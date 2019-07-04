@@ -1,0 +1,696 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046B22CE5798001BA964 /* AppDelegate.swift */; };
+		5ECE046E22CE5798001BA964 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046D22CE5798001BA964 /* ViewController.swift */; };
+		5ECE047122CE5798001BA964 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE046F22CE5798001BA964 /* Main.storyboard */; };
+		5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */; };
+		5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047522CE579B001BA964 /* Assets.xcassets */; };
+		5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */; };
+		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
+		5ECE048F22CE579B001BA964 /* binkappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048E22CE579B001BA964 /* binkappUITests.swift */; };
+		5ECE04A622CE582E001BA964 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A022CE582E001BA964 /* LoginPresenter.swift */; };
+		5ECE04A722CE582E001BA964 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A022CE582E001BA964 /* LoginPresenter.swift */; };
+		5ECE04A822CE582E001BA964 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A022CE582E001BA964 /* LoginPresenter.swift */; };
+		5ECE04A922CE582E001BA964 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A122CE582E001BA964 /* LoginWorker.swift */; };
+		5ECE04AA22CE582E001BA964 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A122CE582E001BA964 /* LoginWorker.swift */; };
+		5ECE04AB22CE582E001BA964 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A122CE582E001BA964 /* LoginWorker.swift */; };
+		5ECE04AC22CE582E001BA964 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A222CE582E001BA964 /* LoginRouter.swift */; };
+		5ECE04AD22CE582E001BA964 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A222CE582E001BA964 /* LoginRouter.swift */; };
+		5ECE04AE22CE582E001BA964 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A222CE582E001BA964 /* LoginRouter.swift */; };
+		5ECE04AF22CE582E001BA964 /* LoginModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A322CE582E001BA964 /* LoginModels.swift */; };
+		5ECE04B022CE582E001BA964 /* LoginModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A322CE582E001BA964 /* LoginModels.swift */; };
+		5ECE04B122CE582E001BA964 /* LoginModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A322CE582E001BA964 /* LoginModels.swift */; };
+		5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A422CE582E001BA964 /* LoginViewController.swift */; };
+		5ECE04B322CE582E001BA964 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A422CE582E001BA964 /* LoginViewController.swift */; };
+		5ECE04B422CE582E001BA964 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A422CE582E001BA964 /* LoginViewController.swift */; };
+		5ECE04B522CE582E001BA964 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A522CE582E001BA964 /* LoginInteractor.swift */; };
+		5ECE04B622CE582E001BA964 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A522CE582E001BA964 /* LoginInteractor.swift */; };
+		5ECE04B722CE582E001BA964 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A522CE582E001BA964 /* LoginInteractor.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5ECE048022CE579B001BA964 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ECE046022CE5797001BA964 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5ECE046722CE5798001BA964;
+			remoteInfo = binkapp;
+		};
+		5ECE048B22CE579B001BA964 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ECE046022CE5797001BA964 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5ECE046722CE5798001BA964;
+			remoteInfo = binkapp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5ECE046822CE5798001BA964 /* binkapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = binkapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ECE046B22CE5798001BA964 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5ECE046D22CE5798001BA964 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5ECE047022CE5798001BA964 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = binkapp.xcdatamodel; sourceTree = "<group>"; };
+		5ECE047522CE579B001BA964 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5ECE047822CE579B001BA964 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5ECE047A22CE579B001BA964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5ECE047F22CE579B001BA964 /* binkappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = binkappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ECE048322CE579B001BA964 /* binkappTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = binkappTests.swift; sourceTree = "<group>"; };
+		5ECE048522CE579B001BA964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5ECE048A22CE579B001BA964 /* binkappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = binkappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ECE048E22CE579B001BA964 /* binkappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = binkappUITests.swift; sourceTree = "<group>"; };
+		5ECE049022CE579B001BA964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5ECE04A022CE582E001BA964 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
+		5ECE04A122CE582E001BA964 /* LoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorker.swift; sourceTree = "<group>"; };
+		5ECE04A222CE582E001BA964 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
+		5ECE04A322CE582E001BA964 /* LoginModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModels.swift; sourceTree = "<group>"; };
+		5ECE04A422CE582E001BA964 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5ECE04A522CE582E001BA964 /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5ECE046522CE5798001BA964 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ECE047C22CE579B001BA964 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ECE048722CE579B001BA964 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5ECE045F22CE5797001BA964 = {
+			isa = PBXGroup;
+			children = (
+				5ECE046A22CE5798001BA964 /* binkapp */,
+				5ECE048222CE579B001BA964 /* binkappTests */,
+				5ECE048D22CE579B001BA964 /* binkappUITests */,
+				5ECE046922CE5798001BA964 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5ECE046922CE5798001BA964 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5ECE046822CE5798001BA964 /* binkapp.app */,
+				5ECE047F22CE579B001BA964 /* binkappTests.xctest */,
+				5ECE048A22CE579B001BA964 /* binkappUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5ECE046A22CE5798001BA964 /* binkapp */ = {
+			isa = PBXGroup;
+			children = (
+				5ECE049C22CE57C8001BA964 /* Models */,
+				5ECE049F22CE57F5001BA964 /* Scenes */,
+				5ECE049D22CE57CF001BA964 /* Services */,
+				5ECE049E22CE57E6001BA964 /* Workers */,
+				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
+				5ECE046D22CE5798001BA964 /* ViewController.swift */,
+				5ECE046F22CE5798001BA964 /* Main.storyboard */,
+				5ECE047522CE579B001BA964 /* Assets.xcassets */,
+				5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */,
+				5ECE047A22CE579B001BA964 /* Info.plist */,
+				5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */,
+			);
+			path = binkapp;
+			sourceTree = "<group>";
+		};
+		5ECE048222CE579B001BA964 /* binkappTests */ = {
+			isa = PBXGroup;
+			children = (
+				5ECE048322CE579B001BA964 /* binkappTests.swift */,
+				5ECE048522CE579B001BA964 /* Info.plist */,
+			);
+			path = binkappTests;
+			sourceTree = "<group>";
+		};
+		5ECE048D22CE579B001BA964 /* binkappUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5ECE048E22CE579B001BA964 /* binkappUITests.swift */,
+				5ECE049022CE579B001BA964 /* Info.plist */,
+			);
+			path = binkappUITests;
+			sourceTree = "<group>";
+		};
+		5ECE049C22CE57C8001BA964 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5ECE049D22CE57CF001BA964 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		5ECE049E22CE57E6001BA964 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		5ECE049F22CE57F5001BA964 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				5ECE04B822CE583B001BA964 /* Login */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		5ECE04B822CE583B001BA964 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				5ECE04A022CE582E001BA964 /* LoginPresenter.swift */,
+				5ECE04A122CE582E001BA964 /* LoginWorker.swift */,
+				5ECE04A222CE582E001BA964 /* LoginRouter.swift */,
+				5ECE04A322CE582E001BA964 /* LoginModels.swift */,
+				5ECE04A422CE582E001BA964 /* LoginViewController.swift */,
+				5ECE04A522CE582E001BA964 /* LoginInteractor.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5ECE046722CE5798001BA964 /* binkapp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ECE049322CE579B001BA964 /* Build configuration list for PBXNativeTarget "binkapp" */;
+			buildPhases = (
+				5ECE046422CE5798001BA964 /* Sources */,
+				5ECE046522CE5798001BA964 /* Frameworks */,
+				5ECE046622CE5798001BA964 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = binkapp;
+			productName = binkapp;
+			productReference = 5ECE046822CE5798001BA964 /* binkapp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5ECE047E22CE579B001BA964 /* binkappTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ECE049622CE579B001BA964 /* Build configuration list for PBXNativeTarget "binkappTests" */;
+			buildPhases = (
+				5ECE047B22CE579B001BA964 /* Sources */,
+				5ECE047C22CE579B001BA964 /* Frameworks */,
+				5ECE047D22CE579B001BA964 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5ECE048122CE579B001BA964 /* PBXTargetDependency */,
+			);
+			name = binkappTests;
+			productName = binkappTests;
+			productReference = 5ECE047F22CE579B001BA964 /* binkappTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5ECE048922CE579B001BA964 /* binkappUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ECE049922CE579B001BA964 /* Build configuration list for PBXNativeTarget "binkappUITests" */;
+			buildPhases = (
+				5ECE048622CE579B001BA964 /* Sources */,
+				5ECE048722CE579B001BA964 /* Frameworks */,
+				5ECE048822CE579B001BA964 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5ECE048C22CE579B001BA964 /* PBXTargetDependency */,
+			);
+			name = binkappUITests;
+			productName = binkappUITests;
+			productReference = 5ECE048A22CE579B001BA964 /* binkappUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5ECE046022CE5797001BA964 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = Bink;
+				TargetAttributes = {
+					5ECE046722CE5798001BA964 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					5ECE047E22CE579B001BA964 = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = 5ECE046722CE5798001BA964;
+					};
+					5ECE048922CE579B001BA964 = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = 5ECE046722CE5798001BA964;
+					};
+				};
+			};
+			buildConfigurationList = 5ECE046322CE5797001BA964 /* Build configuration list for PBXProject "binkapp" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5ECE045F22CE5797001BA964;
+			productRefGroup = 5ECE046922CE5798001BA964 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5ECE046722CE5798001BA964 /* binkapp */,
+				5ECE047E22CE579B001BA964 /* binkappTests */,
+				5ECE048922CE579B001BA964 /* binkappUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5ECE046622CE5798001BA964 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
+				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
+				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ECE047D22CE579B001BA964 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ECE048822CE579B001BA964 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5ECE046422CE5798001BA964 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5ECE04A922CE582E001BA964 /* LoginWorker.swift in Sources */,
+				5ECE04A622CE582E001BA964 /* LoginPresenter.swift in Sources */,
+				5ECE04AF22CE582E001BA964 /* LoginModels.swift in Sources */,
+				5ECE04AC22CE582E001BA964 /* LoginRouter.swift in Sources */,
+				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
+				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
+				5ECE046E22CE5798001BA964 /* ViewController.swift in Sources */,
+				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
+				5ECE04B522CE582E001BA964 /* LoginInteractor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ECE047B22CE579B001BA964 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5ECE04B322CE582E001BA964 /* LoginViewController.swift in Sources */,
+				5ECE04A722CE582E001BA964 /* LoginPresenter.swift in Sources */,
+				5ECE04B622CE582E001BA964 /* LoginInteractor.swift in Sources */,
+				5ECE04B022CE582E001BA964 /* LoginModels.swift in Sources */,
+				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
+				5ECE04AD22CE582E001BA964 /* LoginRouter.swift in Sources */,
+				5ECE04AA22CE582E001BA964 /* LoginWorker.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ECE048622CE579B001BA964 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5ECE04B422CE582E001BA964 /* LoginViewController.swift in Sources */,
+				5ECE04A822CE582E001BA964 /* LoginPresenter.swift in Sources */,
+				5ECE04B722CE582E001BA964 /* LoginInteractor.swift in Sources */,
+				5ECE04B122CE582E001BA964 /* LoginModels.swift in Sources */,
+				5ECE048F22CE579B001BA964 /* binkappUITests.swift in Sources */,
+				5ECE04AE22CE582E001BA964 /* LoginRouter.swift in Sources */,
+				5ECE04AB22CE582E001BA964 /* LoginWorker.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5ECE048122CE579B001BA964 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5ECE046722CE5798001BA964 /* binkapp */;
+			targetProxy = 5ECE048022CE579B001BA964 /* PBXContainerItemProxy */;
+		};
+		5ECE048C22CE579B001BA964 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5ECE046722CE5798001BA964 /* binkapp */;
+			targetProxy = 5ECE048B22CE579B001BA964 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5ECE046F22CE5798001BA964 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5ECE047022CE5798001BA964 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5ECE047822CE579B001BA964 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5ECE049122CE579B001BA964 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5ECE049222CE579B001BA964 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5ECE049422CE579B001BA964 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YN6HQB44NX;
+				INFOPLIST_FILE = binkapp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.binkapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5ECE049522CE579B001BA964 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YN6HQB44NX;
+				INFOPLIST_FILE = binkapp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.binkapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5ECE049722CE579B001BA964 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YN6HQB44NX;
+				INFOPLIST_FILE = binkappTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.binkappTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp.app/binkapp";
+			};
+			name = Debug;
+		};
+		5ECE049822CE579B001BA964 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YN6HQB44NX;
+				INFOPLIST_FILE = binkappTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.binkappTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp.app/binkapp";
+			};
+			name = Release;
+		};
+		5ECE049A22CE579B001BA964 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YN6HQB44NX;
+				INFOPLIST_FILE = binkappUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.binkappUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = binkapp;
+			};
+			name = Debug;
+		};
+		5ECE049B22CE579B001BA964 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YN6HQB44NX;
+				INFOPLIST_FILE = binkappUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.binkappUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = binkapp;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5ECE046322CE5797001BA964 /* Build configuration list for PBXProject "binkapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ECE049122CE579B001BA964 /* Debug */,
+				5ECE049222CE579B001BA964 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5ECE049322CE579B001BA964 /* Build configuration list for PBXNativeTarget "binkapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ECE049422CE579B001BA964 /* Debug */,
+				5ECE049522CE579B001BA964 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5ECE049622CE579B001BA964 /* Build configuration list for PBXNativeTarget "binkappTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ECE049722CE579B001BA964 /* Debug */,
+				5ECE049822CE579B001BA964 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5ECE049922CE579B001BA964 /* Build configuration list for PBXNativeTarget "binkappUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ECE049A22CE579B001BA964 /* Debug */,
+				5ECE049B22CE579B001BA964 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
+			);
+			currentVersion = 5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */;
+			path = binkapp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 5ECE046022CE5797001BA964 /* Project object */;
+}
