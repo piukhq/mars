@@ -3,13 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		4B03E4ACD9F0FF1C979C752E /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */; };
 		5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046B22CE5798001BA964 /* AppDelegate.swift */; };
-		5ECE046E22CE5798001BA964 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046D22CE5798001BA964 /* ViewController.swift */; };
 		5ECE047122CE5798001BA964 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE046F22CE5798001BA964 /* Main.storyboard */; };
 		5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */; };
 		5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047522CE579B001BA964 /* Assets.xcassets */; };
@@ -60,7 +59,6 @@
 		4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046822CE5798001BA964 /* binkapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = binkapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046B22CE5798001BA964 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5ECE046D22CE5798001BA964 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5ECE047022CE5798001BA964 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = binkapp.xcdatamodel; sourceTree = "<group>"; };
 		5ECE047522CE579B001BA964 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 				747EE940A8617CF70F3CD693 /* Pods-binkappUITests.debug.xcconfig */,
 				E7354EC1FB3CF368988428AD /* Pods-binkappUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -169,7 +166,6 @@
 				5ECE049D22CE57CF001BA964 /* Services */,
 				5ECE049E22CE57E6001BA964 /* Workers */,
 				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
-				5ECE046D22CE5798001BA964 /* ViewController.swift */,
 				5ECE046F22CE5798001BA964 /* Main.storyboard */,
 				5ECE047522CE579B001BA964 /* Assets.xcassets */,
 				5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */,
@@ -556,7 +552,6 @@
 				5ECE04AC22CE582E001BA964 /* LoginRouter.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
-				5ECE046E22CE5798001BA964 /* ViewController.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				5ECE04B522CE582E001BA964 /* LoginInteractor.swift in Sources */,
 			);
