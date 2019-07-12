@@ -3,13 +3,10 @@ platform :ios, '12.0'
 
 def common_pods
 
-pod 'FacebookSDK'
-pod 'FacebookSDK/LoginKit'
-pod 'FacebookSDK/ShareKit'
-pod 'FacebookSDK/PlacesKit'
 pod 'Firebase'
 pod 'GoogleSignIn'
 pod 'Intercom'
+pod 'Swinject'
 
 end
 

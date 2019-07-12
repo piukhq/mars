@@ -35,6 +35,10 @@
 		5ECE04B722CE582E001BA964 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A522CE582E001BA964 /* LoginInteractor.swift */; };
 		92CE3430695A6558F2EC1793 /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */; };
 		9C26930409A757F7CD2C794E /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */; };
+		AF06D42F48491D78B0040221 /* DataAccessable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D2B78E62D4C6A766B015 /* DataAccessable.swift */; };
+		AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D82C12A979885545793C /* CoreDataAccess.swift */; };
+		AF06DC6EF72B5BA9474542D9 /* DataAccessable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D2B78E62D4C6A766B015 /* DataAccessable.swift */; };
+		AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D82C12A979885545793C /* CoreDataAccess.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +84,8 @@
 		6F8E73B24E8A8009DF9E4266 /* Pods-binkappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.release.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.release.xcconfig"; sourceTree = "<group>"; };
 		747EE940A8617CF70F3CD693 /* Pods-binkappUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.debug.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF06D2B78E62D4C6A766B015 /* DataAccessable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAccessable.swift; sourceTree = "<group>"; };
+		AF06D82C12A979885545793C /* CoreDataAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataAccess.swift; sourceTree = "<group>"; };
 		CBE46BB3E6386EE997F95088 /* Pods-binkappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.debug.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DAD06B97E6DBC2FAA6900787 /* Pods-binkapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.debug.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.debug.xcconfig"; sourceTree = "<group>"; };
 		E7354EC1FB3CF368988428AD /* Pods-binkappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.release.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -171,6 +177,7 @@
 				5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */,
 				5ECE047A22CE579B001BA964 /* Info.plist */,
 				5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */,
+				AF06D86448D661A8F4142F87 /* Persistence */,
 			);
 			path = binkapp;
 			sourceTree = "<group>";
@@ -233,6 +240,15 @@
 				5ECE04A522CE582E001BA964 /* LoginInteractor.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		AF06D86448D661A8F4142F87 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				AF06D82C12A979885545793C /* CoreDataAccess.swift */,
+				AF06D2B78E62D4C6A766B015 /* DataAccessable.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -554,6 +570,8 @@
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				5ECE04B522CE582E001BA964 /* LoginInteractor.swift in Sources */,
+				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
+				AF06DC6EF72B5BA9474542D9 /* DataAccessable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +586,8 @@
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				5ECE04AD22CE582E001BA964 /* LoginRouter.swift in Sources */,
 				5ECE04AA22CE582E001BA964 /* LoginWorker.swift in Sources */,
+				AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */,
+				AF06D42F48491D78B0040221 /* DataAccessable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,7 +798,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CBE46BB3E6386EE997F95088 /* Pods-binkappTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YN6HQB44NX;
@@ -800,7 +820,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F8E73B24E8A8009DF9E4266 /* Pods-binkappTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YN6HQB44NX;
@@ -822,7 +842,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 747EE940A8617CF70F3CD693 /* Pods-binkappUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YN6HQB44NX;
 				INFOPLIST_FILE = binkappUITests/Info.plist;
@@ -843,7 +863,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E7354EC1FB3CF368988428AD /* Pods-binkappUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YN6HQB44NX;
 				INFOPLIST_FILE = binkappUITests/Info.plist;
