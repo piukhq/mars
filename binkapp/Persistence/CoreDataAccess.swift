@@ -6,7 +6,7 @@
 import Foundation
 import CoreData
 
-class DataAccess : DataAccessable {
+class DataAccess : DataAccessible {
 
     func save() {
         saveContext()

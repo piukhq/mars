@@ -2,169 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="daf25bec-b195-4aa8-afce-2e941642b860" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/binkapp.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/binkapp.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/xcode.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Swinject.xcscheme" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/Assembler.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/Assembly.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/Behavior.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/Container.Arguments.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/Container.Logging.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/Container.TypeForwarding.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/Container.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/DebugHelper.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/FunctionType.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/GraphIdentifier.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/InstanceStorage.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/InstanceWrapper.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/ObjectScope.Standard.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/ObjectScope.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/Resolver.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/ServiceEntry.TypeForwarding.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/ServiceEntry.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/ServiceKey.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/SpinLock.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/Swinject.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/SynchronizedResolver.Arguments.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/SynchronizedResolver.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/UnavailableItems.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Swinject/Sources/_Resolver.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Target Support Files/Swinject/Swinject-Info.plist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Target Support Files/Swinject/Swinject-dummy.m" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Target Support Files/Swinject/Swinject-prefix.pch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Target Support Files/Swinject/Swinject-umbrella.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Target Support Files/Swinject/Swinject.modulemap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Pods/Target Support Files/Swinject/Swinject.xcconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/binkapp.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/binkapp.xcworkspace/xcuserdata/ksigiscar.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/binkapp.xcworkspace/xcuserdata/ksigiscar.xcuserdatad/xcschemes/xcschememanagement.plist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/binkapp/Persistence/CoreDataAccess.swift" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/binkapp/Persistence/DataAccessable.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/Podfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginManager.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginManager.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginManagerLogger.h" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FBSDKLoginKit/FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginManagerLogger.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKAppInviteContent.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKAppInviteContent.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKMessageDialog.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKMessageDialog.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKShareAPI.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKShareAPI.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKShareDialog.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKShareDialog.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKShareOpenGraphContent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKShareOpenGraphContent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKShareOpenGraphContent.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/FBSDKShareOpenGraphContent.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/Internal/FBSDKShareUtility.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FBSDKShareKit/FBSDKShareKit/FBSDKShareKit/Internal/FBSDKShareUtility.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Firebase/NOTICES" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Firebase/NOTICES" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FIRAnalyticsConnector.framework/FIRAnalyticsConnector" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FIRAnalyticsConnector.framework/FIRAnalyticsConnector" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/FirebaseAnalytics" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/FirebaseAnalytics" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseCoreDiagnostics.framework/FirebaseCoreDiagnostics" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseAnalytics/Frameworks/FirebaseCoreDiagnostics.framework/FirebaseCoreDiagnostics" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseCore/Firebase/Core/FIRBundleUtil.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/Firebase/Core/FIRBundleUtil.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseCore/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseCore/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRIMessageCode.h" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRIMessageCode.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceID.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceID.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDAuthKeyChain.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDAuthKeyChain.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDBackupExcludedPlist.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDBackupExcludedPlist.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDCheckinPreferences.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDCheckinPreferences.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDCheckinService.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDCheckinService.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDDefines.h" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDDefines.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDKeyPairStore.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDKeyPairStore.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDKeyPairUtilities.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDKeyPairUtilities.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDStringEncoding.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDStringEncoding.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDTokenFetchOperation.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDTokenFetchOperation.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDTokenInfo.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDTokenInfo.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDTokenOperation.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDTokenOperation.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDTokenStore.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDTokenStore.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDUtilities.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDUtilities.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDVersionUtilities.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/FIRInstanceIDVersionUtilities.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/Public/FIRInstanceID.h" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/Firebase/InstanceID/Public/FIRInstanceID.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/FirebaseInstanceID/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/FirebaseInstanceID/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/GoogleAppMeasurement/Frameworks/GoogleAppMeasurement.framework/GoogleAppMeasurement" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/GoogleAppMeasurement/Frameworks/GoogleAppMeasurement.framework/GoogleAppMeasurement" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/AppDelegateSwizzler/GULAppDelegateSwizzler.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/AppDelegateSwizzler/GULAppDelegateSwizzler.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/AppDelegateSwizzler/Internal/GULAppDelegateSwizzler_Private.h" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/AppDelegateSwizzler/Internal/GULAppDelegateSwizzler_Private.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/Common/GULLoggerCodes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/Common/GULLoggerCodes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/Logger/GULLogger.m" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/Logger/GULLogger.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/Logger/Public/GULLoggerLevel.h" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/Logger/Public/GULLoggerLevel.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/Network/Private/GULNetworkMessageCode.h" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/Network/Private/GULNetworkMessageCode.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/Reachability/Private/GULReachabilityMessageCode.h" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/GoogleUtilities/GoogleUtilities/Reachability/Private/GULReachabilityMessageCode.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/GoogleUtilities/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/GoogleUtilities/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Headers/Intercom+Experimental.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Intercom" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Intercom" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Modules/module.modulemap" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Modules/module.modulemap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/Assets.car" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/Assets.car" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/ja.strings" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/ja.strings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/lt.strings" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/lt.strings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/pt-br.strings" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/pt-br.strings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/pt-pt.strings" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/pt-pt.strings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/zh-hans.strings" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/zh-hans.strings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/zh-hant.strings" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle/zh-hant.strings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Manifest.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Manifest.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FBSDKCoreKit.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FBSDKCoreKit.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FBSDKLoginKit.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FBSDKLoginKit.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FBSDKMarketingKit.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FBSDKMarketingKit.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FBSDKPlacesKit.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FBSDKPlacesKit.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FBSDKShareKit.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FBSDKShareKit.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FacebookSDK.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FacebookSDK.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Firebase.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Firebase.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FirebaseAnalytics.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FirebaseAnalytics.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FirebaseCore.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FirebaseCore.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FirebaseInstanceID.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/FirebaseInstanceID.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/GTMSessionFetcher.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/GTMSessionFetcher.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/GoogleAppMeasurement.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/GoogleAppMeasurement.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/GoogleSignIn.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/GoogleSignIn.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/GoogleToolboxForMac.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/GoogleToolboxForMac.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/GoogleUtilities.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/GoogleUtilities.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Intercom.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Intercom.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Pods-binkapp.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Pods-binkapp.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Pods-binkappTests.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Pods-binkappTests.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Pods-binkappUITests.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/Pods-binkappUITests.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/nanopb.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/nanopb.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/xcschememanagement.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/xcschememanagement.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/FBSDKLoginKit/FBSDKLoginKit-Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/FBSDKLoginKit/FBSDKLoginKit-Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/FBSDKPlacesKit/FBSDKPlacesKit-Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/FBSDKPlacesKit/FBSDKPlacesKit-Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/FBSDKShareKit/FBSDKShareKit-Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/FBSDKShareKit/FBSDKShareKit-Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/FirebaseCore/FirebaseCore-Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/FirebaseCore/FirebaseCore-Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/FirebaseCore/FirebaseCore.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/FirebaseCore/FirebaseCore.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/FirebaseInstanceID/FirebaseInstanceID-Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/FirebaseInstanceID/FirebaseInstanceID-Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/FirebaseInstanceID/FirebaseInstanceID.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/FirebaseInstanceID/FirebaseInstanceID.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/GoogleUtilities/GoogleUtilities-Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/GoogleUtilities/GoogleUtilities-Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-acknowledgements.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-acknowledgements.markdown" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-acknowledgements.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-acknowledgements.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks-Debug-input-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks-Debug-input-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks-Debug-output-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks-Debug-output-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks-Release-input-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks-Release-input-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks-Release-output-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks-Release-output-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks.sh" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp.debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp.debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp.release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkapp/Pods-binkapp.release.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-acknowledgements.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-acknowledgements.markdown" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-acknowledgements.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-acknowledgements.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks-Debug-input-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks-Debug-input-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks-Debug-output-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks-Debug-output-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks-Release-input-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks-Release-input-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks-Release-output-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks-Release-output-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks.sh" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests-frameworks.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests.debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests.debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests.release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappTests/Pods-binkappTests.release.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-acknowledgements.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-acknowledgements.markdown" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-acknowledgements.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-acknowledgements.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks-Debug-input-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks-Debug-input-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks-Debug-output-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks-Debug-output-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks-Release-input-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks-Release-input-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks-Release-output-files.xcfilelist" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks-Release-output-files.xcfilelist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks.sh" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests-frameworks.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests.debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests.debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests.release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Pods/Target Support Files/Pods-binkappUITests/Pods-binkappUITests.release.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binkapp.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/binkapp.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binkapp.xcodeproj/project.xcworkspace/xcuserdata/ksigiscar.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/binkapp.xcodeproj/project.xcworkspace/xcuserdata/ksigiscar.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binkapp.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/xcschememanagement.plist" beforeDir="false" afterPath="$PROJECT_DIR$/binkapp.xcodeproj/xcuserdata/ksigiscar.xcuserdatad/xcschemes/xcschememanagement.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binkapp/AppDelegate.swift" beforeDir="false" afterPath="$PROJECT_DIR$/binkapp/AppDelegate.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/binkapp.xcworkspace/xcuserdata/ksigiscar.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/binkapp.xcworkspace/xcuserdata/ksigiscar.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/binkapp/Persistence/DataAccessable.swift" beforeDir="false" afterPath="$PROJECT_DIR$/binkapp/Persistence/DataAccessable.swift" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -172,14 +12,28 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_D02A6A14-E223-4755-97BB-503BA11E524A" />
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Podfile">
+        <entry file="file://$PROJECT_DIR$/binkapp/Persistence/DataAccessable.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="255">
+              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -193,9 +47,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/binkapp/AppDelegate.swift" />
-        <option value="$PROJECT_DIR$/binkapp/Persistence/DataAccessable.swift" />
         <option value="$PROJECT_DIR$/binkapp/Persistence/DataAccess.swift" />
         <option value="$PROJECT_DIR$/Podfile" />
+        <option value="$PROJECT_DIR$/binkapp/Persistence/DataAccessable.swift" />
       </list>
     </option>
   </component>
@@ -262,16 +116,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1562929447063</updated>
-      <workItem from="1562929449850" duration="3298000" />
+      <workItem from="1562929449850" duration="3966000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3298000" />
+    <option name="totallyTimeSpent" value="3966000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="824" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Designer" />
       <window_info id="Favorites" side_tool="true" />
@@ -279,7 +132,7 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Messages" visible="true" weight="0.329235" />
+      <window_info anchor="bottom" id="Messages" weight="0.329235" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" weight="0.329235" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -290,7 +143,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Database" weight="0.3297568" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -321,10 +174,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Podfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/binkapp/Persistence/CoreDataAccess.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+        <state relative-caret-position="136">
+          <caret line="8" column="25" lean-forward="true" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
           <folding>
             <element signature="e#99#116#0" expanded="true" />
           </folding>
@@ -333,15 +193,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/binkapp/Persistence/DataAccessable.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Podfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="255">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>

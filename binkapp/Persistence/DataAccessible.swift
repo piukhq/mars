@@ -5,11 +5,11 @@
 
 import Foundation
 
-/// Offers a simple interface to access and synchronize data in a framework independant way
+/// Offers a simple interface to access and synchronize data in a framework independent way
 /// Makes it easy to swap Core Data for Realm or another framework
 /// Also makes it easy to mock data coming from the database
 
-protocol DataAccessable {
+protocol DataAccessible {
     func save()
     func sync()
 }
