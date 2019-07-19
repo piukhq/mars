@@ -11,7 +11,10 @@ pod 'Swinject'
 plugin 'cocoapods-keys', {
   :project => "binkapp",
   :keys => [
-    "TestKey"
+    "baseUrlKey",
+    "organisationIdKey",
+    "propertyIdKey",
+    "bundleIdKey"
   ]
 }
 
