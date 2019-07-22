@@ -8,6 +8,17 @@ pod 'GoogleSignIn'
 pod 'Intercom'
 pod 'Swinject'
 
+plugin 'cocoapods-keys', {
+  :project => "binkapp",
+  :keys => [
+    "baseUrlKey",
+    "organisationIdKey",
+    "propertyIdKey",
+    "bundleIdKey",
+    "secretKey"
+  ]
+}
+
 end
 
 target 'binkapp' do
