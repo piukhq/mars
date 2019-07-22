@@ -14,7 +14,8 @@ plugin 'cocoapods-keys', {
     "baseUrlKey",
     "organisationIdKey",
     "propertyIdKey",
-    "bundleIdKey"
+    "bundleIdKey",
+    "secretKey"
   ]
 }
 
