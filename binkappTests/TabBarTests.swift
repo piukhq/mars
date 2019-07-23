@@ -1,20 +1,20 @@
 //
-//  binkappTests.swift
+//  TabBarTests.swift
 //  binkappTests
 //
-//  Created by Karl Sigiscar on 04/07/2019.
+//  Created by Paul Tiriteu on 22/07/2019.
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
 import XCTest
-@testable import binkapp
 
-class binkappTests: XCTestCase {
-    let tabBarTests = TabBarTests()
+class TabBarTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        tabBarTests.setUp()
+        testLoyaltyButton()
+        testAddButton()
+        testPaymentButton()
     }
 
     override func tearDown() {
@@ -32,5 +32,16 @@ class binkappTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
+    
+    func testLoyaltyButton() {
+        
+    }
+    
+    func testAddButton() {
+        
+    }
+    
+    func testPaymentButton() {
+        
+    }
 }

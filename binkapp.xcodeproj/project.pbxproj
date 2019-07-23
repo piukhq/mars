@@ -7,6 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CC341D422E5CEE1003B0900 /* TabBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC341D322E5CEE1003B0900 /* TabBarTests.swift */; };
+		3CE8CFD722E5D7450008BA0C /* MainTabBarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFD122E5D7450008BA0C /* MainTabBarPresenter.swift */; };
+		3CE8CFD822E5D7450008BA0C /* MainTabBarWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFD222E5D7450008BA0C /* MainTabBarWorker.swift */; };
+		3CE8CFD922E5D7450008BA0C /* MainTabBarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFD322E5D7450008BA0C /* MainTabBarRouter.swift */; };
+		3CE8CFDA22E5D7450008BA0C /* MainTabBarModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFD422E5D7450008BA0C /* MainTabBarModels.swift */; };
+		3CE8CFDB22E5D7450008BA0C /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFD522E5D7450008BA0C /* MainTabBarViewController.swift */; };
+		3CE8CFDC22E5D7450008BA0C /* MainTabBarInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFD622E5D7450008BA0C /* MainTabBarInteractor.swift */; };
+		3CE8CFDE22E5DC2C0008BA0C /* MainTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8CFDD22E5DC2C0008BA0C /* MainTabBarViewController.xib */; };
+		3CE8CFE622E5DE0C0008BA0C /* LoyaltyWalletPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFE022E5DE0C0008BA0C /* LoyaltyWalletPresenter.swift */; };
+		3CE8CFE722E5DE0C0008BA0C /* LoyaltyWalletWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFE122E5DE0C0008BA0C /* LoyaltyWalletWorker.swift */; };
+		3CE8CFE822E5DE0C0008BA0C /* LoyaltyWalletRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFE222E5DE0C0008BA0C /* LoyaltyWalletRouter.swift */; };
+		3CE8CFE922E5DE0C0008BA0C /* LoyaltyWalletModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFE322E5DE0C0008BA0C /* LoyaltyWalletModels.swift */; };
+		3CE8CFEA22E5DE0C0008BA0C /* LoyaltyWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFE422E5DE0C0008BA0C /* LoyaltyWalletViewController.swift */; };
+		3CE8CFEB22E5DE0C0008BA0C /* LoyaltyWalletInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFE522E5DE0C0008BA0C /* LoyaltyWalletInteractor.swift */; };
+		3CE8D00022E5DE480008BA0C /* PaymentWalletPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFFA22E5DE480008BA0C /* PaymentWalletPresenter.swift */; };
+		3CE8D00122E5DE480008BA0C /* PaymentWalletWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFFB22E5DE480008BA0C /* PaymentWalletWorker.swift */; };
+		3CE8D00222E5DE480008BA0C /* PaymentWalletRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFFC22E5DE480008BA0C /* PaymentWalletRouter.swift */; };
+		3CE8D00322E5DE480008BA0C /* PaymentWalletModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFFD22E5DE480008BA0C /* PaymentWalletModels.swift */; };
+		3CE8D00422E5DE480008BA0C /* PaymentWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFFE22E5DE480008BA0C /* PaymentWalletViewController.swift */; };
+		3CE8D00522E5DE480008BA0C /* PaymentWalletInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFFF22E5DE480008BA0C /* PaymentWalletInteractor.swift */; };
+		3CE8D00722E5DE6C0008BA0C /* LoyaltyWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8D00622E5DE6C0008BA0C /* LoyaltyWalletViewController.xib */; };
+		3CE8D01022E5DF6C0008BA0C /* AddCardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00A22E5DF6C0008BA0C /* AddCardPresenter.swift */; };
+		3CE8D01122E5DF6C0008BA0C /* AddCardWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00B22E5DF6C0008BA0C /* AddCardWorker.swift */; };
+		3CE8D01222E5DF6C0008BA0C /* AddCardRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00C22E5DF6C0008BA0C /* AddCardRouter.swift */; };
+		3CE8D01322E5DF6C0008BA0C /* AddCardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00D22E5DF6C0008BA0C /* AddCardModels.swift */; };
+		3CE8D01422E5DF6C0008BA0C /* AddCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00E22E5DF6C0008BA0C /* AddCardViewController.swift */; };
+		3CE8D01522E5DF6C0008BA0C /* AddCardInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00F22E5DF6C0008BA0C /* AddCardInteractor.swift */; };
+		3CE8D01722E5DF960008BA0C /* AddCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8D01622E5DF960008BA0C /* AddCardViewController.xib */; };
+		3CE8D01922E5DFD60008BA0C /* PaymentWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8D01822E5DFD60008BA0C /* PaymentWalletViewController.xib */; };
 		4B03E4ACD9F0FF1C979C752E /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */; };
 		5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046B22CE5798001BA964 /* AppDelegate.swift */; };
 		5ECE047122CE5798001BA964 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE046F22CE5798001BA964 /* Main.storyboard */; };
@@ -60,6 +89,35 @@
 
 /* Begin PBXFileReference section */
 		1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CC341D322E5CEE1003B0900 /* TabBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTests.swift; sourceTree = "<group>"; };
+		3CE8CFD122E5D7450008BA0C /* MainTabBarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarPresenter.swift; sourceTree = "<group>"; };
+		3CE8CFD222E5D7450008BA0C /* MainTabBarWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarWorker.swift; sourceTree = "<group>"; };
+		3CE8CFD322E5D7450008BA0C /* MainTabBarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarRouter.swift; sourceTree = "<group>"; };
+		3CE8CFD422E5D7450008BA0C /* MainTabBarModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarModels.swift; sourceTree = "<group>"; };
+		3CE8CFD522E5D7450008BA0C /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		3CE8CFD622E5D7450008BA0C /* MainTabBarInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarInteractor.swift; sourceTree = "<group>"; };
+		3CE8CFDD22E5DC2C0008BA0C /* MainTabBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTabBarViewController.xib; sourceTree = "<group>"; };
+		3CE8CFE022E5DE0C0008BA0C /* LoyaltyWalletPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletPresenter.swift; sourceTree = "<group>"; };
+		3CE8CFE122E5DE0C0008BA0C /* LoyaltyWalletWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletWorker.swift; sourceTree = "<group>"; };
+		3CE8CFE222E5DE0C0008BA0C /* LoyaltyWalletRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletRouter.swift; sourceTree = "<group>"; };
+		3CE8CFE322E5DE0C0008BA0C /* LoyaltyWalletModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletModels.swift; sourceTree = "<group>"; };
+		3CE8CFE422E5DE0C0008BA0C /* LoyaltyWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletViewController.swift; sourceTree = "<group>"; };
+		3CE8CFE522E5DE0C0008BA0C /* LoyaltyWalletInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletInteractor.swift; sourceTree = "<group>"; };
+		3CE8CFFA22E5DE480008BA0C /* PaymentWalletPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletPresenter.swift; sourceTree = "<group>"; };
+		3CE8CFFB22E5DE480008BA0C /* PaymentWalletWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletWorker.swift; sourceTree = "<group>"; };
+		3CE8CFFC22E5DE480008BA0C /* PaymentWalletRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletRouter.swift; sourceTree = "<group>"; };
+		3CE8CFFD22E5DE480008BA0C /* PaymentWalletModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletModels.swift; sourceTree = "<group>"; };
+		3CE8CFFE22E5DE480008BA0C /* PaymentWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletViewController.swift; sourceTree = "<group>"; };
+		3CE8CFFF22E5DE480008BA0C /* PaymentWalletInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletInteractor.swift; sourceTree = "<group>"; };
+		3CE8D00622E5DE6C0008BA0C /* LoyaltyWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoyaltyWalletViewController.xib; sourceTree = "<group>"; };
+		3CE8D00A22E5DF6C0008BA0C /* AddCardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardPresenter.swift; sourceTree = "<group>"; };
+		3CE8D00B22E5DF6C0008BA0C /* AddCardWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardWorker.swift; sourceTree = "<group>"; };
+		3CE8D00C22E5DF6C0008BA0C /* AddCardRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardRouter.swift; sourceTree = "<group>"; };
+		3CE8D00D22E5DF6C0008BA0C /* AddCardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardModels.swift; sourceTree = "<group>"; };
+		3CE8D00E22E5DF6C0008BA0C /* AddCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
+		3CE8D00F22E5DF6C0008BA0C /* AddCardInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardInteractor.swift; sourceTree = "<group>"; };
+		3CE8D01622E5DF960008BA0C /* AddCardViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCardViewController.xib; sourceTree = "<group>"; };
+		3CE8D01822E5DFD60008BA0C /* PaymentWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentWalletViewController.xib; sourceTree = "<group>"; };
 		4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046822CE5798001BA964 /* binkapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = binkapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046B22CE5798001BA964 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +177,62 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3CC341D522E5D130003B0900 /* MainTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				3CE8CFD122E5D7450008BA0C /* MainTabBarPresenter.swift */,
+				3CE8CFD222E5D7450008BA0C /* MainTabBarWorker.swift */,
+				3CE8CFD322E5D7450008BA0C /* MainTabBarRouter.swift */,
+				3CE8CFD422E5D7450008BA0C /* MainTabBarModels.swift */,
+				3CE8CFD522E5D7450008BA0C /* MainTabBarViewController.swift */,
+				3CE8CFDD22E5DC2C0008BA0C /* MainTabBarViewController.xib */,
+				3CE8CFD622E5D7450008BA0C /* MainTabBarInteractor.swift */,
+			);
+			path = MainTabBar;
+			sourceTree = "<group>";
+		};
+		3CE8CFDF22E5DDF00008BA0C /* LoyaltyWallet */ = {
+			isa = PBXGroup;
+			children = (
+				3CE8CFE022E5DE0C0008BA0C /* LoyaltyWalletPresenter.swift */,
+				3CE8CFE122E5DE0C0008BA0C /* LoyaltyWalletWorker.swift */,
+				3CE8CFE222E5DE0C0008BA0C /* LoyaltyWalletRouter.swift */,
+				3CE8CFE322E5DE0C0008BA0C /* LoyaltyWalletModels.swift */,
+				3CE8CFE422E5DE0C0008BA0C /* LoyaltyWalletViewController.swift */,
+				3CE8D00622E5DE6C0008BA0C /* LoyaltyWalletViewController.xib */,
+				3CE8CFE522E5DE0C0008BA0C /* LoyaltyWalletInteractor.swift */,
+			);
+			path = LoyaltyWallet;
+			sourceTree = "<group>";
+		};
+		3CE8CFEC22E5DE1A0008BA0C /* AddCard */ = {
+			isa = PBXGroup;
+			children = (
+				3CE8D00A22E5DF6C0008BA0C /* AddCardPresenter.swift */,
+				3CE8D00B22E5DF6C0008BA0C /* AddCardWorker.swift */,
+				3CE8D00C22E5DF6C0008BA0C /* AddCardRouter.swift */,
+				3CE8D00D22E5DF6C0008BA0C /* AddCardModels.swift */,
+				3CE8D00E22E5DF6C0008BA0C /* AddCardViewController.swift */,
+				3CE8D01622E5DF960008BA0C /* AddCardViewController.xib */,
+				3CE8D00F22E5DF6C0008BA0C /* AddCardInteractor.swift */,
+			);
+			path = AddCard;
+			sourceTree = "<group>";
+		};
+		3CE8CFF922E5DE370008BA0C /* PaymentWallet */ = {
+			isa = PBXGroup;
+			children = (
+				3CE8CFFA22E5DE480008BA0C /* PaymentWalletPresenter.swift */,
+				3CE8CFFB22E5DE480008BA0C /* PaymentWalletWorker.swift */,
+				3CE8CFFC22E5DE480008BA0C /* PaymentWalletRouter.swift */,
+				3CE8CFFD22E5DE480008BA0C /* PaymentWalletModels.swift */,
+				3CE8CFFE22E5DE480008BA0C /* PaymentWalletViewController.swift */,
+				3CE8D01822E5DFD60008BA0C /* PaymentWalletViewController.xib */,
+				3CE8CFFF22E5DE480008BA0C /* PaymentWalletInteractor.swift */,
+			);
+			path = PaymentWallet;
+			sourceTree = "<group>";
+		};
 		492DA371EDF911EDB1A625BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +301,7 @@
 			children = (
 				5ECE048322CE579B001BA964 /* binkappTests.swift */,
 				5ECE048522CE579B001BA964 /* Info.plist */,
+				3CC341D322E5CEE1003B0900 /* TabBarTests.swift */,
 			);
 			path = binkappTests;
 			sourceTree = "<group>";
@@ -224,6 +339,10 @@
 		5ECE049F22CE57F5001BA964 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				3CE8CFF922E5DE370008BA0C /* PaymentWallet */,
+				3CE8CFEC22E5DE1A0008BA0C /* AddCard */,
+				3CE8CFDF22E5DDF00008BA0C /* LoyaltyWallet */,
+				3CC341D522E5D130003B0900 /* MainTabBar */,
 				5ECE04B822CE583B001BA964 /* Login */,
 			);
 			path = Scenes;
@@ -364,9 +483,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CE8D01722E5DF960008BA0C /* AddCardViewController.xib in Resources */,
+				3CE8D01922E5DFD60008BA0C /* PaymentWalletViewController.xib in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
+				3CE8CFDE22E5DC2C0008BA0C /* MainTabBarViewController.xib in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
+				3CE8D00722E5DE6C0008BA0C /* LoyaltyWalletViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,16 +685,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CE8CFDB22E5D7450008BA0C /* MainTabBarViewController.swift in Sources */,
+				3CE8CFDC22E5D7450008BA0C /* MainTabBarInteractor.swift in Sources */,
+				3CE8CFDA22E5D7450008BA0C /* MainTabBarModels.swift in Sources */,
 				5ECE04A922CE582E001BA964 /* LoginWorker.swift in Sources */,
+				3CE8CFE822E5DE0C0008BA0C /* LoyaltyWalletRouter.swift in Sources */,
+				3CE8D01022E5DF6C0008BA0C /* AddCardPresenter.swift in Sources */,
+				3CE8D01522E5DF6C0008BA0C /* AddCardInteractor.swift in Sources */,
 				5ECE04A622CE582E001BA964 /* LoginPresenter.swift in Sources */,
+				3CE8CFE722E5DE0C0008BA0C /* LoyaltyWalletWorker.swift in Sources */,
+				3CE8CFE922E5DE0C0008BA0C /* LoyaltyWalletModels.swift in Sources */,
+				3CE8D00522E5DE480008BA0C /* PaymentWalletInteractor.swift in Sources */,
 				5ECE04AF22CE582E001BA964 /* LoginModels.swift in Sources */,
 				5ECE04AC22CE582E001BA964 /* LoginRouter.swift in Sources */,
+				3CE8CFE622E5DE0C0008BA0C /* LoyaltyWalletPresenter.swift in Sources */,
+				3CE8D01122E5DF6C0008BA0C /* AddCardWorker.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
+				3CE8CFEB22E5DE0C0008BA0C /* LoyaltyWalletInteractor.swift in Sources */,
+				3CE8CFD722E5D7450008BA0C /* MainTabBarPresenter.swift in Sources */,
+				3CE8D01422E5DF6C0008BA0C /* AddCardViewController.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
+				3CE8CFD822E5D7450008BA0C /* MainTabBarWorker.swift in Sources */,
+				3CE8D00222E5DE480008BA0C /* PaymentWalletRouter.swift in Sources */,
+				3CE8D01322E5DF6C0008BA0C /* AddCardModels.swift in Sources */,
+				3CE8D00122E5DE480008BA0C /* PaymentWalletWorker.swift in Sources */,
+				3CE8CFEA22E5DE0C0008BA0C /* LoyaltyWalletViewController.swift in Sources */,
+				3CE8D00422E5DE480008BA0C /* PaymentWalletViewController.swift in Sources */,
 				5ECE04B522CE582E001BA964 /* LoginInteractor.swift in Sources */,
+				3CE8D00022E5DE480008BA0C /* PaymentWalletPresenter.swift in Sources */,
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
+				3CE8CFD922E5D7450008BA0C /* MainTabBarRouter.swift in Sources */,
 				AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */,
+				3CE8D01222E5DF6C0008BA0C /* AddCardRouter.swift in Sources */,
+				3CE8D00322E5DE480008BA0C /* PaymentWalletModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +729,7 @@
 				5ECE04B322CE582E001BA964 /* LoginViewController.swift in Sources */,
 				5ECE04A722CE582E001BA964 /* LoginPresenter.swift in Sources */,
 				5ECE04B622CE582E001BA964 /* LoginInteractor.swift in Sources */,
+				3CC341D422E5CEE1003B0900 /* TabBarTests.swift in Sources */,
 				5ECE04B022CE582E001BA964 /* LoginModels.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				5ECE04AD22CE582E001BA964 /* LoginRouter.swift in Sources */,
