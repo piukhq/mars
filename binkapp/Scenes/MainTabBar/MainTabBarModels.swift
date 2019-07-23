@@ -33,7 +33,8 @@ enum MainTabBar
         ]
         
         func getTabBarLoyaltyButton() -> UITabBarItem {
-            let item = UITabBarItem(title: nil, image: UIImage(named: "loyaltyActive")?.withRenderingMode(.alwaysOriginal), tag: 0)
+            let item = UITabBarItem(title: nil, image: UIImage(named: "loyaltyInactive")?.withRenderingMode(.alwaysOriginal), tag: 0)
+            item.selectedImage = UIImage(named: "loyaltyActive")?.withRenderingMode(.alwaysOriginal)
             return item
         }
         
@@ -44,6 +45,7 @@ enum MainTabBar
         
         func getTabBarPaymentButton() -> UITabBarItem {
             let item = UITabBarItem(title: nil, image: UIImage(named: "paymentInactive")?.withRenderingMode(.alwaysOriginal), tag: 2)
+            item.selectedImage = UIImage(named: "paymentActive")?.withRenderingMode(.alwaysOriginal)
             return item
         }
     }

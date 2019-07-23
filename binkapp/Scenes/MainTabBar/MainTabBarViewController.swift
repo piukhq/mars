@@ -100,13 +100,14 @@ class MainTabBarViewController: UIViewController, MainTabBarDisplayLogic
         items.append(viewModel.getTabBarLoyaltyButton())
         items.append(viewModel.getTabBarAddButton())
         items.append(viewModel.getTabBarPaymentButton())
-        
+        items[2].isEnabled = false
         tabBar.setItems(items, animated: true)
 
         for vc in viewModel.childViewControllers {
             childrenViewControllers.append(vc)
         }
         displayedControllerView.addSubview(childrenViewControllers[0].view)
+        tabBar.selectedItem = items[0]
     }
 }
 

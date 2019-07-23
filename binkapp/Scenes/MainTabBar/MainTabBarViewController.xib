@@ -26,9 +26,9 @@
                     <rect key="frame" x="0.0" y="20" width="375" height="587"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
-                <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbC-ZG-AzA">
+                <tabBar alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbC-ZG-AzA">
                     <rect key="frame" x="0.0" y="607" width="375" height="60"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="Q3z-co-QzY"/>
                     </constraints>
@@ -39,7 +39,7 @@
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tabBar>
             </subviews>
-            <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="goL-qZ-yc0" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="05Z-9q-4Te"/>
                 <constraint firstItem="sbC-ZG-AzA" firstAttribute="top" secondItem="goL-qZ-yc0" secondAttribute="bottom" id="7jC-xu-HVD"/>
