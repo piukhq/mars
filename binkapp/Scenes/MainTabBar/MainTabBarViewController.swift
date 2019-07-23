@@ -102,12 +102,17 @@ class MainTabBarViewController: UIViewController, MainTabBarDisplayLogic
         items.append(viewModel.getTabBarPaymentButton())
         items[2].isEnabled = false
         tabBar.setItems(items, animated: true)
-
+        
+        getChildrenViewControllers(from: viewModel)
+        
+        displayedControllerView.addSubview(childrenViewControllers[0].view)
+        tabBar.selectedItem = items[0]
+    }
+    
+    func getChildrenViewControllers(from viewModel: MainTabBar.Something.ViewModel) {
         for vc in viewModel.childViewControllers {
             childrenViewControllers.append(vc)
         }
-        displayedControllerView.addSubview(childrenViewControllers[0].view)
-        tabBar.selectedItem = items[0]
     }
 }
 

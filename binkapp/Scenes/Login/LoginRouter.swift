@@ -29,9 +29,9 @@ class LoginRouter: NSObject, LoginRoutingLogic, LoginDataPassing
   var dataStore: LoginDataStore?
   
     func routeToMainScreen() {
-        let navController = UINavigationController()
-        let vc = MainTabBarViewController()
-        navController.pushViewController(vc, animated: true)
+//        let navController = UINavigationController()
+//        let vc = MainTabBarViewController()
+//        navController.pushViewController(vc, animated: true)
     }
     
   // MARK: Routing
