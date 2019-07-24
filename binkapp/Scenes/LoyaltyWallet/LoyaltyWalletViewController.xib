@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoyaltyWalletViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="sYL-pw-QLa" id="C7p-5j-dnE"/>
                 <outlet property="view" destination="iN0-l3-epB" id="xY1-ba-kqz"/>
             </connections>
         </placeholder>
@@ -19,7 +20,20 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sYL-pw-QLa">
+                    <rect key="frame" x="25" y="44" width="364" height="818"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="sYL-pw-QLa" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="2xy-1h-UPv"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="sYL-pw-QLa" secondAttribute="trailing" constant="25" id="J45-jc-SVA"/>
+                <constraint firstItem="sYL-pw-QLa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="25" id="O2u-B2-9al"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="sYL-pw-QLa" secondAttribute="bottom" id="sWj-nq-wFm"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
         </view>
     </objects>

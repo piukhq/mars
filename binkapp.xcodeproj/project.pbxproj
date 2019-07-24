@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C61344D22E8A3FE0012DB74 /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61344B22E8A3FE0012DB74 /* CardTableViewCell.swift */; };
+		3C61344E22E8A3FE0012DB74 /* CardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C61344C22E8A3FE0012DB74 /* CardTableViewCell.xib */; };
 		3CC341D422E5CEE1003B0900 /* TabBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC341D322E5CEE1003B0900 /* TabBarTests.swift */; };
 		3CE8CFD722E5D7450008BA0C /* MainTabBarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFD122E5D7450008BA0C /* MainTabBarPresenter.swift */; };
 		3CE8CFD822E5D7450008BA0C /* MainTabBarWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFD222E5D7450008BA0C /* MainTabBarWorker.swift */; };
@@ -89,6 +91,8 @@
 
 /* Begin PBXFileReference section */
 		1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C61344B22E8A3FE0012DB74 /* CardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
+		3C61344C22E8A3FE0012DB74 /* CardTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardTableViewCell.xib; sourceTree = "<group>"; };
 		3CC341D322E5CEE1003B0900 /* TabBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTests.swift; sourceTree = "<group>"; };
 		3CE8CFD122E5D7450008BA0C /* MainTabBarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarPresenter.swift; sourceTree = "<group>"; };
 		3CE8CFD222E5D7450008BA0C /* MainTabBarWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarWorker.swift; sourceTree = "<group>"; };
@@ -177,6 +181,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C61344A22E8A3DC0012DB74 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				3C61344B22E8A3FE0012DB74 /* CardTableViewCell.swift */,
+				3C61344C22E8A3FE0012DB74 /* CardTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		3CC341D522E5D130003B0900 /* MainTabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +207,7 @@
 		3CE8CFDF22E5DDF00008BA0C /* LoyaltyWallet */ = {
 			isa = PBXGroup;
 			children = (
+				3C61344A22E8A3DC0012DB74 /* Cell */,
 				3CE8CFE022E5DE0C0008BA0C /* LoyaltyWalletPresenter.swift */,
 				3CE8CFE122E5DE0C0008BA0C /* LoyaltyWalletWorker.swift */,
 				3CE8CFE222E5DE0C0008BA0C /* LoyaltyWalletRouter.swift */,
@@ -486,6 +500,7 @@
 				3CE8D01722E5DF960008BA0C /* AddCardViewController.xib in Resources */,
 				3CE8D01922E5DFD60008BA0C /* PaymentWalletViewController.xib in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
+				3C61344E22E8A3FE0012DB74 /* CardTableViewCell.xib in Resources */,
 				3CE8CFDE22E5DC2C0008BA0C /* MainTabBarViewController.xib in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
@@ -705,6 +720,7 @@
 				3CE8CFD722E5D7450008BA0C /* MainTabBarPresenter.swift in Sources */,
 				3CE8D01422E5DF6C0008BA0C /* AddCardViewController.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
+				3C61344D22E8A3FE0012DB74 /* CardTableViewCell.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				3CE8CFD822E5D7450008BA0C /* MainTabBarWorker.swift in Sources */,
 				3CE8D00222E5DE480008BA0C /* PaymentWalletRouter.swift in Sources */,
