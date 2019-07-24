@@ -10,8 +10,7 @@ import XCTest
 @testable import binkapp
 
 class TabBarTests: XCTestCase {
-    let tabBarVC = MainTabBarViewController()
-    let viewModel = MainTabBar.Something.ViewModel()
+    let viewModel = MainTabBar.TabBarModels.ViewModel()
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -34,7 +33,6 @@ class TabBarTests: XCTestCase {
     }
     
     func testChildViewControllers() {
-        tabBarVC.getChildrenViewControllers(from: viewModel)
-        XCTAssertEqual(viewModel.childViewControllers, tabBarVC.childrenViewControllers)
+        
     }
 }

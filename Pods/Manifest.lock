@@ -59,7 +59,7 @@ PODS:
   - GoogleUtilities/UserDefaults (6.2.3):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.2)
-  - Intercom (5.4.0)
+  - Intercom (5.4.1)
   - Keys (1.0.1)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -104,7 +104,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
-  Intercom: d2f2f7ea420f37702cbce81606b96c42efa2a368
+  Intercom: d189cf8cc8591e7e63dbb10ee4401a70a7fdc9d6
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1

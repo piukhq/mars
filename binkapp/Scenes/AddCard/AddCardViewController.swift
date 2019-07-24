@@ -22,8 +22,6 @@ class AddCardViewController: UIViewController, AddCardDisplayLogic
   var interactor: AddCardBusinessLogic?
   var router: (NSObjectProtocol & AddCardRoutingLogic & AddCardDataPassing)?
 
-  // MARK: Object lifecycle
-  
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
   {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -35,8 +33,6 @@ class AddCardViewController: UIViewController, AddCardDisplayLogic
     super.init(coder: aDecoder)
     setup()
   }
-  
-  // MARK: Setup
   
   private func setup()
   {
@@ -52,8 +48,6 @@ class AddCardViewController: UIViewController, AddCardDisplayLogic
     router.dataStore = interactor
   }
   
-  // MARK: Routing
-  
   override func prepare(for segue: UIStoryboardSegue, sender: Any?)
   {
     if let scene = segue.identifier {
@@ -64,17 +58,11 @@ class AddCardViewController: UIViewController, AddCardDisplayLogic
     }
   }
   
-  // MARK: View lifecycle
-  
   override func viewDidLoad()
   {
     super.viewDidLoad()
     doSomething()
   }
-  
-  // MARK: Do something
-  
-  //@IBOutlet weak var nameTextField: UITextField!
   
   func doSomething()
   {
@@ -84,6 +72,6 @@ class AddCardViewController: UIViewController, AddCardDisplayLogic
   
   func displaySomething(viewModel: AddCard.Something.ViewModel)
   {
-    //nameTextField.text = viewModel.name
+    
   }
 }
