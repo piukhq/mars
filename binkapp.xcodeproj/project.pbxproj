@@ -39,6 +39,12 @@
 		AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D82C12A979885545793C /* CoreDataAccess.swift */; };
 		AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */; };
 		AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D82C12A979885545793C /* CoreDataAccess.swift */; };
+		B7D48D8B22DDD5AE004EDD42 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D48D8722DDD5AE004EDD42 /* LoginViewControllerTests.swift */; };
+		B7D48D8C22DDD5AE004EDD42 /* LoginInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D48D8822DDD5AE004EDD42 /* LoginInteractorTests.swift */; };
+		B7D48D8D22DDD5AE004EDD42 /* LoginWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D48D8922DDD5AE004EDD42 /* LoginWorkerTests.swift */; };
+		B7D48D8E22DDD5AE004EDD42 /* LoginPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D48D8A22DDD5AE004EDD42 /* LoginPresenterTests.swift */; };
+		B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */; };
+		B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +92,13 @@
 		882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAccessible.swift; sourceTree = "<group>"; };
 		AF06D82C12A979885545793C /* CoreDataAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataAccess.swift; sourceTree = "<group>"; };
+		B7D48D8722DDD5AE004EDD42 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerTests.swift; sourceTree = "<group>"; };
+		B7D48D8822DDD5AE004EDD42 /* LoginInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractorTests.swift; sourceTree = "<group>"; };
+		B7D48D8922DDD5AE004EDD42 /* LoginWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorkerTests.swift; sourceTree = "<group>"; };
+		B7D48D8A22DDD5AE004EDD42 /* LoginPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenterTests.swift; sourceTree = "<group>"; };
+		B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "binkapp-Bridging-Header.h"; sourceTree = "<group>"; };
+		B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Encrypting.swift"; sourceTree = "<group>"; };
+		B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+StringConversion.swift"; sourceTree = "<group>"; };
 		CBE46BB3E6386EE997F95088 /* Pods-binkappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.debug.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DAD06B97E6DBC2FAA6900787 /* Pods-binkapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.debug.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.debug.xcconfig"; sourceTree = "<group>"; };
 		E7354EC1FB3CF368988428AD /* Pods-binkappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.release.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -129,6 +142,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4C4D0AFF535B567F95178B1F /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				4C4D0D75E4D4BE6E3FE14145 /* Login */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		4C4D0D75E4D4BE6E3FE14145 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				B7D48D8722DDD5AE004EDD42 /* LoginViewControllerTests.swift */,
+				B7D48D8822DDD5AE004EDD42 /* LoginInteractorTests.swift */,
+				B7D48D8922DDD5AE004EDD42 /* LoginWorkerTests.swift */,
+				B7D48D8A22DDD5AE004EDD42 /* LoginPresenterTests.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		55D2E5494D854AAC5EFAFFC7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +199,7 @@
 		5ECE046A22CE5798001BA964 /* binkapp */ = {
 			isa = PBXGroup;
 			children = (
+				B7E2EC0622E5ED1800BB201A /* Extensions */,
 				5ECE049C22CE57C8001BA964 /* Models */,
 				5ECE049F22CE57F5001BA964 /* Scenes */,
 				5ECE049D22CE57CF001BA964 /* Services */,
@@ -178,6 +211,7 @@
 				5ECE047A22CE579B001BA964 /* Info.plist */,
 				5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */,
 				AF06D86448D661A8F4142F87 /* Persistence */,
+				B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */,
 			);
 			path = binkapp;
 			sourceTree = "<group>";
@@ -187,6 +221,7 @@
 			children = (
 				5ECE048322CE579B001BA964 /* binkappTests.swift */,
 				5ECE048522CE579B001BA964 /* Info.plist */,
+				4C4D0AFF535B567F95178B1F /* Scenes */,
 			);
 			path = binkappTests;
 			sourceTree = "<group>";
@@ -249,6 +284,15 @@
 				AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		B7E2EC0622E5ED1800BB201A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */,
+				B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,6 +372,7 @@
 				TargetAttributes = {
 					5ECE046722CE5798001BA964 = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
 					};
 					5ECE047E22CE579B001BA964 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -568,7 +613,9 @@
 				5ECE04AC22CE582E001BA964 /* LoginRouter.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
+				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
+				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
 				5ECE04B522CE582E001BA964 /* LoginInteractor.swift in Sources */,
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
 				AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */,
@@ -582,11 +629,15 @@
 				5ECE04B322CE582E001BA964 /* LoginViewController.swift in Sources */,
 				5ECE04A722CE582E001BA964 /* LoginPresenter.swift in Sources */,
 				5ECE04B622CE582E001BA964 /* LoginInteractor.swift in Sources */,
+				B7D48D8E22DDD5AE004EDD42 /* LoginPresenterTests.swift in Sources */,
+				B7D48D8D22DDD5AE004EDD42 /* LoginWorkerTests.swift in Sources */,
 				5ECE04B022CE582E001BA964 /* LoginModels.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
+				B7D48D8C22DDD5AE004EDD42 /* LoginInteractorTests.swift in Sources */,
 				5ECE04AD22CE582E001BA964 /* LoginRouter.swift in Sources */,
 				5ECE04AA22CE582E001BA964 /* LoginWorker.swift in Sources */,
 				AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */,
+				B7D48D8B22DDD5AE004EDD42 /* LoginViewControllerTests.swift in Sources */,
 				AF06D42F48491D78B0040221 /* DataAccessible.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -761,6 +812,7 @@
 			baseConfigurationReference = DAD06B97E6DBC2FAA6900787 /* Pods-binkapp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YN6HQB44NX;
 				INFOPLIST_FILE = binkapp/Info.plist;
@@ -770,6 +822,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -780,6 +834,7 @@
 			baseConfigurationReference = 6249B35DF4CA178120671E6A /* Pods-binkapp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YN6HQB44NX;
 				INFOPLIST_FILE = binkapp/Info.plist;
@@ -789,6 +844,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
