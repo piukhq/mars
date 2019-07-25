@@ -20,10 +20,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mmf-rj-qlF">
-                        <rect key="frame" x="0.0" y="10" width="359" height="56.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="359" height="76.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oEY-ws-4wF">
-                                <rect key="frame" x="158.5" y="20" width="42" height="16.5"/>
+                                <rect key="frame" x="158.5" y="20" width="42" height="36.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -40,9 +40,9 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Mmf-rj-qlF" secondAttribute="trailing" id="CGZ-B6-kak"/>
-                    <constraint firstAttribute="bottom" secondItem="Mmf-rj-qlF" secondAttribute="bottom" constant="10" id="Qg6-67-FFV"/>
+                    <constraint firstAttribute="bottom" secondItem="Mmf-rj-qlF" secondAttribute="bottom" id="Qg6-67-FFV"/>
                     <constraint firstItem="Mmf-rj-qlF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ddY-Vs-J3V"/>
-                    <constraint firstItem="Mmf-rj-qlF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="m4y-wp-7dv"/>
+                    <constraint firstItem="Mmf-rj-qlF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="m4y-wp-7dv"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
