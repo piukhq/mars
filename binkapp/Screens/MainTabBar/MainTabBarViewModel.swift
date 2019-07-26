@@ -14,15 +14,14 @@ class MainTabBarViewModel {
     let repository: MainTabBarRepository
     let router: MainScreenRouter
     
-    let childViewControllers: [UIViewController] = [
-//        LoyaltyWalletViewController(),
-//        AddCardViewController(),
-//        PaymentWalletViewController()
-    ]
+    var childViewControllers = [UIViewController]()
     
     init(repository: MainTabBarRepository, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
+        childViewControllers.append(router.getLoyaltyWalletViewController())
+        childViewControllers.append(router.getAddCardViewController())
+        childViewControllers.append(router.getPaymentWalletViewController())
     }
     
     func getTabBarLoyaltyButton() -> UITabBarItem {
