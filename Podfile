@@ -7,6 +7,7 @@ pod 'Firebase'
 pod 'GoogleSignIn'
 pod 'Intercom'
 pod 'Swinject'
+pod 'SwipeCellKit'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",

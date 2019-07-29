@@ -6,10 +6,11 @@
 //
 
 import UIKit
-import Keys
 
 class LoyaltyWalletViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    
+    var items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     
     let viewModel: LoyaltyWalletViewModel
     
@@ -32,8 +33,38 @@ class LoyaltyWalletViewController: UIViewController {
 }
 
 extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSource {
+    //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
+    
+    // TRIED A THIRD PARTY LIBRARY AND GONNA LEAVE THIS CODE HERE FOR FUTURE IMLPEMENTATION
+//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+//        if orientation == .right {
+//            let deleteAction = SwipeAction(style: .default, title: "Delete") { action, indexPath in
+//                // handle action by updating model with deletion
+//                print(action)
+//            }
+//
+//            // customize the action appearance
+//            deleteAction.image = UIImage(named: "icons8FilledTrash")
+//            return [deleteAction]
+//        } else if orientation == .left {
+//            let barCodeAction = SwipeAction(style: .default, title: "Barcode") { action, indexPath in
+//                print("barcode")
+//            }
+//
+//            barCodeAction.image = UIImage(named: "icons8Barcode")
+//            return [barCodeAction]
+//        } else { return nil }
+//    }
+    
+//    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+//        var options = SwipeOptions()
+//        options.expansionStyle = .destructive
+//        options.transitionStyle = .border
+//        return options
+//    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,29 +72,21 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CardTableViewCell", for: indexPath) as? CardTableViewCell else { return UITableViewCell() }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CardTableViewCell", for: indexPath) as! CardTableViewCell
         cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: nil, handler: { _,_,_  in })
+        let action = UIContextualAction(style: .destructive, title: "Barcode", handler: { _,_,_  in })
         action.image = UIImage(named: "icons8Barcode")
-        
-        let gradient = CAGradientLayer()
-        gradient.colors = [
-            UIColor(red: 100/255, green: 30/255, blue: 255/255, alpha: 1),
-            UIColor(red: 255/255, green: 40/255, blue: 170/255, alpha: 1)
-        ]
-        gradient.locations = [0.0, 1.0]
-        
         action.backgroundColor = UIColor(red: 99/255, green: 159/255, blue: 255/255, alpha: 1)
         let configuration = UISwipeActionsConfiguration(actions: [action])
         return configuration
     }
-    
+
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: nil, handler: { _,_,_  in })
+        let action = UIContextualAction(style: .destructive, title: "Delete", handler: { _,_,_  in })
         action.image = UIImage(named: "icons8FilledTrash")
         let configuration = UISwipeActionsConfiguration(actions: [action])
         return configuration
