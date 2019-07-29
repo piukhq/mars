@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C14E2E822EF073C00846F94 /* MainTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C14E2E722EF073C00846F94 /* MainTabBarViewModel.swift */; };
-		3C14E2EA22EF075B00846F94 /* MainTabBarRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C14E2E922EF075B00846F94 /* MainTabBarRepository.swift */; };
-		3C14E2F022EF07BE00846F94 /* MainScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C14E2EF22EF07BE00846F94 /* MainScreenRouter.swift */; };
+		3CC2AEF722EF0B6E001B0718 /* MainTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AEF622EF0B6E001B0718 /* MainTabBarViewModel.swift */; };
+		3CC2AEF922EF0B7F001B0718 /* MainTabBarRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AEF822EF0B7F001B0718 /* MainTabBarRepository.swift */; };
+		3CC2AEFC22EF0BCA001B0718 /* MainScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2AEFB22EF0BCA001B0718 /* MainScreenRouter.swift */; };
 		3CC341D422E5CEE1003B0900 /* TabBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC341D322E5CEE1003B0900 /* TabBarTests.swift */; };
 		3CE8CFDB22E5D7450008BA0C /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFD522E5D7450008BA0C /* MainTabBarViewController.swift */; };
 		3CE8CFDE22E5DC2C0008BA0C /* MainTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8CFDD22E5DC2C0008BA0C /* MainTabBarViewController.xib */; };
@@ -77,9 +77,9 @@
 
 /* Begin PBXFileReference section */
 		1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C14E2E722EF073C00846F94 /* MainTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModel.swift; sourceTree = "<group>"; };
-		3C14E2E922EF075B00846F94 /* MainTabBarRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarRepository.swift; sourceTree = "<group>"; };
-		3C14E2EF22EF07BE00846F94 /* MainScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenRouter.swift; sourceTree = "<group>"; };
+		3CC2AEF622EF0B6E001B0718 /* MainTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModel.swift; sourceTree = "<group>"; };
+		3CC2AEF822EF0B7F001B0718 /* MainTabBarRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarRepository.swift; sourceTree = "<group>"; };
+		3CC2AEFB22EF0BCA001B0718 /* MainScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenRouter.swift; sourceTree = "<group>"; };
 		3CC341D322E5CEE1003B0900 /* TabBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarTests.swift; sourceTree = "<group>"; };
 		3CE8CFD522E5D7450008BA0C /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		3CE8CFDD22E5DC2C0008BA0C /* MainTabBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTabBarViewController.xib; sourceTree = "<group>"; };
@@ -153,13 +153,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3CC2AEFA22EF0B94001B0718 /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				3CC2AEFB22EF0BCA001B0718 /* MainScreenRouter.swift */,
+			);
+			path = Routing;
+			sourceTree = "<group>";
+		};
 		3CC341D522E5D130003B0900 /* MainTabBar */ = {
 			isa = PBXGroup;
 			children = (
 				3CE8CFD522E5D7450008BA0C /* MainTabBarViewController.swift */,
 				3CE8CFDD22E5DC2C0008BA0C /* MainTabBarViewController.xib */,
-				3C14E2E722EF073C00846F94 /* MainTabBarViewModel.swift */,
-				3C14E2E922EF075B00846F94 /* MainTabBarRepository.swift */,
+				3CC2AEF622EF0B6E001B0718 /* MainTabBarViewModel.swift */,
+				3CC2AEF822EF0B7F001B0718 /* MainTabBarRepository.swift */,
 			);
 			path = MainTabBar;
 			sourceTree = "<group>";
@@ -244,6 +252,7 @@
 		5ECE046A22CE5798001BA964 /* binkapp */ = {
 			isa = PBXGroup;
 			children = (
+				3CC2AEFA22EF0B94001B0718 /* Routing */,
 				5ECE049F22CE57F5001BA964 /* Scenes */,
 				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
 				5ECE046F22CE5798001BA964 /* Main.storyboard */,
@@ -252,7 +261,6 @@
 				5ECE047A22CE579B001BA964 /* Info.plist */,
 				5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */,
 				AF06D86448D661A8F4142F87 /* Persistence */,
-				3C14E2EF22EF07BE00846F94 /* MainScreenRouter.swift */,
 			);
 			path = binkapp;
 			sourceTree = "<group>";
@@ -631,15 +639,15 @@
 				3CE8D00522E5DE480008BA0C /* PaymentWalletInteractor.swift in Sources */,
 				5ECE04AF22CE582E001BA964 /* LoginModels.swift in Sources */,
 				5ECE04AC22CE582E001BA964 /* LoginRouter.swift in Sources */,
-				3C14E2EA22EF075B00846F94 /* MainTabBarRepository.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
-				3C14E2E822EF073C00846F94 /* MainTabBarViewModel.swift in Sources */,
+				3CC2AEFC22EF0BCA001B0718 /* MainScreenRouter.swift in Sources */,
 				3CE8D01422E5DF6C0008BA0C /* AddCardViewController.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
+				3CC2AEF922EF0B7F001B0718 /* MainTabBarRepository.swift in Sources */,
 				3CE8D00222E5DE480008BA0C /* PaymentWalletRouter.swift in Sources */,
 				3CE8D00122E5DE480008BA0C /* PaymentWalletWorker.swift in Sources */,
-				3C14E2F022EF07BE00846F94 /* MainScreenRouter.swift in Sources */,
+				3CC2AEF722EF0B6E001B0718 /* MainTabBarViewModel.swift in Sources */,
 				3CE8CFEA22E5DE0C0008BA0C /* LoyaltyWalletViewController.swift in Sources */,
 				3CE8D00422E5DE480008BA0C /* PaymentWalletViewController.swift in Sources */,
 				5ECE04B522CE582E001BA964 /* LoginInteractor.swift in Sources */,
