@@ -7,6 +7,18 @@ pod 'Firebase'
 pod 'GoogleSignIn'
 pod 'Intercom'
 pod 'Swinject'
+pod 'Alamofire'
+
+plugin 'cocoapods-keys', {
+  :project => "binkapp",
+  :keys => [
+    "baseUrlKey",
+    "organisationIdKey",
+    "propertyIdKey",
+    "bundleIdKey",
+    "secretKey"
+  ]
+}
 
 end
 
