@@ -7,31 +7,38 @@
 
 import UIKit
 import Alamofire
+import Keys
 
 struct Constants {
-    //TODO: Get this from Cocoapods-Keys
-    static let emailAddress = "Bink20iteration1@testbink.com"
     static let endpoint = "https://api.bink-dev.com/ubiquity/service"
-    static let organisationID = "Loyalty Angels"
-    static let property_id = "Bink2.0"
-    static let secret = "QFUkKGnW8SECYwKRVWqrQKlaogNakK4IqEun09GoFRBlhyimsw"
-    static let bundle_id = "com.bink.bink20dev"
 }
 
-class LoginWorker {
-    func login(email: String) {
+class LoginRepository {
+    var user: Dictionary<String, Any>?
+
+    func reigster(email: String) {
         let header = [
-            "Authorization": "Bearer " + generateToken()]
-        Alamofire.request(Constants.endpoint, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: header )
-            .responseString { response in
-                print("response \(response)")
+            "Authorization": "Bearer " + generateToken(email: email),
+            "Content-Type": "application/json"]
+
+        let parameters = [
+            "consent": [
+                "email": email,
+                "latitude": 51.405372,
+                "longitude": 0.00001,
+                "timestamp": Date().timeIntervalSince1970.stringFromTimeInterval()
+            ]
+        ]
+        Alamofire.request(Constants.endpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header )
+            .responseJSON { response in
+                print(response)
         }
     }
 }
 
-// Private extension for LoginWorker class
-private extension LoginWorker {
-    func generateToken() -> String {
+private extension LoginRepository {
+    func generateToken(email: String) -> String {
+        let keys = BinkappKeys()
         let header = [
             "alg": "HS512",
             "typ": "JWT"]
@@ -48,10 +55,10 @@ private extension LoginWorker {
         }
 
         let payload = [
-            "organisation_id": Constants.organisationID,
-            "bundle_id": Constants.bundle_id,
-            "user_id": Constants.emailAddress,
-            "property_id": Constants.property_id,
+            "organisation_id": keys.organisationIdKey,
+            "bundle_id": keys.bundleIdKey,
+            "user_id": email,
+            "property_id": keys.propertyIdKey,
             "iat": Date().timeIntervalSince1970.stringFromTimeInterval()]
 
         // Encode payload
@@ -64,7 +71,7 @@ private extension LoginWorker {
         }
         if let encodedHeader = headerDataEncoded, let encodedPayload = payloadDataEncoded {
             let hmackString = encodedHeader + "." + encodedPayload
-            let hexSignature = hmackString.hmac(algorithm: .SHA512, key: Constants.secret)
+            let hexSignature = hmackString.hmac(algorithm: .SHA512, key: keys.secretKey)
             let signatureData = hexSignature.hexadecimal
             let signature = signatureData?.base64EncodedString().replacingOccurrences(of: "=", with: "") ?? ""
             let token  = hmackString + "." + signature
