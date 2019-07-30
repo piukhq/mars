@@ -29,6 +29,8 @@ class LoyaltyWalletViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CardTableViewCell", bundle: Bundle(for: CardTableViewCell.self)), forCellReuseIdentifier: "CardTableViewCell")
+        
+        viewModel.getMembershipCards()
     }
 }
 
@@ -86,7 +88,14 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: nil, handler: { _,_,_  in })
+        let action = UIContextualAction(style: .destructive, title: nil) { _, _, completion in
+            self.viewModel.deleteMembershipCard(id: indexPath.section, completion: {
+                self.items.remove(at: indexPath.row)
+                self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+            })
+            completion(true)
+        }
+//        let action = UIContextualAction(style: .destructive, title: nil, handler: {_,_,_ in })
         action.image = UIImage(named: "iconSwipeDelete")
         let configuration = UISwipeActionsConfiguration(actions: [action])
         return configuration

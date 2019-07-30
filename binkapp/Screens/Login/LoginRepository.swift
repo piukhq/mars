@@ -10,13 +10,13 @@ import Alamofire
 import Keys
 
 struct Constants {
-    static let endpoint = "https://api.bink-dev.com/ubiquity/service"
+    static let endpoint = "https://api.bink-dev.com/ubiquity"
 }
 
 class LoginRepository {
     var user: Dictionary<String, Any>?
 
-    func reigster(email: String) {
+    func reigster(email: String, completion: @escaping (Any) -> Void) {
         let header = [
             "Authorization": "Bearer " + generateToken(email: email),
             "Content-Type": "application/json"]
@@ -29,9 +29,10 @@ class LoginRepository {
                 "timestamp": Date().timeIntervalSince1970.stringFromTimeInterval()
             ]
         ]
-        Alamofire.request(Constants.endpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header )
+        Alamofire.request(Constants.endpoint + "/service", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header )
             .responseJSON { response in
                 print(response)
+                completion(response)
         }
     }
 }

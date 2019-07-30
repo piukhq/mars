@@ -197,10 +197,10 @@
 			isa = PBXGroup;
 			children = (
 				3C873FE322F073CE00FA3031 /* Cell */,
+				3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */,
 				3C873FE622F073CE00FA3031 /* LoyaltyWalletViewModel.swift */,
 				3C873FE222F073CE00FA3031 /* LoyaltyWalletViewController.swift */,
 				3C873FE722F073CE00FA3031 /* LoyaltyWalletViewController.xib */,
-				3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */,
 			);
 			path = LoyaltyWallet;
 			sourceTree = "<group>";

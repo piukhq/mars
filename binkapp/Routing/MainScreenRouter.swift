@@ -10,16 +10,32 @@ import Foundation
 import UIKit
 
 class MainScreenRouter {
+    var navController: UINavigationController?
+    
     init() {
         
     }
     
-    func getMainScreen() -> UIViewController {
+    func toMainScreen() {
         let repository = MainTabBarRepository()
         let viewModel = MainTabBarViewModel(repository: repository, router: self)
         let viewController = MainTabBarViewController(viewModel: viewModel)
         
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
+    func getLoginScreen() -> UIViewController {
+        let repository = LoginRepository()
+        let viewModel = LoginViewModel(repository: repository, router: self)
+        let viewController = LoginViewController(viewModel: viewModel)
+        
         return viewController
+    }
+    
+    func getNavigationControllerWithLoginScreen() -> UIViewController{
+        navController = UINavigationController(rootViewController: getLoginScreen())
+        navController?.setNavigationBarHidden(true, animated: true)
+        return navController!
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {
@@ -36,5 +52,9 @@ class MainScreenRouter {
     
     func getPaymentWalletViewController() -> UIViewController {
         return PaymentWalletViewController()
+    }
+    
+    func toLoyaltyWalletViewController() {
+        navController?.pushViewController(getLoyaltyWalletViewController(), animated: true)
     }
 }
