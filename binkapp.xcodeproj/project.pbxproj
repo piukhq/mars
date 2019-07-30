@@ -28,6 +28,13 @@
 		3CE8D01422E5DF6C0008BA0C /* AddCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00E22E5DF6C0008BA0C /* AddCardViewController.swift */; };
 		3CE8D01722E5DF960008BA0C /* AddCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8D01622E5DF960008BA0C /* AddCardViewController.xib */; };
 		3CE8D01922E5DFD60008BA0C /* PaymentWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8D01822E5DFD60008BA0C /* PaymentWalletViewController.xib */; };
+		3CFFA6BB22F05D1200AD0109 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFFA6B722F05D1200AD0109 /* UserModel.swift */; };
+		3CFFA6BC22F05D1200AD0109 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFFA6B822F05D1200AD0109 /* LoginViewModel.swift */; };
+		3CFFA6BD22F05D1200AD0109 /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFFA6B922F05D1200AD0109 /* LoginRepository.swift */; };
+		3CFFA6BE22F05D1200AD0109 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFFA6BA22F05D1200AD0109 /* LoginViewController.xib */; };
+		3CFFA6C022F05D5A00AD0109 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFFA6BF22F05D5A00AD0109 /* LoginViewController.swift */; };
+		3CFFA6C422F05DF700AD0109 /* TimeInterval+StringConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFFA6C222F05DF700AD0109 /* TimeInterval+StringConversion.swift */; };
+		3CFFA6C522F05DF700AD0109 /* String+Encrypting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFFA6C322F05DF700AD0109 /* String+Encrypting.swift */; };
 		4B03E4ACD9F0FF1C979C752E /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */; };
 		5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046B22CE5798001BA964 /* AppDelegate.swift */; };
 		5ECE047122CE5798001BA964 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE046F22CE5798001BA964 /* Main.storyboard */; };
@@ -36,24 +43,6 @@
 		5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */; };
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
 		5ECE048F22CE579B001BA964 /* binkappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048E22CE579B001BA964 /* binkappUITests.swift */; };
-		5ECE04A622CE582E001BA964 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A022CE582E001BA964 /* LoginPresenter.swift */; };
-		5ECE04A722CE582E001BA964 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A022CE582E001BA964 /* LoginPresenter.swift */; };
-		5ECE04A822CE582E001BA964 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A022CE582E001BA964 /* LoginPresenter.swift */; };
-		5ECE04A922CE582E001BA964 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A122CE582E001BA964 /* LoginWorker.swift */; };
-		5ECE04AA22CE582E001BA964 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A122CE582E001BA964 /* LoginWorker.swift */; };
-		5ECE04AB22CE582E001BA964 /* LoginWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A122CE582E001BA964 /* LoginWorker.swift */; };
-		5ECE04AC22CE582E001BA964 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A222CE582E001BA964 /* LoginRouter.swift */; };
-		5ECE04AD22CE582E001BA964 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A222CE582E001BA964 /* LoginRouter.swift */; };
-		5ECE04AE22CE582E001BA964 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A222CE582E001BA964 /* LoginRouter.swift */; };
-		5ECE04AF22CE582E001BA964 /* LoginModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A322CE582E001BA964 /* LoginModels.swift */; };
-		5ECE04B022CE582E001BA964 /* LoginModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A322CE582E001BA964 /* LoginModels.swift */; };
-		5ECE04B122CE582E001BA964 /* LoginModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A322CE582E001BA964 /* LoginModels.swift */; };
-		5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A422CE582E001BA964 /* LoginViewController.swift */; };
-		5ECE04B322CE582E001BA964 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A422CE582E001BA964 /* LoginViewController.swift */; };
-		5ECE04B422CE582E001BA964 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A422CE582E001BA964 /* LoginViewController.swift */; };
-		5ECE04B522CE582E001BA964 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A522CE582E001BA964 /* LoginInteractor.swift */; };
-		5ECE04B622CE582E001BA964 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A522CE582E001BA964 /* LoginInteractor.swift */; };
-		5ECE04B722CE582E001BA964 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A522CE582E001BA964 /* LoginInteractor.swift */; };
 		92CE3430695A6558F2EC1793 /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */; };
 		9C26930409A757F7CD2C794E /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */; };
 		AF06D42F48491D78B0040221 /* DataAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */; };
@@ -102,6 +91,13 @@
 		3CE8D00E22E5DF6C0008BA0C /* AddCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
 		3CE8D01622E5DF960008BA0C /* AddCardViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCardViewController.xib; sourceTree = "<group>"; };
 		3CE8D01822E5DFD60008BA0C /* PaymentWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentWalletViewController.xib; sourceTree = "<group>"; };
+		3CFFA6B722F05D1200AD0109 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		3CFFA6B822F05D1200AD0109 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		3CFFA6B922F05D1200AD0109 /* LoginRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRepository.swift; sourceTree = "<group>"; };
+		3CFFA6BA22F05D1200AD0109 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		3CFFA6BF22F05D5A00AD0109 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3CFFA6C222F05DF700AD0109 /* TimeInterval+StringConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TimeInterval+StringConversion.swift"; sourceTree = "<group>"; };
+		3CFFA6C322F05DF700AD0109 /* String+Encrypting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Encrypting.swift"; sourceTree = "<group>"; };
 		4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046822CE5798001BA964 /* binkapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = binkapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046B22CE5798001BA964 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,12 +112,6 @@
 		5ECE048A22CE579B001BA964 /* binkappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = binkappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE048E22CE579B001BA964 /* binkappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = binkappUITests.swift; sourceTree = "<group>"; };
 		5ECE049022CE579B001BA964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5ECE04A022CE582E001BA964 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
-		5ECE04A122CE582E001BA964 /* LoginWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorker.swift; sourceTree = "<group>"; };
-		5ECE04A222CE582E001BA964 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
-		5ECE04A322CE582E001BA964 /* LoginModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModels.swift; sourceTree = "<group>"; };
-		5ECE04A422CE582E001BA964 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		5ECE04A522CE582E001BA964 /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		6249B35DF4CA178120671E6A /* Pods-binkapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.release.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.release.xcconfig"; sourceTree = "<group>"; };
 		6F8E73B24E8A8009DF9E4266 /* Pods-binkappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.release.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.release.xcconfig"; sourceTree = "<group>"; };
 		747EE940A8617CF70F3CD693 /* Pods-binkappUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.debug.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -236,6 +226,15 @@
 			path = PaymentWallet;
 			sourceTree = "<group>";
 		};
+		3CFFA6C122F05DF700AD0109 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3CFFA6C222F05DF700AD0109 /* TimeInterval+StringConversion.swift */,
+				3CFFA6C322F05DF700AD0109 /* String+Encrypting.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		492DA371EDF911EDB1A625BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +283,7 @@
 		5ECE046A22CE5798001BA964 /* binkapp */ = {
 			isa = PBXGroup;
 			children = (
+				3CFFA6C122F05DF700AD0109 /* Extensions */,
 				3C1320F122E9F0990020C1B4 /* Routing */,
 				3CC0265D22E9F00F004F2C94 /* Screens */,
 				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
@@ -319,12 +319,11 @@
 		5ECE04B822CE583B001BA964 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				5ECE04A022CE582E001BA964 /* LoginPresenter.swift */,
-				5ECE04A122CE582E001BA964 /* LoginWorker.swift */,
-				5ECE04A222CE582E001BA964 /* LoginRouter.swift */,
-				5ECE04A322CE582E001BA964 /* LoginModels.swift */,
-				5ECE04A422CE582E001BA964 /* LoginViewController.swift */,
-				5ECE04A522CE582E001BA964 /* LoginInteractor.swift */,
+				3CFFA6B922F05D1200AD0109 /* LoginRepository.swift */,
+				3CFFA6BA22F05D1200AD0109 /* LoginViewController.xib */,
+				3CFFA6B822F05D1200AD0109 /* LoginViewModel.swift */,
+				3CFFA6B722F05D1200AD0109 /* UserModel.swift */,
+				3CFFA6BF22F05D5A00AD0109 /* LoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -459,6 +458,7 @@
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
 				3CE8D00722E5DE6C0008BA0C /* LoyaltyWalletViewController.xib in Resources */,
+				3CFFA6BE22F05D1200AD0109 /* LoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,17 +655,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CE8CFDB22E5D7450008BA0C /* MainTabBarViewController.swift in Sources */,
-				5ECE04A922CE582E001BA964 /* LoginWorker.swift in Sources */,
 				3C1320F322E9F0A60020C1B4 /* MainScreenRouter.swift in Sources */,
-				5ECE04A622CE582E001BA964 /* LoginPresenter.swift in Sources */,
 				3CC0265622E9EBB6004F2C94 /* MainTabBarViewModel.swift in Sources */,
+				3CFFA6C022F05D5A00AD0109 /* LoginViewController.swift in Sources */,
 				3CC0265A22E9EDFA004F2C94 /* LoyaltyWalletViewModel.swift in Sources */,
 				3CE8D00522E5DE480008BA0C /* PaymentWalletInteractor.swift in Sources */,
-				5ECE04AF22CE582E001BA964 /* LoginModels.swift in Sources */,
-				5ECE04AC22CE582E001BA964 /* LoginRouter.swift in Sources */,
-				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
 				3CE8D01422E5DF6C0008BA0C /* AddCardViewController.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
+				3CFFA6BD22F05D1200AD0109 /* LoginRepository.swift in Sources */,
 				3C61344D22E8A3FE0012DB74 /* CardTableViewCell.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				3CE8D00222E5DE480008BA0C /* PaymentWalletRouter.swift in Sources */,
@@ -673,12 +670,15 @@
 				3CE8CFEA22E5DE0C0008BA0C /* LoyaltyWalletViewController.swift in Sources */,
 				3CC0265822E9EBD1004F2C94 /* MainTabBarRepository.swift in Sources */,
 				3CE8D00422E5DE480008BA0C /* PaymentWalletViewController.swift in Sources */,
-				5ECE04B522CE582E001BA964 /* LoginInteractor.swift in Sources */,
 				3CE8D00022E5DE480008BA0C /* PaymentWalletPresenter.swift in Sources */,
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
+				3CFFA6C422F05DF700AD0109 /* TimeInterval+StringConversion.swift in Sources */,
 				3CC0265C22E9EE09004F2C94 /* LoyaltyWalletRepository.swift in Sources */,
 				AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */,
+				3CFFA6BB22F05D1200AD0109 /* UserModel.swift in Sources */,
+				3CFFA6C522F05DF700AD0109 /* String+Encrypting.swift in Sources */,
 				3CE8D00322E5DE480008BA0C /* PaymentWalletModels.swift in Sources */,
+				3CFFA6BC22F05D1200AD0109 /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,14 +686,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5ECE04B322CE582E001BA964 /* LoginViewController.swift in Sources */,
-				5ECE04A722CE582E001BA964 /* LoginPresenter.swift in Sources */,
-				5ECE04B622CE582E001BA964 /* LoginInteractor.swift in Sources */,
 				3CC341D422E5CEE1003B0900 /* TabBarTests.swift in Sources */,
-				5ECE04B022CE582E001BA964 /* LoginModels.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
-				5ECE04AD22CE582E001BA964 /* LoginRouter.swift in Sources */,
-				5ECE04AA22CE582E001BA964 /* LoginWorker.swift in Sources */,
 				AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */,
 				AF06D42F48491D78B0040221 /* DataAccessible.swift in Sources */,
 			);
@@ -703,13 +697,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5ECE04B422CE582E001BA964 /* LoginViewController.swift in Sources */,
-				5ECE04A822CE582E001BA964 /* LoginPresenter.swift in Sources */,
-				5ECE04B722CE582E001BA964 /* LoginInteractor.swift in Sources */,
-				5ECE04B122CE582E001BA964 /* LoginModels.swift in Sources */,
 				5ECE048F22CE579B001BA964 /* binkappUITests.swift in Sources */,
-				5ECE04AE22CE582E001BA964 /* LoginRouter.swift in Sources */,
-				5ECE04AB22CE582E001BA964 /* LoginWorker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
