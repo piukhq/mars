@@ -2,6 +2,7 @@
 //  AppDelegate.swift
 //  binkapp
 //
+//  Created by Karl Sigiscar on 04/07/2019.
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
@@ -12,17 +13,15 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var dataAccess: DataAccessible? // FIXME: Inject from Swinject
+    var dataAccess:DataAccessible? // FIXME: Inject from Swinject
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let repository = LoginRepository()
-        let viewModel = LoginViewModel(repository: repository)
-        let loginViewController = LoginViewController(viewModel: viewModel)
-        let navController = UINavigationController(rootViewController: loginViewController)
-
+        let router = MainScreenRouter()
+        let navController = UINavigationController(rootViewController: router.getMainScreen())
+        
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        if let mainWindow = window {
+        if let mainWindow = self.window {
             mainWindow.rootViewController = navController
             mainWindow.makeKeyAndVisible()
         }
@@ -53,3 +52,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dataAccess?.save()
     }
 }
+

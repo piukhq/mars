@@ -20,6 +20,17 @@ plugin 'cocoapods-keys', {
   ]
 }
 
+plugin 'cocoapods-keys', {
+  :project => "binkapp",
+  :keys => [
+    "baseUrlKey",
+    "organisationIdKey",
+    "propertyIdKey",
+    "bundleIdKey",
+    "secretKey"
+  ]
+}
+
 end
 
 target 'binkapp' do
