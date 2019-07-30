@@ -26,3 +26,38 @@ Pods/Target Support Files/Keys/Keys-prefix.pch
 Pods/Target Support Files/Keys/Keys-umbrella.h
 Pods/Target Support Files/Keys/Keys.modulemap
 Pods/Target Support Files/Keys/Keys.xcconfig
+Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/SwipeCellKit.xcscheme
+Pods/SwipeCellKit/LICENSE
+Pods/SwipeCellKit/README.md
+Pods/SwipeCellKit/Source/Extensions.swift
+Pods/SwipeCellKit/Source/Swipeable.swift
+Pods/SwipeCellKit/Source/SwipeAccessibilityCustomAction.swift
+Pods/SwipeCellKit/Source/SwipeAction.swift
+Pods/SwipeCellKit/Source/SwipeActionButton.swift
+Pods/SwipeCellKit/Source/SwipeActionsView.swift
+Pods/SwipeCellKit/Source/SwipeActionTransitioning.swift
+Pods/SwipeCellKit/Source/SwipeAnimator.swift
+Pods/SwipeCellKit/Source/SwipeCollectionViewCell+Accessibility.swift
+Pods/SwipeCellKit/Source/SwipeCollectionViewCell+Display.swift
+Pods/SwipeCellKit/Source/SwipeCollectionViewCell.swift
+Pods/SwipeCellKit/Source/SwipeCollectionViewCellDelegate.swift
+Pods/SwipeCellKit/Source/SwipeController.swift
+Pods/SwipeCellKit/Source/SwipeExpanding.swift
+Pods/SwipeCellKit/Source/SwipeExpansionStyle.swift
+Pods/SwipeCellKit/Source/SwipeFeedback.swift
+Pods/SwipeCellKit/Source/SwipeOptions.swift
+Pods/SwipeCellKit/Source/SwipeTableViewCell+Accessibility.swift
+Pods/SwipeCellKit/Source/SwipeTableViewCell+Display.swift
+Pods/SwipeCellKit/Source/SwipeTableViewCell.swift
+Pods/SwipeCellKit/Source/SwipeTableViewCellDelegate.swift
+Pods/SwipeCellKit/Source/SwipeTransitionLayout.swift
+Pods/Target Support Files/SwipeCellKit/SwipeCellKit-dummy.m
+Pods/Target Support Files/SwipeCellKit/SwipeCellKit-Info.plist
+Pods/Target Support Files/SwipeCellKit/SwipeCellKit-prefix.pch
+Pods/Target Support Files/SwipeCellKit/SwipeCellKit-umbrella.h
+Pods/Target Support Files/SwipeCellKit/SwipeCellKit.modulemap
+Pods/Target Support Files/SwipeCellKit/SwipeCellKit.xcconfig
+Pods/SwipeCellKit/Source/SwipeCollectionViewCell+Accessibility.swift
+Pods/SwipeCellKit/Source/SwipeCollectionViewCell+Display.swift
+Pods/SwipeCellKit/Source/SwipeTableViewCell+Accessibility.swift
+Pods/SwipeCellKit/Source/SwipeTableViewCell+Display.swift
