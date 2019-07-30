@@ -25,12 +25,7 @@
 		3CE8D00422E5DE480008BA0C /* PaymentWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFFE22E5DE480008BA0C /* PaymentWalletViewController.swift */; };
 		3CE8D00522E5DE480008BA0C /* PaymentWalletInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8CFFF22E5DE480008BA0C /* PaymentWalletInteractor.swift */; };
 		3CE8D00722E5DE6C0008BA0C /* LoyaltyWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8D00622E5DE6C0008BA0C /* LoyaltyWalletViewController.xib */; };
-		3CE8D01022E5DF6C0008BA0C /* AddCardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00A22E5DF6C0008BA0C /* AddCardPresenter.swift */; };
-		3CE8D01122E5DF6C0008BA0C /* AddCardWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00B22E5DF6C0008BA0C /* AddCardWorker.swift */; };
-		3CE8D01222E5DF6C0008BA0C /* AddCardRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00C22E5DF6C0008BA0C /* AddCardRouter.swift */; };
-		3CE8D01322E5DF6C0008BA0C /* AddCardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00D22E5DF6C0008BA0C /* AddCardModels.swift */; };
 		3CE8D01422E5DF6C0008BA0C /* AddCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00E22E5DF6C0008BA0C /* AddCardViewController.swift */; };
-		3CE8D01522E5DF6C0008BA0C /* AddCardInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE8D00F22E5DF6C0008BA0C /* AddCardInteractor.swift */; };
 		3CE8D01722E5DF960008BA0C /* AddCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8D01622E5DF960008BA0C /* AddCardViewController.xib */; };
 		3CE8D01922E5DFD60008BA0C /* PaymentWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8D01822E5DFD60008BA0C /* PaymentWalletViewController.xib */; };
 		4B03E4ACD9F0FF1C979C752E /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */; };
@@ -104,12 +99,7 @@
 		3CE8CFFE22E5DE480008BA0C /* PaymentWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletViewController.swift; sourceTree = "<group>"; };
 		3CE8CFFF22E5DE480008BA0C /* PaymentWalletInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletInteractor.swift; sourceTree = "<group>"; };
 		3CE8D00622E5DE6C0008BA0C /* LoyaltyWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoyaltyWalletViewController.xib; sourceTree = "<group>"; };
-		3CE8D00A22E5DF6C0008BA0C /* AddCardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardPresenter.swift; sourceTree = "<group>"; };
-		3CE8D00B22E5DF6C0008BA0C /* AddCardWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardWorker.swift; sourceTree = "<group>"; };
-		3CE8D00C22E5DF6C0008BA0C /* AddCardRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardRouter.swift; sourceTree = "<group>"; };
-		3CE8D00D22E5DF6C0008BA0C /* AddCardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardModels.swift; sourceTree = "<group>"; };
 		3CE8D00E22E5DF6C0008BA0C /* AddCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
-		3CE8D00F22E5DF6C0008BA0C /* AddCardInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardInteractor.swift; sourceTree = "<group>"; };
 		3CE8D01622E5DF960008BA0C /* AddCardViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddCardViewController.xib; sourceTree = "<group>"; };
 		3CE8D01822E5DFD60008BA0C /* PaymentWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentWalletViewController.xib; sourceTree = "<group>"; };
 		4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,13 +216,8 @@
 		3CE8CFEC22E5DE1A0008BA0C /* AddCard */ = {
 			isa = PBXGroup;
 			children = (
-				3CE8D00A22E5DF6C0008BA0C /* AddCardPresenter.swift */,
-				3CE8D00B22E5DF6C0008BA0C /* AddCardWorker.swift */,
-				3CE8D00C22E5DF6C0008BA0C /* AddCardRouter.swift */,
-				3CE8D00D22E5DF6C0008BA0C /* AddCardModels.swift */,
 				3CE8D00E22E5DF6C0008BA0C /* AddCardViewController.swift */,
 				3CE8D01622E5DF960008BA0C /* AddCardViewController.xib */,
-				3CE8D00F22E5DF6C0008BA0C /* AddCardInteractor.swift */,
 			);
 			path = AddCard;
 			sourceTree = "<group>";
@@ -671,23 +656,19 @@
 			files = (
 				3CE8CFDB22E5D7450008BA0C /* MainTabBarViewController.swift in Sources */,
 				5ECE04A922CE582E001BA964 /* LoginWorker.swift in Sources */,
-				3CE8D01022E5DF6C0008BA0C /* AddCardPresenter.swift in Sources */,
 				3C1320F322E9F0A60020C1B4 /* MainScreenRouter.swift in Sources */,
-				3CE8D01522E5DF6C0008BA0C /* AddCardInteractor.swift in Sources */,
 				5ECE04A622CE582E001BA964 /* LoginPresenter.swift in Sources */,
 				3CC0265622E9EBB6004F2C94 /* MainTabBarViewModel.swift in Sources */,
 				3CC0265A22E9EDFA004F2C94 /* LoyaltyWalletViewModel.swift in Sources */,
 				3CE8D00522E5DE480008BA0C /* PaymentWalletInteractor.swift in Sources */,
 				5ECE04AF22CE582E001BA964 /* LoginModels.swift in Sources */,
 				5ECE04AC22CE582E001BA964 /* LoginRouter.swift in Sources */,
-				3CE8D01122E5DF6C0008BA0C /* AddCardWorker.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
 				3CE8D01422E5DF6C0008BA0C /* AddCardViewController.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				3C61344D22E8A3FE0012DB74 /* CardTableViewCell.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				3CE8D00222E5DE480008BA0C /* PaymentWalletRouter.swift in Sources */,
-				3CE8D01322E5DF6C0008BA0C /* AddCardModels.swift in Sources */,
 				3CE8D00122E5DE480008BA0C /* PaymentWalletWorker.swift in Sources */,
 				3CE8CFEA22E5DE0C0008BA0C /* LoyaltyWalletViewController.swift in Sources */,
 				3CC0265822E9EBD1004F2C94 /* MainTabBarRepository.swift in Sources */,
@@ -697,7 +678,6 @@
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
 				3CC0265C22E9EE09004F2C94 /* LoyaltyWalletRepository.swift in Sources */,
 				AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */,
-				3CE8D01222E5DF6C0008BA0C /* AddCardRouter.swift in Sources */,
 				3CE8D00322E5DE480008BA0C /* PaymentWalletModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
