@@ -7,7 +7,6 @@ pod 'Firebase'
 pod 'GoogleSignIn'
 pod 'Intercom'
 pod 'Swinject'
-pod 'Alamofire'
 pod 'SwipeCellKit'
 
 plugin 'cocoapods-keys', {
