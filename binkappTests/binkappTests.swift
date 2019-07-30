@@ -33,4 +33,8 @@ class binkappTests: XCTestCase {
         }
     }
 
+
+    func testRegister() {
+
+    }
 }

@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (4.8.2)
   - Firebase (6.5.0):
     - Firebase/Core (= 6.5.0)
   - Firebase/Core (6.5.0):
@@ -69,6 +70,7 @@ PODS:
   - Swinject (2.6.2)
 
 DEPENDENCIES:
+  - Alamofire
   - Firebase
   - GoogleSignIn
   - Intercom
@@ -77,6 +79,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -95,6 +98,7 @@ EXTERNAL SOURCES:
     :path: Pods/CocoaPodsKeys
 
 SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   Firebase: dedc9e48ea3f3649ad5f6b982f8a0c73508a14b5
   FirebaseAnalytics: 3fb375bc9d13779add4039716f868d233a473fad
   FirebaseCore: aecf02fb2274ec361b9bebeac112f5daa18273bd
@@ -109,6 +113,6 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
 
-PODFILE CHECKSUM: 83b4d3f824116eb2d75bbdb7f72e91e90c262258
+PODFILE CHECKSUM: 1211efab628d40761585803845521aa1d8b004d8
 
-COCOAPODS: 1.7.4
+COCOAPODS: 1.7.5
