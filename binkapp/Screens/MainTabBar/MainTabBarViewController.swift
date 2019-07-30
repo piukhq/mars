@@ -37,7 +37,7 @@ class MainTabBarViewController: UIViewController {
         items.append(viewModel.getTabBarLoyaltyButton())
         items.append(viewModel.getTabBarAddButton())
         items.append(viewModel.getTabBarPaymentButton())
-        items[2].isEnabled = false
+        items[Buttons.addItem.getIntegerValue()].isEnabled = false
         tabBar.setItems(items, animated: true)
     
         let view = viewModel.childViewControllers[Buttons.loyaltyItem.getIntegerValue()].view
