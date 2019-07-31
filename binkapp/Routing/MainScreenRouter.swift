@@ -40,7 +40,7 @@ class MainScreenRouter {
     
     func getLoyaltyWalletViewController() -> UIViewController {
         let repository = LoyaltyWalletRepository()
-        let viewModel = LoyaltyWalletViewModel(repository: repository)
+        let viewModel = LoyaltyWalletViewModel(repository: repository, router: self)
         let viewController = LoyaltyWalletViewController(viewModel: viewModel)
         
         return viewController
@@ -56,5 +56,14 @@ class MainScreenRouter {
     
     func toLoyaltyWalletViewController() {
         navController?.pushViewController(getLoyaltyWalletViewController(), animated: true)
+    }
+    
+    func showDeleteConfirmationAlert(completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this card?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+            completion()
+        }))
+        navController?.present(alert, animated: true, completion: nil)
     }
 }

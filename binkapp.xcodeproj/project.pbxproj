@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C429F8E22F16A9A009C1BD2 /* LoyaltyWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C429F8D22F16A9A009C1BD2 /* LoyaltyWalletTests.swift */; };
 		3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FD222F073B500FA3031 /* MainScreenRouter.swift */; };
 		3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FD522F073CE00FA3031 /* PaymentWalletInteractor.swift */; };
 		3C873FED22F073CF00FA3031 /* PaymentWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C873FD622F073CE00FA3031 /* PaymentWalletViewController.xib */; };
@@ -27,6 +28,8 @@
 		3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */; };
 		3C873FFD22F073CF00FA3031 /* AddCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FEA22F073CE00FA3031 /* AddCardViewController.swift */; };
 		3C873FFE22F073CF00FA3031 /* AddCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C873FEB22F073CE00FA3031 /* AddCardViewController.xib */; };
+		3CFD913022F1BA8200F25AF1 /* TabBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD912F22F1BA8200F25AF1 /* TabBarTests.swift */; };
+		3CFD913122F1BB7D00F25AF1 /* binkappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048E22CE579B001BA964 /* binkappUITests.swift */; };
 		4B03E4ACD9F0FF1C979C752E /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */; };
 		5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046B22CE5798001BA964 /* AppDelegate.swift */; };
 		5ECE047122CE5798001BA964 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE046F22CE5798001BA964 /* Main.storyboard */; };
@@ -34,15 +37,9 @@
 		5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047522CE579B001BA964 /* Assets.xcassets */; };
 		5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */; };
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
-		5ECE048F22CE579B001BA964 /* binkappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048E22CE579B001BA964 /* binkappUITests.swift */; };
 		5ECE04A922CE582E001BA964 /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A122CE582E001BA964 /* LoginRepository.swift */; };
-		5ECE04AA22CE582E001BA964 /* LoginRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A122CE582E001BA964 /* LoginRepository.swift */; };
 		5ECE04AF22CE582E001BA964 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A322CE582E001BA964 /* UserModel.swift */; };
-		5ECE04B022CE582E001BA964 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A322CE582E001BA964 /* UserModel.swift */; };
-		5ECE04B122CE582E001BA964 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A322CE582E001BA964 /* UserModel.swift */; };
 		5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A422CE582E001BA964 /* LoginViewController.swift */; };
-		5ECE04B322CE582E001BA964 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A422CE582E001BA964 /* LoginViewController.swift */; };
-		5ECE04B422CE582E001BA964 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A422CE582E001BA964 /* LoginViewController.swift */; };
 		92CE3430695A6558F2EC1793 /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */; };
 		9C26930409A757F7CD2C794E /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */; };
 		AF06D42F48491D78B0040221 /* DataAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */; };
@@ -52,10 +49,6 @@
 		B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B720CC1322EEEF5400A4F4D0 /* LoginViewModel.swift */; };
 		B720CC1622EF01E200A4F4D0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */; };
 		B720CC1722EF01E200A4F4D0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */; };
-		B720CC1922EF161700A4F4D0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B720CC1322EEEF5400A4F4D0 /* LoginViewModel.swift */; };
-		B720CC1A22EF162300A4F4D0 /* String+Encrypting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */; };
-		B720CC1B22EF162500A4F4D0 /* TimeInterval+StringConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */; };
-		B720CC1C22EF16B800A4F4D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046B22CE5798001BA964 /* AppDelegate.swift */; };
 		B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */; };
 		B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */; };
 /* End PBXBuildFile section */
@@ -79,6 +72,7 @@
 
 /* Begin PBXFileReference section */
 		1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C429F8D22F16A9A009C1BD2 /* LoyaltyWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletTests.swift; sourceTree = "<group>"; };
 		3C873FD222F073B500FA3031 /* MainScreenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreenRouter.swift; sourceTree = "<group>"; };
 		3C873FD522F073CE00FA3031 /* PaymentWalletInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentWalletInteractor.swift; sourceTree = "<group>"; };
 		3C873FD622F073CE00FA3031 /* PaymentWalletViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentWalletViewController.xib; sourceTree = "<group>"; };
@@ -99,6 +93,7 @@
 		3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletRepository.swift; sourceTree = "<group>"; };
 		3C873FEA22F073CE00FA3031 /* AddCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
 		3C873FEB22F073CE00FA3031 /* AddCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddCardViewController.xib; sourceTree = "<group>"; };
+		3CFD912F22F1BA8200F25AF1 /* TabBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarTests.swift; sourceTree = "<group>"; };
 		4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046822CE5798001BA964 /* binkapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = binkapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046B22CE5798001BA964 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -289,9 +284,10 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
-				B720CC1822EF0F4700A4F4D0 /* New Group */,
+				3CFD912F22F1BA8200F25AF1 /* TabBarTests.swift */,
 				5ECE048322CE579B001BA964 /* binkappTests.swift */,
 				5ECE048522CE579B001BA964 /* Info.plist */,
+				3C429F8D22F16A9A009C1BD2 /* LoyaltyWalletTests.swift */,
 			);
 			path = binkappTests;
 			sourceTree = "<group>";
@@ -336,13 +332,6 @@
 				AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */,
 			);
 			path = Persistence;
-			sourceTree = "<group>";
-		};
-		B720CC1822EF0F4700A4F4D0 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		B7E2EC0622E5ED1800BB201A /* Extensions */ = {
@@ -705,15 +694,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B720CC1C22EF16B800A4F4D0 /* AppDelegate.swift in Sources */,
-				5ECE04B322CE582E001BA964 /* LoginViewController.swift in Sources */,
-				5ECE04B022CE582E001BA964 /* UserModel.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
-				B720CC1A22EF162300A4F4D0 /* String+Encrypting.swift in Sources */,
-				B720CC1B22EF162500A4F4D0 /* TimeInterval+StringConversion.swift in Sources */,
-				5ECE04AA22CE582E001BA964 /* LoginRepository.swift in Sources */,
-				B720CC1922EF161700A4F4D0 /* LoginViewModel.swift in Sources */,
 				AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */,
+				3C429F8E22F16A9A009C1BD2 /* LoyaltyWalletTests.swift in Sources */,
+				3CFD913022F1BA8200F25AF1 /* TabBarTests.swift in Sources */,
 				AF06D42F48491D78B0040221 /* DataAccessible.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -722,9 +706,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5ECE04B422CE582E001BA964 /* LoginViewController.swift in Sources */,
-				5ECE04B122CE582E001BA964 /* UserModel.swift in Sources */,
-				5ECE048F22CE579B001BA964 /* binkappUITests.swift in Sources */,
+				3CFD913122F1BB7D00F25AF1 /* binkappUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -981,6 +963,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.binkappUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = binkapp;
@@ -1002,6 +985,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.binkappUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = binkapp;

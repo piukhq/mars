@@ -76,6 +76,7 @@ private extension LoginRepository {
             let signatureData = hexSignature.hexadecimal
             let signature = signatureData?.base64EncodedString().replacingOccurrences(of: "=", with: "") ?? ""
             let token  = hmackString + "." + signature
+            print(token)
             return token
         }
         return ""

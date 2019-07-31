@@ -10,8 +10,6 @@ import UIKit
 class LoyaltyWalletViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-    var items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    
     let viewModel: LoyaltyWalletViewModel
     
     init(viewModel: LoyaltyWalletViewModel) {
@@ -37,36 +35,8 @@ class LoyaltyWalletViewController: UIViewController {
 extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSource {
     //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
     
-    // TRIED A THIRD PARTY LIBRARY AND GONNA LEAVE THIS CODE HERE FOR FUTURE IMLPEMENTATION
-//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-//        if orientation == .right {
-//            let deleteAction = SwipeAction(style: .default, title: "Delete") { action, indexPath in
-//                // handle action by updating model with deletion
-//                print(action)
-//            }
-//
-//            // customize the action appearance
-//            deleteAction.image = UIImage(named: "icons8FilledTrash")
-//            return [deleteAction]
-//        } else if orientation == .left {
-//            let barCodeAction = SwipeAction(style: .default, title: "Barcode") { action, indexPath in
-//                print("barcode")
-//            }
-//
-//            barCodeAction.image = UIImage(named: "icons8Barcode")
-//            return [barCodeAction]
-//        } else { return nil }
-//    }
-    
-//    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
-//        var options = SwipeOptions()
-//        options.expansionStyle = .destructive
-//        options.transitionStyle = .border
-//        return options
-//    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return items.count
+        return viewModel.items.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -88,15 +58,15 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: nil) { _, _, completion in
-            self.viewModel.deleteMembershipCard(id: indexPath.section, completion: {
-                self.items.remove(at: indexPath.row)
-                self.tableView.deleteSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
-            })
-            completion(true)
+        let action = UIContextualAction(style: .normal, title: nil) { _, _, completion in
+            let section = indexPath.section
+            self.viewModel.showDeleteConfirmationAlert(section: section) {
+                tableView.deleteSections(IndexSet(arrayLiteral: section), with: .automatic)
+                tableView.reloadData()
+            }
         }
-//        let action = UIContextualAction(style: .destructive, title: nil, handler: {_,_,_ in })
         action.image = UIImage(named: "iconSwipeDelete")
+        action.backgroundColor = UIColor.red
         let configuration = UISwipeActionsConfiguration(actions: [action])
         return configuration
     }
