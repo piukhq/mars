@@ -12,7 +12,7 @@ class MainTabBarViewController: UIViewController {
     @IBOutlet weak var displayedControllerView: UIView!
     
     let viewModel: MainTabBarViewModel
-    var selectedTabBarOption = 0
+    var selectedTabBarOption = Buttons.loyaltyItem.getIntegerValue()
     
     init(viewModel: MainTabBarViewModel) {
         self.viewModel = viewModel

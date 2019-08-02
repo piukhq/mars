@@ -24,7 +24,7 @@ class LoyaltyWalletViewModel {
     
     func getMembershipCards() {
         repository.getMembershipCards { (response) in
-            self.membershipCards = [response]
+            self.membershipCards = response
             print(response)
         }
     }

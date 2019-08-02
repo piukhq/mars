@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C17FC2F22F2C69200E423A2 /* MembershipCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C17FC2E22F2C69200E423A2 /* MembershipCardModel.swift */; };
+		3C17FC3222F2CCAD00E423A2 /* MembershipCardImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C17FC3122F2CCAD00E423A2 /* MembershipCardImageModel.swift */; };
 		3C429F8E22F16A9A009C1BD2 /* LoyaltyWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C429F8D22F16A9A009C1BD2 /* LoyaltyWalletTests.swift */; };
 		3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FD222F073B500FA3031 /* MainScreenRouter.swift */; };
 		3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FD522F073CE00FA3031 /* PaymentWalletInteractor.swift */; };
@@ -28,6 +30,8 @@
 		3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */; };
 		3C873FFD22F073CF00FA3031 /* AddCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FEA22F073CE00FA3031 /* AddCardViewController.swift */; };
 		3C873FFE22F073CF00FA3031 /* AddCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C873FEB22F073CE00FA3031 /* AddCardViewController.xib */; };
+		3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CC267EF22F4276E00F0F9E3 /* Localizable.strings */; };
+		3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC267F122F428A400F0F9E3 /* String+Localization.swift */; };
 		3CFD913022F1BA8200F25AF1 /* TabBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD912F22F1BA8200F25AF1 /* TabBarTests.swift */; };
 		3CFD913122F1BB7D00F25AF1 /* binkappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048E22CE579B001BA964 /* binkappUITests.swift */; };
 		4B03E4ACD9F0FF1C979C752E /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */; };
@@ -72,6 +76,8 @@
 
 /* Begin PBXFileReference section */
 		1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C17FC2E22F2C69200E423A2 /* MembershipCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardModel.swift; sourceTree = "<group>"; };
+		3C17FC3122F2CCAD00E423A2 /* MembershipCardImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardImageModel.swift; sourceTree = "<group>"; };
 		3C429F8D22F16A9A009C1BD2 /* LoyaltyWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletTests.swift; sourceTree = "<group>"; };
 		3C873FD222F073B500FA3031 /* MainScreenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreenRouter.swift; sourceTree = "<group>"; };
 		3C873FD522F073CE00FA3031 /* PaymentWalletInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentWalletInteractor.swift; sourceTree = "<group>"; };
@@ -93,6 +99,8 @@
 		3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletRepository.swift; sourceTree = "<group>"; };
 		3C873FEA22F073CE00FA3031 /* AddCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardViewController.swift; sourceTree = "<group>"; };
 		3C873FEB22F073CE00FA3031 /* AddCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddCardViewController.xib; sourceTree = "<group>"; };
+		3CC267EF22F4276E00F0F9E3 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		3CC267F122F428A400F0F9E3 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		3CFD912F22F1BA8200F25AF1 /* TabBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarTests.swift; sourceTree = "<group>"; };
 		4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046822CE5798001BA964 /* binkapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = binkapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +163,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C17FC3022F2CC9400E423A2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3C17FC2E22F2C69200E423A2 /* MembershipCardModel.swift */,
+				3C17FC3122F2CCAD00E423A2 /* MembershipCardImageModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		3C873FD122F073B500FA3031 /* Routing */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +208,7 @@
 		3C873FE122F073CE00FA3031 /* LoyaltyWallet */ = {
 			isa = PBXGroup;
 			children = (
+				3C17FC3022F2CC9400E423A2 /* Models */,
 				3C873FE322F073CE00FA3031 /* Cell */,
 				3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */,
 				3C873FE622F073CE00FA3031 /* LoyaltyWalletViewModel.swift */,
@@ -277,6 +295,7 @@
 				5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */,
 				AF06D86448D661A8F4142F87 /* Persistence */,
 				B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */,
+				3CC267EF22F4276E00F0F9E3 /* Localizable.strings */,
 			);
 			path = binkapp;
 			sourceTree = "<group>";
@@ -339,6 +358,7 @@
 			children = (
 				B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */,
 				B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */,
+				3CC267F122F428A400F0F9E3 /* String+Localization.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -462,6 +482,7 @@
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
 				3C873FF422F073CF00FA3031 /* MainTabBarViewController.xib in Resources */,
+				3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */,
 				3C873FED22F073CF00FA3031 /* PaymentWalletViewController.xib in Resources */,
 				3C873FFE22F073CF00FA3031 /* AddCardViewController.xib in Resources */,
 				3C873FFB22F073CF00FA3031 /* LoyaltyWalletViewController.xib in Resources */,
@@ -663,12 +684,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5ECE04A922CE582E001BA964 /* LoginRepository.swift in Sources */,
+				3C17FC3222F2CCAD00E423A2 /* MembershipCardImageModel.swift in Sources */,
 				3C873FF822F073CF00FA3031 /* CardTableViewCell.swift in Sources */,
 				5ECE04AF22CE582E001BA964 /* UserModel.swift in Sources */,
 				B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
+				3C17FC2F22F2C69200E423A2 /* MembershipCardModel.swift in Sources */,
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */,
@@ -679,6 +702,7 @@
 				3C873FEE22F073CF00FA3031 /* PaymentWalletViewController.swift in Sources */,
 				3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
+				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				3C873FF222F073CF00FA3031 /* PaymentWalletPresenter.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,

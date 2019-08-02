@@ -33,10 +33,32 @@ class LoyaltyWalletRepository {
         return parameters
     }
     
-    func getMembershipCards(completion: @escaping (Any) -> Void) {
+    func getMembershipCards(completion: @escaping ([MembershipCardModel]) -> Void) {
         Alamofire.request(Constants.endpoint + "/membership_cards", method: .get, parameters: getParameters(), encoding: JSONEncoding.default, headers: getHeader() )
             .responseJSON { response in
-                completion(response)
+                guard let data = response.data else {
+                    print("No data found")
+                    return
+                }
+                
+                print("json: \(String.init(data: data, encoding: .utf8))")
+                
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let statusCode = response.response?.statusCode ?? 0
+                    if statusCode == 200 || statusCode == 201 {
+                        let models = try decoder.decode([MembershipCardModel].self, from: data)
+                        completion(models)
+                    } else if let error = response.error {
+                        print(error)
+                    } else {
+                        print("something went wrong, statusCode: \(statusCode)")
+                    }
+                } catch (let error) {
+                    print("decoding error: \(error)")
+                }
         }
     }
     

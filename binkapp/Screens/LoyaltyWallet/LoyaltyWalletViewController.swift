@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreGraphics
 
 class LoyaltyWalletViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -50,7 +51,7 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: nil, handler: { _,_,_  in })
+        let action = UIContextualAction(style: .destructive, title: "barcode_swipe_title".localized, handler: { _,_,_  in })
         action.image = UIImage(named: "iconSwipeBarcode")
         action.backgroundColor = UIColor(red: 99/255, green: 159/255, blue: 255/255, alpha: 1)
         let configuration = UISwipeActionsConfiguration(actions: [action])
@@ -65,9 +66,11 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
                 tableView.reloadData()
             }
         }
+        
         action.image = UIImage(named: "iconSwipeDelete")
         action.backgroundColor = UIColor.red
         let configuration = UISwipeActionsConfiguration(actions: [action])
+        
         return configuration
     }
     
