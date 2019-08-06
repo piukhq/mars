@@ -68,6 +68,7 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Swinject (2.6.2)
+  - SwipeCellKit (2.6.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -76,6 +77,7 @@ DEPENDENCIES:
   - Intercom
   - Keys (from `Pods/CocoaPodsKeys`)
   - Swinject
+  - SwipeCellKit
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -92,6 +94,7 @@ SPEC REPOS:
     - Intercom
     - nanopb
     - Swinject
+    - SwipeCellKit
 
 EXTERNAL SOURCES:
   Keys:
@@ -112,7 +115,8 @@ SPEC CHECKSUMS:
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
+  SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
 
-PODFILE CHECKSUM: 1211efab628d40761585803845521aa1d8b004d8
+PODFILE CHECKSUM: 22817854dba7ae894ee850bbdbe382f14192d68c
 
 COCOAPODS: 1.7.5

@@ -10,7 +10,6 @@ import XCTest
 @testable import binkapp
 
 class TabBarTests: XCTestCase {
-    let viewModel = MainTabBar.TabBarModels.ViewModel()
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

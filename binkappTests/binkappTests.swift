@@ -10,11 +10,11 @@ import XCTest
 @testable import binkapp
 
 class binkappTests: XCTestCase {
-    let tabBarTests = TabBarTests()
+//    let tabBarTests = TabBarTests()
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        tabBarTests.setUp()
+//        tabBarTests.setUp()
     }
 
     override func tearDown() {

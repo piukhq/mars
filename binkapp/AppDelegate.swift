@@ -18,11 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let router = MainScreenRouter()
-        let navController = UINavigationController(rootViewController: router.getMainScreen())
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         if let mainWindow = self.window {
-            mainWindow.rootViewController = navController
+            mainWindow.rootViewController = router.getNavigationControllerWithLoginScreen()
             mainWindow.makeKeyAndVisible()
         }
         return true
