@@ -18,5 +18,42 @@ class AddingOptionView: CustomView {
     
     func configure(addingOption: AddingOptions) {
         self.addingOption = addingOption
+        configureByAddingOption(option: addingOption)
+    }
+    
+    override func configureUI() {
+        titleLabel.font = UIFont.headline
+        descriptionLabel.font = UIFont.bodyTextLarge
+        
+        self.view.layer.cornerRadius = 10
+        self.clipsToBounds = true
+        
+        self.layer.shadowOffset = CGSize(width: 10, height: 10)
+        self.layer.shadowRadius = 15
+        self.layer.shadowOpacity = 0.1
+        self.layer.masksToBounds = false
+    }
+    
+    func configureByAddingOption(option: AddingOptions) {
+        switch option {
+        case .loyalty:
+            optionTypeImageView.image = UIImage(named: "loyalty")
+            titleLabel.text = "add_loyalty_card_title".localized
+            descriptionLabel.text = "scan_a_card_description".localized
+            break
+        case .browse:
+            optionTypeImageView.image = UIImage(named: "browse")
+            titleLabel.text = "browse_brands_title".localized
+            descriptionLabel.text = "find_and_join_description".localized
+            break
+        case .payment:
+            optionTypeImageView.image = UIImage(named: "payment")
+            titleLabel.text = "add_payment_card_title".localized
+            descriptionLabel.text = "scan_and_link_description".localized
+            cardsStackView.addArrangedSubview(UIImageView(image: UIImage(named: "mastercard")))
+            cardsStackView.addArrangedSubview(UIImageView(image: UIImage(named: "amex")))
+            cardsStackView.addArrangedSubview(UIImageView(image: UIImage(named: "visa")))
+            break
+        }
     }
 }

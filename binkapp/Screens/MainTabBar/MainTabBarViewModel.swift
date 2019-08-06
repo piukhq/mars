@@ -19,7 +19,6 @@ class MainTabBarViewModel {
         self.repository = repository
         self.router = router
         childViewControllers.append(router.getLoyaltyWalletViewController())
-        childViewControllers.append(router.getAddCardViewController())
         childViewControllers.append(router.getPaymentWalletViewController())
     }
     
@@ -38,6 +37,10 @@ class MainTabBarViewModel {
         let item = UITabBarItem(title: nil, image: UIImage(named: "paymentInactive")?.withRenderingMode(.alwaysOriginal), tag: Buttons.paymentItem.rawValue)
         item.selectedImage = UIImage(named: "paymentActive")?.withRenderingMode(.alwaysOriginal)
         return item
+    }
+    
+    func toAddingOptionsScreen() {
+        router.toAddingOptionsViewController()
     }
 }
 

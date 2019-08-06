@@ -13,6 +13,7 @@ class MainTabBarViewController: UIViewController {
     
     let viewModel: MainTabBarViewModel
     var selectedTabBarOption = Buttons.loyaltyItem.getIntegerValue()
+    var items = [UITabBarItem]()
     
     init(viewModel: MainTabBarViewModel) {
         self.viewModel = viewModel
@@ -31,15 +32,19 @@ class MainTabBarViewController: UIViewController {
         populateTabBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setFirstDisplayedController()
+    }
+    
     func populateTabBar() {
-        var items = [UITabBarItem]()
-        
         items.append(viewModel.getTabBarLoyaltyButton())
         items.append(viewModel.getTabBarAddButton())
         items.append(viewModel.getTabBarPaymentButton())
         items[Buttons.paymentItem.getIntegerValue()].isEnabled = false
         tabBar.setItems(items, animated: true)
+    }
     
+    func setFirstDisplayedController() {
         let view = viewModel.childViewControllers[Buttons.loyaltyItem.getIntegerValue()].view
         view?.frame = displayedControllerView.frame
         displayedControllerView.addSubview(view!)
@@ -58,10 +63,11 @@ extension MainTabBarViewController: UITabBarDelegate {
             selectedTabBarOption = Buttons.loyaltyItem.getIntegerValue()
             break
         case Buttons.addItem.getIntegerValue():
-            let view = viewModel.childViewControllers[Buttons.addItem.getIntegerValue()].view
-            view?.frame = displayedControllerView.frame
-            displayedControllerView.addSubview(view!)
-            selectedTabBarOption = Buttons.addItem.getIntegerValue()
+//            let view = viewModel.childViewControllers[Buttons.addItem.getIntegerValue()].view
+//            view?.frame = displayedControllerView.frame
+//            displayedControllerView.addSubview(view!)
+//            selectedTabBarOption = Buttons.addItem.getIntegerValue()
+            viewModel.toAddingOptionsScreen()
             break
         case Buttons.paymentItem.getIntegerValue():
             let view = viewModel.childViewControllers[Buttons.paymentItem.getIntegerValue()].view
