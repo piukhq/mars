@@ -26,10 +26,6 @@ class MainScreenRouter {
     func getNavigationControllerWithLoginScreen() -> UIViewController{
         navController = UINavigationController(rootViewController: getLoginScreen())
         
-        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(toSettingsScreen))
-        navController?.navigationItem.rightBarButtonItem = settingsButton
-        navController?.navigationBar.shadowImage = UIImage()
-        
         return navController!
     }
     
@@ -41,8 +37,8 @@ class MainScreenRouter {
         return viewController
     }
     
-    @objc func toSettingsScreen() {
-        
+    func toSettingsScreen() {
+        print("settings button pressed")
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {
