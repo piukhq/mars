@@ -9,9 +9,8 @@
 import Foundation
 
 struct MembershipCardModel: Codable {
-    let barcode: String
-    let barcode_type: Int
-    let membership_id: String
-    let colour: String
-    let images: MembershipCardImageModel
+    let id: Int?
+    let membership_plan: Int?
+    let card: CardModel?
+    let images: [MembershipCardImageModel]?
 }
