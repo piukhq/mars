@@ -8,3 +8,10 @@
 
 "barcode_swipe_title" = "Barcode";
 "delete_swipe_title" = "Delete";
+
+"add_loyalty_card_title" = "Add loyalty card";
+"scan_a_card_description" = "Scan a card you already have";
+"browse_brands_title" = "Browse brands";
+"find_and_join_description" = "Find and join loyalty schemes";
+"add_payment_card_title" = "Add payment card";
+"scan_and_link_description" = "Scan and link your payment card";

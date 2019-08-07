@@ -46,16 +46,18 @@ class MainScreenRouter {
         return viewController
     }
     
-    func getAddCardViewController() -> UIViewController {
-        return AddCardViewController()
-    }
-    
     func getPaymentWalletViewController() -> UIViewController {
         return PaymentWalletViewController()
     }
     
     func toLoyaltyWalletViewController() {
         navController?.pushViewController(getLoyaltyWalletViewController(), animated: true)
+    }
+    
+    func toAddingOptionsViewController() {
+        let viewModel = AddingOptionsViewModel(router: self)
+        let viewController = AddingOptionsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
     }
     
     func showDeleteConfirmationAlert(completion: @escaping () -> Void) {
@@ -65,5 +67,9 @@ class MainScreenRouter {
             completion()
         }))
         navController?.present(alert, animated: true, completion: nil)
+    }
+    
+    func popViewController() {
+        navController?.popViewController(animated: true)
     }
 }
