@@ -27,7 +27,10 @@ class MainTabBarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        self.navigationItem.rightBarButtonItem = navigationController?.navigationItem.rightBarButtonItem
+        
         tabBar.delegate = self
         populateTabBar()
     }
