@@ -13,7 +13,6 @@ class MainScreenRouter {
     var navController: UINavigationController?
     
     init() {
-        
     }
     
     func toMainScreen() {
@@ -24,6 +23,12 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
+    func getNavigationControllerWithLoginScreen() -> UIViewController{
+        navController = UINavigationController(rootViewController: getLoginScreen())
+        
+        return navController!
+    }
+    
     func getLoginScreen() -> UIViewController {
         let repository = LoginRepository()
         let viewModel = LoginViewModel(repository: repository, router: self)
@@ -32,10 +37,8 @@ class MainScreenRouter {
         return viewController
     }
     
-    func getNavigationControllerWithLoginScreen() -> UIViewController{
-        navController = UINavigationController(rootViewController: getLoginScreen())
-        navController?.setNavigationBarHidden(true, animated: true)
-        return navController!
+    func toSettingsScreen() {
+        print("settings button pressed")
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {

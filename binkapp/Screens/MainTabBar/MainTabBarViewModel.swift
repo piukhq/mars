@@ -42,6 +42,10 @@ class MainTabBarViewModel {
     func toAddingOptionsScreen() {
         router.toAddingOptionsViewController()
     }
+    
+    func toSettingsScreen() {
+        router.toSettingsScreen()
+    }
 }
 
 enum Buttons: Int {

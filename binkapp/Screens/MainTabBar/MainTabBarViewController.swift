@@ -27,13 +27,28 @@ class MainTabBarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        setNavigationBar()
+        
         tabBar.delegate = self
         populateTabBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setFirstDisplayedController()
+    }
+    
+    func setNavigationBar() {
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+
+        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(toSettingsScreen))
+        self.navigationItem.rightBarButtonItem = settingsButton
+
+        self.navigationItem.setHidesBackButton(true, animated: true)
+    }
+    
+    @objc func toSettingsScreen() {
+        viewModel.toSettingsScreen()
     }
     
     func populateTabBar() {
