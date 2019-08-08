@@ -1,5 +1,5 @@
 //
-//  CardTableViewCell.swift
+//  WalletLoyaltyCardTableViewCell.swift
 //  binkapp
 //
 //  Copyright © 2019 Bink. All rights reserved.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CardTableViewCell: UITableViewCell {
+class WalletLoyaltyCardTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
