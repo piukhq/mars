@@ -47,8 +47,6 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WalletLoyaltyCardTableViewCell", for: indexPath) as! WalletLoyaltyCardTableViewCell
         cell.selectionStyle = .none
-        cell.layer.cornerRadius = 8
-        cell.layer.masksToBounds = true
         return cell
     }
     
