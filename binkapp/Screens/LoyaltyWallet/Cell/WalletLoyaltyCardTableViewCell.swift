@@ -17,10 +17,6 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configure() {
-        
-    }
-    
     override func draw(_ rect: CGRect) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
