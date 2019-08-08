@@ -36,7 +36,7 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
         
         context.restoreGState()
         
-        
+    
         //// Rectangle 2 Drawing
         context.saveGState()
         context.translateBy(x: 134, y: 38.72)

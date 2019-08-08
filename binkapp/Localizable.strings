@@ -15,3 +15,6 @@
 "find_and_join_description" = "Find and join loyalty schemes";
 "add_payment_card_title" = "Add payment card";
 "scan_and_link_description" = "Scan and link your payment card";
+
+"card_number_title" = "Card number";
+"barcode_card_description" = "Scan this barcode at the store, just like you would a physical loyalty card. Bear in mind that some store scanners cannot read from screens.";

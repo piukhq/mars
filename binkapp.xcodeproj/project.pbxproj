@@ -34,6 +34,10 @@
 		3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */; };
 		3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CC267EF22F4276E00F0F9E3 /* Localizable.strings */; };
 		3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC267F122F428A400F0F9E3 /* String+Localization.swift */; };
+		3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC46C222FC652C008476E3 /* BarcodeViewController.swift */; };
+		3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */; };
+		3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */; };
+		3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */; };
 		3CD3493222F99E1D000C1F4D /* NunitoSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492322F99E1D000C1F4D /* NunitoSans-LightItalic.ttf */; };
 		3CD3493322F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492422F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf */; };
 		3CD3493422F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492522F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf */; };
@@ -124,6 +128,10 @@
 		3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletRepository.swift; sourceTree = "<group>"; };
 		3CC267EF22F4276E00F0F9E3 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		3CC267F122F428A400F0F9E3 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
+		3CCC46C222FC652C008476E3 /* BarcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewController.swift; sourceTree = "<group>"; };
+		3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewController.xib; sourceTree = "<group>"; };
+		3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModel.swift; sourceTree = "<group>"; };
+		3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+binkapp.swift"; sourceTree = "<group>"; };
 		3CD3492322F99E1D000C1F4D /* NunitoSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-LightItalic.ttf"; sourceTree = "<group>"; };
 		3CD3492422F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		3CD3492522F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-ExtraLight.ttf"; sourceTree = "<group>"; };
@@ -205,6 +213,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C0EEE7722FC64F9006FAE5E /* BarcodeModal */ = {
+			isa = PBXGroup;
+			children = (
+				3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */,
+				3CCC46C222FC652C008476E3 /* BarcodeViewController.swift */,
+				3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */,
+			);
+			path = BarcodeModal;
+			sourceTree = "<group>";
+		};
 		3C17FC3022F2CC9400E423A2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,6 +435,7 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				3C0EEE7722FC64F9006FAE5E /* BarcodeModal */,
 				3CC267F322F45A3500F0F9E3 /* AddingOptions */,
 				3C873FD422F073CE00FA3031 /* PaymentWallet */,
 				3C873FDC22F073CE00FA3031 /* MainTabBar */,
@@ -454,6 +473,7 @@
 				B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */,
 				3CC267F122F428A400F0F9E3 /* String+Localization.swift */,
 				3C63ABC922F9D52F00BE143B /* UIFont + binkapp.swift */,
+				3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -575,6 +595,7 @@
 				3CD3493722F99E1D000C1F4D /* NunitoSans-ExtraBold.ttf in Resources */,
 				B720CC1622EF01E200A4F4D0 /* LoginViewController.xib in Resources */,
 				3CD3493A22F99E1D000C1F4D /* NunitoSans-Italic.ttf in Resources */,
+				3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */,
 				3C873FF922F073CF00FA3031 /* WalletLoyaltyCardTableViewCell.xib in Resources */,
 				3CF029F322F45AEC009A0E61 /* AddingOptionsViewController.xib in Resources */,
 				3CD3493322F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf in Resources */,
@@ -818,6 +839,7 @@
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
+				3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */,
 				3C873FF222F073CF00FA3031 /* PaymentWalletPresenter.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
 				3CF029F222F45AEC009A0E61 /* AddingOptionsViewController.swift in Sources */,
@@ -827,6 +849,8 @@
 				AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */,
 				3C873FF122F073CF00FA3031 /* PaymentWalletModels.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont + binkapp.swift in Sources */,
+				3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */,
+				3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

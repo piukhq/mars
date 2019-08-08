@@ -61,7 +61,7 @@ class MainTabBarViewController: UIViewController {
     
     func setFirstDisplayedController() {
         let view = viewModel.childViewControllers[Buttons.loyaltyItem.getIntegerValue()].view
-        view?.frame = displayedControllerView.frame
+        view?.frame = displayedControllerView.bounds
         displayedControllerView.addSubview(view!)
         tabBar.selectedItem = items[Buttons.loyaltyItem.getIntegerValue()]
     }
@@ -73,20 +73,16 @@ extension MainTabBarViewController: UITabBarDelegate {
         switch item.tag {
         case Buttons.loyaltyItem.getIntegerValue():
             let view = viewModel.childViewControllers[Buttons.loyaltyItem.getIntegerValue()].view
-            view?.frame = displayedControllerView.frame
+            view?.frame = displayedControllerView.bounds
             displayedControllerView.addSubview(view!)
             selectedTabBarOption = Buttons.loyaltyItem.getIntegerValue()
             break
         case Buttons.addItem.getIntegerValue():
-//            let view = viewModel.childViewControllers[Buttons.addItem.getIntegerValue()].view
-//            view?.frame = displayedControllerView.frame
-//            displayedControllerView.addSubview(view!)
-//            selectedTabBarOption = Buttons.addItem.getIntegerValue()
             viewModel.toAddingOptionsScreen()
             break
         case Buttons.paymentItem.getIntegerValue():
             let view = viewModel.childViewControllers[Buttons.paymentItem.getIntegerValue()].view
-            view?.frame = displayedControllerView.frame
+            view?.frame = displayedControllerView.bounds
             displayedControllerView.addSubview(view!)
             selectedTabBarOption = Buttons.paymentItem.getIntegerValue()
             break
