@@ -13,7 +13,7 @@
 		3C429F8E22F16A9A009C1BD2 /* LoyaltyWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C429F8D22F16A9A009C1BD2 /* LoyaltyWalletTests.swift */; };
 		3C466B9E22FAE6190044478D /* CardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C466B9D22FAE6190044478D /* CardModel.swift */; };
 		3C63ABC822F9D47E00BE143B /* AddingOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63ABC722F9D47E00BE143B /* AddingOptionsViewModel.swift */; };
-		3C63ABCA22F9D52F00BE143B /* UIFont + binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63ABC922F9D52F00BE143B /* UIFont + binkapp.swift */; };
+		3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */; };
 		3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FD222F073B500FA3031 /* MainScreenRouter.swift */; };
 		3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FD522F073CE00FA3031 /* PaymentWalletInteractor.swift */; };
 		3C873FED22F073CF00FA3031 /* PaymentWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C873FD622F073CE00FA3031 /* PaymentWalletViewController.xib */; };
@@ -57,6 +57,8 @@
 		3CF029F322F45AEC009A0E61 /* AddingOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CF029F122F45AEC009A0E61 /* AddingOptionsViewController.xib */; };
 		3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF029F522F45B53009A0E61 /* CustomView.swift */; };
 		3CF029F822F45B8C009A0E61 /* AddingOptionsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF029F722F45B8C009A0E61 /* AddingOptionsEnum.swift */; };
+		3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */; };
+		3CF054D522FDABF30069E98A /* BinkGradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF054D422FDABF30069E98A /* BinkGradientButton.swift */; };
 		3CFD913022F1BA8200F25AF1 /* TabBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFD912F22F1BA8200F25AF1 /* TabBarTests.swift */; };
 		3CFD913122F1BB7D00F25AF1 /* binkappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048E22CE579B001BA964 /* binkappUITests.swift */; };
 		4B03E4ACD9F0FF1C979C752E /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */; };
@@ -107,7 +109,7 @@
 		3C429F8D22F16A9A009C1BD2 /* LoyaltyWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletTests.swift; sourceTree = "<group>"; };
 		3C466B9D22FAE6190044478D /* CardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModel.swift; sourceTree = "<group>"; };
 		3C63ABC722F9D47E00BE143B /* AddingOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingOptionsViewModel.swift; sourceTree = "<group>"; };
-		3C63ABC922F9D52F00BE143B /* UIFont + binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + binkapp.swift"; sourceTree = "<group>"; };
+		3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+binkapp.swift"; sourceTree = "<group>"; };
 		3C873FD222F073B500FA3031 /* MainScreenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreenRouter.swift; sourceTree = "<group>"; };
 		3C873FD522F073CE00FA3031 /* PaymentWalletInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentWalletInteractor.swift; sourceTree = "<group>"; };
 		3C873FD622F073CE00FA3031 /* PaymentWalletViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaymentWalletViewController.xib; sourceTree = "<group>"; };
@@ -151,6 +153,8 @@
 		3CF029F122F45AEC009A0E61 /* AddingOptionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddingOptionsViewController.xib; sourceTree = "<group>"; };
 		3CF029F522F45B53009A0E61 /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		3CF029F722F45B8C009A0E61 /* AddingOptionsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingOptionsEnum.swift; sourceTree = "<group>"; };
+		3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		3CF054D422FDABF30069E98A /* BinkGradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkGradientButton.swift; sourceTree = "<group>"; };
 		3CFD912F22F1BA8200F25AF1 /* TabBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarTests.swift; sourceTree = "<group>"; };
 		4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046822CE5798001BA964 /* binkapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = binkapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -347,6 +351,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		3CF054D322FDABCA0069E98A /* BinkUI */ = {
+			isa = PBXGroup;
+			children = (
+				3CF054D422FDABF30069E98A /* BinkGradientButton.swift */,
+			);
+			path = BinkUI;
+			sourceTree = "<group>";
+		};
 		492DA371EDF911EDB1A625BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -435,6 +447,7 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				3CF054D322FDABCA0069E98A /* BinkUI */,
 				3C0EEE7722FC64F9006FAE5E /* BarcodeModal */,
 				3CC267F322F45A3500F0F9E3 /* AddingOptions */,
 				3C873FD422F073CE00FA3031 /* PaymentWallet */,
@@ -472,8 +485,9 @@
 				B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */,
 				B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */,
 				3CC267F122F428A400F0F9E3 /* String+Localization.swift */,
-				3C63ABC922F9D52F00BE143B /* UIFont + binkapp.swift */,
+				3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */,
 				3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */,
+				3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -831,11 +845,13 @@
 				3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */,
 				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
 				3C63ABC822F9D47E00BE143B /* AddingOptionsViewModel.swift in Sources */,
+				3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */,
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
 				3C873FEE22F073CF00FA3031 /* PaymentWalletViewController.swift in Sources */,
 				3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
+				3CF054D522FDABF30069E98A /* BinkGradientButton.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
@@ -848,7 +864,7 @@
 				3C873FF022F073CF00FA3031 /* PaymentWalletRouter.swift in Sources */,
 				AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */,
 				3C873FF122F073CF00FA3031 /* PaymentWalletModels.swift in Sources */,
-				3C63ABCA22F9D52F00BE143B /* UIFont + binkapp.swift in Sources */,
+				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,
 				3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */,
 				3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */,
 			);

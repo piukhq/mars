@@ -53,6 +53,7 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .destructive, title: "barcode_swipe_title".localized, handler: { _,_,_  in
             self.viewModel.toBarcodeViewController()
+            self.tableView.reloadData()
         })
         
         action.image = UIImage(named: "swipeBarcode")

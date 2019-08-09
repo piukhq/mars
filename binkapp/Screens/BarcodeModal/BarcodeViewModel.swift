@@ -10,10 +10,15 @@ import UIKit
 
 class BarcodeViewModel {
     //TO DO: CHANGE VARIABLE NAME
-    let string = "1234 5432 6541 4324"
+    let string = "1234 5432 1242 4231"
+    let title = "Harvey Nichols"
     
     init() {
         
+    }
+    
+    func getTitle() -> String {
+        return title
     }
     
     func getCardNumber() -> String {
