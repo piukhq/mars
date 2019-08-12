@@ -8,11 +8,11 @@
 import UIKit
 
 class BarcodeViewController: UIViewController {
-    @IBOutlet weak var barcodeImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var numberLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var maximiseButton: BinkGradientButton!
+    @IBOutlet private weak var barcodeImageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var numberLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var maximiseButton: BinkGradientButton!
     
     let viewModel: BarcodeViewModel
     var originalBarcodeFrame: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
@@ -66,8 +66,10 @@ class BarcodeViewController: UIViewController {
         descriptionLabel.textAlignment = .justified
 
         switch viewModel.getBarcodeType() {
-        case .loyaltyCard: descriptionLabel.text = "barcode_card_description".localized
-        case .coupon: descriptionLabel.text = "barcode_coupon_description".localized
+        case .loyaltyCard:
+            descriptionLabel.text = "barcode_card_description".localized
+        case .coupon:
+            descriptionLabel.text = "barcode_coupon_description".localized
         }
 
         maximiseButton.setTitleColor(UIColor.white, for: .normal)

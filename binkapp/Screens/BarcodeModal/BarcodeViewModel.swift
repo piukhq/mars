@@ -18,10 +18,6 @@ class BarcodeViewModel {
     let string = "1234 5432 1242"
     let title = "Harvey Nichols"
     
-    init() {
-        
-    }
-    
     func getTitle() -> String {
         return title
     }
@@ -46,20 +42,19 @@ class BarcodeViewModel {
             let transform = CGAffineTransform(scaleX: 3, y: 3)
             
             if let output = filter.outputImage?.transformed(by: transform) {
-                let context:CIContext = CIContext.init(options: nil)
-                let cgImage:CGImage = context.createCGImage(output, from: output.extent)!
-                let rawImage:UIImage = UIImage.init(cgImage: cgImage)
-                let cgimage: CGImage = (rawImage.cgImage)!
+                let context: CIContext = CIContext.init(options: nil)
+                let cgImage: CGImage = context.createCGImage(output, from: output.extent)!
+                let rawImage: UIImage = UIImage.init(cgImage: cgImage)
                 let cropZone = CGRect(x: 0, y: 0, width: Int(rawImage.size.width), height: Int(rawImage.size.height))
                 let cWidth: size_t  = size_t(cropZone.size.width)
                 let cHeight: size_t  = size_t(cropZone.size.height)
-                let bitsPerComponent: size_t = cgimage.bitsPerComponent
+                let bitsPerComponent: size_t = cgImage.bitsPerComponent
                 //THE OPERATIONS ORDER COULD BE FLIPPED, ALTHOUGH, IT DOESN'T AFFECT THE RESULT
-                let bytesPerRow = (cgimage.bytesPerRow) / (cgimage.width  * cWidth)
+                let bytesPerRow = (cgImage.bytesPerRow) / (cgImage.width  * cWidth)
                 
-                let context2: CGContext = CGContext(data: nil, width: cWidth, height: cHeight, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: cgimage.bitmapInfo.rawValue)!
+                let context2: CGContext = CGContext(data: nil, width: cWidth, height: cHeight, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: cgImage.bitmapInfo.rawValue)!
                 
-                context2.draw(cgimage, in: cropZone)
+                context2.draw(cgImage, in: cropZone)
                 
                 let result: CGImage  = context2.makeImage()!
                 let finalImage = UIImage(cgImage: result)
