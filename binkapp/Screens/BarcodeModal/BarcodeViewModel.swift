@@ -8,9 +8,14 @@
 import Foundation
 import UIKit
 
+enum BarcodeType {
+    case loyaltyCard
+    case coupon
+}
+
 class BarcodeViewModel {
     //TO DO: CHANGE VARIABLE NAME
-    let string = "1234 5432 1242 4231"
+    let string = "1234 5432 1242"
     let title = "Harvey Nichols"
     
     init() {
@@ -23,6 +28,10 @@ class BarcodeViewModel {
     
     func getCardNumber() -> String {
         return string
+    }
+    
+    func getBarcodeType() -> BarcodeType {
+        return .loyaltyCard
     }
     
     func generateBarcodeImage() -> UIImage? {

@@ -63,22 +63,13 @@ class BarcodeViewController: UIViewController {
         
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textColor = UIColor.black
-        descriptionLabel.text = "barcode_card_description".localized
         descriptionLabel.textAlignment = .justified
 
-//        maximiseButton.setGradientBackground(firstColor: UIColor(red: 180/255, green: 111/255, blue: 234/255, alpha: 1), secondColor: UIColor.blueAccent)
-//        maximiseButton.layer.cornerRadius = maximiseButton.frame.size.height / 2
-//        maximiseButton.addShadow(shadowColor: UIColor.black.cgColor, shadowOffset: CGSize(width: 0.0, height: 8.0), shadowOpacity: 0.3, shadowRadius: 8.0)
-//        maximiseButton.layer.masksToBounds = false
-//        maximiseButton.clipsToBounds = true
-//        
-//        maximiseButton.layer.shadowColor = UIColor.black.cgColor
-//        maximiseButton.layer.shadowOpacity = 0.3
-//        maximiseButton.layer.shadowOffset = CGSize(width: 1, height: 8)
-//        maximiseButton.layer.shadowRadius = 8
-//        maximiseButton.layer.shadowPath = UIBezierPath(rect: maximiseButton.bounds).cgPath
-//        maximiseButton.layer.shouldRasterize = true
-//        
+        switch viewModel.getBarcodeType() {
+        case .loyaltyCard: descriptionLabel.text = "barcode_card_description".localized
+        case .coupon: descriptionLabel.text = "barcode_coupon_description".localized
+        }
+
         maximiseButton.setTitleColor(UIColor.white, for: .normal)
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)

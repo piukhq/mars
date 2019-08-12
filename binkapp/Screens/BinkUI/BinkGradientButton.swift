@@ -9,25 +9,30 @@ import Foundation
 import UIKit
 
 class BinkGradientButton: UIButton {
+    private var shadowLayer: CAShapeLayer!
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureUI()
+        self.setGradientBackground(firstColor: UIColor(red: 180/255, green: 111/255, blue: 234/255, alpha: 1), secondColor: UIColor.blueAccent)
     }
     
-    func configureUI() {
-        self.setGradientBackground(firstColor: UIColor(red: 180/255, green: 111/255, blue: 234/255, alpha: 1), secondColor: UIColor.blueAccent)
-        self.layer.cornerRadius = self.frame.size.height / 2
-        self.clipsToBounds = true
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
-        // add the border to subview
-        let borderView = UIView(frame: self.bounds)
+        let halfOfButtonHeight = layer.frame.height / 2
         
-        borderView.layer.shadowColor = UIColor.black.cgColor
-        borderView.layer.shadowOffset = CGSize(width: 3, height: 8)
-        borderView.layer.shadowOpacity = 0.7
-        borderView.layer.shadowRadius = 8.0
-        
-        borderView.layer.masksToBounds = true
-        self.addSubview(borderView)
+        if shadowLayer == nil {
+            shadowLayer = CAShapeLayer()
+            shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: halfOfButtonHeight).cgPath
+            shadowLayer.fillColor = UIColor.clear.cgColor
+            
+            shadowLayer.shadowColor = UIColor.black.cgColor
+            shadowLayer.shadowPath = shadowLayer.path
+            shadowLayer.shadowOffset = CGSize(width: 3, height: 8)
+            shadowLayer.shadowOpacity = 0.2
+            shadowLayer.shadowRadius = 10
+            
+            layer.insertSublayer(shadowLayer, at: 0)
+        }
     }
 }
