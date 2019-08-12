@@ -9,6 +9,8 @@ pod 'Intercom'
 pod 'Swinject'
 pod 'Alamofire'
 pod 'SwipeCellKit'
+pod 'Fabric'
+pod 'Crashlytics'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
