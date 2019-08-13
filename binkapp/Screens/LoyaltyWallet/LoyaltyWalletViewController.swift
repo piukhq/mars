@@ -27,7 +27,7 @@ class LoyaltyWalletViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "CardTableViewCell", bundle: Bundle(for: CardTableViewCell.self)), forCellReuseIdentifier: "CardTableViewCell")
+        tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
         
         viewModel.getMembershipCards()
     }
@@ -45,13 +45,16 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CardTableViewCell", for: indexPath) as! CardTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WalletLoyaltyCardTableViewCell", for: indexPath) as! WalletLoyaltyCardTableViewCell
         cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "barcode_swipe_title".localized, handler: { _,_,_  in })
+        let action = UIContextualAction(style: .destructive, title: "barcode_swipe_title".localized, handler: { _,_,_  in
+            self.viewModel.toBarcodeViewController()
+            self.tableView.reloadData()
+        })
         
         action.image = UIImage(named: "swipeBarcode")
         action.backgroundColor = UIColor(red: 99/255, green: 159/255, blue: 255/255, alpha: 1)
