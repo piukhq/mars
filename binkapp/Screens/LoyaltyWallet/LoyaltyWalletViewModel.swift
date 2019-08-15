@@ -37,12 +37,6 @@ class LoyaltyWalletViewModel {
     }
     
     func showDeleteConfirmationAlert(section: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-//        router.showDeleteConfirmationAlert {
-//            self.deleteMembershipCard(id: section, completion: {
-//                self.items.remove(at: section)
-//                completion()
-//            })
-//        }
         router.showDeleteConfirmationAlert(yesCompletion: {
             self.deleteMembershipCard(id: section, completion: {
                 self.items.remove(at: section)
