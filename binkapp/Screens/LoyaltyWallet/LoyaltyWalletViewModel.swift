@@ -44,4 +44,8 @@ class LoyaltyWalletViewModel {
             })
         }
     }
+    
+    func toBarcodeViewController() {
+        router.toBarcodeViewController()
+    }
 }

@@ -38,13 +38,14 @@ class MainTabBarViewController: UIViewController {
     }
     
     func setNavigationBar() {
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = UIImage()
 
         let settingsButton = UIBarButtonItem(image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(toSettingsScreen))
-        self.navigationItem.rightBarButtonItem = settingsButton
+        navigationItem.rightBarButtonItem = settingsButton
 
-        self.navigationItem.setHidesBackButton(true, animated: true)
+        navigationItem.setHidesBackButton(true, animated: true)
+        self.title = ""
     }
     
     @objc func toSettingsScreen() {
@@ -61,7 +62,7 @@ class MainTabBarViewController: UIViewController {
     
     func setFirstDisplayedController() {
         let view = viewModel.childViewControllers[Buttons.loyaltyItem.getIntegerValue()].view
-        view?.frame = displayedControllerView.frame
+        view?.frame = displayedControllerView.bounds
         displayedControllerView.addSubview(view!)
         tabBar.selectedItem = items[Buttons.loyaltyItem.getIntegerValue()]
     }
@@ -73,20 +74,16 @@ extension MainTabBarViewController: UITabBarDelegate {
         switch item.tag {
         case Buttons.loyaltyItem.getIntegerValue():
             let view = viewModel.childViewControllers[Buttons.loyaltyItem.getIntegerValue()].view
-            view?.frame = displayedControllerView.frame
+            view?.frame = displayedControllerView.bounds
             displayedControllerView.addSubview(view!)
             selectedTabBarOption = Buttons.loyaltyItem.getIntegerValue()
             break
         case Buttons.addItem.getIntegerValue():
-//            let view = viewModel.childViewControllers[Buttons.addItem.getIntegerValue()].view
-//            view?.frame = displayedControllerView.frame
-//            displayedControllerView.addSubview(view!)
-//            selectedTabBarOption = Buttons.addItem.getIntegerValue()
             viewModel.toAddingOptionsScreen()
             break
         case Buttons.paymentItem.getIntegerValue():
             let view = viewModel.childViewControllers[Buttons.paymentItem.getIntegerValue()].view
-            view?.frame = displayedControllerView.frame
+            view?.frame = displayedControllerView.bounds
             displayedControllerView.addSubview(view!)
             selectedTabBarOption = Buttons.paymentItem.getIntegerValue()
             break
