@@ -65,10 +65,12 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "delete_swipe_title".localized) { _, _, completion in
             let section = indexPath.section
-            self.viewModel.showDeleteConfirmationAlert(section: section) {
+            self.viewModel.showDeleteConfirmationAlert(section: section, yesCompletion: {
                 tableView.deleteSections(IndexSet(arrayLiteral: section), with: .automatic)
                 tableView.reloadData()
-            }
+            }, noCompletion: {
+                tableView.setEditing(false, animated: true)
+            })
         }
         
         action.image = UIImage(named: "trashIcon")
