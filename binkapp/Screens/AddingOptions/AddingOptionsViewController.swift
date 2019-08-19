@@ -35,6 +35,10 @@ class AddingOptionsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     func configureUI() {
         loyaltyCardView.configure(addingOption: .loyalty)
         browseBrandsView.configure(addingOption: .browse)
