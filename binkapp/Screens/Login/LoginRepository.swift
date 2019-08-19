@@ -31,7 +31,6 @@ class LoginRepository {
         ]
         Alamofire.request(Constants.endpoint + "/service", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header )
             .responseJSON { response in
-                print(response)
                 completion(response)
         }
     }
@@ -50,7 +49,6 @@ private extension LoginRepository {
             let headerData = try JSONSerialization.data(withJSONObject: header, options: JSONSerialization.WritingOptions.prettyPrinted)
             let headerDataEncodedWithEquals = headerData.base64EncodedString()
             headerDataEncoded = headerDataEncodedWithEquals.replacingOccurrences(of: "=", with: "")
-
         } catch {
             print("Could not make header data")
         }

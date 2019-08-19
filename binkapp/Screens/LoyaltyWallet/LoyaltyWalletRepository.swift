@@ -2,7 +2,6 @@
 //  LoyaltyWalletRepository.swift
 //  binkapp
 //
-//  Created by Paul Tiriteu on 25/07/2019.
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
@@ -40,16 +39,39 @@ class LoyaltyWalletRepository {
                     print("No data found")
                     return
                 }
-                
-                print("json: \(String.init(data: data, encoding: .utf8))")
-                
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                
+
                 do {
                     let statusCode = response.response?.statusCode ?? 0
                     if statusCode == 200 || statusCode == 201 {
                         let models = try decoder.decode([MembershipCardModel].self, from: data)
+                        completion(models)
+                    } else if let error = response.error {
+                        print(error)
+                    } else {
+                        print("something went wrong, statusCode: \(statusCode)")
+                    }
+                } catch (let error) {
+                    print("decoding error: \(error)")
+                }
+        }
+    }
+    
+    func getMembershipPlans(completion: @escaping ([MembershipPlanModel]) -> Void ){
+        Alamofire.request(Constants.endpoint + "/membership_plans", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: getHeader() )
+            .responseJSON { response in
+                guard let data = response.data else {
+                    print("No data found")
+                    return
+                }
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .useDefaultKeys
+                
+                do {
+                    let statusCode = response.response?.statusCode ?? 0
+                    if statusCode == 200 {
+                        let models = try decoder.decode([MembershipPlanModel].self, from: data)
                         completion(models)
                     } else if let error = response.error {
                         print(error)
