@@ -1,0 +1,441 @@
+fastlane_version "1.104.0" 
+
+default_platform :ios
+
+platform :ios do
+  
+  # Lifecycle
+
+  before_all do |lane, options|
+
+    ENV["MATCH_PASSWORD"] = "EsQzqesxMeoCWMdGEKUBbcf9"
+
+    #ENV["IS_BITRISE"] - will be defined if we are running as Bitrise
+
+    ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
+
+    ENV["CRASHLYTICS_API_TOKEN"] = "94dd38e1a4af53d027da0ff6108c84e33b625923"
+    ENV["CRASHLYTICS_BUILD_SECRET"] = "c7a6ae90120cafbcd5c173f304a2e1531727850bcb0d0350072430bdca821782"
+
+    # This excludes these targets from the code coverage, required if we just want BinkApp posted to Slack
+    ENV["COVERAGE_EXCLUDE_TARGETS"] = ""
+    
+    # This allows the command line iTunes Connect uploaded to get through out firewall, otherwise all connections are blocked
+    ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = "-t DAV"
+
+  end
+
+  after_all do |lane|
+  end
+
+  error do |lane, exception|
+    if ENV["IS_BITRISE"]
+      slack(
+        message: ":boom: #{exception.message}",
+        success: false
+      )
+    else
+      notification(
+        subtitle: "Fastlane: #{lane} failed",
+        message: exception.message
+      )
+    end
+  end
+
+  # Certificate management
+
+  desc "Retrieve all the certificates for all targets and configures your machine to compile against devices"
+  lane :setup do
+
+    # Bink
+
+    match(type: "appstore", app_identifier: "com.bink.wallet.neo", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo", readonly: true)
+    match(type: "development", app_identifier: "com.bink.wallet.neo.alpha", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.beta", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.mr", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.nightly", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.gamma", readonly: true)
+
+  end
+
+    desc "Retrieve and force update all the certificates for all targets and configures your machine to compile against devices, including new ones. NOTE: This should only be run if new devices are required in the profiles and certificates"
+  lane :setupForce do
+
+    # Bink
+
+    match(type: "appstore", app_identifier: "com.bink.wallet.neo", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo", readonly: false, force_for_new_devices: true)
+    match(type: "development", app_identifier: "com.bink.wallet.neo.alpha", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.beta", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.mr", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.nightly", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.gamma", readonly: false, force_for_new_devices: true)
+
+  end
+
+   # Add device
+
+  desc "Adds a device to the portal"
+  lane :addDevice do |parameters|
+    if !parameters[:name]
+      raise "No name specified" 
+    elsif !parameters[:uuid]
+      raise "No UUID specified" 
+    end 
+
+    register_devices(
+      devices: {
+        parameters[:name] => parameters[:uuid]
+       }
+    )
+
+    setupForce
+
+    slack(
+      message: ":iphone: New device added. Please run `fastlane setup` to update your local certificates.",
+      default_payloads: []
+    )
+  end
+
+  # App Store builds
+
+  desc "Build for the App Store"
+  desc "You MUST specify a version and build number"
+  desc "eg. fastlane appstore version:1.2.3 build:120"
+  desc "This uploads a build but does not touch any other settings in iTunes Connect such as description"
+  lane :release do |parameters|
+    checkAppStoreParameters(parameters)
+
+    introMessage = ""
+    if not parameters[:skip_fabric]
+      introMessage = "& Fabric"
+    end
+
+    releaseNumber = "#{parameters[:version]} (#{parameters[:build]})"
+
+    slack(
+      message: ":rocket: Preparing to release #{releaseNumber} to iTunes Connect #{introMessage}",
+      default_payloads: []
+    )
+
+    match(type: "appstore", app_identifier: "com.bink.wallet.neo", readonly: true)
+
+    releaseMessage = "App Store Release: " + releaseNumber + "\n" + buildMessage
+
+    increment_version_number(
+      version_number: parameters[:version]
+    )
+
+    increment_build_number(
+      build_number: parameters[:build]
+    )
+
+    gym(
+      scheme: "binkapp app store",
+      clean: true
+    )
+
+    deliver(
+      skip_screenshots: false,
+      skip_metadata: false,
+      force: true
+    )
+
+    slack(
+      message: ":rocket: Release #{releaseNumber} uploaded to iTunes Connect",
+      default_payloads: []
+    )
+
+    if not parameters[:skip_fabric]
+      slack(
+        message: ":rocket: Starting build of Release #{releaseNumber} for Crashlytics",
+        default_payloads: []
+      )
+
+      match(type: "adhoc", app_identifier: "com.bink.wallet.neo", readonly: true)
+
+      gym(
+        scheme: "binkapp app store (internal)",
+        clean: true
+      )
+
+      crashlytics(
+        api_token: ENV["CRASHLYTICS_API_TOKEN"],
+        build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
+        notes: releaseMessage,
+        groups: ["ios", "internal-testing"]
+      )
+
+      slack(
+        message: ":rocket: Release #{releaseNumber} uploaded to Crashlytics",
+        default_payloads: []
+      )
+    end
+
+  end
+  
+  desc "Build and submit Gamma to Fabric"
+  lane :gamma do |parameters|
+      
+    checkAppStoreParameters(parameters)
+
+    releaseNumber = "#{parameters[:version]} (#{parameters[:build]})"
+
+    slack(
+        message: ":racing_car: Starting Gamma build #{releaseNumber} for Crashlytics",
+        default_payloads: []
+    )
+
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.gamma", readonly: true)
+
+    increment_version_number(
+      version_number: parameters[:version]
+    )
+
+    increment_build_number(
+      build_number: parameters[:build]
+    )
+            
+    gym(
+        scheme: "binkapp gamma",
+        clean: true
+    )
+                
+    crashlytics(
+        api_token: ENV["CRASHLYTICS_API_TOKEN"],
+        build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
+        groups: ["ios", "internal-testing"]
+    )
+    
+    # iOS Bitrise Message
+    slack(
+        message: ":racing_car: Gamma #{releaseNumber} uploaded to Crashlytics",
+        default_payloads: [],
+        channel: "ios-jenkins"
+    )
+
+    # iOS QA Message
+    slack(
+        message: ":racing_car: Gamma #{releaseNumber} uploaded to Crashlytics",
+        default_payloads: [],
+        channel: "ios-qa"
+    )
+
+  end
+  
+  # Bitrise builds
+
+  desc "Build MR and submit to Fabric"
+  lane :mr do |parameters|
+    restrictToBitrise(parameters)
+
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.mr", readonly: true)
+
+    processShaCommand()
+
+    merge_id = parameters[:mergeId]
+    source_branch = parameters[:source]
+    target_branch = parameters[:target]
+    title = parameters[:requestTitle]
+
+    build_number = incrementBuildNumber()
+    build_options = {
+      coverage: true,
+      crashlytics_groups: ["ios", "qa"],
+      number: build_number,
+      # shield: "MR-#{merge_id}-green",
+      scheme: "binkapp merge request",
+      slack_finished: ":iphone: Finished building merge request #{merge_id}"
+    }
+
+    slack(
+      default_payloads: [],
+      attachment_properties: {
+        title: ":iphone: Starting to build merge request (#{merge_id})",
+        title_link: "https://git.bink.com/Pantheon/iOS/mars/binkapp/merge_requests#{merge_id}",
+        author_name: last_git_commit[:author],
+        fields: [
+          {title: "Source", value: source_branch, short: true},
+          {title: "Target", value: target_branch, short: true},
+          {title: "Title", value: title, short: false}
+        ],
+      }
+    )
+
+    build(build_options)
+  end
+
+  desc "Build Nightly and submit to Fabric"
+  lane :nightly do |parameters|
+    restrictToBitrise(parameters)
+
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.nightly", readonly: true)
+
+    build_number = incrementBuildNumber()
+    time = Time.now
+    shield_date = time.strftime("%d:%m:%y")
+
+    build_options = {
+      coverage: true,
+      crashlytics_groups: ["ios", "internal-testing"], 
+      number: build_number,
+      podupdate: true, 
+      # shield: "N-#{shield_date}-blue",
+      scheme: "binkapp nightly",
+      slack_started: ":crescent_moon: Starting Nightly build for #{shield_date}",
+      slack_finished: ":crescent_moon: Bink Nightly #{shield_date} has been released on Crashlytics"
+    }
+
+    add_badge(shield: "N-#{shield_date}-blue")
+    build(build_options)
+  end
+
+  desc "Build the develop branch once a commit has been pushed (or merge request built)"
+  lane :dev do |parameters|
+    restrictToBitrise(parameters)
+
+    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.beta", readonly: true)
+
+    build_number = incrementBuildNumber()
+
+    build_options = {
+      coverage: true,
+      crashlytics_groups: ["ios", "qa", "marketing"],
+      number: build_number,
+      scheme: "binkapp beta",
+      slack_finished: ":iphone: Finished running tests for (#{build_number}) on"
+    }
+
+    slack(
+      default_payloads: [],
+      attachment_properties: {
+        title: ":iphone: Preparing to build the latest develop branch",
+        fields: [
+          {title: "Message", value: buildMessage, short: false}
+        ],
+      }
+    )
+
+    build(build_options)
+  end
+
+  # Funnel for all Jenkins lanes
+
+  private_lane :build do |options|
+
+    if options[:slack_started]
+      slack(
+        message: options[:slack_started],
+        default_payloads: []
+      )
+    end
+
+    clear_derived_data
+
+    cocoapods
+
+    increment_build_number(
+      build_number: options[:number]
+    )
+
+    if options[:shield]
+      badge(shield: options[:shield], no_badge: true, shield_no_resize: true)
+    end
+
+    scan(
+        skip_build: true,
+        scheme: options[:scheme],
+        device: "iPhone 7 (10.2)",
+        code_coverage: true,
+        slack_message: "#{options[:slack_finished]} iOS 10",
+        clean: false
+    )
+
+    if options[:coverage]
+      xcov(
+        workspace: "binkapp.xcworkspace",
+        scheme: options[:scheme],
+        output_directory: "xcov_output",
+        exclude_targets: ENV["COVERAGE_EXCLUDE_TARGETS"]
+      )
+    end
+    
+    gym(
+        scheme: options[:scheme]
+    )
+
+    if options[:crashlytics_groups]
+      crashlytics(
+        api_token: ENV["CRASHLYTICS_API_TOKEN"],
+        build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
+        notes: buildMessage,
+        groups: options[:crashlytics_groups]
+      )
+
+      slack(
+        default_payloads: [],
+        attachment_properties: {
+        title: ":iphone: New build available on Fabric for #{options[:number]}",
+        fields: [
+          {title: "Message", value: buildMessage, short: false}
+          ],
+        }
+      )
+    end
+
+    if options[:podupdate]
+      sh "pod repo update"
+    end
+  end  
+
+  # Helpers
+
+  def incrementBuildNumber()
+  	return ENV["BITRISE_BUILD_NUMBER"]
+  end
+
+  def buildMessage()
+    commit = last_git_commit
+    return "[" + commit[:abbreviated_commit_hash] + "] " + commit[:message]
+  end
+
+  def restrictToBitrise(options)
+    if options[:bitrise]
+      puts "Running on Bitrise"
+      ENV["IS_BITRISE"] = "YES"
+    else
+      raise "This lane is locked to only running on Bitrise" 
+    end
+  end
+
+  def checkAppStoreParameters(parameters)
+    if !parameters[:version]
+      raise "No version specified" 
+    elsif !parameters[:build]
+      raise "No build number specified" 
+    end
+  end
+
+    def processShaCommand()
+    sha_hash = sdkHash()
+     # Change to the sdk folder, fetch the latest git repos and checkout the specified hash from the origin.
+     sh "cd ../../../terra; git fetch; git checkout -f #{sha_hash}"
+  end
+
+  def sdkHash()
+    commit = last_git_commit
+    merge = commit[:message].scan(/Merge branch/)
+    results = commit[:message].scan(/\[TERRA\:(.*)\]/)
+    if merge.last
+        penultimateGitLog = sh "git log -1 --no-merges --pretty=%B"
+        results = penultimateGitLog.scan(/\[TERRA\:(.*)\]/)
+    end
+    
+    if not results.last
+      raise "No SHA provided, please provide a SHA dependancy"
+    end
+    return results.last.first;
+  end
+
+end
