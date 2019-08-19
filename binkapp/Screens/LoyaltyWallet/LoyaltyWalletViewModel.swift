@@ -2,31 +2,29 @@
 //  LoyaltyWalletViewModel.swift
 //  binkapp
 //
-//  Created by Paul Tiriteu on 25/07/2019.
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
+protocol LoyaltyWalletViewModelDelegate {
+    func didFetchCards()
+    func didFetchMembershipPlans()
+}
+
 class LoyaltyWalletViewModel {
-    let repository: LoyaltyWalletRepository
-    let router: MainScreenRouter
+    private let repository: LoyaltyWalletRepository
+    private  let router: MainScreenRouter
+    private var membershipCards = [MembershipCardModel]()
+    private var membershipPlans = [MembershipPlanModel]()
     
-    var membershipCards = [Any]()
-    
-    var items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    var delegate: LoyaltyWalletViewModelDelegate?
     
     init(repository: LoyaltyWalletRepository, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
-    }
-    
-    func getMembershipCards() {
-        repository.getMembershipCards { (response) in
-            self.membershipCards = response
-            print(response)
-        }
+        fetchMembershipCards()
     }
     
     func deleteMembershipCard(id: Int, completion: @escaping () -> Void) {
@@ -36,10 +34,10 @@ class LoyaltyWalletViewModel {
         }
     }
     
-    func showDeleteConfirmationAlert(section: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+    func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(yesCompletion: {
-            self.deleteMembershipCard(id: section, completion: {
-                self.items.remove(at: section)
+            self.deleteMembershipCard(id: index, completion: {
+                self.membershipCards.remove(at: index)
                 yesCompletion()
             })
         }, noCompletion: {
@@ -49,5 +47,26 @@ class LoyaltyWalletViewModel {
     
     func toBarcodeViewController() {
         router.toBarcodeViewController()
+    }
+    
+    func getMemebershipCard() -> [MembershipCardModel] {
+        return membershipCards
+    }
+    
+    func getMembershipPlans() -> [MembershipPlanModel] {
+        return membershipPlans
+    }
+    
+    // MARK: Private methods
+    
+    private func fetchMembershipCards() {
+        repository.getMembershipCards { (response) in
+            self.membershipCards = response
+            self.delegate?.didFetchCards()
+        }
+        repository.getMembershipPlans { (response) in
+            self.membershipPlans = response
+            self.delegate?.didFetchMembershipPlans()
+        }
     }
 }

@@ -8,7 +8,12 @@
 import UIKit
 
 class WalletLoyaltyCardTableViewCell: UITableViewCell {
-
+    @IBOutlet private weak var cardIconImage: UIImageView!
+    @IBOutlet private weak var cardNameLabel: UILabel!
+    @IBOutlet private weak var cardValuePointsLabel: UILabel!
+    @IBOutlet private weak var cardLinkStatusLabel: UILabel!
+    @IBOutlet private weak var cardLinkStatusImage: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -47,5 +52,12 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
         rectangle2Path.fill()
         
         context.restoreGState()
+    }
+    
+    
+    func configureUIWithMembershipCard(card: MembershipCardModel) {
+//        cardIconImage = card.images?[0].url
+//        cardNameLabel.text = card.
+        
     }
 }

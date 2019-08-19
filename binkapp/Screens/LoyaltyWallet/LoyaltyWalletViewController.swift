@@ -8,9 +8,8 @@
 import UIKit
 import CoreGraphics
 
-class LoyaltyWalletViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
-    
+class LoyaltyWalletViewController: UIViewController{
+    @IBOutlet private weak var tableView: UITableView!
     let viewModel: LoyaltyWalletViewModel
     
     init(viewModel: LoyaltyWalletViewModel) {
@@ -25,11 +24,10 @@ class LoyaltyWalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
-        
-        viewModel.getMembershipCards()
     }
 }
 
@@ -37,16 +35,16 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.items.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return viewModel.getMemebershipCard().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WalletLoyaltyCardTableViewCell", for: indexPath) as! WalletLoyaltyCardTableViewCell
-        cell.selectionStyle = .none
+//        cell.cardNameLabel.text = String(describing: viewModel.membershipCards[indexPath.row].id)
         return cell
     }
     
@@ -64,9 +62,8 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "delete_swipe_title".localized) { _, _, completion in
-            let section = indexPath.section
-            self.viewModel.showDeleteConfirmationAlert(section: section, yesCompletion: {
-                tableView.deleteSections(IndexSet(arrayLiteral: section), with: .automatic)
+            self.viewModel.showDeleteConfirmationAlert(index: indexPath.row, yesCompletion: {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
                 tableView.reloadData()
             }, noCompletion: {
                 tableView.setEditing(false, animated: true)
@@ -83,4 +80,16 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 12
     }
+}
+
+extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
+    func didFetchMembershipPlans() {
+        tableView.reloadData()
+    }
+    
+    func didFetchCards() {
+        tableView.reloadData()
+    }
+    
+    
 }
