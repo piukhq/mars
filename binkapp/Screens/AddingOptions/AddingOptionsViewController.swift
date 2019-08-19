@@ -59,14 +59,20 @@ class AddingOptionsViewController: UIViewController {
     }
     
     @objc func toAddLoyaltyCard() {
-        print("first option tapped")
+        displayNoScreenPopup()
     }
     
     @objc func toBrowseBrands() {
-        print("second option tapped")
+        displayNoScreenPopup()
     }
     
     @objc func toAddPaymentCard() {
-        print("third option tapped")
+        displayNoScreenPopup()
+    }
+    
+    func displayNoScreenPopup() {
+         let alert = UIAlertController(title: nil, message: "Screen was not implemented yet", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
