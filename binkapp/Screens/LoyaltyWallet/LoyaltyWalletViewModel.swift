@@ -36,13 +36,15 @@ class LoyaltyWalletViewModel {
         }
     }
     
-    func showDeleteConfirmationAlert(section: Int, completion: @escaping () -> Void) {
-        router.showDeleteConfirmationAlert {
+    func showDeleteConfirmationAlert(section: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+        router.showDeleteConfirmationAlert(yesCompletion: {
             self.deleteMembershipCard(id: section, completion: {
                 self.items.remove(at: section)
-                completion()
+                yesCompletion()
             })
-        }
+        }, noCompletion: {
+            noCompletion()
+        })
     }
     
     func toBarcodeViewController() {

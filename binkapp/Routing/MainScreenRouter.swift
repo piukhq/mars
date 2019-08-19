@@ -69,11 +69,13 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func showDeleteConfirmationAlert(completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this card?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
-            completion()
+    func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+        let alert = UIAlertController(title: nil, message: "delete_card_confirmation".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in
+            noCompletion()
+        }))
+        alert.addAction(UIAlertAction(title: "yes".localized, style: .destructive, handler: { _ in
+            yesCompletion()
         }))
         navController?.present(alert, animated: true, completion: nil)
     }
