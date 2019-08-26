@@ -90,6 +90,9 @@
 		B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726334C23058D2700951037 /* PlanDocumentModel.swift */; };
 		B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726334E23058DC800951037 /* RegistrationFieldModel.swift */; };
 		B726335123058E2300951037 /* TierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726335023058E2300951037 /* TierModel.swift */; };
+		B73F7103230D78E300D82566 /* MembershipCardStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73F7102230D78E300D82566 /* MembershipCardStatusModel.swift */; };
+		B73F7105230D7AF900D82566 /* MembershipCardAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73F7104230D7AF900D82566 /* MembershipCardAccountModel.swift */; };
+		B73F7109230D7F1300D82566 /* MembershipCardBalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */; };
 		B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */; };
 		B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */; };
 /* End PBXBuildFile section */
@@ -218,6 +221,9 @@
 		B726334C23058D2700951037 /* PlanDocumentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDocumentModel.swift; sourceTree = "<group>"; };
 		B726334E23058DC800951037 /* RegistrationFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFieldModel.swift; sourceTree = "<group>"; };
 		B726335023058E2300951037 /* TierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TierModel.swift; sourceTree = "<group>"; };
+		B73F7102230D78E300D82566 /* MembershipCardStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardStatusModel.swift; sourceTree = "<group>"; };
+		B73F7104230D7AF900D82566 /* MembershipCardAccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardAccountModel.swift; sourceTree = "<group>"; };
+		B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardBalanceModel.swift; sourceTree = "<group>"; };
 		B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "binkapp-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Encrypting.swift"; sourceTree = "<group>"; };
 		B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+StringConversion.swift"; sourceTree = "<group>"; };
@@ -284,6 +290,9 @@
 				B726334C23058D2700951037 /* PlanDocumentModel.swift */,
 				B726334E23058DC800951037 /* RegistrationFieldModel.swift */,
 				B726335023058E2300951037 /* TierModel.swift */,
+				B73F7102230D78E300D82566 /* MembershipCardStatusModel.swift */,
+				B73F7104230D7AF900D82566 /* MembershipCardAccountModel.swift */,
+				B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -946,6 +955,7 @@
 				3C873FEE22F073CF00FA3031 /* PaymentWalletViewController.swift in Sources */,
 				B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */,
 				3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */,
+				B73F7105230D7AF900D82566 /* MembershipCardAccountModel.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				3CF054D522FDABF30069E98A /* BinkGradientButton.swift in Sources */,
@@ -963,7 +973,9 @@
 				3C873FF322F073CF00FA3031 /* MainTabBarRepository.swift in Sources */,
 				3C873FF022F073CF00FA3031 /* PaymentWalletRouter.swift in Sources */,
 				AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */,
+				B73F7103230D78E300D82566 /* MembershipCardStatusModel.swift in Sources */,
 				3C873FF122F073CF00FA3031 /* PaymentWalletModels.swift in Sources */,
+				B73F7109230D7F1300D82566 /* MembershipCardBalanceModel.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,
 				3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */,
 				3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */,

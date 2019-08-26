@@ -10,7 +10,7 @@ import CoreGraphics
 
 class LoyaltyWalletViewController: UIViewController{
     @IBOutlet private weak var tableView: UITableView!
-    let viewModel: LoyaltyWalletViewModel
+    private let viewModel: LoyaltyWalletViewModel
     
     init(viewModel: LoyaltyWalletViewModel) {
         self.viewModel = viewModel
@@ -35,16 +35,26 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return viewModel.getMemebershipCards().count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getMemebershipCard().count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WalletLoyaltyCardTableViewCell", for: indexPath) as! WalletLoyaltyCardTableViewCell
-//        cell.cardNameLabel.text = String(describing: viewModel.membershipCards[indexPath.row].id)
+        if let cardPlan = viewModel.getMembershipPlans().first(where: {($0.id == viewModel.getMemebershipCards()[indexPath.section].membershipPlan)}) {
+            cell.configureUIWithMembershipCard(card:viewModel.getMemebershipCards()[indexPath.section] , andMemebershipPlan: cardPlan)
+        }
+        cell.layer.cornerRadius = 8
+        cell.separatorInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        cell.layer.shadowOffset = CGSize(width: 0, height: 5)
+        cell.layer.shadowRadius = 5
+        cell.layer.shadowColor = UIColor.red.cgColor
+        cell.layer.shadowOpacity = 0.9
+        cell.layer.masksToBounds = true
+        
         return cell
     }
     
@@ -80,6 +90,12 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 12
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Error", message: "To be implemented", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
 }
 
 extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
@@ -90,6 +106,4 @@ extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
     func didFetchCards() {
         tableView.reloadData()
     }
-    
-    
 }

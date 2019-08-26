@@ -49,7 +49,7 @@ class LoyaltyWalletViewModel {
         router.toBarcodeViewController()
     }
     
-    func getMemebershipCard() -> [MembershipCardModel] {
+    func getMemebershipCards() -> [MembershipCardModel] {
         return membershipCards
     }
     
