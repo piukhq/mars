@@ -1,5 +1,7 @@
 PODS:
   - Alamofire (4.8.2)
+  - AlamofireImage (3.5.2):
+    - Alamofire (~> 4.8)
   - Crashlytics (3.13.4):
     - Fabric (~> 1.10.2)
   - Fabric (1.10.2)
@@ -75,6 +77,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - AlamofireImage
   - Crashlytics
   - Fabric
   - Firebase
@@ -87,6 +90,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - AlamofireImage
     - Crashlytics
     - Fabric
     - Firebase
@@ -109,6 +113,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: dedc9e48ea3f3649ad5f6b982f8a0c73508a14b5
@@ -126,6 +131,6 @@ SPEC CHECKSUMS:
   Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
   SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
 
-PODFILE CHECKSUM: a86c58ad1bcc7b81eaf5e478ae4eeb0dd5b22aeb
+PODFILE CHECKSUM: 36567e656867037fb978a4956a35865de714c338
 
-COCOAPODS: 1.7.3
+COCOAPODS: 1.7.4

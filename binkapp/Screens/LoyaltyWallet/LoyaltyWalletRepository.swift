@@ -40,7 +40,7 @@ class LoyaltyWalletRepository {
                     return
                 }
                 let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.keyDecodingStrategy = .useDefaultKeys
 
                 do {
                     let statusCode = response.response?.statusCode ?? 0
