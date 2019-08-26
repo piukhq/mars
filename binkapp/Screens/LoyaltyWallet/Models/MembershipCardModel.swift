@@ -11,7 +11,7 @@ struct MembershipCardModel: Codable {
     let id: Int?
     let membershipPlan: Int?
     let paymentCards: [String]?
-    let membershipTransactions: [String]?
+    let membershipTransactions: [MembershipTransaction]?
     let status: MembershipCardStatusModel?
     let card: CardModel?
     let images: [MembershipCardImageModel]?
@@ -36,7 +36,7 @@ struct MembershipCardModel: Codable {
         id = try values.decodeIfPresent(Int.self, forKey: .id)
         membershipPlan = try values.decodeIfPresent(Int.self, forKey: .membershipPlan)
         paymentCards = try values.decodeIfPresent([String].self, forKey: .paymentCards)
-        membershipTransactions = try values.decodeIfPresent([String].self, forKey: .membershipTransactions)
+        membershipTransactions = try values.decodeIfPresent([MembershipTransaction].self, forKey: .membershipTransactions)
         status = try values.decodeIfPresent(MembershipCardStatusModel.self, forKey: .status)
         card = try values.decodeIfPresent(CardModel.self, forKey: .card)
         images = try values.decodeIfPresent([MembershipCardImageModel].self, forKey: .images)

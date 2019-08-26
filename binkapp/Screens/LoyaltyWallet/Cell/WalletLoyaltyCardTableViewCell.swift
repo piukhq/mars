@@ -85,10 +85,15 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
                 cardLinkStatusLabel.isHidden = false
             }
             if plan.featureSet?.hasPoints == true {
-                let prefix = card.balances?[0].prefix ?? ""
-                let suffix = card.balances?[0].suffix ?? ""
                 if let balanceValue = card.balances?[0].value {
-                    cardValuePointsLabel.text = prefix + "\(balanceValue)" + "\n" + suffix
+                    let attributedPrefix = NSMutableAttributedString(string: card.balances?[0].prefix ?? "")
+                    let attributedSuffix = NSMutableAttributedString(string: "\n" + (card.balances?[0].suffix ?? ""), attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
+                    let attributedValue = NSMutableAttributedString(string: String(balanceValue))
+                    let attributedLabelText = NSMutableAttributedString()
+                    attributedLabelText.append(attributedPrefix)
+                    attributedLabelText.append(attributedValue)
+                    attributedLabelText.append(attributedSuffix)
+                    cardValuePointsLabel.attributedText = attributedLabelText
                 }
             } else {
                 cardValuePointsLabel.isHidden = true

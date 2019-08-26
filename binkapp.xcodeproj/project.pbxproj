@@ -90,6 +90,8 @@
 		B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726334C23058D2700951037 /* PlanDocumentModel.swift */; };
 		B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726334E23058DC800951037 /* RegistrationFieldModel.swift */; };
 		B726335123058E2300951037 /* TierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726335023058E2300951037 /* TierModel.swift */; };
+		B72E82C12313F3B40045607E /* MembershipTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72E82C02313F3B40045607E /* MembershipTransaction.swift */; };
+		B72E82C32313F3F90045607E /* MembershipCardAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72E82C22313F3F90045607E /* MembershipCardAmount.swift */; };
 		B73F7103230D78E300D82566 /* MembershipCardStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73F7102230D78E300D82566 /* MembershipCardStatusModel.swift */; };
 		B73F7105230D7AF900D82566 /* MembershipCardAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73F7104230D7AF900D82566 /* MembershipCardAccountModel.swift */; };
 		B73F7109230D7F1300D82566 /* MembershipCardBalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */; };
@@ -221,6 +223,8 @@
 		B726334C23058D2700951037 /* PlanDocumentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDocumentModel.swift; sourceTree = "<group>"; };
 		B726334E23058DC800951037 /* RegistrationFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFieldModel.swift; sourceTree = "<group>"; };
 		B726335023058E2300951037 /* TierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TierModel.swift; sourceTree = "<group>"; };
+		B72E82C02313F3B40045607E /* MembershipTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipTransaction.swift; sourceTree = "<group>"; };
+		B72E82C22313F3F90045607E /* MembershipCardAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardAmount.swift; sourceTree = "<group>"; };
 		B73F7102230D78E300D82566 /* MembershipCardStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardStatusModel.swift; sourceTree = "<group>"; };
 		B73F7104230D7AF900D82566 /* MembershipCardAccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardAccountModel.swift; sourceTree = "<group>"; };
 		B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardBalanceModel.swift; sourceTree = "<group>"; };
@@ -293,6 +297,8 @@
 				B73F7102230D78E300D82566 /* MembershipCardStatusModel.swift */,
 				B73F7104230D7AF900D82566 /* MembershipCardAccountModel.swift */,
 				B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */,
+				B72E82C02313F3B40045607E /* MembershipTransaction.swift */,
+				B72E82C22313F3F90045607E /* MembershipCardAmount.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -944,6 +950,7 @@
 				B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
+				B72E82C12313F3B40045607E /* MembershipTransaction.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */,
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
@@ -959,6 +966,7 @@
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				3CF054D522FDABF30069E98A /* BinkGradientButton.swift in Sources */,
+				B72E82C32313F3F90045607E /* MembershipCardAmount.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
 				B726335123058E2300951037 /* TierModel.swift in Sources */,
