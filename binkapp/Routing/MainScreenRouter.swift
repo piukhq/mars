@@ -11,19 +11,19 @@ import UIKit
 class MainScreenRouter {
     var navController: UINavigationController?
     
-    init() {
-    }
-    
+    let apiManager = ApiManager()
+
     func toMainScreen() {
         let repository = MainTabBarRepository()
         let viewModel = MainTabBarViewModel(repository: repository, router: self)
         let viewController = MainTabBarViewController(viewModel: viewModel)
-        
+
         navController?.pushViewController(viewController, animated: true)
     }
     
     func getNavigationControllerWithLoginScreen() -> UIViewController{
         navController = UINavigationController(rootViewController: getLoginScreen())
+        navController?.navigationBar.isTranslucent = false
         
         return navController!
     }
@@ -41,7 +41,7 @@ class MainScreenRouter {
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {
-        let repository = LoyaltyWalletRepository()
+        let repository = LoyaltyWalletRepository(apiManager: apiManager)
         let viewModel = LoyaltyWalletViewModel(repository: repository, router: self)
         let viewController = LoyaltyWalletViewController(viewModel: viewModel)
         
@@ -62,9 +62,22 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
+    func toBrowseBrandsViewController() {
+        let repository = BrowseBrandsRepository(apiManager: apiManager)
+        let viewModel = BrowseBrandsViewModel(repository: repository, router: self)
+        let viewController = BrowseBrandsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
     func toBarcodeViewController() {
         let viewModel = BarcodeViewModel()
         let viewController = BarcodeViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
+    func toAddOrJoinViewController(membershipPlan: MembershipPlanModel) {
+        let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, router: self)
+        let viewController = AddOrJoinViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
@@ -79,7 +92,21 @@ class MainScreenRouter {
         navController?.present(alert, animated: true, completion: nil)
     }
     
+    func displaySimplePopup(title: String?, message: String?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        navController?.present(alert, animated: true, completion: nil)
+    }
+    
     func popViewController() {
         navController?.popViewController(animated: true)
+    }
+    
+    func popToRootViewController() {
+        if let tabBarVC = navController?.viewControllers.first(where: { $0 is MainTabBarViewController }) {
+            navController?.popToViewController(tabBarVC, animated: true)
+        } else {
+            navController?.popToRootViewController(animated: true)
+        }
     }
 }

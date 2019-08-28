@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoyaltyPlanView" customModule="binkapp" customModuleProvider="target">
+            <connections>
+                <outlet property="descriptionLabel" destination="9nn-OX-QeE" id="HDY-b1-KWx"/>
+                <outlet property="iconImageView" destination="jPG-An-gei" id="1x5-CR-tw1"/>
+                <outlet property="titleLabel" destination="mZf-uy-7I2" id="WQe-fb-iQz"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="522" height="180"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="activeStore" translatesAutoresizingMaskIntoConstraints="NO" id="jPG-An-gei">
+                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="mZf-uy-7I2">
+                    <rect key="frame" x="48" y="5.5" width="474" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="9nn-OX-QeE">
+                    <rect key="frame" x="48" y="26.5" width="474" height="153.5"/>
+                    <attributedString key="attributedText">
+                        <fragment content="Label">
+                            <attributes>
+                                <font key="NSFont" size="17" name=".AppleSystemUIFont"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="justified" lineBreakMode="truncatingTail" baseWritingDirection="natural" lineHeightMultiple="1" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="jPG-An-gei" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="0eE-EP-uCm"/>
+                <constraint firstItem="mZf-uy-7I2" firstAttribute="leading" secondItem="jPG-An-gei" secondAttribute="trailing" constant="16" id="1Qp-wY-WeG"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="mZf-uy-7I2" secondAttribute="trailing" id="5Fy-yC-ZjS"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="9nn-OX-QeE" secondAttribute="trailing" id="7sZ-cw-kH4"/>
+                <constraint firstItem="mZf-uy-7I2" firstAttribute="centerY" secondItem="jPG-An-gei" secondAttribute="centerY" id="XD3-6n-OnQ"/>
+                <constraint firstItem="9nn-OX-QeE" firstAttribute="leading" secondItem="mZf-uy-7I2" secondAttribute="leading" id="an5-ja-GxY"/>
+                <constraint firstItem="9nn-OX-QeE" firstAttribute="top" secondItem="mZf-uy-7I2" secondAttribute="bottom" id="dZ7-dS-dEl"/>
+                <constraint firstItem="jPG-An-gei" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="kGF-Cy-v4i"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="9nn-OX-QeE" secondAttribute="bottom" id="stD-et-sid"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="112" y="-223.98800599700152"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="activeStore" width="32" height="32"/>
+    </resources>
+</document>

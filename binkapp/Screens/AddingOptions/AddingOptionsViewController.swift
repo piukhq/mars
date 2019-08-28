@@ -26,6 +26,11 @@ class AddingOptionsViewController: UIViewController {
         configureUI()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
     init(viewModel: AddingOptionsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "AddingOptionsViewController", bundle: Bundle(for: AddingOptionsViewController.self))
@@ -36,10 +41,13 @@ class AddingOptionsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     func configureUI() {
+        self.title = ""
+        
         loyaltyCardView.configure(addingOption: .loyalty)
         browseBrandsView.configure(addingOption: .browse)
         addPaymentCardView.configure(addingOption: .payment)
@@ -63,7 +71,7 @@ class AddingOptionsViewController: UIViewController {
     }
     
     @objc func toBrowseBrands() {
-        displayNoScreenPopup()
+        viewModel.toBrowseBrandsScreen()
     }
     
     @objc func toAddPaymentCard() {

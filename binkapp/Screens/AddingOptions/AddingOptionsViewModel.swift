@@ -15,7 +15,12 @@ class AddingOptionsViewModel {
         self.router = router
     }
     
+    func toBrowseBrandsScreen() {
+        router.toBrowseBrandsViewController()
+    }
+
     func popViewController() {
         router.popViewController()
     }
+    
 }

@@ -15,7 +15,7 @@ protocol LoyaltyWalletViewModelDelegate {
 
 class LoyaltyWalletViewModel {
     private let repository: LoyaltyWalletRepository
-    private  let router: MainScreenRouter
+    private let router: MainScreenRouter
     private var membershipCards = [MembershipCardModel]()
     private var membershipPlans = [MembershipPlanModel]()
     
@@ -28,18 +28,19 @@ class LoyaltyWalletViewModel {
     }
     
     func deleteMembershipCard(id: Int, completion: @escaping () -> Void) {
-        repository.deleteMembershipCard(id: id) { (response) in
-            print(response)
+        repository.deleteMembershipCard(id: id) { _ in 
             completion()
         }
     }
     
     func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(yesCompletion: {
-            self.deleteMembershipCard(id: index, completion: {
-                self.membershipCards.remove(at: index)
-                yesCompletion()
-            })
+            if let cardId = self.membershipCards[index].id {
+                self.deleteMembershipCard(id: cardId, completion: {
+                    self.membershipCards.remove(at: index)
+                    yesCompletion()
+                })
+            }
         }, noCompletion: {
             noCompletion()
         })
@@ -63,9 +64,18 @@ class LoyaltyWalletViewModel {
         repository.getMembershipCards { (response) in
             self.membershipCards = response
             self.delegate?.didFetchCards()
+            
         }
+        
         repository.getMembershipPlans { (response) in
             self.membershipPlans = response
+            
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(response) {
+                let defaults = UserDefaults.standard
+                defaults.set(encoded, forKey: "MembershipPlans")
+            }
+            
             self.delegate?.didFetchMembershipPlans()
         }
     }

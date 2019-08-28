@@ -27,19 +27,20 @@ class MainTabBarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = ""
+        setNavigationBar()
+        
         tabBar.delegate = self
         populateTabBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setNavigationBar()
         setFirstDisplayedController()
     }
     
     func setNavigationBar() {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.barTintColor = .white
 
         let settingsButton = UIBarButtonItem(image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(toSettingsScreen))
         navigationItem.rightBarButtonItem = settingsButton
