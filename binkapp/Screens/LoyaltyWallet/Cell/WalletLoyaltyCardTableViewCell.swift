@@ -6,15 +6,21 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class WalletLoyaltyCardTableViewCell: UITableViewCell {
-
+    @IBOutlet private weak var cardIconImage: UIImageView!
+    @IBOutlet private weak var cardNameLabel: UILabel!
+    @IBOutlet private weak var cardValuePointsLabel: UILabel!
+    @IBOutlet private weak var cardLinkStatusLabel: UILabel!
+    @IBOutlet private weak var logInButton: UIButton!
+    @IBOutlet private weak var cardLinkStatusImage: UIImageView!
+    
+    var firstColorHex: String = "#D3D3D3"
+    var secondColorHex: String = "#888888"
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
     }
     
     override func draw(_ rect: CGRect) {
@@ -22,8 +28,8 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
         let context = UIGraphicsGetCurrentContext()!
         
         //// Color Declarations
-        let firstColor = UIColor(red: 0.135, green: 0.517, blue: 0.274, alpha: 1.000)
-        let secondColor = UIColor(red: 0.660, green: 0.586, blue: 0.586, alpha: 1.000)
+        let firstColor = UIColor(hexString: firstColorHex)
+        let secondColor = UIColor(hexString: secondColorHex)
         
         //// Rectangle Drawing
         context.saveGState()
@@ -47,5 +53,65 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
         rectangle2Path.fill()
         
         context.restoreGState()
+    }
+    
+    
+    func configureUIWithMembershipCard(card: MembershipCardModel, andMemebershipPlan plan: MembershipPlanModel) {
+        if let imageStringURL = plan.images?.first(where: {($0.type == 3)})?.url {
+            let imageURL = URL(string: imageStringURL)!
+            cardIconImage.af_setImage(withURL: imageURL)
+        }
+        
+        firstColorHex = card.card?.colour ?? ""
+        cardNameLabel.text = plan.account?.companyName
+        cardNameLabel.font = UIFont.subtitle
+        cardValuePointsLabel.font = UIFont.subtitle
+        
+        switch card.status?.state {
+        case "failed":
+            logInButton.isHidden = false
+            logInButton.imageView?.contentMode = .scaleAspectFill
+            cardValuePointsLabel.isHidden = true
+            break
+        case "pending":
+            cardValuePointsLabel.text = card.status?.state
+
+            break
+        case "authorised":
+            if plan.featureSet?.cardType == 2 {
+                cardLinkStatusImage.image = UIImage(imageLiteralResourceName: "linked")
+                cardLinkStatusImage.isHidden = false
+                cardLinkStatusLabel.text = NSLocalizedString("card_linked_status", comment: "")
+                cardLinkStatusLabel.isHidden = false
+            }
+            if plan.featureSet?.hasPoints == true {
+                if let balanceValue = card.balances?[0].value {
+                    let attributedPrefix = NSMutableAttributedString(string: card.balances?[0].prefix ?? "")
+                    let attributedSuffix = NSMutableAttributedString(string: "\n" + (card.balances?[0].suffix ?? ""), attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
+                    let attributedValue = NSMutableAttributedString(string: String(balanceValue))
+                    let attributedLabelText = NSMutableAttributedString()
+                    attributedLabelText.append(attributedPrefix)
+                    attributedLabelText.append(attributedValue)
+                    attributedLabelText.append(attributedSuffix)
+                    cardValuePointsLabel.attributedText = attributedLabelText
+                }
+            } else {
+                cardValuePointsLabel.isHidden = true
+            }
+        case "unauthorised":
+            if plan.featureSet?.cardType == 2 {
+                cardLinkStatusLabel.isHidden = false
+                cardLinkStatusImage.isHidden = false
+                cardLinkStatusLabel.text = NSLocalizedString("card_can_not_link_status", comment: "")
+                cardLinkStatusImage.image = UIImage(imageLiteralResourceName: "unlinked")
+            }
+            break
+        default:
+            break
+        }
+    }
+   
+    @IBAction func logInButtonTapped(_ sender: Any) {
+        //TODO: Add implementation
     }
 }
