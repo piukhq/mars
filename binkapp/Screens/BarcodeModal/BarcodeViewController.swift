@@ -37,6 +37,7 @@ class BarcodeViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal)
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal)
         self.title = viewModel.getTitle()

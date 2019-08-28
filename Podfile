@@ -12,6 +12,7 @@ pod 'AlamofireImage'
 pod 'SwipeCellKit'
 pod 'Fabric'
 pod 'Crashlytics'
+pod 'AlamofireImage'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
