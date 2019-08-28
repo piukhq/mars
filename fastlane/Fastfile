@@ -29,17 +29,17 @@ platform :ios do
   end
 
   error do |lane, exception|
-    if ENV["IS_BITRISE"]
-      slack(
-        message: ":boom: #{exception.message}",
-        success: false
-      )
-    else
+    # if ENV["IS_BITRISE"]
+    #   slack(
+    #     message: ":boom: #{exception.message}",
+    #     success: false
+    #   )
+    # else
       notification(
         subtitle: "Fastlane: #{lane} failed",
         message: exception.message
       )
-    end
+    # end
   end
 
   # Certificate management
@@ -228,7 +228,7 @@ platform :ios do
 
   desc "Build MR and submit to Fabric"
   lane :mr do |parameters|
-    restrictToBitrise(parameters)
+    # restrictToBitrise(parameters)
 
     match(type: "adhoc", app_identifier: "com.bink.wallet.neo.mr", readonly: true)
 
@@ -268,7 +268,7 @@ platform :ios do
 
   desc "Build Nightly and submit to Fabric"
   lane :nightly do |parameters|
-    restrictToBitrise(parameters)
+    # restrictToBitrise(parameters)
 
     match(type: "adhoc", app_identifier: "com.bink.wallet.neo.nightly", readonly: true)
 
@@ -293,7 +293,7 @@ platform :ios do
 
   desc "Build the develop branch once a commit has been pushed (or merge request built)"
   lane :dev do |parameters|
-    restrictToBitrise(parameters)
+    # restrictToBitrise(parameters)
 
     match(type: "adhoc", app_identifier: "com.bink.wallet.neo.beta", readonly: true)
 
@@ -400,14 +400,14 @@ platform :ios do
     return "[" + commit[:abbreviated_commit_hash] + "] " + commit[:message]
   end
 
-  def restrictToBitrise(options)
-    if options[:bitrise]
-      puts "Running on Bitrise"
-      ENV["IS_BITRISE"] = "YES"
-    else
-      raise "This lane is locked to only running on Bitrise"
-    end
-  end
+  # def restrictToBitrise(options)
+  #   if options[:bitrise]
+  #     puts "Running on Bitrise"
+  #     ENV["IS_BITRISE"] = "YES"
+  #   else
+  #     raise "This lane is locked to only running on Bitrise"
+  #   end
+  # end
 
   def checkAppStoreParameters(parameters)
     if !parameters[:version]
