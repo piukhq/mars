@@ -1,14 +1,14 @@
-fastlane_version "1.104.0" 
+fastlane_version "1.104.0"
 
 default_platform :ios
 
 platform :ios do
-  
+
   # Lifecycle
 
   before_all do |lane, options|
 
-    ENV["MATCH_PASSWORD"] = "EsQzqesxMeoCWMdGEKUBbcf9"
+    ENV["MATCH_PASSWORD"] = "c3rt1f1cat3s"
 
     #ENV["IS_BITRISE"] - will be defined if we are running as Bitrise
 
@@ -19,7 +19,7 @@ platform :ios do
 
     # This excludes these targets from the code coverage, required if we just want BinkApp posted to Slack
     ENV["COVERAGE_EXCLUDE_TARGETS"] = ""
-    
+
     # This allows the command line iTunes Connect uploaded to get through out firewall, otherwise all connections are blocked
     ENV["DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS"] = "-t DAV"
 
@@ -79,10 +79,10 @@ platform :ios do
   desc "Adds a device to the portal"
   lane :addDevice do |parameters|
     if !parameters[:name]
-      raise "No name specified" 
+      raise "No name specified"
     elsif !parameters[:uuid]
-      raise "No UUID specified" 
-    end 
+      raise "No UUID specified"
+    end
 
     register_devices(
       devices: {
@@ -174,10 +174,10 @@ platform :ios do
     end
 
   end
-  
+
   desc "Build and submit Gamma to Fabric"
   lane :gamma do |parameters|
-      
+
     checkAppStoreParameters(parameters)
 
     releaseNumber = "#{parameters[:version]} (#{parameters[:build]})"
@@ -196,18 +196,18 @@ platform :ios do
     increment_build_number(
       build_number: parameters[:build]
     )
-            
+
     gym(
         scheme: "binkapp gamma",
         clean: true
     )
-                
+
     crashlytics(
         api_token: ENV["CRASHLYTICS_API_TOKEN"],
         build_secret: ENV["CRASHLYTICS_BUILD_SECRET"],
         groups: ["ios", "internal-testing"]
     )
-    
+
     # iOS Bitrise Message
     slack(
         message: ":racing_car: Gamma #{releaseNumber} uploaded to Crashlytics",
@@ -223,7 +223,7 @@ platform :ios do
     )
 
   end
-  
+
   # Bitrise builds
 
   desc "Build MR and submit to Fabric"
@@ -278,9 +278,9 @@ platform :ios do
 
     build_options = {
       coverage: true,
-      crashlytics_groups: ["ios", "internal-testing"], 
+      crashlytics_groups: ["ios", "internal-testing"],
       number: build_number,
-      podupdate: true, 
+      podupdate: true,
       # shield: "N-#{shield_date}-blue",
       scheme: "binkapp nightly",
       slack_started: ":crescent_moon: Starting Nightly build for #{shield_date}",
@@ -360,7 +360,7 @@ platform :ios do
         exclude_targets: ENV["COVERAGE_EXCLUDE_TARGETS"]
       )
     end
-    
+
     gym(
         scheme: options[:scheme]
     )
@@ -387,7 +387,7 @@ platform :ios do
     if options[:podupdate]
       sh "pod repo update"
     end
-  end  
+  end
 
   # Helpers
 
@@ -405,15 +405,15 @@ platform :ios do
       puts "Running on Bitrise"
       ENV["IS_BITRISE"] = "YES"
     else
-      raise "This lane is locked to only running on Bitrise" 
+      raise "This lane is locked to only running on Bitrise"
     end
   end
 
   def checkAppStoreParameters(parameters)
     if !parameters[:version]
-      raise "No version specified" 
+      raise "No version specified"
     elsif !parameters[:build]
-      raise "No build number specified" 
+      raise "No build number specified"
     end
   end
 
@@ -431,7 +431,7 @@ platform :ios do
         penultimateGitLog = sh "git log -1 --no-merges --pretty=%B"
         results = penultimateGitLog.scan(/\[TERRA\:(.*)\]/)
     end
-    
+
     if not results.last
       raise "No SHA provided, please provide a SHA dependancy"
     end

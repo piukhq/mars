@@ -1408,6 +1408,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				INFOPLIST_FILE = binkapp/Info.plist;
@@ -1415,9 +1416,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.alpha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.neo";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.neo.alpha";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1431,7 +1432,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				INFOPLIST_FILE = binkapp/Info.plist;
@@ -1439,9 +1440,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.neo";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.beta";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1597,7 +1598,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				INFOPLIST_FILE = binkapp/Info.plist;
@@ -1605,9 +1606,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.mr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.neo";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.mr";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1719,7 +1720,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				INFOPLIST_FILE = binkapp/Info.plist;
@@ -1727,9 +1728,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.nightly;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.neo";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.nightly";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1841,7 +1842,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				INFOPLIST_FILE = binkapp/Info.plist;
@@ -1963,7 +1964,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				INFOPLIST_FILE = binkapp/Info.plist;
@@ -1971,9 +1972,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.gamma;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.neo";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.gamma";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2085,7 +2086,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				INFOPLIST_FILE = binkapp/Info.plist;
@@ -2095,7 +2096,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.neo";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

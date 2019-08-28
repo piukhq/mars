@@ -1,6 +1,6 @@
-git_url("https://git.bink.com/Pantheon/iOS/mars/binkapp-match.git")
-
+git_url("https://git.bink.com/Pantheon/iOS/juno-match.git")
 storage_mode("git")
+git_branch("master")
 
 type("development") # The default type, can be: appstore, adhoc, enterprise or development
 
