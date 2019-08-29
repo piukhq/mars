@@ -10,7 +10,7 @@ import Foundation
 struct MembershipCardAmount : Codable {
     let currency : String?
     let suffix : String?
-    let value : Int?
+    let value : Double?
     
     enum CodingKeys: String, CodingKey {
         
@@ -23,7 +23,7 @@ struct MembershipCardAmount : Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         currency = try values.decodeIfPresent(String.self, forKey: .currency)
         suffix = try values.decodeIfPresent(String.self, forKey: .suffix)
-        value = try values.decodeIfPresent(Int.self, forKey: .value)
+        value = try values.decodeIfPresent(Double.self, forKey: .value)
     }
     
 }

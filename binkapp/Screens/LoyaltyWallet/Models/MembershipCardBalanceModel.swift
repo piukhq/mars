@@ -8,11 +8,11 @@
 import Foundation
 
 struct MembershipCardBalanceModel: Codable {
-   let value: Int?
-   let currency: String?
-   let prefix: String?
+    let value: Double?
+    let currency: String?
+    let prefix: String?
     let suffix: String?
-   let updatedAt: Int?
+    let updatedAt: Int?
     
     enum CodingKeys: String, CodingKey {
         
@@ -25,7 +25,7 @@ struct MembershipCardBalanceModel: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        value = try values.decodeIfPresent(Int.self, forKey: .value)
+        value = try values.decodeIfPresent(Double.self, forKey: .value)
         currency = try values.decodeIfPresent(String.self, forKey: .currency)
         prefix = try values.decodeIfPresent(String.self, forKey: .prefix)
         suffix = try values.decodeIfPresent(String.self, forKey: .suffix)
