@@ -1,4 +1,4 @@
-git_url("https://git.bink.com/Pantheon/iOS/juno-match.git")
+git_url("git@git.bink.com:Pantheon/iOS/juno-match.git")
 storage_mode("git")
 git_branch("master")
 
