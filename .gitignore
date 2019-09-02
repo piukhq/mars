@@ -71,3 +71,4 @@ Pods/Target Support Files/Alamofire/Alamofire-umbrella.h
 Pods/Target Support Files/Alamofire/Alamofire.modulemap
 Pods/Target Support Files/Alamofire/Alamofire.xcconfig
 binkapp.xcworkspace/xcuserdata/dorinpop.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+*.xcuserdatad
