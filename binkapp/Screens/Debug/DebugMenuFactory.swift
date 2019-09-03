@@ -22,8 +22,4 @@ struct DebugMenuFactory {
         let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         return DebugMenuRow(title: "Current version", subtitle: "\(versionNumber ?? "") build \(buildNumber ?? "")", action: nil)
     }
-    
-//    private func makeEndpointRow() -> DebugMenuRow {
-//        
-//    }
 }
