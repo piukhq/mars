@@ -37,7 +37,7 @@ class MainScreenRouter {
     }
     
     func toSettingsScreen() {
-        print("Settings screen not yet implemented")
+        displaySimplePopup(title: "Oops", message: "Settings screen not yet implemented.")
     }
     
     func toDebugMenu() {
