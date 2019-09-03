@@ -163,23 +163,16 @@ static NSString *const ktargetToInFlightPackagesKey =
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   GDTUploadCoordinator *sharedCoordinator = [GDTUploadCoordinator sharedInstance];
-  @try {
-    sharedCoordinator->_targetToInFlightPackages =
-        [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
-                               forKey:ktargetToInFlightPackagesKey];
-
-  } @catch (NSException *exception) {
-    sharedCoordinator->_targetToInFlightPackages = [NSMutableDictionary dictionary];
-  }
+  sharedCoordinator->_targetToInFlightPackages =
+      [aDecoder decodeObjectOfClass:[NSMutableDictionary class]
+                             forKey:ktargetToInFlightPackagesKey];
   return sharedCoordinator;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   // All packages that have been given to uploaders need to be tracked so that their expiration
   // timers can be called.
-  if (_targetToInFlightPackages.count > 0) {
-    [aCoder encodeObject:_targetToInFlightPackages forKey:ktargetToInFlightPackagesKey];
-  }
+  [aCoder encodeObject:_targetToInFlightPackages forKey:ktargetToInFlightPackagesKey];
 }
 
 #pragma mark - GDTLifecycleProtocol
