@@ -85,7 +85,7 @@
       buildConfiguration = "App Store">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "App Store"
+      buildConfiguration = "Gamma"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
