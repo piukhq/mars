@@ -20,6 +20,9 @@ class LoyaltyWalletViewModel {
     private var membershipPlans = [MembershipPlanModel]()
     
     var delegate: LoyaltyWalletViewModelDelegate?
+    var membershipCardsCount: Int {
+        return membershipCards.count
+    }
     
     init(repository: LoyaltyWalletRepository, router: MainScreenRouter) {
         self.repository = repository
@@ -50,7 +53,7 @@ class LoyaltyWalletViewModel {
         router.toBarcodeViewController()
     }
     
-    func getMemebershipCards() -> [MembershipCardModel] {
+    func getMembershipCards() -> [MembershipCardModel] {
         return membershipCards
     }
     
