@@ -37,7 +37,13 @@ class MainScreenRouter {
     }
     
     func toSettingsScreen() {
-        print("settings button pressed")
+        displaySimplePopup(title: "Oops", message: "Settings screen not yet implemented.")
+    }
+    
+    func toDebugMenu() {
+        let debugMenuViewModel = DebugMenuViewModel(sections: DebugMenuFactory().makeDebugMenuSections())
+        let debugNavigationController = UINavigationController(rootViewController: DebugMenuTableViewController(viewModel: debugMenuViewModel))
+        navController?.present(debugNavigationController, animated: true, completion: nil)
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {
