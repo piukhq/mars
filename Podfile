@@ -8,11 +8,13 @@ pod 'GoogleSignIn'
 pod 'Intercom'
 pod 'Swinject'
 pod 'Alamofire'
-pod 'AlamofireImage'
 pod 'SwipeCellKit'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'AlamofireImage'
+pod 'iOSDropDown'
+pod 'M13Checkbox'
+pod 'AlamofireNetworkActivityLogger'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",

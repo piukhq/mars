@@ -8,8 +8,9 @@
 import Foundation
 
 struct AuthoriseFieldModel : Codable {
-    let column : String?
-    let validation : String?
-    let description : String?
-    let type : Int?
+    let column: String?
+    let validation: String?
+    let description: String?
+    let type: Int?
+    let choice: [String]?
 }

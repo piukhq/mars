@@ -12,7 +12,7 @@ struct MembershipCardBalanceModel: Codable {
     let currency: String?
     let prefix: String?
     let suffix: String?
-    let updatedAt: Int?
+    let updatedAt: Double?
     
     enum CodingKeys: String, CodingKey {
         
@@ -29,6 +29,6 @@ struct MembershipCardBalanceModel: Codable {
         currency = try values.decodeIfPresent(String.self, forKey: .currency)
         prefix = try values.decodeIfPresent(String.self, forKey: .prefix)
         suffix = try values.decodeIfPresent(String.self, forKey: .suffix)
-        updatedAt = try values.decodeIfPresent(Int.self, forKey: .updatedAt)
+        updatedAt = try values.decodeIfPresent(Double.self, forKey: .updatedAt)
     }
 }

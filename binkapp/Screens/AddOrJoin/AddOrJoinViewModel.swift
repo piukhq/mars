@@ -20,6 +20,10 @@ class AddOrJoinViewModel {
         return membershipPlan
     }
     
+    func toAuthAndAddScreen() {
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan)
+    }
+    
     func displaySimplePopup(title: String?, message: String?) {
         router.displaySimplePopup(title: title, message: message)
     }

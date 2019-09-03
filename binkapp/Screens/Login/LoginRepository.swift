@@ -16,7 +16,7 @@ struct Constants {
 class LoginRepository {
     var user: Dictionary<String, Any>?
 
-    func reigster(email: String, completion: @escaping (Any) -> Void) {
+    func register(email: String, completion: @escaping () -> Void) {
         let header = [
             "Authorization": "Bearer " + generateToken(email: email),
             "Content-Type": "application/json"]
@@ -30,8 +30,8 @@ class LoginRepository {
             ]
         ]
         Alamofire.request(Constants.endpoint + "/service", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header )
-            .responseJSON { response in
-                completion(response)
+            .responseJSON { _ in
+                completion()
         }
     }
 }

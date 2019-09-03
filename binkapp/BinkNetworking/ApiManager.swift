@@ -14,6 +14,7 @@ enum RequestURL {
     case membershipPlans
     case membershipCards
     case deleteMembershipCard(cardId: Int)
+    case postMembershipCard
     
     var value: String {
         switch self {
@@ -21,6 +22,7 @@ enum RequestURL {
         case .membershipPlans: return "/membership_plans"
         case .membershipCards: return "/membership_cards"
         case .deleteMembershipCard(let cardId): return "/membership_card/\(cardId)"
+        case .postMembershipCard: return "/membership_cards"
         }
     }
 }
@@ -46,8 +48,14 @@ enum RequestHTTPMethod {
 class ApiManager {
     private let email = "Bink20iteration1@testbink.com"
     
-    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, onSuccess: @escaping (Resp) -> Void, onError: @escaping () -> Void) where Resp: Codable {
-        Alamofire.request(Constants.endpoint + "\(url.value)", method: httpMethod.value, parameters: getParameters(), encoding: JSONEncoding.default, headers: getHeader() )
+    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> Void, onError: @escaping () -> Void) where Resp: Codable {
+        var params: [String: Any]?
+        if parameters == nil {
+            params = getParameters()
+        } else {
+            params = parameters
+        }
+        Alamofire.request(Constants.endpoint + "\(url.value)", method: httpMethod.value, parameters: params, encoding: JSONEncoding.default, headers: getHeader() )
             .responseJSON { response in
                 guard let data = response.data else {
                     print("No data found")

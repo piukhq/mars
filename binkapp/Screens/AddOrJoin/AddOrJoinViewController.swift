@@ -15,7 +15,7 @@ class AddOrJoinViewController: UIViewController {
     private let viewModel: AddOrJoinViewModel
     
     @IBAction func addCardButtonAction(_ sender: Any) {
-        viewModel.displaySimplePopup(title: nil, message: "Screen not implemented")
+        viewModel.toAuthAndAddScreen()
     }
     
     @IBAction func newCardButtonAction(_ sender: Any) {
@@ -52,9 +52,8 @@ class AddOrJoinViewController: UIViewController {
     
     func configureUI() {
         let membershipPlan = viewModel.getMembershipPlan()
-        if let imageUrlString = membershipPlan.images?.first(where: { $0.type == 3 })?.url {
-            brandHeaderView.configure(imageURLString: imageUrlString, loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
-        }
+        
+        brandHeaderView.configure(imageURLString: ((membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue })?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
         
         addCardButton.titleLabel?.font = UIFont.buttonText
         addCardButton.setTitle("add_my_card_button".localized, for: .normal)
