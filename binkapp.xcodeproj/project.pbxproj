@@ -116,6 +116,14 @@
 		B73F7109230D7F1300D82566 /* MembershipCardBalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */; };
 		B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */; };
 		B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */; };
+		EF485566231D5E4E00FC9E5F /* DebugMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */; };
+		EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF485567231D679E00FC9E5F /* DebugMenuTableViewCell.xib */; };
+		EF48556C231D696800FC9E5F /* DebugMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48556B231D696800FC9E5F /* DebugMenuTableViewCell.swift */; };
+		EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48556D231D6E4000FC9E5F /* DebugMenuFactory.swift */; };
+		EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485571231D728A00FC9E5F /* DebugMenuSection.swift */; };
+		EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */; };
+		EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485576231D72E700FC9E5F /* ModalDismissable.swift */; };
+		EF48557B231E5A4F00FC9E5F /* DebugMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48557A231E5A4F00FC9E5F /* DebugMenuTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -276,6 +284,14 @@
 		DAD06B97E6DBC2FAA6900787 /* Pods-binkapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.debug.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.debug.xcconfig"; sourceTree = "<group>"; };
 		E7354EC1FB3CF368988428AD /* Pods-binkappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.release.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ED4CD3B619FA32A249E98CC6 /* Pods-binkappTests.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.nightly.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.nightly.xcconfig"; sourceTree = "<group>"; };
+		EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTableViewController.swift; sourceTree = "<group>"; };
+		EF485567231D679E00FC9E5F /* DebugMenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugMenuTableViewCell.xib; sourceTree = "<group>"; };
+		EF48556B231D696800FC9E5F /* DebugMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTableViewCell.swift; sourceTree = "<group>"; };
+		EF48556D231D6E4000FC9E5F /* DebugMenuFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuFactory.swift; sourceTree = "<group>"; };
+		EF485571231D728A00FC9E5F /* DebugMenuSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuSection.swift; sourceTree = "<group>"; };
+		EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModel.swift; sourceTree = "<group>"; };
+		EF485576231D72E700FC9E5F /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
+		EF48557A231E5A4F00FC9E5F /* DebugMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -526,6 +542,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EF485575231D72DA00FC9E5F /* Protocols */,
 				3CD3494122F99E25000C1F4D /* Fonts */,
 				3CF029F522F45B53009A0E61 /* CustomView.swift */,
 			);
@@ -635,6 +652,7 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
+				EF485578231E5A3600FC9E5F /* Screens */,
 				3CFD912F22F1BA8200F25AF1 /* TabBarTests.swift */,
 				5ECE048322CE579B001BA964 /* binkappTests.swift */,
 				5ECE048522CE579B001BA964 /* Info.plist */,
@@ -655,6 +673,7 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				EFF3DCDC231D507A006A39C9 /* Debug */,
 				3CE24B272304014500B258C8 /* AddOrJoin */,
 				3C974DCF23018B87005E383C /* BrowseBrands */,
 				3C0EEE7722FC64F9006FAE5E /* BarcodeModal */,
@@ -699,6 +718,59 @@
 				3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EF48556F231D725800FC9E5F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EF485567231D679E00FC9E5F /* DebugMenuTableViewCell.xib */,
+				EF48556B231D696800FC9E5F /* DebugMenuTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EF485570231D726600FC9E5F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EF485571231D728A00FC9E5F /* DebugMenuSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EF485575231D72DA00FC9E5F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				EF485576231D72E700FC9E5F /* ModalDismissable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		EF485578231E5A3600FC9E5F /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				EF485579231E5A4000FC9E5F /* Debug Menu */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		EF485579231E5A4000FC9E5F /* Debug Menu */ = {
+			isa = PBXGroup;
+			children = (
+				EF48557A231E5A4F00FC9E5F /* DebugMenuTests.swift */,
+			);
+			path = "Debug Menu";
+			sourceTree = "<group>";
+		};
+		EFF3DCDC231D507A006A39C9 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				EF485570231D726600FC9E5F /* Model */,
+				EF48556F231D725800FC9E5F /* View */,
+				EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */,
+				EF48556D231D6E4000FC9E5F /* DebugMenuFactory.swift */,
+				EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */,
+			);
+			path = Debug;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -846,6 +918,7 @@
 				3CD3493522F99E1D000C1F4D /* NunitoSans-Light.ttf in Resources */,
 				3C873FFB22F073CF00FA3031 /* LoyaltyWalletViewController.xib in Resources */,
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
+				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
 				3CD3493D22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1067,6 +1140,7 @@
 				3C873FF822F073CF00FA3031 /* WalletLoyaltyCardTableViewCell.swift in Sources */,
 				3C3C604C2302DD1600D9EA25 /* EmptyResponse.swift in Sources */,
 				3C873FF822F073CF00FA3031 /* WalletLoyaltyCardTableViewCell.swift in Sources */,
+				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,
 				5ECE04AF22CE582E001BA964 /* UserModel.swift in Sources */,
 				B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
@@ -1085,6 +1159,7 @@
 				B72E82C12313F3B40045607E /* MembershipTransaction.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */,
+				EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
 				3C794D9123018E67000A31FD /* BrowseBrandsRepository.swift in Sources */,
@@ -1102,6 +1177,7 @@
 				B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */,
 				3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */,
 				3C794D8C23018C25000A31FD /* BrowseBrandsViewController.swift in Sources */,
+				EF48556C231D696800FC9E5F /* DebugMenuTableViewCell.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */,
@@ -1112,14 +1188,16 @@
 				B73F7105230D7AF900D82566 /* MembershipCardAccountModel.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
-				3CF054D522FDABF30069E98A /* BinkGradientButton.swift in Sources */,
 				B72E82C32313F3F90045607E /* MembershipCardAmount.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
 				B726335123058E2300951037 /* TierModel.swift in Sources */,
+				EF485566231D5E4E00FC9E5F /* DebugMenuTableViewController.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
 				B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */,
+				EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
+				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,
 				3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */,
 				3C873FF222F073CF00FA3031 /* PaymentWalletPresenter.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
@@ -1144,6 +1222,7 @@
 			files = (
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */,
+				EF48557B231E5A4F00FC9E5F /* DebugMenuTests.swift in Sources */,
 				3C429F8E22F16A9A009C1BD2 /* LoyaltyWalletTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* TabBarTests.swift in Sources */,
 				AF06D42F48491D78B0040221 /* DataAccessible.swift in Sources */,
