@@ -14,7 +14,7 @@ struct DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "Tools", rows: [makeVersionNumberRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {

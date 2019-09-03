@@ -52,3 +52,5 @@
 "yes" = "Yes";
 "no" = "No";
 "cancel" = "Cancel";
+
+"debug_menu_tools_section_title" = "Tools";
