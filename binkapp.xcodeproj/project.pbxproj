@@ -114,6 +114,14 @@
 		B73F7103230D78E300D82566 /* MembershipCardStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73F7102230D78E300D82566 /* MembershipCardStatusModel.swift */; };
 		B73F7105230D7AF900D82566 /* MembershipCardAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73F7104230D7AF900D82566 /* MembershipCardAccountModel.swift */; };
 		B73F7109230D7F1300D82566 /* MembershipCardBalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */; };
+		B7665992231E57AE00B327BE /* CardDetailsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7665991231E57AE00B327BE /* CardDetailsInfoView.swift */; };
+		B7665994231E57CC00B327BE /* CardDetailsInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7665993231E57CC00B327BE /* CardDetailsInfoView.xib */; };
+		B7D577B3231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */; };
+		B7D577B4231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D577B2231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib */; };
+		B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */; };
+		B7D577B823180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B723180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift */; };
+		B7D577BB23192C4200C6B145 /* FullDetailsBrandHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577BA23192C4200C6B145 /* FullDetailsBrandHeader.swift */; };
+		B7D577BD23192C5C00C6B145 /* FullDetailsBrandHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D577BC23192C5C00C6B145 /* FullDetailsBrandHeader.xib */; };
 		B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */; };
 		B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */; };
 /* End PBXBuildFile section */
@@ -266,6 +274,14 @@
 		B73F7102230D78E300D82566 /* MembershipCardStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardStatusModel.swift; sourceTree = "<group>"; };
 		B73F7104230D7AF900D82566 /* MembershipCardAccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardAccountModel.swift; sourceTree = "<group>"; };
 		B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardBalanceModel.swift; sourceTree = "<group>"; };
+		B7665991231E57AE00B327BE /* CardDetailsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsInfoView.swift; sourceTree = "<group>"; };
+		B7665993231E57CC00B327BE /* CardDetailsInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardDetailsInfoView.xib; sourceTree = "<group>"; };
+		B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewController.swift; sourceTree = "<group>"; };
+		B7D577B2231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoyaltyCardFullDetailsViewController.xib; sourceTree = "<group>"; };
+		B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModel.swift; sourceTree = "<group>"; };
+		B7D577B723180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsRepository.swift; sourceTree = "<group>"; };
+		B7D577BA23192C4200C6B145 /* FullDetailsBrandHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullDetailsBrandHeader.swift; sourceTree = "<group>"; };
+		B7D577BC23192C5C00C6B145 /* FullDetailsBrandHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullDetailsBrandHeader.xib; sourceTree = "<group>"; };
 		B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "binkapp-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Encrypting.swift"; sourceTree = "<group>"; };
 		B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+StringConversion.swift"; sourceTree = "<group>"; };
@@ -655,6 +671,7 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B7D577B02318097500C6B145 /* LoyaltyCardFullDetails */,
 				3CE24B272304014500B258C8 /* AddOrJoin */,
 				3C974DCF23018B87005E383C /* BrowseBrands */,
 				3C0EEE7722FC64F9006FAE5E /* BarcodeModal */,
@@ -686,6 +703,29 @@
 				AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		B7D577B02318097500C6B145 /* LoyaltyCardFullDetails */ = {
+			isa = PBXGroup;
+			children = (
+				B7D577B923192BBD00C6B145 /* Views */,
+				B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */,
+				B7D577B2231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib */,
+				B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */,
+				B7D577B723180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift */,
+			);
+			path = LoyaltyCardFullDetails;
+			sourceTree = "<group>";
+		};
+		B7D577B923192BBD00C6B145 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B7D577BA23192C4200C6B145 /* FullDetailsBrandHeader.swift */,
+				B7D577BC23192C5C00C6B145 /* FullDetailsBrandHeader.xib */,
+				B7665991231E57AE00B327BE /* CardDetailsInfoView.swift */,
+				B7665993231E57CC00B327BE /* CardDetailsInfoView.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		B7E2EC0622E5ED1800BB201A /* Extensions */ = {
@@ -837,10 +877,13 @@
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,
 				3CD3493E22F99E1D000C1F4D /* NunitoSans-Black.ttf in Resources */,
 				3CD3493422F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf in Resources */,
+				B7665994231E57CC00B327BE /* CardDetailsInfoView.xib in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
 				3CD3493622F99E1D000C1F4D /* NunitoSans-BlackItalic.ttf in Resources */,
 				3C873FF422F073CF00FA3031 /* MainTabBarViewController.xib in Resources */,
+				B7D577BD23192C5C00C6B145 /* FullDetailsBrandHeader.xib in Resources */,
 				3CD3493222F99E1D000C1F4D /* NunitoSans-LightItalic.ttf in Resources */,
+				B7D577B4231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib in Resources */,
 				3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */,
 				3C873FED22F073CF00FA3031 /* PaymentWalletViewController.xib in Resources */,
 				3CD3493522F99E1D000C1F4D /* NunitoSans-Light.ttf in Resources */,
@@ -1071,6 +1114,7 @@
 				B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
 				3CF029EF22F45ACE009A0E61 /* AddingOptionView.swift in Sources */,
+				B7D577B823180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				B726334B23058A5C00951037 /* FeatureSetModel.swift in Sources */,
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
@@ -1103,8 +1147,11 @@
 				3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */,
 				3C794D8C23018C25000A31FD /* BrowseBrandsViewController.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
+				B7D577B3231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
+				B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */,
 				3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */,
+				B7665992231E57AE00B327BE /* CardDetailsInfoView.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
@@ -1112,10 +1159,10 @@
 				B73F7105230D7AF900D82566 /* MembershipCardAccountModel.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
-				3CF054D522FDABF30069E98A /* BinkGradientButton.swift in Sources */,
 				B72E82C32313F3F90045607E /* MembershipCardAmount.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
+				B7D577BB23192C4200C6B145 /* FullDetailsBrandHeader.swift in Sources */,
 				B726335123058E2300951037 /* TierModel.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
 				B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */,

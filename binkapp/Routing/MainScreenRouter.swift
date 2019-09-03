@@ -81,6 +81,12 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
+    func toLoyaltyFullDetailsScreen(membershipPlan: MembershipPlanModel) {
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipPlan: membershipPlan, router: self)
+        let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
     func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         let alert = UIAlertController(title: nil, message: "delete_card_confirmation".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in

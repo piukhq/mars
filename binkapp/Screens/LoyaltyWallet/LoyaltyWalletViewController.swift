@@ -92,9 +92,10 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Error", message: "To be implemented", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true)
+//        let alert = UIAlertController(title: "Error", message: "To be implemented", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//        present(alert, animated: true)
+        viewModel.toFullDetailsCardScreen(membershipPlan: viewModel.getMembershipPlans()[indexPath.section])
     }
 }
 

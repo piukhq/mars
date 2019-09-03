@@ -10,7 +10,7 @@ import Alamofire
 import Keys
 
 class LoyaltyWalletRepository {
-    let apiManager: ApiManager
+    private let apiManager: ApiManager
     
     init(apiManager: ApiManager) {
         self.apiManager = apiManager

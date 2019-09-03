@@ -50,6 +50,10 @@ class LoyaltyWalletViewModel {
         router.toBarcodeViewController()
     }
     
+    func toFullDetailsCardScreen(membershipPlan: MembershipPlanModel) {
+        router.toLoyaltyFullDetailsScreen(membershipPlan: membershipPlan)
+    }
+    
     func getMemebershipCards() -> [MembershipCardModel] {
         return membershipCards
     }
