@@ -35,7 +35,7 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.getMemebershipCards().count
+        return viewModel.membershipCardsCount
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,10 +43,14 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = indexPath.section
+        let membershipPlan = viewModel.getMembershipCards()[section].membershipPlan
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "WalletLoyaltyCardTableViewCell", for: indexPath) as! WalletLoyaltyCardTableViewCell
-        if let cardPlan = viewModel.getMembershipPlans().first(where: {($0.id == viewModel.getMemebershipCards()[indexPath.section].membershipPlan)}) {
-            cell.configureUIWithMembershipCard(card:viewModel.getMemebershipCards()[indexPath.section] , andMemebershipPlan: cardPlan)
+        if let cardPlan = viewModel.getMembershipPlans().first(where: {($0.id == membershipPlan)}) {
+            cell.configureUIWithMembershipCard(card: viewModel.getMembershipCards()[section], andMemebershipPlan: cardPlan)
         }
+        
         cell.layer.cornerRadius = 8
         cell.separatorInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         cell.layer.shadowOffset = CGSize(width: 0, height: 5)

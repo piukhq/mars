@@ -89,7 +89,8 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         
         let membershipPlan = viewModel.getMembershipPlans()[indexPath.row]
         
-        if let brandName = membershipPlan.account?.companyName, let imageUrl = membershipPlan.images?.first(where: {$0.type == 3})?.url {
+        if let brandName = membershipPlan.account?.companyName {
+            let imageUrl = membershipPlan.images?.first(where: {$0.type == ImageType.icon.rawValue})?.url
             switch indexPath.section {
             case 0:
                 cell.configure(imageURL: imageUrl, brandName: brandName, description: true)
