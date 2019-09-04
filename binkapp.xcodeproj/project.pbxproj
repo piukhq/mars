@@ -1535,7 +1535,7 @@
 					"PB_FIELD_32BIT=1",
 					"PB_NO_PACKED_STRUCTS=1",
 					"PB_ENABLE_MALLOC=1",
-					DEBUG,
+					"DEBUG=1",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1713,7 +1713,7 @@
 					"PB_FIELD_32BIT=1",
 					"PB_NO_PACKED_STRUCTS=1",
 					"PB_ENABLE_MALLOC=1",
-					DEBUG,
+					"DEBUG=1",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1847,7 +1847,7 @@
 					"PB_FIELD_32BIT=1",
 					"PB_NO_PACKED_STRUCTS=1",
 					"PB_ENABLE_MALLOC=1",
-					DEBUG,
+					"DEBUG=1",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
