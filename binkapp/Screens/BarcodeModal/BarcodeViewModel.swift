@@ -17,13 +17,20 @@ class BarcodeViewModel {
     //TO DO: CHANGE VARIABLE NAME
     let string = "1234 5432 1242"
     let title = "Harvey Nichols"
+    private let membershipPlan: MembershipPlanModel
+    private let membershipCard: MembershipCardModel
+    
+    init(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel) {
+        self.membershipPlan = membershipPlan
+        self.membershipCard = membershipCard
+    }
     
     func getTitle() -> String {
-        return title
+        return membershipPlan.account?.companyName ?? ""
     }
     
     func getCardNumber() -> String {
-        return string
+        return membershipCard.card.
     }
     
     func getBarcodeType() -> BarcodeType {
