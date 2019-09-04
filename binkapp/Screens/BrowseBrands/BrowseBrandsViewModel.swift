@@ -7,10 +7,35 @@
 
 import Foundation
 
+enum PlanCardType: Int {
+    case pll = 2
+    case nonPll
+}
+
 class BrowseBrandsViewModel {
     private let repository: BrowseBrandsRepository
     private let router: MainScreenRouter
     private var membershipPlans = [MembershipPlanModel]()
+    
+    var pllMembershipPlans: [MembershipPlanModel] {
+        var plansArray: [MembershipPlanModel] = []
+        for plan in membershipPlans {
+            if plan.featureSet?.cardType == PlanCardType.pll.rawValue {
+                plansArray.append(plan)
+            }
+        }
+        return plansArray
+    }
+    
+    var nonPllMembershipPlans: [MembershipPlanModel] {
+        var plansArray: [MembershipPlanModel] = []
+        for plan in membershipPlans {
+            if plan.featureSet?.cardType != PlanCardType.pll.rawValue {
+                plansArray.append(plan)
+            }
+        }
+        return plansArray
+    }
     
     init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
         self.repository = repository
@@ -33,5 +58,9 @@ class BrowseBrandsViewModel {
     
     func toAddOrJoinScreen(membershipPlan: MembershipPlanModel) {
         router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+    }
+    
+    func popViewController() {
+        router.popViewController()
     }
 }
