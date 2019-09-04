@@ -35,10 +35,10 @@ class BrowseBrandsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal)
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal)
         navigationController?.setNavigationBarHidden(false, animated: true)
         
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        navigationItem.leftBarButtonItem = backButton
         
         let filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(notImplementedPopup))
         navigationItem.rightBarButtonItem = filtersButton
@@ -68,39 +68,38 @@ class BrowseBrandsViewController: UIViewController {
         alert.addAction(alertAction)
         present(alert, animated: true, completion: nil)
     }
+    
+    @objc private func popViewController() {
+        viewModel.popViewController()
+    }
 }
 
 extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return viewModel.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-            case 0:
-                return viewModel.getMembershipPlans().count
-            default:
-                return 0
-        }
+        return viewModel.getNumberOfRowsFor(section: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrandTableViewCell", for: indexPath) as? BrandTableViewCell else { return UITableViewCell() }
         
-        let membershipPlan = viewModel.getMembershipPlans()[indexPath.row]
+        let membershipPlan: MembershipPlanModel = viewModel.getMembershipPlan(for: indexPath)
         
         if let brandName = membershipPlan.account?.companyName {
             let imageUrl = membershipPlan.images?.first(where: {$0.type == ImageType.icon.rawValue})?.url
             switch indexPath.section {
             case 0:
                 cell.configure(imageURL: imageUrl, brandName: brandName, description: true)
-                if indexPath.row == viewModel.getMembershipPlans().count - 1 {
+                if indexPath.row == viewModel.getPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }
                 break
             case 1:
-                cell.configure(imageURL: "", brandName: brandName)
-                if indexPath.row == viewModel.getMembershipPlans().count - 1 {
+                cell.configure(imageURL: imageUrl, brandName: brandName)
+                if indexPath.row == viewModel.getNonPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }
                 break
@@ -115,11 +114,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         let view = UIView()
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 47))
         titleLabel.font = UIFont.headline
-        if section == 0 {
-            titleLabel.text = "pll_title".localized
-        } else if section == 1 {
-            titleLabel.text = "all_title".localized
-        }
+        titleLabel.text = viewModel.getSectionTitleText(section: section)
         view.addSubview(titleLabel)
         return view
     }
@@ -133,7 +128,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedBrand = viewModel.getMembershipPlans()[indexPath.row]
-        viewModel.toAddOrJoinScreen(membershipPlan: selectedBrand)
+        let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
+        viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
     }
 }
