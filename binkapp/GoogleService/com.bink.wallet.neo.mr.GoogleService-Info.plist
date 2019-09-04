@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>720854562599-dhted8f7aog7ham1i6q01r9list6f3jo.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.720854562599-dhted8f7aog7ham1i6q01r9list6f3jo</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCm48-u-E9VBgvroUP91GEVrTjRCO2DwMM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>720854562599</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bink.wallet.neo.mr</string>
+	<key>PROJECT_ID</key>
+	<string>bink-ios-v2</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bink-ios-v2.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:720854562599:ios:bf13e72c03a2b246</string>
+	<key>DATABASE_URL</key>
+	<string>https://bink-ios-v2.firebaseio.com</string>
+</dict>
+</plist>

@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import Fabric
 import Crashlytics
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,7 +27,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainWindow.rootViewController = router.getNavigationControllerWithLoginScreen()
             mainWindow.makeKeyAndVisible()
         }
+        
+        // Crashlytics
         Fabric.with([Crashlytics.self])
+
+        // Firebase
+
+        if let bundleIdentifier = Bundle.main.bundleIdentifier {
+            let filePath = Bundle.main.path(forResource: "\(bundleIdentifier).GoogleService-Info", ofType: "plist")
+            if let fileopts = FirebaseOptions(contentsOfFile: filePath!) {
+                FirebaseApp.configure(options: fileopts)
+            }
+        }
         return true
     }
 

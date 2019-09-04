@@ -81,6 +81,13 @@
 		3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFDB224230C382400E75A14 /* BinkGradientButton.swift */; };
 		3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFDB226230C38A700E75A14 /* BinkTextField.swift */; };
 		4B03E4ACD9F0FF1C979C752E /* Pods_binkapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */; };
+		5E19AF66231EC5D90056B5D3 /* com.bink.wallet.neo.GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E19AF65231EC5D90056B5D3 /* com.bink.wallet.neo.GoogleService-Info.plist */; };
+		5E19AF6F231EC7A50056B5D3 /* com.bink.wallet.neo.alpha.GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E19AF6E231EC7A40056B5D3 /* com.bink.wallet.neo.alpha.GoogleService-Info.plist */; };
+		5E19AF71231EC7E20056B5D3 /* com.bink.wallet.neo.beta.GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E19AF70231EC7E20056B5D3 /* com.bink.wallet.neo.beta.GoogleService-Info.plist */; };
+		5E19AF73231EC8060056B5D3 /* com.bink.wallet.neo.gamma.GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E19AF72231EC8050056B5D3 /* com.bink.wallet.neo.gamma.GoogleService-Info.plist */; };
+		5E19AF76231EC93F0056B5D3 /* com.bink.wallet.neo.external.GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E19AF75231EC93F0056B5D3 /* com.bink.wallet.neo.external.GoogleService-Info.plist */; };
+		5E19AF78231EC9720056B5D3 /* com.bink.wallet.neo.nightly.GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E19AF77231EC9720056B5D3 /* com.bink.wallet.neo.nightly.GoogleService-Info.plist */; };
+		5E19AF7A231EC9910056B5D3 /* com.bink.wallet.neo.mr.GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E19AF79231EC9910056B5D3 /* com.bink.wallet.neo.mr.GoogleService-Info.plist */; };
 		5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046B22CE5798001BA964 /* AppDelegate.swift */; };
 		5ECE047122CE5798001BA964 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE046F22CE5798001BA964 /* Main.storyboard */; };
 		5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */; };
@@ -218,6 +225,13 @@
 		3CFDB226230C38A700E75A14 /* BinkTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinkTextField.swift; path = binkapp/BinkUI/BinkTextField.swift; sourceTree = SOURCE_ROOT; };
 		4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5066AD6AE98609F176C1C64D /* Pods-binkappUITests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store (internal).xcconfig"; sourceTree = "<group>"; };
+		5E19AF65231EC5D90056B5D3 /* com.bink.wallet.neo.GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "com.bink.wallet.neo.GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5E19AF6E231EC7A40056B5D3 /* com.bink.wallet.neo.alpha.GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "com.bink.wallet.neo.alpha.GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5E19AF70231EC7E20056B5D3 /* com.bink.wallet.neo.beta.GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "com.bink.wallet.neo.beta.GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5E19AF72231EC8050056B5D3 /* com.bink.wallet.neo.gamma.GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "com.bink.wallet.neo.gamma.GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5E19AF75231EC93F0056B5D3 /* com.bink.wallet.neo.external.GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "com.bink.wallet.neo.external.GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5E19AF77231EC9720056B5D3 /* com.bink.wallet.neo.nightly.GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "com.bink.wallet.neo.nightly.GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5E19AF79231EC9910056B5D3 /* com.bink.wallet.neo.mr.GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "com.bink.wallet.neo.mr.GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5ECE046822CE5798001BA964 /* binkapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = binkapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046B22CE5798001BA964 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5ECE047022CE5798001BA964 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -588,6 +602,20 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		5E19AF67231EC6870056B5D3 /* GoogleService */ = {
+			isa = PBXGroup;
+			children = (
+				5E19AF65231EC5D90056B5D3 /* com.bink.wallet.neo.GoogleService-Info.plist */,
+				5E19AF6E231EC7A40056B5D3 /* com.bink.wallet.neo.alpha.GoogleService-Info.plist */,
+				5E19AF70231EC7E20056B5D3 /* com.bink.wallet.neo.beta.GoogleService-Info.plist */,
+				5E19AF72231EC8050056B5D3 /* com.bink.wallet.neo.gamma.GoogleService-Info.plist */,
+				5E19AF75231EC93F0056B5D3 /* com.bink.wallet.neo.external.GoogleService-Info.plist */,
+				5E19AF77231EC9720056B5D3 /* com.bink.wallet.neo.nightly.GoogleService-Info.plist */,
+				5E19AF79231EC9910056B5D3 /* com.bink.wallet.neo.mr.GoogleService-Info.plist */,
+			);
+			path = GoogleService;
+			sourceTree = "<group>";
+		};
 		5ECE045F22CE5797001BA964 = {
 			isa = PBXGroup;
 			children = (
@@ -613,6 +641,7 @@
 		5ECE046A22CE5798001BA964 /* binkapp */ = {
 			isa = PBXGroup;
 			children = (
+				5E19AF67231EC6870056B5D3 /* GoogleService */,
 				5ECE049F22CE57F5001BA964 /* Screens */,
 				3C873FD122F073B500FA3031 /* Routing */,
 				3C25BE012301A0F600E931EE /* BinkNetworking */,
@@ -822,9 +851,12 @@
 				3CD3493A22F99E1D000C1F4D /* NunitoSans-Italic.ttf in Resources */,
 				3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */,
 				3C873FF922F073CF00FA3031 /* WalletLoyaltyCardTableViewCell.xib in Resources */,
+				5E19AF78231EC9720056B5D3 /* com.bink.wallet.neo.nightly.GoogleService-Info.plist in Resources */,
 				3CF029F322F45AEC009A0E61 /* AddingOptionsViewController.xib in Resources */,
 				3CADDEAC23154FB2006C3D9C /* LoyaltyPlanView.xib in Resources */,
+				5E19AF6F231EC7A50056B5D3 /* com.bink.wallet.neo.alpha.GoogleService-Info.plist in Resources */,
 				3CD3493322F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf in Resources */,
+				5E19AF7A231EC9910056B5D3 /* com.bink.wallet.neo.mr.GoogleService-Info.plist in Resources */,
 				3CE24B2D2304014600B258C8 /* AddOrJoinViewController.xib in Resources */,
 				3CD3493F22F99E1D000C1F4D /* NunitoSans-ExtraBoldItalic.ttf in Resources */,
 				3CD3493C22F99E1D000C1F4D /* NunitoSans-Bold.ttf in Resources */,
@@ -841,8 +873,12 @@
 				3CD3493622F99E1D000C1F4D /* NunitoSans-BlackItalic.ttf in Resources */,
 				3C873FF422F073CF00FA3031 /* MainTabBarViewController.xib in Resources */,
 				3CD3493222F99E1D000C1F4D /* NunitoSans-LightItalic.ttf in Resources */,
+				5E19AF66231EC5D90056B5D3 /* com.bink.wallet.neo.GoogleService-Info.plist in Resources */,
+				5E19AF73231EC8060056B5D3 /* com.bink.wallet.neo.gamma.GoogleService-Info.plist in Resources */,
 				3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */,
+				5E19AF76231EC93F0056B5D3 /* com.bink.wallet.neo.external.GoogleService-Info.plist in Resources */,
 				3C873FED22F073CF00FA3031 /* PaymentWalletViewController.xib in Resources */,
+				5E19AF71231EC7E20056B5D3 /* com.bink.wallet.neo.beta.GoogleService-Info.plist in Resources */,
 				3CD3493522F99E1D000C1F4D /* NunitoSans-Light.ttf in Resources */,
 				3C873FFB22F073CF00FA3031 /* LoyaltyWalletViewController.xib in Resources */,
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
@@ -1112,7 +1148,6 @@
 				B73F7105230D7AF900D82566 /* MembershipCardAccountModel.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
-				3CF054D522FDABF30069E98A /* BinkGradientButton.swift in Sources */,
 				B72E82C32313F3F90045607E /* MembershipCardAmount.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
