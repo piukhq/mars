@@ -67,23 +67,11 @@ class BrowseBrandsViewModel {
     }
     
     func getPllMembershipPlans() -> [MembershipPlanModel] {
-        var plansArray: [MembershipPlanModel] = []
-        for plan in membershipPlans {
-            if plan.featureSet?.cardType == PlanCardType.pll.rawValue {
-                plansArray.append(plan)
-            }
-        }
-        return plansArray
+        return membershipPlans.filter { $0.featureSet?.cardType == PlanCardType.pll.rawValue }
     }
     
     func getNonPllMembershipPlans() -> [MembershipPlanModel] {
-        var plansArray: [MembershipPlanModel] = []
-        for plan in membershipPlans {
-            if plan.featureSet?.cardType != PlanCardType.pll.rawValue {
-                plansArray.append(plan)
-            }
-        }
-        return plansArray
+        return membershipPlans.filter { $0.featureSet?.cardType != PlanCardType.pll.rawValue }
     }
     
     func numberOfSections() -> Int {
