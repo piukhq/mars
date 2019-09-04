@@ -1535,7 +1535,6 @@
 					"PB_FIELD_32BIT=1",
 					"PB_NO_PACKED_STRUCTS=1",
 					"PB_ENABLE_MALLOC=1",
-					"DEBUG=1",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1545,6 +1544,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.beta";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "-D DEBUG";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1713,7 +1713,6 @@
 					"PB_FIELD_32BIT=1",
 					"PB_NO_PACKED_STRUCTS=1",
 					"PB_ENABLE_MALLOC=1",
-					"DEBUG=1",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1723,6 +1722,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.mr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.mr";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "-D DEBUG";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1847,7 +1847,6 @@
 					"PB_FIELD_32BIT=1",
 					"PB_NO_PACKED_STRUCTS=1",
 					"PB_ENABLE_MALLOC=1",
-					"DEBUG=1",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1857,6 +1856,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.nightly;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.nightly";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "-D DEBUG";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
