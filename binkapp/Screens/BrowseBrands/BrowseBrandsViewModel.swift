@@ -17,26 +17,6 @@ class BrowseBrandsViewModel {
     private let router: MainScreenRouter
     private var membershipPlans = [MembershipPlanModel]()
     
-    var pllMembershipPlans: [MembershipPlanModel] {
-        var plansArray: [MembershipPlanModel] = []
-        for plan in membershipPlans {
-            if plan.featureSet?.cardType == PlanCardType.pll.rawValue {
-                plansArray.append(plan)
-            }
-        }
-        return plansArray
-    }
-    
-    var nonPllMembershipPlans: [MembershipPlanModel] {
-        var plansArray: [MembershipPlanModel] = []
-        for plan in membershipPlans {
-            if plan.featureSet?.cardType != PlanCardType.pll.rawValue {
-                plansArray.append(plan)
-            }
-        }
-        return plansArray
-    }
-    
     init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
@@ -54,6 +34,62 @@ class BrowseBrandsViewModel {
     
     func getMembershipPlans() -> [MembershipPlanModel] {
         return membershipPlans
+    }
+    
+    func hasMembershipPlans() -> Bool {
+        if !getPllMembershipPlans().isEmpty && !getNonPllMembershipPlans().isEmpty {
+            return true
+        }
+        return false
+    }
+    
+    func hasPlansForOneSection() -> Bool {
+        if (getPllMembershipPlans().isEmpty && !getNonPllMembershipPlans().isEmpty) || (!getPllMembershipPlans().isEmpty && getNonPllMembershipPlans().isEmpty) {
+            return true
+        }
+        return false
+    }
+    
+    func getPllMembershipPlans() -> [MembershipPlanModel] {
+        var plansArray: [MembershipPlanModel] = []
+        for plan in membershipPlans {
+            if plan.featureSet?.cardType == PlanCardType.pll.rawValue {
+                plansArray.append(plan)
+            }
+        }
+        return plansArray
+    }
+    
+    func getNonPllMembershipPlans() -> [MembershipPlanModel] {
+        var plansArray: [MembershipPlanModel] = []
+        for plan in membershipPlans {
+            if plan.featureSet?.cardType != PlanCardType.pll.rawValue {
+                plansArray.append(plan)
+            }
+        }
+        return plansArray
+    }
+    
+    func numberOfSections() -> Int {
+        var sections = 0
+        [getPllMembershipPlans(), getNonPllMembershipPlans()].forEach {
+            if !$0.isEmpty {
+                sections += 1
+            }
+        }
+        return sections
+    }
+
+    
+    func getNumberOfRowsFor(section: Int) -> Int {
+        switch section {
+        case 0:
+            return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans().count : getPllMembershipPlans().count
+        case 1:
+            return getNonPllMembershipPlans().count
+        default:
+            return 0
+        }
     }
     
     func toAddOrJoinScreen(membershipPlan: MembershipPlanModel) {

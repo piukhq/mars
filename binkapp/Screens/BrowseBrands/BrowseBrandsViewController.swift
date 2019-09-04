@@ -69,30 +69,18 @@ class BrowseBrandsViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    @objc func popViewController() {
+    @objc private func popViewController() {
         viewModel.popViewController()
     }
 }
 
 extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        if !viewModel.pllMembershipPlans.isEmpty && !viewModel.nonPllMembershipPlans.isEmpty {
-            return 2
-        } else if (!viewModel.pllMembershipPlans.isEmpty && viewModel.nonPllMembershipPlans.isEmpty) || (viewModel.pllMembershipPlans.isEmpty && !viewModel.nonPllMembershipPlans.isEmpty) {
-            return 1
-        }
-        return 0
+        return viewModel.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-            case 0:
-                return viewModel.pllMembershipPlans.count
-            case 1:
-                return viewModel.nonPllMembershipPlans.count
-            default:
-                return 0
-        }
+        return viewModel.getNumberOfRowsFor(section: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -100,9 +88,9 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         
         var membershipPlan: MembershipPlanModel?
         if indexPath.section == 0 {
-            membershipPlan = viewModel.pllMembershipPlans[indexPath.row]
+            membershipPlan = viewModel.getPllMembershipPlans().isEmpty ? viewModel.getNonPllMembershipPlans()[indexPath.row] : viewModel.getPllMembershipPlans()[indexPath.row]
         } else if indexPath.section == 1 {
-            membershipPlan = viewModel.nonPllMembershipPlans[indexPath.row]
+            membershipPlan = viewModel.getNonPllMembershipPlans()[indexPath.row]
         }
         
         if let brandName = membershipPlan?.account?.companyName {
@@ -110,13 +98,13 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
             switch indexPath.section {
             case 0:
                 cell.configure(imageURL: imageUrl, brandName: brandName, description: true)
-                if indexPath.row == viewModel.pllMembershipPlans.count - 1 {
+                if indexPath.row == viewModel.getPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }
                 break
             case 1:
                 cell.configure(imageURL: imageUrl, brandName: brandName)
-                if indexPath.row == viewModel.nonPllMembershipPlans.count - 1 {
+                if indexPath.row == viewModel.getNonPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }
                 break
@@ -132,7 +120,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 47))
         titleLabel.font = UIFont.headline
         if section == 0 {
-            titleLabel.text = "pll_title".localized
+            titleLabel.text = viewModel.getPllMembershipPlans().isEmpty ? "all_title".localized : "pll_title".localized
         } else if section == 1 {
             titleLabel.text = "all_title".localized
         }
@@ -149,10 +137,14 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var membershipPlan: MembershipPlanModel?
         if indexPath.section == 0 {
-            viewModel.toAddOrJoinScreen(membershipPlan: viewModel.pllMembershipPlans[indexPath.row])
+            membershipPlan = viewModel.getPllMembershipPlans()[indexPath.row]
         } else if indexPath.section == 1 {
-            viewModel.toAddOrJoinScreen(membershipPlan: viewModel.nonPllMembershipPlans[indexPath.row])
+            membershipPlan = viewModel.getNonPllMembershipPlans()[indexPath.row]
         }
+        
+        guard let plan = membershipPlan else { return }
+        viewModel.toAddOrJoinScreen(membershipPlan: plan)
     }
 }
