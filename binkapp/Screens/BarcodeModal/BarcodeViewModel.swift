@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import BarcodeGenerator
 
 enum BarcodeType {
     case loyaltyCard
@@ -31,6 +32,17 @@ class BarcodeViewModel {
     }
     
     func generateBarcodeImage() -> UIImage? {
+        
+        //TODO: Use framework with the code below but we need to use the correct barcode type per membership_plan
+        
+//        let image = BINKBarcodeGenerator.generateBarcode(
+//            withContents: string,
+//            of: .QR,
+//            in: CGSize(width: 350, height: 175)
+//        )
+//
+//        return image
+        
         let data = string.data(using: String.Encoding.ascii)
         
         if let filter = CIFilter(name: "CICode128BarcodeGenerator") {

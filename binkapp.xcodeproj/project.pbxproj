@@ -134,6 +134,8 @@
 		B726335123058E2300951037 /* TierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726335023058E2300951037 /* TierModel.swift */; };
 		B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */; };
 		B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */; };
+		BDA4EE982320508400A99CB1 /* BarcodeGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; };
+		BDA4EE992320508400A99CB1 /* BarcodeGenerator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */; };
 		EF485566231D5E4E00FC9E5F /* DebugMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */; };
 		EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF485567231D679E00FC9E5F /* DebugMenuTableViewCell.xib */; };
@@ -161,6 +163,20 @@
 			remoteInfo = binkapp;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BDA4EE9A2320508500A99CB1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BDA4EE992320508400A99CB1 /* BarcodeGenerator.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		06463A84583BB7EADAB18DE0 /* Pods-binkapp.merge request.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.merge request.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.merge request.xcconfig"; sourceTree = "<group>"; };
@@ -315,6 +331,7 @@
 		B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Encrypting.swift"; sourceTree = "<group>"; };
 		B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+StringConversion.swift"; sourceTree = "<group>"; };
 		B9D343A57D966E00BAEC11B0 /* Pods-binkappTests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.app store (internal).xcconfig"; sourceTree = "<group>"; };
+		BDE778A523204F8E0014567A /* BarcodeGenerator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BarcodeGenerator.framework; sourceTree = "<group>"; };
 		C5D1F95CBE07939CA29E03E5 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
 		CBE46BB3E6386EE997F95088 /* Pods-binkappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.debug.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D43061FB7A72A290DA13F3BF /* Pods-binkappUITests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store.xcconfig"; sourceTree = "<group>"; };
@@ -338,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B03E4ACD9F0FF1C979C752E /* Pods_binkapp.framework in Frameworks */,
+				BDA4EE982320508400A99CB1 /* BarcodeGenerator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -643,6 +661,7 @@
 		492DA371EDF911EDB1A625BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BDE778A523204F8E0014567A /* BarcodeGenerator.framework */,
 				1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */,
 				882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */,
 				4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */,
@@ -868,6 +887,7 @@
 				450A1F7AA044C2D403358768 /* [CP] Embed Pods Frameworks */,
 				11DA7D040AB1DEA408050131 /* [CP] Copy Pods Resources */,
 				5ED4ACFA23018066009D9EC4 /* ShellScript */,
+				BDA4EE9A2320508500A99CB1 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1286,10 +1306,8 @@
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
 				3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */,
-				B73F7105230D7AF900D82566 /* MembershipCardAccountModel.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
-				B72E82C32313F3F90045607E /* MembershipCardAmount.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
 				B726335123058E2300951037 /* TierModel.swift in Sources */,
@@ -1504,6 +1522,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1528,6 +1550,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1706,6 +1732,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1840,6 +1870,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1974,6 +2008,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2099,6 +2137,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2224,6 +2266,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
