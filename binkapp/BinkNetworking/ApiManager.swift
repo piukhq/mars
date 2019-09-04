@@ -46,7 +46,7 @@ enum RequestHTTPMethod {
 class ApiManager {
     private let email = "Bink20iteration1@testbink.com"
     
-    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, onSuccess: @escaping (Resp) -> Void, onError: @escaping () -> Void) where Resp: Codable {
+    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, onSuccess: @escaping (Resp) -> Void, onError: @escaping (Error) -> Void) where Resp: Codable {
         Alamofire.request(Constants.endpoint + "\(url.value)", method: httpMethod.value, parameters: getParameters(), encoding: JSONEncoding.default, headers: getHeader() )
             .responseJSON { response in
                 guard let data = response.data else {
@@ -64,14 +64,13 @@ class ApiManager {
                         onSuccess(models)
                     } else if let error = response.error {
                         print(error)
-                        onError()
+                        onError(error)
                     } else {
                         print("something went wrong, statusCode: \(statusCode)")
-                        onError()
                     }
                 } catch (let error) {
                     print("decoding error: \(error)")
-                    onError()
+                    onError(error)
                 }
         }
     }

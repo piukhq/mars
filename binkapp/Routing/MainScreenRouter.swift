@@ -81,14 +81,14 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toLoyaltyFullDetailsScreen(membershipPlan: MembershipPlanModel) {
-        let viewModel = LoyaltyCardFullDetailsViewModel(membershipPlan: membershipPlan, router: self)
+    func toLoyaltyFullDetailsScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
+        let repository = LoyaltyCardFullDetailsRepository(apiManager: apiManager)
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, repository: repository, router: self)
         let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
-    
-    func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-        let alert = UIAlertController(title: nil, message: "delete_card_confirmation".localized, preferredStyle: .alert)
+    func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in
             noCompletion()
         }))

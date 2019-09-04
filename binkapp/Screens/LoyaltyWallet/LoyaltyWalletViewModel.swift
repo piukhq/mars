@@ -27,14 +27,8 @@ class LoyaltyWalletViewModel {
         fetchMembershipCards()
     }
     
-    func deleteMembershipCard(id: Int, completion: @escaping () -> Void) {
-        repository.deleteMembershipCard(id: id) { _ in 
-            completion()
-        }
-    }
-    
     func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-        router.showDeleteConfirmationAlert(yesCompletion: {
+        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
             if let cardId = self.membershipCards[index].id {
                 self.deleteMembershipCard(id: cardId, completion: {
                     self.membershipCards.remove(at: index)
@@ -50,8 +44,8 @@ class LoyaltyWalletViewModel {
         router.toBarcodeViewController()
     }
     
-    func toFullDetailsCardScreen(membershipPlan: MembershipPlanModel) {
-        router.toLoyaltyFullDetailsScreen(membershipPlan: membershipPlan)
+    func toFullDetailsCardScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
+        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard, membershipPlan: membershipPlan)
     }
     
     func getMemebershipCards() -> [MembershipCardModel] {
@@ -62,15 +56,19 @@ class LoyaltyWalletViewModel {
         return membershipPlans
     }
     
-    // MARK: Private methods
-    
-    private func fetchMembershipCards() {
+    func refreshScreen() {
+        fetchMembershipCards()
+    }
+}
+
+// MARK: Private methods
+
+private extension LoyaltyWalletViewModel {
+    func fetchMembershipCards() {
         repository.getMembershipCards { (response) in
             self.membershipCards = response
             self.delegate?.didFetchCards()
-            
         }
-        
         repository.getMembershipPlans { (response) in
             self.membershipPlans = response
             
@@ -79,8 +77,13 @@ class LoyaltyWalletViewModel {
                 let defaults = UserDefaults.standard
                 defaults.set(encoded, forKey: "MembershipPlans")
             }
-            
             self.delegate?.didFetchMembershipPlans()
+        }
+    }
+    
+    func deleteMembershipCard(id: Int, completion: @escaping () -> Void) {
+        repository.deleteMembershipCard(id: id) { _ in
+            completion()
         }
     }
 }

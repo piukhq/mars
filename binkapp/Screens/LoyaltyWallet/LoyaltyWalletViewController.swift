@@ -28,8 +28,19 @@ class LoyaltyWalletViewController: UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen(notification:)), name: .didDeleteMemebershipCard, object: nil)
     }
 }
+
+// MARK: - Private methods
+private extension LoyaltyWalletViewController {
+    @objc func refreshScreen(notification: Notification) {
+        viewModel.refreshScreen()
+    }
+}
+
+// MARK: - Table view delegate and data source
 
 extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSource {
     //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
@@ -95,9 +106,11 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
 //        let alert = UIAlertController(title: "Error", message: "To be implemented", preferredStyle: .alert)
 //        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 //        present(alert, animated: true)
-        viewModel.toFullDetailsCardScreen(membershipPlan: viewModel.getMembershipPlans()[indexPath.section])
+        viewModel.toFullDetailsCardScreen(membershipCard: viewModel.getMemebershipCards()[indexPath.section], membershipPlan: viewModel.getMembershipPlans()[indexPath.section])
     }
 }
+
+// MARK: - View model delegate
 
 extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
     func didFetchMembershipPlans() {
