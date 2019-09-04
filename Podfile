@@ -15,6 +15,7 @@ pod 'AlamofireImage'
 pod 'iOSDropDown'
 pod 'M13Checkbox'
 pod 'AlamofireNetworkActivityLogger'
+pod 'EANBarcodeGenerator'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",

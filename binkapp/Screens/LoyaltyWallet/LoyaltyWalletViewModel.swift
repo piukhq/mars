@@ -49,8 +49,10 @@ class LoyaltyWalletViewModel {
         })
     }
     
-    func toBarcodeViewController() {
-        router.toBarcodeViewController()
+    func toBarcodeViewController(section: Int) {
+        let card = membershipCards[section]
+        guard let plan = getMembershipPlans().first(where: { $0.id == card.membershipPlan }) else { return }
+        router.toBarcodeViewController(membershipPlan: plan, membershipCard: card)
     }
     
     func getMembershipCards() -> [MembershipCardModel] {

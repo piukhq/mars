@@ -7,16 +7,25 @@
 
 import Foundation
 import UIKit
+import EANBarcodeGenerator
 
 enum BarcodeType {
     case loyaltyCard
     case coupon
 }
 
+enum BarcodeName: String {
+    case barcode128 = "CICode128BarcodeGenerator"
+    case qrCode = "CIQRCodeGenerator"
+    case aztec = "CIAztecCodeGenerator"
+    case pdf417 = "CIPDF417BarcodeGenerator"
+    case ean13 = "CIEANBarcodeGenerator"
+    case dataMatrix = "CIDataMatrixCodeDescriptor"
+//    case itf = ""
+//    case code39 = ""
+}
+
 class BarcodeViewModel {
-    //TO DO: CHANGE VARIABLE NAME
-    let string = "1234 5432 1242"
-    let title = "Harvey Nichols"
     private let membershipPlan: MembershipPlanModel
     private let membershipCard: MembershipCardModel
     
@@ -30,17 +39,35 @@ class BarcodeViewModel {
     }
     
     func getCardNumber() -> String {
-        return membershipCard.card.
+        return membershipCard.card?.barcode ?? ""
     }
     
     func getBarcodeType() -> BarcodeType {
         return .loyaltyCard
     }
     
+    private func getBarcodeName() -> String {
+        switch membershipCard.card?.barcodeType {
+        case 0: return BarcodeName.barcode128.rawValue
+        case 1: return BarcodeName.qrCode.rawValue
+        case 2: return BarcodeName.aztec.rawValue
+        case 3: return BarcodeName.pdf417.rawValue
+        case 4:
+            CIEANBarcodeGenerator.register()
+            return BarcodeName.ean13.rawValue
+        case 5: return BarcodeName.dataMatrix.rawValue
+        case 6: return ""
+        case 7: return ""
+        default: return ""
+        }
+    }
+    
     func generateBarcodeImage() -> UIImage? {
-        let data = string.data(using: String.Encoding.ascii)
+        guard let barcodeString = membershipCard.card?.barcode else { return nil }
         
-        if let filter = CIFilter(name: "CICode128BarcodeGenerator") {
+        let data = barcodeString.data(using: String.Encoding.ascii)
+        
+        if let filter = CIFilter(name: getBarcodeName()) {
             filter.setDefaults()
             //Margin
             filter.setValue(7.00, forKey: "inputQuietSpace")
