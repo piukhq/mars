@@ -86,15 +86,10 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrandTableViewCell", for: indexPath) as? BrandTableViewCell else { return UITableViewCell() }
         
-        var membershipPlan: MembershipPlanModel?
-        if indexPath.section == 0 {
-            membershipPlan = viewModel.getPllMembershipPlans().isEmpty ? viewModel.getNonPllMembershipPlans()[indexPath.row] : viewModel.getPllMembershipPlans()[indexPath.row]
-        } else if indexPath.section == 1 {
-            membershipPlan = viewModel.getNonPllMembershipPlans()[indexPath.row]
-        }
+        let membershipPlan: MembershipPlanModel = viewModel.getMembershipPlan(for: indexPath)
         
-        if let brandName = membershipPlan?.account?.companyName {
-            let imageUrl = membershipPlan?.images?.first(where: {$0.type == ImageType.icon.rawValue})?.url
+        if let brandName = membershipPlan.account?.companyName {
+            let imageUrl = membershipPlan.images?.first(where: {$0.type == ImageType.icon.rawValue})?.url
             switch indexPath.section {
             case 0:
                 cell.configure(imageURL: imageUrl, brandName: brandName, description: true)
@@ -119,11 +114,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         let view = UIView()
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 47))
         titleLabel.font = UIFont.headline
-        if section == 0 {
-            titleLabel.text = viewModel.getPllMembershipPlans().isEmpty ? "all_title".localized : "pll_title".localized
-        } else if section == 1 {
-            titleLabel.text = "all_title".localized
-        }
+        titleLabel.text = viewModel.getSectionTitleText(section: section)
         view.addSubview(titleLabel)
         return view
     }
@@ -137,14 +128,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var membershipPlan: MembershipPlanModel?
-        if indexPath.section == 0 {
-            membershipPlan = viewModel.getPllMembershipPlans()[indexPath.row]
-        } else if indexPath.section == 1 {
-            membershipPlan = viewModel.getNonPllMembershipPlans()[indexPath.row]
-        }
-        
-        guard let plan = membershipPlan else { return }
-        viewModel.toAddOrJoinScreen(membershipPlan: plan)
+        let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
+        viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
     }
 }

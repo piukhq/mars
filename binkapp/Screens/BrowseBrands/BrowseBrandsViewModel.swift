@@ -32,6 +32,22 @@ class BrowseBrandsViewModel {
         }
     }
     
+    func getMembershipPlan(for indexPath: IndexPath) -> MembershipPlanModel {
+        if indexPath.section == 0 {
+            return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
+        }
+        return getNonPllMembershipPlans()[indexPath.row]
+    }
+    
+    func getSectionTitleText(section: Int) -> String {
+        if section == 0 {
+            if !getPllMembershipPlans().isEmpty {
+                return "pll_title".localized
+            }
+        }
+        return "all_title".localized
+    }
+    
     func getMembershipPlans() -> [MembershipPlanModel] {
         return membershipPlans
     }
