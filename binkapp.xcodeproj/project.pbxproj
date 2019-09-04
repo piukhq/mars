@@ -1528,6 +1528,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PB_FIELD_32BIT=1",
+					"PB_NO_PACKED_STRUCTS=1",
+					"PB_ENABLE_MALLOC=1",
+					DEBUG,
+				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1822,6 +1831,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"PB_FIELD_32BIT=1",
+					"PB_NO_PACKED_STRUCTS=1",
+					"PB_ENABLE_MALLOC=1",
+					DEBUG,
+				);
 				INFOPLIST_FILE = binkapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
