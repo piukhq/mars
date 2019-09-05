@@ -17,8 +17,9 @@ class LoginViewModel {
     }
 
     func registerUser(with email: String) {
-        repository.reigster(email: email, completion: { _ in
-            self.router.toMainScreen()
+        repository.register(email: email, completion: { [weak self] in
+            guard let wself = self else { return }
+            wself.router.toMainScreen()
         })
     }
 }

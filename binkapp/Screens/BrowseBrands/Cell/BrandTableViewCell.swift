@@ -19,11 +19,11 @@ class BrandTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func configure(imageURL: String, brandName: String, description: Bool = false) {
-        let url = URL(string: imageURL)!
-        
-        logoImageView.af_setImage(withURL: url, placeholderImage: UIImage())
-        
+    func configure(imageURL: String?, brandName: String, description: Bool = false) {
+        if let imageURLString = imageURL, let url = URL(string: imageURLString) {
+            logoImageView.af_setImage(withURL: url, placeholderImage: UIImage())
+        }
+            
         brandLabel.font = UIFont.subtitle
         brandLabel.text = brandName
         

@@ -42,15 +42,19 @@ class MainTabBarViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.shadowImage = UIImage()
 
-        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(toSettingsScreen))
+        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(settingsButtonTapped))
         navigationItem.rightBarButtonItem = settingsButton
 
         navigationItem.setHidesBackButton(true, animated: true)
         self.title = ""
     }
     
-    @objc func toSettingsScreen() {
+    @objc func settingsButtonTapped() {
+        #if DEBUG
+        viewModel.toDebugMenu()
+        #else
         viewModel.toSettingsScreen()
+        #endif
     }
     
     func populateTabBar() {

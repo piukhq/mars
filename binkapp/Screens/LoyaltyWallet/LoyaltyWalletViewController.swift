@@ -46,7 +46,7 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.getMemebershipCards().count
+        return viewModel.membershipCardsCount
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,10 +54,14 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let section = indexPath.section
+        let membershipPlan = viewModel.getMembershipCards()[section].membershipPlan
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "WalletLoyaltyCardTableViewCell", for: indexPath) as! WalletLoyaltyCardTableViewCell
-        if let cardPlan = viewModel.getMembershipPlans().first(where: {($0.id == viewModel.getMemebershipCards()[indexPath.section].membershipPlan)}) {
-            cell.configureUIWithMembershipCard(card:viewModel.getMemebershipCards()[indexPath.section] , andMemebershipPlan: cardPlan)
+        if let cardPlan = viewModel.getMembershipPlans().first(where: {($0.id == membershipPlan)}) {
+            cell.configureUIWithMembershipCard(card: viewModel.getMembershipCards()[section], andMemebershipPlan: cardPlan)
         }
+        
         cell.layer.cornerRadius = 8
         cell.separatorInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         cell.layer.shadowOffset = CGSize(width: 0, height: 5)
@@ -70,9 +74,10 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "barcode_swipe_title".localized, handler: { _,_,_  in
-            self.viewModel.toBarcodeViewController()
-            self.tableView.reloadData()
+        let action = UIContextualAction(style: .destructive, title: "barcode_swipe_title".localized, handler: { [weak self] _,_,_  in
+            guard let wself = self else { return }
+            wself.viewModel.toBarcodeViewController(section: indexPath.section)
+            wself.tableView.reloadData()
         })
         
         action.image = UIImage(named: "swipeBarcode")
@@ -103,10 +108,7 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let alert = UIAlertController(title: "Error", message: "To be implemented", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        present(alert, animated: true)
-        viewModel.toFullDetailsCardScreen(membershipCard: viewModel.getMemebershipCards()[indexPath.section], membershipPlan: viewModel.getMembershipPlans()[indexPath.section])
+        viewModel.toFullDetailsCardScreen(membershipCard: viewModel.getMembershipCards()[indexPath.section], membershipPlan: viewModel.getMembershipPlans()[indexPath.section])
     }
 }
 

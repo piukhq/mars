@@ -20,6 +20,9 @@ class LoyaltyWalletViewModel {
     private var membershipPlans = [MembershipPlanModel]()
     
     var delegate: LoyaltyWalletViewModelDelegate?
+    var membershipCardsCount: Int {
+        return membershipCards.count
+    }
     
     init(repository: LoyaltyWalletRepository, router: MainScreenRouter) {
         self.repository = repository
@@ -40,15 +43,17 @@ class LoyaltyWalletViewModel {
         })
     }
     
-    func toBarcodeViewController() {
-        router.toBarcodeViewController()
+    func toBarcodeViewController(section: Int) {
+        let card = membershipCards[section]
+        guard let plan = getMembershipPlans().first(where: { $0.id == card.membershipPlan }) else { return }
+        router.toBarcodeViewController(membershipPlan: plan, membershipCard: card)
     }
     
     func toFullDetailsCardScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
         router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard, membershipPlan: membershipPlan)
     }
     
-    func getMemebershipCards() -> [MembershipCardModel] {
+    func getMembershipCards() -> [MembershipCardModel] {
         return membershipCards
     }
     

@@ -37,7 +37,13 @@ class MainScreenRouter {
     }
     
     func toSettingsScreen() {
-        print("settings button pressed")
+        displaySimplePopup(title: "Oops", message: "Settings screen not yet implemented.")
+    }
+    
+    func toDebugMenu() {
+        let debugMenuViewModel = DebugMenuViewModel(sections: DebugMenuFactory().makeDebugMenuSections())
+        let debugNavigationController = UINavigationController(rootViewController: DebugMenuTableViewController(viewModel: debugMenuViewModel))
+        navController?.present(debugNavigationController, animated: true, completion: nil)
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {
@@ -69,10 +75,10 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toBarcodeViewController() {
-        let viewModel = BarcodeViewModel()
+    func toBarcodeViewController(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel) {
+        let viewModel = BarcodeViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard)
         let viewController = BarcodeViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
+        navController?.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
     func toAddOrJoinViewController(membershipPlan: MembershipPlanModel) {
@@ -85,6 +91,13 @@ class MainScreenRouter {
         let repository = LoyaltyCardFullDetailsRepository(apiManager: apiManager)
         let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, repository: repository, router: self)
         let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+
+    func toAuthAndAddViewController(membershipPlan: MembershipPlanModel) {
+        let repository = AuthAndAddRepository(apiManager: apiManager)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan)
+        let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
