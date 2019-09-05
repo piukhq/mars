@@ -61,14 +61,15 @@ class AddOrJoinViewController: UIViewController {
         newCardButton.titleLabel?.font = UIFont.buttonText
         newCardButton.setTitle("get_new_card_button".localized, for: .normal)
         
+        guard let cardType = CardType(rawValue: membershipPlan.featureSet?.cardType ?? 0) else { return }
         let storeView = LoyaltyPlanView()
-        storeView.configure(for: .store, cardType: membershipPlan.featureSet?.cardType ?? 0)
+        storeView.configure(for: .storeCell, cardType: cardType)
         plansStackView.addArrangedSubview(storeView)
         let viewView = LoyaltyPlanView()
-        viewView.configure(for: .view, cardType: membershipPlan.featureSet?.cardType ?? 0)
+        viewView.configure(for: .viewCell, cardType: cardType)
         plansStackView.addArrangedSubview(viewView)
         let linkView = LoyaltyPlanView()
-        linkView.configure(for: .link, cardType: membershipPlan.featureSet?.cardType ?? 0)
+        linkView.configure(for: .linkCell, cardType: cardType)
         plansStackView.addArrangedSubview(linkView)
     }
     
