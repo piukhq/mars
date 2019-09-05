@@ -50,7 +50,7 @@ class BarcodeViewController: UIViewController {
     }
     
     func configureUI() {
-        barcodeImageView.image = viewModel.generateBarcodeImage()
+        viewModel.generateBarcodeImage(for: barcodeImageView)
         
         barcodeImageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(maximizeBarcode))
