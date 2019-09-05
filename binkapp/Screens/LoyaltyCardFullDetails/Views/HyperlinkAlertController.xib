@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HyperlinkAlertController" customModule="binkapp" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="TOe-cb-eeT" id="DmJ-zN-igb"/>
+                <outlet property="customTitleLabel" destination="enl-Z6-HpB" id="dhW-No-wau"/>
+                <outlet property="okButton" destination="cyw-Fx-mEx" id="dxp-wf-pju"/>
+                <outlet property="textView" destination="iSS-eL-0ar" id="iA5-30-xYJ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="vgB-KD-nJG"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOe-cb-eeT" userLabel="ContentView">
+                    <rect key="frame" x="50" y="253" width="314" height="400"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.98999999999999999" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="enl-Z6-HpB">
+                            <rect key="frame" x="0.0" y="0.0" width="314" height="167"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <directionalEdgeInsets key="directionalLayoutMargins" top="10" leading="8" bottom="10" trailing="8"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.98999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iSS-eL-0ar">
+                            <rect key="frame" x="0.0" y="167" width="314" height="187"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="scrollIndicatorInsets" minX="20" minY="0.0" maxX="29" maxY="5"/>
+                            <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                        </textView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbM-Ir-MSE">
+                            <rect key="frame" x="0.0" y="354" width="314" height="2"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="2" id="2ij-3Z-psg"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" alpha="0.98999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cyw-Fx-mEx">
+                            <rect key="frame" x="0.0" y="356" width="314" height="44"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="zcl-da-Kdb"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <state key="normal" title="OK"/>
+                            <connections>
+                                <action selector="okButtonTapped:" destination="-1" eventType="touchUpInside" id="lCe-SZ-81T"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="cyw-Fx-mEx" firstAttribute="leading" secondItem="TOe-cb-eeT" secondAttribute="leading" id="0Zd-e7-91Q"/>
+                        <constraint firstAttribute="trailing" secondItem="cyw-Fx-mEx" secondAttribute="trailing" id="90d-1h-9u8"/>
+                        <constraint firstAttribute="bottom" secondItem="cyw-Fx-mEx" secondAttribute="bottom" id="EPs-6O-9Ct"/>
+                        <constraint firstItem="qbM-Ir-MSE" firstAttribute="leading" secondItem="TOe-cb-eeT" secondAttribute="leading" id="OYB-Ja-T4d"/>
+                        <constraint firstAttribute="trailing" secondItem="enl-Z6-HpB" secondAttribute="trailing" id="PcT-Fo-brg"/>
+                        <constraint firstItem="iSS-eL-0ar" firstAttribute="leading" secondItem="TOe-cb-eeT" secondAttribute="leading" id="SXp-O9-a6K"/>
+                        <constraint firstItem="qbM-Ir-MSE" firstAttribute="top" secondItem="iSS-eL-0ar" secondAttribute="bottom" id="UHb-oq-XyF"/>
+                        <constraint firstItem="iSS-eL-0ar" firstAttribute="top" secondItem="enl-Z6-HpB" secondAttribute="bottom" id="V0Z-uN-FzY"/>
+                        <constraint firstAttribute="trailing" secondItem="iSS-eL-0ar" secondAttribute="trailing" id="VX0-wx-RKM"/>
+                        <constraint firstItem="enl-Z6-HpB" firstAttribute="leading" secondItem="TOe-cb-eeT" secondAttribute="leading" id="blZ-Of-2wF"/>
+                        <constraint firstAttribute="height" constant="400" placeholder="YES" id="jji-d8-CeW"/>
+                        <constraint firstAttribute="trailing" secondItem="qbM-Ir-MSE" secondAttribute="trailing" id="kMu-03-PZU"/>
+                        <constraint firstItem="enl-Z6-HpB" firstAttribute="top" secondItem="TOe-cb-eeT" secondAttribute="top" id="qr9-mb-vNT"/>
+                        <constraint firstItem="cyw-Fx-mEx" firstAttribute="top" secondItem="qbM-Ir-MSE" secondAttribute="bottom" id="zdo-TO-rfw"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="TOe-cb-eeT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="50" id="6eg-jk-iGB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="TOe-cb-eeT" secondAttribute="trailing" constant="50" id="RZh-go-yXJ"/>
+                <constraint firstItem="TOe-cb-eeT" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Z6j-tL-OcT"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="TOe-cb-eeT" secondAttribute="bottom" constant="100" id="cN6-ip-3p6"/>
+                <constraint firstItem="TOe-cb-eeT" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="eUE-VV-Kdh"/>
+                <constraint firstItem="TOe-cb-eeT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="yfk-p3-8lW"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="37.681159420289859" y="34.821428571428569"/>
+        </view>
+    </objects>
+</document>
