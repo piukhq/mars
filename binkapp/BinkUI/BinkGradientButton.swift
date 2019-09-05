@@ -13,8 +13,9 @@ class BinkGradientButton: UIButton {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.setGradientBackground(firstColor: UIColor(red: 180/255, green: 111/255, blue: 234/255, alpha: 1), secondColor: UIColor.blueAccent)
-        self.setTitleColor(.white, for: .normal)
+        setGradientBackground(firstColor: UIColor(red: 180/255, green: 111/255, blue: 234/255, alpha: 1), secondColor: UIColor.blueAccent)
+        setTitleColor(.white, for: .normal)
+        titleLabel?.font = UIFont.buttonText
     }
     
     override func layoutSubviews() {

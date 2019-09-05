@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum PlanCardType: Int {
+    case pll = 2
+    case nonPll
+}
+
 class BrowseBrandsViewModel {
     private let repository: BrowseBrandsRepository
     private let router: MainScreenRouter
@@ -27,11 +32,75 @@ class BrowseBrandsViewModel {
         }
     }
     
+    func getMembershipPlan(for indexPath: IndexPath) -> MembershipPlanModel {
+        if indexPath.section == 0 {
+            return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
+        }
+        return getNonPllMembershipPlans()[indexPath.row]
+    }
+    
+    func getSectionTitleText(section: Int) -> String {
+        if section == 0 {
+            if !getPllMembershipPlans().isEmpty {
+                return "pll_title".localized
+            }
+        }
+        return "all_title".localized
+    }
+    
     func getMembershipPlans() -> [MembershipPlanModel] {
         return membershipPlans
     }
     
+    func hasMembershipPlans() -> Bool {
+        if !getPllMembershipPlans().isEmpty && !getNonPllMembershipPlans().isEmpty {
+            return true
+        }
+        return false
+    }
+    
+    func hasPlansForOneSection() -> Bool {
+        if (getPllMembershipPlans().isEmpty && !getNonPllMembershipPlans().isEmpty) || (!getPllMembershipPlans().isEmpty && getNonPllMembershipPlans().isEmpty) {
+            return true
+        }
+        return false
+    }
+    
+    func getPllMembershipPlans() -> [MembershipPlanModel] {
+        return membershipPlans.filter { $0.featureSet?.cardType == PlanCardType.pll.rawValue }
+    }
+    
+    func getNonPllMembershipPlans() -> [MembershipPlanModel] {
+        return membershipPlans.filter { $0.featureSet?.cardType != PlanCardType.pll.rawValue }
+    }
+    
+    func numberOfSections() -> Int {
+        var sections = 0
+        [getPllMembershipPlans(), getNonPllMembershipPlans()].forEach {
+            if !$0.isEmpty {
+                sections += 1
+            }
+        }
+        return sections
+    }
+
+    
+    func getNumberOfRowsFor(section: Int) -> Int {
+        switch section {
+        case 0:
+            return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans().count : getPllMembershipPlans().count
+        case 1:
+            return getNonPllMembershipPlans().count
+        default:
+            return 0
+        }
+    }
+    
     func toAddOrJoinScreen(membershipPlan: MembershipPlanModel) {
         router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+    }
+    
+    func popViewController() {
+        router.popViewController()
     }
 }

@@ -37,7 +37,13 @@ class MainScreenRouter {
     }
     
     func toSettingsScreen() {
-        print("settings button pressed")
+        displaySimplePopup(title: "Oops", message: "Settings screen not yet implemented.")
+    }
+    
+    func toDebugMenu() {
+        let debugMenuViewModel = DebugMenuViewModel(sections: DebugMenuFactory().makeDebugMenuSections())
+        let debugNavigationController = UINavigationController(rootViewController: DebugMenuTableViewController(viewModel: debugMenuViewModel))
+        navController?.present(debugNavigationController, animated: true, completion: nil)
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {
@@ -78,6 +84,13 @@ class MainScreenRouter {
     func toAddOrJoinViewController(membershipPlan: MembershipPlanModel) {
         let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, router: self)
         let viewController = AddOrJoinViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
+    func toAuthAndAddViewController(membershipPlan: MembershipPlanModel) {
+        let repository = AuthAndAddRepository(apiManager: apiManager)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan)
+        let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     

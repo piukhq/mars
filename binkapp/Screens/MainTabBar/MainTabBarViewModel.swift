@@ -46,6 +46,10 @@ class MainTabBarViewModel {
     func toSettingsScreen() {
         router.toSettingsScreen()
     }
+    
+    func toDebugMenu() {
+        router.toDebugMenu()
+    }
 }
 
 enum Buttons: Int {

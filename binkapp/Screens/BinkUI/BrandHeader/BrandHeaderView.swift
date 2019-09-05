@@ -21,11 +21,11 @@ class BrandHeaderView: CustomView {
         delegate?.buttonWasPressed()
     }
     
-    func configure(imageURLString: String, loyaltyPlanNameCard: String? = nil, delegate: LoyaltyButtonDelegate) {
+    func configure(imageURLString: String?, loyaltyPlanNameCard: String? = nil, delegate: LoyaltyButtonDelegate) {
         self.delegate = delegate
         
-        if let imageURL = URL(string: imageURLString) {
-            logoImageView.af_setImage(withURL: imageURL)
+        if let imageURL = imageURLString, let url = URL(string: imageURL) {
+            logoImageView.af_setImage(withURL: url)
         }
         
         if let planNameCard = loyaltyPlanNameCard {
