@@ -21,7 +21,7 @@ class LoyaltyPlanView: CustomView {
     func configure(for planType: PlanType, cardType: Int) {
         configureIcon(for: planType, cardType: cardType)
         configureTitle(for: planType)
-        configureDescription(for: planType)
+        configureDescription(for: planType, cardType: cardType)
     }
     
     private func configureIcon(for planType: PlanType, cardType: Int) {
@@ -50,11 +50,11 @@ class LoyaltyPlanView: CustomView {
         }
     }
     
-    private func configureDescription(for planType: PlanType) {
+    private func configureDescription(for planType: PlanType, cardType: Int) {
         switch planType {
         case .store: descriptionLabel.text = "add_join_screen_store_description".localized
-        case .view: descriptionLabel.text = "add_join_screen_view_description".localized
-        case .link: descriptionLabel.text = "add_join_screen_link_description".localized
+        case .view: descriptionLabel.text = cardType > 0 ? "add_join_screen_view_description".localized : "add_join_screen_view_description_inactive".localized
+        case .link: descriptionLabel.text = cardType > 1 ? "add_join_screen_link_description".localized : "add_join_screen_link_description_inactive".localized
         }
     }
     
