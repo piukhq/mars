@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import BarcodeGenerator
 
 enum BarcodeType {
     case loyaltyCard
@@ -14,56 +15,49 @@ enum BarcodeType {
 }
 
 class BarcodeViewModel {
-    //TO DO: CHANGE VARIABLE NAME
-    let string = "1234 5432 1242"
-    let title = "Harvey Nichols"
+    private let membershipPlan: MembershipPlanModel
+    private let membershipCard: MembershipCardModel
+    
+    init(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel) {
+        self.membershipPlan = membershipPlan
+        self.membershipCard = membershipCard
+    }
     
     func getTitle() -> String {
-        return title
+        return membershipPlan.account?.companyName ?? ""
     }
     
     func getCardNumber() -> String {
-        return string
+        return membershipCard.card?.barcode ?? ""
     }
     
     func getBarcodeType() -> BarcodeType {
         return .loyaltyCard
     }
     
-    func generateBarcodeImage() -> UIImage? {
-        let data = string.data(using: String.Encoding.ascii)
-        
-        if let filter = CIFilter(name: "CICode128BarcodeGenerator") {
-            filter.setDefaults()
-            //Margin
-            filter.setValue(7.00, forKey: "inputQuietSpace")
-            filter.setValue(data, forKey: "inputMessage")
-            //Scaling
-            let transform = CGAffineTransform(scaleX: 3, y: 3)
-            
-            if let output = filter.outputImage?.transformed(by: transform) {
-                let context: CIContext = CIContext.init(options: nil)
-                let cgImage: CGImage = context.createCGImage(output, from: output.extent)!
-                let rawImage: UIImage = UIImage.init(cgImage: cgImage)
-                let cropZone = CGRect(x: 0, y: 0, width: Int(rawImage.size.width), height: Int(rawImage.size.height))
-                let cWidth: size_t  = size_t(cropZone.size.width)
-                let cHeight: size_t  = size_t(cropZone.size.height)
-                let bitsPerComponent: size_t = cgImage.bitsPerComponent
-                //THE OPERATIONS ORDER COULD BE FLIPPED, ALTHOUGH, IT DOESN'T AFFECT THE RESULT
-                let bytesPerRow = (cgImage.bytesPerRow) / (cgImage.width  * cWidth)
-                
-                let context2: CGContext = CGContext(data: nil, width: cWidth, height: cHeight, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: cgImage.bitmapInfo.rawValue)!
-                
-                context2.draw(cgImage, in: cropZone)
-                
-                let result: CGImage  = context2.makeImage()!
-                let finalImage = UIImage(cgImage: result)
-                
-                return finalImage
-                
-            }
+    private func getBarcodeType() -> BINKBarcodeType {
+        switch membershipCard.card?.barcodeType {
+        case 0: return BINKBarcodeType.code128
+        case 1: return BINKBarcodeType.QR
+        case 2: return BINKBarcodeType.aztec
+        case 3: return BINKBarcodeType.PDF417
+        case 4: return BINKBarcodeType.EAN13
+        case 5: return BINKBarcodeType.dataMatrix
+        case 6: return BINKBarcodeType.ITF
+        case 7: return BINKBarcodeType.code39
+        default: return .code128
         }
+    }
+    
+    func generateBarcodeImage(for imageView: UIImageView) {
+        guard let barcodeString = membershipCard.card?.barcode else { return }
         
-        return nil
+        let image = BINKBarcodeGenerator.generateBarcode(
+            withContents: barcodeString,
+            of: getBarcodeType(),
+            in: imageView.bounds.size
+        )
+        
+        imageView.image = image
     }
 }

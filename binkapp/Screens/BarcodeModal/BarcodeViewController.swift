@@ -37,10 +37,12 @@ class BarcodeViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isHidden = false
-        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal)
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal)
-        self.title = viewModel.getTitle()
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.barTintColor = .white
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        navigationItem.leftBarButtonItem = backButton
+        
+        title = viewModel.getTitle()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,7 +50,7 @@ class BarcodeViewController: UIViewController {
     }
     
     func configureUI() {
-        barcodeImageView.image = viewModel.generateBarcodeImage()
+        viewModel.generateBarcodeImage(for: barcodeImageView)
         
         barcodeImageView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(maximizeBarcode))
@@ -90,5 +92,9 @@ class BarcodeViewController: UIViewController {
         })
         
         isBarcodeFullsize.toggle()
+    }
+    
+    @objc private func popViewController() {
+        dismiss(animated: true, completion: nil)
     }
 }
