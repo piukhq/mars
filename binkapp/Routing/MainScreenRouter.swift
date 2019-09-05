@@ -41,8 +41,12 @@ class MainScreenRouter {
     }
     
     func toDebugMenu() {
-        let debugMenuViewModel = DebugMenuViewModel(sections: DebugMenuFactory().makeDebugMenuSections())
-        let debugNavigationController = UINavigationController(rootViewController: DebugMenuTableViewController(viewModel: debugMenuViewModel))
+        let debugMenuFactory = DebugMenuFactory()
+        let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
+        let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
+        debugMenuFactory.delegate = debugMenuViewController
+
+        let debugNavigationController = UINavigationController(rootViewController: debugMenuViewController)
         navController?.present(debugNavigationController, animated: true, completion: nil)
     }
     

@@ -9,11 +9,15 @@
 import Foundation
 import UIKit
 
-struct DebugMenuViewModel {
-    let sections: [DebugMenuSection]
-    
-    init(sections: [DebugMenuSection]) {
-        self.sections = sections
+class DebugMenuViewModel {
+    private let debugMenuFactory: DebugMenuFactory
+
+    init(debugMenuFactory: DebugMenuFactory) {
+        self.debugMenuFactory = debugMenuFactory
+    }
+
+    var sections: [DebugMenuSection] {
+        return debugMenuFactory.makeDebugMenuSections()
     }
     
     var title: String {

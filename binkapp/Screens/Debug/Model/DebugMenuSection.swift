@@ -14,7 +14,13 @@ struct DebugMenuSection {
 }
 
 struct DebugMenuRow {
+    enum RowType {
+        case version
+        case email
+    }
+
     typealias DebugRowAction = () -> Void
+    
     let title: String
     let subtitle: String?
     let action: DebugRowAction?
