@@ -11,7 +11,6 @@ PODS:
   - AppAuth/ExternalUserAgent (1.2.0)
   - Crashlytics (3.13.4):
     - Fabric (~> 1.10.2)
-  - EANBarcodeGenerator (0.1.0)
   - Fabric (1.10.2)
   - Firebase (6.7.0):
     - Firebase/Core (= 6.7.0)
@@ -101,7 +100,6 @@ DEPENDENCIES:
   - AlamofireImage
   - AlamofireNetworkActivityLogger
   - Crashlytics
-  - EANBarcodeGenerator
   - Fabric
   - Firebase
   - GoogleSignIn
@@ -119,7 +117,6 @@ SPEC REPOS:
     - AlamofireNetworkActivityLogger
     - AppAuth
     - Crashlytics
-    - EANBarcodeGenerator
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -151,7 +148,6 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityLogger: 6d3398c692d2c5d83b0c58793537860aca1e383d
   AppAuth: bce82c76043657c99d91e7882e8a9e1a93650cd4
   Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
-  EANBarcodeGenerator: b19d89506e94e7a1e818d9109fce485d729da6b6
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 291d7b0a7b393f252358083b5d224884126fa46d
   FirebaseAnalytics: 843c7f64a8f9c79f0d03281197ebe7bb1d58d477
@@ -174,6 +170,6 @@ SPEC CHECKSUMS:
   Swinject: 18195e17ad6140f994e95e11c7b04b21410598e8
   SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
 
-PODFILE CHECKSUM: 4a0ca5d053bad3fc0e171b36f2923bf16e9b85ca
+PODFILE CHECKSUM: 3ef25cf60d76a1e92d8d2a8e051cce5ea5b40f25
 
 COCOAPODS: 1.7.5
