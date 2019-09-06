@@ -11,7 +11,7 @@ struct MembershipTransaction: Codable {
     let id: Int?
     let status: String?
     let timestamp: Int?
-    let description : String?
+    let description: String?
     let amounts: [MembershipCardAmount]?
     
     enum CodingKeys: String, CodingKey {

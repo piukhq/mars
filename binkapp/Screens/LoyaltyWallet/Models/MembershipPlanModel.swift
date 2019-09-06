@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MembershipPlanModel : Codable {
+struct MembershipPlanModel: Codable {
     let id: Int?
     let status: String?
     let featureSet: FeatureSetModel?

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TierModel : Codable {
-    let name : String?
-    let description : String?
+struct TierModel: Codable {
+    let name: String?
+    let description: String?
 }

@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct PlanDocumentModel : Codable {
-    let name : String?
-    let description : String?
-    let url : String?
-    let display : [String]?
-    let checkbox : Bool?
+struct PlanDocumentModel: Codable {
+    let name: String?
+    let description: String?
+    let url: String?
+    let display: [String]?
+    let checkbox: Bool?
 }

@@ -94,14 +94,14 @@ class ApiManager {
 }
 
 private extension ApiManager {
-    private func getHeader() -> [String : String] {
+    private func getHeader() -> [String: String] {
         let header = [
             "Authorization": "Bearer " + generateToken(email: userEmail),
             "Content-Type": "application/json"]
         return header
     }
     
-    private func getParameters() -> [String : [String : Any]] {
+    private func getParameters() -> [String: [String: Any]] {
         let parameters = [
             "consent": [
                 "email": userEmail,

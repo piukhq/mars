@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct EnrolFieldModel : Codable {
-    let column : String?
-    let validation : String?
-    let description : String?
-    let type : Int?
+struct EnrolFieldModel: Codable {
+    let column: String?
+    let validation: String?
+    let description: String?
+    let type: Int?
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AuthoriseFieldModel : Codable {
+struct AuthoriseFieldModel: Codable {
     let column: String?
     let validation: String?
     let description: String?

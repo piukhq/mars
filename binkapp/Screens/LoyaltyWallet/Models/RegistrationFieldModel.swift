@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct RegistrationFieldModel : Codable {
-    let column : String?
-    let description : String?
-    let type : Int?
+struct RegistrationFieldModel: Codable {
+    let column: String?
+    let description: String?
+    let type: Int?
 }

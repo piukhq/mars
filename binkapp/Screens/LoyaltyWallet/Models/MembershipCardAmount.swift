@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct MembershipCardAmount : Codable {
-    let currency : String?
-    let suffix : String?
-    let value : Double?
+struct MembershipCardAmount: Codable {
+    let currency: String?
+    let suffix: String?
+    let value: Double?
     
     enum CodingKeys: String, CodingKey {
         

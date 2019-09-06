@@ -8,8 +8,8 @@
 import Foundation
 
 struct MembershipCardStatusModel: Codable {
-    let state : String?
-    let reasonCodes : [String]?
+    let state: String?
+    let reasonCodes: [String]?
     
     enum CodingKeys: String, CodingKey {
         

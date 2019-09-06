@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct BalanceModel : Codable {
-    let currency : String?
-    let prefix : String?
-    let suffix : String?
-    let description : String?
+struct BalanceModel: Codable {
+    let currency: String?
+    let prefix: String?
+    let suffix: String?
+    let description: String?
 }
 

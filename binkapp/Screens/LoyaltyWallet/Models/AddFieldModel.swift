@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AddFieldModel : Codable {
+struct AddFieldModel: Codable {
     let column: String?
     let validation: String?
     let description: String?

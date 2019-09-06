@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct MembershipCardAccountModel : Codable {
-    let tier : Int?
+struct MembershipCardAccountModel: Codable {
+    let tier: Int?
     
     enum CodingKeys: String, CodingKey {
         

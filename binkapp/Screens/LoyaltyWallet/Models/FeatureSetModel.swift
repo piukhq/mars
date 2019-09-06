@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct FeatureSetModel : Codable {
-    let authorisationRequired : Bool?
-    let transactionsAvailable : Bool?
-    let digitalOnly : Bool?
-    let hasPoints : Bool?
-    let cardType : Int?
-    let linkingSupport : [String]?
-//    let apps : [String]?
+struct FeatureSetModel: Codable {
+    let authorisationRequired: Bool?
+    let transactionsAvailable: Bool?
+    let digitalOnly: Bool?
+    let hasPoints: Bool?
+    let cardType: Int?
+    let linkingSupport: [String]?
+//    let apps: [String]?
     
     enum CodingKeys: String, CodingKey {
         

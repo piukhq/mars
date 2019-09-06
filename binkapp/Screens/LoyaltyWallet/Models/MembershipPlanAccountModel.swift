@@ -7,25 +7,25 @@
 
 import Foundation
 
-struct MemebershipPlanAccountModel : Codable {
+struct MemebershipPlanAccountModel: Codable {
     let planName: String?
     let planNameCard: String?
     let planURL: String?
-    let companyName : String?
-    let category : String?
-    let planSummary : String?
-    let planDescription : String?
-    let barcodeRedeemInstructions : String?
-    let planRegisterInfo : String?
-    let companyURL : String?
-    let enrolIncentive : String?
-    let forgottenPasswordUrl : String?
-    let tiers : [TierModel]?
-    let planDocuments : [PlanDocumentModel]?
-    let addFields : [AddFieldModel]?
-    let authoriseFields : [AuthoriseFieldModel]?
-    let registrationFields : [RegistrationFieldModel]?
-    let enrolFields : [EnrolFieldModel]?
+    let companyName: String?
+    let category: String?
+    let planSummary: String?
+    let planDescription: String?
+    let barcodeRedeemInstructions: String?
+    let planRegisterInfo: String?
+    let companyURL: String?
+    let enrolIncentive: String?
+    let forgottenPasswordUrl: String?
+    let tiers: [TierModel]?
+    let planDocuments: [PlanDocumentModel]?
+    let addFields: [AddFieldModel]?
+    let authoriseFields: [AuthoriseFieldModel]?
+    let registrationFields: [RegistrationFieldModel]?
+    let enrolFields: [EnrolFieldModel]?
     
     enum CodingKeys: String, CodingKey {
         
