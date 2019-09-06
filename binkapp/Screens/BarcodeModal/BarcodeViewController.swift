@@ -17,6 +17,8 @@ class BarcodeViewController: UIViewController {
     let viewModel: BarcodeViewModel
     var originalBarcodeFrame: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     var isBarcodeFullsize = false
+    var rightButton: UIBarButtonItem?
+    var leftButton: UIBarButtonItem?
     
     @IBAction func maximiseButtonAction(_ sender: Any) {
         maximizeBarcode()
@@ -39,10 +41,13 @@ class BarcodeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.barTintColor = .white
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
-        navigationItem.leftBarButtonItem = backButton
         
         title = viewModel.getTitle()
+        
+        rightButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(maximizeBarcode))
+        leftButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+
+        navigationItem.leftBarButtonItem = leftButton
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -81,17 +86,42 @@ class BarcodeViewController: UIViewController {
     }
     
     @objc func maximizeBarcode() {
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             if self.isBarcodeFullsize {
-                self.barcodeImageView.frame = self.originalBarcodeFrame
-                self.barcodeImageView.backgroundColor = .clear
+                let orientation = UIInterfaceOrientation.portrait.rawValue
+                UIDevice.current.setValue(orientation, forKey: "orientation")
+                self.setForPortraitOrientation()
             } else {
-                self.barcodeImageView.frame = self.view.bounds
-                self.barcodeImageView.backgroundColor = .white
+                let orientation = UIInterfaceOrientation.landscapeRight.rawValue
+                UIDevice.current.setValue(orientation, forKey: "orientation")
+                self.setForLandscapeOrientation()
             }
         })
         
         isBarcodeFullsize.toggle()
+    }
+    
+    func setForLandscapeOrientation() {
+        barcodeImageView.frame = view.frame
+        barcodeImageView.backgroundColor = .white
+        navigationItem.rightBarButtonItem = rightButton
+        navigationItem.leftBarButtonItem = nil
+        navigationItem.setHidesBackButton(true, animated: true)
+        navigationController?.navigationBar.frame.size.height *= 2
+        numberLabel.textColor = .black
+        let imageRect = viewModel.getRectOfImageInImageView(imageView: barcodeImageView)
+        numberLabel.frame.origin = CGPoint(x: imageRect.origin.x + imageRect.width / 5.5, y: imageRect.origin.y + imageRect.height / 1.6)
+        additionalSafeAreaInsets.top = 30
+    }
+    
+    func setForPortraitOrientation() {
+        barcodeImageView.frame = originalBarcodeFrame
+        barcodeImageView.backgroundColor = .clear
+        navigationItem.rightBarButtonItem = nil
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.setHidesBackButton(false, animated: true)
+        navigationController?.navigationBar.frame.size.height /= 2
+        numberLabel.textColor = .blueAccent
     }
     
     @objc private func popViewController() {
