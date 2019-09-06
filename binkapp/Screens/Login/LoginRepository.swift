@@ -10,7 +10,7 @@ import Alamofire
 import Keys
 
 struct Constants {
-    static let endpoint = "https://api.bink-dev.com/ubiquity"
+    static let endpoint = "https://api.bink-staging.com/ubiquity"
 }
 
 class LoginRepository {
