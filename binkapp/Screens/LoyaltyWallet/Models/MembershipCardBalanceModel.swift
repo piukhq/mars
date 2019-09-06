@@ -15,10 +15,10 @@ struct MembershipCardBalanceModel: Codable {
     let updatedAt: Double?
     
     enum CodingKeys: String, CodingKey {
-        case value = "value"
-        case currency = "currency"
-        case prefix = "prefix"
-        case suffix = "suffix"
+        case value
+        case currency
+        case prefix
+        case suffix
         case updatedAt = "updated_at"
     }
     

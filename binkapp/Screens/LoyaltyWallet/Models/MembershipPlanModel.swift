@@ -16,12 +16,12 @@ struct MembershipPlanModel: Codable {
     let balances: [BalanceModel]?
     
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case status = "status"
+        case id
+        case status
         case featureSet = "feature_set"
-        case images = "images"
-        case account = "account"
-        case balances = "balances"
+        case images
+        case account
+        case balances
     }
     
     init(from decoder: Decoder) throws {

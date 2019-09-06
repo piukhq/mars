@@ -19,15 +19,15 @@ struct MembershipCardModel: Codable {
     let balances: [MembershipCardBalanceModel]?
     
     enum CodingKeys: String, CodingKey {
-        case id = "id"
+        case id
         case membershipPlan = "membership_plan"
         case paymentCards = "payment_cards"
         case membershipTransactions = "membership_transactions"
-        case status = "status"
-        case card = "card"
-        case images = "images"
-        case account = "account"
-        case balances = "balances"
+        case status
+        case card
+        case images
+        case account
+        case balances
     }
     
     init(from decoder: Decoder) throws {

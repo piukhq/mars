@@ -13,9 +13,9 @@ struct CardModel: Codable {
     let colour: String?
     
     enum CodingKeys: String, CodingKey {
-        case barcode = "barcode"
+        case barcode
         case barcodeType = "barcode_type"
-        case colour = "colour"
+        case colour
     }
     
     init(from decoder: Decoder) throws {

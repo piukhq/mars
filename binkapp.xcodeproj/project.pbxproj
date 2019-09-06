@@ -1374,7 +1374,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mogenerator --swift --model binkapp/Persistence/binkapp.xcdatamodeld --output-dir binkapp/Persistence/Entities\n";
+			shellScript = "mogenerator --swift --model binkapp/Persistence/Model/binkapp.xcdatamodeld --output-dir binkapp/Persistence/Entities\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

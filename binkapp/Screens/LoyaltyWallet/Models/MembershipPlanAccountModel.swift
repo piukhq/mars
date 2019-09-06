@@ -32,7 +32,7 @@ struct MemebershipPlanAccountModel: Codable {
         case planNameCard = "plan_name_card"
         case planURL = "plan_url"
         case companyName = "company_name"
-        case category = "category"
+        case category
         case planSummary = "plan_summary"
         case planDescription = "plan_description"
         case barcodeRedeemInstructions = "barcode_redeem_instructions"
@@ -40,7 +40,7 @@ struct MemebershipPlanAccountModel: Codable {
         case companyURL = "company_url"
         case enrolIncentive = "enrol_incentive"
         case forgottenPasswordUrl = "forgotten_password_url"
-        case tiers = "tiers"
+        case tiers
         case planDocuments = "plan_documents"
         case addFields = "add_fields"
         case authoriseFields = "authorise_fields"
