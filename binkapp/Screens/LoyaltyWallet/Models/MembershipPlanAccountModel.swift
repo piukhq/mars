@@ -28,7 +28,6 @@ struct MemebershipPlanAccountModel: Codable {
     let enrolFields: [EnrolFieldModel]?
     
     enum CodingKeys: String, CodingKey {
-        
         case planName = "plan_name"
         case planNameCard = "plan_name_card"
         case planURL = "plan_url"

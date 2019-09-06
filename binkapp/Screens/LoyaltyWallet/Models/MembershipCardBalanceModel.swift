@@ -15,7 +15,6 @@ struct MembershipCardBalanceModel: Codable {
     let updatedAt: Double?
     
     enum CodingKeys: String, CodingKey {
-        
         case value = "value"
         case currency = "currency"
         case prefix = "prefix"

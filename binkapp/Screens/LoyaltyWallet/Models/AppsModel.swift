@@ -13,7 +13,6 @@ struct AppsModel: Codable {
     let appType: Int?
 
     enum CodingKeys: String, CodingKey {
-        
         case appId = "app_id"
         case appStoreUrl = "app_store_url"
         case appType = "app_type"

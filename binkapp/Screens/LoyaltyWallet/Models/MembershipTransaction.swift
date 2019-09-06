@@ -14,15 +14,6 @@ struct MembershipTransaction: Codable {
     let description: String?
     let amounts: [MembershipCardAmount]?
     
-    enum CodingKeys: String, CodingKey {
-        
-        case id = "id"
-        case status = "status"
-        case timestamp = "timestamp"
-        case description = "description"
-        case amounts = "amounts"
-    }
-    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decodeIfPresent(Int.self, forKey: .id)

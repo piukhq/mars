@@ -12,7 +12,6 @@ struct MembershipCardStatusModel: Codable {
     let reasonCodes: [String]?
     
     enum CodingKeys: String, CodingKey {
-        
         case state = "state"
         case reasonCodes = "reason_codes"
     }

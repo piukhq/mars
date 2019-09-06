@@ -13,7 +13,6 @@ struct CardModel: Codable {
     let colour: String?
     
     enum CodingKeys: String, CodingKey {
-        
         case barcode = "barcode"
         case barcodeType = "barcode_type"
         case colour = "colour"

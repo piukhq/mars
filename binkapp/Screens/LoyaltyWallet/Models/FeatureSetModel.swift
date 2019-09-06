@@ -17,7 +17,6 @@ struct FeatureSetModel: Codable {
 //    let apps: [String]?
     
     enum CodingKeys: String, CodingKey {
-        
         case authorisationRequired = "authorisation_required"
         case transactionsAvailable = "transactions_available"
         case digitalOnly = "digital_only"

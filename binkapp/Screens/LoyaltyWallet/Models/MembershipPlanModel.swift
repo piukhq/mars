@@ -16,7 +16,6 @@ struct MembershipPlanModel: Codable {
     let balances: [BalanceModel]?
     
     enum CodingKeys: String, CodingKey {
-        
         case id = "id"
         case status = "status"
         case featureSet = "feature_set"
