@@ -11,5 +11,4 @@ struct BrandModel {
     let id: Int
     let logo: UIImage
     let brandName: String
-    
 }

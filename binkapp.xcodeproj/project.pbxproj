@@ -173,6 +173,8 @@
 		EF758E1023225F45000D26A9 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0D23225F45000D26A9 /* UIApplication.swift */; };
 		EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF758E1223225F95000D26A9 /* TestDatabase.xcdatamodeld */; };
 		EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E1423225F95000D26A9 /* DatabaseTests.swift */; };
+		EF758E2323229BED000D26A9 /* _CD_MembershipCardAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E2123229BED000D26A9 /* _CD_MembershipCardAmount.swift */; };
+		EF758E2423229BED000D26A9 /* CD_MembershipCardAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E2223229BED000D26A9 /* CD_MembershipCardAmount.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -390,6 +392,8 @@
 		EF758E0D23225F45000D26A9 /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		EF758E1323225F95000D26A9 /* TestDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestDatabase.xcdatamodel; sourceTree = "<group>"; };
 		EF758E1423225F95000D26A9 /* DatabaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseTests.swift; sourceTree = "<group>"; };
+		EF758E2123229BED000D26A9 /* _CD_MembershipCardAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardAmount.swift; sourceTree = "<group>"; };
+		EF758E2223229BED000D26A9 /* CD_MembershipCardAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardAmount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -858,6 +862,7 @@
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				EF758E1823229972000D26A9 /* Entities */,
 				EF758E1723225FAC000D26A9 /* Model */,
 				EF758E0623225F1C000D26A9 /* SwiftDatabase */,
 				AF06D82C12A979885545793C /* CoreDataAccess.swift */,
@@ -957,6 +962,15 @@
 				5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		EF758E1823229972000D26A9 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				EF758E2123229BED000D26A9 /* _CD_MembershipCardAmount.swift */,
+				EF758E2223229BED000D26A9 /* CD_MembershipCardAmount.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		EFF3DCDC231D507A006A39C9 /* Debug */ = {
@@ -1383,6 +1397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF758E2323229BED000D26A9 /* _CD_MembershipCardAmount.swift in Sources */,
 				5ECE04A922CE582E001BA964 /* LoginRepository.swift in Sources */,
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
 				3C2C90FB23191CF700D112E3 /* AuthoriseFieldPostModel.swift in Sources */,
@@ -1430,6 +1445,7 @@
 				3CEABFD02316AB88009B1122 /* MembershipCardBalanceModel.swift in Sources */,
 				3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */,
 				3CD7E90B2302AC42001889FE /* ApiManager.swift in Sources */,
+				EF758E2423229BED000D26A9 /* CD_MembershipCardAmount.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
 				3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */,
 				3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */,
