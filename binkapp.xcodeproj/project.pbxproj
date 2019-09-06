@@ -167,6 +167,12 @@
 		EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */; };
 		EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485576231D72E700FC9E5F /* ModalDismissable.swift */; };
 		EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */; };
+		EF758E0823225F35000D26A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0723225F35000D26A9 /* Database.swift */; };
+		EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */; };
+		EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0C23225F45000D26A9 /* NSManagedObjectContext.swift */; };
+		EF758E1023225F45000D26A9 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0D23225F45000D26A9 /* UIApplication.swift */; };
+		EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF758E1223225F95000D26A9 /* TestDatabase.xcdatamodeld */; };
+		EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E1423225F95000D26A9 /* DatabaseTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -377,6 +383,13 @@
 		EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModel.swift; sourceTree = "<group>"; };
 		EF485576231D72E700FC9E5F /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
+		EF758E0723225F35000D26A9 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		EF758E0923225F3B000D26A9 /* SwiftDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftDatabase.h; sourceTree = "<group>"; };
+		EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersistentContainer.swift; sourceTree = "<group>"; };
+		EF758E0C23225F45000D26A9 /* NSManagedObjectContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext.swift; sourceTree = "<group>"; };
+		EF758E0D23225F45000D26A9 /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		EF758E1323225F95000D26A9 /* TestDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestDatabase.xcdatamodel; sourceTree = "<group>"; };
+		EF758E1423225F95000D26A9 /* DatabaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -794,6 +807,7 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
+				EF758E1123225F6D000D26A9 /* SwiftDatabase */,
 				EF485578231E5A3600FC9E5F /* Screens */,
 				3CFD912F22F1BA8200F25AF1 /* TabBarTests.swift */,
 				5ECE048322CE579B001BA964 /* binkappTests.swift */,
@@ -844,7 +858,8 @@
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */,
+				EF758E1723225FAC000D26A9 /* Model */,
+				EF758E0623225F1C000D26A9 /* SwiftDatabase */,
 				AF06D82C12A979885545793C /* CoreDataAccess.swift */,
 				AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */,
 			);
@@ -905,6 +920,43 @@
 				EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */,
 			);
 			path = "Debug Menu";
+			sourceTree = "<group>";
+		};
+		EF758E0623225F1C000D26A9 /* SwiftDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				EF758E0723225F35000D26A9 /* Database.swift */,
+				EF758E0923225F3B000D26A9 /* SwiftDatabase.h */,
+				EF758E0A23225F45000D26A9 /* Extensions */,
+			);
+			path = SwiftDatabase;
+			sourceTree = "<group>";
+		};
+		EF758E0A23225F45000D26A9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */,
+				EF758E0C23225F45000D26A9 /* NSManagedObjectContext.swift */,
+				EF758E0D23225F45000D26A9 /* UIApplication.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EF758E1123225F6D000D26A9 /* SwiftDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				EF758E1423225F95000D26A9 /* DatabaseTests.swift */,
+				EF758E1223225F95000D26A9 /* TestDatabase.xcdatamodeld */,
+			);
+			path = SwiftDatabase;
+			sourceTree = "<group>";
+		};
+		EF758E1723225FAC000D26A9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		EFF3DCDC231D507A006A39C9 /* Debug */ = {
@@ -1340,6 +1392,7 @@
 				3C873FF822F073CF00FA3031 /* WalletLoyaltyCardTableViewCell.swift in Sources */,
 				3C33E33D23166FF9005E97DC /* DropdownView.swift in Sources */,
 				3C3C604C2302DD1600D9EA25 /* EmptyResponse.swift in Sources */,
+				EF758E0823225F35000D26A9 /* Database.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
 				EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */,
 				3C873FF822F073CF00FA3031 /* WalletLoyaltyCardTableViewCell.swift in Sources */,
@@ -1358,12 +1411,14 @@
 				B72633432305899200951037 /* AddFieldModel.swift in Sources */,
 				3CEABFD22316ABA9009B1122 /* MembershipCardAmount.swift in Sources */,
 				3C17FC2F22F2C69200E423A2 /* MembershipCardModel.swift in Sources */,
+				EF758E1023225F45000D26A9 /* UIApplication.swift in Sources */,
 				3CEABFCE2316AB74009B1122 /* MembershipCardAccountModel.swift in Sources */,
 				B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */,
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
+				EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */,
 				3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */,
 				EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,
@@ -1425,6 +1480,7 @@
 				3CEABFCC2316AB65009B1122 /* MembershipCardStatusModel.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,
 				3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */,
+				EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */,
 				3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */,
 				3CB6BF7923141D3000B74882 /* AuthAndAddRepository.swift in Sources */,
 			);
@@ -1439,6 +1495,8 @@
 				EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */,
 				3C429F8E22F16A9A009C1BD2 /* LoyaltyWalletTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* TabBarTests.swift in Sources */,
+				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
+				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
 				AF06D42F48491D78B0040221 /* DataAccessible.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2568,6 +2626,16 @@
 			);
 			currentVersion = 5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		EF758E1223225F95000D26A9 /* TestDatabase.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EF758E1323225F95000D26A9 /* TestDatabase.xcdatamodel */,
+			);
+			currentVersion = EF758E1323225F95000D26A9 /* TestDatabase.xcdatamodel */;
+			path = TestDatabase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
