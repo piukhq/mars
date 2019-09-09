@@ -9,5 +9,5 @@
 import Foundation
 
 extension Notification.Name {
-    static let connectivityCheck = Notification.Name(rawValue: "connectivity-check")
+    static let noInternetConnection = Notification.Name(rawValue: "no_internet_connection")
 }

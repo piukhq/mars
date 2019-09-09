@@ -14,7 +14,7 @@ class MainScreenRouter {
     let apiManager = ApiManager()
     
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(noConnectivityPopup), name: .connectivityCheck, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(noConnectivityPopup), name: .noInternetConnection, object: nil)
     }
 
     func toMainScreen() {

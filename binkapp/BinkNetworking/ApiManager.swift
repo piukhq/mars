@@ -92,7 +92,7 @@ class ApiManager {
                     }
             }
         } else {
-            NotificationCenter.default.post(name: .connectivityCheck, object: nil)
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
         }
     }
 }
