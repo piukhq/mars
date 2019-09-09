@@ -74,3 +74,4 @@ binkapp.xcworkspace/xcuserdata/dorinpop.xcuserdatad/xcdebugger/Breakpoints_v2.xc
 *.xcuserdatad
 /.DS_Store
 /binkapp/Persistence/Entities/.DS_Store
+.DS_Store

@@ -175,6 +175,8 @@
 		EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E1423225F95000D26A9 /* DatabaseTests.swift */; };
 		EF758E2323229BED000D26A9 /* _CD_MembershipCardAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E2123229BED000D26A9 /* _CD_MembershipCardAmount.swift */; };
 		EF758E2423229BED000D26A9 /* CD_MembershipCardAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E2223229BED000D26A9 /* CD_MembershipCardAmount.swift */; };
+		EF758E3723265EB4000D26A9 /* _CD_MembershipCardBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E3523265EB4000D26A9 /* _CD_MembershipCardBalance.swift */; };
+		EF758E3823265EB4000D26A9 /* CD_MembershipCardBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E3623265EB4000D26A9 /* CD_MembershipCardBalance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -394,6 +396,8 @@
 		EF758E1423225F95000D26A9 /* DatabaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseTests.swift; sourceTree = "<group>"; };
 		EF758E2123229BED000D26A9 /* _CD_MembershipCardAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardAmount.swift; sourceTree = "<group>"; };
 		EF758E2223229BED000D26A9 /* CD_MembershipCardAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardAmount.swift; sourceTree = "<group>"; };
+		EF758E3523265EB4000D26A9 /* _CD_MembershipCardBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardBalance.swift; sourceTree = "<group>"; };
+		EF758E3623265EB4000D26A9 /* CD_MembershipCardBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardBalance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -969,6 +973,8 @@
 			children = (
 				EF758E2123229BED000D26A9 /* _CD_MembershipCardAmount.swift */,
 				EF758E2223229BED000D26A9 /* CD_MembershipCardAmount.swift */,
+				EF758E3523265EB4000D26A9 /* _CD_MembershipCardBalance.swift */,
+				EF758E3623265EB4000D26A9 /* CD_MembershipCardBalance.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1480,10 +1486,12 @@
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
 				B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */,
 				EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */,
+				EF758E3823265EB4000D26A9 /* CD_MembershipCardBalance.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
 				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,
 				3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */,
 				3C873FF222F073CF00FA3031 /* PaymentWalletPresenter.swift in Sources */,
+				EF758E3723265EB4000D26A9 /* _CD_MembershipCardBalance.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
 				3CF029F222F45AEC009A0E61 /* AddingOptionsViewController.swift in Sources */,
 				3CF029F822F45B8C009A0E61 /* AddingOptionsEnum.swift in Sources */,
