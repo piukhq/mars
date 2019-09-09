@@ -11,6 +11,7 @@ import CoreGraphics
 class LoyaltyWalletViewController: UIViewController{
     @IBOutlet private weak var tableView: UITableView!
     private let viewModel: LoyaltyWalletViewModel
+    private var refreshControl = UIRefreshControl()
     
     init(viewModel: LoyaltyWalletViewModel) {
         self.viewModel = viewModel
@@ -29,13 +30,16 @@ class LoyaltyWalletViewController: UIViewController{
         tableView.dataSource = self
         tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
         
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen(_:)), name: .didDeleteMemebershipCard, object: nil)
+        refreshControl.addTarget(self, action: #selector(refreshScreen), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen), name: .didDeleteMemebershipCard, object: nil)
     }
 }
 
 // MARK: - Private methods
 private extension LoyaltyWalletViewController {
-    @objc func refreshScreen(_: Notification) {
+    @objc func refreshScreen() {
         viewModel.refreshScreen()
     }
 }

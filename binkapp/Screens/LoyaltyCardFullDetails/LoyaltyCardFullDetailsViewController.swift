@@ -7,10 +7,6 @@
 
 import UIKit
 
-extension Notification.Name {
-    static let didDeleteMemebershipCard = Notification.Name("didDeleteMembershipCard")
-}
-
 class LoyaltyCardFullDetailsViewController: UIViewController {
     @IBOutlet private weak var fullDetailsBrandHeader: FullDetailsBrandHeader!
     @IBOutlet private weak var aboutInfoRow: CardDetailsInfoView!
