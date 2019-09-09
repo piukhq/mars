@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class MainScreenRouter {
-    var navController: UINavigationController?
+    var navController: PortraitNavigationController?
     
     let apiManager = ApiManager()
 
@@ -22,7 +22,7 @@ class MainScreenRouter {
     }
     
     func getNavigationControllerWithLoginScreen() -> UIViewController{
-        navController = UINavigationController(rootViewController: getLoginScreen())
+        navController = PortraitNavigationController(rootViewController: getLoginScreen())
         navController?.navigationBar.isTranslucent = false
         
         return navController!
@@ -46,7 +46,7 @@ class MainScreenRouter {
         let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
         debugMenuFactory.delegate = debugMenuViewController
 
-        let debugNavigationController = UINavigationController(rootViewController: debugMenuViewController)
+        let debugNavigationController = PortraitNavigationController(rootViewController: debugMenuViewController)
         navController?.present(debugNavigationController, animated: true, completion: nil)
     }
     
@@ -82,7 +82,7 @@ class MainScreenRouter {
     func toBarcodeViewController(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel) {
         let viewModel = BarcodeViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard)
         let viewController = BarcodeViewController(viewModel: viewModel)
-        navController?.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
+        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
     func toAddOrJoinViewController(membershipPlan: MembershipPlanModel) {
@@ -125,5 +125,12 @@ class MainScreenRouter {
         } else {
             navController?.popToRootViewController(animated: true)
         }
+    }
+}
+
+class PortraitNavigationController: UINavigationController {
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
     }
 }

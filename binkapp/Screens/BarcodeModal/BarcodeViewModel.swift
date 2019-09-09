@@ -57,7 +57,7 @@ class BarcodeViewModel {
             of: getBarcodeType(),
             in: imageView.bounds.size
         )
-        
+                
         imageView.image = image
     }
     
