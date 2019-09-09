@@ -179,6 +179,9 @@
 		EF758E3823265EB4000D26A9 /* CD_MembershipCardBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E3623265EB4000D26A9 /* CD_MembershipCardBalance.swift */; };
 		EF758E3B232666A8000D26A9 /* _CD_MembershipCardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E39232666A8000D26A9 /* _CD_MembershipCardAccount.swift */; };
 		EF758E3C232666A8000D26A9 /* CD_MembershipCardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E3A232666A8000D26A9 /* CD_MembershipCardAccount.swift */; };
+		EF758E3F232667F9000D26A9 /* _CD_MembershipCardStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E3D232667F9000D26A9 /* _CD_MembershipCardStatus.swift */; };
+		EF758E40232667F9000D26A9 /* CD_MembershipCardStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E3E232667F9000D26A9 /* CD_MembershipCardStatus.swift */; };
+		EF758E4223267BD4000D26A9 /* MembershipCardStatusReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E4123267BD4000D26A9 /* MembershipCardStatusReasonCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -402,6 +405,9 @@
 		EF758E3623265EB4000D26A9 /* CD_MembershipCardBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardBalance.swift; sourceTree = "<group>"; };
 		EF758E39232666A8000D26A9 /* _CD_MembershipCardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardAccount.swift; sourceTree = "<group>"; };
 		EF758E3A232666A8000D26A9 /* CD_MembershipCardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardAccount.swift; sourceTree = "<group>"; };
+		EF758E3D232667F9000D26A9 /* _CD_MembershipCardStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardStatus.swift; sourceTree = "<group>"; };
+		EF758E3E232667F9000D26A9 /* CD_MembershipCardStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardStatus.swift; sourceTree = "<group>"; };
+		EF758E4123267BD4000D26A9 /* MembershipCardStatusReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardStatusReasonCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -459,6 +465,7 @@
 				3CEABFCF2316AB87009B1122 /* MembershipCardBalanceModel.swift */,
 				3CEABFCD2316AB74009B1122 /* MembershipCardAccountModel.swift */,
 				3CEABFCB2316AB65009B1122 /* MembershipCardStatusModel.swift */,
+				EF758E4123267BD4000D26A9 /* MembershipCardStatusReasonCode.swift */,
 				3CEABFC92316AB42009B1122 /* MembershipTransaction.swift */,
 				3C17FC2E22F2C69200E423A2 /* MembershipCardModel.swift */,
 				3C17FC3122F2CCAD00E423A2 /* MembershipCardImageModel.swift */,
@@ -797,21 +804,21 @@
 		5ECE046A22CE5798001BA964 /* binkapp */ = {
 			isa = PBXGroup;
 			children = (
-				5E1B500B232105B800890C7E /* Firebase */,
-				5ECE049F22CE57F5001BA964 /* Screens */,
-				3C873FD122F073B500FA3031 /* Routing */,
+				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
+				5ECE047522CE579B001BA964 /* Assets.xcassets */,
+				B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */,
 				3C25BE012301A0F600E931EE /* BinkNetworking */,
 				3CF054D322FDABCA0069E98A /* BinkUI */,
 				B7E2EC0622E5ED1800BB201A /* Extensions */,
-				3CF029F422F45B48009A0E61 /* Utils */,
-				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
-				5ECE046F22CE5798001BA964 /* Main.storyboard */,
-				5ECE047522CE579B001BA964 /* Assets.xcassets */,
-				5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */,
+				5E1B500B232105B800890C7E /* Firebase */,
 				5ECE047A22CE579B001BA964 /* Info.plist */,
-				AF06D86448D661A8F4142F87 /* Persistence */,
-				B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */,
+				5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */,
 				3CC267EF22F4276E00F0F9E3 /* Localizable.strings */,
+				5ECE046F22CE5798001BA964 /* Main.storyboard */,
+				AF06D86448D661A8F4142F87 /* Persistence */,
+				3C873FD122F073B500FA3031 /* Routing */,
+				5ECE049F22CE57F5001BA964 /* Screens */,
+				3CF029F422F45B48009A0E61 /* Utils */,
 			);
 			path = binkapp;
 			sourceTree = "<group>";
@@ -975,6 +982,8 @@
 		EF758E1823229972000D26A9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				EF758E3D232667F9000D26A9 /* _CD_MembershipCardStatus.swift */,
+				EF758E3E232667F9000D26A9 /* CD_MembershipCardStatus.swift */,
 				EF758E39232666A8000D26A9 /* _CD_MembershipCardAccount.swift */,
 				EF758E3A232666A8000D26A9 /* CD_MembershipCardAccount.swift */,
 				EF758E2123229BED000D26A9 /* _CD_MembershipCardAmount.swift */,
@@ -1436,6 +1445,7 @@
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
 				3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */,
+				EF758E4223267BD4000D26A9 /* MembershipCardStatusReasonCode.swift in Sources */,
 				B72633432305899200951037 /* AddFieldModel.swift in Sources */,
 				3CEABFD22316ABA9009B1122 /* MembershipCardAmount.swift in Sources */,
 				3C17FC2F22F2C69200E423A2 /* MembershipCardModel.swift in Sources */,
@@ -1469,10 +1479,12 @@
 				3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */,
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
+				EF758E40232667F9000D26A9 /* CD_MembershipCardStatus.swift in Sources */,
 				EF758E3B232666A8000D26A9 /* _CD_MembershipCardAccount.swift in Sources */,
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
 				3C873FEE22F073CF00FA3031 /* PaymentWalletViewController.swift in Sources */,
 				B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */,
+				EF758E3F232667F9000D26A9 /* _CD_MembershipCardStatus.swift in Sources */,
 				3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */,
 				3C794D8C23018C25000A31FD /* BrowseBrandsViewController.swift in Sources */,
 				EF48556C231D696800FC9E5F /* DebugMenuTableViewCell.swift in Sources */,

@@ -18,9 +18,19 @@
         <attribute name="updatedAt" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
     </entity>
+    <entity name="CD_MembershipCardStatus" representedClassName="CD_MembershipCardStatus" syncable="YES">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="reasonCodes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardStatusReasonCode" syncable="YES"/>
+    </entity>
+    <entity name="CD_MembershipCardStatusReasonCode" representedClassName="CD_MembershipCardStatusReasonCode" syncable="YES">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="CD_MembershipCardAmount" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="CD_MembershipCardBalance" positionX="-36" positionY="36" width="128" height="135"/>
         <element name="CD_MembershipCardAccount" positionX="-9" positionY="90" width="128" height="75"/>
+        <element name="CD_MembershipCardStatus" positionX="9" positionY="99" width="128" height="90"/>
+        <element name="CD_MembershipCardStatusReasonCode" positionX="27" positionY="108" width="128" height="60"/>
     </elements>
 </model>

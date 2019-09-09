@@ -6,20 +6,16 @@
 //
 
 import Foundation
+import CoreData
 
 struct MembershipCardStatusModel: Codable {
+    let id: String
     let state: String?
-    let reasonCodes: [String]?
+    let reasonCodes: [MembershipCardStatusReasonCode]?
     
     enum CodingKeys: String, CodingKey {
+        case id
         case state
         case reasonCodes = "reason_codes"
     }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        state = try values.decodeIfPresent(String.self, forKey: .state)
-        reasonCodes = try values.decodeIfPresent([String].self, forKey: .reasonCodes)
-    }
-    
 }
