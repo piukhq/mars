@@ -30,6 +30,8 @@ class LoyaltyWalletViewModel {
         fetchMembershipCards()
     }
     
+    // MARK: - Public methods
+    
     func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
             if let cardId = self.membershipCards[index].id {
@@ -57,8 +59,22 @@ class LoyaltyWalletViewModel {
         return membershipCards
     }
     
+    func membershipCard(forIndexPathSection section: Int) -> MembershipCardModel {
+        return membershipCards[section]
+    }
+    
     func getMembershipPlans() -> [MembershipPlanModel] {
         return membershipPlans
+    }
+    
+    func membershipPlan(forIndexPathSection section: Int) -> MembershipPlanModel {
+        return membershipPlans[section]
+    }
+    
+    func membershipPlanForCard(card: MembershipCardModel) -> MembershipPlanModel? {
+        let planModelId = card.membershipPlan
+        let memberhshipPlan = membershipPlans.first(where: {($0.id == planModelId)})
+        return memberhshipPlan
     }
     
     func refreshScreen() {

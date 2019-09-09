@@ -48,7 +48,7 @@ enum RequestHTTPMethod {
 class ApiManager {
     private let email = "Bink20iteration1@testbink.com"
     
-    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> Void, onError: @escaping (Error) -> Void) where Resp: Codable {
+    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Codable {
         var params: [String: Any]?
         if parameters == nil {
             params = getParameters()

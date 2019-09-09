@@ -13,9 +13,9 @@ extension Notification.Name {
 
 class LoyaltyCardFullDetailsViewController: UIViewController {
     @IBOutlet private weak var fullDetailsBrandHeader: FullDetailsBrandHeader!
-    @IBOutlet weak var aboutInfoRow: CardDetailsInfoView!
-    @IBOutlet weak var securityAndPrivacyInfoRow: CardDetailsInfoView!
-    @IBOutlet weak var deleteInfoRow: CardDetailsInfoView!
+    @IBOutlet private weak var aboutInfoRow: CardDetailsInfoView!
+    @IBOutlet private weak var securityAndPrivacyInfoRow: CardDetailsInfoView!
+    @IBOutlet private weak var deleteInfoRow: CardDetailsInfoView!
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
     
@@ -40,18 +40,18 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
 
 private extension LoyaltyCardFullDetailsViewController {
     func configureUI() {
-        let aboutInfoTitle = "About membership"
-        let aboutInfoMessge = "Learn more about how it works"
+        let aboutInfoTitle = "about_membership_title".localized
+        let aboutInfoMessge = "learn_more".localized
         aboutInfoRow.delegate = self
         aboutInfoRow.configureWithTitle(title: aboutInfoTitle, andInfo: aboutInfoMessge)
         
-        let securityInfoTitle = "Security and privacy"
-        let securityInfoMessage = "How we protect your data"
+        let securityInfoTitle = "security_and_privacy_title".localized
+        let securityInfoMessage = "security_and_privacy_message".localized
         securityAndPrivacyInfoRow.delegate = self
         securityAndPrivacyInfoRow.configureWithTitle(title: securityInfoTitle, andInfo: securityInfoMessage)
         
-        let deleteInfoTitle = "Delete this card"
-        let deleteInfoMessage = "Remove this card from Bink"
+        let deleteInfoTitle = "delete_card_title".localized
+        let deleteInfoMessage = "delete_card_message".localized
         deleteInfoRow.delegate = self
         deleteInfoRow.configureWithTitle(title: deleteInfoTitle, andInfo: deleteInfoMessage)
     }
@@ -72,11 +72,11 @@ private extension LoyaltyCardFullDetailsViewController {
     
     func displaySecurityAndPrivacyPopup() {
         let securityAdnPrivacyLink = NSURL(string: "https://bink.com/terms-and-conditions/#privacy-policy")
-        let messageString = "We take security very seriously and keeping your personal details safe is very important to us.\nWe are a PCI certified service provider which means that we meet the highest level of security standards set by the payment card industry. This certification requires us to employ a wide range of measures designed to protect the security of your information. We recommend that you secure your app with Touch ID and/or a passcode for an extra layer of security.\nWe carefully check all the parties who we share your personal information with. To find out more you can see our Privacy Policy here."
+        let messageString = "security_and_privacy_alert_message".localized
         let message = NSMutableAttributedString(string: messageString)
         message.addAttribute(.link, value: securityAdnPrivacyLink ?? "", range: NSRange(location: message.length - 5, length: 4))
 
-        let alert = HyperlinkAlertController(title: "Is my Data Secure?", message: message)
+        let alert = HyperlinkAlertController(title: "security_and_privacy_alert_title".localized, message: message)
         alert.modalPresentationStyle = .overCurrentContext
         alert.modalTransitionStyle = .crossDissolve
         present(alert, animated: true, completion: nil)
@@ -92,6 +92,7 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
             }
             break
         case securityAndPrivacyInfoRow:
+            //TODO: Replace me with Terms and Conditions VC when complete
             displaySecurityAndPrivacyPopup()
             break
         case deleteInfoRow:

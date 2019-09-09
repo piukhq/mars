@@ -27,6 +27,4 @@ class CardDetailsInfoView: CustomView {
     @IBAction func moreInfoTapped(_ sender: Any) {
         delegate?.cardDetailsInfoViewDidTapMoreInfo(self)
     }
-    
-    
 }

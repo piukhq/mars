@@ -19,8 +19,6 @@ class AuthAndAddRepository {
         let method = RequestHTTPMethod.post
         apiManager.doRequest(url: url, httpMethod: method, parameters: jsonCard, onSuccess: { (response: MembershipCardModel) in
             completion(response)
-        }, onError: {_ in
-            
         })
     }
 }
