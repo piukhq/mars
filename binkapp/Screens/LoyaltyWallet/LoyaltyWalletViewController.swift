@@ -28,8 +28,19 @@ class LoyaltyWalletViewController: UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen(_:)), name: .didDeleteMemebershipCard, object: nil)
     }
 }
+
+// MARK: - Private methods
+private extension LoyaltyWalletViewController {
+    @objc func refreshScreen(_: Notification) {
+        viewModel.refreshScreen()
+    }
+}
+
+// MARK: - Table view delegate and data source
 
 extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSource {
     //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
@@ -44,13 +55,11 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
-        let membershipPlan = viewModel.getMembershipCards()[section].membershipPlan
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "WalletLoyaltyCardTableViewCell", for: indexPath) as! WalletLoyaltyCardTableViewCell
-        if let cardPlan = viewModel.getMembershipPlans().first(where: {($0.id == membershipPlan)}) {
-            cell.configureUIWithMembershipCard(card: viewModel.getMembershipCards()[section], andMemebershipPlan: cardPlan)
+        if let cardPlan = viewModel.membershipPlanForCard(card: viewModel.membershipCard(forIndexPathSection: section)) {
+            cell.configureUIWithMembershipCard(card: viewModel.membershipCard(forIndexPathSection: section), andMemebershipPlan: cardPlan)
         }
-        
         cell.layer.cornerRadius = 8
         cell.separatorInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         cell.layer.shadowOffset = CGSize(width: 0, height: 5)
@@ -97,11 +106,14 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let alert = UIAlertController(title: "Error", message: "To be implemented", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true)
+        let card = viewModel.membershipCard(forIndexPathSection: indexPath.section)
+        if let membershipPlan = viewModel.membershipPlanForCard(card: card) {
+            viewModel.toFullDetailsCardScreen(membershipCard: card, membershipPlan: membershipPlan)
+        }
     }
 }
+
+// MARK: - View model delegate
 
 extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
     func didFetchMembershipPlans() {

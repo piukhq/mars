@@ -10,7 +10,7 @@ import Alamofire
 import Keys
 
 class LoyaltyWalletRepository {
-    let apiManager: ApiManager
+    private let apiManager: ApiManager
     
     init(apiManager: ApiManager) {
         self.apiManager = apiManager
@@ -22,7 +22,7 @@ class LoyaltyWalletRepository {
         
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipCardModel]) in
             completion(response)
-        }, onError: {
+        }, onError: {_ in 
             print("error")
         })
     }
@@ -32,7 +32,7 @@ class LoyaltyWalletRepository {
         let method = RequestHTTPMethod.get
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipPlanModel]) in
             completion(response)
-        }, onError: {
+        }, onError: {_ in 
             print("error")
         })
     }
@@ -43,7 +43,7 @@ class LoyaltyWalletRepository {
         
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: EmptyResponse) in
             completion(response)
-        }, onError: {
+        }, onError: {_ in 
             print("error")
         })
     }
