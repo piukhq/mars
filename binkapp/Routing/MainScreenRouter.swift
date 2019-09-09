@@ -14,7 +14,7 @@ class MainScreenRouter {
     let apiManager = ApiManager()
     
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(noConnectivityPopup), name: .noInternetConnection, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
     }
 
     func toMainScreen() {
@@ -119,7 +119,7 @@ class MainScreenRouter {
         navController?.present(alert, animated: true, completion: nil)
     }
     
-    @objc func noConnectivityPopup() {
+    @objc func presentNoConnectivityPopup() {
         let alert = UIAlertController(title: nil, message: "no_internet_connection_title".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
