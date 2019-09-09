@@ -57,38 +57,42 @@ class ApiManager {
     }
     
     func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> Void, onError: @escaping () -> Void) where Resp: Codable {
-        var params: [String: Any]?
-        if parameters == nil {
-            params = getParameters()
-        } else {
-            params = parameters
-        }
-        Alamofire.request(Constants.endpoint + "\(url.value)", method: httpMethod.value, parameters: params, encoding: JSONEncoding.default, headers: getHeader() )
-            .responseJSON { response in
-                guard let data = response.data else {
-                    print("No data found")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .useDefaultKeys
-                
-                do {
-                    let statusCode = response.response?.statusCode ?? 0
-                    if statusCode == 200 || statusCode == 201 {
-                        let models = try decoder.decode(Resp.self, from: data)
-                        onSuccess(models)
-                    } else if let error = response.error {
-                        print(error)
-                        onError()
-                    } else {
-                        print("something went wrong, statusCode: \(statusCode)")
+        if Connectivity.isConnectedToInternet() {
+            var params: [String: Any]?
+            if parameters == nil {
+                params = getParameters()
+            } else {
+                params = parameters
+            }
+            Alamofire.request(Constants.endpoint + "\(url.value)", method: httpMethod.value, parameters: params, encoding: JSONEncoding.default, headers: getHeader() )
+                .responseJSON { response in
+                    guard let data = response.data else {
+                        print("No data found")
+                        return
+                    }
+                    
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .useDefaultKeys
+                    
+                    do {
+                        let statusCode = response.response?.statusCode ?? 0
+                        if statusCode == 200 || statusCode == 201 {
+                            let models = try decoder.decode(Resp.self, from: data)
+                            onSuccess(models)
+                        } else if let error = response.error {
+                            print(error)
+                            onError()
+                        } else {
+                            print("something went wrong, statusCode: \(statusCode)")
+                            onError()
+                        }
+                    } catch (let error) {
+                        print("decoding error: \(error)")
                         onError()
                     }
-                } catch (let error) {
-                    print("decoding error: \(error)")
-                    onError()
-                }
+            }
+        } else {
+            NotificationCenter.default.post(name: .connectivityCheck, object: nil)
         }
     }
 }

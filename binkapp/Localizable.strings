@@ -54,5 +54,8 @@
 "yes" = "Yes";
 "no" = "No";
 "cancel" = "Cancel";
+"ok" = "OK";
+
+"no_internet_connection_title" = "Your selected activity cannot be performed at this time due to a connection issue";
 
 "debug_menu_tools_section_title" = "Tools";

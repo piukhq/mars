@@ -53,6 +53,8 @@
 		3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE622F073CE00FA3031 /* LoyaltyWalletViewModel.swift */; };
 		3C873FFB22F073CF00FA3031 /* LoyaltyWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C873FE722F073CE00FA3031 /* LoyaltyWalletViewController.xib */; };
 		3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */; };
+		3C8BBC27232651E900363349 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8BBC26232651E900363349 /* Connectivity.swift */; };
+		3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8BBC282326541D00363349 /* NotificationNameExtension.swift */; };
 		3C9CCD2D2316958300FAF589 /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9CCD2C2316958300FAF589 /* CheckboxView.swift */; };
 		3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9CCD2E231695AE00FAF589 /* CheckboxView.xib */; };
 		3CADDEAF231566C9006C3D9C /* LoginTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CADDEAE231566C9006C3D9C /* LoginTextFieldView.swift */; };
@@ -241,6 +243,8 @@
 		3C873FE622F073CE00FA3031 /* LoyaltyWalletViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletViewModel.swift; sourceTree = "<group>"; };
 		3C873FE722F073CE00FA3031 /* LoyaltyWalletViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoyaltyWalletViewController.xib; sourceTree = "<group>"; };
 		3C873FE822F073CE00FA3031 /* LoyaltyWalletRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletRepository.swift; sourceTree = "<group>"; };
+		3C8BBC26232651E900363349 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
+		3C8BBC282326541D00363349 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
 		3C9CCD2C2316958300FAF589 /* CheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
 		3C9CCD2E231695AE00FAF589 /* CheckboxView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckboxView.xib; sourceTree = "<group>"; };
 		3CADDEAE231566C9006C3D9C /* LoginTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextFieldView.swift; sourceTree = "<group>"; };
@@ -657,6 +661,7 @@
 				3CF029F522F45B53009A0E61 /* CustomView.swift */,
 				3C2C90F523190A8700D112E3 /* KeyboardLayoutConstraint.swift */,
 				3CB81C12231E74220075D3AC /* ImageTypeEnum.swift */,
+				3C8BBC26232651E900363349 /* Connectivity.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -848,6 +853,7 @@
 				3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */,
 				EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */,
 				EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */,
+				3C8BBC282326541D00363349 /* NotificationNameExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1296,6 +1302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5ECE04A922CE582E001BA964 /* LoginRepository.swift in Sources */,
+				3C8BBC27232651E900363349 /* Connectivity.swift in Sources */,
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
 				3C2C90FB23191CF700D112E3 /* AuthoriseFieldPostModel.swift in Sources */,
 				B7263347230589EE00951037 /* BalanceModel.swift in Sources */,
@@ -1329,6 +1336,7 @@
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */,
+				3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */,
 				EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
