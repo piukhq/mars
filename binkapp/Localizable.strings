@@ -37,7 +37,9 @@
 "add_join_screen_link_title" = "Link";
 "add_join_screen_store_description" = "You can add this card to Bink and show the onscreen barcode at the till to collect points.";
 "add_join_screen_view_description" = "You can see your live points balance and transaction history for this card in Bink.";
+"add_join_screen_view_description_inactive" = "You cannot see your live points balance and transaction history for this card in Bink.";
 "add_join_screen_link_description" = "You can link this card to your bank cards and automatically collect points when you pay.";
+"add_join_screen_link_description_inactive" = "You cannot link this card to your payment cards yet.";
 "add_my_card_button" = "Add my card";
 "get_new_card_button" = "Get a new card";
 

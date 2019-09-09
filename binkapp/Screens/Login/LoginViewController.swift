@@ -9,7 +9,15 @@ import UIKit
 
 class LoginViewController: UIViewController {
     let viewModel: LoginViewModel
-    let email = "Bink20iteration1@testbink.com"
+    private let fallbackUserEmail = "Bink20iteration1@testbink.com"
+
+    private var userEmail: String {
+        guard let userEmail = UserDefaults.standard.string(forKey: .userEmail) else {
+            UserDefaults.standard.setValue(fallbackUserEmail, forKey: .userEmail)
+            return fallbackUserEmail
+        }
+        return userEmail
+    }
     
     init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
@@ -25,6 +33,6 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.registerUser(with: email)
+        viewModel.registerUser(with: userEmail)
     }
 }

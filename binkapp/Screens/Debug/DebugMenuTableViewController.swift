@@ -62,6 +62,7 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row = viewModel.row(atIndexPath: indexPath)
         row.action?()
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // MARK: - ModalDismissable
@@ -69,5 +70,35 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
     @objc func close() {
         dismiss(animated: true, completion: nil)
     }
+}
 
+extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
+    func debugMenuFactory(_ debugMenuFactory: DebugMenuFactory, shouldPerformActionForType type: DebugMenuRow.RowType) {
+        switch type {
+        case .email:
+            let alert = UIAlertController(title: "Edit Email Address", message: "This will overwrite the current logged in email address and reboot the app.", preferredStyle: .alert)
+            alert.addTextField { textField in
+                textField.placeholder = "New email address"
+                textField.text = UserDefaults.standard.string(forKey: .userEmail)
+            }
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+                guard let textField = alert.textFields?.first else {
+                    return
+                }
+                guard let newEmail = textField.text else {
+                    return
+                }
+
+                UserDefaults.standard.setValue(newEmail, forKey: .userEmail)
+                exit(0)
+            }
+            alert.addAction(cancelAction)
+            alert.addAction(okAction)
+            navigationController?.present(alert, animated: true, completion: nil)
+        default:
+            return
+        }
+    }
 }

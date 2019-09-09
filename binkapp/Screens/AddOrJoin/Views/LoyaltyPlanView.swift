@@ -8,7 +8,13 @@
 import UIKit
 
 enum PlanType {
-    case store
+    case storeCell
+    case viewCell
+    case linkCell
+}
+
+enum CardType: Int {
+    case store = 0
     case view
     case link
 }
@@ -18,23 +24,23 @@ class LoyaltyPlanView: CustomView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    func configure(for planType: PlanType, cardType: Int) {
+    func configure(for planType: PlanType, cardType: CardType) {
         configureIcon(for: planType, cardType: cardType)
         configureTitle(for: planType)
-        configureDescription(for: planType)
+        configureDescription(for: planType, cardType: cardType)
     }
     
-    private func configureIcon(for planType: PlanType, cardType: Int) {
+    private func configureIcon(for planType: PlanType, cardType: CardType) {
         switch planType {
-        case .store: iconImageView.image = UIImage(named: "activeStore")
-        case .view:
-            if cardType > 0 {
+        case .storeCell: iconImageView.image = UIImage(named: "activeStore")
+        case .viewCell:
+            if cardType.rawValue > 0 {
                 iconImageView.image = UIImage(named: "activeView")
             } else {
                 iconImageView.image = UIImage(named: "inactiveView")
             }
-        case .link:
-            if cardType > 1 {
+        case .linkCell:
+            if cardType.rawValue > 1 {
                 iconImageView.image = UIImage(named: "activeLink")
             } else {
                 iconImageView.image = UIImage(named: "inactiveLink")
@@ -44,17 +50,20 @@ class LoyaltyPlanView: CustomView {
     
     private func configureTitle(for planType: PlanType) {
         switch planType {
-        case .store: titleLabel.text = "add_join_screen_store_title".localized
-        case .view: titleLabel.text = "add_join_screen_view_title".localized
-        case .link: titleLabel.text = "add_join_screen_link_title".localized
+        case .storeCell: titleLabel.text = "add_join_screen_store_title".localized
+        case .viewCell: titleLabel.text = "add_join_screen_view_title".localized
+        case .linkCell: titleLabel.text = "add_join_screen_link_title".localized
         }
     }
     
-    private func configureDescription(for planType: PlanType) {
+    private func configureDescription(for planType: PlanType, cardType: CardType) {
         switch planType {
-        case .store: descriptionLabel.text = "add_join_screen_store_description".localized
-        case .view: descriptionLabel.text = "add_join_screen_view_description".localized
-        case .link: descriptionLabel.text = "add_join_screen_link_description".localized
+            case .storeCell:
+            descriptionLabel.text = "add_join_screen_store_description".localized
+            case .viewCell:
+            descriptionLabel.text = cardType.rawValue > 0 ? "add_join_screen_view_description".localized : "add_join_screen_view_description_inactive".localized
+            case .linkCell:
+            descriptionLabel.text = cardType.rawValue > 1 ? "add_join_screen_link_description".localized : "add_join_screen_link_description_inactive".localized
         }
     }
     

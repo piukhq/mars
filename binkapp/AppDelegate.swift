@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import Fabric
 import Crashlytics
+import Firebase
 import AlamofireNetworkActivityLogger
 
 @UIApplicationMain
@@ -20,12 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+
         #if DEBUG
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
         #endif
-        
+
         let router = MainScreenRouter()
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -33,7 +34,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainWindow.rootViewController = router.getNavigationControllerWithLoginScreen()
             mainWindow.makeKeyAndVisible()
         }
+
+        // Crashlytics
         Fabric.with([Crashlytics.self])
+
+        // Firebase
+
+        if let bundleIdentifier = Bundle.main.bundleIdentifier {
+            if let filePath = Bundle.main.path(forResource: "\(bundleIdentifier).GoogleService-Info", ofType: "plist") {
+                if let fileopts = FirebaseOptions(contentsOfFile: filePath) {
+                    FirebaseApp.configure(options: fileopts)
+                }
+            }
+        }
         return true
     }
 

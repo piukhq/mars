@@ -46,7 +46,15 @@ enum RequestHTTPMethod {
 }
 
 class ApiManager {
-    private let email = "Bink20iteration1@testbink.com"
+    private let fallbackUserEmail = "Bink20iteration1@testbink.com"
+
+    private var userEmail: String {
+        guard let userEmail = UserDefaults.standard.string(forKey: .userEmail) else {
+            UserDefaults.standard.setValue(fallbackUserEmail, forKey: .userEmail)
+            return fallbackUserEmail
+        }
+        return userEmail
+    }
     
     func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Codable {
         var params: [String: Any]?
@@ -87,7 +95,7 @@ class ApiManager {
 private extension ApiManager {
     private func getHeader() -> [String : String] {
         let header = [
-            "Authorization": "Bearer " + generateToken(email: email),
+            "Authorization": "Bearer " + generateToken(email: userEmail),
             "Content-Type": "application/json"]
         return header
     }
@@ -95,7 +103,7 @@ private extension ApiManager {
     private func getParameters() -> [String : [String : Any]] {
         let parameters = [
             "consent": [
-                "email": email,
+                "email": userEmail,
                 "latitude": 51.405372,
                 "longitude": 0.00001,
                 "timestamp": Date().timeIntervalSince1970.stringFromTimeInterval()
