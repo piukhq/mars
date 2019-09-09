@@ -12,6 +12,10 @@ class MainScreenRouter {
     var navController: UINavigationController?
     
     let apiManager = ApiManager()
+    
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+    }
 
     func toMainScreen() {
         let repository = MainTabBarRepository()
@@ -21,7 +25,7 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func getNavigationControllerWithLoginScreen() -> UIViewController{
+    func getNavigationControllerWithLoginScreen() -> UIViewController {
         navController = UINavigationController(rootViewController: getLoginScreen())
         navController?.navigationBar.isTranslucent = false
         
@@ -117,7 +121,13 @@ class MainScreenRouter {
     
     func displaySimplePopup(title: String?, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
+        navController?.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func presentNoConnectivityPopup() {
+        let alert = UIAlertController(title: nil, message: "no_internet_connection_title".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
     }
     

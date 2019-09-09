@@ -56,7 +56,13 @@ class ApiManager {
         return userEmail
     }
     
+
     func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Codable {
+        guard Connectivity.isConnectedToInternet() else {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            return
+        }
+        
         var params: [String: Any]?
         if parameters == nil {
             params = getParameters()

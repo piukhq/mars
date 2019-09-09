@@ -54,6 +54,9 @@
 "yes" = "Yes";
 "no" = "No";
 "cancel" = "Cancel";
+"ok" = "OK";
+
+"no_internet_connection_title" = "Your selected activity cannot be performed at this time due to a connection issue";
 
 "about_membership_title" = "About membership";
 "learn_more" = "Learn more about how it works";
