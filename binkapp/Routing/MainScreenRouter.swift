@@ -108,6 +108,13 @@ class MainScreenRouter {
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
+    
+    func toPllViewController(membershipPlan: MembershipPlanModel) {
+        let viewModel = PLLViewModel(membershipPlan: membershipPlan, router: self)
+        let viewController = PLLEmptyViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
     func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in
