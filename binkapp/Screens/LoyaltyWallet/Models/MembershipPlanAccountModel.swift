@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct MemebershipPlanAccountModel: Codable {
+struct MembershipPlanAccountModel: Codable {
+    let id: Int
     let planName: String?
     let planNameCard: String?
     let planURL: String?
@@ -28,6 +29,7 @@ struct MemebershipPlanAccountModel: Codable {
     let enrolFields: [EnrolFieldModel]?
     
     enum CodingKeys: String, CodingKey {
+        case id
         case planName = "plan_name"
         case planNameCard = "plan_name_card"
         case planURL = "plan_url"
@@ -46,27 +48,5 @@ struct MemebershipPlanAccountModel: Codable {
         case authoriseFields = "authorise_fields"
         case registrationFields = "registration_fields"
         case enrolFields = "enrol_fields"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        planName = try values.decodeIfPresent(String.self, forKey: .planName)
-        planNameCard = try values.decodeIfPresent(String.self, forKey: .planNameCard)
-        planURL = try values.decodeIfPresent(String.self, forKey: .planURL)
-        companyName = try values.decodeIfPresent(String.self, forKey: .companyName)
-        category = try values.decodeIfPresent(String.self, forKey: .category)
-        planSummary = try values.decodeIfPresent(String.self, forKey: .planSummary)
-        planDescription = try values.decodeIfPresent(String.self, forKey: .planDescription)
-        barcodeRedeemInstructions = try values.decodeIfPresent(String.self, forKey: .barcodeRedeemInstructions)
-        planRegisterInfo = try values.decodeIfPresent(String.self, forKey: .planRegisterInfo)
-        companyURL = try values.decodeIfPresent(String.self, forKey: .companyURL)
-        enrolIncentive = try values.decodeIfPresent(String.self, forKey: .enrolIncentive)
-        forgottenPasswordUrl = try values.decodeIfPresent(String.self, forKey: .forgottenPasswordUrl)
-        tiers = try values.decodeIfPresent([TierModel].self, forKey: .tiers)
-        planDocuments = try values.decodeIfPresent([PlanDocumentModel].self, forKey: .planDocuments)
-        addFields = try values.decodeIfPresent([AddFieldModel].self, forKey: .addFields)
-        authoriseFields = try values.decodeIfPresent([AuthoriseFieldModel].self, forKey: .authoriseFields)
-        registrationFields = try values.decodeIfPresent([RegistrationFieldModel].self, forKey: .registrationFields)
-        enrolFields = try values.decodeIfPresent([EnrolFieldModel].self, forKey: .enrolFields)
     }
 }

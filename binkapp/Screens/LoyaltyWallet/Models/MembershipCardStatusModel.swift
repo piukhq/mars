@@ -9,9 +9,9 @@ import Foundation
 import CoreData
 
 struct MembershipCardStatusModel: Codable {
-    let id: String
+    let id: Int
     let state: String?
-    let reasonCodes: [MembershipCardStatusReasonCode]?
+    let reasonCodes: [String]?
     
     enum CodingKeys: String, CodingKey {
         case id

@@ -8,6 +8,7 @@
 import Foundation
 
 struct BalanceModel: Codable {
+    let id: Int
     let currency: String?
     let prefix: String?
     let suffix: String?

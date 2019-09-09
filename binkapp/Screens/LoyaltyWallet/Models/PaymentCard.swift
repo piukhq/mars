@@ -1,5 +1,5 @@
 //
-//  MembershipCardStatusReasonCode.swift
+//  PaymentCard.swift
 //  binkapp
 //
 //  Created by Nick Farrant on 09/09/2019.
@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import CoreData
 
-struct MembershipCardStatusReasonCode: Codable {
-    let reasonCode: String
+struct PaymentCard: Codable {
+    let id: Int
 }

@@ -37,13 +37,16 @@ class LoyaltyWalletViewModel {
     }
     
     func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-        router.showDeleteConfirmationAlert(yesCompletion: {
-            if let cardId = self.membershipCards[index].id {
-                self.deleteMembershipCard(id: cardId, completion: {
-                    self.membershipCards.remove(at: index)
-                    yesCompletion()
-                })
+        router.showDeleteConfirmationAlert(yesCompletion: { [weak self] in
+            guard let strongSelf = self else {
+                return
             }
+            let cardId = strongSelf.membershipCards[index].id
+            strongSelf.deleteMembershipCard(id: cardId, completion: {
+                strongSelf.membershipCards.remove(at: index)
+                yesCompletion()
+            })
+
         }, noCompletion: {
             noCompletion()
         })

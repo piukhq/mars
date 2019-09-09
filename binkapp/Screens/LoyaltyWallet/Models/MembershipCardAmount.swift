@@ -9,19 +9,8 @@ import Foundation
 import CoreData
 
 struct MembershipCardAmount: Codable {
-    let id: String
+    let id: Int
     let currency: String?
     let suffix: String?
     let value: Double?
-}
-
-extension MembershipCardAmount: CoreDataMappable {
-    func objectToMapTo(_ cdObject: CD_MembershipCardAmount, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardAmount {
-        update(cdObject, \.id, with: id, delta: delta)
-        update(cdObject, \.currency, with: currency, delta: delta)
-        update(cdObject, \.suffix, with: suffix, delta: delta)
-        update(cdObject, \.value, with: NSNumber(value: value ?? 0), delta: delta)
-
-        return cdObject
-    }
 }

@@ -36,7 +36,7 @@ class LoyaltyWalletRepository {
             print("error")
         })
     }
-    
+
     func deleteMembershipCard(id: Int, completion: @escaping (Any) -> Void) {
         let url = RequestURL.deleteMembershipCard(cardId: id)
         let method = RequestHTTPMethod.delete

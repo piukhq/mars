@@ -8,6 +8,7 @@
 import Foundation
 
 struct EnrolFieldModel: Codable {
+    let id: Int
     let column: String?
     let validation: String?
     let description: String?

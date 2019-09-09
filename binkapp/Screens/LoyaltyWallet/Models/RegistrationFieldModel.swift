@@ -8,6 +8,7 @@
 import Foundation
 
 struct RegistrationFieldModel: Codable {
+    let id: Int
     let column: String?
     let description: String?
     let type: Int?

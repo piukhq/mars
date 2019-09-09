@@ -8,20 +8,15 @@
 import Foundation
 
 struct CardModel: Codable {
+    let id: Int
     let barcode: String?
     let barcodeType: Int?
     let colour: String?
     
     enum CodingKeys: String, CodingKey {
+        case id
         case barcode
         case barcodeType = "barcode_type"
         case colour
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        barcode = try values.decodeIfPresent(String.self, forKey: .barcode)
-        barcodeType = try values.decodeIfPresent(Int.self, forKey: .barcodeType)
-        colour = try values.decodeIfPresent(String.self, forKey: .colour)
     }
 }
