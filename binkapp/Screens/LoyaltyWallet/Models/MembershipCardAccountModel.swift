@@ -6,13 +6,18 @@
 //
 
 import Foundation
+import CoreData
 
 struct MembershipCardAccountModel: Codable {
+    let id: String
     let tier: Int?
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        tier = try values.decodeIfPresent(Int.self, forKey: .tier)
+}
+
+extension MembershipCardAccountModel: CoreDataMappable {
+    func objectToMapTo(_ cdObject: CD_MembershipCardAccount, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardAccount {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.tier, with: NSNumber(value: tier ?? 0), delta: delta)
+
+        return cdObject
     }
-    
 }

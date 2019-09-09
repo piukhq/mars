@@ -177,6 +177,8 @@
 		EF758E2423229BED000D26A9 /* CD_MembershipCardAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E2223229BED000D26A9 /* CD_MembershipCardAmount.swift */; };
 		EF758E3723265EB4000D26A9 /* _CD_MembershipCardBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E3523265EB4000D26A9 /* _CD_MembershipCardBalance.swift */; };
 		EF758E3823265EB4000D26A9 /* CD_MembershipCardBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E3623265EB4000D26A9 /* CD_MembershipCardBalance.swift */; };
+		EF758E3B232666A8000D26A9 /* _CD_MembershipCardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E39232666A8000D26A9 /* _CD_MembershipCardAccount.swift */; };
+		EF758E3C232666A8000D26A9 /* CD_MembershipCardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E3A232666A8000D26A9 /* CD_MembershipCardAccount.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -398,6 +400,8 @@
 		EF758E2223229BED000D26A9 /* CD_MembershipCardAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardAmount.swift; sourceTree = "<group>"; };
 		EF758E3523265EB4000D26A9 /* _CD_MembershipCardBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardBalance.swift; sourceTree = "<group>"; };
 		EF758E3623265EB4000D26A9 /* CD_MembershipCardBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardBalance.swift; sourceTree = "<group>"; };
+		EF758E39232666A8000D26A9 /* _CD_MembershipCardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardAccount.swift; sourceTree = "<group>"; };
+		EF758E3A232666A8000D26A9 /* CD_MembershipCardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardAccount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -971,6 +975,8 @@
 		EF758E1823229972000D26A9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				EF758E39232666A8000D26A9 /* _CD_MembershipCardAccount.swift */,
+				EF758E3A232666A8000D26A9 /* CD_MembershipCardAccount.swift */,
 				EF758E2123229BED000D26A9 /* _CD_MembershipCardAmount.swift */,
 				EF758E2223229BED000D26A9 /* CD_MembershipCardAmount.swift */,
 				EF758E3523265EB4000D26A9 /* _CD_MembershipCardBalance.swift */,
@@ -1425,6 +1431,7 @@
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				B726334B23058A5C00951037 /* FeatureSetModel.swift in Sources */,
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
+				EF758E3C232666A8000D26A9 /* CD_MembershipCardAccount.swift in Sources */,
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
@@ -1462,6 +1469,7 @@
 				3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */,
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
+				EF758E3B232666A8000D26A9 /* _CD_MembershipCardAccount.swift in Sources */,
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
 				3C873FEE22F073CF00FA3031 /* PaymentWalletViewController.swift in Sources */,
 				B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */,

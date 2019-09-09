@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18F203" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CD_MembershipCardAccount" representedClassName="CD_MembershipCardAccount" syncable="YES">
+        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="tier" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
     <entity name="CD_MembershipCardAmount" representedClassName="CD_MembershipCardAmount" syncable="YES">
         <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
@@ -17,5 +21,6 @@
     <elements>
         <element name="CD_MembershipCardAmount" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="CD_MembershipCardBalance" positionX="-36" positionY="36" width="128" height="135"/>
+        <element name="CD_MembershipCardAccount" positionX="-9" positionY="90" width="128" height="75"/>
     </elements>
 </model>
