@@ -12,6 +12,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BarcodeViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
                 <outlet property="barcodeImageView" destination="IzY-K3-FYy" id="lJ2-0L-5mK"/>
+                <outlet property="barcodeImageViewLeadingConstraint" destination="gO1-aE-Tvk" id="EYl-B8-fTc"/>
+                <outlet property="barcodeImageViewTrailingConstraint" destination="ko8-te-hao" id="ZnV-de-g9A"/>
                 <outlet property="descriptionLabel" destination="tjc-ff-zGD" id="OVV-FH-diX"/>
                 <outlet property="labelStackView" destination="1Jn-zV-sJX" id="ejJ-IC-1qM"/>
                 <outlet property="maximiseButton" destination="zFJ-Yy-zw9" id="kAd-i6-Pny"/>
@@ -63,7 +65,7 @@
                     </connections>
                 </button>
                 <imageView verifyAmbiguity="off" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="IzY-K3-FYy">
-                    <rect key="frame" x="0.0" y="20" width="375" height="239"/>
+                    <rect key="frame" x="25" y="20" width="325" height="239"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="239" id="XnK-b3-AyU"/>
                     </constraints>
@@ -75,8 +77,8 @@
                 <constraint firstItem="IzY-K3-FYy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="AO0-Fl-Xwc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="zFJ-Yy-zw9" secondAttribute="bottom" constant="67" id="CFh-qD-nWy"/>
                 <constraint firstItem="1Jn-zV-sJX" firstAttribute="top" secondItem="IzY-K3-FYy" secondAttribute="bottom" id="PqY-Iz-5rN"/>
-                <constraint firstItem="IzY-K3-FYy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gO1-aE-Tvk"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="IzY-K3-FYy" secondAttribute="trailing" id="ko8-te-hao"/>
+                <constraint firstItem="IzY-K3-FYy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="gO1-aE-Tvk"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="IzY-K3-FYy" secondAttribute="trailing" constant="25" id="ko8-te-hao"/>
                 <constraint firstItem="1Jn-zV-sJX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="p5w-6V-rrj"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1Jn-zV-sJX" secondAttribute="trailing" constant="25" id="wRb-67-6zz"/>
             </constraints>

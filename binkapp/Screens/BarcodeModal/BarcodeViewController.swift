@@ -14,6 +14,8 @@ class BarcodeViewController: UIViewController {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var maximiseButton: BinkGradientButton!
     @IBOutlet private weak var labelStackView: UIStackView!
+    @IBOutlet weak var barcodeImageViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var barcodeImageViewTrailingConstraint: NSLayoutConstraint!
     
     private let viewModel: BarcodeViewModel
     var isBarcodeFullsize = false
@@ -74,7 +76,7 @@ class BarcodeViewController: UIViewController {
         descriptionLabel.textColor = UIColor.black
         descriptionLabel.textAlignment = .justified
         descriptionLabel.isHidden = maximised
-
+        
         switch viewModel.getBarcodeType() {
         case .loyaltyCard:
             descriptionLabel.text = "barcode_card_description".localized
