@@ -30,7 +30,6 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fullDetailsBrandHeader.configureUI()
         configureUI()
         setCloseButton()
     }
@@ -54,6 +53,9 @@ private extension LoyaltyCardFullDetailsViewController {
         let deleteInfoMessage = "delete_card_message".localized
         deleteInfoRow.delegate = self
         deleteInfoRow.configureWithTitle(title: deleteInfoTitle, andInfo: deleteInfoMessage)
+        
+        let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
+        fullDetailsBrandHeader.configureWith(imageUrl: imageURL, delegate: self)
     }
     
     func setCloseButton() {
@@ -83,6 +85,8 @@ private extension LoyaltyCardFullDetailsViewController {
     }
 }
 
+// MARK: - CardDetailsInfoViewDelegate
+
 extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
     func cardDetailsInfoViewDidTapMoreInfo(_ cardDetailsInfoView: CardDetailsInfoView) {
         switch cardDetailsInfoView {
@@ -104,5 +108,13 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
         default:
             break
         }
+    }
+}
+
+// MARK: - FullDetailsBrandHeaderDelegate
+
+extension LoyaltyCardFullDetailsViewController: FullDetailsBrandHeaderDelegate {
+    func fullDetailsBrandHeaderDidTapShowBarcode(_ fullDetailsBrandHeader: FullDetailsBrandHeader) {
+        viewModel.toBarcodeModel()
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FullDetailsBrandHeaderDelegate {
-    func showBarcodeTapped()
+    func fullDetailsBrandHeaderDidTapShowBarcode(_ fullDetailsBrandHeader: FullDetailsBrandHeader)
 }
 
 class FullDetailsBrandHeader: CustomView {
@@ -17,13 +17,17 @@ class FullDetailsBrandHeader: CustomView {
     
     private var delegate: FullDetailsBrandHeaderDelegate?
     
-    override func configureUI() {
-        brandImage.image = UIImage(imageLiteralResourceName: "AppIcon")
+    func configureWith(imageUrl: String?, delegate: FullDetailsBrandHeaderDelegate) {
+        self.delegate = delegate
+        if let imageURL = imageUrl, let url = URL(string: imageURL) {
+            brandImage.af_setImage(withURL: url)
+        }
         messageLabel.font = .bodyTextLarge
     }
+    
     // MARK: - Actions
 
     @IBAction func showBarcodeTapped(_ sender: Any) {
-        delegate?.showBarcodeTapped()
+        delegate?.fullDetailsBrandHeaderDidTapShowBarcode(self)
     }
 }

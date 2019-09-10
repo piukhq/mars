@@ -20,6 +20,12 @@ class LoyaltyCardFullDetailsViewModel {
         self.membershipCard = membershipCard
     }
     
+    // MARK: - Public methds
+    
+    func toBarcodeModel() {
+        router.toBarcodeViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
+    }
+    
     func popViewController() {
         router.popViewController()
     }
