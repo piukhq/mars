@@ -69,7 +69,7 @@ class ApiManager {
         } else {
             params = parameters
         }
-        Alamofire.request(Constants.endpoint + "\(url.value)", method: httpMethod.value, parameters: params, encoding: JSONEncoding.default, headers: getHeader() )
+        Alamofire.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: params, encoding: JSONEncoding.default, headers: getHeader() )
             .responseJSON { response in
                 guard let data = response.data else {
                     print("No data found")
@@ -151,9 +151,21 @@ private extension ApiManager {
         } catch {
             print("Could not make payload data")
         }
+        
+        let key: String
+        
+        switch APIConstants.secretKeyType {
+        case .dev?:
+            key = keys.secretKey
+        case .staging?:
+            key = keys.stagingSecretKey
+        default:
+            fatalError()
+        }
+        
         if let encodedHeader = headerDataEncoded, let encodedPayload = payloadDataEncoded {
             let hmackString = encodedHeader + "." + encodedPayload
-            let hexSignature = hmackString.hmac(algorithm: .SHA512, key: keys.secretKey)
+            let hexSignature = hmackString.hmac(algorithm: .SHA512, key: key)
             let signatureData = hexSignature.hexadecimal
             let signature = signatureData?.base64EncodedString().replacingOccurrences(of: "=", with: "") ?? ""
             let token  = hmackString + "." + signature
