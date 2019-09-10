@@ -8,7 +8,13 @@
 import Foundation
 
 struct TierModel: Codable {
-    let id: Int
+    let id: String
     let name: String?
-    let description: String?
+    let tierDescription: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case tierDescription = "description"
+    }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct FeatureSetModel: Codable {
-    let id: Int
+    let id: String
     let authorisationRequired: Bool?
     let transactionsAvailable: Bool?
     let digitalOnly: Bool?

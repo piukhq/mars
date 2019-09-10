@@ -8,10 +8,18 @@
 import Foundation
 
 struct BalanceModel: Codable {
-    let id: Int
+    let id: String
     let currency: String?
     let prefix: String?
     let suffix: String?
-    let description: String?
+    let balanceDescription: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case currency
+        case prefix
+        case suffix
+        case balanceDescription = "description"
+    }
 }
 

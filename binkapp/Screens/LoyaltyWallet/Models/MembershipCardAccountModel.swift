@@ -9,6 +9,6 @@ import Foundation
 import CoreData
 
 struct MembershipCardAccountModel: Codable {
-    let id: Int
+    let id: String
     let tier: Int?
 }

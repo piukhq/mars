@@ -8,7 +8,7 @@
 import Foundation
 
 struct MembershipCardModel: Codable {
-    let id: Int
+    let id: String
     let membershipPlan: Int?
     let paymentCards: [PaymentCard]?
     let membershipTransactions: [MembershipTransaction]?

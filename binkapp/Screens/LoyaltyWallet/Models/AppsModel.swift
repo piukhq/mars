@@ -8,7 +8,7 @@
 import Foundation
 
 struct AppsModel: Codable {
-    let id: Int
+    let id: String
     let appId: String?
     let appStoreUrl: String?
     let appType: Int?

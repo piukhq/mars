@@ -32,7 +32,7 @@ class AuthAndAddViewModel {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
-        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: membershipPlan.id)
+        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: Int(membershipPlan.id)) // Tech debt
     }
     
     func getMembershipPlan() -> MembershipPlanModel {
@@ -67,11 +67,11 @@ class AuthAndAddViewModel {
                 switch field.type {
                     case FieldInputType.textfield.rawValue:
                         let view = LoginTextFieldView()
-                        view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .add, delegate: self)
+                        view.configure(title: field.column ?? "", placeholder: field.fieldDescription, validationRegEx: field.validation ?? "", fieldType: .add, delegate: self)
                         fieldsViews.append(view)
                     case FieldInputType.password.rawValue:
                         let view = LoginTextFieldView()
-                        view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .add, delegate: self)
+                        view.configure(title: field.column ?? "", placeholder: field.fieldDescription, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .add, delegate: self)
                         fieldsViews.append(view)
                     case FieldInputType.dropdown.rawValue:
                         let view = DropdownView()
@@ -79,7 +79,7 @@ class AuthAndAddViewModel {
                         fieldsViews.append(view)
                     case FieldInputType.checkbox.rawValue:
                         let view = CheckboxView()
-                        view.configure(title: field.description ?? "", fieldType: .add)
+                        view.configure(title: field.fieldDescription ?? "", fieldType: .add)
                         checkboxes.append(view)
                     default: break
                 }
@@ -91,11 +91,11 @@ class AuthAndAddViewModel {
                 switch field.type {
                 case FieldInputType.textfield.rawValue:
                     let view = LoginTextFieldView()
-                    view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
+                    view.configure(title: field.column ?? "", placeholder: field.fieldDescription, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
                     fieldsViews.append(view)
                 case FieldInputType.password.rawValue:
                     let view = LoginTextFieldView()
-                    view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
+                    view.configure(title: field.column ?? "", placeholder: field.fieldDescription, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
                     fieldsViews.append(view)
                 case FieldInputType.dropdown.rawValue:
                     let view = DropdownView()
@@ -103,7 +103,7 @@ class AuthAndAddViewModel {
                     fieldsViews.append(view)
                 case FieldInputType.checkbox.rawValue:
                     let view = CheckboxView()
-                    view.configure(title: field.description ?? "", fieldType: .authorise)
+                    view.configure(title: field.fieldDescription ?? "", fieldType: .authorise)
                     checkboxes.append(view)
                 default: break
                 }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct MembershipPlanAccountModel: Codable {
-    let id: Int
+    let id: String
     let planName: String?
     let planNameCard: String?
     let planURL: String?

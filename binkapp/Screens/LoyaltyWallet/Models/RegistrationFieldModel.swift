@@ -8,8 +8,15 @@
 import Foundation
 
 struct RegistrationFieldModel: Codable {
-    let id: Int
+    let id: String
     let column: String?
-    let description: String?
+    let fieldDescription: String?
     let type: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case column
+        case fieldDescription = "description"
+        case type
+    }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct CardModel: Codable {
-    let id: Int
+    let id: String
     let barcode: String?
     let barcodeType: Int?
     let colour: String?

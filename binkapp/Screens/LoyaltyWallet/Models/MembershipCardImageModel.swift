@@ -8,7 +8,7 @@
 import Foundation
 
 struct MembershipCardImageModel: Codable {
-    let id: Int
+    let id: String
     let type: Int?
     let url: String?
     let imageDescription: String?

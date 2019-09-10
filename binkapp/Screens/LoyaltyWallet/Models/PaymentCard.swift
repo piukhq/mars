@@ -9,5 +9,5 @@
 import Foundation
 
 struct PaymentCard: Codable {
-    let id: Int
+    let id: String
 }
