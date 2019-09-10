@@ -12,8 +12,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BarcodeViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
                 <outlet property="barcodeImageView" destination="IzY-K3-FYy" id="lJ2-0L-5mK"/>
-                <outlet property="barcodeImageViewLeadingConstraint" destination="gO1-aE-Tvk" id="EYl-B8-fTc"/>
-                <outlet property="barcodeImageViewTrailingConstraint" destination="ko8-te-hao" id="ZnV-de-g9A"/>
                 <outlet property="descriptionLabel" destination="tjc-ff-zGD" id="OVV-FH-diX"/>
                 <outlet property="labelStackView" destination="1Jn-zV-sJX" id="ejJ-IC-1qM"/>
                 <outlet property="maximiseButton" destination="zFJ-Yy-zw9" id="kAd-i6-Pny"/>

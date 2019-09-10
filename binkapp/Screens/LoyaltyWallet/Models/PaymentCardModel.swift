@@ -14,13 +14,11 @@ struct PaymentCardModel: Codable {
     
     enum CodingKeys: String, CodingKey {
         
-        case id = "id"
         case activeLink = "active_link"
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decodeIfPresent(Int.self, forKey: .id)
         activeLink = try values.decodeIfPresent(Bool.self, forKey: .activeLink)
     }
 }

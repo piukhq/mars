@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIApplicationDelegate {
+extension UIApplication {
     func topViewControllerWithRootViewController(rootViewController: UIViewController?) -> UIViewController? {
         guard let rootViewController = rootViewController else { return nil }
         if (rootViewController is UITabBarController) {

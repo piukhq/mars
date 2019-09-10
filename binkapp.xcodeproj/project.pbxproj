@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */; };
 		3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DD2327CE6300620583 /* PaymentCardModel.swift */; };
+		3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */; };
 		3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C119B9F2315332B0015CE91 /* LoyaltyPlanView.swift */; };
 		3C119BA22315332B0015CE91 /* LoyaltyPlanView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C119BA02315332B0015CE91 /* LoyaltyPlanView.xib */; };
 		3C17FC2F22F2C69200E423A2 /* MembershipCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C17FC2E22F2C69200E423A2 /* MembershipCardModel.swift */; };
@@ -210,6 +211,7 @@
 		31EB0DFD604C45979606B50E /* Pods-binkappUITests.alpha.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.alpha.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.alpha.xcconfig"; sourceTree = "<group>"; };
 		3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Extension.swift"; sourceTree = "<group>"; };
 		3C05A9DD2327CE6300620583 /* PaymentCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardModel.swift; sourceTree = "<group>"; };
+		3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitNavigationController.swift; sourceTree = "<group>"; };
 		3C119B9F2315332B0015CE91 /* LoyaltyPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyPlanView.swift; sourceTree = "<group>"; };
 		3C119BA02315332B0015CE91 /* LoyaltyPlanView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoyaltyPlanView.xib; sourceTree = "<group>"; };
 		3C17FC2E22F2C69200E423A2 /* MembershipCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardModel.swift; sourceTree = "<group>"; };
@@ -689,6 +691,7 @@
 				3C2C90F523190A8700D112E3 /* KeyboardLayoutConstraint.swift */,
 				3CB81C12231E74220075D3AC /* ImageTypeEnum.swift */,
 				3C8BBC26232651E900363349 /* Connectivity.swift */,
+				3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1392,6 +1395,7 @@
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
+				3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */,
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
 				3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */,
 				B72633432305899200951037 /* AddFieldModel.swift in Sources */,

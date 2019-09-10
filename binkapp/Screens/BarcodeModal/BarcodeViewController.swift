@@ -14,8 +14,6 @@ class BarcodeViewController: UIViewController {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var maximiseButton: BinkGradientButton!
     @IBOutlet private weak var labelStackView: UIStackView!
-    @IBOutlet weak var barcodeImageViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var barcodeImageViewTrailingConstraint: NSLayoutConstraint!
     
     private let viewModel: BarcodeViewModel
     var isBarcodeFullsize = false
@@ -37,7 +35,7 @@ class BarcodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = viewModel.getTitle()
+        title = viewModel.title
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.barTintColor = .white
         
@@ -52,10 +50,10 @@ class BarcodeViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        configureUI(maximised: isBarcodeFullsize)
+        configureUI(maximized: isBarcodeFullsize)
     }
     
-    func configureUI(maximised: Bool) {
+    func configureUI(maximized: Bool) {
         viewModel.generateBarcodeImage(for: barcodeImageView)
         
         barcodeImageView.isUserInteractionEnabled = true
@@ -63,19 +61,19 @@ class BarcodeViewController: UIViewController {
         barcodeImageView.addGestureRecognizer(tap)
         
         titleLabel.font = UIFont.headline
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = .black
         titleLabel.text = "card_number_title".localized
-        titleLabel.isHidden = maximised
+        titleLabel.isHidden = maximized
         labelStackView.setCustomSpacing(0.0, after: titleLabel)
         
         numberLabel.font = UIFont.subtitle
-        numberLabel.textColor = maximised ? .black : UIColor.blueAccent
+        numberLabel.textColor = maximized ? .black : .blueAccent
         numberLabel.text = viewModel.getCardNumber()
         
         descriptionLabel.font = UIFont.bodyTextLarge
-        descriptionLabel.textColor = UIColor.black
+        descriptionLabel.textColor = .black
         descriptionLabel.textAlignment = .justified
-        descriptionLabel.isHidden = maximised
+        descriptionLabel.isHidden = maximized
         
         switch viewModel.getBarcodeType() {
         case .loyaltyCard:
@@ -84,8 +82,8 @@ class BarcodeViewController: UIViewController {
             descriptionLabel.text = "barcode_coupon_description".localized
         }
         
-        maximiseButton.isHidden = maximised
-        maximiseButton.setTitleColor(UIColor.white, for: .normal)
+        maximiseButton.isHidden = maximized
+        maximiseButton.setTitleColor(.white, for: .normal)
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
     }

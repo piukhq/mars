@@ -143,10 +143,3 @@ class MainScreenRouter {
         }
     }
 }
-
-class PortraitNavigationController: UINavigationController {
-    
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .portrait
-    }
-}
