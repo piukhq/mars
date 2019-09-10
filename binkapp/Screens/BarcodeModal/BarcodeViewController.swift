@@ -15,11 +15,8 @@ class BarcodeViewController: UIViewController {
     @IBOutlet private weak var maximiseButton: BinkGradientButton!
     @IBOutlet private weak var labelStackView: UIStackView!
     
-    let viewModel: BarcodeViewModel
-    var originalBarcodeFrame: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+    private let viewModel: BarcodeViewModel
     var isBarcodeFullsize = false
-    var rightButton: UIBarButtonItem?
-    var leftButton: UIBarButtonItem?
     
     @IBAction func maximiseButtonAction(_ sender: Any) {
         maximizeBarcode()
@@ -43,12 +40,9 @@ class BarcodeViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .white
         
         if isBarcodeFullsize {
-            rightButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
-
-            navigationItem.rightBarButtonItem = rightButton
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
         } else {
-            leftButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
-            navigationItem.leftBarButtonItem = leftButton
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
         }
     }
     
