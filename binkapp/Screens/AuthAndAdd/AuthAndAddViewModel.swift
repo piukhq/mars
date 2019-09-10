@@ -46,7 +46,7 @@ class AuthAndAddViewModel {
             do {
                 let result = try convertToDictionary(from: jsonCard) ?? [:]
                 repository.addMembershipCard(jsonCard: result, completion: { response in
-                    self.router.toPllViewController(membershipPlan: self.membershipPlan)
+                    self.router.toPllViewController(membershipCard: response, membershipPlan: self.membershipPlan)
                 })
             } catch {
                 print(error)
@@ -151,10 +151,6 @@ class AuthAndAddViewModel {
                 membershipCard?.account?.authoriseFields?.append(AuthoriseFieldPostModel(column: column, value: value))
             }
         }
-    }
-    
-    func toPllScreen(withMembershipPlan: MembershipPlanModel) {
-        router.toPllViewController(membershipPlan: membershipPlan)
     }
     
     func displaySimplePopup(title: String?, message: String?) {

@@ -22,6 +22,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PLLEmptyViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
+                <outlet property="brandHeaderView" destination="ZTg-SZ-hJP" id="WtV-FU-KkW"/>
                 <outlet property="view" destination="hMT-hf-fBq" id="cAv-bw-WK0"/>
             </connections>
         </placeholder>
@@ -55,6 +56,9 @@
                     <state key="normal" title="Add payment cards">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
+                    <connections>
+                        <action selector="addPaymentCardsButtonTapped:" destination="-1" eventType="touchUpInside" id="74n-dC-iAj"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="srU-Kj-jRa" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
                     <rect key="frame" x="57" y="682" width="300" height="62"/>
@@ -64,6 +68,9 @@
                     <state key="normal" title="Done">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
+                    <connections>
+                        <action selector="doneButtonTapped:" destination="-1" eventType="touchUpInside" id="KOa-hH-GFd"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have not added any payment cards yet." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUK-ri-3PE">
                     <rect key="frame" x="25" y="268.5" width="364" height="25"/>

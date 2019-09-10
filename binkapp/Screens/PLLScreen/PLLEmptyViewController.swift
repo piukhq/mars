@@ -33,7 +33,7 @@ class PLLEmptyViewController: UIViewController {
     }
     
     @IBAction func doneButtonTapped(_ sender: Any) {
-        viewModel.displaySimplePopup(title: "Error", message: "Not Implemented")
+        viewModel.toFullDetailsCardScreen()
     }
 }
 
@@ -50,9 +50,8 @@ extension PLLEmptyViewController: LoyaltyButtonDelegate {
 private extension PLLEmptyViewController {
     func configureBrandHeader() {
         let membershipPlan = viewModel.getMembershipPlan()
-        if let imageUrlString = membershipPlan.images?.first(where: { $0.type == 3 })?.url {
-            brandHeaderView.configure(imageURLString: imageUrlString, loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
-        }
+        let imageUrlString = membershipPlan.images?.first(where: { $0.type == 3 })?.url
+        brandHeaderView.configure(imageURLString: imageUrlString, loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
     }
 }
 

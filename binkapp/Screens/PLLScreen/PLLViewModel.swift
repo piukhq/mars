@@ -9,9 +9,11 @@ import Foundation
 
 class PLLViewModel {
     private let membershipPlan: MembershipPlanModel
+    private let membershipCard: MembershipCardModel
     private let router: MainScreenRouter
     
-    init(membershipPlan: MembershipPlanModel, router: MainScreenRouter) {
+    init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, router: MainScreenRouter) {
+        self.membershipCard = membershipCard
         self.membershipPlan = membershipPlan
         self.router = router
     }
@@ -24,5 +26,9 @@ class PLLViewModel {
     
     func displaySimplePopup(title: String, message: String) {
         router.displaySimplePopup(title: title, message: message)
+    }
+    
+    func toFullDetailsCardScreen() {
+        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard, membershipPlan: membershipPlan)
     }
 }
