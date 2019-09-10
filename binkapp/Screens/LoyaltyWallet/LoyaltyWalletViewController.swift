@@ -13,6 +13,13 @@ class LoyaltyWalletViewController: UIViewController{
     private let viewModel: LoyaltyWalletViewModel
     private var refreshControl = UIRefreshControl()
     
+    var didFetchCardsAndPlans: (Bool, Bool) = (false, false) {
+        didSet {
+            tableView.reloadData()
+            refreshControl.endRefreshing()
+        }
+    }
+    
     init(viewModel: LoyaltyWalletViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "LoyaltyWalletViewController", bundle: Bundle(for: LoyaltyWalletViewController.self))
@@ -121,10 +128,12 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
 
 extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
     func didFetchMembershipPlans() {
-        tableView.reloadData()
+        didFetchCardsAndPlans.1 = true
+//        tableView.reloadData()
     }
     
     func didFetchCards() {
-        tableView.reloadData()
+        didFetchCardsAndPlans.0 = true
+//        tableView.reloadData()
     }
 }
