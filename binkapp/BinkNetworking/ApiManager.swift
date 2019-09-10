@@ -56,7 +56,13 @@ class ApiManager {
         return userEmail
     }
     
-    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> Void, onError: @escaping () -> Void) where Resp: Codable {
+
+    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Codable {
+        guard Connectivity.isConnectedToInternet() else {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            return
+        }
+        
         var params: [String: Any]?
         if parameters == nil {
             params = getParameters()
@@ -80,14 +86,13 @@ class ApiManager {
                         onSuccess(models)
                     } else if let error = response.error {
                         print(error)
-                        onError()
+                        onError(error)
                     } else {
                         print("something went wrong, statusCode: \(statusCode)")
-                        onError()
                     }
                 } catch (let error) {
                     print("decoding error: \(error)")
-                    onError()
+                    onError(error)
                 }
         }
     }

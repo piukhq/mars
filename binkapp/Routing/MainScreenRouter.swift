@@ -12,6 +12,10 @@ class MainScreenRouter {
     var navController: PortraitNavigationController?
     
     let apiManager = ApiManager()
+    
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+    }
 
     func toMainScreen() {
         let repository = MainTabBarRepository()
@@ -91,15 +95,21 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
+    func toLoyaltyFullDetailsScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
+        let repository = LoyaltyCardFullDetailsRepository(apiManager: apiManager)
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, repository: repository, router: self)
+        let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+
     func toAuthAndAddViewController(membershipPlan: MembershipPlanModel) {
         let repository = AuthAndAddRepository(apiManager: apiManager)
         let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
-    
-    func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-        let alert = UIAlertController(title: nil, message: "delete_card_confirmation".localized, preferredStyle: .alert)
+    func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in
             noCompletion()
         }))
@@ -111,7 +121,13 @@ class MainScreenRouter {
     
     func displaySimplePopup(title: String?, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
+        navController?.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func presentNoConnectivityPopup() {
+        let alert = UIAlertController(title: nil, message: "no_internet_connection_title".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
     }
     
