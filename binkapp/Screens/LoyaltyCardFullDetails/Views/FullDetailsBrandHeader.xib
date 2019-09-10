@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FullDetailsBrandHeader" customModule="binkapp" customModuleProvider="target">
             <connections>
                 <outlet property="brandImage" destination="zbA-fI-XfA" id="Thb-cQ-VUD"/>
+                <outlet property="brandImageBackgroundView" destination="E2a-6w-tiP" id="oed-CB-vti"/>
                 <outlet property="messageLabel" destination="157-2T-a9w" id="b6t-sV-Xtf"/>
             </connections>
         </placeholder>
@@ -19,13 +20,41 @@
             <rect key="frame" x="0.0" y="0.0" width="725" height="289"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoa.png" highlightedImage="activeLink" translatesAutoresizingMaskIntoConstraints="NO" id="zbA-fI-XfA">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E2a-6w-tiP">
                     <rect key="frame" x="0.0" y="0.0" width="725" height="230"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoa.png" highlightedImage="activeLink" translatesAutoresizingMaskIntoConstraints="NO" id="zbA-fI-XfA">
+                            <rect key="frame" x="0.0" y="0.0" width="725" height="230"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="4"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="230" id="QXd-Dt-JqZ"/>
+                        <constraint firstItem="zbA-fI-XfA" firstAttribute="leading" secondItem="E2a-6w-tiP" secondAttribute="leading" id="6U7-HZ-kCH"/>
+                        <constraint firstItem="zbA-fI-XfA" firstAttribute="top" secondItem="E2a-6w-tiP" secondAttribute="top" id="Vpd-be-5Zj"/>
+                        <constraint firstAttribute="trailing" secondItem="zbA-fI-XfA" secondAttribute="trailing" id="d3E-js-iP4"/>
+                        <constraint firstAttribute="bottom" secondItem="zbA-fI-XfA" secondAttribute="bottom" id="gm6-Gy-WhO"/>
+                        <constraint firstAttribute="height" constant="230" id="mie-zb-wcR"/>
                     </constraints>
-                </imageView>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="NO"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                            <real key="value" value="0.80000000000000004"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                            <size key="value" width="0.0" height="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap card to show barcode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="157-2T-a9w">
                     <rect key="frame" x="260" y="242" width="205" height="26.5"/>
                     <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="18"/>
@@ -36,15 +65,18 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="157-2T-a9w" firstAttribute="top" secondItem="zbA-fI-XfA" secondAttribute="bottom" constant="12" id="3hc-f0-h9k"/>
-                <constraint firstAttribute="trailing" secondItem="zbA-fI-XfA" secondAttribute="trailing" id="BKf-CR-N1t"/>
-                <constraint firstItem="zbA-fI-XfA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YUD-fe-bGt"/>
+                <constraint firstItem="E2a-6w-tiP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AWO-Hx-784"/>
+                <constraint firstItem="157-2T-a9w" firstAttribute="top" secondItem="E2a-6w-tiP" secondAttribute="bottom" constant="12" id="Ffl-3N-LtK"/>
+                <constraint firstAttribute="trailing" secondItem="E2a-6w-tiP" secondAttribute="trailing" id="RO3-8O-vds"/>
                 <constraint firstItem="157-2T-a9w" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="d2K-SC-rMh"/>
-                <constraint firstItem="zbA-fI-XfA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="k7o-y7-u8J"/>
+                <constraint firstItem="E2a-6w-tiP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="eqW-5n-4ZG"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="ylu-sb-HUm" appends="YES" id="LqG-Ww-4Dm"/>
+            </connections>
             <point key="canvasLocation" x="354.34782608695656" y="219.97767857142856"/>
         </view>
         <tapGestureRecognizer id="ylu-sb-HUm">

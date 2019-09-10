@@ -14,6 +14,7 @@ protocol FullDetailsBrandHeaderDelegate {
 class FullDetailsBrandHeader: CustomView {
     @IBOutlet private weak var brandImage: UIImageView!
     @IBOutlet private weak var messageLabel: UILabel!
+    @IBOutlet private weak var brandImageBackgroundView: UIView!
     
     private var delegate: FullDetailsBrandHeaderDelegate?
     
@@ -23,6 +24,8 @@ class FullDetailsBrandHeader: CustomView {
             brandImage.af_setImage(withURL: url)
         }
         messageLabel.font = .bodyTextLarge
+        brandImageBackgroundView.layer.shadowColor = UIColor.black.cgColor
+        brandImageBackgroundView.layer.shadowPath = UIBezierPath(roundedRect: brandImageBackgroundView.bounds, cornerRadius: 4).cgPath
     }
     
     // MARK: - Actions
