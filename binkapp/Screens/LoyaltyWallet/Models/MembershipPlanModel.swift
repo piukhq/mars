@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct MembershipPlanModel: Codable {
     let id: String
@@ -22,5 +23,14 @@ struct MembershipPlanModel: Codable {
         case images
         case account
         case balances
+    }
+}
+
+extension MembershipPlanModel: CoreDataMappable {
+    func objectToMapTo(_ cdObject: CD_MembershipPlan, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlan {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.status, with: status, delta: delta)
+
+        return cdObject
     }
 }

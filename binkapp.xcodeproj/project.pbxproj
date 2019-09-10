@@ -159,7 +159,46 @@
 		BDA4EE992320508400A99CB1 /* BarcodeGenerator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */; };
 		EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */; };
-		EF3D8CC82326989600C2EAC8 /* PaymentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CC72326989600C2EAC8 /* PaymentCard.swift */; };
+		EF3D8CF12327F67100C2EAC8 /* CD_FeatureSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CC92327F66F00C2EAC8 /* CD_FeatureSet.swift */; };
+		EF3D8CF22327F67100C2EAC8 /* _CD_AuthoriseField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CCA2327F66F00C2EAC8 /* _CD_AuthoriseField.swift */; };
+		EF3D8CF32327F67100C2EAC8 /* CD_MembershipCardAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CCB2327F66F00C2EAC8 /* CD_MembershipCardAmount.swift */; };
+		EF3D8CF42327F67100C2EAC8 /* _CD_MembershipTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CCC2327F66F00C2EAC8 /* _CD_MembershipTransaction.swift */; };
+		EF3D8CF52327F67100C2EAC8 /* CD_EnrolField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CCD2327F66F00C2EAC8 /* CD_EnrolField.swift */; };
+		EF3D8CF62327F67100C2EAC8 /* CD_AuthoriseField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CCE2327F66F00C2EAC8 /* CD_AuthoriseField.swift */; };
+		EF3D8CF72327F67100C2EAC8 /* CD_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CCF2327F66F00C2EAC8 /* CD_App.swift */; };
+		EF3D8CF82327F67100C2EAC8 /* _CD_AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CD02327F66F00C2EAC8 /* _CD_AddField.swift */; };
+		EF3D8CF92327F67100C2EAC8 /* _CD_RegistrationField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CD12327F66F00C2EAC8 /* _CD_RegistrationField.swift */; };
+		EF3D8CFA2327F67100C2EAC8 /* CD_MembershipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CD22327F66F00C2EAC8 /* CD_MembershipCard.swift */; };
+		EF3D8CFB2327F67100C2EAC8 /* _CD_MembershipPlanAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CD32327F66F00C2EAC8 /* _CD_MembershipPlanAccount.swift */; };
+		EF3D8CFC2327F67100C2EAC8 /* _CD_MembershipCardImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CD42327F67000C2EAC8 /* _CD_MembershipCardImage.swift */; };
+		EF3D8CFD2327F67100C2EAC8 /* _CD_Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CD52327F67000C2EAC8 /* _CD_Balance.swift */; };
+		EF3D8CFE2327F67100C2EAC8 /* _CD_Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CD62327F67000C2EAC8 /* _CD_Card.swift */; };
+		EF3D8CFF2327F67100C2EAC8 /* CD_Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CD72327F67000C2EAC8 /* CD_Balance.swift */; };
+		EF3D8D002327F67100C2EAC8 /* _CD_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CD82327F67000C2EAC8 /* _CD_App.swift */; };
+		EF3D8D012327F67100C2EAC8 /* CD_MembershipCardStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CD92327F67000C2EAC8 /* CD_MembershipCardStatus.swift */; };
+		EF3D8D022327F67100C2EAC8 /* _CD_EnrolField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CDA2327F67000C2EAC8 /* _CD_EnrolField.swift */; };
+		EF3D8D032327F67100C2EAC8 /* CD_MembershipPlanAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CDB2327F67000C2EAC8 /* CD_MembershipPlanAccount.swift */; };
+		EF3D8D042327F67100C2EAC8 /* _CD_MembershipCardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CDC2327F67000C2EAC8 /* _CD_MembershipCardAccount.swift */; };
+		EF3D8D052327F67100C2EAC8 /* CD_AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CDD2327F67000C2EAC8 /* CD_AddField.swift */; };
+		EF3D8D062327F67100C2EAC8 /* CD_MembershipCardImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CDE2327F67000C2EAC8 /* CD_MembershipCardImage.swift */; };
+		EF3D8D072327F67100C2EAC8 /* CD_PlanDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CDF2327F67000C2EAC8 /* CD_PlanDocument.swift */; };
+		EF3D8D082327F67100C2EAC8 /* _CD_MembershipPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CE02327F67000C2EAC8 /* _CD_MembershipPlan.swift */; };
+		EF3D8D092327F67100C2EAC8 /* CD_PaymentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CE12327F67000C2EAC8 /* CD_PaymentCard.swift */; };
+		EF3D8D0A2327F67100C2EAC8 /* _CD_MembershipCardStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CE22327F67000C2EAC8 /* _CD_MembershipCardStatus.swift */; };
+		EF3D8D0B2327F67100C2EAC8 /* _CD_Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CE32327F67000C2EAC8 /* _CD_Tier.swift */; };
+		EF3D8D0C2327F67100C2EAC8 /* _CD_MembershipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CE42327F67000C2EAC8 /* _CD_MembershipCard.swift */; };
+		EF3D8D0D2327F67100C2EAC8 /* CD_MembershipCardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CE52327F67000C2EAC8 /* CD_MembershipCardAccount.swift */; };
+		EF3D8D0E2327F67100C2EAC8 /* CD_MembershipPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CE62327F67100C2EAC8 /* CD_MembershipPlan.swift */; };
+		EF3D8D0F2327F67100C2EAC8 /* _CD_FeatureSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CE72327F67100C2EAC8 /* _CD_FeatureSet.swift */; };
+		EF3D8D102327F67100C2EAC8 /* CD_MembershipCardBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CE82327F67100C2EAC8 /* CD_MembershipCardBalance.swift */; };
+		EF3D8D112327F67100C2EAC8 /* _CD_PlanDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CE92327F67100C2EAC8 /* _CD_PlanDocument.swift */; };
+		EF3D8D122327F67100C2EAC8 /* CD_MembershipTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CEA2327F67100C2EAC8 /* CD_MembershipTransaction.swift */; };
+		EF3D8D132327F67100C2EAC8 /* _CD_PaymentCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CEB2327F67100C2EAC8 /* _CD_PaymentCard.swift */; };
+		EF3D8D142327F67100C2EAC8 /* CD_Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CEC2327F67100C2EAC8 /* CD_Card.swift */; };
+		EF3D8D152327F67100C2EAC8 /* CD_RegistrationField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CED2327F67100C2EAC8 /* CD_RegistrationField.swift */; };
+		EF3D8D162327F67100C2EAC8 /* _CD_MembershipCardBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CEE2327F67100C2EAC8 /* _CD_MembershipCardBalance.swift */; };
+		EF3D8D172327F67100C2EAC8 /* _CD_MembershipCardAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CEF2327F67100C2EAC8 /* _CD_MembershipCardAmount.swift */; };
+		EF3D8D182327F67100C2EAC8 /* CD_Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CF02327F67100C2EAC8 /* CD_Tier.swift */; };
 		EF485566231D5E4E00FC9E5F /* DebugMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */; };
 		EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF485567231D679E00FC9E5F /* DebugMenuTableViewCell.xib */; };
 		EF48556C231D696800FC9E5F /* DebugMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48556B231D696800FC9E5F /* DebugMenuTableViewCell.swift */; };
@@ -376,7 +415,46 @@
 		ED4CD3B619FA32A249E98CC6 /* Pods-binkappTests.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.nightly.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.nightly.xcconfig"; sourceTree = "<group>"; };
 		EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
-		EF3D8CC72326989600C2EAC8 /* PaymentCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCard.swift; sourceTree = "<group>"; };
+		EF3D8CC92327F66F00C2EAC8 /* CD_FeatureSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_FeatureSet.swift; sourceTree = "<group>"; };
+		EF3D8CCA2327F66F00C2EAC8 /* _CD_AuthoriseField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_AuthoriseField.swift; sourceTree = "<group>"; };
+		EF3D8CCB2327F66F00C2EAC8 /* CD_MembershipCardAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardAmount.swift; sourceTree = "<group>"; };
+		EF3D8CCC2327F66F00C2EAC8 /* _CD_MembershipTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipTransaction.swift; sourceTree = "<group>"; };
+		EF3D8CCD2327F66F00C2EAC8 /* CD_EnrolField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_EnrolField.swift; sourceTree = "<group>"; };
+		EF3D8CCE2327F66F00C2EAC8 /* CD_AuthoriseField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_AuthoriseField.swift; sourceTree = "<group>"; };
+		EF3D8CCF2327F66F00C2EAC8 /* CD_App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_App.swift; sourceTree = "<group>"; };
+		EF3D8CD02327F66F00C2EAC8 /* _CD_AddField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_AddField.swift; sourceTree = "<group>"; };
+		EF3D8CD12327F66F00C2EAC8 /* _CD_RegistrationField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_RegistrationField.swift; sourceTree = "<group>"; };
+		EF3D8CD22327F66F00C2EAC8 /* CD_MembershipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCard.swift; sourceTree = "<group>"; };
+		EF3D8CD32327F66F00C2EAC8 /* _CD_MembershipPlanAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipPlanAccount.swift; sourceTree = "<group>"; };
+		EF3D8CD42327F67000C2EAC8 /* _CD_MembershipCardImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardImage.swift; sourceTree = "<group>"; };
+		EF3D8CD52327F67000C2EAC8 /* _CD_Balance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_Balance.swift; sourceTree = "<group>"; };
+		EF3D8CD62327F67000C2EAC8 /* _CD_Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_Card.swift; sourceTree = "<group>"; };
+		EF3D8CD72327F67000C2EAC8 /* CD_Balance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_Balance.swift; sourceTree = "<group>"; };
+		EF3D8CD82327F67000C2EAC8 /* _CD_App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_App.swift; sourceTree = "<group>"; };
+		EF3D8CD92327F67000C2EAC8 /* CD_MembershipCardStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardStatus.swift; sourceTree = "<group>"; };
+		EF3D8CDA2327F67000C2EAC8 /* _CD_EnrolField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_EnrolField.swift; sourceTree = "<group>"; };
+		EF3D8CDB2327F67000C2EAC8 /* CD_MembershipPlanAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipPlanAccount.swift; sourceTree = "<group>"; };
+		EF3D8CDC2327F67000C2EAC8 /* _CD_MembershipCardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardAccount.swift; sourceTree = "<group>"; };
+		EF3D8CDD2327F67000C2EAC8 /* CD_AddField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_AddField.swift; sourceTree = "<group>"; };
+		EF3D8CDE2327F67000C2EAC8 /* CD_MembershipCardImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardImage.swift; sourceTree = "<group>"; };
+		EF3D8CDF2327F67000C2EAC8 /* CD_PlanDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_PlanDocument.swift; sourceTree = "<group>"; };
+		EF3D8CE02327F67000C2EAC8 /* _CD_MembershipPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipPlan.swift; sourceTree = "<group>"; };
+		EF3D8CE12327F67000C2EAC8 /* CD_PaymentCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_PaymentCard.swift; sourceTree = "<group>"; };
+		EF3D8CE22327F67000C2EAC8 /* _CD_MembershipCardStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardStatus.swift; sourceTree = "<group>"; };
+		EF3D8CE32327F67000C2EAC8 /* _CD_Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_Tier.swift; sourceTree = "<group>"; };
+		EF3D8CE42327F67000C2EAC8 /* _CD_MembershipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCard.swift; sourceTree = "<group>"; };
+		EF3D8CE52327F67000C2EAC8 /* CD_MembershipCardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardAccount.swift; sourceTree = "<group>"; };
+		EF3D8CE62327F67100C2EAC8 /* CD_MembershipPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipPlan.swift; sourceTree = "<group>"; };
+		EF3D8CE72327F67100C2EAC8 /* _CD_FeatureSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_FeatureSet.swift; sourceTree = "<group>"; };
+		EF3D8CE82327F67100C2EAC8 /* CD_MembershipCardBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCardBalance.swift; sourceTree = "<group>"; };
+		EF3D8CE92327F67100C2EAC8 /* _CD_PlanDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_PlanDocument.swift; sourceTree = "<group>"; };
+		EF3D8CEA2327F67100C2EAC8 /* CD_MembershipTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipTransaction.swift; sourceTree = "<group>"; };
+		EF3D8CEB2327F67100C2EAC8 /* _CD_PaymentCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_PaymentCard.swift; sourceTree = "<group>"; };
+		EF3D8CEC2327F67100C2EAC8 /* CD_Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_Card.swift; sourceTree = "<group>"; };
+		EF3D8CED2327F67100C2EAC8 /* CD_RegistrationField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_RegistrationField.swift; sourceTree = "<group>"; };
+		EF3D8CEE2327F67100C2EAC8 /* _CD_MembershipCardBalance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardBalance.swift; sourceTree = "<group>"; };
+		EF3D8CEF2327F67100C2EAC8 /* _CD_MembershipCardAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_MembershipCardAmount.swift; sourceTree = "<group>"; };
+		EF3D8CF02327F67100C2EAC8 /* CD_Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_Tier.swift; sourceTree = "<group>"; };
 		EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTableViewController.swift; sourceTree = "<group>"; };
 		EF485567231D679E00FC9E5F /* DebugMenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugMenuTableViewCell.xib; sourceTree = "<group>"; };
 		EF48556B231D696800FC9E5F /* DebugMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -446,7 +524,6 @@
 			isa = PBXGroup;
 			children = (
 				B72633422305899200951037 /* AddFieldModel.swift */,
-				3C61FCDD230AF0BB004721A3 /* AppsModel.swift */,
 				B7263344230589C300951037 /* AuthoriseFieldModel.swift */,
 				B7263346230589EE00951037 /* BalanceModel.swift */,
 				3C466B9D22FAE6190044478D /* CardModel.swift */,
@@ -461,7 +538,6 @@
 				B72633402305883D00951037 /* MembershipPlanAccountModel.swift */,
 				B726333E230586CC00951037 /* MembershipPlanModel.swift */,
 				3CEABFC92316AB42009B1122 /* MembershipTransaction.swift */,
-				EF3D8CC72326989600C2EAC8 /* PaymentCard.swift */,
 				B726334C23058D2700951037 /* PlanDocumentModel.swift */,
 				B726334E23058DC800951037 /* RegistrationFieldModel.swift */,
 				B726335023058E2300951037 /* TierModel.swift */,
@@ -966,6 +1042,46 @@
 		EF758E1823229972000D26A9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				EF3D8CD02327F66F00C2EAC8 /* _CD_AddField.swift */,
+				EF3D8CD82327F67000C2EAC8 /* _CD_App.swift */,
+				EF3D8CCA2327F66F00C2EAC8 /* _CD_AuthoriseField.swift */,
+				EF3D8CD52327F67000C2EAC8 /* _CD_Balance.swift */,
+				EF3D8CD62327F67000C2EAC8 /* _CD_Card.swift */,
+				EF3D8CDA2327F67000C2EAC8 /* _CD_EnrolField.swift */,
+				EF3D8CE72327F67100C2EAC8 /* _CD_FeatureSet.swift */,
+				EF3D8CE42327F67000C2EAC8 /* _CD_MembershipCard.swift */,
+				EF3D8CDC2327F67000C2EAC8 /* _CD_MembershipCardAccount.swift */,
+				EF3D8CEF2327F67100C2EAC8 /* _CD_MembershipCardAmount.swift */,
+				EF3D8CEE2327F67100C2EAC8 /* _CD_MembershipCardBalance.swift */,
+				EF3D8CD42327F67000C2EAC8 /* _CD_MembershipCardImage.swift */,
+				EF3D8CE22327F67000C2EAC8 /* _CD_MembershipCardStatus.swift */,
+				EF3D8CE02327F67000C2EAC8 /* _CD_MembershipPlan.swift */,
+				EF3D8CD32327F66F00C2EAC8 /* _CD_MembershipPlanAccount.swift */,
+				EF3D8CCC2327F66F00C2EAC8 /* _CD_MembershipTransaction.swift */,
+				EF3D8CEB2327F67100C2EAC8 /* _CD_PaymentCard.swift */,
+				EF3D8CE92327F67100C2EAC8 /* _CD_PlanDocument.swift */,
+				EF3D8CD12327F66F00C2EAC8 /* _CD_RegistrationField.swift */,
+				EF3D8CE32327F67000C2EAC8 /* _CD_Tier.swift */,
+				EF3D8CDD2327F67000C2EAC8 /* CD_AddField.swift */,
+				EF3D8CCF2327F66F00C2EAC8 /* CD_App.swift */,
+				EF3D8CCE2327F66F00C2EAC8 /* CD_AuthoriseField.swift */,
+				EF3D8CD72327F67000C2EAC8 /* CD_Balance.swift */,
+				EF3D8CEC2327F67100C2EAC8 /* CD_Card.swift */,
+				EF3D8CCD2327F66F00C2EAC8 /* CD_EnrolField.swift */,
+				EF3D8CC92327F66F00C2EAC8 /* CD_FeatureSet.swift */,
+				EF3D8CD22327F66F00C2EAC8 /* CD_MembershipCard.swift */,
+				EF3D8CE52327F67000C2EAC8 /* CD_MembershipCardAccount.swift */,
+				EF3D8CCB2327F66F00C2EAC8 /* CD_MembershipCardAmount.swift */,
+				EF3D8CE82327F67100C2EAC8 /* CD_MembershipCardBalance.swift */,
+				EF3D8CDE2327F67000C2EAC8 /* CD_MembershipCardImage.swift */,
+				EF3D8CD92327F67000C2EAC8 /* CD_MembershipCardStatus.swift */,
+				EF3D8CE62327F67100C2EAC8 /* CD_MembershipPlan.swift */,
+				EF3D8CDB2327F67000C2EAC8 /* CD_MembershipPlanAccount.swift */,
+				EF3D8CEA2327F67100C2EAC8 /* CD_MembershipTransaction.swift */,
+				EF3D8CE12327F67000C2EAC8 /* CD_PaymentCard.swift */,
+				EF3D8CDF2327F67000C2EAC8 /* CD_PlanDocument.swift */,
+				EF3D8CED2327F67100C2EAC8 /* CD_RegistrationField.swift */,
+				EF3D8CF02327F67100C2EAC8 /* CD_Tier.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1396,6 +1512,7 @@
 			files = (
 				5ECE04A922CE582E001BA964 /* LoginRepository.swift in Sources */,
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
+				EF3D8CF32327F67100C2EAC8 /* CD_MembershipCardAmount.swift in Sources */,
 				3C2C90FB23191CF700D112E3 /* AuthoriseFieldPostModel.swift in Sources */,
 				B7263347230589EE00951037 /* BalanceModel.swift in Sources */,
 				3C17FC3222F2CCAD00E423A2 /* MembershipCardImageModel.swift in Sources */,
@@ -1404,65 +1521,97 @@
 				3C33E33D23166FF9005E97DC /* DropdownView.swift in Sources */,
 				3C3C604C2302DD1600D9EA25 /* EmptyResponse.swift in Sources */,
 				EF758E0823225F35000D26A9 /* Database.swift in Sources */,
+				EF3D8CFC2327F67100C2EAC8 /* _CD_MembershipCardImage.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
 				EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */,
 				3C873FF822F073CF00FA3031 /* WalletLoyaltyCardTableViewCell.swift in Sources */,
+				EF3D8D092327F67100C2EAC8 /* CD_PaymentCard.swift in Sources */,
 				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,
+				EF3D8D0D2327F67100C2EAC8 /* CD_MembershipCardAccount.swift in Sources */,
 				5ECE04AF22CE582E001BA964 /* UserModel.swift in Sources */,
+				EF3D8CF62327F67100C2EAC8 /* CD_AuthoriseField.swift in Sources */,
 				B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */,
+				EF3D8D132327F67100C2EAC8 /* _CD_PaymentCard.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
 				3CF029EF22F45ACE009A0E61 /* AddingOptionView.swift in Sources */,
+				EF3D8D0B2327F67100C2EAC8 /* _CD_Tier.swift in Sources */,
+				EF3D8D072327F67100C2EAC8 /* CD_PlanDocument.swift in Sources */,
+				B7D577B823180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
+				EF3D8CFA2327F67100C2EAC8 /* CD_MembershipCard.swift in Sources */,
+				EF3D8CFE2327F67100C2EAC8 /* _CD_Card.swift in Sources */,
 				B726334B23058A5C00951037 /* FeatureSetModel.swift in Sources */,
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
-				EF3D8CC82326989600C2EAC8 /* PaymentCard.swift in Sources */,
+				EF3D8D052327F67100C2EAC8 /* CD_AddField.swift in Sources */,
+				EF3D8D0C2327F67100C2EAC8 /* _CD_MembershipCard.swift in Sources */,
 				3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */,
+				EF3D8D082327F67100C2EAC8 /* _CD_MembershipPlan.swift in Sources */,
 				B72633432305899200951037 /* AddFieldModel.swift in Sources */,
 				3CEABFD22316ABA9009B1122 /* MembershipCardAmount.swift in Sources */,
 				3C17FC2F22F2C69200E423A2 /* MembershipCardModel.swift in Sources */,
+				EF3D8CF52327F67100C2EAC8 /* CD_EnrolField.swift in Sources */,
 				EF758E1023225F45000D26A9 /* UIApplication.swift in Sources */,
+				EF3D8D102327F67100C2EAC8 /* CD_MembershipCardBalance.swift in Sources */,
 				3CEABFCE2316AB74009B1122 /* MembershipCardAccountModel.swift in Sources */,
 				B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */,
+				EF3D8CF22327F67100C2EAC8 /* _CD_AuthoriseField.swift in Sources */,
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
+				EF3D8D182327F67100C2EAC8 /* CD_Tier.swift in Sources */,
+				EF3D8CF12327F67100C2EAC8 /* CD_FeatureSet.swift in Sources */,
 				EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */,
 				3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */,
 				EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
+				EF3D8CF82327F67100C2EAC8 /* _CD_AddField.swift in Sources */,
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
 				3C2C90FD23193F0000D112E3 /* MembershipCardPostModel.swift in Sources */,
 				3C794D9123018E67000A31FD /* BrowseBrandsRepository.swift in Sources */,
 				3C25BDFF23019BC100E931EE /* BrandTableViewCell.swift in Sources */,
 				3CEABFD02316AB88009B1122 /* MembershipCardBalanceModel.swift in Sources */,
 				3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */,
+				EF3D8CFF2327F67100C2EAC8 /* CD_Balance.swift in Sources */,
 				3CD7E90B2302AC42001889FE /* ApiManager.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
 				3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */,
 				3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */,
 				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
+				EF3D8CFD2327F67100C2EAC8 /* _CD_Balance.swift in Sources */,
+				EF3D8D162327F67100C2EAC8 /* _CD_MembershipCardBalance.swift in Sources */,
 				3CADDEAF231566C9006C3D9C /* LoginTextFieldView.swift in Sources */,
 				3C63ABC822F9D47E00BE143B /* AddingOptionsViewModel.swift in Sources */,
 				3C9CCD2D2316958300FAF589 /* CheckboxView.swift in Sources */,
+				EF3D8D062327F67100C2EAC8 /* CD_MembershipCardImage.swift in Sources */,
+				EF3D8CF42327F67100C2EAC8 /* _CD_MembershipTransaction.swift in Sources */,
 				3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */,
+				EF3D8D0F2327F67100C2EAC8 /* _CD_FeatureSet.swift in Sources */,
+				EF3D8D122327F67100C2EAC8 /* CD_MembershipTransaction.swift in Sources */,
+				EF3D8CFB2327F67100C2EAC8 /* _CD_MembershipPlanAccount.swift in Sources */,
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
 				3C873FEE22F073CF00FA3031 /* PaymentWalletViewController.swift in Sources */,
+				EF3D8D022327F67100C2EAC8 /* _CD_EnrolField.swift in Sources */,
 				B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */,
 				3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */,
+				EF3D8D152327F67100C2EAC8 /* CD_RegistrationField.swift in Sources */,
 				3C794D8C23018C25000A31FD /* BrowseBrandsViewController.swift in Sources */,
+				3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */,
+				EF3D8D172327F67100C2EAC8 /* _CD_MembershipCardAmount.swift in Sources */,
+				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				EF48556C231D696800FC9E5F /* DebugMenuTableViewCell.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				3C2C91012319560C00D112E3 /* InputView.swift in Sources */,
+				EF3D8CF72327F67100C2EAC8 /* CD_App.swift in Sources */,
 				3C2C90F923191CED00D112E3 /* AddFieldPostModel.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
@@ -1471,6 +1620,8 @@
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
+				B7D577BB23192C4200C6B145 /* FullDetailsBrandHeader.swift in Sources */,
+				EF3D8D112327F67100C2EAC8 /* _CD_PlanDocument.swift in Sources */,
 				B726335123058E2300951037 /* TierModel.swift in Sources */,
 				EF485566231D5E4E00FC9E5F /* DebugMenuTableViewController.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
@@ -1478,21 +1629,30 @@
 				EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
 				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,
+				3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */,
+				EF3D8D0E2327F67100C2EAC8 /* CD_MembershipPlan.swift in Sources */,
 				3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */,
 				3C873FF222F073CF00FA3031 /* PaymentWalletPresenter.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
 				3CF029F222F45AEC009A0E61 /* AddingOptionsViewController.swift in Sources */,
 				3CF029F822F45B8C009A0E61 /* AddingOptionsEnum.swift in Sources */,
 				3C873FF322F073CF00FA3031 /* MainTabBarRepository.swift in Sources */,
+				EF3D8D012327F67100C2EAC8 /* CD_MembershipCardStatus.swift in Sources */,
+				EF3D8CF92327F67100C2EAC8 /* _CD_RegistrationField.swift in Sources */,
 				3C873FF022F073CF00FA3031 /* PaymentWalletRouter.swift in Sources */,
 				AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */,
 				3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */,
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
+				EF3D8D0A2327F67100C2EAC8 /* _CD_MembershipCardStatus.swift in Sources */,
 				3C873FF122F073CF00FA3031 /* PaymentWalletModels.swift in Sources */,
 				3CEABFCC2316AB65009B1122 /* MembershipCardStatusModel.swift in Sources */,
+				EF3D8D002327F67100C2EAC8 /* _CD_App.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,
 				3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */,
+				EF3D8D142327F67100C2EAC8 /* CD_Card.swift in Sources */,
 				EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */,
+				EF3D8D042327F67100C2EAC8 /* _CD_MembershipCardAccount.swift in Sources */,
+				EF3D8D032327F67100C2EAC8 /* CD_MembershipPlanAccount.swift in Sources */,
 				3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */,
 				3CB6BF7923141D3000B74882 /* AuthAndAddRepository.swift in Sources */,
 			);

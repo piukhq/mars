@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct MembershipPlanAccountModel: Codable {
     let id: String
@@ -48,5 +49,25 @@ struct MembershipPlanAccountModel: Codable {
         case authoriseFields = "authorise_fields"
         case registrationFields = "registration_fields"
         case enrolFields = "enrol_fields"
+    }
+}
+
+extension MembershipPlanAccountModel: CoreDataMappable {
+    func objectToMapTo(_ cdObject: CD_MembershipPlanAccount, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlanAccount {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.planName, with: planName, delta: delta)
+        update(cdObject, \.planNameCard, with: planNameCard, delta: delta)
+        update(cdObject, \.planURL, with: planURL, delta: delta)
+        update(cdObject, \.companyName, with: companyName, delta: delta)
+        update(cdObject, \.category, with: category, delta: delta)
+        update(cdObject, \.planSummary, with: planSummary, delta: delta)
+        update(cdObject, \.planDescription, with: planDescription, delta: delta)
+        update(cdObject, \.barcodeRedeemInstructions, with: barcodeRedeemInstructions, delta: delta)
+        update(cdObject, \.planRegisterInfo, with: planRegisterInfo, delta: delta)
+        update(cdObject, \.companyURL, with: companyURL, delta: delta)
+        update(cdObject, \.enrolIncentive, with: enrolIncentive, delta: delta)
+        update(cdObject, \.forgottenPasswordUrl, with: forgottenPasswordUrl, delta: delta)
+
+        return cdObject
     }
 }

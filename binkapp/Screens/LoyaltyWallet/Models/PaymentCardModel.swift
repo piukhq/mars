@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct PaymentCardModel: Codable {
     var id: String
@@ -17,3 +18,13 @@ struct PaymentCardModel: Codable {
         case activeLink = "active_link"
     }
 }
+
+extension PaymentCardModel: CoreDataMappable {
+    func objectToMapTo(_ cdObject: CD_PaymentCard, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_PaymentCard {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.activeLink, with: NSNumber(value: activeLink ?? false), delta: delta)
+
+        return cdObject
+    }
+}
+

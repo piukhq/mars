@@ -25,3 +25,16 @@ struct MembershipCardBalanceModel: Codable {
         case updatedAt = "updated_at"
     }
 }
+
+extension MembershipCardBalanceModel: CoreDataMappable {
+    func objectToMapTo(_ cdObject: CD_MembershipCardBalance, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardBalance {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.value, with: NSNumber(value: value ?? 0), delta: delta)
+        update(cdObject, \.currency, with: currency, delta: delta)
+        update(cdObject, \.prefix, with: prefix, delta: delta)
+        update(cdObject, \.suffix, with: suffix, delta: delta)
+        update(cdObject, \.updatedAt, with: NSNumber(value: updatedAt ?? 0), delta: delta)
+
+        return cdObject
+    }
+}

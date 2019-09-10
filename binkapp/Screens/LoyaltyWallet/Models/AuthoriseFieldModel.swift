@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct AuthoriseFieldModel: Codable {
     let id: String
@@ -22,5 +23,17 @@ struct AuthoriseFieldModel: Codable {
         case fieldDescription = "description"
         case type
         case choice
+    }
+}
+
+extension AuthoriseFieldModel: CoreDataMappable {
+    func objectToMapTo(_ cdObject: CD_AuthoriseField, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_AuthoriseField {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.column, with: column, delta: delta)
+        update(cdObject, \.validation, with: validation, delta: delta)
+        update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)
+        update(cdObject, \.type, with: NSNumber(value: type ?? 0), delta: delta)
+
+        return cdObject
     }
 }

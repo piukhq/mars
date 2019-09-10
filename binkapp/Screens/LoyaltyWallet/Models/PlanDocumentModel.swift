@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct PlanDocumentModel: Codable {
     let id: String
@@ -22,5 +23,17 @@ struct PlanDocumentModel: Codable {
         case url
         case display
         case checkbox
+    }
+}
+
+extension PlanDocumentModel: CoreDataMappable {
+    func objectToMapTo(_ cdObject: CD_PlanDocument, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_PlanDocument {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.name, with: name, delta: delta)
+        update(cdObject, \.documentDescription, with: documentDescription, delta: delta)
+        update(cdObject, \.url, with: url, delta: delta)
+        update(cdObject, \.checkbox, with: NSNumber(value: checkbox ?? false), delta: delta)
+
+        return cdObject
     }
 }

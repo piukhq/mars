@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct EnrolFieldModel: Codable {
     let id: String
@@ -20,5 +21,17 @@ struct EnrolFieldModel: Codable {
         case validation
         case fieldDescription = "description"
         case type
+    }
+}
+
+extension EnrolFieldModel: CoreDataMappable {
+    func objectToMapTo(_ cdObject: CD_EnrolField, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_EnrolField {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.column, with: column, delta: delta)
+        update(cdObject, \.validation, with: validation, delta: delta)
+        update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)
+        update(cdObject, \.type, with: NSNumber(value: type ?? 0), delta: delta)
+
+        return cdObject
     }
 }
