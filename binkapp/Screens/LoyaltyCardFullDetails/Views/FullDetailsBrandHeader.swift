@@ -18,7 +18,7 @@ class FullDetailsBrandHeader: CustomView {
     private var delegate: FullDetailsBrandHeaderDelegate?
     
     override func configureUI() {
-        brandImage.image = UIImage(imageLiteralResourceName: "AppIcon")
+        brandImage.image = UIImage(imageLiteralResourceName: "lcd_fallback")
         messageLabel.font = .bodyTextLarge
     }
     // MARK: - Actions

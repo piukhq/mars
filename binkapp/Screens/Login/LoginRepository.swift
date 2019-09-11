@@ -9,10 +9,6 @@ import UIKit
 import Alamofire
 import Keys
 
-struct Constants {
-    static let endpoint = "https://api.bink-dev.com/ubiquity"
-}
-
 class LoginRepository {
     var user: Dictionary<String, Any>?
 
@@ -29,7 +25,7 @@ class LoginRepository {
                 "timestamp": Date().timeIntervalSince1970.stringFromTimeInterval()
             ]
         ]
-        Alamofire.request(Constants.endpoint + "/service", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header )
+        Alamofire.request(APIConstants.baseURLString + "/service", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: header )
             .responseJSON { _ in
                 completion()
         }

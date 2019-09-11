@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEmailAddressRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -35,5 +35,9 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "Current email address", subtitle: currentEmailAddress, action: {
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .email)
         })
+    }
+    
+    private func makeEndpointRow() -> DebugMenuRow {
+        return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: nil)
     }
 }
