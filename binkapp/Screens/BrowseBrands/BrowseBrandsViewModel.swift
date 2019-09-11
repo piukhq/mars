@@ -62,11 +62,11 @@ class BrowseBrandsViewModel {
     }
     
     func getPllMembershipPlans() -> [MembershipPlanModel] {
-        return membershipPlans.filter { $0.featureSet?.cardType == PlanCardType.link }
+        return membershipPlans.filter { $0.featureSet?.cardType == FeatureSetModel.PlanCardType.link }
     }
     
     func getNonPllMembershipPlans() -> [MembershipPlanModel] {
-        return membershipPlans.filter { $0.featureSet?.cardType != PlanCardType.link }
+        return membershipPlans.filter { $0.featureSet?.cardType != FeatureSetModel.PlanCardType.link }
     }
     
     func numberOfSections() -> Int {
