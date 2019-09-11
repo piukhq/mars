@@ -56,10 +56,6 @@ class BarcodeViewController: UIViewController {
     func configureUI(maximized: Bool) {
         viewModel.generateBarcodeImage(for: barcodeImageView)
         
-        barcodeImageView.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(maximizeBarcode))
-        barcodeImageView.addGestureRecognizer(tap)
-        
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black
         titleLabel.text = "card_number_title".localized
@@ -88,7 +84,7 @@ class BarcodeViewController: UIViewController {
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
     }
     
-    @objc func maximizeBarcode() {
+    func maximizeBarcode() {
         // If we are the maximised kind, dismiss this view. If not, present a new barcode modal but maximised
         if isBarcodeFullsize {
             navigationController?.dismiss(animated: true)
