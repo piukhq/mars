@@ -22,11 +22,11 @@ class FullDetailsBrandHeader: CustomView {
     func configureWith(imageUrl: String?, showBarcode: Bool,  delegate: FullDetailsBrandHeaderDelegate) {
         self.delegate = delegate
         messageLabel.isHidden = !showBarcode
+        messageLabel.font = .bodyTextLarge
         showBarcodeTapGesture.isEnabled = showBarcode
         if let imageURL = imageUrl, let url = URL(string: imageURL) {
             brandImage.af_setImage(withURL: url)
         }
-        messageLabel.font = .bodyTextLarge
         brandImageBackgroundView.layer.shadowColor = UIColor.black.cgColor
     }
     

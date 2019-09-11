@@ -17,6 +17,7 @@ struct DebugMenuRow {
     enum RowType {
         case version
         case email
+        case endpoint
     }
 
     typealias DebugRowAction = () -> Void
