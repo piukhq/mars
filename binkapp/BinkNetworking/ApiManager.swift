@@ -63,13 +63,7 @@ class ApiManager {
             return
         }
         
-        var params: [String: Any]?
-        if parameters == nil {
-            params = getParameters()
-        } else {
-            params = parameters
-        }
-        Alamofire.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: params, encoding: JSONEncoding.default, headers: getHeader() )
+        Alamofire.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader() )
             .responseJSON { response in
                 guard let data = response.data else {
                     print("No data found")
