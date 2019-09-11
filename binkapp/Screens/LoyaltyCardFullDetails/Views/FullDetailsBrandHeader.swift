@@ -19,7 +19,7 @@ class FullDetailsBrandHeader: CustomView {
     
     private var delegate: FullDetailsBrandHeaderDelegate?
     
-    func configureWith(imageUrl: String?, showBarcode: Bool,  delegate: FullDetailsBrandHeaderDelegate) {
+    func configure(imageUrl: String?, showBarcode: Bool,  delegate: FullDetailsBrandHeaderDelegate) {
         self.delegate = delegate
         messageLabel.isHidden = !showBarcode
         messageLabel.font = .bodyTextLarge
