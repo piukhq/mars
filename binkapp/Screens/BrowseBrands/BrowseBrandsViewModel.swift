@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum PlanCardType: Int {
-    case pll = 2
-    case nonPll
-}
-
 class BrowseBrandsViewModel {
     private let repository: BrowseBrandsRepository
     private let router: MainScreenRouter
@@ -67,11 +62,11 @@ class BrowseBrandsViewModel {
     }
     
     func getPllMembershipPlans() -> [MembershipPlanModel] {
-        return membershipPlans.filter { $0.featureSet?.cardType == PlanCardType.pll.rawValue }
+        return membershipPlans.filter { $0.featureSet?.cardType == PlanCardType.link }
     }
     
     func getNonPllMembershipPlans() -> [MembershipPlanModel] {
-        return membershipPlans.filter { $0.featureSet?.cardType != PlanCardType.pll.rawValue }
+        return membershipPlans.filter { $0.featureSet?.cardType != PlanCardType.link }
     }
     
     func numberOfSections() -> Int {
