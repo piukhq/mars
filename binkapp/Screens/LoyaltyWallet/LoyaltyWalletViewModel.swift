@@ -86,25 +86,17 @@ class LoyaltyWalletViewModel {
 
 private extension LoyaltyWalletViewModel {
     func fetchData() {
-        dispatchGroup.enter()
         repository.getMembershipCards { (response) in
             self.membershipCards = response
-            self.dispatchGroup.leave()
-        }
-        
-        dispatchGroup.enter()
-        repository.getMembershipPlans { (response) in
-            self.membershipPlans = response
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(response) {
-                let defaults = UserDefaults.standard
-                defaults.set(encoded, forKey: "MembershipPlans")
+            self.repository.getMembershipPlans { (response) in
+                self.membershipPlans = response
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(response) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: "MembershipPlans")
+                }
+                self.delegate?.loyaltyWalletViewModelDidFetchData(self)
             }
-            self.dispatchGroup.leave()
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            self.delegate?.loyaltyWalletViewModelDidFetchData(self)
         }
     }
     

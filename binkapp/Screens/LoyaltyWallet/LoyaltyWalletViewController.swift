@@ -127,7 +127,10 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
 
 extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
     func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel) {
-        refreshControl.endRefreshing()
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.refreshControl.endRefreshing()
+            self.tableView.reloadData()
+            
+        }
     }
 }
