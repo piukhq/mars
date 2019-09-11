@@ -8,13 +8,39 @@
 import UIKit
 import CoreGraphics
 
-class LoyaltyWalletViewController: UIViewController{
-    @IBOutlet private weak var tableView: UITableView!
+class LoyaltyWalletViewController: UIViewController, BarBlurring {
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .white
+        collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        
+        view.addSubview(collectionView)
+        
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            collectionView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
+        
+        return collectionView
+    }()
+    
+    private lazy var layout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 375 - 28, height: 120)
+        layout.minimumLineSpacing = 28.0
+        return layout
+    }()
+    
     private let viewModel: LoyaltyWalletViewModel
+    internal lazy var blurBackground = defaultBlurredBackground()
     
     init(viewModel: LoyaltyWalletViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "LoyaltyWalletViewController", bundle: Bundle(for: LoyaltyWalletViewController.self))
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -25,102 +51,101 @@ class LoyaltyWalletViewController: UIViewController{
         super.viewDidLoad()
         
         viewModel.delegate = self
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
-        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(UINib(nibName: "WalletLoyaltyCardCollectionViewCell", bundle: Bundle(for: WalletLoyaltyCardCollectionViewCell.self)), forCellWithReuseIdentifier: "WalletLoyaltyCardCollectionViewCell")
+
         NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen(_:)), name: .didDeleteMemebershipCard, object: nil)
+    }
+
+    // MARK: - Navigation Bar Blurring
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard let bar = navigationController?.navigationBar else { return }
+        
+        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
 }
 
 // MARK: - Private methods
 private extension LoyaltyWalletViewController {
-    @objc func refreshScreen(_: Notification) {
-        viewModel.refreshScreen()
-    }
+@objc func refreshScreen(_: Notification) {
+viewModel.refreshScreen()
+}
 }
 
-// MARK: - Table view delegate and data source
-
-extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSource {
+extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.membershipCardsCount
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = indexPath.section
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let membershipPlan = viewModel.getMembershipCards()[indexPath.item].membershipPlan
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WalletLoyaltyCardTableViewCell", for: indexPath) as! WalletLoyaltyCardTableViewCell
-        if let cardPlan = viewModel.membershipPlanForCard(card: viewModel.membershipCard(forIndexPathSection: section)) {
-            cell.configureUIWithMembershipCard(card: viewModel.membershipCard(forIndexPathSection: section), andMemebershipPlan: cardPlan)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WalletLoyaltyCardCollectionViewCell", for: indexPath) as! WalletLoyaltyCardCollectionViewCell
+        if let cardPlan = viewModel.getMembershipPlans().first(where: {($0.id == membershipPlan)}) {
+            
+            
+            
+            
+            cell.configureUIWithMembershipCard(card: viewModel.getMembershipCards()[indexPath.item], andMemebershipPlan: cardPlan)
         }
-        cell.layer.cornerRadius = 8
-        cell.separatorInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        cell.layer.shadowOffset = CGSize(width: 0, height: 5)
-        cell.layer.shadowRadius = 5
-        cell.layer.shadowColor = UIColor.red.cgColor
-        cell.layer.shadowOpacity = 0.9
-        cell.layer.masksToBounds = true
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "barcode_swipe_title".localized, handler: { [weak self] _,_,_  in
-            guard let wself = self else { return }
-            wself.viewModel.toBarcodeViewController(section: indexPath.section)
-            wself.tableView.reloadData()
-        })
-        
-        action.image = UIImage(named: "swipeBarcode")
-        action.backgroundColor = UIColor(red: 99/255, green: 159/255, blue: 255/255, alpha: 1)
-        let configuration = UISwipeActionsConfiguration(actions: [action])
-        return configuration
-    }
-
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .normal, title: "delete_swipe_title".localized) { _, _, completion in
-            self.viewModel.showDeleteConfirmationAlert(index: indexPath.row, yesCompletion: {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                tableView.reloadData()
-            }, noCompletion: {
-                tableView.setEditing(false, animated: true)
-            })
-        }
-        
-        action.image = UIImage(named: "trashIcon")
-        action.backgroundColor = UIColor.red
-        let configuration = UISwipeActionsConfiguration(actions: [action])
-        
-        return configuration
-    }
+//    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let action = UIContextualAction(style: .destructive, title: "barcode_swipe_title".localized, handler: { _,_,_  in
+//            self.viewModel.toBarcodeViewController()
+//            self.collectionView.reloadData()
+//        })
+//
+//        action.image = UIImage(named: "swipeBarcode")
+//        action.backgroundColor = UIColor(red: 99/255, green: 159/255, blue: 255/255, alpha: 1)
+//        let configuration = UISwipeActionsConfiguration(actions: [action])
+//        return configuration
+//    }
+//
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let action = UIContextualAction(style: .normal, title: "delete_swipe_title".localized) { _, _, completion in
+//            self.viewModel.showDeleteConfirmationAlert(index: indexPath.row, yesCompletion: {
+//                tableView.deleteRows(at: [indexPath], with: .automatic)
+//                tableView.reloadData()
+//            }, noCompletion: {
+//                tableView.setEditing(false, animated: true)
+//            })
+//        }
+//
+//        action.image = UIImage(named: "trashIcon")
+//        action.backgroundColor = UIColor.red
+//        let configuration = UISwipeActionsConfiguration(actions: [action])
+//
+//        return configuration
+//    }
     
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 12
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let card = viewModel.membershipCard(forIndexPathSection: indexPath.section)
-        if let membershipPlan = viewModel.membershipPlanForCard(card: card) {
-            viewModel.toFullDetailsCardScreen(membershipCard: card, membershipPlan: membershipPlan)
-        }
-    }
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 12
+//    }
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let alert = UIAlertController(title: "Error", message: "To be implemented", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//        present(alert, animated: true)
+//    }
 }
 
 // MARK: - View model delegate
 
 extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
     func didFetchMembershipPlans() {
-        tableView.reloadData()
+        collectionView.reloadData()
     }
     
     func didFetchCards() {
-        tableView.reloadData()
+        collectionView.reloadData()
     }
 }

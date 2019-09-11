@@ -7,17 +7,16 @@
 
 import UIKit
 
-class MainTabBarViewController: UIViewController {
-    @IBOutlet weak var tabBar: UITabBar!
-    @IBOutlet weak var displayedControllerView: UIView!
-    
+class MainTabBarViewController: UITabBarController, BarBlurring {    
     let viewModel: MainTabBarViewModel
     var selectedTabBarOption = Buttons.loyaltyItem.getIntegerValue()
     var items = [UITabBarItem]()
+    lazy var blurBackground = defaultBlurredBackground()
     
     init(viewModel: MainTabBarViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "MainTabBarViewController", bundle: Bundle(for: MainTabBarViewController.self))
+        delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,13 +28,15 @@ class MainTabBarViewController: UIViewController {
         
         self.title = ""
         setNavigationBar()
-        
-        tabBar.delegate = self
         populateTabBar()
     }
+
+    // MARK: - Navigation Bar Blurring
     
-    override func viewWillAppear(_ animated: Bool) {
-        setFirstDisplayedController()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        prepareBarWithBlur(bar: tabBar, blurBackground: blurBackground)
     }
     
     func setNavigationBar() {
@@ -58,42 +59,17 @@ class MainTabBarViewController: UIViewController {
     }
     
     func populateTabBar() {
-        items.append(viewModel.getTabBarLoyaltyButton())
-        items.append(viewModel.getTabBarAddButton())
-        items.append(viewModel.getTabBarPaymentButton())
-        items[Buttons.paymentItem.getIntegerValue()].isEnabled = false
-        tabBar.setItems(items, animated: true)
-    }
-    
-    func setFirstDisplayedController() {
-        let view = viewModel.childViewControllers[Buttons.loyaltyItem.getIntegerValue()].view
-        view?.frame = displayedControllerView.bounds
-        displayedControllerView.addSubview(view!)
-        tabBar.selectedItem = items[Buttons.loyaltyItem.getIntegerValue()]
+        viewControllers = viewModel.childViewControllers
     }
 }
 
-extension MainTabBarViewController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        viewModel.childViewControllers[selectedTabBarOption].view.removeFromSuperview()
-        switch item.tag {
-        case Buttons.loyaltyItem.getIntegerValue():
-            let view = viewModel.childViewControllers[Buttons.loyaltyItem.getIntegerValue()].view
-            view?.frame = displayedControllerView.bounds
-            displayedControllerView.addSubview(view!)
-            selectedTabBarOption = Buttons.loyaltyItem.getIntegerValue()
-            break
-        case Buttons.addItem.getIntegerValue():
+extension MainTabBarViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if viewController is AddingOptionsTabBarViewController {
             viewModel.toAddingOptionsScreen()
-            break
-        case Buttons.paymentItem.getIntegerValue():
-            let view = viewModel.childViewControllers[Buttons.paymentItem.getIntegerValue()].view
-            view?.frame = displayedControllerView.bounds
-            displayedControllerView.addSubview(view!)
-            selectedTabBarOption = Buttons.paymentItem.getIntegerValue()
-            break
-        default: break
+            return false
         }
+        
+        return true
     }
 }
-
