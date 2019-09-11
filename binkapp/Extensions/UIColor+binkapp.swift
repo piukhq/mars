@@ -40,4 +40,8 @@ extension UIColor {
     class var blueAccent: UIColor {
         return UIColor(red: 67/255, green: 113/255, blue: 254/255, alpha: 1)
     }
+    
+    class var binkPurple: UIColor {
+        return UIColor(red: 180/255, green: 111/255, blue: 234/255, alpha: 1)
+    }
 }
