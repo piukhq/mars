@@ -15,7 +15,7 @@ class FullDetailsBrandHeader: CustomView {
     @IBOutlet private weak var brandImage: UIImageView!
     @IBOutlet private weak var messageLabel: UILabel!
     @IBOutlet private weak var brandImageBackgroundView: UIView!
-    @IBOutlet private var showBarcodeTapGesture: UITapGestureRecognizer!
+    @IBOutlet private weak var showBarcodeTapGesture: UITapGestureRecognizer!
     
     private var delegate: FullDetailsBrandHeaderDelegate?
     
