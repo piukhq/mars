@@ -30,7 +30,6 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fullDetailsBrandHeader.configureUI()
         configureUI()
         setCloseButton()
     }
@@ -41,19 +40,23 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
 private extension LoyaltyCardFullDetailsViewController {
     func configureUI() {
         let aboutInfoTitle = "about_membership_title".localized
-        let aboutInfoMessge = "learn_more".localized
+        let aboutInfoMessage = "learn_more".localized
         aboutInfoRow.delegate = self
-        aboutInfoRow.configureWithTitle(title: aboutInfoTitle, andInfo: aboutInfoMessge)
+        aboutInfoRow.configure(title: aboutInfoTitle, andInfo: aboutInfoMessage)
         
         let securityInfoTitle = "security_and_privacy_title".localized
         let securityInfoMessage = "security_and_privacy_message".localized
         securityAndPrivacyInfoRow.delegate = self
-        securityAndPrivacyInfoRow.configureWithTitle(title: securityInfoTitle, andInfo: securityInfoMessage)
+        securityAndPrivacyInfoRow.configure(title: securityInfoTitle, andInfo: securityInfoMessage)
         
         let deleteInfoTitle = "delete_card_title".localized
         let deleteInfoMessage = "delete_card_message".localized
         deleteInfoRow.delegate = self
-        deleteInfoRow.configureWithTitle(title: deleteInfoTitle, andInfo: deleteInfoMessage)
+        deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
+        
+        let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
+        let showBarcode = viewModel.membershipCard.card?.barcode != nil
+        fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode , delegate: self)
     }
     
     func setCloseButton() {
@@ -83,6 +86,8 @@ private extension LoyaltyCardFullDetailsViewController {
     }
 }
 
+// MARK: - CardDetailsInfoViewDelegate
+
 extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
     func cardDetailsInfoViewDidTapMoreInfo(_ cardDetailsInfoView: CardDetailsInfoView) {
         switch cardDetailsInfoView {
@@ -104,5 +109,13 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
         default:
             break
         }
+    }
+}
+
+// MARK: - FullDetailsBrandHeaderDelegate
+
+extension LoyaltyCardFullDetailsViewController: FullDetailsBrandHeaderDelegate {
+    func fullDetailsBrandHeaderDidTapShowBarcode(_ fullDetailsBrandHeader: FullDetailsBrandHeader) {
+        viewModel.toBarcodeModel()
     }
 }
