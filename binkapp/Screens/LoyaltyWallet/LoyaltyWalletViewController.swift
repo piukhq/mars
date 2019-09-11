@@ -11,7 +11,7 @@ import CoreGraphics
 class LoyaltyWalletViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     private let viewModel: LoyaltyWalletViewModel
-    private var refreshControl = UIRefreshControl()
+    private let refreshControl = UIRefreshControl()
     
     init(viewModel: LoyaltyWalletViewModel) {
         self.viewModel = viewModel
@@ -126,7 +126,7 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
 // MARK: - View model delegate
 
 extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
-    func didFetchData() {
+    func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel) {
         refreshControl.endRefreshing()
         tableView.reloadData()
     }

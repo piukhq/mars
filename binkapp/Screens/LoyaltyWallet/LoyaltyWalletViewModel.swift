@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol LoyaltyWalletViewModelDelegate {
-    func didFetchData()
+    func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel)
 }
 
 class LoyaltyWalletViewModel {
@@ -104,7 +104,7 @@ private extension LoyaltyWalletViewModel {
         }
         
         dispatchGroup.notify(queue: .main) {
-            self.delegate?.didFetchData()
+            self.delegate?.loyaltyWalletViewModelDidFetchData(self)
         }
     }
     
