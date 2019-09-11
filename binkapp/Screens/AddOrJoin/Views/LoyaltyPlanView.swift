@@ -13,34 +13,28 @@ enum PlanType {
     case linkCell
 }
 
-enum CardType: Int {
-    case store = 0
-    case view
-    case link
-}
-
 class LoyaltyPlanView: CustomView {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    func configure(for planType: PlanType, cardType: CardType) {
+    func configure(for planType: PlanType, cardType: PlanCardType) {
         configureIcon(for: planType, cardType: cardType)
         configureTitle(for: planType)
         configureDescription(for: planType, cardType: cardType)
     }
     
-    private func configureIcon(for planType: PlanType, cardType: CardType) {
+    private func configureIcon(for planType: PlanType, cardType: PlanCardType) {
         switch planType {
         case .storeCell: iconImageView.image = UIImage(named: "activeStore")
         case .viewCell:
-            if cardType.rawValue > 0 {
+            if cardType == .view || cardType == .link {
                 iconImageView.image = UIImage(named: "activeView")
             } else {
                 iconImageView.image = UIImage(named: "inactiveView")
             }
         case .linkCell:
-            if cardType.rawValue > 1 {
+            if cardType == .link {
                 iconImageView.image = UIImage(named: "activeLink")
             } else {
                 iconImageView.image = UIImage(named: "inactiveLink")
@@ -56,7 +50,7 @@ class LoyaltyPlanView: CustomView {
         }
     }
     
-    private func configureDescription(for planType: PlanType, cardType: CardType) {
+    private func configureDescription(for planType: PlanType, cardType: PlanCardType) {
         switch planType {
             case .storeCell:
             descriptionLabel.text = "add_join_screen_store_description".localized
