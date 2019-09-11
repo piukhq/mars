@@ -865,19 +865,15 @@
 			isa = PBXGroup;
 			children = (
 				5ECE046B22CE5798001BA964 /* AppDelegate.swift */,
-				5ECE047522CE579B001BA964 /* Assets.xcassets */,
-				B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */,
 				3C25BE012301A0F600E931EE /* BinkNetworking */,
 				3CF054D322FDABCA0069E98A /* BinkUI */,
 				B7E2EC0622E5ED1800BB201A /* Extensions */,
 				5E1B500B232105B800890C7E /* Firebase */,
-				5ECE047A22CE579B001BA964 /* Info.plist */,
-				5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */,
-				3CC267EF22F4276E00F0F9E3 /* Localizable.strings */,
-				5ECE046F22CE5798001BA964 /* Main.storyboard */,
 				AF06D86448D661A8F4142F87 /* Persistence */,
+				EFCB2C182329368D0060F73B /* Resources */,
 				3C873FD122F073B500FA3031 /* Routing */,
 				5ECE049F22CE57F5001BA964 /* Screens */,
+				EFCB2C172329366A0060F73B /* Supporting Files */,
 				3CF029F422F45B48009A0E61 /* Utils */,
 			);
 			path = binkapp;
@@ -1084,6 +1080,26 @@
 				EF3D8CF02327F67100C2EAC8 /* CD_Tier.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		EFCB2C172329366A0060F73B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */,
+				5ECE046F22CE5798001BA964 /* Main.storyboard */,
+				3CC267EF22F4276E00F0F9E3 /* Localizable.strings */,
+				5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */,
+				5ECE047A22CE579B001BA964 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EFCB2C182329368D0060F73B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5ECE047522CE579B001BA964 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		EFF3DCDC231D507A006A39C9 /* Debug */ = {
@@ -1851,7 +1867,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_FILE = "binkapp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1859,7 +1875,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.alpha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.neo.alpha";
-				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1888,7 +1904,7 @@
 					"PB_NO_PACKED_STRUCTS=1",
 					"PB_ENABLE_MALLOC=1",
 				);
-				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_FILE = "binkapp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1897,7 +1913,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.beta";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2071,7 +2087,7 @@
 					"PB_NO_PACKED_STRUCTS=1",
 					"PB_ENABLE_MALLOC=1",
 				);
-				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_FILE = "binkapp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2080,7 +2096,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.mr";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2210,7 +2226,7 @@
 					"PB_NO_PACKED_STRUCTS=1",
 					"PB_ENABLE_MALLOC=1",
 				);
-				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_FILE = "binkapp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2219,7 +2235,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.nightly";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2341,7 +2357,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_FILE = "binkapp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2349,7 +2365,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.neo";
-				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2471,7 +2487,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_FILE = "binkapp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2479,7 +2495,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.gamma;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.gamma";
-				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2601,7 +2617,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = binkapp/Info.plist;
+				INFOPLIST_FILE = "binkapp/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2609,7 +2625,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo";
-				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
