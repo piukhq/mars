@@ -9,8 +9,9 @@ import Foundation
 import UIKit
 
 protocol LoyaltyWalletViewModelDelegate {
-    func didFetchCards()
-    func didFetchMembershipPlans()
+//    func didFetchCards()
+//    func didFetchMembershipPlans()
+    func didFetchData()
 }
 
 class LoyaltyWalletViewModel {
@@ -18,6 +19,7 @@ class LoyaltyWalletViewModel {
     private let router: MainScreenRouter
     private var membershipCards = [MembershipCardModel]()
     private var membershipPlans = [MembershipPlanModel]()
+    private let dispatchGroup = DispatchGroup()
     
     var delegate: LoyaltyWalletViewModelDelegate?
     var membershipCardsCount: Int {
@@ -86,19 +88,25 @@ class LoyaltyWalletViewModel {
 
 private extension LoyaltyWalletViewModel {
     func fetchMembershipCards() {
+        dispatchGroup.enter()
         repository.getMembershipCards { (response) in
             self.membershipCards = response
-            self.delegate?.didFetchCards()
+            self.dispatchGroup.leave()
         }
+        
+        dispatchGroup.enter()
         repository.getMembershipPlans { (response) in
             self.membershipPlans = response
-            
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(response) {
                 let defaults = UserDefaults.standard
                 defaults.set(encoded, forKey: "MembershipPlans")
             }
-            self.delegate?.didFetchMembershipPlans()
+            self.dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.delegate?.didFetchData()
         }
     }
     

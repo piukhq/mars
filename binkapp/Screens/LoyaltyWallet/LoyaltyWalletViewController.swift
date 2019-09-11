@@ -8,17 +8,10 @@
 import UIKit
 import CoreGraphics
 
-class LoyaltyWalletViewController: UIViewController{
+class LoyaltyWalletViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     private let viewModel: LoyaltyWalletViewModel
-    private var refreshControl = UIRefreshControl()
-    
-    var didFetchCardsAndPlans: (Bool, Bool) = (false, false) {
-        didSet {
-            tableView.reloadData()
-            refreshControl.endRefreshing()
-        }
-    }
+    private var refreshControl: UIRefreshControl = UIRefreshControl()
     
     init(viewModel: LoyaltyWalletViewModel) {
         self.viewModel = viewModel
@@ -37,10 +30,16 @@ class LoyaltyWalletViewController: UIViewController{
         tableView.dataSource = self
         tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
         
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen), name: .didDeleteMemebershipCard, object: nil)
+        
         refreshControl.addTarget(self, action: #selector(refreshScreen), for: .valueChanged)
         tableView.addSubview(refreshControl)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen), name: .didDeleteMemebershipCard, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        refreshControl.endRefreshing()
+        tableView.contentOffset = .zero
+        super.viewWillDisappear(true)
     }
 }
 
@@ -127,13 +126,8 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
 // MARK: - View model delegate
 
 extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
-    func didFetchMembershipPlans() {
-        didFetchCardsAndPlans.1 = true
-//        tableView.reloadData()
-    }
-    
-    func didFetchCards() {
-        didFetchCardsAndPlans.0 = true
-//        tableView.reloadData()
+    func didFetchData() {
+        refreshControl.endRefreshing()
+        tableView.reloadData()
     }
 }
