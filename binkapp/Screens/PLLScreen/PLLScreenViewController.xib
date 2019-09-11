@@ -20,7 +20,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PLLEmptyViewController" customModule="binkapp" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PLLScreenViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
                 <outlet property="brandHeaderView" destination="ZTg-SZ-hJP" id="WtV-FU-KkW"/>
                 <outlet property="view" destination="hMT-hf-fBq" id="cAv-bw-WK0"/>

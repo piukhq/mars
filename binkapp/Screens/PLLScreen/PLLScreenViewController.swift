@@ -7,14 +7,14 @@
 
 import UIKit
 
-class PLLEmptyViewController: UIViewController {
+class PLLScreenViewController: UIViewController {
     @IBOutlet private weak var brandHeaderView: BrandHeaderView!
     
-    private let viewModel: PLLViewModel
+    private let viewModel: PLLScreenViewModel
     
-    init(viewModel: PLLViewModel) {
+    init(viewModel: PLLScreenViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "PLLEmptyViewController", bundle: Bundle(for: PLLEmptyViewController.self))
+        super.init(nibName: "PLLScreenViewController", bundle: Bundle(for: PLLScreenViewController.self))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,7 +39,7 @@ class PLLEmptyViewController: UIViewController {
 
 // MARK: - Loyalty button delegate
 
-extension PLLEmptyViewController: LoyaltyButtonDelegate {
+extension PLLScreenViewController: LoyaltyButtonDelegate {
     func buttonWasPressed() {
         viewModel.displaySimplePopup(title: ((viewModel.getMembershipPlan().account?.planNameCard) ?? ""), message: (viewModel.getMembershipPlan().account?.planDescription) ?? "")
     }
@@ -47,12 +47,11 @@ extension PLLEmptyViewController: LoyaltyButtonDelegate {
 
 // MARK: - Private methods
 
-private extension PLLEmptyViewController {
+private extension PLLScreenViewController {
     func configureBrandHeader() {
         let membershipPlan = viewModel.getMembershipPlan()
-        let imageUrlString = membershipPlan.images?.first(where: { $0.type == 3 })?.url
+        let imageUrlString = membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue })?.url
         brandHeaderView.configure(imageURLString: imageUrlString, loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
     }
 }
-
 

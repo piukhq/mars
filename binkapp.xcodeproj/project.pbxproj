@@ -130,9 +130,9 @@
 		AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D82C12A979885545793C /* CoreDataAccess.swift */; };
 		AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */; };
 		AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D82C12A979885545793C /* CoreDataAccess.swift */; };
-		B713662623268FEB008A0ED7 /* PLLEmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662423268FEB008A0ED7 /* PLLEmptyViewController.swift */; };
-		B713662723268FEB008A0ED7 /* PLLEmptyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B713662523268FEB008A0ED7 /* PLLEmptyViewController.xib */; };
-		B7136629232690F7008A0ED7 /* PLLViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7136628232690F7008A0ED7 /* PLLViewModel.swift */; };
+		B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */; };
+		B713662723268FEB008A0ED7 /* PLLScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B713662523268FEB008A0ED7 /* PLLScreenViewController.xib */; };
+		B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */; };
 		B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B720CC1322EEEF5400A4F4D0 /* LoginViewModel.swift */; };
 		B720CC1622EF01E200A4F4D0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */; };
 		B720CC1722EF01E200A4F4D0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */; };
@@ -354,9 +354,9 @@
 		AE0DB4F03CE314B533DEA419 /* Pods-binkappUITests.merge request.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.merge request.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.merge request.xcconfig"; sourceTree = "<group>"; };
 		AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAccessible.swift; sourceTree = "<group>"; };
 		AF06D82C12A979885545793C /* CoreDataAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataAccess.swift; sourceTree = "<group>"; };
-		B713662423268FEB008A0ED7 /* PLLEmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLEmptyViewController.swift; sourceTree = "<group>"; };
-		B713662523268FEB008A0ED7 /* PLLEmptyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLLEmptyViewController.xib; sourceTree = "<group>"; };
-		B7136628232690F7008A0ED7 /* PLLViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLViewModel.swift; sourceTree = "<group>"; };
+		B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewController.swift; sourceTree = "<group>"; };
+		B713662523268FEB008A0ED7 /* PLLScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLLScreenViewController.xib; sourceTree = "<group>"; };
+		B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModel.swift; sourceTree = "<group>"; };
 		B720CC1322EEEF5400A4F4D0 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		B726333E230586CC00951037 /* MembershipPlanModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanModel.swift; sourceTree = "<group>"; };
@@ -889,9 +889,9 @@
 		B713662323268FB9008A0ED7 /* PLLScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B713662423268FEB008A0ED7 /* PLLEmptyViewController.swift */,
-				B713662523268FEB008A0ED7 /* PLLEmptyViewController.xib */,
-				B7136628232690F7008A0ED7 /* PLLViewModel.swift */,
+				B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */,
+				B713662523268FEB008A0ED7 /* PLLScreenViewController.xib */,
+				B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */,
 			);
 			path = PLLScreen;
 			sourceTree = "<group>";
@@ -1128,7 +1128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E1B5013232105CD00890C7E /* com.bink.wallet.neo.gamma.GoogleService-Info.plist in Resources */,
-				B713662723268FEB008A0ED7 /* PLLEmptyViewController.xib in Resources */,
+				B713662723268FEB008A0ED7 /* PLLScreenViewController.xib in Resources */,
 				3CD3493722F99E1D000C1F4D /* NunitoSans-ExtraBold.ttf in Resources */,
 				B720CC1622EF01E200A4F4D0 /* LoginViewController.xib in Resources */,
 				5E1B5016232105CD00890C7E /* com.bink.wallet.neo.GoogleService-Info.plist in Resources */,
@@ -1419,7 +1419,7 @@
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
 				EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */,
 				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,
-				B7136629232690F7008A0ED7 /* PLLViewModel.swift in Sources */,
+				B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */,
 				5ECE04AF22CE582E001BA964 /* UserModel.swift in Sources */,
 				B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
@@ -1481,7 +1481,7 @@
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
 				3C2C91012319560C00D112E3 /* InputView.swift in Sources */,
-				B713662623268FEB008A0ED7 /* PLLEmptyViewController.swift in Sources */,
+				B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */,
 				3C2C90F923191CED00D112E3 /* AddFieldPostModel.swift in Sources */,
 				3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,

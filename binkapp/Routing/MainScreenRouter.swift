@@ -110,8 +110,8 @@ class MainScreenRouter {
     }
     
     func toPllViewController(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
-        let viewModel = PLLViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, router: self)
-        let viewController = PLLEmptyViewController(viewModel: viewModel)
+        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, router: self)
+        let viewController = PLLScreenViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     

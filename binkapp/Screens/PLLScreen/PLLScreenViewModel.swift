@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PLLViewModel {
+class PLLScreenViewModel {
     private let membershipPlan: MembershipPlanModel
     private let membershipCard: MembershipCardModel
     private let router: MainScreenRouter
