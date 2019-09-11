@@ -11,7 +11,7 @@ import CoreGraphics
 class LoyaltyWalletViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     private let viewModel: LoyaltyWalletViewModel
-    private var refreshControl: UIRefreshControl = UIRefreshControl()
+    private var refreshControl = UIRefreshControl()
     
     init(viewModel: LoyaltyWalletViewModel) {
         self.viewModel = viewModel

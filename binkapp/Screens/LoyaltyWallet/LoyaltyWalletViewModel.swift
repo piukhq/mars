@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 
 protocol LoyaltyWalletViewModelDelegate {
-//    func didFetchCards()
-//    func didFetchMembershipPlans()
     func didFetchData()
 }
 
@@ -29,7 +27,7 @@ class LoyaltyWalletViewModel {
     init(repository: LoyaltyWalletRepository, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
-        fetchMembershipCards()
+        fetchData()
     }
     
     // MARK: - Public methods
@@ -80,14 +78,14 @@ class LoyaltyWalletViewModel {
     }
     
     func refreshScreen() {
-        fetchMembershipCards()
+        fetchData()
     }
 }
 
 // MARK: Private methods
 
 private extension LoyaltyWalletViewModel {
-    func fetchMembershipCards() {
+    func fetchData() {
         dispatchGroup.enter()
         repository.getMembershipCards { (response) in
             self.membershipCards = response
