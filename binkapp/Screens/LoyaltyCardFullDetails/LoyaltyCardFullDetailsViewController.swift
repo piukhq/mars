@@ -55,7 +55,8 @@ private extension LoyaltyCardFullDetailsViewController {
         deleteInfoRow.configureWithTitle(title: deleteInfoTitle, andInfo: deleteInfoMessage)
         
         let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
-        fullDetailsBrandHeader.configureWith(imageUrl: imageURL, delegate: self)
+        let showBarcode = viewModel.membershipCard.card?.barcode != nil
+        fullDetailsBrandHeader.configureWith(imageUrl: imageURL, showBarcode: showBarcode , delegate: self)
     }
     
     func setCloseButton() {

@@ -10,7 +10,7 @@ import Foundation
 class LoyaltyCardFullDetailsViewModel {
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
-    private let membershipCard: MembershipCardModel
+    let membershipCard: MembershipCardModel
     let membershipPlan: MembershipPlanModel
     
     init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {

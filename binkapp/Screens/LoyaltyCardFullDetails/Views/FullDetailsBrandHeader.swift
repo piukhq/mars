@@ -15,17 +15,19 @@ class FullDetailsBrandHeader: CustomView {
     @IBOutlet private weak var brandImage: UIImageView!
     @IBOutlet private weak var messageLabel: UILabel!
     @IBOutlet private weak var brandImageBackgroundView: UIView!
+    @IBOutlet private var showBarcodeTapGesture: UITapGestureRecognizer!
     
     private var delegate: FullDetailsBrandHeaderDelegate?
     
-    func configureWith(imageUrl: String?, delegate: FullDetailsBrandHeaderDelegate) {
+    func configureWith(imageUrl: String?, showBarcode: Bool,  delegate: FullDetailsBrandHeaderDelegate) {
         self.delegate = delegate
+        messageLabel.isHidden = !showBarcode
+        showBarcodeTapGesture.isEnabled = showBarcode
         if let imageURL = imageUrl, let url = URL(string: imageURL) {
             brandImage.af_setImage(withURL: url)
         }
         messageLabel.font = .bodyTextLarge
         brandImageBackgroundView.layer.shadowColor = UIColor.black.cgColor
-        brandImageBackgroundView.layer.shadowPath = UIBezierPath(roundedRect: brandImageBackgroundView.bounds, cornerRadius: 4).cgPath
     }
     
     // MARK: - Actions
