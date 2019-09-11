@@ -1,171 +1,189 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18F203" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18F203" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CD_AddField" representedClassName="CD_AddField" syncable="YES">
-        <attribute name="column" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fieldDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="validation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="column" optional="YES" attributeType="String"/>
+        <attribute name="fieldDescription" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="validation" optional="YES" attributeType="String"/>
+        <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="addFields" inverseEntity="CD_MembershipPlanAccount"/>
     </entity>
     <entity name="CD_App" representedClassName="CD_App" syncable="YES">
-        <attribute name="appId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="appStoreUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="appType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="appId" optional="YES" attributeType="String"/>
+        <attribute name="appStoreUrl" optional="YES" attributeType="String"/>
+        <attribute name="appType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="String"/>
     </entity>
     <entity name="CD_AuthoriseField" representedClassName="CD_AuthoriseField" syncable="YES">
-        <attribute name="column" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fieldDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="validation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="column" optional="YES" attributeType="String"/>
+        <attribute name="fieldDescription" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="validation" optional="YES" attributeType="String"/>
+        <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="authoriseFields" inverseEntity="CD_MembershipPlanAccount"/>
     </entity>
     <entity name="CD_Balance" representedClassName="CD_Balance" syncable="YES">
-        <attribute name="balanceDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="prefix" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="balanceDescription" optional="YES" attributeType="String"/>
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="prefix" optional="YES" attributeType="String"/>
+        <attribute name="suffix" optional="YES" attributeType="String"/>
+        <relationship name="plan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlan" inverseName="balances" inverseEntity="CD_MembershipPlan"/>
     </entity>
     <entity name="CD_Card" representedClassName="CD_Card" syncable="YES">
-        <attribute name="barcode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="barcodeType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="colour" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="barcode" optional="YES" attributeType="String"/>
+        <attribute name="barcodeType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="colour" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <relationship name="membershipCards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="card" inverseEntity="CD_MembershipCard"/>
     </entity>
     <entity name="CD_EnrolField" representedClassName="CD_EnrolField" syncable="YES">
-        <attribute name="column" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fieldDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="validation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="column" optional="YES" attributeType="String"/>
+        <attribute name="fieldDescription" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="validation" optional="YES" attributeType="String"/>
+        <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="enrolFields" inverseEntity="CD_MembershipPlanAccount"/>
     </entity>
     <entity name="CD_FeatureSet" representedClassName="CD_FeatureSet" syncable="YES">
-        <attribute name="authorisationRequired" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="cardType" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="digitalOnly" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="hasPoints" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="transactionsAvailable" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="authorisationRequired" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
+        <attribute name="cardType" optional="YES" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="NO"/>
+        <attribute name="digitalOnly" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
+        <attribute name="hasPoints" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="transactionsAvailable" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
+        <relationship name="plan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlan" inverseName="featureSet" inverseEntity="CD_MembershipPlan"/>
     </entity>
     <entity name="CD_MembershipCard" representedClassName="CD_MembershipCard" syncable="YES">
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="membershipPlan" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCardAccount" syncable="YES"/>
-        <relationship name="balances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardBalance" syncable="YES"/>
-        <relationship name="card" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Card" syncable="YES"/>
-        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardImage" syncable="YES"/>
-        <relationship name="membershipTransactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipTransaction" syncable="YES"/>
-        <relationship name="paymentCards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_PaymentCard" syncable="YES"/>
-        <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCardStatus" syncable="YES"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="membershipPlan" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCardAccount" inverseName="membershipCard" inverseEntity="CD_MembershipCardAccount"/>
+        <relationship name="balances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardBalance" inverseName="membershipCard" inverseEntity="CD_MembershipCardBalance"/>
+        <relationship name="card" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Card" inverseName="membershipCards" inverseEntity="CD_Card"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardImage" inverseName="membershipCards" inverseEntity="CD_MembershipCardImage"/>
+        <relationship name="membershipTransactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipTransaction" inverseName="membershipCard" inverseEntity="CD_MembershipTransaction"/>
+        <relationship name="paymentCards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_PaymentCard" inverseName="membershipCard" inverseEntity="CD_PaymentCard"/>
+        <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCardStatus" inverseName="membershipCard" inverseEntity="CD_MembershipCardStatus"/>
     </entity>
     <entity name="CD_MembershipCardAccount" representedClassName="CD_MembershipCardAccount" syncable="YES">
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="tier" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="tier" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <relationship name="membershipCard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="account" inverseEntity="CD_MembershipCard"/>
     </entity>
     <entity name="CD_MembershipCardAmount" representedClassName="CD_MembershipCardAmount" syncable="YES">
-        <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="suffix" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO"/>
+        <relationship name="transaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipTransaction" inverseName="amounts" inverseEntity="CD_MembershipTransaction"/>
     </entity>
     <entity name="CD_MembershipCardBalance" representedClassName="CD_MembershipCardBalance" syncable="YES">
-        <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="prefix" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="suffix" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="updatedAt" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="prefix" optional="YES" attributeType="String"/>
+        <attribute name="suffix" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO"/>
+        <relationship name="membershipCard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="balances" inverseEntity="CD_MembershipCard"/>
     </entity>
     <entity name="CD_MembershipCardImage" representedClassName="CD_MembershipCardImage" syncable="YES">
-        <attribute name="encoding" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="imageDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="encoding" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="imageDescription" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="membershipCards" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="images" inverseEntity="CD_MembershipCard"/>
+        <relationship name="plan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlan" inverseName="images" inverseEntity="CD_MembershipPlan"/>
     </entity>
     <entity name="CD_MembershipCardStatus" representedClassName="CD_MembershipCardStatus" syncable="YES">
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="state" optional="YES" attributeType="String"/>
+        <relationship name="membershipCard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="status" inverseEntity="CD_MembershipCard"/>
     </entity>
     <entity name="CD_MembershipPlan" representedClassName="CD_MembershipPlan" syncable="YES">
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" syncable="YES"/>
-        <relationship name="balances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Balance" syncable="YES"/>
-        <relationship name="featureSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_FeatureSet" syncable="YES"/>
-        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardImage" syncable="YES"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="membershipPlan" inverseEntity="CD_MembershipPlanAccount"/>
+        <relationship name="balances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Balance" inverseName="plan" inverseEntity="CD_Balance"/>
+        <relationship name="featureSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_FeatureSet" inverseName="plan" inverseEntity="CD_FeatureSet"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardImage" inverseName="plan" inverseEntity="CD_MembershipCardImage"/>
     </entity>
     <entity name="CD_MembershipPlanAccount" representedClassName="CD_MembershipPlanAccount" syncable="YES">
-        <attribute name="barcodeRedeemInstructions" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="companyName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="companyURL" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="enrolIncentive" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="forgottenPasswordUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="planDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="planName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="planNameCard" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="planRegisterInfo" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="planSummary" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="planURL" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="addFields" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_AddField" syncable="YES"/>
-        <relationship name="authoriseFields" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_AuthoriseField" syncable="YES"/>
-        <relationship name="enrolFields" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_EnrolField" syncable="YES"/>
-        <relationship name="planDocuments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_PlanDocument" syncable="YES"/>
-        <relationship name="registrationFields" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_RegistrationField" syncable="YES"/>
-        <relationship name="tiers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Tier" syncable="YES"/>
+        <attribute name="barcodeRedeemInstructions" optional="YES" attributeType="String"/>
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="companyName" optional="YES" attributeType="String"/>
+        <attribute name="companyURL" optional="YES" attributeType="String"/>
+        <attribute name="enrolIncentive" optional="YES" attributeType="String"/>
+        <attribute name="forgottenPasswordUrl" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="planDescription" optional="YES" attributeType="String"/>
+        <attribute name="planName" optional="YES" attributeType="String"/>
+        <attribute name="planNameCard" optional="YES" attributeType="String"/>
+        <attribute name="planRegisterInfo" optional="YES" attributeType="String"/>
+        <attribute name="planSummary" optional="YES" attributeType="String"/>
+        <attribute name="planURL" optional="YES" attributeType="String"/>
+        <relationship name="addFields" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_AddField" inverseName="planAccount" inverseEntity="CD_AddField"/>
+        <relationship name="authoriseFields" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_AuthoriseField" inverseName="planAccount" inverseEntity="CD_AuthoriseField"/>
+        <relationship name="enrolFields" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_EnrolField" inverseName="planAccount" inverseEntity="CD_EnrolField"/>
+        <relationship name="membershipPlan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlan" inverseName="account" inverseEntity="CD_MembershipPlan"/>
+        <relationship name="planDocuments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_PlanDocument" inverseName="planAccount" inverseEntity="CD_PlanDocument"/>
+        <relationship name="registrationFields" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_RegistrationField" inverseName="planAccount" inverseEntity="CD_RegistrationField"/>
+        <relationship name="tiers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Tier" inverseName="planAccount" inverseEntity="CD_Tier"/>
     </entity>
     <entity name="CD_MembershipTransaction" representedClassName="CD_MembershipTransaction" syncable="YES">
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="transactionDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="amounts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardAmount" syncable="YES"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="transactionDescription" optional="YES" attributeType="String"/>
+        <relationship name="amounts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardAmount" inverseName="transaction" inverseEntity="CD_MembershipCardAmount"/>
+        <relationship name="membershipCard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="membershipTransactions" inverseEntity="CD_MembershipCard"/>
     </entity>
     <entity name="CD_PaymentCard" representedClassName="CD_PaymentCard" syncable="YES">
-        <attribute name="activeLink" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="activeLink" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="String"/>
+        <relationship name="membershipCard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="paymentCards" inverseEntity="CD_MembershipCard"/>
     </entity>
     <entity name="CD_PlanDocument" representedClassName="CD_PlanDocument" syncable="YES">
-        <attribute name="checkbox" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="documentDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="checkbox" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
+        <attribute name="documentDescription" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="planDocuments" inverseEntity="CD_MembershipPlanAccount"/>
     </entity>
     <entity name="CD_RegistrationField" representedClassName="CD_RegistrationField" syncable="YES">
-        <attribute name="column" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fieldDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="column" optional="YES" attributeType="String"/>
+        <attribute name="fieldDescription" optional="YES" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="registrationFields" inverseEntity="CD_MembershipPlanAccount"/>
     </entity>
     <entity name="CD_Tier" representedClassName="CD_Tier" syncable="YES">
-        <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tierDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="tierDescription" optional="YES" attributeType="String"/>
+        <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="tiers" inverseEntity="CD_MembershipPlanAccount"/>
     </entity>
     <elements>
-        <element name="CD_AddField" positionX="-9" positionY="117" width="128" height="120"/>
+        <element name="CD_AddField" positionX="-9" positionY="117" width="128" height="133"/>
         <element name="CD_App" positionX="0" positionY="126" width="128" height="105"/>
-        <element name="CD_AuthoriseField" positionX="9" positionY="135" width="128" height="120"/>
-        <element name="CD_Balance" positionX="18" positionY="144" width="128" height="30"/>
-        <element name="CD_Card" positionX="-9" positionY="81" width="128" height="105"/>
-        <element name="CD_EnrolField" positionX="27" positionY="153" width="128" height="120"/>
-        <element name="CD_FeatureSet" positionX="27" positionY="153" width="128" height="135"/>
-        <element name="CD_MembershipCard" positionX="9" positionY="81" width="128" height="180"/>
-        <element name="CD_MembershipCardAccount" positionX="-9" positionY="90" width="128" height="75"/>
-        <element name="CD_MembershipCardAmount" positionX="-63" positionY="-18" width="128" height="30"/>
-        <element name="CD_MembershipCardBalance" positionX="-36" positionY="36" width="128" height="30"/>
-        <element name="CD_MembershipCardImage" positionX="0" positionY="72" width="128" height="120"/>
-        <element name="CD_MembershipCardStatus" positionX="9" positionY="99" width="128" height="30"/>
-        <element name="CD_MembershipPlan" positionX="36" positionY="171" width="128" height="30"/>
-        <element name="CD_MembershipPlanAccount" positionX="0" positionY="126" width="128" height="30"/>
-        <element name="CD_MembershipTransaction" positionX="-18" positionY="72" width="128" height="120"/>
-        <element name="CD_PaymentCard" positionX="18" positionY="90" width="128" height="75"/>
-        <element name="CD_PlanDocument" positionX="36" positionY="162" width="128" height="120"/>
-        <element name="CD_RegistrationField" positionX="45" positionY="171" width="128" height="105"/>
-        <element name="CD_Tier" positionX="-9" positionY="117" width="128" height="30"/>
+        <element name="CD_AuthoriseField" positionX="9" positionY="135" width="128" height="133"/>
+        <element name="CD_Balance" positionX="18" positionY="144" width="128" height="133"/>
+        <element name="CD_Card" positionX="-9" positionY="81" width="128" height="118"/>
+        <element name="CD_EnrolField" positionX="27" positionY="153" width="128" height="133"/>
+        <element name="CD_FeatureSet" positionX="27" positionY="153" width="128" height="148"/>
+        <element name="CD_MembershipCard" positionX="9" positionY="81" width="128" height="178"/>
+        <element name="CD_MembershipCardAccount" positionX="-9" positionY="90" width="128" height="88"/>
+        <element name="CD_MembershipCardAmount" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="CD_MembershipCardBalance" positionX="-36" positionY="36" width="128" height="148"/>
+        <element name="CD_MembershipCardImage" positionX="0" positionY="72" width="128" height="148"/>
+        <element name="CD_MembershipCardStatus" positionX="9" positionY="99" width="128" height="88"/>
+        <element name="CD_MembershipPlan" positionX="36" positionY="171" width="128" height="133"/>
+        <element name="CD_MembershipPlanAccount" positionX="0" positionY="126" width="128" height="343"/>
+        <element name="CD_MembershipTransaction" positionX="-18" positionY="72" width="128" height="133"/>
+        <element name="CD_PaymentCard" positionX="18" positionY="90" width="128" height="88"/>
+        <element name="CD_PlanDocument" positionX="36" positionY="162" width="128" height="133"/>
+        <element name="CD_RegistrationField" positionX="45" positionY="171" width="128" height="118"/>
+        <element name="CD_Tier" positionX="-9" positionY="117" width="128" height="103"/>
     </elements>
 </model>

@@ -868,9 +868,7 @@
 				3C25BE012301A0F600E931EE /* BinkNetworking */,
 				3CF054D322FDABCA0069E98A /* BinkUI */,
 				B7E2EC0622E5ED1800BB201A /* Extensions */,
-				5E1B500B232105B800890C7E /* Firebase */,
 				AF06D86448D661A8F4142F87 /* Persistence */,
-				EFCB2C182329368D0060F73B /* Resources */,
 				3C873FD122F073B500FA3031 /* Routing */,
 				5ECE049F22CE57F5001BA964 /* Screens */,
 				EFCB2C172329366A0060F73B /* Supporting Files */,
@@ -1085,6 +1083,8 @@
 		EFCB2C172329366A0060F73B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EFCB2C182329368D0060F73B /* Resources */,
+				5E1B500B232105B800890C7E /* Firebase */,
 				B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */,
 				5ECE046F22CE5798001BA964 /* Main.storyboard */,
 				3CC267EF22F4276E00F0F9E3 /* Localizable.strings */,
