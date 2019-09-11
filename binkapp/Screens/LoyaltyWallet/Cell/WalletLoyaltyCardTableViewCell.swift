@@ -78,7 +78,7 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
 
             break
         case "authorised":
-            if plan.featureSet?.cardType == 2 {
+            if plan.featureSet?.cardType == .link {
                 cardLinkStatusImage.image = UIImage(imageLiteralResourceName: "linked")
                 cardLinkStatusImage.isHidden = false
                 cardLinkStatusLabel.text = NSLocalizedString("card_linked_status", comment: "")
@@ -99,7 +99,7 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
                 cardValuePointsLabel.isHidden = true
             }
         case "unauthorised":
-            if plan.featureSet?.cardType == 2 {
+            if plan.featureSet?.cardType == .link {
                 cardLinkStatusLabel.isHidden = false
                 cardLinkStatusImage.isHidden = false
                 cardLinkStatusLabel.text = NSLocalizedString("card_can_not_link_status", comment: "")

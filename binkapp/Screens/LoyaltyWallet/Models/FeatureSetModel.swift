@@ -8,11 +8,18 @@
 import Foundation
 
 struct FeatureSetModel : Codable {
+    
+    enum PlanCardType: Int, Codable {
+        case store
+        case view
+        case link
+    }
+    
     let authorisationRequired : Bool?
     let transactionsAvailable : Bool?
     let digitalOnly : Bool?
     let hasPoints : Bool?
-    let cardType : Int?
+    let cardType : PlanCardType?
     let linkingSupport : [String]?
 //    let apps : [String]?
     
@@ -33,7 +40,7 @@ struct FeatureSetModel : Codable {
         transactionsAvailable = try values.decodeIfPresent(Bool.self, forKey: .transactionsAvailable)
         digitalOnly = try values.decodeIfPresent(Bool.self, forKey: .digitalOnly)
         hasPoints = try values.decodeIfPresent(Bool.self, forKey: .hasPoints)
-        cardType = try values.decodeIfPresent(Int.self, forKey: .cardType)
+        cardType = try values.decodeIfPresent(PlanCardType.self, forKey: .cardType)
         linkingSupport = try values.decodeIfPresent([String].self, forKey: .linkingSupport)
 //        apps = try values.decodeIfPresent([String].self, forKey: .apps)
     }
