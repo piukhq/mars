@@ -35,7 +35,7 @@ extension FeatureSetModel: CoreDataMappable {
         update(cdObject, \.transactionsAvailable, with: NSNumber(value: transactionsAvailable ?? false), delta: delta)
         update(cdObject, \.digitalOnly, with: NSNumber(value: digitalOnly ?? false), delta: delta)
         update(cdObject, \.hasPoints, with: NSNumber(value: hasPoints ?? false), delta: delta)
-        update(cdObject, \.cardType, with: NSNumber(value: cardType ?? 0), delta: delta)
+        update(cdObject, \.cardType, with: NSNumber(value: cardType?.rawValue ?? 0), delta: delta)
 
         return cdObject
     }
