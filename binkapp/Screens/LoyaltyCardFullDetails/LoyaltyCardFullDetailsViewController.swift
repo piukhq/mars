@@ -7,15 +7,14 @@
 
 import UIKit
 
-extension Notification.Name {
-    static let didDeleteMemebershipCard = Notification.Name("didDeleteMembershipCard")
-}
-
 class LoyaltyCardFullDetailsViewController: UIViewController {
     @IBOutlet private weak var fullDetailsBrandHeader: FullDetailsBrandHeader!
     @IBOutlet private weak var aboutInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var securityAndPrivacyInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var deleteInfoRow: CardDetailsInfoView!
+    
+    //ADDED FOR TESTING
+    @IBOutlet private weak var pointsModuleView: UIView!
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
     
@@ -32,6 +31,14 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         setCloseButton()
+        
+        //ADDED FOR TESTING
+        let tap = UITapGestureRecognizer(target: self, action: #selector(toTransactionsViewController))
+        pointsModuleView.addGestureRecognizer(tap)
+    }
+    
+    @objc func toTransactionsViewController() {
+        viewModel.toTransactionsViewController()
     }
 }
 

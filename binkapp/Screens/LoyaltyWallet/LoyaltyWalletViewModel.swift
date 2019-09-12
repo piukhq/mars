@@ -9,8 +9,7 @@ import Foundation
 import UIKit
 
 protocol LoyaltyWalletViewModelDelegate {
-    func didFetchCards()
-    func didFetchMembershipPlans()
+    func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel)
 }
 
 class LoyaltyWalletViewModel {
@@ -18,6 +17,7 @@ class LoyaltyWalletViewModel {
     private let router: MainScreenRouter
     private var membershipCards = [MembershipCardModel]()
     private var membershipPlans = [MembershipPlanModel]()
+    private let dispatchGroup = DispatchGroup()
     
     var delegate: LoyaltyWalletViewModelDelegate?
     var membershipCardsCount: Int {
@@ -27,7 +27,7 @@ class LoyaltyWalletViewModel {
     init(repository: LoyaltyWalletRepository, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
-        fetchMembershipCards()
+        fetchData()
     }
     
     // MARK: - Public methods
@@ -78,27 +78,26 @@ class LoyaltyWalletViewModel {
     }
     
     func refreshScreen() {
-        fetchMembershipCards()
+        fetchData()
     }
 }
 
 // MARK: Private methods
 
 private extension LoyaltyWalletViewModel {
-    func fetchMembershipCards() {
-        repository.getMembershipCards { (response) in
-            self.membershipCards = response
-            self.delegate?.didFetchCards()
-        }
-        repository.getMembershipPlans { (response) in
-            self.membershipPlans = response
-            
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(response) {
-                let defaults = UserDefaults.standard
-                defaults.set(encoded, forKey: "MembershipPlans")
+    func fetchData() {
+        repository.getMembershipCards { [weak self] (response) in
+            guard let wself = self else { return }
+            wself.membershipCards = response
+            wself.repository.getMembershipPlans { (response) in
+                wself.membershipPlans = response
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(response) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: "MembershipPlans")
+                }
+                wself.delegate?.loyaltyWalletViewModelDidFetchData(wself)
             }
-            self.delegate?.didFetchMembershipPlans()
         }
     }
     

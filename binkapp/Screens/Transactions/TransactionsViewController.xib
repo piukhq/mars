@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TransactionsViewController" customModule="binkapp" customModuleProvider="target">
+            <connections>
+                <outlet property="descriptionLabel" destination="mie-yR-6b8" id="LIh-de-SD8"/>
+                <outlet property="lastCheckedLabel" destination="pGf-jw-THB" id="gc3-De-oLr"/>
+                <outlet property="titleLabel" destination="6aW-F1-2e6" id="y4K-os-idQ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6aW-F1-2e6">
+                    <rect key="frame" x="25" y="56" width="364" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mie-yR-6b8">
+                    <rect key="frame" x="25" y="107" width="364" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pGf-jw-THB">
+                    <rect key="frame" x="25" y="81.5" width="364" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="mie-yR-6b8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="3NW-dq-123"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="6aW-F1-2e6" secondAttribute="trailing" constant="25" id="94v-M2-fMi"/>
+                <constraint firstItem="pGf-jw-THB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="F9c-mY-Jry"/>
+                <constraint firstItem="pGf-jw-THB" firstAttribute="top" secondItem="6aW-F1-2e6" secondAttribute="bottom" constant="5" id="Ltx-Cd-cgz"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="mie-yR-6b8" secondAttribute="trailing" constant="25" id="hle-CJ-LvU"/>
+                <constraint firstItem="6aW-F1-2e6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="ieB-3W-qFx"/>
+                <constraint firstItem="mie-yR-6b8" firstAttribute="top" secondItem="pGf-jw-THB" secondAttribute="bottom" constant="5" id="lHe-DD-lNx"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="pGf-jw-THB" secondAttribute="trailing" constant="25" id="mcs-5B-6WD"/>
+                <constraint firstItem="6aW-F1-2e6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="s9e-Sb-thB"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+        </view>
+    </objects>
+</document>
