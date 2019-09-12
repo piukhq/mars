@@ -13,7 +13,7 @@ enum RequestURL {
     case login
     case membershipPlans
     case membershipCards
-    case deleteMembershipCard(cardId: String)
+    case deleteMembershipCard(cardId: Int)
     case postMembershipCard
     
     var value: String {

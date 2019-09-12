@@ -25,8 +25,12 @@ struct BalanceModel: Codable {
 }
 
 extension BalanceModel: CoreDataMappable {
-    func objectToMapTo(_ cdObject: CD_Balance, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_Balance {
-        update(cdObject, \.id, with: id, delta: delta)
+    func objectToMapTo(_ cdObject: CD_Balance, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_Balance {
+        // Our codable models all need to have id's as Int's as dictated by API responses
+        // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
+        let idString = String(id)
+
+        update(cdObject, \.id, with: idString, delta: delta)
         update(cdObject, \.currency, with: currency, delta: delta)
         update(cdObject, \.prefix, with: prefix, delta: delta)
         update(cdObject, \.suffix, with: suffix, delta: delta)

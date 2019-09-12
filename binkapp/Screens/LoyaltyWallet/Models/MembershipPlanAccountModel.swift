@@ -53,8 +53,12 @@ struct MembershipPlanAccountModel: Codable {
 }
 
 extension MembershipPlanAccountModel: CoreDataMappable {
-    func objectToMapTo(_ cdObject: CD_MembershipPlanAccount, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlanAccount {
-        update(cdObject, \.id, with: id, delta: delta)
+    func objectToMapTo(_ cdObject: CD_MembershipPlanAccount, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_MembershipPlanAccount {
+        // Our codable models all need to have id's as Int's as dictated by API responses
+        // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
+        let idString = String(id)
+
+        update(cdObject, \.id, with: idString, delta: delta)
         update(cdObject, \.planName, with: planName, delta: delta)
         update(cdObject, \.planNameCard, with: planNameCard, delta: delta)
         update(cdObject, \.planURL, with: planURL, delta: delta)
