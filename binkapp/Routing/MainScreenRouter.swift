@@ -114,6 +114,11 @@ class MainScreenRouter {
         let viewController = PLLScreenViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
+    func toTransactionsViewController(membershipCard: MembershipCardModel) {
+        let viewModel = TransactionsViewModel(membershipCard: membershipCard, router: self)
+        let viewController = TransactionsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
     
     func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
