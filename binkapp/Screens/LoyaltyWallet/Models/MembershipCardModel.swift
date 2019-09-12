@@ -8,32 +8,7 @@
 import Foundation
 import DeepDiff
 
-extension DiffAware where Self: Hashable {
-    public var diffId: Int {
-        return hashValue
-    }
-
-    public static func compareContent(_ a: Self, _ b: Self) -> Bool {
-        return a == b
-    }
-}
-
-struct MembershipCardModel: Codable, Hashable, DiffAware {
-    static func == (lhs: MembershipCardModel, rhs: MembershipCardModel) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(membershipTransactions)
-        hasher.combine(status)
-        hasher.combine(card)
-        hasher.combine(images)
-        hasher.combine(account)
-        hasher.combine(paymentCards)
-        hasher.combine(balances)
-    }
-    
+struct MembershipCardModel: Codable {
     let id: Int?
     let membershipPlan: Int?
     let membershipTransactions: [MembershipTransaction]?
@@ -68,5 +43,18 @@ struct MembershipCardModel: Codable, Hashable, DiffAware {
         account = try values.decodeIfPresent(MembershipCardAccountModel.self, forKey: .account)
         paymentCards = try values.decodeIfPresent([PaymentCardModel].self, forKey: .paymentCards)
         balances = try values.decodeIfPresent([MembershipCardBalanceModel].self, forKey: .balances)
+    }
+}
+
+extension MembershipCardModel: Hashable, DiffAware {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(membershipTransactions)
+        hasher.combine(status)
+        hasher.combine(card)
+        hasher.combine(images)
+        hasher.combine(account)
+        hasher.combine(paymentCards)
+        hasher.combine(balances)
     }
 }
