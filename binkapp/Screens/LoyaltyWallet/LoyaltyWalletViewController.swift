@@ -8,9 +8,10 @@
 import UIKit
 import CoreGraphics
 
-class LoyaltyWalletViewController: UIViewController{
+class LoyaltyWalletViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     private let viewModel: LoyaltyWalletViewModel
+    private let refreshControl = UIRefreshControl()
     
     init(viewModel: LoyaltyWalletViewModel) {
         self.viewModel = viewModel
@@ -29,13 +30,22 @@ class LoyaltyWalletViewController: UIViewController{
         tableView.dataSource = self
         tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
         
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen(_:)), name: .didDeleteMemebershipCard, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen), name: .didDeleteMemebershipCard, object: nil)
+        
+        refreshControl.addTarget(self, action: #selector(refreshScreen), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        refreshControl.endRefreshing()
+        tableView.contentOffset = .zero
+        super.viewWillDisappear(true)
     }
 }
 
 // MARK: - Private methods
 private extension LoyaltyWalletViewController {
-    @objc func refreshScreen(_: Notification) {
+    @objc func refreshScreen() {
         viewModel.refreshScreen()
     }
 }
@@ -116,11 +126,11 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
 // MARK: - View model delegate
 
 extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
-    func didFetchMembershipPlans() {
-        tableView.reloadData()
-    }
-    
-    func didFetchCards() {
-        tableView.reloadData()
+    func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            self?.refreshControl.endRefreshing()
+            self?.tableView.reloadData()
+            
+        }
     }
 }
