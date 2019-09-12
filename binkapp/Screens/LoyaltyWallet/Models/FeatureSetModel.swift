@@ -15,7 +15,7 @@ struct FeatureSetModel: Codable {
         case link
     }
 
-    let id: Int
+    let id: Int?
     let authorisationRequired: Bool?
     let transactionsAvailable: Bool?
     let digitalOnly: Bool?
@@ -38,7 +38,7 @@ extension FeatureSetModel: CoreDataMappable {
     func objectToMapTo(_ cdObject: CD_FeatureSet, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_FeatureSet {
         // Our codable models all need to have id's as Int's as dictated by API responses
         // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
-        let idString = String(id)
+        let idString = String(id ?? 0)
 
         update(cdObject, \.id, with: idString, delta: delta)
         update(cdObject, \.authorisationRequired, with: NSNumber(value: authorisationRequired ?? false), delta: delta)

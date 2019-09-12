@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct MembershipPlanAccountModel: Codable {
-    let id: Int
+    let id: Int?
     let planName: String?
     let planNameCard: String?
     let planURL: String?
@@ -56,7 +56,7 @@ extension MembershipPlanAccountModel: CoreDataMappable {
     func objectToMapTo(_ cdObject: CD_MembershipPlanAccount, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_MembershipPlanAccount {
         // Our codable models all need to have id's as Int's as dictated by API responses
         // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
-        let idString = String(id)
+        let idString = String(id ?? 0)
 
         update(cdObject, \.id, with: idString, delta: delta)
         update(cdObject, \.planName, with: planName, delta: delta)

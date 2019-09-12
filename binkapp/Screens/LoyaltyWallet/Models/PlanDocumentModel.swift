@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct PlanDocumentModel: Codable {
-    let id: Int
+    let id: Int?
     let name: String?
     let documentDescription: String?
     let url: String?
@@ -30,7 +30,7 @@ extension PlanDocumentModel: CoreDataMappable {
     func objectToMapTo(_ cdObject: CD_PlanDocument, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_PlanDocument {
         // Our codable models all need to have id's as Int's as dictated by API responses
         // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
-        let idString = String(id)
+        let idString = String(id ?? 0)
 
         update(cdObject, \.id, with: idString, delta: delta)
         update(cdObject, \.name, with: name, delta: delta)

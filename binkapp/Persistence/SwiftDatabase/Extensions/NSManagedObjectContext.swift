@@ -15,7 +15,7 @@ public extension NSManagedObjectContext {
     }
     
     func fetchWithApiID<T: NSManagedObject>(_ type: T.Type, id: Int) -> T? {
-        let idString = String(id)
+        let idString = String(id ?? 0)
         let results = fetch(type, predicate: NSPredicate(format: "id == %@", idString))
         return results?.first
     }

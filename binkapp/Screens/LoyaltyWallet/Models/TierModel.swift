@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct TierModel: Codable {
-    let id: Int
+    let id: Int?
     let name: String?
     let tierDescription: String?
 
@@ -24,7 +24,7 @@ extension TierModel: CoreDataMappable {
     func objectToMapTo(_ cdObject: CD_Tier, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_Tier {
         // Our codable models all need to have id's as Int's as dictated by API responses
         // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
-        let idString = String(id)
+        let idString = String(id ?? 0)
 
         update(cdObject, \.id, with: idString, delta: delta)
         update(cdObject, \.name, with: name, delta: delta)

@@ -139,7 +139,7 @@ public protocol CoreDataMappable {
     
     /// The ID of the object. This typically is returned from the API and allows us to retrieve existing
     /// implementations of this object.
-    var id: Int { get }
+    var id: Int? { get }
     
     /// **DO NOT IMPLEMENT**
     ///
