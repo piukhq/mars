@@ -1,5 +1,5 @@
 //
-//  TimeConverter.swift
+//  Date+SinceString.swift
 //  binkapp
 //
 //  Created by Paul Tiriteu on 12/09/2019.
@@ -10,20 +10,24 @@ import Foundation
 
 extension Date {
     func timeAgoString() -> String? {
-        let toDate = Date()
+        let interval = Calendar.current.dateComponents([.day, .hour, .minute], from: self, to: Date())
+        let days = interval.day ?? 0
+        let hours = interval.hour ?? 0
+        let minutes = interval.minute ?? 0
         
-        if let interval = Calendar.current.dateComponents([.day], from: self, to: toDate).day, interval > 0  {
-            return interval == 1 ? "\(interval)" + " " + "day".localized : "\(interval)" + " " + "days".localized
+        if days > 0 {
+            return "\(days) \(days > 1 ? "days".localized : "day".localized)"
         }
         
-        if let interval = Calendar.current.dateComponents([.hour], from: self, to: toDate).hour, interval > 0 {
-            return interval == 1 ? "\(interval)" + " " + "hour".localized : "\(interval)" + " " + "hours".localized
+        if hours > 0 {
+            return "\(hours) \(hours > 1 ? "hours".localized : "hour".localized)"
         }
         
-        if let interval = Calendar.current.dateComponents([.minute], from: self, to: toDate).minute, interval > 0 {
-            return interval == 1 ? "\(interval)" + " " + "minute".localized : "\(interval)" + " " + "minutes".localized
+        if minutes > 0 {
+            return "\(minutes) \(minutes > 1 ? "minutes".localized : "minute".localized)"
         }
         
         return nil
     }
+
 }
