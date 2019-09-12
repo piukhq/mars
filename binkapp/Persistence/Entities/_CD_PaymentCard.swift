@@ -9,6 +9,10 @@ public enum CD_PaymentCardAttributes: String {
     case id = "id"
 }
 
+public enum CD_PaymentCardRelationships: String {
+    case membershipCard = "membershipCard"
+}
+
 open class _CD_PaymentCard: NSManagedObject {
 
     // MARK: - Class methods
@@ -46,6 +50,9 @@ open class _CD_PaymentCard: NSManagedObject {
     var id: String!
 
     // MARK: - Relationships
+
+    @NSManaged open
+    var membershipCard: CD_MembershipCard?
 
 }
 

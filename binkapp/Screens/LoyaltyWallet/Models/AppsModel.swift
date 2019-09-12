@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct AppsModel: Codable {
-    let id: String
+    let id: Int
     let appId: String?
     let appStoreUrl: String?
     let appType: Int?

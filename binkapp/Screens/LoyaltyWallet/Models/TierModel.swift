@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct TierModel: Codable {
-    let id: String
+    let id: Int
     let name: String?
     let tierDescription: String?
 

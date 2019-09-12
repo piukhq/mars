@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct MembershipCardImageModel: Codable {
-    let id: String
+    let id: Int
     let type: Int?
     let url: String?
     let imageDescription: String?

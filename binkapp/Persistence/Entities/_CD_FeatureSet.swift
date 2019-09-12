@@ -13,6 +13,10 @@ public enum CD_FeatureSetAttributes: String {
     case transactionsAvailable = "transactionsAvailable"
 }
 
+public enum CD_FeatureSetRelationships: String {
+    case plan = "plan"
+}
+
 open class _CD_FeatureSet: NSManagedObject {
 
     // MARK: - Class methods
@@ -62,6 +66,9 @@ open class _CD_FeatureSet: NSManagedObject {
     var transactionsAvailable: NSNumber?
 
     // MARK: - Relationships
+
+    @NSManaged open
+    var plan: CD_MembershipPlan?
 
 }
 

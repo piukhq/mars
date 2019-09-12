@@ -10,8 +10,8 @@ import Foundation
 import CoreData
 
 struct PaymentCardModel: Codable {
-    var id: String
-    var activeLink: Bool?
+    let id: String
+    let activeLink: Bool?
     
     enum CodingKeys: String, CodingKey {
         case id

@@ -12,6 +12,11 @@ public enum CD_MembershipCardImageAttributes: String {
     case url = "url"
 }
 
+public enum CD_MembershipCardImageRelationships: String {
+    case membershipCards = "membershipCards"
+    case plan = "plan"
+}
+
 open class _CD_MembershipCardImage: NSManagedObject {
 
     // MARK: - Class methods
@@ -58,6 +63,12 @@ open class _CD_MembershipCardImage: NSManagedObject {
     var url: String?
 
     // MARK: - Relationships
+
+    @NSManaged open
+    var membershipCards: CD_MembershipCard?
+
+    @NSManaged open
+    var plan: CD_MembershipPlan?
 
 }
 

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct CardModel: Codable {
-    let id: String
+    let id: Int
     let barcode: String?
     let barcodeType: Int?
     let colour: String?

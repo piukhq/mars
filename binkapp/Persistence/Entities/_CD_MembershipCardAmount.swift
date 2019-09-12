@@ -11,6 +11,10 @@ public enum CD_MembershipCardAmountAttributes: String {
     case value = "value"
 }
 
+public enum CD_MembershipCardAmountRelationships: String {
+    case transaction = "transaction"
+}
+
 open class _CD_MembershipCardAmount: NSManagedObject {
 
     // MARK: - Class methods
@@ -54,6 +58,9 @@ open class _CD_MembershipCardAmount: NSManagedObject {
     var value: NSNumber?
 
     // MARK: - Relationships
+
+    @NSManaged open
+    var transaction: CD_MembershipTransaction?
 
 }
 

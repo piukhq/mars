@@ -13,6 +13,7 @@ public enum CD_MembershipTransactionAttributes: String {
 
 public enum CD_MembershipTransactionRelationships: String {
     case amounts = "amounts"
+    case membershipCard = "membershipCard"
 }
 
 open class _CD_MembershipTransaction: NSManagedObject {
@@ -65,6 +66,9 @@ open class _CD_MembershipTransaction: NSManagedObject {
     open func amountsSet() -> NSMutableSet {
         return self.amounts.mutableCopy() as! NSMutableSet
     }
+
+    @NSManaged open
+    var membershipCard: CD_MembershipCard?
 
 }
 

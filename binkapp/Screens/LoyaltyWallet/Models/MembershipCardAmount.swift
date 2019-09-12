@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct MembershipCardAmount: Codable {
-    let id: String
+    let id: Int
     let currency: String?
     let suffix: String?
     let value: Double?

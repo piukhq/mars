@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct MembershipTransaction: Codable {
-    let id: String
+    let id: Int
     let status: String?
     let timestamp: Int?
     let transactionDescription: String?

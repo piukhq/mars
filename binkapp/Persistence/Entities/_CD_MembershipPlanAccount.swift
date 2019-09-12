@@ -24,6 +24,7 @@ public enum CD_MembershipPlanAccountRelationships: String {
     case addFields = "addFields"
     case authoriseFields = "authoriseFields"
     case enrolFields = "enrolFields"
+    case membershipPlan = "membershipPlan"
     case planDocuments = "planDocuments"
     case registrationFields = "registrationFields"
     case tiers = "tiers"
@@ -120,6 +121,9 @@ open class _CD_MembershipPlanAccount: NSManagedObject {
     open func enrolFieldsSet() -> NSMutableSet {
         return self.enrolFields.mutableCopy() as! NSMutableSet
     }
+
+    @NSManaged open
+    var membershipPlan: CD_MembershipPlan?
 
     @NSManaged open
     var planDocuments: NSSet

@@ -9,7 +9,13 @@ import Foundation
 import CoreData
 
 struct FeatureSetModel: Codable {
-    let id: String
+    enum PlanCardType: Int, Codable {
+        case store
+        case view
+        case link
+    }
+
+    let id: Int
     let authorisationRequired: Bool?
     let transactionsAvailable: Bool?
     let digitalOnly: Bool?

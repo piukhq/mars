@@ -9,6 +9,10 @@ public enum CD_MembershipCardAccountAttributes: String {
     case tier = "tier"
 }
 
+public enum CD_MembershipCardAccountRelationships: String {
+    case membershipCard = "membershipCard"
+}
+
 open class _CD_MembershipCardAccount: NSManagedObject {
 
     // MARK: - Class methods
@@ -46,6 +50,9 @@ open class _CD_MembershipCardAccount: NSManagedObject {
     var tier: NSNumber?
 
     // MARK: - Relationships
+
+    @NSManaged open
+    var membershipCard: CD_MembershipCard?
 
 }
 

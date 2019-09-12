@@ -11,6 +11,10 @@ public enum CD_RegistrationFieldAttributes: String {
     case type = "type"
 }
 
+public enum CD_RegistrationFieldRelationships: String {
+    case planAccount = "planAccount"
+}
+
 open class _CD_RegistrationField: NSManagedObject {
 
     // MARK: - Class methods
@@ -54,6 +58,9 @@ open class _CD_RegistrationField: NSManagedObject {
     var type: NSNumber?
 
     // MARK: - Relationships
+
+    @NSManaged open
+    var planAccount: CD_MembershipPlanAccount?
 
 }
 

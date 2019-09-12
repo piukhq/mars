@@ -10,6 +10,10 @@ public enum CD_TierAttributes: String {
     case tierDescription = "tierDescription"
 }
 
+public enum CD_TierRelationships: String {
+    case planAccount = "planAccount"
+}
+
 open class _CD_Tier: NSManagedObject {
 
     // MARK: - Class methods
@@ -50,6 +54,9 @@ open class _CD_Tier: NSManagedObject {
     var tierDescription: String?
 
     // MARK: - Relationships
+
+    @NSManaged open
+    var planAccount: CD_MembershipPlanAccount?
 
 }
 

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct PlanDocumentModel: Codable {
-    let id: String
+    let id: Int
     let name: String?
     let documentDescription: String?
     let url: String?

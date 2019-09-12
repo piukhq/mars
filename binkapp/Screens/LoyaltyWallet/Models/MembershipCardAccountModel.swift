@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct MembershipCardAccountModel: Codable {
-    let id: String
+    let id: Int
     let tier: Int?
 }
 

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct EnrolFieldModel: Codable {
-    let id: String
+    let id: Int
     let column: String?
     let validation: String?
     let fieldDescription: String?

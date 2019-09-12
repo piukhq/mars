@@ -12,6 +12,10 @@ public enum CD_PlanDocumentAttributes: String {
     case url = "url"
 }
 
+public enum CD_PlanDocumentRelationships: String {
+    case planAccount = "planAccount"
+}
+
 open class _CD_PlanDocument: NSManagedObject {
 
     // MARK: - Class methods
@@ -58,6 +62,9 @@ open class _CD_PlanDocument: NSManagedObject {
     var url: String?
 
     // MARK: - Relationships
+
+    @NSManaged open
+    var planAccount: CD_MembershipPlanAccount?
 
 }
 

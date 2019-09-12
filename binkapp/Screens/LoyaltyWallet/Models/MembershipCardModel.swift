@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct MembershipCardModel: Codable {
-    let id: String
+    let id: Int
     let membershipPlan: Int?
     let paymentCards: [PaymentCard]?
     let membershipTransactions: [MembershipTransaction]?

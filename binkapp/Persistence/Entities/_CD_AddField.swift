@@ -12,6 +12,10 @@ public enum CD_AddFieldAttributes: String {
     case validation = "validation"
 }
 
+public enum CD_AddFieldRelationships: String {
+    case planAccount = "planAccount"
+}
+
 open class _CD_AddField: NSManagedObject {
 
     // MARK: - Class methods
@@ -58,6 +62,9 @@ open class _CD_AddField: NSManagedObject {
     var validation: String?
 
     // MARK: - Relationships
+
+    @NSManaged open
+    var planAccount: CD_MembershipPlanAccount?
 
 }
 

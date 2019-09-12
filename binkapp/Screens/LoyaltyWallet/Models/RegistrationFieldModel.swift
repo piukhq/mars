@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct RegistrationFieldModel: Codable {
-    let id: String
+    let id: Int
     let column: String?
     let fieldDescription: String?
     let type: Int?

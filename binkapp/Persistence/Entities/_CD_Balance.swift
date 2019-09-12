@@ -12,6 +12,10 @@ public enum CD_BalanceAttributes: String {
     case suffix = "suffix"
 }
 
+public enum CD_BalanceRelationships: String {
+    case plan = "plan"
+}
+
 open class _CD_Balance: NSManagedObject {
 
     // MARK: - Class methods
@@ -58,6 +62,9 @@ open class _CD_Balance: NSManagedObject {
     var suffix: String?
 
     // MARK: - Relationships
+
+    @NSManaged open
+    var plan: CD_MembershipPlan?
 
 }
 
