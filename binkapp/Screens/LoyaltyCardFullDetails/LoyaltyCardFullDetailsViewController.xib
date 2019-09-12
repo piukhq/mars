@@ -26,7 +26,7 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p1P-Vq-CM8">
                     <rect key="frame" x="0.0" y="44" width="414" height="1630"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ub4-ah-QiY">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ub4-ah-QiY" userLabel="ContainerView">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="1482"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iH8-ro-dLl" customClass="FullDetailsBrandHeader" customModule="binkapp" customModuleProvider="target">
@@ -71,7 +71,7 @@
                                         </view>
                                     </subviews>
                                 </stackView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jgp-B3-GNB">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jgp-B3-GNB" userLabel="SeparatorView">
                                     <rect key="frame" x="0.0" y="1207" width="414" height="1"/>
                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>

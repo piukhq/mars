@@ -17,7 +17,7 @@ class CardDetailsInfoView: CustomView {
     
     var delegate: CardDetailsInfoViewDelegate?
     
-    func configureWithTitle(title: String, andInfo info: String){
+    func configure(title: String, andInfo info: String){
         titleLabel.text = title
         infoLabel.text = info
     }
