@@ -32,7 +32,7 @@ class AuthAndAddViewModel {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
-        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: Int(membershipPlan.id)) // Tech debt
+        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: Int(membershipPlan.id ?? 0)) // Tech debt
     }
     
     func getMembershipPlan() -> MembershipPlanModel {

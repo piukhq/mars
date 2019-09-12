@@ -41,7 +41,9 @@ class LoyaltyWalletViewModel {
             guard let strongSelf = self else {
                 return
             }
-            let cardId = strongSelf.membershipCards[index].id
+            guard let cardId = strongSelf.membershipCards[index].id else {
+                return
+            }
             strongSelf.deleteMembershipCard(id: cardId, completion: {
                 strongSelf.membershipCards.remove(at: index)
                 yesCompletion()

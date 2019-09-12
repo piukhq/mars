@@ -172,7 +172,7 @@ public extension CoreDataMappable {
     @discardableResult
     func mapToCoreData(_ context: NSManagedObjectContext, _ update: CoreDataUpdate, overrideID: Int?) -> CoreDataObject {
         var object: CoreDataObject?
-        let existingObject = context.fetchWithApiID(CoreDataObject.self, id: overrideID ?? id)
+        let existingObject = context.fetchWithApiID(CoreDataObject.self, id: overrideID ?? 0)
 
         switch update {
         case .none:
