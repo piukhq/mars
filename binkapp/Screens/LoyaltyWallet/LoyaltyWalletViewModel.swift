@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import DeepDiff
 
 protocol LoyaltyWalletViewModelDelegate {
     func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel)
@@ -17,7 +18,6 @@ class LoyaltyWalletViewModel {
     private let router: MainScreenRouter
     private var membershipCards = [MembershipCardModel]()
     private var membershipPlans = [MembershipPlanModel]()
-    private let dispatchGroup = DispatchGroup()
     
     var delegate: LoyaltyWalletViewModelDelegate?
     var membershipCardsCount: Int {
@@ -32,23 +32,31 @@ class LoyaltyWalletViewModel {
     
     // MARK: - Public methods
     
-    func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+    func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping ([MembershipCardModel]) -> (), noCompletion: @escaping () -> Void) {
+        
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
             if let cardId = self.membershipCards[index].id {
                 self.deleteMembershipCard(id: cardId, completion: {
-                    self.membershipCards.remove(at: index)
-                    yesCompletion()
+                    var new = self.membershipCards
+                    new.remove(at: index)
+                    yesCompletion(new)
                 })
             }
         }, noCompletion: {
-            noCompletion()
+            DispatchQueue.main.async {
+                noCompletion()
+            }
         })
     }
     
-    func toBarcodeViewController(section: Int) {
-        let card = membershipCards[section]
+    func updateMembershipCards(new: [MembershipCardModel]) {
+        membershipCards = new
+    }
+    
+    func toBarcodeViewController(item: Int, completion: @escaping () -> ()) {
+        let card = membershipCards[item]
         guard let plan = getMembershipPlans().first(where: { $0.id == card.membershipPlan }) else { return }
-        router.toBarcodeViewController(membershipPlan: plan, membershipCard: card)
+        router.toBarcodeViewController(membershipPlan: plan, membershipCard: card, completion: completion)
     }
     
     func toFullDetailsCardScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
@@ -77,7 +85,7 @@ class LoyaltyWalletViewModel {
         return memberhshipPlan
     }
     
-    func refreshScreen() {
+    @objc func refreshScreen() {
         fetchData()
     }
 }
@@ -100,6 +108,7 @@ private extension LoyaltyWalletViewModel {
             }
         }
     }
+
     
     func deleteMembershipCard(id: Int, completion: @escaping () -> Void) {
         repository.deleteMembershipCard(id: id) { _ in
@@ -107,3 +116,5 @@ private extension LoyaltyWalletViewModel {
         }
     }
 }
+
+

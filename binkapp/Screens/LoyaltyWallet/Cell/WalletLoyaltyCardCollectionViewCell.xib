@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,6 +22,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="365" height="120"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGo-kk-sli">
+                        <rect key="frame" x="0.0" y="0.0" width="110" height="120"/>
+                        <state key="normal" image="iconSwipeBarcode"/>
+                        <connections>
+                            <action selector="barcodeButtonTapped:" destination="QXi-me-e70" eventType="touchUpInside" id="N2m-jQ-kSN"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlL-P9-bge">
+                        <rect key="frame" x="255.5" y="0.0" width="109.5" height="120"/>
+                        <state key="normal" image="iconSwipeDelete"/>
+                        <connections>
+                            <action selector="deleteButtonTapped:" destination="QXi-me-e70" eventType="touchUpInside" id="W2a-aq-5z4"/>
+                        </connections>
+                    </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="boF-NX-uce" customClass="RectangleView" customModule="binkapp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="365" height="120"/>
                         <subviews>
@@ -63,6 +76,9 @@
                                     <constraint firstAttribute="width" constant="118" id="nws-Xr-e27"/>
                                 </constraints>
                                 <state key="normal" image="login"/>
+                                <connections>
+                                    <action selector="logInButtonTapped:" destination="QXi-me-e70" eventType="touchUpInside" id="7J4-Pi-qnj"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brand Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1AT-4M-cCB">
                                 <rect key="frame" x="158" y="49" width="187" height="22"/>
@@ -76,13 +92,13 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="AaS-Q0-chh">
                                 <rect key="frame" x="302" y="18" width="43" height="30"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0s-Zd-Vca">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0s-Zd-Vca">
                                         <rect key="frame" x="0.0" y="0.0" width="43" height="17"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDN-dC-hcd">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDN-dC-hcd">
                                         <rect key="frame" x="0.0" y="14" width="43" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -114,26 +130,39 @@
                 </subviews>
             </view>
             <constraints>
+                <constraint firstItem="GGo-kk-sli" firstAttribute="width" secondItem="QXi-me-e70" secondAttribute="width" multiplier="0.3" id="2yV-DQ-yab"/>
+                <constraint firstAttribute="trailing" secondItem="nlL-P9-bge" secondAttribute="trailing" id="3D3-zQ-mOj"/>
+                <constraint firstAttribute="bottom" secondItem="nlL-P9-bge" secondAttribute="bottom" id="6AA-tx-eue"/>
                 <constraint firstAttribute="bottom" secondItem="boF-NX-uce" secondAttribute="bottom" id="6it-YZ-PeK"/>
+                <constraint firstItem="GGo-kk-sli" firstAttribute="leading" secondItem="QXi-me-e70" secondAttribute="leading" id="NN0-5B-yq6"/>
                 <constraint firstItem="boF-NX-uce" firstAttribute="top" secondItem="QXi-me-e70" secondAttribute="top" id="PSx-4l-JEt"/>
+                <constraint firstItem="nlL-P9-bge" firstAttribute="top" secondItem="QXi-me-e70" secondAttribute="top" id="SAS-zn-BxR"/>
                 <constraint firstItem="boF-NX-uce" firstAttribute="width" secondItem="QXi-me-e70" secondAttribute="width" id="WaL-bX-ya7"/>
                 <constraint firstItem="boF-NX-uce" firstAttribute="centerX" secondItem="QXi-me-e70" secondAttribute="centerX" id="deo-p9-Of0"/>
+                <constraint firstItem="GGo-kk-sli" firstAttribute="top" secondItem="QXi-me-e70" secondAttribute="top" id="iNF-yp-F4A"/>
+                <constraint firstItem="nlL-P9-bge" firstAttribute="width" relation="greaterThanOrEqual" secondItem="QXi-me-e70" secondAttribute="width" multiplier="0.3" id="jz5-YD-hL8"/>
+                <constraint firstAttribute="bottom" secondItem="GGo-kk-sli" secondAttribute="bottom" id="rh6-OR-lMm"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZvJ-Je-wpk"/>
             <connections>
+                <outlet property="barcodeButton" destination="GGo-kk-sli" id="Tjc-aX-VXr"/>
                 <outlet property="cardContainer" destination="boF-NX-uce" id="prY-AA-rrv"/>
+                <outlet property="cardContainerCenterXConstraint" destination="deo-p9-Of0" id="Fmb-fC-udb"/>
                 <outlet property="cardIconImage" destination="2il-5O-A8c" id="k7o-5a-iha"/>
                 <outlet property="cardLinkStatusImage" destination="XSF-3v-XU7" id="hfi-s1-Pxs"/>
                 <outlet property="cardLinkStatusLabel" destination="iaS-OT-dXC" id="ot9-sv-mur"/>
                 <outlet property="cardNameLabel" destination="1AT-4M-cCB" id="pVh-TR-kLX"/>
                 <outlet property="cardValuePointsLabel" destination="j0s-Zd-Vca" id="ri9-JZ-38b"/>
                 <outlet property="cardValueSuffixLabel" destination="gDN-dC-hcd" id="j0f-3C-5dz"/>
+                <outlet property="deleteButton" destination="nlL-P9-bge" id="9NQ-Lj-f0y"/>
                 <outlet property="logInButton" destination="k9h-9o-rcZ" id="Nof-O0-Way"/>
             </connections>
             <point key="canvasLocation" x="136.95652173913044" y="152.67857142857142"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="iconSwipeBarcode" width="57" height="62"/>
+        <image name="iconSwipeDelete" width="44" height="62"/>
         <image name="login" width="93" height="30"/>
     </resources>
 </document>

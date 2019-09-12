@@ -31,5 +31,14 @@ struct MembershipTransaction: Codable {
         description = try values.decodeIfPresent(String.self, forKey: .description)
         amounts = try values.decodeIfPresent([MembershipCardAmount].self, forKey: .amounts)
     }
-    
+}
+
+extension MembershipTransaction: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(status)
+        hasher.combine(timestamp)
+        hasher.combine(description)
+        hasher.combine(amounts)
+    }
 }

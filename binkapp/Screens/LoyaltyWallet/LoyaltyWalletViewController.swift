@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreGraphics
+import DeepDiff
 
 class LoyaltyWalletViewController: UIViewController, BarBlurring {
     private lazy var collectionView: UICollectionView = {
@@ -37,6 +38,7 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
     
     private let viewModel: LoyaltyWalletViewModel
     internal lazy var blurBackground = defaultBlurredBackground()
+    private let refreshControl = UIRefreshControl()
     
     init(viewModel: LoyaltyWalletViewModel) {
         self.viewModel = viewModel
@@ -54,8 +56,14 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "WalletLoyaltyCardCollectionViewCell", bundle: Bundle(for: WalletLoyaltyCardCollectionViewCell.self)), forCellWithReuseIdentifier: "WalletLoyaltyCardCollectionViewCell")
-
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen(_:)), name: .didDeleteMemebershipCard, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen), name: .didDeleteMemebershipCard, object: nil)
+        refreshControl.addTarget(self, action: #selector(refreshScreen), for: .valueChanged)
+        collectionView.addSubview(refreshControl)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        refreshControl.endRefreshing()
+        super.viewWillDisappear(true)
     }
 
     // MARK: - Navigation Bar Blurring
@@ -64,16 +72,15 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
         super.viewDidLayoutSubviews()
         
         guard let bar = navigationController?.navigationBar else { return }
-        
         prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
 }
 
 // MARK: - Private methods
 private extension LoyaltyWalletViewController {
-@objc func refreshScreen(_: Notification) {
-viewModel.refreshScreen()
-}
+    @objc func refreshScreen() {
+        viewModel.refreshScreen()
+    }
 }
 
 extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -88,64 +95,93 @@ extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionVie
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WalletLoyaltyCardCollectionViewCell", for: indexPath) as! WalletLoyaltyCardCollectionViewCell
         if let cardPlan = viewModel.getMembershipPlans().first(where: {($0.id == membershipPlan)}) {
-            
-            
-            
-            
-            cell.configureUIWithMembershipCard(card: viewModel.getMembershipCards()[indexPath.item], andMemebershipPlan: cardPlan)
+            cell.configureUIWithMembershipCard(card: viewModel.getMembershipCards()[indexPath.item], andMemebershipPlan: cardPlan, delegate: self)
         }
         
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let action = UIContextualAction(style: .destructive, title: "barcode_swipe_title".localized, handler: { _,_,_  in
-//            self.viewModel.toBarcodeViewController()
-//            self.collectionView.reloadData()
-//        })
-//
-//        action.image = UIImage(named: "swipeBarcode")
-//        action.backgroundColor = UIColor(red: 99/255, green: 159/255, blue: 255/255, alpha: 1)
-//        let configuration = UISwipeActionsConfiguration(actions: [action])
-//        return configuration
-//    }
-//
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let action = UIContextualAction(style: .normal, title: "delete_swipe_title".localized) { _, _, completion in
-//            self.viewModel.showDeleteConfirmationAlert(index: indexPath.row, yesCompletion: {
-//                tableView.deleteRows(at: [indexPath], with: .automatic)
-//                tableView.reloadData()
-//            }, noCompletion: {
-//                tableView.setEditing(false, animated: true)
-//            })
-//        }
-//
-//        action.image = UIImage(named: "trashIcon")
-//        action.backgroundColor = UIColor.red
-//        let configuration = UISwipeActionsConfiguration(actions: [action])
-//
-//        return configuration
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? WalletLoyaltyCardCollectionViewCell else { return }
+        
+        if cell.swipeState != .closed {
+            cell.set(to: .closed)
+        } else {
+            // Move to LCD
+            let card = viewModel.membershipCard(forIndexPathSection: indexPath.item)
+            if let membershipPlan = viewModel.membershipPlanForCard(card: card) {
+                viewModel.toFullDetailsCardScreen(membershipCard: card, membershipPlan: membershipPlan)
+            }
+
+        }
+    }
     
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 12
-//    }
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let alert = UIAlertController(title: "Error", message: "To be implemented", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        present(alert, animated: true)
-//    }
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? WalletLoyaltyCardCollectionViewCell else { return }
+        cell.set(to: .closed)
+    }
 }
 
 // MARK: - View model delegate
 
 extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
-    func didFetchMembershipPlans() {
-        collectionView.reloadData()
+    func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            self?.refreshControl.endRefreshing()
+            self?.collectionView.reloadData()
+        }
+    }
+}
+
+extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelegate {
+    func cellPerform(action: CellAction, cell: WalletLoyaltyCardCollectionViewCell) {
+        guard let index = collectionView.indexPath(for: cell) else { return }
+
+        switch action {
+        case .barcode:
+            toBarcode(with: index, cell: cell)
+        case .delete:
+            promptForDelete(with: index, cell: cell)
+        case .login:
+            UIAlertController.presentFeatureNotImplementedAlert(on: self)
+        }
     }
     
-    func didFetchCards() {
-        collectionView.reloadData()
+    func toBarcode(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
+        viewModel.toBarcodeViewController(item: index.item) {
+            cell.set(to: .closed, as: .barcode)
+        }
+    }
+    
+    func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
+        
+        let old = viewModel.getMembershipCards()
+        
+        viewModel.showDeleteConfirmationAlert(index: index.item, yesCompletion: { [weak self] newCards in
+            let changes = diff(old: old, new: newCards)
+            
+            self?.collectionView.reload(changes: changes, updateData: {
+                self?.viewModel.updateMembershipCards(new: newCards)
+            })
+        }, noCompletion: {
+            cell.set(to: .closed)
+        })
+    }
+    
+    func cellDidFullySwipe(action: SwipeMode?, cell: WalletLoyaltyCardCollectionViewCell) {
+        guard let index = collectionView.indexPath(for: cell) else { return }
+        
+        if action == .barcode {
+            toBarcode(with: index, cell: cell)
+        } else {
+            promptForDelete(with: index, cell: cell)
+        }
+    }
+    
+    func cellSwipeBegan(cell: WalletLoyaltyCardCollectionViewCell) {
+        let cells = collectionView.visibleCells.filter { $0 != cell }
+        guard let walletCells = cells as? [WalletLoyaltyCardCollectionViewCell] else { return }
+        walletCells.forEach { $0.set(to: .closed) }
     }
 }

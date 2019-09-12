@@ -7,11 +7,10 @@
 
 import Foundation
 
-struct MembershipCardAccountModel : Codable {
+struct MembershipCardAccountModel : Codable, Hashable {
     let tier : Int?
     
     enum CodingKeys: String, CodingKey {
-        
         case tier = "tier"
     }
     
@@ -19,5 +18,4 @@ struct MembershipCardAccountModel : Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         tier = try values.decodeIfPresent(Int.self, forKey: .tier)
     }
-    
 }

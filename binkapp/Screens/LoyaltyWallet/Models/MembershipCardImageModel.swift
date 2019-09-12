@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MembershipCardImageModel: Codable {
+struct MembershipCardImageModel: Codable, Hashable {
     let id: Int?
     let type: Int?
     let url: String?

@@ -8,7 +8,31 @@
 import UIKit
 import AlamofireImage
 
-class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell {
+enum SwipeMode {
+    case unset // centered
+    case delete // right to left
+    case barcode // left to right
+}
+
+enum SwipeState {
+    case closed
+    case peek
+    case expanded
+}
+
+enum CellAction {
+    case barcode
+    case delete
+    case login
+}
+
+protocol WalletLoyaltyCardCollectionViewCellDelegate: NSObject {
+    func cellSwipeBegan(cell: WalletLoyaltyCardCollectionViewCell)
+    func cellDidFullySwipe(action: SwipeMode?, cell: WalletLoyaltyCardCollectionViewCell)
+    func cellPerform(action: CellAction, cell: WalletLoyaltyCardCollectionViewCell)
+}
+
+class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     @IBOutlet private weak var cardIconImage: UIImageView!
     @IBOutlet private weak var cardNameLabel: UILabel!
     @IBOutlet private weak var cardValuePointsLabel: UILabel!
@@ -17,11 +41,16 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var logInButton: UIButton!
     @IBOutlet private weak var cardLinkStatusImage: UIImageView!
     @IBOutlet weak var cardContainer: RectangleView!
+    @IBOutlet weak var cardContainerCenterXConstraint: NSLayoutConstraint!
+    @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var barcodeButton: UIButton!
+    
+    weak var delegate: WalletLoyaltyCardCollectionViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-//        setupGestureRecognizer()
+        setupGestureRecognizer()
     }
     
     override var bounds: CGRect {
@@ -32,12 +61,25 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell {
     
     private func setupGestureRecognizer() {
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: .handlePan)
+        gestureRecognizer.delegate = self
         cardContainer.addGestureRecognizer(gestureRecognizer)
     }
+    
+    private var swipeMode: SwipeMode? {
+        didSet {
+            guard let mode = swipeMode, mode != oldValue else { return }
+            updateColor(with: mode)
+            updateButtonState(with: mode)
+        }
+    }
+    
+    private (set) var swipeState: SwipeState?
     
     private func setupShadow() {
         cardContainer.layer.cornerRadius = 8
         cardContainer.layer.masksToBounds = true
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 8
         layer.shadowOffset = CGSize(width: 0, height: 3)
         layer.shadowRadius = 3
         layer.shadowOpacity = 0.3
@@ -47,7 +89,9 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell {
         clipsToBounds = false
     }
     
-    func configureUIWithMembershipCard(card: MembershipCardModel, andMemebershipPlan plan: MembershipPlanModel) {
+    func configureUIWithMembershipCard(card: MembershipCardModel, andMemebershipPlan plan: MembershipPlanModel, delegate: WalletLoyaltyCardCollectionViewCellDelegate) {
+        
+        self.delegate = delegate
         
         if let imageStringURL = plan.images?.first(where: {($0.type == 3)})?.url {
             let imageURL = URL(string: imageStringURL)!
@@ -104,40 +148,168 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return true
-//    }
-//
-//    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return false }
-//
-//        return abs((pan.velocity(in: pan.view)).x) > abs((pan.velocity(in: pan.view)).y)
-//    }
+    var gradientLayer: CAGradientLayer?
+    
+    private func updateColor(with swipeMode: SwipeMode) {
+        let firstColor, secondColor: UIColor
+        
+        switch swipeMode {
+        case .delete:
+            firstColor = UIColor(red: 1, green: 107/255.0, blue: 54/255.0, alpha: 1.0)
+            secondColor = UIColor(red: 235/255.0, green: 0, blue: 27/255.0, alpha: 1.0)
+            processGradient(firstColor, secondColor)
+        case .barcode:
+            firstColor = UIColor(red: 180/255.0, green: 111/255.0, blue: 234/255.0, alpha: 1.0)
+            secondColor = UIColor(red: 67/255.0, green: 113/255.0, blue: 254/255.0, alpha: 1.0)
+            processGradient(firstColor, secondColor)
+        case .unset:
+            print()
+        }
+    }
+    
+    private func updateButtonState(with swipeMode: SwipeMode) {
+        switch swipeMode {
+        case .delete:
+            barcodeButton.isHidden = true
+            deleteButton.isHidden = false
+        case .barcode:
+            barcodeButton.isHidden = false
+            deleteButton.isHidden = true
+        case .unset:
+            barcodeButton.isHidden = true
+            deleteButton.isHidden = true
+        }
+    }
+    
+    private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
+        if gradientLayer == nil {
+            gradientLayer = CAGradientLayer()
+            contentView.layer.insertSublayer(gradientLayer!, at: 0)
+        }
+        
+        gradientLayer?.frame = bounds
+        gradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
+        gradientLayer?.locations = [0.0, 1.0]
+        gradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
+        gradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
+    }
+
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return false }
+
+        return abs((pan.velocity(in: pan.view)).x) > abs((pan.velocity(in: pan.view)).y)
+    }
    
     @IBAction func logInButtonTapped(_ sender: Any) {
         //TODO: Add implementation
+        delegate?.cellPerform(action: .login, cell: self)
     }
     
+    
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        delegate?.cellPerform(action: .delete, cell: self)
+    }
+    
+    @IBAction func barcodeButtonTapped(_ sender: Any) {
+        delegate?.cellPerform(action: .barcode, cell: self)
+    }
+    
+    var startingOffset: CGFloat = 0
+    
     @objc func handlePan(gestureRecognizer: UIPanGestureRecognizer) {
-//        guard gestureRecognizer.view != nil else {return}
-//        let piece = gestureRecognizer.view!
-//        // Get the changes in the X and Y directions relative to
-//        // the superview's coordinate space.
-//        let translation = gestureRecognizer.translation(in: piece.superview)
-//        if gestureRecognizer.state == .began {
-//            // Save the view's original position.
-//            self.initialCenter = piece.center
-//        }
-//        // Update the position for the .began, .changed, and .ended states
-//        if gestureRecognizer.state != .cancelled {
-//            // Add the X and Y translation to the view's original position.
-//            let newCenter = CGPoint(x: initialCenter.x + translation.x, y: initialCenter.y + translation.y)
-//            piece.center = newCenter
-//        }
-//        else {
-//            // On cancellation, return the piece to its original location.
-//            piece.center = initialCenter
-//        }
+        guard let view = gestureRecognizer.view else { return }
+        
+        let translationX = startingOffset + gestureRecognizer.translation(in: view.superview).x * 1.3
+        
+        if gestureRecognizer.state == .began {
+            // Save the view's original position.
+            swipeMode = .unset
+            delegate?.cellSwipeBegan(cell: self)
+        }
+        
+        if gestureRecognizer.state == .changed {
+            // Save the view's original position.
+            
+            swipeMode = translationX > 0 ? .barcode : .delete
+            var constant: CGFloat = translationX
+            var maxValue: CGFloat?
+            var minValue: CGFloat?
+            
+            if swipeMode == .barcode {
+                maxValue = view.frame.size.width * 0.9
+                minValue = 0
+                
+                let limitToUpper = min(translationX, maxValue!)
+                constant = max(limitToUpper, minValue!)
+            } else if swipeMode == .delete {
+                maxValue = -(view.frame.size.width * 0.5)
+                minValue = 0
+                
+                let limitToUpper = max(translationX, maxValue!)
+                constant = min(limitToUpper, minValue!)
+            }
+            
+            cardContainerCenterXConstraint.constant = constant
+        }
+        
+        if gestureRecognizer.state == .ended || gestureRecognizer.state == .cancelled {
+            
+            // Get percentage through
+            
+            let percentage = abs(translationX) / view.frame.size.width
+            
+            if percentage < 0.3 {
+                swipeMode = .unset
+                set(to: .closed, as: swipeMode)
+            } else if percentage < 0.6 {
+                set(to: .peek, as: swipeMode)
+            } else {
+                // Commit action
+                set(to: .expanded, as: swipeMode)
+                delegate?.cellDidFullySwipe(action: swipeMode, cell: self)
+            }
+        }
+    }
+    
+    func set(to state: SwipeState, as type: SwipeMode? = nil) {
+        swipeState = state
+        let width = cardContainer.frame.size.width
+        let constant: CGFloat
+        
+        switch state {
+        case .closed:
+            constant = 0
+        case .peek:
+            
+            guard let type = type else { return }
+            
+            if type == .barcode {
+                constant = width * 0.3
+            } else {
+                constant = -(width * 0.3)
+            }
+        case .expanded:
+            
+            guard let type = type else { return }
+            
+            if type == .barcode {
+                constant = width
+            } else {
+                constant = -(width * 0.5)
+            }
+        }
+        
+        startingOffset = constant
+        
+        UIView.animate(withDuration: 0.1) { [weak self] in
+            self?.cardContainerCenterXConstraint.constant = constant
+            self?.layoutIfNeeded()
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        set(to: .closed)
     }
 }
 
@@ -152,6 +324,7 @@ class RectangleView: UIView {
             setNeedsDisplay()
         }
     }
+    
     var secondColorHex: String = "#888888"
     
     override func draw(_ rect: CGRect) {

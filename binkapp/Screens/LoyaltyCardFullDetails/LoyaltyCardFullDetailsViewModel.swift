@@ -23,7 +23,7 @@ class LoyaltyCardFullDetailsViewModel {
     // MARK: - Public methds
     
     func toBarcodeModel() {
-        router.toBarcodeViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
+        router.toBarcodeViewController(membershipPlan: membershipPlan, membershipCard: membershipCard) {}
     }
     
     func toTransactionsViewController() {

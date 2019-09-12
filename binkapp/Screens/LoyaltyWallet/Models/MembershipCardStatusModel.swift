@@ -21,7 +21,6 @@ struct MembershipCardStatusModel: Codable {
     let reasonCodes : [String]?
     
     enum CodingKeys: String, CodingKey {
-        
         case state = "state"
         case reasonCodes = "reason_codes"
     }
@@ -31,5 +30,11 @@ struct MembershipCardStatusModel: Codable {
         state = try values.decodeIfPresent(CardState.self, forKey: .state)
         reasonCodes = try values.decodeIfPresent([String].self, forKey: .reasonCodes)
     }
-    
+}
+
+extension MembershipCardStatusModel: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(state)
+        hasher.combine(reasonCodes)
+    }
 }

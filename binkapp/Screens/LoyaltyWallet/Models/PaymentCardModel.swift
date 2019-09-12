@@ -8,12 +8,11 @@
 
 import Foundation
 
-struct PaymentCardModel: Codable {
+struct PaymentCardModel: Codable, Hashable {
     var id: Int?
     var activeLink: Bool?
     
     enum CodingKeys: String, CodingKey {
-        
         case activeLink = "active_link"
     }
     

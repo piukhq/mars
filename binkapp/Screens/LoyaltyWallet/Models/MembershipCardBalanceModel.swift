@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MembershipCardBalanceModel: Codable {
+struct MembershipCardBalanceModel: Codable, Hashable {
     let value: Double?
     let currency: String?
     let prefix: String?

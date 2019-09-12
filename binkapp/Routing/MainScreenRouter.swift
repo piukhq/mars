@@ -88,10 +88,10 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toBarcodeViewController(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel) {
+    func toBarcodeViewController(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel, completion: @escaping () -> ()) {
         let viewModel = BarcodeViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard)
         let viewController = BarcodeViewController(viewModel: viewModel)
-        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
+        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: completion)
     }
     
     func toAddOrJoinViewController(membershipPlan: MembershipPlanModel) {
