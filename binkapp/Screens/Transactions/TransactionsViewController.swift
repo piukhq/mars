@@ -29,20 +29,20 @@ class TransactionsViewController: UIViewController {
         configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
         
         titleLabel.text = "transaction_history_unavailable_title".localized
         titleLabel.font = .headline
         
-        lastCheckedLabel.text = viewModel.getLastCheckedString()
+        lastCheckedLabel.text = viewModel.getLastCheckedString() ?? ""
         lastCheckedLabel.font = .bodyTextLarge
         
         descriptionLabel.text = "transaction_history_unavailable_description".localized
         descriptionLabel.font = .bodyTextLarge
     }
     
-    @objc func popViewController() {
+    @objc private func popViewController() {
         viewModel.popViewController()
     }
 }

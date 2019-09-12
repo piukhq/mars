@@ -114,6 +114,7 @@ class MainScreenRouter {
         let viewController = PLLScreenViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
+    
     func toTransactionsViewController(membershipCard: MembershipCardModel) {
         let viewModel = TransactionsViewModel(membershipCard: membershipCard, router: self)
         let viewController = TransactionsViewController(viewModel: viewModel)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TransactionsViewModel {
+struct TransactionsViewModel {
     private let router: MainScreenRouter
     let membershipCard: MembershipCardModel
     
@@ -16,9 +16,9 @@ class TransactionsViewModel {
         self.router = router
     }
     
-    func getLastCheckedString() -> String {
+    func getLastCheckedString() -> String? {
         let date = Date(timeIntervalSince1970: membershipCard.balances?.first?.updatedAt ?? 0)
-        let dateString = date.timeAgoSinceDate()
+        guard let dateString = date.timeAgoString() else { return nil }
         return String(format: "last_checked".localized, dateString)
     }
     
