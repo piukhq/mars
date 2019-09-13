@@ -13,7 +13,7 @@ public enum CD_MembershipCardImageAttributes: String {
 }
 
 public enum CD_MembershipCardImageRelationships: String {
-    case membershipCards = "membershipCards"
+    case card = "card"
     case plan = "plan"
 }
 
@@ -65,7 +65,7 @@ open class _CD_MembershipCardImage: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged open
-    var membershipCards: CD_MembershipCard?
+    var card: CD_MembershipCard?
 
     @NSManaged open
     var plan: CD_MembershipPlan?

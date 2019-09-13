@@ -14,7 +14,7 @@ public enum CD_MembershipCardBalanceAttributes: String {
 }
 
 public enum CD_MembershipCardBalanceRelationships: String {
-    case membershipCard = "membershipCard"
+    case card = "card"
 }
 
 open class _CD_MembershipCardBalance: NSManagedObject {
@@ -68,7 +68,7 @@ open class _CD_MembershipCardBalance: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged open
-    var membershipCard: CD_MembershipCard?
+    var card: CD_MembershipCard?
 
 }
 

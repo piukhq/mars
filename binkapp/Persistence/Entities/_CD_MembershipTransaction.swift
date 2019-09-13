@@ -13,7 +13,7 @@ public enum CD_MembershipTransactionAttributes: String {
 
 public enum CD_MembershipTransactionRelationships: String {
     case amounts = "amounts"
-    case membershipCard = "membershipCard"
+    case card = "card"
 }
 
 open class _CD_MembershipTransaction: NSManagedObject {
@@ -68,7 +68,7 @@ open class _CD_MembershipTransaction: NSManagedObject {
     }
 
     @NSManaged open
-    var membershipCard: CD_MembershipCard?
+    var card: CD_MembershipCard?
 
 }
 
