@@ -8,11 +8,13 @@
 import Foundation
 
 struct TransactionsViewModel {
-    private let router: MainScreenRouter
     let membershipCard: MembershipCardModel
+    let membershipPlan: MembershipPlanModel
+    private let router: MainScreenRouter
     
-    init(membershipCard: MembershipCardModel, router: MainScreenRouter) {
+    init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, router: MainScreenRouter) {
         self.membershipCard = membershipCard
+        self.membershipPlan = membershipPlan
         self.router = router
     }
     
@@ -20,6 +22,10 @@ struct TransactionsViewModel {
         let date = Date(timeIntervalSince1970: membershipCard.balances?.first?.updatedAt ?? 0)
         guard let dateString = date.timeAgoString() else { return nil }
         return String(format: "last_checked".localized, dateString)
+    }
+    
+    func displayLoyaltySchemePopup() {
+        router.displaySimplePopup(title: membershipPlan.account?.planNameCard, message: membershipPlan.account?.planDescription)
     }
     
     func popViewController() {

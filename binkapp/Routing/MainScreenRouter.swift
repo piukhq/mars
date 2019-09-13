@@ -115,8 +115,8 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toTransactionsViewController(membershipCard: MembershipCardModel) {
-        let viewModel = TransactionsViewModel(membershipCard: membershipCard, router: self)
+    func toTransactionsViewController(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
+        let viewModel = TransactionsViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, router: self)
         let viewController = TransactionsViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }

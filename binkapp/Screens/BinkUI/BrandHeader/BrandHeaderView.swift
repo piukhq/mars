@@ -8,7 +8,7 @@
 import UIKit
 
 protocol LoyaltyButtonDelegate {
-    func buttonWasPressed()
+    func brandHeaderViewDidTap(_ brandHeaderView: BrandHeaderView)
 }
 
 class BrandHeaderView: CustomView {
@@ -18,7 +18,7 @@ class BrandHeaderView: CustomView {
     private var delegate: LoyaltyButtonDelegate?
     
     @IBAction func loyaltyButtonAction(_ sender: Any) {
-        delegate?.buttonWasPressed()
+        delegate?.brandHeaderViewDidTap(self)
     }
     
     func configure(imageURLString: String?, loyaltyPlanNameCard: String? = nil, delegate: LoyaltyButtonDelegate) {

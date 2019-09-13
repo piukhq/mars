@@ -27,7 +27,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toTransactionsViewController() {
-        router.toTransactionsViewController(membershipCard: membershipCard)
+        router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
     }
     
     func popViewController() {

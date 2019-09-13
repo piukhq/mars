@@ -76,5 +76,7 @@
 "hours" = "hours";
 "minute" = "minute";
 "minutes" = "minutes";
+"points_history_title" = "Points history";
+"recent_transaction_history_subtitle" = "Recent transaction history";
 
 "debug_menu_tools_section_title" = "Tools";
