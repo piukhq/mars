@@ -18,17 +18,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="421" height="106.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="LAm-W2-cQ9">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="LAm-W2-cQ9">
                         <rect key="frame" x="0.0" y="25" width="42" height="56.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eim-lU-uPR">
-                                <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="42" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K3u-Ye-0Jr">
-                                <rect key="frame" x="0.0" y="36" width="42" height="20.5"/>
+                                <rect key="frame" x="0.0" y="29" width="42" height="27.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -50,6 +50,12 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="K3u-Ye-0Jr" id="fik-hx-d3g"/>
+                <outlet property="transactionImageView" destination="lZ0-qV-fXi" id="j3Y-Rj-04i"/>
+                <outlet property="valueLabel" destination="eim-lU-uPR" id="oe8-IQ-iju"/>
+            </connections>
             <point key="canvasLocation" x="205.07246376811597" y="133.59375"/>
         </tableViewCell>
     </objects>

@@ -44,4 +44,12 @@ extension UIColor {
     class var binkPurple: UIColor {
         return UIColor(red: 180/255, green: 111/255, blue: 234/255, alpha: 1)
     }
+    
+    class var greenOk: UIColor {
+        return UIColor(red: 0/255, green: 193/255, blue: 118/255, alpha: 1)
+    }
+    
+    class var amber: UIColor {
+        return UIColor(red: 245/255, green: 166/255, blue: 35/255, alpha: 1)
+    }
 }

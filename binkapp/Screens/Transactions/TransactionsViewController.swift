@@ -29,6 +29,9 @@ class TransactionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerCellForClass(TransactionTableViewCell.self, asNib: true)
     }
     
     private func configureUI() {
@@ -52,6 +55,7 @@ class TransactionsViewController: UIViewController {
         lastCheckedLabel.isHidden = !transactions.isEmpty
         brandHeaderView.isHidden = transactions.isEmpty
         tableView.isHidden = transactions.isEmpty
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
     }
     
     @objc private func popViewController() {
@@ -63,4 +67,28 @@ extension TransactionsViewController: LoyaltyButtonDelegate {
     func brandHeaderViewDidTap(_ brandHeaderView: BrandHeaderView) {
         viewModel.displayLoyaltySchemePopup()
     }
+}
+
+extension TransactionsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+}
+
+extension TransactionsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.transactions.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithClass(TransactionTableViewCell.self, forIndexPath: indexPath)
+        
+        let transaction = viewModel.transactions[indexPath.row]
+        let value = Int(transaction.amounts?.first?.value ?? 0)
+        cell.configure(transactionValue: value, timestamp: transaction.timestamp ?? 0, prefix: transaction.amounts?.first?.prefix, suffix: transaction.amounts?.first?.suffix)
+        
+        return cell
+    }
+    
+    
 }

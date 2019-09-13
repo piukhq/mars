@@ -30,4 +30,9 @@ extension Date {
         return nil
     }
 
+    func getFormattedString(format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
+    }
 }

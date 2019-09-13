@@ -10,12 +10,16 @@ import Foundation
 struct TransactionsViewModel {
     let membershipCard: MembershipCardModel
     let membershipPlan: MembershipPlanModel
+    var transactions: [MembershipTransaction] = []
     private let router: MainScreenRouter
     
     init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, router: MainScreenRouter) {
         self.membershipCard = membershipCard
         self.membershipPlan = membershipPlan
         self.router = router
+        
+        guard let transactions = membershipCard.membershipTransactions else { return }
+        self.transactions = transactions
     }
     
     func getLastCheckedString() -> String? {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol LoyaltyButtonDelegate {
+protocol LoyaltyButtonDelegate: class {
     func brandHeaderViewDidTap(_ brandHeaderView: BrandHeaderView)
 }
 
@@ -15,7 +15,7 @@ class BrandHeaderView: CustomView {
     @IBOutlet private weak var logoImageView: UIImageView!
     @IBOutlet private weak var loyaltyPlanButton: BinkInfoButton!
     
-    private var delegate: LoyaltyButtonDelegate?
+    private weak var delegate: LoyaltyButtonDelegate?
     
     @IBAction func loyaltyButtonAction(_ sender: Any) {
         delegate?.brandHeaderViewDidTap(self)
