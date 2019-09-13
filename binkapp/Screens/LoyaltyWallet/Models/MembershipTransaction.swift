@@ -9,20 +9,16 @@ import Foundation
 import CoreData
 
 struct MembershipTransaction: Codable {
-    let id: Int?
+    let apiId: Int?
     let status: String?
     let timestamp: Int?
     let transactionDescription: String?
     let amounts: [MembershipCardAmount]?
 }
 
-extension MembershipTransaction: CoreDataMappable {
-    func objectToMapTo(_ cdObject: CD_MembershipTransaction, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_MembershipTransaction {
-        // Our codable models all need to have id's as Int's as dictated by API responses
-        // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
-        let idString = String(id ?? 0)
-
-        update(cdObject, \.id, with: idString, delta: delta)
+extension MembershipTransaction: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_MembershipTransaction, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipTransaction {
+        update(cdObject, \.id, with: id, delta: delta)
         update(cdObject, \.status, with: status, delta: delta)
         update(cdObject, \.timestamp, with: NSNumber(value: timestamp ?? 0), delta: delta)
 

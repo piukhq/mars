@@ -9,24 +9,20 @@ import Foundation
 import CoreData
 
 struct MembershipCardStatusModel: Codable {
-    let id: Int?
+    let apiId: Int?
     let state: String?
     let reasonCodes: [String]?
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case apiId = "id"
         case state
         case reasonCodes = "reason_codes"
     }
 }
 
-extension MembershipCardStatusModel: CoreDataMappable {
-    func objectToMapTo(_ cdObject: CD_MembershipCardStatus, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_MembershipCardStatus {
-        // Our codable models all need to have id's as Int's as dictated by API responses
-        // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
-        let idString = String(id ?? 0)
-
-        update(cdObject, \.id, with: idString, delta: delta)
+extension MembershipCardStatusModel: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_MembershipCardStatus, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardStatus {
+        update(cdObject, \.id, with: id, delta: delta)
         update(cdObject, \.state, with: state, delta: delta)
 
         return cdObject

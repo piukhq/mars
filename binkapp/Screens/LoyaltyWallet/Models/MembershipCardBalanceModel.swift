@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct MembershipCardBalanceModel: Codable {
-    let id: Int?
+    let apiId: Int?
     let value: Double?
     let currency: String?
     let prefix: String?
@@ -17,7 +17,7 @@ struct MembershipCardBalanceModel: Codable {
     let updatedAt: Double?
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case apiId = "id"
         case value
         case currency
         case prefix
@@ -26,13 +26,9 @@ struct MembershipCardBalanceModel: Codable {
     }
 }
 
-extension MembershipCardBalanceModel: CoreDataMappable {
-    func objectToMapTo(_ cdObject: CD_MembershipCardBalance, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_MembershipCardBalance {
-        // Our codable models all need to have id's as Int's as dictated by API responses
-        // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
-        let idString = String(id ?? 0)
-
-        update(cdObject, \.id, with: idString, delta: delta)
+extension MembershipCardBalanceModel: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_MembershipCardBalance, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardBalance {
+        update(cdObject, \.id, with: id, delta: delta)
         update(cdObject, \.value, with: NSNumber(value: value ?? 0), delta: delta)
         update(cdObject, \.currency, with: currency, delta: delta)
         update(cdObject, \.prefix, with: prefix, delta: delta)

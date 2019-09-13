@@ -139,7 +139,7 @@ public protocol CoreDataMappable {
     
     /// The ID of the object. This typically is returned from the API and allows us to retrieve existing
     /// implementations of this object.
-    var id: Int? { get }
+    var id: String { get }
     
     /// **DO NOT IMPLEMENT**
     ///
@@ -152,7 +152,7 @@ public protocol CoreDataMappable {
     ///   - update: CoreDataUpdate enum stating the update type
     ///   - overrideID: An optional String which overrides the protocols "id" field. Used when an object has no logical ID
     /// - Returns: An NSManagedObject of the type this protocol represents
-    func mapToCoreData(_ context: NSManagedObjectContext, _ update: CoreDataUpdate, overrideID: Int?) -> CoreDataObject
+    func mapToCoreData(_ context: NSManagedObjectContext, _ update: CoreDataUpdate, overrideID: String?) -> CoreDataObject
     
     /// **THIS IS THE ONLY METHOD YOU NEED TO IMPLEMENT**
     ///
@@ -165,14 +165,14 @@ public protocol CoreDataMappable {
     ///   - update: CoreDataUpdate enum stating the update type
     ///   - overrideID: An optional String which overrides the protocols "id" field. Used when an object has no logical ID
     /// - Returns: You must return from this method the cdObject that was passed in
-    func objectToMapTo(_ cdObject: CoreDataObject, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CoreDataObject
+    func objectToMapTo(_ cdObject: CoreDataObject, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CoreDataObject
 }
 
 public extension CoreDataMappable {
     @discardableResult
-    func mapToCoreData(_ context: NSManagedObjectContext, _ update: CoreDataUpdate, overrideID: Int?) -> CoreDataObject {
+    func mapToCoreData(_ context: NSManagedObjectContext, _ update: CoreDataUpdate, overrideID: String?) -> CoreDataObject {
         var object: CoreDataObject?
-        let existingObject = context.fetchWithApiID(CoreDataObject.self, id: overrideID ?? 0)
+        let existingObject = context.fetchWithApiID(CoreDataObject.self, id: overrideID ?? id)
 
         switch update {
         case .none:

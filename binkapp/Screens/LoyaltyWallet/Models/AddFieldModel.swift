@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct AddFieldModel: Codable {
-    let id: Int?
+    let apiId: Int?
     let column: String?
     let validation: String?
     let fieldDescription: String?
@@ -17,7 +17,7 @@ struct AddFieldModel: Codable {
     let choice: [String]?
 
     enum CodingKeys: String, CodingKey {
-        case id
+        case apiId = "id"
         case column
         case validation
         case fieldDescription = "description"
@@ -26,13 +26,9 @@ struct AddFieldModel: Codable {
     }
 }
 
-extension AddFieldModel: CoreDataMappable {
-    func objectToMapTo(_ cdObject: CD_AddField, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_AddField {
-        // Our codable models all need to have id's as Int's as dictated by API responses
-        // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
-        let idString = String(id ?? 0)
-
-        update(cdObject, \.id, with: idString, delta: delta)
+extension AddFieldModel: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_AddField, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_AddField {
+        update(cdObject, \.id, with: id, delta: delta)
         update(cdObject, \.column, with: column, delta: delta)
         update(cdObject, \.validation, with: validation, delta: delta)
         update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)

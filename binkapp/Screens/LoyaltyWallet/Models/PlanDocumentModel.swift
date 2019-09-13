@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 struct PlanDocumentModel: Codable {
-    let id: Int?
+    let apiId: Int?
     let name: String?
     let documentDescription: String?
     let url: String?
@@ -17,7 +17,7 @@ struct PlanDocumentModel: Codable {
     let checkbox: Bool?
 
     enum CodingKeys: String, CodingKey {
-        case id
+        case apiId = "id"
         case name
         case documentDescription = "description"
         case url
@@ -26,13 +26,9 @@ struct PlanDocumentModel: Codable {
     }
 }
 
-extension PlanDocumentModel: CoreDataMappable {
-    func objectToMapTo(_ cdObject: CD_PlanDocument, in context: NSManagedObjectContext, delta: Bool, overrideID: Int?) -> CD_PlanDocument {
-        // Our codable models all need to have id's as Int's as dictated by API responses
-        // However, we want to cast these all to strings so that our core data wrapper remains unchanged.
-        let idString = String(id ?? 0)
-
-        update(cdObject, \.id, with: idString, delta: delta)
+extension PlanDocumentModel: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_PlanDocument, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_PlanDocument {
+        update(cdObject, \.id, with: id, delta: delta)
         update(cdObject, \.name, with: name, delta: delta)
         update(cdObject, \.documentDescription, with: documentDescription, delta: delta)
         update(cdObject, \.url, with: url, delta: delta)
