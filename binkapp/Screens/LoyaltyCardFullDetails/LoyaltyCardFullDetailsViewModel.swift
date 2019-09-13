@@ -37,10 +37,7 @@ class LoyaltyCardFullDetailsViewModel {
             guard let strongSelf = self else {
                 return
             }
-            guard let membershipCardId = strongSelf.membershipCard.id else {
-                return
-            }
-            strongSelf.repository.deleteMembershipCard(id: membershipCardId, onSuccess: { _ in
+            strongSelf.repository.deleteMembershipCard(id: strongSelf.membershipCard.id, onSuccess: { _ in
                 yesCompletion()
             }, onError: { (error: Error) in
                 strongSelf.displaySimplePopupWithTitle("Error", andMessage: error.localizedDescription)

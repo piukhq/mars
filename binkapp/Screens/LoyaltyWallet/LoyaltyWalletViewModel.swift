@@ -41,9 +41,7 @@ class LoyaltyWalletViewModel {
             guard let strongSelf = self else {
                 return
             }
-            guard let cardId = strongSelf.membershipCards[index].id else {
-                return
-            }
+            let cardId = strongSelf.membershipCards[index].id
             strongSelf.deleteMembershipCard(id: cardId, completion: {
                 strongSelf.membershipCards.remove(at: index)
                 yesCompletion()
@@ -55,7 +53,10 @@ class LoyaltyWalletViewModel {
     
     func toBarcodeViewController(section: Int) {
         let card = membershipCards[section]
-        guard let plan = getMembershipPlans().first(where: { $0.id == card.membershipPlan }) else { return }
+        guard let planId = card.membershipPlan else {
+            return
+        }
+        guard let plan = getMembershipPlans().first(where: { $0.id == String(planId) }) else { return }
         router.toBarcodeViewController(membershipPlan: plan, membershipCard: card)
     }
     
@@ -72,7 +73,10 @@ class LoyaltyWalletViewModel {
     }
     
     func membershipPlanForCard(card: MembershipCardModel) -> MembershipPlanModel? {
-        let membershipPlan = membershipPlans.first(where: {($0.id == card.membershipPlan)})
+        guard let planId = card.membershipPlan else {
+            return nil
+        }
+        let membershipPlan = membershipPlans.first(where: {($0.id == String(planId))})
         return membershipPlan
     }
     
@@ -104,7 +108,7 @@ private extension LoyaltyWalletViewModel {
         }
     }
     
-    func deleteMembershipCard(id: Int, completion: @escaping () -> Void) {
+    func deleteMembershipCard(id: String, completion: @escaping () -> Void) {
         repository.deleteMembershipCard(id: id) { _ in
             completion()
         }
