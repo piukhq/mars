@@ -18,9 +18,12 @@ class AddingOptionsViewModel {
     func toBrowseBrandsScreen() {
         router.toBrowseBrandsViewController()
     }
+    
+    func toAddPaymentCardScreen() {
+        router.toAddPaymentViewController()
+    }
 
     func popViewController() {
         router.popViewController()
     }
-    
 }

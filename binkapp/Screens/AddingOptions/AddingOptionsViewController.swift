@@ -75,7 +75,7 @@ class AddingOptionsViewController: UIViewController {
     }
     
     @objc func toAddPaymentCard() {
-        displayNoScreenPopup()
+        viewModel.toAddPaymentCardScreen()
     }
     
     func displayNoScreenPopup() {

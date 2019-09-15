@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DebugMenuTableViewCell: UITableViewCell {
+class DebugMenuTableViewCell: UITableViewCell, ReusableView {
     
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!

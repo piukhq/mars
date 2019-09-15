@@ -29,7 +29,7 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
         let closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(close))
         navigationItem.rightBarButtonItem = closeBarButton
         
-        tableView.registerCellForClass(DebugMenuTableViewCell.self, asNib: true)
+        tableView.register(DebugMenuTableViewCell.self, asNib: true)
     }
 
     // MARK: - Table view data source
@@ -47,7 +47,7 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithClass(DebugMenuTableViewCell.self, forIndexPath: indexPath)
+        let cell: DebugMenuTableViewCell = tableView.dequeue(indexPath: indexPath)
         
         let row = viewModel.row(atIndexPath: indexPath)
         cell.configure(withDebugRow: row)

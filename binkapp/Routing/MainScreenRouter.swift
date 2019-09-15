@@ -83,6 +83,17 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
+    func toAddPaymentViewController() {
+//        let repository = BrowseBrandsRepository(apiManager: apiManager)
+//        let viewModel = BrowseBrandsViewModel(repository: repository, router: self)
+        
+        //TODO: Replace with information from scanner
+        let card = PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
+        
+        let viewController = AddPaymentCardViewController(model: card)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
     func toBarcodeViewController(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel) {
         let viewModel = BarcodeViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard)
         let viewController = BarcodeViewController(viewModel: viewModel)
