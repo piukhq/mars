@@ -44,6 +44,7 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
     @IBOutlet weak var cardContainerCenterXConstraint: NSLayoutConstraint!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var barcodeButton: UIButton!
+    @IBOutlet weak var cardValueStack: UIStackView!
     
     weak var delegate: WalletLoyaltyCardCollectionViewCellDelegate?
     
@@ -102,50 +103,79 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         cardNameLabel.text = plan.account?.companyName
         cardNameLabel.font = UIFont.subtitle
         cardValuePointsLabel.font = UIFont.pointsValue
+        
+        // Link Status
+        var linkTextContent: String?
+        var linkImage: UIImage?
+        var shouldHideLinkStatusImage = true
+        var shouldHideLinkStatusLabel = true
+        
+        // Login Button
+        var shouldHideLoginButton = true
+        
+        // Card Value
+        var shouldHideValueStack = true
+        var shouldHideValueSuffix = false
+        var valuePointsLabelText: String?
 
         switch card.status?.state {
         case .failed?:
-            logInButton.isHidden = false
-//            logInButton.imageView?.contentMode = .scaleAspectFill
-            cardValuePointsLabel.isHidden = true
-            cardValueSuffixLabel.isHidden = true
+            shouldHideLoginButton = false
             break
         case .pending?:
-            cardValuePointsLabel.text = card.status?.state?.rawValue
-
+            shouldHideValueStack = false
+            shouldHideValueSuffix = true
+            valuePointsLabelText = card.status?.state?.rawValue
             break
         case .authorised?:
             if plan.featureSet?.cardType == .link {
-                cardLinkStatusImage.image = UIImage(imageLiteralResourceName: "linked")
-                cardLinkStatusImage.isHidden = false
-                cardLinkStatusLabel.text = "card_linked_status".localized
-                cardLinkStatusLabel.isHidden = false
+                linkImage = UIImage(imageLiteralResourceName: "linked")
+                shouldHideLinkStatusImage = false
+                shouldHideLinkStatusLabel = false
+                linkTextContent = "card_linked_status".localized
             }
-            if plan.featureSet?.hasPoints == true {
-                if let balanceValue = card.balances?[0].value {
-                    let attributedPrefix = NSMutableAttributedString(string: card.balances?[0].prefix ?? "")
-                    let attributedSuffix = NSMutableAttributedString(string: (card.balances?[0].suffix ?? ""), attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
-                    let attributedValue = NSMutableAttributedString(string: String(balanceValue))
-                    let attributedLabelText = NSMutableAttributedString()
-                    attributedLabelText.append(attributedPrefix)
-                    attributedLabelText.append(attributedValue)
-                    cardValuePointsLabel.attributedText = attributedLabelText
-                    cardValueSuffixLabel.attributedText = attributedSuffix
-                }
+            if let balanceValue = card.balances?[0].value, plan.featureSet?.hasPoints == true {
+                shouldHideValueStack = false
+                
+                let attributedPrefix = NSMutableAttributedString(string: card.balances?[0].prefix ?? "")
+                let attributedSuffix = NSMutableAttributedString(string: (card.balances?[0].suffix ?? ""), attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
+                let attributedValue = NSMutableAttributedString(string: String(balanceValue))
+                let attributedLabelText = NSMutableAttributedString()
+                attributedLabelText.append(attributedPrefix)
+                attributedLabelText.append(attributedValue)
+                cardValuePointsLabel.attributedText = attributedLabelText
+                cardValueSuffixLabel.attributedText = attributedSuffix
             } else {
-                cardValuePointsLabel.superview?.isHidden = true
+                shouldHideValueStack = true
             }
         case .unauthorised?:
             if plan.featureSet?.cardType == .link {
-                cardLinkStatusLabel.isHidden = false
-                cardLinkStatusImage.isHidden = false
-                cardLinkStatusLabel.text = NSLocalizedString("card_can_not_link_status", comment: "")
-                cardLinkStatusImage.image = UIImage(imageLiteralResourceName: "unlinked")
+                shouldHideLinkStatusLabel = false
+                shouldHideLinkStatusImage = false
+                linkTextContent = NSLocalizedString("card_can_not_link_status", comment: "")
+                linkImage = UIImage(imageLiteralResourceName: "unlinked")
             }
+            
+            shouldHideValueStack = true
             break
         default:
             break
         }
+        
+        
+        // Link Status
+        cardLinkStatusLabel.text = linkTextContent
+        cardLinkStatusImage.image = linkImage
+        cardLinkStatusImage.isHidden = shouldHideLinkStatusImage
+        cardLinkStatusLabel.isHidden = shouldHideLinkStatusLabel
+        
+        // Login Button
+        logInButton.isHidden = shouldHideLoginButton
+
+        // Card Value
+        cardValueStack.isHidden = shouldHideValueStack
+        cardValueSuffixLabel.isHidden = shouldHideValueSuffix
+        cardValuePointsLabel.text = valuePointsLabelText
     }
     
     var gradientLayer: CAGradientLayer?

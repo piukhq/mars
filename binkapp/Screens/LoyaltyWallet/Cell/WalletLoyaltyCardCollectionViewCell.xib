@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,7 +24,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGo-kk-sli">
-                        <rect key="frame" x="0.0" y="0.0" width="110" height="120"/>
+                        <rect key="frame" x="0.0" y="0.0" width="109.5" height="120"/>
                         <state key="normal" image="iconSwipeBarcode"/>
                         <connections>
                             <action selector="barcodeButtonTapped:" destination="QXi-me-e70" eventType="touchUpInside" id="N2m-jQ-kSN"/>
@@ -153,6 +154,7 @@
                 <outlet property="cardLinkStatusLabel" destination="iaS-OT-dXC" id="ot9-sv-mur"/>
                 <outlet property="cardNameLabel" destination="1AT-4M-cCB" id="pVh-TR-kLX"/>
                 <outlet property="cardValuePointsLabel" destination="j0s-Zd-Vca" id="ri9-JZ-38b"/>
+                <outlet property="cardValueStack" destination="AaS-Q0-chh" id="91M-KS-lCy"/>
                 <outlet property="cardValueSuffixLabel" destination="gDN-dC-hcd" id="j0f-3C-5dz"/>
                 <outlet property="deleteButton" destination="nlL-P9-bge" id="9NQ-Lj-f0y"/>
                 <outlet property="logInButton" destination="k9h-9o-rcZ" id="Nof-O0-Way"/>
