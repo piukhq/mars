@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 protocol ReasonCodeProtocol: Codable {
     var codeString: String { get }
@@ -14,21 +15,21 @@ protocol ReasonCodeProtocol: Codable {
 }
 
 struct ReasonCodeRange: Codable {
-    var rangeFrom: Int
-    var rangeTo: Int
+    var from: Int
+    var to: Int
     var description: String
 
     var reasonCodes: [ReasonCode] {
-        return ReasonCode.allCases.filter { rangeFrom...rangeTo ~= $0.rawValue }
+        return ReasonCode.allCases.filter { from...to ~= $0.rawValue }
     }
 }
 
 enum ReasonCode: Int, ReasonCodeProtocol, CaseIterable {
-    static let generalStatusCodesRange = ReasonCodeRange(rangeFrom: 000, rangeTo: 099, description: "General Status Codes")
-    static let addDataCodesCodesRange = ReasonCodeRange(rangeFrom: 100, rangeTo: 199, description: "Add Data Codes")
-    static let enrolDataCodesRange = ReasonCodeRange(rangeFrom: 200, rangeTo: 299, description: "Enrol Data Codes")
-    static let authDataCodesRange = ReasonCodeRange(rangeFrom: 300, rangeTo: 399, description: "Auth Data Codes")
-    static let reservedCodesRange = ReasonCodeRange(rangeFrom: 400, rangeTo: 499, description: "Reserved for future use")
+    static let generalStatusCodesRange = ReasonCodeRange(from: 000, to: 099, description: "General Status Codes")
+    static let addDataCodesCodesRange = ReasonCodeRange(from: 100, to: 199, description: "Add Data Codes")
+    static let enrolDataCodesRange = ReasonCodeRange(from: 200, to: 299, description: "Enrol Data Codes")
+    static let authDataCodesRange = ReasonCodeRange(from: 300, to: 399, description: "Auth Data Codes")
+    static let reservedCodesRange = ReasonCodeRange(from: 400, to: 499, description: "Reserved for future use")
 
     case newDataSubmitted = 000
     case addFieldsBeingValidated = 100
@@ -83,5 +84,13 @@ enum ReasonCode: Int, ReasonCodeProtocol, CaseIterable {
         case .authorizationExpired:
             return "Authorization expired"
         }
+    }
+}
+
+extension ReasonCode: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_ReasonCode, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_ReasonCode {
+        update(cdObject, \.id, with: id, delta: delta)
+
+        return cdObject
     }
 }
