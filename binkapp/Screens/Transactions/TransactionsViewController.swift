@@ -29,7 +29,6 @@ class TransactionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        tableView.delegate = self
         tableView.dataSource = self
         tableView.registerCellForClass(TransactionTableViewCell.self, asNib: true)
     }
@@ -45,7 +44,8 @@ class TransactionsViewController: UIViewController {
         if !transactions.isEmpty {
             titleLabel.text = "points_history_title".localized
             descriptionLabel.text = "recent_transaction_history_subtitle".localized
-            brandHeaderView.configure(imageURLString: ((viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue })?.url) ?? nil), loyaltyPlanNameCard: (viewModel.membershipPlan.account?.planNameCard ?? nil), delegate: self)
+            let imageUrl = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue })?.url
+            brandHeaderView.configure(imageURLString: imageUrl, loyaltyPlanNameCard: (viewModel.membershipPlan.account?.planNameCard ?? nil), delegate: self)
         } else {
             titleLabel.text = "transaction_history_unavailable_title".localized
             lastCheckedLabel.text = viewModel.getLastCheckedString() ?? ""
@@ -69,12 +69,6 @@ extension TransactionsViewController: LoyaltyButtonDelegate {
     }
 }
 
-extension TransactionsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-}
-
 extension TransactionsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.transactions.count
@@ -89,6 +83,4 @@ extension TransactionsViewController: UITableViewDataSource {
         
         return cell
     }
-    
-    
 }
