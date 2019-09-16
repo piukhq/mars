@@ -86,11 +86,7 @@ class LoyaltyWalletViewModel {
 //    }
     
     func membershipPlanForCard(card: CD_MembershipCard) -> CD_MembershipPlan? {
-        guard let planId = card.membershipPlan else {
-            return nil
-        }
-        let membershipPlan = membershipPlans?.first(where: {($0.id == String(planId.intValue))})
-        return membershipPlan
+        return card.membershipPlan
     }
 //
 //    func refreshScreen() {

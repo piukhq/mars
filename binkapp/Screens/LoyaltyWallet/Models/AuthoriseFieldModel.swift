@@ -14,7 +14,7 @@ struct AuthoriseFieldModel: Codable {
     let validation: String?
     let fieldDescription: String?
     let type: Int?
-    let choice: [String]?
+    let choices: [FieldChoice]?
 
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -22,7 +22,7 @@ struct AuthoriseFieldModel: Codable {
         case validation
         case fieldDescription = "description"
         case type
-        case choice
+        case choices = "choice"
     }
 }
 
@@ -33,6 +33,16 @@ extension AuthoriseFieldModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.validation, with: validation, delta: delta)
         update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)
         update(cdObject, \.type, with: NSNumber(value: type ?? 0), delta: delta)
+
+        cdObject.choices.forEach {
+            guard let choice = $0 as? CD_FieldChoice else { return }
+            context.delete(choice)
+        }
+        choices?.forEach { choice in
+            let cdChoice = choice.mapToCoreData(context, .update, overrideID: nil)
+            update(cdChoice, \.authoriseField, with: cdObject, delta: delta)
+            cdObject.addChoicesObject(cdChoice)
+        }
 
         return cdObject
     }

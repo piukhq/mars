@@ -35,7 +35,19 @@ struct MembershipCardModel: Codable {
 extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCard, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCard {
         update(cdObject, \.id, with: id, delta: delta)
-        update(cdObject, \.membershipPlan, with: NSNumber(value: membershipPlan ?? 0), delta: delta)
+
+
+        if let membershipPlanId = membershipPlan {
+            // Mock the plan response from the plan id we have so that we can map correctly
+            let plan = MembershipPlanModel(apiId: membershipPlanId, status: nil, featureSet: nil, images: nil, account: nil, balances: nil)
+
+            let overrideID = ""
+            let cdMembershipPlan = plan.mapToCoreData(context, .update, overrideID: overrideID)
+            update(cdMembershipPlan, \.membershipCard, with: cdObject, delta: delta)
+            update(cdObject, \.membershipPlan, with: cdMembershipPlan, delta: delta)
+        } else {
+            update(cdObject, \.membershipPlan, with: nil, delta: false)
+        }
 
 
         cdObject.transactions.forEach {

@@ -20,8 +20,8 @@ struct FeatureSetModel: Codable {
     let transactionsAvailable: Bool?
     let digitalOnly: Bool?
     let hasPoints: Bool?
-    let cardType: Int?
-    let linkingSupport: [String]?
+    let cardType: PlanCardType?
+    let linkingSupport: [String]? // TODO
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
