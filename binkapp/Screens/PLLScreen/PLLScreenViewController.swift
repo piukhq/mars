@@ -40,7 +40,7 @@ class PLLScreenViewController: UIViewController {
 // MARK: - Loyalty button delegate
 
 extension PLLScreenViewController: LoyaltyButtonDelegate {
-    func buttonWasPressed() {
+    func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displaySimplePopup(title: ((viewModel.getMembershipPlan().account?.planNameCard) ?? ""), message: (viewModel.getMembershipPlan().account?.planDescription) ?? "")
     }
 }
