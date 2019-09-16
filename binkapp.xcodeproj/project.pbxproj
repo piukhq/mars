@@ -213,6 +213,7 @@
 		EF758E1023225F45000D26A9 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0D23225F45000D26A9 /* UIApplication.swift */; };
 		EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF758E1223225F95000D26A9 /* TestDatabase.xcdatamodeld */; };
 		EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E1423225F95000D26A9 /* DatabaseTests.swift */; };
+		EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8653A232FCDD800036C17 /* ReasonCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -470,6 +471,7 @@
 		EF758E0D23225F45000D26A9 /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		EF758E1323225F95000D26A9 /* TestDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestDatabase.xcdatamodel; sourceTree = "<group>"; };
 		EF758E1423225F95000D26A9 /* DatabaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseTests.swift; sourceTree = "<group>"; };
+		EFD8653A232FCDD800036C17 /* ReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -541,6 +543,9 @@
 				B726334C23058D2700951037 /* PlanDocumentModel.swift */,
 				B726334E23058DC800951037 /* RegistrationFieldModel.swift */,
 				B726335023058E2300951037 /* TierModel.swift */,
+				3C61FCDD230AF0BB004721A3 /* AppsModel.swift */,
+				3C05A9DD2327CE6300620583 /* PaymentCardModel.swift */,
+				EFD8653A232FCDD800036C17 /* ReasonCode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1624,6 +1629,8 @@
 				EF48556C231D696800FC9E5F /* DebugMenuTableViewCell.swift in Sources */,
 				3C873FEF22F073CF00FA3031 /* PaymentWalletWorker.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
+				B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */,
+				EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */,
 				3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */,
 				3C873FEC22F073CF00FA3031 /* PaymentWalletInteractor.swift in Sources */,
 				3C2C91012319560C00D112E3 /* InputView.swift in Sources */,

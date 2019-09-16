@@ -22,12 +22,12 @@ struct MembershipCardModel: Codable {
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
         case membershipPlan = "membership_plan"
-        case paymentCards = "payment_cards"
         case membershipTransactions = "membership_transactions"
         case status
         case card
         case images
         case account
+        case paymentCards = "payment_cards"
         case balances
     }
 }

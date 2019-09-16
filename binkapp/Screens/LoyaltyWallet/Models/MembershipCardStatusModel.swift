@@ -11,7 +11,7 @@ import CoreData
 struct MembershipCardStatusModel: Codable {
     let apiId: Int?
     let state: String?
-    let reasonCodes: [String]?
+    let reasonCodes: [ReasonCode]?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
