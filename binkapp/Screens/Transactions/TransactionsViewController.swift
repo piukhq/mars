@@ -39,14 +39,14 @@ class TransactionsViewController: UIViewController {
         lastCheckedLabel.font = .bodyTextLarge
         descriptionLabel.font = .bodyTextLarge
 
-        titleLabel.text = viewModel.getTitle()
-        descriptionLabel.text = viewModel.getDescription()
+        titleLabel.text = viewModel.title
+        descriptionLabel.text = viewModel.description
         
         if !viewModel.transactions.isEmpty {
             let imageUrl = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue })?.url
             brandHeaderView.configure(imageURLString: imageUrl, loyaltyPlanNameCard: (viewModel.membershipPlan.account?.planNameCard ?? nil), delegate: self)
         } else {
-            lastCheckedLabel.text = viewModel.getLastCheckedString() ?? ""
+            lastCheckedLabel.text = viewModel.lastCheckedString ?? ""
         }
 
         lastCheckedLabel.isHidden = !viewModel.transactions.isEmpty
