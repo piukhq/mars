@@ -1,77 +1,89 @@
-*xcworkspace/xcuserdata/*
-binkapp.xcworkspace/xcuserdata/paultiriteu.xcuserdatad/UserInterfaceState.xcuserstate
-Pods/CocoaPodsKeys/BinkappKeys.h
-Pods/CocoaPodsKeys/BinkappKeys.m
-Pods/CocoaPodsKeys/Keys.podspec.json
-Pods/Local Podspecs/Keys.podspec.json
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/Firebase.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/FirebaseAnalytics.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/FirebaseCore.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/FirebaseInstanceID.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/GoogleAppMeasurement.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/GoogleSignIn.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/GoogleToolboxForMac.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/GoogleUtilities.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/GTMSessionFetcher.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/Intercom.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/Keys.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/nanopb.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/Pods-binkapp.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/Pods-binkappTests.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/Pods-binkappUITests.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/Swinject.xcscheme
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/xcschememanagement.plist
-Pods/Target Support Files/Keys/Keys-dummy.m
-Pods/Target Support Files/Keys/Keys-Info.plist
-Pods/Target Support Files/Keys/Keys-prefix.pch
-Pods/Target Support Files/Keys/Keys-umbrella.h
-Pods/Target Support Files/Keys/Keys.modulemap
-Pods/Target Support Files/Keys/Keys.xcconfig
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/SwipeCellKit.xcscheme
-Pods/SwipeCellKit/LICENSE
-Pods/SwipeCellKit/README.md
-Pods/SwipeCellKit/Source/Extensions.swift
-Pods/SwipeCellKit/Source/Swipeable.swift
-Pods/SwipeCellKit/Source/SwipeAccessibilityCustomAction.swift
-Pods/SwipeCellKit/Source/SwipeAction.swift
-Pods/SwipeCellKit/Source/SwipeActionButton.swift
-Pods/SwipeCellKit/Source/SwipeActionsView.swift
-Pods/SwipeCellKit/Source/SwipeActionTransitioning.swift
-Pods/SwipeCellKit/Source/SwipeAnimator.swift
-Pods/SwipeCellKit/Source/SwipeCollectionViewCell+Accessibility.swift
-Pods/SwipeCellKit/Source/SwipeCollectionViewCell+Display.swift
-Pods/SwipeCellKit/Source/SwipeCollectionViewCell.swift
-Pods/SwipeCellKit/Source/SwipeCollectionViewCellDelegate.swift
-Pods/SwipeCellKit/Source/SwipeController.swift
-Pods/SwipeCellKit/Source/SwipeExpanding.swift
-Pods/SwipeCellKit/Source/SwipeExpansionStyle.swift
-Pods/SwipeCellKit/Source/SwipeFeedback.swift
-Pods/SwipeCellKit/Source/SwipeOptions.swift
-Pods/SwipeCellKit/Source/SwipeTableViewCell+Accessibility.swift
-Pods/SwipeCellKit/Source/SwipeTableViewCell+Display.swift
-Pods/SwipeCellKit/Source/SwipeTableViewCell.swift
-Pods/SwipeCellKit/Source/SwipeTableViewCellDelegate.swift
-Pods/SwipeCellKit/Source/SwipeTransitionLayout.swift
-Pods/Target Support Files/SwipeCellKit/SwipeCellKit-dummy.m
-Pods/Target Support Files/SwipeCellKit/SwipeCellKit-Info.plist
-Pods/Target Support Files/SwipeCellKit/SwipeCellKit-prefix.pch
-Pods/Target Support Files/SwipeCellKit/SwipeCellKit-umbrella.h
-Pods/Target Support Files/SwipeCellKit/SwipeCellKit.modulemap
-Pods/Target Support Files/SwipeCellKit/SwipeCellKit.xcconfig
-Pods/SwipeCellKit/Source/SwipeCollectionViewCell+Accessibility.swift
-Pods/SwipeCellKit/Source/SwipeCollectionViewCell+Display.swift
-Pods/SwipeCellKit/Source/SwipeTableViewCell+Accessibility.swift
-Pods/SwipeCellKit/Source/SwipeTableViewCell+Display.swift
-binkapp.xcworkspace/xcuserdata/paultiriteu.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
-Pods/Pods.xcodeproj/xcuserdata/paultiriteu.xcuserdatad/xcschemes/Alamofire.xcscheme
-Pods/Target Support Files/Alamofire/Alamofire-dummy.m
-Pods/Target Support Files/Alamofire/Alamofire-Info.plist
-Pods/Target Support Files/Alamofire/Alamofire-prefix.pch
-Pods/Target Support Files/Alamofire/Alamofire-umbrella.h
-Pods/Target Support Files/Alamofire/Alamofire.modulemap
-Pods/Target Support Files/Alamofire/Alamofire.xcconfig
-binkapp.xcworkspace/xcuserdata/dorinpop.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
-*.xcuserdatad
-/.DS_Store
-/binkapp/Persistence/Entities/.DS_Store
-.DS_Store
+
+# Created by https://www.gitignore.io/api/swift
+# Edit at https://www.gitignore.io/?templates=swift
+
+### Swift ###
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+## Build generated
+build/
+DerivedData/
+
+## Various settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+## Other
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+# Package.pins
+# Package.resolved
+.build/
+
+# CocoaPods
+# We recommend against adding the Pods directory to your .gitignore. However
+# you should judge for yourself, the pros and cons are mentioned at:
+# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
+# Pods/
+# Add this line if you want to avoid checking in source code from the Xcode workspace
+# *.xcworkspace
+
+# Carthage
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+# Carthage/Checkouts
+
+Carthage/Build
+
+# Accio dependency management
+Dependencies/
+.accio/
+
+# fastlane
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Code Injection
+# After new code Injection tools there's a generated folder /iOSInjectionProject
+# https://github.com/johnno1962/injectionforxcode
+
+iOSInjectionProject/
+
+# End of https://www.gitignore.io/api/swift
+/Pods/Target Support Files/SwipeCellKit
+/Pods/CocoaPodsKeys
+/Pods/Local Podspecs
+/Pods/Target Support Files/Alamofire
+/Pods/Target Support Files/Keys
+/Pods/SwipeCellKit
+/binkapp.xcworkspace/xcuserdata/nfarrant.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist

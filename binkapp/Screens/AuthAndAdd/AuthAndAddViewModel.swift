@@ -75,7 +75,7 @@ class AuthAndAddViewModel {
                         fieldsViews.append(view)
                     case FieldInputType.dropdown.rawValue:
                         let view = DropdownView()
-                        view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .add, delegate: self)
+                        view.configure(title: field.column ?? "", choices: field.choices ?? [], fieldType: .add, delegate: self)
                         fieldsViews.append(view)
                     case FieldInputType.checkbox.rawValue:
                         let view = CheckboxView()
