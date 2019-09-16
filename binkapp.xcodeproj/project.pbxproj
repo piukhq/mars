@@ -213,6 +213,8 @@
 		EF758E1023225F45000D26A9 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0D23225F45000D26A9 /* UIApplication.swift */; };
 		EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EF758E1223225F95000D26A9 /* TestDatabase.xcdatamodeld */; };
 		EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E1423225F95000D26A9 /* DatabaseTests.swift */; };
+		EF7B65CF232FD30C0025D167 /* CD_ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7B65CD232FD30B0025D167 /* CD_ReasonCode.swift */; };
+		EF7B65D0232FD30C0025D167 /* _CD_ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7B65CE232FD30C0025D167 /* _CD_ReasonCode.swift */; };
 		EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8653A232FCDD800036C17 /* ReasonCode.swift */; };
 /* End PBXBuildFile section */
 
@@ -471,6 +473,8 @@
 		EF758E0D23225F45000D26A9 /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		EF758E1323225F95000D26A9 /* TestDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TestDatabase.xcdatamodel; sourceTree = "<group>"; };
 		EF758E1423225F95000D26A9 /* DatabaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseTests.swift; sourceTree = "<group>"; };
+		EF7B65CD232FD30B0025D167 /* CD_ReasonCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_ReasonCode.swift; sourceTree = "<group>"; };
+		EF7B65CE232FD30C0025D167 /* _CD_ReasonCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_ReasonCode.swift; sourceTree = "<group>"; };
 		EFD8653A232FCDD800036C17 /* ReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1059,6 +1063,7 @@
 				EF3D8CCC2327F66F00C2EAC8 /* _CD_MembershipTransaction.swift */,
 				EF3D8CEB2327F67100C2EAC8 /* _CD_PaymentCard.swift */,
 				EF3D8CE92327F67100C2EAC8 /* _CD_PlanDocument.swift */,
+				EF7B65CE232FD30C0025D167 /* _CD_ReasonCode.swift */,
 				EF3D8CD12327F66F00C2EAC8 /* _CD_RegistrationField.swift */,
 				EF3D8CE32327F67000C2EAC8 /* _CD_Tier.swift */,
 				EF3D8CDD2327F67000C2EAC8 /* CD_AddField.swift */,
@@ -1079,6 +1084,7 @@
 				EF3D8CEA2327F67100C2EAC8 /* CD_MembershipTransaction.swift */,
 				EF3D8CE12327F67000C2EAC8 /* CD_PaymentCard.swift */,
 				EF3D8CDF2327F67000C2EAC8 /* CD_PlanDocument.swift */,
+				EF7B65CD232FD30B0025D167 /* CD_ReasonCode.swift */,
 				EF3D8CED2327F67100C2EAC8 /* CD_RegistrationField.swift */,
 				EF3D8CF02327F67100C2EAC8 /* CD_Tier.swift */,
 			);
@@ -1552,6 +1558,7 @@
 				5ECE04AF22CE582E001BA964 /* UserModel.swift in Sources */,
 				EF3D8CF62327F67100C2EAC8 /* CD_AuthoriseField.swift in Sources */,
 				B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */,
+				EF7B65D0232FD30C0025D167 /* _CD_ReasonCode.swift in Sources */,
 				EF3D8D132327F67100C2EAC8 /* _CD_PaymentCard.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
 				3CF029EF22F45ACE009A0E61 /* AddingOptionView.swift in Sources */,
@@ -1678,6 +1685,7 @@
 				EF3D8D032327F67100C2EAC8 /* CD_MembershipPlanAccount.swift in Sources */,
 				3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */,
 				3CB6BF7923141D3000B74882 /* AuthAndAddRepository.swift in Sources */,
+				EF7B65CF232FD30C0025D167 /* CD_ReasonCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

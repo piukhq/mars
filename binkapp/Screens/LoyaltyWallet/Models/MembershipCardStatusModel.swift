@@ -25,6 +25,16 @@ extension MembershipCardStatusModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.id, with: id, delta: delta)
         update(cdObject, \.state, with: state, delta: delta)
 
+        cdObject.reasonCodes.forEach {
+            guard let reasonCode = $0 as? CD_ReasonCode else { return }
+            context.delete(reasonCode)
+        }
+        reasonCodes?.forEach { reasonCode in
+            let cdReasonCode = reasonCode.mapToCoreData(context, .update, overrideID: nil)
+            update(cdReasonCode, \.status, with: cdObject, delta: delta)
+            cdObject.addReasonCodesObject(cdReasonCode)
+        }
+
         return cdObject
     }
 }

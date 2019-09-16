@@ -85,11 +85,18 @@ enum ReasonCode: Int, ReasonCodeProtocol, CaseIterable {
             return "Authorization expired"
         }
     }
+
+    var apiId: Int? {
+        return nil // This will force CoreDataIDMappable to kick in and give this object a computed id based on the parent object
+    }
 }
 
 extension ReasonCode: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_ReasonCode, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_ReasonCode {
         update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.value, with: NSNumber(value: rawValue), delta: delta)
+        update(cdObject, \.codeString, with: codeString, delta: delta)
+        update(cdObject, \.codeDescription, with: description, delta: delta)
 
         return cdObject
     }
