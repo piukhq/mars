@@ -73,9 +73,9 @@ class LoyaltyWalletViewModel {
 //        return membershipCards
 //    }
 //
-//    func membershipCard(forIndexPathSection section: Int) -> MembershipCardModel {
-//        return membershipCards[section]
-//    }
+    func membershipCard(forIndexPathSection section: Int) -> CD_MembershipCard? {
+        return membershipCards?[section]
+    }
 //
 //    func getMembershipPlans() -> [MembershipPlanModel] {
 //        return membershipPlans
@@ -85,13 +85,13 @@ class LoyaltyWalletViewModel {
 //        return membershipPlans[section]
 //    }
     
-//    func membershipPlanForCard(card: MembershipCardModel) -> MembershipPlanModel? {
-//        guard let planId = card.membershipPlan else {
-//            return nil
-//        }
-//        let membershipPlan = membershipPlans.first(where: {($0.id == String(planId))})
-//        return membershipPlan
-//    }
+    func membershipPlanForCard(card: CD_MembershipCard) -> CD_MembershipPlan? {
+        guard let planId = card.membershipPlan else {
+            return nil
+        }
+        let membershipPlan = membershipPlans?.first(where: {($0.id == String(planId.intValue))})
+        return membershipPlan
+    }
 //
 //    func refreshScreen() {
 //        fetchData()

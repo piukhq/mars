@@ -64,18 +64,14 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithClass(WalletLoyaltyCardTableViewCell.self, forIndexPath: indexPath)
 
-//        if let cardPlan = viewModel.membershipPlanForCard(card: viewModel.membershipCard(forIndexPathSection: indexPath.section)) {
-//            cell.configureUIWithMembershipCard(card: viewModel.membershipCard(forIndexPathSection: indexPath.section), andMemebershipPlan: cardPlan)
-//        }
+        guard let card = viewModel.membershipCard(forIndexPathSection: indexPath.section) else {
+            return cell
+        }
+        guard let plan = viewModel.membershipPlanForCard(card: card) else {
+            return cell
+        }
 
-        // TODO: configure this in the cell
-        cell.layer.cornerRadius = 8
-        cell.separatorInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        cell.layer.shadowOffset = CGSize(width: 0, height: 5)
-        cell.layer.shadowRadius = 5
-        cell.layer.shadowColor = UIColor.red.cgColor
-        cell.layer.shadowOpacity = 0.9
-        cell.layer.masksToBounds = true
+        cell.configureUIWithMembershipCard(card: card, membershipPlan: plan)
         
         return cell
     }

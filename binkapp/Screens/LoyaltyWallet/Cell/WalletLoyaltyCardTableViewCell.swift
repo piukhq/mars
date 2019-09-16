@@ -56,8 +56,21 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
     }
     
     
-    func configureUIWithMembershipCard(card: MembershipCardModel, andMemebershipPlan plan: MembershipPlanModel) {
-        if let imageStringURL = plan.images?.first(where: {($0.type == 3)})?.url {
+    func configureUIWithMembershipCard(card: CD_MembershipCard, membershipPlan plan: CD_MembershipPlan) {
+        layer.cornerRadius = 8
+        separatorInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        layer.shadowOffset = CGSize(width: 0, height: 5)
+        layer.shadowRadius = 5
+        layer.shadowColor = UIColor.red.cgColor
+        layer.shadowOpacity = 0.9
+        layer.masksToBounds = true
+
+        guard let images = plan.images as? Set<CD_MembershipCardImage> else { return }
+        guard let cardTypeInt = plan.featureSet?.cardType as? Int else { return}
+        guard let cardType = FeatureSetModel.PlanCardType(rawValue: cardTypeInt) else { return }
+        guard let balances = card.balances as? Set<CD_MembershipCardBalance> else { return }
+
+        if let imageStringURL = images.first(where: {($0.type == 3)})?.url {
             let imageURL = URL(string: imageStringURL)!
             cardIconImage.af_setImage(withURL: imageURL)
         }
@@ -78,28 +91,29 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
 
             break
         case "authorised":
-            if plan.featureSet?.cardType == 2 {
+            if cardType == .link {
                 cardLinkStatusImage.image = UIImage(imageLiteralResourceName: "linked")
                 cardLinkStatusImage.isHidden = false
                 cardLinkStatusLabel.text = NSLocalizedString("card_linked_status", comment: "")
                 cardLinkStatusLabel.isHidden = false
             }
             if plan.featureSet?.hasPoints == true {
-                if let balanceValue = card.balances?[0].value {
-                    let attributedPrefix = NSMutableAttributedString(string: card.balances?[0].prefix ?? "")
-                    let attributedSuffix = NSMutableAttributedString(string: "\n" + (card.balances?[0].suffix ?? ""), attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
-                    let attributedValue = NSMutableAttributedString(string: String(balanceValue))
-                    let attributedLabelText = NSMutableAttributedString()
-                    attributedLabelText.append(attributedPrefix)
-                    attributedLabelText.append(attributedValue)
-                    attributedLabelText.append(attributedSuffix)
-                    cardValuePointsLabel.attributedText = attributedLabelText
+                guard let balance = balances.first else {
+                    cardValuePointsLabel.isHidden = true
+                    return
                 }
-            } else {
-                cardValuePointsLabel.isHidden = true
+                let attributedPrefix = NSMutableAttributedString(string: balance.prefix ?? "")
+                let attributedSuffix = NSMutableAttributedString(string: "\n" + (balance.suffix ?? ""), attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
+                let balanceValue = balance.value?.intValue
+                let attributedValue = NSMutableAttributedString(string: String(balanceValue ?? 0))
+                let attributedLabelText = NSMutableAttributedString()
+                attributedLabelText.append(attributedPrefix)
+                attributedLabelText.append(attributedValue)
+                attributedLabelText.append(attributedSuffix)
+                cardValuePointsLabel.attributedText = attributedLabelText
             }
         case "unauthorised":
-            if plan.featureSet?.cardType == 2 {
+            if cardType == .link {
                 cardLinkStatusLabel.isHidden = false
                 cardLinkStatusImage.isHidden = false
                 cardLinkStatusLabel.text = NSLocalizedString("card_can_not_link_status", comment: "")
