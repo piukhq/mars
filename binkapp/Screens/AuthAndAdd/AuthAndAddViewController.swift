@@ -82,7 +82,7 @@ class AuthAndAddViewController: UIViewController {
 }
 
 extension AuthAndAddViewController: LoyaltyButtonDelegate {
-    func brandHeaderViewDidTap(_ brandHeaderView: BrandHeaderView) {
+    func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displaySimplePopup(title: (viewModel.getMembershipPlan().account?.planNameCard) ?? nil, message: (viewModel.getMembershipPlan().account?.planDescription) ?? nil)
     }
 }

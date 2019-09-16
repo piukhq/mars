@@ -39,22 +39,19 @@ class TransactionsViewController: UIViewController {
         lastCheckedLabel.font = .bodyTextLarge
         descriptionLabel.font = .bodyTextLarge
 
-        guard let transactions = viewModel.membershipCard.membershipTransactions else { return }
+        titleLabel.text = viewModel.getTitle()
+        descriptionLabel.text = viewModel.getDescription()
         
-        if !transactions.isEmpty {
-            titleLabel.text = "points_history_title".localized
-            descriptionLabel.text = "recent_transaction_history_subtitle".localized
+        if !viewModel.transactions.isEmpty {
             let imageUrl = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue })?.url
             brandHeaderView.configure(imageURLString: imageUrl, loyaltyPlanNameCard: (viewModel.membershipPlan.account?.planNameCard ?? nil), delegate: self)
         } else {
-            titleLabel.text = "transaction_history_unavailable_title".localized
             lastCheckedLabel.text = viewModel.getLastCheckedString() ?? ""
-            descriptionLabel.text = "transaction_history_unavailable_description".localized
         }
 
-        lastCheckedLabel.isHidden = !transactions.isEmpty
-        brandHeaderView.isHidden = transactions.isEmpty
-        tableView.isHidden = transactions.isEmpty
+        lastCheckedLabel.isHidden = !viewModel.transactions.isEmpty
+        brandHeaderView.isHidden = viewModel.transactions.isEmpty
+        tableView.isHidden = viewModel.transactions.isEmpty
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
     }
     
@@ -64,7 +61,7 @@ class TransactionsViewController: UIViewController {
 }
 
 extension TransactionsViewController: LoyaltyButtonDelegate {
-    func brandHeaderViewDidTap(_ brandHeaderView: BrandHeaderView) {
+    func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displayLoyaltySchemePopup()
     }
 }

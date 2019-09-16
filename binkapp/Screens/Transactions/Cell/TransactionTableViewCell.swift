@@ -17,10 +17,6 @@ class TransactionTableViewCell: UITableViewCell {
         super.awakeFromNib()
         configureUI()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     func configure(transactionValue: Int, timestamp: Double, prefix: String?, suffix: String?) {
         if transactionValue < 0 {
@@ -36,7 +32,7 @@ class TransactionTableViewCell: UITableViewCell {
             valueLabel.textColor = .amber
         }
         let timestampDate = Date(timeIntervalSince1970: timestamp)
-        descriptionLabel.text = timestampDate.getFormattedString(format: "dd MMMM YYYY")
+        descriptionLabel.text = timestampDate.getFormattedString(format: DateFormat.dayMonthYear.rawValue)
     }
     
     func configureUI() {

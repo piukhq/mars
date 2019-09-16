@@ -22,6 +22,20 @@ struct TransactionsViewModel {
         self.transactions = transactions
     }
     
+    func getTitle() -> String {
+        if transactions.isEmpty {
+            return "transaction_history_unavailable_title".localized
+        }
+        return "points_history_title".localized
+    }
+    
+    func getDescription() -> String {
+        if transactions.isEmpty {
+            return "transaction_history_unavailable_description".localized
+        }
+        return "recent_transaction_history_subtitle".localized
+    }
+    
     func getLastCheckedString() -> String? {
         let date = Date(timeIntervalSince1970: membershipCard.balances?.first?.updatedAt ?? 0)
         guard let dateString = date.timeAgoString() else { return nil }

@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum DateFormat: String {
+    case dayMonthYear = "dd MMMM YYYY"
+}
+
 extension Date {
     func timeAgoString() -> String? {
         let interval = Calendar.current.dateComponents([.day, .hour, .minute], from: self, to: Date())
