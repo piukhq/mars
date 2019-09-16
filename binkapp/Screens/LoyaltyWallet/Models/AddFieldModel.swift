@@ -14,7 +14,7 @@ struct AddFieldModel: Codable {
     let validation: String?
     let fieldDescription: String?
     let type: Int?
-    let choice: [String]?
+    let choices: [String]?
 
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -22,7 +22,7 @@ struct AddFieldModel: Codable {
         case validation
         case fieldDescription = "description"
         case type
-        case choice
+        case choices = "choice"
     }
 }
 

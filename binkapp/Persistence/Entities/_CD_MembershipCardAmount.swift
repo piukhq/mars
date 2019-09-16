@@ -7,6 +7,7 @@ import CoreData
 public enum CD_MembershipCardAmountAttributes: String {
     case currency = "currency"
     case id = "id"
+    case prefix = "prefix"
     case suffix = "suffix"
     case value = "value"
 }
@@ -50,6 +51,9 @@ open class _CD_MembershipCardAmount: NSManagedObject {
 
     @NSManaged open
     var id: String!
+
+    @NSManaged open
+    var prefix: String?
 
     @NSManaged open
     var suffix: String?

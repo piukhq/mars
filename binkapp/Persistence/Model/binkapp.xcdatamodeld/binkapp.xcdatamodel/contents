@@ -73,6 +73,7 @@
     <entity name="CD_MembershipCardAmount" representedClassName="CD_MembershipCardAmount" syncable="YES">
         <attribute name="currency" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="prefix" optional="YES" attributeType="String"/>
         <attribute name="suffix" optional="YES" attributeType="String"/>
         <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO"/>
         <relationship name="transaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipTransaction" inverseName="amounts" inverseEntity="CD_MembershipTransaction"/>
@@ -174,7 +175,7 @@
         <element name="CD_FeatureSet" positionX="27" positionY="153" width="128" height="148"/>
         <element name="CD_MembershipCard" positionX="9" positionY="81" width="128" height="178"/>
         <element name="CD_MembershipCardAccount" positionX="-9" positionY="90" width="128" height="88"/>
-        <element name="CD_MembershipCardAmount" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="CD_MembershipCardAmount" positionX="-63" positionY="-18" width="128" height="133"/>
         <element name="CD_MembershipCardBalance" positionX="-36" positionY="36" width="128" height="148"/>
         <element name="CD_MembershipCardImage" positionX="0" positionY="72" width="128" height="148"/>
         <element name="CD_MembershipCardStatus" positionX="9" positionY="99" width="128" height="88"/>
