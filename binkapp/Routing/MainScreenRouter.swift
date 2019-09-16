@@ -121,6 +121,12 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
+    func toPendingViewController(pendingType: PendingType) {
+        let viewModel = PendingViewModel(router: self, pendingType: pendingType)
+        let viewController = PendingViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
     func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in

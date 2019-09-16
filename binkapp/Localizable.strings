@@ -79,4 +79,11 @@
 "points_history_title" = "Points history";
 "recent_transaction_history_subtitle" = "Your recent transaction history.";
 
+"log_in_pending_title" = "Log in pending";
+"sign_up_pending_title" = "Sign up pending";
+"register_pending_title" = "Register Ghost card pending";
+"log_in_pending_description" = "You are seeing this because sometimes it takes a while to log in with the merchant. In the meantime please do not attempt to log in again, but you can use your card and receive your benefits as usual. After you are logged in you will be able to see your points balance";
+"sign_up_pending_description" = "Sometimes it takes a while to sign up with your merchant.\nIn the meantime please do not attempt to sign up again. You can use your card and receive your benefits as normal.\nAfter the sign up has been completed you will be able to see your points balance.";
+"register_pending_description" = "Sometimes it takes a while to register with your merchant.\nIn the meantime please do not attept to register your card again. You can use your card an receive your benefits as normal.\nAfter registration up has been completed you will be able to see your points balance.";
+
 "debug_menu_tools_section_title" = "Tools";
