@@ -168,6 +168,20 @@ public protocol CoreDataMappable {
     func objectToMapTo(_ cdObject: CoreDataObject, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CoreDataObject
 }
 
+public protocol CoreDataIDMappable {
+    var apiId: Int? { get }
+    var id: String { get }
+}
+
+public extension CoreDataIDMappable {
+    var id: String {
+        guard let apiId = apiId else {
+            return "<PARENT_ID>_\(String(describing: type(of: self)))"
+        }
+        return String(apiId)
+    }
+}
+
 public extension CoreDataMappable {
     @discardableResult
     func mapToCoreData(_ context: NSManagedObjectContext, _ update: CoreDataUpdate, overrideID: String?) -> CoreDataObject {

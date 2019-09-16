@@ -8,20 +8,6 @@
 import Foundation
 import CoreData
 
-protocol CoreDataIDMappable {
-    var apiId: Int? { get }
-    var id: String { get }
-}
-
-extension CoreDataIDMappable {
-    var id: String {
-        guard let apiId = apiId else {
-            return "<PARENT_ID>_\(String(describing: type(of: self)))"
-        }
-        return String(apiId)
-    }
-}
-
 struct BalanceModel: Codable {
     let apiId: Int?
     let currency: String?
