@@ -28,7 +28,7 @@ struct AuthoriseFieldModel: Codable {
 
 extension AuthoriseFieldModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_AuthoriseField, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_AuthoriseField {
-        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
+        update(cdObject, \.id, with: id, delta: delta)
         update(cdObject, \.column, with: column, delta: delta)
         update(cdObject, \.validation, with: validation, delta: delta)
         update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)
@@ -39,8 +39,7 @@ extension AuthoriseFieldModel: CoreDataMappable, CoreDataIDMappable {
             context.delete(choice)
         }
         choices?.forEach { choice in
-            let overrideId = FieldChoice.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: choice.id)
-            let cdChoice = choice.mapToCoreData(context, .update, overrideID: overrideId)
+            let cdChoice = choice.mapToCoreData(context, .update, overrideID: nil)
             update(cdChoice, \.authoriseField, with: cdObject, delta: delta)
             cdObject.addChoicesObject(cdChoice)
         }

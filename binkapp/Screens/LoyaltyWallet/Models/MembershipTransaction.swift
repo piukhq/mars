@@ -17,7 +17,7 @@ struct MembershipTransaction: Codable {
 }
 extension MembershipTransaction: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipTransaction, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipTransaction {
-        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
+        update(cdObject, \.id, with: id, delta: delta)
         update(cdObject, \.status, with: status, delta: delta)
         update(cdObject, \.timestamp, with: NSNumber(value: timestamp ?? 0.0), delta: delta)
 
@@ -26,8 +26,7 @@ extension MembershipTransaction: CoreDataMappable, CoreDataIDMappable {
             context.delete(amount)
         }
         amounts?.forEach { amount in
-            let overrideId = EnrolFieldModel.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: amount.id)
-            let cdAmount = amount.mapToCoreData(context, .update, overrideID: overrideId)
+            let cdAmount = amount.mapToCoreData(context, .update, overrideID: nil)
             update(cdAmount, \.transaction, with: cdObject, delta: delta)
             cdObject.addAmountsObject(cdAmount)
         }

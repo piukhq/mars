@@ -22,7 +22,7 @@ struct TierModel: Codable {
 
 extension TierModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_Tier, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_Tier {
-        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
+        update(cdObject, \.id, with: id, delta: delta)
         update(cdObject, \.name, with: name, delta: delta)
         update(cdObject, \.tierDescription, with: tierDescription, delta: delta)
 
