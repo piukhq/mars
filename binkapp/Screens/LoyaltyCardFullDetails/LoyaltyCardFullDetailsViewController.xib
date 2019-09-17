@@ -12,9 +12,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoyaltyCardFullDetailsViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
                 <outlet property="aboutInfoRow" destination="vLa-fX-VOe" id="RMJ-5J-6ot"/>
+                <outlet property="cardDetailsStackView" destination="ElX-yf-qIn" id="fXn-yO-V6W"/>
                 <outlet property="deleteInfoRow" destination="gNq-b9-nhJ" id="iTd-pe-K1R"/>
                 <outlet property="fullDetailsBrandHeader" destination="iH8-ro-dLl" id="ehM-lS-T9l"/>
-                <outlet property="pointsModuleView" destination="SQd-Ox-EL0" id="rvu-4Z-STY"/>
                 <outlet property="securityAndPrivacyInfoRow" destination="ruT-bQ-lue" id="j8V-T9-liK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -40,18 +40,14 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="ElX-yf-qIn">
                                     <rect key="frame" x="25" y="290" width="364" height="128"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SQd-Ox-EL0">
-                                            <rect key="frame" x="0.0" y="0.0" width="176" height="128"/>
-                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="128" id="A5z-rB-FR0"/>
-                                            </constraints>
-                                        </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rWO-HB-Y8N">
-                                            <rect key="frame" x="188" y="0.0" width="176" height="128"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="364" height="128"/>
                                             <color key="backgroundColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="128" id="2Qy-pj-k4X"/>
+                                    </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="umh-i2-nD6">
                                     <rect key="frame" x="25" y="443" width="364" height="740"/>

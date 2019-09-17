@@ -5,8 +5,18 @@
   Copyright © 2019 Bink. All rights reserved.
 */
 
+"error_title" = "Error";
+"to_be_implemented_message" = "To be implemented";
+
 "barcode_swipe_title" = "Barcode";
 "delete_swipe_title" = "Delete";
+"please_wait_title" = "Please wait";
+"sign_up_failed_title" = "Sign up failed";
+"please_try_again_title" = "Please try again";
+"log_in_title" = "Log in";
+"registration_failed_title" = "Registration failed";
+"history_title" = "History";
+"not_available_title" = "Not available";
 
 "add_loyalty_card_title" = "Add loyalty card";
 "scan_a_card_description" = "Scan a card you already have";
@@ -43,7 +53,6 @@
 "add_my_card_button" = "Add my card";
 "get_new_card_button" = "Get a new card";
 
-"log_in_title" = "Log in";
 "auth_screen_description" = "Please enter your %@ details below to add this card to your wallet.";
 
 "pll_title" = "PLL";
@@ -80,3 +89,11 @@
 "recent_transaction_history_subtitle" = "Your recent transaction history.";
 
 "debug_menu_tools_section_title" = "Tools";
+
+"points_module_view_history_message" = "View history";
+"points_module_last_checked" = "Last checked";
+"points_module_to_see_history" = "To see history";
+"points_module_signing_up_status" = "Signing up";
+"points_module_logging_in_status" = "Logging in";
+"points_module_registering_card_status" = "Registering card";
+"points_module_retry_log_in_status" = "Retry log in";
