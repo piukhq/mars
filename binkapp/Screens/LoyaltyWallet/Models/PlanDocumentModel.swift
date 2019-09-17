@@ -28,7 +28,7 @@ struct PlanDocumentModel: Codable {
 
 extension PlanDocumentModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_PlanDocument, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_PlanDocument {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.name, with: name, delta: delta)
         update(cdObject, \.documentDescription, with: documentDescription, delta: delta)
         update(cdObject, \.url, with: url, delta: delta)

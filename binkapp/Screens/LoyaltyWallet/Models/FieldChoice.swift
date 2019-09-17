@@ -16,7 +16,7 @@ struct FieldChoice: Codable {
 
 extension FieldChoice: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_FieldChoice, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_FieldChoice {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.value, with: value, delta: delta)
 
         return cdObject

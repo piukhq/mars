@@ -28,7 +28,7 @@ struct AddFieldModel: Codable {
 
 extension AddFieldModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_AddField, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_AddField {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.column, with: column, delta: delta)
         update(cdObject, \.validation, with: validation, delta: delta)
         update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)
@@ -39,7 +39,8 @@ extension AddFieldModel: CoreDataMappable, CoreDataIDMappable {
             context.delete(choice)
         }
         choices?.forEach { choice in
-            let cdChoice = choice.mapToCoreData(context, .update, overrideID: nil)
+            let overrideId = FieldChoice.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: choice.id)
+            let cdChoice = choice.mapToCoreData(context, .update, overrideID: overrideId)
             update(cdChoice, \.addField, with: cdObject, delta: delta)
             cdObject.addChoicesObject(cdChoice)
         }

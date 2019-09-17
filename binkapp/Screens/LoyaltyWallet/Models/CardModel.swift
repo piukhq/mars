@@ -24,7 +24,7 @@ struct CardModel: Codable {
 
 extension CardModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_Card, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_Card {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.barcode, with: barcode, delta: delta)
         update(cdObject, \.barcodeType, with: NSNumber(value: barcodeType ?? 0), delta: delta)
         update(cdObject, \.colour, with: colour, delta: delta)

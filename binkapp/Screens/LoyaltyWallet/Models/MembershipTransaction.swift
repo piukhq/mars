@@ -17,9 +17,12 @@ struct MembershipTransaction: Codable {
 }
 extension MembershipTransaction: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipTransaction, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipTransaction {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.status, with: status, delta: delta)
         update(cdObject, \.timestamp, with: NSNumber(value: timestamp ?? 0.0), delta: delta)
+
+        // ADD RELATIONSHIPS
+
         return cdObject
     }
 }

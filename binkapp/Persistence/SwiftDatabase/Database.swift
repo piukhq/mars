@@ -168,17 +168,28 @@ public protocol CoreDataMappable {
     func objectToMapTo(_ cdObject: CoreDataObject, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CoreDataObject
 }
 
-public protocol CoreDataIDMappable {
+public protocol CoreDataIDMappable: CoreDataMappable {
     var apiId: Int? { get }
-    var id: String { get }
 }
 
 public extension CoreDataIDMappable {
     var id: String {
         guard let apiId = apiId else {
-            return "<PARENT_ID>_\(String(describing: type(of: self)))"
+            fatalError("We should only fall into here if an overrideId is nil and the apiId is nil. This should never happen.")
         }
         return String(apiId)
+    }
+
+    func id(orOverrideId overrideId: String?) -> String {
+        guard let overrideId = overrideId else {
+            return id
+        }
+        return overrideId
+    }
+
+    // Construct the override id to be used for child objects
+    static func overrideId(forParentId parentId: String, withExtension meta: String? = nil) -> String {
+        return "\(parentId)_\(String(describing: Self.self))\(meta ?? "")"
     }
 }
 

@@ -22,7 +22,7 @@ struct MembershipCardStatusModel: Codable {
 
 extension MembershipCardStatusModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCardStatus, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardStatus {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.state, with: state, delta: delta)
 
         cdObject.reasonCodes.forEach {
@@ -30,7 +30,8 @@ extension MembershipCardStatusModel: CoreDataMappable, CoreDataIDMappable {
             context.delete(reasonCode)
         }
         reasonCodes?.forEach { reasonCode in
-            let cdReasonCode = reasonCode.mapToCoreData(context, .update, overrideID: nil)
+            let overrideId = ReasonCode.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: reasonCode.rawValue)
+            let cdReasonCode = reasonCode.mapToCoreData(context, .update, overrideID: overrideId)
             update(cdReasonCode, \.status, with: cdObject, delta: delta)
             cdObject.addReasonCodesObject(cdReasonCode)
         }

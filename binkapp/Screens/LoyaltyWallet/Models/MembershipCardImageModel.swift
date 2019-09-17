@@ -26,7 +26,7 @@ struct MembershipCardImageModel: Codable {
 
 extension MembershipCardImageModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCardImage, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardImage {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.type, with: NSNumber(value: type ?? 0), delta: delta)
         update(cdObject, \.url, with: url, delta: delta)
         update(cdObject, \.imageDescription, with: imageDescription, delta: delta)

@@ -21,7 +21,7 @@ struct PaymentCardModel: Codable {
 
 extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_PaymentCard, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_PaymentCard {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.activeLink, with: NSNumber(value: activeLink ?? false), delta: delta)
 
         return cdObject

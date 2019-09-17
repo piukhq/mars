@@ -89,7 +89,7 @@ enum ReasonCode: String, Codable, CaseIterable {
 
 extension ReasonCode: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_ReasonCode, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_ReasonCode {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.value, with: rawValue, delta: delta)
 
         return cdObject

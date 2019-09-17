@@ -28,7 +28,7 @@ struct MembershipCardBalanceModel: Codable {
 
 extension MembershipCardBalanceModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCardBalance, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardBalance {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.value, with: NSNumber(value: value ?? 0), delta: delta)
         update(cdObject, \.currency, with: currency, delta: delta)
         update(cdObject, \.prefix, with: prefix, delta: delta)
