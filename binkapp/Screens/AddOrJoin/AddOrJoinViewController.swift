@@ -61,7 +61,7 @@ class AddOrJoinViewController: UIViewController {
         newCardButton.titleLabel?.font = UIFont.buttonText
         newCardButton.setTitle("get_new_card_button".localized, for: .normal)
         
-        guard let cardType = CardType(rawValue: membershipPlan.featureSet?.cardType ?? 0) else { return }
+        guard let cardType = membershipPlan.featureSet?.cardType else { return }
         let storeView = LoyaltyPlanView()
         storeView.configure(for: .storeCell, cardType: cardType)
         plansStackView.addArrangedSubview(storeView)
@@ -83,7 +83,7 @@ class AddOrJoinViewController: UIViewController {
 }
 
 extension AddOrJoinViewController: LoyaltyButtonDelegate {
-    func buttonWasPressed() {
+    func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displaySimplePopup(title: (viewModel.getMembershipPlan().account?.planNameCard) ?? nil, message: (viewModel.getMembershipPlan().account?.planDescription) ?? nil)
     }
 }

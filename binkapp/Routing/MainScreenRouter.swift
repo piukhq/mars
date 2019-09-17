@@ -9,9 +9,13 @@ import Foundation
 import UIKit
 
 class MainScreenRouter {
-    var navController: UINavigationController?
+    var navController: PortraitNavigationController?
     
     let apiManager = ApiManager()
+    
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+    }
 
     func toMainScreen() {
         let repository = MainTabBarRepository()
@@ -22,7 +26,7 @@ class MainScreenRouter {
     }
     
     func getNavigationControllerWithLoginScreen() -> UIViewController{
-        navController = UINavigationController(rootViewController: getLoginScreen())
+        navController = PortraitNavigationController(rootViewController: getLoginScreen())
         navController?.navigationBar.isTranslucent = false
         
         return navController!
@@ -46,7 +50,7 @@ class MainScreenRouter {
         let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
         debugMenuFactory.delegate = debugMenuViewController
 
-        let debugNavigationController = UINavigationController(rootViewController: debugMenuViewController)
+        let debugNavigationController = PortraitNavigationController(rootViewController: debugMenuViewController)
         navController?.present(debugNavigationController, animated: true, completion: nil)
     }
     
@@ -82,7 +86,7 @@ class MainScreenRouter {
     func toBarcodeViewController(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel) {
         let viewModel = BarcodeViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard)
         let viewController = BarcodeViewController(viewModel: viewModel)
-        navController?.present(UINavigationController(rootViewController: viewController), animated: true, completion: nil)
+        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
     func toAddOrJoinViewController(membershipPlan: MembershipPlanModel) {
@@ -91,6 +95,13 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
+    func toLoyaltyFullDetailsScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
+        let repository = LoyaltyCardFullDetailsRepository(apiManager: apiManager)
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, repository: repository, router: self)
+        let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+
     func toAuthAndAddViewController(membershipPlan: MembershipPlanModel) {
         let repository = AuthAndAddRepository(apiManager: apiManager)
         let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan)
@@ -98,8 +109,20 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-        let alert = UIAlertController(title: nil, message: "delete_card_confirmation".localized, preferredStyle: .alert)
+    func toPllViewController(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
+        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, router: self)
+        let viewController = PLLScreenViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
+    func toTransactionsViewController(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
+        let viewModel = TransactionsViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, router: self)
+        let viewController = TransactionsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
+    func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in
             noCompletion()
         }))
@@ -111,7 +134,13 @@ class MainScreenRouter {
     
     func displaySimplePopup(title: String?, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
+        navController?.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func presentNoConnectivityPopup() {
+        let alert = UIAlertController(title: nil, message: "no_internet_connection_title".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
     }
     

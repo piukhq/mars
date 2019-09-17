@@ -18,13 +18,13 @@ class BarcodeViewModel {
     private let membershipPlan: MembershipPlanModel
     private let membershipCard: MembershipCardModel
     
+    var title: String {
+        return membershipPlan.account?.companyName ?? ""
+    }
+
     init(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel) {
         self.membershipPlan = membershipPlan
         self.membershipCard = membershipCard
-    }
-    
-    func getTitle() -> String {
-        return membershipPlan.account?.companyName ?? ""
     }
     
     func getCardNumber() -> String {
@@ -57,7 +57,7 @@ class BarcodeViewModel {
             of: getBarcodeType(),
             in: imageView.bounds.size
         )
-        
+                
         imageView.image = image
     }
 }

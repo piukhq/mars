@@ -54,5 +54,29 @@
 "yes" = "Yes";
 "no" = "No";
 "cancel" = "Cancel";
+"ok" = "OK";
+
+"no_internet_connection_title" = "Your selected activity cannot be performed at this time due to a connection issue";
+
+"about_membership_title" = "About membership";
+"learn_more" = "Learn more about how it works";
+"security_and_privacy_title" = "Security and privacy";
+"security_and_privacy_message" = "How we protect your data";
+"security_and_privacy_alert_title" = "Is my Data Secure?";
+"security_and_privacy_alert_message" = "We take security very seriously and keeping your personal details safe is very important to us.\nWe are a PCI certified service provider which means that we meet the highest level of security standards set by the payment card industry. This certification requires us to employ a wide range of measures designed to protect the security of your information. We recommend that you secure your app with Touch ID and/or a passcode for an extra layer of security.\nWe carefully check all the parties who we share your personal information with. To find out more you can see our Privacy Policy here.";
+"delete_card_title" = "Delete this card";
+"delete_card_message" = "Remove this card from Bink";
+
+"transaction_history_unavailable_title" = "Transaction history unavailable";
+"transaction_history_unavailable_description" = "We are unable to currently show the transaction history for this loyalty scheme yet.";
+"last_checked" = "Last Checked %@ ago.";
+"day" = "day";
+"days" = "days";
+"hour" = "hour";
+"hours" = "hours";
+"minute" = "minute";
+"minutes" = "minutes";
+"points_history_title" = "Points history";
+"recent_transaction_history_subtitle" = "Your recent transaction history.";
 
 "debug_menu_tools_section_title" = "Tools";

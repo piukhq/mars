@@ -17,6 +17,7 @@ struct MembershipCardModel: Codable {
     let card: CardModel?
     let images: [MembershipCardImageModel]?
     let account: MembershipCardAccountModel?
+    let paymentCards: [PaymentCardModel]?
     let balances: [MembershipCardBalanceModel]?
     
     enum CodingKeys: String, CodingKey {

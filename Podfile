@@ -23,7 +23,8 @@ plugin 'cocoapods-keys', {
     "organisationIdKey",
     "propertyIdKey",
     "bundleIdKey",
-    "secretKey"
+    "secretKey",
+    "stagingSecretKey"
   ]
 }
 

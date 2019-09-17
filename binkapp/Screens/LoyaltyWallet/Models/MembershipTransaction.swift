@@ -14,14 +14,23 @@ struct MembershipTransaction: Codable {
     let timestamp: Int?
     let transactionDescription: String?
     let amounts: [MembershipCardAmount]?
-}
-
-extension MembershipTransaction: CoreDataMappable, CoreDataIDMappable {
-    func objectToMapTo(_ cdObject: CD_MembershipTransaction, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipTransaction {
-        update(cdObject, \.id, with: id, delta: delta)
-        update(cdObject, \.status, with: status, delta: delta)
-        update(cdObject, \.timestamp, with: NSNumber(value: timestamp ?? 0), delta: delta)
-
-        return cdObject
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case id = "id"
+        case status = "status"
+        case timestamp = "timestamp"
+        case description = "description"
+        case amounts = "amounts"
     }
+    
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decodeIfPresent(Int.self, forKey: .id)
+        status = try values.decodeIfPresent(String.self, forKey: .status)
+        timestamp = try values.decodeIfPresent(Double.self, forKey: .timestamp)
+        description = try values.decodeIfPresent(String.self, forKey: .description)
+        amounts = try values.decodeIfPresent([MembershipCardAmount].self, forKey: .amounts)
+    }
+    
 }

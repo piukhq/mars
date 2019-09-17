@@ -9,8 +9,7 @@ import Foundation
 import UIKit
 
 protocol LoyaltyWalletViewModelDelegate {
-    func didFetchCards()
-    func didFetchMembershipPlans()
+    func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel)
 }
 
 class LoyaltyWalletViewModel {
@@ -35,11 +34,7 @@ class LoyaltyWalletViewModel {
         }
     }
     
-    func deleteMembershipCard(id: Int, completion: @escaping () -> Void) {
-        repository.deleteMembershipCard(id: id) { _ in 
-            completion()
-        }
-    }
+    // MARK: - Public methods
     
 //    func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
 //        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in

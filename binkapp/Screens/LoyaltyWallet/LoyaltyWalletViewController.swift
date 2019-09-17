@@ -8,9 +8,10 @@
 import UIKit
 import CoreGraphics
 
-class LoyaltyWalletViewController: UIViewController{
+class LoyaltyWalletViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     private let viewModel: LoyaltyWalletViewModel
+    private let refreshControl = UIRefreshControl()
     
     init(viewModel: LoyaltyWalletViewModel) {
         self.viewModel = viewModel

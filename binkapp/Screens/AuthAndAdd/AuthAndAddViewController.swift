@@ -48,7 +48,7 @@ class AuthAndAddViewController: UIViewController {
     func configureUI() {
         let membershipPlan = viewModel.getMembershipPlan()
         
-        brandHeaderView.configure(imageURLString: ((membershipPlan.images?.first(where: { $0.type == 3 })?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
+        brandHeaderView.configure(imageURLString: ((membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue})?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
         
         titleLabel.text = "log_in_title".localized
         titleLabel.font = UIFont.headline
@@ -82,7 +82,7 @@ class AuthAndAddViewController: UIViewController {
 }
 
 extension AuthAndAddViewController: LoyaltyButtonDelegate {
-    func buttonWasPressed() {
+    func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displaySimplePopup(title: (viewModel.getMembershipPlan().account?.planNameCard) ?? nil, message: (viewModel.getMembershipPlan().account?.planDescription) ?? nil)
     }
 }

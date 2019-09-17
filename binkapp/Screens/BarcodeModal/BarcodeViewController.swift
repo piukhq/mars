@@ -13,17 +13,18 @@ class BarcodeViewController: UIViewController {
     @IBOutlet private weak var numberLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var maximiseButton: BinkGradientButton!
+    @IBOutlet private weak var labelStackView: UIStackView!
     
-    let viewModel: BarcodeViewModel
-    var originalBarcodeFrame: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+    private let viewModel: BarcodeViewModel
     var isBarcodeFullsize = false
     
     @IBAction func maximiseButtonAction(_ sender: Any) {
         maximizeBarcode()
     }
     
-    init(viewModel: BarcodeViewModel) {
+    init(viewModel: BarcodeViewModel, showFullSize: Bool = false) {
         self.viewModel = viewModel
+        isBarcodeFullsize = showFullSize
         super.init(nibName: "BarcodeViewController", bundle: Bundle(for: BarcodeViewController.self))
     }
     
@@ -33,65 +34,69 @@ class BarcodeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
+        
+        title = viewModel.title
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.barTintColor = .white
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
-        navigationItem.leftBarButtonItem = backButton
         
-        title = viewModel.getTitle()
+        if isBarcodeFullsize {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        } else {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        originalBarcodeFrame = barcodeImageView.frame
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        configureUI(maximized: isBarcodeFullsize)
     }
     
-    func configureUI() {
+    func configureUI(maximized: Bool) {
         viewModel.generateBarcodeImage(for: barcodeImageView)
         
-        barcodeImageView.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(maximizeBarcode))
-        barcodeImageView.addGestureRecognizer(tap)
-        
         titleLabel.font = UIFont.headline
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = .black
         titleLabel.text = "card_number_title".localized
+        titleLabel.isHidden = maximized
+        labelStackView.setCustomSpacing(0.0, after: titleLabel)
         
         numberLabel.font = UIFont.subtitle
-        numberLabel.textColor = UIColor.blueAccent
+        numberLabel.textColor = maximized ? .black : .blueAccent
         numberLabel.text = viewModel.getCardNumber()
         
         descriptionLabel.font = UIFont.bodyTextLarge
-        descriptionLabel.textColor = UIColor.black
+        descriptionLabel.textColor = .black
         descriptionLabel.textAlignment = .justified
-
+        descriptionLabel.isHidden = maximized
+        
         switch viewModel.getBarcodeType() {
         case .loyaltyCard:
             descriptionLabel.text = "barcode_card_description".localized
         case .coupon:
             descriptionLabel.text = "barcode_coupon_description".localized
         }
-
-        maximiseButton.setTitleColor(UIColor.white, for: .normal)
+        
+        maximiseButton.isHidden = maximized
+        maximiseButton.setTitleColor(.white, for: .normal)
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
     }
     
-    @objc func maximizeBarcode() {
-        UIView.animate(withDuration: 0.5, animations: {
-            if self.isBarcodeFullsize {
-                self.barcodeImageView.frame = self.originalBarcodeFrame
-                self.barcodeImageView.backgroundColor = .clear
-            } else {
-                self.barcodeImageView.frame = self.view.bounds
-                self.barcodeImageView.backgroundColor = .white
-            }
-        })
-        
-        isBarcodeFullsize.toggle()
+    func maximizeBarcode() {
+        // If we are the maximised kind, dismiss this view. If not, present a new barcode modal but maximised
+        if isBarcodeFullsize {
+            navigationController?.dismiss(animated: true)
+        } else {
+            let nav = UINavigationController(rootViewController: BarcodeViewController(viewModel: viewModel, showFullSize: true))
+            nav.modalTransitionStyle = .crossDissolve
+            present(nav, animated: true)
+        }
+    }
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
     }
     
     @objc private func popViewController() {

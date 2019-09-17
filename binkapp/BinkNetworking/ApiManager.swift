@@ -56,14 +56,14 @@ class ApiManager {
         return userEmail
     }
     
-    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> Void, onError: @escaping () -> Void) where Resp: Codable {
-        var params: [String: Any]?
-        if parameters == nil {
-            params = getParameters()
-        } else {
-            params = parameters
+
+    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Codable {
+        guard Connectivity.isConnectedToInternet() else {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            return
         }
-        Alamofire.request(Constants.endpoint + "\(url.value)", method: httpMethod.value, parameters: params, encoding: JSONEncoding.default, headers: getHeader() )
+        
+        Alamofire.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader() )
             .responseJSON { response in
                 guard let data = response.data else {
                     print("No data found")
@@ -80,14 +80,13 @@ class ApiManager {
                         onSuccess(models)
                     } else if let error = response.error {
                         print(error)
-                        onError()
+                        onError(error)
                     } else {
                         print("something went wrong, statusCode: \(statusCode)")
-                        onError()
                     }
                 } catch (let error) {
                     print("decoding error: \(error)")
-                    onError()
+                    onError(error)
                 }
         }
     }
@@ -146,9 +145,21 @@ private extension ApiManager {
         } catch {
             print("Could not make payload data")
         }
+        
+        let key: String
+        
+        switch APIConstants.secretKeyType {
+        case .dev?:
+            key = keys.secretKey
+        case .staging?:
+            key = keys.stagingSecretKey
+        default:
+            fatalError()
+        }
+        
         if let encodedHeader = headerDataEncoded, let encodedPayload = payloadDataEncoded {
             let hmackString = encodedHeader + "." + encodedPayload
-            let hexSignature = hmackString.hmac(algorithm: .SHA512, key: keys.secretKey)
+            let hexSignature = hmackString.hmac(algorithm: .SHA512, key: key)
             let signatureData = hexSignature.hexadecimal
             let signature = signatureData?.base64EncodedString().replacingOccurrences(of: "=", with: "") ?? ""
             let token  = hmackString + "." + signature
