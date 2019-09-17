@@ -54,7 +54,7 @@ struct MembershipPlanAccountModel: Codable {
 
 extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipPlanAccount, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlanAccount {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: id(orOverrideId: overrideID), delta: delta)
         update(cdObject, \.planName, with: planName, delta: delta)
         update(cdObject, \.planNameCard, with: planNameCard, delta: delta)
         update(cdObject, \.planURL, with: planURL, delta: delta)
@@ -67,6 +67,72 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.companyURL, with: companyURL, delta: delta)
         update(cdObject, \.enrolIncentive, with: enrolIncentive, delta: delta)
         update(cdObject, \.forgottenPasswordUrl, with: forgottenPasswordUrl, delta: delta)
+
+        cdObject.tiers.forEach {
+            guard let tier = $0 as? CD_Tier else { return }
+            context.delete(tier)
+        }
+        tiers?.forEach { tier in
+            let overrideId = TierModel.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: tier.id)
+            let cdTier = tier.mapToCoreData(context, .update, overrideID: overrideId)
+            update(cdTier, \.planAccount, with: cdObject, delta: delta)
+            cdObject.addTiersObject(cdTier)
+        }
+
+        cdObject.planDocuments.forEach {
+            guard let document = $0 as? CD_PlanDocument else { return }
+            context.delete(document)
+        }
+        planDocuments?.forEach { document in
+            let overrideId = PlanDocumentModel.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: document.id)
+            let cdPlanDocument = document.mapToCoreData(context, .update, overrideID: overrideId)
+            update(cdPlanDocument, \.planAccount, with: cdObject, delta: delta)
+            cdObject.addPlanDocumentsObject(cdPlanDocument)
+        }
+
+        cdObject.addFields.forEach {
+            guard let field = $0 as? CD_AddField else { return }
+            context.delete(field)
+        }
+        addFields?.forEach { field in
+            let overrideId = AddFieldModel.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: field.id)
+            let cdAddField = field.mapToCoreData(context, .update, overrideID: overrideId)
+            update(cdAddField, \.planAccount, with: cdObject, delta: delta)
+            cdObject.addAddFieldsObject(cdAddField)
+        }
+
+        cdObject.authoriseFields.forEach {
+            guard let field = $0 as? CD_AuthoriseField else { return }
+            context.delete(field)
+        }
+        authoriseFields?.forEach { field in
+            let overrideId = AuthoriseFieldModel.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: field.id)
+            let cdAuthField = field.mapToCoreData(context, .update, overrideID: overrideId)
+            update(cdAuthField, \.planAccount, with: cdObject, delta: delta)
+            cdObject.addAuthoriseFieldsObject(cdAuthField)
+        }
+
+        cdObject.registrationFields.forEach {
+            guard let field = $0 as? CD_RegistrationField else { return }
+            context.delete(field)
+        }
+        registrationFields?.forEach { field in
+            let overrideId = RegistrationFieldModel.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: field.id)
+            let cdRegField = field.mapToCoreData(context, .update, overrideID: overrideId)
+            update(cdRegField, \.planAccount, with: cdObject, delta: delta)
+            cdObject.addRegistrationFieldsObject(cdRegField)
+        }
+
+        cdObject.enrolFields.forEach {
+            guard let field = $0 as? CD_EnrolField else { return }
+            context.delete(field)
+        }
+        enrolFields?.forEach { field in
+            let overrideId = EnrolFieldModel.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: field.id)
+            let cdEnrolField = field.mapToCoreData(context, .update, overrideID: overrideId)
+            update(cdEnrolField, \.planAccount, with: cdObject, delta: delta)
+            cdObject.addEnrolFieldsObject(cdEnrolField)
+        }
 
         return cdObject
     }
