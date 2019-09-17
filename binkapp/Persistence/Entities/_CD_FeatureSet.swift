@@ -14,6 +14,7 @@ public enum CD_FeatureSetAttributes: String {
 }
 
 public enum CD_FeatureSetRelationships: String {
+    case linkingSupport = "linkingSupport"
     case plan = "plan"
 }
 
@@ -68,7 +69,42 @@ open class _CD_FeatureSet: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged open
+    var linkingSupport: NSSet
+
+    open func linkingSupportSet() -> NSMutableSet {
+        return self.linkingSupport.mutableCopy() as! NSMutableSet
+    }
+
+    @NSManaged open
     var plan: CD_MembershipPlan?
+
+}
+
+extension _CD_FeatureSet {
+
+    open func addLinkingSupport(_ objects: NSSet) {
+        let mutable = self.linkingSupport.mutableCopy() as! NSMutableSet
+        mutable.union(objects as Set<NSObject>)
+        self.linkingSupport = mutable.copy() as! NSSet
+    }
+
+    open func removeLinkingSupport(_ objects: NSSet) {
+        let mutable = self.linkingSupport.mutableCopy() as! NSMutableSet
+        mutable.minus(objects as Set<NSObject>)
+        self.linkingSupport = mutable.copy() as! NSSet
+    }
+
+    open func addLinkingSupportObject(_ value: CD_LinkingSupport) {
+        let mutable = self.linkingSupport.mutableCopy() as! NSMutableSet
+        mutable.add(value)
+        self.linkingSupport = mutable.copy() as! NSSet
+    }
+
+    open func removeLinkingSupportObject(_ value: CD_LinkingSupport) {
+        let mutable = self.linkingSupport.mutableCopy() as! NSMutableSet
+        mutable.remove(value)
+        self.linkingSupport = mutable.copy() as! NSSet
+    }
 
 }
 
