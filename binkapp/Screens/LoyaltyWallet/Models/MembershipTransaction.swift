@@ -21,7 +21,16 @@ extension MembershipTransaction: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.status, with: status, delta: delta)
         update(cdObject, \.timestamp, with: NSNumber(value: timestamp ?? 0.0), delta: delta)
 
-        // ADD RELATIONSHIPS
+        cdObject.amounts.forEach {
+            guard let amount = $0 as? CD_MembershipCardAmount else { return }
+            context.delete(amount)
+        }
+        amounts?.forEach { amount in
+            let overrideId = EnrolFieldModel.overrideId(forParentId: id(orOverrideId: overrideID), withExtension: amount.id)
+            let cdAmount = amount.mapToCoreData(context, .update, overrideID: overrideId)
+            update(cdAmount, \.transaction, with: cdObject, delta: delta)
+            cdObject.addAmountsObject(cdAmount)
+        }
 
         return cdObject
     }
