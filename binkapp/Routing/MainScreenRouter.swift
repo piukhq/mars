@@ -121,9 +121,9 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPendingViewController(pendingType: PendingType) {
-        let viewModel = PendingViewModel(router: self, pendingType: pendingType)
-        let viewController = PendingViewController(viewModel: viewModel)
+    func toSimpleInfoViewController(pendingType: PendingType) {
+        let viewModel = SimpleInfoViewModel(router: self, pendingType: pendingType)
+        let viewController = SimpleInfoViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     

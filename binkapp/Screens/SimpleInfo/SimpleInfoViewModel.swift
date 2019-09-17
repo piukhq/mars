@@ -14,7 +14,7 @@ enum PendingType {
     case register
 }
 
-class PendingViewModel {
+class SimpleInfoViewModel {
     private let router: MainScreenRouter
     private let pendingType: PendingType
     

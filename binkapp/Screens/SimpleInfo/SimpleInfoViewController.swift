@@ -8,15 +8,15 @@
 
 import UIKit
 
-class PendingViewController: UIViewController {
+class SimpleInfoViewController: UIViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     
-    private let viewModel: PendingViewModel
+    private let viewModel: SimpleInfoViewModel
     
-    init(viewModel: PendingViewModel) {
+    init(viewModel: SimpleInfoViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "PendingViewController", bundle: Bundle(for: PendingViewController.self))
+        super.init(nibName: "SimpleInfoViewController", bundle: Bundle(for: SimpleInfoViewController.self))
     }
     
     required init?(coder aDecoder: NSCoder) {
