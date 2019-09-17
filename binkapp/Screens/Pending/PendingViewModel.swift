@@ -34,9 +34,9 @@ class PendingViewModel {
         case .login:
             return "log_in_pending_description".localized
         case .signup:
-            return "sign_up_pending_title".localized
+            return "sign_up_pending_description".localized
         case .register:
-            return "register_pending_title".localized
+            return "register_pending_description".localized
         }
     }
     

@@ -9,6 +9,9 @@
 import UIKit
 
 class PendingViewController: UIViewController {
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    
     private let viewModel: PendingViewModel
     
     init(viewModel: PendingViewModel) {
@@ -22,13 +25,19 @@ class PendingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
     }
     
     private func configureUI() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        
+        titleLabel.text = viewModel.title
+        descriptionLabel.text = viewModel.description
+        titleLabel.font = .headline
+        descriptionLabel.font = .bodyTextLarge
     }
     
     @objc private func popViewController() {
-        router.popViewController()
+        viewModel.popViewController()
     }
 }

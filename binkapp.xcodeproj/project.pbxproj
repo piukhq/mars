@@ -559,9 +559,9 @@
 		3C7067EC232FD50800AB88A5 /* Pending */ = {
 			isa = PBXGroup;
 			children = (
+				3C7067F1232FD74500AB88A5 /* PendingViewModel.swift */,
 				3C7067ED232FD52D00AB88A5 /* PendingViewController.swift */,
 				3C7067EE232FD52D00AB88A5 /* PendingViewController.xib */,
-				3C7067F1232FD74500AB88A5 /* PendingViewModel.swift */,
 			);
 			path = Pending;
 			sourceTree = "<group>";
