@@ -139,6 +139,8 @@
 		B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */; };
 		B713662723268FEB008A0ED7 /* PLLScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B713662523268FEB008A0ED7 /* PLLScreenViewController.xib */; };
 		B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */; };
+		B713662D232A63AA008A0ED7 /* PointsModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662C232A63AA008A0ED7 /* PointsModuleView.swift */; };
+		B713662F232A63BA008A0ED7 /* PointsModuleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B713662E232A63BA008A0ED7 /* PointsModuleView.xib */; };
 		B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B720CC1322EEEF5400A4F4D0 /* LoginViewModel.swift */; };
 		B720CC1622EF01E200A4F4D0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */; };
 		B720CC1722EF01E200A4F4D0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */; };
@@ -369,6 +371,8 @@
 		B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewController.swift; sourceTree = "<group>"; };
 		B713662523268FEB008A0ED7 /* PLLScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLLScreenViewController.xib; sourceTree = "<group>"; };
 		B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModel.swift; sourceTree = "<group>"; };
+		B713662C232A63AA008A0ED7 /* PointsModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsModuleView.swift; sourceTree = "<group>"; };
+		B713662E232A63BA008A0ED7 /* PointsModuleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PointsModuleView.xib; sourceTree = "<group>"; };
 		B720CC1322EEEF5400A4F4D0 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		B726333E230586CC00951037 /* MembershipPlanModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanModel.swift; sourceTree = "<group>"; };
@@ -959,6 +963,8 @@
 				B7665993231E57CC00B327BE /* CardDetailsInfoView.xib */,
 				B76659972320F68C00B327BE /* HyperlinkAlertController.swift */,
 				B76659982320F68C00B327BE /* HyperlinkAlertController.xib */,
+				B713662C232A63AA008A0ED7 /* PointsModuleView.swift */,
+				B713662E232A63BA008A0ED7 /* PointsModuleView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1202,6 +1208,7 @@
 				3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */,
 				3CB6BF7323141CF400B74882 /* AuthAndAddViewController.xib in Resources */,
 				3C873FED22F073CF00FA3031 /* PaymentWalletViewController.xib in Resources */,
+				B713662F232A63BA008A0ED7 /* PointsModuleView.xib in Resources */,
 				3CD3493522F99E1D000C1F4D /* NunitoSans-Light.ttf in Resources */,
 				3C873FFB22F073CF00FA3031 /* LoyaltyWalletViewController.xib in Resources */,
 				3C48E7E2232A4B1E00ADE410 /* TransactionsViewController.xib in Resources */,
@@ -1500,6 +1507,7 @@
 				3C63ABC822F9D47E00BE143B /* AddingOptionsViewModel.swift in Sources */,
 				3C9CCD2D2316958300FAF589 /* CheckboxView.swift in Sources */,
 				3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */,
+				B713662D232A63AA008A0ED7 /* PointsModuleView.swift in Sources */,
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,

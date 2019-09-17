@@ -21,7 +21,6 @@ struct FeatureSetModel : Codable {
     let hasPoints : Bool?
     let cardType : PlanCardType?
     let linkingSupport : [String]?
-//    let apps : [String]?
     
     enum CodingKeys: String, CodingKey {
         
