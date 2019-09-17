@@ -44,8 +44,7 @@ class LoyaltyCardFullDetailsViewModel {
             router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
             break
         case .loginPending:
-            //TODO: change to login screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            router.toSimpleInfoViewController(pendingType: .login)
             break
         case .loginUnavailable:
             //TODO: change to login unavailable screen after is implemented
@@ -55,9 +54,15 @@ class LoyaltyCardFullDetailsViewModel {
             //TODO: change to sign up screen after is implemented
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
+        case .signUpPending:
+            router.toSimpleInfoViewController(pendingType: .signup)
+            break
         case .registerGhostCard:
             //TODO: change to sign up screen after is implemented
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            break
+        case .registerGhostCardPending:
+            router.toSimpleInfoViewController(pendingType: .register)
             break
         }
     }
