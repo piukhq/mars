@@ -41,7 +41,7 @@ class LoyaltyWalletViewController: UIViewController{
     }
 
     @objc private func loadMembershipCards() {
-        viewModel.getMembershipCards(forceRefresh: false) { [weak self] in
+        viewModel.getMembershipCards(forceRefresh: true) { [weak self] in
             DispatchQueue.main.async {
                 self?.refreshControl.endRefreshing()
                 self?.tableView.reloadData()

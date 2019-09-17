@@ -9,46 +9,42 @@
 import Foundation
 import CoreData
 
-protocol ReasonCodeProtocol: Codable {
-    var codeString: String { get }
-    var description: String { get }
-}
-
 struct ReasonCodeRange: Codable {
     var from: Int
     var to: Int
     var description: String
 
     var reasonCodes: [ReasonCode] {
-        return ReasonCode.allCases.filter { from...to ~= $0.rawValue }
+        return ReasonCode.allCases.filter { from...to ~= $0.code }
     }
 }
 
-enum ReasonCode: Int, ReasonCodeProtocol, CaseIterable {
+enum ReasonCode: String, Codable, CaseIterable {
     static let generalStatusCodesRange = ReasonCodeRange(from: 000, to: 099, description: "General Status Codes")
     static let addDataCodesCodesRange = ReasonCodeRange(from: 100, to: 199, description: "Add Data Codes")
     static let enrolDataCodesRange = ReasonCodeRange(from: 200, to: 299, description: "Enrol Data Codes")
     static let authDataCodesRange = ReasonCodeRange(from: 300, to: 399, description: "Auth Data Codes")
     static let reservedCodesRange = ReasonCodeRange(from: 400, to: 499, description: "Reserved for future use")
 
-    case newDataSubmitted = 000
-    case addFieldsBeingValidated = 100
-    case accountDoesNotExist = 101
-    case addDataRejectedByMerchant = 102
-    case NoAuthorizationProvided = 103
-    case accountNotRegistered = 105
-    case enrolmentInProgress = 200
-    case enrolmentDataRejectedByMerchant = 201
-    case accountAlreadyExists = 202
-    case enrolmentComplete = 203
-    case authorizationCorrect = 300
-    case authorizationInProgress = 301
-    case noAuthorizationRequired = 302
-    case authorizationDataRejectedByMerchant = 303
-    case authorizationExpired = 304
+    case newDataSubmitted = "X000"
+    case addFieldsBeingValidated = "X100"
+    case accountDoesNotExist = "X101"
+    case addDataRejectedByMerchant = "X102"
+    case NoAuthorizationProvided = "X103"
+    case accountNotRegistered = "X105"
+    case enrolmentInProgress = "X200"
+    case enrolmentDataRejectedByMerchant = "X201"
+    case accountAlreadyExists = "X202"
+    case enrolmentComplete = "X203"
+    case authorizationCorrect = "X300"
+    case authorizationInProgress = "X301"
+    case noAuthorizationRequired = "X302"
+    case authorizationDataRejectedByMerchant = "X303"
+    case authorizationExpired = "X304"
 
-    var codeString: String {
-        return "X\(rawValue)"
+    var code: Int {
+        let codeString = String(rawValue.suffix(3))
+        return Int(codeString)! // Tech debt
     }
 
     var description: String {
@@ -94,9 +90,7 @@ enum ReasonCode: Int, ReasonCodeProtocol, CaseIterable {
 extension ReasonCode: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_ReasonCode, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_ReasonCode {
         update(cdObject, \.id, with: id, delta: delta)
-        update(cdObject, \.value, with: NSNumber(value: rawValue), delta: delta)
-        update(cdObject, \.codeString, with: codeString, delta: delta)
-        update(cdObject, \.codeDescription, with: description, delta: delta)
+        update(cdObject, \.value, with: rawValue, delta: delta)
 
         return cdObject
     }

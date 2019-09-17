@@ -5,8 +5,6 @@ import Foundation
 import CoreData
 
 public enum CD_ReasonCodeAttributes: String {
-    case codeDescription = "codeDescription"
-    case codeString = "codeString"
     case id = "id"
     case value = "value"
 }
@@ -46,16 +44,10 @@ open class _CD_ReasonCode: NSManagedObject {
     // MARK: - Properties
 
     @NSManaged open
-    var codeDescription: String?
-
-    @NSManaged open
-    var codeString: String?
-
-    @NSManaged open
     var id: String!
 
     @NSManaged open
-    var value: NSNumber?
+    var value: String?
 
     // MARK: - Relationships
 
