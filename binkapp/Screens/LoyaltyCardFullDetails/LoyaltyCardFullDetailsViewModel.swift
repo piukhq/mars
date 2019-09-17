@@ -43,14 +43,15 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
-            if let cardId = self.membershipCard.id {
-                self.repository.deleteMembershipCard(id: cardId, onSuccess: { _ in
-                    yesCompletion()
-                }, onError: { (error: Error) in
-                    self.displaySimplePopupWithTitle("Error", andMessage: error.localizedDescription)
-                })
+        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
+            guard let strongSelf = self else {
+                return
             }
+            strongSelf.repository.deleteMembershipCard(id: strongSelf.membershipCard.id, onSuccess: { _ in
+                yesCompletion()
+            }, onError: { (error: Error) in
+                strongSelf.displaySimplePopupWithTitle("Error", andMessage: error.localizedDescription)
+            })
         }, noCompletion: {
             noCompletion()
         })

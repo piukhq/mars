@@ -76,7 +76,7 @@ extension TransactionsViewController: UITableViewDataSource {
         
         let transaction = viewModel.transactions[indexPath.row]
         let value = Int(transaction.amounts?.first?.value ?? 0)
-        cell.configure(transactionValue: value, timestamp: transaction.timestamp ?? 0, prefix: transaction.amounts?.first?.prefix, suffix: transaction.amounts?.first?.suffix)
+        cell.configure(transactionValue: value, timestamp: transaction.timestamp ?? 0.0, prefix: transaction.amounts?.first?.prefix, suffix: transaction.amounts?.first?.suffix)
         
         return cell
     }

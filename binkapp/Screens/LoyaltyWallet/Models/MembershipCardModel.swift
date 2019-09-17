@@ -11,7 +11,6 @@ import CoreData
 struct MembershipCardModel: Codable {
     let apiId: Int?
     let membershipPlan: Int?
-    let paymentCards: [PaymentCard]?
     let membershipTransactions: [MembershipTransaction]?
     let status: MembershipCardStatusModel?
     let card: CardModel?
