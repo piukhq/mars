@@ -13,6 +13,13 @@ struct MembershipCardStatusModel: Codable {
     let state: String?
     let reasonCodes: [ReasonCode]?
     
+    enum MembershipCardStatus: String {
+        case authorised
+        case unauthorised
+        case pending
+        case failed 
+    }
+    
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
         case state
