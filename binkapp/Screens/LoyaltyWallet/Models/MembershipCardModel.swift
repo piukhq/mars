@@ -34,7 +34,7 @@ struct MembershipCardModel: Codable {
 
 extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCard, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCard {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
 
 
         if let membershipPlanId = membershipPlan {
@@ -61,7 +61,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
 
 
         if let status = status {
-            let cdStatus = status.mapToCoreData(context, .update, overrideID: "")
+            let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: id))
             update(cdStatus, \.card, with: cdObject, delta: delta)
             update(cdObject, \.status, with: cdStatus, delta: delta)
         } else {
@@ -70,7 +70,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
 
 
         if let card = card {
-            let cdCard = card.mapToCoreData(context, .update, overrideID: "")
+            let cdCard = card.mapToCoreData(context, .update, overrideID: CardModel.overrideId(forParentId: id))
             update(cdCard, \.membershipCard, with: cdObject, delta: delta)
             update(cdObject, \.card, with: cdCard, delta: delta)
         } else {
@@ -90,7 +90,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
 
 
         if let account = account {
-            let cdAccount = account.mapToCoreData(context, .update, overrideID: "")
+            let cdAccount = account.mapToCoreData(context, .update, overrideID: MembershipCardAccountModel.overrideId(forParentId: id))
             update(cdAccount, \.card, with: cdObject, delta: delta)
             update(cdObject, \.account, with: cdAccount, delta: delta)
         } else {
@@ -120,6 +120,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         }
         
 
+        // At this point, all CD mapping seems correct
         return cdObject
     }
 }

@@ -33,7 +33,7 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
 
 
         if let featureSet = featureSet {
-            let cdFeatureSet = featureSet.mapToCoreData(context, .update, overrideID: "")
+            let cdFeatureSet = featureSet.mapToCoreData(context, .update, overrideID: FeatureSetModel.overrideId(forParentId: id))
             update(cdFeatureSet, \.plan, with: cdObject, delta: delta)
             update(cdObject, \.featureSet, with: cdFeatureSet, delta: delta)
         } else {
@@ -53,7 +53,7 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
 
 
         if let account = account {
-            let cdAccount = account.mapToCoreData(context, .update, overrideID: "")
+            let cdAccount = account.mapToCoreData(context, .update, overrideID: MembershipPlanAccountModel.overrideId(forParentId: id))
             update(cdAccount, \.plan, with: cdObject, delta: delta)
             update(cdObject, \.account, with: cdAccount, delta: delta)
         } else {

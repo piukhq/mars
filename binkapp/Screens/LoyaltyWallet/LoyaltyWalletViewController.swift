@@ -52,8 +52,6 @@ class LoyaltyWalletViewController: UIViewController {
 }
 
 extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSource {
-    //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.membershipCardsCount
     }
@@ -65,15 +63,18 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithClass(WalletLoyaltyCardTableViewCell.self, forIndexPath: indexPath)
 
-        guard let card = viewModel.membershipCard(forIndexPathSection: indexPath.section) else {
-            return cell
-        }
-        guard let plan = viewModel.membershipPlanForCard(card: card) else {
+        guard let cards = viewModel.getMembershipCards() else {
             return cell
         }
 
-        cell.configureUIWithMembershipCard(card: card, membershipPlan: plan)
+//        Category *sectionCategory=[[fetchedResultsController fetchedObjects] objectAtIndex:indexPath.section];
+//        NSSortDescriptor *sort=[NSSortDescriptor sortWithKey:@"pname" ascending:NO];
+//        NSArray *sortedPersons=[sectionCategory.people sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+//        Person *rowPerson=[sortedPersons objectAtIndex:indexPath.row];
+//        cell.textLabel.text = rowPerson.pname;
+
         
+
         return cell
     }
     

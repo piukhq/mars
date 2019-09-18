@@ -22,7 +22,7 @@ struct MembershipCardStatusModel: Codable {
 
 extension MembershipCardStatusModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCardStatus, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardStatus {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.state, with: state, delta: delta)
 
         cdObject.reasonCodes.forEach {

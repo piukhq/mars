@@ -15,7 +15,7 @@ protocol LoyaltyWalletViewModelDelegate {
 class LoyaltyWalletViewModel {
     private let repository: LoyaltyWalletRepository
     private let router: MainScreenRouter
-    var membershipCards: [CD_MembershipCard]?
+    private var membershipCards: [CD_MembershipCard]?
     private var membershipPlans: [CD_MembershipPlan]?
 
     var membershipCardsCount: Int {
@@ -60,55 +60,34 @@ class LoyaltyWalletViewModel {
 //        router.toBarcodeViewController(membershipPlan: plan, membershipCard: card)
 //    }
     
-//    func toFullDetailsCardScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
-//        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard, membershipPlan: membershipPlan)
-//    }
+    func toFullDetailsCardScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
+        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard, membershipPlan: membershipPlan)
+    }
     
-//    func getMembershipCards() -> [MembershipCardModel] {
-//        return membershipCards
-//    }
-//
+    func getMembershipCards() -> [CD_MembershipCard]? {
+        return membershipCards
+    }
+
+    func getMembershipPlans() -> [CD_MembershipPlan]? {
+        return membershipPlans
+    }
+
     func membershipCard(forIndexPathSection section: Int) -> CD_MembershipCard? {
         return membershipCards?[section]
     }
-//
-//    func getMembershipPlans() -> [MembershipPlanModel] {
-//        return membershipPlans
-//    }
-//
-//    func membershipPlan(forIndexPathSection section: Int) -> MembershipPlanModel {
-//        return membershipPlans[section]
-//    }
+
+    func membershipPlan(forIndexPathSection section: Int) -> CD_MembershipPlan? {
+        return membershipPlans?[section]
+    }
     
     func membershipPlanForCard(card: CD_MembershipCard) -> CD_MembershipPlan? {
         return card.membershipPlan
     }
-//
-//    func refreshScreen() {
-//        fetchData()
-//    }
 }
 
 // MARK: Private methods
 
 private extension LoyaltyWalletViewModel {
-    func fetchLoyaltyCards(completion: @escaping ([CD_MembershipCard]?) -> Void) {
-        repository.getMembershipCards { loyaltyCards in
-            completion(loyaltyCards)
-
-//            guard let wself = self else { return }
-//            wself.membershipCards = response
-//            wself.repository.getMembershipPlans { (response) in
-//                wself.membershipPlans = response
-//                let encoder = JSONEncoder()
-//                if let encoded = try? encoder.encode(response) {
-//                    let defaults = UserDefaults.standard
-//                    defaults.set(encoded, forKey: "MembershipPlans")
-//                }
-//                wself.delegate?.loyaltyWalletViewModelDidFetchData(wself)
-//            }
-        }
-    }
     
     func deleteMembershipCard(id: String, completion: @escaping () -> Void) {
         repository.deleteMembershipCard(id: id) { _ in

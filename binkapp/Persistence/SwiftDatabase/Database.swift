@@ -174,7 +174,14 @@ public protocol CoreDataIDMappable: CoreDataMappable {
 
 public extension CoreDataIDMappable {
     var id: String {
-        return ""
+        guard let apiId = apiId else {
+            return Self.overrideId(forParentId: "")
+        }
+        return String(apiId)
+    }
+
+    static func overrideId(forParentId parentId: String) -> String {
+        return "\(parentId)_\(String(describing: Self.self))"
     }
 }
 
