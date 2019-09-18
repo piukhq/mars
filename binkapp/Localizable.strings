@@ -88,6 +88,9 @@
 "points_history_title" = "Points history";
 "recent_transaction_history_subtitle" = "Your recent transaction history.";
 
+"only_points_log_in_description" = "You can log in to your %@ account to see your points balance. This is optional";
+"points_and_transactions_log_in_description" = "You can log in to your %@ account to see your points balance and transaction history. This is optional";
+
 "debug_menu_tools_section_title" = "Tools";
 
 "points_module_view_history_message" = "View history";

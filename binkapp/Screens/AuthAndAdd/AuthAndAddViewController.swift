@@ -53,11 +53,7 @@ class AuthAndAddViewController: UIViewController {
         titleLabel.text = "log_in_title".localized
         titleLabel.font = UIFont.headline
         
-        if let planName = membershipPlan.account?.planName {
-            descriptionLabel.text = String(format: "auth_screen_description".localized, planName)
-            descriptionLabel.font = UIFont.bodyTextLarge
-            descriptionLabel.isHidden = false
-        }
+        viewModel.setDescription(label: descriptionLabel)
         
         loginButton.setTitle("log_in_title".localized, for: .normal)
         
