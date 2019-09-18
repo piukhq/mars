@@ -72,12 +72,12 @@ class LoyaltyWalletViewModel {
         return membershipPlans
     }
 
-    func membershipCard(forIndexPathSection section: Int) -> CD_MembershipCard? {
-        return membershipCards?[section]
+    func membershipCard(forIndexPath indexPath: IndexPath) -> CD_MembershipCard? {
+        return membershipCards?[indexPath.section]
     }
 
-    func membershipPlan(forIndexPathSection section: Int) -> CD_MembershipPlan? {
-        return membershipPlans?[section]
+    func membershipPlan(forIndexPath indexPath: IndexPath) -> CD_MembershipPlan? {
+        return membershipPlans?[indexPath.section]
     }
     
     func membershipPlanForCard(card: CD_MembershipCard) -> CD_MembershipPlan? {

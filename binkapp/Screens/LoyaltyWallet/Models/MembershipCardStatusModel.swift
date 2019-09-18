@@ -30,7 +30,8 @@ extension MembershipCardStatusModel: CoreDataMappable, CoreDataIDMappable {
             context.delete(reasonCode)
         }
         reasonCodes?.forEach { reasonCode in
-            let cdReasonCode = reasonCode.mapToCoreData(context, .update, overrideID: nil)
+            let override = ReasonCode.overrideId(forParentId: overrideID ?? id)
+            let cdReasonCode = reasonCode.mapToCoreData(context, .update, overrideID: "\(override)_\(reasonCode.rawValue)")
             update(cdReasonCode, \.status, with: cdObject, delta: delta)
             cdObject.addReasonCodesObject(cdReasonCode)
         }

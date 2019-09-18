@@ -63,50 +63,15 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithClass(WalletLoyaltyCardTableViewCell.self, forIndexPath: indexPath)
 
-        guard let cards = viewModel.getMembershipCards() else {
+        // this seems to return a fault object, with nil properties
+        guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
             return cell
         }
 
-//        Category *sectionCategory=[[fetchedResultsController fetchedObjects] objectAtIndex:indexPath.section];
-//        NSSortDescriptor *sort=[NSSortDescriptor sortWithKey:@"pname" ascending:NO];
-//        NSArray *sortedPersons=[sectionCategory.people sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
-//        Person *rowPerson=[sortedPersons objectAtIndex:indexPath.row];
-//        cell.textLabel.text = rowPerson.pname;
-
-        
+        // configure cell
 
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: "barcode_swipe_title".localized, handler: { [weak self] _,_,_  in
-            guard let wself = self else { return }
-//            wself.viewModel.toBarcodeViewController(section: indexPath.section)
-            wself.tableView.reloadData()
-        })
-        
-        action.image = UIImage(named: "swipeBarcode")
-        action.backgroundColor = UIColor(red: 99/255, green: 159/255, blue: 255/255, alpha: 1)
-        let configuration = UISwipeActionsConfiguration(actions: [action])
-        return configuration
-    }
-
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let action = UIContextualAction(style: .normal, title: "delete_swipe_title".localized) { _, _, completion in
-//            self.viewModel.showDeleteConfirmationAlert(index: indexPath.row, yesCompletion: {
-//                tableView.deleteRows(at: [indexPath], with: .automatic)
-//                tableView.reloadData()
-//            }, noCompletion: {
-//                tableView.setEditing(false, animated: true)
-//            })
-//        }
-//
-//        action.image = UIImage(named: "trashIcon")
-//        action.backgroundColor = UIColor.red
-//        let configuration = UISwipeActionsConfiguration(actions: [action])
-//
-//        return configuration
-//    }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 12

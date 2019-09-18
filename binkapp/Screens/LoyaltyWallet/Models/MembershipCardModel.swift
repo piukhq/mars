@@ -41,7 +41,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             // Mock the plan response from the plan id we have so that we can map correctly
             let plan = MembershipPlanModel(apiId: membershipPlanId, status: nil, featureSet: nil, images: nil, account: nil, balances: nil)
 
-            let cdMembershipPlan = plan.mapToCoreData(context, .update, overrideID: "")
+            let cdMembershipPlan = plan.mapToCoreData(context, .update, overrideID: nil)
             update(cdMembershipPlan, \.membershipCard, with: cdObject, delta: delta)
             update(cdObject, \.membershipPlan, with: cdMembershipPlan, delta: delta)
         } else {
@@ -120,7 +120,6 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         }
         
 
-        // At this point, all CD mapping seems correct
         return cdObject
     }
 }
