@@ -24,7 +24,9 @@ class PointsModuleView: CustomView {
         case loginPending
         case loginUnavailable
         case signUp
+        case signUpPending
         case registerGhostCard
+        case registerGhostCardPending
     }
     
     private var action: PointsModuleAction?
@@ -59,7 +61,7 @@ class PointsModuleView: CustomView {
                 switch reasonCodes[0] {
                 case "X200":
                     // Points module 1.9
-                    configure(imageName: imageName, titleText: "points_module_signing_up_status".localized, subtitleText: "please_wait_title".localized, touchAction: .loginPending)
+                    configure(imageName: imageName, titleText: "points_module_signing_up_status".localized, subtitleText: "please_wait_title".localized, touchAction: .signUpPending)
                     break
                 case "X000", "X301":
                     // Points module 1.7
@@ -67,7 +69,7 @@ class PointsModuleView: CustomView {
                     break
                 default:
                     // Points module 1.11 (need reason codes, set by defaul)
-                    configure(imageName: imageName, titleText: "points_module_registering_card_status".localized, subtitleText: "please_wait_title".localized, touchAction: .loginPending)
+                    configure(imageName: imageName, titleText: "points_module_registering_card_status".localized, subtitleText: "please_wait_title".localized, touchAction: .registerGhostCardPending)
                     break
                 }
             } else {
