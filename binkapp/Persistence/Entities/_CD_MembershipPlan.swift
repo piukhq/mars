@@ -14,7 +14,6 @@ public enum CD_MembershipPlanRelationships: String {
     case balances = "balances"
     case featureSet = "featureSet"
     case images = "images"
-    case membershipCard = "membershipCard"
 }
 
 open class _CD_MembershipPlan: NSManagedObject {
@@ -74,9 +73,6 @@ open class _CD_MembershipPlan: NSManagedObject {
     open func imagesSet() -> NSMutableSet {
         return self.images.mutableCopy() as! NSMutableSet
     }
-
-    @NSManaged open
-    var membershipCard: CD_MembershipCard?
 
 }
 

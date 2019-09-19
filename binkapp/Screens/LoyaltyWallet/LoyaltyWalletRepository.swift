@@ -82,8 +82,7 @@ class LoyaltyWalletRepository {
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipPlanModel]) in
             Current.database.performBackgroundTask { context in
                 response.forEach {
-                    let cdObject = $0.mapToCoreData(context, .delta, overrideID: nil)
-                    print(cdObject)
+                    $0.mapToCoreData(context, .delta, overrideID: nil)
                 }
 
                 try? context.save()

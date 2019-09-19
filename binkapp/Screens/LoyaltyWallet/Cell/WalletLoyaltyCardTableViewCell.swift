@@ -65,10 +65,18 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
         layer.shadowOpacity = 0.9
         layer.masksToBounds = true
 
-        guard let images = plan.images as? Set<CD_MembershipCardImage> else { return }
-        guard let cardTypeInt = plan.featureSet?.cardType as? Int else { return}
-        guard let cardType = FeatureSetModel.PlanCardType(rawValue: cardTypeInt) else { return }
-        guard let balances = card.balances as? Set<CD_MembershipCardBalance> else { return }
+        guard let images = plan.images as? Set<CD_MembershipCardImage> else {
+            return
+        }
+        guard let cardTypeInt = plan.featureSet?.cardType as? Int else {
+            return
+        }
+        guard let cardType = FeatureSetModel.PlanCardType(rawValue: cardTypeInt) else {
+            return
+        }
+        guard let balances = card.balances as? Set<CD_MembershipCardBalance> else {
+            return
+        }
 
         if let imageStringURL = images.first(where: {($0.type == 3)})?.url {
             let imageURL = URL(string: imageStringURL)!

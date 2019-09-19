@@ -6,6 +6,7 @@ import CoreData
 
 public enum CD_MembershipCardAttributes: String {
     case id = "id"
+    case membershipPlan = "membershipPlan"
 }
 
 public enum CD_MembershipCardRelationships: String {
@@ -13,7 +14,6 @@ public enum CD_MembershipCardRelationships: String {
     case balances = "balances"
     case card = "card"
     case images = "images"
-    case membershipPlan = "membershipPlan"
     case paymentCards = "paymentCards"
     case status = "status"
     case transactions = "transactions"
@@ -52,6 +52,9 @@ open class _CD_MembershipCard: NSManagedObject {
     @NSManaged open
     var id: String!
 
+    @NSManaged open
+    var membershipPlan: NSNumber?
+
     // MARK: - Relationships
 
     @NSManaged open
@@ -73,9 +76,6 @@ open class _CD_MembershipCard: NSManagedObject {
     open func imagesSet() -> NSMutableSet {
         return self.images.mutableCopy() as! NSMutableSet
     }
-
-    @NSManaged open
-    var membershipPlan: CD_MembershipPlan?
 
     @NSManaged open
     var paymentCards: NSSet
