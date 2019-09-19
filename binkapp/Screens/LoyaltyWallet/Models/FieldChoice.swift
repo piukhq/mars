@@ -9,15 +9,18 @@
 import Foundation
 import CoreData
 
-struct FieldChoice: Codable {
-    let apiId: Int?
-    let value: String
+typealias FieldChoice = String
+
+extension FieldChoice {
+    public var apiId: Int? {
+        return nil
+    }
 }
 
 extension FieldChoice: CoreDataMappable, CoreDataIDMappable {
-    func objectToMapTo(_ cdObject: CD_FieldChoice, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_FieldChoice {
-        update(cdObject, \.id, with: id, delta: delta)
-        update(cdObject, \.value, with: value, delta: delta)
+    public func objectToMapTo(_ cdObject: CD_FieldChoice, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_FieldChoice {
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
+        update(cdObject, \.value, with: self, delta: delta)
 
         return cdObject
     }
