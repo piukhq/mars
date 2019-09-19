@@ -21,7 +21,7 @@ struct FeatureSetModel: Codable {
     let digitalOnly: Bool?
     let hasPoints: Bool?
     let cardType: PlanCardType?
-    let linkingSupport: [LinkingSupportModel]?
+    let linkingSupport: [LinkingSupportType]?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -48,7 +48,7 @@ extension FeatureSetModel: CoreDataMappable, CoreDataIDMappable {
             context.delete(support)
         }
         linkingSupport?.forEach { support in
-            let cdSupport = support.mapToCoreData(context, .update, overrideID: nil)
+            let cdSupport = support.mapToCoreData(context, .update, overrideID: nil) // This should have an override?
             update(cdSupport, \.featureSet, with: cdObject, delta: delta)
             cdObject.addLinkingSupportObject(cdSupport)
         }

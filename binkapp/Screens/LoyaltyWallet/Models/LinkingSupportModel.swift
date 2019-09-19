@@ -9,15 +9,20 @@
 import Foundation
 import CoreData
 
-struct LinkingSupportModel: Codable {
-    let apiId: Int?
-    let value: String
+enum LinkingSupportType: String, Codable {
+    case add = "ADD"
+    case registration = "REGISTRATION"
+    case enrol = "ENROL"
+
+    var apiId: Int? {
+        return nil // This will force CoreDataIDMappable to kick in and give this object a computed id based on the parent object
+    }
 }
 
-extension LinkingSupportModel: CoreDataMappable, CoreDataIDMappable {
+extension LinkingSupportType: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_LinkingSupport, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_LinkingSupport {
-        update(cdObject, \.id, with: id, delta: delta)
-        update(cdObject, \.value, with: value, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
+        update(cdObject, \.value, with: rawValue, delta: delta)
 
         return cdObject
     }
