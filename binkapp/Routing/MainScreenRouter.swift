@@ -121,6 +121,12 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
+    func toPaymentTermsAndConditionsViewController() {
+        let viewModel = PaymentTermsAndConditionsViewModel(router: self)
+        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
     func toSimpleInfoViewController(pendingType: PendingType) {
         let viewModel = SimpleInfoViewModel(router: self, pendingType: pendingType)
         let viewController = SimpleInfoViewController(viewModel: viewModel)

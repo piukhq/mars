@@ -104,3 +104,5 @@
 "points_module_logging_in_status" = "Logging in";
 "points_module_registering_card_status" = "Registering card";
 "points_module_retry_log_in_status" = "Retry log in";
+
+"terms_and_conditions_title" = "Terms and conditions";
