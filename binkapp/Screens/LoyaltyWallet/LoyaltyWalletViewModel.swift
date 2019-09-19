@@ -28,8 +28,8 @@ class LoyaltyWalletViewModel {
     }
 
     func getMembershipCards(forceRefresh: Bool = false, completion: @escaping () -> Void) {
-        repository.getMembershipCards(forceRefresh: forceRefresh) { membershipCards in
-            self.membershipCards = membershipCards
+        repository.getMembershipCards(forceRefresh: forceRefresh) { [weak self] membershipCards in
+            self?.membershipCards = membershipCards // self.membershipCards are correct here. all have properties
             completion()
         }
     }

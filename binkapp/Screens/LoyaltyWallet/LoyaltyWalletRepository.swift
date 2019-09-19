@@ -20,8 +20,7 @@ class LoyaltyWalletRepository {
         var membershipCards: [MembershipCardModel]?
 
         func fetchCoreDataObjects(completion: @escaping ([CD_MembershipCard]?) -> Void) {
-            let database = Database(named: "binkapp")
-            database.performBackgroundTask { context in
+            Current.database.performBackgroundTask { context in
                 membershipCards?.forEach {
                     $0.mapToCoreData(context, .delta, overrideID: nil)
                 }
@@ -29,7 +28,7 @@ class LoyaltyWalletRepository {
                 try? context.save()
 
                 DispatchQueue.main.async {
-                    database.performTask { context in
+                    Current.database.performTask { context in
                         let objects = context.fetchAll(CD_MembershipCard.self)
                         completion(objects)
                     }
@@ -57,9 +56,7 @@ class LoyaltyWalletRepository {
         let url = RequestURL.membershipPlans
         let method = RequestHTTPMethod.get
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipPlanModel]) in
-
-            let database = Database(named: "binkapp")
-            database.performBackgroundTask { context in
+            Current.database.performBackgroundTask { context in
                 response.forEach {
                     let cdObject = $0.mapToCoreData(context, .delta, overrideID: nil)
                     print(cdObject)
@@ -68,7 +65,7 @@ class LoyaltyWalletRepository {
                 try? context.save()
 
                 DispatchQueue.main.async {
-                    database.performTask { context in
+                    Current.database.performTask { context in
                         let objects = context.fetchAll(CD_MembershipPlan.self)
                         completion(objects)
                     }
