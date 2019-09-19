@@ -162,6 +162,11 @@
 		B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76659972320F68C00B327BE /* HyperlinkAlertController.swift */; };
 		B766599A2320F68D00B327BE /* HyperlinkAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B76659982320F68C00B327BE /* HyperlinkAlertController.xib */; };
 		B766599E23214A4600B327BE /* WalletLoyaltyCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE422F073CE00FA3031 /* WalletLoyaltyCardTableViewCell.swift */; };
+		B774E9AA233123BD006D4131 /* PaymentTermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774E9A8233123BD006D4131 /* PaymentTermsAndConditionsViewController.swift */; };
+		B774E9AB233123BD006D4131 /* PaymentTermsAndConditionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B774E9A9233123BD006D4131 /* PaymentTermsAndConditionsViewController.xib */; };
+		B774E9AD233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */; };
+		B774E9AF233263C5006D4131 /* BinkFloatingButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774E9AE233263C5006D4131 /* BinkFloatingButtonsView.swift */; };
+		B774E9B1233263EB006D4131 /* BinkFloatingButtonsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B774E9B0233263EB006D4131 /* BinkFloatingButtonsView.xib */; };
 		B7D577B3231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */; };
 		B7D577B4231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D577B2231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib */; };
 		B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */; };
@@ -397,6 +402,11 @@
 		B7665993231E57CC00B327BE /* CardDetailsInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardDetailsInfoView.xib; sourceTree = "<group>"; };
 		B76659972320F68C00B327BE /* HyperlinkAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkAlertController.swift; sourceTree = "<group>"; };
 		B76659982320F68C00B327BE /* HyperlinkAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HyperlinkAlertController.xib; sourceTree = "<group>"; };
+		B774E9A8233123BD006D4131 /* PaymentTermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTermsAndConditionsViewController.swift; sourceTree = "<group>"; };
+		B774E9A9233123BD006D4131 /* PaymentTermsAndConditionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentTermsAndConditionsViewController.xib; sourceTree = "<group>"; };
+		B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTermsAndConditionsViewModel.swift; sourceTree = "<group>"; };
+		B774E9AE233263C5006D4131 /* BinkFloatingButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkFloatingButtonsView.swift; sourceTree = "<group>"; };
+		B774E9B0233263EB006D4131 /* BinkFloatingButtonsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BinkFloatingButtonsView.xib; sourceTree = "<group>"; };
 		B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewController.swift; sourceTree = "<group>"; };
 		B7D577B2231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoyaltyCardFullDetailsViewController.xib; sourceTree = "<group>"; };
 		B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -765,6 +775,8 @@
 				3CFDB226230C38A700E75A14 /* BinkTextField.swift */,
 				3CFDB224230C382400E75A14 /* BinkGradientButton.swift */,
 				3CD4F14D230D35AE0075F63C /* BinkInfoButton.swift */,
+				B774E9AE233263C5006D4131 /* BinkFloatingButtonsView.swift */,
+				B774E9B0233263EB006D4131 /* BinkFloatingButtonsView.xib */,
 				3CD39615231E8E7100CD5C31 /* LayoutHelper.swift */,
 			);
 			name = BinkUI;
@@ -901,6 +913,7 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B76749112331232D0002047A /* PaymentTermsAndConditions */,
 				3C7067EC232FD50800AB88A5 /* SimpleInfo */,
 				3C48E7DE232A4B0300ADE410 /* Transactions */,
 				B713662323268FB9008A0ED7 /* PLLScreen */,
@@ -957,6 +970,16 @@
 				B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		B76749112331232D0002047A /* PaymentTermsAndConditions */ = {
+			isa = PBXGroup;
+			children = (
+				B774E9A8233123BD006D4131 /* PaymentTermsAndConditionsViewController.swift */,
+				B774E9A9233123BD006D4131 /* PaymentTermsAndConditionsViewController.xib */,
+				B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */,
+			);
+			path = PaymentTermsAndConditions;
 			sourceTree = "<group>";
 		};
 		B7D577B02318097500C6B145 /* LoyaltyCardFullDetails */ = {
@@ -1209,6 +1232,7 @@
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
+				B774E9B1233263EB006D4131 /* BinkFloatingButtonsView.xib in Resources */,
 				3CD3493822F99E1D000C1F4D /* NunitoSans-Regular.ttf in Resources */,
 				3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */,
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,
@@ -1225,6 +1249,7 @@
 				3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */,
 				3CB6BF7323141CF400B74882 /* AuthAndAddViewController.xib in Resources */,
 				3C873FED22F073CF00FA3031 /* PaymentWalletViewController.xib in Resources */,
+				B774E9AB233123BD006D4131 /* PaymentTermsAndConditionsViewController.xib in Resources */,
 				B713662F232A63BA008A0ED7 /* PointsModuleView.xib in Resources */,
 				3CD3493522F99E1D000C1F4D /* NunitoSans-Light.ttf in Resources */,
 				3C873FFB22F073CF00FA3031 /* LoyaltyWalletViewController.xib in Resources */,
@@ -1493,6 +1518,7 @@
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
 				3C48E7E4232A4DFF00ADE410 /* TransactionsViewModel.swift in Sources */,
+				B774E9AD233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift in Sources */,
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
 				3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */,
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
@@ -1558,6 +1584,7 @@
 				B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */,
 				EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */,
 				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,
+				B774E9AF233263C5006D4131 /* BinkFloatingButtonsView.swift in Sources */,
 				3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */,
 				3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */,
 				3C873FF222F073CF00FA3031 /* PaymentWalletPresenter.swift in Sources */,
@@ -1567,6 +1594,7 @@
 				3C873FF322F073CF00FA3031 /* MainTabBarRepository.swift in Sources */,
 				3C873FF022F073CF00FA3031 /* PaymentWalletRouter.swift in Sources */,
 				AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */,
+				B774E9AA233123BD006D4131 /* PaymentTermsAndConditionsViewController.swift in Sources */,
 				3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */,
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
 				3C873FF122F073CF00FA3031 /* PaymentWalletModels.swift in Sources */,

@@ -9,14 +9,19 @@ import Foundation
 import UIKit
 
 extension UIView {
-    func setGradientBackground(firstColor: UIColor, secondColor: UIColor) {
+    enum GradientOrientation {
+        case vertical
+        case horizontal
+    }
+    
+    func setGradientBackground(firstColor: UIColor, secondColor: UIColor, orientation: GradientOrientation, roundedCorner: Bool) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = bounds
         gradientLayer.colors = [firstColor.cgColor, secondColor.cgColor]
         gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
-        gradientLayer.cornerRadius = self.frame.size.height / 2
+        gradientLayer.startPoint = orientation == .horizontal ? CGPoint(x: 1.0, y: 0.0) : CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = orientation == .horizontal ? CGPoint(x: 0.0, y: 0.0) : CGPoint(x: 0.5, y: 1.0)
+        gradientLayer.cornerRadius = roundedCorner ? frame.size.height / 2 : 0
         
         layer.insertSublayer(gradientLayer, at: 0)
     }
