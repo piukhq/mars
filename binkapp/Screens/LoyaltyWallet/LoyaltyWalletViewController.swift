@@ -29,9 +29,9 @@ class LoyaltyWalletViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadMembershipCards), name: .didDeleteMemebershipCard, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadWallet), name: .didDeleteMemebershipCard, object: nil)
         
-        refreshControl.addTarget(self, action: #selector(loadMembershipCards), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(loadWallet), for: .valueChanged)
         tableView.addSubview(refreshControl)
     }
     
@@ -41,8 +41,8 @@ class LoyaltyWalletViewController: UIViewController {
         super.viewWillDisappear(true)
     }
 
-    @objc private func loadMembershipCards() {
-        viewModel.getMembershipCards(forceRefresh: true) { [weak self] in
+    @objc private func loadWallet() {
+        viewModel.getWallet(forceRefresh: true) { [weak self] in
             DispatchQueue.main.async {
                 self?.refreshControl.endRefreshing()
                 self?.tableView.reloadData()
@@ -63,7 +63,6 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithClass(WalletLoyaltyCardTableViewCell.self, forIndexPath: indexPath)
 
-        // this seems to return a fault object, with nil properties
         guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
             return cell
         }

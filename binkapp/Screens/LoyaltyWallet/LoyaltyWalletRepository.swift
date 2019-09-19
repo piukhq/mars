@@ -52,7 +52,31 @@ class LoyaltyWalletRepository {
         })
     }
     
-    func getMembershipPlans(completion: @escaping ([CD_MembershipPlan]) -> Void) {
+    func getMembershipPlans(forceRefresh: Bool = false, completion: @escaping ([CD_MembershipPlan]?) -> Void) {
+        var membershipPlans: [MembershipPlanModel]?
+
+        func fetchCoreDataObjects(completion: @escaping ([CD_MembershipPlan]?) -> Void) {
+            Current.database.performBackgroundTask { context in
+                membershipPlans?.forEach {
+                    $0.mapToCoreData(context, .delta, overrideID: nil)
+                }
+
+                try? context.save()
+
+                DispatchQueue.main.async {
+                    Current.database.performTask { context in
+                        let objects = context.fetchAll(CD_MembershipPlan.self)
+                        completion(objects)
+                    }
+                }
+            }
+        }
+
+        guard forceRefresh else {
+            fetchCoreDataObjects(completion: completion)
+            return
+        }
+
         let url = RequestURL.membershipPlans
         let method = RequestHTTPMethod.get
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipPlanModel]) in

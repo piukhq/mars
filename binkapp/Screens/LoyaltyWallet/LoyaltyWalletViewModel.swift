@@ -27,10 +27,14 @@ class LoyaltyWalletViewModel {
         self.router = router
     }
 
-    func getMembershipCards(forceRefresh: Bool = false, completion: @escaping () -> Void) {
-        repository.getMembershipCards(forceRefresh: forceRefresh) { [weak self] membershipCards in
-            self?.membershipCards = membershipCards // self.membershipCards are correct here. all have properties
-            completion()
+    func getWallet(forceRefresh: Bool = false, completion: @escaping () -> Void) {
+        repository.getMembershipCards(forceRefresh: forceRefresh) { [weak self] cards in
+            self?.membershipCards = cards
+            
+            self?.repository.getMembershipPlans(forceRefresh: forceRefresh, completion: { plans in
+                self?.membershipPlans = plans
+                completion()
+            })
         }
     }
     
