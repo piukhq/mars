@@ -29,20 +29,31 @@ class LoyaltyWalletViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
         
-        NotificationCenter.default.addObserver(self, selector: #selector(loadWallet), name: .didDeleteMemebershipCard, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshWallet), name: .didDeleteMemebershipCard, object: nil)
         
-        refreshControl.addTarget(self, action: #selector(loadWallet), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshWallet), for: .valueChanged)
         tableView.addSubview(refreshControl)
+
+        loadLocalWallet()
+        refreshWallet()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         refreshControl.endRefreshing()
         tableView.contentOffset = .zero
-        super.viewWillDisappear(true)
+        super.viewWillDisappear(animated)
     }
 
-    @objc private func loadWallet() {
-        viewModel.getWallet(forceRefresh: true) { [weak self] in
+    private func loadLocalWallet() {
+        loadWallet()
+    }
+
+    @objc private func refreshWallet() {
+        loadWallet(forceRefresh: true)
+    }
+
+    @objc private func loadWallet(forceRefresh: Bool = false) {
+        viewModel.getWallet(forceRefresh: forceRefresh) { [weak self] in
             DispatchQueue.main.async {
                 self?.refreshControl.endRefreshing()
                 self?.tableView.reloadData()
@@ -63,11 +74,15 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithClass(WalletLoyaltyCardTableViewCell.self, forIndexPath: indexPath)
 
-        guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
+        guard let card = viewModel.membershipCard(forIndexPath: indexPath) else {
             return cell
         }
 
-        // configure cell
+        guard let plan = viewModel.membershipPlanForCard(card: card) else {
+            return cell
+        }
+
+        cell.configureUIWithMembershipCard(card: card, membershipPlan: plan)
 
         return cell
     }

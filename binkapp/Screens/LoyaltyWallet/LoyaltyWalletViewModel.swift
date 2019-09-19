@@ -85,7 +85,7 @@ class LoyaltyWalletViewModel {
     }
     
     func membershipPlanForCard(card: CD_MembershipCard) -> CD_MembershipPlan? {
-        return card.membershipPlan
+        return membershipPlans?.first(where: { $0.id == card.membershipPlan?.id })
     }
 }
 
