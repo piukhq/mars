@@ -10,10 +10,10 @@ import CoreData
 
 struct MembershipCardStatusModel: Codable {
     let apiId: Int?
-    let state: String?
+    let state: MembershipCardStatus?
     let reasonCodes: [ReasonCode]?
     
-    enum MembershipCardStatus: String {
+    enum MembershipCardStatus: String, Codable {
         case authorised
         case unauthorised
         case pending
@@ -30,7 +30,7 @@ struct MembershipCardStatusModel: Codable {
 extension MembershipCardStatusModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCardStatus, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardStatus {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
-        update(cdObject, \.state, with: state, delta: delta)
+        update(cdObject, \.state, with: state?.rawValue, delta: delta)
 
         cdObject.reasonCodes.forEach {
             guard let reasonCode = $0 as? CD_ReasonCode else { return }
