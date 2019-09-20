@@ -16,8 +16,6 @@ class BaseFormViewController: UIViewController {
         static let cellHeight: CGFloat = 80.0
         static let horizontalInset: CGFloat = 25.0
         static let maskingInset: CGFloat = 209.0
-        static let buttonWidthPercentage: CGFloat = 0.75
-        static let buttonHeight: CGFloat = 52.0
     }
     
     // MARK: - Properties
@@ -67,15 +65,6 @@ class BaseFormViewController: UIViewController {
         return maskingView
     }()
     
-    private lazy var addButton: BinkGradientButton = {
-        let button = BinkGradientButton(frame: .zero)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Add", for: .normal)
-        button.titleLabel?.font = UIFont.buttonText
-        view.addSubview(button)
-        return button
-    }()
-    
     lazy var layout = UICollectionViewFlowLayout()
     
     let dataSource: FormDataSource
@@ -85,7 +74,6 @@ class BaseFormViewController: UIViewController {
     init(title: String, description: String, dataSource: FormDataSource) {
         self.dataSource = dataSource
         super.init(nibName: nil, bundle: nil)
-        configureLayout()
         titleLabel.text = title
         descriptionLabel.text = description
     }
@@ -101,6 +89,11 @@ class BaseFormViewController: UIViewController {
         setBottomItemMask()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureLayout()
+    }
+    
     private func configureLayout() {
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -112,11 +105,6 @@ class BaseFormViewController: UIViewController {
             maskingView.rightAnchor.constraint(equalTo: view.rightAnchor),
             maskingView.heightAnchor.constraint(equalToConstant: Constants.maskingInset),
             maskingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            addButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: Constants.buttonWidthPercentage),
-            addButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
-            addButton.centerYAnchor.constraint(equalTo: maskingView.centerYAnchor),
-            addButton.centerXAnchor.constraint(equalTo: maskingView.centerXAnchor),
             ])
     }
     

@@ -11,11 +11,11 @@ import Foundation
 class PaymentCardCreateModel {
     var fullPan: String?
     var nameOnCard: String?
-    var month: String?
-    var year: String?
+    var month: Int?
+    var year: Int?
     var cardType: PaymentCardType?
     
-    init(fullPan: String?, nameOnCard: String?, month: String?, year: String?) {
+    init(fullPan: String?, nameOnCard: String?, month: Int?, year: Int?) {
         self.fullPan = fullPan
         self.nameOnCard = nameOnCard
         self.month = month

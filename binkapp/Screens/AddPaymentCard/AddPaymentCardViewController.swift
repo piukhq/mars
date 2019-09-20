@@ -7,11 +7,27 @@
 //
 
 import UIKit
+import Keys
 
 class AddPaymentCardViewController: BaseFormViewController {
     
     private let model: PaymentCardCreateModel
     private let temp = TemporaryReactiveView()
+    
+    private struct Constants {
+        static let buttonWidthPercentage: CGFloat = 0.75
+        static let buttonHeight: CGFloat = 52.0
+    }
+    
+    private lazy var addButton: BinkGradientButton = {
+        let button = BinkGradientButton(frame: .zero)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Add", for: .normal)
+        button.titleLabel?.font = UIFont.buttonText
+        button.addTarget(self, action: .addButtonTapped, for: .touchUpInside)
+        view.addSubview(button)
+        return button
+    }()
     
     init(model: PaymentCardCreateModel) {
         self.model = model
@@ -23,9 +39,22 @@ class AddPaymentCardViewController: BaseFormViewController {
         )
         
         dataSource.delegate = self
-
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureLayout()
         stackScrollView.insert(arrangedSubview: temp, atIndex: 0, customSpacing: 30.0)
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "Privacy and security"), hyperlinkButton(title: "More information")])
+    }
+    
+    func configureLayout() {
+        NSLayoutConstraint.activate([
+            addButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: Constants.buttonWidthPercentage),
+            addButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -78.0),
+            addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            ])
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,6 +70,81 @@ class AddPaymentCardViewController: BaseFormViewController {
         button.setAttributedTitle(attrString, for: .normal)
         button.contentHorizontalAlignment = .left
         return button
+    }
+    
+    @objc func addButtonTapped() {
+        
+        let json = SpreedlyRequest(
+            firstName: "Max",
+            lastName: "Woodhams",
+            number: "5355220148983616",
+            month: "11",
+            year: "20"
+        )
+        
+//        let configuration = URLSessionConfiguration.default
+//        configuration.urlCredentialStorage = nil
+//
+//        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+//        let jsonEncoder = JSONEncoder()
+//        do {
+//            let jsonData = try jsonEncoder.encode(json)
+//            let jsonString = String(data: jsonData, encoding: .utf8)
+//            print("JSON String : " + jsonString!)
+//        } catch {
+//
+//        }
+//
+//        let keys = BinkappKeys()
+//
+//        var request = URLRequest(url: URL(string: "https://core.spreedly.com/v1/payment_methods.json?environment_key=\(keys.spreedlyEnvironmentKey)")!)
+//        request.httpMethod = "POST"
+//
+//        let task = session.dataTask(with: request) { (data, response, error) in
+//
+//        }
+//
+//        task.resume()
+        
+        guard let paymentCreateRequest = PaymentCardCreateRequest(model: self.model) else { return }
+        
+        let api = ApiManager()
+        
+//        apiManager.doRequest(url: url, httpMethod: method, parameters: jsonCard, onSuccess: { (response: MembershipCardModel) in
+//            completion(response)
+//        })
+        
+        do {
+            try api.doRequest(url: .postPaymentCard, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardResponse) in
+                
+            }, onError: { error in
+                print(error)
+            })
+        } catch {
+            
+        }
+
+//        api.doRequest(
+//            url: .postPaymentCard,
+//            httpMethod: .post, onSuccess: (response: PaymentCardResponse) { in
+//
+//        }
+    }
+}
+
+extension Encodable {
+    func asDictionary() throws -> [String: Any] {
+        let data = try JSONEncoder().encode(self)
+        guard let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
+            throw NSError()
+        }
+        return dictionary
+    }
+}
+
+extension AddPaymentCardViewController: URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        completionHandler(.useCredential, nil)
     }
 }
 
@@ -89,9 +193,26 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
         if field.fieldType == .cardNumber {
             let type = PaymentCardType.type(from: value)
             self.model.cardType = type
+            self.model.fullPan = value
             temp.update(with: type)
         }
+        
+        if field.fieldType == .text {
+            self.model.nameOnCard = value
+        }
     }
+    
+    func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {
+        // For mapping to the payment card expiry fields, we only care if we have BOTH
+        guard options.count > 1 else { return }
+        
+        if let month = options.first as? Int { self.model.month = month }
+        if let year = options.last as? Int { self.model.year = year }
+    }
+}
+
+private extension Selector {
+    static let addButtonTapped = #selector(AddPaymentCardViewController.addButtonTapped)
 }
 
 //TODO: Replace me with the actual CELL for payment cards when the wallet is built
@@ -99,7 +220,6 @@ class TemporaryReactiveView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         layer.cornerRadius = 8.0
         clipsToBounds = true
         heightAnchor.constraint(equalToConstant: 120).isActive = true

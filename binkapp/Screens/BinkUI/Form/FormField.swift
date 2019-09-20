@@ -60,13 +60,15 @@ class FormField {
     let validation: String
     let fieldType: FieldInputType
     let valueUpdated: ValueUpdatedBlock
+    let pickerOptionsUpdated: PickerUpdatedBlock?
     let shouldChange: TextFieldShouldChange
     private(set) var value: String?
     
     typealias ValueUpdatedBlock = (FormField, String?) -> ()
+    typealias PickerUpdatedBlock = (FormField, [Any]) -> ()
     typealias TextFieldShouldChange = (FormField, UITextField, NSRange, String?) -> (Bool)
         
-    init(title: String, placeholder: String, validation: String, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange) {
+    init(title: String, placeholder: String, validation: String, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, pickerSelected: PickerUpdatedBlock? = nil) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation
@@ -74,6 +76,7 @@ class FormField {
         self.value = value
         self.valueUpdated = updated
         self.shouldChange = shouldChange
+        self.pickerOptionsUpdated = pickerSelected
     }
     
     func validate() -> Bool {
@@ -91,6 +94,10 @@ class FormField {
     func updateValue(_ value: String?) {
         self.value = value
         valueUpdated(self, value)
+    }
+    
+    func pickerDidSelect(_ options: [Any]) {
+        pickerOptionsUpdated?(self, options)
     }
     
     func textField(_ textField: UITextField, shouldChangeInRange: NSRange, newValue: String?) -> Bool {

@@ -82,7 +82,7 @@ extension FormCollectionViewCell: UITextFieldDelegate {
         return formField?.textField(textField, shouldChangeInRange: range, newValue: string) ?? false
     }
     
-    @objc func textFieldUpdated(_ textField: UITextField) {
+    @objc func textFieldUpdated(_ textField: UITextField, text: String?, backingData: [Int]?) {
         formField?.updateValue(textField.text)
     }
 }
@@ -94,10 +94,10 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
     
     func multipleChoiceInputDidUpdate(newValue: String?, backingData: [Int]?) {
         textField.text = newValue
-        textFieldUpdated(textField)
+        if let options = backingData { formField?.pickerDidSelect(options) }
     }
 }
 
 fileprivate extension Selector {
-    static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:))
+    static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:text:backingData:))
 }

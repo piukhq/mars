@@ -164,6 +164,9 @@
 		B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */; };
 		B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */; };
 		BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CB945232857BD005C37AE /* APIConstants.swift */; };
+		BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */; };
+		BD9FB68B2333DE3E00E5559A /* String+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68A2333DE3E00E5559A /* String+Random.swift */; };
+		BD9FB68D2333FB7000E5559A /* PaymentCardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68C2333FB7000E5559A /* PaymentCardResponse.swift */; };
 		BDA4EE982320508400A99CB1 /* BarcodeGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; };
 		BDA4EE992320508400A99CB1 /* BarcodeGenerator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */; };
@@ -178,6 +181,7 @@
 		BDB0187E232E1FC800BFFA18 /* PaymentCardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */; };
 		BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */; };
 		BDB01884232EB14A00BFFA18 /* StackScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01883232EB14A00BFFA18 /* StackScrollView.swift */; };
+		BDB01886232ED6F800BFFA18 /* SpreedlyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01885232ED6F800BFFA18 /* SpreedlyRequest.swift */; };
 		EF39C1DF231E9F2900A0BBC0 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1DE231E9F2900A0BBC0 /* UITableView+Extension.swift */; };
 		EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */; };
 		EF485566231D5E4E00FC9E5F /* DebugMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */; };
@@ -408,6 +412,9 @@
 		BD3CB9432328573C005C37AE /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		BD3CB9442328574A005C37AE /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		BD3CB945232857BD005C37AE /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
+		BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCreateRequest.swift; sourceTree = "<group>"; };
+		BD9FB68A2333DE3E00E5559A /* String+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Random.swift"; sourceTree = "<group>"; };
+		BD9FB68C2333FB7000E5559A /* PaymentCardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardResponse.swift; sourceTree = "<group>"; };
 		BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewController.swift; sourceTree = "<group>"; };
 		BDB0186B232D96EB00BFFA18 /* BaseFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFormViewController.swift; sourceTree = "<group>"; };
 		BDB0186D232D98C000BFFA18 /* FormDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDataSource.swift; sourceTree = "<group>"; };
@@ -420,6 +427,7 @@
 		BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardType.swift; sourceTree = "<group>"; };
 		BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormMultipleChoiceInput.swift; sourceTree = "<group>"; };
 		BDB01883232EB14A00BFFA18 /* StackScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackScrollView.swift; sourceTree = "<group>"; };
+		BDB01885232ED6F800BFFA18 /* SpreedlyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpreedlyRequest.swift; sourceTree = "<group>"; };
 		BDE778A523204F8E0014567A /* BarcodeGenerator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BarcodeGenerator.framework; sourceTree = "<group>"; };
 		C5D1F95CBE07939CA29E03E5 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
 		CBE46BB3E6386EE997F95088 /* Pods-binkappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.debug.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -992,6 +1000,7 @@
 				3C8BBC282326541D00363349 /* NotificationNameExtension.swift */,
 				3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */,
 				BDB01879232E144C00BFFA18 /* Array+Extension.swift */,
+				BD9FB68A2333DE3E00E5559A /* String+Random.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1012,6 +1021,9 @@
 				BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */,
 				BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */,
 				BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */,
+				BD9FB68C2333FB7000E5559A /* PaymentCardResponse.swift */,
+				BDB01885232ED6F800BFFA18 /* SpreedlyRequest.swift */,
+				BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */,
 			);
 			path = AddPaymentCard;
 			sourceTree = "<group>";
@@ -1491,11 +1503,13 @@
 				BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */,
 				3C3C604C2302DD1600D9EA25 /* EmptyResponse.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
+				BD9FB68B2333DE3E00E5559A /* String+Random.swift in Sources */,
 				EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */,
 				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,
 				3C48E7E1232A4B1E00ADE410 /* TransactionsViewController.swift in Sources */,
 				B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */,
 				5ECE04AF22CE582E001BA964 /* UserModel.swift in Sources */,
+				BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */,
 				B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */,
 				BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */,
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
@@ -1507,6 +1521,7 @@
 				BDB0187C232E1B5900BFFA18 /* PaymentCardCreateModel.swift in Sources */,
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
 				3C48E7E4232A4DFF00ADE410 /* TransactionsViewModel.swift in Sources */,
+				BD9FB68D2333FB7000E5559A /* PaymentCardResponse.swift in Sources */,
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
 				3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */,
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
@@ -1546,6 +1561,7 @@
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
+				BDB01886232ED6F800BFFA18 /* SpreedlyRequest.swift in Sources */,
 				3C873FEE22F073CF00FA3031 /* PaymentWalletViewController.swift in Sources */,
 				B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */,
 				3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */,
@@ -2293,6 +2309,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.neo";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2423,6 +2440,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.gamma;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.gamma";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2553,6 +2571,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -10,6 +10,7 @@ import UIKit
 
 protocol FormDataSourceDelegate:NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField)
+    func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField)
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool
 }
 
@@ -40,6 +41,11 @@ class FormDataSource: NSObject, UICollectionViewDataSource {
             return delegate.formDataSource(self, textField: textField, shouldChangeTo: newValue, in: range, for: field)
         }
         
+        let pickerUpdatedBlock: FormField.PickerUpdatedBlock = { [weak self] field, options in
+            guard let self = self else { return }
+            self.delegate?.formDataSource(self, selected: options, for: field)
+        }
+        
         // Card Number
 
         let cardNumberField = FormField(
@@ -64,7 +70,8 @@ class FormDataSource: NSObject, UICollectionViewDataSource {
             validation: "",
             fieldType: .expiry(months: monthData, years: yearData),
             updated: updatedBlock,
-            shouldChange: shouldChangeBlock
+            shouldChange: shouldChangeBlock,
+            pickerSelected: pickerUpdatedBlock
         )
         
         let nameOnCardField = FormField(
