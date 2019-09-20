@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var dataAccess:DataAccessible? // FIXME: Inject from Swinject
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
 
         #if DEBUG
         NetworkActivityLogger.shared.level = .debug

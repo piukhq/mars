@@ -188,6 +188,7 @@
 		BDA4EE982320508400A99CB1 /* BarcodeGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; };
 		BDA4EE992320508400A99CB1 /* BarcodeGenerator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EF2E8811233385A400F678F3 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E8810233385A400F678F3 /* World.swift */; };
+		EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E881223351A6000F678F3 /* CoreDataRepositoryProtocol.swift */; };
 		EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */; };
 		EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */; };
 		EF3D8CF12327F67100C2EAC8 /* CD_FeatureSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3D8CC92327F66F00C2EAC8 /* CD_FeatureSet.swift */; };
@@ -488,6 +489,7 @@
 		E7354EC1FB3CF368988428AD /* Pods-binkappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.release.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ED4CD3B619FA32A249E98CC6 /* Pods-binkappTests.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.nightly.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.nightly.xcconfig"; sourceTree = "<group>"; };
 		EF2E8810233385A400F678F3 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		EF2E881223351A6000F678F3 /* CoreDataRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepositoryProtocol.swift; sourceTree = "<group>"; };
 		EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		EF3D8CC92327F66F00C2EAC8 /* CD_FeatureSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_FeatureSet.swift; sourceTree = "<group>"; };
@@ -1171,6 +1173,7 @@
 			isa = PBXGroup;
 			children = (
 				EF485576231D72E700FC9E5F /* ModalDismissable.swift */,
+				EF2E881223351A6000F678F3 /* CoreDataRepositoryProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1752,6 +1755,7 @@
 				EF758E0823225F35000D26A9 /* Database.swift in Sources */,
 				EF3D8CFC2327F67100C2EAC8 /* _CD_MembershipCardImage.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
+				EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */,
 				EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */,
 				EF3D8D092327F67100C2EAC8 /* CD_PaymentCard.swift in Sources */,
 				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,

@@ -10,7 +10,7 @@ import Alamofire
 import Keys
 import CoreData
 
-class LoyaltyWalletRepository {
+class LoyaltyWalletRepository: CoreDataRepositoryProtocol {
     private let apiManager: ApiManager
     
     init(apiManager: ApiManager) {
@@ -46,6 +46,7 @@ class LoyaltyWalletRepository {
         trashLocalObjects(forObjectType: CD_MembershipPlan.self) { [weak self] in
             let url = RequestURL.membershipPlans
             let method = RequestHTTPMethod.get
+
             self?.apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipPlanModel]) in
                 self?.mapCoreDataObjects(objectsToMap: response, completion: {
                     self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self, completion: completion)
@@ -65,39 +66,5 @@ class LoyaltyWalletRepository {
         }, onError: {_ in 
             print("error")
         })
-    }
-}
-
-// MARK: - Core Data Interaction
-extension LoyaltyWalletRepository {
-    private func mapCoreDataObjects<T: CoreDataMappable>(objectsToMap objects: [T], completion: @escaping () -> Void) {
-        Current.database.performBackgroundTask { context in
-            objects.forEach {
-                _ = $0.mapToCoreData(context, .delta, overrideID: nil)
-            }
-
-            try? context.save()
-
-            completion()
-        }
-    }
-
-    private func fetchCoreDataObjects<T: NSManagedObject>(forObjectType objectType: T.Type, completion: @escaping ([T]?) -> Void) {
-        DispatchQueue.main.async {
-            Current.database.performTask { context in
-                let objects = context.fetchAll(objectType)
-                completion(objects)
-            }
-        }
-    }
-
-    private func trashLocalObjects<T: NSManagedObject>(forObjectType objectType: T.Type, completion: @escaping () -> Void) {
-        Current.database.performBackgroundTask { context in
-            context.deleteAll(objectType)
-            try? context.save()
-            DispatchQueue.main.async {
-                completion()
-            }
-        }
     }
 }

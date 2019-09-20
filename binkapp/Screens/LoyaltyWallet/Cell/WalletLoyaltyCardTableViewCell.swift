@@ -55,7 +55,6 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
         context.restoreGState()
     }
     
-    
     func configureUIWithMembershipCard(card: CD_MembershipCard, membershipPlan plan: CD_MembershipPlan) {
         layer.cornerRadius = 8
         separatorInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
