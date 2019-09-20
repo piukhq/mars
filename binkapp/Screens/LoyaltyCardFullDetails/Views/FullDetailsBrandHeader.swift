@@ -27,7 +27,25 @@ class FullDetailsBrandHeader: CustomView {
         if let imageURL = imageUrl, let url = URL(string: imageURL) {
             brandImage.af_setImage(withURL: url)
         }
-        brandImageBackgroundView.layer.shadowColor = UIColor.black.cgColor
+        //        brandImageBackgroundView.layer.shadowColor = UIColor.black.cgColor
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        brandImageBackgroundView.clipsToBounds = true
+        brandImage.clipsToBounds = true
+        brandImageBackgroundView.layer.cornerRadius = 5
+//        let shadowLayer = CAShapeLayer()
+//        shadowLayer.path = UIBezierPath(roundedRect: brandImageBackgroundView.bounds, cornerRadius: 5).cgPath
+//        shadowLayer.fillColor = UIColor.clear.cgColor
+//
+//        shadowLayer.shadowColor = UIColor.black.cgColor
+//        shadowLayer.shadowPath = shadowLayer.path
+//        shadowLayer.shadowOffset = .zero
+//        shadowLayer.shadowOpacity = 0.1
+//        shadowLayer.shadowRadius = 5
+//
+//        brandImageBackgroundView.layer.insertSublayer(shadowLayer, at: 0)
     }
     
     // MARK: - Actions
