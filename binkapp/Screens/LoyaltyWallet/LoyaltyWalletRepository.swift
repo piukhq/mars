@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import Keys
+import CoreData
 
 class LoyaltyWalletRepository {
     private let apiManager: ApiManager
@@ -17,85 +18,35 @@ class LoyaltyWalletRepository {
     }
     
     func getMembershipCards(forceRefresh: Bool = false, completion: @escaping ([CD_MembershipCard]?) -> Void) {
-        var membershipCards: [MembershipCardModel]?
-
-        func fetchCoreDataObjects(completion: @escaping ([CD_MembershipCard]?) -> Void) {
-            Current.database.performBackgroundTask { context in
-                membershipCards?.forEach {
-                    $0.mapToCoreData(context, .delta, overrideID: nil)
-                }
-
-                try? context.save()
-
-                DispatchQueue.main.async {
-                    Current.database.performTask { context in
-                        let objects = context.fetchAll(CD_MembershipCard.self)
-                        completion(objects)
-                    }
-                }
-            }
-        }
-
         guard forceRefresh else {
-            fetchCoreDataObjects(completion: completion)
+            fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: completion)
             return
         }
 
         let url = RequestURL.membershipCards
         let method = RequestHTTPMethod.get
         
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipCardModel]) in
-            membershipCards = response
-            fetchCoreDataObjects(completion: completion)
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipCardModel]) in
+            self?.mapCoreDataObjects(objectsToMap: response, completion: {
+                self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: completion)
+            })
         }, onError: {_ in 
             print("error")
         })
     }
     
     func getMembershipPlans(forceRefresh: Bool = false, completion: @escaping ([CD_MembershipPlan]?) -> Void) {
-        var membershipPlans: [MembershipPlanModel]?
-
-        func fetchCoreDataObjects(completion: @escaping ([CD_MembershipPlan]?) -> Void) {
-            Current.database.performBackgroundTask { context in
-                membershipPlans?.forEach {
-                    $0.mapToCoreData(context, .delta, overrideID: nil)
-                }
-
-                try? context.save()
-
-                DispatchQueue.main.async {
-                    Current.database.performTask { context in
-                        let objects = context.fetchAll(CD_MembershipPlan.self)
-                        completion(objects)
-                    }
-                }
-            }
-        }
-
         guard forceRefresh else {
-            fetchCoreDataObjects(completion: completion)
+            fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self, completion: completion)
             return
         }
 
         let url = RequestURL.membershipPlans
         let method = RequestHTTPMethod.get
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipPlanModel]) in
-            Current.database.performBackgroundTask { context in
-                response.forEach {
-                    $0.mapToCoreData(context, .delta, overrideID: nil)
-                }
-
-                try? context.save()
-
-                DispatchQueue.main.async {
-                    Current.database.performTask { context in
-                        let objects = context.fetchAll(CD_MembershipPlan.self)
-                        completion(objects)
-                    }
-                }
-                
-            }
-
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
+            self?.mapCoreDataObjects(objectsToMap: response, completion: {
+                self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self, completion: completion)
+            })
         }, onError: {_ in 
             print("error")
         })
@@ -110,5 +61,37 @@ class LoyaltyWalletRepository {
         }, onError: {_ in 
             print("error")
         })
+    }
+}
+
+// MARK: - Core Data Interaction
+extension LoyaltyWalletRepository {
+    private func mapCoreDataObjects<T: CoreDataMappable>(objectsToMap objects: [T], completion: @escaping () -> Void) {
+        Current.database.performBackgroundTask { context in
+            objects.forEach {
+                _ = $0.mapToCoreData(context, .delta, overrideID: nil)
+            }
+
+            try? context.save()
+
+            completion()
+        }
+    }
+
+    private func fetchCoreDataObjects<T: NSManagedObject>(forObjectType objectType: T.Type, completion: @escaping ([T]?) -> Void) {
+        DispatchQueue.main.async {
+            Current.database.performTask { context in
+                let objects = context.fetchAll(objectType)
+                completion(objects)
+            }
+        }
+    }
+
+    private func trashLocalObjects<T: NSManagedObject>(forObjectType objectType: T.Type, completion: @escaping () -> Void) {
+        Current.database.performBackgroundTask { context in
+            context.deleteAll(objectType)
+            try? context.save()
+            completion()
+        }
     }
 }
