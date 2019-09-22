@@ -25,6 +25,8 @@ open class StackScrollView: UIScrollView {
     private let stackView: UIStackView
     
     private var stackViewTopConstraint = NSLayoutConstraint()
+
+    private var lastContentInset: UIEdgeInsets?
     
     public var arrangedSubviews: [UIView] {
         return stackView.arrangedSubviews
@@ -102,7 +104,7 @@ open class StackScrollView: UIScrollView {
                 ])
             
             if adjustForKeyboard {
-                NotificationCenter.default.addObserver(self, selector: .keyboardShow, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+                NotificationCenter.default.addObserver(self, selector: .keyboardShow, name: UIResponder.keyboardWillShowNotification, object: nil)
                 NotificationCenter.default.addObserver(self, selector: .keyboardHide, name: UIResponder.keyboardWillHideNotification, object: nil)
             }
         } else {
@@ -113,8 +115,8 @@ open class StackScrollView: UIScrollView {
              The minimumContentWidthGuidingConstraint is required to ensure that the scrollView attemps to grow causing
              the necessary layout pass required to start drawing it's content.
              */
-            preferredContentSizeWidthConstraint.priority = UILayoutPriority(rawValue: 999)
-            minimumContentWidthGuidingConstraint.priority = UILayoutPriority(rawValue: 999)
+            preferredContentSizeWidthConstraint.priority = .almostRequired
+            minimumContentWidthGuidingConstraint.priority = .almostRequired
             NSLayoutConstraint.activate([
                 stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
                 stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -202,12 +204,18 @@ open class StackScrollView: UIScrollView {
         keyboardFrame = convert(keyboardFrame, from: nil)
         
         var inset: UIEdgeInsets = contentInset
+        if inset.bottom != keyboardFrame.size.height { lastContentInset = inset }
         inset.bottom = keyboardFrame.size.height
         contentInset = inset
     }
     
     @objc fileprivate func keyboardWillHide(notification: NSNotification) {
-        contentInset = .zero
+        if let lastInset = lastContentInset {
+            contentInset = lastInset
+            lastContentInset = nil
+        } else {
+            contentInset = .zero
+        }
     }
 }
 
