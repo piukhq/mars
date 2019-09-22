@@ -17,6 +17,9 @@ class AddPaymentCardViewController: BaseFormViewController {
     private struct Constants {
         static let buttonWidthPercentage: CGFloat = 0.75
         static let buttonHeight: CGFloat = 52.0
+        static let postCollectionViewPadding: CGFloat = 15.0
+        static let cardPadding: CGFloat = 30.0
+        static let bottomButtonPadding: CGFloat = 78.0
     }
     
     private lazy var addButton: BinkGradientButton = {
@@ -25,9 +28,12 @@ class AddPaymentCardViewController: BaseFormViewController {
         button.setTitle("Add", for: .normal)
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .addButtonTapped, for: .touchUpInside)
+        button.isEnabled = false
         view.addSubview(button)
         return button
     }()
+    
+    // MARK: - Initialisation
     
     init(model: PaymentCardCreateModel) {
         self.model = model
@@ -41,78 +47,50 @@ class AddPaymentCardViewController: BaseFormViewController {
         dataSource.delegate = self
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()
-        stackScrollView.insert(arrangedSubview: temp, atIndex: 0, customSpacing: 30.0)
+        stackScrollView.insert(arrangedSubview: temp, atIndex: 0, customSpacing: Constants.cardPadding)
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "Privacy and security"), hyperlinkButton(title: "More information")])
+        stackScrollView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
     }
+    
+    // MARK: - Layout
     
     func configureLayout() {
         NSLayoutConstraint.activate([
             addButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: Constants.buttonWidthPercentage),
             addButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
-            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -78.0),
+            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.bottomButtonPadding),
             addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             ])
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Builder
     
     private func hyperlinkButton(title: String) -> UIButton {
         let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
         let attrString = NSAttributedString(
             string: title,
             attributes: [.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
         )
         button.setAttributedTitle(attrString, for: .normal)
         button.contentHorizontalAlignment = .left
+        button.heightAnchor.constraint(equalToConstant: 54.0).isActive = true
         return button
     }
     
+    // MARK: - Actions
+    
     @objc func addButtonTapped() {
-        
-        let json = SpreedlyRequest(
-            firstName: "Max",
-            lastName: "Woodhams",
-            number: "5355220148983616",
-            month: "11",
-            year: "20"
-        )
-        
-//        let configuration = URLSessionConfiguration.default
-//        configuration.urlCredentialStorage = nil
-//
-//        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-//        let jsonEncoder = JSONEncoder()
-//        do {
-//            let jsonData = try jsonEncoder.encode(json)
-//            let jsonString = String(data: jsonData, encoding: .utf8)
-//            print("JSON String : " + jsonString!)
-//        } catch {
-//
-//        }
-//
-//        let keys = BinkappKeys()
-//
-//        var request = URLRequest(url: URL(string: "https://core.spreedly.com/v1/payment_methods.json?environment_key=\(keys.spreedlyEnvironmentKey)")!)
-//        request.httpMethod = "POST"
-//
-//        let task = session.dataTask(with: request) { (data, response, error) in
-//
-//        }
-//
-//        task.resume()
-        
         guard let paymentCreateRequest = PaymentCardCreateRequest(model: self.model) else { return }
         
         let api = ApiManager()
-        
-//        apiManager.doRequest(url: url, httpMethod: method, parameters: jsonCard, onSuccess: { (response: MembershipCardModel) in
-//            completion(response)
-//        })
         
         do {
             try api.doRequest(url: .postPaymentCard, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardResponse) in
@@ -123,22 +101,10 @@ class AddPaymentCardViewController: BaseFormViewController {
         } catch {
             
         }
-
-//        api.doRequest(
-//            url: .postPaymentCard,
-//            httpMethod: .post, onSuccess: (response: PaymentCardResponse) { in
-//
-//        }
     }
-}
-
-extension Encodable {
-    func asDictionary() throws -> [String: Any] {
-        let data = try JSONEncoder().encode(self)
-        guard let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
-            throw NSError()
-        }
-        return dictionary
+    
+    override func formValidityUpdated(fullFormIsValid: Bool) {
+        addButton.isEnabled = fullFormIsValid
     }
 }
 
@@ -151,6 +117,13 @@ extension AddPaymentCardViewController: URLSessionDelegate {
 extension AddPaymentCardViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         if let type = self.model.cardType, let newValue = newValue, let text = textField.text, field.fieldType == .cardNumber  {
+            
+            /*
+             Potentially "needlessly" complex, but the below will insert whitespace to format card numbers correctly according
+             to the pattern available in PaymentCardType.
+             EXAMPLE: 4242424242424242 becomes 4242 4242 4242 4242
+            */
+            
             if newValue.count > 0 {
                 let values = type.lengthRange()
                 let cardLength = values.length + values.whitespaceIndexes.count
@@ -225,6 +198,12 @@ class TemporaryReactiveView: UIView {
         heightAnchor.constraint(equalToConstant: 120).isActive = true
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        update(with: .none)
+    }
+    
     var gradientLayer: CAGradientLayer?
     
     required init?(coder aDecoder: NSCoder) {
@@ -234,13 +213,13 @@ class TemporaryReactiveView: UIView {
     func update(with paymentType: PaymentCardType?) {
         switch paymentType {
         case .visa?:
-            processGradient(UIColor.init(hexString: "181c51"), UIColor.init(hexString: "13288d"))
+            processGradient(UIColor(hexString: "181c51"), UIColor(hexString: "13288d"))
         case .masterCard?:
-            processGradient(UIColor.init(hexString: "eb001b"), UIColor.init(hexString: "f79e1b"))
+            processGradient(UIColor(hexString: "eb001b"), UIColor(hexString: "f79e1b"))
         case .amex?:
-            processGradient(UIColor.init(hexString: "006bcd"), UIColor.init(hexString: "57c4ff"))
+            processGradient(UIColor(hexString: "006bcd"), UIColor(hexString: "57c4ff"))
         case .none:
-            processGradient(UIColor.darkGray, UIColor.lightGray)
+            processGradient(UIColor(hexString: "b46fea"), UIColor(hexString: "4371fe"))
         }
     }
     

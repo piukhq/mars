@@ -10,6 +10,11 @@ import UIKit
 
 class BinkGradientButton: UIButton {
     private var shadowLayer: CAShapeLayer!
+    private lazy var gradientLayer: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        layer.insertSublayer(gradient, at: 0)
+        return gradient
+    }()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,7 +24,9 @@ class BinkGradientButton: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.setGradientBackground(firstColor: .binkPurple, secondColor: .blueAccent)
+        
+        backgroundColor = .white
+        processGradient(.binkPurple, .blueAccent)
         let halfOfButtonHeight = layer.frame.height / 2
         
         if shadowLayer == nil {
@@ -35,6 +42,20 @@ class BinkGradientButton: UIButton {
             
             layer.insertSublayer(shadowLayer, at: 0)
         }
-        
+    }
+    
+    override var isEnabled: Bool {
+        didSet {
+            gradientLayer.opacity = isEnabled ? 1.0 : 0.5
+        }
+    }
+    
+    private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
+        gradientLayer.frame = bounds
+        gradientLayer.colors = [firstColor.cgColor, secondColor.cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.cornerRadius = self.frame.size.height / 2
+        gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
     }
 }

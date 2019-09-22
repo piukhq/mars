@@ -57,9 +57,10 @@ class FormField {
     
     let title: String
     let placeholder: String
-    let validation: String
+    let validation: String?
     let fieldType: FieldInputType
     let valueUpdated: ValueUpdatedBlock
+    let fieldExited: FieldExitedBlock
     let pickerOptionsUpdated: PickerUpdatedBlock?
     let shouldChange: TextFieldShouldChange
     private(set) var value: String?
@@ -67,8 +68,9 @@ class FormField {
     typealias ValueUpdatedBlock = (FormField, String?) -> ()
     typealias PickerUpdatedBlock = (FormField, [Any]) -> ()
     typealias TextFieldShouldChange = (FormField, UITextField, NSRange, String?) -> (Bool)
+    typealias FieldExitedBlock = (FormField) -> ()
         
-    init(title: String, placeholder: String, validation: String, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, pickerSelected: PickerUpdatedBlock? = nil) {
+    init(title: String, placeholder: String, validation: String?, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation
@@ -76,16 +78,19 @@ class FormField {
         self.value = value
         self.valueUpdated = updated
         self.shouldChange = shouldChange
+        self.fieldExited = fieldExited
         self.pickerOptionsUpdated = pickerSelected
     }
     
-    func validate() -> Bool {
+    func isValid() -> Bool {
         // If our value is unset then  we do not pass the validation check
         guard let value = value else { return false }
         
         if fieldType == .cardNumber {
             return PaymentCardType.validate(fullPan: value)
         } else {
+            guard let validation = validation else { return true }
+            
             let predicate = NSPredicate(format: "SELF MATCHES %@", validation)
             return predicate.evaluate(with: value)
         }
@@ -98,6 +103,10 @@ class FormField {
     
     func pickerDidSelect(_ options: [Any]) {
         pickerOptionsUpdated?(self, options)
+    }
+    
+    func fieldWasExited() {
+        fieldExited(self)
     }
     
     func textField(_ textField: UITextField, shouldChangeInRange: NSRange, newValue: String?) -> Bool {

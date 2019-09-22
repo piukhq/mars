@@ -12,6 +12,14 @@ protocol FormDataSourceDelegate:NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField)
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField)
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool
+    func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField)
+}
+
+extension FormDataSourceDelegate {
+    func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField) {}
+    func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {}
+//    func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool { return true }
+    func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {}
 }
 
 class FormDataSource: NSObject, UICollectionViewDataSource {
@@ -30,7 +38,6 @@ class FormDataSource: NSObject, UICollectionViewDataSource {
     }
     
     private func setupFields<T>(with model: T) where T: PaymentCardCreateModel {
-        
         let updatedBlock: FormField.ValueUpdatedBlock = { [weak self] field, newValue in
             guard let self = self else { return }
             self.delegate?.formDataSource(self, changed: newValue, for: field)
@@ -46,19 +53,25 @@ class FormDataSource: NSObject, UICollectionViewDataSource {
             self.delegate?.formDataSource(self, selected: options, for: field)
         }
         
+        let fieldExitedBlock: FormField.FieldExitedBlock = { [weak self] field in
+            guard let self = self else { return }
+            self.delegate?.formDataSource(self, fieldDidExit: field)
+        }
+        
         // Card Number
 
         let cardNumberField = FormField(
-            title: "Card Number",
-            placeholder: "4444 4444 4444 4444",
-            validation: "",
+            title: "Card number",
+            placeholder: "xxxx xxxx xxxx xxxx",
+            validation: nil,
             fieldType: .cardNumber,
             updated: updatedBlock,
-            shouldChange: shouldChangeBlock
+            shouldChange: shouldChangeBlock,
+            fieldExited: fieldExitedBlock
         )
         
         let monthData = Calendar.current.monthSymbols.enumerated().compactMap { index, _ in
-            FormPickerData("\(index + 1)", backingData: index + 1)
+            FormPickerData(String(format: "%02d", index + 1), backingData: index + 1)
         }
         
         let yearValue = Calendar.current.component(.year, from: Date())
@@ -67,20 +80,22 @@ class FormDataSource: NSObject, UICollectionViewDataSource {
         let expiryField = FormField(
             title: "Expiry",
             placeholder: "MM/YY",
-            validation: "",
+            validation: "^(0[1-9]|1[012])[\\/](19|20)\\d\\d$",
             fieldType: .expiry(months: monthData, years: yearData),
             updated: updatedBlock,
             shouldChange: shouldChangeBlock,
+            fieldExited: fieldExitedBlock,
             pickerSelected: pickerUpdatedBlock
         )
         
         let nameOnCardField = FormField(
             title: "Name on card",
             placeholder: "J Appleseed",
-            validation: "",
+            validation: "^(((?=.{1,}$)[A-Za-z\\-\\u00C0-\\u00FF' ])+\\s*)$",
             fieldType: .text,
             updated: updatedBlock,
-            shouldChange: shouldChangeBlock
+            shouldChange: shouldChangeBlock,
+            fieldExited: fieldExitedBlock
         )
         
         fields = [cardNumberField, expiryField, nameOnCardField]

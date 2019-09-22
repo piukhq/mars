@@ -167,6 +167,8 @@
 		BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */; };
 		BD9FB68B2333DE3E00E5559A /* String+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68A2333DE3E00E5559A /* String+Random.swift */; };
 		BD9FB68D2333FB7000E5559A /* PaymentCardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68C2333FB7000E5559A /* PaymentCardResponse.swift */; };
+		BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */; };
+		BD9FB6B223380C0900E5559A /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */; };
 		BDA4EE982320508400A99CB1 /* BarcodeGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; };
 		BDA4EE992320508400A99CB1 /* BarcodeGenerator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */; };
@@ -415,6 +417,8 @@
 		BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCreateRequest.swift; sourceTree = "<group>"; };
 		BD9FB68A2333DE3E00E5559A /* String+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Random.swift"; sourceTree = "<group>"; };
 		BD9FB68C2333FB7000E5559A /* PaymentCardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardResponse.swift; sourceTree = "<group>"; };
+		BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILayoutPriority+Extension.swift"; sourceTree = "<group>"; };
+		BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewController.swift; sourceTree = "<group>"; };
 		BDB0186B232D96EB00BFFA18 /* BaseFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFormViewController.swift; sourceTree = "<group>"; };
 		BDB0186D232D98C000BFFA18 /* FormDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDataSource.swift; sourceTree = "<group>"; };
@@ -1001,6 +1005,8 @@
 				3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */,
 				BDB01879232E144C00BFFA18 /* Array+Extension.swift */,
 				BD9FB68A2333DE3E00E5559A /* String+Random.swift */,
+				BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */,
+				BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1500,6 +1506,7 @@
 				3C17FC3222F2CCAD00E423A2 /* MembershipCardImageModel.swift in Sources */,
 				3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */,
 				3C33E33D23166FF9005E97DC /* DropdownView.swift in Sources */,
+				BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */,
 				BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */,
 				3C3C604C2302DD1600D9EA25 /* EmptyResponse.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
@@ -1607,6 +1614,7 @@
 				BDB01870232D99D200BFFA18 /* FormField.swift in Sources */,
 				3C873FF122F073CF00FA3031 /* PaymentWalletModels.swift in Sources */,
 				B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */,
+				BD9FB6B223380C0900E5559A /* Encodable+Extension.swift in Sources */,
 				3C48E7E6232A5E6700ADE410 /* Date+SinceString.swift in Sources */,
 				3CEABFCC2316AB65009B1122 /* MembershipCardStatusModel.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,

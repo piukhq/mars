@@ -8,28 +8,31 @@
 
 import UIKit
 
-class BaseFormViewController: UIViewController {
+protocol Form {
+    func formValidityUpdated(fullFormIsValid: Bool)
+}
+
+class BaseFormViewController: UIViewController, Form {
     
     // MARK: - Helpers
     
     private struct Constants {
-        static let cellHeight: CGFloat = 80.0
+        static let normalCellHeight: CGFloat = 84.0
         static let horizontalInset: CGFloat = 25.0
-        static let maskingInset: CGFloat = 209.0
+        static let maskingHeight: CGFloat = 209.0
+        static let bottomInset: CGFloat = 140.0
     }
     
     // MARK: - Properties
     
-    lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    lazy var collectionView: NestedCollectionView = {
+        let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = dataSource
+        collectionView.isScrollEnabled = false
         collectionView.delegate = self
         collectionView.backgroundColor = .white
         collectionView.register(FormCollectionViewCell.self)
-        collectionView.alwaysBounceVertical = true
-        let height = CGFloat(dataSource.fields.count) * Constants.cellHeight
-        collectionView.heightAnchor.constraint(equalToConstant: height).isActive = true
         return collectionView
     }()
     
@@ -38,6 +41,9 @@ class BaseFormViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .white
         stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
         view.addSubview(stackView)
         return stackView
     }()
@@ -65,7 +71,11 @@ class BaseFormViewController: UIViewController {
         return maskingView
     }()
     
-    lazy var layout = UICollectionViewFlowLayout()
+    private lazy var layout: UICollectionViewFlowLayout = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.estimatedItemSize = CGSize(width: 1, height: 1) // To invoke automatic self sizing
+        return flowLayout
+    }()
     
     let dataSource: FormDataSource
     
@@ -84,8 +94,8 @@ class BaseFormViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        if collectionView.contentSize.equalTo(.zero) { collectionView.layoutIfNeeded() }
+
+        if collectionView.contentSize.height == 0 { collectionView.layoutIfNeeded() }
         setBottomItemMask()
     }
     
@@ -103,7 +113,7 @@ class BaseFormViewController: UIViewController {
             
             maskingView.leftAnchor.constraint(equalTo: view.leftAnchor),
             maskingView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            maskingView.heightAnchor.constraint(equalToConstant: Constants.maskingInset),
+            maskingView.heightAnchor.constraint(equalToConstant: Constants.maskingHeight),
             maskingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             ])
     }
@@ -116,18 +126,42 @@ class BaseFormViewController: UIViewController {
         
         maskingView.layer.mask = maskGradient
     }
+    
+    /// This method is designed to be overriden for updating UI elements in response to validity
+    func formValidityUpdated(fullFormIsValid: Bool) {}
+}
+
+extension BaseFormViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let cell = cell as? FormCollectionViewCell else { return }
+        
+        cell.setWidth(collectionView.frame.size.width)
+    }
 }
 
 extension BaseFormViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width, height: Constants.cellHeight)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
+    }
+    
+    func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {
+        collectionView.collectionViewLayout.invalidateLayout()
+        formValidityUpdated(fullFormIsValid: dataSource.fields.reduce(true, { $0 && $1.isValid() }))
+    }
+}
+
+class NestedCollectionView: UICollectionView {
+    override var contentSize: CGSize {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return collectionViewLayout.collectionViewContentSize
     }
 }

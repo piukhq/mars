@@ -47,7 +47,7 @@ enum PaymentCardType: String {
     }
     
     static func validate(fullPan: String?) -> Bool {
-        guard let fullPan = fullPan, !fullPan.isEmpty,
+        guard let fullPan = fullPan?.replacingOccurrences(of: " ", with: ""), !fullPan.isEmpty,
             let _ = PaymentCardType.allValues.first(where: { $0.fullyValidate(fullPan) }) else {
                 return false
         }

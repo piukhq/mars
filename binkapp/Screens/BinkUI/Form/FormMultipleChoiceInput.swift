@@ -40,7 +40,7 @@ class FormMultipleChoiceInput: UIInputView {
             
             selectedContent.sorted(by: { $0.key < $1.key }).forEach { key, value in
                 if let separator = delegate?.multipleChoiceSeparatorForMultiValues(), lastString != nil {
-                    fullContentString += " \(separator) "
+                    fullContentString += "\(separator)"
                 }
                 
                 fullContentString += value.title
