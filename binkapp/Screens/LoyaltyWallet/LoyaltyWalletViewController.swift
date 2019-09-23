@@ -99,8 +99,7 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
         let action = UIContextualAction(style: .normal, title: "delete_swipe_title".localized) { _, _, completion in
             self.viewModel.showDeleteConfirmationAlert(index: indexPath.row, yesCompletion: {
                 let indexSet = IndexSet(arrayLiteral: indexPath.section)
-                tableView.deleteSections(indexSet, with: .automatic)
-                tableView.reloadData()
+                tableView.deleteSections(indexSet, with: .left)
             }, noCompletion: {
                 tableView.setEditing(false, animated: true)
             })
