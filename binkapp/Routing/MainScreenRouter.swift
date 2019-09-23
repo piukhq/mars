@@ -27,7 +27,7 @@ class MainScreenRouter {
     
     func getNavigationControllerWithLoginScreen() -> UIViewController{
         navController = PortraitNavigationController(rootViewController: getLoginScreen())
-        navController?.navigationBar.isTranslucent = false
+        navController?.navigationBar.isTranslucent = true
         
         return navController!
     }
@@ -66,6 +66,10 @@ class MainScreenRouter {
         return PaymentWalletViewController()
     }
     
+    func getDummyViewControllerForAction() -> UIViewController {
+        return AddingOptionsTabBarViewController()
+    }
+    
     func toLoyaltyWalletViewController() {
         navController?.pushViewController(getLoyaltyWalletViewController(), animated: true)
     }
@@ -73,6 +77,7 @@ class MainScreenRouter {
     func toAddingOptionsViewController() {
         let viewModel = AddingOptionsViewModel(router: self)
         let viewController = AddingOptionsViewController(viewModel: viewModel)
+        
         navController?.pushViewController(viewController, animated: true)
     }
     
@@ -83,10 +88,10 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toBarcodeViewController(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel) {
-        let viewModel = BarcodeViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard)
+    func toBarcodeViewController(membershipCard: CD_MembershipCard, completion: @escaping () -> ()) {
+        let viewModel = BarcodeViewModel(membershipCard: membershipCard)
         let viewController = BarcodeViewController(viewModel: viewModel)
-        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
+        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: completion)
     }
     
     func toAddOrJoinViewController(membershipPlan: MembershipPlanModel) {
@@ -152,6 +157,10 @@ class MainScreenRouter {
     
     func popViewController() {
         navController?.popViewController(animated: true)
+    }
+    
+    func dismissViewController() {
+        navController?.dismiss(animated: true)
     }
     
     func popToRootViewController() {

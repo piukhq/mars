@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoyaltyCardFullDetailsViewController: UIViewController {
+class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     @IBOutlet private weak var fullDetailsBrandHeader: FullDetailsBrandHeader!
     @IBOutlet private weak var aboutInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var securityAndPrivacyInfoRow: CardDetailsInfoView!
@@ -15,6 +15,7 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
     @IBOutlet private weak var cardDetailsStackView: UIStackView!
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
+    internal lazy var blurBackground = defaultBlurredBackground()
     
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -33,6 +34,15 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
     
     @objc func toTransactionsViewController() {
         viewModel.toTransactionsViewController()
+    }
+    
+    // MARK: - Navigation Bar Blurring
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard let bar = navigationController?.navigationBar else { return }
+        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
 }
 

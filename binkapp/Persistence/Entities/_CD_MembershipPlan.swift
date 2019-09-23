@@ -14,6 +14,7 @@ public enum CD_MembershipPlanRelationships: String {
     case balances = "balances"
     case featureSet = "featureSet"
     case images = "images"
+    case membershipCards = "membershipCards"
 }
 
 open class _CD_MembershipPlan: NSManagedObject {
@@ -74,6 +75,13 @@ open class _CD_MembershipPlan: NSManagedObject {
         return self.images.mutableCopy() as! NSMutableSet
     }
 
+    @NSManaged open
+    var membershipCards: NSSet
+
+    open func membershipCardsSet() -> NSMutableSet {
+        return self.membershipCards.mutableCopy() as! NSMutableSet
+    }
+
 }
 
 extension _CD_MembershipPlan {
@@ -128,6 +136,34 @@ extension _CD_MembershipPlan {
         let mutable = self.images.mutableCopy() as! NSMutableSet
         mutable.remove(value)
         self.images = mutable.copy() as! NSSet
+    }
+
+}
+
+extension _CD_MembershipPlan {
+
+    open func addMembershipCards(_ objects: NSSet) {
+        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+        mutable.union(objects as Set<NSObject>)
+        self.membershipCards = mutable.copy() as! NSSet
+    }
+
+    open func removeMembershipCards(_ objects: NSSet) {
+        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+        mutable.minus(objects as Set<NSObject>)
+        self.membershipCards = mutable.copy() as! NSSet
+    }
+
+    open func addMembershipCardsObject(_ value: CD_MembershipCard) {
+        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+        mutable.add(value)
+        self.membershipCards = mutable.copy() as! NSSet
+    }
+
+    open func removeMembershipCardsObject(_ value: CD_MembershipCard) {
+        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+        mutable.remove(value)
+        self.membershipCards = mutable.copy() as! NSSet
     }
 
 }

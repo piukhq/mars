@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct MembershipCardImageModel: Codable {
+struct MembershipCardImageModel: Codable, Hashable {
     let apiId: Int?
     let type: Int?
     let url: String?

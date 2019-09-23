@@ -34,4 +34,4 @@ extension MembershipTransaction: CoreDataMappable, CoreDataIDMappable {
         return cdObject
     }
 }
-    
+

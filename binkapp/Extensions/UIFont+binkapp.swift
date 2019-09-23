@@ -22,6 +22,10 @@ extension UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()
     }
     
+    class var pointsValue: UIFont {
+        return UIFont(name: "NunitoSans-ExtraBold", size: 17.0) ?? UIFont()
+    }
+    
     class var buttonText: UIFont {
         return UIFont(name: "NunitoSans-Bold", size: 18.0) ?? UIFont()
     }

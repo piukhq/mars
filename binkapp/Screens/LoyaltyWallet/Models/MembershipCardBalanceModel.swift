@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct MembershipCardBalanceModel: Codable {
+struct MembershipCardBalanceModel: Codable, Hashable {
     let apiId: Int?
     let value: Double?
     let currency: String?

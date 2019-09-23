@@ -22,5 +22,4 @@ class AddingOptionsViewModel {
     func popViewController() {
         router.popViewController()
     }
-    
 }

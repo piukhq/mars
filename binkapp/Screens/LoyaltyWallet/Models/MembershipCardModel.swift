@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import DeepDiff
 
 struct MembershipCardModel: Codable {
     let apiId: Int?
@@ -35,19 +36,28 @@ struct MembershipCardModel: Codable {
 extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCard, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCard {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
-        update(cdObject, \.membershipPlan, with: NSNumber(value: membershipPlan ?? 0), delta: delta)
+//        update(cdObject, \.membershipPlan, with: NSNumber(value: membershipPlan ?? 0), delta: delta)
 
+        // Retrieve Membership Plan
+        
+        if let planId = membershipPlan {
+        
+//            context.perform {
+                let plan = context.fetchWithApiID(CD_MembershipPlan.self, id: String(planId))
+                self.update(cdObject, \.membershipPlan, with: plan, delta: delta)
+//            }
+        }
 
         cdObject.transactions.forEach {
             guard let transaction = $0 as? CD_MembershipTransaction else { return }
             context.delete(transaction)
         }
+        
         membershipTransactions?.forEach { transaction in
             let cdTransaction = transaction.mapToCoreData(context, .update, overrideID: nil)
             update(cdTransaction, \.card, with: cdObject, delta: delta)
             cdObject.addTransactionsObject(cdTransaction)
         }
-
 
         if let status = status {
             let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: id))
@@ -56,7 +66,6 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         } else {
             update(cdObject, \.status, with: nil, delta: false)
         }
-
 
         if let card = card {
             let cdCard = card.mapToCoreData(context, .update, overrideID: CardModel.overrideId(forParentId: id))
@@ -77,7 +86,6 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             cdObject.addImagesObject(cdImage)
         }
 
-
         if let account = account {
             let cdAccount = account.mapToCoreData(context, .update, overrideID: MembershipCardAccountModel.overrideId(forParentId: id))
             update(cdAccount, \.card, with: cdObject, delta: delta)
@@ -85,7 +93,6 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         } else {
             update(cdObject, \.account, with: nil, delta: false)
         }
-
 
         cdObject.paymentCards.forEach {
             guard let paymentCard = $0 as? CD_PaymentCard else { return }
@@ -97,7 +104,6 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             cdObject.addPaymentCardsObject(cdPaymentCard)
         }
 
-
         cdObject.balances.forEach {
             guard let balance = $0 as? CD_MembershipCardBalance else { return }
             context.delete(balance)
@@ -107,7 +113,6 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             update(cdBalance, \.card, with: cdObject, delta: delta)
             cdObject.addBalancesObject(cdBalance)
         }
-        
 
         return cdObject
     }

@@ -22,19 +22,17 @@ class LoyaltyWalletRepository: CoreDataRepositoryProtocol {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: completion)
             return
         }
-
-        trashLocalObjects(forObjectType: CD_MembershipCard.self) { [weak self] in
-            let url = RequestURL.membershipCards
-            let method = RequestHTTPMethod.get
-
-            self?.apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipCardModel]) in
-                self?.mapCoreDataObjects(objectsToMap: response, completion: {
-                    self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: completion)
-                })
-            }, onError: {_ in
-                print("error")
+        
+        let url = RequestURL.membershipCards
+        let method = RequestHTTPMethod.get
+        
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipCardModel]) in
+            self.mapCoreDataObjects(objectsToMap: response, completion: {
+                self.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: completion)
             })
-        }
+        }, onError: {_ in
+            print("error")
+        })
     }
     
     func getMembershipPlans(forceRefresh: Bool = false, completion: @escaping ([CD_MembershipPlan]?) -> Void) {
@@ -42,19 +40,17 @@ class LoyaltyWalletRepository: CoreDataRepositoryProtocol {
             fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self, completion: completion)
             return
         }
-
-        trashLocalObjects(forObjectType: CD_MembershipPlan.self) { [weak self] in
-            let url = RequestURL.membershipPlans
-            let method = RequestHTTPMethod.get
-
-            self?.apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipPlanModel]) in
-                self?.mapCoreDataObjects(objectsToMap: response, completion: {
-                    self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self, completion: completion)
-                })
-            }, onError: {_ in
-                print("error")
+        
+        let url = RequestURL.membershipPlans
+        let method = RequestHTTPMethod.get
+        
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipPlanModel]) in
+            self.mapCoreDataObjects(objectsToMap: response, completion: {
+                self.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self, completion: completion)
             })
-        }
+        }, onError: {_ in
+            print("error")
+        })
     }
 
     func deleteMembershipCard(id: String, completion: @escaping (Any) -> Void) {

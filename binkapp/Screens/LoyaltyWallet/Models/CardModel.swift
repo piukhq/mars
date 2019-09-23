@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct CardModel: Codable {
+struct CardModel: Codable, Hashable {
     let apiId: Int?
     let barcode: String?
     let barcodeType: Int?

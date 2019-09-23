@@ -57,7 +57,6 @@ class AddingOptionsViewController: UIViewController {
         stackView.addArrangedSubview(loyaltyCardView)
         stackView.addArrangedSubview(browseBrandsView)
         stackView.addArrangedSubview(addPaymentCardView)
-        
     }
     
     func addGesturesToViews() {

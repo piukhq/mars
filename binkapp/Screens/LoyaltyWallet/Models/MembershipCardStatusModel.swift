@@ -46,3 +46,10 @@ extension MembershipCardStatusModel: CoreDataMappable, CoreDataIDMappable {
         return cdObject
     }
 }
+
+extension MembershipCardStatusModel: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(state)
+        hasher.combine(reasonCodes)
+    }
+}

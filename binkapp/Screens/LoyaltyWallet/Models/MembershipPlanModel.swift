@@ -55,9 +55,9 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
         if let account = account {
             let cdAccount = account.mapToCoreData(context, .update, overrideID: MembershipPlanAccountModel.overrideId(forParentId: id))
             update(cdAccount, \.plan, with: cdObject, delta: delta)
-            update(cdObject, \.account, with: cdAccount, delta: delta)
+//            update(cdObject, \.account, with: cdAccount, delta: delta)
         } else {
-            update(cdObject, \.account, with: nil, delta: false)
+//            update(cdObject, \.account, with: nil, delta: false)
         }
 
 

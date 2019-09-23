@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import DeepDiff
 
 protocol LoyaltyWalletViewModelDelegate {
     func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel)
@@ -17,7 +18,8 @@ class LoyaltyWalletViewModel {
     private let router: MainScreenRouter
     private var membershipCards: [CD_MembershipCard]?
     private var membershipPlans: [CD_MembershipPlan]?
-
+    
+    var delegate: LoyaltyWalletViewModelDelegate?
     var membershipCardsCount: Int {
         return membershipCards?.count ?? 0
     }
@@ -28,41 +30,48 @@ class LoyaltyWalletViewModel {
     }
 
     func getWallet(forceRefresh: Bool = false, completion: @escaping () -> Void) {
-        repository.getMembershipCards(forceRefresh: forceRefresh) { [weak self] cards in
-            self?.membershipCards = cards
-            
-            self?.repository.getMembershipPlans(forceRefresh: forceRefresh, completion: { plans in
-                self?.membershipPlans = plans
+        
+        repository.getMembershipPlans(forceRefresh: forceRefresh, completion: { plans in
+            self.membershipPlans = plans
+            self.repository.getMembershipCards(forceRefresh: forceRefresh) { [weak self] cards in
+                self?.membershipCards = cards
                 completion()
-            })
-        }
+            }
+        })
+        
+        
+        
     }
     
     // MARK: - Public methods
     
-//    func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-//        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
-//            guard let strongSelf = self else {
-//                return
+    func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping ([MembershipCardModel]) -> (), noCompletion: @escaping () -> Void) {
+        
+//        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
+//            if let cardId = self.membershipCards[index].id {
+//                self.deleteMembershipCard(id: cardId, completion: {
+//                    var new = self.membershipCards
+//                    new.remove(at: index)
+//                    yesCompletion(new)
+//                })
 //            }
-//            let cardId = strongSelf.membershipCards[index].id
-//            strongSelf.deleteMembershipCard(id: cardId, completion: {
-//                strongSelf.membershipCards.remove(at: index)
-//                yesCompletion()
-//            })
 //        }, noCompletion: {
-//            noCompletion()
+//            DispatchQueue.main.async {
+//                noCompletion()
+//            }
 //        })
+    }
+    
+//    func updateMembershipCards(new: [MembershipCardModel]) {
+//        membershipCards = new
 //    }
     
-//    func toBarcodeViewController(section: Int) {
-//        let card = membershipCards[section]
-//        guard let planId = card.membershipPlan else {
-//            return
-//        }
-//        guard let plan = getMembershipPlans().first(where: { $0.id == String(planId) }) else { return }
-//        router.toBarcodeViewController(membershipPlan: plan, membershipCard: card)
-//    }
+    func toBarcodeViewController(item: Int, completion: @escaping () -> ()) {
+        guard let card = membershipCards?[item] else { return }
+        
+        router.toBarcodeViewController(membershipCard: card, completion: completion)
+//        guard let plan = getMembershipPlans().first(where: { $0.id == card.membershipPlan }) else { return }
+    }
     
     func toFullDetailsCardScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
         router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard, membershipPlan: membershipPlan)
@@ -84,13 +93,13 @@ class LoyaltyWalletViewModel {
         return membershipPlans?[indexPath.section]
     }
     
-    func membershipPlanForCard(card: CD_MembershipCard) -> CD_MembershipPlan? {
-        guard let planId = card.membershipPlan?.intValue else {
-            return nil
-        }
-        let planIdString = String(planId)
-        return membershipPlans?.first(where: { $0.id == planIdString })
-    }
+//    func membershipPlanForCard(card: CD_MembershipCard) -> CD_MembershipPlan? {
+//        guard let planId = card.membershipPlan?.intValue else {
+//            return nil
+//        }
+//        let planIdString = String(planId)
+//        return membershipPlans?.first(where: { $0.id == planIdString })
+//    }
 }
 
 // MARK: Private methods
