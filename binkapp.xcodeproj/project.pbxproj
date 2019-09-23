@@ -101,6 +101,7 @@
 		3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */; };
 		3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE24B292304014500B258C8 /* AddOrJoinViewModel.swift */; };
 		3CE24B2D2304014600B258C8 /* AddOrJoinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE24B2A2304014500B258C8 /* AddOrJoinViewController.xib */; };
+		3CE892682338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */; };
 		3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEABFC92316AB42009B1122 /* MembershipTransaction.swift */; };
 		3CEABFCC2316AB65009B1122 /* MembershipCardStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEABFCB2316AB65009B1122 /* MembershipCardStatusModel.swift */; };
 		3CEABFCE2316AB74009B1122 /* MembershipCardAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEABFCD2316AB74009B1122 /* MembershipCardAccountModel.swift */; };
@@ -325,6 +326,7 @@
 		3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewController.swift; sourceTree = "<group>"; };
 		3CE24B292304014500B258C8 /* AddOrJoinViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewModel.swift; sourceTree = "<group>"; };
 		3CE24B2A2304014500B258C8 /* AddOrJoinViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddOrJoinViewController.xib; sourceTree = "<group>"; };
+		3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+RoundedCornersAndAspectFit.swift"; sourceTree = "<group>"; };
 		3CEABFC92316AB42009B1122 /* MembershipTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembershipTransaction.swift; sourceTree = "<group>"; };
 		3CEABFCB2316AB65009B1122 /* MembershipCardStatusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembershipCardStatusModel.swift; sourceTree = "<group>"; };
 		3CEABFCD2316AB74009B1122 /* MembershipCardAccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembershipCardAccountModel.swift; sourceTree = "<group>"; };
@@ -1023,6 +1025,7 @@
 				EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */,
 				3C8BBC282326541D00363349 /* NotificationNameExtension.swift */,
 				3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */,
+				3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1586,6 +1589,7 @@
 				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,
 				B774E9AF233263C5006D4131 /* BinkFloatingButtonsView.swift in Sources */,
 				3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */,
+				3CE892682338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift in Sources */,
 				3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */,
 				3C873FF222F073CF00FA3031 /* PaymentWalletPresenter.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
