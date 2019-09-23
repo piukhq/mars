@@ -29,7 +29,6 @@ class FullDetailsBrandHeader: CustomView {
                 self.brandImage.roundCornersForAspectFit(radius: 4)
             }
         }
-        //        brandImageBackgroundView.layer.shadowColor = UIColor.black.cgColor
     }
     
     // MARK: - Actions
