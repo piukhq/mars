@@ -41,11 +41,9 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         // Retrieve Membership Plan
         
         if let planId = membershipPlan {
-        
-//            context.perform {
                 let plan = context.fetchWithApiID(CD_MembershipPlan.self, id: String(planId))
                 self.update(cdObject, \.membershipPlan, with: plan, delta: delta)
-//            }
+                plan?.addMembershipCardsObject(cdObject)
         }
 
         cdObject.transactions.forEach {

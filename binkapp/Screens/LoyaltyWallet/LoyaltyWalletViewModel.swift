@@ -32,15 +32,11 @@ class LoyaltyWalletViewModel {
     func getWallet(forceRefresh: Bool = false, completion: @escaping () -> Void) {
         
         repository.getMembershipPlans(forceRefresh: forceRefresh, completion: { plans in
-            self.membershipPlans = plans
             self.repository.getMembershipCards(forceRefresh: forceRefresh) { [weak self] cards in
                 self?.membershipCards = cards
                 completion()
             }
         })
-        
-        
-        
     }
     
     // MARK: - Public methods
