@@ -22,11 +22,11 @@ class PaymentWalletViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
+        
+        viewModel.delegate = self
+        viewModel.getPaymentCards()
+        
         tableView.registerCellForClass(PaymentCardTableViewCell.self, asNib: true)
-    }
-    
-    func configureUI() {
         tableView.separatorColor = .clear
     }
     
@@ -40,5 +40,11 @@ class PaymentWalletViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell()
+    }
+}
+
+extension PaymentWalletViewController: PaymentWalletViewModelDelegate {
+    func paymentWalletViewModelDidLoadData(_ viewModel: PaymentWalletViewModel) {
+        tableView.reloadData()
     }
 }
