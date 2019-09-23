@@ -40,7 +40,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="zbA-fI-XfA" secondAttribute="trailing" id="BFv-oE-rYb"/>
                                 <constraint firstItem="zbA-fI-XfA" firstAttribute="leading" secondItem="JLY-Tr-SIY" secondAttribute="leading" id="Kaj-Hh-9Iq"/>
