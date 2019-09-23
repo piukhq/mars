@@ -2,71 +2,43 @@
 //  PaymentWalletViewController.swift
 //  binkapp
 //
-//  Copyright (c) 2019 Bink. All rights reserved.
+//  Created by Paul Tiriteu on 23/09/2019.
+//  Copyright © 2019 Bink. All rights reserved.
 //
 
 import UIKit
 
-protocol PaymentWalletDisplayLogic: class
-{
-  func displaySomething(viewModel: PaymentWallet.Something.ViewModel)
-}
-
-class PaymentWalletViewController: UIViewController, PaymentWalletDisplayLogic
-{
-  var interactor: PaymentWalletBusinessLogic?
-  var router: (NSObjectProtocol & PaymentWalletRoutingLogic & PaymentWalletDataPassing)?
-  
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
-  {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    setup()
-  }
-  
-  required init?(coder aDecoder: NSCoder)
-  {
-    super.init(coder: aDecoder)
-    setup()
-  }
-  
-  private func setup()
-  {
-    let viewController = self
-    let interactor = PaymentWalletInteractor()
-    let presenter = PaymentWalletPresenter()
-    let router = PaymentWalletRouter()
-    viewController.interactor = interactor
-    viewController.router = router
-    interactor.presenter = presenter
-    presenter.viewController = viewController
-    router.viewController = viewController
-    router.dataStore = interactor
-  }
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-  {
-    if let scene = segue.identifier {
-      let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-      if let router = router, router.responds(to: selector) {
-        router.perform(selector, with: segue)
-      }
-    }
-  }
-  
-  override func viewDidLoad()
-  {
-    super.viewDidLoad()
-    doSomething()
-  }
-  
-  func doSomething()
-  {
-    let request = PaymentWallet.Something.Request()
-    interactor?.doSomething(request: request)
-  }
-  
-  func displaySomething(viewModel: PaymentWallet.Something.ViewModel)
-  {
+class PaymentWalletViewController: UITableViewController {
+    private let viewModel: PaymentWalletViewModel
     
-  }
+    init(viewModel: PaymentWalletViewModel) {
+        self.viewModel = viewModel
+        super.init(style: .plain)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureUI()
+        tableView.registerCellForClass(PaymentCardTableViewCell.self, asNib: true)
+    }
+    
+    func configureUI() {
+        tableView.separatorColor = .clear
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.paymentCards.count
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
 }
