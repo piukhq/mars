@@ -9,7 +9,7 @@ import UIKit
 import CoreGraphics
 import DeepDiff
 
-class LoyaltyWalletViewController: UIViewController, BarBlurring {
+class LoyaltyWalletViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +37,6 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
     }()
     
     private let viewModel: LoyaltyWalletViewModel
-    internal lazy var blurBackground = defaultBlurredBackground()
     private let refreshControl = UIRefreshControl()
     
     init(viewModel: LoyaltyWalletViewModel) {
@@ -89,12 +88,12 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
 
 // MARK: - Navigation Bar Blurring
 
-override func viewDidLayoutSubviews() {
-super.viewDidLayoutSubviews()
-
-guard let bar = navigationController?.navigationBar else { return }
-prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
-}
+//    override func viewDidLayoutSubviews() {
+//        super.viewDidLayoutSubviews()
+//
+//        guard let bar = navigationController?.navigationBar else { return }
+//        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
+//    }
 }
 
 extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -110,6 +109,8 @@ extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionVie
         
         if let card = viewModel.membershipCard(forIndexPath: indexPath) {
             cell.configureUIWithMembershipCard(card: card, delegate: self)
+            
+            
 //            cell.configureUIWithMembershipCard(
 //                card: <#T##MembershipCardModel#>,
 //                andMemebershipPlan: <#T##MembershipPlanModel#>,
