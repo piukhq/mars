@@ -19,7 +19,7 @@ class AddOrJoinViewController: UIViewController {
     }
     
     @IBAction func newCardButtonAction(_ sender: Any) {
-        viewModel.newCardWasPresed()
+        viewModel.didSelectAddNewCard()
     }
     
     init(viewModel: AddOrJoinViewModel) {
