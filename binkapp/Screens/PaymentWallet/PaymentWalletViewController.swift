@@ -8,12 +8,14 @@
 
 import UIKit
 
-class PaymentWalletViewController: UITableViewController {
+class PaymentWalletViewController: UIViewController {
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     private let viewModel: PaymentWalletViewModel
     
     init(viewModel: PaymentWalletViewModel) {
         self.viewModel = viewModel
-        super.init(style: .plain)
+        super.init(nibName: "PaymentWalletViewController", bundle: Bundle(for: PaymentWalletViewController.self))
     }
     
     required init?(coder: NSCoder) {
@@ -23,28 +25,37 @@ class PaymentWalletViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
         viewModel.delegate = self
         viewModel.getPaymentCards()
-        
-        tableView.registerCellForClass(PaymentCardTableViewCell.self, asNib: true)
-        tableView.separatorColor = .clear
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.paymentCards.count
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+}
+
+extension PaymentWalletViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.paymentCards.count
     }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+    
+    
+}
+
+extension PaymentWalletViewController: UICollectionViewDelegate {
+    
 }
 
 extension PaymentWalletViewController: PaymentWalletViewModelDelegate {
     func paymentWalletViewModelDidLoadData(_ viewModel: PaymentWalletViewModel) {
-        tableView.reloadData()
+        
     }
 }

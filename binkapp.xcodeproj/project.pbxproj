@@ -27,6 +27,7 @@
 		3C33E33F23167015005E97DC /* DropdownView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C33E33E23167015005E97DC /* DropdownView.xib */; };
 		3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C36071E230FF03000AC76A3 /* BrandHeaderView.swift */; };
 		3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C360720230FF03B00AC76A3 /* BrandHeaderView.xib */; };
+		3C3684A02339FF33001CBF90 /* PaymentWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C36849F2339FF33001CBF90 /* PaymentWalletViewController.xib */; };
 		3C3C604C2302DD1600D9EA25 /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3C604B2302DD1600D9EA25 /* EmptyResponse.swift */; };
 		3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3C604E2302E65600D9EA25 /* BrandModel.swift */; };
 		3C429F8E22F16A9A009C1BD2 /* LoyaltyWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C429F8D22F16A9A009C1BD2 /* LoyaltyWalletTests.swift */; };
@@ -248,6 +249,7 @@
 		3C34B3514F00742E1239A094 /* Pods-binkapp.gamma.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.gamma.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.gamma.xcconfig"; sourceTree = "<group>"; };
 		3C36071E230FF03000AC76A3 /* BrandHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderView.swift; sourceTree = "<group>"; };
 		3C360720230FF03B00AC76A3 /* BrandHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrandHeaderView.xib; sourceTree = "<group>"; };
+		3C36849F2339FF33001CBF90 /* PaymentWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentWalletViewController.xib; sourceTree = "<group>"; };
 		3C3C604B2302DD1600D9EA25 /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		3C3C604E2302E65600D9EA25 /* BrandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandModel.swift; sourceTree = "<group>"; };
 		3C429F8D22F16A9A009C1BD2 /* LoyaltyWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletTests.swift; sourceTree = "<group>"; };
@@ -609,6 +611,7 @@
 				3C453CB82338E85D00287B56 /* PaymentWalletRepository.swift */,
 				3C453CB62338E84F00287B56 /* PaymentWalletViewModel.swift */,
 				3C453CB22338E84500287B56 /* PaymentWalletViewController.swift */,
+				3C36849F2339FF33001CBF90 /* PaymentWalletViewController.xib */,
 			);
 			path = PaymentWallet;
 			sourceTree = "<group>";
@@ -1257,6 +1260,7 @@
 				3C873FFB22F073CF00FA3031 /* LoyaltyWalletViewController.xib in Resources */,
 				3C48E7E2232A4B1E00ADE410 /* TransactionsViewController.xib in Resources */,
 				5E1B5014232105CD00890C7E /* com.bink.wallet.neo.alpha.GoogleService-Info.plist in Resources */,
+				3C3684A02339FF33001CBF90 /* PaymentWalletViewController.xib in Resources */,
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
 				B766599A2320F68D00B327BE /* HyperlinkAlertController.xib in Resources */,
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
