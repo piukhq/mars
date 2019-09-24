@@ -75,7 +75,6 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
             break
         case "pending":
             cardValuePointsLabel.text = card.status?.state
-
             break
         case "authorised":
             if plan.featureSet?.cardType == .link {
@@ -85,7 +84,7 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
                 cardLinkStatusLabel.isHidden = false
             }
             if plan.featureSet?.hasPoints == true {
-                if let balanceValue = card.balances?[0].value {
+                if let balanceValue = card.balances?.first?.value {
                     let attributedPrefix = NSMutableAttributedString(string: card.balances?[0].prefix ?? "")
                     let attributedSuffix = NSMutableAttributedString(string: "\n" + (card.balances?[0].suffix ?? ""), attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
                     let attributedValue = NSMutableAttributedString(string: String(balanceValue))
