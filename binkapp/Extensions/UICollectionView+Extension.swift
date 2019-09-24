@@ -11,9 +11,13 @@ import UIKit
 public extension UICollectionView {
     
     // MARK: - Cell
-    
-    func register<T: UICollectionViewCell>(_: T.Type) {
-        register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
+
+    func register<T: UICollectionViewCell>(_: T.Type, asNib: Bool = false) {
+        if asNib {
+            register(UINib(nibName: T.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: T.reuseIdentifier)
+        } else {
+            register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
+        }
     }
     
     func dequeue<T: UICollectionViewCell>(indexPath: IndexPath) -> T {

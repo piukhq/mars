@@ -41,7 +41,7 @@ class PaymentWalletViewController: UIViewController {
     }
 
     private func configureCollectionView() {
-        collectionView.register(PaymentCardCollectionViewCell.self)
+        collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
