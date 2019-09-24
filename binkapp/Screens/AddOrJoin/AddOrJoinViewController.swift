@@ -19,7 +19,7 @@ class AddOrJoinViewController: UIViewController {
     }
     
     @IBAction func newCardButtonAction(_ sender: Any) {
-        viewModel.displaySimplePopup(title: nil, message: "Screen not implemented")
+        viewModel.newCardWasPresed()
     }
     
     init(viewModel: AddOrJoinViewModel) {

@@ -24,6 +24,16 @@ class AddOrJoinViewModel {
         router.toAuthAndAddViewController(membershipPlan: membershipPlan)
     }
     
+    func newCardWasPresed() {
+        if membershipPlan.featureSet?.cardType == FeatureSetModel.PlanCardType.link {
+            //TODO: go to sign up form
+            print("goes to sign up")
+        } else {
+            //TODO: native join unavailable
+            print("native join unavailable")
+        }
+    }
+    
     func displaySimplePopup(title: String?, message: String?) {
         router.displaySimplePopup(title: title, message: message)
     }
