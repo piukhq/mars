@@ -8,10 +8,10 @@
 import Foundation
 
 struct MembershipCardStatusModel: Codable {
-    let state : String?
+    let state : MembershipCardStatus?
     let reasonCodes : [String]?
     
-    enum MembershipCardStatus: String {
+    enum MembershipCardStatus: String, Codable {
         case authorised
         case unauthorised
         case pending
@@ -26,7 +26,7 @@ struct MembershipCardStatusModel: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        state = try values.decodeIfPresent(String.self, forKey: .state)
+        state = try values.decodeIfPresent(MembershipCardStatus.self, forKey: .state)
         reasonCodes = try values.decodeIfPresent([String].self, forKey: .reasonCodes)
     }
     

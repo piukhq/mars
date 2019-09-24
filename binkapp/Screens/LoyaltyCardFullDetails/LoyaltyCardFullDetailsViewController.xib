@@ -38,15 +38,10 @@
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="ElX-yf-qIn">
                                     <rect key="frame" x="25" y="325" width="364" height="128"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rWO-HB-Y8N">
-                                            <rect key="frame" x="0.0" y="0.0" width="364" height="128"/>
-                                            <color key="backgroundColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="128" id="yfe-5Z-qsH"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="364" id="2UN-LV-eZ8"/>
+                                        <constraint firstAttribute="height" constant="128" id="jvb-fa-jDG"/>
+                                    </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="umh-i2-nD6">
                                     <rect key="frame" x="25" y="478" width="364" height="740"/>

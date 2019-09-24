@@ -27,6 +27,8 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
+        viewModel.getPaymentCards()
         configureUI()
         setCloseButton()
     }
@@ -59,8 +61,16 @@ private extension LoyaltyCardFullDetailsViewController {
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
         fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
         
-        let pointsModuleView = PointsModuleView()
-        pointsModuleView.configure(membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, delegate: self)
+
+    }
+    
+    func configureCardDetails(_ paymentCards: [PaymentCardModel]?) {
+        let linkModuleView = BinkModuleView()
+        linkModuleView.configure(moduleType: .link, membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, paymentCards: paymentCards, delegate: self)
+        cardDetailsStackView.insertArrangedSubview(linkModuleView, at: 0)
+        
+        let pointsModuleView = BinkModuleView()
+        pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, delegate: self)
         cardDetailsStackView.insertArrangedSubview(pointsModuleView, at: 0)
     }
     
@@ -123,8 +133,18 @@ extension LoyaltyCardFullDetailsViewController: FullDetailsBrandHeaderDelegate {
 
 // MARK: - PointsModuleViewDelegate
 
-extension LoyaltyCardFullDetailsViewController: PointsModuleViewDelegate {
-    func pointsModuleViewWasTapped(_: PointsModuleView, withAction action: PointsModuleView.PointsModuleAction) {
+extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
+    func binkModuleViewWasTapped(_: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
         viewModel.goToScreenForAction(action: action)
+    }
+}
+
+// MARK: - LoyaltyCardFullDetailsViewModelDelegate
+
+extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsViewModelDelegate {
+    func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel]) {
+        DispatchQueue.main.async {
+            self.configureCardDetails(paymentCards)
+        }
     }
 }
