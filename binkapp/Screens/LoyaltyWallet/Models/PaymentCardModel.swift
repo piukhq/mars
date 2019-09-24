@@ -8,54 +8,18 @@
 
 import Foundation
 
-struct PaymentCardMembershipCardResponse: Codable {
-    var id: Int?
-    var activeLink: Bool
+enum PaymentCardProvider: String, Codable {
+    case visa = "Visa"
+    case mastercard = "Mastercard"
+    case amex = "Amex"
 
-    enum CodingKeys: String, CodingKey {
-        case id
-        case activeLink = "active_link"
-    }
-}
-
-struct PaymentCardAccountResponse: Codable {
-    var verificationInProgress: Bool?
-    var status: Int?
-    var consents: [PaymentCardAccountConsentsResponse]?
-
-    enum CodingKeys: String, CodingKey {
-        case verificationInProgress = "verification_in_progress"
-        case status
-        case consents
-    }
-}
-
-struct PaymentCardAccountConsentsResponse: Codable {
-    var type: Int?
-    var timestamp: Int?
-}
-
-struct PaymentCardCardResponse: Codable {
-    var firstSix: String?
-    var lastFour: String?
-    var month: Int?
-    var year: Int?
-    var country: String?
-    var currencyCode: String?
-    var nameOnCard: String?
-    var provider: String?
-    var type: String?
-
-    enum CodingKeys: String, CodingKey {
-        case firstSix = "first_six_digits"
-        case lastFour = "last_four_digits"
-        case month
-        case year
-        case country
-        case currencyCode = "currency_code"
-        case nameOnCard = "name_on_card"
-        case provider
-        case type
+    var redactedPrefix: String {
+        switch self {
+        case .mastercard, .visa:
+            return "••••   ••••   ••••   "
+        case .amex:
+            return "••••   ••••••   •"
+        }
     }
 }
 
@@ -74,5 +38,56 @@ struct PaymentCardModel: Codable {
         case card
         case images
         case account
+    }
+
+    struct PaymentCardMembershipCardResponse: Codable {
+        var id: Int?
+        var activeLink: Bool
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case activeLink = "active_link"
+        }
+    }
+
+    struct PaymentCardAccountResponse: Codable {
+        var verificationInProgress: Bool?
+        var status: Int?
+        var consents: [PaymentCardAccountConsentsResponse]?
+
+        enum CodingKeys: String, CodingKey {
+            case verificationInProgress = "verification_in_progress"
+            case status
+            case consents
+        }
+    }
+
+    struct PaymentCardAccountConsentsResponse: Codable {
+        var type: Int?
+        var timestamp: Int?
+    }
+
+    struct PaymentCardCardResponse: Codable {
+        var firstSix: String?
+        var lastFour: String?
+        var month: Int?
+        var year: Int?
+        var country: String?
+        var currencyCode: String?
+        var nameOnCard: String?
+        var provider: PaymentCardProvider?
+        var type: String?
+
+        enum CodingKeys: String, CodingKey {
+            case firstSix = "first_six_digits"
+            case lastFour = "last_four_digits"
+            case month
+            case year
+            case country
+            case currencyCode = "currency_code"
+            case nameOnCard = "name_on_card"
+            case provider
+            case type
+        }
     }
 }

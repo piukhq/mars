@@ -42,6 +42,10 @@ class PaymentWalletViewController: UIViewController {
 
     private func configureCollectionView() {
         collectionView.registerCellForClass(PaymentCardCollectionViewCell.self, asNib: true)
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        flowLayout.minimumLineSpacing = 12
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -90,6 +94,7 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 300, height: 100)
+        let screenWidth = UIScreen.main.bounds.width
+        return CGSize(width: screenWidth - 50, height: 120)
     }
 }
