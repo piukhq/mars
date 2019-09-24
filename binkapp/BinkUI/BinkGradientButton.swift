@@ -35,6 +35,5 @@ class BinkGradientButton: UIButton {
             
             layer.insertSublayer(shadowLayer, at: 0)
         }
-        
     }
 }
