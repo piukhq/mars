@@ -28,6 +28,7 @@ class PaymentWalletViewController: UIViewController {
 
         refreshControl.addTarget(self, action: #selector(refreshWallet), for: .valueChanged)
         collectionView.addSubview(refreshControl)
+        collectionView.alwaysBounceVertical = true
         
         collectionView.dataSource = self
         collectionView.delegate = self
