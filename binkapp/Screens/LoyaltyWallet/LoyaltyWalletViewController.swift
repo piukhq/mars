@@ -67,7 +67,8 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WalletLoyaltyCardTableViewCell", for: indexPath) as! WalletLoyaltyCardTableViewCell
+        let cell: WalletLoyaltyCardTableViewCell = tableView.dequeue(indexPath: indexPath)
+        
         if let cardPlan = viewModel.membershipPlanForCard(card: viewModel.membershipCard(forIndexPathSection: section)) {
             cell.configureUIWithMembershipCard(card: viewModel.membershipCard(forIndexPathSection: section), andMemebershipPlan: cardPlan)
         }

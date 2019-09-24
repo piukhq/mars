@@ -84,7 +84,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrandTableViewCell", for: indexPath) as? BrandTableViewCell else { return UITableViewCell() }
+        let cell: BrandTableViewCell = tableView.dequeue(indexPath: indexPath)
         
         let membershipPlan: MembershipPlanModel = viewModel.getMembershipPlan(for: indexPath)
         

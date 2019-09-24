@@ -41,7 +41,7 @@ class PaymentWalletViewController: UIViewController {
     }
 
     private func configureCollectionView() {
-        collectionView.registerCellForClass(PaymentCardCollectionViewCell.self, asNib: true)
+        collectionView.register(PaymentCardCollectionViewCell.self)
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
@@ -83,7 +83,7 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithClass(PaymentCardCollectionViewCell.self, forIndexPath: indexPath)
+        let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
 
         guard let paymentCard = viewModel.paymentCards?[indexPath.row] else {
             return cell
