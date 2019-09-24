@@ -12,6 +12,7 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
 
     func configureWithPaymentCard(_ paymentCard: PaymentCardModel) {
         backgroundColor = .orange
+        layer.cornerRadius = 4
     }
 
 }
