@@ -21,6 +21,28 @@ enum PaymentCardProvider: String, Codable {
             return "••••   ••••••   •"
         }
     }
+
+    var logoName: String {
+        switch self {
+        case .amex:
+            return "cardPaymentLogoAmEx"
+        case .mastercard:
+            return "cardPaymentLogoMasterCard"
+        case .visa:
+            return "cardPaymentLogoVisa"
+        }
+    }
+
+    var sublogoName: String {
+        switch self {
+        case .amex:
+            return "cardPaymentSublogoAmEx"
+        case .mastercard:
+            return "cardPaymentSublogoMasterCard"
+        case .visa:
+            return "cardPaymentSublogoVisa"
+        }
+    }
 }
 
 struct PaymentCardModel: Codable {

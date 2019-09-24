@@ -51,10 +51,13 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         case .amex:
             containerView.backgroundColor = .green
         }
+
+        providerLogoImageView.image = UIImage(named: provider.logoName)
+        providerWatermarkImageView.image = UIImage(named: provider.sublogoName)
     }
 
     private func configurePaymentCardLinkingStatus(_ paymentCard: PaymentCardModel) {
-        guard paymentCardIsExpired(paymentCard) else {
+        guard !paymentCardIsExpired(paymentCard) else {
             alertView.configureForType(.paymentExpired)
             alertView.isHidden = false
             pllStatusLabel.isHidden = true

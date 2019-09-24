@@ -59,6 +59,20 @@
                                     <constraint firstAttribute="width" constant="100" id="VgT-Eu-TUF"/>
                                 </constraints>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cardPaymentLogoVisa" translatesAutoresizingMaskIntoConstraints="NO" id="Z3L-XY-Mka">
+                                <rect key="frame" x="293" y="20" width="78" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="78" id="Jjn-jw-TDR"/>
+                                    <constraint firstAttribute="height" constant="54" id="Rgm-Hf-gmk"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xMi-zC-Mus">
+                                <rect key="frame" x="20" y="77" width="171" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="171" id="05a-Cb-n18"/>
+                                    <constraint firstAttribute="height" constant="43" id="gNh-xe-pbb"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -66,15 +80,19 @@
                             <constraint firstAttribute="trailing" secondItem="LQa-TU-DPB" secondAttribute="trailing" constant="20" id="7BV-lO-1rZ"/>
                             <constraint firstAttribute="bottom" secondItem="7wp-r2-0PR" secondAttribute="bottom" constant="15" id="7Cy-lm-4sC"/>
                             <constraint firstItem="LQa-TU-DPB" firstAttribute="centerY" secondItem="5ti-Yy-XeC" secondAttribute="centerY" id="ABb-2a-3GO"/>
+                            <constraint firstAttribute="bottom" secondItem="xMi-zC-Mus" secondAttribute="bottom" id="AhV-8U-nSW"/>
                             <constraint firstItem="LQa-TU-DPB" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="20" id="IpJ-jV-CgZ"/>
                             <constraint firstItem="2nB-iq-pM6" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="8" id="KeE-7W-pkS"/>
                             <constraint firstAttribute="trailing" secondItem="x78-gd-0FT" secondAttribute="trailing" constant="20" id="S3Z-Pc-wlB"/>
                             <constraint firstAttribute="trailing" secondItem="Gpr-Cg-2C1" secondAttribute="trailing" constant="20" id="TNh-wZ-ciT"/>
+                            <constraint firstItem="Z3L-XY-Mka" firstAttribute="top" secondItem="5ti-Yy-XeC" secondAttribute="top" constant="20" id="ToW-fp-wfx"/>
                             <constraint firstAttribute="bottom" secondItem="2nB-iq-pM6" secondAttribute="bottom" constant="13" id="XrO-7l-Ljo"/>
                             <constraint firstItem="x78-gd-0FT" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="20" id="Y07-Jy-5by"/>
                             <constraint firstItem="Gpr-Cg-2C1" firstAttribute="leading" secondItem="2nB-iq-pM6" secondAttribute="trailing" constant="8" id="e2l-0w-OGi"/>
+                            <constraint firstAttribute="trailing" secondItem="Z3L-XY-Mka" secondAttribute="trailing" constant="20" id="h0A-dZ-QDr"/>
                             <constraint firstItem="x78-gd-0FT" firstAttribute="top" secondItem="5ti-Yy-XeC" secondAttribute="top" constant="20" id="qht-QK-TfD"/>
                             <constraint firstAttribute="trailing" secondItem="7wp-r2-0PR" secondAttribute="trailing" constant="20" id="zRW-f5-3p9"/>
+                            <constraint firstItem="xMi-zC-Mus" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="20" id="zVl-Am-EsC"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -95,11 +113,14 @@
                 <outlet property="linkedStatusImageView" destination="Gpr-Cg-2C1" id="vZ5-Ff-E54"/>
                 <outlet property="nameOnCardLabel" destination="x78-gd-0FT" id="WuN-XY-iIX"/>
                 <outlet property="pllStatusLabel" destination="2nB-iq-pM6" id="84j-0s-av8"/>
+                <outlet property="providerLogoImageView" destination="Z3L-XY-Mka" id="ldP-o8-xLC"/>
+                <outlet property="providerWatermarkImageView" destination="xMi-zC-Mus" id="rbk-vS-eaR"/>
             </connections>
-            <point key="canvasLocation" x="480.43478260869568" y="105.13392857142857"/>
+            <point key="canvasLocation" x="487.68115942028987" y="106.47321428571428"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="cardPaymentLogoVisa" width="78" height="54"/>
         <image name="un" width="16" height="16"/>
     </resources>
 </document>
