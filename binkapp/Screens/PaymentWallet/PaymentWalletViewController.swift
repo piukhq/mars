@@ -27,35 +27,32 @@ class PaymentWalletViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        viewModel.delegate = self
-        viewModel.getPaymentCards()
+
+        configureCollectionView()
+    }
+
+    private func configureCollectionView() {
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
     }
     
 }
 
-extension PaymentWalletViewController: UICollectionViewDataSource {
+extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.paymentCards.count
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = .purple
+        return cell
     }
-    
-    
-}
 
-extension PaymentWalletViewController: UICollectionViewDelegate {
-    
-}
-
-extension PaymentWalletViewController: PaymentWalletViewModelDelegate {
-    func paymentWalletViewModelDidLoadData(_ viewModel: PaymentWalletViewModel) {
-        
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 300, height: 100)
     }
 }
