@@ -34,6 +34,12 @@ class PaymentTermsAndConditionsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         textView.setContentOffset(.zero, animated: false)
     }
+    
+    private func configureUI() {
+        title = viewModel.title
+        textView.text = viewModel.text
+        textView.font = viewModel.font
+    }
 }
 
 // MARK: - Private methods
