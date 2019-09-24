@@ -41,7 +41,7 @@ class PaymentWalletViewController: UIViewController {
     }
 
     private func configureCollectionView() {
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.registerCellForClass(PaymentCardCollectionViewCell.self, asNib: true)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -78,8 +78,14 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .purple
+        let cell = collectionView.dequeueReusableCellWithClass(PaymentCardCollectionViewCell.self, forIndexPath: indexPath)
+
+        guard let paymentCard = viewModel.paymentCards?[indexPath.row] else {
+            return cell
+        }
+
+        cell.configureWithPaymentCard(paymentCard)
+
         return cell
     }
 

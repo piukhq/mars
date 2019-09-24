@@ -176,6 +176,9 @@
 		BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CB945232857BD005C37AE /* APIConstants.swift */; };
 		BDA4EE982320508400A99CB1 /* BarcodeGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; };
 		BDA4EE992320508400A99CB1 /* BarcodeGenerator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		EF2E881E233A354500F678F3 /* PaymentCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E881C233A354500F678F3 /* PaymentCardCollectionViewCell.swift */; };
+		EF2E881F233A354500F678F3 /* PaymentCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF2E881D233A354500F678F3 /* PaymentCardCollectionViewCell.xib */; };
+		EF2E8821233A364100F678F3 /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E8820233A364100F678F3 /* UICollectionViewExtension.swift */; };
 		EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */; };
 		EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */; };
 		EF485566231D5E4E00FC9E5F /* DebugMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */; };
@@ -423,6 +426,9 @@
 		DAD06B97E6DBC2FAA6900787 /* Pods-binkapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.debug.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.debug.xcconfig"; sourceTree = "<group>"; };
 		E7354EC1FB3CF368988428AD /* Pods-binkappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.release.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ED4CD3B619FA32A249E98CC6 /* Pods-binkappTests.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.nightly.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.nightly.xcconfig"; sourceTree = "<group>"; };
+		EF2E881C233A354500F678F3 /* PaymentCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		EF2E881D233A354500F678F3 /* PaymentCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardCollectionViewCell.xib; sourceTree = "<group>"; };
+		EF2E8820233A364100F678F3 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTableViewController.swift; sourceTree = "<group>"; };
@@ -596,6 +602,7 @@
 		3C873FD422F073CE00FA3031 /* PaymentWallet */ = {
 			isa = PBXGroup;
 			children = (
+				EF2E881B233A353400F678F3 /* Cell */,
 				3C453CB82338E85D00287B56 /* PaymentWalletRepository.swift */,
 				3C453CB62338E84F00287B56 /* PaymentWalletViewModel.swift */,
 				3C453CB22338E84500287B56 /* PaymentWalletViewController.swift */,
@@ -1017,6 +1024,7 @@
 				3C8BBC282326541D00363349 /* NotificationNameExtension.swift */,
 				3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */,
 				3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */,
+				EF2E8820233A364100F678F3 /* UICollectionViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1029,6 +1037,15 @@
 				BD3CB945232857BD005C37AE /* APIConstants.swift */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		EF2E881B233A353400F678F3 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EF2E881C233A354500F678F3 /* PaymentCardCollectionViewCell.swift */,
+				EF2E881D233A354500F678F3 /* PaymentCardCollectionViewCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		EF48556F231D725800FC9E5F /* View */ = {
@@ -1249,6 +1266,7 @@
 				3C48E7E2232A4B1E00ADE410 /* TransactionsViewController.xib in Resources */,
 				5E1B5014232105CD00890C7E /* com.bink.wallet.neo.alpha.GoogleService-Info.plist in Resources */,
 				3C3684A02339FF33001CBF90 /* PaymentWalletViewController.xib in Resources */,
+				EF2E881F233A354500F678F3 /* PaymentCardCollectionViewCell.xib in Resources */,
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
 				B766599A2320F68D00B327BE /* HyperlinkAlertController.xib in Resources */,
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
@@ -1489,6 +1507,7 @@
 				5ECE04A922CE582E001BA964 /* LoginRepository.swift in Sources */,
 				BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */,
 				3C8BBC27232651E900363349 /* Connectivity.swift in Sources */,
+				EF2E8821233A364100F678F3 /* UICollectionViewExtension.swift in Sources */,
 				3C7067EF232FD52D00AB88A5 /* SimpleInfoViewController.swift in Sources */,
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
 				3C2C90FB23191CF700D112E3 /* AuthoriseFieldPostModel.swift in Sources */,
@@ -1552,6 +1571,7 @@
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
 				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
 				B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */,
+				EF2E881E233A354500F678F3 /* PaymentCardCollectionViewCell.swift in Sources */,
 				3C873FFC22F073CF00FA3031 /* LoyaltyWalletRepository.swift in Sources */,
 				3C794D8C23018C25000A31FD /* BrowseBrandsViewController.swift in Sources */,
 				3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */,
