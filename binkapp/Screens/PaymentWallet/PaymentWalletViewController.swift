@@ -10,7 +10,8 @@ import UIKit
 
 class PaymentWalletViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
-    
+
+    private let refreshControl = UIRefreshControl()
     private let viewModel: PaymentWalletViewModel
     
     init(viewModel: PaymentWalletViewModel) {
@@ -24,15 +25,24 @@ class PaymentWalletViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        refreshControl.addTarget(self, action: #selector(getWallet), for: .valueChanged)
+        collectionView.addSubview(refreshControl)
         
         collectionView.dataSource = self
         collectionView.delegate = self
 
         configureCollectionView()
+
+        viewModel.getWallet()
     }
 
     private func configureCollectionView() {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+    }
+
+    @objc private func getWallet() {
+        
     }
     
 }

@@ -17,18 +17,20 @@ class PaymentWalletViewModel {
     private let router: MainScreenRouter
     
     weak var delegate: PaymentWalletViewModelDelegate?
-    var paymentCards: [PaymentCardModel] = []
+    private var paymentCards: [PaymentCardModel]?
     
     init(repository: PaymentWalletRepository, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
     }
     
-    func getPaymentCards() {
-        repository.getPaymentCards { [weak self] (results) in
-            guard let wself = self else { return }
-            wself.paymentCards = results
-            wself.delegate?.paymentWalletViewModelDidLoadData(wself)
+    func getWallet() {
+        repository.getPaymentCards { [weak self] cards in
+            self?.paymentCards = cards
         }
+    }
+
+    func getPaymentCards() -> [PaymentCardModel]? {
+        return paymentCards
     }
 }

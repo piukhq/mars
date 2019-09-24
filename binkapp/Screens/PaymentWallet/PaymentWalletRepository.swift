@@ -15,13 +15,13 @@ struct PaymentWalletRepository {
         self.apiManager = apiManager
     }
     
-    func getPaymentCards(completion: @escaping ([PaymentCardModel]) -> Void) {
+    func getPaymentCards(completion: @escaping ([PaymentCardModel]?) -> Void) {
         let url = RequestURL.getPaymentCards
         let httpMethod = RequestHTTPMethod.get
         apiManager.doRequest(url: url, httpMethod: httpMethod, parameters: nil, onSuccess: { (results: [PaymentCardModel]) in
             completion(results)
         }) { (error) in
-            
+            completion(nil)
         }
     }
 }
