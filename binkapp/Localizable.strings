@@ -5,8 +5,18 @@
   Copyright © 2019 Bink. All rights reserved.
 */
 
+"error_title" = "Error";
+"to_be_implemented_message" = "To be implemented";
+
 "barcode_swipe_title" = "Barcode";
 "delete_swipe_title" = "Delete";
+"please_wait_title" = "Please wait";
+"sign_up_failed_title" = "Sign up failed";
+"please_try_again_title" = "Please try again";
+"log_in_title" = "Log in";
+"registration_failed_title" = "Registration failed";
+"history_title" = "History";
+"not_available_title" = "Not available";
 
 "add_loyalty_card_title" = "Add loyalty card";
 "scan_a_card_description" = "Scan a card you already have";
@@ -43,7 +53,6 @@
 "add_my_card_button" = "Add my card";
 "get_new_card_button" = "Get a new card";
 
-"log_in_title" = "Log in";
 "auth_screen_description" = "Please enter your %@ details below to add this card to your wallet.";
 
 "pll_title" = "PLL";
@@ -76,5 +85,24 @@
 "hours" = "hours";
 "minute" = "minute";
 "minutes" = "minutes";
+"points_history_title" = "Points history";
+"recent_transaction_history_subtitle" = "Your recent transaction history.";
+
+"log_in_pending_title" = "Log in pending";
+"sign_up_pending_title" = "Sign up pending";
+"register_pending_title" = "Register Ghost card pending";
+"log_in_pending_description" = "You are seeing this because sometimes it takes a while to log in with the merchant. In the meantime please do not attempt to log in again, but you can use your card and receive your benefits as usual. After you are logged in you will be able to see your points balance.";
+"sign_up_pending_description" = "Sometimes it takes a while to sign up with your merchant.\nIn the meantime please do not attempt to sign up again. You can use your card and receive your benefits as normal.\nAfter the sign up has been completed you will be able to see your points balance.";
+"register_pending_description" = "Sometimes it takes a while to register with your merchant.\nIn the meantime please do not attept to register your card again. You can use your card an receive your benefits as normal.\nAfter registration up has been completed you will be able to see your points balance.";
 
 "debug_menu_tools_section_title" = "Tools";
+
+"points_module_view_history_message" = "View history";
+"points_module_last_checked" = "Last checked";
+"points_module_to_see_history" = "To see history";
+"points_module_signing_up_status" = "Signing up";
+"points_module_logging_in_status" = "Logging in";
+"points_module_registering_card_status" = "Registering card";
+"points_module_retry_log_in_status" = "Retry log in";
+
+"terms_and_conditions_title" = "Terms and conditions";

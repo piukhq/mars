@@ -12,9 +12,7 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
     @IBOutlet private weak var aboutInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var securityAndPrivacyInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var deleteInfoRow: CardDetailsInfoView!
-    
-    //ADDED FOR TESTING
-    @IBOutlet private weak var pointsModuleView: UIView!
+    @IBOutlet private weak var cardDetailsStackView: UIStackView!
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
     
@@ -31,10 +29,6 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         setCloseButton()
-        
-        //ADDED FOR TESTING
-        let tap = UITapGestureRecognizer(target: self, action: #selector(toTransactionsViewController))
-        pointsModuleView.addGestureRecognizer(tap)
     }
     
     @objc func toTransactionsViewController() {
@@ -63,20 +57,20 @@ private extension LoyaltyCardFullDetailsViewController {
         
         let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
-        fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode , delegate: self)
+        fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
+        
+        let pointsModuleView = PointsModuleView()
+        pointsModuleView.configure(membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, delegate: self)
+        cardDetailsStackView.insertArrangedSubview(pointsModuleView, at: 0)
     }
     
     func setCloseButton() {
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController
+        let closeButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popToRootController
             ))
         self.navigationItem.setLeftBarButton(closeButton, animated: true)
     }
     
-    @objc func popViewController() {
-        viewModel.popViewController()
-    }
-    
-    func popToRootController() {
+    @objc func popToRootController() {
         viewModel.popToRootController()
     }
     
@@ -124,5 +118,13 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
 extension LoyaltyCardFullDetailsViewController: FullDetailsBrandHeaderDelegate {
     func fullDetailsBrandHeaderDidTapShowBarcode(_ fullDetailsBrandHeader: FullDetailsBrandHeader) {
         viewModel.toBarcodeModel()
+    }
+}
+
+// MARK: - PointsModuleViewDelegate
+
+extension LoyaltyCardFullDetailsViewController: PointsModuleViewDelegate {
+    func pointsModuleViewWasTapped(_: PointsModuleView, withAction action: PointsModuleView.PointsModuleAction) {
+        viewModel.goToScreenForAction(action: action)
     }
 }

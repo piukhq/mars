@@ -19,7 +19,7 @@ class AddOrJoinViewController: UIViewController {
     }
     
     @IBAction func newCardButtonAction(_ sender: Any) {
-        viewModel.displaySimplePopup(title: nil, message: "Screen not implemented")
+        viewModel.didSelectAddNewCard()
     }
     
     init(viewModel: AddOrJoinViewModel) {
@@ -83,7 +83,7 @@ class AddOrJoinViewController: UIViewController {
 }
 
 extension AddOrJoinViewController: LoyaltyButtonDelegate {
-    func buttonWasPressed() {
+    func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displaySimplePopup(title: (viewModel.getMembershipPlan().account?.planNameCard) ?? nil, message: (viewModel.getMembershipPlan().account?.planDescription) ?? nil)
     }
 }

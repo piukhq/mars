@@ -31,6 +31,7 @@ class LoyaltyWalletViewController: UIViewController {
         tableView.register(UINib(nibName: "WalletLoyaltyCardTableViewCell", bundle: Bundle(for: WalletLoyaltyCardTableViewCell.self)), forCellReuseIdentifier: "WalletLoyaltyCardTableViewCell")
         
         NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen), name: .didDeleteMemebershipCard, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen), name: .didAddMembershipCard, object: nil)
         
         refreshControl.addTarget(self, action: #selector(refreshScreen), for: .valueChanged)
         tableView.addSubview(refreshControl)
@@ -97,8 +98,8 @@ extension LoyaltyWalletViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "delete_swipe_title".localized) { _, _, completion in
             self.viewModel.showDeleteConfirmationAlert(index: indexPath.row, yesCompletion: {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                tableView.reloadData()
+                let indexSet = IndexSet(arrayLiteral: indexPath.section)
+                tableView.deleteSections(indexSet, with: .left)
             }, noCompletion: {
                 tableView.setEditing(false, animated: true)
             })

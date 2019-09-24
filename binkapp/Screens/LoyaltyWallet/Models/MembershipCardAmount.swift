@@ -8,14 +8,16 @@
 import Foundation
 
 struct MembershipCardAmount : Codable {
-    let currency : String?
-    let suffix : String?
-    let value : Double?
+    let currency: String?
+    let suffix: String?
+    let prefix: String?
+    let value: Double?
     
     enum CodingKeys: String, CodingKey {
         
         case currency = "currency"
         case suffix = "suffix"
+        case prefix = "prefix"
         case value = "value"
     }
     
@@ -23,6 +25,7 @@ struct MembershipCardAmount : Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         currency = try values.decodeIfPresent(String.self, forKey: .currency)
         suffix = try values.decodeIfPresent(String.self, forKey: .suffix)
+        prefix = try values.decodeIfPresent(String.self, forKey: .prefix)
         value = try values.decodeIfPresent(Double.self, forKey: .value)
     }
     

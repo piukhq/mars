@@ -24,6 +24,11 @@ class PLLScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBrandHeader()
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     // MARK: - Actions
@@ -40,7 +45,7 @@ class PLLScreenViewController: UIViewController {
 // MARK: - Loyalty button delegate
 
 extension PLLScreenViewController: LoyaltyButtonDelegate {
-    func buttonWasPressed() {
+    func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displaySimplePopup(title: ((viewModel.getMembershipPlan().account?.planNameCard) ?? ""), message: (viewModel.getMembershipPlan().account?.planDescription) ?? "")
     }
 }

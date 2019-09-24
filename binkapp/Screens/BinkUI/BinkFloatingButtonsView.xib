@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NunitoSans-Bold.ttf">
+            <string>NunitoSans-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BinkFloatingButtonsView" customModule="binkapp" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="471" height="209"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TW0-ag-wj5" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
+                    <rect key="frame" x="57" y="30" width="357" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="52" id="aVJ-Dh-PW3"/>
+                        <constraint firstAttribute="height" constant="52" id="wMw-NA-2P1"/>
+                    </constraints>
+                    <state key="normal" title="Accept"/>
+                    <connections>
+                        <action selector="primaryButtonWasTapped:" destination="-1" eventType="touchUpInside" id="JSR-Sb-PMu"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o06-9p-PuS">
+                    <rect key="frame" x="57" y="97" width="357" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="52" id="48j-yX-4jY"/>
+                        <constraint firstAttribute="height" constant="52" id="jn4-gZ-wgx"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="18"/>
+                    <state key="normal" title="Decline">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </state>
+                    <connections>
+                        <action selector="secondaryButtonWasTapped:" destination="-1" eventType="touchUpInside" id="qoj-2C-Wlk"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="TW0-ag-wj5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="1V6-tT-9zQ"/>
+                <constraint firstItem="TW0-ag-wj5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="57" id="96C-CX-mRt"/>
+                <constraint firstAttribute="trailing" secondItem="TW0-ag-wj5" secondAttribute="trailing" constant="57" id="Elg-wi-dAC"/>
+                <constraint firstAttribute="trailing" secondItem="o06-9p-PuS" secondAttribute="trailing" constant="57" id="OZo-Ua-kNS"/>
+                <constraint firstItem="o06-9p-PuS" firstAttribute="top" secondItem="TW0-ag-wj5" secondAttribute="bottom" constant="15" id="SdG-ck-9Yz"/>
+                <constraint firstItem="o06-9p-PuS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="57" id="zEO-j1-1kB"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="173.18840579710147" y="-145.64732142857142"/>
+        </view>
+    </objects>
+</document>
