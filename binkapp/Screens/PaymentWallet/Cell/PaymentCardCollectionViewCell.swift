@@ -9,27 +9,29 @@
 import UIKit
 
 class PaymentCardCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var nameOnCardLabel: UILabel!
-    @IBOutlet weak var cardNumberLabel: UILabel!
-    @IBOutlet weak var pllStatusLabel: UILabel!
-    @IBOutlet weak var providerLogoImageView: UIImageView!
-    @IBOutlet weak var providerWatermarkImageView: UIImageView!
+    @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var nameOnCardLabel: UILabel!
+    @IBOutlet private weak var cardNumberLabel: UILabel!
+    @IBOutlet private weak var pllStatusLabel: UILabel!
+    @IBOutlet private weak var linkedStatusImageView: UIImageView!
+    @IBOutlet private weak var providerLogoImageView: UIImageView!
+    @IBOutlet private weak var providerWatermarkImageView: UIImageView!
+    @IBOutlet private weak var alertView: CardAlertView!
 
     func configureWithPaymentCard(_ paymentCard: PaymentCardModel) {
         layer.cornerRadius = 8
 
         nameOnCardLabel.text = paymentCard.card?.nameOnCard
         cardNumberLabel.attributedText = cardNumberAttributedString(paymentCard)
-        pllStatusLabel.text = paymentCardLinkingText(paymentCard)
 
         configureForProvider(paymentCard.card?.provider)
+        configurePaymentCardLinkingStatus(paymentCard)
+
         setLabelStyling()
     }
 
     private func setLabelStyling() {
         nameOnCardLabel.font = .subtitle
-//        cardNumberLabel.font = .buttonText
         pllStatusLabel.font = .statusLabel
 
         [nameOnCardLabel, cardNumberLabel, pllStatusLabel].forEach {
@@ -51,14 +53,25 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    private func paymentCardLinkingText(_ paymentCard: PaymentCardModel) -> String {
+    private func configurePaymentCardLinkingStatus(_ paymentCard: PaymentCardModel) {
+        guard paymentCardIsExpired(paymentCard) else {
+            alertView.configureForType(.paymentExpired)
+            alertView.isHidden = false
+            pllStatusLabel.isHidden = true
+            linkedStatusImageView.isHidden = true
+            return
+        }
         if paymentCardIsLinkedToMembershipCards(paymentCard) {
-            return "Linked to \(linkedMembershipCardsCount(paymentCard)) loyalty cards" // TODO: Account for 1 card in string
+            pllStatusLabel.text = "Linked to \(linkedMembershipCardsCount(paymentCard)) loyalty cards" // TODO: Account for 1 card in string
         } else {
-            return "Not linked"
+            pllStatusLabel.text = "Not linked"
         }
 
-        // TODO: expiry strings and views
+        linkedStatusImageView.image = imageForLinkedStatus(paymentCard)
+    }
+
+    private func imageForLinkedStatus(_ paymentCard: PaymentCardModel) -> UIImage? {
+        return paymentCardIsLinkedToMembershipCards(paymentCard) ? UIImage(named: "linked") : UIImage(named: "unlinked")
     }
 
     private func linkedMembershipCardsCount(_ paymentCard: PaymentCardModel) -> Int {
@@ -88,6 +101,22 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         attributedString.append(NSMutableAttributedString(string: lastFour, attributes: [.font: UIFont.buttonText, .kern: 0.2]))
 
         return attributedString
+    }
+
+    private func paymentCardIsExpired(_ paymentCard: PaymentCardModel) -> Bool {
+        guard let card = paymentCard.card else {
+            return false
+        }
+        guard let expiryYear = card.year else {
+            return false
+        }
+        guard let expiryMonth = card.month else {
+            return false
+        }
+        guard let expiryDate = Date.makeDate(year: expiryYear, month: expiryMonth, day: 01, hr: 00, min: 00, sec: 00) else {
+            return false
+        }
+        return expiryDate < Date()
     }
 
 }

@@ -1,5 +1,5 @@
 //
-//  Date+SinceString.swift
+//  DateExtension.swift
 //  binkapp
 //
 //  Created by Paul Tiriteu on 12/09/2019.
@@ -38,5 +38,11 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
+    }
+
+    static func makeDate(year: Int, month: Int, day: Int, hr: Int, min: Int, sec: Int) -> Date? {
+        let calendar = Calendar(identifier: .gregorian)
+        let components = DateComponents(year: year, month: month, day: day, hour: hr, minute: min, second: sec)
+        return calendar.date(from: components)
     }
 }

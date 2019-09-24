@@ -45,6 +45,10 @@ extension UIFont {
     class var bodyTextLarge: UIFont {
         return UIFont(name: "NunitoSans-Light", size: 18.0) ?? UIFont()
     }
+
+    class var alertText: UIFont {
+        return UIFont(name: "NunitoSans-ExtraBold", size: 17.0) ?? UIFont()
+    }
     
     class var textFieldLabel: UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 15.0) ?? UIFont()

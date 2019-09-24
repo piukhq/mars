@@ -45,6 +45,7 @@ class PaymentWalletViewController: UIViewController {
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
+        flowLayout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         flowLayout.minimumLineSpacing = 12
     }
 
