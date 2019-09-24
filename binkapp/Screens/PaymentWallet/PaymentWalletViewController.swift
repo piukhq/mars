@@ -26,7 +26,7 @@ class PaymentWalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        refreshControl.addTarget(self, action: #selector(getWallet), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshWallet), for: .valueChanged)
         collectionView.addSubview(refreshControl)
         
         collectionView.dataSource = self
@@ -34,15 +34,35 @@ class PaymentWalletViewController: UIViewController {
 
         configureCollectionView()
 
-        viewModel.getWallet()
+        // Reimplement when we bring core data into this view controller
+//        loadLocalWallet()
+        refreshWallet()
     }
 
     private func configureCollectionView() {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
     }
 
-    @objc private func getWallet() {
-        
+    override func viewWillDisappear(_ animated: Bool) {
+        refreshControl.endRefreshing()
+        super.viewWillDisappear(animated)
+    }
+
+    private func loadLocalWallet() {
+        loadWallet()
+    }
+
+    @objc private func refreshWallet() {
+        loadWallet(forceRefresh: true)
+    }
+
+    @objc private func loadWallet(forceRefresh: Bool = false) {
+        viewModel.getWallet(forceRefresh: forceRefresh) {
+            DispatchQueue.main.async { [weak self] in
+                self?.refreshControl.endRefreshing()
+                self?.collectionView.reloadData()
+            }
+        }
     }
     
 }
@@ -53,7 +73,7 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return viewModel.paymentCards?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
