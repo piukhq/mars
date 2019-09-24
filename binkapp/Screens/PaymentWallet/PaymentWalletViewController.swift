@@ -2,71 +2,60 @@
 //  PaymentWalletViewController.swift
 //  binkapp
 //
-//  Copyright (c) 2019 Bink. All rights reserved.
+//  Created by Paul Tiriteu on 23/09/2019.
+//  Copyright © 2019 Bink. All rights reserved.
 //
 
 import UIKit
 
-protocol PaymentWalletDisplayLogic: class
-{
-  func displaySomething(viewModel: PaymentWallet.Something.ViewModel)
+class PaymentWalletViewController: UIViewController {
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    private let viewModel: PaymentWalletViewModel
+    
+    init(viewModel: PaymentWalletViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: "PaymentWalletViewController", bundle: Bundle(for: PaymentWalletViewController.self))
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        viewModel.delegate = self
+        viewModel.getPaymentCards()
+    }
+    
 }
 
-class PaymentWalletViewController: UIViewController, PaymentWalletDisplayLogic
-{
-  var interactor: PaymentWalletBusinessLogic?
-  var router: (NSObjectProtocol & PaymentWalletRoutingLogic & PaymentWalletDataPassing)?
-  
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
-  {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    setup()
-  }
-  
-  required init?(coder aDecoder: NSCoder)
-  {
-    super.init(coder: aDecoder)
-    setup()
-  }
-  
-  private func setup()
-  {
-    let viewController = self
-    let interactor = PaymentWalletInteractor()
-    let presenter = PaymentWalletPresenter()
-    let router = PaymentWalletRouter()
-    viewController.interactor = interactor
-    viewController.router = router
-    interactor.presenter = presenter
-    presenter.viewController = viewController
-    router.viewController = viewController
-    router.dataStore = interactor
-  }
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-  {
-    if let scene = segue.identifier {
-      let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-      if let router = router, router.responds(to: selector) {
-        router.perform(selector, with: segue)
-      }
+extension PaymentWalletViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
-  }
-  
-  override func viewDidLoad()
-  {
-    super.viewDidLoad()
-    doSomething()
-  }
-  
-  func doSomething()
-  {
-    let request = PaymentWallet.Something.Request()
-    interactor?.doSomething(request: request)
-  }
-  
-  func displaySomething(viewModel: PaymentWallet.Something.ViewModel)
-  {
     
-  }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.paymentCards.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+    
+    
+}
+
+extension PaymentWalletViewController: UICollectionViewDelegate {
+    
+}
+
+extension PaymentWalletViewController: PaymentWalletViewModelDelegate {
+    func paymentWalletViewModelDidLoadData(_ viewModel: PaymentWalletViewModel) {
+        
+    }
 }
