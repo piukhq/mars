@@ -21,8 +21,6 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
     private var gradientLayer: CAGradientLayer?
  
     func configureWithPaymentCard(_ paymentCard: PaymentCardModel) {
-        layer.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
-
         nameOnCardLabel.text = paymentCard.card?.nameOnCard
         cardNumberLabel.attributedText = cardNumberAttributedString(paymentCard)
 
@@ -30,6 +28,7 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         configurePaymentCardLinkingStatus(paymentCard)
 
         setLabelStyling()
+        setupShadow()
     }
 
     private func setLabelStyling() {
@@ -47,11 +46,11 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         }
         switch provider {
         case .visa:
-            processGradient(UIColor(hexString: "181c51"), UIColor(hexString: "13288d"))
+            processGradient(UIColor(hexString: "13288d"), UIColor(hexString: "181c51"))
         case .mastercard:
-            processGradient(UIColor(hexString: "eb001b"), UIColor(hexString: "f79e1b"))
+            processGradient(UIColor(hexString: "f79e1b"), UIColor(hexString: "eb001b"))
         case .amex:
-            processGradient(UIColor(hexString: "006bcd"), UIColor(hexString: "57c4ff"))
+            processGradient(UIColor(hexString: "57c4ff"), UIColor(hexString: "006bcd"))
         }
 
         providerLogoImageView.image = UIImage(named: provider.logoName)
@@ -136,6 +135,21 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         gradientLayer?.locations = [0.0, 1.0]
         gradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
         gradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer?.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
+    }
+
+    private func setupShadow() {
+        containerView.layer.cornerRadius = 8
+        containerView.layer.masksToBounds = true
+        contentView.clipsToBounds = true
+        contentView.layer.cornerRadius = 8
+        layer.shadowOffset = CGSize(width: 0, height: 3)
+        layer.shadowRadius = 3
+        layer.shadowOpacity = 0.3
+        layer.shadowPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: 8, height: 8)).cgPath
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
+        clipsToBounds = false
     }
 
 }
