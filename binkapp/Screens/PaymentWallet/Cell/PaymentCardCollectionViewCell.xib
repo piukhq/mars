@@ -20,16 +20,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ti-Yy-XeC">
                         <rect key="frame" x="0.0" y="0.0" width="391" height="120"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQa-TU-DPB">
-                                <rect key="frame" x="20" y="41" width="351" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name on card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x78-gd-0FT">
-                                <rect key="frame" x="20" y="20" width="351" height="21"/>
+                                <rect key="frame" x="20" y="20" width="351" height="19"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="3du-iI-xwC"/>
+                                    <constraint firstAttribute="height" constant="19" id="3du-iI-xwC"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -73,6 +67,12 @@
                                     <constraint firstAttribute="height" constant="43" id="gNh-xe-pbb"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQa-TU-DPB">
+                                <rect key="frame" x="20" y="39" width="351" height="38"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -82,6 +82,7 @@
                             <constraint firstAttribute="bottom" secondItem="xMi-zC-Mus" secondAttribute="bottom" id="AhV-8U-nSW"/>
                             <constraint firstItem="LQa-TU-DPB" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="20" id="IpJ-jV-CgZ"/>
                             <constraint firstItem="2nB-iq-pM6" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="8" id="KeE-7W-pkS"/>
+                            <constraint firstItem="xMi-zC-Mus" firstAttribute="top" secondItem="LQa-TU-DPB" secondAttribute="bottom" id="NBF-nq-5KL"/>
                             <constraint firstAttribute="trailing" secondItem="x78-gd-0FT" secondAttribute="trailing" constant="20" id="S3Z-Pc-wlB"/>
                             <constraint firstAttribute="trailing" secondItem="Gpr-Cg-2C1" secondAttribute="trailing" constant="20" id="TNh-wZ-ciT"/>
                             <constraint firstItem="Z3L-XY-Mka" firstAttribute="top" secondItem="5ti-Yy-XeC" secondAttribute="top" constant="20" id="ToW-fp-wfx"/>
@@ -89,9 +90,8 @@
                             <constraint firstItem="x78-gd-0FT" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="20" id="Y07-Jy-5by"/>
                             <constraint firstItem="Gpr-Cg-2C1" firstAttribute="leading" secondItem="2nB-iq-pM6" secondAttribute="trailing" constant="8" id="e2l-0w-OGi"/>
                             <constraint firstAttribute="trailing" secondItem="Z3L-XY-Mka" secondAttribute="trailing" constant="20" id="h0A-dZ-QDr"/>
-                            <constraint firstItem="xMi-zC-Mus" firstAttribute="top" secondItem="LQa-TU-DPB" secondAttribute="bottom" id="pnt-8q-OFB"/>
+                            <constraint firstItem="LQa-TU-DPB" firstAttribute="top" secondItem="x78-gd-0FT" secondAttribute="bottom" id="oj0-Gb-NxB"/>
                             <constraint firstItem="x78-gd-0FT" firstAttribute="top" secondItem="5ti-Yy-XeC" secondAttribute="top" constant="20" id="qht-QK-TfD"/>
-                            <constraint firstItem="LQa-TU-DPB" firstAttribute="top" secondItem="x78-gd-0FT" secondAttribute="bottom" id="sB0-W2-byM"/>
                             <constraint firstAttribute="trailing" secondItem="7wp-r2-0PR" secondAttribute="trailing" constant="20" id="zRW-f5-3p9"/>
                             <constraint firstItem="xMi-zC-Mus" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="20" id="zVl-Am-EsC"/>
                         </constraints>
