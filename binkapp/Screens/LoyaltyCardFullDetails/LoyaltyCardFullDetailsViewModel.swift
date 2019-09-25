@@ -10,15 +10,13 @@ import Foundation
 class LoyaltyCardFullDetailsViewModel {
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
-    let membershipCard: MembershipCardModel
-    let membershipPlan: MembershipPlanModel
+    let membershipCard: CD_MembershipCard
     
-    init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
         self.router = router
         self.repository = repository
-        self.membershipPlan = membershipPlan
         self.membershipCard = membershipCard
-    }
+    }  
     
     // MARK: - Public methds
     
@@ -27,7 +25,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toTransactionsViewController() {
-        router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
+//        router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
     }
     
     func goToScreenForAction(action: PointsModuleView.PointsModuleAction) {
@@ -41,7 +39,7 @@ class LoyaltyCardFullDetailsViewModel {
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .transactions:
-            router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
+//            router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
             break
         case .loginPending:
             router.toSimpleInfoViewController(pendingType: .login)

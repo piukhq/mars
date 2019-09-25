@@ -126,13 +126,13 @@ extension _CD_MembershipPlan {
         self.images = mutable.copy() as! NSSet
     }
 
-    open func addImagesObject(_ value: CD_MembershipCardImage) {
+    open func addImagesObject(_ value: CD_MembershipPlanImage) {
         let mutable = self.images.mutableCopy() as! NSMutableSet
         mutable.add(value)
         self.images = mutable.copy() as! NSSet
     }
 
-    open func removeImagesObject(_ value: CD_MembershipCardImage) {
+    open func removeImagesObject(_ value: CD_MembershipPlanImage) {
         let mutable = self.images.mutableCopy() as! NSMutableSet
         mutable.remove(value)
         self.images = mutable.copy() as! NSSet

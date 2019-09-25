@@ -1,10 +1,10 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to CD_MembershipCardImage.swift instead.
+// Make changes to CD_MembershipPlanImage.swift instead.
 
 import Foundation
 import CoreData
 
-public enum CD_MembershipCardImageAttributes: String {
+public enum CD_MembershipPlanImageAttributes: String {
     case encoding = "encoding"
     case id = "id"
     case imageDescription = "imageDescription"
@@ -12,16 +12,16 @@ public enum CD_MembershipCardImageAttributes: String {
     case url = "url"
 }
 
-public enum CD_MembershipCardImageRelationships: String {
-    case card = "card"
+public enum CD_MembershipPlanImageRelationships: String {
+    case plan = "plan"
 }
 
-open class _CD_MembershipCardImage: NSManagedObject {
+open class _CD_MembershipPlanImage: NSManagedObject {
 
     // MARK: - Class methods
 
     open class func entityName () -> String {
-        return "CD_MembershipCardImage"
+        return "CD_MembershipPlanImage"
     }
 
     open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
@@ -29,7 +29,7 @@ open class _CD_MembershipCardImage: NSManagedObject {
     }
 
     @nonobjc
-    open class func fetchRequest() -> NSFetchRequest<CD_MembershipCardImage> {
+    open class func fetchRequest() -> NSFetchRequest<CD_MembershipPlanImage> {
         return NSFetchRequest(entityName: self.entityName())
     }
 
@@ -40,7 +40,7 @@ open class _CD_MembershipCardImage: NSManagedObject {
     }
 
     public convenience init?(managedObjectContext: NSManagedObjectContext) {
-        guard let entity = _CD_MembershipCardImage.entity(managedObjectContext: managedObjectContext) else { return nil }
+        guard let entity = _CD_MembershipPlanImage.entity(managedObjectContext: managedObjectContext) else { return nil }
         self.init(entity: entity, insertInto: managedObjectContext)
     }
 
@@ -50,7 +50,7 @@ open class _CD_MembershipCardImage: NSManagedObject {
     var encoding: String?
 
     @NSManaged open
-    var id: String!
+    var id: String?
 
     @NSManaged open
     var imageDescription: String?
@@ -64,7 +64,7 @@ open class _CD_MembershipCardImage: NSManagedObject {
     // MARK: - Relationships
 
     @NSManaged open
-    var card: CD_MembershipCard?
+    var plan: CD_MembershipPlan?
 
 }
 

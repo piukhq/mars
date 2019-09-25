@@ -9,7 +9,7 @@ import UIKit
 import CoreGraphics
 import DeepDiff
 
-class LoyaltyWalletViewController: UIViewController {
+class LoyaltyWalletViewController: UIViewController, BarBlurring {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,6 +28,8 @@ class LoyaltyWalletViewController: UIViewController {
         
         return collectionView
     }()
+    
+    internal lazy var blurBackground = defaultBlurredBackground()
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -56,7 +58,6 @@ class LoyaltyWalletViewController: UIViewController {
         collectionView.dataSource = self
         
         collectionView.register(UINib(nibName: "WalletLoyaltyCardCollectionViewCell", bundle: Bundle(for: WalletLoyaltyCardCollectionViewCell.self)), forCellWithReuseIdentifier: "WalletLoyaltyCardCollectionViewCell")
-//        NotificationCenter.default.addObserver(self, selector: #selector(refreshScreen), name: .didDeleteMemebershipCard, object: nil)
         refreshControl.addTarget(self, action: #selector(refreshWallet), for: .valueChanged)
         collectionView.addSubview(refreshControl)
         
@@ -86,14 +87,14 @@ class LoyaltyWalletViewController: UIViewController {
         }
     }
 
-// MARK: - Navigation Bar Blurring
+ // MARK: - Navigation Bar Blurring
 
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//
-//        guard let bar = navigationController?.navigationBar else { return }
-//        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
-//    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard let bar = navigationController?.navigationBar else { return }
+        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
+    }
 }
 
 extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -109,37 +110,10 @@ extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionVie
         
         if let card = viewModel.membershipCard(forIndexPath: indexPath) {
             cell.configureUIWithMembershipCard(card: card, delegate: self)
-            
-            
-//            cell.configureUIWithMembershipCard(
-//                card: <#T##MembershipCardModel#>,
-//                andMemebershipPlan: <#T##MembershipPlanModel#>,
-//                delegate: self
-//            )
         }
-//        if let cardPlan = viewModel.getMembershipPlans().first(where: {($0.id == membershipPlan)}) {
-//        }
         
-//        cell.configureUIWithMembershipCard(card: viewModel.getMembershipCards()[indexPath.item], andMemebershipPlan: cardPlan)
         return cell
     }
-
-    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCellWithClass(WalletLoyaltyCardTableViewCell.self, forIndexPath: indexPath)
-//
-//        guard let card = viewModel.membershipCard(forIndexPath: indexPath) else {
-//            return cell
-//        }
-//
-//        guard let plan = viewModel.membershipPlanForCard(card: card) else {
-//            return cell
-//        }
-//
-//        cell.configureUIWithMembershipCard(card: card, membershipPlan: plan)
-//
-//        return cell
-//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? WalletLoyaltyCardCollectionViewCell else { return }
@@ -148,7 +122,9 @@ extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionVie
             cell.set(to: .closed)
         } else {
             // Move to LCD
-            let card = viewModel.membershipCard(forIndexPath: indexPath)
+            if let card = viewModel.membershipCard(forIndexPath: indexPath) {
+                viewModel.toFullDetailsCardScreen(membershipCard: card)
+            }
 //            if let membershipPlan = viewModel.membershipPlanForCard(card: card) {
 //                viewModel.toFullDetailsCardScreen(membershipCard: card, membershipPlan: membershipPlan)
 //            }

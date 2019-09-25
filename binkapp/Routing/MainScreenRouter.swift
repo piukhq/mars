@@ -100,9 +100,9 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toLoyaltyFullDetailsScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
+    func toLoyaltyFullDetailsScreen(membershipCard: CD_MembershipCard) {
         let repository = LoyaltyCardFullDetailsRepository(apiManager: apiManager)
-        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, repository: repository, router: self)
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, repository: repository, router: self)
         let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
@@ -114,8 +114,8 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPllViewController(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
-        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, router: self)
+    func toPllViewController(membershipCard: CD_MembershipCard, membershipPlan: MembershipPlanModel) {
+        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, router: self)
         let viewController = PLLScreenViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }

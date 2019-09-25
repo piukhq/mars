@@ -31,14 +31,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         if let mainWindow = self.window {
             mainWindow.rootViewController = router.getNavigationControllerWithLoginScreen()
+            mainWindow.tintColor = .black
             mainWindow.makeKeyAndVisible()
         }
 
         // Crashlytics
         Fabric.with([Crashlytics.self])
-
+        
+        if #available(iOS 13, *) {
+            let navAppearance = UINavigationBarAppearance()
+            navAppearance.configureWithTransparentBackground()
+            navAppearance.shadowImage = UIImage()
+            navAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
+            navAppearance.backgroundEffect = UIBlurEffect(style: .light)
+            UINavigationBar.appearance().standardAppearance = navAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
+            
+            let tabAppearance = UITabBarAppearance()
+            tabAppearance.configureWithTransparentBackground()
+            tabAppearance.shadowImage = UIImage()
+            tabAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
+            tabAppearance.backgroundEffect = UIBlurEffect(style: .light)
+            UITabBar.appearance().standardAppearance = tabAppearance
+        }
+        let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
+        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
+        
         // Firebase
-
+        
         if let bundleIdentifier = Bundle.main.bundleIdentifier {
             if let filePath = Bundle.main.path(forResource: "\(bundleIdentifier).GoogleService-Info", ofType: "plist") {
                 if let fileopts = FirebaseOptions(contentsOfFile: filePath) {

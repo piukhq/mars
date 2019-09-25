@@ -9,5 +9,5 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-API_BASE_URL = api.bink-dev.com/ubiquity
-SECRET = dev // USE DEV SECRET
+API_BASE_URL = api.bink-staging.com/ubiquity
+SECRET = staging // USE STAGING SECRET

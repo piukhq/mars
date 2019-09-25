@@ -10,6 +10,13 @@ import UIKit
 
 class MainTabBarViewModel {
     
+    // MARK: - Helpers
+    
+    private struct Constants {
+        static let iconInsets: CGFloat = 6.0
+        static let centerInsets: CGFloat = 8.0
+    }
+    
     let repository: MainTabBarRepository
     let router: MainScreenRouter
     
@@ -37,19 +44,24 @@ class MainTabBarViewModel {
     func getTabBarLoyaltyButton() -> UITabBarItem {
         let item = UITabBarItem(title: nil, image: UIImage(named: "loyaltyInactive")?.withRenderingMode(.alwaysOriginal), tag: Buttons.loyaltyItem.rawValue)
         item.selectedImage = UIImage(named: "loyaltyActive")?.withRenderingMode(.alwaysOriginal)
+        item.title = "Loyalty"
+        item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)
+        
         return item
     }
     
     func getTabBarAddButton() -> UITabBarItem {
         let item = UITabBarItem(title: nil, image: UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), tag: Buttons.addItem.rawValue)
-        item.imageInsets = UIEdgeInsets(top: 0.0, left: 0, bottom: 0, right: 0)
+        item.imageInsets = UIEdgeInsets(top: Constants.centerInsets, left: 0, bottom: -Constants.centerInsets, right: 0)
         return item
     }
     
     func getTabBarPaymentButton() -> UITabBarItem {
         let item = UITabBarItem(title: nil, image: UIImage(named: "paymentInactive")?.withRenderingMode(.alwaysOriginal), tag: Buttons.paymentItem.rawValue)
         item.selectedImage = UIImage(named: "paymentActive")?.withRenderingMode(.alwaysOriginal)
+        item.title = "Payment"
         item.isEnabled = false
+        item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)
         return item
     }
     

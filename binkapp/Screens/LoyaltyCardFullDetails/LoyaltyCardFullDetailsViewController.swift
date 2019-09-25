@@ -65,13 +65,13 @@ private extension LoyaltyCardFullDetailsViewController {
         deleteInfoRow.delegate = self
         deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
         
-        let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
-        let showBarcode = viewModel.membershipCard.card?.barcode != nil
-        fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode , delegate: self)
-        
-        let pointsModuleView = PointsModuleView()
-        pointsModuleView.configure(membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, delegate: self)
-        cardDetailsStackView.insertArrangedSubview(pointsModuleView, at: 0)
+//        let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
+//        let showBarcode = viewModel.membershipCard.card?.barcode != nil
+//        fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode , delegate: self)
+//
+//        let pointsModuleView = PointsModuleView()
+//        pointsModuleView.configure(membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, delegate: self)
+//        cardDetailsStackView.insertArrangedSubview(pointsModuleView, at: 0)
     }
     
     func setCloseButton() {
@@ -107,7 +107,7 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
     func cardDetailsInfoViewDidTapMoreInfo(_ cardDetailsInfoView: CardDetailsInfoView) {
         switch cardDetailsInfoView {
         case aboutInfoRow:
-            if let infoMessage = viewModel.membershipPlan.account?.planDescription {
+            if let infoMessage = viewModel.membershipCard.membershipPlan?.account?.planDescription {
                 viewModel.displaySimplePopupWithTitle("Info", andMessage: infoMessage)
             }
             break

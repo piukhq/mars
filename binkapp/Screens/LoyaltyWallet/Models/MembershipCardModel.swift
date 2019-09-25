@@ -53,8 +53,8 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         
         membershipTransactions?.forEach { transaction in
             let cdTransaction = transaction.mapToCoreData(context, .update, overrideID: nil)
-            update(cdTransaction, \.card, with: cdObject, delta: delta)
             cdObject.addTransactionsObject(cdTransaction)
+            update(cdTransaction, \.card, with: cdObject, delta: false)
         }
 
         if let status = status {
@@ -78,6 +78,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             guard let image = $0 as? CD_MembershipCardImage else { return }
             context.delete(image)
         }
+        
         images?.forEach { image in
             let cdImage = image.mapToCoreData(context, .update, overrideID: nil)
             update(cdImage, \.card, with: cdObject, delta: delta)
@@ -106,9 +107,10 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             guard let balance = $0 as? CD_MembershipCardBalance else { return }
             context.delete(balance)
         }
+        
         balances?.forEach { balance in
-            let cdBalance = balance.mapToCoreData(context, .update, overrideID: nil)
-            update(cdBalance, \.card, with: cdObject, delta: delta)
+            let cdBalance = balance.mapToCoreData(context, .update, overrideID: MembershipCardModel.overrideId(forParentId: id))
+            update(cdBalance, \.card, with: cdObject, delta: false)
             cdObject.addBalancesObject(cdBalance)
         }
 

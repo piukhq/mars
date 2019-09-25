@@ -70,4 +70,7 @@ extension UIFont {
         return UIFont(name: "NunitoSans-Light", size: 14.0) ?? UIFont()
     }
     
+    class var tabBar: UIFont {
+        return UIFont(name: "NunitoSans-Regular", size: 12.0) ?? UIFont()
+    }
 }

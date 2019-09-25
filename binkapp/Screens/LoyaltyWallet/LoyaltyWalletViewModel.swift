@@ -43,7 +43,7 @@ class LoyaltyWalletViewModel {
     
     func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping ([MembershipCardModel]) -> (), noCompletion: @escaping () -> Void) {
         
-//        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
+        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
 //            if let cardId = self.membershipCards[index].id {
 //                self.deleteMembershipCard(id: cardId, completion: {
 //                    var new = self.membershipCards
@@ -51,11 +51,11 @@ class LoyaltyWalletViewModel {
 //                    yesCompletion(new)
 //                })
 //            }
-//        }, noCompletion: {
-//            DispatchQueue.main.async {
-//                noCompletion()
-//            }
-//        })
+        }, noCompletion: {
+            DispatchQueue.main.async {
+                noCompletion()
+            }
+        })
     }
     
 //    func updateMembershipCards(new: [MembershipCardModel]) {
@@ -69,8 +69,8 @@ class LoyaltyWalletViewModel {
 //        guard let plan = getMembershipPlans().first(where: { $0.id == card.membershipPlan }) else { return }
     }
     
-    func toFullDetailsCardScreen(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
-        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard, membershipPlan: membershipPlan)
+    func toFullDetailsCardScreen(membershipCard: CD_MembershipCard) {
+        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
     }
     
     func getMembershipCards() -> [CD_MembershipCard]? {

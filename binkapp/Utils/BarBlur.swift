@@ -47,20 +47,23 @@ extension BarBlurring {
     }
     
     func prepareBlur(bar: AnyObject, blurBackground: UIVisualEffectView, frame: CGRect) {
-        if let declaredBar = bar as? UIView {
-            declaredBar.clearBackgroundImage()
-            
-            if blurBackground.superview == nil {
-                declaredBar.insertSubview(blurBackground, at: 1)
+        // This is only necessary pre iOS 13. We will leave this calling through but catch here
+        if #available(iOS 13, *) {} else {
+            if let declaredBar = bar as? UIView {
+                declaredBar.clearBackgroundImage()
 
-                blurBackground.frame = frame
-            } else {
-                let subviews = declaredBar.subviews
+                if blurBackground.superview == nil {
+                    declaredBar.insertSubview(blurBackground, at: 0)
 
-                if let originalIndex = subviews.firstIndex(of: blurBackground) {
-                    if originalIndex != 1 {
-                        declaredBar.insertSubview(blurBackground, at: 1)
-                        blurBackground.frame = frame
+                    blurBackground.frame = frame
+                } else {
+                    let subviews = declaredBar.subviews
+
+                    if let originalIndex = subviews.firstIndex(of: blurBackground) {
+                        if originalIndex != 0 {
+                            declaredBar.insertSubview(blurBackground, at: 0)
+                            blurBackground.frame = frame
+                        }
                     }
                 }
             }
@@ -82,6 +85,7 @@ private extension UIView {
         if let navBar = self as? UINavigationBar {
             navBar.shadowImage = UIImage()
             navBar.setBackgroundImage(UIImage(), for: .default)
+            
         } else if let tabBar = self as? UITabBar {
             tabBar.backgroundImage = UIImage()
         }

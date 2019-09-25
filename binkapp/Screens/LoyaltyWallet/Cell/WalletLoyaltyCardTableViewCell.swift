@@ -52,6 +52,7 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         super.awakeFromNib()
         
         setupGestureRecognizer()
+        setupTheming()
     }
     
     override var bounds: CGRect {
@@ -90,8 +91,12 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         clipsToBounds = false
     }
     
+    private func setupTheming() {
+        cardNameLabel.font = UIFont.subtitle
+        cardValuePointsLabel.font = UIFont.pointsValue
+    }
+    
     func configureUIWithMembershipCard(card: CD_MembershipCard, delegate: WalletLoyaltyCardCollectionViewCellDelegate) {
-        
         self.delegate = delegate
         
         guard let plan = card.membershipPlan else { return }
@@ -104,8 +109,6 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
 
         cardContainer.firstColorHex = card.card?.colour ?? ""
         cardNameLabel.text = plan.account?.companyName
-        cardNameLabel.font = UIFont.subtitle
-        cardValuePointsLabel.font = UIFont.pointsValue
         
         // Link Status
         var linkTextContent: String?
@@ -119,20 +122,15 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         // Card Value
         var shouldHideValueStack = true
         var shouldHideValueSuffix = false
-        var valuePointsLabelText: String?
 
         switch card.status?.status {
         case .failed?:
             shouldHideLoginButton = false
-            break
         case .pending?:
-            shouldHideValueStack = false
             shouldHideValueSuffix = true
-            valuePointsLabelText = card.status?.status?.rawValue
-            break
+            shouldHideValueStack = false
+            cardValuePointsLabel.text = card.status?.status?.rawValue
         case .authorised?:
-            print("a")
-            
             if plan.featureSet?.planCardType == .link {
                 linkImage = UIImage(imageLiteralResourceName: "linked")
                 shouldHideLinkStatusImage = false
@@ -140,32 +138,33 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
                 linkTextContent = "card_linked_status".localized
             }
             
-//            if plan.featureSet?.cardType == .link {
-//            }
-//            if let balanceValue = card.balances?[0].value, plan.featureSet?.hasPoints == true {
-//                shouldHideValueStack = false
-//
-//                let attributedPrefix = NSMutableAttributedString(string: card.balances?[0].prefix ?? "")
-//                let attributedSuffix = NSMutableAttributedString(string: (card.balances?[0].suffix ?? ""), attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
-//                let attributedValue = NSMutableAttributedString(string: String(balanceValue))
-//                let attributedLabelText = NSMutableAttributedString()
-//                attributedLabelText.append(attributedPrefix)
-//                attributedLabelText.append(attributedValue)
-//                cardValuePointsLabel.attributedText = attributedLabelText
-//                cardValueSuffixLabel.attributedText = attributedSuffix
-//            } else {
-//                shouldHideValueStack = true
-//            }
+            if plan.featureSet?.hasPoints?.boolValue == true {
+                if let balance = card.balances.allObjects.first as? CD_MembershipCardBalance,
+                    let balanceValue = balance.value,
+                    plan.featureSet?.hasPoints == true {
+                    shouldHideValueStack = false
+                    
+                    let attributedPrefix = NSMutableAttributedString(string: balance.prefix ?? "")
+                    let attributedSuffix = NSMutableAttributedString(string: balance.suffix ?? "", attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
+                    let attributedValue = NSMutableAttributedString(string: balanceValue.stringValue)
+                    let attributedLabelText = NSMutableAttributedString()
+                    attributedLabelText.append(attributedPrefix)
+                    attributedLabelText.append(attributedValue)
+                    cardValuePointsLabel.attributedText = attributedLabelText
+                    cardValueSuffixLabel.attributedText = attributedSuffix
+                }
+            } else {
+                shouldHideValueStack = true
+            }
         case .unauthorised?:
-//            if plan.featureSet?.cardType == .link {
-//                shouldHideLinkStatusLabel = false
-//                shouldHideLinkStatusImage = false
-//                linkTextContent = NSLocalizedString("card_can_not_link_status", comment: "")
-//                linkImage = UIImage(imageLiteralResourceName: "unlinked")
-//            }
+            if plan.featureSet?.planCardType == .link {
+                shouldHideLinkStatusLabel = false
+                shouldHideLinkStatusImage = false
+                linkTextContent = NSLocalizedString("card_can_not_link_status", comment: "")
+                linkImage = UIImage(imageLiteralResourceName: "unlinked")
+            }
             
             shouldHideValueStack = true
-            break
         default:
             break
         }
@@ -183,7 +182,6 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         // Card Value
         cardValueStack.isHidden = shouldHideValueStack
         cardValueSuffixLabel.isHidden = shouldHideValueSuffix
-        cardValuePointsLabel.text = valuePointsLabelText
     }
     
     var gradientLayer: CAGradientLayer?
@@ -348,6 +346,7 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
     override func prepareForReuse() {
         super.prepareForReuse()
         set(to: .closed)
+        cardIconImage.image = nil
     }
 }
 

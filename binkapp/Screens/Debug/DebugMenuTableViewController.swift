@@ -83,7 +83,7 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             }
 
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+            let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
                 guard let textField = alert.textFields?.first else {
                     return
                 }
@@ -92,13 +92,27 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
                 }
 
                 UserDefaults.standard.setValue(newEmail, forKey: .userEmail)
-                exit(0)
+            
+                self?.clearMembershipCards {
+                    exit(0)
+                }
+                
             }
             alert.addAction(cancelAction)
             alert.addAction(okAction)
             navigationController?.present(alert, animated: true, completion: nil)
         default:
             return
+        }
+    }
+    
+    private func clearMembershipCards(completion: @escaping () -> Void) {
+        Current.database.performBackgroundTask { context in
+            context.deleteAll(CD_MembershipCard.self)
+            try? context.save()
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
 }

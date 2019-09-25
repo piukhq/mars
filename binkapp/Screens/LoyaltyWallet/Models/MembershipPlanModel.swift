@@ -12,7 +12,7 @@ struct MembershipPlanModel: Codable {
     let apiId: Int?
     let status: String?
     let featureSet: FeatureSetModel?
-    let images: [MembershipCardImageModel]?
+    let images: [MembershipPlanImageModel]?
     let account: MembershipPlanAccountModel?
     let balances: [BalanceModel]?
     
@@ -40,17 +40,16 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
             update(cdObject, \.featureSet, with: nil, delta: false)
         }
 
-
         cdObject.images.forEach {
-            guard let image = $0 as? CD_MembershipCardImage else { return }
+            guard let image = $0 as? CD_MembershipPlanImage else { return }
             context.delete(image)
         }
+        
         images?.forEach { image in
             let cdImage = image.mapToCoreData(context, .update, overrideID: nil)
             update(cdImage, \.plan, with: cdObject, delta: delta)
             cdObject.addImagesObject(cdImage)
         }
-
 
         if let account = account {
             let cdAccount = account.mapToCoreData(context, .update, overrideID: MembershipPlanAccountModel.overrideId(forParentId: id))
