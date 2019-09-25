@@ -39,6 +39,7 @@
 		3C48E7E2232A4B1E00ADE410 /* TransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C48E7E0232A4B1E00ADE410 /* TransactionsViewController.xib */; };
 		3C48E7E4232A4DFF00ADE410 /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C48E7E3232A4DFF00ADE410 /* TransactionsViewModel.swift */; };
 		3C48E7E6232A5E6700ADE410 /* Date+SinceString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C48E7E5232A5E6700ADE410 /* Date+SinceString.swift */; };
+		3C4BE8C8233B590100EC4BF6 /* ReusableModalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4BE8C7233B590100EC4BF6 /* ReusableModalViewModel.swift */; };
 		3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61FCDD230AF0BB004721A3 /* AppsModel.swift */; };
 		3C63ABC822F9D47E00BE143B /* AddingOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63ABC722F9D47E00BE143B /* AddingOptionsViewModel.swift */; };
 		3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */; };
@@ -260,6 +261,7 @@
 		3C48E7E0232A4B1E00ADE410 /* TransactionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionsViewController.xib; sourceTree = "<group>"; };
 		3C48E7E3232A4DFF00ADE410 /* TransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
 		3C48E7E5232A5E6700ADE410 /* Date+SinceString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+SinceString.swift"; sourceTree = "<group>"; };
+		3C4BE8C7233B590100EC4BF6 /* ReusableModalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableModalViewModel.swift; sourceTree = "<group>"; };
 		3C61FCDD230AF0BB004721A3 /* AppsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsModel.swift; sourceTree = "<group>"; };
 		3C63ABC722F9D47E00BE143B /* AddingOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingOptionsViewModel.swift; sourceTree = "<group>"; };
 		3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+binkapp.swift"; sourceTree = "<group>"; };
@@ -564,6 +566,14 @@
 				3C48E7E0232A4B1E00ADE410 /* TransactionsViewController.xib */,
 			);
 			path = Transactions;
+			sourceTree = "<group>";
+		};
+		3C4BE8C9233B856900EC4BF6 /* ReusableModal */ = {
+			isa = PBXGroup;
+			children = (
+				3C4BE8C7233B590100EC4BF6 /* ReusableModalViewModel.swift */,
+			);
+			path = ReusableModal;
 			sourceTree = "<group>";
 		};
 		3C7067EC232FD50800AB88A5 /* SimpleInfo */ = {
@@ -906,6 +916,7 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				3C4BE8C9233B856900EC4BF6 /* ReusableModal */,
 				B76749112331232D0002047A /* PaymentTermsAndConditions */,
 				3C7067EC232FD50800AB88A5 /* SimpleInfo */,
 				3C48E7DE232A4B0300ADE410 /* Transactions */,
@@ -1577,6 +1588,7 @@
 				EF485566231D5E4E00FC9E5F /* DebugMenuTableViewController.swift in Sources */,
 				B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */,
 				EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */,
+				3C4BE8C8233B590100EC4BF6 /* ReusableModalViewModel.swift in Sources */,
 				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,
 				B774E9AF233263C5006D4131 /* BinkFloatingButtonsView.swift in Sources */,
 				3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */,

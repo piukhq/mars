@@ -12,9 +12,9 @@ class PaymentTermsAndConditionsViewController: UIViewController {
     @IBOutlet private weak var floatingButtonsContainer: BinkFloatingButtonsView!
     @IBOutlet private weak var textView: UITextView!
     
-    private let viewModel: PaymentTermsAndConditionsViewModel
+    private let viewModel: ReusableModalViewModel
     
-    init(viewModel: PaymentTermsAndConditionsViewModel) {
+    init(viewModel: ReusableModalViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "PaymentTermsAndConditionsViewController", bundle: Bundle(for: PaymentTermsAndConditionsViewController.self))
     }
@@ -25,10 +25,9 @@ class PaymentTermsAndConditionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setCloseButton()
         floatingButtonsContainer.delegate = self
         textView.delegate = self
-        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 209, right: 0)
+        configureUI()
     }
     
     override func viewDidLayoutSubviews() {
@@ -36,9 +35,13 @@ class PaymentTermsAndConditionsViewController: UIViewController {
     }
     
     private func configureUI() {
+        setCloseButton()
+        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 209, right: 0)
+        
         title = viewModel.title
-        textView.text = viewModel.text
-        textView.font = viewModel.font
+        textView.attributedText = viewModel.text
+        
+        floatingButtonsContainer.configure(mainButtonTitle: viewModel.mainButtonTitle, secondaryButtonTitle: viewModel.secondaryButtonTitle)
     }
 }
 
@@ -59,11 +62,11 @@ private extension PaymentTermsAndConditionsViewController {
 
 extension PaymentTermsAndConditionsViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_: BinkFloatingButtonsView) {
-        viewModel.createCard()
+        viewModel.mainButtonWasTapped()
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_: BinkFloatingButtonsView) {
-        viewModel.toRootViewController()
+        viewModel.secondaryButtonWasTapped()
     }
 }
 

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class AddingOptionsViewModel {
     let router: MainScreenRouter
@@ -25,6 +25,24 @@ class AddingOptionsViewModel {
     
     // TODO: To be removed after the corect screen is implemented. Added for testing purposes.
     func toPaymentTermsAndConditionsScreen() {
-        router.toPaymentTermsAndConditionsViewController(configurationModel: TermsAndConditionsConfiguration(text: "", font: .bodyTextLarge))
+        let screenText = "terms_and_conditions_title".localized + "\n" + "lorem_ipsum".localized
+        
+        let attributedText = NSMutableAttributedString(string: screenText)
+        
+        attributedText.addAttribute(
+            NSAttributedString.Key.font,
+            value: UIFont.headline,
+            range: NSRange(location: 0, length: ("terms_and_conditions_title".localized).count)
+        )
+        
+        attributedText.addAttribute(
+            NSAttributedString.Key.font,
+            value: UIFont.bodyTextLarge,
+            range: NSRange(location: ("terms_and_conditions_title".localized).count, length: ("lorem_ipsum".localized).count)
+        )
+        
+        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, mainButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized)
+        
+        router.toPaymentTermsAndConditionsViewController(configurationModel: configurationModel)
     }
 }
