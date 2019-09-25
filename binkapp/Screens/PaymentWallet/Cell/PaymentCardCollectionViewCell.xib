@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="391" height="120"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQa-TU-DPB">
-                                <rect key="frame" x="20" y="49.5" width="351" height="21"/>
+                                <rect key="frame" x="20" y="41" width="351" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -79,7 +79,6 @@
                             <constraint firstAttribute="bottom" secondItem="Gpr-Cg-2C1" secondAttribute="bottom" constant="16" id="4mA-RD-obF"/>
                             <constraint firstAttribute="trailing" secondItem="LQa-TU-DPB" secondAttribute="trailing" constant="20" id="7BV-lO-1rZ"/>
                             <constraint firstAttribute="bottom" secondItem="7wp-r2-0PR" secondAttribute="bottom" constant="15" id="7Cy-lm-4sC"/>
-                            <constraint firstItem="LQa-TU-DPB" firstAttribute="centerY" secondItem="5ti-Yy-XeC" secondAttribute="centerY" id="ABb-2a-3GO"/>
                             <constraint firstAttribute="bottom" secondItem="xMi-zC-Mus" secondAttribute="bottom" id="AhV-8U-nSW"/>
                             <constraint firstItem="LQa-TU-DPB" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="20" id="IpJ-jV-CgZ"/>
                             <constraint firstItem="2nB-iq-pM6" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="8" id="KeE-7W-pkS"/>
@@ -90,7 +89,9 @@
                             <constraint firstItem="x78-gd-0FT" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="20" id="Y07-Jy-5by"/>
                             <constraint firstItem="Gpr-Cg-2C1" firstAttribute="leading" secondItem="2nB-iq-pM6" secondAttribute="trailing" constant="8" id="e2l-0w-OGi"/>
                             <constraint firstAttribute="trailing" secondItem="Z3L-XY-Mka" secondAttribute="trailing" constant="20" id="h0A-dZ-QDr"/>
+                            <constraint firstItem="xMi-zC-Mus" firstAttribute="top" secondItem="LQa-TU-DPB" secondAttribute="bottom" id="pnt-8q-OFB"/>
                             <constraint firstItem="x78-gd-0FT" firstAttribute="top" secondItem="5ti-Yy-XeC" secondAttribute="top" constant="20" id="qht-QK-TfD"/>
+                            <constraint firstItem="LQa-TU-DPB" firstAttribute="top" secondItem="x78-gd-0FT" secondAttribute="bottom" id="sB0-W2-byM"/>
                             <constraint firstAttribute="trailing" secondItem="7wp-r2-0PR" secondAttribute="trailing" constant="20" id="zRW-f5-3p9"/>
                             <constraint firstItem="xMi-zC-Mus" firstAttribute="leading" secondItem="5ti-Yy-XeC" secondAttribute="leading" constant="20" id="zVl-Am-EsC"/>
                         </constraints>
@@ -105,7 +106,7 @@
                 <constraint firstAttribute="bottom" secondItem="5ti-Yy-XeC" secondAttribute="bottom" id="uk2-4V-uU7"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="391" height="120"/>
+            <size key="customSize" width="391" height="116"/>
             <connections>
                 <outlet property="alertView" destination="7wp-r2-0PR" id="eIi-eo-t0m"/>
                 <outlet property="cardNumberLabel" destination="LQa-TU-DPB" id="cbA-D8-Uan"/>
@@ -116,7 +117,7 @@
                 <outlet property="providerLogoImageView" destination="Z3L-XY-Mka" id="ldP-o8-xLC"/>
                 <outlet property="providerWatermarkImageView" destination="xMi-zC-Mus" id="rbk-vS-eaR"/>
             </connections>
-            <point key="canvasLocation" x="487.68115942028987" y="106.47321428571428"/>
+            <point key="canvasLocation" x="487.68115942028987" y="105.13392857142857"/>
         </collectionViewCell>
     </objects>
     <resources>

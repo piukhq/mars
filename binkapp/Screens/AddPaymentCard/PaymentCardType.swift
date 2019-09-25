@@ -14,12 +14,7 @@ enum PaymentCardType: String, Codable {
     case amex = "Amex"
 
     var redactedPrefix: String {
-        switch self {
-        case .mastercard, .visa:
-            return "••••   ••••   ••••   "
-        case .amex:
-            return "••••   ••••••   •"
-        }
+        return "••••   ••••   ••••   "
     }
 
     var logoName: String {
