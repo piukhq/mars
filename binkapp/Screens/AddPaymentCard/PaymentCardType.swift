@@ -22,7 +22,7 @@ enum PaymentCardType: String, Codable {
         case .amex:
             return "cardPaymentLogoAmEx"
         case .mastercard:
-            return "cardPaymentLogoMasterCard"
+            return "cardPaymentLogoMastercard"
         case .visa:
             return "cardPaymentLogoVisa"
         }

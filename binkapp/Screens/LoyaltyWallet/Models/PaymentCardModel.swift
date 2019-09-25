@@ -53,7 +53,11 @@ struct PaymentCardModel: Codable {
     }
 
     struct PaymentCardCardResponse: Codable {
-        var firstSix: String?
+        var firstSix: String? {
+            didSet {
+                // set payment card type for gradient
+            }
+        }
         var lastFour: String?
         var month: Int?
         var year: Int?
