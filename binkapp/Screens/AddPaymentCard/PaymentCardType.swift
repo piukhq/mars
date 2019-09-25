@@ -8,12 +8,43 @@
 
 import Foundation
 
-enum PaymentCardType: String {
-    case amex
-    case masterCard
-    case visa
+enum PaymentCardType: String, Codable {
+    case visa = "Visa"
+    case mastercard = "Mastercard"
+    case amex = "Amex"
+
+    var redactedPrefix: String {
+        switch self {
+        case .mastercard, .visa:
+            return "••••   ••••   ••••   "
+        case .amex:
+            return "••••   ••••••   •"
+        }
+    }
+
+    var logoName: String {
+        switch self {
+        case .amex:
+            return "cardPaymentLogoAmEx"
+        case .mastercard:
+            return "cardPaymentLogoMasterCard"
+        case .visa:
+            return "cardPaymentLogoVisa"
+        }
+    }
+
+    var sublogoName: String {
+        switch self {
+        case .amex:
+            return "cardPaymentSublogoAmEx"
+        case .mastercard:
+            return "cardPaymentSublogoMasterCard"
+        case .visa:
+            return "cardPaymentSublogoVisa"
+        }
+    }
     
-    static let allValues: [PaymentCardType] = [.amex, .masterCard, .visa]
+    static let allValues: [PaymentCardType] = [.amex, .mastercard, .visa]
     
     private var formatValues: FormatValues {
         let prefix: [PrefixContainable], length: Int, whitespaceIndexLocations: [Int]
@@ -24,7 +55,7 @@ enum PaymentCardType: String {
             prefix = ["34", "37"]
             length = 15
             whitespaceIndexLocations = [4, 11]
-        case .masterCard:
+        case .mastercard:
             prefix = ["51"..."55", "2221"..."2720"]
             length = 16
             whitespaceIndexLocations = [4, 9, 14]

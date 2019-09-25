@@ -214,7 +214,7 @@ class TemporaryReactiveView: UIView {
         switch paymentType {
         case .visa?:
             processGradient(UIColor(hexString: "181c51"), UIColor(hexString: "13288d"))
-        case .masterCard?:
+        case .mastercard?:
             processGradient(UIColor(hexString: "eb001b"), UIColor(hexString: "f79e1b"))
         case .amex?:
             processGradient(UIColor(hexString: "006bcd"), UIColor(hexString: "57c4ff"))

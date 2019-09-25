@@ -45,8 +45,8 @@ class PaymentWalletViewController: UIViewController {
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
-        flowLayout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
-        flowLayout.minimumLineSpacing = 12
+        flowLayout.sectionInset = LayoutHelper.WalletDimensions.edgeInsets
+        flowLayout.minimumLineSpacing = LayoutHelper.WalletDimensions.cardLineSpacing
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -96,6 +96,7 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = UIScreen.main.bounds.width
-        return CGSize(width: screenWidth - 50, height: 120)
+        let padding = LayoutHelper.WalletDimensions.cardHorizontalPadding * 2
+        return CGSize(width: screenWidth - padding, height: LayoutHelper.WalletDimensions.cardHeight)
     }
 }

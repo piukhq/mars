@@ -18,13 +18,15 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var providerWatermarkImageView: UIImageView!
     @IBOutlet private weak var alertView: CardAlertView!
 
+    private var gradientLayer: CAGradientLayer?
+ 
     func configureWithPaymentCard(_ paymentCard: PaymentCardModel) {
-        layer.cornerRadius = 8
+        layer.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
 
         nameOnCardLabel.text = paymentCard.card?.nameOnCard
         cardNumberLabel.attributedText = cardNumberAttributedString(paymentCard)
 
-        configureForProvider(paymentCard.card?.provider)
+        configureForProvider(paymentCard)
         configurePaymentCardLinkingStatus(paymentCard)
 
         setLabelStyling()
@@ -39,17 +41,17 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    private func configureForProvider(_ provider: PaymentCardProvider?) {
-        guard let provider = provider else {
+    private func configureForProvider(_ paymentCard: PaymentCardModel?) {
+        guard let provider = PaymentCardType.type(from: paymentCard?.card?.firstSix) else {
             return
         }
         switch provider {
         case .visa:
-            containerView.backgroundColor = .blue
+            processGradient(UIColor(hexString: "181c51"), UIColor(hexString: "13288d"))
         case .mastercard:
-            containerView.backgroundColor = .orange
+            processGradient(UIColor(hexString: "eb001b"), UIColor(hexString: "f79e1b"))
         case .amex:
-            containerView.backgroundColor = .green
+            processGradient(UIColor(hexString: "006bcd"), UIColor(hexString: "57c4ff"))
         }
 
         providerLogoImageView.image = UIImage(named: provider.logoName)
@@ -120,6 +122,20 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
             return false
         }
         return expiryDate < Date()
+    }
+
+    private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
+        if gradientLayer == nil {
+            let gradient = CAGradientLayer()
+            layer.insertSublayer(gradient, at: 0)
+            gradientLayer = gradient
+        }
+
+        gradientLayer?.frame = bounds
+        gradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
+        gradientLayer?.locations = [0.0, 1.0]
+        gradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
+        gradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
     }
 
 }

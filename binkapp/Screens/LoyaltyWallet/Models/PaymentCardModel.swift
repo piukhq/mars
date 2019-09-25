@@ -8,43 +8,6 @@
 
 import Foundation
 
-enum PaymentCardProvider: String, Codable {
-    case visa = "Visa"
-    case mastercard = "Mastercard"
-    case amex = "Amex"
-
-    var redactedPrefix: String {
-        switch self {
-        case .mastercard, .visa:
-            return "••••   ••••   ••••   "
-        case .amex:
-            return "••••   ••••••   •"
-        }
-    }
-
-    var logoName: String {
-        switch self {
-        case .amex:
-            return "cardPaymentLogoAmEx"
-        case .mastercard:
-            return "cardPaymentLogoMasterCard"
-        case .visa:
-            return "cardPaymentLogoVisa"
-        }
-    }
-
-    var sublogoName: String {
-        switch self {
-        case .amex:
-            return "cardPaymentSublogoAmEx"
-        case .mastercard:
-            return "cardPaymentSublogoMasterCard"
-        case .visa:
-            return "cardPaymentSublogoVisa"
-        }
-    }
-}
-
 struct PaymentCardModel: Codable {
     var id: Int?
     var membershipCards: [PaymentCardMembershipCardResponse]?
@@ -97,7 +60,7 @@ struct PaymentCardModel: Codable {
         var country: String?
         var currencyCode: String?
         var nameOnCard: String?
-        var provider: PaymentCardProvider?
+        var provider: PaymentCardType?
         var type: String?
 
         enum CodingKeys: String, CodingKey {
