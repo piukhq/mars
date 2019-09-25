@@ -19,13 +19,16 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var alertView: CardAlertView!
 
     private var gradientLayer: CAGradientLayer?
+    private var paymentCard: PaymentCardModel!
  
     func configureWithPaymentCard(_ paymentCard: PaymentCardModel) {
-        nameOnCardLabel.text = paymentCard.card?.nameOnCard
-        cardNumberLabel.attributedText = cardNumberAttributedString(paymentCard)
+        self.paymentCard = paymentCard
 
-        configureForProvider(paymentCard)
-        configurePaymentCardLinkingStatus(paymentCard)
+        nameOnCardLabel.text = paymentCard.card?.nameOnCard
+        cardNumberLabel.attributedText = cardNumberAttributedString()
+
+        configureForProvider()
+        configurePaymentCardLinkingStatus()
 
         setLabelStyling()
         setupShadow()
@@ -40,8 +43,9 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    private func configureForProvider(_ paymentCard: PaymentCardModel?) {
+    private func configureForProvider() {
         guard let provider = PaymentCardType.type(from: paymentCard?.card?.firstSix) else {
+            processGradient(UIColor(hexString: "b46fea"), UIColor(hexString: "4371fe"))
             return
         }
         switch provider {
@@ -57,39 +61,39 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         providerWatermarkImageView.image = UIImage(named: provider.sublogoName)
     }
 
-    private func configurePaymentCardLinkingStatus(_ paymentCard: PaymentCardModel) {
-        guard !paymentCardIsExpired(paymentCard) else {
+    private func configurePaymentCardLinkingStatus() {
+        guard !paymentCardIsExpired() else {
             alertView.configureForType(.paymentExpired)
             alertView.isHidden = false
             pllStatusLabel.isHidden = true
             linkedStatusImageView.isHidden = true
             return
         }
-        if paymentCardIsLinkedToMembershipCards(paymentCard) {
-            pllStatusLabel.text = "Linked to \(linkedMembershipCardsCount(paymentCard)) loyalty cards" // TODO: Account for 1 card in string
+        if paymentCardIsLinkedToMembershipCards() {
+            pllStatusLabel.text = "Linked to \(linkedMembershipCardsCount()) loyalty cards" // TODO: Account for 1 card in string
         } else {
             pllStatusLabel.text = "Not linked"
         }
 
-        linkedStatusImageView.image = imageForLinkedStatus(paymentCard)
+        linkedStatusImageView.image = imageForLinkedStatus()
     }
 
-    private func imageForLinkedStatus(_ paymentCard: PaymentCardModel) -> UIImage? {
-        return paymentCardIsLinkedToMembershipCards(paymentCard) ? UIImage(named: "linked") : UIImage(named: "unlinked")
+    private func imageForLinkedStatus() -> UIImage? {
+        return paymentCardIsLinkedToMembershipCards() ? UIImage(named: "linked") : UIImage(named: "unlinked")
     }
 
-    private func linkedMembershipCardsCount(_ paymentCard: PaymentCardModel) -> Int {
+    private func linkedMembershipCardsCount() -> Int {
         guard let membershipCards = paymentCard.membershipCards else {
             return 0
         }
         return membershipCards.filter { $0.activeLink == true }.count
     }
 
-    private func paymentCardIsLinkedToMembershipCards(_ paymentCard: PaymentCardModel) -> Bool {
-        return linkedMembershipCardsCount(paymentCard) != 0
+    private func paymentCardIsLinkedToMembershipCards() -> Bool {
+        return linkedMembershipCardsCount() != 0
     }
 
-    private func cardNumberAttributedString(_ paymentCard: PaymentCardModel) -> NSAttributedString? {
+    private func cardNumberAttributedString() -> NSAttributedString? {
         guard let redactedPrefix = paymentCard.card?.provider?.redactedPrefix else {
             return nil
         }
@@ -107,7 +111,7 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         return attributedString
     }
 
-    private func paymentCardIsExpired(_ paymentCard: PaymentCardModel) -> Bool {
+    private func paymentCardIsExpired() -> Bool {
         guard let card = paymentCard.card else {
             return false
         }
