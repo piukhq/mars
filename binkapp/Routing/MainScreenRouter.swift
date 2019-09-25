@@ -63,7 +63,11 @@ class MainScreenRouter {
     }
     
     func getPaymentWalletViewController() -> UIViewController {
-        return PaymentWalletViewController()
+        let repository = PaymentWalletRepository(apiManager: apiManager)
+        let viewModel = PaymentWalletViewModel(repository: repository, router: self)
+        let viewController = PaymentWalletViewController(viewModel: viewModel)
+        
+        return viewController
     }
     
     func getDummyViewControllerForAction() -> UIViewController {
@@ -123,6 +127,12 @@ class MainScreenRouter {
     func toTransactionsViewController(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
         let viewModel = TransactionsViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, router: self)
         let viewController = TransactionsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
+    func toPaymentTermsAndConditionsViewController() {
+        let viewModel = PaymentTermsAndConditionsViewModel(router: self)
+        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     

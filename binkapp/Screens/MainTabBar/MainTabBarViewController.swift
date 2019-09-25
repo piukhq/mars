@@ -9,7 +9,7 @@ import UIKit
 
 class MainTabBarViewController: UITabBarController, BarBlurring {    
     let viewModel: MainTabBarViewModel
-    var selectedTabBarOption = Buttons.loyaltyItem.getIntegerValue()
+    var selectedTabBarOption = Buttons.loyaltyItem.rawValue
     var items = [UITabBarItem]()
     lazy var blurBackground = defaultBlurredBackground()
     

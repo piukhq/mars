@@ -74,7 +74,8 @@ class AddingOptionsViewController: UIViewController {
     }
     
     @objc func toAddPaymentCard() {
-        displayNoScreenPopup()
+        // TODO: To be removed after the corect screen is implemented. Added for testing purposes.
+        viewModel.toPaymentTermsAndConditionsScree()
     }
     
     func displayNoScreenPopup() {

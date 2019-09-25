@@ -32,81 +32,89 @@ class PointsModuleView: CustomView {
     private var action: PointsModuleAction?
     private var delegate: PointsModuleViewDelegate?
     
-    func configure(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, delegate: PointsModuleViewDelegate) {
+    func configure(membershipCard: CD_MembershipCard, delegate: PointsModuleViewDelegate) {
         self.delegate = delegate
         layer.shadowColor = UIColor.black.cgColor
         
-        guard membershipPlan.featureSet?.hasPoints ?? false || membershipPlan.featureSet?.transactionsAvailable ?? false else {
+        guard membershipCard.membershipPlan?.featureSet?.hasPoints?.boolValue == true || membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue == true else {
             // Points module 1.5
             configure(imageName: "lcdModuleIconsPointsInactive", titleText: "history_title".localized, subtitleText: "not_available_title".localized, touchAction: .loginUnavailable)
             return
         }
         
-        guard let status = membershipCard.status else { return }
+        guard let status = membershipCard.status?.status, let plan = membershipCard.membershipPlan else { return }
         
-//        switch status {
-//        case .authorised:
-//            // Points module 1.1, 1.2
-//            if let balances = membershipCard.balances, let value = balances[0].value {
-//                let titleText = (balances[0].prefix ?? "") + String(value) + " " + (balances[0].suffix ?? "")
-//                let subtitleText = (membershipPlan.featureSet?.transactionsAvailable ?? false) ? "points_module_view_history_message".localized : "points_module_last_checked".localized + (balances[0].updatedAt?.stringFromTimeInterval() ?? "")
-//                configure(imageName: "lcdModuleIconsPointsActive", titleText: titleText, subtitleText: subtitleText, touchAction: .transactions)
-//            }
-//            break
-//        case .unauthorised:
-//            // Points Module 1.3, 1.4
-//            configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .login)
-//            break
-//        case MembershipCardStatusModel.MembershipCardStatus.pending:
-//            let imageName = "lcdModuleIconsPointsLoginPending"
-//
-//            if let reasonCodes = membershipCard.status?.reasonCodes, reasonCodes.count > 0 {
-//                switch reasonCodes[0] {
-//                case "X200":
-//                    // Points module 1.9
-//                    configure(imageName: imageName, titleText: "points_module_signing_up_status".localized, subtitleText: "please_wait_title".localized, touchAction: .signUpPending)
-//                    break
-//                case "X000", "X301":
-//                    // Points module 1.7
-//                    configure(imageName: imageName, titleText: "points_module_signing_up_status".localized, subtitleText: "please_wait_title".localized, touchAction: .loginPending)
-//                    break
-//                default:
-//                    // Points module 1.11 (need reason codes, set by defaul)
-//                    configure(imageName: imageName, titleText: "points_module_registering_card_status".localized, subtitleText: "please_wait_title".localized, touchAction: .registerGhostCardPending)
-//                    break
-//                }
-//            } else {
-//                isHidden = true
-//            }
-//            break
-//        case MembershipCardStatusModel.MembershipCardStatus.failed.rawValue:
-//            let imageName = "lcdModuleIconsPointsLogin"
-//            if let reasonCodes = membershipCard.status?.reasonCodes, reasonCodes.count > 0 {
-//                switch reasonCodes[0] {
-//                case "X201":
-//                    // Points module 1.8
-//                    configure(imageName: imageName, titleText: "sign_up_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .signUp)
-//                    break
-//                case "X105", "X202":
-//                    // Points module 1.x (to be defined)
-//                    configure(imageName: imageName, titleText: "log_in_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
-//                    break
-//                case "X101", "X102", "X103", "X104", "X302", "X303", "X304":
-//                    // Points module 1.6
-//                    configure(imageName: imageName, titleText: "points_module_retry_log_in_status".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
-//                    break
-//                default:
-//                    // Points module 1.10 (need reason codes, set by default)
-//                    configure(imageName: imageName, titleText: "registration_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .registerGhostCard)
-//                    break
-//                }
-//            } else {
-//                isHidden = true
-//            }
-//            break
-//        default:
-//            return
-//        }
+        switch status {
+        case .authorised:
+            // Points module 1.1, 1.2
+            if let balances = membershipCard.balances.allObjects as? [CD_MembershipCardBalance],
+                let balance = balances.first,
+                let value = balance.value {
+                                
+                let prefix = balance.prefix ?? ""
+                let suffix = balance.suffix ?? ""
+                let titleText = prefix + value.stringValue + " " + suffix
+                
+                let transactionsAvailable = plan.featureSet?.transactionsAvailable?.boolValue == true
+                
+                let subtitleText = (transactionsAvailable) ? "points_module_view_history_message".localized : "points_module_last_checked".localized + (balance.updatedAt?.stringValue ?? "")
+                configure(imageName: "lcdModuleIconsPointsActive", titleText: titleText, subtitleText: subtitleText, touchAction: .transactions)
+            }
+            break
+        case .unauthorised:
+            // Points Module 1.3, 1.4
+            configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .login)
+            break
+        case .pending:
+            let imageName = "lcdModuleIconsPointsLoginPending"
+
+            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.value {
+                switch reasonCode {
+                case "X200":
+                    // Points module 1.9
+                    configure(imageName: imageName, titleText: "points_module_signing_up_status".localized, subtitleText: "please_wait_title".localized, touchAction: .signUpPending)
+                    break
+                case "X000", "X301":
+                    // Points module 1.7
+                    configure(imageName: imageName, titleText: "points_module_signing_up_status".localized, subtitleText: "please_wait_title".localized, touchAction: .loginPending)
+                    break
+                default:
+                    // Points module 1.11 (need reason codes, set by defaul)
+                    configure(imageName: imageName, titleText: "points_module_registering_card_status".localized, subtitleText: "please_wait_title".localized, touchAction: .registerGhostCardPending)
+                    break
+                }
+            } else {
+                isHidden = true
+            }
+            break
+        case .failed:
+            let imageName = "lcdModuleIconsPointsLogin"
+            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.value {
+                switch reasonCode {
+                case "X201":
+                    // Points module 1.8
+                    configure(imageName: imageName, titleText: "sign_up_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .signUp)
+                    break
+                case "X105", "X202":
+                    // Points module 1.x (to be defined)
+                    configure(imageName: imageName, titleText: "log_in_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
+                    break
+                case "X101", "X102", "X103", "X104", "X302", "X303", "X304":
+                    // Points module 1.6
+                    configure(imageName: imageName, titleText: "points_module_retry_log_in_status".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
+                    break
+                default:
+                    // Points module 1.10 (need reason codes, set by default)
+                    configure(imageName: imageName, titleText: "registration_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .registerGhostCard)
+                    break
+                }
+            } else {
+                isHidden = true
+            }
+            break
+        default:
+            return
+        }
     }
     
     // MARK: - Actions

@@ -24,6 +24,11 @@ class PLLScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBrandHeader()
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     // MARK: - Actions
@@ -45,7 +50,7 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
     }
 }
 
-// MARK: - Private methods
+    // MARK: - Private methods
 
 private extension PLLScreenViewController {
     func configureBrandHeader() {

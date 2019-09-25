@@ -65,10 +65,6 @@ class LoyaltyCardFullDetailsViewModel {
         }
     }
     
-    func popViewController() {
-        router.popViewController()
-    }
-    
     func popToRootController() {
         router.popToRootViewController()
     }

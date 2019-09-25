@@ -9,6 +9,7 @@ public enum CD_CardAttributes: String {
     case barcodeType = "barcodeType"
     case colour = "colour"
     case id = "id"
+    case membershipId = "membershipId"
 }
 
 public enum CD_CardRelationships: String {
@@ -56,6 +57,9 @@ open class _CD_Card: NSManagedObject {
 
     @NSManaged open
     var id: String!
+
+    @NSManaged open
+    var membershipId: String?
 
     // MARK: - Relationships
 

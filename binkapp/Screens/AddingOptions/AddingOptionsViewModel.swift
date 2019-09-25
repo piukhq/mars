@@ -22,4 +22,9 @@ class AddingOptionsViewModel {
     func popViewController() {
         router.popViewController()
     }
+    
+    // TODO: To be removed after the corect screen is implemented. Added for testing purposes.
+    func toPaymentTermsAndConditionsScree() {
+        router.toPaymentTermsAndConditionsViewController()
+    }
 }

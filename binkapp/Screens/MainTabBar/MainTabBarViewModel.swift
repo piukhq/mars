@@ -79,15 +79,7 @@ class MainTabBarViewModel {
 }
 
 enum Buttons: Int {
-    case loyaltyItem
-    case addItem
+    case loyaltyItem = 0
     case paymentItem
-    
-    func getIntegerValue() -> Int {
-        switch self {
-        case .loyaltyItem: return self.rawValue
-        case .addItem: return self.rawValue
-        case .paymentItem: return self.rawValue
-        }
-    }
+    case addItem
 }

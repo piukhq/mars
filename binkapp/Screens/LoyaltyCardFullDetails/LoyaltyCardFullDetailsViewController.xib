@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,29 +27,29 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="1674"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ub4-ah-QiY" userLabel="ContainerView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="1482"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="1517"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iH8-ro-dLl" customClass="FullDetailsBrandHeader" customModule="binkapp" customModuleProvider="target">
-                                    <rect key="frame" x="25" y="0.0" width="364" height="265"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <rect key="frame" x="25" y="0.0" width="364" height="300"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="265" id="9nF-dr-hoU"/>
+                                        <constraint firstAttribute="height" constant="300" placeholder="YES" id="9nF-dr-hoU"/>
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="ElX-yf-qIn">
-                                    <rect key="frame" x="25" y="290" width="364" height="128"/>
+                                    <rect key="frame" x="25" y="325" width="364" height="128"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rWO-HB-Y8N">
                                             <rect key="frame" x="0.0" y="0.0" width="364" height="128"/>
                                             <color key="backgroundColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="128" id="yfe-5Z-qsH"/>
+                                            </constraints>
                                         </view>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="128" id="2Qy-pj-k4X"/>
-                                    </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="umh-i2-nD6">
-                                    <rect key="frame" x="25" y="443" width="364" height="740"/>
+                                    <rect key="frame" x="25" y="478" width="364" height="740"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CsR-MA-SH2">
                                             <rect key="frame" x="0.0" y="0.0" width="364" height="364"/>
@@ -69,14 +68,14 @@
                                     </subviews>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jgp-B3-GNB" userLabel="SeparatorView">
-                                    <rect key="frame" x="0.0" y="1207" width="414" height="1"/>
-                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <rect key="frame" x="0.0" y="1242" width="414" height="1"/>
+                                    <color key="backgroundColor" red="0.66666666666666663" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="ROX-j2-GYy"/>
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="wZH-mI-4Mq">
-                                    <rect key="frame" x="25" y="1208" width="364" height="264"/>
+                                    <rect key="frame" x="25" y="1243" width="364" height="264"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vLa-fX-VOe" customClass="CardDetailsInfoView" customModule="binkapp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="364" height="88"/>
