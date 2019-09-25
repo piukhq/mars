@@ -26,6 +26,7 @@
 "add_payment_card_title" = "Add payment card";
 "scan_and_link_description" = "Scan and link your payment card";
 "card_linked_status" = "Linked";
+"card_linking_status" = "Linking";
 "card_can_not_link_status" = "Cannot Link";
 "card_link_status" = "Link";
 

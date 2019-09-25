@@ -60,8 +60,6 @@ private extension LoyaltyCardFullDetailsViewController {
         let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
         fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
-        
-
     }
     
     func configureCardDetails(_ paymentCards: [PaymentCardModel]?) {

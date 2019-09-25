@@ -150,7 +150,7 @@ private extension BinkModuleView {
             switch membershipPlan.featureSet?.cardType {
             case .store, .view:
                 // Link module 2.8
-                configure(imageName: "lcdModuleIconsLinkInactive", titleText: "card_link_status".localized, subtitleText: "not_available_title".localized, touchAction: .unLinkable)
+                configure(imageName: "lcdModuleIconsLinkInactive", titleText: "card_linking_status".localized, subtitleText: "not_available_title".localized, touchAction: .unLinkable)
                  break
             default:
                 // Link module 2.4
@@ -165,7 +165,7 @@ private extension BinkModuleView {
             guard membershipCard.paymentCards?.count ?? 0 == 0, linkedCard == nil else {
                 // Link module 2.1
                 let subtitleText = "To " + String(membershipCard.paymentCards?.count ?? 0) + " of " + String(paymentCards.count) + " cards"
-                configure(imageName: "lcdModuleIconsLinkActive", titleText: "card_link_status".localized, subtitleText: subtitleText, touchAction: .pll)
+                configure(imageName: "lcdModuleIconsLinkActive", titleText: "card_linked_status".localized, subtitleText: subtitleText, touchAction: .pll)
                 return
             }
             if paymentCards.count == 0 {
