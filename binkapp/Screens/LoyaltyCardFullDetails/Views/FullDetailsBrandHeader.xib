@@ -24,13 +24,13 @@
                     <rect key="frame" x="5" y="8" width="715" height="388"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLY-Tr-SIY">
-                            <rect key="frame" x="0.0" y="0.0" width="715" height="230"/>
+                            <rect key="frame" x="0.0" y="0.0" width="715" height="290"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="zbA-fI-XfA">
-                                    <rect key="frame" x="0.0" y="0.0" width="715" height="230"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zbA-fI-XfA">
+                                    <rect key="frame" x="0.0" y="0.0" width="715" height="354"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="230" id="WsH-0j-khh"/>
+                                        <constraint firstAttribute="width" secondItem="zbA-fI-XfA" secondAttribute="height" multiplier="125:79" id="MQn-jN-xmU"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -55,6 +55,12 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="JLY-Tr-SIY" firstAttribute="leading" secondItem="ZLp-Mi-A3p" secondAttribute="leading" id="WWI-Kn-hsy"/>
+                        <constraint firstItem="157-2T-a9w" firstAttribute="top" secondItem="JLY-Tr-SIY" secondAttribute="bottom" constant="71.5" id="dDO-b1-Dcb"/>
+                        <constraint firstAttribute="trailing" secondItem="JLY-Tr-SIY" secondAttribute="trailing" id="jS7-4x-DwH"/>
+                        <constraint firstItem="JLY-Tr-SIY" firstAttribute="top" secondItem="ZLp-Mi-A3p" secondAttribute="top" id="jsJ-fA-J7H"/>
+                    </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <integer key="value" value="4"/>

@@ -111,9 +111,6 @@ class PointsModuleView: CustomView {
             } else {
                 isHidden = true
             }
-            break
-        default:
-            return
         }
     }
     

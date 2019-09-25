@@ -25,10 +25,12 @@ class FullDetailsBrandHeader: CustomView {
         messageLabel.font = .bodyTextLarge
         showBarcodeTapGesture.isEnabled = showBarcode
         if let imageURL = imageUrl, let url = URL(string: imageURL) {
-            brandImage.af_setImage(withURL: url) { [weak self] _ in
-                self?.brandImage.roundCornersForAspectFit(radius: 4)
-            }
+            brandImage.af_setImage(withURL: url)
+            print(brandImage.image?.size)
         }
+        brandImage.clipsToBounds = true
+        brandImage.backgroundColor = .black
+        brandImage.layer.cornerRadius = 4
     }
     
     // MARK: - Actions
