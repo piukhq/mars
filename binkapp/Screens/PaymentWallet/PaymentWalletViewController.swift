@@ -89,7 +89,8 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
             return cell
         }
 
-        cell.configureWithPaymentCard(paymentCard)
+        let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
+        cell.configureWithViewModel(cellViewModel)
 
         return cell
     }
