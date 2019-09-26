@@ -70,6 +70,7 @@ class AuthAndAddViewModel {
                 let result = try convertToDictionary(from: jsonCard) ?? [:]
                 repository.addMembershipCard(jsonCard: result, completion: { response in
                     self.router.toPllViewController(membershipCard: response, membershipPlan: self.membershipPlan)
+                    NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
                 })
             } catch {
                 print(error)

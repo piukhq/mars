@@ -19,7 +19,7 @@ class BinkGradientButton: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.setGradientBackground(firstColor: .binkPurple, secondColor: .blueAccent)
+        self.setGradientBackground(firstColor: .binkPurple, secondColor: .blueAccent, orientation: .horizontal, roundedCorner: true)
         let halfOfButtonHeight = layer.frame.height / 2
         
         if shadowLayer == nil {
@@ -35,6 +35,5 @@ class BinkGradientButton: UIButton {
             
             layer.insertSublayer(shadowLayer, at: 0)
         }
-        
     }
 }

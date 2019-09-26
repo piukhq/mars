@@ -57,7 +57,7 @@ private extension LoyaltyCardFullDetailsViewController {
         
         let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
-        fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode , delegate: self)
+        fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
         
         let pointsModuleView = PointsModuleView()
         pointsModuleView.configure(membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, delegate: self)
@@ -65,16 +65,12 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func setCloseButton() {
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController
+        let closeButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popToRootController
             ))
         self.navigationItem.setLeftBarButton(closeButton, animated: true)
     }
     
-    @objc func popViewController() {
-        viewModel.popViewController()
-    }
-    
-    func popToRootController() {
+    @objc func popToRootController() {
         viewModel.popToRootController()
     }
     
