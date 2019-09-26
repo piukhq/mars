@@ -8,27 +8,21 @@
 
 import Foundation
 
-protocol PaymentWalletViewModelDelegate: class {
-    func paymentWalletViewModelDidLoadData(_ viewModel: PaymentWalletViewModel)
-}
-
 class PaymentWalletViewModel {
     private let repository: PaymentWalletRepository
-    private let router: MainScreenRouter
-    
-    weak var delegate: PaymentWalletViewModelDelegate?
-    var paymentCards: [PaymentCardModel] = []
+    let router: MainScreenRouter
+
+    var paymentCards: [PaymentCardModel]?
     
     init(repository: PaymentWalletRepository, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
     }
     
-    func getPaymentCards() {
-        repository.getPaymentCards { [weak self] (results) in
-            guard let wself = self else { return }
-            wself.paymentCards = results
-            wself.delegate?.paymentWalletViewModelDidLoadData(wself)
+    func getWallet(forceRefresh: Bool = false, completion: @escaping () -> Void) {
+        repository.getPaymentCards { [weak self] cards in
+            self?.paymentCards = cards
+            completion()
         }
     }
 }

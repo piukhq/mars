@@ -97,11 +97,11 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             guard let paymentCard = $0 as? CD_PaymentCard else { return }
             context.delete(paymentCard)
         }
-        paymentCards?.forEach { paymentCard in
-            let cdPaymentCard = paymentCard.mapToCoreData(context, .update, overrideID: nil)
-            update(cdPaymentCard, \.membershipCard, with: cdObject, delta: delta)
-            cdObject.addPaymentCardsObject(cdPaymentCard)
-        }
+//        paymentCards?.forEach { paymentCard in
+//            let cdPaymentCard = paymentCard.mapToCoreData(context, .update, overrideID: nil)
+//            update(cdPaymentCard, \.membershipCard, with: cdObject, delta: delta)
+//            cdObject.addPaymentCardsObject(cdPaymentCard)
+//        }
 
         cdObject.balances.forEach {
             guard let balance = $0 as? CD_MembershipCardBalance else { return }

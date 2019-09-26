@@ -10,7 +10,8 @@ import UIKit
 
 class PaymentWalletViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
-    
+
+    private let refreshControl = UIRefreshControl()
     private let viewModel: PaymentWalletViewModel
     
     init(viewModel: PaymentWalletViewModel) {
@@ -24,38 +25,79 @@ class PaymentWalletViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        refreshControl.addTarget(self, action: #selector(refreshWallet), for: .valueChanged)
+        collectionView.addSubview(refreshControl)
+        collectionView.alwaysBounceVertical = true
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        viewModel.delegate = self
-        viewModel.getPaymentCards()
+
+        configureCollectionView()
+
+        // Reimplement when we bring core data into this view controller
+//        loadLocalWallet()
+        refreshWallet()
+    }
+
+    private func configureCollectionView() {
+        collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        flowLayout.sectionInset = LayoutHelper.WalletDimensions.edgeInsets
+        flowLayout.minimumLineSpacing = LayoutHelper.WalletDimensions.cardLineSpacing
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        refreshControl.endRefreshing()
+        super.viewWillDisappear(animated)
+    }
+
+    private func loadLocalWallet() {
+        loadWallet()
+    }
+
+    @objc private func refreshWallet() {
+        loadWallet(forceRefresh: true)
+    }
+
+    @objc private func loadWallet(forceRefresh: Bool = false) {
+        viewModel.getWallet(forceRefresh: forceRefresh) {
+            DispatchQueue.main.async { [weak self] in
+                self?.refreshControl.endRefreshing()
+                self?.collectionView.reloadData()
+            }
+        }
     }
     
 }
 
-extension PaymentWalletViewController: UICollectionViewDataSource {
+extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.paymentCards.count
+        return viewModel.paymentCards?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
-    }
-    
-    
-}
+        let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
 
-extension PaymentWalletViewController: UICollectionViewDelegate {
-    
-}
-
-extension PaymentWalletViewController: PaymentWalletViewModelDelegate {
-    func paymentWalletViewModelDidLoadData(_ viewModel: PaymentWalletViewModel) {
+        guard let paymentCard = viewModel.paymentCards?[indexPath.row] else {
+            return cell
+        }
         
+        let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard, router: viewModel.router)
+        cell.configureWithViewModel(cellViewModel)
+
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let screenWidth = UIScreen.main.bounds.width
+        let padding = LayoutHelper.WalletDimensions.cardHorizontalPadding * 2
+        return CGSize(width: screenWidth - padding, height: LayoutHelper.WalletDimensions.cardHeight)
     }
 }

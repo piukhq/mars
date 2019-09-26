@@ -49,11 +49,19 @@ extension UIFont {
     class var bodyTextLarge: UIFont {
         return UIFont(name: "NunitoSans-Light", size: 18.0) ?? UIFont()
     }
+
+    class var alertText: UIFont {
+        return UIFont(name: "NunitoSans-ExtraBold", size: 17.0) ?? UIFont()
+    }
     
     class var textFieldLabel: UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 15.0) ?? UIFont()
     }
-    
+
+    class var statusLabel: UIFont {
+        return UIFont(name: "NunitoSans-SemiBold", size: 15.0) ?? UIFont()
+    }
+
     class var navbarHeaderLine2: UIFont {
         return UIFont(name: "NunitoSans-Regular", size: 15.0) ?? UIFont()
     }
@@ -68,6 +76,10 @@ extension UIFont {
     
     class var bodyTextSmall: UIFont {
         return UIFont(name: "NunitoSans-Light", size: 14.0) ?? UIFont()
+    }
+
+    class var redactedCardNumberPrefix: UIFont {
+        return UIFont(name: "NunitoSans-SemiBold", size: 10.0) ?? UIFont()
     }
     
     class var tabBar: UIFont {

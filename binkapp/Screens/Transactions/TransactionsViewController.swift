@@ -30,7 +30,7 @@ class TransactionsViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         tableView.dataSource = self
-        tableView.registerCellForClass(TransactionTableViewCell.self, asNib: true)
+        tableView.register(TransactionTableViewCell.self, asNib: true)
     }
     
     private func configureUI() {
@@ -72,7 +72,8 @@ extension TransactionsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithClass(TransactionTableViewCell.self, forIndexPath: indexPath)
+        
+        let cell: TransactionTableViewCell = tableView.dequeue(indexPath: indexPath)
         
         let transaction = viewModel.transactions[indexPath.row]
         let value = Int(transaction.amounts?.first?.value ?? 0)
