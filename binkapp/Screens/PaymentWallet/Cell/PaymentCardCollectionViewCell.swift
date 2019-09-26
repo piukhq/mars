@@ -19,7 +19,6 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var alertView: CardAlertView!
 
     private var gradientLayer: CAGradientLayer?
-
     private var viewModel: PaymentCardCellViewModel!
 
     func configureWithViewModel(_ viewModel: PaymentCardCellViewModel) {
@@ -58,7 +57,9 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
 
     private func configurePaymentCardLinkingStatus() {
         guard !viewModel.paymentCardIsExpired() else {
-            alertView.configureForType(.paymentExpired)
+            alertView.configureForType(.paymentExpired) { [weak self] in
+                self?.viewModel.expiredAction()
+            }
             alertView.isHidden = false
             pllStatusLabel.isHidden = true
             linkedStatusImageView.isHidden = true

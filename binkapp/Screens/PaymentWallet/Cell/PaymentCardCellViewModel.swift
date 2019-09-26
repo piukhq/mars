@@ -9,10 +9,12 @@
 import UIKit
 
 struct PaymentCardCellViewModel {
-    private var paymentCard: PaymentCardModel
+    private let paymentCard: PaymentCardModel
+    private let router: MainScreenRouter
 
-    init(paymentCard: PaymentCardModel) {
+    init(paymentCard: PaymentCardModel, router: MainScreenRouter) {
         self.paymentCard = paymentCard
+        self.router = router
     }
 
     var nameOnCardText: String? {
@@ -33,6 +35,10 @@ struct PaymentCardCellViewModel {
         } else {
             return "Not linked"
         }
+    }
+
+    func expiredAction() {
+        router.displaySimplePopup(title: "Expired Payment Card", message: "This payment card has expired.")
     }
 
     func paymentCardIsExpired() -> Bool {

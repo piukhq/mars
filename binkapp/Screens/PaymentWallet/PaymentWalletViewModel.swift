@@ -10,7 +10,7 @@ import Foundation
 
 class PaymentWalletViewModel {
     private let repository: PaymentWalletRepository
-    private let router: MainScreenRouter
+    let router: MainScreenRouter
 
     var paymentCards: [PaymentCardModel]?
     

@@ -88,8 +88,8 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
         guard let paymentCard = viewModel.paymentCards?[indexPath.row] else {
             return cell
         }
-
-        let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
+        
+        let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard, router: viewModel.router)
         cell.configureWithViewModel(cellViewModel)
 
         return cell
