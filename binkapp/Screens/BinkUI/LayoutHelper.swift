@@ -16,10 +16,12 @@ extension LayoutHelper {
     }
 
     struct WalletDimensions {
-        static let cardHeight: CGFloat = 120.0
         static let cardHorizontalPadding: CGFloat = 25.0
+        private static let cardHeight: CGFloat = 120.0
+        private static let cardWidth: CGFloat = UIScreen.main.bounds.width - (WalletDimensions.cardHorizontalPadding * 2)
+        static let cardSize = CGSize(width: WalletDimensions.cardWidth, height: WalletDimensions.cardHeight)
         static let cardLineSpacing: CGFloat = 12.0
         static let cardCornerRadius: CGFloat = 8.0
-        static let edgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        static let contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
     }
 }

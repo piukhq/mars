@@ -15,7 +15,7 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .white
-        collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        collectionView.contentInset = LayoutHelper.WalletDimensions.contentInset
         
         view.addSubview(collectionView)
         
@@ -33,8 +33,8 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 375 - 28, height: 120)
-        layout.minimumLineSpacing = 28.0
+        layout.itemSize = LayoutHelper.WalletDimensions.cardSize
+        layout.minimumLineSpacing = LayoutHelper.WalletDimensions.cardLineSpacing
         return layout
     }()
     

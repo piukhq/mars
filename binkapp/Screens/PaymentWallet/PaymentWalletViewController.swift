@@ -42,10 +42,10 @@ class PaymentWalletViewController: UIViewController {
 
     private func configureCollectionView() {
         collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
+        collectionView.contentInset = LayoutHelper.WalletDimensions.contentInset
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
-        flowLayout.sectionInset = LayoutHelper.WalletDimensions.edgeInsets
         flowLayout.minimumLineSpacing = LayoutHelper.WalletDimensions.cardLineSpacing
     }
 
@@ -96,8 +96,6 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let screenWidth = UIScreen.main.bounds.width
-        let padding = LayoutHelper.WalletDimensions.cardHorizontalPadding * 2
-        return CGSize(width: screenWidth - padding, height: LayoutHelper.WalletDimensions.cardHeight)
+        return LayoutHelper.WalletDimensions.cardSize
     }
 }
