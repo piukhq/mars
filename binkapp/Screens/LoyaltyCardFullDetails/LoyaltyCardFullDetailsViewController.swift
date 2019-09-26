@@ -63,13 +63,13 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configureCardDetails(_ paymentCards: [PaymentCardModel]?) {
+        let pointsModuleView = BinkModuleView()
+            pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, delegate: self)
+            cardDetailsStackView.addArrangedSubview(pointsModuleView)
+        
         let linkModuleView = BinkModuleView()
         linkModuleView.configure(moduleType: .link, membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, paymentCards: paymentCards, delegate: self)
-        cardDetailsStackView.insertArrangedSubview(linkModuleView, at: 0)
-        
-        let pointsModuleView = BinkModuleView()
-        pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, delegate: self)
-        cardDetailsStackView.insertArrangedSubview(pointsModuleView, at: 0)
+        cardDetailsStackView.addArrangedSubview(linkModuleView)
     }
     
     func setCloseButton() {

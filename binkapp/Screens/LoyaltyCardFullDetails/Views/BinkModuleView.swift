@@ -164,7 +164,7 @@ private extension BinkModuleView {
             let linkedCard = paymentCards.first(where: { $0.activeLink == true})
             guard membershipCard.paymentCards?.count ?? 0 == 0, linkedCard == nil else {
                 // Link module 2.1
-                let subtitleText = "To " + String(membershipCard.paymentCards?.count ?? 0) + " of " + String(paymentCards.count) + " cards"
+                let subtitleText = String(format: "link_module_to_number_of_payment_cards_message".localized, membershipCard.paymentCards?.count ?? 0, paymentCards.count)
                 configure(imageName: "lcdModuleIconsLinkActive", titleText: "card_linked_status".localized, subtitleText: subtitleText, touchAction: .pll)
                 return
             }

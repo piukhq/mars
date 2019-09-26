@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol LoyaltyCardFullDetailsViewModelDelegate {
+protocol LoyaltyCardFullDetailsViewModelDelegate: class {
     func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel])
 }
 
@@ -17,7 +17,7 @@ class LoyaltyCardFullDetailsViewModel {
     
     let membershipCard: MembershipCardModel
     let membershipPlan: MembershipPlanModel
-    var delegate: LoyaltyCardFullDetailsViewModelDelegate?
+    weak var delegate: LoyaltyCardFullDetailsViewModelDelegate?
     
     init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
         self.router = router

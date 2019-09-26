@@ -111,5 +111,6 @@
 "link_module_to_payment_cards_message" = "To payment cards";
 "link_module_error_title" = "Link error";
 "link_module_to_link_to_cards_message" = "To link to cards";
+"link_module_to_number_of_payment_cards_message" = "To %d of %d cards";
 
 "terms_and_conditions_title" = "Terms and conditions";
