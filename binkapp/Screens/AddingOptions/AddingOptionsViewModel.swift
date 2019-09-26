@@ -19,7 +19,7 @@ class AddingOptionsViewModel {
         router.toBrowseBrandsViewController()
     }
 
-    func popViewController() {
+    @objc func popViewController() {
         router.popViewController()
     }
     
@@ -41,7 +41,9 @@ class AddingOptionsViewModel {
             range: NSRange(location: ("terms_and_conditions_title".localized).count, length: ("lorem_ipsum".localized).count)
         )
         
-        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, mainButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized)
+        let backButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        
+        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, mainButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: backButton)
         
         router.toPaymentTermsAndConditionsViewController(configurationModel: configurationModel)
     }

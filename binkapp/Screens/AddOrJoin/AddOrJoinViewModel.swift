@@ -45,15 +45,17 @@ class AddOrJoinViewModel {
                 range: NSRange(location: ("native_join_unavailable_title".localized).count, length: ("native_join_unavailable_description".localized).count)
             )
             
+            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+            
             if let planURL = membershipPlan.account?.planURL {
                 let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, mainButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
                     if let url = URL(string: planURL) {
                         UIApplication.shared.open(url)
                     }
-                })
+                }, tabBarBackButton: backButton)
                 router.toReusableModalTemplateViewController(configurationModel: configurationModel)
             } else {
-                let configurationModel = ReusableModalConfiguration(title: "", text: attributedText)
+                let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
                 router.toReusableModalTemplateViewController(configurationModel: configurationModel)
             }
             
@@ -64,7 +66,7 @@ class AddOrJoinViewModel {
         router.displaySimplePopup(title: title, message: message)
     }
     
-    func popViewController() {
+    @objc func popViewController() {
         router.popViewController()
     }
     

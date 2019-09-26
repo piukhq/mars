@@ -15,14 +15,16 @@ public struct ReusableModalConfiguration {
     var mainButtonCompletion: () -> Void?
     var secondaryButtonTitle: String?
     var secondaryButtonCompletion: () -> Void?
+    var tabBarBackButton: UIBarButtonItem
     
-    init(title: String = "", text: NSMutableAttributedString, mainButtonTitle: String? = nil, mainButtonCompletion: (() -> Void)? = nil, secondaryButtonTitle: String? = nil, secondaryButtonCompletion: (() -> Void)? = nil) {
+    init(title: String = "", text: NSMutableAttributedString, mainButtonTitle: String? = nil, mainButtonCompletion: (() -> Void)? = nil, secondaryButtonTitle: String? = nil, secondaryButtonCompletion: (() -> Void)? = nil, tabBarBackButton: UIBarButtonItem) {
         self.title = title
         self.text = text
         self.mainButtonTitle = mainButtonTitle
         self.mainButtonCompletion = mainButtonCompletion ?? {  }
         self.secondaryButtonTitle = secondaryButtonTitle
         self.secondaryButtonCompletion = secondaryButtonCompletion ?? {  }
+        self.tabBarBackButton = tabBarBackButton
     }
 }
 
@@ -52,6 +54,10 @@ open class ReusableModalViewModel {
     
     var secondaryButtonCompletion: () -> Void? {
         return configurationModel.secondaryButtonCompletion
+    }
+    
+    var tabBarBackButton: UIBarButtonItem {
+        return configurationModel.tabBarBackButton
     }
     
     init(configurationModel: ReusableModalConfiguration, router: MainScreenRouter) {
