@@ -209,6 +209,7 @@
 		EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485576231D72E700FC9E5F /* ModalDismissable.swift */; };
 		EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */; };
 		EF8BF1ED233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BF1EC233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift */; };
+		EF8BF1EF233CBCE300D2E5F3 /* CAGradientLayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BF1EE233CBCE300D2E5F3 /* CAGradientLayerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -479,6 +480,7 @@
 		EF485576231D72E700FC9E5F /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
 		EF8BF1EC233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCellViewModel.swift; sourceTree = "<group>"; };
+		EF8BF1EE233CBCE300D2E5F3 /* CAGradientLayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1073,6 +1075,7 @@
 				BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */,
 				BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */,
 				3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */,
+				EF8BF1EE233CBCE300D2E5F3 /* CAGradientLayerExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1615,6 +1618,7 @@
 				5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */,
 				3CF029EF22F45ACE009A0E61 /* AddingOptionView.swift in Sources */,
 				B7D577B823180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift in Sources */,
+				EF8BF1EF233CBCE300D2E5F3 /* CAGradientLayerExtension.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				B726334B23058A5C00951037 /* FeatureSetModel.swift in Sources */,
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,

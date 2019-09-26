@@ -46,20 +46,14 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
 
     private func configureForProvider() {
         guard let cardType = viewModel.paymentCardType else {
-            processGradient(UIColor(hexString: "b46fea"), UIColor(hexString: "4371fe"))
+            processGradient()
             return
-        }
-        switch cardType {
-        case .visa:
-            processGradient(UIColor(hexString: "13288d"), UIColor(hexString: "181c51"))
-        case .mastercard:
-            processGradient(UIColor(hexString: "f79e1b"), UIColor(hexString: "eb001b"))
-        case .amex:
-            processGradient(UIColor(hexString: "57c4ff"), UIColor(hexString: "006bcd"))
         }
 
         providerLogoImageView.image = UIImage(named: cardType.logoName)
         providerWatermarkImageView.image = UIImage(named: cardType.sublogoName)
+
+        processGradient()
     }
 
     private func configurePaymentCardLinkingStatus() {
@@ -79,15 +73,25 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         return viewModel.paymentCardIsLinkedToMembershipCards() ? UIImage(named: "linked") : UIImage(named: "unlinked")
     }
 
-    private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
+    private func processGradient() {
         if gradientLayer == nil {
             let gradient = CAGradientLayer()
             layer.insertSublayer(gradient, at: 0)
             gradientLayer = gradient
         }
 
+        switch viewModel.paymentCardType {
+        case .visa:
+            gradientLayer?.colors = UIColor.visaPaymentCardGradients
+        case .mastercard:
+            gradientLayer?.colors = UIColor.mastercardPaymentCardGradients
+        case .amex:
+            gradientLayer?.colors = UIColor.amexPaymentCardGradients
+        case .none:
+            gradientLayer?.colors = UIColor.unknownPaymentCardGradients
+        }
+
         gradientLayer?.frame = bounds
-        gradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
         gradientLayer?.locations = [0.0, 1.0]
         gradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
         gradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
