@@ -34,7 +34,7 @@ class LoyaltyCardFullDetailsViewModel {
         switch action {
         case .login:
             //TODO: change to login screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, isFirstAuth: false)
             break
         case .loginChanges:
             //TODO: change to login changes screen after is implemented
