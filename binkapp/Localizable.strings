@@ -17,6 +17,7 @@
 "registration_failed_title" = "Registration failed";
 "history_title" = "History";
 "not_available_title" = "Not available";
+"pending_title" = "Pending";
 
 "add_loyalty_card_title" = "Add loyalty card";
 "scan_a_card_description" = "Scan a card you already have";
@@ -25,7 +26,9 @@
 "add_payment_card_title" = "Add payment card";
 "scan_and_link_description" = "Scan and link your payment card";
 "card_linked_status" = "Linked";
+"card_linking_status" = "Linking";
 "card_can_not_link_status" = "Cannot Link";
+"card_link_status" = "Link";
 
 "browse_brands_title" = "Browse brands";
 "filters_button_title" = "Filters";
@@ -89,6 +92,7 @@
 "recent_transaction_history_subtitle" = "Your recent transaction history.";
 
 "log_in_pending_title" = "Log in pending";
+"log_in_failed_title" = "Log in failed";
 "sign_up_pending_title" = "Sign up pending";
 "register_pending_title" = "Register Ghost card pending";
 "log_in_pending_description" = "You are seeing this because sometimes it takes a while to log in with the merchant. In the meantime please do not attempt to log in again, but you can use your card and receive your benefits as usual. After you are logged in you will be able to see your points balance.";
@@ -104,5 +108,9 @@
 "points_module_logging_in_status" = "Logging in";
 "points_module_registering_card_status" = "Registering card";
 "points_module_retry_log_in_status" = "Retry log in";
+"link_module_to_payment_cards_message" = "To payment cards";
+"link_module_error_title" = "Link error";
+"link_module_to_link_to_cards_message" = "To link to cards";
+"link_module_to_number_of_payment_cards_message" = "To %d of %d cards";
 
 "terms_and_conditions_title" = "Terms and conditions";

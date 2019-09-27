@@ -68,15 +68,15 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
         cardValuePointsLabel.font = UIFont.subtitle
         
         switch card.status?.state {
-        case "failed":
+        case .failed:
             logInButton.isHidden = false
             logInButton.imageView?.contentMode = .scaleAspectFill
             cardValuePointsLabel.isHidden = true
             break
-        case "pending":
-            cardValuePointsLabel.text = card.status?.state
+        case .pending:
+            cardValuePointsLabel.text = card.status?.state?.rawValue
             break
-        case "authorised":
+        case .authorised:
             if plan.featureSet?.cardType == .link {
                 cardLinkStatusImage.image = UIImage(imageLiteralResourceName: "linked")
                 cardLinkStatusImage.isHidden = false
@@ -97,7 +97,7 @@ class WalletLoyaltyCardTableViewCell: UITableViewCell {
             } else {
                 cardValuePointsLabel.isHidden = true
             }
-        case "unauthorised":
+        case .unauthorised:
             if plan.featureSet?.cardType == .link {
                 cardLinkStatusLabel.isHidden = false
                 cardLinkStatusImage.isHidden = false
