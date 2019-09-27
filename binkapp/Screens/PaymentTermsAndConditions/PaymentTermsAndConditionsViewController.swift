@@ -12,9 +12,9 @@ class PaymentTermsAndConditionsViewController: UIViewController {
     @IBOutlet private weak var floatingButtonsContainer: BinkFloatingButtonsView!
     @IBOutlet private weak var textView: UITextView!
     
-    private let viewModel: PaymentTermsAndConditionsViewModel
+    private let viewModel: ReusableModalViewModel
     
-    init(viewModel: PaymentTermsAndConditionsViewModel) {
+    init(viewModel: ReusableModalViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "PaymentTermsAndConditionsViewController", bundle: Bundle(for: PaymentTermsAndConditionsViewController.self))
     }
@@ -25,14 +25,23 @@ class PaymentTermsAndConditionsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setCloseButton()
         floatingButtonsContainer.delegate = self
         textView.delegate = self
-        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 209, right: 0)
+        configureUI()
     }
     
     override func viewDidLayoutSubviews() {
         textView.setContentOffset(.zero, animated: false)
+    }
+    
+    private func configureUI() {
+        setCloseButton()
+        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 209, right: 0)
+        
+        title = viewModel.title
+        textView.attributedText = viewModel.text
+        
+        floatingButtonsContainer.configure(primaryButtonTitle: viewModel.primaryButtonTitle, secondaryButtonTitle: viewModel.secondaryButtonTitle)
     }
 }
 
@@ -40,8 +49,8 @@ class PaymentTermsAndConditionsViewController: UIViewController {
 
 private extension PaymentTermsAndConditionsViewController {
     func setCloseButton() {
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
-        self.navigationItem.setLeftBarButton(closeButton, animated: true)
+//        let closeButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        self.navigationItem.setLeftBarButton(viewModel.tabBarBackButton, animated: true)
     }
     
     @objc func popViewController() {
@@ -53,11 +62,11 @@ private extension PaymentTermsAndConditionsViewController {
 
 extension PaymentTermsAndConditionsViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_: BinkFloatingButtonsView) {
-        viewModel.createCard()
+        viewModel.mainButtonWasTapped()
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_: BinkFloatingButtonsView) {
-        viewModel.toRootViewController()
+        viewModel.secondaryButtonWasTapped()
     }
 }
 
