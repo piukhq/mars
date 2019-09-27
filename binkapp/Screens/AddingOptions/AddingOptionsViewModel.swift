@@ -28,22 +28,12 @@ class AddingOptionsViewModel {
         let screenText = "terms_and_conditions_title".localized + "\n" + "lorem_ipsum".localized
         
         let attributedText = NSMutableAttributedString(string: screenText)
-        
-        attributedText.addAttribute(
-            NSAttributedString.Key.font,
-            value: UIFont.headline,
-            range: NSRange(location: 0, length: ("terms_and_conditions_title".localized).count)
-        )
-        
-        attributedText.addAttribute(
-            NSAttributedString.Key.font,
-            value: UIFont.bodyTextLarge,
-            range: NSRange(location: ("terms_and_conditions_title".localized).count, length: ("lorem_ipsum".localized).count)
-        )
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: ("terms_and_conditions_title".localized).count))
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: ("terms_and_conditions_title".localized).count, length: ("lorem_ipsum".localized).count))
         
         let backButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
         
-        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, mainButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: backButton)
+        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: backButton)
         
         router.toPaymentTermsAndConditionsViewController(configurationModel: configurationModel)
     }

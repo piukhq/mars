@@ -11,19 +11,19 @@ import UIKit
 public struct ReusableModalConfiguration {
     var title: String
     var text: NSMutableAttributedString
-    var mainButtonTitle: String?
+    var primaryButtonTitle: String?
     var mainButtonCompletion: () -> Void?
     var secondaryButtonTitle: String?
     var secondaryButtonCompletion: () -> Void?
     var tabBarBackButton: UIBarButtonItem
     
-    init(title: String = "", text: NSMutableAttributedString, mainButtonTitle: String? = nil, mainButtonCompletion: (() -> Void)? = nil, secondaryButtonTitle: String? = nil, secondaryButtonCompletion: (() -> Void)? = nil, tabBarBackButton: UIBarButtonItem) {
+    init(title: String = "", text: NSMutableAttributedString, primaryButtonTitle: String? = nil, mainButtonCompletion: @escaping (() -> Void) = { }, secondaryButtonTitle: String? = nil, secondaryButtonCompletion: @escaping (() -> Void) = { }, tabBarBackButton: UIBarButtonItem) {
         self.title = title
         self.text = text
-        self.mainButtonTitle = mainButtonTitle
-        self.mainButtonCompletion = mainButtonCompletion ?? {  }
+        self.primaryButtonTitle = primaryButtonTitle
+        self.mainButtonCompletion = mainButtonCompletion
         self.secondaryButtonTitle = secondaryButtonTitle
-        self.secondaryButtonCompletion = secondaryButtonCompletion ?? {  }
+        self.secondaryButtonCompletion = secondaryButtonCompletion
         self.tabBarBackButton = tabBarBackButton
     }
 }
@@ -40,8 +40,8 @@ open class ReusableModalViewModel {
         return configurationModel.text
     }
     
-    var mainButtonTitle: String? {
-        return configurationModel.mainButtonTitle
+    var primaryButtonTitle: String? {
+        return configurationModel.primaryButtonTitle
     }
     
     var mainButtonCompletion: () -> Void? {

@@ -14,7 +14,8 @@ protocol BinkFloatingButtonsViewDelegate {
 }
 
 class BinkFloatingButtonsView: CustomView {
-    @IBOutlet weak var mainButton: BinkGradientButton!
+    @IBOutlet weak var buttonsStackView: UIStackView!
+    @IBOutlet weak var primaryButton: BinkGradientButton!
     @IBOutlet weak var secondaryButton: UIButton!
     var delegate: BinkFloatingButtonsViewDelegate?
     
@@ -23,18 +24,17 @@ class BinkFloatingButtonsView: CustomView {
          setGradientBackground(firstColor: .init(white: 255, alpha: 0), secondColor: .init(white: 255, alpha: 1), orientation: .vertical, roundedCorner: false)
     }
     
-    func configure(mainButtonTitle: String?, secondaryButtonTitle: String?) {
-        if mainButtonTitle != nil {
-            mainButton.setTitle(mainButtonTitle, for: .normal)
-        } else {
-            mainButton.isHidden = true
-        }
-        
-        if secondaryButtonTitle != nil {
-            secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
-        } else {
-            secondaryButton.isHidden = true
-        }
+    func configure(primaryButtonTitle: String?, secondaryButtonTitle: String?) {
+        primaryButton.setTitle(primaryButtonTitle, for: .normal)
+        primaryButton.isHidden = primaryButtonTitle == nil
+
+        secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
+        secondaryButton.isHidden = secondaryButtonTitle == nil
+    }
+    
+    override func configureUI() {
+        buttonsStackView.layer.masksToBounds = false
+        buttonsStackView.clipsToBounds = false
     }
     
     // MARK: - Actions

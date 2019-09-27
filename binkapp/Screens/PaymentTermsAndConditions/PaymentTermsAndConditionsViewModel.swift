@@ -10,7 +10,7 @@ import UIKit
 
 class PaymentTermsAndConditionsViewModel: ReusableModalViewModel {
     
-    override var mainButtonTitle: String? {
+    override var primaryButtonTitle: String? {
         return "accept".localized
     }
     

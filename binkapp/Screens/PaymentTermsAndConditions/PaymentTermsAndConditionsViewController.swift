@@ -41,7 +41,7 @@ class PaymentTermsAndConditionsViewController: UIViewController {
         title = viewModel.title
         textView.attributedText = viewModel.text
         
-        floatingButtonsContainer.configure(mainButtonTitle: viewModel.mainButtonTitle, secondaryButtonTitle: viewModel.secondaryButtonTitle)
+        floatingButtonsContainer.configure(primaryButtonTitle: viewModel.primaryButtonTitle, secondaryButtonTitle: viewModel.secondaryButtonTitle)
     }
 }
 

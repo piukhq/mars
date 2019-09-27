@@ -14,7 +14,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BinkFloatingButtonsView" customModule="binkapp" customModuleProvider="target">
             <connections>
-                <outlet property="mainButton" destination="TW0-ag-wj5" id="Fen-YG-av2"/>
+                <outlet property="buttonsStackView" destination="9yY-3z-uuC" id="aqS-HL-x3T"/>
+                <outlet property="primaryButton" destination="TW0-ag-wj5" id="iTY-27-qke"/>
                 <outlet property="secondaryButton" destination="o06-9p-PuS" id="RUG-Bt-BgP"/>
             </connections>
         </placeholder>
@@ -24,12 +25,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="9yY-3z-uuC">
-                    <rect key="frame" x="57" y="50" width="357" height="119"/>
+                    <rect key="frame" x="85.5" y="50" width="300" height="119"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TW0-ag-wj5" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="357" height="52"/>
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="52"/>
                             <constraints>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="52" id="aVJ-Dh-PW3"/>
+                                <constraint firstAttribute="width" constant="300" id="SEv-w0-AD1"/>
                                 <constraint firstAttribute="height" constant="52" id="wMw-NA-2P1"/>
                             </constraints>
                             <state key="normal" title="Accept"/>
@@ -38,7 +39,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o06-9p-PuS">
-                            <rect key="frame" x="0.0" y="67" width="357" height="52"/>
+                            <rect key="frame" x="0.0" y="67" width="300" height="52"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="52" id="48j-yX-4jY"/>
                                 <constraint firstAttribute="height" constant="52" id="jn4-gZ-wgx"/>
@@ -57,9 +58,8 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="9yY-3z-uuC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="QtZ-zU-muu"/>
-                <constraint firstItem="9yY-3z-uuC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="57" id="bRg-o0-08y"/>
                 <constraint firstAttribute="bottom" secondItem="9yY-3z-uuC" secondAttribute="bottom" constant="40" id="btQ-g9-opT"/>
-                <constraint firstAttribute="trailing" secondItem="9yY-3z-uuC" secondAttribute="trailing" constant="57" id="fcD-zG-51G"/>
+                <constraint firstItem="9yY-3z-uuC" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="sTc-Bw-weS"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="173.18840579710147" y="-145.64732142857142"/>
