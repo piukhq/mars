@@ -60,6 +60,10 @@ private extension LoyaltyCardFullDetailsViewController {
         let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
         fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
+        
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
+        cardDetailsStackView.addArrangedSubview(activityIndicator)
+        activityIndicator.startAnimating()
     }
     
     func configureCardDetails(_ paymentCards: [PaymentCardModel]?) {
@@ -132,7 +136,7 @@ extension LoyaltyCardFullDetailsViewController: FullDetailsBrandHeaderDelegate {
 // MARK: - PointsModuleViewDelegate
 
 extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
-    func binkModuleViewWasTapped(_: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
+    func binkModuleViewWasTapped(moduleView: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
         viewModel.goToScreenForAction(action: action)
     }
 }
@@ -142,6 +146,11 @@ extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
 extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsViewModelDelegate {
     func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel]) {
         DispatchQueue.main.async {
+            [weak self] in
+            guard let self = self else {return}
+            if let activityIndicator = self.cardDetailsStackView.subviews.first {
+                activityIndicator.removeFromSuperview()
+            }
             self.configureCardDetails(paymentCards)
         }
     }

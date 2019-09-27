@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol BinkModuleViewDelegate {
-    func binkModuleViewWasTapped(_: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction)
+protocol BinkModuleViewDelegate: class {
+    func binkModuleViewWasTapped(moduleView: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction)
 }
 
 class BinkModuleView: CustomView {
@@ -18,12 +18,12 @@ class BinkModuleView: CustomView {
     @IBOutlet private weak var subtitleLabel: UILabel!
     
     enum ModuleType: Int {
-        case points = 0
+        case points
         case link
     }
     
     enum BinkModuleAction: Int {
-        case login = 0
+        case login
         case loginChanges
         case transactions
         case loginPending
@@ -39,9 +39,9 @@ class BinkModuleView: CustomView {
     }
     
     private var action: BinkModuleAction?
-    private var delegate: BinkModuleViewDelegate?
+    private weak var delegate: BinkModuleViewDelegate?
     
-    func configure(moduleType:ModuleType, membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, paymentCards: [PaymentCardModel]? = nil, delegate: BinkModuleViewDelegate) {
+    func configure(moduleType:ModuleType, membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, paymentCards: [PaymentCardModel]? = nil, delegate: BinkModuleViewDelegate? = nil) {
         self.delegate = delegate
         layer.shadowColor = UIColor.black.cgColor
         
@@ -59,9 +59,9 @@ class BinkModuleView: CustomView {
     
     // MARK: - Actions
     
-    @IBAction func pointsModuleTapepd(_ sender: Any) {
+    @IBAction func pointsModuleTappedd(_ sender: Any) {
         if let binkModuleAction = action {
-            delegate?.binkModuleViewWasTapped(self, withAction: binkModuleAction)
+            delegate?.binkModuleViewWasTapped(moduleView: self, withAction: binkModuleAction)
         }
     }
 }

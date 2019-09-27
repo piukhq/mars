@@ -98,7 +98,7 @@
         </view>
         <tapGestureRecognizer id="iGT-Me-Tnu">
             <connections>
-                <action selector="pointsModuleTapepd:" destination="-1" id="izI-kz-K86"/>
+                <action selector="pointsModuleTappedd:" destination="-1" id="YSV-cv-4cc"/>
             </connections>
         </tapGestureRecognizer>
     </objects>
