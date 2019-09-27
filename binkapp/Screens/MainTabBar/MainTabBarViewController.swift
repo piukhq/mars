@@ -25,6 +25,8 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupNotifications()
         
         self.title = ""
         setNavigationBar()
@@ -71,5 +73,17 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
         }
         
         return true
+    }
+}
+
+// MARK: - Notifications and Handlers
+
+extension MainTabBarViewController {
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddPaymentCard), name: .didAddPaymentCard, object: nil)
+    }
+
+    @objc private func handleDidAddPaymentCard() {
+        selectedIndex = 2
     }
 }

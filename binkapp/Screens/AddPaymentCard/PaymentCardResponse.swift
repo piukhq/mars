@@ -10,19 +10,13 @@ import Foundation
 
 struct PaymentCardResponse: Codable {
     struct Card: Codable {
-        enum Provider: String, Codable {
-            case Visa
-            case Amex
-            case Mastercard
-        }
-        
         let firstSixDigits: String?
         let lastFourDigits: String?
         let month: Int?
         let year: Int?
         let currencyCode: String?
         let nameOnCard: String?
-        let provider: Provider?
+        let provider: String?
         let type: String?
         
         enum CodingKeys: String, CodingKey {

@@ -82,11 +82,24 @@ class AddPaymentCardViewController: BaseFormViewController {
     // MARK: - Actions
     
     @objc func addButtonTapped() {
-        viewModel.toPaymentTermsAndConditions()
+        viewModel.toPaymentTermsAndConditions(delegate: self)
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
         addButton.isEnabled = fullFormIsValid
+    }
+}
+
+extension AddPaymentCardViewController: PaymentTermsAndConditionsViewControllerDelegate {
+    func paymentTermsAndConditionsViewControllerDidAccept(_ viewController: PaymentTermsAndConditionsViewController) {
+        viewModel.addPaymentCard { [weak self] success in
+            if success {
+                NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
+                self?.viewModel.popToRootViewController()
+            } else {
+                self?.viewModel.displayError()
+            }
+        }
     }
 }
 

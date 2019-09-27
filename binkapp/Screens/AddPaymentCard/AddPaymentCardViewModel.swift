@@ -9,11 +9,12 @@
 import Foundation
 
 struct AddPaymentCardViewModel {
+    private let apiManager: ApiManager
+    private let router: MainScreenRouter
+    private let paymentCard: PaymentCardCreateModel
 
-    let router: MainScreenRouter
-    let paymentCard: PaymentCardCreateModel
-
-    init(router: MainScreenRouter, paymentCard: PaymentCardCreateModel) {
+    init(apiManager: ApiManager, router: MainScreenRouter, paymentCard: PaymentCardCreateModel) {
+        self.apiManager = apiManager
         self.router = router
         self.paymentCard = paymentCard
     }
@@ -43,19 +44,28 @@ struct AddPaymentCardViewModel {
         paymentCard.year = year
     }
 
-    func toPaymentTermsAndConditions() {
-        router.toPaymentTermsAndConditionsViewController()
+    func toPaymentTermsAndConditions(delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
+        router.toPaymentTermsAndConditionsViewController(delegate: delegate)
     }
 
-//    func addPaymentCard() {
-//        guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard) else {
-//            return
-//        }
-//
-//        try? apiManager.doRequest(url: .postPaymentCard, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardResponse) in
-//            //
-//        }, onError: { error in
-//            print(error)
-//        })
-//    }
+    func addPaymentCard(completion: @escaping (Bool) -> Void) {
+        guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard) else {
+            return
+        }
+
+        try? apiManager.doRequest(url: .postPaymentCard, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardResponse) in
+            completion(true)
+        }, onError: { error in
+            print(error)
+            completion(false)
+        })
+    }
+
+    func popToRootViewController() {
+        router.popToRootViewController()
+    }
+
+    func displayError() {
+        router.displaySimplePopup(title: "Oops", message: "Something went wrong.")
+    }
 }

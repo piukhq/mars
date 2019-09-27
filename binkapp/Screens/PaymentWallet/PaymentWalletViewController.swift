@@ -26,6 +26,8 @@ class PaymentWalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshWallet), name: .didAddPaymentCard, object: nil)
+
         refreshControl.addTarget(self, action: #selector(refreshWallet), for: .valueChanged)
         collectionView.addSubview(refreshControl)
         collectionView.alwaysBounceVertical = true

@@ -16,14 +16,12 @@ class MainTabBarViewModel {
         static let iconInsets: CGFloat = 6.0
         static let centerInsets: CGFloat = 8.0
     }
-    
-    let repository: MainTabBarRepository
+
     let router: MainScreenRouter
     
     var childViewControllers = [UIViewController]()
     
-    init(repository: MainTabBarRepository, router: MainScreenRouter) {
-        self.repository = repository
+    init(router: MainScreenRouter) {
         self.router = router
         
         // Tabs

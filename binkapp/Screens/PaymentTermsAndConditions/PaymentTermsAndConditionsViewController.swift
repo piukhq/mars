@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol PaymentTermsAndConditionsViewControllerDelegate: AnyObject {
+    func paymentTermsAndConditionsViewControllerDidAccept(_ viewController: PaymentTermsAndConditionsViewController)
+}
+
 class PaymentTermsAndConditionsViewController: UIViewController {
     @IBOutlet private weak var floatingButtonsContainer: BinkFloatingButtonsView!
     @IBOutlet private weak var textView: UITextView!
+
+    weak var delegate: PaymentTermsAndConditionsViewControllerDelegate?
     
     private let viewModel: PaymentTermsAndConditionsViewModel
     
@@ -53,7 +59,12 @@ private extension PaymentTermsAndConditionsViewController {
 
 extension PaymentTermsAndConditionsViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_: BinkFloatingButtonsView) {
-        viewModel.accept()
+        viewModel.accept { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.delegate?.paymentTermsAndConditionsViewControllerDidAccept(strongSelf)
+        }
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_: BinkFloatingButtonsView) {

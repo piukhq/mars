@@ -17,8 +17,7 @@ class MainScreenRouter {
     }
 
     func toMainScreen() {
-        let repository = MainTabBarRepository()
-        let viewModel = MainTabBarViewModel(repository: repository, router: self)
+        let viewModel = MainTabBarViewModel(router: self)
         let viewController = MainTabBarViewController(viewModel: viewModel)
 
         navController?.pushViewController(viewController, animated: true)
@@ -98,7 +97,7 @@ class MainScreenRouter {
         //TODO: Replace with information from scanner
         let card = PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
 
-        let viewModel = AddPaymentCardViewModel(router: self, paymentCard: card)
+        let viewModel = AddPaymentCardViewModel(apiManager: apiManager, router: self, paymentCard: card)
         let viewController = AddPaymentCardViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
@@ -141,9 +140,10 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPaymentTermsAndConditionsViewController() {
-        let viewModel = PaymentTermsAndConditionsViewModel(apiManager: apiManager, router: self)
+    func toPaymentTermsAndConditionsViewController(delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
+        let viewModel = PaymentTermsAndConditionsViewModel(router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        viewController.delegate = delegate
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
@@ -180,8 +180,8 @@ class MainScreenRouter {
         navController?.popViewController(animated: true)
     }
     
-    func dismissViewController() {
-        navController?.dismiss(animated: true)
+    func dismissViewController(completion: (() -> Void)? = nil) {
+        navController?.dismiss(animated: true, completion: completion)
     }
     
     func popToRootViewController() {

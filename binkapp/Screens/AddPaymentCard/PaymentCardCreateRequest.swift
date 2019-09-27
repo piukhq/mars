@@ -36,7 +36,7 @@ struct PaymentCardCreateRequest: Codable {
         struct Consents: Codable {
             let latitude: Double
             let longitude: Double
-            let timestamp: TimeInterval
+            let timestamp: Int
             let type: Int
         }
         
@@ -73,8 +73,9 @@ struct PaymentCardCreateRequest: Codable {
             year: year,
             fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month))
         )
-        
-        account = Account(consents: [Account.Consents(latitude: 0.0, longitude: 0.0, timestamp: Date().timeIntervalSince1970, type: 0)])
+
+        let timestamp = Date().timeIntervalSince1970
+        account = Account(consents: [Account.Consents(latitude: 0.0, longitude: 0.0, timestamp: Int(timestamp), type: 0)])
     }
     
     private static func fakeFingerprint(pan: String, expiryYear: String, expiryMonth: String) -> String {

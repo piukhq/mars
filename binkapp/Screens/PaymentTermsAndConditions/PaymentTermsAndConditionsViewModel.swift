@@ -9,18 +9,16 @@
 import Foundation
 
 class PaymentTermsAndConditionsViewModel {
-    let apiManager: ApiManager
     private let router: MainScreenRouter
     
-    init(apiManager: ApiManager, router: MainScreenRouter) {
-        self.apiManager = apiManager
+    init(router: MainScreenRouter) {
         self.router = router
     }
     
     // MARK: - Public methods
     
-    func accept() {
-        router.dismissViewController()
+    func accept(completion: @escaping () -> Void) {
+        router.dismissViewController(completion: completion)
     }
 
     func decline() {
