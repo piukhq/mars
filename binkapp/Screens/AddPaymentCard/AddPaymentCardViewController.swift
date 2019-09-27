@@ -92,11 +92,13 @@ class AddPaymentCardViewController: BaseFormViewController {
 
 extension AddPaymentCardViewController: PaymentTermsAndConditionsViewControllerDelegate {
     func paymentTermsAndConditionsViewControllerDidAccept(_ viewController: PaymentTermsAndConditionsViewController) {
+        addButton.startLoading()
         viewModel.addPaymentCard { [weak self] success in
             if success {
                 NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
                 self?.viewModel.popToRootViewController()
             } else {
+                self?.addButton.stopLoading()
                 self?.viewModel.displayError()
             }
         }

@@ -16,6 +16,11 @@ class BinkGradientButton: UIButton {
         return gradient
     }()
 
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .white)
+        return activityIndicator
+    }()
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setTitleColor(.white, for: .normal)
@@ -42,12 +47,33 @@ class BinkGradientButton: UIButton {
             
             layer.insertSublayer(shadowLayer, at: 0)
         }
+
+        setupActivityIndicator()
     }
     
     override var isEnabled: Bool {
         didSet {
             gradientLayer.opacity = isEnabled ? 1.0 : 0.5
         }
+    }
+
+    func startLoading() {
+        titleLabel?.alpha = 0.0
+        activityIndicator.startAnimating()
+    }
+
+    func stopLoading() {
+        titleLabel?.alpha = 1.0
+        activityIndicator.stopAnimating()
+    }
+
+    private func setupActivityIndicator() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(activityIndicator)
+        NSLayoutConstraint.activate([
+            activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
     }
     
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
