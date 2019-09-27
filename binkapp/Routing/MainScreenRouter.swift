@@ -125,8 +125,14 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPaymentTermsAndConditionsViewController() {
-        let viewModel = PaymentTermsAndConditionsViewModel(router: self)
+    func toPaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration) {
+        let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel, router: self)
+        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
+    func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
+        let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }

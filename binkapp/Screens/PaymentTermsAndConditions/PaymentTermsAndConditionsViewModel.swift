@@ -6,27 +6,23 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-class PaymentTermsAndConditionsViewModel {
-    private let router: MainScreenRouter
+class PaymentTermsAndConditionsViewModel: ReusableModalViewModel {
     
-    
-    init(router: MainScreenRouter) {
-        self.router = router
+    override var primaryButtonTitle: String? {
+        return "accept".localized
     }
     
-    // MARK: - Public methods
-    
-    func toRootViewController()  {
-        router.popToRootViewController()
+    override var secondaryButtonTitle: String? {
+        return "decline".localized
     }
     
-    func popViewController()  {
-        router.popViewController()
-    }
-    
-    func createCard() {
+    override func mainButtonWasTapped() {
         router.displaySimplePopup(title: "error".localized, message: "to_be_implemented_message".localized)
+    }
+    
+    override func secondaryButtonWasTapped() {
+        router.popViewController()
     }
 }

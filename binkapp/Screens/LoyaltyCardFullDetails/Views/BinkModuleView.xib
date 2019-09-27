@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -16,7 +15,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PointsModuleView" customModule="binkapp" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BinkModuleView" customModule="binkapp" customModuleProvider="target">
             <connections>
                 <outlet property="moduleImageView" destination="odm-Iu-Gpd" id="17I-uQ-Xdf"/>
                 <outlet property="subtitleLabel" destination="xyg-pt-TkQ" id="O7x-Hk-9a8"/>
@@ -38,14 +37,14 @@
                                 <constraint firstAttribute="height" constant="44" id="kW6-bb-osi"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldC-Xf-tYd">
-                            <rect key="frame" x="20" y="69" width="45.5" height="25"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldC-Xf-tYd">
+                            <rect key="frame" x="20" y="69" width="150" height="0.0"/>
                             <fontDescription key="fontDescription" name="NunitoSans-ExtraBold" family="Nunito Sans" pointSize="18"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xyg-pt-TkQ">
-                            <rect key="frame" x="20" y="94" width="43" height="25"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xyg-pt-TkQ">
+                            <rect key="frame" x="20" y="69" width="150" height="0.0"/>
                             <fontDescription key="fontDescription" name="NunitoSans-Light" family="Nunito Sans" pointSize="18"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -56,8 +55,11 @@
                     <constraints>
                         <constraint firstItem="odm-Iu-Gpd" firstAttribute="top" secondItem="DPZ-Et-OHc" secondAttribute="top" constant="20" id="2Jb-4l-k0m"/>
                         <constraint firstItem="xyg-pt-TkQ" firstAttribute="leading" secondItem="DPZ-Et-OHc" secondAttribute="leading" constant="20" id="AA4-bC-z0m"/>
+                        <constraint firstAttribute="trailing" secondItem="xyg-pt-TkQ" secondAttribute="trailing" constant="5" id="Chf-w8-tGJ"/>
+                        <constraint firstItem="xyg-pt-TkQ" firstAttribute="top" secondItem="ldC-Xf-tYd" secondAttribute="bottom" id="K5m-qr-2hb"/>
                         <constraint firstItem="xyg-pt-TkQ" firstAttribute="top" secondItem="ldC-Xf-tYd" secondAttribute="bottom" id="MDl-Er-PcT"/>
                         <constraint firstItem="ldC-Xf-tYd" firstAttribute="top" secondItem="odm-Iu-Gpd" secondAttribute="bottom" constant="5" id="UPb-0g-mQN"/>
+                        <constraint firstAttribute="trailing" secondItem="ldC-Xf-tYd" secondAttribute="trailing" constant="5" id="V7l-qB-6nA"/>
                         <constraint firstItem="ldC-Xf-tYd" firstAttribute="leading" secondItem="DPZ-Et-OHc" secondAttribute="leading" constant="20" id="VSp-0U-MOj"/>
                         <constraint firstItem="odm-Iu-Gpd" firstAttribute="leading" secondItem="DPZ-Et-OHc" secondAttribute="leading" constant="20" id="w6R-wS-pvd"/>
                     </constraints>
@@ -96,7 +98,7 @@
         </view>
         <tapGestureRecognizer id="iGT-Me-Tnu">
             <connections>
-                <action selector="pointsModuleTapepd:" destination="-1" id="izI-kz-K86"/>
+                <action selector="pointsModuleTappedd:" destination="-1" id="YSV-cv-4cc"/>
             </connections>
         </tapGestureRecognizer>
     </objects>

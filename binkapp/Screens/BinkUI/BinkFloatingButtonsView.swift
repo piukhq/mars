@@ -14,11 +14,27 @@ protocol BinkFloatingButtonsViewDelegate {
 }
 
 class BinkFloatingButtonsView: CustomView {
+    @IBOutlet weak var buttonsStackView: UIStackView!
+    @IBOutlet weak var primaryButton: BinkGradientButton!
+    @IBOutlet weak var secondaryButton: UIButton!
     var delegate: BinkFloatingButtonsViewDelegate?
     
     override func layoutSubviews() {
         super.layoutSubviews()
          setGradientBackground(firstColor: .init(white: 255, alpha: 0), secondColor: .init(white: 255, alpha: 1), orientation: .vertical, roundedCorner: false)
+    }
+    
+    func configure(primaryButtonTitle: String?, secondaryButtonTitle: String?) {
+        primaryButton.setTitle(primaryButtonTitle, for: .normal)
+        primaryButton.isHidden = primaryButtonTitle == nil
+
+        secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
+        secondaryButton.isHidden = secondaryButtonTitle == nil
+    }
+    
+    override func configureUI() {
+        buttonsStackView.layer.masksToBounds = false
+        buttonsStackView.clipsToBounds = false
     }
     
     // MARK: - Actions
