@@ -29,11 +29,10 @@ class BinkGradientButton: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        backgroundColor = .white
+
         processGradient(.binkPurple, .blueAccent)
+
         let halfOfButtonHeight = layer.frame.height / 2
-        
         if shadowLayer == nil {
             shadowLayer = CAShapeLayer()
             shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: halfOfButtonHeight).cgPath
@@ -47,6 +46,9 @@ class BinkGradientButton: UIButton {
             
             layer.insertSublayer(shadowLayer, at: 0)
         }
+
+        backgroundColor = .white
+        layer.cornerRadius = halfOfButtonHeight
 
         setupActivityIndicator()
     }
