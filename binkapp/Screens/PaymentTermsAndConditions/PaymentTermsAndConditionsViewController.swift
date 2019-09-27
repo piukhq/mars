@@ -45,7 +45,7 @@ private extension PaymentTermsAndConditionsViewController {
     }
     
     @objc func popViewController() {
-        viewModel.popViewController()
+        viewModel.close()
     }
 }
 
@@ -53,11 +53,11 @@ private extension PaymentTermsAndConditionsViewController {
 
 extension PaymentTermsAndConditionsViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_: BinkFloatingButtonsView) {
-        viewModel.createCard()
+        viewModel.accept()
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_: BinkFloatingButtonsView) {
-        viewModel.toRootViewController()
+        viewModel.decline()
     }
 }
 

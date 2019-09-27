@@ -10,7 +10,6 @@ import UIKit
 
 class MainScreenRouter {
     var navController: PortraitNavigationController?
-    
     let apiManager = ApiManager()
     
     init() {
@@ -99,7 +98,8 @@ class MainScreenRouter {
         //TODO: Replace with information from scanner
         let card = PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
 
-        let viewController = AddPaymentCardViewController(model: card)
+        let viewModel = AddPaymentCardViewModel(router: self, paymentCard: card)
+        let viewController = AddPaymentCardViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
 
@@ -142,9 +142,9 @@ class MainScreenRouter {
     }
     
     func toPaymentTermsAndConditionsViewController() {
-        let viewModel = PaymentTermsAndConditionsViewModel(router: self)
+        let viewModel = PaymentTermsAndConditionsViewModel(apiManager: apiManager, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
+        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
     func toSimpleInfoViewController(pendingType: PendingType) {

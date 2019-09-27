@@ -10,8 +10,7 @@ import UIKit
 import Keys
 
 class AddPaymentCardViewController: BaseFormViewController {
-    
-    private let model: PaymentCardCreateModel
+    private let viewModel: AddPaymentCardViewModel
     private let temp = TemporaryReactiveView()
     
     private struct Constants {
@@ -35,15 +34,9 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     // MARK: - Initialisation
     
-    init(model: PaymentCardCreateModel) {
-        self.model = model
-        let dataSource = FormDataSource(model)
-        super.init(
-            title: "Add payment card",
-            description: "Enter your details below to add your payment card into Bink.",
-            dataSource: dataSource
-        )
-        
+    init(viewModel: AddPaymentCardViewModel) {
+        self.viewModel = viewModel
+        super.init(title: "Add payment card", description: "Enter your details below to add your payment card into Bink.", dataSource: viewModel.formDataSource)
         dataSource.delegate = self
     }
     
@@ -53,6 +46,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         configureLayout()
         stackScrollView.insert(arrangedSubview: temp, atIndex: 0, customSpacing: Constants.cardPadding)
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "Privacy and security"), hyperlinkButton(title: "More information")])
@@ -88,19 +82,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     // MARK: - Actions
     
     @objc func addButtonTapped() {
-        guard let paymentCreateRequest = PaymentCardCreateRequest(model: self.model) else { return }
-        
-        let api = ApiManager()
-        
-        do {
-            try api.doRequest(url: .postPaymentCard, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardResponse) in
-                
-            }, onError: { error in
-                print(error)
-            })
-        } catch {
-            
-        }
+        viewModel.toPaymentTermsAndConditions()
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
@@ -116,7 +98,10 @@ extension AddPaymentCardViewController: URLSessionDelegate {
 
 extension AddPaymentCardViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
-        if let type = self.model.cardType, let newValue = newValue, let text = textField.text, field.fieldType == .cardNumber  {
+        if let type = viewModel.paymentCardType,
+            let newValue = newValue,
+            let text = textField.text,
+            field.fieldType == .cardNumber  {
             
             /*
              Potentially "needlessly" complex, but the below will insert whitespace to format card numbers correctly according
@@ -165,22 +150,24 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField) {
         if field.fieldType == .cardNumber {
             let type = PaymentCardType.type(from: value)
-            self.model.cardType = type
-            self.model.fullPan = value
+            viewModel.setPaymentCardType(type)
+            viewModel.setPaymentCardFullPan(value)
             temp.update(with: type)
         }
         
         if field.fieldType == .text {
-            self.model.nameOnCard = value
+            viewModel.setPaymentCardName(value)
         }
     }
     
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {
         // For mapping to the payment card expiry fields, we only care if we have BOTH
         guard options.count > 1 else { return }
-        
-        if let month = options.first as? Int { self.model.month = month }
-        if let year = options.last as? Int { self.model.year = year }
+
+        let month = options.first as? Int
+        let year = options.last as? Int
+
+        viewModel.setPaymentCardExpiry(month: month, year: year)
     }
 }
 

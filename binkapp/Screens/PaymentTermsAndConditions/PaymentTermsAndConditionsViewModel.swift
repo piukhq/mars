@@ -9,24 +9,25 @@
 import Foundation
 
 class PaymentTermsAndConditionsViewModel {
+    let apiManager: ApiManager
     private let router: MainScreenRouter
     
-    
-    init(router: MainScreenRouter) {
+    init(apiManager: ApiManager, router: MainScreenRouter) {
+        self.apiManager = apiManager
         self.router = router
     }
     
     // MARK: - Public methods
     
-    func toRootViewController()  {
-        router.popToRootViewController()
+    func accept() {
+        router.dismissViewController()
     }
-    
-    func popViewController()  {
-        router.popViewController()
+
+    func decline() {
+        close()
     }
-    
-    func createCard() {
-        router.displaySimplePopup(title: "error".localized, message: "to_be_implemented_message".localized)
+
+    func close() {
+        router.dismissViewController()
     }
 }
