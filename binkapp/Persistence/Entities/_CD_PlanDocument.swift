@@ -7,7 +7,6 @@ import CoreData
 public enum CD_PlanDocumentAttributes: String {
     case checkbox = "checkbox"
     case documentDescription = "documentDescription"
-    case id = "id"
     case name = "name"
     case url = "url"
 }
@@ -16,15 +15,15 @@ public enum CD_PlanDocumentRelationships: String {
     case planAccount = "planAccount"
 }
 
-open class _CD_PlanDocument: NSManagedObject {
+open class _CD_PlanDocument: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_PlanDocument"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -51,9 +50,6 @@ open class _CD_PlanDocument: NSManagedObject {
 
     @NSManaged open
     var documentDescription: String?
-
-    @NSManaged open
-    var id: String!
 
     @NSManaged open
     var name: String?

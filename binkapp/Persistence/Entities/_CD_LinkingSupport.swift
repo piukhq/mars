@@ -5,7 +5,6 @@ import Foundation
 import CoreData
 
 public enum CD_LinkingSupportAttributes: String {
-    case id = "id"
     case value = "value"
 }
 
@@ -13,15 +12,15 @@ public enum CD_LinkingSupportRelationships: String {
     case featureSet = "featureSet"
 }
 
-open class _CD_LinkingSupport: NSManagedObject {
+open class _CD_LinkingSupport: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_LinkingSupport"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -42,9 +41,6 @@ open class _CD_LinkingSupport: NSManagedObject {
     }
 
     // MARK: - Properties
-
-    @NSManaged open
-    var id: String!
 
     @NSManaged open
     var value: String?

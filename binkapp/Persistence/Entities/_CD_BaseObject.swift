@@ -1,32 +1,27 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to CD_Tier.swift instead.
+// Make changes to CD_BaseObject.swift instead.
 
 import Foundation
 import CoreData
 
-public enum CD_TierAttributes: String {
-    case name = "name"
-    case tierDescription = "tierDescription"
+public enum CD_BaseObjectAttributes: String {
+    case id = "id"
 }
 
-public enum CD_TierRelationships: String {
-    case planAccount = "planAccount"
-}
-
-open class _CD_Tier: CD_BaseObject {
+open class _CD_BaseObject: NSManagedObject {
 
     // MARK: - Class methods
 
-    override open class func entityName () -> String {
-        return "CD_Tier"
+    open class func entityName () -> String {
+        return "CD_BaseObject"
     }
 
-    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
     @nonobjc
-    open class func fetchRequest() -> NSFetchRequest<CD_Tier> {
+    open class func fetchRequest() -> NSFetchRequest<CD_BaseObject> {
         return NSFetchRequest(entityName: self.entityName())
     }
 
@@ -37,22 +32,16 @@ open class _CD_Tier: CD_BaseObject {
     }
 
     public convenience init?(managedObjectContext: NSManagedObjectContext) {
-        guard let entity = _CD_Tier.entity(managedObjectContext: managedObjectContext) else { return nil }
+        guard let entity = _CD_BaseObject.entity(managedObjectContext: managedObjectContext) else { return nil }
         self.init(entity: entity, insertInto: managedObjectContext)
     }
 
     // MARK: - Properties
 
     @NSManaged open
-    var name: String?
-
-    @NSManaged open
-    var tierDescription: String?
+    var id: String!
 
     // MARK: - Relationships
-
-    @NSManaged open
-    var planAccount: CD_MembershipPlanAccount?
 
 }
 

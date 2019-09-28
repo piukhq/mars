@@ -8,7 +8,6 @@ public enum CD_CardAttributes: String {
     case barcode = "barcode"
     case barcodeType = "barcodeType"
     case colour = "colour"
-    case id = "id"
     case membershipId = "membershipId"
 }
 
@@ -16,15 +15,15 @@ public enum CD_CardRelationships: String {
     case membershipCard = "membershipCard"
 }
 
-open class _CD_Card: NSManagedObject {
+open class _CD_Card: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_Card"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -54,9 +53,6 @@ open class _CD_Card: NSManagedObject {
 
     @NSManaged open
     var colour: String?
-
-    @NSManaged open
-    var id: String!
 
     @NSManaged open
     var membershipId: String?

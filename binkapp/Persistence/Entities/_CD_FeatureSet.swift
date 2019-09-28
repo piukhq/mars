@@ -9,7 +9,6 @@ public enum CD_FeatureSetAttributes: String {
     case cardType = "cardType"
     case digitalOnly = "digitalOnly"
     case hasPoints = "hasPoints"
-    case id = "id"
     case transactionsAvailable = "transactionsAvailable"
 }
 
@@ -18,15 +17,15 @@ public enum CD_FeatureSetRelationships: String {
     case plan = "plan"
 }
 
-open class _CD_FeatureSet: NSManagedObject {
+open class _CD_FeatureSet: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_FeatureSet"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -59,9 +58,6 @@ open class _CD_FeatureSet: NSManagedObject {
 
     @NSManaged open
     var hasPoints: NSNumber?
-
-    @NSManaged open
-    var id: String!
 
     @NSManaged open
     var transactionsAvailable: NSNumber?

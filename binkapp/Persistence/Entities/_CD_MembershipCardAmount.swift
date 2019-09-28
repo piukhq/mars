@@ -6,7 +6,6 @@ import CoreData
 
 public enum CD_MembershipCardAmountAttributes: String {
     case currency = "currency"
-    case id = "id"
     case prefix = "prefix"
     case suffix = "suffix"
     case value = "value"
@@ -16,15 +15,15 @@ public enum CD_MembershipCardAmountRelationships: String {
     case transaction = "transaction"
 }
 
-open class _CD_MembershipCardAmount: NSManagedObject {
+open class _CD_MembershipCardAmount: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_MembershipCardAmount"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -48,9 +47,6 @@ open class _CD_MembershipCardAmount: NSManagedObject {
 
     @NSManaged open
     var currency: String?
-
-    @NSManaged open
-    var id: String!
 
     @NSManaged open
     var prefix: String?

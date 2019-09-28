@@ -7,7 +7,6 @@ import CoreData
 public enum CD_RegistrationFieldAttributes: String {
     case column = "column"
     case fieldDescription = "fieldDescription"
-    case id = "id"
     case type = "type"
 }
 
@@ -15,15 +14,15 @@ public enum CD_RegistrationFieldRelationships: String {
     case planAccount = "planAccount"
 }
 
-open class _CD_RegistrationField: NSManagedObject {
+open class _CD_RegistrationField: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_RegistrationField"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -50,9 +49,6 @@ open class _CD_RegistrationField: NSManagedObject {
 
     @NSManaged open
     var fieldDescription: String?
-
-    @NSManaged open
-    var id: String!
 
     @NSManaged open
     var type: NSNumber?

@@ -5,7 +5,6 @@ import Foundation
 import CoreData
 
 public enum CD_MembershipPlanAttributes: String {
-    case id = "id"
     case status = "status"
 }
 
@@ -17,15 +16,15 @@ public enum CD_MembershipPlanRelationships: String {
     case membershipCards = "membershipCards"
 }
 
-open class _CD_MembershipPlan: NSManagedObject {
+open class _CD_MembershipPlan: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_MembershipPlan"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -46,9 +45,6 @@ open class _CD_MembershipPlan: NSManagedObject {
     }
 
     // MARK: - Properties
-
-    @NSManaged open
-    var id: String!
 
     @NSManaged open
     var status: String?

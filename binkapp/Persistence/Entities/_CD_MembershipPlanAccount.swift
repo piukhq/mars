@@ -11,7 +11,6 @@ public enum CD_MembershipPlanAccountAttributes: String {
     case companyURL = "companyURL"
     case enrolIncentive = "enrolIncentive"
     case forgottenPasswordUrl = "forgottenPasswordUrl"
-    case id = "id"
     case planDescription = "planDescription"
     case planName = "planName"
     case planNameCard = "planNameCard"
@@ -30,15 +29,15 @@ public enum CD_MembershipPlanAccountRelationships: String {
     case tiers = "tiers"
 }
 
-open class _CD_MembershipPlanAccount: NSManagedObject {
+open class _CD_MembershipPlanAccount: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_MembershipPlanAccount"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -77,9 +76,6 @@ open class _CD_MembershipPlanAccount: NSManagedObject {
 
     @NSManaged open
     var forgottenPasswordUrl: String?
-
-    @NSManaged open
-    var id: String!
 
     @NSManaged open
     var planDescription: String?

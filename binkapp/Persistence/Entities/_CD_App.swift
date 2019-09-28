@@ -8,18 +8,17 @@ public enum CD_AppAttributes: String {
     case appId = "appId"
     case appStoreUrl = "appStoreUrl"
     case appType = "appType"
-    case id = "id"
 }
 
-open class _CD_App: NSManagedObject {
+open class _CD_App: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_App"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -49,9 +48,6 @@ open class _CD_App: NSManagedObject {
 
     @NSManaged open
     var appType: NSNumber?
-
-    @NSManaged open
-    var id: String!
 
     // MARK: - Relationships
 
