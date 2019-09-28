@@ -86,19 +86,20 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: BrandTableViewCell = tableView.dequeue(indexPath: indexPath)
         
-        let membershipPlan: MembershipPlanModel = viewModel.getMembershipPlan(for: indexPath)
+        let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
         
         if let brandName = membershipPlan.account?.companyName {
-            let imageUrl = membershipPlan.images?.first(where: {$0.type == ImageType.icon.rawValue})?.url
+            let imageUrlString = membershipPlan.firstIconImage()?.url
+
             switch indexPath.section {
             case 0:
-                cell.configure(imageURL: imageUrl, brandName: brandName, description: true)
+                cell.configure(imageURL: imageUrlString, brandName: brandName, description: true)
                 if indexPath.row == viewModel.getPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }
                 break
             case 1:
-                cell.configure(imageURL: imageUrl, brandName: brandName)
+                cell.configure(imageURL: imageUrlString, brandName: brandName)
                 if indexPath.row == viewModel.getNonPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }

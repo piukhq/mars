@@ -23,19 +23,19 @@ enum FieldInputType: Int {
 class AuthAndAddViewModel {
     private let repository: AuthAndAddRepository
     private let router: MainScreenRouter
-    private let membershipPlan: MembershipPlanModel
+    private let membershipPlan: CD_MembershipPlan
     
     private var fieldsViews: [InputValidation] = []
     private var membershipCard: MembershipCardPostModel?
     
-    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: MembershipPlanModel) {
+    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan) {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
-        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: membershipPlan.apiId ?? 0) // Tech debt
+//        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: membershipPlan.id ?? 0) // Tech debt
     }
     
-    func getMembershipPlan() -> MembershipPlanModel {
+    func getMembershipPlan() -> CD_MembershipPlan {
         return membershipPlan
     }
     
@@ -64,22 +64,22 @@ class AuthAndAddViewModel {
     
     func populateStackView(stackView: UIStackView) {
         var checkboxes: [CheckboxView] = []
-        if let addFields = membershipPlan.account?.addFields {
+        if let addFields = membershipPlan.account?.formattedAddFields {
             for field in addFields {
-                switch field.type {
-                    case FieldInputType.textfield.rawValue:
+                switch field.fieldInputType {
+                    case .textfield:
                         let view = LoginTextFieldView()
                         view.configure(title: field.column ?? "", placeholder: field.fieldDescription, validationRegEx: field.validation ?? "", fieldType: .add, delegate: self)
                         fieldsViews.append(view)
-                    case FieldInputType.password.rawValue:
+                    case .password:
                         let view = LoginTextFieldView()
                         view.configure(title: field.column ?? "", placeholder: field.fieldDescription, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .add, delegate: self)
                         fieldsViews.append(view)
-                    case FieldInputType.dropdown.rawValue:
+                    case .dropdown:
                         let view = DropdownView()
-//                        view.configure(title: field.column ?? "", choices: field.choices ?? [], fieldType: .add, delegate: self)
+                        view.configure(title: field.column ?? "", choices: field.choicesArray ?? [], fieldType: .add, delegate: self)
                         fieldsViews.append(view)
-                    case FieldInputType.checkbox.rawValue:
+                    case .checkbox:
                         let view = CheckboxView()
                         view.configure(title: field.fieldDescription ?? "", fieldType: .add)
                         checkboxes.append(view)
@@ -88,22 +88,22 @@ class AuthAndAddViewModel {
             }
         }
         
-        if let authoriseFields = membershipPlan.account?.authoriseFields {
+        if let authoriseFields = membershipPlan.account?.formattedAuthFields {
             for field in authoriseFields {
-                switch field.type {
-                case FieldInputType.textfield.rawValue:
+                switch field.fieldInputType {
+                case .textfield:
                     let view = LoginTextFieldView()
                     view.configure(title: field.column ?? "", placeholder: field.fieldDescription, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
                     fieldsViews.append(view)
-                case FieldInputType.password.rawValue:
+                case .password:
                     let view = LoginTextFieldView()
                     view.configure(title: field.column ?? "", placeholder: field.fieldDescription, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
                     fieldsViews.append(view)
-                case FieldInputType.dropdown.rawValue:
+                case .dropdown:
                     let view = DropdownView()
-//                    view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .authorise, delegate: self)
+                    view.configure(title: field.column ?? "", choices: field.choicesArray ?? [], fieldType: .authorise, delegate: self)
                     fieldsViews.append(view)
-                case FieldInputType.checkbox.rawValue:
+                case .checkbox:
                     let view = CheckboxView()
                     view.configure(title: field.fieldDescription ?? "", fieldType: .authorise)
                     checkboxes.append(view)

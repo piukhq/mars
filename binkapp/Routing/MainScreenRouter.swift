@@ -108,7 +108,7 @@ class MainScreenRouter {
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: completion)
     }
     
-    func toAddOrJoinViewController(membershipPlan: MembershipPlanModel) {
+    func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan) {
         let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, router: self)
         let viewController = AddOrJoinViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
@@ -121,7 +121,7 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toAuthAndAddViewController(membershipPlan: MembershipPlanModel) {
+    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan) {
         let repository = AuthAndAddRepository(apiManager: apiManager)
         let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
