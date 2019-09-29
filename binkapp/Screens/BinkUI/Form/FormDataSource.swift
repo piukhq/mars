@@ -18,12 +18,10 @@ protocol FormDataSourceDelegate:NSObjectProtocol {
 extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField) {}
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {}
-//    func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool { return true }
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {}
 }
 
-class FormDataSource: NSObject, UICollectionViewDataSource {
-    
+class FormDataSource: NSObject {
     private struct Constants {
         static let expiryYearsInTheFuture = 50
     }
@@ -31,6 +29,16 @@ class FormDataSource: NSObject, UICollectionViewDataSource {
     private(set) var fields = [FormField]()
     weak var delegate: FormDataSourceDelegate?
     
+    func currentFieldValues() -> [String: String] {
+        var values = [String: String]()
+        fields.forEach { values[$0.title] = $0.value }
+        
+        return values
+    }
+}
+
+// MARK: - Add Payment Card
+extension FormDataSource {
     convenience init(_ paymentCardModel: PaymentCardCreateModel, delegate: FormDataSourceDelegate? = nil) {
         self.init()
         self.delegate = delegate
@@ -59,7 +67,7 @@ class FormDataSource: NSObject, UICollectionViewDataSource {
         }
         
         // Card Number
-
+        
         let cardNumberField = FormField(
             title: "Card number",
             placeholder: "xxxx xxxx xxxx xxxx",
@@ -100,7 +108,72 @@ class FormDataSource: NSObject, UICollectionViewDataSource {
         
         fields = [cardNumberField, expiryField, nameOnCardField]
     }
+}
+
+// MARK: - Add And Auth
+extension FormDataSource {
+    convenience init(authAdd membershipPlan: CD_MembershipPlan, delegate: FormDataSourceDelegate? = nil) {
+        self.init()
+        self.delegate = delegate
+        setupFields(with: membershipPlan)
+    }
     
+    private func setupFields<T>(with model: T) where T: CD_MembershipPlan {
+        let updatedBlock: FormField.ValueUpdatedBlock = { [weak self] field, newValue in
+            guard let self = self else { return }
+            self.delegate?.formDataSource(self, changed: newValue, for: field)
+        }
+        
+        let shouldChangeBlock: FormField.TextFieldShouldChange = { [weak self] (field, textField, range, newValue) in
+            guard let self = self, let delegate = self.delegate else { return true }
+            return delegate.formDataSource(self, textField: textField, shouldChangeTo: newValue, in: range, for: field)
+        }
+        
+        let pickerUpdatedBlock: FormField.PickerUpdatedBlock = { [weak self] field, options in
+            guard let self = self else { return }
+            self.delegate?.formDataSource(self, selected: options, for: field)
+        }
+        
+        let fieldExitedBlock: FormField.FieldExitedBlock = { [weak self] field in
+            guard let self = self else { return }
+            self.delegate?.formDataSource(self, fieldDidExit: field)
+        }
+        
+        model.account?.formattedAddFields?.forEach { field in
+            fields.append(
+                FormField(
+                    title: field.column ?? "",
+                    placeholder: field.fieldDescription ?? "",
+                    validation: field.validation,
+                    fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, choices: field.choicesArray),
+                    updated: updatedBlock,
+                    shouldChange: shouldChangeBlock,
+                    fieldExited: fieldExitedBlock,
+                    pickerSelected: pickerUpdatedBlock,
+                    columnKind: .add
+                )
+            )
+        }
+        
+        model.account?.formattedAuthFields?.forEach { field in
+            fields.append(
+                FormField(
+                    title: field.column ?? "",
+                    placeholder: field.fieldDescription ?? "",
+                    validation: field.validation,
+                    fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, choices: field.choicesArray),
+                    updated: updatedBlock,
+                    shouldChange: shouldChangeBlock,
+                    fieldExited: fieldExitedBlock,
+                    pickerSelected: pickerUpdatedBlock,
+                    columnKind: .auth
+                )
+            )
+        }
+    }
+}
+
+extension FormDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return fields.count
     }

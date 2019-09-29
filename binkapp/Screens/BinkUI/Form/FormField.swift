@@ -53,11 +53,39 @@ class FormField {
         func autoCorrection() -> UITextAutocorrectionType {
             return .no
         }
+        
+        static func fieldInputType(for simpleFieldInputType: InputType?, choices: [String]? = nil) -> FieldInputType {
+            switch simpleFieldInputType {
+            case .textfield:
+                return .text
+            case .password:
+                return .sensitive
+            case .checkbox:
+                return .checkbox
+            case .dropdown:
+                if let choices = choices {
+                    let data = choices.compactMap { FormPickerData($0) }
+                    return .choice(data: data)
+                } else {
+                    return .choice(data: [])
+                }
+            case .none:
+                return .text
+            }
+        }
+    }
+    
+    enum ColumnKind {
+        case add
+        case auth
+        case enrol
+        case register
     }
     
     let title: String
     let placeholder: String
     let validation: String?
+    let columnKind: ColumnKind?
     let fieldType: FieldInputType
     let valueUpdated: ValueUpdatedBlock
     let fieldExited: FieldExitedBlock
@@ -70,7 +98,7 @@ class FormField {
     typealias TextFieldShouldChange = (FormField, UITextField, NSRange, String?) -> (Bool)
     typealias FieldExitedBlock = (FormField) -> ()
         
-    init(title: String, placeholder: String, validation: String?, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil) {
+    init(title: String, placeholder: String, validation: String?, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation
@@ -80,6 +108,7 @@ class FormField {
         self.shouldChange = shouldChange
         self.fieldExited = fieldExited
         self.pickerOptionsUpdated = pickerSelected
+        self.columnKind = columnKind
     }
     
     func isValid() -> Bool {

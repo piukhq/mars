@@ -66,6 +66,7 @@ class BaseFormViewController: UIViewController, Form {
     private lazy var maskingView: UIView = {
         let maskingView = UIView()
         maskingView.translatesAutoresizingMaskIntoConstraints = false
+        maskingView.isUserInteractionEnabled = false
         maskingView.backgroundColor = .white
         view.addSubview(maskingView)
         return maskingView
