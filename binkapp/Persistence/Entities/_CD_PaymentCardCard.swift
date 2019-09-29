@@ -1,27 +1,31 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to CD_MembershipCardImage.swift instead.
+// Make changes to CD_PaymentCardCard.swift instead.
 
 import Foundation
 import CoreData
 
-public enum CD_MembershipCardImageAttributes: String {
-    case encoding = "encoding"
-    case imageDescription = "imageDescription"
+public enum CD_PaymentCardCardAttributes: String {
+    case country = "country"
+    case currencyCode = "currencyCode"
+    case firstSix = "firstSix"
+    case lastFour = "lastFour"
+    case month = "month"
+    case nameOnCard = "nameOnCard"
+    case provider = "provider"
     case type = "type"
-    case url = "url"
+    case year = "year"
 }
 
-public enum CD_MembershipCardImageRelationships: String {
-    case card = "card"
+public enum CD_PaymentCardCardRelationships: String {
     case paymentCard = "paymentCard"
 }
 
-open class _CD_MembershipCardImage: CD_BaseObject {
+open class _CD_PaymentCardCard: CD_BaseObject {
 
     // MARK: - Class methods
 
     override open class func entityName () -> String {
-        return "CD_MembershipCardImage"
+        return "CD_PaymentCardCard"
     }
 
     override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
@@ -29,7 +33,7 @@ open class _CD_MembershipCardImage: CD_BaseObject {
     }
 
     @nonobjc
-    open class func fetchRequest() -> NSFetchRequest<CD_MembershipCardImage> {
+    open class func fetchRequest() -> NSFetchRequest<CD_PaymentCardCard> {
         return NSFetchRequest(entityName: self.entityName())
     }
 
@@ -40,28 +44,40 @@ open class _CD_MembershipCardImage: CD_BaseObject {
     }
 
     public convenience init?(managedObjectContext: NSManagedObjectContext) {
-        guard let entity = _CD_MembershipCardImage.entity(managedObjectContext: managedObjectContext) else { return nil }
+        guard let entity = _CD_PaymentCardCard.entity(managedObjectContext: managedObjectContext) else { return nil }
         self.init(entity: entity, insertInto: managedObjectContext)
     }
 
     // MARK: - Properties
 
     @NSManaged open
-    var encoding: String?
+    var country: String?
 
     @NSManaged open
-    var imageDescription: String?
+    var currencyCode: String?
 
     @NSManaged open
-    var type: NSNumber?
+    var firstSix: String?
 
     @NSManaged open
-    var url: String?
+    var lastFour: String?
+
+    @NSManaged open
+    var month: NSNumber?
+
+    @NSManaged open
+    var nameOnCard: String?
+
+    @NSManaged open
+    var provider: String?
+
+    @NSManaged open
+    var type: String?
+
+    @NSManaged open
+    var year: NSNumber?
 
     // MARK: - Relationships
-
-    @NSManaged open
-    var card: CD_MembershipCard?
 
     @NSManaged open
     var paymentCard: CD_PaymentCard?

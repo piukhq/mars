@@ -5,11 +5,14 @@ import Foundation
 import CoreData
 
 public enum CD_PaymentCardAttributes: String {
-    case activeLink = "activeLink"
+    case status = "status"
 }
 
 public enum CD_PaymentCardRelationships: String {
-    case membershipCard = "membershipCard"
+    case account = "account"
+    case card = "card"
+    case images = "images"
+    case membershipCards = "membershipCards"
 }
 
 open class _CD_PaymentCard: CD_BaseObject {
@@ -43,12 +46,85 @@ open class _CD_PaymentCard: CD_BaseObject {
     // MARK: - Properties
 
     @NSManaged open
-    var activeLink: NSNumber?
+    var status: String?
 
     // MARK: - Relationships
 
     @NSManaged open
-    var membershipCard: CD_MembershipCard?
+    var account: CD_PaymentCardAccount?
+
+    @NSManaged open
+    var card: CD_PaymentCardCard?
+
+    @NSManaged open
+    var images: NSSet
+
+    open func imagesSet() -> NSMutableSet {
+        return self.images.mutableCopy() as! NSMutableSet
+    }
+
+    @NSManaged open
+    var membershipCards: NSSet
+
+    open func membershipCardsSet() -> NSMutableSet {
+        return self.membershipCards.mutableCopy() as! NSMutableSet
+    }
+
+}
+
+extension _CD_PaymentCard {
+
+    open func addImages(_ objects: NSSet) {
+        let mutable = self.images.mutableCopy() as! NSMutableSet
+        mutable.union(objects as Set<NSObject>)
+        self.images = mutable.copy() as! NSSet
+    }
+
+    open func removeImages(_ objects: NSSet) {
+        let mutable = self.images.mutableCopy() as! NSMutableSet
+        mutable.minus(objects as Set<NSObject>)
+        self.images = mutable.copy() as! NSSet
+    }
+
+    open func addImagesObject(_ value: CD_MembershipCardImage) {
+        let mutable = self.images.mutableCopy() as! NSMutableSet
+        mutable.add(value)
+        self.images = mutable.copy() as! NSSet
+    }
+
+    open func removeImagesObject(_ value: CD_MembershipCardImage) {
+        let mutable = self.images.mutableCopy() as! NSMutableSet
+        mutable.remove(value)
+        self.images = mutable.copy() as! NSSet
+    }
+
+}
+
+extension _CD_PaymentCard {
+
+    open func addMembershipCards(_ objects: NSSet) {
+        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+        mutable.union(objects as Set<NSObject>)
+        self.membershipCards = mutable.copy() as! NSSet
+    }
+
+    open func removeMembershipCards(_ objects: NSSet) {
+        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+        mutable.minus(objects as Set<NSObject>)
+        self.membershipCards = mutable.copy() as! NSSet
+    }
+
+    open func addMembershipCardsObject(_ value: CD_PaymentCardMembershipCard) {
+        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+        mutable.add(value)
+        self.membershipCards = mutable.copy() as! NSSet
+    }
+
+    open func removeMembershipCardsObject(_ value: CD_PaymentCardMembershipCard) {
+        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+        mutable.remove(value)
+        self.membershipCards = mutable.copy() as! NSSet
+    }
 
 }
 

@@ -1,27 +1,24 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to CD_MembershipCardImage.swift instead.
+// Make changes to CD_PaymentCardAccountConsents.swift instead.
 
 import Foundation
 import CoreData
 
-public enum CD_MembershipCardImageAttributes: String {
-    case encoding = "encoding"
-    case imageDescription = "imageDescription"
+public enum CD_PaymentCardAccountConsentsAttributes: String {
+    case timestamp = "timestamp"
     case type = "type"
-    case url = "url"
 }
 
-public enum CD_MembershipCardImageRelationships: String {
-    case card = "card"
-    case paymentCard = "paymentCard"
+public enum CD_PaymentCardAccountConsentsRelationships: String {
+    case account = "account"
 }
 
-open class _CD_MembershipCardImage: CD_BaseObject {
+open class _CD_PaymentCardAccountConsents: CD_BaseObject {
 
     // MARK: - Class methods
 
     override open class func entityName () -> String {
-        return "CD_MembershipCardImage"
+        return "CD_PaymentCardAccountConsents"
     }
 
     override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
@@ -29,7 +26,7 @@ open class _CD_MembershipCardImage: CD_BaseObject {
     }
 
     @nonobjc
-    open class func fetchRequest() -> NSFetchRequest<CD_MembershipCardImage> {
+    open class func fetchRequest() -> NSFetchRequest<CD_PaymentCardAccountConsents> {
         return NSFetchRequest(entityName: self.entityName())
     }
 
@@ -40,31 +37,22 @@ open class _CD_MembershipCardImage: CD_BaseObject {
     }
 
     public convenience init?(managedObjectContext: NSManagedObjectContext) {
-        guard let entity = _CD_MembershipCardImage.entity(managedObjectContext: managedObjectContext) else { return nil }
+        guard let entity = _CD_PaymentCardAccountConsents.entity(managedObjectContext: managedObjectContext) else { return nil }
         self.init(entity: entity, insertInto: managedObjectContext)
     }
 
     // MARK: - Properties
 
     @NSManaged open
-    var encoding: String?
-
-    @NSManaged open
-    var imageDescription: String?
+    var timestamp: NSNumber?
 
     @NSManaged open
     var type: NSNumber?
 
-    @NSManaged open
-    var url: String?
-
     // MARK: - Relationships
 
     @NSManaged open
-    var card: CD_MembershipCard?
-
-    @NSManaged open
-    var paymentCard: CD_PaymentCard?
+    var account: CD_PaymentCardAccount?
 
 }
 
