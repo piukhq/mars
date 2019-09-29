@@ -6,7 +6,6 @@ import CoreData
 
 public enum CD_MembershipPlanImageAttributes: String {
     case encoding = "encoding"
-    case id = "id"
     case imageDescription = "imageDescription"
     case type = "type"
     case url = "url"
@@ -16,15 +15,15 @@ public enum CD_MembershipPlanImageRelationships: String {
     case plan = "plan"
 }
 
-open class _CD_MembershipPlanImage: NSManagedObject {
+open class _CD_MembershipPlanImage: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_MembershipPlanImage"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -48,9 +47,6 @@ open class _CD_MembershipPlanImage: NSManagedObject {
 
     @NSManaged open
     var encoding: String?
-
-    @NSManaged open
-    var id: String?
 
     @NSManaged open
     var imageDescription: String?

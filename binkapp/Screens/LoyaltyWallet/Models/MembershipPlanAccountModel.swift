@@ -72,6 +72,7 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
             guard let tier = $0 as? CD_Tier else { return }
             context.delete(tier)
         }
+        
         tiers?.forEach { tier in
             let cdTier = tier.mapToCoreData(context, .update, overrideID: nil)
             update(cdTier, \.planAccount, with: cdObject, delta: delta)
@@ -82,6 +83,7 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
             guard let document = $0 as? CD_PlanDocument else { return }
             context.delete(document)
         }
+        
         planDocuments?.forEach { document in
             let cdPlanDocument = document.mapToCoreData(context, .update, overrideID: nil)
             update(cdPlanDocument, \.planAccount, with: cdObject, delta: delta)
@@ -92,40 +94,56 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
             guard let field = $0 as? CD_AddField else { return }
             context.delete(field)
         }
-        addFields?.forEach { field in
-            let cdAddField = field.mapToCoreData(context, .update, overrideID: nil)
-            update(cdAddField, \.planAccount, with: cdObject, delta: delta)
-            cdObject.addAddFieldsObject(cdAddField)
+        
+        if let addFields = addFields {
+            for (index, field) in addFields.enumerated() {
+                let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdAddField = field.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdAddField, \.planAccount, with: cdObject, delta: delta)
+                cdObject.addAddFieldsObject(cdAddField)
+            }
         }
 
         cdObject.authoriseFields.forEach {
             guard let field = $0 as? CD_AuthoriseField else { return }
             context.delete(field)
         }
-        authoriseFields?.forEach { field in
-            let cdAuthField = field.mapToCoreData(context, .update, overrideID: nil)
-            update(cdAuthField, \.planAccount, with: cdObject, delta: delta)
-            cdObject.addAuthoriseFieldsObject(cdAuthField)
+        
+        if let authFields = authoriseFields {
+            for (index, field) in authFields.enumerated() {
+                let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdAuthField = field.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdAuthField, \.planAccount, with: cdObject, delta: delta)
+                cdObject.addAuthoriseFieldsObject(cdAuthField)
+            }
         }
 
         cdObject.registrationFields.forEach {
             guard let field = $0 as? CD_RegistrationField else { return }
             context.delete(field)
         }
-        registrationFields?.forEach { field in
-            let cdRegField = field.mapToCoreData(context, .update, overrideID: nil)
-            update(cdRegField, \.planAccount, with: cdObject, delta: delta)
-            cdObject.addRegistrationFieldsObject(cdRegField)
+        
+        if let registrationFields = registrationFields {
+            for (index, field) in registrationFields.enumerated() {
+                let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdRegField = field.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdRegField, \.planAccount, with: cdObject, delta: delta)
+                cdObject.addRegistrationFieldsObject(cdRegField)
+            }
         }
 
         cdObject.enrolFields.forEach {
             guard let field = $0 as? CD_EnrolField else { return }
             context.delete(field)
         }
-        enrolFields?.forEach { field in
-            let cdEnrolField = field.mapToCoreData(context, .update, overrideID: nil)
-            update(cdEnrolField, \.planAccount, with: cdObject, delta: delta)
-            cdObject.addEnrolFieldsObject(cdEnrolField)
+        
+        if let enrolFields = enrolFields {
+            for (index, field) in enrolFields.enumerated() {
+                let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdEnrolField = field.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdEnrolField, \.planAccount, with: cdObject, delta: delta)
+                cdObject.addEnrolFieldsObject(cdEnrolField)
+            }
         }
 
         return cdObject

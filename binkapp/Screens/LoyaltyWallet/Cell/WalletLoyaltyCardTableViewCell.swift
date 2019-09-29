@@ -38,7 +38,7 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
     @IBOutlet private weak var cardValuePointsLabel: UILabel!
     @IBOutlet private weak var cardValueSuffixLabel: UILabel!
     @IBOutlet private weak var cardLinkStatusLabel: UILabel!
-    @IBOutlet private weak var logInButton: UIButton!
+    @IBOutlet private weak var logInButton: CardAlertView!
     @IBOutlet private weak var cardLinkStatusImage: UIImageView!
     @IBOutlet weak var cardContainer: RectangleView!
     @IBOutlet weak var cardContainerCenterXConstraint: NSLayoutConstraint!
@@ -94,6 +94,11 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
     private func setupTheming() {
         cardNameLabel.font = UIFont.subtitle
         cardValuePointsLabel.font = UIFont.pointsValue
+        
+        logInButton.configureForType(.loyaltyLogIn) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.cellPerform(action: .login, cell: self)
+        }
     }
     
     func configureUIWithMembershipCard(card: CD_MembershipCard, delegate: WalletLoyaltyCardCollectionViewCellDelegate) {
@@ -168,7 +173,6 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         default:
             break
         }
-        
         
         // Link Status
         cardLinkStatusLabel.text = linkTextContent

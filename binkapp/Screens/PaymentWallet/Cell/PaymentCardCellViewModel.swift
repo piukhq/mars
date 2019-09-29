@@ -42,14 +42,10 @@ struct PaymentCardCellViewModel {
     }
 
     func paymentCardIsExpired() -> Bool {
-        guard let card = paymentCard.card else {
-            return false
-        }
-        guard let expiryYear = card.year else {
-            return false
-        }
-        guard let expiryMonth = card.month else {
-            return false
+        guard let card = paymentCard.card,
+            let expiryYear = card.year,
+            let expiryMonth = card.month else {
+                return false
         }
         guard let expiryDate = Date.makeDate(year: expiryYear, month: expiryMonth, day: 01, hr: 00, min: 00, sec: 00) else {
             return false

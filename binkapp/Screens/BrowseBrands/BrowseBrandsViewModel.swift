@@ -10,24 +10,21 @@ import Foundation
 class BrowseBrandsViewModel {
     private let repository: BrowseBrandsRepository
     private let router: MainScreenRouter
-    private var membershipPlans = [MembershipPlanModel]()
+    private var membershipPlans = [CD_MembershipPlan]()
     
     init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
-        
-        let defaults = UserDefaults.standard
-        if let encodedMembershipPlans = defaults.object(forKey: "MembershipPlans") as? Data {
-            let decoder = JSONDecoder()
-            if let plans = try? decoder.decode([MembershipPlanModel].self, from: encodedMembershipPlans) {
-                self.membershipPlans = plans.sorted(by: { (firstPlan, secondPlan) -> Bool in
-                    (firstPlan.account?.companyName)! < (secondPlan.account?.companyName)!
-                })
-            }
+
+        Current.database.performTask { context in
+            let plans = context.fetchAll(CD_MembershipPlan.self)
+            self.membershipPlans = plans.sorted(by: { (firstPlan, secondPlan) -> Bool in
+                (firstPlan.account?.companyName)! < (secondPlan.account?.companyName)!
+            })
         }
     }
     
-    func getMembershipPlan(for indexPath: IndexPath) -> MembershipPlanModel {
+    func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan {
         if indexPath.section == 0 {
             return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
         }
@@ -43,7 +40,7 @@ class BrowseBrandsViewModel {
         return "all_title".localized
     }
     
-    func getMembershipPlans() -> [MembershipPlanModel] {
+    func getMembershipPlans() -> [CD_MembershipPlan] {
         return membershipPlans
     }
     
@@ -61,12 +58,12 @@ class BrowseBrandsViewModel {
         return false
     }
     
-    func getPllMembershipPlans() -> [MembershipPlanModel] {
-        return membershipPlans.filter { $0.featureSet?.cardType == FeatureSetModel.PlanCardType.link }
+    func getPllMembershipPlans() -> [CD_MembershipPlan] {
+        return membershipPlans.filter { $0.featureSet?.planCardType == .link }
     }
     
-    func getNonPllMembershipPlans() -> [MembershipPlanModel] {
-        return membershipPlans.filter { $0.featureSet?.cardType != FeatureSetModel.PlanCardType.link }
+    func getNonPllMembershipPlans() -> [CD_MembershipPlan] {
+        return membershipPlans.filter { $0.featureSet?.planCardType != .link }
     }
     
     func numberOfSections() -> Int {
@@ -91,7 +88,7 @@ class BrowseBrandsViewModel {
         }
     }
     
-    func toAddOrJoinScreen(membershipPlan: MembershipPlanModel) {
+    func toAddOrJoinScreen(membershipPlan: CD_MembershipPlan) {
         router.toAddOrJoinViewController(membershipPlan: membershipPlan)
     }
     

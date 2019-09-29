@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -70,17 +69,6 @@
                                     <constraint firstAttribute="width" constant="70" id="v6b-Du-gdL"/>
                                 </constraints>
                             </imageView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9h-9o-rcZ">
-                                <rect key="frame" x="247" y="0.0" width="118" height="65"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="nHN-AY-76u"/>
-                                    <constraint firstAttribute="width" constant="118" id="nws-Xr-e27"/>
-                                </constraints>
-                                <state key="normal" image="login"/>
-                                <connections>
-                                    <action selector="logInButtonTapped:" destination="QXi-me-e70" eventType="touchUpInside" id="7J4-Pi-qnj"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brand Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1AT-4M-cCB">
                                 <rect key="frame" x="158" y="49" width="187" height="22"/>
                                 <constraints>
@@ -90,37 +78,48 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="AaS-Q0-chh">
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" distribution="fillProportionally" alignment="bottom" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="AaS-Q0-chh">
                                 <rect key="frame" x="302" y="18" width="43" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0s-Zd-Vca">
-                                        <rect key="frame" x="0.0" y="0.0" width="43" height="19.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="43" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="999" constant="14" id="Dex-Dg-vJk"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDN-dC-hcd">
-                                        <rect key="frame" x="0.0" y="16.5" width="43" height="13.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDN-dC-hcd">
+                                        <rect key="frame" x="5.5" y="16" width="37.5" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="999" constant="14" id="AeG-JK-DZ7"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="T81-8r-Eoq"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="iKM-GG-wmx"/>
                                 </constraints>
                             </stackView>
+                            <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEC-Ml-S8b" customClass="CardAlertView" customModule="binkapp" customModuleProvider="target">
+                                <rect key="frame" x="256" y="18" width="89" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="E6w-L9-sR8"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="k9h-9o-rcZ" secondAttribute="trailing" id="1Au-dv-tsJ"/>
+                            <constraint firstItem="AaS-Q0-chh" firstAttribute="top" secondItem="UEC-Ml-S8b" secondAttribute="top" id="0TS-S8-XrO"/>
                             <constraint firstItem="2il-5O-A8c" firstAttribute="centerY" secondItem="boF-NX-uce" secondAttribute="centerY" id="5RY-nx-bTD"/>
                             <constraint firstItem="AaS-Q0-chh" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" constant="18" id="7XW-om-1er"/>
                             <constraint firstItem="2il-5O-A8c" firstAttribute="leading" secondItem="boF-NX-uce" secondAttribute="leading" constant="20" id="ACz-PF-v16"/>
+                            <constraint firstItem="UEC-Ml-S8b" firstAttribute="trailing" secondItem="AaS-Q0-chh" secondAttribute="trailing" id="ApQ-4Y-G4Q"/>
                             <constraint firstAttribute="trailing" secondItem="E9J-zy-VH9" secondAttribute="trailing" constant="20" id="Krm-SP-cUI"/>
-                            <constraint firstItem="k9h-9o-rcZ" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" id="WdW-XF-85f"/>
-                            <constraint firstItem="k9h-9o-rcZ" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" id="XkT-Zd-XEO"/>
-                            <constraint firstAttribute="trailing" secondItem="k9h-9o-rcZ" secondAttribute="trailing" id="cr5-a5-5Sk"/>
                             <constraint firstAttribute="trailing" secondItem="1AT-4M-cCB" secondAttribute="trailing" constant="20" id="h7I-kq-IRG"/>
                             <constraint firstAttribute="trailing" secondItem="AaS-Q0-chh" secondAttribute="trailing" constant="20" id="oB4-9v-aEW"/>
                             <constraint firstItem="1AT-4M-cCB" firstAttribute="leading" secondItem="2il-5O-A8c" secondAttribute="trailing" constant="68" id="rTp-qt-dTB"/>
@@ -157,14 +156,13 @@
                 <outlet property="cardValueStack" destination="AaS-Q0-chh" id="91M-KS-lCy"/>
                 <outlet property="cardValueSuffixLabel" destination="gDN-dC-hcd" id="j0f-3C-5dz"/>
                 <outlet property="deleteButton" destination="nlL-P9-bge" id="9NQ-Lj-f0y"/>
-                <outlet property="logInButton" destination="k9h-9o-rcZ" id="Nof-O0-Way"/>
+                <outlet property="logInButton" destination="UEC-Ml-S8b" id="SBl-aw-HWf"/>
             </connections>
-            <point key="canvasLocation" x="136.95652173913044" y="152.67857142857142"/>
+            <point key="canvasLocation" x="123.91304347826087" y="150.66964285714286"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="iconSwipeBarcode" width="57" height="62"/>
         <image name="iconSwipeDelete" width="44" height="62"/>
-        <image name="login" width="93" height="30"/>
     </resources>
 </document>

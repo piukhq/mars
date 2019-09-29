@@ -38,6 +38,7 @@ extension AddFieldModel: CoreDataMappable, CoreDataIDMappable {
             guard let choice = $0 as? CD_FieldChoice else { return }
             context.delete(choice)
         }
+        
         choices?.forEach { choice in
             let cdChoice = choice.mapToCoreData(context, .update, overrideID: nil)
             update(cdChoice, \.addField, with: cdObject, delta: delta)

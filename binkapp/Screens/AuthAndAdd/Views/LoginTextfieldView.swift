@@ -43,7 +43,7 @@ class LoginTextFieldView: CustomView {
 
 extension LoginTextFieldView: InputValidation {
     var isValid: Bool {
-        guard let regEx = validationRegEx else { return true }
+        guard let regEx = validationRegEx, !regEx.isEmpty else { return true }
         let predicate = NSPredicate(format: "SELF MATCHES %@", regEx)
         if predicate.evaluate(with: textField.text) == true {
             if let fType = fieldType {

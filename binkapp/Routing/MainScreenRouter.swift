@@ -108,7 +108,7 @@ class MainScreenRouter {
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: completion)
     }
     
-    func toAddOrJoinViewController(membershipPlan: MembershipPlanModel) {
+    func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan) {
         let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, router: self)
         let viewController = AddOrJoinViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
@@ -121,29 +121,53 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toAuthAndAddViewController(membershipPlan: MembershipPlanModel) {
+    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan) {
         let repository = AuthAndAddRepository(apiManager: apiManager)
         let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPllViewController(membershipCard: CD_MembershipCard, membershipPlan: MembershipPlanModel) {
+    func toPllViewController(membershipCard: CD_MembershipCard) {
         let viewModel = PLLScreenViewModel(membershipCard: membershipCard, router: self)
         let viewController = PLLScreenViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toTransactionsViewController(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
-        let viewModel = TransactionsViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, router: self)
+    func toTransactionsViewController(membershipCard: CD_MembershipCard) {
+        let viewModel = TransactionsViewModel(membershipCard: membershipCard, router: self)
         let viewController = TransactionsViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
     func toPaymentTermsAndConditionsViewController(delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
-        let viewModel = PaymentTermsAndConditionsViewModel(router: self)
-        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        let screenText = "terms_and_conditions_title".localized + "\n" + "lorem_ipsum".localized
+        
+        let attributedText = NSMutableAttributedString(string: screenText)
+        
+        attributedText.addAttribute(
+            NSAttributedString.Key.font,
+            value: UIFont.headline,
+            range: NSRange(location: 0, length: ("terms_and_conditions_title".localized).count)
+        )
+        
+        attributedText.addAttribute(
+            NSAttributedString.Key.font,
+            value: UIFont.bodyTextLarge,
+            range: NSRange(location: ("terms_and_conditions_title".localized).count, length: ("lorem_ipsum".localized).count)
+        )
+        
+        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: nil)
+        let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel, router: self)
+        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, delegate: delegate)
         viewController.delegate = delegate
+        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
+    }
+    
+    func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
+        let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
+        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     

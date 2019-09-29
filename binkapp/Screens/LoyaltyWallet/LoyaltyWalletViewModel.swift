@@ -30,10 +30,9 @@ class LoyaltyWalletViewModel {
     }
 
     func getWallet(forceRefresh: Bool = false, completion: @escaping () -> Void) {
-        
         repository.getMembershipPlans(forceRefresh: forceRefresh, completion: { plans in
             self.repository.getMembershipCards(forceRefresh: forceRefresh) { [weak self] cards in
-                self?.membershipCards = cards
+                self?.membershipCards = cards ?? []
                 completion()
             }
         })
@@ -41,16 +40,13 @@ class LoyaltyWalletViewModel {
     
     // MARK: - Public methods
     
-    func showDeleteConfirmationAlert(index: Int, yesCompletion: @escaping ([MembershipCardModel]) -> (), noCompletion: @escaping () -> Void) {
-        
+    func showDeleteConfirmationAlert(card: CD_MembershipCard, yesCompletion: @escaping () -> (), noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
-//            if let cardId = self.membershipCards[index].id {
-//                self.deleteMembershipCard(id: cardId, completion: {
-//                    var new = self.membershipCards
-//                    new.remove(at: index)
-//                    yesCompletion(new)
-//                })
-//            }
+            let cardId = card.id
+            self.deleteMembershipCard(card, completion: {
+                self.membershipCards?.removeAll(where: { $0.id == cardId })
+                yesCompletion()
+            })
         }, noCompletion: {
             DispatchQueue.main.async {
                 noCompletion()
@@ -58,15 +54,10 @@ class LoyaltyWalletViewModel {
         })
     }
     
-//    func updateMembershipCards(new: [MembershipCardModel]) {
-//        membershipCards = new
-//    }
-    
     func toBarcodeViewController(item: Int, completion: @escaping () -> ()) {
         guard let card = membershipCards?[item] else { return }
         
         router.toBarcodeViewController(membershipCard: card, completion: completion)
-//        guard let plan = getMembershipPlans().first(where: { $0.id == card.membershipPlan }) else { return }
     }
     
     func toFullDetailsCardScreen(membershipCard: CD_MembershipCard) {
@@ -102,9 +93,17 @@ class LoyaltyWalletViewModel {
 
 private extension LoyaltyWalletViewModel {
     
-    func deleteMembershipCard(id: String, completion: @escaping () -> Void) {
-        repository.deleteMembershipCard(id: id) { _ in
-            completion()
+    func deleteMembershipCard(_ card: CD_MembershipCard, completion: @escaping () -> Void) {
+        // Process the backend delete, but fail silently
+        repository.deleteMembershipCard(id: card.id) { _ in }
+        
+        Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
+            if let cardToDelete = cardToDelete { context.delete(cardToDelete) }
+            try? context.save()
+            
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
 }

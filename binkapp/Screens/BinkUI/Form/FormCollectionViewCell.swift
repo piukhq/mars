@@ -165,9 +165,7 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let field = formField else { return }
-        
         validationLabel.isHidden = field.isValid()
-        
         field.fieldWasExited()
     }
 }

@@ -122,7 +122,7 @@ public class Database {
 
 /// An enum that allows us to identify whether we are updating an object or not when mapping to Core Data
 ///
-/// - none: Do not update the object. Delete if one exists and recreated. Gurantees a new object.
+/// - none: Do not update the object. Delete if one exists and recreated. Guarantees a new object.
 /// - update: Update the existing object fully with the data that is passed in
 /// - delta: Update the existing object, replacing only the non-nil values that are passed in
 public enum CoreDataUpdate {

@@ -50,11 +50,14 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             guard let transaction = $0 as? CD_MembershipTransaction else { return }
             context.delete(transaction)
         }
-        
-        membershipTransactions?.forEach { transaction in
-            let cdTransaction = transaction.mapToCoreData(context, .update, overrideID: nil)
-            cdObject.addTransactionsObject(cdTransaction)
-            update(cdTransaction, \.card, with: cdObject, delta: false)
+                
+        if let membershipTransactions = membershipTransactions {
+            for (index, transaction) in membershipTransactions.enumerated() {
+                let indexID = MembershipCardModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdTransaction = transaction.mapToCoreData(context, .update, overrideID: indexID)
+                cdObject.addTransactionsObject(cdTransaction)
+                update(cdTransaction, \.card, with: cdObject, delta: false)
+            }
         }
 
         if let status = status {
@@ -108,10 +111,13 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             context.delete(balance)
         }
         
-        balances?.forEach { balance in
-            let cdBalance = balance.mapToCoreData(context, .update, overrideID: MembershipCardModel.overrideId(forParentId: id))
-            update(cdBalance, \.card, with: cdObject, delta: false)
-            cdObject.addBalancesObject(cdBalance)
+        if let balances = balances {
+            for (index, balance) in balances.enumerated() {
+                let indexID = MembershipCardModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdBalance = balance.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdBalance, \.card, with: cdObject, delta: false)
+                cdObject.addBalancesObject(cdBalance)
+            }
         }
 
         return cdObject

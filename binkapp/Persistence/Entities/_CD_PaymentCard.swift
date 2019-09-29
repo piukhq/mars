@@ -6,22 +6,21 @@ import CoreData
 
 public enum CD_PaymentCardAttributes: String {
     case activeLink = "activeLink"
-    case id = "id"
 }
 
 public enum CD_PaymentCardRelationships: String {
     case membershipCard = "membershipCard"
 }
 
-open class _CD_PaymentCard: NSManagedObject {
+open class _CD_PaymentCard: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_PaymentCard"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -45,9 +44,6 @@ open class _CD_PaymentCard: NSManagedObject {
 
     @NSManaged open
     var activeLink: NSNumber?
-
-    @NSManaged open
-    var id: String!
 
     // MARK: - Relationships
 

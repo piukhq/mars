@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class AddingOptionsViewModel {
     let router: MainScreenRouter
@@ -23,7 +23,7 @@ class AddingOptionsViewModel {
         router.toAddPaymentViewController()
     }
 
-    func popViewController() {
+    @objc func popViewController() {
         router.popViewController()
     }
 }

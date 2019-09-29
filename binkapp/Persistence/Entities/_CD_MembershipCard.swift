@@ -4,10 +4,6 @@
 import Foundation
 import CoreData
 
-public enum CD_MembershipCardAttributes: String {
-    case id = "id"
-}
-
 public enum CD_MembershipCardRelationships: String {
     case account = "account"
     case balances = "balances"
@@ -19,15 +15,15 @@ public enum CD_MembershipCardRelationships: String {
     case transactions = "transactions"
 }
 
-open class _CD_MembershipCard: NSManagedObject {
+open class _CD_MembershipCard: CD_BaseObject {
 
     // MARK: - Class methods
 
-    open class func entityName () -> String {
+    override open class func entityName () -> String {
         return "CD_MembershipCard"
     }
 
-    open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
+    override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entity(forEntityName: self.entityName(), in: managedObjectContext)
     }
 
@@ -48,9 +44,6 @@ open class _CD_MembershipCard: NSManagedObject {
     }
 
     // MARK: - Properties
-
-    @NSManaged open
-    var id: String!
 
     // MARK: - Relationships
 
