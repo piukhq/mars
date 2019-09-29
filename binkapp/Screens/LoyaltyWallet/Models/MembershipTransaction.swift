@@ -25,10 +25,14 @@ extension MembershipTransaction: CoreDataMappable, CoreDataIDMappable {
             guard let amount = $0 as? CD_MembershipCardAmount else { return }
             context.delete(amount)
         }
-        amounts?.forEach { amount in
-            let cdAmount = amount.mapToCoreData(context, .update, overrideID: nil)
-            update(cdAmount, \.transaction, with: cdObject, delta: delta)
-            cdObject.addAmountsObject(cdAmount)
+        
+        if let amounts = amounts {
+            for (index, amount) in amounts.enumerated() {
+                let indexID = MembershipCardModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdAmount = amount.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdAmount, \.transaction, with: cdObject, delta: delta)
+                cdObject.addAmountsObject(cdAmount)
+            }
         }
 
         return cdObject

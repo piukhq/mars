@@ -17,6 +17,7 @@
 "registration_failed_title" = "Registration failed";
 "history_title" = "History";
 "not_available_title" = "Not available";
+"pending_title" = "Pending";
 
 "add_loyalty_card_title" = "Add loyalty card";
 "scan_a_card_description" = "Scan a card you already have";
@@ -25,7 +26,9 @@
 "add_payment_card_title" = "Add payment card";
 "scan_and_link_description" = "Scan and link your payment card";
 "card_linked_status" = "Linked";
+"card_linking_status" = "Linking";
 "card_can_not_link_status" = "Cannot Link";
+"card_link_status" = "Link";
 
 "browse_brands_title" = "Browse brands";
 "filters_button_title" = "Filters";
@@ -64,6 +67,8 @@
 "no" = "No";
 "cancel" = "Cancel";
 "ok" = "OK";
+"accept" = "Accept";
+"decline" = "Decline";
 
 "no_internet_connection_title" = "Your selected activity cannot be performed at this time due to a connection issue";
 
@@ -89,6 +94,7 @@
 "recent_transaction_history_subtitle" = "Your recent transaction history.";
 
 "log_in_pending_title" = "Log in pending";
+"log_in_failed_title" = "Log in failed";
 "sign_up_pending_title" = "Sign up pending";
 "register_pending_title" = "Register Ghost card pending";
 "log_in_pending_description" = "You are seeing this because sometimes it takes a while to log in with the merchant. In the meantime please do not attempt to log in again, but you can use your card and receive your benefits as usual. After you are logged in you will be able to see your points balance.";
@@ -104,5 +110,15 @@
 "points_module_logging_in_status" = "Logging in";
 "points_module_registering_card_status" = "Registering card";
 "points_module_retry_log_in_status" = "Retry log in";
+"link_module_to_payment_cards_message" = "To payment cards";
+"link_module_error_title" = "Link error";
+"link_module_to_link_to_cards_message" = "To link to cards";
+"link_module_to_number_of_payment_cards_message" = "To %d of %d cards";
 
 "terms_and_conditions_title" = "Terms and conditions";
+
+"native_join_unavailable_title" = "Native join unavailable";
+"native_join_unavailable_description" = "You can go to the merchant website to join then come back and add your card. Or we can email you the link so you can sign up on your computer. Copy needed.";
+"to_merchant_site_button" = "Go to merchant site";
+
+"lorem_ipsum" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque, nisi ut sagittis luctus, justo orci porttitor nulla, ac ultricies sem mi quis nunc. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur placerat sagittis tortor quis vehicula. Fusce et aliquam tellus, eu semper sem. Proin eu eleifend nunc. Aliquam id lacus faucibus, euismod orci in, tempor felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam finibus commodo dui sit amet imperdiet. Phasellus tincidunt elementum euismod. Aliquam lobortis sapien in justo varius pulvinar. Morbi ac placerat sem. Maecenas ut auctor purus.Etiam quis blandit sapien. Nam urna quam, tempus ut massa sed, blandit ultrices neque. Sed sagittis vel quam ac interdum. Nunc tempus eros eget leo volutpat, ac sodales ex scelerisque. Aenean vel nibh lacus. Sed convallis faucibus euismod. Sed diam dui, commodo blandit tempus in, faucibus quis ligula. Integer condimentum mollis bibendum. Nullam feugiat rutrum mauris a luctus. Morbi dignissim, orci ac tempor bibendum, augue diam pharetra massa, vel commodo leo sem sed nisl. Pellentesque egestas egestas quam, nec laoreet dolor. Curabitur commodo scelerisque nisl ac mollis. Morbi egestas arcu nec convallis mollis.";

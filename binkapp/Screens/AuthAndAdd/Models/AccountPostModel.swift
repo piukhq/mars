@@ -16,3 +16,4 @@ struct AccountPostModel: Codable {
         case authoriseFields = "authorise_fields"
     }
 }
+

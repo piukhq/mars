@@ -7,7 +7,7 @@
 
 import Foundation
 
-class  LoyaltyCardFullDetailsRepository {
+class LoyaltyCardFullDetailsRepository {
     
     private let apiManager: ApiManager
     
@@ -26,4 +26,11 @@ class  LoyaltyCardFullDetailsRepository {
         })
     }
     
+    func getPaymentCards(completion: @escaping ([PaymentCardModel]) -> Void) {
+        let url = RequestURL.getPaymentCards
+        let httpMethod = RequestHTTPMethod.get
+        apiManager.doRequest(url: url, httpMethod: httpMethod, parameters: nil, onSuccess: { (results: [PaymentCardModel]) in
+            completion(results)
+        }) { (error) in }
+    }
 }

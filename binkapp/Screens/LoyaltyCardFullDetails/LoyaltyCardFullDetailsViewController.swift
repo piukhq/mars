@@ -28,6 +28,8 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
+        viewModel.getPaymentCards()
         configureUI()
         setCloseButton()
     }
@@ -67,11 +69,21 @@ private extension LoyaltyCardFullDetailsViewController {
         
         let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
-        fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode , delegate: self)
-
-        let pointsModuleView = PointsModuleView()
-        pointsModuleView.configure(membershipCard: viewModel.membershipCard, delegate: self)
-        cardDetailsStackView.insertArrangedSubview(pointsModuleView, at: 0)
+        fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
+        
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
+        cardDetailsStackView.addArrangedSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    func configureCardDetails(_ paymentCards: [PaymentCardModel]?) {
+        let pointsModuleView = BinkModuleView()
+            pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
+            cardDetailsStackView.addArrangedSubview(pointsModuleView)
+        
+        let linkModuleView = BinkModuleView()
+        linkModuleView.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: paymentCards, delegate: self)
+        cardDetailsStackView.addArrangedSubview(linkModuleView)
     }
     
     func setCloseButton() {
@@ -133,8 +145,23 @@ extension LoyaltyCardFullDetailsViewController: FullDetailsBrandHeaderDelegate {
 
 // MARK: - PointsModuleViewDelegate
 
-extension LoyaltyCardFullDetailsViewController: PointsModuleViewDelegate {
-    func pointsModuleViewWasTapped(_: PointsModuleView, withAction action: PointsModuleView.PointsModuleAction) {
+extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
+    func binkModuleViewWasTapped(moduleView: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
         viewModel.goToScreenForAction(action: action)
+    }
+}
+
+// MARK: - LoyaltyCardFullDetailsViewModelDelegate
+
+extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsViewModelDelegate {
+    func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel]) {
+        DispatchQueue.main.async {
+            [weak self] in
+            guard let self = self else {return}
+            if let activityIndicator = self.cardDetailsStackView.subviews.first {
+                activityIndicator.removeFromSuperview()
+            }
+            self.configureCardDetails(paymentCards)
+        }
     }
 }
