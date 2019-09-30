@@ -12,7 +12,7 @@ class PaymentWalletViewModel {
     private let repository: PaymentWalletRepository
     let router: MainScreenRouter
 
-    var paymentCards: [CD_PaymentCard]?
+    private var paymentCards: [CD_PaymentCard]?
     
     init(repository: PaymentWalletRepository, router: MainScreenRouter) {
         self.repository = repository
@@ -24,5 +24,13 @@ class PaymentWalletViewModel {
             self?.paymentCards = cards
             completion()
         }
+    }
+
+    var paymentCardCount: Int {
+        return paymentCards?.count ?? 0
+    }
+
+    func paymentCardAtIndexPath(_ indexPath: IndexPath) -> CD_PaymentCard? {
+        return paymentCards?[indexPath.row]
     }
 }

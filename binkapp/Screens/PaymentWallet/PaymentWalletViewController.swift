@@ -80,13 +80,13 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.paymentCards?.count ?? 0
+        return viewModel.paymentCardCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
 
-        guard let paymentCard = viewModel.paymentCards?[indexPath.row] else {
+        guard let paymentCard = viewModel.paymentCardAtIndexPath(indexPath) else {
             return cell
         }
         
