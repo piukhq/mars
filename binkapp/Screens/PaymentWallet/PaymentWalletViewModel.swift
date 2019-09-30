@@ -20,7 +20,7 @@ class PaymentWalletViewModel {
     }
     
     func getWallet(forceRefresh: Bool = false, completion: @escaping () -> Void) {
-        repository.getPaymentCards { [weak self] cards in
+        repository.getPaymentCards(forceRefresh: forceRefresh) { [weak self] cards in
             self?.paymentCards = cards
             completion()
         }
