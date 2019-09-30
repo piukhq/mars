@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BrowseBrandsViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
-                <outlet property="searchTextField" destination="RhA-bK-Lyi" id="Cmx-jl-bBZ"/>
                 <outlet property="tableView" destination="1MC-ks-eDc" id="wd1-uP-rhH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,32 +19,21 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RhA-bK-Lyi" customClass="BinkTextField" customModule="binkapp" customModuleProvider="target">
-                    <rect key="frame" x="25" y="44" width="364" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="ktg-dO-Yhv"/>
-                    </constraints>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="1MC-ks-eDc">
-                    <rect key="frame" x="25" y="114" width="364" height="748"/>
+                    <rect key="frame" x="25" y="0.0" width="364" height="896"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="RhA-bK-Lyi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="fiX-U3-5sw"/>
-                <constraint firstItem="RhA-bK-Lyi" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="geK-6O-7GE"/>
-                <constraint firstItem="1MC-ks-eDc" firstAttribute="top" secondItem="RhA-bK-Lyi" secondAttribute="bottom" constant="30" id="h1C-0i-IcT"/>
+                <constraint firstItem="1MC-ks-eDc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Zui-VW-pxz"/>
                 <constraint firstItem="1MC-ks-eDc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="hId-fZ-Z73"/>
-                <constraint firstItem="RhA-bK-Lyi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nPo-Mj-c4Z"/>
                 <constraint firstItem="1MC-ks-eDc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="obq-Vm-0Lw"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="1MC-ks-eDc" secondAttribute="bottom" id="tGh-dY-p2u"/>
+                <constraint firstAttribute="bottom" secondItem="1MC-ks-eDc" secondAttribute="bottom" id="tGh-dY-p2u"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="137.68115942028987" y="153.34821428571428"/>
         </view>
     </objects>
 </document>

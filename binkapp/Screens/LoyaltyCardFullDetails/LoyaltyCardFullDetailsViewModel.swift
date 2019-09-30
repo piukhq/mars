@@ -33,11 +33,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toBarcodeModel() {
-//        router.toBarcodeViewController(membershipCard: ) {}
-    }
-    
-    func toTransactionsViewController() {
-//        router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
+        router.toBarcodeViewController(membershipCard: membershipCard) { }
     }
     
     func goToScreenForAction(action: BinkModuleView.BinkModuleAction) {

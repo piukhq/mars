@@ -8,7 +8,6 @@
 import UIKit
 
 class BrowseBrandsViewController: UIViewController {
-    @IBOutlet private weak var searchTextField: BinkTextField!
     @IBOutlet private weak var tableView: UITableView!
     
     let viewModel: BrowseBrandsViewModel
@@ -28,8 +27,6 @@ class BrowseBrandsViewController: UIViewController {
         tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
-        
-        configureUI()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -45,21 +42,6 @@ class BrowseBrandsViewController: UIViewController {
         navigationItem.rightBarButtonItem?.tintColor = .black
         
         self.title = "browse_brands_title".localized
-    }
-    
-    func configureUI() {
-        searchTextField.placeholder = "search".localized
-        
-        searchTextField.leftViewMode = .always
-        let iconView = UIView(frame: CGRect(x: 0, y: 0, width: searchTextField.frame.height, height: searchTextField.frame.height))
-
-        let imageView = UIImageView(frame: CGRect(x: iconView.frame.height / 3, y: iconView.frame.height / 4, width: searchTextField.frame.height / 2, height: searchTextField.frame.height / 2))
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "search")
-        
-        iconView.addSubview(imageView)
-        
-        searchTextField.leftView = iconView
     }
     
     @objc func notImplementedPopup() {

@@ -26,7 +26,6 @@ class FullDetailsBrandHeader: CustomView {
         showBarcodeTapGesture.isEnabled = showBarcode
         if let imageURL = imageUrl, let url = URL(string: imageURL) {
             brandImage.af_setImage(withURL: url)
-            print(brandImage.image?.size)
         }
         brandImage.clipsToBounds = true
         brandImage.backgroundColor = .black

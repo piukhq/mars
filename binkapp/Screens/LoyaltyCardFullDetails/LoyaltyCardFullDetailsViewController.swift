@@ -34,10 +34,6 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         setCloseButton()
     }
     
-    @objc func toTransactionsViewController() {
-        viewModel.toTransactionsViewController()
-    }
-    
     // MARK: - Navigation Bar Blurring
     
     override func viewDidLayoutSubviews() {
