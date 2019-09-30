@@ -18,7 +18,7 @@ struct PaymentCardModel: Codable {
     var account: PaymentCardAccountResponse?
 
     enum CodingKeys: String, CodingKey {
-        case apiId
+        case apiId = "id"
         case membershipCards = "membership_cards"
         case status
         case card
