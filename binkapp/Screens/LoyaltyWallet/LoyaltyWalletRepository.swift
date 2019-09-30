@@ -26,9 +26,9 @@ class LoyaltyWalletRepository: CoreDataRepositoryProtocol {
         let url = RequestURL.membershipCards
         let method = RequestHTTPMethod.get
         
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipCardModel]) in
-            self.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
-                self.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion : completion)
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipCardModel]) in
+            self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
+                self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion : completion)
             })
         }, onError: {_ in
             print("error")
@@ -44,9 +44,9 @@ class LoyaltyWalletRepository: CoreDataRepositoryProtocol {
         let url = RequestURL.membershipPlans
         let method = RequestHTTPMethod.get
         
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [MembershipPlanModel]) in
-            self.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
-                self.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self, completion: completion)
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
+            self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
+                self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self, completion: completion)
             })
         }, onError: {_ in
             print("error")

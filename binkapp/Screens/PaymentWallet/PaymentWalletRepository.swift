@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PaymentWalletRepository: CoreDataRepositoryProtocol {
+class PaymentWalletRepository: CoreDataRepositoryProtocol {
     private let apiManager: ApiManager
     
     init(apiManager: ApiManager) {
@@ -24,9 +24,9 @@ struct PaymentWalletRepository: CoreDataRepositoryProtocol {
         let url = RequestURL.membershipCards
         let method = RequestHTTPMethod.get
 
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [PaymentCardModel]) in
-            self.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
-                self.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self, completion : completion)
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [PaymentCardModel]) in
+            self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
+                self?.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self, completion : completion)
             })
         }, onError: {_ in
             print("error")
