@@ -184,7 +184,8 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         logInButton.isHidden = shouldHideLoginButton
 
         // Card Value
-        cardValueStack.isHidden = shouldHideValueStack
+        cardValuePointsLabel.isHidden = shouldHideValueStack
+        cardValueSuffixLabel.isHidden = shouldHideValueStack
         cardValueSuffixLabel.isHidden = shouldHideValueSuffix
     }
     

@@ -63,27 +63,16 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" distribution="fillProportionally" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="AaS-Q0-chh">
-                                <rect key="frame" x="245" y="18" width="100" height="30"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0s-Zd-Vca">
-                                        <rect key="frame" x="57" y="0.0" width="43" height="16.5"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDN-dC-hcd">
-                                        <rect key="frame" x="62.5" y="16.5" width="37.5" height="13.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0s-Zd-Vca">
+                                <rect key="frame" x="245" y="18" width="100" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="HTW-vA-aLJ"/>
-                                    <constraint firstAttribute="width" constant="100" id="LXe-pT-44v"/>
+                                    <constraint firstAttribute="width" constant="100" id="TL4-Oi-yiB"/>
+                                    <constraint firstAttribute="height" constant="20" id="eeU-qn-CIo"/>
                                 </constraints>
-                            </stackView>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEC-Ml-S8b" customClass="CardAlertView" customModule="binkapp" customModuleProvider="target">
                                 <rect key="frame" x="245" y="18" width="100" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -101,21 +90,33 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDN-dC-hcd">
+                                <rect key="frame" x="245" y="33" width="100" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="cfB-o6-POC"/>
+                                    <constraint firstAttribute="width" constant="100" id="mNq-h4-TiC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="2il-5O-A8c" firstAttribute="centerY" secondItem="boF-NX-uce" secondAttribute="centerY" id="5RY-nx-bTD"/>
                             <constraint firstItem="XSF-3v-XU7" firstAttribute="leading" secondItem="iaS-OT-dXC" secondAttribute="trailing" constant="8" id="9Z1-V8-10W"/>
+                            <constraint firstItem="j0s-Zd-Vca" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" constant="18" id="9ao-VM-BS2"/>
                             <constraint firstItem="2il-5O-A8c" firstAttribute="leading" secondItem="boF-NX-uce" secondAttribute="leading" constant="20" id="ACz-PF-v16"/>
                             <constraint firstAttribute="bottom" secondItem="XSF-3v-XU7" secondAttribute="bottom" constant="16" id="Aow-YE-k0n"/>
                             <constraint firstItem="iaS-OT-dXC" firstAttribute="leading" secondItem="2il-5O-A8c" secondAttribute="trailing" constant="8" id="DYx-O5-Pef"/>
-                            <constraint firstItem="AaS-Q0-chh" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" constant="18" id="PSX-nt-i12"/>
                             <constraint firstAttribute="trailing" secondItem="XSF-3v-XU7" secondAttribute="trailing" constant="20" id="dua-DX-tIV"/>
                             <constraint firstAttribute="trailing" secondItem="1AT-4M-cCB" secondAttribute="trailing" constant="20" id="h7I-kq-IRG"/>
                             <constraint firstItem="UEC-Ml-S8b" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" constant="18" id="iUC-qo-fFG"/>
                             <constraint firstAttribute="trailing" secondItem="UEC-Ml-S8b" secondAttribute="trailing" constant="20" id="ltx-zN-ivF"/>
                             <constraint firstItem="1AT-4M-cCB" firstAttribute="leading" secondItem="2il-5O-A8c" secondAttribute="trailing" constant="60" id="rTp-qt-dTB"/>
-                            <constraint firstAttribute="trailing" secondItem="AaS-Q0-chh" secondAttribute="trailing" constant="20" id="sdI-Mm-32H"/>
+                            <constraint firstAttribute="trailing" secondItem="j0s-Zd-Vca" secondAttribute="trailing" constant="20" id="sJj-fg-6KP"/>
+                            <constraint firstAttribute="trailing" secondItem="gDN-dC-hcd" secondAttribute="trailing" constant="20" id="txX-sa-7kL"/>
+                            <constraint firstItem="gDN-dC-hcd" firstAttribute="top" secondItem="j0s-Zd-Vca" secondAttribute="bottom" constant="-5" id="uRy-zg-AEz"/>
                             <constraint firstItem="iaS-OT-dXC" firstAttribute="centerY" secondItem="XSF-3v-XU7" secondAttribute="centerY" id="vIf-pO-P4X"/>
                             <constraint firstItem="1AT-4M-cCB" firstAttribute="centerY" secondItem="boF-NX-uce" secondAttribute="centerY" id="yEf-p7-39l"/>
                         </constraints>
@@ -146,7 +147,6 @@
                 <outlet property="cardLinkStatusLabel" destination="iaS-OT-dXC" id="ot9-sv-mur"/>
                 <outlet property="cardNameLabel" destination="1AT-4M-cCB" id="pVh-TR-kLX"/>
                 <outlet property="cardValuePointsLabel" destination="j0s-Zd-Vca" id="ri9-JZ-38b"/>
-                <outlet property="cardValueStack" destination="AaS-Q0-chh" id="91M-KS-lCy"/>
                 <outlet property="cardValueSuffixLabel" destination="gDN-dC-hcd" id="j0f-3C-5dz"/>
                 <outlet property="deleteButton" destination="nlL-P9-bge" id="9NQ-Lj-f0y"/>
                 <outlet property="logInButton" destination="UEC-Ml-S8b" id="SBl-aw-HWf"/>
