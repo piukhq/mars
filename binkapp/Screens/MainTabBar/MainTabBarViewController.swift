@@ -38,13 +38,10 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-//        prepareBarWithBlur(bar: tabBar, blurBackground: blurBackground)
+        prepareBarWithBlur(bar: tabBar, blurBackground: blurBackground)
     }
     
     func setNavigationBar() {
-//        navigationController?.setNavigationBarHidden(false, animated: true)
-//        navigationController?.navigationBar.shadowImage = UIImage()
-
         let settingsButton = UIBarButtonItem(image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(settingsButtonTapped))
         navigationItem.rightBarButtonItem = settingsButton
 
