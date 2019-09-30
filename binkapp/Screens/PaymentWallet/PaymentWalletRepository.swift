@@ -8,20 +8,28 @@
 
 import Foundation
 
-struct PaymentWalletRepository {
+struct PaymentWalletRepository: CoreDataRepositoryProtocol {
     private let apiManager: ApiManager
     
     init(apiManager: ApiManager) {
         self.apiManager = apiManager
     }
-    
-    func getPaymentCards(completion: @escaping ([PaymentCardModel]?) -> Void) {
-        let url = RequestURL.getPaymentCards
-        let httpMethod = RequestHTTPMethod.get
-        apiManager.doRequest(url: url, httpMethod: httpMethod, parameters: nil, onSuccess: { (results: [PaymentCardModel]) in
-            completion(results)
-        }) { (error) in
-            completion(nil)
+
+    func getPaymentCards(forceRefresh: Bool = false, completion: @escaping ([CD_PaymentCard]?) -> Void) {
+        guard forceRefresh else {
+            fetchCoreDataObjects(forObjectType: CD_PaymentCard.self, completion: completion)
+            return
         }
+
+        let url = RequestURL.membershipCards
+        let method = RequestHTTPMethod.get
+
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: [PaymentCardModel]) in
+            self.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
+                self.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self, completion : completion)
+            })
+        }, onError: {_ in
+            print("error")
+        })
     }
 }

@@ -9,10 +9,10 @@
 import UIKit
 
 struct PaymentCardCellViewModel {
-    private let paymentCard: PaymentCardModel
+    private let paymentCard: CD_PaymentCard
     private let router: MainScreenRouter
 
-    init(paymentCard: PaymentCardModel, router: MainScreenRouter) {
+    init(paymentCard: CD_PaymentCard, router: MainScreenRouter) {
         self.paymentCard = paymentCard
         self.router = router
     }
@@ -47,7 +47,8 @@ struct PaymentCardCellViewModel {
             let expiryMonth = card.month else {
                 return false
         }
-        guard let expiryDate = Date.makeDate(year: expiryYear, month: expiryMonth, day: 01, hr: 00, min: 00, sec: 00) else {
+        // Tech debt (casting to int)
+        guard let expiryDate = Date.makeDate(year: expiryYear.intValue, month: expiryMonth.intValue, day: 01, hr: 00, min: 00, sec: 00) else {
             return false
         }
         return expiryDate < Date()
@@ -72,7 +73,8 @@ struct PaymentCardCellViewModel {
     }
 
     private func linkedMembershipCardsCount() -> Int {
-        guard let membershipCards = paymentCard.membershipCards else {
+        // Tech debt
+        guard let membershipCards = paymentCard.membershipCards as? Set<CD_PaymentCardMembershipCard> else {
             return 0
         }
         return membershipCards.filter { $0.activeLink == true }.count

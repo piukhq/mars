@@ -37,8 +37,7 @@ class PaymentWalletViewController: UIViewController {
 
         configureCollectionView()
 
-        // Reimplement when we bring core data into this view controller
-//        loadLocalWallet()
+        loadLocalWallet()
         refreshWallet()
     }
 

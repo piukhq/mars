@@ -12,7 +12,7 @@ class PaymentWalletViewModel {
     private let repository: PaymentWalletRepository
     let router: MainScreenRouter
 
-    var paymentCards: [PaymentCardModel]?
+    var paymentCards: [CD_PaymentCard]?
     
     init(repository: PaymentWalletRepository, router: MainScreenRouter) {
         self.repository = repository
