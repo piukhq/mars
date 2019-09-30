@@ -46,7 +46,7 @@ class AuthAndAddViewModel {
         label.isHidden = false
     }
     
-    func getDescriptionText() -> String {
+    private func getDescriptionText() -> String {
         guard let companyName = membershipPlan.account?.planNameCard else { return "" }
         
         if (membershipPlan.featureSet?.hasPoints ?? false) == true && (membershipPlan.featureSet?.transactionsAvailable ?? false) == false {
