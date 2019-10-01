@@ -47,13 +47,20 @@ class AuthAndAddViewModel {
     private func getDescriptionText() -> String {
         guard let companyName = membershipPlan.account?.planNameCard else { return "" }
         
-        if (membershipPlan.featureSet?.hasPoints ?? false) == true && (membershipPlan.featureSet?.transactionsAvailable ?? false) == false {
-            return String(format: "only_points_log_in_description".localized, companyName)
-        } else if (membershipPlan.featureSet?.hasPoints ?? false) == true && (membershipPlan.featureSet?.transactionsAvailable ?? false) == true {
-            return String(format: "points_and_transactions_log_in_description".localized, companyName)
+        if hasPoints() {
+            guard let transactionsAvailable = membershipPlan.featureSet?.transactionsAvailable else {
+                return String(format: "only_points_log_in_description".localized, companyName)
+            }
+            
+            return transactionsAvailable ? String(format: "only_points_log_in_description".localized, companyName) : String(format: "points_and_transactions_log_in_description".localized, companyName)
+        } else {
+            return ""
         }
-        
-        return ""
+    }
+    
+    private func hasPoints() -> Bool {
+        guard let hasPoints = membershipPlan.featureSet?.hasPoints else { return false }
+        return hasPoints
     }
     
     func getMembershipPlan() -> MembershipPlanModel {
