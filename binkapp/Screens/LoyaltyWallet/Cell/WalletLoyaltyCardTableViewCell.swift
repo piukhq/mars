@@ -44,7 +44,6 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
     @IBOutlet weak var cardContainerCenterXConstraint: NSLayoutConstraint!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var barcodeButton: UIButton!
-    @IBOutlet weak var cardValueStack: UIStackView!
     
     weak var delegate: WalletLoyaltyCardCollectionViewCellDelegate?
     
@@ -92,8 +91,15 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
     }
     
     private func setupTheming() {
-        cardNameLabel.font = UIFont.subtitle
-        cardValuePointsLabel.font = UIFont.pointsValue
+        // Set all fonts and text colors
+        [cardNameLabel, cardValuePointsLabel, cardValueSuffixLabel, cardLinkStatusLabel].forEach {
+            $0?.textColor = .white
+        }
+
+        cardNameLabel.font = .subtitle
+        cardValuePointsLabel.font = .pointsValue
+        cardValueSuffixLabel.font = .navbarHeaderLine2
+        cardLinkStatusLabel.font = .statusLabel
         
         logInButton.configureForType(.loyaltyLogIn) { [weak self] in
             guard let self = self else { return }
@@ -125,15 +131,15 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         var shouldHideLoginButton = true
         
         // Card Value
-        var shouldHideValueStack = true
-        var shouldHideValueSuffix = false
+        var shouldHideValue = true
+        var shouldHideValueSuffix = true
 
         switch card.status?.status {
         case .failed?:
             shouldHideLoginButton = false
         case .pending?:
             shouldHideValueSuffix = true
-            shouldHideValueStack = false
+            shouldHideValue = false
             cardValuePointsLabel.text = card.status?.status?.rawValue
         case .authorised?:
             if plan.featureSet?.planCardType == .link {
@@ -147,7 +153,7 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
                 if let balance = card.balances.allObjects.first as? CD_MembershipCardBalance,
                     let balanceValue = balance.value,
                     plan.featureSet?.hasPoints == true {
-                    shouldHideValueStack = false
+                    shouldHideValue = false
                     
                     let attributedPrefix = NSMutableAttributedString(string: balance.prefix ?? "")
                     let attributedSuffix = NSMutableAttributedString(string: balance.suffix ?? "", attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
@@ -159,7 +165,7 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
                     cardValueSuffixLabel.attributedText = attributedSuffix
                 }
             } else {
-                shouldHideValueStack = true
+                shouldHideValue = true
             }
         case .unauthorised?:
             if plan.featureSet?.planCardType == .link {
@@ -169,7 +175,7 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
                 linkImage = UIImage(imageLiteralResourceName: "unlinked")
             }
             
-            shouldHideValueStack = true
+            shouldHideValue = true
         default:
             break
         }
@@ -184,9 +190,8 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         logInButton.isHidden = shouldHideLoginButton
 
         // Card Value
-        cardValuePointsLabel.isHidden = shouldHideValueStack
-        cardValueSuffixLabel.isHidden = shouldHideValueStack
-        cardValueSuffixLabel.isHidden = shouldHideValueSuffix
+        cardValuePointsLabel.isHidden = shouldHideValue
+        cardValueSuffixLabel.isHidden = shouldHideValue
     }
     
     var gradientLayer: CAGradientLayer?
