@@ -93,6 +93,9 @@
 "points_history_title" = "Points history";
 "recent_transaction_history_subtitle" = "Your recent transaction history.";
 
+"only_points_log_in_description" = "You can log in to your %@ account to see your points balance. This is optional";
+"points_and_transactions_log_in_description" = "You can log in to your %@ account to see your points balance and transaction history. This is optional";
+
 "log_in_pending_title" = "Log in pending";
 "log_in_failed_title" = "Log in failed";
 "sign_up_pending_title" = "Sign up pending";

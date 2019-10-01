@@ -28,11 +28,39 @@ class AuthAndAddViewModel {
     private var fieldsViews: [InputValidation] = []
     private var membershipCard: MembershipCardPostModel?
     
-    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: MembershipPlanModel) {
+    var isFirstAuth: Bool
+    
+    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: MembershipPlanModel, isFirstAuth: Bool = true) {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
         self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: membershipPlan.id)
+        self.isFirstAuth = isFirstAuth
+    }
+    
+    func getDescription() -> String? {
+        guard let planName = membershipPlan.account?.planName else { return nil }
+        
+        return isFirstAuth ? String(format: "auth_screen_description".localized, planName) : getDescriptionText()
+    }
+    
+    private func getDescriptionText() -> String {
+        guard let companyName = membershipPlan.account?.planNameCard else { return "" }
+        
+        if hasPoints() {
+            guard let transactionsAvailable = membershipPlan.featureSet?.transactionsAvailable else {
+                return String(format: "only_points_log_in_description".localized, companyName)
+            }
+            
+            return transactionsAvailable ? String(format: "only_points_log_in_description".localized, companyName) : String(format: "points_and_transactions_log_in_description".localized, companyName)
+        } else {
+            return ""
+        }
+    }
+    
+    private func hasPoints() -> Bool {
+        guard let hasPoints = membershipPlan.featureSet?.hasPoints else { return false }
+        return hasPoints
     }
     
     func getMembershipPlan() -> MembershipPlanModel {
@@ -61,67 +89,14 @@ class AuthAndAddViewModel {
         return anyResult as? [String: Any]
     }
     
-    func populateStackView(stackView: UIStackView) {
-        var checkboxes: [CheckboxView] = []
-        if let addFields = membershipPlan.account?.addFields {
-            for field in addFields {
-                switch field.type {
-                    case FieldInputType.textfield.rawValue:
-                        let view = LoginTextFieldView()
-                        view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .add, delegate: self)
-                        fieldsViews.append(view)
-                    case FieldInputType.password.rawValue:
-                        let view = LoginTextFieldView()
-                        view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .add, delegate: self)
-                        fieldsViews.append(view)
-                    case FieldInputType.dropdown.rawValue:
-                        let view = DropdownView()
-                        view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .add, delegate: self)
-                        fieldsViews.append(view)
-                    case FieldInputType.checkbox.rawValue:
-                        let view = CheckboxView()
-                        view.configure(title: field.description ?? "", fieldType: .add)
-                        checkboxes.append(view)
-                    default: break
-                }
-            }
-        }
-        
-        if let authoriseFields = membershipPlan.account?.authoriseFields {
-            for field in authoriseFields {
-                switch field.type {
-                case FieldInputType.textfield.rawValue:
-                    let view = LoginTextFieldView()
-                    view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
-                    fieldsViews.append(view)
-                case FieldInputType.password.rawValue:
-                    let view = LoginTextFieldView()
-                    view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
-                    fieldsViews.append(view)
-                case FieldInputType.dropdown.rawValue:
-                    let view = DropdownView()
-                    view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .authorise, delegate: self)
-                    fieldsViews.append(view)
-                case FieldInputType.checkbox.rawValue:
-                    let view = CheckboxView()
-                    view.configure(title: field.description ?? "", fieldType: .authorise)
-                    checkboxes.append(view)
-                default: break
-                }
-            }
-        }
-        
-        for box in checkboxes {
-            fieldsViews.append(box)
-        }
-        
-        if fieldsViews.isEmpty == false {
-            for view in fieldsViews {
-                if view is UIView {
-                    stackView.addArrangedSubview(view as! UIView)
-                }
-            }
-        }
+    func getAddFields() -> [AddFieldModel] {
+        guard let fields = membershipPlan.account?.addFields else { return [] }
+        return isFirstAuth ? fields : []
+    }
+    
+    func getAuthorizeFields() -> [AuthoriseFieldModel] {
+        guard let fields = membershipPlan.account?.authoriseFields else { return [] }
+        return fields
     }
     
     func allFieldsAreValid() -> Bool {
@@ -164,12 +139,6 @@ class AuthAndAddViewModel {
     
     func popToRootViewController() {
         router.popToRootViewController()
-    }
-}
-
-extension AuthAndAddViewModel: LoginTextFieldDelegate {
-    func loginTextFieldView(_ loginTextFieldView: LoginTextFieldView, didCompleteWithColumn column: String, value: String, fieldType: FieldType) {
-        addFieldToCard(column: column, value: value, fieldType: fieldType)
     }
 }
 

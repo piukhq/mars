@@ -18,6 +18,7 @@ class AuthAndAddViewController: UIViewController {
     
     private let viewModel: AuthAndAddViewModel
     private var isKeyboardOpen = false
+    private var fieldsViews: [InputValidation] = []
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
@@ -53,15 +54,75 @@ class AuthAndAddViewController: UIViewController {
         titleLabel.text = "log_in_title".localized
         titleLabel.font = UIFont.headline
         
-        if let planName = membershipPlan.account?.planName {
-            descriptionLabel.text = String(format: "auth_screen_description".localized, planName)
-            descriptionLabel.font = UIFont.bodyTextLarge
-            descriptionLabel.isHidden = false
-        }
+        descriptionLabel.text = viewModel.getDescription()
+        descriptionLabel.font = UIFont.bodyTextLarge
+        descriptionLabel.isHidden = viewModel.getDescription() == nil
         
         loginButton.setTitle("log_in_title".localized, for: .normal)
         
-        viewModel.populateStackView(stackView: fieldsStackView)
+        populateStackViewWithFields()
+    }
+    
+    func populateStackViewWithFields() {
+        var checkboxes = [CheckboxView]()
+        let addFields = viewModel.getAddFields()
+        let authorizeFields = viewModel.getAuthorizeFields()
+        
+        for field in addFields {
+            switch field.type {
+            case FieldInputType.textfield.rawValue:
+                let view = LoginTextFieldView()
+                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
+                fieldsViews.append(view)
+            case FieldInputType.password.rawValue:
+                let view = LoginTextFieldView()
+                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
+                fieldsViews.append(view)
+            case FieldInputType.dropdown.rawValue:
+                let view = DropdownView()
+                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .authorise, delegate: self)
+                fieldsViews.append(view)
+            case FieldInputType.checkbox.rawValue:
+                let view = CheckboxView()
+                view.configure(title: field.description ?? "", fieldType: .authorise)
+                checkboxes.append(view)
+            default: break
+            }
+        }
+        
+        for field in authorizeFields {
+            switch field.type {
+            case FieldInputType.textfield.rawValue:
+                let view = LoginTextFieldView()
+                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
+                fieldsViews.append(view)
+            case FieldInputType.password.rawValue:
+                let view = LoginTextFieldView()
+                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
+                fieldsViews.append(view)
+            case FieldInputType.dropdown.rawValue:
+                let view = DropdownView()
+                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .authorise, delegate: self)
+                fieldsViews.append(view)
+            case FieldInputType.checkbox.rawValue:
+                let view = CheckboxView()
+                view.configure(title: field.description ?? "", fieldType: .authorise)
+                checkboxes.append(view)
+            default: break
+            }
+        }
+        
+        for box in checkboxes {
+            fieldsViews.append(box)
+        }
+        
+        if fieldsViews.isEmpty == false {
+            for view in fieldsViews {
+                if view is UIView {
+                    fieldsStackView.addArrangedSubview(view as! UIView)
+                }
+            }
+        }
     }
     
     @objc func popViewController() {
@@ -84,5 +145,17 @@ class AuthAndAddViewController: UIViewController {
 extension AuthAndAddViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displaySimplePopup(title: (viewModel.getMembershipPlan().account?.planNameCard) ?? nil, message: (viewModel.getMembershipPlan().account?.planDescription) ?? nil)
+    }
+}
+
+extension AuthAndAddViewController: LoginTextFieldDelegate {
+    func loginTextFieldView(_ loginTextFieldView: LoginTextFieldView, didCompleteWithColumn column: String, value: String, fieldType: FieldType) {
+        viewModel.addFieldToCard(column: column, value: value, fieldType: fieldType)
+    }
+}
+
+extension AuthAndAddViewController: DropdownDelegate {
+    func dropdownView(_ dropdownView: DropdownView, didSetDataWithColumn column: String, value: String, fieldType: FieldType) {
+        viewModel.addFieldToCard(column: column, value: value, fieldType: fieldType)
     }
 }
