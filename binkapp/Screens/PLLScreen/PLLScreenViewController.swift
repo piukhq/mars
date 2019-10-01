@@ -9,11 +9,20 @@ import UIKit
 
 class PLLScreenViewController: UIViewController {
     @IBOutlet private weak var brandHeaderView: BrandHeaderView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var primaryMessageLabel: UILabel!
+    @IBOutlet weak var secondaryMesageLabel: UILabel!
+    @IBOutlet weak var floatingButtonsView: BinkFloatingButtonsView!
+    @IBOutlet weak var paymentCardsTableView: UITableView!
     
     private let viewModel: PLLScreenViewModel
+    private let isEmpty: Bool
+    private let paymentCards: [PaymentCardModel]
     
-    init(viewModel: PLLScreenViewModel) {
+    init(viewModel: PLLScreenViewModel, isEmpty: Bool, paymentCards: [PaymentCardModel]? = nil) {
         self.viewModel = viewModel
+        self.isEmpty = isEmpty
+        self.paymentCards = paymentCards ?? []
         super.init(nibName: "PLLScreenViewController", bundle: Bundle(for: PLLScreenViewController.self))
     }
     
@@ -48,6 +57,25 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displaySimplePopup(title: ((viewModel.getMembershipPlan().account?.planNameCard) ?? ""), message: (viewModel.getMembershipPlan().account?.planDescription) ?? "")
     }
+}
+
+// MARK: - UITableViewDataSource
+
+extension PLLScreenViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return paymentCards.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = PaymentCardCell()
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension PLLScreenViewController: UITableViewDelegate {
+    
 }
 
 // MARK: - Private methods
