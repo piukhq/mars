@@ -85,36 +85,28 @@ class LoyaltyCardFullDetailsViewModel {
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .unLinkable:
-            let title = "unlinkable_pll_title".localized
-            let description = "unlinkable_pll_description".localized
-            
-            let attributedText = NSMutableAttributedString(string: title + "\n" + description)
-            attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-            attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
-            
-            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
-            
-            let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
-            
-            router.toReusableModalTemplateViewController(configurationModel: configurationModel)
+            toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)
             break
         case .genericError:
-            let title = "error_title".localized
             let state = membershipCard.status?.state?.rawValue ?? ""
             let reasonCodes = membershipCard.status?.reasonCodes ?? [""]
             let description = state + "\n" + reasonCodes.joined(separator: ", ")
-            
-            let attributedText = NSMutableAttributedString(string: title + "\n" + description)
-            attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-            attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
-            
-            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
-            
-            let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
-            
-            router.toReusableModalTemplateViewController(configurationModel: configurationModel)
+    
+            toReusableModalTemplate(title: "error_title".localized, description: description)
             break
         }
+        
+    }
+    
+    private func toReusableModalTemplate(title: String, description: String) {
+        let attributedText = NSMutableAttributedString(string: title + "\n" + description)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
+        
+        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
     func popToRootController() {
