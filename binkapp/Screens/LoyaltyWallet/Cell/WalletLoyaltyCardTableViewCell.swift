@@ -370,33 +370,33 @@ class RectangleView: UIView {
     var secondColorHex: String = "#888888"
     
     override func draw(_ rect: CGRect) {
-        //// General Declarations
+        /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
-        //// Color Declarations
+        /// Color Declarations
         let firstColor = UIColor(hexString: firstColorHex)
         let secondColor = UIColor(hexString: secondColorHex)
-        
-        //// Rectangle Drawing
+
+        /// Rectangle Drawing
         context.saveGState()
         context.translateBy(x: 120.76, y: 81.4)
         context.rotate(by: -45 * CGFloat.pi/180)
-        
-        let rectanglePath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 427.54, height: 333.64), cornerRadius: 8)
+
+        let rectanglePath = UIBezierPath(roundedRect: CGRect(x: -15, y: -5, width: 427.54, height: 333.64), cornerRadius: 12)
         secondColor.setFill()
         rectanglePath.fill()
-        
+
         context.restoreGState()
-        
-        //// Rectangle 2 Drawing
+
+        /// Rectangle 2 Drawing
         context.saveGState()
         context.translateBy(x: 134, y: 38.72)
         context.rotate(by: -20 * CGFloat.pi/180)
-        
-        let rectangle2Path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 514.29, height: 370.52), cornerRadius: 8)
+
+        let rectangle2Path = UIBezierPath(roundedRect: CGRect(x: -15, y: -5, width: 514.29, height: 370.52), cornerRadius: 12)
         firstColor.setFill()
         rectangle2Path.fill()
-        
+
         context.restoreGState()
     }
 }
