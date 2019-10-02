@@ -47,6 +47,10 @@ struct AddPaymentCardViewModel {
     func toPaymentTermsAndConditions(delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
         router.toPaymentTermsAndConditionsViewController(delegate: delegate)
     }
+    
+    func toPrivacyAndSecurity() {
+        router.toPrivacyAndSecurityViewController()
+    }
 
     func addPaymentCard(completion: @escaping (Bool) -> Void) {
         guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard) else {

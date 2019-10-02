@@ -23,6 +23,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         static let cardPadding: CGFloat = 30.0
         static let bottomButtonPadding: CGFloat = 78.0
         static let cardHeight: CGFloat = 120.0
+        static let hyperlinkHeight: CGFloat = 54.0
     }
     
     private lazy var addButton: BinkGradientButton = {
@@ -56,7 +57,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         if let card = card {
             stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: Constants.cardPadding)
         }
-        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "Privacy and security"), hyperlinkButton(title: "More information")])
+        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "privacy_and_security_title".localized)])
         stackScrollView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
         configureLayout()
     }
@@ -107,7 +108,8 @@ class AddPaymentCardViewController: BaseFormViewController {
         )
         button.setAttributedTitle(attrString, for: .normal)
         button.contentHorizontalAlignment = .left
-        button.heightAnchor.constraint(equalToConstant: 54.0).isActive = true
+        button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
+        button.addTarget(self, action: .privacyButtonTapped, for: .touchUpInside)
         return button
     }
     
@@ -115,6 +117,10 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     @objc func addButtonTapped() {
         viewModel.toPaymentTermsAndConditions(delegate: self)
+    }
+    
+    @objc func privacyButtonTapped() {
+        viewModel.toPrivacyAndSecurity()
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
@@ -218,4 +224,5 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
 
 private extension Selector {
     static let addButtonTapped = #selector(AddPaymentCardViewController.addButtonTapped)
+    static let privacyButtonTapped = #selector(AddPaymentCardViewController.privacyButtonTapped)
 }

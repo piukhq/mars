@@ -148,8 +148,6 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
     }
 
     private func processGradient(type: PaymentCardType?) {
-    
-        
         
         if gradientLayer == nil {
             let gradient = CAGradientLayer()

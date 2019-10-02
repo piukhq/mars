@@ -81,6 +81,9 @@
 "delete_card_title" = "Delete this card";
 "delete_card_message" = "Remove this card from Bink";
 
+"privacy_and_security_body" = "We take security very seriously and keeping your personal details safe is very important to us.\nWe are a PCI certified service provider which means that we meet the highest level of security standards set by the payment card industry. This certification requires us to employ a wide range of measures designed to protect the security of your information. We recommend that you secure your app with Touch ID and/or a passcode for an extra layer of security.\nWe carefully check all the parties who we share your personal information with. To find out more you can see our Privacy Policy here.";
+"privacy_and_security_link" = "here";
+
 "transaction_history_unavailable_title" = "Transaction history unavailable";
 "transaction_history_unavailable_description" = "We are unable to currently show the transaction history for this loyalty scheme yet.";
 "last_checked" = "Last Checked %@ ago.";
@@ -116,6 +119,7 @@
 "link_module_to_number_of_payment_cards_message" = "To %d of %d cards";
 
 "terms_and_conditions_title" = "Terms and conditions";
+"privacy_and_security_title" = "Privacy and Security";
 
 "native_join_unavailable_title" = "Native join unavailable";
 "native_join_unavailable_description" = "You can go to the merchant website to join then come back and add your card. Or we can email you the link so you can sign up on your computer. Copy needed.";
