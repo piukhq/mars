@@ -40,14 +40,16 @@ class BrowseBrandsViewController: UIViewController {
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
         navigationItem.leftBarButtonItem = backButton
         
-        let filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(notImplementedPopup))
-        navigationItem.rightBarButtonItem = filtersButton
-        navigationItem.rightBarButtonItem?.tintColor = .black
+        //TODO: uncomment this to display the Filters button
+//        let filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(notImplementedPopup))
+//        navigationItem.rightBarButtonItem = filtersButton
+//        navigationItem.rightBarButtonItem?.tintColor = .black
         
         self.title = "browse_brands_title".localized
     }
     
     func configureUI() {
+        //TODO: set height of 40px and bottom constraint of 30 to the searchTextField when ready for development
         searchTextField.placeholder = "search".localized
         
         searchTextField.leftViewMode = .always
