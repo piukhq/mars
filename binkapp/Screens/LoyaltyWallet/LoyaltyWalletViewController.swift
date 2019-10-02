@@ -52,8 +52,7 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel.delegate = self
+
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -136,17 +135,6 @@ extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? WalletLoyaltyCardCollectionViewCell else { return }
         cell.set(to: .closed)
-    }
-}
-
-// MARK: - View model delegate
-
-extension LoyaltyWalletViewController: LoyaltyWalletViewModelDelegate {
-    func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel) {
-        DispatchQueue.main.async { [weak self] in
-            self?.refreshControl.endRefreshing()
-            self?.collectionView.reloadData()
-        }
     }
 }
 

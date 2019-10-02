@@ -278,6 +278,7 @@
 		EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */; };
 		EF4B465E2343B5FF009A3651 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465D2343B5FF009A3651 /* RectangleView.swift */; };
 		EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */; };
+		EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */; };
 		EF758E0823225F35000D26A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0723225F35000D26A9 /* Database.swift */; };
 		EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */; };
 		EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0C23225F45000D26A9 /* NSManagedObjectContext.swift */; };
@@ -629,6 +630,7 @@
 		EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
 		EF4B465D2343B5FF009A3651 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
 		EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModel.swift; sourceTree = "<group>"; };
+		EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackUtil.swift; sourceTree = "<group>"; };
 		EF758E0723225F35000D26A9 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		EF758E0923225F3B000D26A9 /* SwiftDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftDatabase.h; sourceTree = "<group>"; };
 		EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersistentContainer.swift; sourceTree = "<group>"; };
@@ -994,6 +996,7 @@
 				3CB81C12231E74220075D3AC /* ImageTypeEnum.swift */,
 				3C8BBC26232651E900363349 /* Connectivity.swift */,
 				3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */,
+				EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1954,6 +1957,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B766599E23214A4600B327BE /* WalletLoyaltyCardCollectionViewCell.swift in Sources */,
+				EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */,
 				5ECE04A922CE582E001BA964 /* LoginRepository.swift in Sources */,
 				BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */,
 				BDD9C878233BE6B1003CD616 /* _CD_AuthoriseField.swift in Sources */,
