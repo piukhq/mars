@@ -10,6 +10,7 @@ open class CD_AuthoriseField: _CD_AuthoriseField {
     }
     
     var choicesArray: [String]? {
-        return choices.allObjects as? [String]
+        guard let formatted = choices.allObjects as? [CD_FieldChoice] else { return  nil }
+        return formatted.compactMap { $0.value }
     }
 }

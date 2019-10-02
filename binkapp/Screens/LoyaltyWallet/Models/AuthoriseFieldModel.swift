@@ -38,10 +38,14 @@ extension AuthoriseFieldModel: CoreDataMappable, CoreDataIDMappable {
             guard let choice = $0 as? CD_FieldChoice else { return }
             context.delete(choice)
         }
-        choices?.forEach { choice in
-            let cdChoice = choice.mapToCoreData(context, .update, overrideID: nil)
-            update(cdChoice, \.authoriseField, with: cdObject, delta: delta)
-            cdObject.addChoicesObject(cdChoice)
+        
+        if let choices = choices {
+            for (index, choice) in choices.enumerated() {
+                let indexID = AuthoriseFieldModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdChoice = choice.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdChoice, \.authoriseField, with: cdObject, delta: delta)
+                cdObject.addChoicesObject(cdChoice)
+            }
         }
 
         return cdObject

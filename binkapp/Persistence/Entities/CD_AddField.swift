@@ -10,6 +10,7 @@ open class CD_AddField: _CD_AddField {
     }
     
     var choicesArray: [String]? {
-        return choices.allObjects as? [String]
+        guard let formatted = choices.allObjects as? [CD_FieldChoice] else { return  nil }
+        return formatted.compactMap { $0.value }
     }
 }

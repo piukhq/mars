@@ -39,12 +39,15 @@ extension AddFieldModel: CoreDataMappable, CoreDataIDMappable {
             context.delete(choice)
         }
         
-        choices?.forEach { choice in
-            let cdChoice = choice.mapToCoreData(context, .update, overrideID: nil)
-            update(cdChoice, \.addField, with: cdObject, delta: delta)
-            cdObject.addChoicesObject(cdChoice)
+        if let choices = choices {
+            for (index, choice) in choices.enumerated() {
+                let indexID = AddFieldModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdChoice = choice.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdChoice, \.addField, with: cdObject, delta: delta)
+                cdObject.addChoicesObject(cdChoice)
+            }
         }
-
+        
         return cdObject
     }
 }
