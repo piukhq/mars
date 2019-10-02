@@ -23,19 +23,19 @@ class MainTabBarViewModel {
     }
     
     func getTabBarLoyaltyButton() -> UITabBarItem {
-        let item = UITabBarItem(title: nil, image: UIImage(named: "loyaltyInactive")?.withRenderingMode(.alwaysOriginal), tag: Buttons.loyaltyItem.rawValue)
-        item.selectedImage = UIImage(named: "loyaltyActive")?.withRenderingMode(.alwaysOriginal)
+        let item = UITabBarItem(title: nil, image: UIImage(named: "loyaltyInactive"), tag: Buttons.loyaltyItem.rawValue)
+        item.selectedImage = UIImage(named: "loyaltyActive")
         return item
     }
     
     func getTabBarAddButton() -> UITabBarItem {
-        let item = UITabBarItem(title: nil, image: UIImage(named: "add")?.withRenderingMode(.alwaysOriginal), tag: Buttons.addItem.rawValue)
+        let item = UITabBarItem(title: nil, image: UIImage(named: "add"), tag: Buttons.addItem.rawValue)
         return item
     }
     
     func getTabBarPaymentButton() -> UITabBarItem {
-        let item = UITabBarItem(title: nil, image: UIImage(named: "paymentInactive")?.withRenderingMode(.alwaysOriginal), tag: Buttons.paymentItem.rawValue)
-        item.selectedImage = UIImage(named: "paymentActive")?.withRenderingMode(.alwaysOriginal)
+        let item = UITabBarItem(title: nil, image: UIImage(named: "paymentInactive"), tag: Buttons.paymentItem.rawValue)
+        item.selectedImage = UIImage(named: "paymentActive")
         return item
     }
     

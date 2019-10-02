@@ -77,7 +77,7 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func setCloseButton() {
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popToRootController
+        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popToRootController
             ))
         self.navigationItem.setLeftBarButton(closeButton, animated: true)
     }

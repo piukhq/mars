@@ -34,7 +34,7 @@ class TransactionsViewController: UIViewController {
     }
     
     private func configureUI() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         titleLabel.font = .headline
         lastCheckedLabel.font = .bodyTextLarge
         descriptionLabel.font = .bodyTextLarge
