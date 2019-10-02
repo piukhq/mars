@@ -5,7 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol LoyaltyCardFullDetailsViewModelDelegate: class {
     func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel])
@@ -85,18 +85,36 @@ class LoyaltyCardFullDetailsViewModel {
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .unLinkable:
-            //TODO: change to unlinkable error screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)
             break
         case .genericError:
-            //TODO: change to generic error screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            let state = membershipCard.status?.state?.rawValue ?? ""
+            let reasonCodes = membershipCard.status?.reasonCodes ?? [""]
+            let description = state + "\n" + reasonCodes.joined(separator: ", ")
+    
+            toReusableModalTemplate(title: "error_title".localized, description: description)
             break
         }
+        
+    }
+    
+    private func toReusableModalTemplate(title: String, description: String) {
+        let attributedText = NSMutableAttributedString(string: title + "\n" + description)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
+        
+        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
     func popToRootController() {
         router.popToRootViewController()
+    }
+    
+    @objc func popViewController() {
+        router.popViewController()
     }
     
     func displaySimplePopupWithTitle(_ title: String, andMessage message: String) {
