@@ -17,6 +17,7 @@ class LoyaltyCardFullDetailsViewModel {
     
     let membershipCard: MembershipCardModel
     let membershipPlan: MembershipPlanModel
+    var paymentCards: [PaymentCardModel]?
     weak var delegate: LoyaltyCardFullDetailsViewModelDelegate?
     
     init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
@@ -30,8 +31,9 @@ class LoyaltyCardFullDetailsViewModel {
     
     func getPaymentCards() {
         repository.getPaymentCards { [weak self] (results) in
-            guard let wself = self else { return }
-            wself.delegate?.loyaltyCardFullDetailsViewModelDidFetchPaymentCards(wself, paymentCards: results)
+            guard let self = self else { return }
+            self.paymentCards = results
+            self.delegate?.loyaltyCardFullDetailsViewModelDidFetchPaymentCards(self, paymentCards: results)
         }
     }
     
@@ -82,7 +84,7 @@ class LoyaltyCardFullDetailsViewModel {
             break
         case .pll:
             //TODO: change to PLL screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            router.toPllViewController(membershipCard: membershipCard, membershipPlan: membershipPlan, paymentCards: self.paymentCards)
             break
         case .unLinkable:
             //TODO: change to unlinkable error screen after is implemented

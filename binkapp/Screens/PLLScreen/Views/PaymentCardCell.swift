@@ -19,6 +19,6 @@ class PaymentCardCell: UITableViewCell {
         paymentCardImageView.image = image
         titleLabel.text = title
         subtitleLabel.text = subtitle
-//        switchButton.onTintColor = setgrad
+        switchButton.setGradientBackground(firstColor: .binkPurple, secondColor: .blueAccent, orientation: .horizontal, roundedCorner: true)
     }
 }

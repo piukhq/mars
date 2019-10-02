@@ -16,13 +16,9 @@ class PLLScreenViewController: UIViewController {
     @IBOutlet weak var paymentCardsTableView: UITableView!
     
     private let viewModel: PLLScreenViewModel
-    private let isEmpty: Bool
-    private let paymentCards: [PaymentCardModel]
     
-    init(viewModel: PLLScreenViewModel, isEmpty: Bool, paymentCards: [PaymentCardModel]? = nil) {
+    init(viewModel: PLLScreenViewModel) {
         self.viewModel = viewModel
-        self.isEmpty = isEmpty
-        self.paymentCards = paymentCards ?? []
         super.init(nibName: "PLLScreenViewController", bundle: Bundle(for: PLLScreenViewController.self))
     }
     
@@ -33,6 +29,8 @@ class PLLScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBrandHeader()
+        configureUI()
+        paymentCardsTableView.register(UINib(nibName: "PaymentCardCell", bundle: Bundle(for: PaymentCardCell.self)), forCellReuseIdentifier: "PaymentCardCell")
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
@@ -63,11 +61,14 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 
 extension PLLScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return paymentCards.count
+        if let paymentCards = viewModel.paymentCards {
+            return paymentCards.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = PaymentCardCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PaymentCardCell", for: indexPath)
         return cell
     }
 }
@@ -85,6 +86,10 @@ private extension PLLScreenViewController {
         let membershipPlan = viewModel.getMembershipPlan()
         let imageUrlString = membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue })?.url
         brandHeaderView.configure(imageURLString: imageUrlString, loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
+    }
+    
+    func configureUI(){
+        viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: "Add payment cards") : floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: nil)
     }
 }
 
