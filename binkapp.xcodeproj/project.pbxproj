@@ -277,6 +277,7 @@
 		EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485576231D72E700FC9E5F /* ModalDismissable.swift */; };
 		EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */; };
 		EF4B465E2343B5FF009A3651 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465D2343B5FF009A3651 /* RectangleView.swift */; };
+		EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */; };
 		EF758E0823225F35000D26A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0723225F35000D26A9 /* Database.swift */; };
 		EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */; };
 		EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0C23225F45000D26A9 /* NSManagedObjectContext.swift */; };
@@ -627,6 +628,7 @@
 		EF485576231D72E700FC9E5F /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
 		EF4B465D2343B5FF009A3651 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
+		EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModel.swift; sourceTree = "<group>"; };
 		EF758E0723225F35000D26A9 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		EF758E0923225F3B000D26A9 /* SwiftDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftDatabase.h; sourceTree = "<group>"; };
 		EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersistentContainer.swift; sourceTree = "<group>"; };
@@ -863,6 +865,7 @@
 			children = (
 				BD01E122231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib */,
 				3C873FE422F073CE00FA3031 /* WalletLoyaltyCardCollectionViewCell.swift */,
+				EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2094,6 +2097,7 @@
 				B7665992231E57AE00B327BE /* CardDetailsInfoView.swift in Sources */,
 				BDD9C88A233BE6B1003CD616 /* _CD_EnrolField.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
+				EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
 				BDD9C875233BE6B1003CD616 /* _CD_MembershipPlanAccount.swift in Sources */,
 				BDD9C87F233BE6B1003CD616 /* CD_AuthoriseField.swift in Sources */,

@@ -109,10 +109,13 @@ extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WalletLoyaltyCardCollectionViewCell", for: indexPath) as! WalletLoyaltyCardCollectionViewCell
-        
-        if let card = viewModel.membershipCard(forIndexPath: indexPath) {
-            cell.configureUIWithMembershipCard(card: card, delegate: self)
+
+        guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
+            return cell
         }
+
+        let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+        cell.configureUIWithViewModel(viewModel: cellViewModel, delegate: self)
         
         return cell
     }

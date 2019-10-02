@@ -44,7 +44,8 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
     @IBOutlet weak var cardContainerCenterXConstraint: NSLayoutConstraint!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var barcodeButton: UIButton!
-    
+
+    private var viewModel: WalletLoyaltyCardCellViewModel!
     weak var delegate: WalletLoyaltyCardCollectionViewCellDelegate?
 
     var gradientLayer: CAGradientLayer?
@@ -110,94 +111,43 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         cardLinkStatusLabel.font = .statusLabel
     }
     
-    func configureUIWithMembershipCard(card: CD_MembershipCard, delegate: WalletLoyaltyCardCollectionViewCellDelegate) {
+    func configureUIWithViewModel(viewModel: WalletLoyaltyCardCellViewModel, delegate: WalletLoyaltyCardCollectionViewCellDelegate) {
+        self.viewModel = viewModel
         self.delegate = delegate
         
-        guard let plan = card.membershipPlan else { return }
-        
+        guard let plan = viewModel.membershipPlan else { return }
+
+        /// Brand icon
         if let iconImage = plan.firstIconImage(),
             let urlString = iconImage.url,
             let imageURL = URL(string: urlString) {
             cardIconImage.af_setImage(withURL: imageURL)
         }
 
-        cardContainer.firstColorHex = card.card?.colour ?? ""
+        /// Brand colours
+        cardContainer.firstColorHex = viewModel.brandColorHex ?? ""
+
+        /// Brand name
         cardNameLabel.text = plan.account?.companyName
         
-        // Link Status
-        var linkTextContent: String?
-        var linkImage: UIImage?
-        var shouldHideLinkStatusImage = true
-        var shouldHideLinkStatusLabel = true
+        /// Link Status
+        cardLinkStatusLabel.text = viewModel.linkStatusText
+        cardLinkStatusImage.image = UIImage(named: viewModel.linkStatusImageName)
+        cardLinkStatusImage.isHidden = !viewModel.shouldShowLinkStatus
+        cardLinkStatusLabel.isHidden = !viewModel.shouldShowLinkStatus
         
-        // Login Button
-        var shouldHideLoginButton = true
-        
-        // Card Value
-        var shouldHideValue = true
-
-        switch card.status?.status {
-        case .failed?:
-            shouldHideLoginButton = false
-        case .pending?:
-            shouldHideValue = false
-            cardValuePointsLabel.text = card.status?.status?.rawValue
-        case .authorised?:
-            if plan.featureSet?.planCardType == .link {
-                linkImage = UIImage(imageLiteralResourceName: "linked")
-                shouldHideLinkStatusImage = false
-                shouldHideLinkStatusLabel = false
-                linkTextContent = "card_linked_status".localized
-            }
-            
-            if plan.featureSet?.hasPoints?.boolValue == true {
-                if let balance = card.balances.allObjects.first as? CD_MembershipCardBalance,
-                    let balanceValue = balance.value,
-                    plan.featureSet?.hasPoints == true {
-                    shouldHideValue = false
-                    
-                    let attributedPrefix = NSMutableAttributedString(string: balance.prefix ?? "")
-                    let attributedSuffix = NSMutableAttributedString(string: balance.suffix ?? "", attributes:[NSAttributedString.Key.font: UIFont.navbarHeaderLine2])
-                    let attributedValue = NSMutableAttributedString(string: balanceValue.stringValue)
-                    let attributedLabelText = NSMutableAttributedString()
-                    attributedLabelText.append(attributedPrefix)
-                    attributedLabelText.append(attributedValue)
-                    cardValuePointsLabel.attributedText = attributedLabelText
-                    cardValueSuffixLabel.attributedText = attributedSuffix
-                }
-            } else {
-                shouldHideValue = true
-            }
-        case .unauthorised?:
-            if plan.featureSet?.planCardType == .link {
-                shouldHideLinkStatusLabel = false
-                shouldHideLinkStatusImage = false
-                linkTextContent = NSLocalizedString("card_can_not_link_status", comment: "")
-                linkImage = UIImage(imageLiteralResourceName: "unlinked")
-            }
-            
-            shouldHideValue = true
-        default:
-            break
-        }
-        
-        // Link Status
-        cardLinkStatusLabel.text = linkTextContent
-        cardLinkStatusImage.image = linkImage
-        cardLinkStatusImage.isHidden = shouldHideLinkStatusImage
-        cardLinkStatusLabel.isHidden = shouldHideLinkStatusLabel
-        
-        // Login Button
-        logInButton.isHidden = shouldHideLoginButton
-
-        // Card Value
-        cardValuePointsLabel.isHidden = shouldHideValue
-        cardValueSuffixLabel.isHidden = shouldHideValue
-
+        /// Login Button
         logInButton.configureForType(.loyaltyLogIn) { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.cellPerform(action: .login, cell: self)
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.cellPerform(action: .login, cell: strongSelf)
         }
+        logInButton.isHidden = !viewModel.shouldShowLoginButton
+
+        /// Card Value
+        cardValuePointsLabel.text = viewModel.pointsValueText
+        cardValueSuffixLabel.text = viewModel.pointsValueSuffixText
+        cardValuePointsLabel.isHidden = !viewModel.shouldShowPointsValueLabels
+        cardValueSuffixLabel.isHidden = !viewModel.shouldShowPointsValueLabels
     }
 
 }
