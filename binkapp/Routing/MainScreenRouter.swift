@@ -106,9 +106,9 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toAuthAndAddViewController(membershipPlan: MembershipPlanModel) {
+    func toAuthAndAddViewController(membershipPlan: MembershipPlanModel, isFirstAuth: Bool = true) {
         let repository = AuthAndAddRepository(apiManager: apiManager)
-        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, isFirstAuth: isFirstAuth)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
