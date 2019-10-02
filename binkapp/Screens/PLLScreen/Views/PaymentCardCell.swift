@@ -9,16 +9,16 @@
 import UIKit
 
 class PaymentCardCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+    @IBOutlet private weak var paymentCardImageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
+    @IBOutlet private weak var switchButton: UISwitch!
     
+    
+    func configureUI(image: UIImage, title: String, subtitle: String) {
+        paymentCardImageView.image = image
+        titleLabel.text = title
+        subtitleLabel.text = subtitle
+//        switchButton.onTintColor = setgrad
+    }
 }
