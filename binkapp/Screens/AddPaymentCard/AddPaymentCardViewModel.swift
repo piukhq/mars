@@ -11,7 +11,7 @@ import Foundation
 struct AddPaymentCardViewModel {
     private let apiManager: ApiManager
     private let router: MainScreenRouter
-    private let paymentCard: PaymentCardCreateModel
+    let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
     init(apiManager: ApiManager, router: MainScreenRouter, paymentCard: PaymentCardCreateModel) {
         self.apiManager = apiManager

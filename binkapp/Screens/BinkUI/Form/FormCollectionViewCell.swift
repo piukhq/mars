@@ -58,7 +58,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.textFieldExplainer
         label.textColor = .red
-        label.text = "Field Invalid"
+        label.text = "Incorrect Format"
         label.isHidden = true
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         return label
