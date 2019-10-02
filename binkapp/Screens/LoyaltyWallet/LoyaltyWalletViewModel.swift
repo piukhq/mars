@@ -9,17 +9,12 @@ import Foundation
 import UIKit
 import DeepDiff
 
-protocol LoyaltyWalletViewModelDelegate {
-    func loyaltyWalletViewModelDidFetchData(_ viewModel: LoyaltyWalletViewModel)
-}
-
 class LoyaltyWalletViewModel {
     private let repository: LoyaltyWalletRepository
     private let router: MainScreenRouter
     private var membershipCards: [CD_MembershipCard]?
     private var membershipPlans: [CD_MembershipPlan]?
     
-    var delegate: LoyaltyWalletViewModelDelegate?
     var membershipCardsCount: Int {
         return membershipCards?.count ?? 0
     }
