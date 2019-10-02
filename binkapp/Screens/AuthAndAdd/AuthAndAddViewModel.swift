@@ -34,33 +34,41 @@ class AuthAndAddViewModel {
     private var fieldsViews: [InputValidation] = []
     private var membershipCard: MembershipCardPostModel?
     
-    var isFirstAuth: Bool
     var formPurpose: FormPurpose
     
-    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: MembershipPlanModel, isFirstAuth: Bool = true, formPurpose: FormPurpose) {
+    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: MembershipPlanModel, formPurpose: FormPurpose) {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
         self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: membershipPlan.id)
-        self.isFirstAuth = isFirstAuth
         self.formPurpose = formPurpose
     }
     
     func getDescription() -> String? {
-        guard let planName = membershipPlan.account?.planName else { return nil }
         
-        return isFirstAuth ? String(format: "auth_screen_description".localized, planName) : getDescriptionText()
+        switch formPurpose {
+        case .firstLogin:
+            guard let planName = membershipPlan.account?.planName else { return nil }
+            return String(format: "auth_screen_description".localized, planName)
+        case .otherLogin:
+            return getDescriptionForOtherLogin()
+        case .signUp:
+            guard let companyName = membershipPlan.account?.companyName else { return nil }
+            return String(format: "sign_up_new_card_description".localized, companyName)
+        }
+        
+//        return isFirstAuth ? String(format: "auth_screen_description".localized, planName) : getDescriptionText()
     }
     
-    private func getDescriptionText() -> String {
-        guard let companyName = membershipPlan.account?.planNameCard else { return "" }
+    private func getDescriptionForOtherLogin() -> String {
+        guard let planNameCard = membershipPlan.account?.planNameCard else { return "" }
         
         if hasPoints() {
             guard let transactionsAvailable = membershipPlan.featureSet?.transactionsAvailable else {
-                return String(format: "only_points_log_in_description".localized, companyName)
+                return String(format: "only_points_log_in_description".localized, planNameCard)
             }
             
-            return transactionsAvailable ? String(format: "only_points_log_in_description".localized, companyName) : String(format: "points_and_transactions_log_in_description".localized, companyName)
+            return transactionsAvailable ? String(format: "only_points_log_in_description".localized, planNameCard) : String(format: "points_and_transactions_log_in_description".localized, planNameCard)
         } else {
             return ""
         }
