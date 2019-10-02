@@ -12,4 +12,5 @@ struct EnrolFieldModel : Codable {
     let validation : String?
     let description : String?
     let type : Int?
+    let choice: [String]?
 }

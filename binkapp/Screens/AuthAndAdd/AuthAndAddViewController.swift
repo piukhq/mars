@@ -51,7 +51,7 @@ class AuthAndAddViewController: UIViewController {
         
         brandHeaderView.configure(imageURLString: ((membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue})?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
         
-        titleLabel.text = "log_in_title".localized
+        titleLabel.text = viewModel.title
         titleLabel.font = UIFont.headline
         
         descriptionLabel.text = viewModel.getDescription()
@@ -67,6 +67,7 @@ class AuthAndAddViewController: UIViewController {
         var checkboxes = [CheckboxView]()
         let addFields = viewModel.getAddFields()
         let authorizeFields = viewModel.getAuthorizeFields()
+        let enrolFields = viewModel.getEnrolFields()
         
         for field in addFields {
             switch field.type {
@@ -91,6 +92,28 @@ class AuthAndAddViewController: UIViewController {
         }
         
         for field in authorizeFields {
+            switch field.type {
+            case FieldInputType.textfield.rawValue:
+                let view = LoginTextFieldView()
+                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
+                fieldsViews.append(view)
+            case FieldInputType.password.rawValue:
+                let view = LoginTextFieldView()
+                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
+                fieldsViews.append(view)
+            case FieldInputType.dropdown.rawValue:
+                let view = DropdownView()
+                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .authorise, delegate: self)
+                fieldsViews.append(view)
+            case FieldInputType.checkbox.rawValue:
+                let view = CheckboxView()
+                view.configure(title: field.description ?? "", fieldType: .authorise)
+                checkboxes.append(view)
+            default: break
+            }
+        }
+        
+        for field in enrolFields {
             switch field.type {
             case FieldInputType.textfield.rawValue:
                 let view = LoginTextFieldView()

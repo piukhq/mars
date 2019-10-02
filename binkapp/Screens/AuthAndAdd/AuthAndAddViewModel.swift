@@ -36,6 +36,10 @@ class AuthAndAddViewModel {
     
     var formPurpose: FormPurpose
     
+    var title: String {
+        return formPurpose == .signUp ? "log_in_title".localized : "sign_up_new_card_title".localized
+    }
+    
     init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: MembershipPlanModel, formPurpose: FormPurpose) {
         self.repository = repository
         self.router = router

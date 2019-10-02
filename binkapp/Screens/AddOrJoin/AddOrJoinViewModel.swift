@@ -27,7 +27,7 @@ class AddOrJoinViewModel {
     func didSelectAddNewCard() {
         if membershipPlan.featureSet?.cardType == .link {
             //TODO: go to sign up form
-            router.displaySimplePopup(title: "Goes to Sign Up Form", message: "Not implemented yet")
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
         } else {
             let screenText = "native_join_unavailable_title".localized + "\n" + "native_join_unavailable_description".localized
             
