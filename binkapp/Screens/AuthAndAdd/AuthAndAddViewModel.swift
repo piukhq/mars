@@ -20,6 +20,12 @@ enum FieldInputType: Int {
     case checkbox
 }
 
+enum FormPurpose {
+    case firstLogin
+    case otherLogin
+    case signUp
+}
+
 class AuthAndAddViewModel {
     private let repository: AuthAndAddRepository
     private let router: MainScreenRouter
@@ -29,13 +35,15 @@ class AuthAndAddViewModel {
     private var membershipCard: MembershipCardPostModel?
     
     var isFirstAuth: Bool
+    var formPurpose: FormPurpose
     
-    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: MembershipPlanModel, isFirstAuth: Bool = true) {
+    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: MembershipPlanModel, isFirstAuth: Bool = true, formPurpose: FormPurpose) {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
         self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: membershipPlan.id)
         self.isFirstAuth = isFirstAuth
+        self.formPurpose = formPurpose
     }
     
     func getDescription() -> String? {
@@ -91,12 +99,17 @@ class AuthAndAddViewModel {
     
     func getAddFields() -> [AddFieldModel] {
         guard let fields = membershipPlan.account?.addFields else { return [] }
-        return isFirstAuth ? fields : []
+        return formPurpose == .firstLogin ? fields : []
     }
     
     func getAuthorizeFields() -> [AuthoriseFieldModel] {
         guard let fields = membershipPlan.account?.authoriseFields else { return [] }
-        return fields
+        return formPurpose != .signUp ? fields : []
+    }
+    
+    func getEnrolFields() -> [EnrolFieldModel] {
+        guard let fields = membershipPlan.account?.enrolFields else { return [] }
+        return formPurpose == .signUp ? fields : []
     }
     
     func allFieldsAreValid() -> Bool {
