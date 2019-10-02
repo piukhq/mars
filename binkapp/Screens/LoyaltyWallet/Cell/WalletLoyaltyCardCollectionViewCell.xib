@@ -146,14 +146,14 @@
                 <outlet property="barcodeButton" destination="GGo-kk-sli" id="Tjc-aX-VXr"/>
                 <outlet property="cardContainer" destination="boF-NX-uce" id="prY-AA-rrv"/>
                 <outlet property="cardContainerCenterXConstraint" destination="deo-p9-Of0" id="Fmb-fC-udb"/>
-                <outlet property="cardIconImage" destination="2il-5O-A8c" id="k7o-5a-iha"/>
+                <outlet property="cardIconImageView" destination="2il-5O-A8c" id="k7o-5a-iha"/>
                 <outlet property="cardLinkStatusImage" destination="XSF-3v-XU7" id="hfi-s1-Pxs"/>
                 <outlet property="cardLinkStatusLabel" destination="iaS-OT-dXC" id="ot9-sv-mur"/>
                 <outlet property="cardNameLabel" destination="1AT-4M-cCB" id="pVh-TR-kLX"/>
                 <outlet property="cardValuePointsLabel" destination="6Ln-ov-l0D" id="TaQ-3y-bap"/>
                 <outlet property="cardValueSuffixLabel" destination="40K-eq-Rsb" id="5zk-aA-qra"/>
                 <outlet property="deleteButton" destination="nlL-P9-bge" id="9NQ-Lj-f0y"/>
-                <outlet property="logInButton" destination="UEC-Ml-S8b" id="SBl-aw-HWf"/>
+                <outlet property="logInAlert" destination="UEC-Ml-S8b" id="SBl-aw-HWf"/>
             </connections>
             <point key="canvasLocation" x="123.91304347826087" y="150.66964285714286"/>
         </collectionViewCell>
