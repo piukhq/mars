@@ -12,6 +12,7 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
     @IBOutlet private weak var aboutInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var securityAndPrivacyInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var deleteInfoRow: CardDetailsInfoView!
+    @IBOutlet private weak var offersStackView: UIStackView!
     @IBOutlet private weak var cardDetailsStackView: UIStackView!
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
@@ -42,6 +43,14 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
 
 private extension LoyaltyCardFullDetailsViewController {
     func configureUI() {
+        if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
+            for offer in offerTileImageUrls {
+                let offerView = OfferTileView()
+                offerView.configure(imageUrl: offer)
+                offersStackView.addArrangedSubview(offerView)
+            }
+        }
+        
         let aboutInfoTitle = "about_membership_title".localized
         let aboutInfoMessage = "learn_more".localized
         aboutInfoRow.delegate = self
