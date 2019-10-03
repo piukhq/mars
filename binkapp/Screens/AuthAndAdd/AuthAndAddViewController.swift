@@ -18,7 +18,8 @@ class AuthAndAddViewController: UIViewController {
     
     private let viewModel: AuthAndAddViewModel
     private var isKeyboardOpen = false
-    private var fieldsViews: [InputValidation] = []
+    
+    var fieldsViews: [InputValidation] = []
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
@@ -58,7 +59,7 @@ class AuthAndAddViewController: UIViewController {
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.isHidden = viewModel.getDescription() == nil
         
-        loginButton.setTitle("log_in_title".localized, for: .normal)
+        loginButton.setTitle(viewModel.buttonTitle, for: .normal)
         
         populateStackViewWithFields()
     }
@@ -117,19 +118,19 @@ class AuthAndAddViewController: UIViewController {
             switch field.type {
             case FieldInputType.textfield.rawValue:
                 let view = LoginTextFieldView()
-                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
+                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .enrol, delegate: self)
                 fieldsViews.append(view)
             case FieldInputType.password.rawValue:
                 let view = LoginTextFieldView()
-                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
+                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .enrol, delegate: self)
                 fieldsViews.append(view)
             case FieldInputType.dropdown.rawValue:
                 let view = DropdownView()
-                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .authorise, delegate: self)
+                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .enrol, delegate: self)
                 fieldsViews.append(view)
             case FieldInputType.checkbox.rawValue:
                 let view = CheckboxView()
-                view.configure(title: field.description ?? "", fieldType: .authorise)
+                view.configure(title: field.description ?? "", fieldType: .enrol)
                 checkboxes.append(view)
             default: break
             }
@@ -138,6 +139,8 @@ class AuthAndAddViewController: UIViewController {
         for box in checkboxes {
             fieldsViews.append(box)
         }
+        
+        viewModel.setFields(fields: fieldsViews)
         
         if fieldsViews.isEmpty == false {
             for view in fieldsViews {

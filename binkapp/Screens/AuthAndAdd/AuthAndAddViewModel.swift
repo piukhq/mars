@@ -11,6 +11,7 @@ import UIKit
 enum FieldType {
     case add
     case authorise
+    case enrol
 }
 
 enum FieldInputType: Int {
@@ -37,19 +38,22 @@ class AuthAndAddViewModel {
     var formPurpose: FormPurpose
     
     var title: String {
-        return formPurpose == .signUp ? "log_in_title".localized : "sign_up_new_card_title".localized
+        return formPurpose == .signUp ? "sign_up_new_card_title".localized : "log_in_title".localized
+    }
+    
+    var buttonTitle: String {
+        return formPurpose == .signUp ? "sign_up_button_title".localized : "log_in_title".localized
     }
     
     init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: MembershipPlanModel, formPurpose: FormPurpose) {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
-        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: membershipPlan.id)
+        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: [], enrolFields: []), membershipPlan: membershipPlan.id)
         self.formPurpose = formPurpose
     }
     
     func getDescription() -> String? {
-        
         switch formPurpose {
         case .firstLogin:
             guard let planName = membershipPlan.account?.planName else { return nil }
@@ -60,8 +64,6 @@ class AuthAndAddViewModel {
             guard let companyName = membershipPlan.account?.companyName else { return nil }
             return String(format: "sign_up_new_card_description".localized, companyName)
         }
-        
-//        return isFirstAuth ? String(format: "auth_screen_description".localized, planName) : getDescriptionText()
     }
     
     private func getDescriptionForOtherLogin() -> String {
@@ -125,6 +127,10 @@ class AuthAndAddViewModel {
         return formPurpose == .signUp ? fields : []
     }
     
+    func setFields(fields: [InputValidation]) {
+        self.fieldsViews = fields
+    }
+    
     func allFieldsAreValid() -> Bool {
         for field in fieldsViews {
             if !field.isValid {
@@ -151,6 +157,14 @@ class AuthAndAddViewModel {
                 existingField.value = value
             } else {
                 membershipCard?.account?.authoriseFields?.append(AuthoriseFieldPostModel(column: column, value: value))
+            }
+        case .enrol:
+            let enrolFieldsArray = membershipCard?.account?.enrolFields
+            if var existingField = enrolFieldsArray?.first(where: { $0.column == column }) {
+                existingField.column = column
+                existingField.value = value
+            } else {
+                membershipCard?.account?.enrolFields?.append(EnrolFieldPostModel(column: column, value: value))
             }
         }
     }

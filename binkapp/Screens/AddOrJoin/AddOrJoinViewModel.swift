@@ -25,37 +25,44 @@ class AddOrJoinViewModel {
     }
     
     func didSelectAddNewCard() {
-        if membershipPlan.featureSet?.cardType == .link {
-            //TODO: go to sign up form
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
-        } else {
-            let screenText = "native_join_unavailable_title".localized + "\n" + "native_join_unavailable_description".localized
-            
-            let attributedText = NSMutableAttributedString(string: screenText)
-            attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: ("native_join_unavailable_title".localized).count)
-            )
-            attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: ("native_join_unavailable_title".localized).count, length: ("native_join_unavailable_description".localized).count)
-            )
-            
-            var configurationModel: ReusableModalConfiguration
-            
-            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-            
-            guard let planURL = membershipPlan.account?.planURL else {
-                configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
-                router.toReusableModalTemplateViewController(configurationModel: configurationModel)
-                return
-            }
-            
-            configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
-                if let url = URL(string: planURL) {
-                    UIApplication.shared.open(url)
-                }
-            }, tabBarBackButton: backButton)
-            
-            router.toReusableModalTemplateViewController(configurationModel: configurationModel)
-            
+        guard let enrolFields = membershipPlan.account?.enrolFields else {
+            toNativeJoinUnavailable()
+            return
         }
+        
+        if enrolFields.isEmpty {
+            toNativeJoinUnavailable()
+        } else {
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
+        }
+    }
+    
+    func toNativeJoinUnavailable() {
+        let screenText = "native_join_unavailable_title".localized + "\n" + "native_join_unavailable_description".localized
+        
+        let attributedText = NSMutableAttributedString(string: screenText)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: ("native_join_unavailable_title".localized).count)
+        )
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: ("native_join_unavailable_title".localized).count, length: ("native_join_unavailable_description".localized).count)
+        )
+        
+        var configurationModel: ReusableModalConfiguration
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        
+        guard let planURL = membershipPlan.account?.planURL else {
+            configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
+            router.toReusableModalTemplateViewController(configurationModel: configurationModel)
+            return
+        }
+        
+        configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
+            if let url = URL(string: planURL) {
+                UIApplication.shared.open(url)
+            }
+        }, tabBarBackButton: backButton)
+        
+        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
     func displaySimplePopup(title: String?, message: String?) {
