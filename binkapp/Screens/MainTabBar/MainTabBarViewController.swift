@@ -42,7 +42,7 @@ class MainTabBarViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationController?.navigationBar.shadowImage = UIImage()
 
-        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(settingsButtonTapped))
+        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .done, target: self, action: #selector(settingsButtonTapped))
         navigationItem.rightBarButtonItem = settingsButton
 
         navigationItem.setHidesBackButton(true, animated: true)

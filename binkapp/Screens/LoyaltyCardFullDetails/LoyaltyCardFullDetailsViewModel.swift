@@ -103,7 +103,7 @@ class LoyaltyCardFullDetailsViewModel {
         attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
         attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
         
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
