@@ -23,15 +23,6 @@ class LoyaltyWalletViewModel {
         self.repository = repository
         self.router = router
     }
-
-    func getWallet(forceRefresh: Bool = false, completion: @escaping () -> Void) {
-        repository.getMembershipPlans(forceRefresh: forceRefresh, completion: { plans in
-            self.repository.getMembershipCards(forceRefresh: forceRefresh) { [weak self] cards in
-                self?.membershipCards = cards ?? []
-                completion()
-            }
-        })
-    }
     
     // MARK: - Public methods
     
@@ -74,14 +65,6 @@ class LoyaltyWalletViewModel {
     func membershipPlan(forIndexPath indexPath: IndexPath) -> CD_MembershipPlan? {
         return membershipPlans?[indexPath.item]
     }
-    
-//    func membershipPlanForCard(card: CD_MembershipCard) -> CD_MembershipPlan? {
-//        guard let planId = card.membershipPlan?.intValue else {
-//            return nil
-//        }
-//        let planIdString = String(planId)
-//        return membershipPlans?.first(where: { $0.id == planIdString })
-//    }
 }
 
 // MARK: Private methods

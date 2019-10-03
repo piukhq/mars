@@ -26,9 +26,10 @@ class PaymentWalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshWallet), name: .didAddPaymentCard, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadWallet), name: .didAddPaymentCard, object: nil)
 
-        refreshControl.addTarget(self, action: #selector(refreshWallet), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
         collectionView.addSubview(refreshControl)
         collectionView.alwaysBounceVertical = true
         
@@ -36,9 +37,6 @@ class PaymentWalletViewController: UIViewController {
         collectionView.delegate = self
 
         configureCollectionView()
-
-        loadLocalWallet()
-        refreshWallet()
     }
 
     private func configureCollectionView() {
@@ -55,21 +53,13 @@ class PaymentWalletViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
 
-    private func loadLocalWallet() {
-        loadWallet()
+    @objc private func reloadWallet() {
+        Current.wallet.load()
     }
 
-    @objc private func refreshWallet() {
-        loadWallet(forceRefresh: true)
-    }
-
-    @objc private func loadWallet(forceRefresh: Bool = false) {
-        viewModel.getWallet(forceRefresh: forceRefresh) {
-            DispatchQueue.main.async { [weak self] in
-                self?.refreshControl.endRefreshing()
-                self?.collectionView.reloadData()
-            }
-        }
+    @objc private func refresh() {
+        refreshControl.endRefreshing()
+        collectionView.reloadData()
     }
     
 }
@@ -80,13 +70,14 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.paymentCardCount
+        return Current.wallet.paymentCards?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
 
-        guard let paymentCard = viewModel.paymentCardAtIndexPath(indexPath) else {
+        // TODO: All calls to current.wallet should be abstracted by the viewmodel
+        guard let paymentCard = Current.wallet.paymentCards?[indexPath.row] else {
             return cell
         }
         

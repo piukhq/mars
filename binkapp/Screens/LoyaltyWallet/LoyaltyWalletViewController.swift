@@ -55,15 +55,13 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        collectionView.register(UINib(nibName: "WalletLoyaltyCardCollectionViewCell", bundle: Bundle(for: WalletLoyaltyCardCollectionViewCell.self)), forCellWithReuseIdentifier: "WalletLoyaltyCardCollectionViewCell")
-        refreshControl.addTarget(self, action: #selector(refreshWallet), for: .valueChanged)
+        collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
+
+        refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
         collectionView.addSubview(refreshControl)
-        
-        loadLocalWallet()
-        refreshWallet()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(loadLocalWallet), name: .didAddMembershipCard, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadWallet), name: .didAddMembershipCard, object: nil)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -71,21 +69,13 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
         super.viewWillDisappear(animated)
     }
 
-    @objc private func loadLocalWallet() {
-        loadWallet()
+    @objc private func reloadWallet() {
+        Current.wallet.load()
     }
 
-    @objc private func refreshWallet() {
-        loadWallet(forceRefresh: true)
-    }
-
-    @objc private func loadWallet(forceRefresh: Bool = false) {
-        viewModel.getWallet(forceRefresh: forceRefresh) { [weak self] in
-            DispatchQueue.main.async {
-                self?.refreshControl.endRefreshing()
-                self?.collectionView.reloadData()
-            }
-        }
+    @objc private func refresh() {
+        refreshControl.endRefreshing()
+        collectionView.reloadData()
     }
 
  // MARK: - Navigation Bar Blurring
@@ -99,17 +89,15 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
 }
 
 extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    //TO DO: ADD GRADIENT COLOR TO SWIPE ACTION
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.membershipCardsCount
+        return Current.wallet.membershipCards?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WalletLoyaltyCardCollectionViewCell", for: indexPath) as! WalletLoyaltyCardCollectionViewCell
+        let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
 
-        guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
+        guard let membershipCard = Current.wallet.membershipCards?[indexPath.row] else {
             return cell
         }
 
@@ -125,8 +113,7 @@ extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionVie
         if cell.swipeState != .closed {
             cell.set(to: .closed)
         } else {
-            // Move to LCD
-            if let card = viewModel.membershipCard(forIndexPath: indexPath) {
+            if let card = Current.wallet.membershipCards?[indexPath.row] {
                 viewModel.toFullDetailsCardScreen(membershipCard: card)
             }
         }
@@ -159,7 +146,7 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     }
     
     func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
-        guard let card = viewModel.membershipCard(forIndexPath: index) else { return }
+        guard let card = Current.wallet.membershipCards?[index.row] else { return }
                 
         viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
             self?.collectionView.reloadData()
