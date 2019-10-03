@@ -49,7 +49,7 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var shouldShowLinkStatus: Bool {
-        return cardStatus == .authorised && planCardType == .link || cardStatus == .unauthorised && planCardType == .link
+        return planCardType == .link
     }
 
     var brandColorHex: String? {
@@ -60,26 +60,32 @@ struct WalletLoyaltyCardCellViewModel {
         return membershipPlan?.account?.companyName
     }
 
+    var hasLinkedPaymentCards: Bool {
+        return membershipCard.linkedPaymentCards.count > 0
+    }
+
     var linkStatusText: String? {
-        switch cardStatus {
-        case .authorised:
-            return "card_linked_status".localized
-        case .unauthorised:
-            return "card_can_not_link_status".localized
+        switch (planCardType, hasLinkedPaymentCards) {
+        case (.link, true):
+            return "Linked"
+        case (.link, false):
+            return "Link now"
         default:
             return nil
         }
+
+        // Linking error?
     }
 
     var linkStatusImageName: String {
-        switch cardStatus {
-        case .authorised:
+        switch (planCardType, hasLinkedPaymentCards) {
+        case (.link, true):
             return "linked"
-        case .unauthorised:
-            return "unlinked"
         default:
-            return ""
+            return "unlinked"
         }
+
+        // Linking error?
     }
 
     var pointsValueText: String {
