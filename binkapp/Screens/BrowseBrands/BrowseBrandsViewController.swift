@@ -37,7 +37,7 @@ class BrowseBrandsViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         navigationItem.leftBarButtonItem = backButton
         
         //TODO: uncomment this to display the Filters button

@@ -40,7 +40,7 @@ class AuthAndAddViewController: UIViewController {
         closeButton.tintColor = .black
         self.navigationItem.setRightBarButton(closeButton, animated: true)
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         self.navigationItem.leftBarButtonItem = backButton
         
         navigationItem.setHidesBackButton(false, animated: true)
