@@ -57,9 +57,8 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8PI-on-12i">
-                    <rect key="frame" x="35" y="340" width="240" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8PI-on-12i">
+                    <rect key="frame" x="25" y="318.5" width="364" height="543.5"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="rHi-Tx-icy"/>
@@ -77,18 +76,22 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ugv-KX-hjN" firstAttribute="leading" secondItem="LLm-1f-Ztl" secondAttribute="leading" constant="25" id="1Uf-MY-heq"/>
+                <constraint firstItem="LLm-1f-Ztl" firstAttribute="bottom" secondItem="8PI-on-12i" secondAttribute="bottom" id="53b-pB-CMh"/>
                 <constraint firstItem="ugv-KX-hjN" firstAttribute="top" secondItem="ZTg-SZ-hJP" secondAttribute="bottom" constant="25" id="9d0-YT-oyp"/>
                 <constraint firstItem="wqO-u0-OXm" firstAttribute="bottom" secondItem="LLm-1f-Ztl" secondAttribute="bottom" id="BZH-5F-cyU"/>
                 <constraint firstItem="3nB-ba-SkQ" firstAttribute="leading" secondItem="LLm-1f-Ztl" secondAttribute="leading" constant="25" id="LP1-dt-Lsp"/>
                 <constraint firstItem="wqO-u0-OXm" firstAttribute="leading" secondItem="LLm-1f-Ztl" secondAttribute="leading" id="Rw7-e0-ZXb"/>
                 <constraint firstItem="3nB-ba-SkQ" firstAttribute="top" secondItem="mUK-ri-3PE" secondAttribute="bottom" id="WG9-ba-Uys"/>
                 <constraint firstItem="LLm-1f-Ztl" firstAttribute="trailing" secondItem="wqO-u0-OXm" secondAttribute="trailing" id="YY3-r8-WuU"/>
+                <constraint firstItem="8PI-on-12i" firstAttribute="top" secondItem="3nB-ba-SkQ" secondAttribute="bottom" id="c1x-f0-I7y"/>
                 <constraint firstItem="ZTg-SZ-hJP" firstAttribute="leading" secondItem="LLm-1f-Ztl" secondAttribute="leading" constant="25" id="cvd-nw-xFY"/>
+                <constraint firstItem="LLm-1f-Ztl" firstAttribute="trailing" secondItem="8PI-on-12i" secondAttribute="trailing" constant="25" id="e0G-Ht-jmM"/>
                 <constraint firstItem="LLm-1f-Ztl" firstAttribute="trailing" secondItem="mUK-ri-3PE" secondAttribute="trailing" constant="25" id="feV-cC-Ebm"/>
                 <constraint firstItem="mUK-ri-3PE" firstAttribute="leading" secondItem="LLm-1f-Ztl" secondAttribute="leading" constant="25" id="lkA-x2-dbQ"/>
                 <constraint firstItem="mUK-ri-3PE" firstAttribute="top" secondItem="ugv-KX-hjN" secondAttribute="bottom" id="mAS-0B-lSk"/>
                 <constraint firstItem="LLm-1f-Ztl" firstAttribute="trailing" secondItem="3nB-ba-SkQ" secondAttribute="trailing" constant="25" id="mOo-nl-LfX"/>
                 <constraint firstItem="LLm-1f-Ztl" firstAttribute="trailing" secondItem="ugv-KX-hjN" secondAttribute="trailing" constant="25" id="u7F-rt-iJm"/>
+                <constraint firstItem="8PI-on-12i" firstAttribute="leading" secondItem="LLm-1f-Ztl" secondAttribute="leading" constant="25" id="vWr-Rq-pBp"/>
                 <constraint firstItem="LLm-1f-Ztl" firstAttribute="trailing" secondItem="ZTg-SZ-hJP" secondAttribute="trailing" constant="25" id="xcA-oz-DDv"/>
                 <constraint firstItem="ZTg-SZ-hJP" firstAttribute="top" secondItem="LLm-1f-Ztl" secondAttribute="top" constant="56" id="zDW-yz-2aC"/>
             </constraints>

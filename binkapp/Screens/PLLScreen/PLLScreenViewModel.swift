@@ -14,7 +14,7 @@ class PLLScreenViewModel {
     let paymentCards: [PaymentCardModel]?
     var isEmptyPll: Bool {
         if let paymentCards = paymentCards {
-            return paymentCards.count > 0
+            return paymentCards.count == 0
         }
         return true
     }

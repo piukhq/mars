@@ -32,19 +32,19 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agI-cI-K6A">
-                        <rect key="frame" x="76" y="30" width="228" height="25"/>
+                        <rect key="frame" x="76" y="30" width="223" height="25"/>
                         <fontDescription key="fontDescription" name="NunitoSans-ExtraBold" family="Nunito Sans" pointSize="18"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bgy-ha-qvh">
-                        <rect key="frame" x="76" y="56" width="228" height="19.5"/>
+                        <rect key="frame" x="76" y="56" width="223" height="19.5"/>
                         <fontDescription key="fontDescription" name="NunitoSans-Light" family="Nunito Sans" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YAq-on-9dQ">
-                        <rect key="frame" x="316" y="36" width="51" height="28"/>
+                        <rect key="frame" x="311" y="36" width="51" height="28"/>
                         <color key="onTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </switch>
                 </subviews>
@@ -55,7 +55,7 @@
                     <constraint firstItem="h7g-va-knt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="OPX-Tk-URq"/>
                     <constraint firstItem="agI-cI-K6A" firstAttribute="leading" secondItem="h7g-va-knt" secondAttribute="trailing" constant="12" id="UAo-oP-OWQ"/>
                     <constraint firstItem="agI-cI-K6A" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="VD8-lg-Plx"/>
-                    <constraint firstAttribute="trailing" secondItem="YAq-on-9dQ" secondAttribute="trailing" id="YvW-0w-g7X"/>
+                    <constraint firstAttribute="trailing" secondItem="YAq-on-9dQ" secondAttribute="trailing" constant="5" id="YvW-0w-g7X"/>
                     <constraint firstItem="YAq-on-9dQ" firstAttribute="leading" secondItem="Bgy-ha-qvh" secondAttribute="trailing" constant="12" id="Z1w-Ng-778"/>
                     <constraint firstItem="YAq-on-9dQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="36" id="ZwQ-bL-4po"/>
                     <constraint firstAttribute="bottom" secondItem="YAq-on-9dQ" secondAttribute="bottom" constant="36" id="sfr-Om-8L1"/>

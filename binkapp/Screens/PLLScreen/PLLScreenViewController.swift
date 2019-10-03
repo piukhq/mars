@@ -9,11 +9,11 @@ import UIKit
 
 class PLLScreenViewController: UIViewController {
     @IBOutlet private weak var brandHeaderView: BrandHeaderView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var primaryMessageLabel: UILabel!
-    @IBOutlet weak var secondaryMesageLabel: UILabel!
-    @IBOutlet weak var floatingButtonsView: BinkFloatingButtonsView!
-    @IBOutlet weak var paymentCardsTableView: UITableView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var primaryMessageLabel: UILabel!
+    @IBOutlet private weak var secondaryMesageLabel: UILabel!
+    @IBOutlet private weak var floatingButtonsView: BinkFloatingButtonsView!
+    @IBOutlet private weak var paymentCardsTableView: UITableView!
     
     private let viewModel: PLLScreenViewModel
     
@@ -28,24 +28,14 @@ class PLLScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        floatingButtonsView.delegate = self
         configureBrandHeader()
         configureUI()
         paymentCardsTableView.register(UINib(nibName: "PaymentCardCell", bundle: Bundle(for: PaymentCardCell.self)), forCellReuseIdentifier: "PaymentCardCell")
-        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    
-    // MARK: - Actions
-    
-    @IBAction func addPaymentCardsButtonTapped(_ sender: Any) {
-        viewModel.displaySimplePopup(title: "Error", message: "Not Implemented")
-    }
-    
-    @IBAction func doneButtonTapped(_ sender: Any) {
-        viewModel.toFullDetailsCardScreen()
     }
 }
 
@@ -54,6 +44,18 @@ class PLLScreenViewController: UIViewController {
 extension PLLScreenViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displaySimplePopup(title: ((viewModel.getMembershipPlan().account?.planNameCard) ?? ""), message: (viewModel.getMembershipPlan().account?.planDescription) ?? "")
+    }
+}
+
+// MARK: - BinkFloatingButtonsViewDelegate
+
+extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
+    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+        viewModel.toFullDetailsCardScreen()
+    }
+    
+    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+        viewModel.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
     }
 }
 
@@ -68,7 +70,10 @@ extension PLLScreenViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PaymentCardCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PaymentCardCell", for: indexPath) as! PaymentCardCell
+        if let paymentCard = viewModel.paymentCards?[indexPath.row] {
+            cell.configureUI(paymentCard: paymentCard)
+        }
         return cell
     }
 }
@@ -89,7 +94,13 @@ private extension PLLScreenViewController {
     }
     
     func configureUI(){
+        navigationController?.setNavigationBarHidden(viewModel.isEmptyPll, animated: false)
+        titleLabel.text = viewModel.isEmptyPll ? "pll_screen_link_title".localized : "pll_screen_add_title".localized
+        primaryMessageLabel.text = viewModel.isEmptyPll ? "pll_screen_link_message".localized : "pll_screen_link_message".localized
+        secondaryMesageLabel.isHidden = viewModel.isEmptyPll
+        paymentCardsTableView.isHidden = viewModel.isEmptyPll
         viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: "Add payment cards") : floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: nil)
     }
+    
 }
 
