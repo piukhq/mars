@@ -70,7 +70,7 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
     }
 
     @objc private func reloadWallet() {
-        Current.wallet.load()
+        viewModel.reloadWallet()
     }
 
     @objc private func refresh() {
@@ -90,14 +90,14 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
 
 extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Current.wallet.membershipCards?.count ?? 0
+        return viewModel.membershipCardsCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
 
-        guard let membershipCard = Current.wallet.membershipCards?[indexPath.row] else {
+        guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
             return cell
         }
 
@@ -113,7 +113,7 @@ extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionVie
         if cell.swipeState != .closed {
             cell.set(to: .closed)
         } else {
-            if let card = Current.wallet.membershipCards?[indexPath.row] {
+            if let card = viewModel.membershipCard(forIndexPath: indexPath) {
                 viewModel.toFullDetailsCardScreen(membershipCard: card)
             }
         }
@@ -146,13 +146,13 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     }
     
     func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
-        guard let card = Current.wallet.membershipCards?[index.row] else { return }
+        guard let card = viewModel.membershipCard(forIndexPath: index) else { return }
                 
-        viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
-            self?.collectionView.reloadData()
-        }, noCompletion: {
-            cell.set(to: .closed)
-        })
+//        viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
+//            self?.collectionView.reloadData()
+//        }, noCompletion: {
+//            cell.set(to: .closed)
+//        })
     }
     
     func cellDidFullySwipe(action: SwipeMode?, cell: WalletLoyaltyCardCollectionViewCell) {

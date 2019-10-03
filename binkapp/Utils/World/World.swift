@@ -46,9 +46,8 @@ class Wallet: CoreDataRepositoryProtocol {
     }
 
     private func getMembershipPlans(completion: @escaping () -> Void) {
-//        guard forceRefresh else {
-//            fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self, completion: completion)
-//            return
+//        fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { _ in
+//            completion()
 //        }
 
         let url = RequestURL.membershipPlans
@@ -66,9 +65,9 @@ class Wallet: CoreDataRepositoryProtocol {
     }
 
     private func getMembershipCards(completion: @escaping () -> Void) {
-//        guard forceRefresh else {
-//            fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: completion)
-//            return
+//        fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
+//            self?.membershipCards = cards
+//            completion()
 //        }
 
         let url = RequestURL.membershipCards
@@ -87,9 +86,9 @@ class Wallet: CoreDataRepositoryProtocol {
     }
 
     private func getPaymentCards(completion: @escaping () -> Void) {
-//        guard forceRefresh else {
-//            fetchCoreDataObjects(forObjectType: CD_PaymentCard.self, completion: completion)
-//            return
+//        fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { [weak self] cards in
+//            self?.paymentCards = cards
+//            completion()
 //        }
 
         let url = RequestURL.getPaymentCards

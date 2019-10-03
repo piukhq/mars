@@ -11,7 +11,9 @@ import Foundation
 class PaymentWalletViewModel {
     let router: MainScreenRouter
 
-    private var paymentCards: [CD_PaymentCard]?
+    private var paymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards
+    }
     
     init(router: MainScreenRouter) {
         self.router = router
@@ -23,5 +25,9 @@ class PaymentWalletViewModel {
 
     func paymentCardAtIndexPath(_ indexPath: IndexPath) -> CD_PaymentCard? {
         return paymentCards?[indexPath.row]
+    }
+
+    func loadWallet() {
+        Current.wallet.load()
     }
 }
