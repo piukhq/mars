@@ -11,7 +11,7 @@ import CoreData
 
 struct PaymentCardModel: Codable {
     var apiId: Int?
-    var membershipCards: [PaymentCardMembershipCardResponse]?
+    var membershipCards: [LinkedCardResponse]?
     var status: String?
     var card: PaymentCardCardResponse?
     var images: [MembershipCardImageModel]?
@@ -59,14 +59,15 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
             cdObject.addImagesObject(cdImage)
         }
 
-        cdObject.membershipCards.forEach {
-            guard let membershipCard = $0 as? CD_PaymentCardMembershipCard else { return }
-            context.delete(membershipCard)
+        cdObject.linkedMembershipCards.forEach {
+            guard let membershipCard = $0 as? CD_MembershipCard else { return }
+            cdObject.removeLinkedMembershipCardsObject(membershipCard)
         }
-        membershipCards?.forEach { membershipCard in
-            let cdMembershipCard = membershipCard.mapToCoreData(context, .update, overrideID: nil)
-            update(cdMembershipCard, \.paymentCard, with: cdObject, delta: delta)
-            cdObject.addMembershipCardsObject(cdMembershipCard)
+        membershipCards?.filter({ $0.activeLink == true }).forEach { membershipCard in
+            if let cdMembershipCard = context.fetchWithApiID(CD_MembershipCard.self, id: String(membershipCard.id ?? 0)) {
+                cdObject.addLinkedMembershipCardsObject(cdMembershipCard)
+                cdMembershipCard.addLinkedPaymentCardsObject(cdObject)
+            }
         }
 
         return cdObject

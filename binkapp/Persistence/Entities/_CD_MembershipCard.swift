@@ -9,8 +9,8 @@ public enum CD_MembershipCardRelationships: String {
     case balances = "balances"
     case card = "card"
     case images = "images"
+    case linkedPaymentCards = "linkedPaymentCards"
     case membershipPlan = "membershipPlan"
-    case paymentCards = "paymentCards"
     case status = "status"
     case transactions = "transactions"
 }
@@ -68,14 +68,14 @@ open class _CD_MembershipCard: CD_BaseObject {
     }
 
     @NSManaged open
-    var membershipPlan: CD_MembershipPlan?
+    var linkedPaymentCards: NSSet
+
+    open func linkedPaymentCardsSet() -> NSMutableSet {
+        return self.linkedPaymentCards.mutableCopy() as! NSMutableSet
+    }
 
     @NSManaged open
-    var paymentCards: NSSet
-
-    open func paymentCardsSet() -> NSMutableSet {
-        return self.paymentCards.mutableCopy() as! NSMutableSet
-    }
+    var membershipPlan: CD_MembershipPlan?
 
     @NSManaged open
     var status: CD_MembershipCardStatus?
@@ -147,28 +147,28 @@ extension _CD_MembershipCard {
 
 extension _CD_MembershipCard {
 
-    open func addPaymentCards(_ objects: NSSet) {
-        let mutable = self.paymentCards.mutableCopy() as! NSMutableSet
+    open func addLinkedPaymentCards(_ objects: NSSet) {
+        let mutable = self.linkedPaymentCards.mutableCopy() as! NSMutableSet
         mutable.union(objects as Set<NSObject>)
-        self.paymentCards = mutable.copy() as! NSSet
+        self.linkedPaymentCards = mutable.copy() as! NSSet
     }
 
-    open func removePaymentCards(_ objects: NSSet) {
-        let mutable = self.paymentCards.mutableCopy() as! NSMutableSet
+    open func removeLinkedPaymentCards(_ objects: NSSet) {
+        let mutable = self.linkedPaymentCards.mutableCopy() as! NSMutableSet
         mutable.minus(objects as Set<NSObject>)
-        self.paymentCards = mutable.copy() as! NSSet
+        self.linkedPaymentCards = mutable.copy() as! NSSet
     }
 
-    open func addPaymentCardsObject(_ value: CD_PaymentCard) {
-        let mutable = self.paymentCards.mutableCopy() as! NSMutableSet
+    open func addLinkedPaymentCardsObject(_ value: CD_PaymentCard) {
+        let mutable = self.linkedPaymentCards.mutableCopy() as! NSMutableSet
         mutable.add(value)
-        self.paymentCards = mutable.copy() as! NSSet
+        self.linkedPaymentCards = mutable.copy() as! NSSet
     }
 
-    open func removePaymentCardsObject(_ value: CD_PaymentCard) {
-        let mutable = self.paymentCards.mutableCopy() as! NSMutableSet
+    open func removeLinkedPaymentCardsObject(_ value: CD_PaymentCard) {
+        let mutable = self.linkedPaymentCards.mutableCopy() as! NSMutableSet
         mutable.remove(value)
-        self.paymentCards = mutable.copy() as! NSSet
+        self.linkedPaymentCards = mutable.copy() as! NSSet
     }
 
 }

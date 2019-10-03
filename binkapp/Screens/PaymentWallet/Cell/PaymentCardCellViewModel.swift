@@ -74,10 +74,10 @@ struct PaymentCardCellViewModel {
 
     private func linkedMembershipCardsCount() -> Int {
         // Tech debt
-        guard let membershipCards = paymentCard.membershipCards as? Set<CD_PaymentCardMembershipCard> else {
+        guard let membershipCards = paymentCard.linkedMembershipCards as? Set<CD_MembershipCard> else {
             return 0
         }
-        return membershipCards.filter { $0.activeLink == true }.count
+        return membershipCards.count
     }
 
     func paymentCardIsLinkedToMembershipCards() -> Bool {

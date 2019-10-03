@@ -17,7 +17,7 @@ struct MembershipCardModel: Codable {
     let card: CardModel?
     let images: [MembershipCardImageModel]?
     let account: MembershipCardAccountModel?
-    let paymentCards: [PaymentCardModel]?
+    let paymentCards: [LinkedCardResponse]?
     let balances: [MembershipCardBalanceModel]?
     
     enum CodingKeys: String, CodingKey {
@@ -36,14 +36,18 @@ struct MembershipCardModel: Codable {
 extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCard, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCard {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
-//        update(cdObject, \.membershipPlan, with: NSNumber(value: membershipPlan ?? 0), delta: delta)
 
         // Retrieve Membership Plan
         
         if let planId = membershipPlan {
-                let plan = context.fetchWithApiID(CD_MembershipPlan.self, id: String(planId))
-                self.update(cdObject, \.membershipPlan, with: plan, delta: delta)
-                plan?.addMembershipCardsObject(cdObject)
+            // get plan for id from core data
+            let plan = context.fetchWithApiID(CD_MembershipPlan.self, id: String(planId))
+
+            // update membership card with this membership plan
+            update(cdObject, \.membershipPlan, with: plan, delta: delta)
+
+            // add this cd object to the plan
+            plan?.addMembershipCardsObject(cdObject)
         }
 
         cdObject.transactions.forEach {
@@ -96,15 +100,16 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             update(cdObject, \.account, with: nil, delta: false)
         }
 
-        cdObject.paymentCards.forEach {
+        cdObject.linkedPaymentCards.forEach {
             guard let paymentCard = $0 as? CD_PaymentCard else { return }
-            context.delete(paymentCard)
+            cdObject.removeLinkedPaymentCardsObject(paymentCard)
         }
-//        paymentCards?.forEach { paymentCard in
-//            let cdPaymentCard = paymentCard.mapToCoreData(context, .update, overrideID: nil)
-//            update(cdPaymentCard, \.membershipCard, with: cdObject, delta: delta)
-//            cdObject.addPaymentCardsObject(cdPaymentCard)
-//        }
+        paymentCards?.filter({ $0.activeLink == true }).forEach { paymentCard in
+            if let cdPaymentCard = context.fetchWithApiID(CD_PaymentCard.self, id: String(paymentCard.id ?? 0)) {
+                cdObject.addLinkedPaymentCardsObject(cdPaymentCard)
+                cdPaymentCard.addLinkedMembershipCardsObject(cdObject)
+            }
+        }
 
         cdObject.balances.forEach {
             guard let balance = $0 as? CD_MembershipCardBalance else { return }

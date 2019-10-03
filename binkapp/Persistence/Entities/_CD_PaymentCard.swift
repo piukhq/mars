@@ -12,7 +12,7 @@ public enum CD_PaymentCardRelationships: String {
     case account = "account"
     case card = "card"
     case images = "images"
-    case membershipCards = "membershipCards"
+    case linkedMembershipCards = "linkedMembershipCards"
 }
 
 open class _CD_PaymentCard: CD_BaseObject {
@@ -64,10 +64,10 @@ open class _CD_PaymentCard: CD_BaseObject {
     }
 
     @NSManaged open
-    var membershipCards: NSSet
+    var linkedMembershipCards: NSSet
 
-    open func membershipCardsSet() -> NSMutableSet {
-        return self.membershipCards.mutableCopy() as! NSMutableSet
+    open func linkedMembershipCardsSet() -> NSMutableSet {
+        return self.linkedMembershipCards.mutableCopy() as! NSMutableSet
     }
 
 }
@@ -102,28 +102,28 @@ extension _CD_PaymentCard {
 
 extension _CD_PaymentCard {
 
-    open func addMembershipCards(_ objects: NSSet) {
-        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+    open func addLinkedMembershipCards(_ objects: NSSet) {
+        let mutable = self.linkedMembershipCards.mutableCopy() as! NSMutableSet
         mutable.union(objects as Set<NSObject>)
-        self.membershipCards = mutable.copy() as! NSSet
+        self.linkedMembershipCards = mutable.copy() as! NSSet
     }
 
-    open func removeMembershipCards(_ objects: NSSet) {
-        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+    open func removeLinkedMembershipCards(_ objects: NSSet) {
+        let mutable = self.linkedMembershipCards.mutableCopy() as! NSMutableSet
         mutable.minus(objects as Set<NSObject>)
-        self.membershipCards = mutable.copy() as! NSSet
+        self.linkedMembershipCards = mutable.copy() as! NSSet
     }
 
-    open func addMembershipCardsObject(_ value: CD_PaymentCardMembershipCard) {
-        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+    open func addLinkedMembershipCardsObject(_ value: CD_MembershipCard) {
+        let mutable = self.linkedMembershipCards.mutableCopy() as! NSMutableSet
         mutable.add(value)
-        self.membershipCards = mutable.copy() as! NSSet
+        self.linkedMembershipCards = mutable.copy() as! NSSet
     }
 
-    open func removeMembershipCardsObject(_ value: CD_PaymentCardMembershipCard) {
-        let mutable = self.membershipCards.mutableCopy() as! NSMutableSet
+    open func removeLinkedMembershipCardsObject(_ value: CD_MembershipCard) {
+        let mutable = self.linkedMembershipCards.mutableCopy() as! NSMutableSet
         mutable.remove(value)
-        self.membershipCards = mutable.copy() as! NSSet
+        self.linkedMembershipCards = mutable.copy() as! NSSet
     }
 
 }
