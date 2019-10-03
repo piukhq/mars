@@ -14,6 +14,7 @@
                 <outlet property="cardDetailsStackView" destination="ElX-yf-qIn" id="fXn-yO-V6W"/>
                 <outlet property="deleteInfoRow" destination="gNq-b9-nhJ" id="iTd-pe-K1R"/>
                 <outlet property="fullDetailsBrandHeader" destination="iH8-ro-dLl" id="ehM-lS-T9l"/>
+                <outlet property="offersStackView" destination="umh-i2-nD6" id="VRv-PN-5Mu"/>
                 <outlet property="securityAndPrivacyInfoRow" destination="ruT-bQ-lue" id="j8V-T9-liK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -27,7 +28,7 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="1630"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ub4-ah-QiY" userLabel="ContainerView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="1488"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="1449"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iH8-ro-dLl" customClass="FullDetailsBrandHeader" customModule="binkapp" customModuleProvider="target">
                                     <rect key="frame" x="25" y="0.0" width="364" height="271"/>
@@ -46,33 +47,20 @@
                                     </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="umh-i2-nD6">
-                                    <rect key="frame" x="25" y="449" width="364" height="740"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CsR-MA-SH2">
-                                            <rect key="frame" x="0.0" y="0.0" width="364" height="364"/>
-                                            <color key="backgroundColor" red="0.0" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="364" id="QnL-oy-ias"/>
-                                            </constraints>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X7o-X4-vJV">
-                                            <rect key="frame" x="0.0" y="376" width="364" height="364"/>
-                                            <color key="backgroundColor" red="0.0" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="364" id="jpe-qt-FsL"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
+                                    <rect key="frame" x="25" y="449" width="364" height="700"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="700" placeholder="YES" id="O05-rK-rb9"/>
+                                    </constraints>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jgp-B3-GNB" userLabel="SeparatorView">
-                                    <rect key="frame" x="0.0" y="1213" width="414" height="1"/>
+                                    <rect key="frame" x="0.0" y="1174" width="414" height="1"/>
                                     <color key="backgroundColor" red="0.66666666666666663" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="ROX-j2-GYy"/>
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="wZH-mI-4Mq">
-                                    <rect key="frame" x="25" y="1214" width="364" height="264"/>
+                                    <rect key="frame" x="25" y="1175" width="364" height="264"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vLa-fX-VOe" customClass="CardDetailsInfoView" customModule="binkapp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="364" height="88"/>
@@ -107,7 +95,6 @@
                                 <constraint firstItem="umh-i2-nD6" firstAttribute="leading" secondItem="ub4-ah-QiY" secondAttribute="leading" constant="25" id="FXD-xK-fik"/>
                                 <constraint firstAttribute="trailing" secondItem="wZH-mI-4Mq" secondAttribute="trailing" constant="25" id="MgQ-8f-3bC"/>
                                 <constraint firstAttribute="trailing" secondItem="umh-i2-nD6" secondAttribute="trailing" constant="25" id="Mt9-2T-2F7"/>
-                                <constraint firstItem="wZH-mI-4Mq" firstAttribute="top" secondItem="umh-i2-nD6" secondAttribute="bottom" constant="25" id="QWA-iS-gpp"/>
                                 <constraint firstItem="iH8-ro-dLl" firstAttribute="leading" secondItem="ub4-ah-QiY" secondAttribute="leading" constant="25" id="Xti-rD-gT0"/>
                                 <constraint firstItem="wZH-mI-4Mq" firstAttribute="top" secondItem="Jgp-B3-GNB" secondAttribute="bottom" id="h06-kS-VDT"/>
                                 <constraint firstAttribute="trailing" secondItem="Jgp-B3-GNB" secondAttribute="trailing" id="iQa-2e-F1b"/>
@@ -116,6 +103,7 @@
                                 <constraint firstItem="Jgp-B3-GNB" firstAttribute="leading" secondItem="ub4-ah-QiY" secondAttribute="leading" id="rLM-BR-nhA"/>
                                 <constraint firstAttribute="trailing" secondItem="ElX-yf-qIn" secondAttribute="trailing" constant="25" id="y2F-1t-hkV"/>
                                 <constraint firstAttribute="trailing" secondItem="iH8-ro-dLl" secondAttribute="trailing" constant="25" id="yEB-XR-C3N"/>
+                                <constraint firstItem="Jgp-B3-GNB" firstAttribute="top" secondItem="umh-i2-nD6" secondAttribute="bottom" constant="25" id="yPC-dM-tta"/>
                             </constraints>
                         </view>
                     </subviews>

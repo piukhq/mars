@@ -121,6 +121,10 @@ class LoyaltyCardFullDetailsViewModel {
         router.displaySimplePopup(title: title, message: message)
     }
     
+    func getOfferTileImageUrls() -> [String]? {
+        return membershipPlan.images?.filter({ $0.type == ImageType.offer.rawValue}).map({return $0.url}) as? [String] ?? [""]
+    }
+    
     func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
             if let cardId = self.membershipCard.id {

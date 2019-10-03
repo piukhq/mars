@@ -74,6 +74,7 @@ class AuthAndAddViewModel {
             do {
                 let result = try convertToDictionary(from: jsonCard) ?? [:]
                 repository.addMembershipCard(jsonCard: result, completion: { response in
+                    // TODO: Add condition here after server work is done.
                     self.router.toPllViewController(membershipCard: response, membershipPlan: self.membershipPlan)
                     NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
                 })
