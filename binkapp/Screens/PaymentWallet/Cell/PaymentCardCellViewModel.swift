@@ -31,7 +31,7 @@ struct PaymentCardCellViewModel {
 
     var linkedText: String {
         if paymentCardIsLinkedToMembershipCards() {
-            return "Linked to \(linkedMembershipCardsCount()) loyalty cards" // TODO: Account for 1 card in string
+            return "Linked to \(linkedMembershipCardsCount) loyalty card\(linkedMembershipCardsCount > 1 ? "s" : "")"
         } else {
             return "Not linked"
         }
@@ -72,8 +72,7 @@ struct PaymentCardCellViewModel {
         return attributedString
     }
 
-    private func linkedMembershipCardsCount() -> Int {
-        // Tech debt
+    private var linkedMembershipCardsCount: Int {
         guard let membershipCards = paymentCard.linkedMembershipCards as? Set<CD_MembershipCard> else {
             return 0
         }
@@ -81,6 +80,6 @@ struct PaymentCardCellViewModel {
     }
 
     func paymentCardIsLinkedToMembershipCards() -> Bool {
-        return linkedMembershipCardsCount() != 0
+        return linkedMembershipCardsCount > 0
     }
 }
