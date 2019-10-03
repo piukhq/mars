@@ -67,9 +67,9 @@ struct WalletLoyaltyCardCellViewModel {
     var linkStatusText: String? {
         switch (planCardType, hasLinkedPaymentCards) {
         case (.link, true):
-            return "Linked"
+            return "Linked".localized
         case (.link, false):
-            return "Link now"
+            return "Link now".localized
         default:
             return nil
         }
@@ -89,6 +89,9 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var pointsValueText: String {
+        guard cardStatus != .pending else {
+            return "Pending".localized
+        }
         return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "")"
     }
 
