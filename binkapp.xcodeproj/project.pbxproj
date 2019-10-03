@@ -279,6 +279,9 @@
 		EF4B465E2343B5FF009A3651 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465D2343B5FF009A3651 /* RectangleView.swift */; };
 		EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */; };
 		EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */; };
+		EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */; };
+		EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */; };
+		EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */; };
 		EF758E0823225F35000D26A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0723225F35000D26A9 /* Database.swift */; };
 		EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */; };
 		EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0C23225F45000D26A9 /* NSManagedObjectContext.swift */; };
@@ -629,6 +632,9 @@
 		EF4B465D2343B5FF009A3651 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
 		EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModel.swift; sourceTree = "<group>"; };
 		EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackUtil.swift; sourceTree = "<group>"; };
+		EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewController.swift; sourceTree = "<group>"; };
+		EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailViewController.xib; sourceTree = "<group>"; };
+		EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewModel.swift; sourceTree = "<group>"; };
 		EF758E0723225F35000D26A9 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		EF758E0923225F3B000D26A9 /* SwiftDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftDatabase.h; sourceTree = "<group>"; };
 		EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersistentContainer.swift; sourceTree = "<group>"; };
@@ -1140,23 +1146,24 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				3CC267F322F45A3500F0F9E3 /* AddingOptions */,
+				3CE24B272304014500B258C8 /* AddOrJoin */,
 				BDB01867232D948000BFFA18 /* AddPaymentCard */,
-				3C4BE8C9233B856900EC4BF6 /* ReusableModal */,
+				3CA0CBA723141C610055FDE8 /* AuthAndAdd */,
+				3C0EEE7722FC64F9006FAE5E /* BarcodeModal */,
+				3C974DCF23018B87005E383C /* BrowseBrands */,
+				EFF3DCDC231D507A006A39C9 /* Debug */,
+				5ECE04B822CE583B001BA964 /* Login */,
+				B7D577B02318097500C6B145 /* LoyaltyCardFullDetails */,
+				3C873FE122F073CE00FA3031 /* LoyaltyWallet */,
+				3C873FDC22F073CE00FA3031 /* MainTabBar */,
+				EF4B466323464873009A3651 /* PaymentCardDetail */,
 				B76749112331232D0002047A /* PaymentTermsAndConditions */,
+				3C873FD422F073CE00FA3031 /* PaymentWallet */,
+				B713662323268FB9008A0ED7 /* PLLScreen */,
+				3C4BE8C9233B856900EC4BF6 /* ReusableModal */,
 				3C7067EC232FD50800AB88A5 /* SimpleInfo */,
 				3C48E7DE232A4B0300ADE410 /* Transactions */,
-				B713662323268FB9008A0ED7 /* PLLScreen */,
-				B7D577B02318097500C6B145 /* LoyaltyCardFullDetails */,
-				EFF3DCDC231D507A006A39C9 /* Debug */,
-				3CA0CBA723141C610055FDE8 /* AuthAndAdd */,
-				3CE24B272304014500B258C8 /* AddOrJoin */,
-				3C974DCF23018B87005E383C /* BrowseBrands */,
-				3C0EEE7722FC64F9006FAE5E /* BarcodeModal */,
-				3CC267F322F45A3500F0F9E3 /* AddingOptions */,
-				3C873FD422F073CE00FA3031 /* PaymentWallet */,
-				3C873FDC22F073CE00FA3031 /* MainTabBar */,
-				3C873FE122F073CE00FA3031 /* LoyaltyWallet */,
-				5ECE04B822CE583B001BA964 /* Login */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -1373,6 +1380,16 @@
 				EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */,
 			);
 			path = "Debug Menu";
+			sourceTree = "<group>";
+		};
+		EF4B466323464873009A3651 /* PaymentCardDetail */ = {
+			isa = PBXGroup;
+			children = (
+				EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */,
+				EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */,
+				EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */,
+			);
+			path = PaymentCardDetail;
 			sourceTree = "<group>";
 		};
 		EF758E0623225F1C000D26A9 /* SwiftDatabase */ = {
@@ -1661,6 +1678,7 @@
 				3CD3493A22F99E1D000C1F4D /* NunitoSans-Italic.ttf in Resources */,
 				BD01E123231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib in Resources */,
 				3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */,
+				EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */,
 				3CF029F322F45AEC009A0E61 /* AddingOptionsViewController.xib in Resources */,
 				3CD3493322F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf in Resources */,
 				3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */,
@@ -1969,6 +1987,7 @@
 				BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */,
 				BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */,
 				3C3C604C2302DD1600D9EA25 /* EmptyResponse.swift in Sources */,
+				EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */,
 				BDD9C88C233BE6B1003CD616 /* _CD_MembershipCardAccount.swift in Sources */,
 				BDD9C89C233BE6B1003CD616 /* CD_AddField.swift in Sources */,
 				BDD9C877233BE6B1003CD616 /* _CD_FieldChoice.swift in Sources */,
@@ -2014,6 +2033,7 @@
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
 				3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */,
 				3C453CB72338E84F00287B56 /* PaymentWalletViewModel.swift in Sources */,
+				EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */,
 				B72633432305899200951037 /* AddFieldModel.swift in Sources */,
 				BDD9C89A233BE6B1003CD616 /* CD_LinkingSupport.swift in Sources */,
 				BDD9C894233BE6B1003CD616 /* CD_MembershipPlan.swift in Sources */,

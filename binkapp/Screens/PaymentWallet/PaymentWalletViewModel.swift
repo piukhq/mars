@@ -33,4 +33,8 @@ class PaymentWalletViewModel {
     func paymentCardAtIndexPath(_ indexPath: IndexPath) -> CD_PaymentCard? {
         return paymentCards?[indexPath.row]
     }
+
+    func toPaymentCardDetail(for paymentCard: CD_PaymentCard) {
+        router.toPaymentCardDetailViewController(paymentCard: paymentCard)
+    }
 }

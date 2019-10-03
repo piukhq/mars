@@ -121,6 +121,13 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
+    func toPaymentCardDetailViewController(paymentCard: CD_PaymentCard) {
+        // TODO: repository
+        let viewModel = PaymentCardDetailViewModel(paymentCard: paymentCard, router: self)
+        let viewController = PaymentCardDetailViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+
     func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan) {
         let repository = AuthAndAddRepository(apiManager: apiManager)
         let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan)

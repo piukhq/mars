@@ -30,7 +30,7 @@ struct PaymentCardCellViewModel {
     }
 
     var linkedText: String {
-        if paymentCardIsLinkedToMembershipCards() {
+        if paymentCardIsLinkedToMembershipCards {
             return "Linked to \(linkedMembershipCardsCount) loyalty card\(linkedMembershipCardsCount > 1 ? "s" : "")"
         } else {
             return "Not linked"
@@ -41,7 +41,7 @@ struct PaymentCardCellViewModel {
         router.displaySimplePopup(title: "Expired Payment Card", message: "This payment card has expired.")
     }
 
-    func paymentCardIsExpired() -> Bool {
+    var paymentCardIsExpired: Bool {
         guard let card = paymentCard.card,
             let expiryYear = card.year,
             let expiryMonth = card.month else {
@@ -79,7 +79,7 @@ struct PaymentCardCellViewModel {
         return membershipCards.count
     }
 
-    func paymentCardIsLinkedToMembershipCards() -> Bool {
+    var paymentCardIsLinkedToMembershipCards: Bool {
         return linkedMembershipCardsCount > 0
     }
 }
