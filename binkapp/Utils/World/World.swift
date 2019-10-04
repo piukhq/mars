@@ -26,12 +26,7 @@ class Wallet: CoreDataRepositoryProtocol {
         let dispatchGroup = DispatchGroup()
 
         dispatchGroup.enter()
-        getMembershipPlans {
-            dispatchGroup.leave()
-        }
-
-        dispatchGroup.enter()
-        getMembershipCards {
+        getLoyaltyWallet {
             dispatchGroup.leave()
         }
 
@@ -42,6 +37,14 @@ class Wallet: CoreDataRepositoryProtocol {
 
         dispatchGroup.notify(queue: .main) {
             NotificationCenter.default.post(name: .didLoadWallet, object: nil)
+        }
+    }
+
+    private func getLoyaltyWallet(completion: @escaping () -> Void) {
+        getMembershipPlans { [weak self] in
+            self?.getMembershipCards {
+                completion()
+            }
         }
     }
 
