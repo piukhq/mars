@@ -11,7 +11,7 @@ import Foundation
 class Wallet: CoreDataRepositoryProtocol {
     private enum FetchType {
         case local
-        case refresh
+        case reload
     }
 
     private let apiManager = ApiManager()
@@ -25,21 +25,27 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
     func launch() {
         loadWallet(forType: .local) { [weak self] in
-            self?.loadWallet(forType: .refresh)
+            self?.loadWallet(forType: .reload)
         }
     }
 
     /// Fetch the wallets from the API.
     /// Should only be called from a pull to refresh.
-    func refresh() {
-        loadWallet(forType: .refresh)
+    func reload() {
+        loadWallet(forType: .reload)
+    }
+
+    /// Refresh from our local data
+    /// Useful for calling after card deletions
+    func refreshLocal() {
+        loadWallet(forType: .local)
     }
 
     // MARK: - Private
 
     private func loadWallet(forType type: FetchType, completion: (() -> Void)? = nil) {
         let dispatchGroup = DispatchGroup()
-        let forceRefresh = type == .refresh
+        let forceRefresh = type == .reload
 
         dispatchGroup.enter()
         getLoyaltyWallet(forceRefresh: forceRefresh) {

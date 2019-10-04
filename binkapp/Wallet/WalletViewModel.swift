@@ -10,8 +10,9 @@ import Foundation
 
 protocol WalletViewModel {
     associatedtype T
+    associatedtype R
 
-    init(repository: WalletRepository, router: MainScreenRouter)
+    init(repository: R, router: MainScreenRouter)
     var cards: [T]? { get }
     var cardCount: Int { get }
     func card(forIndexPath indexPath: IndexPath) -> T?
@@ -28,6 +29,10 @@ extension WalletViewModel {
     }
 
     func reloadWallet() {
-        Current.wallet.refresh()
+        Current.wallet.reload()
+    }
+
+    func refreshLocalWallet() {
+        Current.wallet.refreshLocal()
     }
 }

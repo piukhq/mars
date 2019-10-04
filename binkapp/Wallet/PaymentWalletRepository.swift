@@ -1,5 +1,5 @@
 //
-//  WalletRepository.swift
+//  PaymentWalletRepository.swift
 //  binkapp
 //
 //  Created by Nick Farrant on 04/10/2019.
@@ -7,15 +7,18 @@
 //
 
 import Foundation
-
-protocol WalletRepository: CoreDataRepositoryProtocol {
-    init(apiManager: ApiManager)
-}
+import CoreData
 
 struct PaymentWalletRepository: WalletRepository {
+    typealias T = CD_PaymentCard
+
     private let apiManager: ApiManager
 
     init(apiManager: ApiManager) {
         self.apiManager = apiManager
+    }
+
+    func delete(_ card: CD_PaymentCard, completion: @escaping () -> Void) {
+        //
     }
 }

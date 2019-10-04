@@ -10,13 +10,14 @@ import UIKit
 import DeepDiff
 import CoreData
 
-struct LoyaltyWalletViewModel: WalletViewModel {
+class LoyaltyWalletViewModel: WalletViewModel {
     typealias T = CD_MembershipCard
+    typealias R = LoyaltyWalletRepository
 
-    private let repository: WalletRepository
+    private let repository: R
     private let router: MainScreenRouter
 
-    init(repository: WalletRepository, router: MainScreenRouter) {
+    required init(repository: R, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
     }
@@ -36,33 +37,13 @@ struct LoyaltyWalletViewModel: WalletViewModel {
         router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
     }
 
-
-
-//    func showDeleteConfirmationAlert(card: CD_MembershipCard, yesCompletion: @escaping () -> (), noCompletion: @escaping () -> Void) {
-//        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
-//            let cardId = card.id
-//            self.deleteMembershipCard(card, completion: {
-//                self.membershipCards?.removeAll(where: { $0.id == cardId })
-//                yesCompletion()
-//            })
-//        }, noCompletion: {
-//            DispatchQueue.main.async {
-//                noCompletion()
-//            }
-//        })
-//    }
-
-//    func deleteMembershipCard(_ card: CD_MembershipCard, completion: @escaping () -> Void) {
-//        // Process the backend delete, but fail silently
-//        repository.deleteMembershipCard(id: card.id) { _ in }
-//
-//        Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
-//            if let cardToDelete = cardToDelete { context.delete(cardToDelete) }
-//            try? context.save()
-//
-//            DispatchQueue.main.async {
-//                completion()
-//            }
-//        }
-//    }
+    func showDeleteConfirmationAlert(card: CD_MembershipCard, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
+            self?.repository.delete(card, completion: yesCompletion)
+        }, noCompletion: {
+            DispatchQueue.main.async {
+                noCompletion()
+            }
+        })
+    }
 }

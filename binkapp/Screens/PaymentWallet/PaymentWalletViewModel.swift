@@ -10,11 +10,12 @@ import Foundation
 
 struct PaymentWalletViewModel: WalletViewModel {
     typealias T = CD_PaymentCard
+    typealias R = PaymentWalletRepository
 
-    private let repository: WalletRepository
+    private let repository: R
     let router: MainScreenRouter
 
-    init(repository: WalletRepository, router: MainScreenRouter) {
+    init(repository: R, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
     }

@@ -148,11 +148,11 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
         guard let card = viewModel.card(forIndexPath: index) else { return }
                 
-//        viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
-//            self?.collectionView.reloadData()
-//        }, noCompletion: {
-//            cell.set(to: .closed)
-//        })
+        viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
+            self?.viewModel.refreshLocalWallet()
+        }, noCompletion: {
+            cell.set(to: .closed)
+        })
     }
     
     func cellDidFullySwipe(action: SwipeMode?, cell: WalletLoyaltyCardCollectionViewCell) {
