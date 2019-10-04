@@ -102,7 +102,7 @@ class AuthAndAddViewController: BaseFormViewController {
     }
         
     @objc func loginButtonTapped() {
-        viewModel.addMembershipCard(with: dataSource.fields)
+        viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {

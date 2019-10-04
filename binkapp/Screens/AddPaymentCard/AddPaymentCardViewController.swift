@@ -19,7 +19,6 @@ class AddPaymentCardViewController: BaseFormViewController {
     private struct Constants {
         static let buttonWidthPercentage: CGFloat = 0.75
         static let buttonHeight: CGFloat = 52.0
-        static let postCollectionViewPadding: CGFloat = 15.0
         static let cardPadding: CGFloat = 30.0
         static let bottomButtonPadding: CGFloat = 78.0
         static let cardHeight: CGFloat = 120.0
@@ -58,7 +57,6 @@ class AddPaymentCardViewController: BaseFormViewController {
             stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: Constants.cardPadding)
         }
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "privacy_and_security_title".localized)])
-        stackScrollView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
         configureLayout()
     }
     

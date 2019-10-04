@@ -41,11 +41,9 @@ class AuthAndAddViewModel {
         return membershipPlan
     }
     
-    func addMembershipCard(with formFields: [FormField]) {
-        
-        formFields.forEach {
-            addFieldToCard(formField: $0)
-        }
+    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) {
+        formFields.forEach { addFieldToCard(formField: $0) }
+        checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
                         
         try? repository.addMembershipCard(jsonCard: membershipCard.asDictionary(), completion: { card in
             if let card = card {
@@ -61,6 +59,7 @@ class AuthAndAddViewModel {
             let addFieldsArray = membershipCard.account?.addFields
             if var existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
                 existingField.value = formField.value
+                existingField.value = formField.value
             } else {
                 membershipCard.account?.addFields?.append(AddFieldPostModel(column: formField.title, value: formField.value))
             }
@@ -70,6 +69,29 @@ class AuthAndAddViewModel {
                 existingField.value = formField.value
             } else {
                 membershipCard.account?.authoriseFields?.append(AuthoriseFieldPostModel(column: formField.title, value: formField.value))
+            }
+        default:
+            break
+        }
+    }
+    
+    func addCheckboxToCard(checkbox: CheckboxView) {
+        switch checkbox.columnKind {
+        case .add:
+            let addFieldsArray = membershipCard.account?.addFields
+                        
+            if var existingField = addFieldsArray?.first(where: { $0.column == checkbox.title }) {
+                existingField.value = String(checkbox.isValid())
+            } else {
+                membershipCard.account?.addFields?.append(AddFieldPostModel(column: checkbox.title, value:  String(checkbox.isValid())))
+            }
+        case .auth:
+            print()
+            let authoriseFieldsArray = membershipCard.account?.authoriseFields
+            if var existingField = authoriseFieldsArray?.first(where: { $0.column == checkbox.title }) {
+                existingField.value = String(checkbox.isValid())
+            } else {
+                membershipCard.account?.authoriseFields?.append(AuthoriseFieldPostModel(column: checkbox.title, value: String(checkbox.isValid())))
             }
         default:
             break

@@ -21,6 +21,7 @@ class BaseFormViewController: UIViewController, Form {
         static let horizontalInset: CGFloat = 25.0
         static let maskingHeight: CGFloat = 209.0
         static let bottomInset: CGFloat = 140.0
+        static let postCollectionViewPadding: CGFloat = 15.0
     }
     
     // MARK: - Properties
@@ -44,6 +45,7 @@ class BaseFormViewController: UIViewController, Form {
         stackView.distribution = .fill
         stackView.alignment = .fill
         stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
+        stackView.customPadding(Constants.postCollectionViewPadding, after: collectionView)
         view.addSubview(stackView)
         return stackView
     }()
@@ -103,6 +105,7 @@ class BaseFormViewController: UIViewController, Form {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureLayout()
+        configureCheckboxes()
     }
     
     private func configureLayout() {
@@ -128,6 +131,11 @@ class BaseFormViewController: UIViewController, Form {
         maskingView.layer.mask = maskGradient
     }
     
+    private func configureCheckboxes() {
+        guard dataSource.checkboxes.count > 0 else { return }
+        stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
+    }
+    
     /// This method is designed to be overriden for updating UI elements in response to validity
     func formValidityUpdated(fullFormIsValid: Bool) {}
 }
@@ -151,7 +159,13 @@ extension BaseFormViewController: UICollectionViewDelegateFlowLayout {
     
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {
         collectionView.collectionViewLayout.invalidateLayout()
-        formValidityUpdated(fullFormIsValid: dataSource.fields.reduce(true, { $0 && $1.isValid() }))
+        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+    }
+}
+
+extension BaseFormViewController: CheckboxViewDelegate {
+    func checkboxStateDidChange() {
+        formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
     }
 }
 

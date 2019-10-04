@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol FormDataSourceDelegate:NSObjectProtocol {
+protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField)
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField)
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool
@@ -22,12 +22,23 @@ extension FormDataSourceDelegate {
 }
 
 class FormDataSource: NSObject {
+    
+    typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate
+    
     private struct Constants {
         static let expiryYearsInTheFuture = 50
     }
     
     private(set) var fields = [FormField]()
-    weak var delegate: FormDataSourceDelegate?
+    private(set) var checkboxes = [CheckboxView]()
+    weak var delegate: MultiDelegate?
+    
+    var fullFormIsValid: Bool {
+        let formFieldsValid = fields.reduce(true, { $0 && $1.isValid() })
+        let checkboxesValid = checkboxes.reduce(true, { $0 && $1.isValid() })
+        
+        return formFieldsValid && checkboxesValid
+    }
     
     func currentFieldValues() -> [String: String] {
         var values = [String: String]()
@@ -39,7 +50,7 @@ class FormDataSource: NSObject {
 
 // MARK: - Add Payment Card
 extension FormDataSource {
-    convenience init(_ paymentCardModel: PaymentCardCreateModel, delegate: FormDataSourceDelegate? = nil) {
+    convenience init(_ paymentCardModel: PaymentCardCreateModel, delegate: MultiDelegate? = nil) {
         self.init()
         self.delegate = delegate
         setupFields(with: paymentCardModel)
@@ -112,7 +123,7 @@ extension FormDataSource {
 
 // MARK: - Add And Auth
 extension FormDataSource {
-    convenience init(authAdd membershipPlan: CD_MembershipPlan, delegate: FormDataSourceDelegate? = nil) {
+    convenience init(authAdd membershipPlan: CD_MembershipPlan, delegate: MultiDelegate? = nil) {
         self.init()
         self.delegate = delegate
         setupFields(with: membershipPlan)
@@ -140,36 +151,54 @@ extension FormDataSource {
         }
         
         model.account?.formattedAddFields?.forEach { field in
-            fields.append(
-                FormField(
-                    title: field.column ?? "",
-                    placeholder: field.fieldDescription ?? "",
-                    validation: field.validation,
-                    fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, choices: field.choicesArray),
-                    updated: updatedBlock,
-                    shouldChange: shouldChangeBlock,
-                    fieldExited: fieldExitedBlock,
-                    pickerSelected: pickerUpdatedBlock,
-                    columnKind: .add
+            if field.fieldInputType == .checkbox {
+                let checkbox = CheckboxView(frame: .zero)
+                checkbox.configure(title: field.column ?? "", columnKind: .add, delegate: self)
+                checkboxes.append(checkbox)
+            } else {
+                fields.append(
+                    FormField(
+                        title: field.column ?? "",
+                        placeholder: field.fieldDescription ?? "",
+                        validation: field.validation,
+                        fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, choices: field.choicesArray),
+                        updated: updatedBlock,
+                        shouldChange: shouldChangeBlock,
+                        fieldExited: fieldExitedBlock,
+                        pickerSelected: pickerUpdatedBlock,
+                        columnKind: .add
+                    )
                 )
-            )
+            }
         }
         
         model.account?.formattedAuthFields?.forEach { field in
-            fields.append(
-                FormField(
-                    title: field.column ?? "",
-                    placeholder: field.fieldDescription ?? "",
-                    validation: field.validation,
-                    fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, choices: field.choicesArray),
-                    updated: updatedBlock,
-                    shouldChange: shouldChangeBlock,
-                    fieldExited: fieldExitedBlock,
-                    pickerSelected: pickerUpdatedBlock,
-                    columnKind: .auth
+            if field.fieldInputType == .checkbox {
+                let checkbox = CheckboxView(frame: .zero)
+                checkbox.configure(title: field.column ?? "", columnKind: .auth, delegate: self)
+                checkboxes.append(checkbox)
+            } else {
+                fields.append(
+                    FormField(
+                        title: field.column ?? "",
+                        placeholder: field.fieldDescription ?? "",
+                        validation: field.validation,
+                        fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, choices: field.choicesArray),
+                        updated: updatedBlock,
+                        shouldChange: shouldChangeBlock,
+                        fieldExited: fieldExitedBlock,
+                        pickerSelected: pickerUpdatedBlock,
+                        columnKind: .auth
+                    )
                 )
-            )
+            }
         }
+    }
+}
+
+extension FormDataSource: CheckboxViewDelegate {
+    func checkboxStateDidChange() {
+        delegate?.checkboxStateDidChange()
     }
 }
 
