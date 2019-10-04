@@ -14,11 +14,13 @@ class AuthAndAddRepository {
         self.apiManager = apiManager
     }
     
-    func addMembershipCard(jsonCard: [String: Any], completion: @escaping (MembershipCardModel) -> Void) {
+    func addMembershipCard(jsonCard: [String: Any], completion: @escaping (MembershipCardModel) -> Void, onError: @escaping (Error) -> Void) {
         let url = RequestURL.postMembershipCard
         let method = RequestHTTPMethod.post
         apiManager.doRequest(url: url, httpMethod: method, parameters: jsonCard, onSuccess: { (response: MembershipCardModel) in
             completion(response)
+        }, onError: { (error) in
+            onError(error)
         })
     }
 }

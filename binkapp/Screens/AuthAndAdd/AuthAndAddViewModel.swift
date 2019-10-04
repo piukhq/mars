@@ -99,6 +99,8 @@ class AuthAndAddViewModel {
                     // TODO: Add condition here after server work is done.
                     self.router.toPllViewController(membershipCard: response, membershipPlan: self.membershipPlan)
                     NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+                }, onError: { (error) in
+                    self.router.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
                 })
             } catch {
                 print(error)
