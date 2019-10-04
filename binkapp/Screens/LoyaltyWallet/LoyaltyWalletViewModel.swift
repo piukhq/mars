@@ -57,7 +57,7 @@ class LoyaltyWalletViewModel {
     }
 
     func reloadWallet() {
-        Current.wallet.load()
+        Current.wallet.refresh()
     }
 }
 

@@ -28,6 +28,6 @@ class PaymentWalletViewModel {
     }
 
     func loadWallet() {
-        Current.wallet.load()
+        Current.wallet.refresh()
     }
 }

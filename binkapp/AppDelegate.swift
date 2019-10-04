@@ -68,8 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        Current.wallet.load()
-
         return true
     }
     

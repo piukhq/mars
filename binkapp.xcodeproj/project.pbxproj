@@ -267,6 +267,7 @@
 		EF2E8827233A6FDB00F678F3 /* CardAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF2E8826233A6FDB00F678F3 /* CardAlertView.xib */; };
 		EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */; };
 		EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */; };
+		EF3BC90D234750F900FE52ED /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC90C234750F900FE52ED /* Wallet.swift */; };
 		EF485566231D5E4E00FC9E5F /* DebugMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */; };
 		EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF485567231D679E00FC9E5F /* DebugMenuTableViewCell.xib */; };
 		EF48556C231D696800FC9E5F /* DebugMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48556B231D696800FC9E5F /* DebugMenuTableViewCell.swift */; };
@@ -616,6 +617,7 @@
 		EF2E8826233A6FDB00F678F3 /* CardAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardAlertView.xib; sourceTree = "<group>"; };
 		EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
+		EF3BC90C234750F900FE52ED /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTableViewController.swift; sourceTree = "<group>"; };
 		EF485567231D679E00FC9E5F /* DebugMenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugMenuTableViewCell.xib; sourceTree = "<group>"; };
 		EF48556B231D696800FC9E5F /* DebugMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -979,6 +981,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EF3BC90B234750ED00FE52ED /* Wallet */,
 				EF8BF1F4233E60A300D2E5F3 /* Cache */,
 				EF2E880F2333859900F678F3 /* World */,
 				BD01E124231FA3A900D52713 /* BarBlur.swift */,
@@ -1327,6 +1330,14 @@
 				EF4B465D2343B5FF009A3651 /* RectangleView.swift */,
 			);
 			path = Wallets;
+			sourceTree = "<group>";
+		};
+		EF3BC90B234750ED00FE52ED /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				EF3BC90C234750F900FE52ED /* Wallet.swift */,
+			);
+			path = Wallet;
 			sourceTree = "<group>";
 		};
 		EF48556F231D725800FC9E5F /* View */ = {
@@ -1947,6 +1958,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF3BC90D234750F900FE52ED /* Wallet.swift in Sources */,
 				B766599E23214A4600B327BE /* WalletLoyaltyCardCollectionViewCell.swift in Sources */,
 				EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */,
 				5ECE04A922CE582E001BA964 /* LoginRepository.swift in Sources */,

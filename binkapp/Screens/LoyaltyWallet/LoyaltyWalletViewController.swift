@@ -60,6 +60,7 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
         collectionView.addSubview(refreshControl)
 
+        print("registering for refresh notifications")
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadWallet), name: .didAddMembershipCard, object: nil)
     }
@@ -74,6 +75,7 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
     }
 
     @objc private func refresh() {
+        print("refreshing wallet")
         refreshControl.endRefreshing()
         collectionView.reloadData()
     }

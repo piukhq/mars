@@ -31,6 +31,8 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
         self.title = ""
         setNavigationBar()
         populateTabBar()
+
+        Current.wallet.launch()
     }
 
     // MARK: - Navigation Bar Blurring
