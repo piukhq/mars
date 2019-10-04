@@ -27,14 +27,43 @@ class AuthAndAddViewModel {
     
     private var fieldsViews: [InputValidation] = []
     private lazy var membershipCard: MembershipCardPostModel = {
-       return MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: nil)
+       return MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: membershipPlanId)
     }()
     
-    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan) {
+    private var isFirstAuth: Bool
+    private let membershipPlanId: Int
+    
+    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, isFirstAuth: Bool = true) {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
-        membershipCard.membershipPlan = Int(membershipPlan.id)
+        membershipPlanId = Int(membershipPlan.id)!
+        self.isFirstAuth = isFirstAuth
+    }
+    
+    func getDescription() -> String? {
+        guard let planName = membershipPlan.account?.planName else { return nil }
+        
+        return isFirstAuth ? String(format: "auth_screen_description".localized, planName) : getDescriptionText()
+    }
+    
+    private func getDescriptionText() -> String {
+        guard let companyName = membershipPlan.account?.planNameCard else { return "" }
+        
+        if hasPoints() {
+            guard let transactionsAvailable = membershipPlan.featureSet?.transactionsAvailable else {
+                return String(format: "only_points_log_in_description".localized, companyName)
+            }
+            
+            return transactionsAvailable.boolValue ? String(format: "only_points_log_in_description".localized, companyName) : String(format: "points_and_transactions_log_in_description".localized, companyName)
+        } else {
+            return ""
+        }
+    }
+    
+    private func hasPoints() -> Bool {
+        guard let hasPoints = membershipPlan.featureSet?.hasPoints else { return false }
+        return hasPoints.boolValue
     }
     
     func getMembershipPlan() -> CD_MembershipPlan {

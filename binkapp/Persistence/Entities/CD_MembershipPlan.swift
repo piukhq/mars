@@ -11,4 +11,8 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
     func firstIconImage() -> CD_MembershipPlanImage? {
         return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(integerLiteral: 3))).first as? CD_MembershipPlanImage
     }
+    
+    var imagesSet: Set<CD_MembershipPlanImage>? {
+        return images as? Set<CD_MembershipPlanImage>
+    }
 }

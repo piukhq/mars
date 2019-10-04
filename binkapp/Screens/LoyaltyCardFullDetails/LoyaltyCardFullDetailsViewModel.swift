@@ -5,7 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol LoyaltyCardFullDetailsViewModelDelegate: class {
     func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel])
@@ -40,11 +40,12 @@ class LoyaltyCardFullDetailsViewModel {
         switch action {
         case .login:
             //TODO: change to login screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            guard let plan = membershipCard.membershipPlan else { return }
+            router.toAuthAndAddViewController(membershipPlan: plan, isFirstAuth: false)
             break
         case .loginChanges:
-            //TODO: change to login changes screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            guard let plan = membershipCard.membershipPlan else { return }
+            router.toAuthAndAddViewController(membershipPlan: plan, isFirstAuth: false)
             break
         case .transactions:
             router.toTransactionsViewController(membershipCard: membershipCard)
@@ -78,22 +79,48 @@ class LoyaltyCardFullDetailsViewModel {
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .unLinkable:
-            //TODO: change to unlinkable error screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)
             break
         case .genericError:
-            //TODO: change to generic error screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            let state = membershipCard.status?.status?.rawValue ?? ""
+            
+            var description = state + "\n"
+            membershipCard.status?.formattedReasonCodes?.forEach {
+                description += $0.value ?? ""
+            }
+    
+            toReusableModalTemplate(title: "error_title".localized, description: description)
             break
         }
+        
+    }
+    
+    private func toReusableModalTemplate(title: String, description: String) {
+        let attributedText = NSMutableAttributedString(string: title + "\n" + description)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
+        
+        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
     func popToRootController() {
         router.popToRootViewController()
     }
     
+    @objc func popViewController() {
+        router.popViewController()
+    }
+    
     func displaySimplePopupWithTitle(_ title: String, andMessage message: String) {
         router.displaySimplePopup(title: title, message: message)
+    }
+    
+    func getOfferTileImageUrls() -> [String]? {
+        let planImages = membershipCard.membershipPlan?.imagesSet
+        return planImages?.filter({ $0.type?.intValue == 2}).compactMap { $0.url }
     }
     
     func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {

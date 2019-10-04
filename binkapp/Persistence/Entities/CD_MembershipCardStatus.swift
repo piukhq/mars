@@ -16,4 +16,8 @@ open class CD_MembershipCardStatus: _CD_MembershipCardStatus {
         
         return MembershipCardStatus(rawValue: state)
     }
+    
+    var formattedReasonCodes: Set<CD_ReasonCode>? {
+        return reasonCodes as? Set<CD_ReasonCode>
+    }
 }

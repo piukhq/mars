@@ -145,8 +145,10 @@
 		B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */; };
 		B713662723268FEB008A0ED7 /* PLLScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B713662523268FEB008A0ED7 /* PLLScreenViewController.xib */; };
 		B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */; };
+		B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662A2329374D008A0ED7 /* OfferTileView.swift */; };
 		B713662D232A63AA008A0ED7 /* BinkModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662C232A63AA008A0ED7 /* BinkModuleView.swift */; };
 		B713662F232A63BA008A0ED7 /* BinkModuleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B713662E232A63BA008A0ED7 /* BinkModuleView.xib */; };
+		B71D51F92343692000BB3406 /* OfferTileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B71D51F82343692000BB3406 /* OfferTileView.xib */; };
 		B720CC1422EEEF5400A4F4D0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B720CC1322EEEF5400A4F4D0 /* LoginViewModel.swift */; };
 		B720CC1622EF01E200A4F4D0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */; };
 		B720CC1722EF01E200A4F4D0 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */; };
@@ -488,8 +490,10 @@
 		B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewController.swift; sourceTree = "<group>"; };
 		B713662523268FEB008A0ED7 /* PLLScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLLScreenViewController.xib; sourceTree = "<group>"; };
 		B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModel.swift; sourceTree = "<group>"; };
+		B713662A2329374D008A0ED7 /* OfferTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferTileView.swift; sourceTree = "<group>"; };
 		B713662C232A63AA008A0ED7 /* BinkModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleView.swift; sourceTree = "<group>"; };
 		B713662E232A63BA008A0ED7 /* BinkModuleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BinkModuleView.xib; sourceTree = "<group>"; };
+		B71D51F82343692000BB3406 /* OfferTileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfferTileView.xib; sourceTree = "<group>"; };
 		B720CC1322EEEF5400A4F4D0 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		B720CC1522EF01E200A4F4D0 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		B726333E230586CC00951037 /* MembershipPlanModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanModel.swift; sourceTree = "<group>"; };
@@ -1240,6 +1244,8 @@
 				B7665993231E57CC00B327BE /* CardDetailsInfoView.xib */,
 				B76659972320F68C00B327BE /* HyperlinkAlertController.swift */,
 				B76659982320F68C00B327BE /* HyperlinkAlertController.xib */,
+				B713662A2329374D008A0ED7 /* OfferTileView.swift */,
+				B71D51F82343692000BB3406 /* OfferTileView.xib */,
 				B713662C232A63AA008A0ED7 /* BinkModuleView.swift */,
 				B713662E232A63BA008A0ED7 /* BinkModuleView.xib */,
 			);
@@ -1674,6 +1680,7 @@
 				5E1B5016232105CD00890C7E /* com.bink.wallet.neo.GoogleService-Info.plist in Resources */,
 				5E1B5015232105CD00890C7E /* com.bink.wallet.neo.mr.GoogleService-Info.plist in Resources */,
 				3C25BE0023019BC100E931EE /* BrandTableViewCell.xib in Resources */,
+				B71D51F92343692000BB3406 /* OfferTileView.xib in Resources */,
 				3C33E33F23167015005E97DC /* DropdownView.xib in Resources */,
 				3CD3493A22F99E1D000C1F4D /* NunitoSans-Italic.ttf in Resources */,
 				BD01E123231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib in Resources */,
@@ -2065,6 +2072,7 @@
 				3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */,
 				EF8BF1F1233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift in Sources */,
 				3CD7E90B2302AC42001889FE /* ApiManager.swift in Sources */,
+				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
 				3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */,
 				BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */,

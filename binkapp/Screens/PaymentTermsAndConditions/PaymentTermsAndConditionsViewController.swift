@@ -62,7 +62,7 @@ class PaymentTermsAndConditionsViewController: UIViewController {
 private extension PaymentTermsAndConditionsViewController {
     func setCloseButton() {
         if viewModel.showCloseButton {
-                    let closeButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(dismissViewController))
+                    let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(dismissViewController))
             navigationItem.setRightBarButton(closeButton, animated: false)
         } else {
             self.navigationItem.setLeftBarButton(viewModel.tabBarBackButton, animated: true)
