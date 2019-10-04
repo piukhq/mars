@@ -156,6 +156,7 @@
 		B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726334C23058D2700951037 /* PlanDocumentModel.swift */; };
 		B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726334E23058DC800951037 /* RegistrationFieldModel.swift */; };
 		B726335123058E2300951037 /* TierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726335023058E2300951037 /* TierModel.swift */; };
+		B7385F54234780D2007B88DA /* BinkSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7385F53234780D2007B88DA /* BinkSwitch.swift */; };
 		B7665992231E57AE00B327BE /* CardDetailsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7665991231E57AE00B327BE /* CardDetailsInfoView.swift */; };
 		B7665994231E57CC00B327BE /* CardDetailsInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7665993231E57CC00B327BE /* CardDetailsInfoView.xib */; };
 		B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76659972320F68C00B327BE /* HyperlinkAlertController.swift */; };
@@ -397,6 +398,7 @@
 		B726334E23058DC800951037 /* RegistrationFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFieldModel.swift; sourceTree = "<group>"; };
 		B726335023058E2300951037 /* TierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TierModel.swift; sourceTree = "<group>"; };
 		B72E82C22313F3F90045607E /* MembershipCardAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardAmount.swift; sourceTree = "<group>"; };
+		B7385F53234780D2007B88DA /* BinkSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkSwitch.swift; sourceTree = "<group>"; };
 		B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardBalanceModel.swift; sourceTree = "<group>"; };
 		B7665991231E57AE00B327BE /* CardDetailsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsInfoView.swift; sourceTree = "<group>"; };
 		B7665993231E57CC00B327BE /* CardDetailsInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardDetailsInfoView.xib; sourceTree = "<group>"; };
@@ -1042,6 +1044,7 @@
 			children = (
 				B7FE19B8234391B000F2D6A0 /* PaymentCardCell.swift */,
 				B7FE19B9234391B000F2D6A0 /* PaymentCardCell.xib */,
+				B7385F53234780D2007B88DA /* BinkSwitch.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1549,6 +1552,7 @@
 				3C17FC2F22F2C69200E423A2 /* MembershipCardModel.swift in Sources */,
 				B7FE19BA234391B000F2D6A0 /* PaymentCardCell.swift in Sources */,
 				3CEABFCE2316AB74009B1122 /* MembershipCardAccountModel.swift in Sources */,
+				B7385F54234780D2007B88DA /* BinkSwitch.swift in Sources */,
 				B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */,
