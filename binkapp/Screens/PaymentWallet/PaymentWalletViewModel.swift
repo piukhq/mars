@@ -8,26 +8,18 @@
 
 import Foundation
 
-class PaymentWalletViewModel {
+struct PaymentWalletViewModel: WalletViewModel {
+    typealias T = CD_PaymentCard
+
+    private let repository: WalletRepository
     let router: MainScreenRouter
 
-    private var paymentCards: [CD_PaymentCard]? {
-        return Current.wallet.paymentCards
-    }
-    
-    init(router: MainScreenRouter) {
+    init(repository: WalletRepository, router: MainScreenRouter) {
+        self.repository = repository
         self.router = router
     }
 
-    var paymentCardCount: Int {
-        return paymentCards?.count ?? 0
-    }
-
-    func paymentCardAtIndexPath(_ indexPath: IndexPath) -> CD_PaymentCard? {
-        return paymentCards?[indexPath.row]
-    }
-
-    func loadWallet() {
-        Current.wallet.refresh()
+    var cards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards
     }
 }

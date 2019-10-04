@@ -61,7 +61,7 @@ class MainScreenRouter {
     }
     
     func getPaymentWalletViewController() -> UIViewController {
-        let viewModel = PaymentWalletViewModel(router: self)
+        let viewModel = PaymentWalletViewModel(repository: PaymentWalletRepository(apiManager: apiManager), router: self)
         let viewController = PaymentWalletViewController(viewModel: viewModel)
         
         return viewController

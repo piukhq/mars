@@ -10,10 +10,10 @@ import Alamofire
 import Keys
 import CoreData
 
-class LoyaltyWalletRepository: CoreDataRepositoryProtocol {
+class LoyaltyWalletRepository: WalletRepository {
     private let apiManager: ApiManager
     
-    init(apiManager: ApiManager) {
+    required init(apiManager: ApiManager) {
         self.apiManager = apiManager
     }
 

@@ -90,14 +90,14 @@ class LoyaltyWalletViewController: UIViewController, BarBlurring {
 
 extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.membershipCardsCount
+        return viewModel.cardCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
 
-        guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
+        guard let membershipCard = viewModel.card(forIndexPath: indexPath) else {
             return cell
         }
 
@@ -113,7 +113,7 @@ extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionVie
         if cell.swipeState != .closed {
             cell.set(to: .closed)
         } else {
-            if let card = viewModel.membershipCard(forIndexPath: indexPath) {
+            if let card = viewModel.card(forIndexPath: indexPath) {
                 viewModel.toFullDetailsCardScreen(membershipCard: card)
             }
         }
@@ -146,7 +146,7 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     }
     
     func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
-        guard let card = viewModel.membershipCard(forIndexPath: index) else { return }
+        guard let card = viewModel.card(forIndexPath: index) else { return }
                 
 //        viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
 //            self?.collectionView.reloadData()

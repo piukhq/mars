@@ -54,7 +54,7 @@ class PaymentWalletViewController: UIViewController {
     }
 
     @objc private func reloadWallet() {
-        viewModel.loadWallet()
+        viewModel.reloadWallet()
     }
 
     @objc private func refresh() {
@@ -70,13 +70,13 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.paymentCardCount
+        return viewModel.cardCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
 
-        guard let paymentCard = viewModel.paymentCardAtIndexPath(indexPath) else {
+        guard let paymentCard = viewModel.card(forIndexPath: indexPath) else {
             return cell
         }
         
