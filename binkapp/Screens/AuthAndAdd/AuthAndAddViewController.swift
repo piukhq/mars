@@ -74,19 +74,19 @@ class AuthAndAddViewController: UIViewController {
             switch field.type {
             case FieldInputType.textfield.rawValue:
                 let view = LoginTextFieldView()
-                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
+                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .add, delegate: self)
                 fieldsViews.append(view)
             case FieldInputType.password.rawValue:
                 let view = LoginTextFieldView()
-                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
+                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .add, delegate: self)
                 fieldsViews.append(view)
             case FieldInputType.dropdown.rawValue:
                 let view = DropdownView()
-                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .authorise, delegate: self)
+                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .add, delegate: self)
                 fieldsViews.append(view)
             case FieldInputType.checkbox.rawValue:
                 let view = CheckboxView()
-                view.configure(title: field.description ?? "", fieldType: .authorise)
+                view.configure(title: field.description ?? "", columnName: field.column ?? "", fieldType: .add, delegate: self)
                 checkboxes.append(view)
             default: break
             }
@@ -108,7 +108,7 @@ class AuthAndAddViewController: UIViewController {
                 fieldsViews.append(view)
             case FieldInputType.checkbox.rawValue:
                 let view = CheckboxView()
-                view.configure(title: field.description ?? "", fieldType: .authorise)
+                view.configure(title: field.description ?? "", columnName: field.column ?? "", fieldType: .authorise, delegate: self)
                 checkboxes.append(view)
             default: break
             }
@@ -130,7 +130,7 @@ class AuthAndAddViewController: UIViewController {
                 fieldsViews.append(view)
             case FieldInputType.checkbox.rawValue:
                 let view = CheckboxView()
-                view.configure(title: field.description ?? "", fieldType: .enrol)
+                view.configure(title: field.description ?? "", columnName: field.column ?? "", fieldType: .enrol, delegate: self)
                 checkboxes.append(view)
             default: break
             }
@@ -182,6 +182,12 @@ extension AuthAndAddViewController: LoginTextFieldDelegate {
 
 extension AuthAndAddViewController: DropdownDelegate {
     func dropdownView(_ dropdownView: DropdownView, didSetDataWithColumn column: String, value: String, fieldType: FieldType) {
+        viewModel.addFieldToCard(column: column, value: value, fieldType: fieldType)
+    }
+}
+
+extension AuthAndAddViewController: CheckboxViewDelegate {
+    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FieldType) {
         viewModel.addFieldToCard(column: column, value: value, fieldType: fieldType)
     }
 }

@@ -181,9 +181,3 @@ class AuthAndAddViewModel {
         router.popToRootViewController()
     }
 }
-
-extension AuthAndAddViewModel: DropdownDelegate {
-    func dropdownView(_ dropdownView: DropdownView, didSetDataWithColumn column: String, value: String, fieldType: FieldType) {
-        addFieldToCard(column: column, value: value, fieldType: fieldType)
-    }
-}
