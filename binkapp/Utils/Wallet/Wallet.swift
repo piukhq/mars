@@ -9,6 +9,11 @@
 import Foundation
 
 class Wallet: CoreDataRepositoryProtocol {
+    private enum FetchType {
+        case local
+        case refresh
+    }
+
     private let apiManager = ApiManager()
 
     private(set) var membershipCards: [CD_MembershipCard]?
@@ -19,59 +24,42 @@ class Wallet: CoreDataRepositoryProtocol {
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
     func launch() {
-        loadLocalWallet { [weak self] in
-            self?.refreshWallet(completion: nil)
+        loadWallet(forType: .local) { [weak self] in
+            self?.loadWallet(forType: .refresh)
         }
     }
 
     /// Fetch the wallets from the API.
     /// Should only be called from a pull to refresh.
     func refresh() {
-        refreshWallet()
+        loadWallet(forType: .refresh)
     }
 
     // MARK: - Private
 
-    private func refreshWallet(completion: (() -> Void)? = nil) {
-        let refreshWalletDispatchGroup = DispatchGroup()
+    private func loadWallet(forType type: FetchType, completion: (() -> Void)? = nil) {
+        let dispatchGroup = DispatchGroup()
+        let forceRefresh = type == .refresh
 
-        refreshWalletDispatchGroup.enter()
-        getLoyaltyWallet(forceRefresh: true) {
-            refreshWalletDispatchGroup.leave()
+        dispatchGroup.enter()
+        getLoyaltyWallet(forceRefresh: forceRefresh) {
+            dispatchGroup.leave()
         }
 
-        refreshWalletDispatchGroup.enter()
-        getPaymentCards(forceRefresh: true) {
-            refreshWalletDispatchGroup.leave()
+        dispatchGroup.enter()
+        getPaymentWallet(forceRefresh: forceRefresh) {
+            dispatchGroup.leave()
         }
 
-        refreshWalletDispatchGroup.notify(queue: .main) {
-            print("sending notification for refresh")
+        dispatchGroup.notify(queue: .main) {
             NotificationCenter.default.post(name: .didLoadWallet, object: nil)
             completion?()
         }
     }
 
-    private func loadLocalWallet(completion: (() -> Void)? = nil) {
-        let localWalletDispatchGroup = DispatchGroup()
-
-        localWalletDispatchGroup.enter()
-        getLoyaltyWallet {
-            localWalletDispatchGroup.leave()
-        }
-
-        localWalletDispatchGroup.enter()
-        getPaymentCards {
-            localWalletDispatchGroup.leave()
-        }
-
-        localWalletDispatchGroup.notify(queue: .main) {
-            print("sending notification for local refresh")
-            NotificationCenter.default.post(name: .didLoadWallet, object: nil)
-            completion?()
-        }
-    }
-
+    /// Even though we want to get the loyalty and payment card wallets asyncronously and complete once both finish regardless of order,
+    /// membership cards still have a dependancy on membership plans having been downloaded.
+    /// This provides a convenient way to get the loyalty wallet as a whole, while honouring that dependancy.
     private func getLoyaltyWallet(forceRefresh: Bool = false, completion: @escaping () -> Void) {
         getMembershipPlans(forceRefresh: forceRefresh) { [weak self] in
             self?.getMembershipCards(forceRefresh: forceRefresh) {
@@ -126,7 +114,7 @@ class Wallet: CoreDataRepositoryProtocol {
         })
     }
 
-    private func getPaymentCards(forceRefresh: Bool = false, completion: @escaping () -> Void) {
+    private func getPaymentWallet(forceRefresh: Bool = false, completion: @escaping () -> Void) {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { [weak self] cards in
                 self?.paymentCards = cards
