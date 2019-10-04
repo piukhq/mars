@@ -41,17 +41,17 @@ class BinkModuleView: CustomView {
     private var action: BinkModuleAction?
     private weak var delegate: BinkModuleViewDelegate?
     
-    func configure(moduleType:ModuleType, membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, paymentCards: [PaymentCardModel]? = nil, delegate: BinkModuleViewDelegate? = nil) {
+    func configure(moduleType:ModuleType, membershipCard: CD_MembershipCard, paymentCards: [PaymentCardModel]? = nil, delegate: BinkModuleViewDelegate? = nil) {
         self.delegate = delegate
         layer.shadowColor = UIColor.black.cgColor
         
         switch moduleType{
         case .points:
-            configurePointsModule(membershipCard: membershipCard, membershipPlan: membershipPlan)
+            configurePointsModule(membershipCard: membershipCard)
             break
         case .link:
             if let paymentCardsArray = paymentCards {
-                configureLinkModule(membershipCard: membershipCard, membershipPlan: membershipPlan, paymentCards: paymentCardsArray)
+                configureLinkModule(membershipCard: membershipCard, paymentCards: paymentCardsArray)
             }
             break
         }
@@ -77,19 +77,28 @@ private extension BinkModuleView {
     }
     
     // Configure points module view
-    func configurePointsModule(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
-        guard membershipPlan.featureSet?.hasPoints ?? false || membershipPlan.featureSet?.transactionsAvailable ?? false else {
+    func configurePointsModule(membershipCard: CD_MembershipCard) {
+        guard let plan = membershipCard.membershipPlan,
+            plan.featureSet?.hasPoints?.boolValue ?? false || plan.featureSet?.transactionsAvailable?.boolValue ?? false else {
             // Points module 1.5
             configure(imageName: "lcdModuleIconsPointsInactive", titleText: "history_title".localized, subtitleText: "not_available_title".localized, touchAction: .loginUnavailable)
             return
         }
         
-        switch membershipCard.status?.state {
+        switch membershipCard.status?.status {
         case .authorised:
             // Points module 1.1, 1.2
-            if let balances = membershipCard.balances, let value = balances[0].value {
-                let titleText = (balances[0].prefix ?? "") + String(value) + " " + (balances[0].suffix ?? "")
-                let subtitleText = (membershipPlan.featureSet?.transactionsAvailable ?? false) ? "points_module_view_history_message".localized : "points_module_last_checked".localized + (balances[0].updatedAt?.stringFromTimeInterval() ?? "")
+            if let balances = membershipCard.balances.allObjects as? [CD_MembershipCardBalance],
+                let balance = balances.first,
+                let value = balance.value {
+                                
+                let prefix = balance.prefix ?? ""
+                let suffix = balance.suffix ?? ""
+                let titleText = prefix + value.stringValue + " " + suffix
+                
+                let transactionsAvailable = plan.featureSet?.transactionsAvailable?.boolValue == true
+                
+                let subtitleText = (transactionsAvailable) ? "points_module_view_history_message".localized : "points_module_last_checked".localized + (balance.updatedAt?.stringValue ?? "")
                 configure(imageName: "lcdModuleIconsPointsActive", titleText: titleText, subtitleText: subtitleText, touchAction: .transactions)
             }
             break
@@ -99,8 +108,9 @@ private extension BinkModuleView {
             break
         case .pending:
             let imageName = "lcdModuleIconsPointsLoginPending"
-            if let reasonCodes = membershipCard.status?.reasonCodes, reasonCodes.count > 0 {
-                switch reasonCodes[0] {
+
+            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.value {
+                switch reasonCode {
                 case "X200":
                     // Points module 1.9
                     configure(imageName: imageName, titleText: "points_module_signing_up_status".localized, subtitleText: "please_wait_title".localized, touchAction: .signUpPending)
@@ -118,8 +128,8 @@ private extension BinkModuleView {
             break
         case .failed:
             let imageName = "lcdModuleIconsPointsLogin"
-            if let reasonCodes = membershipCard.status?.reasonCodes, reasonCodes.count > 0 {
-                switch reasonCodes[0] {
+            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.value {
+                switch reasonCode {
                 case "X201":
                     // Points module 1.8
                     configure(imageName: imageName, titleText: "sign_up_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .signUp)
@@ -145,9 +155,11 @@ private extension BinkModuleView {
     }
     
     // Configure link module view
-    func configureLinkModule(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, paymentCards: [PaymentCardModel]) {
-        guard membershipPlan.featureSet?.cardType == FeatureSetModel.PlanCardType.link else {
-            switch membershipPlan.featureSet?.cardType {
+    func configureLinkModule(membershipCard: CD_MembershipCard, paymentCards: [PaymentCardModel]) {
+        guard let plan = membershipCard.membershipPlan else { return }
+        
+        guard plan.featureSet?.planCardType == .link else {
+            switch plan.featureSet?.planCardType {
             case .store, .view:
                 // Link module 2.8
                 configure(imageName: "lcdModuleIconsLinkInactive", titleText: "card_linking_status".localized, subtitleText: "not_available_title".localized, touchAction: .unLinkable)
@@ -159,15 +171,15 @@ private extension BinkModuleView {
             }
             return
         }
-        switch membershipCard.status?.state {
+        switch membershipCard.status?.status {
         case .authorised:
-            let linkedCard = paymentCards.first(where: { $0.activeLink == true})
-            guard membershipCard.paymentCards?.count ?? 0 == 0, linkedCard == nil else {
-                // Link module 2.1
-                let subtitleText = String(format: "link_module_to_number_of_payment_cards_message".localized, membershipCard.paymentCards?.count ?? 0, paymentCards.count)
-                configure(imageName: "lcdModuleIconsLinkActive", titleText: "card_linked_status".localized, subtitleText: subtitleText, touchAction: .pll)
-                return
-            }
+//            let linkedCard = paymentCards.first(where: { $0.activeLink == true})
+//            guard membershipCard.paymentCards?.count ?? 0 == 0, linkedCard == nil else {
+//                // Link module 2.1
+//                let subtitleText = String(format: "link_module_to_number_of_payment_cards_message".localized, membershipCard.paymentCards?.count ?? 0, paymentCards.count)
+//                configure(imageName: "lcdModuleIconsLinkActive", titleText: "card_linked_status".localized, subtitleText: subtitleText, touchAction: .pll)
+//                return
+//            }
             if paymentCards.count == 0 {
                 // Link module 2.2
                 configure(imageName: "lcdModuleIconsLinkError", titleText: "card_link_status".localized, subtitleText: "link_module_to_payment_cards_message".localized, touchAction: .pllEmpty)

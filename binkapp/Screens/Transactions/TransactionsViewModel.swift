@@ -8,9 +8,8 @@
 import Foundation
 
 struct TransactionsViewModel {
-    let membershipCard: MembershipCardModel
-    let membershipPlan: MembershipPlanModel
-    var transactions: [MembershipTransaction] = []
+    let membershipCard: CD_MembershipCard
+    var transactions: [CD_MembershipTransaction] = []
     private let router: MainScreenRouter
     
     var title: String {
@@ -28,22 +27,27 @@ struct TransactionsViewModel {
     }
     
     var lastCheckedString: String? {
-        let date = Date(timeIntervalSince1970: membershipCard.balances?.first?.updatedAt ?? 0)
+        let date = Date(timeIntervalSince1970: membershipCard.formattedBalances?.first?.updatedAt?.doubleValue ?? 0)
         guard let dateString = date.timeAgoString() else { return nil }
         return String(format: "last_checked".localized, dateString)
     }
     
-    init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard, router: MainScreenRouter) {
         self.membershipCard = membershipCard
-        self.membershipPlan = membershipPlan
         self.router = router
         
-        guard let transactions = membershipCard.membershipTransactions else { return }
-        self.transactions = transactions
+        guard let transactions = membershipCard.formattedTransactions else { return }
+        self.transactions = Array(transactions).sorted(by: {
+            if let firstTimestamp = $0.timestamp?.doubleValue, let secondTimestamp = $1.timestamp?.doubleValue {
+                return firstTimestamp > secondTimestamp
+            } else {
+                return $0.id > $1.id
+            }
+        })
     }
     
     func displayLoyaltySchemePopup() {
-        router.displaySimplePopup(title: membershipPlan.account?.planNameCard, message: membershipPlan.account?.planDescription)
+        router.displaySimplePopup(title: membershipCard.membershipPlan?.account?.planNameCard, message: membershipCard.membershipPlan?.account?.planDescription)
     }
     
     func popViewController() {

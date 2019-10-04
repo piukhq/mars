@@ -15,6 +15,8 @@ pod 'AlamofireImage'
 pod 'iOSDropDown'
 pod 'M13Checkbox'
 pod 'AlamofireNetworkActivityLogger'
+pod 'DeepDiff'
+pod 'CryptoSwift'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
@@ -24,7 +26,8 @@ plugin 'cocoapods-keys', {
     "propertyIdKey",
     "bundleIdKey",
     "secretKey",
-    "stagingSecretKey"
+    "stagingSecretKey",
+    "spreedlyEnvironmentKey"
   ]
 }
 

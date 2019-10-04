@@ -35,7 +35,7 @@
 @property(nullable, nonatomic, readwrite) NSURLSessionUploadTask *currentTask;
 
 /** If running in the background, the current background ID. */
-@property(nonatomic) BOOL runningInBackground;
+@property(nonatomic) GDTBackgroundIdentifier backgroundID;
 
 @end
 
@@ -61,6 +61,7 @@
     _uploaderQueue = dispatch_queue_create("com.google.GDTCCTUploader", DISPATCH_QUEUE_SERIAL);
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     _uploaderSession = [NSURLSession sessionWithConfiguration:config];
+    _backgroundID = GDTBackgroundIdentifierInvalid;
   }
   return self;
 }
@@ -85,15 +86,6 @@
 }
 
 - (void)uploadPackage:(GDTUploadPackage *)package {
-  GDTBackgroundIdentifier bgID = GDTBackgroundIdentifierInvalid;
-  if (_runningInBackground) {
-    bgID = [[GDTApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-      if (bgID != GDTBackgroundIdentifierInvalid) {
-        [[GDTApplication sharedApplication] endBackgroundTask:bgID];
-      }
-    }];
-  }
-
   dispatch_async(_uploaderQueue, ^{
     if (self->_currentTask || self->_currentUploadPackage) {
       GDTLogWarning(GDTMCWUploadFailed, @"%@",
@@ -120,10 +112,9 @@
           }
           pb_release(gdt_cct_LogResponse_fields, &logResponse);
           [package completeDelivery];
-
-          // End the background task if there was one.
-          if (bgID != GDTBackgroundIdentifierInvalid) {
-            [[GDTApplication sharedApplication] endBackgroundTask:bgID];
+          if (self->_backgroundID != GDTBackgroundIdentifierInvalid) {
+            [[GDTApplication sharedApplication] endBackgroundTask:self->_backgroundID];
+            self->_backgroundID = GDTBackgroundIdentifierInvalid;
           }
           self.currentTask = nil;
           self.currentUploadPackage = nil;
@@ -200,21 +191,12 @@
 #pragma mark - GDTLifecycleProtocol
 
 - (void)appWillBackground:(GDTApplication *)app {
-  _runningInBackground = YES;
-  __block GDTBackgroundIdentifier bgID = [app beginBackgroundTaskWithExpirationHandler:^{
-    if (bgID != GDTBackgroundIdentifierInvalid) {
-      [app endBackgroundTask:bgID];
+  _backgroundID = [app beginBackgroundTaskWithExpirationHandler:^{
+    if (self->_backgroundID != GDTBackgroundIdentifierInvalid) {
+      [app endBackgroundTask:self->_backgroundID];
+      self->_backgroundID = GDTBackgroundIdentifierInvalid;
     }
   }];
-  if (bgID != GDTBackgroundIdentifierInvalid) {
-    dispatch_async(_uploaderQueue, ^{
-      [[GDTApplication sharedApplication] endBackgroundTask:bgID];
-    });
-  }
-}
-
-- (void)appWillForeground:(GDTApplication *)app {
-  _runningInBackground = NO;
 }
 
 - (void)appWillTerminate:(GDTApplication *)application {

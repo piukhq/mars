@@ -57,7 +57,6 @@ class AddingOptionsViewController: UIViewController {
         stackView.addArrangedSubview(loyaltyCardView)
         stackView.addArrangedSubview(browseBrandsView)
         stackView.addArrangedSubview(addPaymentCardView)
-        
     }
     
     func addGesturesToViews() {
@@ -75,8 +74,7 @@ class AddingOptionsViewController: UIViewController {
     }
     
     @objc func toAddPaymentCard() {
-        // TODO: To be removed after the corect screen is implemented. Added for testing purposes.
-        viewModel.toPaymentTermsAndConditionsScreen()
+        viewModel.toAddPaymentCardScreen()
     }
     
     func displayNoScreenPopup() {

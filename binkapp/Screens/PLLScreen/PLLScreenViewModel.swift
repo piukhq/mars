@@ -8,20 +8,18 @@
 import Foundation
 
 class PLLScreenViewModel {
-    private let membershipPlan: MembershipPlanModel
-    private let membershipCard: MembershipCardModel
+    private let membershipCard: CD_MembershipCard
     private let router: MainScreenRouter
     
-    init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard, router: MainScreenRouter) {
         self.membershipCard = membershipCard
-        self.membershipPlan = membershipPlan
         self.router = router
     }
     
     // MARK:  - Public methods
     
-    func getMembershipPlan() -> MembershipPlanModel {
-        return membershipPlan
+    func getMembershipPlan() -> CD_MembershipPlan {
+        return membershipCard.membershipPlan!
     }
     
     func displaySimplePopup(title: String, message: String) {
@@ -29,6 +27,6 @@ class PLLScreenViewModel {
     }
     
     func toFullDetailsCardScreen() {
-        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard, membershipPlan: membershipPlan)
+        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoyaltyCardFullDetailsViewController: UIViewController {
+class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     @IBOutlet private weak var fullDetailsBrandHeader: FullDetailsBrandHeader!
     @IBOutlet private weak var aboutInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var securityAndPrivacyInfoRow: CardDetailsInfoView!
@@ -16,6 +16,7 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
     @IBOutlet private weak var cardDetailsStackView: UIStackView!
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
+    internal lazy var blurBackground = defaultBlurredBackground()
     
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -34,8 +35,13 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
         setCloseButton()
     }
     
-    @objc func toTransactionsViewController() {
-        viewModel.toTransactionsViewController()
+    // MARK: - Navigation Bar Blurring
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard let bar = navigationController?.navigationBar else { return }
+        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
 }
 
@@ -66,7 +72,7 @@ private extension LoyaltyCardFullDetailsViewController {
         deleteInfoRow.delegate = self
         deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
         
-        let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
+        let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
         fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
         
@@ -77,11 +83,11 @@ private extension LoyaltyCardFullDetailsViewController {
     
     func configureCardDetails(_ paymentCards: [PaymentCardModel]?) {
         let pointsModuleView = BinkModuleView()
-            pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, delegate: self)
+            pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
             cardDetailsStackView.addArrangedSubview(pointsModuleView)
         
         let linkModuleView = BinkModuleView()
-        linkModuleView.configure(moduleType: .link, membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, paymentCards: paymentCards, delegate: self)
+        linkModuleView.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: paymentCards, delegate: self)
         cardDetailsStackView.addArrangedSubview(linkModuleView)
     }
     
@@ -114,7 +120,7 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
     func cardDetailsInfoViewDidTapMoreInfo(_ cardDetailsInfoView: CardDetailsInfoView) {
         switch cardDetailsInfoView {
         case aboutInfoRow:
-            if let infoMessage = viewModel.membershipPlan.account?.planDescription {
+            if let infoMessage = viewModel.membershipCard.membershipPlan?.account?.planDescription {
                 viewModel.displaySimplePopupWithTitle("Info", andMessage: infoMessage)
             }
             break

@@ -18,23 +18,12 @@ class AddingOptionsViewModel {
     func toBrowseBrandsScreen() {
         router.toBrowseBrandsViewController()
     }
+    
+    func toAddPaymentCardScreen() {
+        router.toAddPaymentViewController()
+    }
 
     @objc func popViewController() {
         router.popViewController()
-    }
-    
-    // TODO: To be removed after the corect screen is implemented. Added for testing purposes.
-    func toPaymentTermsAndConditionsScreen() {
-        let screenText = "terms_and_conditions_title".localized + "\n" + "lorem_ipsum".localized
-        
-        let attributedText = NSMutableAttributedString(string: screenText)
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: ("terms_and_conditions_title".localized).count))
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: ("terms_and_conditions_title".localized).count, length: ("lorem_ipsum".localized).count))
-        
-        let backButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popViewController))
-        
-        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: backButton)
-        
-        router.toPaymentTermsAndConditionsViewController(configurationModel: configurationModel)
     }
 }

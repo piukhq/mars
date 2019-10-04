@@ -14,17 +14,14 @@ protocol LoyaltyCardFullDetailsViewModelDelegate: class {
 class LoyaltyCardFullDetailsViewModel {
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
-    
-    let membershipCard: MembershipCardModel
-    let membershipPlan: MembershipPlanModel
+    let membershipCard: CD_MembershipCard
     weak var delegate: LoyaltyCardFullDetailsViewModelDelegate?
-    
-    init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
+
+    init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
         self.router = router
         self.repository = repository
-        self.membershipPlan = membershipPlan
         self.membershipCard = membershipCard
-    }
+    }  
     
     // MARK: - Public methds
     
@@ -36,25 +33,22 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toBarcodeModel() {
-        router.toBarcodeViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
-    }
-    
-    func toTransactionsViewController() {
-        router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
+        router.toBarcodeViewController(membershipCard: membershipCard) { }
     }
     
     func goToScreenForAction(action: BinkModuleView.BinkModuleAction) {
         switch action {
         case .login:
             //TODO: change to login screen after is implemented
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, isFirstAuth: false)
+            guard let plan = membershipCard.membershipPlan else { return }
+            router.toAuthAndAddViewController(membershipPlan: plan, isFirstAuth: false)
             break
         case .loginChanges:
-            //TODO: change to login changes screen after is implemented
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, isFirstAuth: false)
+            guard let plan = membershipCard.membershipPlan else { return }
+            router.toAuthAndAddViewController(membershipPlan: plan, isFirstAuth: false)
             break
         case .transactions:
-            router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
+            router.toTransactionsViewController(membershipCard: membershipCard)
             break
         case .loginPending:
             router.toSimpleInfoViewController(pendingType: .login)
@@ -78,7 +72,7 @@ class LoyaltyCardFullDetailsViewModel {
             router.toSimpleInfoViewController(pendingType: .register)
             break
         case .pllEmpty:
-            router.toPllViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
+            router.toPllViewController(membershipCard: membershipCard)
             break
         case .pll:
             //TODO: change to PLL screen after is implemented
@@ -88,9 +82,12 @@ class LoyaltyCardFullDetailsViewModel {
             toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)
             break
         case .genericError:
-            let state = membershipCard.status?.state?.rawValue ?? ""
-            let reasonCodes = membershipCard.status?.reasonCodes ?? [""]
-            let description = state + "\n" + reasonCodes.joined(separator: ", ")
+            let state = membershipCard.status?.status?.rawValue ?? ""
+            
+            var description = state + "\n"
+            membershipCard.status?.formattedReasonCodes?.forEach {
+                description += $0.value ?? ""
+            }
     
             toReusableModalTemplate(title: "error_title".localized, description: description)
             break
@@ -122,18 +119,20 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func getOfferTileImageUrls() -> [String]? {
-        return membershipPlan.images?.filter({ $0.type == ImageType.offer.rawValue}).map({return $0.url}) as? [String] ?? [""]
+        let planImages = membershipCard.membershipPlan?.imagesSet
+        return planImages?.filter({ $0.type?.intValue == 2}).compactMap { $0.url }
     }
     
     func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
-            if let cardId = self.membershipCard.id {
-                self.repository.deleteMembershipCard(id: cardId, onSuccess: { _ in
-                    yesCompletion()
-                }, onError: { (error: Error) in
-                    self.displaySimplePopupWithTitle("Error", andMessage: error.localizedDescription)
-                })
+        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
+            guard let strongSelf = self else {
+                return
             }
+            strongSelf.repository.deleteMembershipCard(id: strongSelf.membershipCard.id, onSuccess: { _ in
+                yesCompletion()
+            }, onError: { (error: Error) in
+                strongSelf.displaySimplePopupWithTitle("Error", andMessage: error.localizedDescription)
+            })
         }, noCompletion: {
             noCompletion()
         })

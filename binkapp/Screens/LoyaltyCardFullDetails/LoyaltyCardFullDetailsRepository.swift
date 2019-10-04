@@ -15,7 +15,7 @@ class LoyaltyCardFullDetailsRepository {
         self.apiManager = apiManager
     }
     
-    func deleteMembershipCard(id: Int, onSuccess: @escaping (Any) -> Void, onError: @escaping(Error) -> Void) {
+    func deleteMembershipCard(id: String, onSuccess: @escaping (Any) -> Void, onError: @escaping(Error) -> Void) {
         let url = RequestURL.deleteMembershipCard(cardId: id)
         let method = RequestHTTPMethod.delete
         

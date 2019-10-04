@@ -13,8 +13,9 @@ enum RequestURL {
     case login
     case membershipPlans
     case membershipCards
-    case deleteMembershipCard(cardId: Int)
+    case deleteMembershipCard(cardId: String)
     case postMembershipCard
+    case postPaymentCard
     case getPaymentCards
     
     var value: String {
@@ -25,6 +26,7 @@ enum RequestURL {
         case .deleteMembershipCard(let cardId): return "/membership_card/\(cardId)"
         case .postMembershipCard: return "/membership_cards"
         case .getPaymentCards: return "/payment_cards"
+        case .postPaymentCard: return "/payment_cards"
         }
     }
 }
@@ -95,14 +97,14 @@ class ApiManager {
 }
 
 private extension ApiManager {
-    private func getHeader() -> [String : String] {
+    private func getHeader() -> [String: String] {
         let header = [
             "Authorization": "Bearer " + generateToken(email: userEmail),
             "Content-Type": "application/json"]
         return header
     }
     
-    private func getParameters() -> [String : [String : Any]] {
+    private func getParameters() -> [String: [String: Any]] {
         let parameters = [
             "consent": [
                 "email": userEmail,

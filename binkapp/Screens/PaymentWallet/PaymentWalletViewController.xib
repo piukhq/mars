@@ -22,6 +22,7 @@
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="gMQ-z6-5Xq">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <viewLayoutGuide key="safeArea" id="Cn7-PS-nPl"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Eam-OJ-dGT">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -32,10 +33,10 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="gMQ-z6-5Xq" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="2jb-xd-NxK"/>
-                <constraint firstItem="gMQ-z6-5Xq" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="apD-4S-kLw"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gMQ-z6-5Xq" secondAttribute="trailing" id="hJj-pZ-n0H"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gMQ-z6-5Xq" secondAttribute="bottom" id="zCP-80-4Qb"/>
+                <constraint firstItem="gMQ-z6-5Xq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2jb-xd-NxK"/>
+                <constraint firstItem="gMQ-z6-5Xq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="apD-4S-kLw"/>
+                <constraint firstAttribute="trailing" secondItem="gMQ-z6-5Xq" secondAttribute="trailing" id="hJj-pZ-n0H"/>
+                <constraint firstAttribute="bottom" secondItem="gMQ-z6-5Xq" secondAttribute="bottom" id="zCP-80-4Qb"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="133" y="102"/>
