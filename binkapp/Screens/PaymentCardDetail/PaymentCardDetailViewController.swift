@@ -10,17 +10,16 @@ import UIKit
 
 class PaymentCardDetailViewController: UIViewController {
     private let viewModel: PaymentCardDetailViewModel
-
     private var hasSetupCell = false
 
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .white
-        stackView.margin = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        stackView.margin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         stackView.distribution = .fill
-        stackView.alignment = .fill
-        stackView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 140, right: 0)
+        stackView.alignment = .center
+        stackView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         view.addSubview(stackView)
         return stackView
     }()
@@ -34,15 +33,38 @@ class PaymentCardDetailViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let title = UILabel()
         title.font = UIFont.headline
+        title.textAlignment = .left
+        title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
 
-     private lazy var descriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let description = UILabel()
         description.font = UIFont.bodyTextLarge
         description.numberOfLines = 0
+        description.textAlignment = .left
+        description.translatesAutoresizingMaskIntoConstraints = false
         return description
     }()
+
+    lazy var linkedCardsTableView: NestedTableView = {
+        let tableView = NestedTableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+
+    lazy var informationTableView: NestedTableView = {
+        let tableView = NestedTableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+
+    func makeTableViewSeparator() -> UIView {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = linkedCardsTableView.separatorColor
+        return view
+    }
 
     init(viewModel: PaymentCardDetailViewModel) {
         self.viewModel = viewModel
@@ -56,10 +78,16 @@ class PaymentCardDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = "Testing..."
-        descriptionLabel.text = "Hello, world"
+        titleLabel.text = "Linked cards"
+        descriptionLabel.text = "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points."
+
+        linkedCardsTableView.delegate = self
+        linkedCardsTableView.dataSource = self
+        informationTableView.delegate = self
+        informationTableView.dataSource = self
 
         stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: 30)
+        stackScrollView.add(arrangedSubviews: [titleLabel, descriptionLabel, linkedCardsTableView, informationTableView])
 
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -68,7 +96,18 @@ class PaymentCardDetailViewController: UIViewController {
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
             card.heightAnchor.constraint(equalToConstant: LayoutHelper.WalletDimensions.cardSize.height),
             card.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50),
+            titleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
+            titleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
+            descriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
+            descriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
+            linkedCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
         ])
+
+        linkedCardsTableView.register(LinkedLoyaltyCardTableViewCell.self, asNib: true)
+        informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
+        linkedCardsTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        informationTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
     }
 
     override func viewDidLayoutSubviews() {
@@ -82,4 +121,48 @@ class PaymentCardDetailViewController: UIViewController {
         }
     }
 
+}
+
+extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == linkedCardsTableView {
+            let cell: LinkedLoyaltyCardTableViewCell = tableView.dequeue(indexPath: indexPath)
+            return cell
+        }
+
+        if tableView == informationTableView {
+            let cell: CardDetailInfoTableViewCell = tableView.dequeue(indexPath: indexPath)
+            return cell
+        }
+        
+        return UITableViewCell()
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return tableView == linkedCardsTableView ? 100 : 88
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return makeTableViewSeparator()
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return tableView == linkedCardsTableView ? 0.5 : 0.0
+    }
+}
+
+class NestedTableView: UITableView {
+    override var contentSize: CGSize {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return contentSize
+    }
 }
