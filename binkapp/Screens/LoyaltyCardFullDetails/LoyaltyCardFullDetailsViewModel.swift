@@ -7,19 +7,14 @@
 
 import UIKit
 
-protocol LoyaltyCardFullDetailsViewModelDelegate: class {
-    func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel])
-}
-
 class LoyaltyCardFullDetailsViewModel {
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
     
-    let membershipCard: MembershipCardModel
-    let membershipPlan: MembershipPlanModel
-    var paymentCards: [PaymentCardModel]?
+    var paymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards
+    }
     let membershipCard: CD_MembershipCard
-    weak var delegate: LoyaltyCardFullDetailsViewModelDelegate?
 
     init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
         self.router = router
@@ -28,14 +23,6 @@ class LoyaltyCardFullDetailsViewModel {
     }  
     
     // MARK: - Public methds
-    
-    func getPaymentCards() {
-        repository.getPaymentCards { [weak self] (results) in
-            guard let self = self else { return }
-            self.paymentCards = results
-            self.delegate?.loyaltyCardFullDetailsViewModelDidFetchPaymentCards(self, paymentCards: results)
-        }
-    }
     
     func toBarcodeModel() {
         router.toBarcodeViewController(membershipCard: membershipCard) { }
@@ -77,11 +64,14 @@ class LoyaltyCardFullDetailsViewModel {
             router.toSimpleInfoViewController(pendingType: .register)
             break
         case .pllEmpty:
-            router.toPllViewController(membershipCard: membershipCard)
+            if let membershipPlan = membershipCard.membershipPlan {
+                router.toPllViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
+            }
             break
         case .pll:
-            //TODO: change to PLL screen after is implemented
-            router.toPllViewController(membershipCard: membershipCard, membershipPlan: membershipPlan, paymentCards: self.paymentCards)
+            if let membershipPlan = membershipCard.membershipPlan {
+                router.toPllViewController(membershipCard: membershipCard, membershipPlan: membershipPlan, paymentCards: self.paymentCards)
+            }
             break
         case .unLinkable:
             toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)

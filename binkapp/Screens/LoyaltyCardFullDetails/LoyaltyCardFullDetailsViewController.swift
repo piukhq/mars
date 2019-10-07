@@ -29,8 +29,6 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.delegate = self
-        viewModel.getPaymentCards()
         configureUI()
         setCloseButton()
     }
@@ -153,20 +151,5 @@ extension LoyaltyCardFullDetailsViewController: FullDetailsBrandHeaderDelegate {
 extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
     func binkModuleViewWasTapped(moduleView: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
         viewModel.goToScreenForAction(action: action)
-    }
-}
-
-// MARK: - LoyaltyCardFullDetailsViewModelDelegate
-
-extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsViewModelDelegate {
-    func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel]) {
-        DispatchQueue.main.async {
-            [weak self] in
-            guard let self = self else {return}
-            if let activityIndicator = self.cardDetailsStackView.subviews.first {
-                activityIndicator.removeFromSuperview()
-            }
-            self.configureCardDetails(paymentCards)
-        }
     }
 }

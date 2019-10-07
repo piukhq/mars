@@ -9,8 +9,11 @@ import Foundation
 
 class PLLScreenViewModel {
     private let membershipCard: CD_MembershipCard
+    private let membershipPlan: CD_MembershipPlan
     private let router: MainScreenRouter
-    let paymentCards: [PaymentCardModel]?
+    var paymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards
+    }
     var isEmptyPll: Bool {
         if let paymentCards = paymentCards {
             return paymentCards.count == 0
@@ -18,10 +21,10 @@ class PLLScreenViewModel {
         return true
     }
     
-    init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, paymentCards: [PaymentCardModel]? = nil, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard, membershipPlan: CD_MembershipPlan, router: MainScreenRouter) {
         self.membershipCard = membershipCard
+        self.membershipPlan = membershipPlan
         self.router = router
-        self.paymentCards = paymentCards
     }
     
     // MARK:  - Public methods

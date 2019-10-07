@@ -15,7 +15,7 @@ class PaymentCardCell: UITableViewCell {
     @IBOutlet private weak var switchButton: UISwitch!
     
     
-    func configureUI(paymentCard: PaymentCardModel) {
+    func configureUI(paymentCard: CD_PaymentCard) {
 //        paymentCardImageView.image = paymentCard.
 //        titleLabel.text = title
 //        subtitleLabel.text = subtitle
