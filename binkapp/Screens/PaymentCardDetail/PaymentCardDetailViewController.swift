@@ -201,24 +201,39 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
 extension PaymentCardDetailViewController: LinkedLoyaltyCardCellDelegate {
     func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, didToggleLinkedState isOn: Bool, forMembershipCard membershipCard: CD_MembershipCard) {
+
+        // This should be in a repository via the view model
+
         let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: viewModel.paymentCardId)
         let method: RequestHTTPMethod = isOn ? .patch : .delete
 
         let apiManager = ApiManager()
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: PaymentCardModel) in
+            guard let self = self else {
+                return
+            }
+
+            if method == .delete {
+                self.viewModel.removeMembershipCard(membershipCard)
+
+                self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel)
+
+                self.linkedCardsTableView.reloadData()
+                Current.wallet.refreshLocal()
+                return
+            }
+
             Current.database.performBackgroundTask { context in
                 let object = response.mapToCoreData(context, .delta, overrideID: nil)
 
                 try? context.save()
 
-                // If we are deleting a link, get the core data payment card and remove the membership card object
-                // Do we need to handle the inverse to this?
-
                 DispatchQueue.main.async {
-                    Current.database.performTask { [weak self] context in
+                    Current.database.performTask { context in
                         if let cdPaymentCard = context.fetchWithID(CD_PaymentCard.self, id: object.objectID) {
-                            self?.viewModel.setNewPaymentCard(cdPaymentCard)
-                            self?.linkedCardsTableView.reloadData()
+                            self.viewModel.setNewPaymentCard(cdPaymentCard)
+                            self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel)
+                            self.linkedCardsTableView.reloadData()
                             Current.wallet.refreshLocal()
                         }
                     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PaymentCardDetailViewModel {
+class PaymentCardDetailViewModel {
     private var paymentCard: CD_PaymentCard
     private let router: MainScreenRouter
 
@@ -54,7 +54,15 @@ struct PaymentCardDetailViewModel {
         return linkableMembershipCards?[indexPath.row]
     }
 
-    mutating func setNewPaymentCard(_ paymentCard: CD_PaymentCard) {
+    func setNewPaymentCard(_ paymentCard: CD_PaymentCard) {
         self.paymentCard = paymentCard
+    }
+
+    func removeMembershipCard(_ membershipCard: CD_MembershipCard) {
+        Current.database.performBackgroundTask { [weak self] context in
+            self?.paymentCard.removeLinkedMembershipCardsObject(membershipCard)
+
+            try? context.save()
+        }
     }
 }
