@@ -16,4 +16,8 @@ struct PaymentCardDetailViewModel {
         self.paymentCard = paymentCard
         self.router = router
     }
+
+    var paymentCardCellViewModel: PaymentCardCellViewModel {
+        return PaymentCardCellViewModel(paymentCard: paymentCard, router: router)
+    }
 }
