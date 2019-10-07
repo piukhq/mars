@@ -15,9 +15,10 @@ public struct ReusableModalConfiguration {
     var mainButtonCompletion: () -> Void?
     var secondaryButtonTitle: String?
     var secondaryButtonCompletion: () -> Void?
-    var tabBarBackButton: UIBarButtonItem
+    var tabBarBackButton: UIBarButtonItem?
+    let showCloseButton: Bool
     
-    init(title: String = "", text: NSMutableAttributedString, primaryButtonTitle: String? = nil, mainButtonCompletion: @escaping (() -> Void) = { }, secondaryButtonTitle: String? = nil, secondaryButtonCompletion: @escaping (() -> Void) = { }, tabBarBackButton: UIBarButtonItem) {
+    init(title: String = "", text: NSMutableAttributedString, primaryButtonTitle: String? = nil, mainButtonCompletion: @escaping (() -> Void) = { }, secondaryButtonTitle: String? = nil, secondaryButtonCompletion: @escaping (() -> Void) = { }, tabBarBackButton: UIBarButtonItem? = nil, showCloseButton: Bool = false) {
         self.title = title
         self.text = text
         self.primaryButtonTitle = primaryButtonTitle
@@ -25,6 +26,7 @@ public struct ReusableModalConfiguration {
         self.secondaryButtonTitle = secondaryButtonTitle
         self.secondaryButtonCompletion = secondaryButtonCompletion
         self.tabBarBackButton = tabBarBackButton
+        self.showCloseButton = showCloseButton
     }
 }
 
@@ -56,8 +58,12 @@ open class ReusableModalViewModel {
         return configurationModel.secondaryButtonCompletion
     }
     
-    var tabBarBackButton: UIBarButtonItem {
+    var tabBarBackButton: UIBarButtonItem? {
         return configurationModel.tabBarBackButton
+    }
+    
+    var showCloseButton: Bool {
+        return configurationModel.showCloseButton
     }
     
     init(configurationModel: ReusableModalConfiguration, router: MainScreenRouter) {
@@ -65,7 +71,7 @@ open class ReusableModalViewModel {
         self.router = router
     }
     
-    func mainButtonWasTapped() {
+    func mainButtonWasTapped(completion: (() -> Void)? = nil) {
         mainButtonCompletion()
     }
     

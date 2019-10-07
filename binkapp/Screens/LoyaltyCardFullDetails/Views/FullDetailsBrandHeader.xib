@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina6_5" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
@@ -17,51 +17,66 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="364" height="271"/>
+            <rect key="frame" x="0.0" y="0.0" width="725" height="567"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLY-Tr-SIY">
-                    <rect key="frame" x="0.0" y="0.0" width="364" height="268.33333333333331"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="ZLp-Mi-A3p">
+                    <rect key="frame" x="5" y="8" width="715" height="551"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="zbA-fI-XfA">
-                            <rect key="frame" x="0.0" y="0.0" width="364" height="230"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLY-Tr-SIY">
+                            <rect key="frame" x="0.0" y="0.0" width="715" height="512.5"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="zbA-fI-XfA">
+                                    <rect key="frame" x="0.0" y="0.0" width="715" height="452"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="zbA-fI-XfA" secondAttribute="height" multiplier="125:79" id="MQn-jN-xmU"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="230" id="WsH-0j-khh"/>
-                                <constraint firstAttribute="width" secondItem="zbA-fI-XfA" secondAttribute="height" multiplier="182:115" id="yyk-xV-PdI"/>
+                                <constraint firstAttribute="trailing" secondItem="zbA-fI-XfA" secondAttribute="trailing" id="BFv-oE-rYb"/>
+                                <constraint firstItem="zbA-fI-XfA" firstAttribute="leading" secondItem="JLY-Tr-SIY" secondAttribute="leading" id="Kaj-Hh-9Iq"/>
+                                <constraint firstItem="zbA-fI-XfA" firstAttribute="top" secondItem="JLY-Tr-SIY" secondAttribute="top" id="P61-u6-i9f"/>
                             </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="4"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
-                            </userDefinedRuntimeAttributes>
-                        </imageView>
+                        </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Tap card to show barcode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="157-2T-a9w">
-                            <rect key="frame" x="0.0" y="242" width="354" height="26.333333333333314"/>
+                            <rect key="frame" x="0.0" y="524.5" width="715" height="26.5"/>
                             <fontDescription key="fontDescription" name="NotoSansChakma-Regular" family="Noto Sans Chakma" pointSize="18"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="zbA-fI-XfA" secondAttribute="trailing" id="BFv-oE-rYb"/>
-                        <constraint firstItem="zbA-fI-XfA" firstAttribute="leading" secondItem="JLY-Tr-SIY" secondAttribute="leading" id="Kaj-Hh-9Iq"/>
-                        <constraint firstItem="zbA-fI-XfA" firstAttribute="top" secondItem="JLY-Tr-SIY" secondAttribute="top" id="P61-u6-i9f"/>
-                        <constraint firstAttribute="bottom" secondItem="157-2T-a9w" secondAttribute="bottom" id="a20-62-WJO"/>
-                        <constraint firstItem="157-2T-a9w" firstAttribute="leading" secondItem="JLY-Tr-SIY" secondAttribute="leading" id="cx0-jH-qLB"/>
-                        <constraint firstItem="157-2T-a9w" firstAttribute="top" secondItem="zbA-fI-XfA" secondAttribute="bottom" constant="12" id="gCV-fE-pYF"/>
-                        <constraint firstAttribute="trailing" secondItem="157-2T-a9w" secondAttribute="trailing" constant="10" id="i8H-FB-0fU"/>
+                        <constraint firstAttribute="bottom" secondItem="157-2T-a9w" secondAttribute="bottom" id="QD3-M8-iFo"/>
+                        <constraint firstItem="JLY-Tr-SIY" firstAttribute="leading" secondItem="ZLp-Mi-A3p" secondAttribute="leading" id="WWI-Kn-hsy"/>
+                        <constraint firstItem="157-2T-a9w" firstAttribute="leading" secondItem="ZLp-Mi-A3p" secondAttribute="leading" id="cQd-wA-LDI"/>
+                        <constraint firstAttribute="trailing" secondItem="157-2T-a9w" secondAttribute="trailing" id="eId-1Q-Ora"/>
+                        <constraint firstAttribute="trailing" secondItem="JLY-Tr-SIY" secondAttribute="trailing" id="jS7-4x-DwH"/>
+                        <constraint firstItem="JLY-Tr-SIY" firstAttribute="top" secondItem="ZLp-Mi-A3p" secondAttribute="top" id="jsJ-fA-J7H"/>
                     </constraints>
-                </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="JLY-Tr-SIY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="V61-lt-a7k"/>
-                <constraint firstItem="JLY-Tr-SIY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="heH-dS-DWV"/>
-                <constraint firstAttribute="trailing" secondItem="JLY-Tr-SIY" secondAttribute="trailing" id="lnM-Og-Erq"/>
+                <constraint firstAttribute="bottom" secondItem="ZLp-Mi-A3p" secondAttribute="bottom" constant="8" id="CkT-rf-qEZ"/>
+                <constraint firstItem="ZLp-Mi-A3p" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="Mjf-lU-jM2"/>
+                <constraint firstAttribute="trailing" secondItem="ZLp-Mi-A3p" secondAttribute="trailing" constant="5" id="Pa9-Fl-FBV"/>
+                <constraint firstItem="ZLp-Mi-A3p" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="Zi7-Nq-Mgb"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -69,7 +84,7 @@
             <connections>
                 <outletCollection property="gestureRecognizers" destination="ylu-sb-HUm" appends="YES" id="LqG-Ww-4Dm"/>
             </connections>
-            <point key="canvasLocation" x="92.753623188405811" y="213.95089285714286"/>
+            <point key="canvasLocation" x="354.34782608695656" y="313.05803571428572"/>
         </view>
         <tapGestureRecognizer id="ylu-sb-HUm">
             <connections>

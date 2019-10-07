@@ -7,14 +7,16 @@
 
 import UIKit
 
-class LoyaltyCardFullDetailsViewController: UIViewController {
+class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     @IBOutlet private weak var fullDetailsBrandHeader: FullDetailsBrandHeader!
     @IBOutlet private weak var aboutInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var securityAndPrivacyInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var deleteInfoRow: CardDetailsInfoView!
+    @IBOutlet private weak var offersStackView: UIStackView!
     @IBOutlet private weak var cardDetailsStackView: UIStackView!
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
+    internal lazy var blurBackground = defaultBlurredBackground()
     
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -33,8 +35,13 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
         setCloseButton()
     }
     
-    @objc func toTransactionsViewController() {
-        viewModel.toTransactionsViewController()
+    // MARK: - Navigation Bar Blurring
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard let bar = navigationController?.navigationBar else { return }
+        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
 }
 
@@ -42,6 +49,14 @@ class LoyaltyCardFullDetailsViewController: UIViewController {
 
 private extension LoyaltyCardFullDetailsViewController {
     func configureUI() {
+        if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
+            for offer in offerTileImageUrls {
+                let offerView = OfferTileView()
+                offerView.configure(imageUrl: offer)
+                offersStackView.addArrangedSubview(offerView)
+            }
+        }
+        
         let aboutInfoTitle = "about_membership_title".localized
         let aboutInfoMessage = "learn_more".localized
         aboutInfoRow.delegate = self
@@ -57,7 +72,7 @@ private extension LoyaltyCardFullDetailsViewController {
         deleteInfoRow.delegate = self
         deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
         
-        let imageURL = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.hero.rawValue})?.url ?? nil
+        let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
         fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
         
@@ -68,16 +83,16 @@ private extension LoyaltyCardFullDetailsViewController {
     
     func configureCardDetails(_ paymentCards: [PaymentCardModel]?) {
         let pointsModuleView = BinkModuleView()
-            pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, delegate: self)
+            pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
             cardDetailsStackView.addArrangedSubview(pointsModuleView)
         
         let linkModuleView = BinkModuleView()
-        linkModuleView.configure(moduleType: .link, membershipCard: viewModel.membershipCard, membershipPlan: viewModel.membershipPlan, paymentCards: paymentCards, delegate: self)
+        linkModuleView.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: paymentCards, delegate: self)
         cardDetailsStackView.addArrangedSubview(linkModuleView)
     }
     
     func setCloseButton() {
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popToRootController
+        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popToRootController
             ))
         self.navigationItem.setLeftBarButton(closeButton, animated: true)
     }
@@ -105,7 +120,7 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
     func cardDetailsInfoViewDidTapMoreInfo(_ cardDetailsInfoView: CardDetailsInfoView) {
         switch cardDetailsInfoView {
         case aboutInfoRow:
-            if let infoMessage = viewModel.membershipPlan.account?.planDescription {
+            if let infoMessage = viewModel.membershipCard.membershipPlan?.account?.planDescription {
                 viewModel.displaySimplePopupWithTitle("Info", andMessage: infoMessage)
             }
             break

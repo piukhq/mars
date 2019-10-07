@@ -8,7 +8,6 @@
 import UIKit
 
 class BrowseBrandsViewController: UIViewController {
-    @IBOutlet private weak var searchTextField: BinkTextField!
     @IBOutlet private weak var tableView: UITableView!
     
     let viewModel: BrowseBrandsViewModel
@@ -28,8 +27,6 @@ class BrowseBrandsViewController: UIViewController {
         tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
-        
-        configureUI()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -37,29 +34,15 @@ class BrowseBrandsViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         navigationItem.leftBarButtonItem = backButton
         
-        let filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(notImplementedPopup))
-        navigationItem.rightBarButtonItem = filtersButton
-        navigationItem.rightBarButtonItem?.tintColor = .black
+        //TODO: uncomment this to display the Filters button
+//        let filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(notImplementedPopup))
+//        navigationItem.rightBarButtonItem = filtersButton
+//        navigationItem.rightBarButtonItem?.tintColor = .black
         
         self.title = "browse_brands_title".localized
-    }
-    
-    func configureUI() {
-        searchTextField.placeholder = "search".localized
-        
-        searchTextField.leftViewMode = .always
-        let iconView = UIView(frame: CGRect(x: 0, y: 0, width: searchTextField.frame.height, height: searchTextField.frame.height))
-
-        let imageView = UIImageView(frame: CGRect(x: iconView.frame.height / 3, y: iconView.frame.height / 4, width: searchTextField.frame.height / 2, height: searchTextField.frame.height / 2))
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "search")
-        
-        iconView.addSubview(imageView)
-        
-        searchTextField.leftView = iconView
     }
     
     @objc func notImplementedPopup() {
@@ -84,21 +67,22 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrandTableViewCell", for: indexPath) as? BrandTableViewCell else { return UITableViewCell() }
+        let cell: BrandTableViewCell = tableView.dequeue(indexPath: indexPath)
         
-        let membershipPlan: MembershipPlanModel = viewModel.getMembershipPlan(for: indexPath)
+        let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
         
         if let brandName = membershipPlan.account?.companyName {
-            let imageUrl = membershipPlan.images?.first(where: {$0.type == ImageType.icon.rawValue})?.url
+            let imageUrlString = membershipPlan.firstIconImage()?.url
+
             switch indexPath.section {
             case 0:
-                cell.configure(imageURL: imageUrl, brandName: brandName, description: true)
+                cell.configure(imageURL: imageUrlString, brandName: brandName, description: true)
                 if indexPath.row == viewModel.getPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }
                 break
             case 1:
-                cell.configure(imageURL: imageUrl, brandName: brandName)
+                cell.configure(imageURL: imageUrlString, brandName: brandName)
                 if indexPath.row == viewModel.getNonPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }

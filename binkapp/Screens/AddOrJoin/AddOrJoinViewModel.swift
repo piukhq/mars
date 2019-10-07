@@ -8,15 +8,15 @@
 import UIKit
 
 class AddOrJoinViewModel {
-    private let membershipPlan: MembershipPlanModel
+    private let membershipPlan: CD_MembershipPlan
     private let router: MainScreenRouter
     
-    init(membershipPlan: MembershipPlanModel, router: MainScreenRouter) {
+    init(membershipPlan: CD_MembershipPlan, router: MainScreenRouter) {
         self.membershipPlan = membershipPlan
         self.router = router
     }
     
-    func getMembershipPlan() -> MembershipPlanModel {
+    func getMembershipPlan() -> CD_MembershipPlan {
         return membershipPlan
     }
     
@@ -25,7 +25,7 @@ class AddOrJoinViewModel {
     }
     
     func didSelectAddNewCard() {
-        if membershipPlan.featureSet?.cardType == .link {
+        if membershipPlan.featureSet?.planCardType == .link {
             //TODO: go to sign up form
             router.displaySimplePopup(title: "Goes to Sign Up Form", message: "Not implemented yet")
         } else {
@@ -39,7 +39,7 @@ class AddOrJoinViewModel {
             
             var configurationModel: ReusableModalConfiguration
             
-            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
             
             guard let planURL = membershipPlan.account?.planURL else {
                 configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)

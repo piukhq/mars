@@ -15,15 +15,13 @@ enum BarcodeType {
 }
 
 class BarcodeViewModel {
-    private let membershipPlan: MembershipPlanModel
-    private let membershipCard: MembershipCardModel
+    private let membershipCard: CD_MembershipCard
     
     var title: String {
-        return membershipPlan.account?.companyName ?? ""
+        return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
 
-    init(membershipPlan: MembershipPlanModel, membershipCard: MembershipCardModel) {
-        self.membershipPlan = membershipPlan
+    init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
     }
     

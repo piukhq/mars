@@ -13,7 +13,7 @@ enum FieldType {
     case authorise
 }
 
-enum FieldInputType: Int {
+enum InputType: Int {
     case textfield = 0
     case password
     case dropdown
@@ -23,134 +23,107 @@ enum FieldInputType: Int {
 class AuthAndAddViewModel {
     private let repository: AuthAndAddRepository
     private let router: MainScreenRouter
-    private let membershipPlan: MembershipPlanModel
+    private let membershipPlan: CD_MembershipPlan
     
     private var fieldsViews: [InputValidation] = []
-    private var membershipCard: MembershipCardPostModel?
+    private lazy var membershipCard: MembershipCardPostModel = {
+       return MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: membershipPlanId)
+    }()
     
-    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: MembershipPlanModel) {
+    private var isFirstAuth: Bool
+    private let membershipPlanId: Int
+    
+    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, isFirstAuth: Bool = true) {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
-        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: []), membershipPlan: membershipPlan.id)
+        membershipPlanId = Int(membershipPlan.id)!
+        self.isFirstAuth = isFirstAuth
     }
     
-    func getMembershipPlan() -> MembershipPlanModel {
+    func getDescription() -> String? {
+        guard let planName = membershipPlan.account?.planName else { return nil }
+        
+        return isFirstAuth ? String(format: "auth_screen_description".localized, planName) : getDescriptionText()
+    }
+    
+    private func getDescriptionText() -> String {
+        guard let companyName = membershipPlan.account?.planNameCard else { return "" }
+        
+        if hasPoints() {
+            guard let transactionsAvailable = membershipPlan.featureSet?.transactionsAvailable else {
+                return String(format: "only_points_log_in_description".localized, companyName)
+            }
+            
+            return transactionsAvailable.boolValue ? String(format: "only_points_log_in_description".localized, companyName) : String(format: "points_and_transactions_log_in_description".localized, companyName)
+        } else {
+            return ""
+        }
+    }
+    
+    private func hasPoints() -> Bool {
+        guard let hasPoints = membershipPlan.featureSet?.hasPoints else { return false }
+        return hasPoints.boolValue
+    }
+    
+    func getMembershipPlan() -> CD_MembershipPlan {
         return membershipPlan
     }
     
-    func addMembershipCard() {
-        let jsonEncoder = JSONEncoder()
-        let jsonData = try! jsonEncoder.encode(membershipCard)
-        if let jsonCard = String(data: jsonData, encoding: String.Encoding.utf8) {
-            do {
-                let result = try convertToDictionary(from: jsonCard) ?? [:]
-                repository.addMembershipCard(jsonCard: result, completion: { response in
-                    self.router.toPllViewController(membershipCard: response, membershipPlan: self.membershipPlan)
-                    NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
-                })
-            } catch {
-                print(error)
+    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) {
+        formFields.forEach { addFieldToCard(formField: $0) }
+        checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
+                        
+        try? repository.addMembershipCard(jsonCard: membershipCard.asDictionary(), completion: { card in
+            if let card = card {
+                self.router.toPllViewController(membershipCard: card)
+                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
-        }
-    }
-
-    func convertToDictionary(from text: String) throws -> [String: Any]? {
-        guard let data = text.data(using: .utf8) else { return [:] }
-        let anyResult: Any = try JSONSerialization.jsonObject(with: data, options: [])
-        return anyResult as? [String: Any]
+        })
     }
     
-    func populateStackView(stackView: UIStackView) {
-        var checkboxes: [CheckboxView] = []
-        if let addFields = membershipPlan.account?.addFields {
-            for field in addFields {
-                switch field.type {
-                    case FieldInputType.textfield.rawValue:
-                        let view = LoginTextFieldView()
-                        view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .add, delegate: self)
-                        fieldsViews.append(view)
-                    case FieldInputType.password.rawValue:
-                        let view = LoginTextFieldView()
-                        view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .add, delegate: self)
-                        fieldsViews.append(view)
-                    case FieldInputType.dropdown.rawValue:
-                        let view = DropdownView()
-                        view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .add, delegate: self)
-                        fieldsViews.append(view)
-                    case FieldInputType.checkbox.rawValue:
-                        let view = CheckboxView()
-                        view.configure(title: field.description ?? "", fieldType: .add)
-                        checkboxes.append(view)
-                    default: break
-                }
-            }
-        }
-        
-        if let authoriseFields = membershipPlan.account?.authoriseFields {
-            for field in authoriseFields {
-                switch field.type {
-                case FieldInputType.textfield.rawValue:
-                    let view = LoginTextFieldView()
-                    view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
-                    fieldsViews.append(view)
-                case FieldInputType.password.rawValue:
-                    let view = LoginTextFieldView()
-                    view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
-                    fieldsViews.append(view)
-                case FieldInputType.dropdown.rawValue:
-                    let view = DropdownView()
-                    view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .authorise, delegate: self)
-                    fieldsViews.append(view)
-                case FieldInputType.checkbox.rawValue:
-                    let view = CheckboxView()
-                    view.configure(title: field.description ?? "", fieldType: .authorise)
-                    checkboxes.append(view)
-                default: break
-                }
-            }
-        }
-        
-        for box in checkboxes {
-            fieldsViews.append(box)
-        }
-        
-        if fieldsViews.isEmpty == false {
-            for view in fieldsViews {
-                if view is UIView {
-                    stackView.addArrangedSubview(view as! UIView)
-                }
-            }
-        }
-    }
-    
-    func allFieldsAreValid() -> Bool {
-        for field in fieldsViews {
-            if !field.isValid {
-                return false
-            }
-        }
-        return true
-    }
-    
-    func addFieldToCard(column: String, value: String, fieldType: FieldType) {
-        switch fieldType {
+    func addFieldToCard(formField: FormField) {
+        switch formField.columnKind {
         case .add:
-            let addFieldsArray = membershipCard?.account?.addFields
-            if var existingField = addFieldsArray?.first(where: { $0.column == column }) {
-                existingField.column = column
-                existingField.value = value
+            let addFieldsArray = membershipCard.account?.addFields
+            if var existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
+                existingField.value = formField.value
+                existingField.value = formField.value
             } else {
-                membershipCard?.account?.addFields?.append(AddFieldPostModel(column: column, value: value))
+                membershipCard.account?.addFields?.append(AddFieldPostModel(column: formField.title, value: formField.value))
             }
-        case .authorise:
-            let authoriseFieldsArray = membershipCard?.account?.authoriseFields
-            if var existingField = authoriseFieldsArray?.first(where: { $0.column == column }) {
-                existingField.column = column
-                existingField.value = value
+        case .auth:
+            let authoriseFieldsArray = membershipCard.account?.authoriseFields
+            if var existingField = authoriseFieldsArray?.first(where: { $0.column == formField.title }) {
+                existingField.value = formField.value
             } else {
-                membershipCard?.account?.authoriseFields?.append(AuthoriseFieldPostModel(column: column, value: value))
+                membershipCard.account?.authoriseFields?.append(AuthoriseFieldPostModel(column: formField.title, value: formField.value))
             }
+        default:
+            break
+        }
+    }
+    
+    func addCheckboxToCard(checkbox: CheckboxView) {
+        switch checkbox.columnKind {
+        case .add:
+            let addFieldsArray = membershipCard.account?.addFields
+                        
+            if var existingField = addFieldsArray?.first(where: { $0.column == checkbox.title }) {
+                existingField.value = String(checkbox.isValid())
+            } else {
+                membershipCard.account?.addFields?.append(AddFieldPostModel(column: checkbox.title, value:  String(checkbox.isValid())))
+            }
+        case .auth:
+            print()
+            let authoriseFieldsArray = membershipCard.account?.authoriseFields
+            if var existingField = authoriseFieldsArray?.first(where: { $0.column == checkbox.title }) {
+                existingField.value = String(checkbox.isValid())
+            } else {
+                membershipCard.account?.authoriseFields?.append(AuthoriseFieldPostModel(column: checkbox.title, value: String(checkbox.isValid())))
+            }
+        default:
+            break
         }
     }
     
@@ -164,17 +137,5 @@ class AuthAndAddViewModel {
     
     func popToRootViewController() {
         router.popToRootViewController()
-    }
-}
-
-extension AuthAndAddViewModel: LoginTextFieldDelegate {
-    func loginTextFieldView(_ loginTextFieldView: LoginTextFieldView, didCompleteWithColumn column: String, value: String, fieldType: FieldType) {
-        addFieldToCard(column: column, value: value, fieldType: fieldType)
-    }
-}
-
-extension AuthAndAddViewModel: DropdownDelegate {
-    func dropdownView(_ dropdownView: DropdownView, didSetDataWithColumn column: String, value: String, fieldType: FieldType) {
-        addFieldToCard(column: column, value: value, fieldType: fieldType)
     }
 }

@@ -8,14 +8,21 @@
 
 import UIKit
 
+protocol PaymentTermsAndConditionsViewControllerDelegate: AnyObject {
+    func paymentTermsAndConditionsViewControllerDidAccept(_ viewController: PaymentTermsAndConditionsViewController)
+}
+
 class PaymentTermsAndConditionsViewController: UIViewController {
     @IBOutlet private weak var floatingButtonsContainer: BinkFloatingButtonsView!
     @IBOutlet private weak var textView: UITextView!
+
+    weak var delegate: PaymentTermsAndConditionsViewControllerDelegate?
     
     private let viewModel: ReusableModalViewModel
     
-    init(viewModel: ReusableModalViewModel) {
+    init(viewModel: ReusableModalViewModel, delegate: PaymentTermsAndConditionsViewControllerDelegate? = nil) {
         self.viewModel = viewModel
+        self.delegate = delegate
         super.init(nibName: "PaymentTermsAndConditionsViewController", bundle: Bundle(for: PaymentTermsAndConditionsViewController.self))
     }
     
@@ -36,12 +43,17 @@ class PaymentTermsAndConditionsViewController: UIViewController {
     
     private func configureUI() {
         setCloseButton()
-        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 209, right: 0)
-        
-        title = viewModel.title
+        let primary = viewModel.primaryButtonTitle
+        let secondary = viewModel.secondaryButtonTitle
+        let showingButtons = viewModel.primaryButtonTitle != nil || viewModel.secondaryButtonTitle != nil
+        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: showingButtons ? 209 : 140, right: 0)
         textView.attributedText = viewModel.text
+        textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
         
-        floatingButtonsContainer.configure(primaryButtonTitle: viewModel.primaryButtonTitle, secondaryButtonTitle: viewModel.secondaryButtonTitle)
+        floatingButtonsContainer.configure(
+            primaryButtonTitle: primary,
+            secondaryButtonTitle: secondary
+        )
     }
 }
 
@@ -49,12 +61,20 @@ class PaymentTermsAndConditionsViewController: UIViewController {
 
 private extension PaymentTermsAndConditionsViewController {
     func setCloseButton() {
-//        let closeButton = UIBarButtonItem(image: UIImage(named: "close")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
-        self.navigationItem.setLeftBarButton(viewModel.tabBarBackButton, animated: true)
+        if viewModel.showCloseButton {
+                    let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(dismissViewController))
+            navigationItem.setRightBarButton(closeButton, animated: false)
+        } else {
+            self.navigationItem.setLeftBarButton(viewModel.tabBarBackButton, animated: true)
+        }
     }
     
     @objc func popViewController() {
         viewModel.popViewController()
+    }
+    
+    @objc func dismissViewController() {
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -62,7 +82,10 @@ private extension PaymentTermsAndConditionsViewController {
 
 extension PaymentTermsAndConditionsViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_: BinkFloatingButtonsView) {
-        viewModel.mainButtonWasTapped()
+        viewModel.mainButtonWasTapped() { [weak self] in
+            guard let self = self, let delegate = self.delegate else { return }
+            delegate.paymentTermsAndConditionsViewControllerDidAccept(self)
+        }
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_: BinkFloatingButtonsView) {
@@ -75,7 +98,11 @@ extension PaymentTermsAndConditionsViewController: BinkFloatingButtonsViewDelega
 extension PaymentTermsAndConditionsViewController: UITextViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let textViewFont = textView.font {
-            title = scrollView.contentOffset.y > textViewFont.lineHeight ? "terms_and_conditions_title".localized : ""
+            title = scrollView.contentOffset.y > textViewFont.lineHeight ? viewModel.title : ""
         }
+    }
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return true
     }
 }

@@ -11,6 +11,8 @@ PODS:
   - AppAuth/ExternalUserAgent (1.2.0)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
+  - CryptoSwift (1.0.0)
+  - DeepDiff (2.2.0)
   - Fabric (1.10.2)
   - Firebase (6.8.1):
     - Firebase/Core (= 6.8.1)
@@ -83,7 +85,7 @@ PODS:
   - GTMSessionFetcher/Core (1.2.2)
   - GTMSessionFetcher/Full (1.2.2):
     - GTMSessionFetcher/Core (= 1.2.2)
-  - Intercom (5.4.1)
+  - Intercom (5.5.0)
   - iOSDropDown (0.3.4)
   - Keys (1.0.1)
   - M13Checkbox (3.4.0)
@@ -100,6 +102,8 @@ DEPENDENCIES:
   - AlamofireImage
   - AlamofireNetworkActivityLogger
   - Crashlytics
+  - CryptoSwift
+  - DeepDiff
   - Fabric
   - Firebase
   - GoogleSignIn
@@ -117,6 +121,8 @@ SPEC REPOS:
     - AlamofireNetworkActivityLogger
     - AppAuth
     - Crashlytics
+    - CryptoSwift
+    - DeepDiff
     - Fabric
     - Firebase
     - FirebaseAnalytics
@@ -148,6 +154,8 @@ SPEC CHECKSUMS:
   AlamofireNetworkActivityLogger: 6d3398c692d2c5d83b0c58793537860aca1e383d
   AppAuth: bce82c76043657c99d91e7882e8a9e1a93650cd4
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
+  DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 9cbe4e5b5eaafa05dc932be58b7c8c3820d71e88
   FirebaseAnalytics: 843c7f64a8f9c79f0d03281197ebe7bb1d58d477
@@ -162,7 +170,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: e7dc37039b19df7fe543479d3e4a02ac8d11bb69
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
-  Intercom: d189cf8cc8591e7e63dbb10ee4401a70a7fdc9d6
+  Intercom: 4da298d6a1f6b9612fff9db4134c6273ff64af64
   iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   M13Checkbox: 6f59404540ac98ba83a3d1afac335895a40c6a5d
@@ -170,6 +178,6 @@ SPEC CHECKSUMS:
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   SwipeCellKit: 935ca28c187ec6e1ffb2b578cf8ddca842bfdcbb
 
-PODFILE CHECKSUM: 96b5774618b04566f0f60cd5e69d65db2e19406b
+PODFILE CHECKSUM: 2a2381b5d55c3c5ce2d3b374ad9e8b338e7f6be7
 
 COCOAPODS: 1.7.5

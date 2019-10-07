@@ -30,11 +30,11 @@ class TransactionsViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         tableView.dataSource = self
-        tableView.registerCellForClass(TransactionTableViewCell.self, asNib: true)
+        tableView.register(TransactionTableViewCell.self, asNib: true)
     }
     
     private func configureUI() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         titleLabel.font = .headline
         lastCheckedLabel.font = .bodyTextLarge
         descriptionLabel.font = .bodyTextLarge
@@ -43,8 +43,8 @@ class TransactionsViewController: UIViewController {
         descriptionLabel.text = viewModel.description
         
         if !viewModel.transactions.isEmpty {
-            let imageUrl = viewModel.membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue })?.url
-            brandHeaderView.configure(imageURLString: imageUrl, loyaltyPlanNameCard: (viewModel.membershipPlan.account?.planNameCard ?? nil), delegate: self)
+            let imageUrl = viewModel.membershipCard.membershipPlan?.firstIconImage()?.url
+            brandHeaderView.configure(imageURLString: imageUrl, loyaltyPlanNameCard: (viewModel.membershipCard.membershipPlan?.account?.planNameCard ?? nil), delegate: self)
         } else {
             lastCheckedLabel.text = viewModel.lastCheckedString ?? ""
         }
@@ -72,11 +72,13 @@ extension TransactionsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithClass(TransactionTableViewCell.self, forIndexPath: indexPath)
+        
+        let cell: TransactionTableViewCell = tableView.dequeue(indexPath: indexPath)
         
         let transaction = viewModel.transactions[indexPath.row]
-        let value = Int(transaction.amounts?.first?.value ?? 0)
-        cell.configure(transactionValue: value, timestamp: transaction.timestamp ?? 0, prefix: transaction.amounts?.first?.prefix, suffix: transaction.amounts?.first?.suffix)
+        
+        let value = transaction.formattedAmounts?.first?.value?.intValue ?? 0
+        cell.configure(transactionValue: value, timestamp: transaction.timestamp?.doubleValue ?? 0.0, prefix: transaction.formattedAmounts?.first?.prefix, suffix: transaction.formattedAmounts?.first?.suffix)
         
         return cell
     }

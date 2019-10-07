@@ -29,7 +29,7 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
         let closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(close))
         navigationItem.rightBarButtonItem = closeBarButton
         
-        tableView.registerCellForClass(DebugMenuTableViewCell.self, asNib: true)
+        tableView.register(DebugMenuTableViewCell.self, asNib: true)
     }
 
     // MARK: - Table view data source
@@ -47,7 +47,7 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithClass(DebugMenuTableViewCell.self, forIndexPath: indexPath)
+        let cell: DebugMenuTableViewCell = tableView.dequeue(indexPath: indexPath)
         
         let row = viewModel.row(atIndexPath: indexPath)
         cell.configure(withDebugRow: row)
@@ -83,7 +83,7 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             }
 
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+            let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
                 guard let textField = alert.textFields?.first else {
                     return
                 }
@@ -92,13 +92,27 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
                 }
 
                 UserDefaults.standard.setValue(newEmail, forKey: .userEmail)
-                exit(0)
+            
+                self?.clearMembershipCards {
+                    exit(0)
+                }
+                
             }
             alert.addAction(cancelAction)
             alert.addAction(okAction)
             navigationController?.present(alert, animated: true, completion: nil)
         default:
             return
+        }
+    }
+    
+    private func clearMembershipCards(completion: @escaping () -> Void) {
+        Current.database.performBackgroundTask { context in
+            context.deleteAll(CD_MembershipCard.self)
+            try? context.save()
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
 }

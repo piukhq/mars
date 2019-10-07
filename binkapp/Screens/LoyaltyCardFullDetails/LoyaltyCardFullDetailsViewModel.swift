@@ -5,7 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol LoyaltyCardFullDetailsViewModelDelegate: class {
     func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel])
@@ -18,14 +18,14 @@ class LoyaltyCardFullDetailsViewModel {
     let membershipCard: MembershipCardModel
     let membershipPlan: MembershipPlanModel
     var paymentCards: [PaymentCardModel]?
+    let membershipCard: CD_MembershipCard
     weak var delegate: LoyaltyCardFullDetailsViewModelDelegate?
-    
-    init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
+
+    init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
         self.router = router
         self.repository = repository
-        self.membershipPlan = membershipPlan
         self.membershipCard = membershipCard
-    }
+    }  
     
     // MARK: - Public methds
     
@@ -38,25 +38,22 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toBarcodeModel() {
-        router.toBarcodeViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
-    }
-    
-    func toTransactionsViewController() {
-        router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
+        router.toBarcodeViewController(membershipCard: membershipCard) { }
     }
     
     func goToScreenForAction(action: BinkModuleView.BinkModuleAction) {
         switch action {
         case .login:
             //TODO: change to login screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            guard let plan = membershipCard.membershipPlan else { return }
+            router.toAuthAndAddViewController(membershipPlan: plan, isFirstAuth: false)
             break
         case .loginChanges:
-            //TODO: change to login changes screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            guard let plan = membershipCard.membershipPlan else { return }
+            router.toAuthAndAddViewController(membershipPlan: plan, isFirstAuth: false)
             break
         case .transactions:
-            router.toTransactionsViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
+            router.toTransactionsViewController(membershipCard: membershipCard)
             break
         case .loginPending:
             router.toSimpleInfoViewController(pendingType: .login)
@@ -80,40 +77,67 @@ class LoyaltyCardFullDetailsViewModel {
             router.toSimpleInfoViewController(pendingType: .register)
             break
         case .pllEmpty:
-            router.toPllViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
+            router.toPllViewController(membershipCard: membershipCard)
             break
         case .pll:
             //TODO: change to PLL screen after is implemented
             router.toPllViewController(membershipCard: membershipCard, membershipPlan: membershipPlan, paymentCards: self.paymentCards)
             break
         case .unLinkable:
-            //TODO: change to unlinkable error screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)
             break
         case .genericError:
-            //TODO: change to generic error screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            let state = membershipCard.status?.status?.rawValue ?? ""
+            
+            var description = state + "\n"
+            membershipCard.status?.formattedReasonCodes?.forEach {
+                description += $0.value ?? ""
+            }
+    
+            toReusableModalTemplate(title: "error_title".localized, description: description)
             break
         }
+        
+    }
+    
+    private func toReusableModalTemplate(title: String, description: String) {
+        let attributedText = NSMutableAttributedString(string: title + "\n" + description)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
+        
+        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
     func popToRootController() {
         router.popToRootViewController()
     }
     
+    @objc func popViewController() {
+        router.popViewController()
+    }
+    
     func displaySimplePopupWithTitle(_ title: String, andMessage message: String) {
         router.displaySimplePopup(title: title, message: message)
     }
     
+    func getOfferTileImageUrls() -> [String]? {
+        let planImages = membershipCard.membershipPlan?.imagesSet
+        return planImages?.filter({ $0.type?.intValue == 2}).compactMap { $0.url }
+    }
+    
     func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: {
-            if let cardId = self.membershipCard.id {
-                self.repository.deleteMembershipCard(id: cardId, onSuccess: { _ in
-                    yesCompletion()
-                }, onError: { (error: Error) in
-                    self.displaySimplePopupWithTitle("Error", andMessage: error.localizedDescription)
-                })
+        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
+            guard let strongSelf = self else {
+                return
             }
+            strongSelf.repository.deleteMembershipCard(id: strongSelf.membershipCard.id, onSuccess: { _ in
+                yesCompletion()
+            }, onError: { (error: Error) in
+                strongSelf.displaySimplePopupWithTitle("Error", andMessage: error.localizedDescription)
+            })
         }, noCompletion: {
             noCompletion()
         })

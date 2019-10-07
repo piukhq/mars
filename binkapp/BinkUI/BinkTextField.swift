@@ -27,6 +27,5 @@ class BinkTextField: UITextField {
         layer.masksToBounds = false
         layer.shadowOpacity = 0.1
         layer.backgroundColor = UIColor.white.cgColor
-
     }
 }

@@ -7,17 +7,16 @@
 
 import UIKit
 
-class MainTabBarViewController: UIViewController {
-    @IBOutlet weak var tabBar: UITabBar!
-    @IBOutlet weak var displayedControllerView: UIView!
-    
+class MainTabBarViewController: UITabBarController, BarBlurring {    
     let viewModel: MainTabBarViewModel
     var selectedTabBarOption = Buttons.loyaltyItem.rawValue
     var items = [UITabBarItem]()
+    lazy var blurBackground = defaultBlurredBackground()
     
     init(viewModel: MainTabBarViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "MainTabBarViewController", bundle: Bundle(for: MainTabBarViewController.self))
+        delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -26,23 +25,26 @@ class MainTabBarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupNotifications()
         
         self.title = ""
         setNavigationBar()
-        
-        tabBar.delegate = self
         populateTabBar()
+
+        Current.wallet.launch()
     }
+
+    // MARK: - Navigation Bar Blurring
     
-    override func viewWillAppear(_ animated: Bool) {
-        setFirstDisplayedController()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        prepareBarWithBlur(bar: tabBar, blurBackground: blurBackground)
     }
     
     func setNavigationBar() {
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = UIImage()
-
-        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(settingsButtonTapped))
+        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .done, target: self, action: #selector(settingsButtonTapped))
         navigationItem.rightBarButtonItem = settingsButton
 
         navigationItem.setHidesBackButton(true, animated: true)
@@ -58,41 +60,29 @@ class MainTabBarViewController: UIViewController {
     }
     
     func populateTabBar() {
-        items.append(viewModel.getTabBarLoyaltyButton())
-        items.append(viewModel.getTabBarAddButton())
-        items.append(viewModel.getTabBarPaymentButton())
-        tabBar.setItems(items, animated: true)
-    }
-    
-    func setFirstDisplayedController() {
-        let view = viewModel.childViewControllers[Buttons.loyaltyItem.rawValue].view
-        view?.frame = displayedControllerView.bounds
-        displayedControllerView.addSubview(view!)
-        tabBar.selectedItem = items[Buttons.loyaltyItem.rawValue]
+        viewControllers = viewModel.childViewControllers
     }
 }
 
-extension MainTabBarViewController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        viewModel.childViewControllers[selectedTabBarOption].view.removeFromSuperview()
-        switch item.tag {
-        case Buttons.loyaltyItem.rawValue:
-            let view = viewModel.childViewControllers[Buttons.loyaltyItem.rawValue].view
-            view?.frame = displayedControllerView.bounds
-            displayedControllerView.addSubview(view!)
-            selectedTabBarOption = Buttons.loyaltyItem.rawValue
-            break
-        case Buttons.addItem.rawValue:
+extension MainTabBarViewController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if viewController is AddingOptionsTabBarViewController {
             viewModel.toAddingOptionsScreen()
-            break
-        case Buttons.paymentItem.rawValue:
-            let view = viewModel.childViewControllers[Buttons.paymentItem.rawValue].view
-            view?.frame = displayedControllerView.bounds
-            displayedControllerView.addSubview(view!)
-            selectedTabBarOption = Buttons.paymentItem.rawValue
-            break
-        default: break
+            return false
         }
+        
+        return true
     }
 }
 
+// MARK: - Notifications and Handlers
+
+extension MainTabBarViewController {
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddPaymentCard), name: .didAddPaymentCard, object: nil)
+    }
+
+    @objc private func handleDidAddPaymentCard() {
+        selectedIndex = 2
+    }
+}

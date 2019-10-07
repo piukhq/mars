@@ -6,32 +6,71 @@
 //
 
 import Foundation
+import CoreData
 
-struct MembershipPlanModel : Codable {
-    let id: Int?
+struct MembershipPlanModel: Codable {
+    let apiId: Int?
     let status: String?
     let featureSet: FeatureSetModel?
-    let images: [MembershipCardImageModel]?
-    let account: MemebershipPlanAccountModel?
+    let images: [MembershipPlanImageModel]?
+    let account: MembershipPlanAccountModel?
     let balances: [BalanceModel]?
     
     enum CodingKeys: String, CodingKey {
-        
-        case id = "id"
-        case status = "status"
+        case apiId = "id"
+        case status
         case featureSet = "feature_set"
-        case images = "images"
-        case account = "account"
-        case balances = "balances"
+        case images
+        case account
+        case balances
     }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decodeIfPresent(Int.self, forKey: .id)
-        status = try values.decodeIfPresent(String.self, forKey: .status)
-        featureSet = try values.decodeIfPresent(FeatureSetModel.self, forKey: .featureSet)
-        images = try values.decodeIfPresent([MembershipCardImageModel].self, forKey: .images)
-        account = try values.decodeIfPresent(MemebershipPlanAccountModel.self, forKey: .account)
-        balances = try values.decodeIfPresent([BalanceModel].self, forKey: .balances)
+}
+
+extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_MembershipPlan, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlan {
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
+        update(cdObject, \.status, with: status, delta: delta)
+
+
+        if let featureSet = featureSet {
+            let cdFeatureSet = featureSet.mapToCoreData(context, .update, overrideID: FeatureSetModel.overrideId(forParentId: id))
+            update(cdFeatureSet, \.plan, with: cdObject, delta: delta)
+            update(cdObject, \.featureSet, with: cdFeatureSet, delta: delta)
+        } else {
+            update(cdObject, \.featureSet, with: nil, delta: false)
+        }
+
+        cdObject.images.forEach {
+            guard let image = $0 as? CD_MembershipPlanImage else { return }
+            context.delete(image)
+        }
+        
+        images?.forEach { image in
+            let cdImage = image.mapToCoreData(context, .update, overrideID: nil)
+            update(cdImage, \.plan, with: cdObject, delta: delta)
+            cdObject.addImagesObject(cdImage)
+        }
+
+        if let account = account {
+            let cdAccount = account.mapToCoreData(context, .update, overrideID: MembershipPlanAccountModel.overrideId(forParentId: id))
+            update(cdAccount, \.plan, with: cdObject, delta: delta)
+//            update(cdObject, \.account, with: cdAccount, delta: delta)
+        } else {
+//            update(cdObject, \.account, with: nil, delta: false)
+        }
+
+
+        cdObject.balances.forEach {
+            guard let balance = $0 as? CD_Balance else { return }
+            context.delete(balance)
+        }
+        balances?.forEach { balance in
+            let cdBalance = balance.mapToCoreData(context, .update, overrideID: nil)
+            update(cdBalance, \.plan, with: cdObject, delta: delta)
+            cdObject.addBalancesObject(cdBalance)
+        }
+
+
+        return cdObject
     }
 }
