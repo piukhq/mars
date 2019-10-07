@@ -125,12 +125,24 @@ class PaymentCardDetailViewController: UIViewController {
 
 extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        if tableView == linkedCardsTableView {
+            return Current.wallet.membershipCards?.count ?? 0
+        }
+
+        if tableView == informationTableView {
+            return 3
+        }
+
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == linkedCardsTableView {
             let cell: LinkedLoyaltyCardTableViewCell = tableView.dequeue(indexPath: indexPath)
+            guard let membershipCard = Current.wallet.membershipCards?[indexPath.row] else {
+                return cell
+            }
+            cell.configureWithMembershipCard(membershipCard)
             return cell
         }
 

@@ -40,16 +40,16 @@
                         </constraints>
                     </switch>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="tHm-fr-gba">
-                        <rect key="frame" x="97" y="30.5" width="237" height="39"/>
+                        <rect key="frame" x="101" y="30.5" width="233" height="39"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Co-op" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zjm-hx-fNo">
-                                <rect key="frame" x="0.0" y="0.0" width="237" height="22"/>
+                                <rect key="frame" x="0.0" y="0.0" width="233" height="22"/>
                                 <fontDescription key="fontDescription" name="NunitoSans-ExtraBold" family="Nunito Sans" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£3.50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RWx-gs-EDP">
-                                <rect key="frame" x="0.0" y="22" width="237" height="17"/>
+                                <rect key="frame" x="0.0" y="22" width="233" height="17"/>
                                 <fontDescription key="fontDescription" name="NunitoSans-Light" family="Nunito Sans" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -64,13 +64,19 @@
                     <constraint firstItem="Eda-qh-7yN" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="0cL-c9-GKM"/>
                     <constraint firstAttribute="trailing" secondItem="qVb-o0-JMX" secondAttribute="trailing" constant="25" id="7sE-6V-nJK"/>
                     <constraint firstItem="Eda-qh-7yN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="Xee-Gz-236"/>
-                    <constraint firstItem="tHm-fr-gba" firstAttribute="leading" secondItem="Eda-qh-7yN" secondAttribute="trailing" constant="8" id="cSC-fi-Yc1"/>
+                    <constraint firstItem="tHm-fr-gba" firstAttribute="leading" secondItem="Eda-qh-7yN" secondAttribute="trailing" constant="12" id="cSC-fi-Yc1"/>
                     <constraint firstItem="tHm-fr-gba" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fGT-fz-YPV"/>
                     <constraint firstItem="qVb-o0-JMX" firstAttribute="leading" secondItem="tHm-fr-gba" secondAttribute="trailing" constant="8" id="luW-ym-UXZ"/>
                     <constraint firstItem="qVb-o0-JMX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="znE-L2-6am"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="companyNameLabel" destination="Zjm-hx-fNo" id="ZqR-71-Rb1"/>
+                <outlet property="iconImageView" destination="Eda-qh-7yN" id="CQG-Mi-zMl"/>
+                <outlet property="linkToggle" destination="qVb-o0-JMX" id="JrW-Wx-cIv"/>
+                <outlet property="pointsValueLabel" destination="RWx-gs-EDP" id="EN0-yQ-kx0"/>
+            </connections>
             <point key="canvasLocation" x="206.52173913043481" y="126.5625"/>
         </tableViewCell>
     </objects>
