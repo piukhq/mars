@@ -9,7 +9,7 @@
 import Foundation
 
 struct PaymentCardDetailViewModel {
-    private let paymentCard: CD_PaymentCard
+    private var paymentCard: CD_PaymentCard
     private let router: MainScreenRouter
 
     init(paymentCard: CD_PaymentCard, router: MainScreenRouter) {
@@ -19,5 +19,22 @@ struct PaymentCardDetailViewModel {
 
     var paymentCardCellViewModel: PaymentCardCellViewModel {
         return PaymentCardCellViewModel(paymentCard: paymentCard, router: router)
+    }
+
+    var paymentCardId: String {
+        return paymentCard.id
+    }
+
+    var linkedMembershipCardIds: [String]? {
+        let membershipCards = paymentCard.linkedMembershipCards as? Set<CD_MembershipCard>
+        return membershipCards?.map { $0.id }
+    }
+
+    func membershipCardIsLinked(_ membershipCard: CD_MembershipCard) -> Bool {
+        return linkedMembershipCardIds?.contains(membershipCard.id) ?? false
+    }
+
+    mutating func setNewPaymentCard(_ paymentCard: CD_PaymentCard) {
+        self.paymentCard = paymentCard
     }
 }

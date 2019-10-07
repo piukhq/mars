@@ -9,7 +9,7 @@
 import UIKit
 
 class PaymentCardDetailViewController: UIViewController {
-    private let viewModel: PaymentCardDetailViewModel
+    private var viewModel: PaymentCardDetailViewModel
     private var hasSetupCell = false
 
     private lazy var stackScrollView: StackScrollView = {
@@ -108,6 +108,8 @@ class PaymentCardDetailViewController: UIViewController {
         informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
         linkedCardsTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
         informationTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+
+        getLinkedCards()
     }
 
     override func viewDidLayoutSubviews() {
@@ -121,12 +123,39 @@ class PaymentCardDetailViewController: UIViewController {
         }
     }
 
+    private var linkedMembershipCardIds: [String]?
+
+    private func getLinkedCards() {
+        let url = RequestURL.paymentCard(cardId: viewModel.paymentCardId)
+        let method = RequestHTTPMethod.get
+
+        let apiManager = ApiManager()
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
+            Current.database.performBackgroundTask { context in
+                let object = response.mapToCoreData(context, .update, overrideID: nil)
+
+                try? context.save()
+
+                DispatchQueue.main.async {
+                    Current.database.performTask { [weak self] context in
+                        if let cdPaymentCard = context.fetchWithID(CD_PaymentCard.self, id: object.objectID) {
+                            self?.viewModel.setNewPaymentCard(cdPaymentCard)
+                            self?.linkedCardsTableView.reloadData()
+                        }
+                    }
+                }
+            }
+        }, onError: {_ in
+            print("error")
+        })
+    }
+
 }
 
 extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == linkedCardsTableView {
-            return Current.wallet.membershipCards?.count ?? 0
+            return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link }).count ?? 0
         }
 
         if tableView == informationTableView {
@@ -139,10 +168,12 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == linkedCardsTableView {
             let cell: LinkedLoyaltyCardTableViewCell = tableView.dequeue(indexPath: indexPath)
-            guard let membershipCard = Current.wallet.membershipCards?[indexPath.row] else {
+            guard let linkableCards = Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link }) else {
                 return cell
             }
-            cell.configureWithMembershipCard(membershipCard)
+            let membershipCard = linkableCards[indexPath.row]
+
+            cell.configureWithMembershipCard(membershipCard, isLinked: viewModel.membershipCardIsLinked(membershipCard), delegate: self)
             return cell
         }
 
@@ -164,6 +195,37 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return tableView == linkedCardsTableView ? 0.5 : 0.0
+    }
+}
+
+extension PaymentCardDetailViewController: LinkedLoyaltyCardCellDelegate {
+    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, didToggleLinkedState isOn: Bool, forMembershipCard membershipCard: CD_MembershipCard) {
+        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: viewModel.paymentCardId)
+        let method: RequestHTTPMethod = isOn ? .patch : .delete
+
+        let apiManager = ApiManager()
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
+            Current.database.performBackgroundTask { context in
+                let object = response.mapToCoreData(context, .delta, overrideID: nil)
+
+                try? context.save()
+
+                // If we are deleting a link, get the core data payment card and remove the membership card object
+                // Do we need to handle the inverse to this?
+
+                DispatchQueue.main.async {
+                    Current.database.performTask { [weak self] context in
+                        if let cdPaymentCard = context.fetchWithID(CD_PaymentCard.self, id: object.objectID) {
+                            self?.viewModel.setNewPaymentCard(cdPaymentCard)
+                            self?.linkedCardsTableView.reloadData()
+                            Current.wallet.refreshLocal()
+                        }
+                    }
+                }
+            }
+        }, onError: {_ in
+            print("error")
+        })
     }
 }
 
