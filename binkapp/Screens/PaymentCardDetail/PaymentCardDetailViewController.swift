@@ -143,8 +143,9 @@ class PaymentCardDetailViewController: UIViewController {
                     }
                 }
             }
-        }, onError: {_ in
-            print("error")
+        }, onError: { [weak self] _ in
+            // reload based on what we already know from the local wallet
+            self?.linkedCardsTableView.reloadData()
         })
     }
 
@@ -172,9 +173,10 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
             }
 
             let isLinked = viewModel.membershipCardIsLinked(membershipCard)
-
             let cellViewModel = LinkedLoyaltyCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
+
             cell.configureWithViewModel(cellViewModel, delegate: self)
+
             return cell
         }
 
@@ -239,8 +241,9 @@ extension PaymentCardDetailViewController: LinkedLoyaltyCardCellDelegate {
                     }
                 }
             }
-        }, onError: {_ in
-            print("error")
+        }, onError: { [weak self]_ in
+            // reload based on what we already know from the local wallet
+            self?.linkedCardsTableView.reloadData()
         })
     }
 }
