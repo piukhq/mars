@@ -20,10 +20,6 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
 
     private var gradientLayer: CAGradientLayer?
     private var viewModel: PaymentCardCellViewModel!
-    
-    static func loadViewFromNib() -> PaymentCardCollectionViewCell? {
-        return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.first as? PaymentCardCollectionViewCell
-    }
 
     func configureWithViewModel(_ viewModel: PaymentCardCellViewModel) {
         self.viewModel = viewModel

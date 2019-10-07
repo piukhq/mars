@@ -87,7 +87,7 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let paymentCard = viewModel.paymentCardAtIndexPath(indexPath) else {
+        guard let paymentCard = viewModel.card(forIndexPath: indexPath) else {
             return
         }
         viewModel.toPaymentCardDetail(for: paymentCard)
