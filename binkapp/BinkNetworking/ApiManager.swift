@@ -14,19 +14,23 @@ enum RequestURL {
     case membershipPlans
     case membershipCards
     case deleteMembershipCard(cardId: String)
-    case postMembershipCard
-    case postPaymentCard
-    case getPaymentCards
+    case paymentCards
+    case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
     
     var value: String {
         switch self {
-        case .login: return "/service"
-        case .membershipPlans: return "/membership_plans"
-        case .membershipCards: return "/membership_cards"
-        case .deleteMembershipCard(let cardId): return "/membership_card/\(cardId)"
-        case .postMembershipCard: return "/membership_cards"
-        case .getPaymentCards: return "/payment_cards"
-        case .postPaymentCard: return "/payment_cards"
+        case .login:
+            return "/service"
+        case .membershipPlans:
+            return "/membership_plans"
+        case .membershipCards:
+            return "/membership_cards"
+        case .deleteMembershipCard(let cardId):
+            return "/membership_card/\(cardId)"
+        case .paymentCards:
+            return "/payment_cards"
+        case .linkMembershipCardToPaymentCard(let membershipCardId, let paymentCardId):
+            return "/membership_card/\(membershipCardId)/payment_card\(paymentCardId)"
         }
     }
 }

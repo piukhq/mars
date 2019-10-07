@@ -32,7 +32,7 @@
                             <constraint firstAttribute="height" constant="64" id="y6Q-n4-pSC"/>
                         </constraints>
                     </imageView>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qVb-o0-JMX">
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qVb-o0-JMX">
                         <rect key="frame" x="342" y="36" width="50" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="48" id="5hs-L6-wAf"/>
