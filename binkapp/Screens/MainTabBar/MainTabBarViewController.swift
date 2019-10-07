@@ -31,6 +31,8 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
         self.title = ""
         setNavigationBar()
         populateTabBar()
+
+        Current.wallet.launch()
     }
 
     // MARK: - Navigation Bar Blurring
@@ -42,7 +44,7 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
     }
     
     func setNavigationBar() {
-        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal), style: .done, target: self, action: #selector(settingsButtonTapped))
+        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .done, target: self, action: #selector(settingsButtonTapped))
         navigationItem.rightBarButtonItem = settingsButton
 
         navigationItem.setHidesBackButton(true, animated: true)

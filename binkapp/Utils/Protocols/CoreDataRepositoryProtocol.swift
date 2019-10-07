@@ -16,10 +16,6 @@ protocol CoreDataRepositoryProtocol {
     func trashLocalObjects<T: NSManagedObject>(forObjectType objectType: T.Type, completion: @escaping () -> Void)
 }
 
-protocol Balls: NSManagedObject {
-    var id: String! { get set }
-}
-
 extension CoreDataRepositoryProtocol {
     func mapCoreDataObjects<T: CoreDataMappable, E>(objectsToMap objects: [T], type: E.Type, completion: @escaping () -> Void) where E: CD_BaseObject {
         

@@ -61,8 +61,7 @@ class MainScreenRouter {
     }
     
     func getPaymentWalletViewController() -> UIViewController {
-        let repository = PaymentWalletRepository(apiManager: apiManager)
-        let viewModel = PaymentWalletViewModel(repository: repository, router: self)
+        let viewModel = PaymentWalletViewModel(repository: PaymentWalletRepository(apiManager: apiManager), router: self)
         let viewController = PaymentWalletViewController(viewModel: viewModel)
         
         return viewController
@@ -128,9 +127,9 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan) {
+    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, isFirstAuth: Bool = true) {
         let repository = AuthAndAddRepository(apiManager: apiManager)
-        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, isFirstAuth: isFirstAuth)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }

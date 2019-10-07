@@ -36,6 +36,7 @@ class AuthAndAddViewController: BaseFormViewController {
     
     private let viewModel: AuthAndAddViewModel
     private var isKeyboardOpen = false
+    private var fieldsViews: [InputValidation] = []
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
@@ -61,7 +62,7 @@ class AuthAndAddViewController: BaseFormViewController {
         closeButton.tintColor = .black
         self.navigationItem.setRightBarButton(closeButton, animated: true)
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         self.navigationItem.leftBarButtonItem = backButton
         
         navigationItem.setHidesBackButton(false, animated: true)
@@ -102,7 +103,7 @@ class AuthAndAddViewController: BaseFormViewController {
     }
         
     @objc func loginButtonTapped() {
-        viewModel.addMembershipCard(with: dataSource.fields)
+        viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
