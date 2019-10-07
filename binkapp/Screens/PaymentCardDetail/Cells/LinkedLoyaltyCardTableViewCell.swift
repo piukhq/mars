@@ -36,6 +36,7 @@ class LinkedLoyaltyCardTableViewCell: UITableViewCell {
         }
 
         linkToggle.isOn = viewModel.isLinked
+        pointsValueLabel.text = viewModel.pointsValueText
     }
 
     @IBAction private func didToggle() {

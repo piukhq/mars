@@ -25,4 +25,12 @@ struct LinkedLoyaltyCellViewModel {
         let iconImage = membershipCard.membershipPlan?.firstIconImage()
         return URL(string: iconImage?.url ?? "")
     }
+
+    var pointsValueText: String? {
+        let balance = membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
+        guard let balanceValue = balance?.value?.stringValue else {
+            return nil // If there is no value, don't show the points label
+        }
+        return "\(balance?.prefix ?? "")\(balanceValue) \(balance?.suffix ?? "")"
+    }
 }
