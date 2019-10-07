@@ -78,8 +78,8 @@ class PaymentCardDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = "Linked cards"
-        descriptionLabel.text = "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points."
+        titleLabel.text = viewModel.titleText
+        descriptionLabel.text = viewModel.descriptionText
 
         linkedCardsTableView.delegate = self
         linkedCardsTableView.dataSource = self
@@ -123,8 +123,6 @@ class PaymentCardDetailViewController: UIViewController {
         }
     }
 
-    private var linkedMembershipCardIds: [String]?
-
     private func getLinkedCards() {
         let url = RequestURL.paymentCard(cardId: viewModel.paymentCardId)
         let method = RequestHTTPMethod.get
@@ -155,7 +153,7 @@ class PaymentCardDetailViewController: UIViewController {
 extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == linkedCardsTableView {
-            return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link }).count ?? 0
+            return viewModel.pllEnabledMembershipCardsCount
         }
 
         if tableView == informationTableView {
@@ -168,12 +166,15 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == linkedCardsTableView {
             let cell: LinkedLoyaltyCardTableViewCell = tableView.dequeue(indexPath: indexPath)
-            guard let linkableCards = Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link }) else {
+
+            guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
                 return cell
             }
-            let membershipCard = linkableCards[indexPath.row]
 
-            cell.configureWithMembershipCard(membershipCard, isLinked: viewModel.membershipCardIsLinked(membershipCard), delegate: self)
+            let isLinked = viewModel.membershipCardIsLinked(membershipCard)
+
+            let cellViewModel = LinkedLoyaltyCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
+            cell.configureWithViewModel(cellViewModel, delegate: self)
             return cell
         }
 

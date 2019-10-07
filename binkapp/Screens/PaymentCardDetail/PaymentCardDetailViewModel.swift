@@ -17,12 +17,28 @@ struct PaymentCardDetailViewModel {
         self.router = router
     }
 
+    var titleText: String {
+        return "Linked cards"
+    }
+
+    var descriptionText: String {
+        return "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points."
+    }
+
     var paymentCardCellViewModel: PaymentCardCellViewModel {
-        return PaymentCardCellViewModel(paymentCard: paymentCard, router: router)
+        return PaymentCardCellViewModel(paymentCard: paymentCard)
     }
 
     var paymentCardId: String {
         return paymentCard.id
+    }
+
+    var linkableMembershipCards: [CD_MembershipCard]? {
+        return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
+    }
+
+    var pllEnabledMembershipCardsCount: Int {
+        return linkableMembershipCards?.count ?? 0
     }
 
     var linkedMembershipCardIds: [String]? {
@@ -32,6 +48,10 @@ struct PaymentCardDetailViewModel {
 
     func membershipCardIsLinked(_ membershipCard: CD_MembershipCard) -> Bool {
         return linkedMembershipCardIds?.contains(membershipCard.id) ?? false
+    }
+
+    func membershipCard(forIndexPath indexPath: IndexPath) -> CD_MembershipCard? {
+        return linkableMembershipCards?[indexPath.row]
     }
 
     mutating func setNewPaymentCard(_ paymentCard: CD_PaymentCard) {

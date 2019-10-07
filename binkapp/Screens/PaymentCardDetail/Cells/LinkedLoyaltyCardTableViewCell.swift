@@ -10,7 +10,7 @@ import UIKit
 import AlamofireImage
 
 protocol LinkedLoyaltyCardCellDelegate: AnyObject {
-    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, didToggleLinkedState isOn: Bool, forMembershipCard membershipCard: CD_MembershipCard)
+    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, didToggleLinkedState isLinked: Bool, forMembershipCard membershipCard: CD_MembershipCard)
 }
 
 class LinkedLoyaltyCardTableViewCell: UITableViewCell {
@@ -19,30 +19,27 @@ class LinkedLoyaltyCardTableViewCell: UITableViewCell {
     @IBOutlet private weak var pointsValueLabel: UILabel!
     @IBOutlet private weak var linkToggle: UISwitch!
 
-    private var membershipCard: CD_MembershipCard!
+    private var viewModel: LinkedLoyaltyCellViewModel!
     private weak var delegate: LinkedLoyaltyCardCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
-    func configureWithMembershipCard(_ membershipCard: CD_MembershipCard, isLinked: Bool, delegate: LinkedLoyaltyCardCellDelegate?) {
-        self.membershipCard = membershipCard
+    func configureWithViewModel(_ viewModel: LinkedLoyaltyCellViewModel, delegate: LinkedLoyaltyCardCellDelegate?) {
+        self.viewModel = viewModel
         self.delegate = delegate
-        
-        companyNameLabel.text = membershipCard.membershipPlan?.account?.companyName
 
-        if let iconImage = membershipCard.membershipPlan?.firstIconImage(),
-            let urlString = iconImage.url,
-            let imageURL = URL(string: urlString) {
-            iconImageView.af_setImage(withURL: imageURL)
+        companyNameLabel.text = viewModel.companyNameText
+        if let iconImageUrl = viewModel.iconUrl {
+            iconImageView.af_setImage(withURL: iconImageUrl)
         }
 
-        linkToggle.isOn = isLinked
+        linkToggle.isOn = viewModel.isLinked
     }
 
     @IBAction private func didToggle() {
-        delegate?.linkedLoyaltyCardCell(self, didToggleLinkedState: linkToggle.isOn, forMembershipCard: membershipCard)
+        delegate?.linkedLoyaltyCardCell(self, didToggleLinkedState: linkToggle.isOn, forMembershipCard: viewModel.membershipCard)
     }
     
 }
