@@ -77,7 +77,13 @@ class PaymentCardDetailViewModel {
     }
 
     func deletePaymentCard() {
-        
+        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
+            guard let self = self else { return }
+            self.repository.deletePaymentCard(self.paymentCard) {
+                Current.wallet.refreshLocal()
+                self.router.popToRootViewController()
+            }
+        }, noCompletion: {})
     }
 
     // MARK: - Repository

@@ -16,6 +16,7 @@ enum RequestURL {
     case deleteMembershipCard(cardId: String)
     case paymentCards
     case paymentCard(cardId: String)
+    case deletePaymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
     
     var value: String {
@@ -30,7 +31,7 @@ enum RequestURL {
             return "/membership_card/\(cardId)"
         case .paymentCards:
             return "/payment_cards"
-        case .paymentCard(let cardId):
+        case .paymentCard(let cardId), .deletePaymentCard(let cardId):
             return "/payment_card/\(cardId)"
         case .linkMembershipCardToPaymentCard(let membershipCardId, let paymentCardId):
             return "/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"

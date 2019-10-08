@@ -38,6 +38,26 @@ class PaymentCardDetailRepository {
         })
     }
 
+    func deletePaymentCard(_ paymentCard: CD_PaymentCard, completion: @escaping () -> Void) {
+        // Process the backend delete, but fail silently
+        let url = RequestURL.deletePaymentCard(cardId: paymentCard.id)
+        let method = RequestHTTPMethod.delete
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
+
+        // Process core data deletion
+        Current.database.performBackgroundTask(with: paymentCard) { (context, cardToDelete) in
+            if let cardToDelete = cardToDelete {
+                context.delete(cardToDelete)
+            }
+
+            try? context.save()
+
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
+
     func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, completion: @escaping (CD_PaymentCard?) -> Void) {
         let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
         let method: RequestHTTPMethod = .patch
