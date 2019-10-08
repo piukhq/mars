@@ -210,6 +210,17 @@ extension PaymentCardDetailViewController: LinkedLoyaltyCardCellDelegate {
     }
 }
 
+extension PaymentCardDetailViewController: CardDetailInformationRowFactoryDelegate {
+    func cardDetailInformationRowFactory(_ factory: PaymentCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
+        switch informationRowType {
+        case .securityAndPrivacy:
+            viewModel.toSecurityAndPrivacyScreen()
+        case .deletePaymentCard:
+            viewModel.deletePaymentCard()
+        }
+    }
+}
+
 class NestedTableView: UITableView {
     override var contentSize: CGSize {
         didSet {

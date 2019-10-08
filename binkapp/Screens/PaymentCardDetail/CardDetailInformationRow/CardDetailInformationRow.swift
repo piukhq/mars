@@ -37,23 +37,31 @@ struct CardDetailInformationRow {
 }
 
 protocol CardDetailInformationRowFactory {
-    static func makeInformationRows() -> [CardDetailInformationRow]
+    func makeInformationRows() -> [CardDetailInformationRow]
+}
+
+protocol CardDetailInformationRowFactoryDelegate: AnyObject {
+    func cardDetailInformationRowFactory(_ factory: PaymentCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType)
 }
 
 class PaymentCardDetailInformationRowFactory: CardDetailInformationRowFactory {
-    static func makeInformationRows() -> [CardDetailInformationRow] {
+    weak var delegate: CardDetailInformationRowFactoryDelegate?
+
+    func makeInformationRows() -> [CardDetailInformationRow] {
         return [makeSecurityAndPrivacyRow(), makeDeletePaymentCardRow()]
     }
 
-    private static func makeSecurityAndPrivacyRow() -> CardDetailInformationRow {
-        return CardDetailInformationRow(type: .securityAndPrivacy) {
-            print("security and privacy row")
+    private func makeSecurityAndPrivacyRow() -> CardDetailInformationRow {
+        return CardDetailInformationRow(type: .securityAndPrivacy) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.cardDetailInformationRowFactory(self, shouldPerformActionForRowType: .securityAndPrivacy)
         }
     }
 
-    private static func makeDeletePaymentCardRow() -> CardDetailInformationRow {
-        return CardDetailInformationRow(type: .deletePaymentCard) {
-            print("delete this card row")
+    private func makeDeletePaymentCardRow() -> CardDetailInformationRow {
+        return CardDetailInformationRow(type: .deletePaymentCard) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.cardDetailInformationRowFactory(self, shouldPerformActionForRowType: .deletePaymentCard)
         }
     }
 }

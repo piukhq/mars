@@ -122,8 +122,10 @@ class MainScreenRouter {
 
     func toPaymentCardDetailViewController(paymentCard: CD_PaymentCard) {
         let repository = PaymentCardDetailRepository(apiManager: apiManager)
-        let viewModel = PaymentCardDetailViewModel(paymentCard: paymentCard, router: self, repository: repository)
+        let factory = PaymentCardDetailInformationRowFactory()
+        let viewModel = PaymentCardDetailViewModel(paymentCard: paymentCard, router: self, repository: repository, informationRowFactory: factory)
         let viewController = PaymentCardDetailViewController(viewModel: viewModel)
+        factory.delegate = viewController
         navController?.pushViewController(viewController, animated: true)
     }
 

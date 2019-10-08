@@ -12,11 +12,13 @@ class PaymentCardDetailViewModel {
     private var paymentCard: CD_PaymentCard
     private let router: MainScreenRouter
     private let repository: PaymentCardDetailRepository
+    private let informationRowFactory: PaymentCardDetailInformationRowFactory
 
-    init(paymentCard: CD_PaymentCard, router: MainScreenRouter, repository: PaymentCardDetailRepository) {
+    init(paymentCard: CD_PaymentCard, router: MainScreenRouter, repository: PaymentCardDetailRepository, informationRowFactory: PaymentCardDetailInformationRowFactory) {
         self.paymentCard = paymentCard
         self.router = router
         self.repository = repository
+        self.informationRowFactory = informationRowFactory
     }
 
     // MARK: - Header views
@@ -59,7 +61,7 @@ class PaymentCardDetailViewModel {
     // MARK: Information rows
 
     var informationRows: [CardDetailInformationRow] {
-        return PaymentCardDetailInformationRowFactory.makeInformationRows()
+        return informationRowFactory.makeInformationRows()
     }
 
     func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
@@ -68,6 +70,14 @@ class PaymentCardDetailViewModel {
 
     func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
         informationRows[indexPath.row].action()
+    }
+
+    func toSecurityAndPrivacyScreen() {
+        router.toPrivacyAndSecurityViewController()
+    }
+
+    func deletePaymentCard() {
+        
     }
 
     // MARK: - Repository
