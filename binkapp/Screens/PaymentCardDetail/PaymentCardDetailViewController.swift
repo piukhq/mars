@@ -138,7 +138,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
         }
 
         if tableView == informationTableView {
-            return 2
+            return viewModel.informationRows.count
         }
 
         return 0
@@ -162,10 +162,26 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
         if tableView == informationTableView {
             let cell: CardDetailInfoTableViewCell = tableView.dequeue(indexPath: indexPath)
+
+            let informationRow = viewModel.informationRow(forIndexPath: indexPath)
+            cell.configureWithInformationRow(informationRow)
+
             return cell
         }
         
         return UITableViewCell()
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == linkedCardsTableView {
+
+        }
+
+        if tableView == informationTableView {
+            viewModel.performActionForInformationRow(atIndexPath: indexPath)
+        }
+
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -9,9 +9,12 @@
 import UIKit
 
 class CardDetailInfoTableViewCell: UITableViewCell {
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    func configureWithInformationRow(_ informationRow: CardDetailInformationRow) {
+        titleLabel.text = informationRow.type.title
+        subtitleLabel.text = informationRow.type.subtitle
     }
     
 }

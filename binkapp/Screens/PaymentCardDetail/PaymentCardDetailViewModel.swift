@@ -19,6 +19,8 @@ class PaymentCardDetailViewModel {
         self.repository = repository
     }
 
+    // MARK: - Header views
+
     var titleText: String {
         return "Linked cards"
     }
@@ -30,6 +32,8 @@ class PaymentCardDetailViewModel {
     var paymentCardCellViewModel: PaymentCardCellViewModel {
         return PaymentCardCellViewModel(paymentCard: paymentCard)
     }
+
+    // MARK: - Linked cards
 
     var linkableMembershipCards: [CD_MembershipCard]? {
         return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
@@ -50,6 +54,20 @@ class PaymentCardDetailViewModel {
 
     func membershipCard(forIndexPath indexPath: IndexPath) -> CD_MembershipCard? {
         return linkableMembershipCards?[indexPath.row]
+    }
+
+    // MARK: Information rows
+
+    var informationRows: [CardDetailInformationRow] {
+        return PaymentCardDetailInformationRowFactory.makeInformationRows()
+    }
+
+    func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
+        return informationRows[indexPath.row]
+    }
+
+    func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
+        informationRows[indexPath.row].action()
     }
 
     // MARK: - Repository
