@@ -124,29 +124,9 @@ class PaymentCardDetailViewController: UIViewController {
     }
 
     private func getLinkedCards() {
-        let url = RequestURL.paymentCard(cardId: viewModel.paymentCardId)
-        let method = RequestHTTPMethod.get
-
-        let apiManager = ApiManager()
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
-            Current.database.performBackgroundTask { context in
-                let object = response.mapToCoreData(context, .update, overrideID: nil)
-
-                try? context.save()
-
-                DispatchQueue.main.async {
-                    Current.database.performTask { [weak self] context in
-                        if let cdPaymentCard = context.fetchWithID(CD_PaymentCard.self, id: object.objectID) {
-                            self?.viewModel.setNewPaymentCard(cdPaymentCard)
-                            self?.linkedCardsTableView.reloadData()
-                        }
-                    }
-                }
-            }
-        }, onError: { [weak self] _ in
-            // reload based on what we already know from the local wallet
+        viewModel.getLinkedMembershipCards { [weak self] in
             self?.linkedCardsTableView.reloadData()
-        })
+        }
     }
 
 }
@@ -158,7 +138,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
         }
 
         if tableView == informationTableView {
-            return 3
+            return 2
         }
 
         return 0
@@ -205,49 +185,22 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 }
 
 extension PaymentCardDetailViewController: LinkedLoyaltyCardCellDelegate {
-    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, didToggleLinkedState isOn: Bool, forMembershipCard membershipCard: CD_MembershipCard) {
-
-        // This should be in a repository via the view model
-
-        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: viewModel.paymentCardId)
-        let method: RequestHTTPMethod = isOn ? .patch : .delete
-
-        let apiManager = ApiManager()
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: PaymentCardModel) in
-            guard let self = self else {
-                return
-            }
-
-            if method == .delete {
-                self.viewModel.removeMembershipCard(membershipCard)
-
+    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, didToggleLinkedState isLinked: Bool, forMembershipCard membershipCard: CD_MembershipCard) {
+        if isLinked {
+            viewModel.linkMembershipCard(withId: membershipCard.id) { [weak self] in
+                guard let self = self else { return }
                 self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel)
-
                 self.linkedCardsTableView.reloadData()
                 Current.wallet.refreshLocal()
-                return
             }
-
-            Current.database.performBackgroundTask { context in
-                let object = response.mapToCoreData(context, .delta, overrideID: nil)
-
-                try? context.save()
-
-                DispatchQueue.main.async {
-                    Current.database.performTask { context in
-                        if let cdPaymentCard = context.fetchWithID(CD_PaymentCard.self, id: object.objectID) {
-                            self.viewModel.setNewPaymentCard(cdPaymentCard)
-                            self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel)
-                            self.linkedCardsTableView.reloadData()
-                            Current.wallet.refreshLocal()
-                        }
-                    }
-                }
+        } else {
+            viewModel.removeLinkToMembershipCard(membershipCard) { [weak self] in
+                guard let self = self else { return }
+                self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel)
+                self.linkedCardsTableView.reloadData()
+                Current.wallet.refreshLocal()
             }
-        }, onError: { [weak self]_ in
-            // reload based on what we already know from the local wallet
-            self?.linkedCardsTableView.reloadData()
-        })
+        }
     }
 }
 

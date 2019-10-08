@@ -9,7 +9,7 @@
 import Foundation
 
 struct LinkedLoyaltyCellViewModel {
-    let membershipCard: CD_MembershipCard
+    private(set) var membershipCard: CD_MembershipCard
     let isLinked: Bool
 
     init(membershipCard: CD_MembershipCard, isLinked: Bool) {

@@ -45,14 +45,14 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="tHm-fr-gba">
                         <rect key="frame" x="101" y="30.5" width="233" height="39"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Co-op" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zjm-hx-fNo">
-                                <rect key="frame" x="0.0" y="0.0" width="233" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zjm-hx-fNo">
+                                <rect key="frame" x="0.0" y="0.0" width="233" height="19.5"/>
                                 <fontDescription key="fontDescription" name="NunitoSans-ExtraBold" family="Nunito Sans" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£3.50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RWx-gs-EDP">
-                                <rect key="frame" x="0.0" y="22" width="233" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RWx-gs-EDP">
+                                <rect key="frame" x="0.0" y="19.5" width="233" height="19.5"/>
                                 <fontDescription key="fontDescription" name="NunitoSans-Light" family="Nunito Sans" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

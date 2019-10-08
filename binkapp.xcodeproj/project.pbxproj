@@ -315,6 +315,7 @@
 		EFF59F19234B73C900CF3992 /* CardDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F17234B73C900CF3992 /* CardDetailInfoTableViewCell.swift */; };
 		EFF59F1A234B73C900CF3992 /* CardDetailInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFF59F18234B73C900CF3992 /* CardDetailInfoTableViewCell.xib */; };
 		EFF59F1C234BC7FF00CF3992 /* LinkedLoyaltyCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F1B234BC7FF00CF3992 /* LinkedLoyaltyCardCellViewModel.swift */; };
+		EFF59F1E234C828900CF3992 /* PaymentCardDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F1D234C828900CF3992 /* PaymentCardDetailRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -679,6 +680,7 @@
 		EFF59F17234B73C900CF3992 /* CardDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
 		EFF59F18234B73C900CF3992 /* CardDetailInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardDetailInfoTableViewCell.xib; sourceTree = "<group>"; };
 		EFF59F1B234BC7FF00CF3992 /* LinkedLoyaltyCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedLoyaltyCardCellViewModel.swift; sourceTree = "<group>"; };
+		EFF59F1D234C828900CF3992 /* PaymentCardDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1422,6 +1424,7 @@
 				EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */,
 				EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */,
 				EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */,
+				EFF59F1D234C828900CF3992 /* PaymentCardDetailRepository.swift */,
 			);
 			path = PaymentCardDetail;
 			sourceTree = "<group>";
@@ -2176,6 +2179,7 @@
 				BDD9C87F233BE6B1003CD616 /* CD_AuthoriseField.swift in Sources */,
 				BDD9C876233BE6B1003CD616 /* CD_MembershipPlanAccount.swift in Sources */,
 				3C2C91012319560C00D112E3 /* InputView.swift in Sources */,
+				EFF59F1E234C828900CF3992 /* PaymentCardDetailRepository.swift in Sources */,
 				B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */,
 				BD01E127231FA3D000D52713 /* AddingOptionsTabBarViewController.swift in Sources */,
 				3C2C90F923191CED00D112E3 /* AddFieldPostModel.swift in Sources */,

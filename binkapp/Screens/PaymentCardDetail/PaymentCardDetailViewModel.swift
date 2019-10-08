@@ -11,10 +11,12 @@ import Foundation
 class PaymentCardDetailViewModel {
     private var paymentCard: CD_PaymentCard
     private let router: MainScreenRouter
+    private let repository: PaymentCardDetailRepository
 
-    init(paymentCard: CD_PaymentCard, router: MainScreenRouter) {
+    init(paymentCard: CD_PaymentCard, router: MainScreenRouter, repository: PaymentCardDetailRepository) {
         self.paymentCard = paymentCard
         self.router = router
+        self.repository = repository
     }
 
     var titleText: String {
@@ -27,10 +29,6 @@ class PaymentCardDetailViewModel {
 
     var paymentCardCellViewModel: PaymentCardCellViewModel {
         return PaymentCardCellViewModel(paymentCard: paymentCard)
-    }
-
-    var paymentCardId: String {
-        return paymentCard.id
     }
 
     var linkableMembershipCards: [CD_MembershipCard]? {
@@ -54,15 +52,33 @@ class PaymentCardDetailViewModel {
         return linkableMembershipCards?[indexPath.row]
     }
 
-    func setNewPaymentCard(_ paymentCard: CD_PaymentCard) {
-        self.paymentCard = paymentCard
+    // MARK: - Repository
+
+    func getLinkedMembershipCards(completion: @escaping () -> Void) {
+        repository.getPaymentCard(forId: paymentCard.id) { [weak self] paymentCard in
+            // If we don't get a payment card back, we'll fail silently by firing the same completion handler anyway.
+            // The completion will always be to reload the views, so we will just see the local data.
+            if let paymentCard = paymentCard {
+                self?.paymentCard = paymentCard
+            }
+
+            completion()
+        }
     }
 
-    func removeMembershipCard(_ membershipCard: CD_MembershipCard) {
-        Current.database.performBackgroundTask { [weak self] context in
-            self?.paymentCard.removeLinkedMembershipCardsObject(membershipCard)
+    func linkMembershipCard(withId membershipCardId: String, completion: @escaping () -> Void) {
+        repository.linkMembershipCard(withId: membershipCardId, toPaymentCardWithId: paymentCard.id) { [weak self] paymentCard in
+            // If we don't get a payment card back, we'll fail silently by firing the same completion handler anyway.
+            // The completion will always be to reload the views, so we will just see the local data.
+            if let paymentCard = paymentCard {
+                self?.paymentCard = paymentCard
+            }
 
-            try? context.save()
+            completion()
         }
+    }
+
+    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
+        repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard, completion: completion)
     }
 }
