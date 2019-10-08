@@ -20,16 +20,16 @@ class PaymentCardDetailRepository {
         let method = RequestHTTPMethod.get
 
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
-            Current.database.performBackgroundTask { context in
-                let object = response.mapToCoreData(context, .update, overrideID: nil)
+            Current.database.performBackgroundTask { backgroundContext in
+                let newObject = response.mapToCoreData(backgroundContext, .update, overrideID: nil)
+                let newObjectId = newObject.id ?? ""
 
-                try? context.save()
+                try? backgroundContext.save()
 
                 DispatchQueue.main.async {
                     Current.database.performTask { context in
-                        if let cdPaymentCard = context.fetchWithID(CD_PaymentCard.self, id: object.objectID) {
-                            completion(cdPaymentCard)
-                        }
+                        let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
+                        completion(fetchedObject)
                     }
                 }
             }
@@ -43,16 +43,17 @@ class PaymentCardDetailRepository {
         let method: RequestHTTPMethod = .patch
 
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
-            Current.database.performBackgroundTask { context in
-                let object = response.mapToCoreData(context, .delta, overrideID: nil)
+            Current.database.performBackgroundTask { backgroundContext in
+                // Should we be using .none here? Only option that works...
+                let newObject = response.mapToCoreData(backgroundContext, .none, overrideID: nil)
+                let newObjectId = newObject.id ?? ""
 
-                try? context.save()
+                try? backgroundContext.save()
 
                 DispatchQueue.main.async {
                     Current.database.performTask { context in
-                        if let cdPaymentCard = context.fetchWithID(CD_PaymentCard.self, id: object.objectID) {
-                            completion(cdPaymentCard)
-                        }
+                        let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
+                        completion(fetchedObject)
                     }
                 }
             }

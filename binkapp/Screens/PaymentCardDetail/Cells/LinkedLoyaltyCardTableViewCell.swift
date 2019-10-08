@@ -10,7 +10,7 @@ import UIKit
 import AlamofireImage
 
 protocol LinkedLoyaltyCardCellDelegate: AnyObject {
-    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, didToggleLinkedState isLinked: Bool, forMembershipCard membershipCard: CD_MembershipCard)
+    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard)
 }
 
 class LinkedLoyaltyCardTableViewCell: UITableViewCell {
@@ -40,7 +40,7 @@ class LinkedLoyaltyCardTableViewCell: UITableViewCell {
     }
 
     @IBAction private func didToggle() {
-        delegate?.linkedLoyaltyCardCell(self, didToggleLinkedState: linkToggle.isOn, forMembershipCard: viewModel.membershipCard)
+        delegate?.linkedLoyaltyCardCell(self, shouldToggleLinkedStateForMembershipCard: viewModel.membershipCard)
     }
     
 }

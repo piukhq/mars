@@ -129,6 +129,12 @@ class PaymentCardDetailViewController: UIViewController {
         }
     }
 
+    private func refreshViews() {
+        self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel)
+        self.linkedCardsTableView.reloadData()
+        Current.wallet.refreshLocal()
+    }
+
 }
 
 extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDelegate {
@@ -173,10 +179,6 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == linkedCardsTableView {
-
-        }
-
         if tableView == informationTableView {
             viewModel.performActionForInformationRow(atIndexPath: indexPath)
         }
@@ -201,21 +203,9 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 }
 
 extension PaymentCardDetailViewController: LinkedLoyaltyCardCellDelegate {
-    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, didToggleLinkedState isLinked: Bool, forMembershipCard membershipCard: CD_MembershipCard) {
-        if isLinked {
-            viewModel.linkMembershipCard(withId: membershipCard.id) { [weak self] in
-                guard let self = self else { return }
-                self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel)
-                self.linkedCardsTableView.reloadData()
-                Current.wallet.refreshLocal()
-            }
-        } else {
-            viewModel.removeLinkToMembershipCard(membershipCard) { [weak self] in
-                guard let self = self else { return }
-                self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel)
-                self.linkedCardsTableView.reloadData()
-                Current.wallet.refreshLocal()
-            }
+    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard) {
+        viewModel.toggleLinkForMembershipCard(membershipCard) { [weak self] in
+            self?.refreshViews()
         }
     }
 }

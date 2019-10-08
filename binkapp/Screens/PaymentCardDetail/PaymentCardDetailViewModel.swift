@@ -72,6 +72,14 @@ class PaymentCardDetailViewModel {
 
     // MARK: - Repository
 
+    func toggleLinkForMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
+        if membershipCardIsLinked(membershipCard) {
+            removeLinkToMembershipCard(membershipCard, completion: completion)
+        } else {
+            linkMembershipCard(withId: membershipCard.id, completion: completion)
+        }
+    }
+
     func getLinkedMembershipCards(completion: @escaping () -> Void) {
         repository.getPaymentCard(forId: paymentCard.id) { [weak self] paymentCard in
             // If we don't get a payment card back, we'll fail silently by firing the same completion handler anyway.
@@ -84,7 +92,7 @@ class PaymentCardDetailViewModel {
         }
     }
 
-    func linkMembershipCard(withId membershipCardId: String, completion: @escaping () -> Void) {
+    private func linkMembershipCard(withId membershipCardId: String, completion: @escaping () -> Void) {
         repository.linkMembershipCard(withId: membershipCardId, toPaymentCardWithId: paymentCard.id) { [weak self] paymentCard in
             // If we don't get a payment card back, we'll fail silently by firing the same completion handler anyway.
             // The completion will always be to reload the views, so we will just see the local data.
@@ -96,7 +104,7 @@ class PaymentCardDetailViewModel {
         }
     }
 
-    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
+    private func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
         repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard, completion: completion)
     }
 }
