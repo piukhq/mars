@@ -55,6 +55,8 @@ private extension LoyaltyCardFullDetailsViewController {
             }
         }
         
+        configureCardDetails(viewModel.paymentCards)
+        
         let aboutInfoTitle = "about_membership_title".localized
         let aboutInfoMessage = "learn_more".localized
         aboutInfoRow.delegate = self
@@ -73,13 +75,9 @@ private extension LoyaltyCardFullDetailsViewController {
         let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
         fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
-        
-        let activityIndicator = UIActivityIndicatorView(style: .gray)
-        cardDetailsStackView.addArrangedSubview(activityIndicator)
-        activityIndicator.startAnimating()
     }
     
-    func configureCardDetails(_ paymentCards: [PaymentCardModel]?) {
+    func configureCardDetails(_ paymentCards: [CD_PaymentCard]?) {
         let pointsModuleView = BinkModuleView()
             pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
             cardDetailsStackView.addArrangedSubview(pointsModuleView)

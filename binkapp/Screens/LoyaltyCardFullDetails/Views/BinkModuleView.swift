@@ -41,7 +41,7 @@ class BinkModuleView: CustomView {
     private var action: BinkModuleAction?
     private weak var delegate: BinkModuleViewDelegate?
     
-    func configure(moduleType:ModuleType, membershipCard: CD_MembershipCard, paymentCards: [PaymentCardModel]? = nil, delegate: BinkModuleViewDelegate? = nil) {
+    func configure(moduleType:ModuleType, membershipCard: CD_MembershipCard, paymentCards: [CD_PaymentCard]? = nil, delegate: BinkModuleViewDelegate? = nil) {
         self.delegate = delegate
         layer.shadowColor = UIColor.black.cgColor
         
@@ -155,7 +155,7 @@ private extension BinkModuleView {
     }
     
     // Configure link module view
-    func configureLinkModule(membershipCard: CD_MembershipCard, paymentCards: [PaymentCardModel]) {
+    func configureLinkModule(membershipCard: CD_MembershipCard, paymentCards: [CD_PaymentCard]) {
         guard let plan = membershipCard.membershipPlan else { return }
         
         guard plan.featureSet?.planCardType == .link else {
@@ -173,13 +173,14 @@ private extension BinkModuleView {
         }
         switch membershipCard.status?.status {
         case .authorised:
-//            let linkedCard = paymentCards.first(where: { $0.activeLink == true})
-//            guard membershipCard.paymentCards?.count ?? 0 == 0, linkedCard == nil else {
-//                // Link module 2.1
-//                let subtitleText = String(format: "link_module_to_number_of_payment_cards_message".localized, membershipCard.paymentCards?.count ?? 0, paymentCards.count)
-//                configure(imageName: "lcdModuleIconsLinkActive", titleText: "card_linked_status".localized, subtitleText: subtitleText, touchAction: .pll)
-//                return
-//            }
+            let posiblyLinkedCard = paymentCards.first(where: { ($0 as CD_PaymentCard)?.linkedMembershipCards.count ?? > 0})
+            let linkedCard = posiblyLinkedCard.f
+            guard membershipCard.linkedPaymentCards.count == 0, linkedCard == nil else {
+                // Link module 2.1
+                let subtitleText = String(format: "link_module_to_number_of_payment_cards_message".localized, membershipCard.paymentCards?.count ?? 0, paymentCards.count)
+                configure(imageName: "lcdModuleIconsLinkActive", titleText: "card_linked_status".localized, subtitleText: subtitleText, touchAction: .pll)
+                return
+            }
             if paymentCards.count == 0 {
                 // Link module 2.2
                 configure(imageName: "lcdModuleIconsLinkError", titleText: "card_link_status".localized, subtitleText: "link_module_to_payment_cards_message".localized, touchAction: .pllEmpty)
