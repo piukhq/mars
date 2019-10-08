@@ -197,6 +197,9 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if viewModel.pllEnabledMembershipCardsCount == 0 {
+            return 0.0
+        }
         return tableView == linkedCardsTableView ? 0.5 : 0.0
     }
 }
