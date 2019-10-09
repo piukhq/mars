@@ -100,6 +100,7 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
                 let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdAddField = field.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdAddField, \.planAccount, with: cdObject, delta: delta)
+                update(cdAddField, \.order, with: NSNumber(value: index), delta: delta)
                 cdObject.addAddFieldsObject(cdAddField)
             }
         }
@@ -114,6 +115,7 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
                 let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdAuthField = field.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdAuthField, \.planAccount, with: cdObject, delta: delta)
+                update(cdAuthField, \.order, with: NSNumber(value: index), delta: delta)
                 cdObject.addAuthoriseFieldsObject(cdAuthField)
             }
         }
@@ -128,6 +130,7 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
                 let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdRegField = field.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdRegField, \.planAccount, with: cdObject, delta: delta)
+                update(cdRegField, \.order, with: NSNumber(value: index), delta: delta)
                 cdObject.addRegistrationFieldsObject(cdRegField)
             }
         }
@@ -142,6 +145,7 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
                 let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdEnrolField = field.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdEnrolField, \.planAccount, with: cdObject, delta: delta)
+                update(cdEnrolField, \.order, with: NSNumber(value: index), delta: delta)
                 cdObject.addEnrolFieldsObject(cdEnrolField)
             }
         }
