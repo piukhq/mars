@@ -3,6 +3,7 @@
     <entity name="CD_AddField" representedClassName="CD_AddField" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="column" optional="YES" attributeType="String"/>
         <attribute name="fieldDescription" optional="YES" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="validation" optional="YES" attributeType="String"/>
         <relationship name="choices" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_FieldChoice" inverseName="addField" inverseEntity="CD_FieldChoice"/>
@@ -16,6 +17,7 @@
     <entity name="CD_AuthoriseField" representedClassName="CD_AuthoriseField" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="column" optional="YES" attributeType="String"/>
         <attribute name="fieldDescription" optional="YES" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="validation" optional="YES" attributeType="String"/>
         <relationship name="choices" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_FieldChoice" inverseName="authoriseField" inverseEntity="CD_FieldChoice"/>
@@ -41,6 +43,7 @@
     <entity name="CD_EnrolField" representedClassName="CD_EnrolField" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="column" optional="YES" attributeType="String"/>
         <attribute name="fieldDescription" optional="YES" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="validation" optional="YES" attributeType="String"/>
         <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="enrolFields" inverseEntity="CD_MembershipPlanAccount"/>
@@ -192,6 +195,7 @@
     <entity name="CD_RegistrationField" representedClassName="CD_RegistrationField" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="column" optional="YES" attributeType="String"/>
         <attribute name="fieldDescription" optional="YES" attributeType="String"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="registrationFields" inverseEntity="CD_MembershipPlanAccount"/>
     </entity>
@@ -201,13 +205,13 @@
         <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="tiers" inverseEntity="CD_MembershipPlanAccount"/>
     </entity>
     <elements>
-        <element name="CD_AddField" positionX="-9" positionY="117" width="128" height="133"/>
+        <element name="CD_AddField" positionX="-9" positionY="117" width="128" height="148"/>
         <element name="CD_App" positionX="0" positionY="126" width="128" height="88"/>
-        <element name="CD_AuthoriseField" positionX="9" positionY="135" width="128" height="133"/>
+        <element name="CD_AuthoriseField" positionX="9" positionY="135" width="128" height="148"/>
         <element name="CD_Balance" positionX="18" positionY="144" width="128" height="118"/>
         <element name="CD_BaseObject" positionX="9" positionY="153" width="128" height="58"/>
         <element name="CD_Card" positionX="-9" positionY="81" width="128" height="118"/>
-        <element name="CD_EnrolField" positionX="27" positionY="153" width="128" height="118"/>
+        <element name="CD_EnrolField" positionX="27" positionY="153" width="128" height="133"/>
         <element name="CD_FeatureSet" positionX="27" positionY="153" width="128" height="148"/>
         <element name="CD_FieldChoice" positionX="0" positionY="144" width="128" height="88"/>
         <element name="CD_LinkingSupport" positionX="-9" positionY="135" width="128" height="73"/>
@@ -227,7 +231,7 @@
         <element name="CD_PaymentCardCard" positionX="0" positionY="144" width="128" height="193"/>
         <element name="CD_PlanDocument" positionX="36" positionY="162" width="128" height="118"/>
         <element name="CD_ReasonCode" positionX="-9" positionY="135" width="128" height="73"/>
-        <element name="CD_RegistrationField" positionX="45" positionY="171" width="128" height="103"/>
+        <element name="CD_RegistrationField" positionX="45" positionY="171" width="128" height="118"/>
         <element name="CD_Tier" positionX="-9" positionY="117" width="128" height="88"/>
     </elements>
 </model>
