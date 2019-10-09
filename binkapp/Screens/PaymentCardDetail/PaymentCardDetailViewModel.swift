@@ -23,6 +23,14 @@ class PaymentCardDetailViewModel {
 
     // MARK: - Header views
 
+    var navigationViewTitleText: String {
+        return paymentCard.card?.nameOnCard ?? ""
+    }
+
+    var navigationViewDetailText: String {
+        return "•••• \(paymentCard.card?.lastFour ?? "")"
+    }
+
     var titleText: String {
         return "Linked cards"
     }

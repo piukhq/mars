@@ -127,6 +127,8 @@ extension AddPaymentCardViewController: PaymentTermsAndConditionsViewControllerD
         addButton.startLoading()
         viewModel.addPaymentCard { [weak self] success in
             if success {
+                // TODO: Do we still need this now we have the wallet in World?
+                // Move this to view model, and use the router and reload from Current.wallet
                 NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
                 self?.viewModel.popToRootViewController()
             } else {
@@ -148,7 +150,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
         if let type = viewModel.paymentCardType,
             let newValue = newValue,
             let text = textField.text,
-            field.fieldType == .cardNumber  {
+            field.fieldType == .cardNumber {
             
             /*
              Potentially "needlessly" complex, but the below will insert whitespace to format card numbers correctly according

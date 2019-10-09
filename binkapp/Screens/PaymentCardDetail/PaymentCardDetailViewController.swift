@@ -86,6 +86,7 @@ class PaymentCardDetailViewController: UIViewController {
         informationTableView.delegate = self
         informationTableView.dataSource = self
 
+        stackScrollView.delegate = self
         stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: 30)
         stackScrollView.add(arrangedSubviews: [titleLabel, descriptionLabel, linkedCardsTableView, informationTableView])
 
@@ -218,6 +219,18 @@ extension PaymentCardDetailViewController: CardDetailInformationRowFactoryDelega
         case .deletePaymentCard:
             viewModel.deletePaymentCard()
         }
+    }
+}
+
+// MARK: - Navigation title scrolling behaviour
+
+extension PaymentCardDetailViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let titleView: DetailNavigationTitleView = .fromNib()
+        titleView.configureWithTitle(viewModel.navigationViewTitleText, detail: viewModel.navigationViewDetailText)
+
+        let offset: CGFloat = 44 + 20 + 20 + 60
+        navigationItem.titleView = scrollView.contentOffset.y > 108 - offset ? titleView : nil
     }
 }
 
