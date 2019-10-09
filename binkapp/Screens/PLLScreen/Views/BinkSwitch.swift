@@ -7,27 +7,37 @@
 //
 
 import UIKit
+@IBDesignable
 
 class BinkSwitch: UISwitch {
+    @IBInspectable var OffTint: UIColor? {
+        didSet {
+            self.tintColor = OffTint
+            self.layer.cornerRadius = 16
+            self.backgroundColor = OffTint
+        }
+    }
+}
+
+
+private extension BinkSwitch {
+    func setGradientLayer() {
+        let backgroundGradientLayer = CAGradientLayer()
+        backgroundGradientLayer.frame = bounds
+        backgroundGradientLayer.colors = UIColor.binkSwitchGradients
+        backgroundGradientLayer.locations = [0.0, 1.0]
+        backgroundGradientLayer.cornerRadius = self.frame.size.height / 2
+        backgroundGradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
+        backgroundGradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+        layer.insertSublayer(backgroundGradientLayer, at: 0)
+    }
     
-//    override var onTintColor: UIColor? {
-//        didSet {
-//            onTintColor = gradientColor()
-//        }
-//    }
-//
-//    func gradientColor() -> UIColor? {
-//        let gradient = CAGradientLayer()
-//        gradient.frame = frame
-//        let colors = [UIColor.binkPurple.cgColor, UIColor.blueAccent.cgColor]
-//        gradient.colors = colors
-//
-//        UIGraphicsBeginImageContext(gradient.bounds.size)
-//        gradient.render(in: UIGraphicsGetCurrentContext()!)
-//        let bacgroundimage = UIGraphicsGetImageFromCurrentImageContext()!
-//        UIGraphicsEndImageContext()
-//        layer.insertSublayer(gradient, at: 0)
-//
-//        return UIColor(patternImage: bacgroundimage)
-//    }
+    func removeGradientLayer(){
+        if let sublayers = layer.sublayers, sublayers.count > 1 {
+            for layer in sublayers {
+                layer.removeFromSuperlayer()
+                break
+            }
+        }
+    }
 }

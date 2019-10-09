@@ -14,6 +14,16 @@ class PaymentCardCell: UITableViewCell {
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var switchButton: UISwitch!
     
+    private var backgroundGradientLayer = CAGradientLayer()
+    
+    override func layoutSubviews() {
+        backgroundGradientLayer.frame = switchButton.bounds
+        backgroundGradientLayer.colors = UIColor.binkSwitchGradients
+        backgroundGradientLayer.locations = [0.0, 1.0]
+        backgroundGradientLayer.cornerRadius = switchButton.frame.size.height / 2
+        backgroundGradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
+        backgroundGradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+    }
     
     func configureUI(paymentCard: CD_PaymentCard) {
 //        paymentCardImageView.image = paymentCard.
@@ -23,23 +33,11 @@ class PaymentCardCell: UITableViewCell {
 //        switchButton.onTintColor = binkGradientColor
 //        switchButton.tintColor = .gray//
     }
-    
-//    func colorWithGradient(frame: CGRect, colors: [UIColor]) -> UIColor {
-//        
-//        // create the background layer that will hold the gradient
-//        let backgroundGradientLayer = CAGradientLayer()
-//        backgroundGradientLayer.frame = frame
-//         
-//        // we create an array of CG colors from out UIColor array
-//        let cgColors = colors.map({$0.cgColor})
-//        
-//        backgroundGradientLayer.colors = cgColors
-//        
-//        UIGraphicsBeginImageContext(backgroundGradientLayer.bounds.size)
-//        backgroundGradientLayer.render(in: UIGraphicsGetCurrentContext()!)
-//        let backgroundColorImage = UIGraphicsGetImageFromCurrentImageContext()!
-//        UIGraphicsEndImageContext()
-//        
-//        return UIColor(patternImage: backgroundColorImage)
-//    }
+    @IBAction func switchDidChangeValue(_ sender: UISwitch) {
+        if sender.isOn {
+            switchButton.layer.insertSublayer(backgroundGradientLayer, at: 0)
+        } else {
+            backgroundGradientLayer.removeFromSuperlayer()
+        }
+    }
 }

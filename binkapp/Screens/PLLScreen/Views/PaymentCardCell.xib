@@ -46,6 +46,14 @@
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YAq-on-9dQ" customClass="BinkSwitch" customModule="binkapp" customModuleProvider="target">
                         <rect key="frame" x="311" y="36" width="51" height="28"/>
                         <color key="onTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="OffTint">
+                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="switchDidChangeValue:" destination="KGk-i7-Jjw" eventType="valueChanged" id="fxG-tb-EhC"/>
+                        </connections>
                     </switch>
                 </subviews>
                 <constraints>
