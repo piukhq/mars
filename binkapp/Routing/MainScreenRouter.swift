@@ -140,27 +140,35 @@ class MainScreenRouter {
     }
     
     func toPaymentTermsAndConditionsViewController(delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
-        let screenText = "terms_and_conditions_title".localized + "\n" + "lorem_ipsum".localized
+        let title = "terms_and_conditions_title".localized
+        let screenText = title + "\n" + "lorem_ipsum".localized
         
         let attributedText = NSMutableAttributedString(string: screenText)
         
         attributedText.addAttribute(
             NSAttributedString.Key.font,
             value: UIFont.headline,
-            range: NSRange(location: 0, length: ("terms_and_conditions_title".localized).count)
+            range: NSRange(location: 0, length: title.count)
         )
         
         attributedText.addAttribute(
             NSAttributedString.Key.font,
             value: UIFont.bodyTextLarge,
-            range: NSRange(location: ("terms_and_conditions_title".localized).count, length: ("lorem_ipsum".localized).count)
+            range: NSRange(location: title.count, length: ("lorem_ipsum".localized).count)
         )
         
-        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: nil)
+        let configurationModel = ReusableModalConfiguration(title: title, text: attributedText, primaryButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: nil)
         let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, delegate: delegate)
+        let navigationController = PortraitNavigationController(rootViewController: viewController)
+        
+        // This is to stop dismissal of the card style presentation
+        if #available(iOS 13, *) {
+            navigationController.isModalInPresentation = true
+        }
+        
         viewController.delegate = delegate
-        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
+        navController?.present(navigationController, animated: true, completion: nil)
     }
     
     func toPrivacyAndSecurityViewController() {
