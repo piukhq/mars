@@ -16,10 +16,10 @@ class PaymentCardDetailViewController: UIViewController {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .white
-        stackView.margin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        stackView.margin = LayoutHelper.PaymentCardDetail.stackScrollViewMargins
         stackView.distribution = .fill
         stackView.alignment = .center
-        stackView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
         view.addSubview(stackView)
         return stackView
     }()
@@ -165,9 +165,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
             cell.configureWithViewModel(cellViewModel, delegate: self)
 
             return cell
-        }
-
-        if tableView == informationTableView {
+        } else { // This will always be the information table view
             let cell: CardDetailInfoTableViewCell = tableView.dequeue(indexPath: indexPath)
 
             let informationRow = viewModel.informationRow(forIndexPath: indexPath)
@@ -175,8 +173,6 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
             return cell
         }
-        
-        return UITableViewCell()
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -229,8 +225,8 @@ extension PaymentCardDetailViewController: UIScrollViewDelegate {
         let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.navigationViewTitleText, detail: viewModel.navigationViewDetailText)
 
-        let offset: CGFloat = 44 + 20 + 20 + 60
-        navigationItem.titleView = scrollView.contentOffset.y > 108 - offset ? titleView : nil
+        let offset = LayoutHelper.PaymentCardDetail.navBarTitleViewScrollOffset(withNavigationBar: navigationController?.navigationBar)
+        navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
     }
 }
 
@@ -243,5 +239,18 @@ class NestedTableView: UITableView {
 
     override var intrinsicContentSize: CGSize {
         return contentSize
+    }
+}
+
+extension LayoutHelper {
+    struct PaymentCardDetail {
+        static func navBarTitleViewScrollOffset(withNavigationBar navigationBar: UINavigationBar?) -> CGFloat {
+            let stackScrollViewInitialOffset: CGFloat = 108
+            let desiredOffset = LayoutHelper.statusBarHeight + LayoutHelper.heightForNavigationBar(navigationBar) + stackScrollViewContentInsets.top + (LayoutHelper.WalletDimensions.cardSize.height / 2)
+            return stackScrollViewInitialOffset - desiredOffset
+        }
+
+        static let stackScrollViewMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        static let stackScrollViewContentInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     }
 }

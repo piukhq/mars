@@ -181,7 +181,13 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
         let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
 
-        let offset: CGFloat = 100
+        let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
         navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
+    }
+}
+
+extension LayoutHelper {
+    struct LoyaltyCardDetail {
+        static let navBarTitleViewScrollOffset: CGFloat = 100
     }
 }
