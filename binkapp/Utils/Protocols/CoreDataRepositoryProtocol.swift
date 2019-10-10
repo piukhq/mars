@@ -54,7 +54,7 @@ extension CoreDataRepositoryProtocol {
     func fetchCoreDataObjects<T: NSManagedObject>(forObjectType objectType: T.Type, completion: @escaping ([T]?) -> Void) {
         DispatchQueue.main.async {
             Current.database.performTask { context in
-                let objects = context.fetchAll(objectType)
+                let objects = context.fetchAll(objectType, sorting: [NSSortDescriptor(key: "id", ascending: false)])
                 completion(objects)
             }
         }
