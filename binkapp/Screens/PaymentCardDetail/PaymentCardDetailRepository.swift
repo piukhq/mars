@@ -22,7 +22,9 @@ class PaymentCardDetailRepository {
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask { backgroundContext in
                 let newObject = response.mapToCoreData(backgroundContext, .update, overrideID: nil)
-                let newObjectId = newObject.id ?? ""
+                guard let newObjectId = newObject.id else {
+                    fatalError("Failed to get the id from the new object.")
+                }
 
                 try? backgroundContext.save()
 
@@ -64,9 +66,12 @@ class PaymentCardDetailRepository {
 
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask { backgroundContext in
-                // Should we be using .none here? Only option that works...
+                // TODO: Should we be using .none here? Only option that works...
+                // It's functional but we're not sure why it doesn't work otherwise and that is concerning.
                 let newObject = response.mapToCoreData(backgroundContext, .none, overrideID: nil)
-                let newObjectId = newObject.id ?? ""
+                guard let newObjectId = newObject.id else {
+                    fatalError("Failed to get the id from the new object.")
+                }
 
                 try? backgroundContext.save()
 
