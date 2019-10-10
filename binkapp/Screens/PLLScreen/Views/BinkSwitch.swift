@@ -15,6 +15,8 @@ class BinkSwitch: UISwitch {
         didSet {
             if isOn {
                 setGradientLayer()
+            } else {
+                removeGradientLayer()
             }
         }
     }

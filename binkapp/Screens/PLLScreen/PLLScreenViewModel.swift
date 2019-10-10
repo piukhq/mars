@@ -21,7 +21,7 @@ class PLLScreenViewModel {
         return true
     }
     
-    init(membershipCard: CD_MembershipCard, membershipPlan: CD_MembershipPlan, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard, membershipPlan: CD_MembershipPlan, repository: PLLScreenRepository, router: MainScreenRouter) {
         self.membershipCard = membershipCard
         self.membershipPlan = membershipPlan
         self.router = router
@@ -30,7 +30,11 @@ class PLLScreenViewModel {
     // MARK:  - Public methods
     
     func getMembershipPlan() -> CD_MembershipPlan {
-        return membershipCard.membershipPlan!
+        return membershipCard.membershipPlan ?? CD_MembershipPlan()
+    }
+    
+    func getMembershipCard() -> CD_MembershipCard {
+        return membershipCard
     }
     
     func displaySimplePopup(title: String, message: String) {

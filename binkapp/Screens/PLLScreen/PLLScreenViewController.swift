@@ -51,6 +51,7 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 
 extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+        // TODO: make the call here for patch or delete
         viewModel.toFullDetailsCardScreen()
     }
     
@@ -72,7 +73,7 @@ extension PLLScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PaymentCardCell", for: indexPath) as! PaymentCardCell
         if let paymentCard = viewModel.paymentCards?[indexPath.row] {
-            cell.configureUI(paymentCard: paymentCard)
+            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, delegate: self)
         }
         return cell
     }
@@ -101,6 +102,13 @@ private extension PLLScreenViewController {
         paymentCardsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonsView.frame.size.height, right: 0)
         viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: "Add payment cards") : floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: nil)
     }
-    
+}
+
+// MARK: - PaymentCardCellDelegate
+
+extension PLLScreenViewController: PaymentCardCellDelegate {
+    func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, isOn: Bool) {
+
+    }
 }
 
