@@ -63,6 +63,9 @@
 "popular_title" = "Popular";
 "all_title" = "All";
 
+"pll_screen_add_title" = "Add card";
+"pll_screen_link_message" = "The payment cards below will be linked to this loyalty card. Simply pay with them to collect points.";
+"pll_screen_card_ending" = "Card ending in ";
 "delete_card_confirmation" = "Are you sure you want to delete this card?";
 "yes" = "Yes";
 "no" = "No";

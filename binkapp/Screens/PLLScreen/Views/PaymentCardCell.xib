@@ -44,7 +44,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YAq-on-9dQ" customClass="BinkSwitch" customModule="binkapp" customModuleProvider="target">
-                        <rect key="frame" x="311" y="36" width="51" height="28"/>
+                        <rect key="frame" x="311" y="34.5" width="51" height="31"/>
                         <color key="onTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="OffTint">
@@ -57,6 +57,7 @@
                     </switch>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="YAq-on-9dQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="8EC-yh-bB2"/>
                     <constraint firstItem="YAq-on-9dQ" firstAttribute="leading" secondItem="agI-cI-K6A" secondAttribute="trailing" constant="12" id="CcO-xk-WF0"/>
                     <constraint firstItem="Bgy-ha-qvh" firstAttribute="leading" secondItem="h7g-va-knt" secondAttribute="trailing" constant="12" id="Kdd-Yj-i7w"/>
                     <constraint firstItem="h7g-va-knt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="LCW-1t-HsT"/>
@@ -65,8 +66,6 @@
                     <constraint firstItem="agI-cI-K6A" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="VD8-lg-Plx"/>
                     <constraint firstAttribute="trailing" secondItem="YAq-on-9dQ" secondAttribute="trailing" constant="5" id="YvW-0w-g7X"/>
                     <constraint firstItem="YAq-on-9dQ" firstAttribute="leading" secondItem="Bgy-ha-qvh" secondAttribute="trailing" constant="12" id="Z1w-Ng-778"/>
-                    <constraint firstItem="YAq-on-9dQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="36" id="ZwQ-bL-4po"/>
-                    <constraint firstAttribute="bottom" secondItem="YAq-on-9dQ" secondAttribute="bottom" constant="36" id="sfr-Om-8L1"/>
                     <constraint firstItem="Bgy-ha-qvh" firstAttribute="top" secondItem="agI-cI-K6A" secondAttribute="bottom" constant="1" id="tV4-co-t04"/>
                     <constraint firstAttribute="bottom" secondItem="h7g-va-knt" secondAttribute="bottom" constant="18" id="zb2-d7-J13"/>
                 </constraints>

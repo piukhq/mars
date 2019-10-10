@@ -7,37 +7,26 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class PaymentCardCell: UITableViewCell {
     @IBOutlet private weak var paymentCardImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var switchButton: UISwitch!
-    
-    private var backgroundGradientLayer = CAGradientLayer()
-    
-    override func layoutSubviews() {
-        backgroundGradientLayer.frame = switchButton.bounds
-        backgroundGradientLayer.colors = UIColor.binkSwitchGradients
-        backgroundGradientLayer.locations = [0.0, 1.0]
-        backgroundGradientLayer.cornerRadius = switchButton.frame.size.height / 2
-        backgroundGradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
-        backgroundGradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
-    }
-    
+    @IBOutlet private weak var switchButton: BinkSwitch!
+        
     func configureUI(paymentCard: CD_PaymentCard) {
-//        paymentCardImageView.image = paymentCard.
-//        titleLabel.text = title
-//        subtitleLabel.text = subtitle
-//        let binkGradientColor = colorWithGradient(frame: switchButton.frame, colors: [.binkPurple, .blueAccent])
-//        switchButton.onTintColor = binkGradientColor
-//        switchButton.tintColor = .gray//
-    }
-    @IBAction func switchDidChangeValue(_ sender: UISwitch) {
-        if sender.isOn {
-            switchButton.layer.insertSublayer(backgroundGradientLayer, at: 0)
-        } else {
-            backgroundGradientLayer.removeFromSuperlayer()
+        if let imageUrlString = paymentCard.imagesArray.first?.url {
+            guard let imageUrl = URL(string: imageUrlString) else { return }
+            paymentCardImageView.af_setImage(withURL: imageUrl)
         }
+        titleLabel.text = paymentCard.card?.nameOnCard
+        subtitleLabel.text = "pll_screen_card_ending".localized + (paymentCard.card?.lastFour ?? "")
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func switchDidChangeValue(_ sender: BinkSwitch) {
+        switchButton.isGradientVisible = sender.isOn
     }
 }

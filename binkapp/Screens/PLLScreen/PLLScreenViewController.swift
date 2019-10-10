@@ -98,6 +98,7 @@ private extension PLLScreenViewController {
         primaryMessageLabel.text = viewModel.isEmptyPll ? "pll_screen_link_message".localized : "pll_screen_link_message".localized
         secondaryMesageLabel.isHidden = viewModel.isEmptyPll
         paymentCardsTableView.isHidden = viewModel.isEmptyPll
+        paymentCardsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonsView.frame.size.height, right: 0)
         viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: "Add payment cards") : floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: nil)
     }
     
