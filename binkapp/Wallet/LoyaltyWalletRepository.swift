@@ -10,15 +10,13 @@ import Foundation
 import CoreData
 
 struct LoyaltyWalletRepository: WalletRepository {
-    typealias T = CD_MembershipCard
-
     private let apiManager: ApiManager
 
     init(apiManager: ApiManager) {
         self.apiManager = apiManager
     }
 
-    func delete(_ card: CD_MembershipCard, completion: @escaping () -> Void) {
+    func delete<T: WalletCard>(_ card: T, completion: @escaping () -> Void) {
         // Process the backend delete, but fail silently
         let url = RequestURL.deleteMembershipCard(cardId: card.id)
         let method = RequestHTTPMethod.delete
@@ -29,7 +27,7 @@ struct LoyaltyWalletRepository: WalletRepository {
             if let cardToDelete = cardToDelete {
                 context.delete(cardToDelete)
             }
-            
+
             try? context.save()
 
             DispatchQueue.main.async {
