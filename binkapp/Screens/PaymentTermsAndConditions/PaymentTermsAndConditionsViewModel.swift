@@ -17,12 +17,12 @@ class PaymentTermsAndConditionsViewModel: ReusableModalViewModel {
     override var secondaryButtonTitle: String? {
         return "decline".localized
     }
-    
-    override func mainButtonWasTapped() {
-        router.displaySimplePopup(title: "error".localized, message: "to_be_implemented_message".localized)
+        
+    override func mainButtonWasTapped(completion: (() -> Void)? = nil) {
+        router.dismissViewController(completion: completion)
     }
     
     override func secondaryButtonWasTapped() {
-        router.popViewController()
+        router.dismissViewController()
     }
 }

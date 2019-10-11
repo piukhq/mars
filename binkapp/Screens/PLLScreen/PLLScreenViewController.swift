@@ -50,13 +50,12 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
     }
 }
 
-// MARK: - Private methods
+    // MARK: - Private methods
 
 private extension PLLScreenViewController {
     func configureBrandHeader() {
         let membershipPlan = viewModel.getMembershipPlan()
-        let imageUrlString = membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue })?.url
-        brandHeaderView.configure(imageURLString: imageUrlString, loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
+        brandHeaderView.configure(imageURLString: membershipPlan.firstIconImage()?.url, loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
     }
 }
 

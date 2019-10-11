@@ -8,15 +8,15 @@
 import UIKit
 
 class AddOrJoinViewModel {
-    private let membershipPlan: MembershipPlanModel
+    private let membershipPlan: CD_MembershipPlan
     private let router: MainScreenRouter
     
-    init(membershipPlan: MembershipPlanModel, router: MainScreenRouter) {
+    init(membershipPlan: CD_MembershipPlan, router: MainScreenRouter) {
         self.membershipPlan = membershipPlan
         self.router = router
     }
     
-    func getMembershipPlan() -> MembershipPlanModel {
+    func getMembershipPlan() -> CD_MembershipPlan {
         return membershipPlan
     }
     

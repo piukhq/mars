@@ -8,13 +8,31 @@
 import UIKit
 import NotificationCenter
 
-class AuthAndAddViewController: UIViewController {
-    @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var brandHeaderView: BrandHeaderView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var fieldsStackView: UIStackView!
-    @IBOutlet private weak var loginButton: BinkGradientButton!
+class AuthAndAddViewController: BaseFormViewController {    
+    private struct Constants {
+        static let buttonWidthPercentage: CGFloat = 0.75
+        static let buttonHeight: CGFloat = 52.0
+        static let postCollectionViewPadding: CGFloat = 15.0
+        static let cardPadding: CGFloat = 30.0
+        static let bottomButtonPadding: CGFloat = 78.0
+    }
+    
+    private lazy var brandHeaderView: BrandHeaderView = {
+        let brandHeader = BrandHeaderView()
+        brandHeader.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        return brandHeader
+    }()
+
+    private lazy var loginButton: BinkGradientButton = {
+        let button = BinkGradientButton(frame: .zero)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Login", for: .normal)
+        button.titleLabel?.font = UIFont.buttonText
+        button.addTarget(self, action: .loginButtonTapped, for: .touchUpInside)
+        button.isEnabled = false
+        view.addSubview(button)
+        return button
+    }()
     
     private let viewModel: AuthAndAddViewModel
     private var isKeyboardOpen = false
@@ -23,7 +41,9 @@ class AuthAndAddViewController: UIViewController {
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: "AuthAndAddViewController", bundle: Bundle(for: AuthAndAddViewController.self))
+        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan())
+        super.init(title: "Log in", description: "", dataSource: datasource)
+        dataSource.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,6 +54,8 @@ class AuthAndAddViewController: UIViewController {
         super.viewDidLoad()
         setNavigationBar()
         configureUI()
+        configureLayout()
+        stackScrollView.insert(arrangedSubview: brandHeaderView, atIndex: 0, customSpacing: Constants.cardPadding)
     }
     
     func setNavigationBar() {
@@ -47,10 +69,21 @@ class AuthAndAddViewController: UIViewController {
         navigationItem.setHidesBackButton(false, animated: true)
     }
     
+    // MARK: - Layout
+    
+    func configureLayout() {
+        NSLayoutConstraint.activate([
+            loginButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: Constants.buttonWidthPercentage),
+            loginButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.bottomButtonPadding),
+            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            ])
+    }
+    
     func configureUI() {
         let membershipPlan = viewModel.getMembershipPlan()
         
-        brandHeaderView.configure(imageURLString: ((membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue})?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
+        brandHeaderView.configure(imageURLString: ((membershipPlan.firstIconImage()?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
         
         titleLabel.text = viewModel.title
         titleLabel.font = UIFont.headline
@@ -61,6 +94,11 @@ class AuthAndAddViewController: UIViewController {
         
         loginButton.setTitle(viewModel.buttonTitle, for: .normal)
         
+        if let planName = membershipPlan.account?.planName {
+            descriptionLabel.text = String(format: "auth_screen_description".localized, planName)
+            descriptionLabel.font = UIFont.bodyTextLarge
+            descriptionLabel.isHidden = false
+        }
         populateStackViewWithFields()
     }
     
@@ -158,13 +196,19 @@ class AuthAndAddViewController: UIViewController {
     @objc func popToRootScreen() {
         viewModel.popToRootViewController()
     }
+        
+    @objc func loginButtonTapped() {
+        viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
+    }
     
-    @IBAction func loginButtonAction(_ sender: Any) {
-        if viewModel.allFieldsAreValid() {
-            viewModel.addMembershipCard()
-        } else {
-            print("Not all fields are valid")
-        }
+    override func formValidityUpdated(fullFormIsValid: Bool) {
+        loginButton.isEnabled = fullFormIsValid
+    }
+}
+
+extension AuthAndAddViewController: FormDataSourceDelegate {
+    func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
+        return true
     }
 }
 
@@ -174,16 +218,8 @@ extension AuthAndAddViewController: LoyaltyButtonDelegate {
     }
 }
 
-extension AuthAndAddViewController: LoginTextFieldDelegate {
-    func loginTextFieldView(_ loginTextFieldView: LoginTextFieldView, didCompleteWithColumn column: String, value: String, fieldType: FieldType) {
-        viewModel.addFieldToCard(column: column, value: value, fieldType: fieldType)
-    }
-}
-
-extension AuthAndAddViewController: DropdownDelegate {
-    func dropdownView(_ dropdownView: DropdownView, didSetDataWithColumn column: String, value: String, fieldType: FieldType) {
-        viewModel.addFieldToCard(column: column, value: value, fieldType: fieldType)
-    }
+private extension Selector {
+    static let loginButtonTapped = #selector(AuthAndAddViewController.loginButtonTapped)
 }
 
 extension AuthAndAddViewController: CheckboxViewDelegate {

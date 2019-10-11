@@ -18,3 +18,4 @@ struct AccountPostModel: Codable {
         case enrolFields = "enrol_fields"
     }
 }
+

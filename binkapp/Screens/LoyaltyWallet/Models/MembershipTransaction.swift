@@ -6,30 +6,36 @@
 //
 
 import Foundation
+import CoreData
 
 struct MembershipTransaction: Codable {
-    let id: Int?
+    let apiId: Int?
     let status: String?
     let timestamp: Double?
-    let description : String?
+    let transactionDescription: String?
     let amounts: [MembershipCardAmount]?
-    
-    enum CodingKeys: String, CodingKey {
-        
-        case id = "id"
-        case status = "status"
-        case timestamp = "timestamp"
-        case description = "description"
-        case amounts = "amounts"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decodeIfPresent(Int.self, forKey: .id)
-        status = try values.decodeIfPresent(String.self, forKey: .status)
-        timestamp = try values.decodeIfPresent(Double.self, forKey: .timestamp)
-        description = try values.decodeIfPresent(String.self, forKey: .description)
-        amounts = try values.decodeIfPresent([MembershipCardAmount].self, forKey: .amounts)
-    }
-    
 }
+extension MembershipTransaction: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_MembershipTransaction, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipTransaction {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.status, with: status, delta: delta)
+        update(cdObject, \.timestamp, with: NSNumber(value: timestamp ?? 0.0), delta: delta)
+
+        cdObject.amounts.forEach {
+            guard let amount = $0 as? CD_MembershipCardAmount else { return }
+            context.delete(amount)
+        }
+        
+        if let amounts = amounts {
+            for (index, amount) in amounts.enumerated() {
+                let indexID = MembershipCardModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdAmount = amount.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdAmount, \.transaction, with: cdObject, delta: delta)
+                cdObject.addAmountsObject(cdAmount)
+            }
+        }
+
+        return cdObject
+    }
+}
+

@@ -18,13 +18,13 @@ class LoyaltyPlanView: CustomView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    func configure(for planType: PlanType, cardType: FeatureSetModel.PlanCardType) {
+    func configure(for planType: PlanType, cardType: CD_FeatureSet.PlanCardType) {
         configureIcon(for: planType, cardType: cardType)
         configureTitle(for: planType)
         configureDescription(for: planType, cardType: cardType)
     }
     
-    private func configureIcon(for planType: PlanType, cardType: FeatureSetModel.PlanCardType) {
+    private func configureIcon(for planType: PlanType, cardType: CD_FeatureSet.PlanCardType) {
         switch planType {
         case .storeCell: iconImageView.image = UIImage(named: "activeStore")
         case .viewCell:
@@ -50,7 +50,7 @@ class LoyaltyPlanView: CustomView {
         }
     }
     
-    private func configureDescription(for planType: PlanType, cardType: FeatureSetModel.PlanCardType) {
+    private func configureDescription(for planType: PlanType, cardType: CD_FeatureSet.PlanCardType) {
         switch planType {
             case .storeCell:
             descriptionLabel.text = "add_join_screen_store_description".localized

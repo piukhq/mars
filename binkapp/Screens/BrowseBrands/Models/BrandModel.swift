@@ -8,8 +8,7 @@
 import UIKit
 
 struct BrandModel {
-    let id: Int
+    let apiId: Int?
     let logo: UIImage
     let brandName: String
-    
 }

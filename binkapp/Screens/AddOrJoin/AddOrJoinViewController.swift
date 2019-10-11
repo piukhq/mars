@@ -53,7 +53,7 @@ class AddOrJoinViewController: UIViewController {
     func configureUI() {
         let membershipPlan = viewModel.getMembershipPlan()
         
-        brandHeaderView.configure(imageURLString: ((membershipPlan.images?.first(where: { $0.type == ImageType.icon.rawValue })?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
+        brandHeaderView.configure(imageURLString: ((membershipPlan.firstIconImage()?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
         
         addCardButton.titleLabel?.font = UIFont.buttonText
         addCardButton.setTitle("add_my_card_button".localized, for: .normal)
@@ -61,7 +61,7 @@ class AddOrJoinViewController: UIViewController {
         newCardButton.titleLabel?.font = UIFont.buttonText
         newCardButton.setTitle("get_new_card_button".localized, for: .normal)
         
-        guard let cardType = membershipPlan.featureSet?.cardType else { return }
+        guard let cardType = membershipPlan.featureSet?.planCardType else { return }
         let storeView = LoyaltyPlanView()
         storeView.configure(for: .storeCell, cardType: cardType)
         plansStackView.addArrangedSubview(storeView)

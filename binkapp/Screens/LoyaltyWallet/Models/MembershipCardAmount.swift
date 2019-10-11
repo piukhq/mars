@@ -6,27 +6,24 @@
 //
 
 import Foundation
+import CoreData
 
-struct MembershipCardAmount : Codable {
+struct MembershipCardAmount: Codable, Hashable {
+    let apiId: Int?
     let currency: String?
-    let suffix: String?
     let prefix: String?
+    let suffix: String?
     let value: Double?
-    
-    enum CodingKeys: String, CodingKey {
-        
-        case currency = "currency"
-        case suffix = "suffix"
-        case prefix = "prefix"
-        case value = "value"
+}
+
+extension MembershipCardAmount: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_MembershipCardAmount, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardAmount {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.currency, with: currency, delta: delta)
+        update(cdObject, \.prefix, with: prefix, delta: delta)
+        update(cdObject, \.suffix, with: suffix, delta: delta)
+        update(cdObject, \.value, with: NSNumber(value: value ?? 0), delta: delta)
+
+        return cdObject
     }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        currency = try values.decodeIfPresent(String.self, forKey: .currency)
-        suffix = try values.decodeIfPresent(String.self, forKey: .suffix)
-        prefix = try values.decodeIfPresent(String.self, forKey: .prefix)
-        value = try values.decodeIfPresent(Double.self, forKey: .value)
-    }
-    
 }

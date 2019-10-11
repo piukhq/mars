@@ -52,4 +52,23 @@ extension UIColor {
     class var amber: UIColor {
         return UIColor(red: 245/255, green: 166/255, blue: 35/255, alpha: 1)
     }
+
+    // MARK: - Payment Card Gradient Colours
+
+    static let visaGradientLeft = UIColor(hexString: "13288d")
+    static let visaGradientRight = UIColor(hexString: "181c51")
+
+    static let mastercardGradientLeft = UIColor(hexString: "f79e1b")
+    static let mastercardGradientRight = UIColor(hexString: "eb001b")
+
+    static let amexGradientLeft = UIColor(hexString: "57c4ff")
+    static let amexGradientRight = UIColor(hexString: "006bcd")
+
+    static let unknownGradientLeft = UIColor(hexString: "b46fea")
+    static let unknownGradientRight = UIColor(hexString: "4371fe")
+
+    static let visaPaymentCardGradients: [CGColor] = [UIColor.visaGradientLeft.cgColor, UIColor.visaGradientRight.cgColor]
+    static let mastercardPaymentCardGradients: [CGColor] = [UIColor.mastercardGradientLeft.cgColor, UIColor.mastercardGradientRight.cgColor]
+    static let amexPaymentCardGradients: [CGColor] = [UIColor.amexGradientLeft.cgColor, UIColor.amexGradientRight.cgColor]
+    static let unknownPaymentCardGradients: [CGColor] = [UIColor.unknownGradientLeft.cgColor, UIColor.unknownGradientRight.cgColor]
 }

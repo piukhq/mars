@@ -8,18 +8,19 @@
 
 import UIKit
 
-extension UITableView {
-    func registerCellForClass(_ cellClass: AnyClass, asNib: Bool = false) {
+public extension UITableView {
+    func register<T: UITableViewCell>(_: T.Type, asNib: Bool = false) {
         if asNib {
-            register(UINib(nibName: String(describing: cellClass), bundle: nil), forCellReuseIdentifier: String(describing: cellClass))
+            register(UINib(nibName: T.reuseIdentifier, bundle: nil),
+                     forCellReuseIdentifier: T.reuseIdentifier)
         } else {
-            register(cellClass, forCellReuseIdentifier: String(describing: cellClass))
+            register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
         }
     }
     
-    func dequeueReusableCellWithClass<T>(_ type: T.Type, forIndexPath indexPath: IndexPath) -> T {
-        guard let cell = dequeueReusableCell(withIdentifier: String(describing: T.self), for: indexPath) as? T else {
-            fatalError("Tried to dequeue unavailable cell type")
+    func dequeue<T: UITableViewCell>(indexPath: IndexPath) -> T {
+        guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+            fatalError("Could not dequeue cell with identifier: \(T.reuseIdentifier)")
         }
         return cell
     }
