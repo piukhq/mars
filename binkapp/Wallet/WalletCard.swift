@@ -92,6 +92,10 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        fatalError("Should be implemented by subclass")
+        guard let card = viewModel.card(forIndexPath: indexPath) else {
+            return
+        }
+
+        viewModel.toCardDetail(for: card)
     }
 }

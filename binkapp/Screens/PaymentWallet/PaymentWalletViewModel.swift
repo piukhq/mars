@@ -24,7 +24,7 @@ struct PaymentWalletViewModel: WalletViewModel {
         return Current.wallet.paymentCards
     }
 
-    func toPaymentCardDetail(for paymentCard: CD_PaymentCard) {
-        router.toPaymentCardDetailViewController(paymentCard: paymentCard)
+    func toCardDetail(for card: CD_PaymentCard) {
+        router.toPaymentCardDetailViewController(paymentCard: card)
     }
 }

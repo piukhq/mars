@@ -114,7 +114,7 @@ extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionVie
             cell.set(to: .closed)
         } else {
             if let card = viewModel.card(forIndexPath: indexPath) {
-                viewModel.toFullDetailsCardScreen(membershipCard: card)
+                viewModel.toCardDetail(for: card)
             }
         }
     }

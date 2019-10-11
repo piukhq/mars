@@ -9,18 +9,16 @@
 import UIKit
 
 class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
-
     override func configureCollectionView() {
         super.configureCollectionView()
-
         collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+
+        // can this be made generic??
+
         let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
 
         guard let paymentCard = viewModel.card(forIndexPath: indexPath) else {
@@ -31,13 +29,6 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
         cell.configureWithViewModel(cellViewModel)
 
         return cell
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let paymentCard = viewModel.card(forIndexPath: indexPath) else {
-            return
-        }
-        viewModel.toPaymentCardDetail(for: paymentCard)
     }
 
 }

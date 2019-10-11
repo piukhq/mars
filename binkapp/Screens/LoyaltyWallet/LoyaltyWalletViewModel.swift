@@ -33,8 +33,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
         router.toBarcodeViewController(membershipCard: card, completion: completion)
     }
 
-    func toFullDetailsCardScreen(membershipCard: CD_MembershipCard) {
-        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
+    func toCardDetail(for card: CD_MembershipCard) {
+        router.toLoyaltyFullDetailsScreen(membershipCard: card)
     }
 
     func showDeleteConfirmationAlert(card: CD_MembershipCard, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {

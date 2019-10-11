@@ -17,6 +17,7 @@ protocol WalletViewModel {
     var cardCount: Int { get }
     func card(forIndexPath indexPath: IndexPath) -> T?
     func reloadWallet()
+    func toCardDetail(for card: T)
 }
 
 extension WalletViewModel {
@@ -36,3 +37,5 @@ extension WalletViewModel {
         Current.wallet.refreshLocal()
     }
 }
+
+
