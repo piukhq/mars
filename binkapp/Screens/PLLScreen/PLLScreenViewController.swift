@@ -108,7 +108,7 @@ private extension PLLScreenViewController {
 
 extension PLLScreenViewController: PaymentCardCellDelegate {
     func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, isOn: Bool) {
-
+//        let changedPaymentCard = viewModel.paymentCards[paymentCell.indexpat]
     }
 }
 

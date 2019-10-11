@@ -57,7 +57,7 @@ struct AddPaymentCardViewModel {
             return
         }
 
-        try? apiManager.doRequest(url: .postPaymentCard, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardResponse) in
+        try? apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardResponse) in
             completion(true)
         }, onError: { error in
             print(error)

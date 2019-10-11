@@ -129,7 +129,7 @@ class Wallet: CoreDataRepositoryProtocol {
             return
         }
 
-        let url = RequestURL.getPaymentCards
+        let url = RequestURL.paymentCards
         let method = RequestHTTPMethod.get
 
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [PaymentCardModel]) in
