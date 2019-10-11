@@ -88,25 +88,6 @@ class AuthAndAddViewModel {
     func getMembershipPlan() -> CD_MembershipPlan {
         return membershipPlan
     }
-    
-//    func addMembershipCard() {
-//        let jsonEncoder = JSONEncoder()
-//        let jsonData = try! jsonEncoder.encode(membershipCard)
-//        if let jsonCard = String(data: jsonData, encoding: String.Encoding.utf8) {
-//            do {
-//                let result = try convertToDictionary(from: jsonCard) ?? [:]
-//                repository.addMembershipCard(jsonCard: result, completion: { response in
-//                    // TODO: Add condition here after server work is done.
-//                    self.router.toPllViewController(membershipCard: response, membershipPlan: self.membershipPlan)
-//                    NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
-//                }, onError: { (error) in
-//                    self.router.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
-//                })
-//            } catch {
-//                print(error)
-//            }
-//        }
-//    }
 
     func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) {
         formFields.forEach { addFieldToCard(formField: $0) }
@@ -127,26 +108,6 @@ class AuthAndAddViewModel {
         let anyResult: Any = try JSONSerialization.jsonObject(with: data, options: [])
         return anyResult as? [String: Any]
     }
-    
-    func getAddFields() -> [AddFieldModel] {
-        guard let fields = membershipPlan.account?.formattedAddFieldsArray else { return [] }
-        return formPurpose == .firstLogin ? fields : []
-    }
-    
-    func getAuthorizeFields() -> [AuthoriseFieldModel] {
-        guard let fields = membershipPlan.account?.formattedAuthroriseFieldsArray else { return [] }
-        return formPurpose != .signUp ? fields : []
-    }
-    
-    func getEnrolFields() -> [EnrolFieldModel] {
-        guard let fields = membershipPlan.account?.formattedEnrolFieldsArray else { return [] }
-        return formPurpose == .signUp ? fields : []
-    }
-    
-//    func getRegistrationFields() -> [RegistrationFieldModel] {
-//        guard let fields = membershipPlan.account?.formattedRegistrationFieldsArray else { return [] }
-//        return formPurpose 
-//    }
     
     func setFields(fields: [InputValidation]) {
         self.fieldsViews = fields
