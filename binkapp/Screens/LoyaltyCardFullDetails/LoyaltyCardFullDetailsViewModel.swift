@@ -40,10 +40,12 @@ class LoyaltyCardFullDetailsViewModel {
         switch action {
         case .login:
             //TODO: change to login screen after is implemented
+            guard let membershipPlan = membershipCard.membershipPlan else { return }
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .otherLogin)
             break
         case .loginChanges:
             //TODO: change to login changes screen after is implemented
+            guard let membershipPlan = membershipCard.membershipPlan else { return }
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .otherLogin)
             break
         case .transactions:

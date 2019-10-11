@@ -30,7 +30,7 @@ class AddOrJoinViewModel {
             return
         }
         
-        if enrolFields.isEmpty {
+        if enrolFields.count == 0 {
             toNativeJoinUnavailable()
         } else {
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)

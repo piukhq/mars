@@ -41,7 +41,7 @@ class AuthAndAddViewController: BaseFormViewController {
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan())
+        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose)
         super.init(title: "Log in", description: "", dataSource: datasource)
         dataSource.delegate = self
     }
@@ -103,90 +103,90 @@ class AuthAndAddViewController: BaseFormViewController {
     }
     
     func populateStackViewWithFields() {
-        var checkboxes = [CheckboxView]()
-        let addFields = viewModel.getAddFields()
-        let authorizeFields = viewModel.getAuthorizeFields()
-        let enrolFields = viewModel.getEnrolFields()
-        
-        for field in addFields {
-            switch field.type {
-            case FieldInputType.textfield.rawValue:
-                let view = LoginTextFieldView()
-                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .add, delegate: self)
-                fieldsViews.append(view)
-            case FieldInputType.password.rawValue:
-                let view = LoginTextFieldView()
-                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .add, delegate: self)
-                fieldsViews.append(view)
-            case FieldInputType.dropdown.rawValue:
-                let view = DropdownView()
-                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .add, delegate: self)
-                fieldsViews.append(view)
-            case FieldInputType.checkbox.rawValue:
-                let view = CheckboxView()
-                view.configure(title: field.description ?? "", columnName: field.column ?? "", fieldType: .add, delegate: self)
-                checkboxes.append(view)
-            default: break
-            }
-        }
-        
-        for field in authorizeFields {
-            switch field.type {
-            case FieldInputType.textfield.rawValue:
-                let view = LoginTextFieldView()
-                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
-                fieldsViews.append(view)
-            case FieldInputType.password.rawValue:
-                let view = LoginTextFieldView()
-                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
-                fieldsViews.append(view)
-            case FieldInputType.dropdown.rawValue:
-                let view = DropdownView()
-                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .authorise, delegate: self)
-                fieldsViews.append(view)
-            case FieldInputType.checkbox.rawValue:
-                let view = CheckboxView()
-                view.configure(title: field.description ?? "", columnName: field.column ?? "", fieldType: .authorise, delegate: self)
-                checkboxes.append(view)
-            default: break
-            }
-        }
-        
-        for field in enrolFields {
-            switch field.type {
-            case FieldInputType.textfield.rawValue:
-                let view = LoginTextFieldView()
-                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .enrol, delegate: self)
-                fieldsViews.append(view)
-            case FieldInputType.password.rawValue:
-                let view = LoginTextFieldView()
-                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .enrol, delegate: self)
-                fieldsViews.append(view)
-            case FieldInputType.dropdown.rawValue:
-                let view = DropdownView()
-                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .enrol, delegate: self)
-                fieldsViews.append(view)
-            case FieldInputType.checkbox.rawValue:
-                let view = CheckboxView()
-                view.configure(title: field.description ?? "", columnName: field.column ?? "", fieldType: .enrol, delegate: self)
-                checkboxes.append(view)
-            default: break
-            }
-        }
-        
-        for box in checkboxes {
-            fieldsViews.append(box)
-        }
-        
-        viewModel.setFields(fields: fieldsViews)
-        
-        if fieldsViews.isEmpty == false {
-            for view in fieldsViews {
-                if view is UIView {
-                    fieldsStackView.addArrangedSubview(view as! UIView)
-                }
-            }
-        }
+//        var checkboxes = [CheckboxView]()
+//        let addFields = viewModel.getAddFields()
+//        let authorizeFields = viewModel.getAuthorizeFields()
+//        let enrolFields = viewModel.getEnrolFields()
+//
+//        for field in addFields {
+//            switch field.type {
+//            case FieldInputType.textfield.rawValue:
+//                let view = LoginTextFieldView()
+//                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .add, delegate: self)
+//                fieldsViews.append(view)
+//            case FieldInputType.password.rawValue:
+//                let view = LoginTextFieldView()
+//                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .add, delegate: self)
+//                fieldsViews.append(view)
+//            case FieldInputType.dropdown.rawValue:
+//                let view = DropdownView()
+//                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .add, delegate: self)
+//                fieldsViews.append(view)
+//            case FieldInputType.checkbox.rawValue:
+//                let view = CheckboxView()
+//                view.configure(title: field.description ?? "", columnName: field.column ?? "", fieldType: .add, delegate: self)
+//                checkboxes.append(view)
+//            default: break
+//            }
+//        }
+//
+//        for field in authorizeFields {
+//            switch field.type {
+//            case FieldInputType.textfield.rawValue:
+//                let view = LoginTextFieldView()
+//                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .authorise, delegate: self)
+//                fieldsViews.append(view)
+//            case FieldInputType.password.rawValue:
+//                let view = LoginTextFieldView()
+//                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .authorise, delegate: self)
+//                fieldsViews.append(view)
+//            case FieldInputType.dropdown.rawValue:
+//                let view = DropdownView()
+//                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .authorise, delegate: self)
+//                fieldsViews.append(view)
+//            case FieldInputType.checkbox.rawValue:
+//                let view = CheckboxView()
+//                view.configure(title: field.description ?? "", columnName: field.column ?? "", fieldType: .authorise, delegate: self)
+//                checkboxes.append(view)
+//            default: break
+//            }
+//        }
+//
+//        for field in enrolFields {
+//            switch field.type {
+//            case FieldInputType.textfield.rawValue:
+//                let view = LoginTextFieldView()
+//                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", fieldType: .enrol, delegate: self)
+//                fieldsViews.append(view)
+//            case FieldInputType.password.rawValue:
+//                let view = LoginTextFieldView()
+//                view.configure(title: field.column ?? "", placeholder: field.description, validationRegEx: field.validation ?? "", isPassword: true, fieldType: .enrol, delegate: self)
+//                fieldsViews.append(view)
+//            case FieldInputType.dropdown.rawValue:
+//                let view = DropdownView()
+//                view.configure(title: field.column ?? "", choices: field.choice ?? [], fieldType: .enrol, delegate: self)
+//                fieldsViews.append(view)
+//            case FieldInputType.checkbox.rawValue:
+//                let view = CheckboxView()
+//                view.configure(title: field.description ?? "", columnName: field.column ?? "", fieldType: .enrol, delegate: self)
+//                checkboxes.append(view)
+//            default: break
+//            }
+//        }
+//
+//        for box in checkboxes {
+//            fieldsViews.append(box)
+//        }
+//
+//        viewModel.setFields(fields: fieldsViews)
+//
+//        if fieldsViews.isEmpty == false {
+//            for view in fieldsViews {
+//                if view is UIView {
+//                    fieldsStackView.addArrangedSubview(view as! UIView)
+//                }
+//            }
+//        }
     }
     
     @objc func popViewController() {
@@ -222,8 +222,8 @@ private extension Selector {
     static let loginButtonTapped = #selector(AuthAndAddViewController.loginButtonTapped)
 }
 
-extension AuthAndAddViewController: CheckboxViewDelegate {
-    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FieldType) {
-        viewModel.addFieldToCard(column: column, value: value, fieldType: fieldType)
-    }
-}
+//extension AuthAndAddViewController: CheckboxViewDelegate {
+//    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FieldType) {
+//        viewModel.addFieldToCard(column: column, value: value, fieldType: fieldType)
+//    }
+//}

@@ -33,7 +33,7 @@ extension EnrolFieldModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.validation, with: validation, delta: delta)
         update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)
         update(cdObject, \.type, with: NSNumber(value: type ?? 0), delta: delta)
-        update(cdObject, \.choice, with: choice, delta: delta)
+//        update(cdObject, \.choice, with: choice, delta: delta)
 
         return cdObject
     }
