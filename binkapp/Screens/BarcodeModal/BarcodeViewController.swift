@@ -82,6 +82,10 @@ class BarcodeViewController: UIViewController {
         maximiseButton.setTitleColor(.white, for: .normal)
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
+        
+        if isBarcodeFullsize {
+            numberLabel.center.x = barcodeImageView.center.x
+        }
     }
     
     func maximizeBarcode() {
@@ -91,6 +95,7 @@ class BarcodeViewController: UIViewController {
         } else {
             let nav = UINavigationController(rootViewController: BarcodeViewController(viewModel: viewModel, showFullSize: true))
             nav.modalTransitionStyle = .crossDissolve
+            nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)
         }
     }
