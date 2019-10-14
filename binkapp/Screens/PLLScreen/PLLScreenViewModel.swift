@@ -8,14 +8,15 @@
 import Foundation
 
 class PLLScreenViewModel {
-    private let membershipCard: CD_MembershipCard
+    private var membershipCard: CD_MembershipCard
     private let membershipPlan: CD_MembershipPlan
     private let repository: PLLScreenRepository
     private let router: MainScreenRouter
     var paymentCards: [CD_PaymentCard]? {
+        Current.wallet.reload()
         return Current.wallet.paymentCards
     }
-    private var paymentCard = CD_PaymentCard()
+    private var changedLinkCards = [CD_PaymentCard]()
     
     var isEmptyPll: Bool {
         if let paymentCards = paymentCards {
@@ -24,19 +25,11 @@ class PLLScreenViewModel {
         return true
     }
     
-    var linkableMembershipCards: [CD_MembershipCard]? {
-         return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
-     }
-
-     var pllEnabledMembershipCardsCount: Int {
-         return linkableMembershipCards?.count ?? 0
-     }
-
-     var linkedMembershipCardIds: [String]? {
-         let membershipCards = paymentCard.linkedMembershipCards as? Set<CD_MembershipCard>
-         return membershipCards?.map { $0.id }
-     }
-
+    var linkedPaymentCardIds: [CD_PaymentCard]? {
+        let paymentCards = membershipCard.linkedPaymentCards.allObjects as? [CD_PaymentCard]
+        return paymentCards
+    }
+    
     
     init(membershipCard: CD_MembershipCard, membershipPlan: CD_MembershipPlan, repository: PLLScreenRepository, router: MainScreenRouter) {
         self.membershipCard = membershipCard
@@ -47,18 +40,31 @@ class PLLScreenViewModel {
     
     // MARK:  - Public methods
     
-    func membershipCardIsLinked(_ membershipCard: CD_MembershipCard) -> Bool {
-         return linkedMembershipCardIds?.contains(membershipCard.id) ?? false
-     }
-
-    func toggleLinkForMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
-         if membershipCardIsLinked(membershipCard) {
-             removeLinkToMembershipCard(membershipCard, completion: completion)
-         } else {
-             linkMembershipCard(withId: membershipCard.id, completion: completion)
-         }
-     }
-
+    func addCardToChangedCardsArray(card: CD_PaymentCard) {
+        if !(changedLinkCards.contains(card)) {
+            changedLinkCards.append(card)
+        }
+    }
+    
+    func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
+        let group = DispatchGroup()
+        for paymentCard in changedLinkCards {
+            if paymentCardIsLinked(paymentCard) {
+                group.enter()
+                removeLinkToPaymentCard(paymentCard, completion: {
+                    group.leave()
+                })
+            } else {
+                group.enter()
+                linkPaymentpCard(withId: paymentCard.id, completion: {
+                    group.leave()
+                })
+            }
+        }
+        group.notify(queue: .main) {
+            completion()
+        }
+    }
     
     func getMembershipPlan() -> CD_MembershipPlan {
         return membershipCard.membershipPlan ?? CD_MembershipPlan()
@@ -78,20 +84,17 @@ class PLLScreenViewModel {
 }
 
 private extension PLLScreenViewModel {
-    func linkMembershipCard(withId membershipCardId: String, completion: @escaping () -> Void) {
-        repository.linkMembershipCard(withId: membershipCardId, toPaymentCardWithId: paymentCard.id) { [weak self] paymentCard in
-            // If we don't get a payment card back, we'll fail silently by firing the same completion handler anyway.
-            // The completion will always be to reload the views, so we will just see the local data.
-            if let paymentCard = paymentCard {
-                self?.paymentCard = paymentCard
-            }
-
+    func linkPaymentpCard(withId paymentCardId: String, completion: @escaping () -> Void) {
+        repository.linkMembershipCard(withId: membershipCard.id, toPaymentCardWithId: paymentCardId) {_ in
             completion()
         }
     }
-
-    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
+    
+    func removeLinkToPaymentCard(_ paymentCard: CD_PaymentCard, completion: @escaping () -> Void) {
         repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard, completion: completion)
     }
-
+    
+    func paymentCardIsLinked(_ paymentCard: CD_PaymentCard) -> Bool {
+        return linkedPaymentCardIds?.contains(paymentCard) ?? false
+    }
 }

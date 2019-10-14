@@ -10,7 +10,7 @@ import UIKit
 import AlamofireImage
 
 protocol PaymentCardCellDelegate: class {
-    func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, isOn: Bool)
+    func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, cardIndex: Int)
 }
 
 class PaymentCardCell: UITableViewCell {
@@ -20,6 +20,7 @@ class PaymentCardCell: UITableViewCell {
     @IBOutlet private weak var switchButton: BinkSwitch!
     private let activityIndicator = UIActivityIndicatorView()
     private var delegate: PaymentCardCellDelegate?
+    private var cardIndex = 0
         
     override func layoutSubviews() {
         activityIndicator.frame = paymentCardImageView.frame
@@ -27,8 +28,9 @@ class PaymentCardCell: UITableViewCell {
         activityIndicator.startAnimating()
     }
     
-    func configureUI(membershipCard: CD_MembershipCard ,paymentCard: CD_PaymentCard, delegate: PaymentCardCellDelegate) {
+    func configureUI(membershipCard: CD_MembershipCard ,paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate) {
         self.delegate = delegate
+        self.cardIndex = cardIndex
         if let imageUrlString = paymentCard.imagesArray.first?.url {
             guard let imageUrl = URL(string: imageUrlString) else { return }
             paymentCardImageView?.af_setImage(withURL: imageUrl, placeholderImage: nil, filter: nil, progress: nil, progressQueue: .main, imageTransition: .noTransition, runImageTransitionIfCached: true, completion: { (response) in
@@ -44,6 +46,6 @@ class PaymentCardCell: UITableViewCell {
     
     @IBAction func switchDidChangeValue(_ sender: BinkSwitch) {
         switchButton.isGradientVisible = sender.isOn
-        delegate?.paymentCardCellDidToggleSwitch(self, isOn: sender.isOn)
+        delegate?.paymentCardCellDidToggleSwitch(self, cardIndex: cardIndex)
     }
 }

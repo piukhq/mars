@@ -52,7 +52,10 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
         // TODO: make the call here for patch or delete
-        viewModel.toFullDetailsCardScreen()
+        viewModel.toggleLinkForMembershipCards {
+            self.paymentCardsTableView.reloadData()
+            self.viewModel.toFullDetailsCardScreen()
+        }
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
@@ -73,7 +76,7 @@ extension PLLScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PaymentCardCell", for: indexPath) as! PaymentCardCell
         if let paymentCard = viewModel.paymentCards?[indexPath.row] {
-            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, delegate: self)
+            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self)
         }
         return cell
     }
@@ -107,8 +110,10 @@ private extension PLLScreenViewController {
 // MARK: - PaymentCardCellDelegate
 
 extension PLLScreenViewController: PaymentCardCellDelegate {
-    func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, isOn: Bool) {
-//        let changedPaymentCard = viewModel.paymentCards[paymentCell.indexpat]
+    func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, cardIndex: Int) {
+        if let paymentCards = viewModel.paymentCards {
+            viewModel.addCardToChangedCardsArray(card: paymentCards[cardIndex])
+        }
     }
 }
 
