@@ -82,6 +82,11 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="360" height="100"/>
+            <connections>
+                <outlet property="brandIconImageView" destination="AmH-Y0-910" id="9HG-vA-sel"/>
+                <outlet property="detailLabel" destination="aOM-Yi-6H3" id="OwP-Xn-L68"/>
+                <outlet property="titleLabel" destination="beb-B2-R6Y" id="Y3Q-F3-b6n"/>
+            </connections>
             <point key="canvasLocation" x="362.31884057971018" y="169.41964285714286"/>
         </collectionViewCell>
     </objects>

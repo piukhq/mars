@@ -32,7 +32,7 @@ protocol WalletLoyaltyCardCollectionViewCellDelegate: NSObject {
     func cellPerform(action: CellAction, cell: WalletLoyaltyCardCollectionViewCell)
 }
 
-class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
+class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureRecognizerDelegate {
     @IBOutlet private weak var cardIconImageView: UIImageView!
     @IBOutlet private weak var cardNameLabel: UILabel!
     @IBOutlet private weak var cardValuePointsLabel: UILabel!
@@ -40,7 +40,6 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
     @IBOutlet private weak var cardLinkStatusLabel: UILabel!
     @IBOutlet private weak var logInAlert: CardAlertView!
     @IBOutlet private weak var cardLinkStatusImage: UIImageView!
-    @IBOutlet private weak var cardContainer: RectangleView!
     @IBOutlet private weak var cardContainerCenterXConstraint: NSLayoutConstraint!
     @IBOutlet private weak var deleteButton: UIButton!
     @IBOutlet private weak var barcodeButton: UIButton!
@@ -73,7 +72,7 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
     private func setupGestureRecognizer() {
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: .handlePan)
         gestureRecognizer.delegate = self
-        cardContainer.addGestureRecognizer(gestureRecognizer)
+        containerView.addGestureRecognizer(gestureRecognizer)
     }
     
     private var swipeMode: SwipeMode? {
@@ -85,20 +84,6 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
     }
     
     private (set) var swipeState: SwipeState?
-    
-    private func setupShadow() {
-        cardContainer.layer.cornerRadius = 8
-        cardContainer.layer.masksToBounds = true
-        contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 8
-        layer.shadowOffset = CGSize(width: 0, height: 3)
-        layer.shadowRadius = 3
-        layer.shadowOpacity = 0.3
-        layer.shadowPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: 8, height: 8)).cgPath
-        layer.shouldRasterize = true
-        layer.rasterizationScale = UIScreen.main.scale
-        clipsToBounds = false
-    }
     
     private func setupTheming() {
         [cardNameLabel, cardValuePointsLabel, cardValueSuffixLabel, cardLinkStatusLabel].forEach {
@@ -125,7 +110,7 @@ class WalletLoyaltyCardCollectionViewCell: UICollectionViewCell, UIGestureRecogn
         }
 
         /// Brand colours
-        cardContainer.firstColorHex = viewModel.brandColorHex ?? ""
+        containerView.firstColorHex = viewModel.brandColorHex ?? ""
 
         /// Brand name
         cardNameLabel.text = plan.account?.companyName
@@ -280,7 +265,7 @@ extension WalletLoyaltyCardCollectionViewCell {
 
     func set(to state: SwipeState, as type: SwipeMode? = nil) {
         swipeState = state
-        let width = cardContainer.frame.size.width
+        let width = containerView.frame.size.width
         let constant: CGFloat
 
         switch state {
