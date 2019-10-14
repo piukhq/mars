@@ -154,7 +154,7 @@ extension FormDataSource {
             model.account?.formattedAddFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
-                    checkbox.configure(title: field.fieldDescription ?? "", columnKind: .add, delegate: self)
+                    checkbox.configure(title: field.fieldDescription ?? "", columnName: field.column ?? "", columnKind: .enrol, delegate: self)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -178,7 +178,7 @@ extension FormDataSource {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
-                    checkbox.configure(title: field.fieldDescription ?? "", columnKind: .auth, delegate: self)
+                    checkbox.configure(title: field.fieldDescription ?? "", columnName: field.column ?? "", columnKind: .enrol, delegate: self)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -203,7 +203,7 @@ extension FormDataSource {
             model.account?.formattedEnrolFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
-                    checkbox.configure(title: field.fieldDescription ?? "", columnKind: .enrol, delegate: self)
+                    checkbox.configure(title: field.fieldDescription ?? "", columnName: field.column ?? "", columnKind: .enrol, delegate: self)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -214,7 +214,8 @@ extension FormDataSource {
                             fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, choices: field.choicesArray),
                             updated: updatedBlock,
                             shouldChange: shouldChangeBlock,
-                            fieldExited: fieldExitedBlock
+                            fieldExited: fieldExitedBlock,
+                            columnKind: .enrol
                         )
                     )
                 }

@@ -49,7 +49,7 @@ class AuthAndAddViewModel {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
-        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: [], enrolFields: []), membershipPlan: nil)
+        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: [], enrolFields: []), membershipPlan: Int(membershipPlan.id))
         self.formPurpose = formPurpose
     }
     
@@ -119,7 +119,6 @@ class AuthAndAddViewModel {
             let addFieldsArray = membershipCard?.account?.addFields
             if var existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
                 existingField.value = formField.value
-                existingField.value = formField.value
             } else {
                 membershipCard?.account?.addFields?.append(AddFieldPostModel(column: formField.title, value: formField.value))
             }
@@ -129,6 +128,13 @@ class AuthAndAddViewModel {
                 existingField.value = formField.value
             } else {
                 membershipCard?.account?.authoriseFields?.append(AuthoriseFieldPostModel(column: formField.title, value: formField.value))
+            }
+        case .enrol:
+            let enrolFieldsArray = membershipCard?.account?.enrolFields
+            if var existingField = enrolFieldsArray?.first(where: { $0.column == formField.title }) {
+                existingField.value = formField.value
+            } else {
+                membershipCard?.account?.enrolFields?.append(EnrolFieldPostModel(column: formField.title, value: formField.value))
             }
         default:
             break

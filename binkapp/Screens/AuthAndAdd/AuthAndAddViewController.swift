@@ -26,7 +26,7 @@ class AuthAndAddViewController: BaseFormViewController {
     private lazy var loginButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Login", for: .normal)
+        button.setTitle("login".localized, for: .normal)
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .loginButtonTapped, for: .touchUpInside)
         button.isEnabled = false
@@ -133,9 +133,3 @@ extension AuthAndAddViewController: LoyaltyButtonDelegate {
 private extension Selector {
     static let loginButtonTapped = #selector(AuthAndAddViewController.loginButtonTapped)
 }
-
-//extension AuthAndAddViewController: CheckboxViewDelegate {
-//    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FieldType) {
-//        viewModel.addFieldToCard(column: column, value: value, fieldType: fieldType)
-//    }
-//}

@@ -16,6 +16,7 @@ class CheckboxView: CustomView {
     @IBOutlet private weak var checkboxView: M13Checkbox!
     @IBOutlet private weak var titleLabel: UILabel!
  
+    private(set) var columnName: String?
     private(set) var columnKind: FormField.ColumnKind?
     private(set) var title: String? {
         didSet {
@@ -24,9 +25,10 @@ class CheckboxView: CustomView {
     }
     weak var delegate: CheckboxViewDelegate?
     
-    func configure(title: String, columnKind: FormField.ColumnKind, delegate: CheckboxViewDelegate? = nil) {
+    func configure(title: String, columnName: String, columnKind: FormField.ColumnKind, delegate: CheckboxViewDelegate? = nil) {
         checkboxView.boxType = .square
         checkboxView.stateChangeAnimation = .flat(.fill)
+        self.columnName = columnName
         self.title = title
         self.columnKind = columnKind
         self.delegate = delegate
