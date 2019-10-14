@@ -13,7 +13,6 @@ class PLLScreenViewModel {
     private let repository: PLLScreenRepository
     private let router: MainScreenRouter
     var paymentCards: [CD_PaymentCard]? {
-        Current.wallet.reload()
         return Current.wallet.paymentCards
     }
     private var changedLinkCards = [CD_PaymentCard]()
@@ -30,7 +29,6 @@ class PLLScreenViewModel {
         return paymentCards
     }
     
-    
     init(membershipCard: CD_MembershipCard, membershipPlan: CD_MembershipPlan, repository: PLLScreenRepository, router: MainScreenRouter) {
         self.membershipCard = membershipCard
         self.membershipPlan = membershipPlan
@@ -44,6 +42,10 @@ class PLLScreenViewModel {
         if !(changedLinkCards.contains(card)) {
             changedLinkCards.append(card)
         }
+    }
+    
+    func reloadPaymentCards(){
+        Current.wallet.reload()
     }
     
     func toggleLinkForMembershipCards(completion: @escaping () -> Void) {

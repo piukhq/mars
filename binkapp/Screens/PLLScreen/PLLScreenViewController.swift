@@ -51,10 +51,13 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 
 extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
-        // TODO: make the call here for patch or delete
+        let activityIndicator = UIActivityIndicatorView(frame: view.frame)
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
         viewModel.toggleLinkForMembershipCards {
-            self.paymentCardsTableView.reloadData()
+            self.reloadContent()
             self.viewModel.toFullDetailsCardScreen()
+            activityIndicator.removeFromSuperview()
         }
     }
     
@@ -82,15 +85,14 @@ extension PLLScreenViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - UITableViewDelegate
-
-extension PLLScreenViewController: UITableViewDelegate {
-    
-}
-
 // MARK: - Private methods
 
 private extension PLLScreenViewController {
+    func reloadContent() {
+        viewModel.reloadPaymentCards()
+        paymentCardsTableView.reloadData()
+    }
+    
     func configureBrandHeader() {
         let membershipPlan = viewModel.getMembershipPlan()
         brandHeaderView.configure(imageURLString: membershipPlan.firstIconImage()?.url, loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
