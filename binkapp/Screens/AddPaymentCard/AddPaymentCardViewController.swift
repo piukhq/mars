@@ -11,8 +11,8 @@ import Keys
 
 class AddPaymentCardViewController: BaseFormViewController {
     private let viewModel: AddPaymentCardViewModel
-    private lazy var card: PaymentCardCollectionViewCell? = {
-        let cell = PaymentCardCollectionViewCell.loadViewFromNib()
+    private lazy var card: PaymentCardCollectionViewCell = {
+        let cell: PaymentCardCollectionViewCell = .fromNib()
         return cell
     }()
     
@@ -53,9 +53,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let card = card {
-            stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: Constants.cardPadding)
-        }
+        stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: Constants.cardPadding)
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "privacy_and_security_title".localized)])
         configureLayout()
     }
@@ -71,12 +69,10 @@ class AddPaymentCardViewController: BaseFormViewController {
             addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ]
         
-        if let card = card {
-            constraints.append(contentsOf: [
-                card.heightAnchor.constraint(equalToConstant: Constants.cardHeight),
-                    card.widthAnchor.constraint(equalTo: collectionView.widthAnchor)
-            ])
-        }
+        constraints.append(contentsOf: [
+            card.heightAnchor.constraint(equalToConstant: Constants.cardHeight),
+                card.widthAnchor.constraint(equalTo: collectionView.widthAnchor)
+        ])
 
         NSLayoutConstraint.activate(constraints)
     }
@@ -87,11 +83,11 @@ class AddPaymentCardViewController: BaseFormViewController {
         // This is due to strange layout issues on first appearance
         if !hasSetupCell {
             hasSetupCell = true
-            card?.frame = CGRect(
+            card.frame = CGRect(
                 origin: .zero,
                 size: CGSize(width: collectionView.contentSize.width, height: Constants.cardHeight)
             )
-            card?.configureWithAddViewModel(viewModel.paymentCard)
+            card.configureWithAddViewModel(viewModel.paymentCard)
         }
     }
     
@@ -131,6 +127,8 @@ extension AddPaymentCardViewController: PaymentTermsAndConditionsViewControllerD
         addButton.startLoading()
         viewModel.addPaymentCard { [weak self] success in
             if success {
+                // TODO: Do we still need this now we have the wallet in World?
+                // Move this to view model, and use the router and reload from Current.wallet
                 NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
                 self?.viewModel.popToRootViewController()
             } else {
@@ -152,7 +150,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
         if let type = viewModel.paymentCardType,
             let newValue = newValue,
             let text = textField.text,
-            field.fieldType == .cardNumber  {
+            field.fieldType == .cardNumber {
             
             /*
              Potentially "needlessly" complex, but the below will insert whitespace to format card numbers correctly according
@@ -206,7 +204,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
         }
 
         if field.fieldType == .text { viewModel.setPaymentCardName(value) }
-        card?.configureWithAddViewModel(viewModel.paymentCard)
+        card.configureWithAddViewModel(viewModel.paymentCard)
     }
     
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {

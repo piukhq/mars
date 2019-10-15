@@ -10,6 +10,12 @@ import UIKit
 struct LayoutHelper { }
 
 extension LayoutHelper {
+    static let statusBarHeight: CGFloat = 20
+
+    static func heightForNavigationBar(_ navigationBar: UINavigationBar?) -> CGFloat {
+        return navigationBar?.frame.height ?? 0
+    }
+
     struct BinkInfoButton {
         static let imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 7, right: 5)
         static let titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 3)

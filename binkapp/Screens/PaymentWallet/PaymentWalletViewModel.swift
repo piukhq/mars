@@ -23,4 +23,8 @@ struct PaymentWalletViewModel: WalletViewModel {
     var cards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
     }
+
+    func toPaymentCardDetail(for paymentCard: CD_PaymentCard) {
+        router.toPaymentCardDetailViewController(paymentCard: paymentCard)
+    }
 }
