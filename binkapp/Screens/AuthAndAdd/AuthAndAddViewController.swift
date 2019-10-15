@@ -90,12 +90,6 @@ class AuthAndAddViewController: BaseFormViewController {
         descriptionLabel.isHidden = viewModel.getDescription() == nil
         
         loginButton.setTitle(viewModel.buttonTitle, for: .normal)
-        
-        if let planName = membershipPlan.account?.planName {
-            descriptionLabel.text = String(format: "auth_screen_description".localized, planName)
-            descriptionLabel.font = UIFont.bodyTextLarge
-            descriptionLabel.isHidden = false
-        }
     }
     
     @objc func popViewController() {
