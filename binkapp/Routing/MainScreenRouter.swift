@@ -120,6 +120,15 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
+    func toPaymentCardDetailViewController(paymentCard: CD_PaymentCard) {
+        let repository = PaymentCardDetailRepository(apiManager: apiManager)
+        let factory = PaymentCardDetailInformationRowFactory()
+        let viewModel = PaymentCardDetailViewModel(paymentCard: paymentCard, router: self, repository: repository, informationRowFactory: factory)
+        let viewController = PaymentCardDetailViewController(viewModel: viewModel)
+        factory.delegate = viewController
+        navController?.pushViewController(viewController, animated: true)
+    }
+
     func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose) {
         let repository = AuthAndAddRepository(apiManager: apiManager)
         let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: formPurpose)

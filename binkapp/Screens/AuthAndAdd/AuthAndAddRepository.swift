@@ -21,7 +21,7 @@ class AuthAndAddRepository {
     }
     
     func addMembershipCard(request: AddMembershipCardRequest) {
-        let url = RequestURL.postMembershipCard
+        let url = RequestURL.membershipCards
         let method = RequestHTTPMethod.post
         apiManager.doRequest(url: url, httpMethod: method, parameters: request.jsonCard, onSuccess: { (response: MembershipCardModel) in
             // Map to core data

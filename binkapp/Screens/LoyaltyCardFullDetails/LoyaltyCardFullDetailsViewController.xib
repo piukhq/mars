@@ -15,6 +15,7 @@
                 <outlet property="deleteInfoRow" destination="gNq-b9-nhJ" id="iTd-pe-K1R"/>
                 <outlet property="fullDetailsBrandHeader" destination="iH8-ro-dLl" id="ehM-lS-T9l"/>
                 <outlet property="offersStackView" destination="umh-i2-nD6" id="VRv-PN-5Mu"/>
+                <outlet property="scrollView" destination="p1P-Vq-CM8" id="LEw-YT-uVW"/>
                 <outlet property="securityAndPrivacyInfoRow" destination="ruT-bQ-lue" id="j8V-T9-liK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

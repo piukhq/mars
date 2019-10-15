@@ -22,8 +22,20 @@ class LoyaltyCardFullDetailsViewModel {
         self.repository = repository
         self.membershipCard = membershipCard
     }  
-    
-    // MARK: - Public methds
+
+    var brandName: String {
+        return membershipCard.membershipPlan?.account?.companyName ?? ""
+    }
+
+    var balance: CD_MembershipCardBalance? {
+        return membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
+    }
+
+    var pointsValueText: String {
+        return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "") \(balance?.suffix ?? "")"
+    }
+
+    // MARK: - Public methods
     
     func getPaymentCards() {
         repository.getPaymentCards { [weak self] (results) in
