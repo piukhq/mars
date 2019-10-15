@@ -1,6 +1,10 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
+## Keys
+
+MIT LICENSE Found in the repo
+
 ## Alamofire
 
 Copyright (c) 2014 Alamofire Software Foundation (http://alamofire.org/)
@@ -2427,10 +2431,6 @@ All other components of this product are provided under the following license:
    See the License for the specific language governing permissions and
    limitations under the License.
 
-
-## Keys
-
-MIT LICENSE Found in the repo
 
 ## M13Checkbox
 
