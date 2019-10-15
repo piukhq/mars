@@ -22,14 +22,12 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let joinCards = JoinCardFactory.makeJoinCards(forWallet: .loyalty) else {
-            fatalError("Failed to get join cards from factory")
-        }
-
-        if indexPath.row < joinCards.count {
+        if indexPath.row < viewModel.joinCardCount {
             // join card
             let cell: WalletJoinCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            let joinCard = joinCards[indexPath.row]
+            guard let joinCard = viewModel.joinCards?[indexPath.row] else {
+                return cell
+            }
             cell.configureWithJoinCard(joinCard)
             return cell
         } else {

@@ -20,6 +20,13 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell {
     private var gradientLayer: CAGradientLayer?
     private var viewModel: PaymentCardCellViewModel!
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        alertView.isHidden = true
+        pllStatusLabel.isHidden = false
+        linkedStatusImageView.isHidden = false
+    }
+
     func configureWithViewModel(_ viewModel: PaymentCardCellViewModel) {
         self.viewModel = viewModel
 

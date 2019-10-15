@@ -35,13 +35,6 @@
                                     <constraint firstAttribute="width" constant="60" id="fNa-W9-jY8"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="join-card-close-icon" translatesAutoresizingMaskIntoConstraints="NO" id="1ve-HA-8tL">
-                                <rect key="frame" x="326" y="22" width="12" height="12"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="12" id="Rog-8b-OtJ"/>
-                                    <constraint firstAttribute="height" constant="12" id="vDT-cd-QUd"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link this card to your payment cards to automatically collect rewards." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOM-Yi-6H3">
                                 <rect key="frame" x="95" y="42" width="244" height="41"/>
                                 <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="15"/>
@@ -49,7 +42,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Co-op Membership Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beb-B2-R6Y">
-                                <rect key="frame" x="95" y="19" width="223" height="23"/>
+                                <rect key="frame" x="95" y="19" width="203.5" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="u40-7v-Its"/>
                                 </constraints>
@@ -57,6 +50,17 @@
                                 <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5RO-Fi-2MV">
+                                <rect key="frame" x="328" y="22" width="12" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="12" id="6Ct-kn-3kz"/>
+                                    <constraint firstAttribute="height" constant="12" id="qvd-Ym-5Wc"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="join-card-close-icon"/>
+                                <connections>
+                                    <action selector="dismissButtonWasPressed" destination="gTV-IL-0wX" eventType="touchUpInside" id="KIR-BQ-qz9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -66,9 +70,9 @@
                             <constraint firstItem="beb-B2-R6Y" firstAttribute="top" secondItem="jpz-VD-l7V" secondAttribute="top" constant="19" id="BIp-d1-19E"/>
                             <constraint firstItem="aOM-Yi-6H3" firstAttribute="top" secondItem="beb-B2-R6Y" secondAttribute="bottom" id="DSa-pT-XSl"/>
                             <constraint firstItem="beb-B2-R6Y" firstAttribute="leading" secondItem="AmH-Y0-910" secondAttribute="trailing" constant="15" id="NQa-ep-i7A"/>
-                            <constraint firstAttribute="trailing" secondItem="1ve-HA-8tL" secondAttribute="trailing" constant="22" id="W7L-sF-7QO"/>
-                            <constraint firstItem="1ve-HA-8tL" firstAttribute="leading" secondItem="beb-B2-R6Y" secondAttribute="trailing" constant="8" id="wMG-RE-MGs"/>
-                            <constraint firstItem="1ve-HA-8tL" firstAttribute="top" secondItem="jpz-VD-l7V" secondAttribute="top" constant="22" id="xYY-B4-NiM"/>
+                            <constraint firstItem="5RO-Fi-2MV" firstAttribute="leading" secondItem="beb-B2-R6Y" secondAttribute="trailing" constant="29.5" id="RKL-wa-cgr"/>
+                            <constraint firstAttribute="trailing" secondItem="5RO-Fi-2MV" secondAttribute="trailing" constant="20" id="csi-Qh-XaZ"/>
+                            <constraint firstItem="5RO-Fi-2MV" firstAttribute="top" secondItem="jpz-VD-l7V" secondAttribute="top" constant="22" id="rD6-Lc-pi9"/>
                             <constraint firstItem="AmH-Y0-910" firstAttribute="leading" secondItem="jpz-VD-l7V" secondAttribute="leading" constant="20" id="zA2-5w-pWA"/>
                         </constraints>
                     </view>

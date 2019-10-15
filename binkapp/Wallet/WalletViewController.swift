@@ -104,10 +104,15 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let card = viewModel.card(forIndexPath: indexPath) else {
-            return
+        if indexPath.row < viewModel.joinCardCount {
+            // join card
+        } else {
+            guard let card = viewModel.card(forIndexPath: indexPath) else {
+                return
+            }
+
+            viewModel.toCardDetail(for: card)
         }
 
-        viewModel.toCardDetail(for: card)
     }
 }
