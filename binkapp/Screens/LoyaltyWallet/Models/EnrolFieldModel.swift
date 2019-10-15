@@ -41,7 +41,7 @@ extension EnrolFieldModel: CoreDataMappable, CoreDataIDMappable {
         
         if let choices = choices {
             for (index, choice) in choices.enumerated() {
-                let indexID = AddFieldModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let indexID = EnrolFieldModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdChoice = choice.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdChoice, \.enrolField, with: cdObject, delta: delta)
                 cdObject.addChoicesObject(cdChoice)
