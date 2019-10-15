@@ -21,20 +21,4 @@ open class CD_MembershipPlanAccount: _CD_MembershipPlanAccount {
     var formattedRegistrationFields: Set<CD_RegistrationField>? {
         return registrationFields as? Set<CD_RegistrationField>
     }
-    
-    var  formattedAuthroriseFieldsArray: [AuthoriseFieldModel]? {
-        return authoriseFields.allObjects as? [AuthoriseFieldModel]
-    }
-    
-    var formattedEnrolFieldsArray: [EnrolFieldModel]? {
-        return enrolFields.allObjects as? [EnrolFieldModel]
-    }
-    
-    var formattedRegistrationFieldsArray: [RegistrationFieldModel]? {
-        return registrationFields.allObjects as? [RegistrationFieldModel]
-    }
-    
-    var formattedAddFieldsArray: [AddFieldModel]? {
-        return addFields.allObjects as? [AddFieldModel]
-    }
 }

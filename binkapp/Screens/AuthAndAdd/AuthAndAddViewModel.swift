@@ -89,18 +89,20 @@ class AuthAndAddViewModel {
         return membershipPlan
     }
 
-    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) {
+    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
-                        
-        try? repository.addMembershipCard(jsonCard: membershipCard.asDictionary(), completion: { card in
+                    
+        let request = try AddMembershipCardRequest(jsonCard: membershipCard.asDictionary(), completion: { card in
             if let card = card {
                 self.router.toPllViewController(membershipCard: card)
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
         }, onError: { error in
-            
+            print(error)
         })
+        
+        repository.addMembershipCard(request: request)
     }
 
     func convertToDictionary(from text: String) throws -> [String: Any]? {

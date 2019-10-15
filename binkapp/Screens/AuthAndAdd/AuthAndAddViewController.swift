@@ -35,14 +35,11 @@ class AuthAndAddViewController: BaseFormViewController {
     }()
     
     private let viewModel: AuthAndAddViewModel
-    private var isKeyboardOpen = false
-    
-    var fieldsViews: [InputValidation] = []
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
         let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose)
-        super.init(title: "Log in", description: "", dataSource: datasource)
+        super.init(title: "login".localized, description: "", dataSource: datasource)
         dataSource.delegate = self
     }
     
@@ -110,7 +107,7 @@ class AuthAndAddViewController: BaseFormViewController {
     }
         
     @objc func loginButtonTapped() {
-        viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
+        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {

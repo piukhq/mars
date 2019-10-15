@@ -25,16 +25,12 @@ class AddOrJoinViewModel {
     }
     
     func didSelectAddNewCard() {
-        guard let enrolFields = membershipPlan.account?.enrolFields else {
+        guard let enrolFields = membershipPlan.account?.enrolFields, enrolFields.count > 0 else {
             toNativeJoinUnavailable()
             return
         }
         
-        if enrolFields.count == 0 {
-            toNativeJoinUnavailable()
-        } else {
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
-        }
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
     }
     
     func toNativeJoinUnavailable() {

@@ -40,7 +40,7 @@ class CheckboxView: CustomView {
 
 extension CheckboxView: InputValidation {
     var isValid: Bool {
-        let isChecked = checkboxView.checkState == .checked ? true : false
+        let isChecked = checkboxView.checkState == .checked
         
         guard let columnType = columnKind, let columnName = title else { return false }
         delegate?.checkboxView(self, didCompleteWithColumn: columnName, value: String(isChecked), fieldType: columnType)
@@ -48,7 +48,7 @@ extension CheckboxView: InputValidation {
     }
     
     @objc func checkboxValueChanged(_ sender: Any) {
-        let isChecked = checkboxView.checkState == .checked ? true : false
+        let isChecked = checkboxView.checkState == .checked
         
         guard let columnType = columnKind, let columnName = title else { return }
         delegate?.checkboxView(self, didCompleteWithColumn: columnName, value: String(isChecked), fieldType: columnType)
