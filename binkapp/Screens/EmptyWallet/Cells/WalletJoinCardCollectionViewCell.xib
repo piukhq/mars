@@ -84,6 +84,7 @@
             <size key="customSize" width="360" height="100"/>
             <connections>
                 <outlet property="brandIconImageView" destination="AmH-Y0-910" id="9HG-vA-sel"/>
+                <outlet property="containerView" destination="jpz-VD-l7V" id="H61-cy-s8h"/>
                 <outlet property="detailLabel" destination="aOM-Yi-6H3" id="OwP-Xn-L68"/>
                 <outlet property="titleLabel" destination="beb-B2-R6Y" id="Y3Q-F3-b6n"/>
             </connections>

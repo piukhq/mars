@@ -9,116 +9,43 @@ import UIKit
 import CoreGraphics
 import DeepDiff
 
-class LoyaltyWalletViewController: UIViewController, BarBlurring {
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.alwaysBounceVertical = true
-        collectionView.backgroundColor = .white
-        collectionView.contentInset = LayoutHelper.WalletDimensions.contentInset
-        
-        view.addSubview(collectionView)
-        
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            collectionView.rightAnchor.constraint(equalTo: view.rightAnchor)
-        ])
-        
-        return collectionView
-    }()
-    
-    internal lazy var blurBackground = defaultBlurredBackground()
-    
-    private lazy var layout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = LayoutHelper.WalletDimensions.cardSize
-        layout.minimumLineSpacing = LayoutHelper.WalletDimensions.cardLineSpacing
-        return layout
-    }()
-    
-    private let viewModel: LoyaltyWalletViewModel
-    private let refreshControl = UIRefreshControl()
-    
-    init(viewModel: LoyaltyWalletViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {
+    override func configureCollectionView() {
+        super.configureCollectionView()
+        collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
-
-        refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
-        collectionView.addSubview(refreshControl)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
+        // still need this?
         NotificationCenter.default.addObserver(self, selector: #selector(reloadWallet), name: .didAddMembershipCard, object: nil)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        refreshControl.endRefreshing()
-        super.viewWillDisappear(animated)
-    }
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let joinCards = JoinCardFactory.makeJoinCards(forWallet: .loyalty) else {
+            fatalError("Failed to get join cards from factory")
+        }
 
-    @objc private func reloadWallet() {
-        viewModel.reloadWallet()
-    }
+        if indexPath.row < joinCards.count {
+            // join card
+            let cell: WalletJoinCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            let joinCard = joinCards[indexPath.row]
+            cell.configureWithJoinCard(joinCard)
+            return cell
+        } else {
+            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
 
-    @objc private func refresh() {
-        refreshControl.endRefreshing()
-        collectionView.reloadData()
-    }
+            guard let membershipCard = viewModel.card(forIndexPath: indexPath) else {
+                return cell
+            }
 
- // MARK: - Navigation Bar Blurring
+            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+            cell.configureUIWithViewModel(viewModel: cellViewModel, delegate: self)
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        guard let bar = navigationController?.navigationBar else { return }
-        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
-    }
-}
-
-extension LoyaltyWalletViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.cardCount
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-
-        guard let membershipCard = viewModel.card(forIndexPath: indexPath) else {
             return cell
         }
+    }
 
-        let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
-        cell.configureUIWithViewModel(viewModel: cellViewModel, delegate: self)
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? WalletLoyaltyCardCollectionViewCell else { return }
-        
-        if cell.swipeState != .closed {
-            cell.set(to: .closed)
-        } else {
-            if let card = viewModel.card(forIndexPath: indexPath) {
-                viewModel.toCardDetail(for: card)
-            }
-        }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? WalletLoyaltyCardCollectionViewCell else { return }
         cell.set(to: .closed)

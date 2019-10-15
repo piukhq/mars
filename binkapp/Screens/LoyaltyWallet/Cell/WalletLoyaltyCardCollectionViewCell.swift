@@ -43,6 +43,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     @IBOutlet private weak var cardContainerCenterXConstraint: NSLayoutConstraint!
     @IBOutlet private weak var deleteButton: UIButton!
     @IBOutlet private weak var barcodeButton: UIButton!
+    @IBOutlet private weak var rectangleView: RectangleView!
 
     private var viewModel: WalletLoyaltyCardCellViewModel!
     private weak var delegate: WalletLoyaltyCardCollectionViewCellDelegate?
@@ -72,7 +73,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     private func setupGestureRecognizer() {
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: .handlePan)
         gestureRecognizer.delegate = self
-        containerView.addGestureRecognizer(gestureRecognizer)
+        rectangleView.addGestureRecognizer(gestureRecognizer)
     }
     
     private var swipeMode: SwipeMode? {
@@ -110,7 +111,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         }
 
         /// Brand colours
-        containerView.firstColorHex = viewModel.brandColorHex ?? ""
+        rectangleView.firstColorHex = viewModel.brandColorHex ?? ""
 
         /// Brand name
         cardNameLabel.text = plan.account?.companyName
@@ -265,7 +266,7 @@ extension WalletLoyaltyCardCollectionViewCell {
 
     func set(to state: SwipeState, as type: SwipeMode? = nil) {
         swipeState = state
-        let width = containerView.frame.size.width
+        let width = rectangleView.frame.size.width
         let constant: CGFloat
 
         switch state {

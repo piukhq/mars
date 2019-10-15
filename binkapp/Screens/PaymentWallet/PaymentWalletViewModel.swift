@@ -20,6 +20,10 @@ struct PaymentWalletViewModel: WalletViewModel {
         self.router = router
     }
 
+    var joinCards: [JoinCard]? {
+        return JoinCardFactory.makeJoinCards(forWallet: .payment)
+    }
+
     var cards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
     }

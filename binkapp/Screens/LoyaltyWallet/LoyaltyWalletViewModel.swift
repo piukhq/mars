@@ -22,6 +22,10 @@ class LoyaltyWalletViewModel: WalletViewModel {
         self.router = router
     }
 
+    var joinCards: [JoinCard]? {
+        return JoinCardFactory.makeJoinCards(forWallet: .loyalty)
+    }
+
     var cards: [CD_MembershipCard]? {
         return Current.wallet.membershipCards
     }

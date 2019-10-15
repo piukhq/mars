@@ -15,20 +15,27 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-
-        // can this be made generic??
-
-        let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-
-        guard let paymentCard = viewModel.card(forIndexPath: indexPath) else {
-            return cell
+        guard let joinCards = JoinCardFactory.makeJoinCards(forWallet: .loyalty) else {
+            fatalError("Failed to get join cards from factory")
         }
 
-        let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard, router: viewModel.router)
-        cell.configureWithViewModel(cellViewModel)
+        if indexPath.row < joinCards.count {
+            // join card
+            let cell: WalletJoinCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            let joinCard = joinCards[indexPath.row]
+            cell.configureWithJoinCard(joinCard)
+            return cell
+        } else {
+            let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            guard let paymentCard = viewModel.card(forIndexPath: indexPath) else {
+                return cell
+            }
 
-        return cell
+            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard, router: viewModel.router)
+            cell.configureWithViewModel(cellViewModel)
+
+            return cell
+        }
     }
 
 }
