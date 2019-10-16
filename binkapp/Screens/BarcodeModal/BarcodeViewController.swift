@@ -47,8 +47,8 @@ class BarcodeViewController: UIViewController {
     }
     
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         
         configureUI(maximized: isBarcodeFullsize)
     }
@@ -84,7 +84,7 @@ class BarcodeViewController: UIViewController {
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
         
         if isBarcodeFullsize {
-            numberLabel.center.x = barcodeImageView.center.x
+            numberLabel.center.x = barcodeImageView.center.x - 30
         }
     }
     
