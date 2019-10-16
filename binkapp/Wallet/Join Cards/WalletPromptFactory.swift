@@ -1,5 +1,5 @@
 //
-//  JoinCardFactory.swift
+//  WalletPromptFactory.swift
 //  binkapp
 //
 //  Created by Nick Farrant on 16/10/2019.
@@ -8,28 +8,32 @@
 
 import Foundation
 
-final class JoinCardFactory {
+final class WalletPromptFactory {
     enum WalletType {
         case loyalty
         case payment
     }
 
-    static func makeJoinCards(forWallet walletType: WalletType) -> [JoinCard] {
-        var joinCards: [JoinCard] = []
+    static func makeWalletPrompts(forWallet walletType: WalletType) -> [WalletPrompt] {
+        var walletPrompts: [WalletPrompt] = []
 
         if walletType == .loyalty {
             guard let plans = Current.wallet.membershipPlans else {
-                return joinCards
+                return walletPrompts
             }
 
+            // join cards
             plans.filter({ $0.featureSet?.planCardType == .link }).forEach { plan in
                 if shouldShowJoinCard(forMembershipPlan: plan) {
-                    joinCards.append(JoinCard(membershipPlan: plan))
+                    walletPrompts.append(WalletPrompt(type: .loyaltyJoin(membershipPlan: plan)))
                 }
             }
+
+            // add payment cards prompt
+            walletPrompts.append(WalletPrompt(type: .addPaymentCards))
         }
 
-        return joinCards
+        return walletPrompts
     }
 
     static private func shouldShowJoinCard(forMembershipPlan plan: CD_MembershipPlan) -> Bool {
@@ -44,7 +48,7 @@ final class JoinCardFactory {
             }
         }
 
-        let planJoinCardHasBeenDismissed = UserDefaults.standard.bool(forKey: JoinCard.userDefaultsKey(forPlan: plan))
+        let planJoinCardHasBeenDismissed = UserDefaults.standard.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: plan)))
         return !planJoinCardHasBeenDismissed && !planExistsInWallet
     }
 }

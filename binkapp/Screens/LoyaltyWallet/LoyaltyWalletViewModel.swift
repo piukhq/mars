@@ -22,8 +22,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
         self.router = router
     }
 
-    var joinCards: [JoinCard]? {
-        return JoinCardFactory.makeJoinCards(forWallet: .loyalty)
+    var walletPrompts: [WalletPrompt]? {
+        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
     }
 
     var cards: [CD_MembershipCard]? {
@@ -51,7 +51,13 @@ class LoyaltyWalletViewModel: WalletViewModel {
         })
     }
 
-    func didSelectJoinCard(_ joinCard: JoinCard) {
-        router.toAuthAndAddViewController(membershipPlan: joinCard.membershipPlan)
+    func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
+        switch walletPrompt.type {
+        case .loyaltyJoin(let membershipPlan):
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan)
+        case .addPaymentCards:
+            router.toAddPaymentViewController()
+        }
+
     }
 }

@@ -20,8 +20,8 @@ struct PaymentWalletViewModel: WalletViewModel {
         self.router = router
     }
 
-    var joinCards: [JoinCard]? {
-        return JoinCardFactory.makeJoinCards(forWallet: .payment)
+    var walletPrompts: [WalletPrompt]? {
+        return WalletPromptFactory.makeWalletPrompts(forWallet: .payment)
     }
 
     var cards: [CD_PaymentCard]? {
@@ -32,7 +32,7 @@ struct PaymentWalletViewModel: WalletViewModel {
         router.toPaymentCardDetailViewController(paymentCard: card)
     }
 
-    func didSelectJoinCard(_ joinCard: JoinCard) {
+    func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         //
     }
 }

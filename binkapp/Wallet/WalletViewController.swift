@@ -92,12 +92,12 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.cardCount + viewModel.joinCardCount
+        return viewModel.cardCount + viewModel.walletPromptsCount
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.row < viewModel.joinCardCount {
-            return LayoutHelper.WalletDimensions.joinCardSize
+        if indexPath.row < viewModel.walletPromptsCount {
+            return LayoutHelper.WalletDimensions.walletPromptSize
         } else {
             return LayoutHelper.WalletDimensions.cardSize
         }
@@ -108,11 +108,11 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row < viewModel.joinCardCount {
-            guard let joinCard = viewModel.joinCards?[indexPath.row] else {
+        if indexPath.row < viewModel.walletPromptsCount {
+            guard let joinCard = viewModel.walletPrompts?[indexPath.row] else {
                 return
             }
-            viewModel.didSelectJoinCard(joinCard)
+            viewModel.didSelectWalletPrompt(joinCard)
         } else {
             guard let card = viewModel.card(forIndexPath: indexPath) else {
                 return

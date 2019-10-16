@@ -277,8 +277,8 @@
 		EF3BC913234779AE00FE52ED /* LoyaltyWalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC912234779AE00FE52ED /* LoyaltyWalletRepository.swift */; };
 		EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC914234779C900FE52ED /* PaymentWalletRepository.swift */; };
 		EF480C1B2355F9470060B7C1 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C192355F9470060B7C1 /* WalletViewController.swift */; };
-		EF480C1F235754AD0060B7C1 /* JoinCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C1E235754AD0060B7C1 /* JoinCard.swift */; };
-		EF480C21235754C20060B7C1 /* JoinCardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C20235754C20060B7C1 /* JoinCardFactory.swift */; };
+		EF480C1F235754AD0060B7C1 /* WalletPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C1E235754AD0060B7C1 /* WalletPrompt.swift */; };
+		EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C20235754C20060B7C1 /* WalletPromptFactory.swift */; };
 		EF485566231D5E4E00FC9E5F /* DebugMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */; };
 		EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF485567231D679E00FC9E5F /* DebugMenuTableViewCell.xib */; };
 		EF48556C231D696800FC9E5F /* DebugMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48556B231D696800FC9E5F /* DebugMenuTableViewCell.swift */; };
@@ -650,8 +650,8 @@
 		EF3BC912234779AE00FE52ED /* LoyaltyWalletRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletRepository.swift; sourceTree = "<group>"; };
 		EF3BC914234779C900FE52ED /* PaymentWalletRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletRepository.swift; sourceTree = "<group>"; };
 		EF480C192355F9470060B7C1 /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
-		EF480C1E235754AD0060B7C1 /* JoinCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCard.swift; sourceTree = "<group>"; };
-		EF480C20235754C20060B7C1 /* JoinCardFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCardFactory.swift; sourceTree = "<group>"; };
+		EF480C1E235754AD0060B7C1 /* WalletPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPrompt.swift; sourceTree = "<group>"; };
+		EF480C20235754C20060B7C1 /* WalletPromptFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptFactory.swift; sourceTree = "<group>"; };
 		EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTableViewController.swift; sourceTree = "<group>"; };
 		EF485567231D679E00FC9E5F /* DebugMenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugMenuTableViewCell.xib; sourceTree = "<group>"; };
 		EF48556B231D696800FC9E5F /* DebugMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuTableViewCell.swift; sourceTree = "<group>"; };
@@ -1416,8 +1416,8 @@
 		EF480C1D235754A00060B7C1 /* Join Cards */ = {
 			isa = PBXGroup;
 			children = (
-				EF480C1E235754AD0060B7C1 /* JoinCard.swift */,
-				EF480C20235754C20060B7C1 /* JoinCardFactory.swift */,
+				EF480C1E235754AD0060B7C1 /* WalletPrompt.swift */,
+				EF480C20235754C20060B7C1 /* WalletPromptFactory.swift */,
 			);
 			path = "Join Cards";
 			sourceTree = "<group>";
@@ -2279,7 +2279,7 @@
 				3CE892682338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift in Sources */,
 				3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */,
 				BDD9C887233BE6B1003CD616 /* CD_MembershipCardAmount.swift in Sources */,
-				EF480C1F235754AD0060B7C1 /* JoinCard.swift in Sources */,
+				EF480C1F235754AD0060B7C1 /* WalletPrompt.swift in Sources */,
 				BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */,
 				EF335C82234F565B00D49223 /* WalletJoinCardCollectionViewCell.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
@@ -2294,7 +2294,7 @@
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
 				BDD9C873233BE6B1003CD616 /* CD_Balance.swift in Sources */,
 				BDD9C895233BE6B1003CD616 /* CD_MembershipTransaction.swift in Sources */,
-				EF480C21235754C20060B7C1 /* JoinCardFactory.swift in Sources */,
+				EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */,
 				BDB01870232D99D200BFFA18 /* FormField.swift in Sources */,
 				B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */,
 				3C48E7E6232A5E6700ADE410 /* DateExtension.swift in Sources */,
@@ -2374,7 +2374,7 @@
 /* Begin XCBuildConfiguration section */
 		5ECE049122CE579B001BA964 /* Alpha */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD3CB9432328573C005C37AE /* Dev.xcconfig */;
+			baseConfigurationReference = BD3CB9442328574A005C37AE /* Staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";

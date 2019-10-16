@@ -14,26 +14,28 @@ class WalletJoinCardCollectionViewCell: WalletCardCollectionViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var detailLabel: UILabel!
 
-    private var joinCard: JoinCard!
+    private var walletPrompt: WalletPrompt!
 
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
-    func configureWithJoinCard(_ joinCard: JoinCard) {
-        self.joinCard = joinCard
+    func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {
+        self.walletPrompt = walletPrompt
 
         setupShadow()
         
-        titleLabel.text = joinCard.title
-        detailLabel.text = joinCard.body
-        if let iconImageUrl = joinCard.iconImageUrl {
+        titleLabel.text = walletPrompt.title
+        detailLabel.text = walletPrompt.body
+        if let iconImageUrl = walletPrompt.iconImageUrl {
             brandIconImageView.af_setImage(withURL: iconImageUrl)
+        } else {
+            brandIconImageView.image = UIImage(named: walletPrompt.iconImageName ?? "")
         }
     }
 
     @IBAction private func dismissButtonWasPressed() {
-        UserDefaults.standard.set(true, forKey: joinCard.userDefaultsKey)
+        UserDefaults.standard.set(true, forKey: walletPrompt.userDefaultsDismissKey)
         Current.wallet.refreshLocal()
     }
 }
