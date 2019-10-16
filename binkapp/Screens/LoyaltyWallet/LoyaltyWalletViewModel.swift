@@ -50,4 +50,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
             }
         })
     }
+
+    func didSelectJoinCard(_ joinCard: JoinCard) {
+        router.toAuthAndAddViewController(membershipPlan: joinCard.membershipPlan)
+    }
 }

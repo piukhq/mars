@@ -21,6 +21,7 @@ protocol WalletViewModel {
     func reloadWallet()
     func refreshLocalWallet()
     func toCardDetail(for card: T)
+    func didSelectJoinCard(_ joinCard: JoinCard)
 }
 
 extension WalletViewModel {

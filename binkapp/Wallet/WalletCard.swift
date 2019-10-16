@@ -12,7 +12,6 @@ import CoreData
 enum WalletCardType {
     case loyalty
     case payment
-    case join
 }
 
 typealias WalletCard = WalletCardProtocol & NSManagedObject

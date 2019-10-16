@@ -109,7 +109,10 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row < viewModel.joinCardCount {
-            // join card
+            guard let joinCard = viewModel.joinCards?[indexPath.row] else {
+                return
+            }
+            viewModel.didSelectJoinCard(joinCard)
         } else {
             guard let card = viewModel.card(forIndexPath: indexPath) else {
                 return

@@ -31,4 +31,8 @@ struct PaymentWalletViewModel: WalletViewModel {
     func toCardDetail(for card: CD_PaymentCard) {
         router.toPaymentCardDetailViewController(paymentCard: card)
     }
+
+    func didSelectJoinCard(_ joinCard: JoinCard) {
+        //
+    }
 }
