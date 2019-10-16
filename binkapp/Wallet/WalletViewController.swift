@@ -63,7 +63,7 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     }
 
     func configureCollectionView() {
-        collectionView.register(WalletJoinCardCollectionViewCell.self, asNib: true)
+        collectionView.register(WalletPromptCollectionViewCell.self, asNib: true)
         view.addSubview(collectionView)
         collectionView.addSubview(refreshControl)
 

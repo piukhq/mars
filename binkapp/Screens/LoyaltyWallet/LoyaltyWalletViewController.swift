@@ -24,7 +24,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row < viewModel.walletPromptsCount {
             // join card
-            let cell: WalletJoinCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let walletPrompt = viewModel.walletPrompts?[indexPath.row] else {
                 return cell
             }

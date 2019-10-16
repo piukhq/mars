@@ -13,5 +13,13 @@ let Current = World()
 class World {
     lazy var database = Database(named: "binkapp")
     lazy var wallet = Wallet()
-    lazy var userDefaults = UserDefaults.standard
+    lazy var userDefaults: BinkUserDefaults = UserDefaults.standard
 }
+
+protocol BinkUserDefaults {
+    func set(_ value: Any?, forKey defaultName: String)
+    func string(forKey defaultName: String) -> String?
+    func bool(forKey defaultName: String) -> Bool
+}
+
+extension UserDefaults: BinkUserDefaults {}

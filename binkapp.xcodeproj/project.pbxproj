@@ -266,11 +266,9 @@
 		EF2E881F233A354500F678F3 /* PaymentCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF2E881D233A354500F678F3 /* PaymentCardCollectionViewCell.xib */; };
 		EF2E8825233A6FCF00F678F3 /* CardAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E8824233A6FCF00F678F3 /* CardAlertView.swift */; };
 		EF2E8827233A6FDB00F678F3 /* CardAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF2E8826233A6FDB00F678F3 /* CardAlertView.xib */; };
-		EF335C82234F565B00D49223 /* WalletJoinCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF335C80234F565B00D49223 /* WalletJoinCardCollectionViewCell.swift */; };
-		EF335C83234F565B00D49223 /* WalletJoinCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF335C81234F565B00D49223 /* WalletJoinCardCollectionViewCell.xib */; };
+		EF335C83234F565B00D49223 /* WalletPromptCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF335C81234F565B00D49223 /* WalletPromptCollectionViewCell.xib */; };
 		EF335C892350D2C600D49223 /* WalletCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF335C882350D2C600D49223 /* WalletCard.swift */; };
 		EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */; };
-		EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */; };
 		EF3BC90D234750F900FE52ED /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC90C234750F900FE52ED /* Wallet.swift */; };
 		EF3BC90F234770E000FE52ED /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC90E234770E000FE52ED /* WalletViewModel.swift */; };
 		EF3BC911234771AA00FE52ED /* WalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC910234771AA00FE52ED /* WalletRepository.swift */; };
@@ -293,6 +291,7 @@
 		EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */; };
 		EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */; };
 		EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */; };
+		EF586FE023578735000917B6 /* WalletPromptCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF586FDF23578735000917B6 /* WalletPromptCollectionViewCell.swift */; };
 		EF758E0823225F35000D26A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0723225F35000D26A9 /* Database.swift */; };
 		EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */; };
 		EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0C23225F45000D26A9 /* NSManagedObjectContext.swift */; };
@@ -639,11 +638,9 @@
 		EF2E881D233A354500F678F3 /* PaymentCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		EF2E8824233A6FCF00F678F3 /* CardAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAlertView.swift; sourceTree = "<group>"; };
 		EF2E8826233A6FDB00F678F3 /* CardAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardAlertView.xib; sourceTree = "<group>"; };
-		EF335C80234F565B00D49223 /* WalletJoinCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletJoinCardCollectionViewCell.swift; sourceTree = "<group>"; };
-		EF335C81234F565B00D49223 /* WalletJoinCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletJoinCardCollectionViewCell.xib; sourceTree = "<group>"; };
+		EF335C81234F565B00D49223 /* WalletPromptCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletPromptCollectionViewCell.xib; sourceTree = "<group>"; };
 		EF335C882350D2C600D49223 /* WalletCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCard.swift; sourceTree = "<group>"; };
 		EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
-		EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		EF3BC90C234750F900FE52ED /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		EF3BC90E234770E000FE52ED /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
 		EF3BC910234771AA00FE52ED /* WalletRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRepository.swift; sourceTree = "<group>"; };
@@ -666,6 +663,7 @@
 		EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewController.swift; sourceTree = "<group>"; };
 		EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailViewController.xib; sourceTree = "<group>"; };
 		EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewModel.swift; sourceTree = "<group>"; };
+		EF586FDF23578735000917B6 /* WalletPromptCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletPromptCollectionViewCell.swift; sourceTree = "<group>"; };
 		EF758E0723225F35000D26A9 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		EF758E0923225F3B000D26A9 /* SwiftDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftDatabase.h; sourceTree = "<group>"; };
 		EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersistentContainer.swift; sourceTree = "<group>"; };
@@ -1301,7 +1299,6 @@
 				3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */,
 				EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */,
 				BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */,
-				EF39C1ED23214A7300A0BBC0 /* UserDefaultsExtension.swift */,
 				3C8BBC282326541D00363349 /* NotificationNameExtension.swift */,
 				3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */,
 				BD1E7289232AB91C002CC85E /* UIAlertController+Extension.swift */,
@@ -1391,8 +1388,8 @@
 		EF335C7F234F563600D49223 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				EF335C80234F565B00D49223 /* WalletJoinCardCollectionViewCell.swift */,
-				EF335C81234F565B00D49223 /* WalletJoinCardCollectionViewCell.xib */,
+				EF586FDF23578735000917B6 /* WalletPromptCollectionViewCell.swift */,
+				EF335C81234F565B00D49223 /* WalletPromptCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1779,7 +1776,7 @@
 				B713662723268FEB008A0ED7 /* PLLScreenViewController.xib in Resources */,
 				3CD3493722F99E1D000C1F4D /* NunitoSans-ExtraBold.ttf in Resources */,
 				B720CC1622EF01E200A4F4D0 /* LoginViewController.xib in Resources */,
-				EF335C83234F565B00D49223 /* WalletJoinCardCollectionViewCell.xib in Resources */,
+				EF335C83234F565B00D49223 /* WalletPromptCollectionViewCell.xib in Resources */,
 				5E1B5016232105CD00890C7E /* com.bink.wallet.neo.GoogleService-Info.plist in Resources */,
 				5E1B5015232105CD00890C7E /* com.bink.wallet.neo.mr.GoogleService-Info.plist in Resources */,
 				3C25BE0023019BC100E931EE /* BrandTableViewCell.xib in Resources */,
@@ -2094,6 +2091,7 @@
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
 				3C2C90FB23191CF700D112E3 /* AuthoriseFieldPostModel.swift in Sources */,
 				B7263347230589EE00951037 /* BalanceModel.swift in Sources */,
+				EF586FE023578735000917B6 /* WalletPromptCollectionViewCell.swift in Sources */,
 				EF8BF20F23414C8300D2E5F3 /* _CD_PaymentCardCard.swift in Sources */,
 				3C17FC3222F2CCAD00E423A2 /* MembershipCardImageModel.swift in Sources */,
 				3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */,
@@ -2112,7 +2110,6 @@
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
 				EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */,
 				BD9FB68B2333DE3E00E5559A /* String+Random.swift in Sources */,
-				EF39C1EE23214A7300A0BBC0 /* UserDefaultsExtension.swift in Sources */,
 				BDD9C898233BE6B1003CD616 /* _CD_PlanDocument.swift in Sources */,
 				BDD9C889233BE6B1003CD616 /* _CD_MembershipCardAmount.swift in Sources */,
 				EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */,
@@ -2281,7 +2278,6 @@
 				BDD9C887233BE6B1003CD616 /* CD_MembershipCardAmount.swift in Sources */,
 				EF480C1F235754AD0060B7C1 /* WalletPrompt.swift in Sources */,
 				BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */,
-				EF335C82234F565B00D49223 /* WalletJoinCardCollectionViewCell.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
 				EF2E8825233A6FCF00F678F3 /* CardAlertView.swift in Sources */,
 				3CF029F222F45AEC009A0E61 /* AddingOptionsViewController.swift in Sources */,

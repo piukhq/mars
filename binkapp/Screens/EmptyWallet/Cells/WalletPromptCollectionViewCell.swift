@@ -1,5 +1,5 @@
 //
-//  WalletJoinCardCollectionViewCell.swift
+//  WalletPromptCollectionViewCell.swift
 //  binkapp
 //
 //  Created by Nick Farrant on 10/10/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 
-class WalletJoinCardCollectionViewCell: WalletCardCollectionViewCell {
+class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
     @IBOutlet private weak var brandIconImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var detailLabel: UILabel!
