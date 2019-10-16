@@ -162,11 +162,11 @@ class AuthAndAddViewModel {
             
         case .enrol:
             let enrolFieldsArray = membershipCard?.account?.enrolFields
-            if var existingField = enrolFieldsArray?.first(where: { $0.column == checkbox.title }) {
-                existingField.column = checkbox.title
+            if var existingField = enrolFieldsArray?.first(where: { $0.column == checkbox.columnName }) {
+                existingField.column = checkbox.columnName
                 existingField.value = String(checkbox.isValid)
             } else {
-                membershipCard?.account?.enrolFields?.append(EnrolFieldPostModel(column: checkbox.title, value: String(checkbox.isValid)))
+                membershipCard?.account?.enrolFields?.append(EnrolFieldPostModel(column: checkbox.columnName, value: String(checkbox.isValid)))
             }
         default:
             break
