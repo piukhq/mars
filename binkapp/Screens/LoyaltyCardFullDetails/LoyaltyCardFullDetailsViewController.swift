@@ -14,6 +14,7 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     @IBOutlet private weak var deleteInfoRow: CardDetailsInfoView!
     @IBOutlet private weak var offersStackView: UIStackView!
     @IBOutlet private weak var cardDetailsStackView: UIStackView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
     internal lazy var blurBackground = defaultBlurredBackground()
@@ -33,6 +34,8 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         viewModel.getPaymentCards()
         configureUI()
         setCloseButton()
+
+        scrollView.delegate = self
     }
     
     // MARK: - Navigation Bar Blurring
@@ -168,5 +171,23 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsViewModelD
             }
             self.configureCardDetails(paymentCards)
         }
+    }
+}
+
+// MARK: - Navigation title scrolling behaviour
+
+extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let titleView: DetailNavigationTitleView = .fromNib()
+        titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
+
+        let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
+        navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
+    }
+}
+
+extension LayoutHelper {
+    struct LoyaltyCardDetail {
+        static let navBarTitleViewScrollOffset: CGFloat = 100
     }
 }

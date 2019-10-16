@@ -86,6 +86,13 @@ extension PaymentWalletViewController: UICollectionViewDataSource, UICollectionV
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let paymentCard = viewModel.card(forIndexPath: indexPath) else {
+            return
+        }
+        viewModel.toPaymentCardDetail(for: paymentCard)
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return LayoutHelper.WalletDimensions.cardSize
     }

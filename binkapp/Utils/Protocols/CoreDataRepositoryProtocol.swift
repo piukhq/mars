@@ -29,7 +29,7 @@ extension CoreDataRepositoryProtocol {
             
             Current.database.performBackgroundTask { context in
                 objects.forEach {
-                    _ = $0.mapToCoreData(context, .delta, overrideID: nil)
+                    _ = $0.mapToCoreData(context, .update, overrideID: nil)
                 }
                 
                 if !recordsToDelete.isEmpty {
