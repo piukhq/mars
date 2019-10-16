@@ -79,7 +79,7 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             let alert = UIAlertController(title: "Edit Email Address", message: "This will overwrite the current logged in email address and reboot the app.", preferredStyle: .alert)
             alert.addTextField { textField in
                 textField.placeholder = "New email address"
-                textField.text = UserDefaults.standard.string(forKey: .userEmail)
+                textField.text = Current.userDefaults.string(forKey: .userEmail)
             }
 
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -91,7 +91,7 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
                     return
                 }
 
-                UserDefaults.standard.setValue(newEmail, forKey: .userEmail)
+                Current.userDefaults.setValue(newEmail, forKey: .userEmail)
             
                 self?.clearMembershipCards {
                     exit(0)

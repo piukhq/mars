@@ -31,7 +31,7 @@ class DebugMenuFactory {
     }
 
     private func makeEmailAddressRow() -> DebugMenuRow {
-        let currentEmailAddress = UserDefaults.standard.string(forKey: .userEmail)
+        let currentEmailAddress = Current.userDefaults.string(forKey: .userEmail)
         return DebugMenuRow(title: "Current email address", subtitle: currentEmailAddress, action: {
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .email)
         })

@@ -53,11 +53,11 @@ final class WalletPromptFactory {
             }
         }
 
-        let hasBeenDismissed = UserDefaults.standard.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: plan)))
+        let hasBeenDismissed = Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: plan)))
         return !hasBeenDismissed && !planExistsInWallet
     }
 
     static private func shouldShowAddPaymentCard() -> Bool {
-        return !UserDefaults.standard.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards))
+        return !Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards))
     }
 }

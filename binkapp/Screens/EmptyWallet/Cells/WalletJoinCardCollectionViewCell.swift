@@ -35,7 +35,7 @@ class WalletJoinCardCollectionViewCell: WalletCardCollectionViewCell {
     }
 
     @IBAction private func dismissButtonWasPressed() {
-        UserDefaults.standard.set(true, forKey: walletPrompt.userDefaultsDismissKey)
+        Current.userDefaults.set(true, forKey: walletPrompt.userDefaultsDismissKey)
         Current.wallet.refreshLocal()
     }
 }
