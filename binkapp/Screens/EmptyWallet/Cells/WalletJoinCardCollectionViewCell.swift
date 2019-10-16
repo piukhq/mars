@@ -51,27 +51,31 @@ final class JoinCardFactory {
             guard let plans = Current.wallet.membershipPlans else {
                 return joinCards
             }
-            guard let membershipCards = Current.wallet.membershipCards else {
-                return joinCards
-            }
 
             plans.filter({ $0.featureSet?.planCardType == .link }).forEach { plan in
-                var planExistsInWallet = false
-                membershipCards.forEach {
-                    if plan == $0.membershipPlan {
-                        planExistsInWallet = true
-                    }
-                }
-                
-                let planJoinCardHasBeenDismissed = UserDefaults.standard.bool(forKey: JoinCard.userDefaultsKey(forPlan: plan))
-
-                if !planJoinCardHasBeenDismissed && !planExistsInWallet {
+                if shouldShowJoinCard(forMembershipPlan: plan) {
                     joinCards.append(JoinCard(membershipPlan: plan))
                 }
             }
         }
 
         return joinCards
+    }
+
+    static private func shouldShowJoinCard(forMembershipPlan plan: CD_MembershipPlan) -> Bool {
+        guard let membershipCards = Current.wallet.membershipCards else {
+            return false
+        }
+
+        var planExistsInWallet = false
+        membershipCards.forEach {
+            if plan == $0.membershipPlan {
+                planExistsInWallet = true
+            }
+        }
+
+        let planJoinCardHasBeenDismissed = UserDefaults.standard.bool(forKey: JoinCard.userDefaultsKey(forPlan: plan))
+        return !planJoinCardHasBeenDismissed && !planExistsInWallet
     }
 }
 
