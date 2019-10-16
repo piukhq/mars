@@ -30,7 +30,9 @@ final class WalletPromptFactory {
             }
 
             // add payment cards prompt
-            walletPrompts.append(WalletPrompt(type: .addPaymentCards))
+            if shouldShowAddPaymentCard() {
+                walletPrompts.append(WalletPrompt(type: .addPaymentCards))
+            }
         }
 
         return walletPrompts
@@ -48,7 +50,11 @@ final class WalletPromptFactory {
             }
         }
 
-        let planJoinCardHasBeenDismissed = UserDefaults.standard.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: plan)))
-        return !planJoinCardHasBeenDismissed && !planExistsInWallet
+        let hasBeenDismissed = UserDefaults.standard.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: plan)))
+        return !hasBeenDismissed && !planExistsInWallet
+    }
+
+    static private func shouldShowAddPaymentCard() -> Bool {
+        return !UserDefaults.standard.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards))
     }
 }
