@@ -23,7 +23,10 @@ final class WalletPromptFactory {
             }
 
             // join cards
-            plans.filter({ $0.featureSet?.planCardType == .link }).forEach { plan in
+            let sortedPlans = plans.sorted(by: { (firstPlan, secondPlan) -> Bool in
+                firstPlan.account?.companyName ?? "" < secondPlan.account?.companyName ?? ""
+            })
+            sortedPlans.filter({ $0.featureSet?.planCardType == .link }).forEach { plan in
                 if shouldShowJoinCard(forMembershipPlan: plan) {
                     walletPrompts.append(WalletPrompt(type: .loyaltyJoin(membershipPlan: plan)))
                 }
