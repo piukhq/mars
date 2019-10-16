@@ -61,6 +61,8 @@ class BarcodeViewController: UIViewController {
         titleLabel.text = "card_number_title".localized
         titleLabel.isHidden = maximized
         labelStackView.setCustomSpacing(0.0, after: titleLabel)
+
+        labelStackView.alignment = maximized ? .center : .fill
         
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = maximized ? .black : .blueAccent
@@ -82,10 +84,6 @@ class BarcodeViewController: UIViewController {
         maximiseButton.setTitleColor(.white, for: .normal)
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
-        
-        if isBarcodeFullsize {
-            numberLabel.center.x = barcodeImageView.center.x - 30
-        }
     }
     
     func maximizeBarcode() {
