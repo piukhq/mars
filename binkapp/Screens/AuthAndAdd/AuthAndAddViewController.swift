@@ -14,7 +14,8 @@ class AuthAndAddViewController: BaseFormViewController {
         static let buttonHeight: CGFloat = 52.0
         static let postCollectionViewPadding: CGFloat = 15.0
         static let cardPadding: CGFloat = 30.0
-        static let bottomButtonPadding: CGFloat = 78.0
+        static let bottomButtonPadding: CGFloat = 22.0
+        static let buttonsSpacing: CGFloat = 20
     }
     
     private lazy var brandHeaderView: BrandHeaderView = {
@@ -30,6 +31,16 @@ class AuthAndAddViewController: BaseFormViewController {
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .loginButtonTapped, for: .touchUpInside)
         button.isEnabled = false
+        view.addSubview(button)
+        return button
+    }()
+    
+    private lazy var accountButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("no_account_button_title".localized, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: .accountButtonTapped, for: .touchUpInside)
         view.addSubview(button)
         return button
     }()
@@ -72,9 +83,14 @@ class AuthAndAddViewController: BaseFormViewController {
     
     func configureLayout() {
         NSLayoutConstraint.activate([
+            accountButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: Constants.buttonWidthPercentage),
+            accountButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            accountButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.bottomButtonPadding),
+            accountButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
             loginButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: Constants.buttonWidthPercentage),
             loginButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
-            loginButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.bottomButtonPadding),
+            loginButton.bottomAnchor.constraint(equalTo: accountButton.topAnchor, constant: -Constants.buttonsSpacing),
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
             ])
     }
@@ -106,6 +122,10 @@ class AuthAndAddViewController: BaseFormViewController {
         viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
     }
     
+    @objc func accountButtonTapped() {
+        viewModel.displaySimplePopup(title: "Button is active but screen is not implemented", message: nil)
+    }
+    
     override func formValidityUpdated(fullFormIsValid: Bool) {
         loginButton.isEnabled = fullFormIsValid
     }
@@ -125,4 +145,5 @@ extension AuthAndAddViewController: LoyaltyButtonDelegate {
 
 private extension Selector {
     static let loginButtonTapped = #selector(AuthAndAddViewController.loginButtonTapped)
+    static let accountButtonTapped = #selector(AuthAndAddViewController.accountButtonTapped)
 }
