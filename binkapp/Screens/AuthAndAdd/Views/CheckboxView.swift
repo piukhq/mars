@@ -40,10 +40,6 @@ class CheckboxView: CustomView {
 
 extension CheckboxView: InputValidation {
     var isValid: Bool {
-//        let isChecked = checkboxView.checkState == .checked
-//
-//        guard let columnType = columnKind, let columnName = title else { return false }
-//        delegate?.checkboxView(self, didCompleteWithColumn: columnName, value: String(isChecked), fieldType: columnType)
         return checkboxView.checkState == .checked
     }
     
