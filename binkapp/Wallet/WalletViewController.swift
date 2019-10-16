@@ -96,7 +96,11 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return LayoutHelper.WalletDimensions.cardSize
+        if indexPath.row < viewModel.joinCardCount {
+            return LayoutHelper.WalletDimensions.joinCardSize
+        } else {
+            return LayoutHelper.WalletDimensions.cardSize
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -113,6 +117,5 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
 
             viewModel.toCardDetail(for: card)
         }
-
     }
 }

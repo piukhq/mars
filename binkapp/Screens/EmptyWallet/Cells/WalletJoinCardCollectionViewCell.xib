@@ -19,14 +19,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="WalletJoinCardCollectionViewCell" customModule="binkapp" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="360" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="360" height="100"/>
+                <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jpz-VD-l7V">
-                        <rect key="frame" x="0.0" y="0.0" width="360" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AmH-Y0-910">
                                 <rect key="frame" x="20" y="20" width="60" height="60"/>
@@ -36,13 +36,13 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link this card to your payment cards to automatically collect rewards." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOM-Yi-6H3">
-                                <rect key="frame" x="95" y="42" width="244" height="41"/>
+                                <rect key="frame" x="95" y="42" width="284" height="41"/>
                                 <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Co-op Membership Card" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beb-B2-R6Y">
-                                <rect key="frame" x="95" y="19" width="203.5" height="23"/>
+                                <rect key="frame" x="95" y="19" width="243.5" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="u40-7v-Its"/>
                                 </constraints>
@@ -51,7 +51,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5RO-Fi-2MV">
-                                <rect key="frame" x="328" y="22" width="12" height="12"/>
+                                <rect key="frame" x="368" y="22" width="12" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="12" id="6Ct-kn-3kz"/>
                                     <constraint firstAttribute="height" constant="12" id="qvd-Ym-5Wc"/>
@@ -64,6 +64,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="aOM-Yi-6H3" secondAttribute="bottom" constant="17" id="0ER-rM-7na"/>
                             <constraint firstItem="aOM-Yi-6H3" firstAttribute="leading" secondItem="AmH-Y0-910" secondAttribute="trailing" constant="15" id="6AG-67-Yp6"/>
                             <constraint firstItem="AmH-Y0-910" firstAttribute="centerY" secondItem="jpz-VD-l7V" secondAttribute="centerY" id="7rR-EL-vih"/>
                             <constraint firstAttribute="trailing" secondItem="aOM-Yi-6H3" secondAttribute="trailing" constant="21" id="BD1-0Q-ueq"/>
@@ -85,14 +86,14 @@
                 <constraint firstAttribute="trailing" secondItem="jpz-VD-l7V" secondAttribute="trailing" id="rgc-Hd-x39"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="360" height="100"/>
+            <size key="customSize" width="400" height="100"/>
             <connections>
                 <outlet property="brandIconImageView" destination="AmH-Y0-910" id="9HG-vA-sel"/>
                 <outlet property="containerView" destination="jpz-VD-l7V" id="H61-cy-s8h"/>
                 <outlet property="detailLabel" destination="aOM-Yi-6H3" id="OwP-Xn-L68"/>
                 <outlet property="titleLabel" destination="beb-B2-R6Y" id="Y3Q-F3-b6n"/>
             </connections>
-            <point key="canvasLocation" x="362.31884057971018" y="169.41964285714286"/>
+            <point key="canvasLocation" x="391.304347826087" y="169.41964285714286"/>
         </collectionViewCell>
     </objects>
     <resources>

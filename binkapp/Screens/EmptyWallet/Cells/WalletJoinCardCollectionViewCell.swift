@@ -47,17 +47,25 @@ final class JoinCardFactory {
     static func makeJoinCards(forWallet walletType: WalletType) -> [JoinCard] {
         var joinCards: [JoinCard] = []
 
-        // Decisioning for whether to show join card for plan
-
         if walletType == .loyalty {
             guard let plans = Current.wallet.membershipPlans else {
                 return joinCards
             }
+            guard let membershipCards = Current.wallet.membershipCards else {
+                return joinCards
+            }
 
             plans.filter({ $0.featureSet?.planCardType == .link }).forEach { plan in
+                var planExistsInWallet = false
+                membershipCards.forEach {
+                    if plan == $0.membershipPlan {
+                        planExistsInWallet = true
+                    }
+                }
+                
                 let planJoinCardHasBeenDismissed = UserDefaults.standard.bool(forKey: JoinCard.userDefaultsKey(forPlan: plan))
-                print("\(plan.account?.planName ?? "") has been dismissed: \(planJoinCardHasBeenDismissed)")
-                if !planJoinCardHasBeenDismissed {
+
+                if !planJoinCardHasBeenDismissed && !planExistsInWallet {
                     joinCards.append(JoinCard(membershipPlan: plan))
                 }
             }
