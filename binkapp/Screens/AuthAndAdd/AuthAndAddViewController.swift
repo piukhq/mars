@@ -26,7 +26,7 @@ class AuthAndAddViewController: BaseFormViewController {
     private lazy var loginButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Login", for: .normal)
+        button.setTitle("login".localized, for: .normal)
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .loginButtonTapped, for: .touchUpInside)
         button.isEnabled = false
@@ -35,13 +35,11 @@ class AuthAndAddViewController: BaseFormViewController {
     }()
     
     private let viewModel: AuthAndAddViewModel
-    private var isKeyboardOpen = false
-    private var fieldsViews: [InputValidation] = []
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan())
-        super.init(title: "Log in", description: "", dataSource: datasource)
+        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose)
+        super.init(title: "login".localized, description: "", dataSource: datasource)
         dataSource.delegate = self
     }
     
@@ -84,14 +82,14 @@ class AuthAndAddViewController: BaseFormViewController {
         
         brandHeaderView.configure(imageURLString: ((membershipPlan.firstIconImage()?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
         
-        titleLabel.text = "log_in_title".localized
+        titleLabel.text = viewModel.title
         titleLabel.font = UIFont.headline
         
-        if let planName = membershipPlan.account?.planName {
-            descriptionLabel.text = String(format: "auth_screen_description".localized, planName)
-            descriptionLabel.font = UIFont.bodyTextLarge
-            descriptionLabel.isHidden = false
-        }
+        descriptionLabel.text = viewModel.getDescription()
+        descriptionLabel.font = UIFont.bodyTextLarge
+        descriptionLabel.isHidden = viewModel.getDescription() == nil
+        
+        loginButton.setTitle(viewModel.buttonTitle, for: .normal)
     }
     
     @objc func popViewController() {
@@ -103,7 +101,7 @@ class AuthAndAddViewController: BaseFormViewController {
     }
         
     @objc func loginButtonTapped() {
-        viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
+        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
