@@ -42,6 +42,10 @@ class Wallet: CoreDataRepositoryProtocol {
         loadWallet(forType: .local)
     }
 
+    var hasPaymentCards: Bool {
+        return paymentCards != nil && paymentCards?.count != 0
+    }
+
     // MARK: - Private
 
     private func loadWallet(forType type: FetchType, completion: (() -> Void)? = nil) {

@@ -58,6 +58,6 @@ final class WalletPromptFactory {
     }
 
     static private func shouldShowAddPaymentCard() -> Bool {
-        return !Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards))
+        return !Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards)) && !Current.wallet.hasPaymentCards
     }
 }

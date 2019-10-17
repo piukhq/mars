@@ -54,7 +54,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .loyaltyJoin(let membershipPlan):
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan)
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .firstLogin)
         case .addPaymentCards:
             router.toAddPaymentViewController()
         }
