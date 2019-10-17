@@ -15,7 +15,7 @@ class PaymentCardCellViewModelTests: XCTestCase {
     var basePaymentCard: PaymentCardModel!
 
     override func setUp() {
-        basePaymentCard = PaymentCardModel(apiId: 0, membershipCards: nil, status: "active", card: PaymentCardCardResponse(), images: nil, account: PaymentCardAccountResponse())
+        basePaymentCard = PaymentCardModel(apiId: nil, membershipCards: nil, status: nil, card: PaymentCardCardResponse(), images: nil, account: PaymentCardAccountResponse())
     }
 
     func test_nameOnCard() {
@@ -24,7 +24,7 @@ class PaymentCardCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.nameOnCardText, "Nick Farrant")
     }
 
-    func test_redactedCardNumber() {
+    func test_cardNumberText() {
         basePaymentCard.card?.lastFour = "4444"
         let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
         XCTAssertEqual(sut.cardNumberText, "••••   ••••   ••••   4444")
@@ -51,7 +51,8 @@ class PaymentCardCellViewModelTests: XCTestCase {
 
     func test_paymentCardIsLinkedToMembershipCards_isCorrect_whenLinked() {
         basePaymentCard.membershipCards = [
-            LinkedCardResponse(id: 1, activeLink: true)
+            LinkedCardResponse(id: 1, activeLink: true),
+            LinkedCardResponse(id: 1, activeLink: false),
         ]
         let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
         XCTAssertTrue(sut.paymentCardIsLinkedToMembershipCards)
