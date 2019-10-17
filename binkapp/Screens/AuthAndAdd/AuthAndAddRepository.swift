@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct AddMembershipCardRequest {
+    let jsonCard: [String: Any]
+    let completion: (CD_MembershipCard?) -> Void
+    let onError: (Error) -> Void
+}
+
 class AuthAndAddRepository {
     private let apiManager: ApiManager
     
@@ -14,10 +20,10 @@ class AuthAndAddRepository {
         self.apiManager = apiManager
     }
     
-    func addMembershipCard(jsonCard: [String: Any], completion: @escaping (CD_MembershipCard?) -> Void) throws {
+    func addMembershipCard(request: AddMembershipCardRequest) {
         let url = RequestURL.membershipCards
         let method = RequestHTTPMethod.post
-        apiManager.doRequest(url: url, httpMethod: method, parameters: jsonCard, onSuccess: { (response: MembershipCardModel) in
+        apiManager.doRequest(url: url, httpMethod: method, parameters: request.jsonCard, onSuccess: { (response: MembershipCardModel) in
             // Map to core data
             Current.database.performBackgroundTask { context in
                 let newObject = response.mapToCoreData(context, .none, overrideID: nil)
@@ -26,13 +32,13 @@ class AuthAndAddRepository {
                 
                 DispatchQueue.main.async {
                     Current.database.performTask(with: newObject) { (context, safeObject) in
-                        completion(safeObject)
+                        request.completion(safeObject)
                     }
                 }
             }
         }, onError: { error in
             print(error)
-            completion(nil)
+            request.onError(error)
         })
     }
 }

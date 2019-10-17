@@ -43,14 +43,24 @@ class LoginTextFieldView: CustomView {
 
 extension LoginTextFieldView: InputValidation {
     var isValid: Bool {
-        guard let regEx = validationRegEx, !regEx.isEmpty else { return true }
-        let predicate = NSPredicate(format: "SELF MATCHES %@", regEx)
-        if predicate.evaluate(with: textField.text) == true {
-            if let fType = fieldType {
-                delegate?.loginTextFieldView(self, didCompleteWithColumn: title, value: textField.text ?? "", fieldType: fType)
-                return true
-            }
+        guard let regEx = validationRegEx, !regEx.isEmpty else {
+            titleLabel.textColor = .black
+            return true
         }
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regEx)
+        
+        guard predicate.evaluate(with: textField.text) == true else {
+            titleLabel.textColor = .red
+            return false
+        }
+        
+        if let fType = fieldType {
+            delegate?.loginTextFieldView(self, didCompleteWithColumn: title, value: textField.text ?? "", fieldType: fType)
+            titleLabel.textColor = .black
+            return true
+        }
+        
+        titleLabel.textColor = .red
         return false
     }
     
@@ -63,7 +73,6 @@ extension LoginTextFieldView: UITextFieldDelegate {
             delegate?.loginTextFieldView(self, didCompleteWithColumn: title, value: textField.text ?? "", fieldType: fType)
         } else {
             print("IT IS NOT VALID")
-            titleLabel.textColor = .red
         }
     }
     
