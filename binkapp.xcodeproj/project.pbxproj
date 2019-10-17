@@ -81,6 +81,7 @@
 		3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */; };
 		3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */; };
 		3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */; };
+		3CD2CBBF2346059100862A5A /* EnrolFieldPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD2CBBE2346059100862A5A /* EnrolFieldPostModel.swift */; };
 		3CD3493222F99E1D000C1F4D /* NunitoSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492322F99E1D000C1F4D /* NunitoSans-LightItalic.ttf */; };
 		3CD3493322F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492422F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf */; };
 		3CD3493422F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CD3492522F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf */; };
@@ -423,6 +424,7 @@
 		3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewController.xib; sourceTree = "<group>"; };
 		3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModel.swift; sourceTree = "<group>"; };
 		3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+binkapp.swift"; sourceTree = "<group>"; };
+		3CD2CBBE2346059100862A5A /* EnrolFieldPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrolFieldPostModel.swift; sourceTree = "<group>"; };
 		3CD3492322F99E1D000C1F4D /* NunitoSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-LightItalic.ttf"; sourceTree = "<group>"; };
 		3CD3492422F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		3CD3492522F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans-ExtraLight.ttf"; sourceTree = "<group>"; };
@@ -783,6 +785,7 @@
 				3C2C90FA23191CF700D112E3 /* AuthoriseFieldPostModel.swift */,
 				3C2C90FC23193F0000D112E3 /* MembershipCardPostModel.swift */,
 				3C2C90FE23193F6700D112E3 /* AccountPostModel.swift */,
+				3CD2CBBE2346059100862A5A /* EnrolFieldPostModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2218,6 +2221,7 @@
 				EFF59F15234B71B400CF3992 /* LinkedLoyaltyCardTableViewCell.swift in Sources */,
 				B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */,
 				EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */,
+				3CD2CBBF2346059100862A5A /* EnrolFieldPostModel.swift in Sources */,
 				3C4BE8C8233B590100EC4BF6 /* ReusableModalViewModel.swift in Sources */,
 				EF8BF1FB234147F500D2E5F3 /* PaymentCardAccountResponse.swift in Sources */,
 				EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */,

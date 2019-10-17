@@ -129,9 +129,9 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, isFirstAuth: Bool = true) {
+    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose) {
         let repository = AuthAndAddRepository(apiManager: apiManager)
-        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, isFirstAuth: isFirstAuth)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: formPurpose)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
@@ -216,7 +216,6 @@ class MainScreenRouter {
     func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     

@@ -48,6 +48,7 @@ class DropdownView: CustomView {
 
 extension DropdownView: InputValidation {
     var isValid: Bool {
+        titleLabel.textColor = selectedOption != nil ? .black : .red
         return selectedOption != nil
     }
 }

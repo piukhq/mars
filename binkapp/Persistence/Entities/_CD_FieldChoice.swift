@@ -11,6 +11,7 @@ public enum CD_FieldChoiceAttributes: String {
 public enum CD_FieldChoiceRelationships: String {
     case addField = "addField"
     case authoriseField = "authoriseField"
+    case enrolField = "enrolField"
 }
 
 open class _CD_FieldChoice: CD_BaseObject {
@@ -53,6 +54,9 @@ open class _CD_FieldChoice: CD_BaseObject {
 
     @NSManaged open
     var authoriseField: CD_AuthoriseField?
+
+    @NSManaged open
+    var enrolField: CD_EnrolField?
 
 }
 
