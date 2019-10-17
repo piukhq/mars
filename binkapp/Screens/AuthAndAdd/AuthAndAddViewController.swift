@@ -106,6 +106,8 @@ class AuthAndAddViewController: BaseFormViewController {
         descriptionLabel.isHidden = viewModel.getDescription() == nil
         
         loginButton.setTitle(viewModel.buttonTitle, for: .normal)
+        
+        accountButton.isHidden = viewModel.formPurpose != .firstLogin
     }
     
     @objc func popViewController() {
@@ -121,7 +123,13 @@ class AuthAndAddViewController: BaseFormViewController {
     }
     
     @objc func accountButtonTapped() {
-        viewModel.displaySimplePopup(title: "Button is active but screen is not implemented", message: nil)
+        let fields = viewModel.getMembershipPlan().featureSet?.linkingSupport.allObjects as! [LinkingSupportType]
+        if fields.contains(LinkingSupportType.registration) {
+            viewModel.displaySimplePopup(title: "Button is active but screen is not implemented", message: nil)
+        } else {
+            viewModel.displaySimplePopup(title: "Button is active but screen is not implemented", message: nil)
+        }
+        
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
