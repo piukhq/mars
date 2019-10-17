@@ -8,7 +8,7 @@
 
 import XCTest
 import CoreData
-@testable import binkapp_α
+@testable import binkapp
 
 class PaymentCardCellViewModelTests: XCTestCase {
 

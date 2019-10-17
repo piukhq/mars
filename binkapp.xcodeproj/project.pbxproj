@@ -2513,6 +2513,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.alpha;
+				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME) α";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.neo.alpha";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
@@ -2550,6 +2551,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.beta;
+				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME) β";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.beta";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -2746,6 +2748,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.mr;
+				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME) MR";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.mr";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -2891,6 +2894,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.nightly;
+				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME) nightly";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.nightly";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -3027,6 +3031,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
+				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.neo";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
@@ -3163,6 +3168,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.gamma;
+				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.gamma";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
@@ -3299,6 +3305,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
+				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
