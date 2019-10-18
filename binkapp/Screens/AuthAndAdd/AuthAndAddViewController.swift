@@ -123,8 +123,8 @@ class AuthAndAddViewController: BaseFormViewController {
     }
     
     @objc func accountButtonTapped() {
-        let fields = viewModel.getMembershipPlan().featureSet?.linkingSupport.allObjects as! [LinkingSupportType]
-        if fields.contains(LinkingSupportType.registration) {
+        let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
+        if !fields!.isEmpty {
             viewModel.displaySimplePopup(title: "Button is active but screen is not implemented", message: nil)
         } else {
             viewModel.displaySimplePopup(title: "Button is active but screen is not implemented", message: nil)
