@@ -2376,7 +2376,7 @@
 /* Begin XCBuildConfiguration section */
 		5ECE049122CE579B001BA964 /* Alpha */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD3CB9442328574A005C37AE /* Staging.xcconfig */;
+			baseConfigurationReference = BD3CB9432328573C005C37AE /* Dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
