@@ -1,7 +1,11 @@
 import Foundation
 
 @objc(CD_MembershipCard)
-open class CD_MembershipCard: _CD_MembershipCard {
+open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
+    var type: WalletCardType {
+        return .loyalty
+    }
+
 	// Custom logic goes here.
     var formattedBalances: Set<CD_MembershipCardBalance>? {
         return balances as? Set<CD_MembershipCardBalance>

@@ -45,6 +45,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="boF-NX-uce" customClass="RectangleView" customModule="binkapp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="365" height="120"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wQ-yx-2v3" customClass="RectangleView" customModule="binkapp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="-4" width="365" height="128"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XSF-3v-XU7">
                                 <rect key="frame" x="329" y="88" width="16" height="16"/>
                                 <constraints>
@@ -113,12 +117,16 @@
                             <constraint firstItem="2il-5O-A8c" firstAttribute="leading" secondItem="boF-NX-uce" secondAttribute="leading" constant="20" id="ACz-PF-v16"/>
                             <constraint firstAttribute="bottom" secondItem="XSF-3v-XU7" secondAttribute="bottom" constant="16" id="Aow-YE-k0n"/>
                             <constraint firstItem="iaS-OT-dXC" firstAttribute="leading" secondItem="2il-5O-A8c" secondAttribute="trailing" constant="8" id="DYx-O5-Pef"/>
+                            <constraint firstAttribute="bottom" secondItem="3wQ-yx-2v3" secondAttribute="bottom" constant="-4" id="EJV-Ho-KE3"/>
                             <constraint firstAttribute="trailing" secondItem="40K-eq-Rsb" secondAttribute="trailing" constant="20" id="JDG-fk-iud"/>
+                            <constraint firstItem="3wQ-yx-2v3" firstAttribute="leading" secondItem="boF-NX-uce" secondAttribute="leading" id="WtK-eE-fOm"/>
+                            <constraint firstItem="3wQ-yx-2v3" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" constant="-4" id="XuJ-7J-oAr"/>
                             <constraint firstAttribute="trailing" secondItem="XSF-3v-XU7" secondAttribute="trailing" constant="20" id="dua-DX-tIV"/>
                             <constraint firstItem="6Ln-ov-l0D" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" constant="18" id="gbe-50-MRJ"/>
                             <constraint firstAttribute="trailing" secondItem="1AT-4M-cCB" secondAttribute="trailing" constant="20" id="h7I-kq-IRG"/>
                             <constraint firstItem="UEC-Ml-S8b" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" constant="18" id="iUC-qo-fFG"/>
                             <constraint firstAttribute="trailing" secondItem="UEC-Ml-S8b" secondAttribute="trailing" constant="20" id="ltx-zN-ivF"/>
+                            <constraint firstAttribute="trailing" secondItem="3wQ-yx-2v3" secondAttribute="trailing" id="qfp-UH-AVH"/>
                             <constraint firstItem="1AT-4M-cCB" firstAttribute="leading" secondItem="2il-5O-A8c" secondAttribute="trailing" constant="60" id="rTp-qt-dTB"/>
                             <constraint firstItem="40K-eq-Rsb" firstAttribute="top" secondItem="6Ln-ov-l0D" secondAttribute="bottom" id="rpS-HC-1Qh"/>
                             <constraint firstItem="iaS-OT-dXC" firstAttribute="centerY" secondItem="XSF-3v-XU7" secondAttribute="centerY" id="vIf-pO-P4X"/>
@@ -144,7 +152,6 @@
             <viewLayoutGuide key="safeArea" id="ZvJ-Je-wpk"/>
             <connections>
                 <outlet property="barcodeButton" destination="GGo-kk-sli" id="Tjc-aX-VXr"/>
-                <outlet property="cardContainer" destination="boF-NX-uce" id="prY-AA-rrv"/>
                 <outlet property="cardContainerCenterXConstraint" destination="deo-p9-Of0" id="Fmb-fC-udb"/>
                 <outlet property="cardIconImageView" destination="2il-5O-A8c" id="k7o-5a-iha"/>
                 <outlet property="cardLinkStatusImage" destination="XSF-3v-XU7" id="hfi-s1-Pxs"/>
@@ -152,8 +159,10 @@
                 <outlet property="cardNameLabel" destination="1AT-4M-cCB" id="pVh-TR-kLX"/>
                 <outlet property="cardValuePointsLabel" destination="6Ln-ov-l0D" id="TaQ-3y-bap"/>
                 <outlet property="cardValueSuffixLabel" destination="40K-eq-Rsb" id="5zk-aA-qra"/>
+                <outlet property="containerView" destination="boF-NX-uce" id="YB8-bC-TC3"/>
                 <outlet property="deleteButton" destination="nlL-P9-bge" id="9NQ-Lj-f0y"/>
                 <outlet property="logInAlert" destination="UEC-Ml-S8b" id="SBl-aw-HWf"/>
+                <outlet property="rectangleView" destination="3wQ-yx-2v3" id="IcS-qw-Nhj"/>
             </connections>
             <point key="canvasLocation" x="123.91304347826087" y="150.66964285714286"/>
         </collectionViewCell>

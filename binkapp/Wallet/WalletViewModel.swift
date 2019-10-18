@@ -15,17 +15,26 @@ protocol WalletViewModel {
     init(repository: R, router: MainScreenRouter)
     var cards: [T]? { get }
     var cardCount: Int { get }
+    var walletPromptsCount: Int { get }
+    var walletPrompts: [WalletPrompt]? { get }
     func card(forIndexPath indexPath: IndexPath) -> T?
     func reloadWallet()
+    func refreshLocalWallet()
+    func toCardDetail(for card: T)
+    func didSelectWalletPrompt(_ walletPrompt: WalletPrompt)
 }
 
 extension WalletViewModel {
+    var walletPromptsCount: Int {
+        return walletPrompts?.count ?? 0
+    }
+
     var cardCount: Int {
         return cards?.count ?? 0
     }
 
     func card(forIndexPath indexPath: IndexPath) -> T? {
-        return cards?[indexPath.row]
+        return cards?[safe: indexPath.row - walletPromptsCount]
     }
 
     func reloadWallet() {

@@ -8,8 +8,7 @@
 
 import UIKit
 
-class PaymentCardCollectionViewCell: UICollectionViewCell {
-    @IBOutlet private weak var containerView: UIView!
+class PaymentCardCollectionViewCell: WalletCardCollectionViewCell {
     @IBOutlet private weak var nameOnCardLabel: UILabel!
     @IBOutlet private weak var cardNumberLabel: UILabel!
     @IBOutlet private weak var pllStatusLabel: UILabel!
@@ -20,6 +19,13 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
 
     private var gradientLayer: CAGradientLayer?
     private var viewModel: PaymentCardCellViewModel!
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        alertView.isHidden = true
+        pllStatusLabel.isHidden = false
+        linkedStatusImageView.isHidden = false
+    }
 
     func configureWithViewModel(_ viewModel: PaymentCardCellViewModel) {
         self.viewModel = viewModel
@@ -41,8 +47,8 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         configureForProvider(cardType: viewModel.cardType)
 
         setLabelStyling()
-        setupShadow()
         pllStatusLabel.isHidden = true
+        setupShadow()
     }
     
     private func cardNumberAttributedString(for incompletePan: String, type: PaymentCardType?) -> NSAttributedString? {
@@ -168,19 +174,4 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
         gradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
         gradientLayer?.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
     }
-
-    private func setupShadow() {
-        containerView.layer.cornerRadius = 8
-        containerView.layer.masksToBounds = true
-        contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 8
-        layer.shadowOffset = CGSize(width: 0, height: 3)
-        layer.shadowRadius = 3
-        layer.shadowOpacity = 0.3
-        layer.shadowPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: 8, height: 8)).cgPath
-        layer.shouldRasterize = true
-        layer.rasterizationScale = UIScreen.main.scale
-        clipsToBounds = false
-    }
-
 }

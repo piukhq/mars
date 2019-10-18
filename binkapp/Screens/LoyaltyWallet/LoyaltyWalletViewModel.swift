@@ -22,6 +22,10 @@ class LoyaltyWalletViewModel: WalletViewModel {
         self.router = router
     }
 
+    var walletPrompts: [WalletPrompt]? {
+        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
+    }
+
     var cards: [CD_MembershipCard]? {
         return Current.wallet.membershipCards
     }
@@ -33,8 +37,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
         router.toBarcodeViewController(membershipCard: card, completion: completion)
     }
 
-    func toFullDetailsCardScreen(membershipCard: CD_MembershipCard) {
-        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
+    func toCardDetail(for card: CD_MembershipCard) {
+        router.toLoyaltyFullDetailsScreen(membershipCard: card)
     }
 
     func showDeleteConfirmationAlert(card: CD_MembershipCard, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
@@ -45,5 +49,15 @@ class LoyaltyWalletViewModel: WalletViewModel {
                 noCompletion()
             }
         })
+    }
+
+    func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
+        switch walletPrompt.type {
+        case .loyaltyJoin(let membershipPlan):
+            router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+        case .addPaymentCards:
+            router.toAddPaymentViewController()
+        }
+
     }
 }

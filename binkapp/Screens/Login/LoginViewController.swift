@@ -12,8 +12,8 @@ class LoginViewController: UIViewController {
     private let fallbackUserEmail = "Bink20iteration1@testbink.com"
 
     private var userEmail: String {
-        guard let userEmail = UserDefaults.standard.string(forKey: .userEmail) else {
-            UserDefaults.standard.setValue(fallbackUserEmail, forKey: .userEmail)
+        guard let userEmail = Current.userDefaults.string(forKey: "userEmail") else {
+            Current.userDefaults.set(fallbackUserEmail, forKey: "userEmail")
             return fallbackUserEmail
         }
         return userEmail
