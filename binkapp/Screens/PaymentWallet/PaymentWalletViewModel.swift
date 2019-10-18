@@ -33,6 +33,6 @@ struct PaymentWalletViewModel: WalletViewModel {
     }
 
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
-        //
+        // TODO: Implement as part of IB20-167
     }
 }
