@@ -76,7 +76,11 @@ class AuthAndAddViewModel {
                         
         try? repository.addMembershipCard(jsonCard: membershipCard.asDictionary(), completion: { card in
             if let card = card {
-                self.router.toPllViewController(membershipCard: card, membershipPlan: self.membershipPlan)
+                if card.membershipPlan?.featureSet?.planCardType == .link {
+                    self.router.toPllViewController(membershipCard: card, isAddJourney: true)
+                } else {
+                    self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+                }
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
         })

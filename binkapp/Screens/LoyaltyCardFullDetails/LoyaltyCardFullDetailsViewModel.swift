@@ -64,14 +64,10 @@ class LoyaltyCardFullDetailsViewModel {
             router.toSimpleInfoViewController(pendingType: .register)
             break
         case .pllEmpty:
-            if let membershipPlan = membershipCard.membershipPlan {
-                router.toPllViewController(membershipCard: membershipCard, membershipPlan: membershipPlan)
-            }
+            router.toPllViewController(membershipCard: membershipCard, isAddJourney: false)
             break
         case .pll:
-            if let membershipPlan = membershipCard.membershipPlan {
-                router.toPllViewController(membershipCard: membershipCard, membershipPlan: membershipPlan, paymentCards: self.paymentCards)
-            }
+            router.toPllViewController(membershipCard: membershipCard, paymentCards: self.paymentCards, isAddJourney: false)
             break
         case .unLinkable:
             toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)

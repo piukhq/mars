@@ -15,7 +15,7 @@ class PLLScreenRepository {
         self.apiManager = apiManager
     }
     
-    func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, completion: @escaping (CD_PaymentCard?) -> Void) {
+    func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping (Error) -> Void) {
         let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
         let method: RequestHTTPMethod = .patch
         
@@ -33,16 +33,16 @@ class PLLScreenRepository {
                 DispatchQueue.main.async {
                     Current.database.performTask { context in
                         let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
-                        completion(fetchedObject)
+                        onSuccess(fetchedObject)
                     }
                 }
             }
-        }, onError: { _ in
-            completion(nil)
+        }, onError: { error in
+            onError(error)
         })
     }
     
-    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping () -> Void) {
+    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, onSuccess: @escaping () -> Void, onError: @escaping(Error) -> Void) {
         let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id)
         let method: RequestHTTPMethod = .delete
         
@@ -53,11 +53,11 @@ class PLLScreenRepository {
                 try? context.save()
                 
                 DispatchQueue.main.async {
-                    completion()
+                    onSuccess()
                 }
             }
-        }, onError: { _ in
-            completion()
+        }, onError: { error in
+            onError(error)
         })
     }
 }

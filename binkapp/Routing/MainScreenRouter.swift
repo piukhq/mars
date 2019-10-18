@@ -127,9 +127,9 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPllViewController(membershipCard: CD_MembershipCard, membershipPlan: CD_MembershipPlan, paymentCards: [CD_PaymentCard]? = nil) {
+    func toPllViewController(membershipCard: CD_MembershipCard, paymentCards: [CD_PaymentCard]? = nil, isAddJourney: Bool) {
         let repository = PLLScreenRepository(apiManager: apiManager)
-        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, membershipPlan: membershipPlan, repository: repository, router: self)
+        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, repository: repository, router: self, isAddJourney: isAddJourney)
         let viewController = PLLScreenViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }

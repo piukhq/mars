@@ -9,9 +9,9 @@ import Foundation
 
 class PLLScreenViewModel {
     private var membershipCard: CD_MembershipCard
-    private let membershipPlan: CD_MembershipPlan
     private let repository: PLLScreenRepository
     private let router: MainScreenRouter
+    let isAddJourney: Bool
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
     }
@@ -29,18 +29,26 @@ class PLLScreenViewModel {
         return paymentCards
     }
     
-    init(membershipCard: CD_MembershipCard, membershipPlan: CD_MembershipPlan, repository: PLLScreenRepository, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard, repository: PLLScreenRepository, router: MainScreenRouter, isAddJourney: Bool) {
         self.membershipCard = membershipCard
-        self.membershipPlan = membershipPlan
         self.repository = repository
         self.router = router
+        self.isAddJourney = isAddJourney
     }
     
     // MARK:  - Public methods
     
+    func popViewController() {
+        router.popViewController()
+    }
+    
     func addCardToChangedCardsArray(card: CD_PaymentCard) {
         if !(changedLinkCards.contains(card)) {
             changedLinkCards.append(card)
+        } else {
+            if let index = changedLinkCards.firstIndex(of: card) {
+                changedLinkCards.remove(at: index)
+            }
         }
     }
     
@@ -85,15 +93,23 @@ class PLLScreenViewModel {
     }
 }
 
+// MARK: - Private methods
+
 private extension PLLScreenViewModel {
     func linkPaymentpCard(withId paymentCardId: String, completion: @escaping () -> Void) {
-        repository.linkMembershipCard(withId: membershipCard.id, toPaymentCardWithId: paymentCardId) {_ in
+        repository.linkMembershipCard(withId: membershipCard.id, toPaymentCardWithId: paymentCardId, onSuccess: {_ in
             completion()
+        }) { (error) in
+            self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
         }
     }
     
     func removeLinkToPaymentCard(_ paymentCard: CD_PaymentCard, completion: @escaping () -> Void) {
-        repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard, completion: completion)
+        repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard, onSuccess: {
+            completion()
+        }) { (error) in
+            self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+        }
     }
     
     func paymentCardIsLinked(_ paymentCard: CD_PaymentCard) -> Bool {

@@ -14,6 +14,7 @@ class PLLScreenViewController: UIViewController {
     @IBOutlet private weak var secondaryMesageLabel: UILabel!
     @IBOutlet private weak var floatingButtonsView: BinkFloatingButtonsView!
     @IBOutlet private weak var paymentCardsTableView: UITableView!
+    @IBOutlet weak var floatingButtonsViewHeightConstraint: NSLayoutConstraint!
     
     private let viewModel: PLLScreenViewModel
     
@@ -28,6 +29,9 @@ class PLLScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        navigationItem.leftBarButtonItem = backButton
+        
         floatingButtonsView.delegate = self
         configureBrandHeader()
         configureUI()
@@ -79,7 +83,10 @@ extension PLLScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PaymentCardCell", for: indexPath) as! PaymentCardCell
         if let paymentCard = viewModel.paymentCards?[indexPath.row] {
-            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self)
+            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self, isAddJourney: viewModel.isAddJourney)
+            if viewModel.isAddJourney {
+                viewModel.addCardToChangedCardsArray(card: paymentCard)
+            }
         }
         return cell
     }
@@ -88,6 +95,10 @@ extension PLLScreenViewController: UITableViewDataSource {
 // MARK: - Private methods
 
 private extension PLLScreenViewController {
+    @objc func popViewController() {
+        viewModel.popViewController()
+    }
+    
     func reloadContent() {
         viewModel.reloadPaymentCards()
         paymentCardsTableView.reloadData()
@@ -98,18 +109,19 @@ private extension PLLScreenViewController {
         brandHeaderView.configure(imageURLString: membershipPlan.firstIconImage()?.url, loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
     }
     
-    func configureUI(){
-        navigationController?.setNavigationBarHidden(viewModel.isEmptyPll, animated: false)
+    func configureUI() {
+        navigationController?.setNavigationBarHidden(viewModel.isEmptyPll || viewModel.isAddJourney, animated: false)
         titleLabel.text = viewModel.isEmptyPll ? "pll_screen_link_title".localized : "pll_screen_add_title".localized
         primaryMessageLabel.text = viewModel.isEmptyPll ? "pll_screen_link_message".localized : "pll_screen_link_message".localized
-        secondaryMesageLabel.isHidden = viewModel.isEmptyPll
+        secondaryMesageLabel.isHidden = !viewModel.isEmptyPll
         paymentCardsTableView.isHidden = viewModel.isEmptyPll
-        paymentCardsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonsView.frame.size.height, right: 0)
+        floatingButtonsViewHeightConstraint.constant = viewModel.isEmptyPll ? 210.0 : 130.0
+        paymentCardsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonsViewHeightConstraint.constant, right: 0)
         viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: "Add payment cards") : floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: nil)
     }
 }
 
-// MARK: - PaymentCardCellDelegate
+// MARK: - PaymentCardCellDelegat3
 
 extension PLLScreenViewController: PaymentCardCellDelegate {
     func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, cardIndex: Int) {
