@@ -21,7 +21,7 @@ struct TransactionsViewModel {
     
     var description: String {
         if transactions.isEmpty {
-            return "transaction_history_unavailable_description".localized
+            return String(format: "transaction_history_unavailable_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
         }
         return "recent_transaction_history_subtitle".localized
     }

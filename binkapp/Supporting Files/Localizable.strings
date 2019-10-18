@@ -87,7 +87,7 @@
 "privacy_and_security_link" = "here";
 
 "transaction_history_unavailable_title" = "Transaction history unavailable";
-"transaction_history_unavailable_description" = "We are unable to currently show the transaction history for this loyalty scheme yet.";
+"transaction_history_unavailable_description" = "Your %@ history is not available yet.";
 "last_checked" = "Last Checked %@ ago.";
 "day" = "day";
 "days" = "days";
