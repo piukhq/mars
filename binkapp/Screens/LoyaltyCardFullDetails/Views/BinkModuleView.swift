@@ -41,7 +41,7 @@ class BinkModuleView: CustomView {
     private var action: BinkModuleAction?
     private weak var delegate: BinkModuleViewDelegate?
     
-    func configure(moduleType:ModuleType, membershipCard: CD_MembershipCard, paymentCards: [CD_PaymentCard]? = nil, delegate: BinkModuleViewDelegate? = nil) {
+    func configure(moduleType: ModuleType, membershipCard: CD_MembershipCard, paymentCards: [CD_PaymentCard]? = nil, delegate: BinkModuleViewDelegate? = nil) {
         self.delegate = delegate
         layer.shadowColor = UIColor.black.cgColor
         

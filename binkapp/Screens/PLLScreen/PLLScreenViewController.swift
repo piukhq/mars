@@ -14,7 +14,7 @@ class PLLScreenViewController: UIViewController {
     @IBOutlet private weak var secondaryMesageLabel: UILabel!
     @IBOutlet private weak var floatingButtonsView: BinkFloatingButtonsView!
     @IBOutlet private weak var paymentCardsTableView: UITableView!
-    @IBOutlet weak var floatingButtonsViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var floatingButtonsViewHeightConstraint: NSLayoutConstraint!
     
     private let viewModel: PLLScreenViewModel
     
@@ -35,7 +35,7 @@ class PLLScreenViewController: UIViewController {
         floatingButtonsView.delegate = self
         configureBrandHeader()
         configureUI()
-        paymentCardsTableView.register(UINib(nibName: "PaymentCardCell", bundle: Bundle(for: PaymentCardCell.self)), forCellReuseIdentifier: "PaymentCardCell")
+        paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,14 +81,14 @@ extension PLLScreenViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PaymentCardCell", for: indexPath) as! PaymentCardCell
+        let cell: PaymentCardCell = tableView.dequeue(indexPath: indexPath)
         if let paymentCard = viewModel.paymentCards?[indexPath.row] {
             cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self, isAddJourney: viewModel.isAddJourney)
             if viewModel.isAddJourney {
                 viewModel.addCardToChangedCardsArray(card: paymentCard)
             }
         }
-        return cell
+        return cell 
     }
 }
 
@@ -117,7 +117,7 @@ private extension PLLScreenViewController {
         paymentCardsTableView.isHidden = viewModel.isEmptyPll
         floatingButtonsViewHeightConstraint.constant = viewModel.isEmptyPll ? 210.0 : 130.0
         paymentCardsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonsViewHeightConstraint.constant, right: 0)
-        viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: "Add payment cards") : floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: nil)
+        viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: "pll_screen_add_cards_button_title".localized) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil)
     }
 }
 

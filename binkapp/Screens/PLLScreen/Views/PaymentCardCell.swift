@@ -18,8 +18,8 @@ class PaymentCardCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var switchButton: BinkSwitch!
+    private weak var delegate: PaymentCardCellDelegate?
     private let activityIndicator = UIActivityIndicatorView()
-    private var delegate: PaymentCardCellDelegate?
     private var cardIndex = 0
     private var firsUse = true
         
