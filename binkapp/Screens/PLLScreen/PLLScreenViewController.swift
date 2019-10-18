@@ -66,7 +66,7 @@ extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
-        viewModel.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+        viewModel.toAddPaymentCardScreen()
     }
 }
 
@@ -112,7 +112,7 @@ private extension PLLScreenViewController {
     func configureUI() {
         navigationController?.setNavigationBarHidden(viewModel.isEmptyPll || viewModel.isAddJourney, animated: false)
         titleLabel.text = viewModel.isEmptyPll ? "pll_screen_link_title".localized : "pll_screen_add_title".localized
-        primaryMessageLabel.text = viewModel.isEmptyPll ? "pll_screen_link_message".localized : "pll_screen_link_message".localized
+        primaryMessageLabel.text = viewModel.isEmptyPll ? "pll_screen_link_message".localized : "pll_screen_add_message".localized
         secondaryMesageLabel.isHidden = !viewModel.isEmptyPll
         paymentCardsTableView.isHidden = viewModel.isEmptyPll
         floatingButtonsViewHeightConstraint.constant = viewModel.isEmptyPll ? 210.0 : 130.0

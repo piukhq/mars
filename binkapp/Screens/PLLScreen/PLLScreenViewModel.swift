@@ -91,6 +91,10 @@ class PLLScreenViewModel {
     func toFullDetailsCardScreen() {
         router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
     }
+    
+    func toAddPaymentCardScreen() {
+        router.toAddPaymentViewController()
+    }
 }
 
 // MARK: - Private methods
