@@ -124,12 +124,11 @@ class AuthAndAddViewController: BaseFormViewController {
     
     @objc func accountButtonTapped() {
         let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
-        if !fields!.isEmpty {
-            viewModel.displaySimplePopup(title: "Button is active but screen is not implemented", message: nil)
-        } else {
-            viewModel.displaySimplePopup(title: "Button is active but screen is not implemented", message: nil)
+        guard (fields?.contains(where: { $0.value == "REGISTRATION" }) ?? false) else {
+            viewModel.displaySimplePopup(title: "doesn't have registration fields", message: nil)
+            return
         }
-        
+        viewModel.displaySimplePopup(title: "has registration fields", message: nil)
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
