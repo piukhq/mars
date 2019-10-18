@@ -20,10 +20,6 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
 
     private var gradientLayer: CAGradientLayer?
     private var viewModel: PaymentCardCellViewModel!
-    
-    static func loadViewFromNib() -> PaymentCardCollectionViewCell? {
-        return Bundle.main.loadNibNamed(String(describing: self), owner: self, options: nil)?.first as? PaymentCardCollectionViewCell
-    }
 
     func configureWithViewModel(_ viewModel: PaymentCardCellViewModel) {
         self.viewModel = viewModel
@@ -129,7 +125,7 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
     }
 
     private func configurePaymentCardLinkingStatus() {
-        guard !viewModel.paymentCardIsExpired() else {
+        guard !viewModel.paymentCardIsExpired else {
             alertView.configureForType(.paymentExpired) { [weak self] in
                 self?.viewModel.expiredAction()
             }
@@ -144,7 +140,7 @@ class PaymentCardCollectionViewCell: UICollectionViewCell {
     }
 
     private func imageForLinkedStatus() -> UIImage? {
-        return viewModel.paymentCardIsLinkedToMembershipCards() ? UIImage(named: "linked") : UIImage(named: "unlinked")
+        return viewModel.paymentCardIsLinkedToMembershipCards ? UIImage(named: "linked") : UIImage(named: "unlinked")
     }
 
     private func processGradient(type: PaymentCardType?) {

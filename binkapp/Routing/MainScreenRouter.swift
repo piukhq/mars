@@ -120,9 +120,18 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, isFirstAuth: Bool = true) {
+    func toPaymentCardDetailViewController(paymentCard: CD_PaymentCard) {
+        let repository = PaymentCardDetailRepository(apiManager: apiManager)
+        let factory = PaymentCardDetailInformationRowFactory()
+        let viewModel = PaymentCardDetailViewModel(paymentCard: paymentCard, router: self, repository: repository, informationRowFactory: factory)
+        let viewController = PaymentCardDetailViewController(viewModel: viewModel)
+        factory.delegate = viewController
+        navController?.pushViewController(viewController, animated: true)
+    }
+
+    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose) {
         let repository = AuthAndAddRepository(apiManager: apiManager)
-        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, isFirstAuth: isFirstAuth)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: formPurpose)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
@@ -141,27 +150,35 @@ class MainScreenRouter {
     }
     
     func toPaymentTermsAndConditionsViewController(delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
-        let screenText = "terms_and_conditions_title".localized + "\n" + "lorem_ipsum".localized
+        let title = "terms_and_conditions_title".localized
+        let screenText = title + "\n" + "lorem_ipsum".localized
         
         let attributedText = NSMutableAttributedString(string: screenText)
         
         attributedText.addAttribute(
             NSAttributedString.Key.font,
             value: UIFont.headline,
-            range: NSRange(location: 0, length: ("terms_and_conditions_title".localized).count)
+            range: NSRange(location: 0, length: title.count)
         )
         
         attributedText.addAttribute(
             NSAttributedString.Key.font,
             value: UIFont.bodyTextLarge,
-            range: NSRange(location: ("terms_and_conditions_title".localized).count, length: ("lorem_ipsum".localized).count)
+            range: NSRange(location: title.count, length: ("lorem_ipsum".localized).count)
         )
         
-        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: nil)
+        let configurationModel = ReusableModalConfiguration(title: title, text: attributedText, primaryButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: nil)
         let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, delegate: delegate)
+        let navigationController = PortraitNavigationController(rootViewController: viewController)
+        
+        // This is to stop dismissal of the card style presentation
+        if #available(iOS 13, *) {
+            navigationController.isModalInPresentation = true
+        }
+        
         viewController.delegate = delegate
-        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
+        navController?.present(navigationController, animated: true, completion: nil)
     }
     
     func toPrivacyAndSecurityViewController() {
@@ -200,7 +217,6 @@ class MainScreenRouter {
     func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     

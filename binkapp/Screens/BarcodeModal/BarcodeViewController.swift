@@ -47,8 +47,8 @@ class BarcodeViewController: UIViewController {
     }
     
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         
         configureUI(maximized: isBarcodeFullsize)
     }
@@ -61,6 +61,8 @@ class BarcodeViewController: UIViewController {
         titleLabel.text = "card_number_title".localized
         titleLabel.isHidden = maximized
         labelStackView.setCustomSpacing(0.0, after: titleLabel)
+
+        labelStackView.alignment = maximized ? .center : .fill
         
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = maximized ? .black : .blueAccent
@@ -91,6 +93,7 @@ class BarcodeViewController: UIViewController {
         } else {
             let nav = UINavigationController(rootViewController: BarcodeViewController(viewModel: viewModel, showFullSize: true))
             nav.modalTransitionStyle = .crossDissolve
+            nav.modalPresentationStyle = .fullScreen
             present(nav, animated: true)
         }
     }

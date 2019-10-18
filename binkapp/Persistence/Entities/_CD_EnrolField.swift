@@ -7,11 +7,13 @@ import CoreData
 public enum CD_EnrolFieldAttributes: String {
     case column = "column"
     case fieldDescription = "fieldDescription"
+    case order = "order"
     case type = "type"
     case validation = "validation"
 }
 
 public enum CD_EnrolFieldRelationships: String {
+    case choices = "choices"
     case planAccount = "planAccount"
 }
 
@@ -52,6 +54,9 @@ open class _CD_EnrolField: CD_BaseObject {
     var fieldDescription: String?
 
     @NSManaged open
+    var order: NSNumber!
+
+    @NSManaged open
     var type: NSNumber?
 
     @NSManaged open
@@ -60,7 +65,42 @@ open class _CD_EnrolField: CD_BaseObject {
     // MARK: - Relationships
 
     @NSManaged open
+    var choices: NSSet
+
+    open func choicesSet() -> NSMutableSet {
+        return self.choices.mutableCopy() as! NSMutableSet
+    }
+
+    @NSManaged open
     var planAccount: CD_MembershipPlanAccount?
+
+}
+
+extension _CD_EnrolField {
+
+    open func addChoices(_ objects: NSSet) {
+        let mutable = self.choices.mutableCopy() as! NSMutableSet
+        mutable.union(objects as Set<NSObject>)
+        self.choices = mutable.copy() as! NSSet
+    }
+
+    open func removeChoices(_ objects: NSSet) {
+        let mutable = self.choices.mutableCopy() as! NSMutableSet
+        mutable.minus(objects as Set<NSObject>)
+        self.choices = mutable.copy() as! NSSet
+    }
+
+    open func addChoicesObject(_ value: CD_FieldChoice) {
+        let mutable = self.choices.mutableCopy() as! NSMutableSet
+        mutable.add(value)
+        self.choices = mutable.copy() as! NSSet
+    }
+
+    open func removeChoicesObject(_ value: CD_FieldChoice) {
+        let mutable = self.choices.mutableCopy() as! NSMutableSet
+        mutable.remove(value)
+        self.choices = mutable.copy() as! NSSet
+    }
 
 }
 

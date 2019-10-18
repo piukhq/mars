@@ -164,7 +164,7 @@ extension BaseFormViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension BaseFormViewController: CheckboxViewDelegate {
-    func checkboxStateDidChange() {
+    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
         formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
     }
 }

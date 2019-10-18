@@ -21,8 +21,20 @@ class LoyaltyCardFullDetailsViewModel {
         self.repository = repository
         self.membershipCard = membershipCard
     }  
-    
-    // MARK: - Public methds
+
+    var brandName: String {
+        return membershipCard.membershipPlan?.account?.companyName ?? ""
+    }
+
+    var balance: CD_MembershipCardBalance? {
+        return membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
+    }
+
+    var pointsValueText: String {
+        return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "") \(balance?.suffix ?? "")"
+    }
+
+    // MARK: - Public methods
     
     func toBarcodeModel() {
         router.toBarcodeViewController(membershipCard: membershipCard) { }
@@ -32,12 +44,13 @@ class LoyaltyCardFullDetailsViewModel {
         switch action {
         case .login:
             //TODO: change to login screen after is implemented
-            guard let plan = membershipCard.membershipPlan else { return }
-            router.toAuthAndAddViewController(membershipPlan: plan, isFirstAuth: false)
+            guard let membershipPlan = membershipCard.membershipPlan else { return }
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .otherLogin)
             break
         case .loginChanges:
-            guard let plan = membershipCard.membershipPlan else { return }
-            router.toAuthAndAddViewController(membershipPlan: plan, isFirstAuth: false)
+            //TODO: change to login changes screen after is implemented
+            guard let membershipPlan = membershipCard.membershipPlan else { return }
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .otherLogin)
             break
         case .transactions:
             router.toTransactionsViewController(membershipCard: membershipCard)

@@ -25,4 +25,11 @@ extension UIView {
         
         layer.insertSublayer(gradientLayer, at: 0)
     }
+
+    static func fromNib<T: UIView>() -> T {
+        guard let viewFromNib = Bundle.main.loadNibNamed(String(describing: T.self), owner: self, options: nil)?.first as? T else {
+            fatalError("Could not load view from nib")
+        }
+        return viewFromNib
+    }
 }
