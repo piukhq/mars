@@ -20,11 +20,19 @@ struct PaymentWalletViewModel: WalletViewModel {
         self.router = router
     }
 
+    var walletPrompts: [WalletPrompt]? {
+        return WalletPromptFactory.makeWalletPrompts(forWallet: .payment)
+    }
+
     var cards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
     }
 
-    func toPaymentCardDetail(for paymentCard: CD_PaymentCard) {
-        router.toPaymentCardDetailViewController(paymentCard: paymentCard)
+    func toCardDetail(for card: CD_PaymentCard) {
+        router.toPaymentCardDetailViewController(paymentCard: card)
+    }
+
+    func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
+        // TODO: Implement as part of IB20-167
     }
 }

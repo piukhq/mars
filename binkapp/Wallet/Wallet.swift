@@ -16,6 +16,7 @@ class Wallet: CoreDataRepositoryProtocol {
 
     private let apiManager = ApiManager()
 
+    private(set) var membershipPlans: [CD_MembershipPlan]?
     private(set) var membershipCards: [CD_MembershipCard]?
     private(set) var paymentCards: [CD_PaymentCard]?
 
@@ -39,6 +40,10 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Useful for calling after card deletions
     func refreshLocal() {
         loadWallet(forType: .local)
+    }
+
+    var hasPaymentCards: Bool {
+        return paymentCards != nil && paymentCards?.count != 0
     }
 
     // MARK: - Private
@@ -76,7 +81,8 @@ class Wallet: CoreDataRepositoryProtocol {
 
     private func getMembershipPlans(forceRefresh: Bool = false, completion: @escaping () -> Void) {
         guard forceRefresh else {
-            fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { _ in
+            fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { [weak self] plans in
+                self?.membershipPlans = plans
                 completion()
             }
             return
@@ -87,7 +93,8 @@ class Wallet: CoreDataRepositoryProtocol {
 
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
             self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
-                self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { _ in
+                self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { plans in
+                    self?.membershipPlans = plans
                     completion()
                 }
             })

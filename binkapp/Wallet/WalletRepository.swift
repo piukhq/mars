@@ -7,11 +7,8 @@
 //
 
 import Foundation
-import CoreData
 
 protocol WalletRepository: CoreDataRepositoryProtocol {
-    associatedtype T
-
     init(apiManager: ApiManager)
-    func delete(_ card: T, completion: @escaping () -> Void)
+    func delete<T: WalletCard>(_ card: T, completion: @escaping () -> Void)
 }

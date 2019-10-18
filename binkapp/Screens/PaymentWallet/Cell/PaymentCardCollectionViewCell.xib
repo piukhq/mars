@@ -110,7 +110,7 @@
             <connections>
                 <outlet property="alertView" destination="7wp-r2-0PR" id="eIi-eo-t0m"/>
                 <outlet property="cardNumberLabel" destination="LQa-TU-DPB" id="cbA-D8-Uan"/>
-                <outlet property="containerView" destination="5ti-Yy-XeC" id="aQl-op-qX1"/>
+                <outlet property="containerView" destination="5ti-Yy-XeC" id="hNF-Bk-Kzh"/>
                 <outlet property="linkedStatusImageView" destination="Gpr-Cg-2C1" id="vZ5-Ff-E54"/>
                 <outlet property="nameOnCardLabel" destination="x78-gd-0FT" id="WuN-XY-iIX"/>
                 <outlet property="pllStatusLabel" destination="2nB-iq-pM6" id="84j-0s-av8"/>

@@ -23,9 +23,9 @@ extension LayoutHelper {
 
     struct WalletDimensions {
         static let cardHorizontalPadding: CGFloat = 25.0
-        private static let cardHeight: CGFloat = 120.0
         private static let cardWidth: CGFloat = UIScreen.main.bounds.width - (WalletDimensions.cardHorizontalPadding * 2)
-        static let cardSize = CGSize(width: WalletDimensions.cardWidth, height: WalletDimensions.cardHeight)
+        static let cardSize = CGSize(width: WalletDimensions.cardWidth, height: 120.0)
+        static let walletPromptSize = CGSize(width: WalletDimensions.cardWidth, height: 100)
         static let cardLineSpacing: CGFloat = 12.0
         static let cardCornerRadius: CGFloat = 8.0
         static let contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
