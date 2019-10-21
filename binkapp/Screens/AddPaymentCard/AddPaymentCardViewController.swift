@@ -17,10 +17,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     }()
     
     private struct Constants {
-        static let buttonWidthPercentage: CGFloat = 0.75
-        static let buttonHeight: CGFloat = 52.0
         static let cardPadding: CGFloat = 30.0
-        static let bottomButtonPadding: CGFloat = 78.0
         static let cardHeight: CGFloat = 120.0
         static let hyperlinkHeight: CGFloat = 54.0
     }
@@ -63,9 +60,9 @@ class AddPaymentCardViewController: BaseFormViewController {
     func configureLayout() {
         
         var constraints = [
-            addButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: Constants.buttonWidthPercentage),
-            addButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
-            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.bottomButtonPadding),
+            addButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
+            addButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
+            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
             addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ]
         

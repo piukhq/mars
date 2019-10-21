@@ -84,6 +84,15 @@ class BarcodeViewController: UIViewController {
         maximiseButton.setTitleColor(.white, for: .normal)
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
+
+        maximiseButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            maximiseButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
+            maximiseButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
+            maximiseButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
+            maximiseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
     }
     
     func maximizeBarcode() {

@@ -70,7 +70,7 @@ class AddOrJoinViewController: UIViewController {
             newCardButton.topAnchor.constraint(equalTo: addCardButton.bottomAnchor, constant: LayoutHelper.PillButton.verticalSpacing),
             newCardButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
             newCardButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            newCardButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding)
+            newCardButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding)
         ])
         
         guard let cardType = membershipPlan.featureSet?.planCardType else { return }

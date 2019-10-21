@@ -42,7 +42,7 @@ class OnboardingViewController: UIViewController {
             floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             floatingButtonsView.heightAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.height),
             floatingButtonsView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding),
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding),
             facebookPillButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
             facebookPillButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
             facebookPillButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
