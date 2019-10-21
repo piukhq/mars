@@ -77,10 +77,10 @@ class LoyaltyCardFullDetailsViewModel {
             router.toSimpleInfoViewController(pendingType: .register)
             break
         case .pllEmpty:
-            router.toPllViewController(membershipCard: membershipCard, isAddJourney: false)
+            router.toPllViewController(membershipCard: membershipCard)
             break
         case .pll:
-            router.toPllViewController(membershipCard: membershipCard, isAddJourney: false)
+            router.toPllViewController(membershipCard: membershipCard)
             break
         case .unLinkable:
             toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)

@@ -18,18 +18,26 @@ class PLLScreenViewModel {
     private var changedLinkCards = [CD_PaymentCard]()
     
     var isEmptyPll: Bool {
-        if let paymentCards = paymentCards {
-            return paymentCards.count == 0
-        }
-        return true
+        return paymentCards == nil ? true : paymentCards?.count == 0
     }
     
-    var linkedPaymentCardIds: [CD_PaymentCard]? {
+    var isNavigationVisisble: Bool {
+        return isEmptyPll || isAddJourney
+    }
+    
+    var linkedPaymentCards: [CD_PaymentCard]? {
         let paymentCards = membershipCard.linkedPaymentCards.allObjects as? [CD_PaymentCard]
         return paymentCards
     }
     
-    init(membershipCard: CD_MembershipCard, repository: PLLScreenRepository, router: MainScreenRouter, isAddJourney: Bool) {
+    var titleText: String {
+        return isEmptyPll ? "pll_screen_add_title".localized : "pll_screen_link_title".localized
+    }
+    
+    var primaryMessageText: String {
+        return isEmptyPll ? "pll_screen_link_message".localized : "pll_screen_add_message".localized
+    }
+        init(membershipCard: CD_MembershipCard, repository: PLLScreenRepository, router: MainScreenRouter, isAddJourney: Bool) {
         self.membershipCard = membershipCard
         self.repository = repository
         self.router = router
@@ -57,27 +65,15 @@ class PLLScreenViewModel {
     }
     
     func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
-        let group = DispatchGroup()
-        for paymentCard in changedLinkCards {
-            if paymentCardIsLinked(paymentCard) {
-                group.enter()
-                removeLinkToPaymentCard(paymentCard, completion: {
-                    group.leave()
-                })
-            } else {
-                group.enter()
-                linkPaymentpCard(withId: paymentCard.id, completion: {
-                    group.leave()
-                })
-            }
-        }
-        group.notify(queue: .main) {
+        repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion()
+        }) { (error) in
+            self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
         }
     }
     
-    func getMembershipPlan() -> CD_MembershipPlan {
-        return membershipCard.membershipPlan ?? CD_MembershipPlan()
+    func getMembershipPlan() -> CD_MembershipPlan? {
+        return membershipCard.membershipPlan
     }
     
     func getMembershipCard() -> CD_MembershipCard {
@@ -94,29 +90,5 @@ class PLLScreenViewModel {
     
     func toAddPaymentCardScreen() {
         router.toAddPaymentViewController()
-    }
-}
-
-// MARK: - Private methods
-
-private extension PLLScreenViewModel {
-    func linkPaymentpCard(withId paymentCardId: String, completion: @escaping () -> Void) {
-        repository.linkMembershipCard(withId: membershipCard.id, toPaymentCardWithId: paymentCardId, onSuccess: {_ in
-            completion()
-        }) { (error) in
-            self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
-        }
-    }
-    
-    func removeLinkToPaymentCard(_ paymentCard: CD_PaymentCard, completion: @escaping () -> Void) {
-        repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard, onSuccess: {
-            completion()
-        }) { (error) in
-            self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
-        }
-    }
-    
-    func paymentCardIsLinked(_ paymentCard: CD_PaymentCard) -> Bool {
-        return linkedPaymentCardIds?.contains(paymentCard) ?? false
     }
 }

@@ -47,7 +47,7 @@ class PLLScreenViewController: UIViewController {
 
 extension PLLScreenViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
-        viewModel.displaySimplePopup(title: ((viewModel.getMembershipPlan().account?.planNameCard) ?? ""), message: (viewModel.getMembershipPlan().account?.planDescription) ?? "")
+        viewModel.displaySimplePopup(title: ((viewModel.getMembershipPlan()?.account?.planNameCard) ?? ""), message: (viewModel.getMembershipPlan()?.account?.planDescription) ?? "")
     }
 }
 
@@ -106,13 +106,13 @@ private extension PLLScreenViewController {
     
     func configureBrandHeader() {
         let membershipPlan = viewModel.getMembershipPlan()
-        brandHeaderView.configure(imageURLString: membershipPlan.firstIconImage()?.url, loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
+        brandHeaderView.configure(imageURLString: membershipPlan?.firstIconImage()?.url, loyaltyPlanNameCard: (membershipPlan?.account?.planNameCard ?? nil), delegate: self)
     }
     
     func configureUI() {
-        navigationController?.setNavigationBarHidden(viewModel.isEmptyPll || viewModel.isAddJourney, animated: false)
-        titleLabel.text = viewModel.isEmptyPll ? "pll_screen_link_title".localized : "pll_screen_add_title".localized
-        primaryMessageLabel.text = viewModel.isEmptyPll ? "pll_screen_link_message".localized : "pll_screen_add_message".localized
+        navigationController?.setNavigationBarHidden(viewModel.isNavigationVisisble, animated: false)
+        titleLabel.text = viewModel.titleText
+        primaryMessageLabel.text = viewModel.primaryMessageText
         secondaryMesageLabel.isHidden = !viewModel.isEmptyPll
         paymentCardsTableView.isHidden = viewModel.isEmptyPll
         floatingButtonsViewHeightConstraint.constant = viewModel.isEmptyPll ? 210.0 : 130.0

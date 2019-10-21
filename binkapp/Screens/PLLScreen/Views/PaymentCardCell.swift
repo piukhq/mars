@@ -21,7 +21,7 @@ class PaymentCardCell: UITableViewCell {
     private weak var delegate: PaymentCardCellDelegate?
     private let activityIndicator = UIActivityIndicatorView()
     private var cardIndex = 0
-    private var firsUse = true
+    private var firstUse = true
         
     override func layoutSubviews() {
         activityIndicator.frame = paymentCardImageView.frame
@@ -29,7 +29,7 @@ class PaymentCardCell: UITableViewCell {
         activityIndicator.startAnimating()
     }
     
-    func configureUI(membershipCard: CD_MembershipCard ,paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, isAddJourney: Bool) {
+    func configureUI(membershipCard: CD_MembershipCard, paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, isAddJourney: Bool) {
         self.delegate = delegate
         self.cardIndex = cardIndex
         if let imageUrlString = paymentCard.imagesArray.first?.url {
@@ -40,9 +40,9 @@ class PaymentCardCell: UITableViewCell {
         }
         titleLabel.text = paymentCard.card?.nameOnCard
         subtitleLabel.text = "pll_screen_card_ending".localized + (paymentCard.card?.lastFour ?? "")
-        if firsUse {
+        if firstUse {
             switchButton.isOn = isAddJourney ? true : membershipCard.linkedPaymentCards.contains(paymentCard)
-            firsUse = false
+            firstUse = false
         }
     }
     
