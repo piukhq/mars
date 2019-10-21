@@ -17,8 +17,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // still need this?
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadWallet), name: .didAddMembershipCard, object: nil)
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

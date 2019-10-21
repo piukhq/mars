@@ -80,9 +80,14 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
 extension MainTabBarViewController {
     private func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddPaymentCard), name: .didAddPaymentCard, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddMembershipCard), name: .didAddMembershipCard, object: nil)
     }
 
     @objc private func handleDidAddPaymentCard() {
         selectedIndex = 2
+    }
+
+    @objc private func handleDidAddMembershipCard() {
+        selectedIndex = 0
     }
 }

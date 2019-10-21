@@ -100,6 +100,7 @@ class AuthAndAddViewModel {
         let request = try AddMembershipCardRequest(jsonCard: membershipCard.asDictionary(), completion: { card in
             if let card = card {
                 self.router.toPllViewController(membershipCard: card)
+                Current.wallet.reload()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
         }, onError: { error in

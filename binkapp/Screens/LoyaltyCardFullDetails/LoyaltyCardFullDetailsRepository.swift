@@ -7,23 +7,11 @@
 
 import Foundation
 
-class LoyaltyCardFullDetailsRepository {
-    
+class LoyaltyCardFullDetailsRepository: WalletRepository {
     private let apiManager: ApiManager
     
-    init(apiManager: ApiManager) {
+    required init(apiManager: ApiManager) {
         self.apiManager = apiManager
-    }
-    
-    func deleteMembershipCard(id: String, onSuccess: @escaping (Any) -> Void, onError: @escaping(Error) -> Void) {
-        let url = RequestURL.deleteMembershipCard(cardId: id)
-        let method = RequestHTTPMethod.delete
-        
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: EmptyResponse) in
-            onSuccess(response)
-        }, onError: { (error: Error) in
-            onError(error)
-        })
     }
     
     func getPaymentCards(completion: @escaping ([PaymentCardModel]) -> Void) {
@@ -32,5 +20,25 @@ class LoyaltyCardFullDetailsRepository {
         apiManager.doRequest(url: url, httpMethod: httpMethod, parameters: nil, onSuccess: { (results: [PaymentCardModel]) in
             completion(results)
         }) { (error) in }
+    }
+
+    func delete<T: WalletCard>(_ card: T, completion: @escaping () -> Void) {
+        // Process the backend delete, but fail silently
+        let url = RequestURL.deleteMembershipCard(cardId: card.id)
+        let method = RequestHTTPMethod.delete
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
+
+        // Process core data deletion
+        Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
+            if let cardToDelete = cardToDelete {
+                context.delete(cardToDelete)
+            }
+
+            try? context.save()
+
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
     }
 }

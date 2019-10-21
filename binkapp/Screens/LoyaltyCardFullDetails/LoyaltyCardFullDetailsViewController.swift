@@ -133,7 +133,7 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
             break
         case deleteInfoRow:
             viewModel.showDeleteConfirmationAlert(yesCompletion: {
-                NotificationCenter.default.post(Notification(name: .didDeleteMemebershipCard))
+                Current.wallet.refreshLocal()
                 self.popToRootController()
             }) {}
             break
