@@ -62,13 +62,13 @@ private extension LoyaltyCardFullDetailsViewController {
         
         aboutInfoRow.delegate = self
         let aboutInfoMessage = "learn_more".localized
+        var aboutInfoTitle = ""
         if let planName = viewModel.membershipCard.membershipPlan?.account?.planName {
-            let aboutInfoTitle = String(format: "about_membership_plan_title".localized, planName)
-            aboutInfoRow.configure(title: aboutInfoTitle, andInfo: aboutInfoMessage)
+            aboutInfoTitle = String(format: "about_membership_plan_title".localized, planName)
         } else {
-            let aboutInfoTitle = "about_membership_title".localized
-            aboutInfoRow.configure(title: aboutInfoTitle, andInfo: aboutInfoMessage)
+            aboutInfoTitle = "about_membership_title".localized
         }
+        aboutInfoRow.configure(title: aboutInfoTitle, andInfo: aboutInfoMessage)
         
         let securityInfoTitle = "security_and_privacy_title".localized
         let securityInfoMessage = "security_and_privacy_message".localized
@@ -77,13 +77,13 @@ private extension LoyaltyCardFullDetailsViewController {
         
         let deleteInfoMessage = "delete_card_message".localized
         deleteInfoRow.delegate = self
+        var deleteInfoTitle = ""
         if let planNameCard = viewModel.membershipCard.membershipPlan?.account?.planNameCard {
-            let deleteInfoTitle = String(format: "delete_card_plan_title".localized, planNameCard)
-            deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
+            deleteInfoTitle = String(format: "delete_card_plan_title".localized, planNameCard)
         } else {
-            let deleteInfoTitle = "delete_card_title".localized
-            deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
+            deleteInfoTitle = "delete_card_title".localized
         }
+        deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
         
         let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
