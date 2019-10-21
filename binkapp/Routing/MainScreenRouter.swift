@@ -19,23 +19,13 @@ class MainScreenRouter {
     func toMainScreen() {
         let viewModel = MainTabBarViewModel(router: self)
         let viewController = MainTabBarViewController(viewModel: viewModel)
+        navController = PortraitNavigationController(rootViewController: viewController)
+        UIApplication.shared.keyWindow?.rootViewController = navController
+    }
 
-        navController?.pushViewController(viewController, animated: true)
-    }
-    
-    func getNavigationControllerWithLoginScreen() -> UIViewController{
-        navController = PortraitNavigationController(rootViewController: getLoginScreen())
-        navController?.navigationBar.isTranslucent = true
-        
-        return navController!
-    }
-    
-    func getLoginScreen() -> UIViewController {
-        let repository = LoginRepository()
-        let viewModel = LoginViewModel(repository: repository, router: self)
-        let viewController = LoginViewController(viewModel: viewModel)
-        
-        return viewController
+    func getOnboardingViewController() -> UIViewController {
+        let viewModel = OnboardingViewModel(router: self, repository: LoginRepository())
+        return OnboardingViewController(viewModel: viewModel)
     }
     
     func toSettingsScreen() {

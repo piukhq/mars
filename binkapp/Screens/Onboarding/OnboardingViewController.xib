@@ -10,7 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
-                <outlet property="floatingButtonsView" destination="gzo-L5-ehT" id="3L2-Ei-jvF"/>
+                <outlet property="facebookPillButton" destination="m1o-2C-O6j" id="dgm-oU-rwN"/>
+                <outlet property="floatingButtonsView" destination="caj-wq-i4b" id="qKV-1d-zrn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,20 +20,18 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gzo-L5-ehT" customClass="BinkFloatingButtonsView" customModule="binkapp" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="687" width="414" height="209"/>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="caj-wq-i4b" customClass="BinkFloatingButtonsView" customModule="binkapp" customModuleProvider="target">
+                    <rect key="frame" x="57" y="733" width="300" height="129"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="209" id="zpb-G4-9kr"/>
-                    </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1o-2C-O6j" customClass="BinkPillButton" customModule="binkapp" customModuleProvider="target">
+                    <rect key="frame" x="184" y="590" width="46" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Button"/>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <constraints>
-                <constraint firstAttribute="bottom" secondItem="gzo-L5-ehT" secondAttribute="bottom" id="3So-sq-8il"/>
-                <constraint firstItem="gzo-L5-ehT" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="B5w-nj-EKl"/>
-                <constraint firstItem="gzo-L5-ehT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="LeQ-FR-1hM"/>
-            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="153.34821428571428"/>
         </view>

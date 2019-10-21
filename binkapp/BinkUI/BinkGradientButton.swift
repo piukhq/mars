@@ -8,13 +8,12 @@
 import Foundation
 import UIKit
 
-class BinkGradientButton: UIButton {
+class BinkPillButton: UIButton {
+    enum PillButtonType {
+        case facebook
+    }
+
     private var shadowLayer: CAShapeLayer!
-    private lazy var gradientLayer: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        layer.insertSublayer(gradient, at: 0)
-        return gradient
-    }()
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .white)
@@ -26,37 +25,33 @@ class BinkGradientButton: UIButton {
         setTitleColor(.white, for: .normal)
         titleLabel?.font = .buttonText
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-
-        processGradient(.binkPurple, .blueAccent)
 
         let halfOfButtonHeight = layer.frame.height / 2
         if shadowLayer == nil {
             shadowLayer = CAShapeLayer()
             shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: halfOfButtonHeight).cgPath
             shadowLayer.fillColor = UIColor.clear.cgColor
-            
+
             shadowLayer.shadowColor = UIColor.black.cgColor
             shadowLayer.shadowPath = shadowLayer.path
             shadowLayer.shadowOffset = CGSize(width: 3, height: 8)
             shadowLayer.shadowOpacity = 0.2
             shadowLayer.shadowRadius = 10
-            
+
             layer.insertSublayer(shadowLayer, at: 0)
         }
 
-        backgroundColor = .white
         layer.cornerRadius = halfOfButtonHeight
 
         setupActivityIndicator()
     }
-    
-    override var isEnabled: Bool {
-        didSet {
-            gradientLayer.opacity = isEnabled ? 1.0 : 0.5
-        }
+
+    func configureForType(_ type: PillButtonType) {
+        backgroundColor = backgroundColor(forType: type)
+        setTitle(title(forType: type), for: .normal)
     }
 
     func startLoading() {
@@ -77,7 +72,42 @@ class BinkGradientButton: UIButton {
             activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
-    
+
+    private func backgroundColor(forType buttonType: PillButtonType) -> UIColor {
+        switch buttonType {
+        case .facebook:
+            return .init(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
+        }
+    }
+
+    private func title(forType buttonType: PillButtonType) -> String {
+        switch buttonType {
+        case .facebook:
+            return "Continue with Facebook"
+        }
+    }
+}
+
+class BinkGradientButton: BinkPillButton {
+    private lazy var gradientLayer: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        layer.insertSublayer(gradient, at: 0)
+        return gradient
+    }()
+
+    override var isEnabled: Bool {
+        didSet {
+            gradientLayer.opacity = isEnabled ? 1.0 : 0.5
+        }
+    }
+
+    override func layoutSubviews() {
+        // We need to process the gradient before we process the shadow
+        // So we call super.layoutSubviews last
+        processGradient(.binkPurple, .blueAccent)
+        super.layoutSubviews()
+    }
+
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
         gradientLayer.frame = bounds
         gradientLayer.colors = [firstColor.cgColor, secondColor.cgColor]

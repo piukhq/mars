@@ -14,7 +14,6 @@ protocol BinkFloatingButtonsViewDelegate: AnyObject {
 }
 
 class BinkFloatingButtonsView: CustomView {
-    @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var primaryButton: BinkGradientButton!
     @IBOutlet weak var secondaryButton: UIButton!
     weak var delegate: BinkFloatingButtonsViewDelegate?
@@ -30,11 +29,12 @@ class BinkFloatingButtonsView: CustomView {
 
         secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
         secondaryButton.isHidden = secondaryButtonTitle == nil
+        secondaryButton.titleLabel?.font = .buttonText
     }
     
     override func configureUI() {
-        buttonsStackView.layer.masksToBounds = false
-        buttonsStackView.clipsToBounds = false
+        layer.masksToBounds = false
+        clipsToBounds = false
     }
     
     // MARK: - Actions
@@ -45,5 +45,17 @@ class BinkFloatingButtonsView: CustomView {
     
     @IBAction func secondaryButtonWasTapped(_ sender: Any) {
         delegate?.binkFloatingButtonsSecondaryButtonWasTapped(self)
+    }
+}
+
+extension LayoutHelper {
+    struct PillButton {
+        static let height: CGFloat = 52
+        static let width: CGFloat = 300
+        static let verticalSpacing: CGFloat = 25
+    }
+    struct FloatingButtons {
+        static let height: CGFloat = (PillButton.height * 2) + PillButton.verticalSpacing
+        static let width: CGFloat = PillButton.width
     }
 }
