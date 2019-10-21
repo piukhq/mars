@@ -46,7 +46,7 @@ class AuthAndAddViewModel {
     }
     
     var accountButtonShouldHide: Bool {
-        
+        return formPurpose != .firstLogin
     }
     
     init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose) {

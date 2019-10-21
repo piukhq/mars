@@ -107,7 +107,7 @@ class AuthAndAddViewController: BaseFormViewController {
         
         loginButton.setTitle(viewModel.buttonTitle, for: .normal)
         
-        accountButton.isHidden = viewModel.formPurpose != .firstLogin
+        accountButton.isHidden = viewModel.accountButtonShouldHide
     }
     
     @objc func popViewController() {
