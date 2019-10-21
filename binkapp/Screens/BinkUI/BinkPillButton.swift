@@ -91,7 +91,7 @@ class BinkPillButton: UIButton {
 extension LayoutHelper {
     struct PillButton {
         static let height: CGFloat = 52
-        static let width: CGFloat = 300
+        static let widthPercentage: CGFloat = 0.75
         static let verticalSpacing: CGFloat = 25
         static let bottomPadding: CGFloat = 16
     }
