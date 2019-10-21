@@ -72,6 +72,8 @@
 "decline" = "Decline";
 "login" = "Login";
 
+"no_account_button_title" = "I don't have an account";
+
 "no_internet_connection_title" = "Your selected activity cannot be performed at this time due to a connection issue";
 
 "about_membership_title" = "About membership";
