@@ -54,6 +54,15 @@ class PaymentTermsAndConditionsViewController: UIViewController {
             primaryButtonTitle: primary,
             secondaryButtonTitle: secondary
         )
+
+        floatingButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            floatingButtonsContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.height),
+            floatingButtonsContainer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.FloatingButtons.widthPercentage),
+            floatingButtonsContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding),
+            floatingButtonsContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
     }
 }
 

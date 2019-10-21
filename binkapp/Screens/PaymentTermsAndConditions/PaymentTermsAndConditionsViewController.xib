@@ -52,23 +52,18 @@
                         <outlet property="delegate" destination="-1" id="U3z-Og-Xng"/>
                     </connections>
                 </textView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Gs-VS-QJP" customClass="BinkFloatingButtonsView" customModule="binkapp" customModuleProvider="target">
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Gs-VS-QJP" customClass="BinkFloatingButtonsView" customModule="binkapp" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="687" width="414" height="209"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="209" id="IQH-2i-P2G"/>
-                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7Gs-VS-QJP" secondAttribute="trailing" id="BFU-wW-kPb"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JPW-kV-XX9" secondAttribute="trailing" constant="25" id="Dvx-Lx-h8D"/>
-                <constraint firstAttribute="bottom" secondItem="7Gs-VS-QJP" secondAttribute="bottom" id="NEC-WR-62v"/>
                 <constraint firstItem="JPW-kV-XX9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="Vmy-Dm-PqW"/>
                 <constraint firstAttribute="bottom" secondItem="JPW-kV-XX9" secondAttribute="bottom" id="idQ-KR-W9Y"/>
                 <constraint firstItem="JPW-kV-XX9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="lDg-wf-VfV"/>
-                <constraint firstItem="7Gs-VS-QJP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="olz-Sb-gwK"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
