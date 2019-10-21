@@ -60,6 +60,18 @@ class AddOrJoinViewController: UIViewController {
         
         newCardButton.titleLabel?.font = UIFont.buttonText
         newCardButton.setTitle("get_new_card_button".localized, for: .normal)
+
+        addCardButton.translatesAutoresizingMaskIntoConstraints = false
+        newCardButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            addCardButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
+            addCardButton.widthAnchor.constraint(equalToConstant: LayoutHelper.PillButton.width),
+            newCardButton.topAnchor.constraint(equalTo: addCardButton.bottomAnchor, constant: LayoutHelper.PillButton.verticalSpacing),
+            newCardButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
+            newCardButton.widthAnchor.constraint(equalToConstant: LayoutHelper.PillButton.width),
+            newCardButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding)
+        ])
         
         guard let cardType = membershipPlan.featureSet?.planCardType else { return }
         let storeView = LoyaltyPlanView()

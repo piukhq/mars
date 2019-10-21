@@ -16,7 +16,7 @@ class MainScreenRouter {
         NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
     }
 
-    func toMainScreen() {
+    func launchWallets() {
         let viewModel = MainTabBarViewModel(router: self)
         let viewController = MainTabBarViewController(viewModel: viewModel)
         navController = PortraitNavigationController(rootViewController: viewController)

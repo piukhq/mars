@@ -8,33 +8,6 @@
 
 import UIKit
 
-class OnboardingViewModel {
-    private let router: MainScreenRouter
-    private let repository: LoginRepository
-
-    private let fallbackUserEmail = "Bink20iteration1@testbink.com"
-
-    private var userEmail: String {
-        guard let userEmail = Current.userDefaults.string(forKey: "userEmail") else {
-            Current.userDefaults.set(fallbackUserEmail, forKey: "userEmail")
-            return fallbackUserEmail
-        }
-        return userEmail
-    }
-
-    init(router: MainScreenRouter, repository: LoginRepository) {
-        self.router = router
-        self.repository = repository
-    }
-
-    func login() {
-        repository.register(email: userEmail) { [weak self] in
-            guard let self = self else { return }
-            self.router.toMainScreen()
-        }
-    }
-}
-
 class OnboardingViewController: UIViewController {
     @IBOutlet private weak var facebookPillButton: BinkPillButton!
     @IBOutlet private weak var floatingButtonsView: BinkFloatingButtonsView!
@@ -60,7 +33,7 @@ class OnboardingViewController: UIViewController {
         facebookPillButton.configureForType(.facebook)
         facebookPillButton.addTarget(self, action: #selector(handleFacebookButtonPressed), for: .touchUpInside)
 
-        floatingButtonsView.configure(primaryButtonTitle: "Sign up with email", secondaryButtonTitle: "Log in with email")
+        floatingButtonsView.configure(primaryButtonTitle: viewModel.signUpWithEmailButtonText, secondaryButtonTitle: viewModel.loginWithEmailButtonText)
         floatingButtonsView.delegate = self
 
         facebookPillButton.translatesAutoresizingMaskIntoConstraints = false
@@ -69,7 +42,7 @@ class OnboardingViewController: UIViewController {
             floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             floatingButtonsView.heightAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.height),
             floatingButtonsView.widthAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.width),
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding),
             facebookPillButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
             facebookPillButton.widthAnchor.constraint(equalToConstant: LayoutHelper.PillButton.width),
             facebookPillButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
