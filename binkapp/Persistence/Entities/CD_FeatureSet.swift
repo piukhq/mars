@@ -16,6 +16,6 @@ open class CD_FeatureSet: _CD_FeatureSet {
     }
     
     var formattedLinkingSupport: [CD_LinkingSupport] {
-        return linkingSupport.allObjects as! [CD_LinkingSupport]
+        return linkingSupport.allObjects as? [CD_LinkingSupport] ?? []
     }
 }
