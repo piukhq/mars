@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol BinkFloatingButtonsViewDelegate {
+protocol BinkFloatingButtonsViewDelegate: AnyObject {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView)
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView)
 }
@@ -17,7 +17,7 @@ class BinkFloatingButtonsView: CustomView {
     @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var primaryButton: BinkGradientButton!
     @IBOutlet weak var secondaryButton: UIButton!
-    var delegate: BinkFloatingButtonsViewDelegate?
+    weak var delegate: BinkFloatingButtonsViewDelegate?
     
     override func layoutSubviews() {
         super.layoutSubviews()

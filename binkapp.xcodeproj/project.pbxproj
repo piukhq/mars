@@ -302,6 +302,8 @@
 		EF7B65D6232FDB8A0025D167 /* FieldChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7B65D5232FDB8A0025D167 /* FieldChoice.swift */; };
 		EF8B700F23585F76006CE3DD /* PaymentCardCellViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B700E23585F76006CE3DD /* PaymentCardCellViewModelMock.swift */; };
 		EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */; };
+		EF8B701A235DDC75006CE3DD /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */; };
+		EF8B701B235DDC75006CE3DD /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF8B7019235DDC75006CE3DD /* OnboardingViewController.xib */; };
 		EF8BF1ED233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BF1EC233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift */; };
 		EF8BF1EF233CBCE300D2E5F3 /* CAGradientLayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BF1EE233CBCE300D2E5F3 /* CAGradientLayerExtension.swift */; };
 		EF8BF1F1233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BF1F0233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift */; };
@@ -677,6 +679,8 @@
 		EF7B65D5232FDB8A0025D167 /* FieldChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldChoice.swift; sourceTree = "<group>"; };
 		EF8B700E23585F76006CE3DD /* PaymentCardCellViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCellViewModelMock.swift; sourceTree = "<group>"; };
 		EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardBalanceModelTests.swift; sourceTree = "<group>"; };
+		EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		EF8B7019235DDC75006CE3DD /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
 		EF8BF1EC233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCellViewModel.swift; sourceTree = "<group>"; };
 		EF8BF1EE233CBCE300D2E5F3 /* CAGradientLayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayerExtension.swift; sourceTree = "<group>"; };
 		EF8BF1F0233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewModel.swift; sourceTree = "<group>"; };
@@ -1189,6 +1193,7 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				EF8B7013235DDC36006CE3DD /* Onboarding */,
 				EF335C7C234F432700D49223 /* EmptyWallet */,
 				3CC267F322F45A3500F0F9E3 /* AddingOptions */,
 				3CE24B272304014500B258C8 /* AddOrJoin */,
@@ -1624,6 +1629,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		EF8B7013235DDC36006CE3DD /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */,
+				EF8B7019235DDC75006CE3DD /* OnboardingViewController.xib */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		EF8BF1F4233E60A300D2E5F3 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -1840,6 +1854,7 @@
 				3CE24B2D2304014600B258C8 /* AddOrJoinViewController.xib in Resources */,
 				5E1B5018232105CD00890C7E /* com.bink.wallet.neo.beta.GoogleService-Info.plist in Resources */,
 				5E1B5019232105CD00890C7E /* com.bink.wallet.neo.external.GoogleService-Info.plist in Resources */,
+				EF8B701B235DDC75006CE3DD /* OnboardingViewController.xib in Resources */,
 				3CD3493F22F99E1D000C1F4D /* NunitoSans-ExtraBoldItalic.ttf in Resources */,
 				5E1B5017232105CD00890C7E /* com.bink.wallet.neo.nightly.GoogleService-Info.plist in Resources */,
 				3CD3493C22F99E1D000C1F4D /* NunitoSans-Bold.ttf in Resources */,
@@ -2128,6 +2143,7 @@
 				EF3BC90D234750F900FE52ED /* Wallet.swift in Sources */,
 				B766599E23214A4600B327BE /* WalletLoyaltyCardCollectionViewCell.swift in Sources */,
 				EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */,
+				EF8B701A235DDC75006CE3DD /* OnboardingViewController.swift in Sources */,
 				5ECE04A922CE582E001BA964 /* LoginRepository.swift in Sources */,
 				BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */,
 				BDD9C878233BE6B1003CD616 /* _CD_AuthoriseField.swift in Sources */,
