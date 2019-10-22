@@ -41,4 +41,8 @@ class OnboardingViewModel {
             self.router.launchWallets()
         }
     }
+
+    func notImplemented() {
+        router.featureNotImplemented()
+    }
 }

@@ -39,9 +39,9 @@ class OnboardingViewController: UIViewController {
         facebookPillButton.translatesAutoresizingMaskIntoConstraints = false
         floatingButtonsView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             floatingButtonsView.heightAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.height),
-            floatingButtonsView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
+            floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
             floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding),
             facebookPillButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
             facebookPillButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
@@ -53,13 +53,13 @@ class OnboardingViewController: UIViewController {
     // MARK: Button handlers
 
     @objc private func handleFacebookButtonPressed() {
-        print("Facebook login not implemented")
+        viewModel.notImplemented()
     }
 }
 
 extension OnboardingViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
-        print("Sign up with email not implemented")
+        viewModel.notImplemented()
     }
 
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {

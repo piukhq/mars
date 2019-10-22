@@ -19,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wcL-we-4RC" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="471" height="52"/>
+                    <rect key="frame" x="59" y="0.0" width="353" height="52"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="52" id="PbY-HO-qwq"/>
                     </constraints>
@@ -29,7 +29,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DxC-KQ-Wi0">
-                    <rect key="frame" x="0.0" y="77" width="471" height="52"/>
+                    <rect key="frame" x="59" y="77" width="353" height="52"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="52" id="7Kr-d3-2G8"/>
                     </constraints>
@@ -42,12 +42,12 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="wcL-we-4RC" secondAttribute="trailing" id="7wO-dy-mf3"/>
-                <constraint firstAttribute="trailing" secondItem="DxC-KQ-Wi0" secondAttribute="trailing" id="BbE-Oh-0ww"/>
-                <constraint firstItem="wcL-we-4RC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MDh-fN-OfX"/>
                 <constraint firstItem="wcL-we-4RC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="UxU-M8-tRR"/>
-                <constraint firstItem="DxC-KQ-Wi0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bG5-QL-4zn"/>
+                <constraint firstItem="wcL-we-4RC" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="d7F-bb-wuh"/>
+                <constraint firstItem="DxC-KQ-Wi0" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.75" id="dzX-11-26g"/>
+                <constraint firstItem="wcL-we-4RC" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.75" id="g44-OA-TAM"/>
                 <constraint firstItem="DxC-KQ-Wi0" firstAttribute="top" secondItem="wcL-we-4RC" secondAttribute="bottom" constant="25" id="hbV-Uf-qrT"/>
+                <constraint firstItem="DxC-KQ-Wi0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="r6T-YQ-2Vj"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="173.18840579710147" y="-200.55803571428569"/>

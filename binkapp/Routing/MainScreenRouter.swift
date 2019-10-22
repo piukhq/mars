@@ -27,9 +27,13 @@ class MainScreenRouter {
         let viewModel = OnboardingViewModel(router: self, repository: LoginRepository())
         return OnboardingViewController(viewModel: viewModel)
     }
+
+    func featureNotImplemented() {
+        displaySimplePopup(title: "Oops", message: "This feature has not yet been implemented.")
+    }
     
     func toSettingsScreen() {
-        displaySimplePopup(title: "Oops", message: "Settings screen not yet implemented.")
+        featureNotImplemented()
     }
     
     func toDebugMenu() {
