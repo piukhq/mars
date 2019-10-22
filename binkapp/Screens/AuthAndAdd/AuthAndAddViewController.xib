@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,7 +12,6 @@
                 <outlet property="brandHeaderView" destination="9v1-Ak-MDC" id="D7F-JN-T24"/>
                 <outlet property="descriptionLabel" destination="aKK-h5-Fut" id="ff5-wz-aYJ"/>
                 <outlet property="fieldsStackView" destination="gyN-dk-KWl" id="5iB-vq-xwm"/>
-                <outlet property="loginButton" destination="BNb-1t-7WS" id="feg-Ze-I7F"/>
                 <outlet property="scrollView" destination="0ti-3e-qp7" id="tDB-Ha-Ciq"/>
                 <outlet property="titleLabel" destination="CCh-kY-qxL" id="ISy-y7-CWh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -26,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-3e-qp7">
-                    <rect key="frame" x="0.0" y="44" width="414" height="733"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <subviews>
                         <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fq7-aO-FEk">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="406"/>
@@ -83,27 +80,14 @@
                         <constraint firstAttribute="bottom" secondItem="fq7-aO-FEk" secondAttribute="bottom" id="ucj-Qa-3ti"/>
                     </constraints>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNb-1t-7WS" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
-                    <rect key="frame" x="57" y="787" width="300" height="52"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="300" id="7Xb-LL-gf9"/>
-                        <constraint firstAttribute="height" constant="52" id="rVt-oG-oTe"/>
-                    </constraints>
-                    <state key="normal" title="Button"/>
-                    <connections>
-                        <action selector="loginButtonAction:" destination="-1" eventType="touchUpInside" id="ZQc-4l-XU4"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="0ti-3e-qp7" secondAttribute="trailing" id="18P-iI-nAE"/>
                 <constraint firstItem="fq7-aO-FEk" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" id="BLD-ho-UJW"/>
                 <constraint firstItem="0ti-3e-qp7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CrL-Hi-bp2"/>
-                <constraint firstItem="BNb-1t-7WS" firstAttribute="top" secondItem="0ti-3e-qp7" secondAttribute="bottom" constant="10" id="KSX-jA-gcx"/>
+                <constraint firstAttribute="bottom" secondItem="0ti-3e-qp7" secondAttribute="bottom" id="Lvd-UV-FrD"/>
                 <constraint firstItem="0ti-3e-qp7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="g2J-Io-H77"/>
-                <constraint firstItem="BNb-1t-7WS" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="p0P-qU-Sdq"/>
-                <constraint firstAttribute="bottom" secondItem="BNb-1t-7WS" secondAttribute="bottom" constant="57" id="ym9-KA-qEu" customClass="KeyboardLayoutConstraint" customModule="binkapp" customModuleProvider="target"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="98.550724637681171" y="39.508928571428569"/>

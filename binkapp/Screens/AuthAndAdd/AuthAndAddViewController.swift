@@ -10,12 +10,8 @@ import NotificationCenter
 
 class AuthAndAddViewController: BaseFormViewController {    
     private struct Constants {
-        static let buttonWidthPercentage: CGFloat = 0.75
-        static let buttonHeight: CGFloat = 52.0
         static let postCollectionViewPadding: CGFloat = 15.0
         static let cardPadding: CGFloat = 30.0
-        static let bottomButtonPadding: CGFloat = 22.0
-        static let buttonsSpacing: CGFloat = 20
     }
     
     private lazy var brandHeaderView: BrandHeaderView = {
@@ -24,25 +20,13 @@ class AuthAndAddViewController: BaseFormViewController {
         return brandHeader
     }()
 
-    private lazy var loginButton: BinkGradientButton = {
-        let button = BinkGradientButton(frame: .zero)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("login".localized, for: .normal)
-        button.titleLabel?.font = UIFont.buttonText
-        button.addTarget(self, action: .loginButtonTapped, for: .touchUpInside)
-        button.isEnabled = false
-        view.addSubview(button)
-        return button
-    }()
-    
-    private lazy var accountButton: UIButton = {
-        let button = UIButton(frame: .zero)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("no_account_button_title".localized, for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: .accountButtonTapped, for: .touchUpInside)
-        view.addSubview(button)
-        return button
+    private lazy var floatingButtons: BinkFloatingButtonsView = {
+        let floatingButtons = BinkFloatingButtonsView()
+        floatingButtons.configure(primaryButtonTitle: "login".localized, secondaryButtonTitle: "no_account_button_title".localized)
+        floatingButtons.primaryButton.isEnabled = false
+        floatingButtons.delegate = self
+        floatingButtons.translatesAutoresizingMaskIntoConstraints = false
+        return floatingButtons
     }()
     
     private let viewModel: AuthAndAddViewModel
@@ -80,17 +64,16 @@ class AuthAndAddViewController: BaseFormViewController {
     // MARK: - Layout
     
     func configureLayout() {
+        view.addSubview(floatingButtons)
         NSLayoutConstraint.activate([
-            accountButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: Constants.buttonWidthPercentage),
-            accountButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
-            accountButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.bottomButtonPadding),
-            accountButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            loginButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: Constants.buttonWidthPercentage),
-            loginButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
-            loginButton.bottomAnchor.constraint(equalTo: accountButton.topAnchor, constant: -Constants.buttonsSpacing),
-            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-            ])
+            floatingButtons.heightAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.height),
+            floatingButtons.leftAnchor.constraint(equalTo: view.leftAnchor),
+            floatingButtons.rightAnchor.constraint(equalTo: view.rightAnchor),
+            floatingButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding)
+        ])
+
+        // TODO: Update once stack view again
+        floatingButtons.secondaryButton.isHidden = viewModel.accountButtonShouldHide
     }
     
     func configureUI() {
@@ -104,10 +87,6 @@ class AuthAndAddViewController: BaseFormViewController {
         descriptionLabel.text = viewModel.getDescription()
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.isHidden = viewModel.getDescription() == nil
-        
-        loginButton.setTitle(viewModel.buttonTitle, for: .normal)
-        
-        accountButton.isHidden = viewModel.accountButtonShouldHide
     }
     
     @objc func popViewController() {
@@ -117,22 +96,24 @@ class AuthAndAddViewController: BaseFormViewController {
     @objc func popToRootScreen() {
         viewModel.popToRootViewController()
     }
-        
-    @objc func loginButtonTapped() {
+    
+    override func formValidityUpdated(fullFormIsValid: Bool) {
+        floatingButtons.primaryButton.isEnabled = fullFormIsValid
+    }
+}
+
+extension AuthAndAddViewController: BinkFloatingButtonsViewDelegate {
+    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
         try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
     }
-    
-    @objc func accountButtonTapped() {
+
+    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
         let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
         guard (fields?.contains(where: { $0.value == "REGISTRATION" }) ?? false) else {
             viewModel.displaySimplePopup(title: "doesn't have registration fields", message: nil)
             return
         }
         viewModel.displaySimplePopup(title: "has registration fields", message: nil)
-    }
-    
-    override func formValidityUpdated(fullFormIsValid: Bool) {
-        loginButton.isEnabled = fullFormIsValid
     }
 }
 
@@ -146,9 +127,4 @@ extension AuthAndAddViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.displaySimplePopup(title: (viewModel.getMembershipPlan().account?.planNameCard) ?? nil, message: (viewModel.getMembershipPlan().account?.planDescription) ?? nil)
     }
-}
-
-private extension Selector {
-    static let loginButtonTapped = #selector(AuthAndAddViewController.loginButtonTapped)
-    static let accountButtonTapped = #selector(AuthAndAddViewController.accountButtonTapped)
 }
