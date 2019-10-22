@@ -164,8 +164,6 @@
 		B774E9AA233123BD006D4131 /* PaymentTermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774E9A8233123BD006D4131 /* PaymentTermsAndConditionsViewController.swift */; };
 		B774E9AB233123BD006D4131 /* PaymentTermsAndConditionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B774E9A9233123BD006D4131 /* PaymentTermsAndConditionsViewController.xib */; };
 		B774E9AD233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */; };
-		B774E9AF233263C5006D4131 /* BinkFloatingButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774E9AE233263C5006D4131 /* BinkFloatingButtonsView.swift */; };
-		B774E9B1233263EB006D4131 /* BinkFloatingButtonsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B774E9B0233263EB006D4131 /* BinkFloatingButtonsView.xib */; };
 		B7D577B3231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */; };
 		B7D577B4231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D577B2231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib */; };
 		B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */; };
@@ -271,6 +269,8 @@
 		EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC914234779C900FE52ED /* PaymentWalletRepository.swift */; };
 		EF46E286235E007300BA2CAF /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF46E285235E007300BA2CAF /* OnboardingViewModel.swift */; };
 		EF46E288235E01DD00BA2CAF /* BinkPillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF46E287235E01DD00BA2CAF /* BinkPillButton.swift */; };
+		EF46E28D235F642100BA2CAF /* BinkPrimarySecondaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF46E28B235F642000BA2CAF /* BinkPrimarySecondaryButtonView.swift */; };
+		EF46E28E235F642100BA2CAF /* BinkPrimarySecondaryButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF46E28C235F642000BA2CAF /* BinkPrimarySecondaryButtonView.xib */; };
 		EF480C1B2355F9470060B7C1 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C192355F9470060B7C1 /* WalletViewController.swift */; };
 		EF480C1F235754AD0060B7C1 /* WalletPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C1E235754AD0060B7C1 /* WalletPrompt.swift */; };
 		EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C20235754C20060B7C1 /* WalletPromptFactory.swift */; };
@@ -528,8 +528,6 @@
 		B774E9A8233123BD006D4131 /* PaymentTermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTermsAndConditionsViewController.swift; sourceTree = "<group>"; };
 		B774E9A9233123BD006D4131 /* PaymentTermsAndConditionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentTermsAndConditionsViewController.xib; sourceTree = "<group>"; };
 		B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTermsAndConditionsViewModel.swift; sourceTree = "<group>"; };
-		B774E9AE233263C5006D4131 /* BinkFloatingButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkFloatingButtonsView.swift; sourceTree = "<group>"; };
-		B774E9B0233263EB006D4131 /* BinkFloatingButtonsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BinkFloatingButtonsView.xib; sourceTree = "<group>"; };
 		B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewController.swift; sourceTree = "<group>"; };
 		B7D577B2231809D700C6B145 /* LoyaltyCardFullDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoyaltyCardFullDetailsViewController.xib; sourceTree = "<group>"; };
 		B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -645,6 +643,8 @@
 		EF3BC914234779C900FE52ED /* PaymentWalletRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletRepository.swift; sourceTree = "<group>"; };
 		EF46E285235E007300BA2CAF /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		EF46E287235E01DD00BA2CAF /* BinkPillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkPillButton.swift; sourceTree = "<group>"; };
+		EF46E28B235F642000BA2CAF /* BinkPrimarySecondaryButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinkPrimarySecondaryButtonView.swift; path = binkapp/Screens/BinkUI/BinkPrimarySecondaryButtonView.swift; sourceTree = SOURCE_ROOT; };
+		EF46E28C235F642000BA2CAF /* BinkPrimarySecondaryButtonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BinkPrimarySecondaryButtonView.xib; path = binkapp/Screens/BinkUI/BinkPrimarySecondaryButtonView.xib; sourceTree = SOURCE_ROOT; };
 		EF480C192355F9470060B7C1 /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		EF480C1E235754AD0060B7C1 /* WalletPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPrompt.swift; sourceTree = "<group>"; };
 		EF480C20235754C20060B7C1 /* WalletPromptFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptFactory.swift; sourceTree = "<group>"; };
@@ -1052,8 +1052,8 @@
 				3CFDB226230C38A700E75A14 /* BinkTextField.swift */,
 				3CFDB224230C382400E75A14 /* BinkGradientButton.swift */,
 				3CD4F14D230D35AE0075F63C /* BinkInfoButton.swift */,
-				B774E9AE233263C5006D4131 /* BinkFloatingButtonsView.swift */,
-				B774E9B0233263EB006D4131 /* BinkFloatingButtonsView.xib */,
+				EF46E28B235F642000BA2CAF /* BinkPrimarySecondaryButtonView.swift */,
+				EF46E28C235F642000BA2CAF /* BinkPrimarySecondaryButtonView.xib */,
 				3CD39615231E8E7100CD5C31 /* LayoutHelper.swift */,
 				BDB01883232EB14A00BFFA18 /* StackScrollView.swift */,
 				EF46E287235E01DD00BA2CAF /* BinkPillButton.swift */,
@@ -1854,7 +1854,6 @@
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
-				B774E9B1233263EB006D4131 /* BinkFloatingButtonsView.xib in Resources */,
 				3CD3493822F99E1D000C1F4D /* NunitoSans-Regular.ttf in Resources */,
 				3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */,
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,
@@ -1864,6 +1863,7 @@
 				B7665994231E57CC00B327BE /* CardDetailsInfoView.xib in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
 				3CD3493622F99E1D000C1F4D /* NunitoSans-BlackItalic.ttf in Resources */,
+				EF46E28E235F642100BA2CAF /* BinkPrimarySecondaryButtonView.xib in Resources */,
 				EFF59F1A234B73C900CF3992 /* CardDetailInfoTableViewCell.xib in Resources */,
 				B7D577BD23192C5C00C6B145 /* FullDetailsBrandHeader.xib in Resources */,
 				3CD3493222F99E1D000C1F4D /* NunitoSans-LightItalic.ttf in Resources */,
@@ -2176,6 +2176,7 @@
 				BDD9C88D233BE6B1003CD616 /* _CD_Card.swift in Sources */,
 				BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */,
 				BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */,
+				EF46E28D235F642100BA2CAF /* BinkPrimarySecondaryButtonView.swift in Sources */,
 				3CF029EF22F45ACE009A0E61 /* AddingOptionView.swift in Sources */,
 				B7D577B823180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift in Sources */,
 				BDD9C892233BE6B1003CD616 /* _CD_FeatureSet.swift in Sources */,
@@ -2323,7 +2324,6 @@
 				BDD9C891233BE6B1003CD616 /* _CD_MembershipTransaction.swift in Sources */,
 				BDB01884232EB14A00BFFA18 /* StackScrollView.swift in Sources */,
 				BDB0186E232D98C000BFFA18 /* FormDataSource.swift in Sources */,
-				B774E9AF233263C5006D4131 /* BinkFloatingButtonsView.swift in Sources */,
 				3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */,
 				EF8BF2122341501300D2E5F3 /* CD_PaymentCardAccountConsents.swift in Sources */,
 				EFF59F1C234BC7FF00CF3992 /* LinkedLoyaltyCardCellViewModel.swift in Sources */,

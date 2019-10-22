@@ -9,7 +9,7 @@ import UIKit
 
 class PLLScreenViewController: UIViewController {
     @IBOutlet private weak var brandHeaderView: BrandHeaderView!
-    @IBOutlet private weak var floatingButtonsView: BinkFloatingButtonsView!
+    @IBOutlet private weak var floatingButtonsView: BinkPrimarySecondaryButtonView!
     
     private let viewModel: PLLScreenViewModel
     
@@ -27,7 +27,7 @@ class PLLScreenViewController: UIViewController {
         configureBrandHeader()
         navigationController?.setNavigationBarHidden(true, animated: false)
 
-        floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: "Add payment cards")
+        floatingButtonsView.configure(primaryButtonTitle: "Done", secondaryButtonTitle: "Add payment cards", floating: true)
         floatingButtonsView.delegate = self
 
         configureUI()
@@ -41,10 +41,9 @@ class PLLScreenViewController: UIViewController {
         floatingButtonsView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            floatingButtonsView.heightAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.height),
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
             floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
@@ -69,12 +68,12 @@ private extension PLLScreenViewController {
 
 // MARK: - Floating buttons delegate
 
-extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
-    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
+    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         viewModel.toFullDetailsCardScreen()
     }
 
-    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         viewModel.displaySimplePopup(title: "Error", message: "Not Implemented")
     }
 }

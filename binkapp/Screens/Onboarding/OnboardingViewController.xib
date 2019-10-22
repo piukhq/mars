@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="caj-wq-i4b" customClass="BinkFloatingButtonsView" customModule="binkapp" customModuleProvider="target">
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="caj-wq-i4b" customClass="BinkPrimarySecondaryButtonView" customModule="binkapp" customModuleProvider="target">
                     <rect key="frame" x="57" y="733" width="300" height="129"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

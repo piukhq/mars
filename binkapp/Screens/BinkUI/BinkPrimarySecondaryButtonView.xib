@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BinkFloatingButtonsView" customModule="binkapp" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BinkPrimarySecondaryButtonView" customModule="binkapp" customModuleProvider="target">
             <connections>
                 <outlet property="primaryButton" destination="2dX-9O-Px8" id="sJk-nS-Hem"/>
                 <outlet property="secondaryButton" destination="ZEd-6G-wx0" id="PYO-KH-VDH"/>

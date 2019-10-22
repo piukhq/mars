@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ti-3e-qp7">
-                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="802"/>
                     <subviews>
                         <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fq7-aO-FEk">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="406"/>
@@ -86,7 +86,7 @@
                 <constraint firstAttribute="trailing" secondItem="0ti-3e-qp7" secondAttribute="trailing" id="18P-iI-nAE"/>
                 <constraint firstItem="fq7-aO-FEk" firstAttribute="width" secondItem="fnl-2z-Ty3" secondAttribute="width" id="BLD-ho-UJW"/>
                 <constraint firstItem="0ti-3e-qp7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CrL-Hi-bp2"/>
-                <constraint firstAttribute="bottom" secondItem="0ti-3e-qp7" secondAttribute="bottom" id="Lvd-UV-FrD"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="0ti-3e-qp7" secondAttribute="bottom" constant="16" id="Lvd-UV-FrD"/>
                 <constraint firstItem="0ti-3e-qp7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="g2J-Io-H77"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

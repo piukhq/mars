@@ -10,7 +10,7 @@ import UIKit
 
 class OnboardingViewController: UIViewController {
     @IBOutlet private weak var facebookPillButton: BinkPillButton!
-    @IBOutlet private weak var floatingButtonsView: BinkFloatingButtonsView!
+    @IBOutlet private weak var floatingButtonsView: BinkPrimarySecondaryButtonView!
 
     private let viewModel: OnboardingViewModel
 
@@ -41,7 +41,7 @@ class OnboardingViewController: UIViewController {
         NSLayoutConstraint.activate([
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding),
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
             facebookPillButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
             facebookPillButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
             facebookPillButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -56,12 +56,12 @@ class OnboardingViewController: UIViewController {
     }
 }
 
-extension OnboardingViewController: BinkFloatingButtonsViewDelegate {
-    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+extension OnboardingViewController: BinkPrimarySecondaryButtonViewDelegate {
+    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         viewModel.notImplemented()
     }
 
-    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         viewModel.login()
     }
 }

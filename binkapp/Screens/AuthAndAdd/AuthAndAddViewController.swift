@@ -20,8 +20,8 @@ class AuthAndAddViewController: BaseFormViewController {
         return brandHeader
     }()
 
-    private lazy var floatingButtons: BinkFloatingButtonsView = {
-        let floatingButtons = BinkFloatingButtonsView()
+    private lazy var floatingButtons: BinkPrimarySecondaryButtonView = {
+        let floatingButtons = BinkPrimarySecondaryButtonView()
         floatingButtons.configure(primaryButtonTitle: "login".localized, secondaryButtonTitle: "no_account_button_title".localized)
         floatingButtons.primaryButton.isEnabled = false
         floatingButtons.delegate = self
@@ -66,13 +66,10 @@ class AuthAndAddViewController: BaseFormViewController {
     func configureLayout() {
         view.addSubview(floatingButtons)
         NSLayoutConstraint.activate([
-            floatingButtons.heightAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.height),
             floatingButtons.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtons.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            floatingButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
         ])
-
-        // TODO: Update once stack view again
         floatingButtons.secondaryButton.isHidden = viewModel.accountButtonShouldHide
     }
     
@@ -102,12 +99,12 @@ class AuthAndAddViewController: BaseFormViewController {
     }
 }
 
-extension AuthAndAddViewController: BinkFloatingButtonsViewDelegate {
-    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
+    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
     }
 
-    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
         guard (fields?.contains(where: { $0.value == "REGISTRATION" }) ?? false) else {
             viewModel.displaySimplePopup(title: "doesn't have registration fields", message: nil)
