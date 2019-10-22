@@ -50,7 +50,7 @@ class BinkFloatingButtonsView: CustomView {
 
 extension LayoutHelper {
     struct FloatingButtons {
-        static let height: CGFloat = (PillButton.height * 2) + PillButton.verticalSpacing
-        static let bottomPadding: CGFloat = PillButton.bottomPadding
+        static let height: CGFloat = (PillButton.height * 2) + PillButton.verticalSpacing + PillButton.bottomPadding
+        static let bottomPadding: CGFloat = 16
     }
 }

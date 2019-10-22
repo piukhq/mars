@@ -59,11 +59,9 @@ class PaymentTermsAndConditionsViewController: UIViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            floatingButtonsContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.height),
             floatingButtonsContainer.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsContainer.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtonsContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding),
-            floatingButtonsContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            floatingButtonsContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding),
             textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             textView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
             textView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),

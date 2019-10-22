@@ -69,7 +69,7 @@ class AuthAndAddViewController: BaseFormViewController {
             floatingButtons.heightAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.height),
             floatingButtons.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtons.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding)
+            floatingButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
         // TODO: Update once stack view again

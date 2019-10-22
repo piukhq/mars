@@ -44,7 +44,7 @@ class PLLScreenViewController: UIViewController {
             floatingButtonsView.heightAnchor.constraint(equalToConstant: LayoutHelper.FloatingButtons.height),
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.FloatingButtons.bottomPadding),
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
