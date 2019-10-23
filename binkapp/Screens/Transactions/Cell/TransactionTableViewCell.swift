@@ -18,7 +18,12 @@ class TransactionTableViewCell: UITableViewCell {
         configureUI()
     }
     
-    func configure(transactionValue: Int, timestamp: Double, prefix: String?, suffix: String?) {
+    func configure(transaction: CD_MembershipTransaction) {
+       let transactionValue = transaction.formattedAmounts?.first?.value?.intValue ?? 0
+       let timestamp = transaction.timestamp?.doubleValue ?? 0.0
+       let prefix = transaction.formattedAmounts?.first?.prefix
+       let suffix = transaction.formattedAmounts?.first?.suffix != "" ? transaction.formattedAmounts?.first?.currency : nil
+        
         if transactionValue < 0 {
             valueLabel.text = "-" + (prefix ?? "") + "\(abs(transactionValue)) " + (suffix ?? "")
             valueLabel.textColor = .black
