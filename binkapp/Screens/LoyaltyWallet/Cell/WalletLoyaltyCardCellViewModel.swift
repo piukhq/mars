@@ -41,7 +41,7 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var shouldShowLoginButton: Bool {
-        return cardStatus == .failed || cardStatus == .unauthorised
+        return (cardStatus == .failed || cardStatus == .unauthorised) && membershipPlan?.featureSet?.planCardType != .store
     }
 
     var shouldShowPointsValueLabels: Bool {
