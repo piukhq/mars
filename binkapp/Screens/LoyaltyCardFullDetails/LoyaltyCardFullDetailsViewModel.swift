@@ -92,7 +92,10 @@ class LoyaltyCardFullDetailsViewModel {
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .unLinkable:
-            toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)
+            let attributedString = NSMutableAttributedString(string: "unlinkable_pll_description".localized)
+            
+            
+            toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: attributedString)
             break
         case .genericError:
             let state = membershipCard.status?.status?.rawValue ?? ""
@@ -102,19 +105,18 @@ class LoyaltyCardFullDetailsViewModel {
                 description += $0.value ?? ""
             }
     
-            toReusableModalTemplate(title: "error_title".localized, description: description)
+            let attributedString = NSMutableAttributedString(string: description)
+            
+            toReusableModalTemplate(title: "error_title".localized, description: attributedString)
             break
         }
         
     }
     
-    private func toReusableModalTemplate(title: String, description: String) {
-        let attributedText = NSMutableAttributedString(string: title + "\n" + description)
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+    func toReusableModalTemplate(title: String, description: NSMutableAttributedString) {
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
+//        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        let configurationModel = ReusableModalConfiguration(title: "", text: description, showCloseButton: true)
         
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
@@ -127,9 +129,14 @@ class LoyaltyCardFullDetailsViewModel {
         router.popViewController()
     }
     
-    func displaySimplePopupWithTitle(_ title: String, andMessage message: String) {
-        router.displaySimplePopup(title: title, message: message)
-    }
+//    func displayTemplatePopup(_ title: String, andMessage message: String) {
+//        let attributedString = NSMutableAttributedString(string: message)
+//
+//        attributedString.addAttributes([.font: UIFont.bodyTextLarge], range: NSRange(location: 0, length: message.count))
+//
+//        let configuration = ReusableModalConfiguration(title: title, text: attributedString, primaryButtonTitle: nil,  secondaryButtonTitle: nil, tabBarBackButton: nil, showCloseButton: true)
+//        router.toReusableModalTemplateViewController(configurationModel: configuration)
+//    }
     
     func getOfferTileImageUrls() -> [String]? {
         let planImages = membershipCard.membershipPlan?.imagesSet
@@ -144,7 +151,7 @@ class LoyaltyCardFullDetailsViewModel {
             strongSelf.repository.deleteMembershipCard(id: strongSelf.membershipCard.id, onSuccess: { _ in
                 yesCompletion()
             }, onError: { (error: Error) in
-                strongSelf.displaySimplePopupWithTitle("Error", andMessage: error.localizedDescription)
+                strongSelf.router.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
             })
         }, noCompletion: {
             noCompletion()

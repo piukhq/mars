@@ -7,6 +7,7 @@
 
 "error_title" = "Error";
 "to_be_implemented_message" = "To be implemented";
+"info_title" = "Info";
 
 "barcode_swipe_title" = "Barcode";
 "delete_swipe_title" = "Delete";

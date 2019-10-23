@@ -106,14 +106,21 @@ private extension LoyaltyCardFullDetailsViewController {
     
     func displaySecurityAndPrivacyPopup() {
         let securityAdnPrivacyLink = NSURL(string: "https://bink.com/terms-and-conditions/#privacy-policy")
-        let messageString = "security_and_privacy_alert_message".localized
-        let message = NSMutableAttributedString(string: messageString)
-        message.addAttribute(.link, value: securityAdnPrivacyLink ?? "", range: NSRange(location: message.length - 5, length: 4))
+        let title = "security_and_privacy_alert_title".localized
+        let description = "security_and_privacy_alert_message".localized
+        let attributedString = NSMutableAttributedString(string: title + "\n" + description)
+        attributedString.addAttribute(.link, value: securityAdnPrivacyLink ?? "", range: NSRange(location: attributedString.length - 5, length: 4))
+        attributedString.addAttribute(.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
 
-        let alert = HyperlinkAlertController(title: "security_and_privacy_alert_title".localized, message: message)
-        alert.modalPresentationStyle = .overCurrentContext
-        alert.modalTransitionStyle = .crossDissolve
-        present(alert, animated: true, completion: nil)
+//        let alert = HyperlinkAlertController(title: "security_and_privacy_alert_title".localized, message: message)
+//        alert.modalPresentationStyle = .overCurrentContext
+//        alert.modalTransitionStyle = .crossDissolve
+//        present(alert, animated: true, completion: nil)
+        
+        viewModel.toReusableModalTemplate(title: title, description: attributedString)
+        
+//        viewModel.toReusableModalTemplate(title: <#T##String#>, description: <#T##String#>)
     }
 }
 
@@ -124,7 +131,13 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
         switch cardDetailsInfoView {
         case aboutInfoRow:
             if let infoMessage = viewModel.membershipCard.membershipPlan?.account?.planDescription {
-                viewModel.displaySimplePopupWithTitle("Info", andMessage: infoMessage)
+                let title = "info_title".localized
+                let attributedText = NSMutableAttributedString(string: title + "\n" + infoMessage)
+                
+                attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+                attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: infoMessage.count))
+                
+                viewModel.toReusableModalTemplate(title: title, description: attributedText)
             }
             break
         case securityAndPrivacyInfoRow:
