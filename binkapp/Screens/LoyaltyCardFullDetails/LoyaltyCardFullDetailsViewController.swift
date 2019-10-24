@@ -60,14 +60,9 @@ private extension LoyaltyCardFullDetailsViewController {
             }
         }
         
-        aboutInfoRow.delegate = self
+        let aboutInfoTitle = viewModel.aboutTitle
         let aboutInfoMessage = "learn_more".localized
-        var aboutInfoTitle = ""
-        if let planName = viewModel.membershipCard.membershipPlan?.account?.planName {
-            aboutInfoTitle = String(format: "about_membership_plan_title".localized, planName)
-        } else {
-            aboutInfoTitle = "about_membership_title".localized
-        }
+        aboutInfoRow.delegate = self
         aboutInfoRow.configure(title: aboutInfoTitle, andInfo: aboutInfoMessage)
         
         let securityInfoTitle = "security_and_privacy_title".localized
@@ -75,14 +70,9 @@ private extension LoyaltyCardFullDetailsViewController {
         securityAndPrivacyInfoRow.delegate = self
         securityAndPrivacyInfoRow.configure(title: securityInfoTitle, andInfo: securityInfoMessage)
         
+        let deleteInfoTitle = viewModel.deleteTitle
         let deleteInfoMessage = "delete_card_message".localized
         deleteInfoRow.delegate = self
-        var deleteInfoTitle = ""
-        if let planNameCard = viewModel.membershipCard.membershipPlan?.account?.planNameCard {
-            deleteInfoTitle = String(format: "delete_card_plan_title".localized, planNameCard)
-        } else {
-            deleteInfoTitle = "delete_card_title".localized
-        }
         deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
         
         let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url
