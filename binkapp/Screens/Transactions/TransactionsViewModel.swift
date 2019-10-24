@@ -13,16 +13,16 @@ struct TransactionsViewModel {
     private let router: MainScreenRouter
     
     var title: String {
-        if transactions.isEmpty {
-            return "transaction_history_unavailable_title".localized
-        }
+//        if transactions.isEmpty {
+//            return "transaction_history_unavailable_title".localized
+//        }
         return "points_history_title".localized
     }
     
     var description: String {
-        if transactions.isEmpty {
-            return String(format: "transaction_history_unavailable_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
-        }
+//        if transactions.isEmpty {
+//            return String(format: "transaction_history_unavailable_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
+//        }
         return "recent_transaction_history_subtitle".localized
     }
     

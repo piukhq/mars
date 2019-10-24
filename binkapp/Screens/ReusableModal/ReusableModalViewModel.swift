@@ -58,6 +58,10 @@ open class ReusableModalViewModel {
         return configurationModel.secondaryButtonCompletion
     }
     
+    var shouldHideButtonsView: Bool {
+        return primaryButtonTitle == nil && secondaryButtonTitle == nil
+    }
+    
     var tabBarBackButton: UIBarButtonItem? {
         return configurationModel.tabBarBackButton
     }
