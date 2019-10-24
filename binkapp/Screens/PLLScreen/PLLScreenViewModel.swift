@@ -11,7 +11,7 @@ class PLLScreenViewModel {
     private var membershipCard: CD_MembershipCard
     private let repository: PLLScreenRepository
     private let router: MainScreenRouter
-    let isAddJourney: Bool
+    let journey: PLLScreenViewController.PllScreenJourney
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
     }
@@ -22,7 +22,7 @@ class PLLScreenViewModel {
     }
     
     var isNavigationVisisble: Bool {
-        return isEmptyPll || isAddJourney
+        return isEmptyPll || journey == .newCard
     }
     
     var linkedPaymentCards: [CD_PaymentCard]? {
@@ -37,11 +37,12 @@ class PLLScreenViewModel {
     var primaryMessageText: String {
         return isEmptyPll ? "pll_screen_link_message".localized : "pll_screen_add_message".localized
     }
-        init(membershipCard: CD_MembershipCard, repository: PLLScreenRepository, router: MainScreenRouter, isAddJourney: Bool) {
+        
+    init(membershipCard: CD_MembershipCard, repository: PLLScreenRepository, router: MainScreenRouter, journey: PLLScreenViewController.PllScreenJourney) {
         self.membershipCard = membershipCard
         self.repository = repository
         self.router = router
-        self.isAddJourney = isAddJourney
+        self.journey = journey
     }
     
     // MARK:  - Public methods

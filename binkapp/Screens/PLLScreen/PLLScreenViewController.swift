@@ -17,9 +17,16 @@ class PLLScreenViewController: UIViewController {
     @IBOutlet private weak var floatingButtonsViewHeightConstraint: NSLayoutConstraint!
     
     private let viewModel: PLLScreenViewModel
+    private let journey: PllScreenJourney
     
-    init(viewModel: PLLScreenViewModel) {
+    enum PllScreenJourney {
+        case newCard
+        case existingCard
+    }
+    
+    init(viewModel: PLLScreenViewModel, journey: PllScreenJourney) {
         self.viewModel = viewModel
+        self.journey = journey
         super.init(nibName: "PLLScreenViewController", bundle: Bundle(for: PLLScreenViewController.self))
     }
     
@@ -55,13 +62,13 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 
 extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
-        let activityIndicator = UIActivityIndicatorView(frame: view.frame)
-        view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
+        floatingButtons.primaryButton.startLoading()
+        view.isUserInteractionEnabled = false
         viewModel.toggleLinkForMembershipCards {
             self.reloadContent()
-            self.viewModel.toFullDetailsCardScreen()
-            activityIndicator.removeFromSuperview()
+            self.view.isUserInteractionEnabled = true
+            floatingButtons.primaryButton.stopLoading()
+            self.navigateToLCDScreen()
         }
     }
     
@@ -73,6 +80,10 @@ extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
 // MARK: - UITableViewDataSource
 
 extension PLLScreenViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let paymentCards = viewModel.paymentCards {
             return paymentCards.count
@@ -83,8 +94,8 @@ extension PLLScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PaymentCardCell = tableView.dequeue(indexPath: indexPath)
         if let paymentCard = viewModel.paymentCards?[indexPath.row] {
-            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self, isAddJourney: viewModel.isAddJourney)
-            if viewModel.isAddJourney {
+            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self, journey: journey)
+            if journey == .newCard {
                 viewModel.addCardToChangedCardsArray(card: paymentCard)
             }
         }
@@ -118,6 +129,17 @@ private extension PLLScreenViewController {
         floatingButtonsViewHeightConstraint.constant = viewModel.isEmptyPll ? 210.0 : 130.0
         paymentCardsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonsViewHeightConstraint.constant, right: 0)
         viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: "pll_screen_add_cards_button_title".localized) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil)
+    }
+    
+    func navigateToLCDScreen() {
+        switch journey {
+        case .newCard:
+            viewModel.toFullDetailsCardScreen()
+            break
+        case .existingCard:
+            viewModel.popViewController()
+            break
+        }
     }
 }
 

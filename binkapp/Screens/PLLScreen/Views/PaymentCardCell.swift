@@ -22,26 +22,28 @@ class PaymentCardCell: UITableViewCell {
     private let activityIndicator = UIActivityIndicatorView()
     private var cardIndex = 0
     private var firstUse = true
-        
-    override func layoutSubviews() {
-        activityIndicator.frame = paymentCardImageView.frame
-        paymentCardImageView.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-    }
     
-    func configureUI(membershipCard: CD_MembershipCard, paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, isAddJourney: Bool) {
+    func configureUI(membershipCard: CD_MembershipCard, paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, journey: PLLScreenViewController.PllScreenJourney) {
         self.delegate = delegate
         self.cardIndex = cardIndex
-        if let imageUrlString = paymentCard.imagesArray.first?.url {
-            guard let imageUrl = URL(string: imageUrlString) else { return }
-            paymentCardImageView?.af_setImage(withURL: imageUrl, placeholderImage: nil, filter: nil, progress: nil, progressQueue: .main, imageTransition: .noTransition, runImageTransitionIfCached: true, completion: { (response) in
-                self.activityIndicator.removeFromSuperview()
-            })
+
+        switch paymentCard.card?.providerName {
+        case .visa:
+            paymentCardImageView.image = UIImage(named: "visalogoContainer")
+            break
+        case .americanexpress:
+            paymentCardImageView.image = UIImage(named: "americanexpresslogoContainer")
+            break
+        case .mastercard:
+            paymentCardImageView.image = UIImage(named: "mastercardlogoContainer")
+            break
+        default:
+            break
         }
         titleLabel.text = paymentCard.card?.nameOnCard
         subtitleLabel.text = "pll_screen_card_ending".localized + (paymentCard.card?.lastFour ?? "")
         if firstUse {
-            switchButton.isOn = isAddJourney ? true : membershipCard.linkedPaymentCards.contains(paymentCard)
+            switchButton.isOn = journey == .newCard ? true : membershipCard.linkedPaymentCards.contains(paymentCard)
             firstUse = false
         }
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -55,15 +55,25 @@
                             <action selector="switchDidChangeValue:" destination="KGk-i7-Jjw" eventType="valueChanged" id="fxG-tb-EhC"/>
                         </connections>
                     </switch>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3LR-wF-ZTF">
+                        <rect key="frame" x="0.0" y="99" width="365" height="1"/>
+                        <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="C8P-BQ-MYW"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="3LR-wF-ZTF" secondAttribute="trailing" id="2u4-9j-Cig"/>
                     <constraint firstItem="YAq-on-9dQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="8EC-yh-bB2"/>
                     <constraint firstItem="YAq-on-9dQ" firstAttribute="leading" secondItem="agI-cI-K6A" secondAttribute="trailing" constant="12" id="CcO-xk-WF0"/>
                     <constraint firstItem="Bgy-ha-qvh" firstAttribute="leading" secondItem="h7g-va-knt" secondAttribute="trailing" constant="12" id="Kdd-Yj-i7w"/>
+                    <constraint firstAttribute="bottom" secondItem="3LR-wF-ZTF" secondAttribute="bottom" id="LAk-Rm-d8e"/>
                     <constraint firstItem="h7g-va-knt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="18" id="LCW-1t-HsT"/>
                     <constraint firstItem="h7g-va-knt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="OPX-Tk-URq"/>
                     <constraint firstItem="agI-cI-K6A" firstAttribute="leading" secondItem="h7g-va-knt" secondAttribute="trailing" constant="12" id="UAo-oP-OWQ"/>
                     <constraint firstItem="agI-cI-K6A" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="VD8-lg-Plx"/>
+                    <constraint firstItem="3LR-wF-ZTF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="VKf-eF-dd0"/>
                     <constraint firstAttribute="trailing" secondItem="YAq-on-9dQ" secondAttribute="trailing" constant="5" id="YvW-0w-g7X"/>
                     <constraint firstItem="YAq-on-9dQ" firstAttribute="leading" secondItem="Bgy-ha-qvh" secondAttribute="trailing" constant="12" id="Z1w-Ng-778"/>
                     <constraint firstItem="Bgy-ha-qvh" firstAttribute="top" secondItem="agI-cI-K6A" secondAttribute="bottom" constant="1" id="tV4-co-t04"/>

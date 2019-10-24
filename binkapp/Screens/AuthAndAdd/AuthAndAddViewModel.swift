@@ -97,7 +97,7 @@ class AuthAndAddViewModel {
             guard let self = self else {return}
             if let card = card {
                 if card.membershipPlan?.featureSet?.planCardType == .link {
-                    self.router.toPllViewController(membershipCard: card, isAddJourney: true)
+                    self.router.toPllViewController(membershipCard: card, journey: .newCard)
                 } else {
                     self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
                 }

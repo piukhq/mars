@@ -36,6 +36,10 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         scrollView.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        configureCardDetails(viewModel.paymentCards)
+    }
+    
     // MARK: - Navigation Bar Blurring
     
     override func viewDidLayoutSubviews() {
@@ -81,6 +85,11 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configureCardDetails(_ paymentCards: [CD_PaymentCard]?) {
+        if cardDetailsStackView.subviews.count > 0 {
+            for subview in cardDetailsStackView.subviews {
+                cardDetailsStackView.removeArrangedSubview(subview)
+            }
+        }
         let pointsModuleView = BinkModuleView()
             pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
             cardDetailsStackView.addArrangedSubview(pointsModuleView)
