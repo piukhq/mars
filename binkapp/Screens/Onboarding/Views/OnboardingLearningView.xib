@@ -26,7 +26,7 @@
                     <rect key="frame" x="89.666666666666657" y="100" width="269.66666666666674" height="276"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bink-logo" translatesAutoresizingMaskIntoConstraints="NO" id="EYQ-zj-WRe">
-                            <rect key="frame" x="0.0" y="0.0" width="269.6666666666668" height="98.333333333333329"/>
+                            <rect key="frame" x="0.0" y="0.0" width="269.66666666666669" height="98.333333333333329"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="EYQ-zj-WRe" secondAttribute="height" multiplier="225:82" id="sOV-8B-tFP"/>
                             </constraints>
@@ -40,13 +40,13 @@
                     </subviews>
                 </stackView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All your cards in one place" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q0P-nH-Ggx">
-                    <rect key="frame" x="25" y="401" width="399" height="24.666666666666686"/>
+                    <rect key="frame" x="25" y="401" width="399" height="21"/>
                     <fontDescription key="fontDescription" name="NunitoSans-ExtraBold" family="Nunito Sans" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Store all your loyalty cards in a single digital wallet. View your rewards and points balances any time, anywhere." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xq8-5H-mwI">
-                    <rect key="frame" x="25" y="425.66666666666669" width="399" height="73.666666666666686"/>
+                    <rect key="frame" x="25" y="422" width="399" height="63"/>
                     <fontDescription key="fontDescription" name="NunitoSans-Light" family="Nunito Sans" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>

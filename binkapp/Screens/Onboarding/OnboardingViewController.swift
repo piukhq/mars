@@ -41,11 +41,12 @@ class OnboardingViewController: UIViewController {
     }
 
     private func configureUI() {
+        scrollView.clipsToBounds = false
         let views = [
+            TestView(bgColor: .systemTeal),
             OnboardingLearningView(frame: .zero),
-            OnboardingLearningView(frame: .zero)
+            TestView(bgColor: .systemOrange)
         ]
-        scrollView.backgroundColor = .systemBlue
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         learningContainer.addSubview(scrollView)
         scrollView.frame = CGRect(x: 0, y: 0, width: learningContainer.frame.width, height: learningContainer.frame.height)
