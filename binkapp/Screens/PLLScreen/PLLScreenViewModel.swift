@@ -5,7 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class PLLScreenViewModel {
     private let membershipCard: CD_MembershipCard
@@ -20,6 +20,18 @@ class PLLScreenViewModel {
     
     func getMembershipPlan() -> CD_MembershipPlan {
         return membershipCard.membershipPlan!
+    }
+    
+    func brandHeaderWasTapped() {
+        let title: String = membershipCard.membershipPlan?.account?.planNameCard ?? ""
+        let description: String = membershipCard.membershipPlan?.account?.planDescription ?? ""
+        
+        let attributedString = NSMutableAttributedString(string: title + "\n" + description)
+        attributedString.addAttribute(.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        
+        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
+        router.toReusableModalTemplateViewController(configurationModel: configuration)
     }
     
     func displaySimplePopup(title: String, message: String) {
