@@ -41,10 +41,13 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var shouldShowLoginButton: Bool {
-        return cardStatus == .failed || cardStatus == .unauthorised
+        return (cardStatus == .failed || cardStatus == .unauthorised) && membershipPlan?.featureSet?.planCardType != .store
     }
 
     var shouldShowPointsValueLabels: Bool {
+        guard membershipPlan?.featureSet?.planCardType != .store  else {
+            return false
+        }
         return !shouldShowLoginButton || cardStatus == .pending || planHasPoints && balanceValue != nil
     }
 
