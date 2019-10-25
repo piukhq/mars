@@ -125,7 +125,6 @@ private extension PLLScreenViewController {
     
     func configureUI() {
         navigationController?.setNavigationBarHidden(viewModel.isNavigationVisisble, animated: false)
-//        paymentCardsTableView.tableFooterView = UIView()
         titleLabel.text = viewModel.titleText
         primaryMessageLabel.text = viewModel.primaryMessageText
         secondaryMesageLabel.isHidden = !viewModel.isEmptyPll
