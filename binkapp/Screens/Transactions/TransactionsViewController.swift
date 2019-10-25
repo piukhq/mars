@@ -62,7 +62,7 @@ class TransactionsViewController: UIViewController {
 
 extension TransactionsViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
-        viewModel.displayLoyaltySchemePopup()
+        viewModel.brandHeaderWasTapped()
     }
 }
 

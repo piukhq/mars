@@ -178,8 +178,8 @@ class AuthAndAddViewModel {
     }
     
     func brandHeaderWasTapped() {
-        let title: String! = membershipPlan.account?.planNameCard ?? ""
-        let description: String! = membershipPlan.account?.planDescription ?? ""
+        let title: String = membershipPlan.account?.planNameCard ?? ""
+        let description: String = membershipPlan.account?.planDescription ?? ""
         
         let attributedString = NSMutableAttributedString(string: title + "\n" + description)
         attributedString.addAttribute(.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
