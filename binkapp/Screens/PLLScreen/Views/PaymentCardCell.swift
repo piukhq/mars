@@ -18,20 +18,20 @@ class PaymentCardCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var switchButton: BinkSwitch!
+    @IBOutlet private weak var separatorView: UIView!
     private weak var delegate: PaymentCardCellDelegate?
-    private let activityIndicator = UIActivityIndicatorView()
     private var cardIndex = 0
     private var firstUse = true
     
-    func configureUI(membershipCard: CD_MembershipCard, paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, journey: PLLScreenViewController.PllScreenJourney) {
+    func configureUI(membershipCard: CD_MembershipCard, paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, journey: PllScreenJourney, isLastCell: Bool) {
         self.delegate = delegate
         self.cardIndex = cardIndex
 
-        switch paymentCard.card?.providerName {
+        switch PaymentCardType.type(from: paymentCard.card?.firstSix) {
         case .visa:
             paymentCardImageView.image = UIImage(named: "visalogoContainer")
             break
-        case .americanexpress:
+        case .amex:
             paymentCardImageView.image = UIImage(named: "americanexpresslogoContainer")
             break
         case .mastercard:
@@ -40,6 +40,7 @@ class PaymentCardCell: UITableViewCell {
         default:
             break
         }
+        separatorView.isHidden = isLastCell
         titleLabel.text = paymentCard.card?.nameOnCard
         subtitleLabel.text = "pll_screen_card_ending".localized + (paymentCard.card?.lastFour ?? "")
         if firstUse {

@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum PllScreenJourney {
+    case newCard
+    case existingCard
+}
+
 class PLLScreenViewController: UIViewController {
     @IBOutlet private weak var brandHeaderView: BrandHeaderView!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -18,11 +23,6 @@ class PLLScreenViewController: UIViewController {
     
     private let viewModel: PLLScreenViewModel
     private let journey: PllScreenJourney
-    
-    enum PllScreenJourney {
-        case newCard
-        case existingCard
-    }
     
     init(viewModel: PLLScreenViewModel, journey: PllScreenJourney) {
         self.viewModel = viewModel
@@ -64,7 +64,8 @@ extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
         floatingButtons.primaryButton.startLoading()
         view.isUserInteractionEnabled = false
-        viewModel.toggleLinkForMembershipCards {
+        viewModel.toggleLinkForMembershipCards { [weak self] in
+            guard let self = self else {return}
             self.reloadContent()
             self.view.isUserInteractionEnabled = true
             floatingButtons.primaryButton.stopLoading()
@@ -93,8 +94,10 @@ extension PLLScreenViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PaymentCardCell = tableView.dequeue(indexPath: indexPath)
-        if let paymentCard = viewModel.paymentCards?[indexPath.row] {
-            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self, journey: journey)
+        if let paymentCards = viewModel.paymentCards {
+            let paymentCard = paymentCards[indexPath.row]
+            let isLastCell = indexPath.row == paymentCards.count - 1
+            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self, journey: journey, isLastCell: isLastCell)
             if journey == .newCard {
                 viewModel.addCardToChangedCardsArray(card: paymentCard)
             }
@@ -122,6 +125,7 @@ private extension PLLScreenViewController {
     
     func configureUI() {
         navigationController?.setNavigationBarHidden(viewModel.isNavigationVisisble, animated: false)
+//        paymentCardsTableView.tableFooterView = UIView()
         titleLabel.text = viewModel.titleText
         primaryMessageLabel.text = viewModel.primaryMessageText
         secondaryMesageLabel.isHidden = !viewModel.isEmptyPll

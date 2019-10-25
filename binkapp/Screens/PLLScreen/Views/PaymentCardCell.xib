@@ -82,6 +82,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="paymentCardImageView" destination="h7g-va-knt" id="uNP-FK-Oby"/>
+                <outlet property="separatorView" destination="3LR-wF-ZTF" id="RPi-ZF-lnc"/>
                 <outlet property="subtitleLabel" destination="Bgy-ha-qvh" id="Gdx-jV-rwT"/>
                 <outlet property="switchButton" destination="YAq-on-9dQ" id="wQs-sf-4x4"/>
                 <outlet property="titleLabel" destination="agI-cI-K6A" id="ldD-Xe-iEn"/>
