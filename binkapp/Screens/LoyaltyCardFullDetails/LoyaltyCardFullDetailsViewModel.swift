@@ -112,9 +112,9 @@ class LoyaltyCardFullDetailsViewModel {
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .unLinkable:
-            let attributedString = NSMutableAttributedString(string: "unlinkable_pll_description".localized)
-            
-            toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: attributedString)
+            let title = "unlinkable_pll_title".localized
+            let description = "unlinkable_pll_description".localized
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .genericError:
             let state = membershipCard.status?.status?.rawValue ?? ""
