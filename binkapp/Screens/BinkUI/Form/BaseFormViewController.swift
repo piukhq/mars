@@ -20,7 +20,7 @@ class BaseFormViewController: UIViewController, Form {
         static let normalCellHeight: CGFloat = 84.0
         static let horizontalInset: CGFloat = 25.0
         static let maskingHeight: CGFloat = 209.0
-        static let bottomInset: CGFloat = 140.0
+        static let bottomInset: CGFloat = 150.0
         static let postCollectionViewPadding: CGFloat = 15.0
     }
     

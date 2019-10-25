@@ -45,6 +45,10 @@ class AuthAndAddViewModel {
         return formPurpose == .signUp ? "sign_up_button_title".localized : "log_in_title".localized
     }
     
+    var accountButtonShouldHide: Bool {
+        return formPurpose != .firstLogin
+    }
+    
     init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose) {
         self.repository = repository
         self.router = router
