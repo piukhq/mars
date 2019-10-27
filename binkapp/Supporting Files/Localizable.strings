@@ -76,6 +76,9 @@
 
 "no_internet_connection_title" = "Your selected activity cannot be performed at this time due to a connection issue";
 
+"details_header_show_barcode" = "Tap card to show barcode";
+"details_header_show_card_number" = "Tap to show card number";
+
 "about_membership_title" = "About membership";
 "learn_more" = "Learn more about how it works";
 "security_and_privacy_title" = "Security and privacy";

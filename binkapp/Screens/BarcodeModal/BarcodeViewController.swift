@@ -55,6 +55,7 @@ class BarcodeViewController: UIViewController {
     
     func configureUI(maximized: Bool) {
         viewModel.generateBarcodeImage(for: barcodeImageView)
+        barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
         
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black
