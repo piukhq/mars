@@ -18,6 +18,7 @@
 "history_title" = "History";
 "not_available_title" = "Not available";
 "pending_title" = "Pending";
+"retry_title" = "Retry";
 
 "add_loyalty_card_title" = "Add loyalty card";
 "scan_a_card_description" = "Scan a card you already have";

@@ -83,7 +83,6 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
             updateButtonState(with: mode)
         }
     }
-    
     private (set) var swipeState: SwipeState?
     
     private func setupTheming() {
@@ -122,12 +121,12 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         cardLinkStatusImage.isHidden = !viewModel.shouldShowLinkStatus
         cardLinkStatusLabel.isHidden = !viewModel.shouldShowLinkStatus
         
-        /// Login Button
-        logInAlert.configureForType(.loyaltyLogIn) { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.cellPerform(action: .login, cell: self)
-        }
-        logInAlert.isHidden = !viewModel.shouldShowLoginButton
+        /// Login Button will not be visible for the MVP and waiting for the correct reason codes/state to display it
+//        logInAlert.configureForType(.loyaltyLogIn) { [weak self] in
+//            guard let self = self else { return }
+//            self.delegate?.cellPerform(action: .login, cell: self)
+//        }
+        logInAlert.isHidden = true
 
         /// Card Value
         cardValuePointsLabel.text = viewModel.pointsValueText
