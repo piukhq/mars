@@ -64,7 +64,7 @@ private extension LoyaltyCardFullDetailsViewController {
         
         configureCardDetails(viewModel.paymentCards)
         
-        let aboutInfoTitle = "about_membership_title".localized
+        let aboutInfoTitle = viewModel.aboutTitle
         let aboutInfoMessage = "learn_more".localized
         aboutInfoRow.delegate = self
         aboutInfoRow.configure(title: aboutInfoTitle, andInfo: aboutInfoMessage)
@@ -74,7 +74,7 @@ private extension LoyaltyCardFullDetailsViewController {
         securityAndPrivacyInfoRow.delegate = self
         securityAndPrivacyInfoRow.configure(title: securityInfoTitle, andInfo: securityInfoMessage)
         
-        let deleteInfoTitle = "delete_card_title".localized
+        let deleteInfoTitle = viewModel.deleteTitle
         let deleteInfoMessage = "delete_card_message".localized
         deleteInfoRow.delegate = self
         deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
