@@ -97,9 +97,14 @@ class AuthAndAddViewModel {
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
                     
-        let request = try AddMembershipCardRequest(jsonCard: membershipCard.asDictionary(), completion: { card in
+        let request = try AddMembershipCardRequest(jsonCard: membershipCard.asDictionary(), completion: { [weak self] card in
+            guard let self = self else {return}
             if let card = card {
-                self.router.toPllViewController(membershipCard: card)
+                if card.membershipPlan?.featureSet?.planCardType == .link {
+                    self.router.toPllViewController(membershipCard: card, journey: .newCard)
+                } else {
+                    self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+                }
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
         }, onError: { error in
