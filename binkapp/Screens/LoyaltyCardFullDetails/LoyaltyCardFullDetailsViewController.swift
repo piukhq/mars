@@ -123,12 +123,21 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
     func cardDetailsInfoViewDidTapMoreInfo(_ cardDetailsInfoView: CardDetailsInfoView) {
         switch cardDetailsInfoView {
         case aboutInfoRow:
+            let title = viewModel.membershipCard.membershipPlan?.account?.planName ?? "info_title".localized
             if let infoMessage = viewModel.membershipCard.membershipPlan?.account?.planDescription {
-                let title = "info_title".localized
                 let attributedText = NSMutableAttributedString(string: title + "\n" + infoMessage)
                 
                 attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
                 attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: infoMessage.count))
+                
+                viewModel.toReusableModalTemplate(title: title, description: attributedText)
+            } else {
+                let title = ""
+                let description = ""
+                let attributedText = NSMutableAttributedString(string: title + "\n" + description)
+                
+                attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+                attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
                 
                 viewModel.toReusableModalTemplate(title: title, description: attributedText)
             }
