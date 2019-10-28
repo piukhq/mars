@@ -128,7 +128,14 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
     func cardDetailsInfoViewDidTapMoreInfo(_ cardDetailsInfoView: CardDetailsInfoView) {
         switch cardDetailsInfoView {
         case aboutInfoRow:
-            let title = viewModel.membershipCard.membershipPlan?.account?.planName ?? "info_title".localized
+            var title = ""
+            
+            if let planName = viewModel.membershipCard.membershipPlan?.account?.planName {
+                title = String(format: "about_custom_title".localized, planName)
+            } else {
+                title = "info_title".localized
+            }
+            
             if let infoMessage = viewModel.membershipCard.membershipPlan?.account?.planDescription {
                 let attributedText = NSMutableAttributedString(string: title + "\n" + infoMessage)
                 
