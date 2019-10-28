@@ -47,10 +47,14 @@ extension FeatureSetModel: CoreDataMappable, CoreDataIDMappable {
             guard let support = $0 as? CD_LinkingSupport else { return }
             context.delete(support)
         }
-        linkingSupport?.forEach { support in
-            let cdSupport = support.mapToCoreData(context, .update, overrideID: nil) // This should have an override?
-            update(cdSupport, \.featureSet, with: cdObject, delta: delta)
-            cdObject.addLinkingSupportObject(cdSupport)
+
+        if let linkingSupport = linkingSupport {
+            for (index, support) in linkingSupport.enumerated() {
+                let indexID = LinkingSupportType.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdSupport = support.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdSupport, \.featureSet, with: cdObject, delta: delta)
+                cdObject.addLinkingSupportObject(cdSupport)
+            }
         }
 
         return cdObject

@@ -18,17 +18,22 @@ class TransactionTableViewCell: UITableViewCell {
         configureUI()
     }
     
-    func configure(transactionValue: Int, timestamp: Double, prefix: String?, suffix: String?) {
+    func configure(transaction: CD_MembershipTransaction) {
+       let transactionValue = transaction.formattedAmounts?.first?.value?.intValue ?? 0
+       let timestamp = transaction.timestamp?.doubleValue ?? 0.0
+       let prefix = transaction.formattedAmounts?.first?.prefix
+       let suffix = transaction.formattedAmounts?.first?.suffix != "" ? transaction.formattedAmounts?.first?.currency : nil
+        
         if transactionValue < 0 {
-            valueLabel.text = "-" + (prefix ?? "") + "\(abs(transactionValue))" + (suffix ?? "")
+            valueLabel.text = "-" + (prefix ?? "") + "\(abs(transactionValue)) " + (suffix ?? "")
             valueLabel.textColor = .black
             transactionImageView.image = UIImage(named: "down")
         } else if transactionValue > 0 {
-            valueLabel.text = "+" + (prefix ?? "") + "\(transactionValue)" + (suffix ?? "")
+            valueLabel.text = "+" + (prefix ?? "") + "\(transactionValue) " + (suffix ?? "")
             valueLabel.textColor = .greenOk
             transactionImageView.image = UIImage(named: "up")
         } else {
-            valueLabel.text = (prefix ?? "") + "\(transactionValue)" + (suffix ?? "")
+            valueLabel.text = (prefix ?? "") + "\(transactionValue) " + (suffix ?? "")
             valueLabel.textColor = .amber
         }
         let timestampDate = Date(timeIntervalSince1970: timestamp)

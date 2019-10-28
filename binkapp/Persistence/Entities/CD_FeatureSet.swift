@@ -14,4 +14,8 @@ open class CD_FeatureSet: _CD_FeatureSet {
         guard let cardType = cardType?.intValue else { return nil }
         return PlanCardType(rawValue: cardType)
     }
+    
+    var formattedLinkingSupport: [CD_LinkingSupport] {
+        return linkingSupport.allObjects as? [CD_LinkingSupport] ?? []
+    }
 }

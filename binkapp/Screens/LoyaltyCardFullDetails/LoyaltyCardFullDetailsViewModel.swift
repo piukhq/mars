@@ -7,15 +7,14 @@
 
 import UIKit
 
-protocol LoyaltyCardFullDetailsViewModelDelegate: class {
-    func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel])
-}
-
 class LoyaltyCardFullDetailsViewModel {
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
+    
+    var paymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards
+    }
     let membershipCard: CD_MembershipCard
-    weak var delegate: LoyaltyCardFullDetailsViewModelDelegate?
     
     var aboutTitle: String {
         if let planName = membershipCard.membershipPlan?.account?.planName {
@@ -52,13 +51,6 @@ class LoyaltyCardFullDetailsViewModel {
     }
 
     // MARK: - Public methods
-    
-    func getPaymentCards() {
-        repository.getPaymentCards { [weak self] (results) in
-            guard let wself = self else { return }
-            wself.delegate?.loyaltyCardFullDetailsViewModelDidFetchPaymentCards(wself, paymentCards: results)
-        }
-    }
     
     func toBarcodeModel() {
         router.toBarcodeViewController(membershipCard: membershipCard) { }
@@ -101,11 +93,10 @@ class LoyaltyCardFullDetailsViewModel {
             router.toSimpleInfoViewController(pendingType: .register)
             break
         case .pllEmpty:
-            router.toPllViewController(membershipCard: membershipCard)
+            router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)
             break
         case .pll:
-            //TODO: change to PLL screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)
             break
         case .unLinkable:
             toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)

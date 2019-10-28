@@ -21,7 +21,7 @@ class BinkFloatingButtonsView: CustomView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-         setGradientBackground(firstColor: .init(white: 255, alpha: 0), secondColor: .init(white: 255, alpha: 1), orientation: .vertical, roundedCorner: false)
+        view.setGradientBackground(firstColor: .init(white: 255, alpha: 0), secondColor: .init(white: 255, alpha: 1), orientation: .vertical, roundedCorner: false)
     }
     
     func configure(primaryButtonTitle: String?, secondaryButtonTitle: String?) {
