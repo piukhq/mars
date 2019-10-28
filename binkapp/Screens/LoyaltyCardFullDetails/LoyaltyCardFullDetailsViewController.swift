@@ -132,7 +132,6 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
                 
                 viewModel.toReusableModalTemplate(title: title, description: attributedText)
             } else {
-                let title = ""
                 let description = ""
                 let attributedText = NSMutableAttributedString(string: title + "\n" + description)
                 
