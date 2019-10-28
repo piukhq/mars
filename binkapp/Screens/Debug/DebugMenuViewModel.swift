@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class DebugMenuViewModel {
+struct DebugMenuViewModel {
     private let debugMenuFactory: DebugMenuFactory
 
     init(debugMenuFactory: DebugMenuFactory) {

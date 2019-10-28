@@ -146,3 +146,28 @@
 "unlinkable_pll_description" = "Payment Linked Loyalty (PLL) allows customers’ payment cards to be securely linked to loyalty programmes, enabling every customer to be identified and rewarded every time they shop.\nThis is currently not available for this merchant.";
 
 "lorem_ipsum" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque, nisi ut sagittis luctus, justo orci porttitor nulla, ac ultricies sem mi quis nunc. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur placerat sagittis tortor quis vehicula. Fusce et aliquam tellus, eu semper sem. Proin eu eleifend nunc. Aliquam id lacus faucibus, euismod orci in, tempor felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam finibus commodo dui sit amet imperdiet. Phasellus tincidunt elementum euismod. Aliquam lobortis sapien in justo varius pulvinar. Morbi ac placerat sem. Maecenas ut auctor purus.Etiam quis blandit sapien. Nam urna quam, tempus ut massa sed, blandit ultrices neque. Sed sagittis vel quam ac interdum. Nunc tempus eros eget leo volutpat, ac sodales ex scelerisque. Aenean vel nibh lacus. Sed convallis faucibus euismod. Sed diam dui, commodo blandit tempus in, faucibus quis ligula. Integer condimentum mollis bibendum. Nullam feugiat rutrum mauris a luctus. Morbi dignissim, orci ac tempor bibendum, augue diam pharetra massa, vel commodo leo sem sed nisl. Pellentesque egestas egestas quam, nec laoreet dolor. Curabitur commodo scelerisque nisl ac mollis. Morbi egestas arcu nec convallis mollis.";
+
+
+// MARK: - Settings
+
+"settings_section_account_title" = "Account";
+"settings_row_preferences_title" = "Preferences";
+"settings_row_logout_title" = "Log out";
+
+"settings_section_support_title" = "Support and feedback";
+"settings_row_faqs_title" = "FAQs";
+"settings_row_faqs_subtitle" = "Frequently asked questions";
+"settings_row_contact_title" = "Contact us";
+"settings_row_contact_subtitle" = "Get in touch with Bink";
+"settings_row_rateapp_title" = "Rate this app";
+
+"settings_section_about_title" = "About";
+"settings_row_security_title" = "Security and privacy";
+"settings_row_security_subtitle" = "How we protect your data";
+"settings_row_howitworks_title" = "How it works";
+"settings_row_howitworks_subtitle" = "Find out more about Bink";
+
+"settings_section_legal_title" = "Legal";
+"settings_row_privacypolicy_title" = "Privacy policy";
+"settings_row_termsandconditions_title" = "Terms and conditions";
+
