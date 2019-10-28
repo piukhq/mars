@@ -78,7 +78,6 @@ class LoyaltyCardFullDetailsViewModel {
             let title = "log_in_pending_title".localized
             let description = "log_in_pending_description".localized
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
-//            router.toSimpleInfoViewController(pendingType: .login)
             break
         case .loginUnavailable:
             //TODO: change to login unavailable screen after is implemented
@@ -92,7 +91,6 @@ class LoyaltyCardFullDetailsViewModel {
             let title = "sign_up_pending_title".localized
             let description = "sign_up_pending_description".localized
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
-//            router.toSimpleInfoViewController(pendingType: .signup)
             break
         case .registerGhostCard:
             //TODO: change to sign up screen after is implemented
@@ -102,7 +100,6 @@ class LoyaltyCardFullDetailsViewModel {
             let title = "sign_up_pending_title".localized
             let description = "sign_up_pending_description".localized
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
-//            router.toSimpleInfoViewController(pendingType: .register)
             break
         case .pllEmpty:
             router.toPllViewController(membershipCard: membershipCard)
@@ -159,13 +156,13 @@ class LoyaltyCardFullDetailsViewModel {
     
     func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
-            strongSelf.repository.deleteMembershipCard(id: strongSelf.membershipCard.id, onSuccess: { _ in
+            self.repository.deleteMembershipCard(id: self.membershipCard.id, onSuccess: { _ in
                 yesCompletion()
             }, onError: { (error: Error) in
-                strongSelf.router.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+                self.router.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
             })
         }, noCompletion: {
             noCompletion()

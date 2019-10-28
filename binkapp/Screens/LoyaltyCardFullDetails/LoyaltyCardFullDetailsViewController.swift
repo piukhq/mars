@@ -112,15 +112,8 @@ private extension LoyaltyCardFullDetailsViewController {
         attributedString.addAttribute(.link, value: securityAdnPrivacyLink ?? "", range: NSRange(location: attributedString.length - 5, length: 4))
         attributedString.addAttribute(.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
         attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
-
-//        let alert = HyperlinkAlertController(title: "security_and_privacy_alert_title".localized, message: message)
-//        alert.modalPresentationStyle = .overCurrentContext
-//        alert.modalTransitionStyle = .crossDissolve
-//        present(alert, animated: true, completion: nil)
         
         viewModel.toReusableModalTemplate(title: title, description: attributedString)
-        
-//        viewModel.toReusableModalTemplate(title: <#T##String#>, description: <#T##String#>)
     }
 }
 
