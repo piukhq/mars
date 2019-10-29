@@ -69,18 +69,7 @@ class LoyaltyCardFullDetailsViewModel {
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .otherLogin)
             break
         case .transactions:
-            if let transactions = membershipCard.formattedTransactions, !transactions.isEmpty {
-                router.toTransactionsViewController(membershipCard: membershipCard)
-            } else {
-                let title = "transaction_history_unavailable_title".localized
-                let description = String(format: "transaction_history_unavailable_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
-                let attributedString = NSMutableAttributedString(string: title + "\n" + description)
-                attributedString.addAttribute(.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-                attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
-                
-                let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-                router.toReusableModalTemplateViewController(configurationModel: configuration)
-            }
+            router.toTransactionsViewController(membershipCard: membershipCard)
             break
         case .loginPending:
             let title = "log_in_pending_title".localized
