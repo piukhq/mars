@@ -21,9 +21,8 @@ class FullDetailsBrandHeader: CustomView {
     
     func configure(imageUrl: String?, showBarcode: Bool,  delegate: FullDetailsBrandHeaderDelegate) {
         self.delegate = delegate
-        messageLabel.isHidden = !showBarcode
+        messageLabel.text = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
         messageLabel.font = .bodyTextLarge
-        showBarcodeTapGesture.isEnabled = showBarcode
         if let imageURL = imageUrl, let url = URL(string: imageURL) {
             brandImage.af_setImage(withURL: url)
         }
