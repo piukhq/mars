@@ -84,6 +84,6 @@ class AddOrJoinViewController: UIViewController {
 
 extension AddOrJoinViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
-        viewModel.displaySimplePopup(title: (viewModel.getMembershipPlan().account?.planNameCard) ?? nil, message: (viewModel.getMembershipPlan().account?.planDescription) ?? nil)
+        viewModel.brandHeaderWasTapped()
     }
 }
