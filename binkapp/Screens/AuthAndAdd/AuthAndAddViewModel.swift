@@ -39,12 +39,24 @@ class AuthAndAddViewModel {
     var formPurpose: FormPurpose
     
     var title: String {
-        return formPurpose == .signUp ? "sign_up_new_card_title".localized : "log_in_title".localized
+        switch formPurpose {
+        case .signUp: return "sign_up_new_card_title".localized
+        case .firstLogin: return "log_in_title".localized
+        case .otherLogin: return "log_in_title".localized
+        case .ghostCard: return "register_ghost_card_title".localized
+        }
     }
     
     var buttonTitle: String {
-        return formPurpose == .signUp ? "sign_up_button_title".localized : "log_in_title".localized
+        switch formPurpose {
+        case .signUp: return "sign_up_button_title".localized
+        case .firstLogin: return "log_in_title".localized
+        case .otherLogin: return "log_in_title".localized
+        case .ghostCard: return "register_card_title".localized
+        }
     }
+    
+    var description: String?
     
     var accountButtonShouldHide: Bool {
         return formPurpose != .firstLogin || formPurpose == .ghostCard
