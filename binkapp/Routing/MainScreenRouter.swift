@@ -25,8 +25,6 @@ class MainScreenRouter {
     
     func getNavigationControllerWithLoginScreen() -> UIViewController{
         navController = PortraitNavigationController(rootViewController: getLoginScreen())
-        navController?.navigationBar.isTranslucent = true
-        
         return navController!
     }
     
@@ -38,18 +36,12 @@ class MainScreenRouter {
         return viewController
     }
     
-    func toSettingsScreen() {
-        displaySimplePopup(title: "Oops", message: "Settings screen not yet implemented.")
-    }
-    
-    func toDebugMenu() {
-        let debugMenuFactory = DebugMenuFactory()
-        let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
-        let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
-        debugMenuFactory.delegate = debugMenuViewController
-
-        let debugNavigationController = PortraitNavigationController(rootViewController: debugMenuViewController)
-        navController?.present(debugNavigationController, animated: true, completion: nil)
+    func toSettings() {
+        let viewModel = SettingsViewModel()
+        let settingsVC = SettingsViewController(viewModel: viewModel)
+        let settingsNav = PortraitNavigationController(rootViewController: settingsVC)
+        settingsNav.modalPresentationStyle = .fullScreen
+        navController?.present(settingsNav, animated: true, completion: nil)
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {
@@ -264,5 +256,10 @@ class MainScreenRouter {
         } else {
             navController?.popToRootViewController(animated: true)
         }
+    }
+    
+    class func openExternalURL(with urlString: String) {
+        guard let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }
