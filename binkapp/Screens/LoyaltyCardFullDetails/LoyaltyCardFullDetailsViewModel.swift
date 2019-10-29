@@ -15,6 +15,22 @@ class LoyaltyCardFullDetailsViewModel {
         return Current.wallet.paymentCards
     }
     let membershipCard: CD_MembershipCard
+    
+    var aboutTitle: String {
+        if let planName = membershipCard.membershipPlan?.account?.planName {
+            return String(format: "about_membership_plan_title".localized, planName)
+        } else {
+           return "about_membership_title".localized
+        }
+    }
+    
+    var deleteTitle: String {
+        if let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+            return String(format: "delete_card_plan_title".localized, planNameCard)
+        } else {
+            return "delete_card_title".localized
+        }
+    }
 
     init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
         self.router = router
@@ -158,5 +174,20 @@ class LoyaltyCardFullDetailsViewModel {
         }, noCompletion: {
             noCompletion()
         })
+    }
+}
+
+// MARK: - Private methods
+
+private extension LoyaltyCardFullDetailsViewModel {
+    func toReusableModalTemplate(title: String, description: String) {
+        let attributedText = NSMutableAttributedString(string: title + "\n" + description)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
+        
+        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
 }

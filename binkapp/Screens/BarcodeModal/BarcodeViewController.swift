@@ -17,6 +17,7 @@ class BarcodeViewController: UIViewController {
     
     private let viewModel: BarcodeViewModel
     var isBarcodeFullsize = false
+    var hasDrawnBarcode = false
     
     @IBAction func maximiseButtonAction(_ sender: Any) {
         maximizeBarcode()
@@ -39,21 +40,18 @@ class BarcodeViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.barTintColor = .white
         
-        if isBarcodeFullsize {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popViewController))
-        } else {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popViewController))
     }
     
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         configureUI(maximized: isBarcodeFullsize)
     }
     
     func configureUI(maximized: Bool) {
+        guard !hasDrawnBarcode else { return }
+        
         viewModel.generateBarcodeImage(for: barcodeImageView)
         
         titleLabel.font = UIFont.headline
@@ -84,6 +82,7 @@ class BarcodeViewController: UIViewController {
         maximiseButton.setTitleColor(.white, for: .normal)
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
+        hasDrawnBarcode = true
     }
     
     func maximizeBarcode() {

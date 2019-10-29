@@ -103,8 +103,9 @@ class MainScreenRouter {
 
     func toBarcodeViewController(membershipCard: CD_MembershipCard, completion: @escaping () -> ()) {
         let viewModel = BarcodeViewModel(membershipCard: membershipCard)
-        let viewController = BarcodeViewController(viewModel: viewModel)
-        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: completion)
+        let navigationController = PortraitNavigationController(rootViewController: BarcodeViewController(viewModel: viewModel))
+        navigationController.modalPresentationStyle = .fullScreen
+        navController?.present(navigationController,  animated: true, completion: completion)
     }
     
     func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan) {

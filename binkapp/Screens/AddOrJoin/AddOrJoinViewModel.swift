@@ -78,7 +78,7 @@ class AddOrJoinViewModel {
     }
     
     @objc func popViewController() {
-        router.dismissViewController()
+        router.popViewController()
     }
     
     func popToRootViewController() {
