@@ -11,6 +11,16 @@ import MessageUI
 
 class SettingsViewController: UIViewController {
     
+    // MARK: - Helpers
+    
+    private struct Constants {
+        static let rowHeight: CGFloat = 88
+        static let headerHeight: CGFloat = 50
+        static let supportEmail = "support@bink.com"
+    }
+    
+    // MARK: - Properties
+    
     private let viewModel: SettingsViewModel
     
     private lazy var tableView: UITableView = {
@@ -19,12 +29,14 @@ class SettingsViewController: UIViewController {
         tableView.register(SettingsTableViewCell.self)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = 88
+        tableView.rowHeight = Constants.rowHeight
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
         view.addSubview(tableView)
         return tableView
     }()
+    
+    // MARK: - View Lifecycle
     
     init(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
@@ -52,6 +64,8 @@ class SettingsViewController: UIViewController {
         ])
     }
     
+    // MARK: - Action
+    
     @objc func close() {
         dismiss(animated: true)
     }
@@ -72,7 +86,7 @@ extension SettingsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return Constants.headerHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -86,6 +100,8 @@ extension SettingsViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - TableView
 
 extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -117,17 +133,19 @@ extension SettingsViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - Mail Compose
+
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
     private func sendEmail() {
         if MFMailComposeViewController.canSendMail() {
             let mailViewController = MFMailComposeViewController()
             mailViewController.mailComposeDelegate = self
-            mailViewController.setToRecipients(["support@bink.com"])
+            mailViewController.setToRecipients([Constants.supportEmail])
             mailViewController.setMessageBody("lorem_ipsum".localized, isHTML: false)
             
             present(mailViewController, animated: true)
         } else {
-            MainScreenRouter.openExternalURL(with: "mailto:support@bink.com")
+            MainScreenRouter.openExternalURL(with: "mailto:\(Constants.supportEmail)")
         }
     }
     

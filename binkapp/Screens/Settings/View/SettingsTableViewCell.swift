@@ -10,6 +10,12 @@ import UIKit
 
 class SettingsTableViewCell: UITableViewCell {
     
+    private struct Constants {
+        static let separatorHeight: CGFloat = 1.0
+        static let leftRightPadding: CGFloat = 25.0
+        static let chevronRightPadding: CGFloat = 28.0
+    }
+    
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = .subtitle
@@ -25,7 +31,7 @@ class SettingsTableViewCell: UITableViewCell {
     private lazy var separator: UIView = {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
+        separator.heightAnchor.constraint(equalToConstant: Constants.separatorHeight).isActive = true
         separator.backgroundColor = UIColor(hexString: "e5e5e5")
         contentView.addSubview(separator)
         return separator
@@ -61,13 +67,13 @@ class SettingsTableViewCell: UITableViewCell {
     private func customise() {
         NSLayoutConstraint.activate([
             labelStack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            labelStack.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 25.0),
-            labelStack.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -25.0),
+            labelStack.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Constants.leftRightPadding),
+            labelStack.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.leftRightPadding),
             separator.leftAnchor.constraint(equalTo: labelStack.leftAnchor),
             separator.rightAnchor.constraint(equalTo: labelStack.rightAnchor),
             separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             chevron.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            chevron.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -28.0)
+            chevron.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.chevronRightPadding)
         ])
     }
     

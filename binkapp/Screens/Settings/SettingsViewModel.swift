@@ -16,7 +16,7 @@ class SettingsViewModel {
     }
     
     var title: String {
-        return "Settings"
+        return "settings_title".localized
     }
     
     var sectionsCount: Int {

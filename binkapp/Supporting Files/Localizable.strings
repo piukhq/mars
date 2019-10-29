@@ -150,6 +150,8 @@
 
 // MARK: - Settings
 
+"settings_title" = "Settings";
+
 "settings_section_account_title" = "Account";
 "settings_row_preferences_title" = "Preferences";
 "settings_row_logout_title" = "Log out";
