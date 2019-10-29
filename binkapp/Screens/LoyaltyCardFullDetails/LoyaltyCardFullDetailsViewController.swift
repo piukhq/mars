@@ -137,20 +137,18 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
             }
             
             if let infoMessage = viewModel.membershipCard.membershipPlan?.account?.planDescription {
-                let attributedText = NSMutableAttributedString(string: title + "\n" + infoMessage)
+                let attributedString = NSMutableAttributedString()
+                let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
+                let attributedBody = NSAttributedString(string: infoMessage, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+                attributedString.append(attributedTitle)
+                attributedString.append(attributedBody)
+
                 
-                attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-                attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: infoMessage.count))
-                
-                viewModel.toReusableModalTemplate(title: title, description: attributedText)
+                viewModel.toReusableModalTemplate(title: title, description: attributedString)
             } else {
-                let description = ""
-                let attributedText = NSMutableAttributedString(string: title + "\n" + description)
+                let attributedTitle = NSMutableAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
                 
-                attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-                attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
-                
-                viewModel.toReusableModalTemplate(title: title, description: attributedText)
+                viewModel.toReusableModalTemplate(title: title, description: attributedTitle)
             }
             break
         case securityAndPrivacyInfoRow:
