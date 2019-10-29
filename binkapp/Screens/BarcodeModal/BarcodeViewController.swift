@@ -60,12 +60,17 @@ class BarcodeViewController: UIViewController {
         titleLabel.text = "card_number_title".localized
         titleLabel.isHidden = maximized
         labelStackView.setCustomSpacing(0.0, after: titleLabel)
-
+        
         labelStackView.alignment = maximized ? .center : .fill
         
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = maximized ? .black : .blueAccent
-        numberLabel.text = viewModel.getCardNumber()
+        
+        if maximized {
+            numberLabel.text = viewModel.getBarcode()
+        } else {
+            numberLabel.text = viewModel.getCardNumber()
+        }
         
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textColor = .black
