@@ -128,7 +128,7 @@ class AuthAndAddViewController: BaseFormViewController {
             viewModel.displaySimplePopup(title: "doesn't have registration fields", message: nil)
             return
         }
-        viewModel.displaySimplePopup(title: "has registration fields", message: nil)
+        viewModel.reloadWith(newFormPuropse: .ghostCard)
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {

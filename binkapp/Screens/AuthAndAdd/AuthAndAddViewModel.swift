@@ -25,6 +25,7 @@ enum FormPurpose {
     case firstLogin
     case otherLogin
     case signUp
+    case ghostCard
 }
 
 class AuthAndAddViewModel {
@@ -46,7 +47,7 @@ class AuthAndAddViewModel {
     }
     
     var accountButtonShouldHide: Bool {
-        return formPurpose != .firstLogin
+        return formPurpose != .firstLogin || formPurpose == .ghostCard
     }
     
     init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose) {
@@ -67,6 +68,8 @@ class AuthAndAddViewModel {
         case .signUp:
             guard let companyName = membershipPlan.account?.companyName else { return nil }
             return String(format: "sign_up_new_card_description".localized, companyName)
+        case .ghostCard:
+            return ""
         }
     }
     
@@ -180,6 +183,10 @@ class AuthAndAddViewModel {
         default:
             break
         }
+    }
+    
+    func reloadWith(newFormPuropse: FormPurpose) {
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPuropse)
     }
     
     func displaySimplePopup(title: String?, message: String?) {
