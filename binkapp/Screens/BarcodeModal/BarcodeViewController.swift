@@ -53,6 +53,7 @@ class BarcodeViewController: UIViewController {
         guard !hasDrawnBarcode else { return }
         
         viewModel.generateBarcodeImage(for: barcodeImageView)
+        barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
         
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black

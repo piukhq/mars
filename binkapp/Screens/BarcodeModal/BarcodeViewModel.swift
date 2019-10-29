@@ -20,6 +20,10 @@ class BarcodeViewModel {
     var title: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
+    
+    var isBarcodeAvailable: Bool {
+        return ((membershipCard.card?.barcode) != nil)
+    }
 
     init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
