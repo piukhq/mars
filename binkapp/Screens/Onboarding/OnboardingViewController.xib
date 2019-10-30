@@ -12,7 +12,6 @@
             <connections>
                 <outlet property="facebookPillButton" destination="m1o-2C-O6j" id="dgm-oU-rwN"/>
                 <outlet property="floatingButtonsView" destination="caj-wq-i4b" id="qKV-1d-zrn"/>
-                <outlet property="learningContainer" destination="YuY-Lt-Kqs" id="SQE-RY-oGZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -31,18 +30,8 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Button"/>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YuY-Lt-Kqs">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="537.5"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <constraints>
-                <constraint firstItem="YuY-Lt-Kqs" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="XoX-jF-yEK"/>
-                <constraint firstItem="YuY-Lt-Kqs" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="aIE-zN-Dc9"/>
-                <constraint firstItem="YuY-Lt-Kqs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="b6e-zk-9rd"/>
-                <constraint firstItem="YuY-Lt-Kqs" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.6" id="y5e-7N-YAT"/>
-            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="153.34821428571428"/>
         </view>
