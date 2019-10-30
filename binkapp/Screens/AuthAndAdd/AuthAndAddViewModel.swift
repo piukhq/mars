@@ -182,10 +182,7 @@ class AuthAndAddViewModel {
         }
     }
     
-    func brandHeaderWasTapped() {
-        let title: String = membershipPlan.account?.planNameCard ?? ""
-        let description: String = membershipPlan.account?.planDescription ?? ""
-        
+    func toReusableTemplate(title: String, description: String) {
         let attributedString = NSMutableAttributedString()
         let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
         let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
@@ -194,6 +191,13 @@ class AuthAndAddViewModel {
         
         let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
         router.toReusableModalTemplateViewController(configurationModel: configuration)
+    }
+    
+    func brandHeaderWasTapped() {
+        let title: String = membershipPlan.account?.planNameCard ?? ""
+        let description: String = membershipPlan.account?.planDescription ?? ""
+        
+        toReusableTemplate(title: title, description: description)
     }
     
     func displaySimplePopup(title: String?, message: String?) {
