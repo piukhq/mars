@@ -25,12 +25,4 @@ class LoyaltyCardFullDetailsRepository {
             onError(error)
         })
     }
-    
-    func getPaymentCards(completion: @escaping ([PaymentCardModel]) -> Void) {
-        let url = RequestURL.paymentCards
-        let httpMethod = RequestHTTPMethod.get
-        apiManager.doRequest(url: url, httpMethod: httpMethod, parameters: nil, onSuccess: { (results: [PaymentCardModel]) in
-            completion(results)
-        }) { (error) in }
-    }
 }

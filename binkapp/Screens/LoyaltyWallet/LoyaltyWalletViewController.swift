@@ -65,7 +65,7 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     }
     
     func toBarcode(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
-        viewModel.toBarcodeViewController(item: index.item) {
+        viewModel.toBarcodeViewController(indexPath: index) {
             cell.set(to: .closed, as: .barcode)
         }
     }

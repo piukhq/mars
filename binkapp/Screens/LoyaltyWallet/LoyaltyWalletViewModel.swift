@@ -25,15 +25,16 @@ class LoyaltyWalletViewModel: WalletViewModel {
     var walletPrompts: [WalletPrompt]? {
         return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
     }
-
+    
     var cards: [CD_MembershipCard]? {
-        return Current.wallet.membershipCards
-    }
+         return Current.wallet.membershipCards
+     }
 
-    func toBarcodeViewController(item: Int, completion: @escaping () -> ()) {
-        guard let card = cards?[item] else {
+    func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> ()) {
+        guard let card = card(forIndexPath: indexPath) else {
             return
         }
+        
         router.toBarcodeViewController(membershipCard: card, completion: completion)
     }
 

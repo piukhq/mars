@@ -140,7 +140,6 @@
 		AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */; };
 		AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D82C12A979885545793C /* CoreDataAccess.swift */; };
 		B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */; };
-		B713662723268FEB008A0ED7 /* PLLScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B713662523268FEB008A0ED7 /* PLLScreenViewController.xib */; };
 		B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */; };
 		B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662A2329374D008A0ED7 /* OfferTileView.swift */; };
 		B713662D232A63AA008A0ED7 /* BinkModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662C232A63AA008A0ED7 /* BinkModuleView.swift */; };
@@ -156,6 +155,7 @@
 		B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726334C23058D2700951037 /* PlanDocumentModel.swift */; };
 		B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726334E23058DC800951037 /* RegistrationFieldModel.swift */; };
 		B726335123058E2300951037 /* TierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B726335023058E2300951037 /* TierModel.swift */; };
+		B7385F54234780D2007B88DA /* BinkSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7385F53234780D2007B88DA /* BinkSwitch.swift */; };
 		B7665992231E57AE00B327BE /* CardDetailsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7665991231E57AE00B327BE /* CardDetailsInfoView.swift */; };
 		B7665994231E57CC00B327BE /* CardDetailsInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7665993231E57CC00B327BE /* CardDetailsInfoView.xib */; };
 		B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76659972320F68C00B327BE /* HyperlinkAlertController.swift */; };
@@ -172,12 +172,19 @@
 		B7D577BD23192C5C00C6B145 /* FullDetailsBrandHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7D577BC23192C5C00C6B145 /* FullDetailsBrandHeader.xib */; };
 		B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */; };
 		B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */; };
+		B7FE19BA234391B000F2D6A0 /* PaymentCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE19B8234391B000F2D6A0 /* PaymentCardCell.swift */; };
+		B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7FE19B9234391B000F2D6A0 /* PaymentCardCell.xib */; };
 		BD01E123231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD01E122231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib */; };
 		BD01E125231FA3A900D52713 /* BarBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01E124231FA3A900D52713 /* BarBlur.swift */; };
 		BD01E127231FA3D000D52713 /* AddingOptionsTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01E126231FA3D000D52713 /* AddingOptionsTabBarViewController.swift */; };
 		BD1E728A232AB91C002CC85E /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1E7289232AB91C002CC85E /* UIAlertController+Extension.swift */; };
 		BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CB945232857BD005C37AE /* APIConstants.swift */; };
 		BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */; };
+		BD99D2D8234FDF2C00823FC4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2D7234FDF2C00823FC4 /* SettingsViewController.swift */; };
+		BD99D2DA234FDF6F00823FC4 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2D9234FDF6F00823FC4 /* SettingsViewModel.swift */; };
+		BD99D2DC235091AA00823FC4 /* SettingsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2DB235091AA00823FC4 /* SettingsFactory.swift */; };
+		BD99D2DF2350E4BD00823FC4 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2DE2350E4BC00823FC4 /* SettingsSection.swift */; };
+		BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2E12354945000823FC4 /* SettingsTableViewCell.swift */; };
 		BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */; };
 		BD9FB68B2333DE3E00E5559A /* String+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68A2333DE3E00E5559A /* String+Random.swift */; };
 		BD9FB68D2333FB7000E5559A /* PaymentCardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68C2333FB7000E5559A /* PaymentCardResponse.swift */; };
@@ -200,6 +207,7 @@
 		BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */; };
 		BDB01884232EB14A00BFFA18 /* StackScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01883232EB14A00BFFA18 /* StackScrollView.swift */; };
 		BDB01886232ED6F800BFFA18 /* SpreedlyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01885232ED6F800BFFA18 /* SpreedlyRequest.swift */; };
+		BDBAA1BA235E1BBB00087E12 /* SettingsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBAA1B9235E1BBB00087E12 /* SettingsTableViewHeader.swift */; };
 		BDD9C83C233BE493003CD616 /* MembershipPlanImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C83B233BE493003CD616 /* MembershipPlanImageModel.swift */; };
 		BDD9C871233BE6B1003CD616 /* CD_PlanDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C841233BE6AD003CD616 /* CD_PlanDocument.swift */; };
 		BDD9C872233BE6B1003CD616 /* CD_MembershipCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C842233BE6AD003CD616 /* CD_MembershipCard.swift */; };
@@ -252,6 +260,7 @@
 		BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */; };
 		BDD9C8A9233E22CC003CD616 /* _CD_BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C8A8233E22CC003CD616 /* _CD_BaseObject.swift */; };
 		BDD9C8AB233E260A003CD616 /* CD_BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C8AA233E2609003CD616 /* CD_BaseObject.swift */; };
+		DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB088544234FD8A30041A67A /* PLLScreenRepository.swift */; };
 		EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1110532354D4BE009A4438 /* WalletCardCollectionViewCell.swift */; };
 		EF2E8811233385A400F678F3 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E8810233385A400F678F3 /* World.swift */; };
 		EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E881223351A6000F678F3 /* CoreDataRepositoryProtocol.swift */; };
@@ -503,7 +512,6 @@
 		AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAccessible.swift; sourceTree = "<group>"; };
 		AF06D82C12A979885545793C /* CoreDataAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataAccess.swift; sourceTree = "<group>"; };
 		B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewController.swift; sourceTree = "<group>"; };
-		B713662523268FEB008A0ED7 /* PLLScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLLScreenViewController.xib; sourceTree = "<group>"; };
 		B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModel.swift; sourceTree = "<group>"; };
 		B713662A2329374D008A0ED7 /* OfferTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferTileView.swift; sourceTree = "<group>"; };
 		B713662C232A63AA008A0ED7 /* BinkModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkModuleView.swift; sourceTree = "<group>"; };
@@ -520,6 +528,7 @@
 		B726334E23058DC800951037 /* RegistrationFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFieldModel.swift; sourceTree = "<group>"; };
 		B726335023058E2300951037 /* TierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TierModel.swift; sourceTree = "<group>"; };
 		B72E82C22313F3F90045607E /* MembershipCardAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardAmount.swift; sourceTree = "<group>"; };
+		B7385F53234780D2007B88DA /* BinkSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkSwitch.swift; sourceTree = "<group>"; };
 		B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardBalanceModel.swift; sourceTree = "<group>"; };
 		B7665991231E57AE00B327BE /* CardDetailsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsInfoView.swift; sourceTree = "<group>"; };
 		B7665993231E57CC00B327BE /* CardDetailsInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardDetailsInfoView.xib; sourceTree = "<group>"; };
@@ -537,6 +546,8 @@
 		B7E2EC0222E5E35D00BB201A /* binkapp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "binkapp-Bridging-Header.h"; sourceTree = "<group>"; };
 		B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Encrypting.swift"; sourceTree = "<group>"; };
 		B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+StringConversion.swift"; sourceTree = "<group>"; };
+		B7FE19B8234391B000F2D6A0 /* PaymentCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCell.swift; sourceTree = "<group>"; };
+		B7FE19B9234391B000F2D6A0 /* PaymentCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardCell.xib; sourceTree = "<group>"; };
 		B9D343A57D966E00BAEC11B0 /* Pods-binkappTests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		BD01E122231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WalletLoyaltyCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		BD01E124231FA3A900D52713 /* BarBlur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarBlur.swift; sourceTree = "<group>"; };
@@ -546,6 +557,11 @@
 		BD3CB9442328574A005C37AE /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		BD3CB945232857BD005C37AE /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCreateRequest.swift; sourceTree = "<group>"; };
+		BD99D2D7234FDF2C00823FC4 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		BD99D2D9234FDF6F00823FC4 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		BD99D2DB235091AA00823FC4 /* SettingsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFactory.swift; sourceTree = "<group>"; };
+		BD99D2DE2350E4BC00823FC4 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
+		BD99D2E12354945000823FC4 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiffAware+Extension.swift"; sourceTree = "<group>"; };
 		BD9FB68A2333DE3E00E5559A /* String+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Random.swift"; sourceTree = "<group>"; };
 		BD9FB68C2333FB7000E5559A /* PaymentCardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardResponse.swift; sourceTree = "<group>"; };
@@ -566,6 +582,7 @@
 		BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormMultipleChoiceInput.swift; sourceTree = "<group>"; };
 		BDB01883232EB14A00BFFA18 /* StackScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackScrollView.swift; sourceTree = "<group>"; };
 		BDB01885232ED6F800BFFA18 /* SpreedlyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpreedlyRequest.swift; sourceTree = "<group>"; };
+		BDBAA1B9235E1BBB00087E12 /* SettingsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewHeader.swift; sourceTree = "<group>"; };
 		BDD9C83B233BE493003CD616 /* MembershipPlanImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanImageModel.swift; sourceTree = "<group>"; };
 		BDD9C841233BE6AD003CD616 /* CD_PlanDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_PlanDocument.swift; sourceTree = "<group>"; };
 		BDD9C842233BE6AD003CD616 /* CD_MembershipCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_MembershipCard.swift; sourceTree = "<group>"; };
@@ -624,6 +641,7 @@
 		CBE46BB3E6386EE997F95088 /* Pods-binkappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.debug.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D43061FB7A72A290DA13F3BF /* Pods-binkappUITests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store.xcconfig"; sourceTree = "<group>"; };
 		DAD06B97E6DBC2FAA6900787 /* Pods-binkapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.debug.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.debug.xcconfig"; sourceTree = "<group>"; };
+		DB088544234FD8A30041A67A /* PLLScreenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenRepository.swift; sourceTree = "<group>"; };
 		E7354EC1FB3CF368988428AD /* Pods-binkappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.release.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ED4CD3B619FA32A249E98CC6 /* Pods-binkappTests.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.nightly.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.nightly.xcconfig"; sourceTree = "<group>"; };
 		EF1110532354D4BE009A4438 /* WalletCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1193,6 +1211,7 @@
 				EF335C7C234F432700D49223 /* EmptyWallet */,
 				3CC267F322F45A3500F0F9E3 /* AddingOptions */,
 				3CE24B272304014500B258C8 /* AddOrJoin */,
+				BD99D2D6234FDF1B00823FC4 /* Settings */,
 				BDB01867232D948000BFFA18 /* AddPaymentCard */,
 				3CA0CBA723141C610055FDE8 /* AuthAndAdd */,
 				3C0EEE7722FC64F9006FAE5E /* BarcodeModal */,
@@ -1236,9 +1255,10 @@
 		B713662323268FB9008A0ED7 /* PLLScreen */ = {
 			isa = PBXGroup;
 			children = (
+				B7FE19B72343917800F2D6A0 /* Views */,
 				B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */,
-				B713662523268FEB008A0ED7 /* PLLScreenViewController.xib */,
 				B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */,
+				DB088544234FD8A30041A67A /* PLLScreenRepository.swift */,
 			);
 			path = PLLScreen;
 			sourceTree = "<group>";
@@ -1317,6 +1337,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		B7FE19B72343917800F2D6A0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B7FE19B8234391B000F2D6A0 /* PaymentCardCell.swift */,
+				B7FE19B9234391B000F2D6A0 /* PaymentCardCell.xib */,
+				B7385F53234780D2007B88DA /* BinkSwitch.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		BD3CB94223285716005C37AE /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -1325,6 +1355,35 @@
 				BD3CB945232857BD005C37AE /* APIConstants.swift */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		BD99D2D6234FDF1B00823FC4 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				BD99D2E02354943900823FC4 /* View */,
+				BD99D2D7234FDF2C00823FC4 /* SettingsViewController.swift */,
+				BD99D2D9234FDF6F00823FC4 /* SettingsViewModel.swift */,
+				BD99D2DB235091AA00823FC4 /* SettingsFactory.swift */,
+				BD99D2DD2350E3EA00823FC4 /* Model */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		BD99D2DD2350E3EA00823FC4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BD99D2DE2350E4BC00823FC4 /* SettingsSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BD99D2E02354943900823FC4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BD99D2E12354945000823FC4 /* SettingsTableViewCell.swift */,
+				BDBAA1B9235E1BBB00087E12 /* SettingsTableViewHeader.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		BDB01867232D948000BFFA18 /* AddPaymentCard */ = {
@@ -1827,7 +1886,6 @@
 			files = (
 				3CD6B3B4232B98CE00058514 /* TransactionTableViewCell.xib in Resources */,
 				5E1B5013232105CD00890C7E /* com.bink.wallet.neo.gamma.GoogleService-Info.plist in Resources */,
-				B713662723268FEB008A0ED7 /* PLLScreenViewController.xib in Resources */,
 				3CD3493722F99E1D000C1F4D /* NunitoSans-ExtraBold.ttf in Resources */,
 				EF335C83234F565B00D49223 /* WalletPromptCollectionViewCell.xib in Resources */,
 				5E1B5016232105CD00890C7E /* com.bink.wallet.neo.GoogleService-Info.plist in Resources */,
@@ -1851,6 +1909,7 @@
 				5E1B5017232105CD00890C7E /* com.bink.wallet.neo.nightly.GoogleService-Info.plist in Resources */,
 				3CD3493C22F99E1D000C1F4D /* NunitoSans-Bold.ttf in Resources */,
 				3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */,
+				B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
@@ -2140,6 +2199,7 @@
 				BDD9C878233BE6B1003CD616 /* _CD_AuthoriseField.swift in Sources */,
 				EF8B700F23585F76006CE3DD /* PaymentCardCellViewModelMock.swift in Sources */,
 				3C8BBC27232651E900363349 /* Connectivity.swift in Sources */,
+				BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */,
 				BDD9C897233BE6B1003CD616 /* CD_PaymentCard.swift in Sources */,
 				3C7067EF232FD52D00AB88A5 /* SimpleInfoViewController.swift in Sources */,
 				BDD9C88B233BE6B1003CD616 /* CD_MembershipCardImage.swift in Sources */,
@@ -2173,6 +2233,7 @@
 				EF8BF1F9234147E000D2E5F3 /* LinkedCardResponse.swift in Sources */,
 				B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */,
 				BDD9C880233BE6B1003CD616 /* _CD_App.swift in Sources */,
+				DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */,
 				BDD9C88D233BE6B1003CD616 /* _CD_Card.swift in Sources */,
 				BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */,
 				BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */,
@@ -2204,10 +2265,12 @@
 				BDD9C894233BE6B1003CD616 /* CD_MembershipPlan.swift in Sources */,
 				3CEABFD22316ABA9009B1122 /* MembershipCardAmount.swift in Sources */,
 				3C17FC2F22F2C69200E423A2 /* MembershipCardModel.swift in Sources */,
+				B7FE19BA234391B000F2D6A0 /* PaymentCardCell.swift in Sources */,
 				EF4B465E2343B5FF009A3651 /* RectangleView.swift in Sources */,
 				BDD9C896233BE6B1003CD616 /* CD_Tier.swift in Sources */,
 				EF758E1023225F45000D26A9 /* UIApplication.swift in Sources */,
 				3CEABFCE2316AB74009B1122 /* MembershipCardAccountModel.swift in Sources */,
+				B7385F54234780D2007B88DA /* BinkSwitch.swift in Sources */,
 				B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */,
 				BDD9C899233BE6B1003CD616 /* CD_FieldChoice.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
@@ -2220,7 +2283,9 @@
 				EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */,
 				3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */,
 				3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */,
+				BDBAA1BA235E1BBB00087E12 /* SettingsTableViewHeader.swift in Sources */,
 				EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */,
+				BD99D2D8234FDF2C00823FC4 /* SettingsViewController.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
 				EFF59F19234B73C900CF3992 /* CardDetailInfoTableViewCell.swift in Sources */,
@@ -2279,6 +2344,7 @@
 				EF8BF1FD2341480800D2E5F3 /* PaymentCardAccountConsentsResponse.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */,
+				BD99D2DF2350E4BD00823FC4 /* SettingsSection.swift in Sources */,
 				BDD9C886233BE6B1003CD616 /* CD_MembershipCardBalance.swift in Sources */,
 				BDD9C87C233BE6B1003CD616 /* _CD_MembershipCardBalance.swift in Sources */,
 				EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */,
@@ -2298,6 +2364,7 @@
 				3C2C90F923191CED00D112E3 /* AddFieldPostModel.swift in Sources */,
 				3C7067F2232FD74500AB88A5 /* SimpleInfoViewModel.swift in Sources */,
 				EFF59F21234CAE5600CF3992 /* CardDetailInformationRow.swift in Sources */,
+				BD99D2DC235091AA00823FC4 /* SettingsFactory.swift in Sources */,
 				BDD9C879233BE6B1003CD616 /* _CD_MembershipCardStatus.swift in Sources */,
 				3C453CB42338E84500287B56 /* PaymentWalletViewController.swift in Sources */,
 				3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */,
@@ -2330,6 +2397,7 @@
 				EF8BF20623414A6100D2E5F3 /* CD_PaymentCardAccount.swift in Sources */,
 				3CE892682338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift in Sources */,
 				3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */,
+				BD99D2DA234FDF6F00823FC4 /* SettingsViewModel.swift in Sources */,
 				BDD9C887233BE6B1003CD616 /* CD_MembershipCardAmount.swift in Sources */,
 				EF480C1F235754AD0060B7C1 /* WalletPrompt.swift in Sources */,
 				BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */,

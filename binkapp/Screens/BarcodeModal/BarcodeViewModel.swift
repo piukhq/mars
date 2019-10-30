@@ -20,6 +20,10 @@ class BarcodeViewModel {
     var title: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
+    
+    var isBarcodeAvailable: Bool {
+        return ((membershipCard.card?.barcode) != nil)
+    }
 
     init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
@@ -27,6 +31,10 @@ class BarcodeViewModel {
     
     func getCardNumber() -> String {
         return membershipCard.card?.membershipId ?? ""
+    }
+    
+    func getBarcode() -> String {
+        return membershipCard.card?.barcode ?? ""
     }
     
     func getBarcodeType() -> BarcodeType {

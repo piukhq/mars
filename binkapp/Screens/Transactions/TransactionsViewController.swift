@@ -62,7 +62,7 @@ class TransactionsViewController: UIViewController {
 
 extension TransactionsViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
-        viewModel.displayLoyaltySchemePopup()
+        viewModel.brandHeaderWasTapped()
     }
 }
 
@@ -72,13 +72,9 @@ extension TransactionsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell: TransactionTableViewCell = tableView.dequeue(indexPath: indexPath)
-        
         let transaction = viewModel.transactions[indexPath.row]
-        
-        let value = transaction.formattedAmounts?.first?.value?.intValue ?? 0
-        cell.configure(transactionValue: value, timestamp: transaction.timestamp?.doubleValue ?? 0.0, prefix: transaction.formattedAmounts?.first?.prefix, suffix: transaction.formattedAmounts?.first?.suffix)
+        cell.configure(transaction: transaction)
         
         return cell
     }

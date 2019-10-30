@@ -17,6 +17,7 @@ class BarcodeViewController: UIViewController {
     
     private let viewModel: BarcodeViewModel
     var isBarcodeFullsize = false
+    var hasDrawnBarcode = false
     
     @IBAction func maximiseButtonAction(_ sender: Any) {
         maximizeBarcode()
@@ -39,34 +40,37 @@ class BarcodeViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.barTintColor = .white
         
-        if isBarcodeFullsize {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popViewController))
-        } else {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popViewController))
     }
     
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         configureUI(maximized: isBarcodeFullsize)
     }
     
     func configureUI(maximized: Bool) {
+        guard !hasDrawnBarcode else { return }
+        
         viewModel.generateBarcodeImage(for: barcodeImageView)
+        barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
         
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black
         titleLabel.text = "card_number_title".localized
         titleLabel.isHidden = maximized
         labelStackView.setCustomSpacing(0.0, after: titleLabel)
-
+        
         labelStackView.alignment = maximized ? .center : .fill
         
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = maximized ? .black : .blueAccent
-        numberLabel.text = viewModel.getCardNumber()
+        
+        if maximized {
+            numberLabel.text = viewModel.getBarcode()
+        } else {
+            numberLabel.text = viewModel.getCardNumber()
+        }
         
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textColor = .black
@@ -84,15 +88,7 @@ class BarcodeViewController: UIViewController {
         maximiseButton.setTitleColor(.white, for: .normal)
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
-
-        maximiseButton.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            maximiseButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            maximiseButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
-            maximiseButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
-            maximiseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
+        hasDrawnBarcode = true
     }
     
     func maximizeBarcode() {
