@@ -32,18 +32,12 @@ class MainScreenRouter {
         displaySimplePopup(title: "Oops", message: "This feature has not yet been implemented.")
     }
     
-    func toSettingsScreen() {
-        featureNotImplemented()
-    }
-    
-    func toDebugMenu() {
-        let debugMenuFactory = DebugMenuFactory()
-        let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
-        let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
-        debugMenuFactory.delegate = debugMenuViewController
-
-        let debugNavigationController = PortraitNavigationController(rootViewController: debugMenuViewController)
-        navController?.present(debugNavigationController, animated: true, completion: nil)
+    func toSettings() {
+        let viewModel = SettingsViewModel()
+        let settingsVC = SettingsViewController(viewModel: viewModel)
+        let settingsNav = PortraitNavigationController(rootViewController: settingsVC)
+        settingsNav.modalPresentationStyle = .fullScreen
+        navController?.present(settingsNav, animated: true, completion: nil)
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {
@@ -97,8 +91,9 @@ class MainScreenRouter {
 
     func toBarcodeViewController(membershipCard: CD_MembershipCard, completion: @escaping () -> ()) {
         let viewModel = BarcodeViewModel(membershipCard: membershipCard)
-        let viewController = BarcodeViewController(viewModel: viewModel)
-        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: completion)
+        let navigationController = PortraitNavigationController(rootViewController: BarcodeViewController(viewModel: viewModel))
+        navigationController.modalPresentationStyle = .fullScreen
+        navController?.present(navigationController,  animated: true, completion: completion)
     }
     
     func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan) {
@@ -130,9 +125,10 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPllViewController(membershipCard: CD_MembershipCard) {
-        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, router: self)
-        let viewController = PLLScreenViewController(viewModel: viewModel)
+    func toPllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney ) {
+        let repository = PLLScreenRepository(apiManager: apiManager)
+        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, repository: repository, router: self, journey: journey)
+        let viewController = PLLScreenViewController(viewModel: viewModel, journey: journey)
         navController?.pushViewController(viewController, animated: true)
     }
     
@@ -256,5 +252,10 @@ class MainScreenRouter {
         } else {
             navController?.popToRootViewController(animated: true)
         }
+    }
+    
+    class func openExternalURL(with urlString: String) {
+        guard let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }

@@ -79,12 +79,8 @@ class MainTabBarViewModel {
         router.toAddingOptionsViewController()
     }
     
-    func toSettingsScreen() {
-        router.toSettingsScreen()
-    }
-    
-    func toDebugMenu() {
-        router.toDebugMenu()
+    func toSettings() {
+        router.toSettings()
     }
 }
 

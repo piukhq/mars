@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             navAppearance.shadowImage = UIImage()
             navAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
             navAppearance.backgroundEffect = UIBlurEffect(style: .light)
+            navAppearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: UIColor.black]
             UINavigationBar.appearance().standardAppearance = navAppearance
             UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
             
@@ -54,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tabAppearance.backgroundEffect = UIBlurEffect(style: .light)
             UITabBar.appearance().standardAppearance = tabAppearance
         }
+        
         let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)

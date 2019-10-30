@@ -97,9 +97,14 @@ class AuthAndAddViewModel {
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
                     
-        let request = try AddMembershipCardRequest(jsonCard: membershipCard.asDictionary(), completion: { card in
+        let request = try AddMembershipCardRequest(jsonCard: membershipCard.asDictionary(), completion: { [weak self] card in
+            guard let self = self else {return}
             if let card = card {
-                self.router.toPllViewController(membershipCard: card)
+                if card.membershipPlan?.featureSet?.planCardType == .link {
+                    self.router.toPllViewController(membershipCard: card, journey: .newCard)
+                } else {
+                    self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+                }
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
         }, onError: { error in
@@ -175,6 +180,20 @@ class AuthAndAddViewModel {
         default:
             break
         }
+    }
+    
+    func brandHeaderWasTapped() {
+        let title: String = membershipPlan.account?.planNameCard ?? ""
+        let description: String = membershipPlan.account?.planDescription ?? ""
+        
+        let attributedString = NSMutableAttributedString()
+        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
+        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+        attributedString.append(attributedTitle)
+        attributedString.append(attributedBody)
+        
+        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
+        router.toReusableModalTemplateViewController(configurationModel: configuration)
     }
     
     func displaySimplePopup(title: String?, message: String?) {

@@ -30,12 +30,14 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.delegate = self
-        viewModel.getPaymentCards()
         configureUI()
         setCloseButton()
 
         scrollView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        configureCardDetails(viewModel.paymentCards)
     }
     
     // MARK: - Navigation Bar Blurring
@@ -60,7 +62,9 @@ private extension LoyaltyCardFullDetailsViewController {
             }
         }
         
-        let aboutInfoTitle = "about_membership_title".localized
+        configureCardDetails(viewModel.paymentCards)
+        
+        let aboutInfoTitle = viewModel.aboutTitle
         let aboutInfoMessage = "learn_more".localized
         aboutInfoRow.delegate = self
         aboutInfoRow.configure(title: aboutInfoTitle, andInfo: aboutInfoMessage)
@@ -70,7 +74,7 @@ private extension LoyaltyCardFullDetailsViewController {
         securityAndPrivacyInfoRow.delegate = self
         securityAndPrivacyInfoRow.configure(title: securityInfoTitle, andInfo: securityInfoMessage)
         
-        let deleteInfoTitle = "delete_card_title".localized
+        let deleteInfoTitle = viewModel.deleteTitle
         let deleteInfoMessage = "delete_card_message".localized
         deleteInfoRow.delegate = self
         deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
@@ -78,13 +82,14 @@ private extension LoyaltyCardFullDetailsViewController {
         let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
         fullDetailsBrandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
-        
-        let activityIndicator = UIActivityIndicatorView(style: .gray)
-        cardDetailsStackView.addArrangedSubview(activityIndicator)
-        activityIndicator.startAnimating()
     }
     
-    func configureCardDetails(_ paymentCards: [PaymentCardModel]?) {
+    func configureCardDetails(_ paymentCards: [CD_PaymentCard]?) {
+        if cardDetailsStackView.subviews.count > 0 {
+            for subview in cardDetailsStackView.subviews {
+                cardDetailsStackView.removeArrangedSubview(subview)
+            }
+        }
         let pointsModuleView = BinkModuleView()
             pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
             cardDetailsStackView.addArrangedSubview(pointsModuleView)
@@ -106,14 +111,14 @@ private extension LoyaltyCardFullDetailsViewController {
     
     func displaySecurityAndPrivacyPopup() {
         let securityAdnPrivacyLink = NSURL(string: "https://bink.com/terms-and-conditions/#privacy-policy")
-        let messageString = "security_and_privacy_alert_message".localized
-        let message = NSMutableAttributedString(string: messageString)
-        message.addAttribute(.link, value: securityAdnPrivacyLink ?? "", range: NSRange(location: message.length - 5, length: 4))
-
-        let alert = HyperlinkAlertController(title: "security_and_privacy_alert_title".localized, message: message)
-        alert.modalPresentationStyle = .overCurrentContext
-        alert.modalTransitionStyle = .crossDissolve
-        present(alert, animated: true, completion: nil)
+        let title = "security_and_privacy_alert_title".localized
+        let description = "security_and_privacy_alert_message".localized
+        let attributedString = NSMutableAttributedString(string: title + "\n" + description)
+        attributedString.addAttribute(.link, value: securityAdnPrivacyLink ?? "", range: NSRange(location: attributedString.length - 5, length: 4))
+        attributedString.addAttribute(.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        
+        viewModel.toReusableModalTemplate(title: title, description: attributedString)
     }
 }
 
@@ -123,8 +128,27 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
     func cardDetailsInfoViewDidTapMoreInfo(_ cardDetailsInfoView: CardDetailsInfoView) {
         switch cardDetailsInfoView {
         case aboutInfoRow:
+            var title = ""
+            
+            if let planName = viewModel.membershipCard.membershipPlan?.account?.planName {
+                title = String(format: "about_custom_title".localized, planName)
+            } else {
+                title = "info_title".localized
+            }
+            
             if let infoMessage = viewModel.membershipCard.membershipPlan?.account?.planDescription {
-                viewModel.displaySimplePopupWithTitle("Info", andMessage: infoMessage)
+                let attributedString = NSMutableAttributedString()
+                let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
+                let attributedBody = NSAttributedString(string: infoMessage, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+                attributedString.append(attributedTitle)
+                attributedString.append(attributedBody)
+
+                
+                viewModel.toReusableModalTemplate(title: title, description: attributedString)
+            } else {
+                let attributedTitle = NSMutableAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
+                
+                viewModel.toReusableModalTemplate(title: title, description: attributedTitle)
             }
             break
         case securityAndPrivacyInfoRow:
@@ -156,21 +180,6 @@ extension LoyaltyCardFullDetailsViewController: FullDetailsBrandHeaderDelegate {
 extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
     func binkModuleViewWasTapped(moduleView: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
         viewModel.goToScreenForAction(action: action)
-    }
-}
-
-// MARK: - LoyaltyCardFullDetailsViewModelDelegate
-
-extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsViewModelDelegate {
-    func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel]) {
-        DispatchQueue.main.async {
-            [weak self] in
-            guard let self = self else {return}
-            if let activityIndicator = self.cardDetailsStackView.subviews.first {
-                activityIndicator.removeFromSuperview()
-            }
-            self.configureCardDetails(paymentCards)
-        }
     }
 }
 
