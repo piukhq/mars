@@ -105,7 +105,7 @@ class AuthAndAddViewModel {
                 } else {
                     self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
                 }
-                Current.wallet.reload()
+                Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
         }, onError: { error in
