@@ -18,7 +18,6 @@ class PLLScreenViewController: UIViewController {
     
     private let viewModel: PLLScreenViewModel
     private let journey: PllScreenJourney
-    lazy var floatingButtonsViewHeightConstraint = floatingButtonsView.heightAnchor.constraint(equalToConstant: 0)
     
     private lazy var stackScroll: StackScrollView = {
         let stackScroll = StackScrollView(
@@ -74,8 +73,8 @@ class PLLScreenViewController: UIViewController {
         return tableView
     }()
     
-    private lazy var floatingButtonsView: BinkFloatingButtonsView = {
-        let floatingButtonsView = BinkFloatingButtonsView(frame: .zero)
+    private lazy var floatingButtonsView: BinkPrimarySecondaryButtonView = {
+        let floatingButtonsView = BinkPrimarySecondaryButtonView(frame: .zero)
         floatingButtonsView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(floatingButtonsView)
         return floatingButtonsView
@@ -124,10 +123,10 @@ class PLLScreenViewController: UIViewController {
             secondaryMessageLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
             secondaryMessageLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
             brandHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            floatingButtonsViewHeightConstraint,
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
+            floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
 }
@@ -142,12 +141,12 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 
 // MARK: - BinkFloatingButtonsViewDelegate
 
-extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
-    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
+    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         floatingButtons.primaryButton.startLoading()
         view.isUserInteractionEnabled = false
         viewModel.toggleLinkForMembershipCards { [weak self] in
-            guard let self = self else {return}
+            guard let self = self else { return }
             self.reloadContent()
             self.view.isUserInteractionEnabled = true
             floatingButtons.primaryButton.stopLoading()
@@ -155,7 +154,7 @@ extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
         }
     }
     
-    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         viewModel.toAddPaymentCardScreen()
     }
 }
@@ -212,8 +211,7 @@ private extension PLLScreenViewController {
         secondaryMessageLabel.text = viewModel.secondaryMessageText
         secondaryMessageLabel.isHidden = !viewModel.isEmptyPll
         paymentCardsTableView.isHidden = viewModel.isEmptyPll
-        floatingButtonsViewHeightConstraint.constant = viewModel.isEmptyPll ? 210.0 : 130.0
-        stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonsViewHeightConstraint.constant, right: 0)
+        stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
         viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: "pll_screen_add_cards_button_title".localized) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil)
     }
     
