@@ -47,6 +47,7 @@ class PaymentCardCell: UITableViewCell {
             switchButton.isOn = journey == .newCard ? true : membershipCard.linkedPaymentCards.contains(paymentCard)
             firstUse = false
         }
+        selectionStyle = .none
     }
     
     // MARK: - Actions

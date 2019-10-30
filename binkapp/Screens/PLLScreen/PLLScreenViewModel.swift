@@ -37,6 +37,10 @@ class PLLScreenViewModel {
     var primaryMessageText: String {
         return isEmptyPll ? "pll_screen_link_message".localized : "pll_screen_add_message".localized
     }
+    
+    var secondaryMessageText: String {
+        return "pll_screen_secondary_message".localized
+    }
         
     init(membershipCard: CD_MembershipCard, repository: PLLScreenRepository, router: MainScreenRouter, journey: PllScreenJourney) {
         self.membershipCard = membershipCard

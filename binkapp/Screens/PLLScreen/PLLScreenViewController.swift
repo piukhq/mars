@@ -13,21 +13,80 @@ enum PllScreenJourney {
 }
 
 class PLLScreenViewController: UIViewController {
-    @IBOutlet private weak var brandHeaderView: BrandHeaderView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var primaryMessageLabel: UILabel!
-    @IBOutlet private weak var secondaryMesageLabel: UILabel!
-    @IBOutlet private weak var floatingButtonsView: BinkFloatingButtonsView!
-    @IBOutlet private weak var paymentCardsTableView: UITableView!
-    @IBOutlet private weak var floatingButtonsViewHeightConstraint: NSLayoutConstraint!
+    
+    // MARK: - Properties
     
     private let viewModel: PLLScreenViewModel
     private let journey: PllScreenJourney
+    lazy var floatingButtonsViewHeightConstraint = floatingButtonsView.heightAnchor.constraint(equalToConstant: 0)
+    
+    private lazy var stackScroll: StackScrollView = {
+        let stackScroll = StackScrollView(
+            axis: .vertical,
+            arrangedSubviews: [brandHeaderView, titleLabel, primaryMessageLabel, secondaryMessageLabel, paymentCardsTableView],
+            adjustForKeyboard: false
+        )
+        stackScroll.translatesAutoresizingMaskIntoConstraints = false
+        stackScroll.alignment = .center
+        stackScroll.customPadding(25.0, after: brandHeaderView)
+        view.addSubview(stackScroll)
+        return stackScroll
+    }()
+    
+    private lazy var brandHeaderView: BrandHeaderView = {
+        let brandHeader = BrandHeaderView()
+        brandHeader.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        return brandHeader
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.headline
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var primaryMessageLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.bodyTextLarge
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var secondaryMessageLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.bodyTextLarge
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var paymentCardsTableView: NestedTableView = {
+        let tableView = NestedTableView(frame: .zero)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.rowHeight = 100.0
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        return tableView
+    }()
+    
+    private lazy var floatingButtonsView: BinkFloatingButtonsView = {
+        let floatingButtonsView = BinkFloatingButtonsView(frame: .zero)
+        floatingButtonsView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(floatingButtonsView)
+        return floatingButtonsView
+    }()
+    
+    // MARK: - Initialisation
     
     init(viewModel: PLLScreenViewModel, journey: PllScreenJourney) {
         self.viewModel = viewModel
         self.journey = journey
-        super.init(nibName: "PLLScreenViewController", bundle: Bundle(for: PLLScreenViewController.self))
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,15 +97,38 @@ class PLLScreenViewController: UIViewController {
         super.viewDidLoad()
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         navigationItem.leftBarButtonItem = backButton
+        view.backgroundColor = .white
         
-        floatingButtonsView.delegate = self
         configureBrandHeader()
+        configureLayout()
         configureUI()
         paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
+        floatingButtonsView.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    private func configureLayout() {
+        NSLayoutConstraint.activate([
+            stackScroll.topAnchor.constraint(equalTo: view.topAnchor),
+            stackScroll.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackScroll.leftAnchor.constraint(equalTo: view.leftAnchor),
+            stackScroll.rightAnchor.constraint(equalTo: view.rightAnchor),
+            paymentCardsTableView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -50.0),
+            titleLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
+            titleLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
+            primaryMessageLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
+            primaryMessageLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
+            secondaryMessageLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
+            secondaryMessageLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
+            brandHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            floatingButtonsViewHeightConstraint,
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
+        ])
     }
 }
 
@@ -127,10 +209,11 @@ private extension PLLScreenViewController {
         navigationController?.setNavigationBarHidden(viewModel.isNavigationVisisble, animated: false)
         titleLabel.text = viewModel.titleText
         primaryMessageLabel.text = viewModel.primaryMessageText
-        secondaryMesageLabel.isHidden = !viewModel.isEmptyPll
+        secondaryMessageLabel.text = viewModel.secondaryMessageText
+        secondaryMessageLabel.isHidden = !viewModel.isEmptyPll
         paymentCardsTableView.isHidden = viewModel.isEmptyPll
         floatingButtonsViewHeightConstraint.constant = viewModel.isEmptyPll ? 210.0 : 130.0
-        paymentCardsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonsViewHeightConstraint.constant, right: 0)
+        stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonsViewHeightConstraint.constant, right: 0)
         viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: "pll_screen_add_cards_button_title".localized) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil)
     }
     
@@ -155,4 +238,3 @@ extension PLLScreenViewController: PaymentCardCellDelegate {
         }
     }
 }
-
