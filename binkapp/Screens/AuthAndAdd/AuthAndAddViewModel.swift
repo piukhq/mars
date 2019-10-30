@@ -56,8 +56,6 @@ class AuthAndAddViewModel {
         }
     }
     
-    var description: String?
-    
     var accountButtonShouldHide: Bool {
         return formPurpose != .firstLogin || formPurpose == .ghostCard
     }
@@ -81,7 +79,8 @@ class AuthAndAddViewModel {
             guard let companyName = membershipPlan.account?.companyName else { return nil }
             return String(format: "sign_up_new_card_description".localized, companyName)
         case .ghostCard:
-            return ""
+            guard let companyName = membershipPlan.account?.companyName else { return nil }
+            return String(format: "register_ghost_card_description".localized, companyName)
         }
     }
     
