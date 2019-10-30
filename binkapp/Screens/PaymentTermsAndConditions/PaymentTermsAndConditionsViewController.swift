@@ -50,6 +50,8 @@ class PaymentTermsAndConditionsViewController: UIViewController {
         textView.attributedText = viewModel.text
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
         
+        floatingButtonsContainer.isHidden = viewModel.shouldHideButtonsView
+        
         floatingButtonsContainer.configure(
             primaryButtonTitle: primary,
             secondaryButtonTitle: secondary

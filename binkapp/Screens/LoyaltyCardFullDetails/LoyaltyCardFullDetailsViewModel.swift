@@ -72,7 +72,9 @@ class LoyaltyCardFullDetailsViewModel {
             router.toTransactionsViewController(membershipCard: membershipCard)
             break
         case .loginPending:
-            router.toSimpleInfoViewController(pendingType: .login)
+            let title = "log_in_pending_title".localized
+            let description = "log_in_pending_description".localized
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .loginUnavailable:
             //TODO: change to login unavailable screen after is implemented
@@ -83,14 +85,18 @@ class LoyaltyCardFullDetailsViewModel {
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .signUpPending:
-            router.toSimpleInfoViewController(pendingType: .signup)
+            let title = "sign_up_pending_title".localized
+            let description = "sign_up_pending_description".localized
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .registerGhostCard:
             //TODO: change to sign up screen after is implemented
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .registerGhostCardPending:
-            router.toSimpleInfoViewController(pendingType: .register)
+            let title = "sign_up_pending_title".localized
+            let description = "sign_up_pending_description".localized
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .pllEmpty:
             router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)
@@ -99,7 +105,9 @@ class LoyaltyCardFullDetailsViewModel {
             router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)
             break
         case .unLinkable:
-            toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)
+            let title = "unlinkable_pll_title".localized
+            let description = "unlinkable_pll_description".localized
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .genericError:
             let state = membershipCard.status?.status?.rawValue ?? ""
@@ -109,10 +117,24 @@ class LoyaltyCardFullDetailsViewModel {
                 description += $0.value ?? ""
             }
     
-            toReusableModalTemplate(title: "error_title".localized, description: description)
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: "error_title".localized, description: description))
             break
         }
+    }
+    
+    func getBasicReusableConfiguration(title: String, description: String) -> ReusableModalConfiguration {
+        let attributedString = NSMutableAttributedString(string: title + "\n" + description)
         
+        attributedString.addAttribute(.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        
+        return ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
+    }
+    
+    func toReusableModalTemplate(title: String, description: NSMutableAttributedString) {
+        let configurationModel = ReusableModalConfiguration(title: "", text: description, showCloseButton: true)
+        
+        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
     func popToRootController() {
@@ -123,10 +145,6 @@ class LoyaltyCardFullDetailsViewModel {
         router.popViewController()
     }
     
-    func displaySimplePopupWithTitle(_ title: String, andMessage message: String) {
-        router.displaySimplePopup(title: title, message: message)
-    }
-    
     func getOfferTileImageUrls() -> [String]? {
         let planImages = membershipCard.membershipPlan?.imagesSet
         return planImages?.filter({ $0.type?.intValue == 2}).compactMap { $0.url }
@@ -134,13 +152,13 @@ class LoyaltyCardFullDetailsViewModel {
     
     func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
-            guard let strongSelf = self else {
+            guard let self = self else {
                 return
             }
-            strongSelf.repository.deleteMembershipCard(id: strongSelf.membershipCard.id, onSuccess: { _ in
+            self.repository.deleteMembershipCard(id: self.membershipCard.id, onSuccess: { _ in
                 yesCompletion()
             }, onError: { (error: Error) in
-                strongSelf.displaySimplePopupWithTitle("Error", andMessage: error.localizedDescription)
+                self.router.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
             })
         }, noCompletion: {
             noCompletion()
