@@ -117,7 +117,7 @@ extension SettingsViewController: UITableViewDelegate {
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {
                 case is SettingsViewController.Type:
-                    let vc = SettingsViewController(viewModel: SettingsViewModel())
+                    let vc = SettingsViewController(viewModel: viewModel)
                     present(vc, animated: true)
                 case is DebugMenuTableViewController.Type:
                     let debugMenuFactory = DebugMenuFactory()

@@ -9,7 +9,13 @@
 import UIKit
 
 class SettingsViewModel {
-    private let factory = SettingsFactory()
+    private let factory: SettingsFactory
+    private let router: MainScreenRouter
+    
+    init(router: MainScreenRouter) {
+        self.router = router
+        factory = SettingsFactory(router: router)
+    }
     
     var sections: [SettingsSection] {
         return factory.sectionData()
