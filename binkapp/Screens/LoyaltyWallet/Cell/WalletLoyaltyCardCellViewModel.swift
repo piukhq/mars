@@ -40,12 +40,15 @@ struct WalletLoyaltyCardCellViewModel {
         return membershipPlan?.featureSet?.planCardType
     }
 
-    var shouldShowLoginButton: Bool {
-        return cardStatus == .failed || cardStatus == .unauthorised
+    var shouldShowRetryStatus: Bool {
+        return (cardStatus == .failed || cardStatus == .unauthorised) && membershipPlan?.featureSet?.planCardType != .store
     }
 
     var shouldShowPointsValueLabels: Bool {
-        return !shouldShowLoginButton || cardStatus == .pending || planHasPoints && balanceValue != nil
+        guard membershipPlan?.featureSet?.planCardType != .store  else {
+            return false
+        }
+        return shouldShowRetryStatus || cardStatus == .pending || planHasPoints && balanceValue != nil
     }
 
     var shouldShowLinkStatus: Bool {
@@ -90,7 +93,10 @@ struct WalletLoyaltyCardCellViewModel {
 
     var pointsValueText: String {
         guard cardStatus != .pending else {
-            return "Pending".localized
+            return "pending_title".localized
+        }
+        guard !shouldShowRetryStatus else {
+            return "retry_title".localized
         }
         return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "")"
     }

@@ -52,11 +52,7 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
     }
     
     @objc func settingsButtonTapped() {
-        #if DEBUG
-        viewModel.toDebugMenu()
-        #else
-        viewModel.toSettingsScreen()
-        #endif
+        viewModel.toSettings()
     }
     
     func populateTabBar() {

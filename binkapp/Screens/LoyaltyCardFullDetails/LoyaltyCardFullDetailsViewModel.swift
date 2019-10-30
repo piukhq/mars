@@ -7,15 +7,30 @@
 
 import UIKit
 
-protocol LoyaltyCardFullDetailsViewModelDelegate: class {
-    func loyaltyCardFullDetailsViewModelDidFetchPaymentCards(_ loyaltyCardFullDetailsViewModel: LoyaltyCardFullDetailsViewModel, paymentCards: [PaymentCardModel])
-}
-
 class LoyaltyCardFullDetailsViewModel {
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
+    
+    var paymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards
+    }
     let membershipCard: CD_MembershipCard
-    weak var delegate: LoyaltyCardFullDetailsViewModelDelegate?
+    
+    var aboutTitle: String {
+        if let planName = membershipCard.membershipPlan?.account?.planName {
+            return String(format: "about_membership_plan_title".localized, planName)
+        } else {
+           return "about_membership_title".localized
+        }
+    }
+    
+    var deleteTitle: String {
+        if let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+            return String(format: "delete_card_plan_title".localized, planNameCard)
+        } else {
+            return "delete_card_title".localized
+        }
+    }
 
     init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
         self.router = router
@@ -37,13 +52,6 @@ class LoyaltyCardFullDetailsViewModel {
 
     // MARK: - Public methods
     
-    func getPaymentCards() {
-        repository.getPaymentCards { [weak self] (results) in
-            guard let wself = self else { return }
-            wself.delegate?.loyaltyCardFullDetailsViewModelDidFetchPaymentCards(wself, paymentCards: results)
-        }
-    }
-    
     func toBarcodeModel() {
         router.toBarcodeViewController(membershipCard: membershipCard) { }
     }
@@ -64,7 +72,9 @@ class LoyaltyCardFullDetailsViewModel {
             router.toTransactionsViewController(membershipCard: membershipCard)
             break
         case .loginPending:
-            router.toSimpleInfoViewController(pendingType: .login)
+            let title = "log_in_pending_title".localized
+            let description = "log_in_pending_description".localized
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .loginUnavailable:
             //TODO: change to login unavailable screen after is implemented
@@ -75,24 +85,29 @@ class LoyaltyCardFullDetailsViewModel {
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .signUpPending:
-            router.toSimpleInfoViewController(pendingType: .signup)
+            let title = "sign_up_pending_title".localized
+            let description = "sign_up_pending_description".localized
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .registerGhostCard:
             //TODO: change to sign up screen after is implemented
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .registerGhostCardPending:
-            router.toSimpleInfoViewController(pendingType: .register)
+            let title = "sign_up_pending_title".localized
+            let description = "sign_up_pending_description".localized
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .pllEmpty:
-            router.toPllViewController(membershipCard: membershipCard)
+            router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)
             break
         case .pll:
-            //TODO: change to PLL screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)
             break
         case .unLinkable:
-            toReusableModalTemplate(title: "unlinkable_pll_title".localized, description: "unlinkable_pll_description".localized)
+            let title = "unlinkable_pll_title".localized
+            let description = "unlinkable_pll_description".localized
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .genericError:
             let state = membershipCard.status?.status?.rawValue ?? ""
@@ -102,19 +117,22 @@ class LoyaltyCardFullDetailsViewModel {
                 description += $0.value ?? ""
             }
     
-            toReusableModalTemplate(title: "error_title".localized, description: description)
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: "error_title".localized, description: description))
             break
         }
-        
     }
     
-    private func toReusableModalTemplate(title: String, description: String) {
-        let attributedText = NSMutableAttributedString(string: title + "\n" + description)
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+    func getBasicReusableConfiguration(title: String, description: String) -> ReusableModalConfiguration {
+        let attributedString = NSMutableAttributedString(string: title + "\n" + description)
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
+        attributedString.addAttribute(.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        
+        return ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
+    }
+    
+    func toReusableModalTemplate(title: String, description: NSMutableAttributedString) {
+        let configurationModel = ReusableModalConfiguration(title: "", text: description, showCloseButton: true)
         
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
@@ -125,10 +143,6 @@ class LoyaltyCardFullDetailsViewModel {
     
     @objc func popViewController() {
         router.popViewController()
-    }
-    
-    func displaySimplePopupWithTitle(_ title: String, andMessage message: String) {
-        router.displaySimplePopup(title: title, message: message)
     }
     
     func getOfferTileImageUrls() -> [String]? {
@@ -145,5 +159,20 @@ class LoyaltyCardFullDetailsViewModel {
         }, noCompletion: {
             noCompletion()
         })
+    }
+}
+
+// MARK: - Private methods
+
+private extension LoyaltyCardFullDetailsViewModel {
+    func toReusableModalTemplate(title: String, description: String) {
+        let attributedText = NSMutableAttributedString(string: title + "\n" + description)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
+        
+        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
 }

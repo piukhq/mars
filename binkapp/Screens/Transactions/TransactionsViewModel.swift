@@ -5,7 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct TransactionsViewModel {
     let membershipCard: CD_MembershipCard
@@ -46,8 +46,18 @@ struct TransactionsViewModel {
         })
     }
     
-    func displayLoyaltySchemePopup() {
-        router.displaySimplePopup(title: membershipCard.membershipPlan?.account?.planNameCard, message: membershipCard.membershipPlan?.account?.planDescription)
+    func brandHeaderWasTapped() {
+        let title: String = membershipCard.membershipPlan?.account?.planNameCard ?? ""
+        let description: String = membershipCard.membershipPlan?.account?.planDescription ?? ""
+        
+        let attributedString = NSMutableAttributedString()
+        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
+        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+        attributedString.append(attributedTitle)
+        attributedString.append(attributedBody)
+        
+        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
+        router.toReusableModalTemplateViewController(configurationModel: configuration)
     }
     
     func popViewController() {
