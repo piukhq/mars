@@ -66,7 +66,7 @@ class PLLScreenViewModel {
     }
     
     func reloadPaymentCards(){
-        Current.wallet.reload()
+        Current.wallet.refreshLocal()
     }
     
     func toggleLinkForMembershipCards(completion: @escaping () -> Void) {

@@ -87,6 +87,12 @@ class PLLScreenViewController: UIViewController {
         self.viewModel = viewModel
         self.journey = journey
         super.init(nibName: nil, bundle: nil)
+        
+        if journey == .newCard {
+            viewModel.paymentCards?.forEach {
+                viewModel.addCardToChangedCardsArray(card: $0)
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -179,10 +185,14 @@ extension PLLScreenViewController: UITableViewDataSource {
         if let paymentCards = viewModel.paymentCards {
             let paymentCard = paymentCards[indexPath.row]
             let isLastCell = indexPath.row == paymentCards.count - 1
-            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self, journey: journey, isLastCell: isLastCell)
-            if journey == .newCard {
-                viewModel.addCardToChangedCardsArray(card: paymentCard)
-            }
+            cell.configureUI(
+                paymentCard: paymentCard,
+                cardIndex: indexPath.row,
+                delegate: self,
+                journey: journey,
+                isLastCell: isLastCell,
+                showAsLinked: viewModel.linkedPaymentCards?.contains(paymentCard) == true
+            )
         }
         return cell 
     }
