@@ -101,8 +101,15 @@ class PLLScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        navigationItem.leftBarButtonItem = backButton
+        
+        if viewModel.shouldShowBackButton {
+            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+            navigationItem.leftBarButtonItem = backButton
+        } else {
+            // Catch the default back button
+            navigationItem.setHidesBackButton(true, animated: false)
+        }
+
         view.backgroundColor = .white
         
         configureBrandHeader()
@@ -110,10 +117,6 @@ class PLLScreenViewController: UIViewController {
         configureUI()
         paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
         floatingButtonsView.delegate = self
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     private func configureLayout() {
@@ -216,7 +219,6 @@ private extension PLLScreenViewController {
     }
     
     func configureUI() {
-        navigationController?.setNavigationBarHidden(viewModel.isNavigationVisisble, animated: false)
         titleLabel.text = viewModel.titleText
         primaryMessageLabel.text = viewModel.primaryMessageText
         secondaryMessageLabel.text = viewModel.secondaryMessageText

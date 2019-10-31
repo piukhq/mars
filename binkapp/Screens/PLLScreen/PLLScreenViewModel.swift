@@ -21,8 +21,8 @@ class PLLScreenViewModel {
         return paymentCards == nil ? true : paymentCards?.count == 0
     }
     
-    var isNavigationVisisble: Bool {
-        return isEmptyPll || journey == .newCard
+    var shouldShowBackButton: Bool {
+        return journey != .newCard
     }
     
     var linkedPaymentCards: [CD_PaymentCard]? {
