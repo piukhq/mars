@@ -107,7 +107,7 @@ extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
         guard (fields?.contains(where: { $0.value == "REGISTRATION" }) ?? false) else {
-            viewModel.displaySimplePopup(title: "doesn't have registration fields", message: nil)
+            viewModel.toReusableTemplate(title: "native_join_unavailable_title".localized, description: "ghost_native_join_unavailable_description".localized)
             return
         }
         viewModel.displaySimplePopup(title: "has registration fields", message: nil)
