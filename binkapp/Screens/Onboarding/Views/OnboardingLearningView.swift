@@ -62,10 +62,6 @@ class OnboardingLearningView: CustomView {
     @IBOutlet private weak var bodyTextLabel: UILabel!
     @IBOutlet private weak var imageTopPaddingConstraint: NSLayoutConstraint!
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     func configure(forType type: OnboardingLearningType) {
         learningImageView.image = UIImage(named: type.learningImageName)
         headerTextLabel.text = type.headerText

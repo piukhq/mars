@@ -14,7 +14,6 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
 
     lazy var learningContainer: UIView = {
         let container = UIView()
-        container.backgroundColor = .lightGray
         return container
     }()
 
@@ -51,18 +50,18 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if !didLayoutSubviews {
-            configureUI()
             didLayoutSubviews = true
+            configureUI()
         }
     }
 
     private func configureUI() {
-        let view1 = UIView(frame: .zero)
-        view1.backgroundColor = .systemRed
-        let view2 = UIView(frame: .zero)
-        view2.backgroundColor = .systemBlue
-        let view3 = UIView(frame: .zero)
-        view3.backgroundColor = .systemGreen
+        let view1 = OnboardingLearningView(frame: .zero)
+        view1.configure(forType: .pll)
+        let view2 = OnboardingLearningView(frame: .zero)
+        view2.configure(forType: .wallet)
+        let view3 = OnboardingLearningView(frame: .zero)
+        view3.configure(forType: .barcodeOrCollect)
         let views = [
             view1,
             view2,
@@ -89,7 +88,6 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             learningContainer.leftAnchor.constraint(equalTo: view.leftAnchor),
             learningContainer.rightAnchor.constraint(equalTo: view.rightAnchor),
             learningContainerHeightConstraint,
-            learningContainer.bottomAnchor.constraint(lessThanOrEqualTo: facebookPillButton.topAnchor, constant: -25),
 
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -101,31 +99,32 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             facebookPillButton.bottomAnchor.constraint(equalTo: floatingButtonsView.topAnchor, constant: -LayoutHelper.PillButton.verticalSpacing),
         ])
 
-//        view.layoutIfNeeded()
-//
-//        learningContainer.addSubview(scrollView)
-//        learningContainer.addSubview(pageControl)
-//        scrollView.frame = CGRect(x: 0, y: 0, width: learningContainer.frame.width, height: learningContainer.frame.height)
-//        scrollView.contentSize = CGSize(width: learningContainer.frame.width * CGFloat(views.count), height: learningContainer.frame.height)
-//
-//        NSLayoutConstraint.activate([
-//            pageControl.bottomAnchor.constraint(equalTo: learningContainer.bottomAnchor),
-//            pageControl.heightAnchor.constraint(equalToConstant: 20),
-//            pageControl.widthAnchor.constraint(equalToConstant: 50),
-//            pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor),
-//        ])
-//
-//        scrollView.bounces = false
-//        scrollView.showsVerticalScrollIndicator = false
-//        scrollView.showsHorizontalScrollIndicator = false
-//        scrollView.delegate = self
-//
-//        scrollView.isPagingEnabled = true
-//
-//        for i in 0..<views.count {
-//            views[i].frame = CGRect(x: learningContainer.frame.width * CGFloat(i), y: 0, width: learningContainer.frame.width, height: learningContainer.frame.height)
-//            scrollView.addSubview(views[i])
-//        }
+        view.layoutIfNeeded()
+
+        learningContainer.addSubview(scrollView)
+        learningContainer.addSubview(pageControl)
+        scrollView.frame = CGRect(x: 0, y: 12, width: learningContainer.frame.width, height: learningContainer.frame.height-12)
+        scrollView.contentSize = CGSize(width: learningContainer.frame.width * CGFloat(views.count), height: learningContainer.frame.height-12)
+
+        NSLayoutConstraint.activate([
+            pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            pageControl.bottomAnchor.constraint(lessThanOrEqualTo: facebookPillButton.topAnchor, constant: -25),
+            pageControl.heightAnchor.constraint(equalToConstant: 40),
+            pageControl.widthAnchor.constraint(equalToConstant: 40),
+            pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor),
+        ])
+
+        scrollView.bounces = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.delegate = self
+
+        scrollView.isPagingEnabled = true
+
+        for i in 0..<views.count {
+            views[i].frame = CGRect(x: learningContainer.frame.width * CGFloat(i), y: 0, width: learningContainer.frame.width, height: learningContainer.frame.height-12)
+            scrollView.addSubview(views[i])
+        }
     }
 
     // MARK: Button handlers
