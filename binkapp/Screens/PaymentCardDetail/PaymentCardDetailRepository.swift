@@ -68,16 +68,21 @@ class PaymentCardDetailRepository {
             Current.database.performBackgroundTask { backgroundContext in
                 // TODO: Should we be using .none here? Only option that works...
                 // It's functional but we're not sure why it doesn't work otherwise and that is concerning.
-                let newObject = response.mapToCoreData(backgroundContext, .none, overrideID: nil)
+                let newObject = response.mapToCoreData(backgroundContext, .update, overrideID: nil)
+                
                 guard let newObjectId = newObject.id else {
                     fatalError("Failed to get the id from the new object.")
                 }
+                
+                newObject.card?.nameOnCard = "LINK \(Date())"
 
-                try? backgroundContext.save()
-
+                try! backgroundContext.save()
+                            
                 DispatchQueue.main.async {
+                    
                     Current.database.performTask { context in
                         let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
+                                                
                         completion(fetchedObject)
                     }
                 }
@@ -87,22 +92,33 @@ class PaymentCardDetailRepository {
         })
     }
 
-    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping () -> Void) {
-        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id)
+    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?) -> Void) {
+        let alalala: String = paymentCard.id
+        let membershipCardId: String = membershipCard.id
+        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: alalala)
         let method: RequestHTTPMethod = .delete
-
+        
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
-            Current.database.performBackgroundTask { context in
-                paymentCard.removeLinkedMembershipCardsObject(membershipCard)
-
+            Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
+                
+                if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCardId) {
+                    safePaymentCard?.removeLinkedMembershipCardsObject(membershipCardToRemove)
+                }
+                
+                safePaymentCard?.card?.nameOnCard = "DEL \(Date())"
+                
                 try? context.save()
-
+                
                 DispatchQueue.main.async {
-                    completion()
+                    Current.database.performTask { context in
+                        let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: alalala)
+
+                        completion(fetchedObject)
+                    }
                 }
             }
         }, onError: { _ in
-            completion()
+            completion(nil)
         })
     }
 }

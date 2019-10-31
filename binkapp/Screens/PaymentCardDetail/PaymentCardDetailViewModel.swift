@@ -129,6 +129,12 @@ class PaymentCardDetailViewModel {
     }
 
     private func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
-        repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard, completion: completion)
+        repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard) { [weak self] paymentCard in
+            if let paymentCard = paymentCard {
+                self?.paymentCard = paymentCard
+            }
+
+            completion()
+        }
     }
 }
