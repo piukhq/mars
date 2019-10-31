@@ -72,6 +72,14 @@ class SettingsViewController: UIViewController {
         viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
     }
     
+    private func toHowItWorksVC() {
+        let title: String = "how_it_works_title".localized
+        let description: String = "how_it_works_description".localized
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        let configuration = ReusableModalConfiguration(title: title, text: viewModel.getAttributedString(title: title, description: description), tabBarBackButton: backButton)
+        viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
+    }
+    
     // MARK: - Action
     @objc func popViewController() {
         navigationController?.popViewController(animated: true)
@@ -149,7 +157,9 @@ extension SettingsViewController: UITableViewDelegate {
                 case .securityAndPrivacy:
                     toSecurityAndPrivacyVC()
                     break
-                case .howItWorks: break
+                case .howItWorks:
+                    toHowItWorksVC()
+                    break
                 }
             }
         }
