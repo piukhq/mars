@@ -95,16 +95,6 @@ struct SettingsFactory {
         
         sections.append(legalSection)
         
-        func getAttributedString(title: String, description: String) -> NSMutableAttributedString {
-            let attributedString = NSMutableAttributedString()
-            let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-            let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
-            attributedString.append(attributedTitle)
-            attributedString.append(attributedBody)
-            
-            return attributedString
-        }
-        
         // MARK: - Debug
         
         #if DEBUG

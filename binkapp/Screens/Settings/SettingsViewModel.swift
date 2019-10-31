@@ -44,4 +44,8 @@ class SettingsViewModel {
     func row(atIndexPath indexPath: IndexPath) -> SettingsRow? {
         return sections[safe: indexPath.section]?.rows[safe: indexPath.row]
     }
+    
+    func presentReusableModal(configurationModel: ReusableModalConfiguration, navController: UINavigationController?) {
+        router.pushReusableModalTemplateVC(configurationModel: configurationModel, navigationController: navController)
+    }
 }

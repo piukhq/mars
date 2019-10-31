@@ -213,6 +213,12 @@ class MainScreenRouter {
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
+    func pushReusableModalTemplateVC(configurationModel: ReusableModalConfiguration, navigationController: UINavigationController?) {
+        let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
+        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     func toSimpleInfoViewController(pendingType: PendingType) {
         let viewModel = SimpleInfoViewModel(router: self, pendingType: pendingType)
         let viewController = SimpleInfoViewController(viewModel: viewModel)
