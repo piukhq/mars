@@ -187,3 +187,8 @@
 "settings_row_privacypolicy_title" = "Privacy policy";
 "settings_row_termsandconditions_title" = "Terms and conditions";
 
+// MARK: - Buttons
+"continue_with_facebook_button" = "Continue with Facebook";
+"signup_with_email_button" = "Sign up with email";
+"login_with_email_button" = "Log in with email";
+
