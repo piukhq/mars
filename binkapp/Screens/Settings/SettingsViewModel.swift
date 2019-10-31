@@ -46,6 +46,17 @@ class SettingsViewModel {
     }
     
     func pushReusableModal(configurationModel: ReusableModalConfiguration, navController: UINavigationController?) {
+        
         router.pushReusableModalTemplateVC(configurationModel: configurationModel, navigationController: navController)
+    }
+    
+    func getAttributedString(title: String, description: String) -> NSMutableAttributedString {
+        let attributedString = NSMutableAttributedString()
+        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
+        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+        attributedString.append(attributedTitle)
+        attributedString.append(attributedBody)
+        
+        return attributedString
     }
 }

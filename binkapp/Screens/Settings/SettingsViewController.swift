@@ -64,14 +64,12 @@ class SettingsViewController: UIViewController {
         ])
     }
     
-    func getAttributedString(title: String, description: String) -> NSMutableAttributedString {
-        let attributedString = NSMutableAttributedString()
-        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
-        attributedString.append(attributedTitle)
-        attributedString.append(attributedBody)
-        
-        return attributedString
+    private func toSecurityAndPrivacyVC() {
+        let title: String = "settings_row_security_title".localized
+        let description: String = "security_and_privacy_description".localized
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        let configuration = ReusableModalConfiguration(title: title, text: viewModel.getAttributedString(title: title, description: description), tabBarBackButton: backButton)
+        viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
     }
     
     // MARK: - Action
@@ -149,11 +147,7 @@ extension SettingsViewController: UITableViewDelegate {
             case .pushToReusable(let screen):
                 switch screen {
                 case .securityAndPrivacy:
-                    let title: String = "settings_row_security_title".localized
-                    let description: String = "security_and_privacy_description".localized
-                    let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-                    let configuration = ReusableModalConfiguration(title: title, text: getAttributedString(title: title, description: description), tabBarBackButton: backButton)
-                    viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
+                    toSecurityAndPrivacyVC()
                     break
                 case .howItWorks: break
                 }
