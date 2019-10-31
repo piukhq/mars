@@ -70,19 +70,3 @@ class OnboardingLearningView: CustomView {
     }
 
 }
-
-extension LayoutHelper {
-    struct OnboardingLearningView {
-        struct PLL {
-
-        }
-
-        struct Wallet {
-
-        }
-
-        struct BarcodeOrCollect {
-
-        }
-    }
-}
