@@ -37,7 +37,7 @@ class MainScreenRouter {
     }
     
     func toSettings() {
-        let viewModel = SettingsViewModel()
+        let viewModel = SettingsViewModel(router: self)
         let settingsVC = SettingsViewController(viewModel: viewModel)
         let settingsNav = PortraitNavigationController(rootViewController: settingsVC)
         settingsNav.modalPresentationStyle = .fullScreen
@@ -211,6 +211,12 @@ class MainScreenRouter {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
+    }
+    
+    func pushReusableModalTemplateVC(configurationModel: ReusableModalConfiguration, navigationController: UINavigationController?) {
+        let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
+        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     func toSimpleInfoViewController(pendingType: PendingType) {

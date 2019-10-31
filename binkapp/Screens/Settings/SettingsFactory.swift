@@ -9,6 +9,12 @@
 import UIKit
 
 struct SettingsFactory {
+    private let router: MainScreenRouter
+    
+    init(router: MainScreenRouter) {
+        self.router = router
+    }
+    
     func sectionData() -> [SettingsSection] {
         
         var sections = [SettingsSection]()
@@ -59,12 +65,12 @@ struct SettingsFactory {
             SettingsRow(
                 title: "settings_row_security_title".localized,
                 subtitle: "settings_row_security_subtitle".localized,
-                action: .notImplemented
+                action: .pushToReusable(screen: .securityAndPrivacy)
             ),
             SettingsRow(
                 title: "settings_row_howitworks_title".localized,
                 subtitle: "settings_row_howitworks_subtitle".localized,
-                action: .notImplemented
+                action: .pushToReusable(screen: .howItWorks)
             )
         ])
         
