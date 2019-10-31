@@ -75,6 +75,9 @@ class SettingsViewController: UIViewController {
     }
     
     // MARK: - Action
+    @objc func popViewController() {
+        navigationController?.popViewController(animated: true)
+    }
     
     @objc func close() {
         dismiss(animated: true)
@@ -121,14 +124,17 @@ extension SettingsViewController: UITableViewDelegate {
             switch rowData.action {
             case let .customAction(action):
                 action()
+                break
                 //TODO: Add sendEmail call with correct content.
             case .notImplemented, .contactUsAction:
                 UIAlertController.presentFeatureNotImplementedAlert(on: self)
+                break
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {
                 case is SettingsViewController.Type:
                     let vc = SettingsViewController(viewModel: viewModel)
                     present(vc, animated: true)
+                    break
                 case is DebugMenuTableViewController.Type:
                     let debugMenuFactory = DebugMenuFactory()
                     let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
@@ -138,13 +144,15 @@ extension SettingsViewController: UITableViewDelegate {
                     break
                 default:
                     print("Unsupported VC for presentation")
+                    break
                 }
             case .pushToReusable(let screen):
                 switch screen {
                 case .securityAndPrivacy:
                     let title: String = "settings_row_security_title".localized
                     let description: String = "security_and_privacy_description".localized
-                    let configuration = ReusableModalConfiguration(title: title, text: getAttributedString(title: title, description: description), showCloseButton: true)
+                    let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+                    let configuration = ReusableModalConfiguration(title: title, text: getAttributedString(title: title, description: description), tabBarBackButton: backButton)
                     viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
                     break
                 case .howItWorks: break
