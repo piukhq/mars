@@ -12,6 +12,47 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet private weak var facebookPillButton: BinkPillButton!
     @IBOutlet private weak var floatingButtonsView: BinkPrimarySecondaryButtonView!
 
+    lazy var view1: OnboardingLearningView = {
+        let onboardingView = OnboardingLearningView(frame: .zero)
+        onboardingView.configure(forType: .pll)
+        return onboardingView
+    }()
+    lazy var view2: OnboardingLearningView = {
+        let onboardingView = OnboardingLearningView(frame: .zero)
+        onboardingView.configure(forType: .wallet)
+        return onboardingView
+    }()
+    lazy var view3: OnboardingLearningView = {
+        let onboardingView = OnboardingLearningView(frame: .zero)
+        onboardingView.configure(forType: .barcodeOrCollect)
+        return onboardingView
+    }()
+
+    lazy var views: [UIView] = {
+        return [
+            view1,
+            view2,
+            view3
+        ]
+    }()
+
+    var timer: Timer!
+
+    @objc func fireTimer() {
+        scrollToNext()
+    }
+
+    func scrollToNext() {
+        if pageControl.currentPage != views.count - 1 {
+            let nextPageX: CGFloat = CGFloat(pageControl.currentPage + 1) * scrollView.frame.width
+            pageControl.currentPage = pageControl.currentPage + 1
+            scrollView.setContentOffset(CGPoint(x: nextPageX, y: 0), animated: true)
+        } else {
+            pageControl.currentPage = 0
+            scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        }
+    }
+
     lazy var learningContainer: UIView = {
         let container = UIView()
         return container
@@ -45,6 +86,8 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
     }
 
     override func viewDidLayoutSubviews() {
@@ -56,18 +99,6 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     }
 
     private func configureUI() {
-        let view1 = OnboardingLearningView(frame: .zero)
-        view1.configure(forType: .pll)
-        let view2 = OnboardingLearningView(frame: .zero)
-        view2.configure(forType: .wallet)
-        let view3 = OnboardingLearningView(frame: .zero)
-        view3.configure(forType: .barcodeOrCollect)
-        let views = [
-            view1,
-            view2,
-            view3
-        ]
-
         facebookPillButton.configureForType(.facebook)
         facebookPillButton.addTarget(self, action: #selector(handleFacebookButtonPressed), for: .touchUpInside)
 
@@ -153,3 +184,4 @@ extension OnboardingViewController: BinkPrimarySecondaryButtonViewDelegate {
         viewModel.login()
     }
 }
+
