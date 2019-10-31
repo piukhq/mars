@@ -48,28 +48,29 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
             update(cdObject, \.account, with: nil, delta: false)
         }
 
-
         cdObject.images.forEach {
             guard let image = $0 as? CD_MembershipPlanImage else { return }
             context.delete(image)
         }
+        
         images?.forEach { image in
             let cdImage = image.mapToCoreData(context, .update, overrideID: nil)
             update(cdImage, \.paymentCard, with: cdObject, delta: delta)
             cdObject.addImagesObject(cdImage)
         }
-
+        
         cdObject.linkedMembershipCards.forEach {
-            guard let membershipCard = $0 as? CD_MembershipCard else { return }
-            cdObject.removeLinkedMembershipCardsObject(membershipCard)
-        }
+             guard let membershipCard = $0 as? CD_MembershipCard else { return }
+             cdObject.removeLinkedMembershipCardsObject(membershipCard)
+         }
+
         membershipCards?.filter({ $0.activeLink == true }).forEach { membershipCard in
             if let cdMembershipCard = context.fetchWithApiID(CD_MembershipCard.self, id: String(membershipCard.id ?? 0)) {
                 cdObject.addLinkedMembershipCardsObject(cdMembershipCard)
                 cdMembershipCard.addLinkedPaymentCardsObject(cdObject)
             }
         }
-
+        
         return cdObject
     }
 }

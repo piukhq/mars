@@ -15,27 +15,47 @@ class PLLScreenRepository {
         self.apiManager = apiManager
     }
     
-    func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping(Error) -> Void) {
+    func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping () -> Void) {
+        
+        var idsToRemove = [String]()
+        var idsToAdd = [String]()
+        var fullSuccess = true // assume true
+        
         let group = DispatchGroup()
         for paymentCard in changedLinkCards {
+            group.enter()
             if membershipCard.linkedPaymentCards.contains(paymentCard) {
-                group.enter()
-                removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard, onSuccess: {
+                removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard) { id in
+                    if let id = id {
+                        idsToRemove.append(id)
+                    } else {
+                        fullSuccess = false
+                    }
                     group.leave()
-                }) { (error) in
-                    onError(error)
                 }
             } else {
-                group.enter()
-                linkMembershipCard(withId: membershipCard.id, toPaymentCardWithId: paymentCard.id, onSuccess: { (paymentCard) in
+                linkMembershipCard(withId: membershipCard.id, toPaymentCardWithId: paymentCard.id) { id in
+                    if let id = id {
+                        idsToAdd.append(id)
+                    } else {
+                        fullSuccess = false
+                    }
                     group.leave()
-                }) { (error) in
-                    onError(error)
                 }
             }
         }
+                
         group.notify(queue: .main) {
-            onSuccess()
+            self.saveChanges(
+                toAdd: idsToAdd,
+                toRemove: idsToRemove,
+                membershipCard: membershipCard) {
+                    if fullSuccess {
+                        onSuccess()
+                    } else {
+                        onError()
+                    }
+            }
         }
     }
 }
@@ -43,50 +63,47 @@ class PLLScreenRepository {
 // MARK: - Private methods
 
 private extension PLLScreenRepository {
-    func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping (Error) -> Void) {
-           let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
-           let method: RequestHTTPMethod = .patch
-           
-           apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
-               Current.database.performBackgroundTask { backgroundContext in
-                   // TODO: Should we be using .none here? Only option that works...
-                   // It's functional but we're not sure why it doesn't work otherwise and that is concerning.
-                   let newObject = response.mapToCoreData(backgroundContext, .none, overrideID: nil)
-                   guard let newObjectId = newObject.id else {
-                       fatalError("Failed to get the id from the new object.")
-                   }
-                   
-                   try? backgroundContext.save()
-                   
-                   DispatchQueue.main.async {
-                       Current.database.performTask { context in
-                           let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
-                           onSuccess(fetchedObject)
-                       }
-                   }
-               }
-           }, onError: { error in
-               onError(error)
-           })
-       }
-       
-       func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, onSuccess: @escaping () -> Void, onError: @escaping(Error) -> Void) {
-           let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id)
-           let method: RequestHTTPMethod = .delete
-           
-           apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
-               Current.database.performBackgroundTask { context in
-                   paymentCard.removeLinkedMembershipCardsObject(membershipCard)
-                   
-                   try? context.save()
-                   
-                   DispatchQueue.main.async {
-                       onSuccess()
-                   }
-               }
-           }, onError: { error in
-               onError(error)
-           })
-       }
-       
+    func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, completion: @escaping (String?) -> Void) {
+        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
+        let method: RequestHTTPMethod = .patch
+        
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
+            completion(response.id)
+        }, onError: { error in
+            completion(nil)
+        })
+    }
+    
+    func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
+        let paymentCardId: String = paymentCard.id
+        let membershipCardId: String = membershipCard.id
+        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
+        let method: RequestHTTPMethod = .delete
+        
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
+            completion(paymentCardId)
+        }, onError: { error in
+            completion(nil)
+        })
+    }
+    
+    func saveChanges(toAdd: [String], toRemove: [String], membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
+        Current.database.performBackgroundTask(with: membershipCard) { (context, safeCard) in
+            guard let safeCard = safeCard else { return }
+            
+            if let addResults = context.fetchAllWithApiIDs(CD_PaymentCard.self, ids: toAdd) {
+                safeCard.addLinkedPaymentCards(NSSet(array: addResults))
+            }
+            
+            if let removeResults = context.fetchAllWithApiIDs(CD_PaymentCard.self, ids: toRemove) {
+                safeCard.removeLinkedPaymentCards(NSSet(array: removeResults))
+            }
+            
+            if context.hasChanges { try? context.save() }
+            
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
 }
