@@ -25,7 +25,8 @@ class AddOrJoinViewModel {
     }
     
     func didSelectAddNewCard() {
-        guard let enrolFields = membershipPlan.account?.enrolFields, enrolFields.count > 0 else {
+        let fields = membershipPlan.featureSet?.formattedLinkingSupport
+        guard (fields?.contains(where: { $0.value == "ENROL" }) ?? false) else {
             toNativeJoinUnavailable()
             return
         }
