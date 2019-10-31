@@ -28,11 +28,11 @@ class OnboardingViewModel {
     }
 
     var signUpWithEmailButtonText: String {
-        return "Sign up with email"
+        return "signup_with_email_button".localized
     }
 
     var loginWithEmailButtonText: String {
-        return "Log in with email"
+        return "login_with_email_button".localized
     }
 
     func login() {

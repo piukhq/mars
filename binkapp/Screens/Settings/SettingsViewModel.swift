@@ -9,7 +9,13 @@
 import UIKit
 
 class SettingsViewModel {
-    private let factory = SettingsFactory()
+    private let factory: SettingsFactory
+    let router: MainScreenRouter
+    
+    init(router: MainScreenRouter) {
+        self.router = router
+        factory = SettingsFactory(router: router)
+    }
     
     var sections: [SettingsSection] {
         return factory.sectionData()
@@ -37,5 +43,20 @@ class SettingsViewModel {
     
     func row(atIndexPath indexPath: IndexPath) -> SettingsRow? {
         return sections[safe: indexPath.section]?.rows[safe: indexPath.row]
+    }
+    
+    func pushReusableModal(configurationModel: ReusableModalConfiguration, navController: UINavigationController?) {
+        
+        router.pushReusableModalTemplateVC(configurationModel: configurationModel, navigationController: navController)
+    }
+    
+    func getAttributedString(title: String, description: String) -> NSMutableAttributedString {
+        let attributedString = NSMutableAttributedString()
+        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
+        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+        attributedString.append(attributedTitle)
+        attributedString.append(attributedBody)
+        
+        return attributedString
     }
 }

@@ -76,14 +76,14 @@ class BinkPillButton: UIButton {
     private func backgroundColor(forType buttonType: PillButtonType) -> UIColor {
         switch buttonType {
         case .facebook:
-            return .init(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
+            return .facebookButton
         }
     }
 
     private func title(forType buttonType: PillButtonType) -> String {
         switch buttonType {
         case .facebook:
-            return "Continue with Facebook"
+            return "continue_with_facebook_button".localized
         }
     }
 }
