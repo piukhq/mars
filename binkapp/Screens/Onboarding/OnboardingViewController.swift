@@ -13,7 +13,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet private weak var floatingButtonsView: BinkPrimarySecondaryButtonView!
     private let viewModel: OnboardingViewModel
     private var didLayoutSubviews = false
-    private var timer: Timer!
+    private var timer: Timer?
 
     lazy var learningContainer: UIView = {
         let container = UIView()
@@ -82,7 +82,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        timer = Timer.scheduledTimer(timeInterval: 12.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+        startTimer()
     }
 
     override func viewDidLayoutSubviews() {
@@ -157,15 +157,21 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
         pageControl.currentPage = Int(pageNumber)
+        startTimer() // invalidate current timer and start again
     }
 
     // MARK: Timer
 
-    @objc func fireTimer() {
+    private func startTimer() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 12, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+    }
+
+    @objc private func fireTimer() {
         scrollToNext()
     }
 
-    func scrollToNext() {
+    private func scrollToNext() {
         let nextPage = pageControl.currentPage + 1
 
         if pageControl.currentPage != onboardingViews.count - 1 {
