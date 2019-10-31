@@ -150,6 +150,7 @@
 
 "native_join_unavailable_title" = "Native join unavailable";
 "native_join_unavailable_description" = "You can go to the merchant website to join then come back and add your card. Or we can email you the link so you can sign up on your computer. Copy needed.";
+"ghost_native_join_unavailable_description" = "Go to merchant website and join and then come back and add your card.";
 "to_merchant_site_button" = "Go to merchant site";
 
 "unlinkable_pll_title" = "Payment Linked Loyalty unavailable";
