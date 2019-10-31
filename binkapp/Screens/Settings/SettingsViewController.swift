@@ -145,7 +145,7 @@ extension SettingsViewController: UITableViewDelegate {
                     let title: String = "settings_row_security_title".localized
                     let description: String = "security_and_privacy_description".localized
                     let configuration = ReusableModalConfiguration(title: title, text: getAttributedString(title: title, description: description), showCloseButton: true)
-                    viewModel.presentReusableModal(configurationModel: configuration, navController: navigationController)
+                    viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
                     break
                 case .howItWorks: break
                 }
