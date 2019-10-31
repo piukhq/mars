@@ -127,8 +127,8 @@ extension AddPaymentCardViewController: PaymentTermsAndConditionsViewControllerD
         addButton.startLoading()
         viewModel.addPaymentCard { [weak self] success in
             if success {
-                // TODO: Do we still need this now we have the wallet in World?
-                // Move this to view model, and use the router and reload from Current.wallet
+                Current.wallet.refreshLocal()
+                // We post the notification so that we can switch tabs if necessary
                 NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
                 self?.viewModel.popToRootViewController()
             } else {

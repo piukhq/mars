@@ -8,10 +8,10 @@
 
 import Foundation
 
-class PaymentCardDetailRepository {
+class PaymentCardDetailRepository: WalletRepository {
     private let apiManager: ApiManager
 
-    init(apiManager: ApiManager) {
+    required init(apiManager: ApiManager) {
         self.apiManager = apiManager
     }
 
@@ -40,14 +40,14 @@ class PaymentCardDetailRepository {
         })
     }
 
-    func deletePaymentCard(_ paymentCard: CD_PaymentCard, completion: @escaping () -> Void) {
+    func delete<T: WalletCard>(_ card: T, completion: @escaping () -> Void) {
         // Process the backend delete, but fail silently
-        let url = RequestURL.deletePaymentCard(cardId: paymentCard.id)
+        let url = RequestURL.deletePaymentCard(cardId: card.id)
         let method = RequestHTTPMethod.delete
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
 
         // Process core data deletion
-        Current.database.performBackgroundTask(with: paymentCard) { (context, cardToDelete) in
+        Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
             if let cardToDelete = cardToDelete {
                 context.delete(cardToDelete)
             }
