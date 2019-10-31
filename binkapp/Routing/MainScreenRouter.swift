@@ -210,7 +210,7 @@ class MainScreenRouter {
     func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
-        navController?.present(viewController, animated: true, completion: nil)
+        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
     func toSimpleInfoViewController(pendingType: PendingType) {
