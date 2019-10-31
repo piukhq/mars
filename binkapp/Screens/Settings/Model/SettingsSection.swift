@@ -19,9 +19,15 @@ struct SettingsRow {
     
     enum RowAction {
         case pushToViewController(viewController: UIViewController.Type)
+        case pushToReusable(screen: ReusableScreen)
         case customAction(action: VoidClosure)
         case contactUsAction
         case notImplemented //TODO: REMOVE ME BEFORE RELEASE!
+    }
+    
+    enum ReusableScreen {
+        case securityAndPrivacy
+        case howItWorks
     }
     
     let title: String
