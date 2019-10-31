@@ -46,139 +46,31 @@ enum OnboardingLearningType: Int {
         }
     }
 
-    var shouldShowBinkLogo: Bool {
-        switch self {
-        case .pll:
-            return true
-        case .wallet, .barcodeOrCollect:
-            return false
-        }
-    }
-
-    var learningImageSize: CGSize {
-        switch self {
-        case .pll:
-            return CGSize(width: 236, height: 134)
-        case .wallet:
-            return CGSize(width: 241, height: 209)
-        case .barcodeOrCollect:
-            return CGSize(width: 244, height: 209)
-        }
-    }
-
     var topPadding: CGFloat {
         switch self {
         case .pll:
-            return 100
+            return 0
         case .wallet, .barcodeOrCollect:
-            return 132
+            return 50
         }
     }
 }
 
-class OnboardingLearningView: UIView {
-    lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 25
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-
-    lazy var binkLogoImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "bink-logo"))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-
-    lazy var smallLearningImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-
-    lazy var learningImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-
-    lazy var textStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-
-    lazy var headerTextLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.font = .subtitle
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    lazy var bodyTextLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.font = .bodyTextLarge
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    private let type: OnboardingLearningType
-
-    init(type: OnboardingLearningType) {
-        self.type = type
-        super.init(frame: .zero)
-        configure()
-    }
+class OnboardingLearningView: CustomView {
+    @IBOutlet private weak var learningImageView: UIImageView!
+    @IBOutlet private weak var headerTextLabel: UILabel!
+    @IBOutlet private weak var bodyTextLabel: UILabel!
+    @IBOutlet private weak var imageTopPaddingConstraint: NSLayoutConstraint!
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
-        addSubview(stackView)
-        stackView.addArrangedSubview(binkLogoImageView)
-        stackView.addArrangedSubview(smallLearningImageView)
-        stackView.addArrangedSubview(learningImageView)
-        stackView.addArrangedSubview(textStackView)
-        textStackView.addArrangedSubview(headerTextLabel)
-        textStackView.addArrangedSubview(bodyTextLabel)
-
-        binkLogoImageView.isHidden = !type.shouldShowBinkLogo
-        smallLearningImageView.isHidden = binkLogoImageView.isHidden
-        learningImageView.isHidden = type.shouldShowBinkLogo
-        smallLearningImageView.image = UIImage(named: type.learningImageName)
+    func configure(forType type: OnboardingLearningType) {
         learningImageView.image = UIImage(named: type.learningImageName)
         headerTextLabel.text = type.headerText
         bodyTextLabel.text = type.bodyText
-
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: type.topPadding),
-            stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 25),
-            stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -25),
-
-            binkLogoImageView.heightAnchor.constraint(equalToConstant: 82),
-            binkLogoImageView.widthAnchor.constraint(equalToConstant: 158),
-
-            smallLearningImageView.heightAnchor.constraint(equalToConstant: 134),
-            smallLearningImageView.widthAnchor.constraint(equalToConstant: 236),
-
-            learningImageView.heightAnchor.constraint(equalToConstant: 209),
-            learningImageView.widthAnchor.constraint(equalToConstant: 244),
-        ])
+        imageTopPaddingConstraint.constant = type.topPadding
     }
 
 }
