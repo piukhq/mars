@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsViewModel {
     private let factory: SettingsFactory
-    private let router: MainScreenRouter
+    let router: MainScreenRouter
     
     init(router: MainScreenRouter) {
         self.router = router

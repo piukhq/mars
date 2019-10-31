@@ -65,18 +65,12 @@ struct SettingsFactory {
             SettingsRow(
                 title: "settings_row_security_title".localized,
                 subtitle: "settings_row_security_subtitle".localized,
-                action: .customAction(action: {
-                    let title: String = "settings_row_security_title".localized
-                    let description: String = "security_and_privacy_description".localized
-                    
-                    let configuration = ReusableModalConfiguration(title: title, text: getAttributedString(title: title, description: description), showCloseButton: true)
-                    self.router.pushReusableModalTemplateViewController(configurationModel: configuration)
-                })
+                action: .pushToReusable(screen: .securityAndPrivacy)
             ),
             SettingsRow(
                 title: "settings_row_howitworks_title".localized,
                 subtitle: "settings_row_howitworks_subtitle".localized,
-                action: .notImplemented
+                action: .pushToReusable(screen: .howItWorks)
             )
         ])
         

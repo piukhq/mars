@@ -64,6 +64,16 @@ class SettingsViewController: UIViewController {
         ])
     }
     
+    func getAttributedString(title: String, description: String) -> NSMutableAttributedString {
+        let attributedString = NSMutableAttributedString()
+        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
+        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+        attributedString.append(attributedTitle)
+        attributedString.append(attributedBody)
+        
+        return attributedString
+    }
+    
     // MARK: - Action
     
     @objc func close() {
@@ -125,8 +135,21 @@ extension SettingsViewController: UITableViewDelegate {
                     let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
                     debugMenuFactory.delegate = debugMenuViewController
                     navigationController?.pushViewController(debugMenuViewController, animated: true)
+                    break
                 default:
                     print("Unsupported VC for presentation")
+                }
+            case .pushToReusable(let screen):
+                switch screen {
+                case .securityAndPrivacy:
+                    let title: String = "settings_row_security_title".localized
+                    let description: String = "security_and_privacy_description".localized
+                    let configuration = ReusableModalConfiguration(title: title, text: getAttributedString(title: title, description: description), showCloseButton: true)
+                    let reusableViewModel = ReusableModalViewModel(configurationModel: configuration, router: viewModel.router)
+                    let reusableViewController = PaymentTermsAndConditionsViewController(viewModel: reusableViewModel)
+                    navigationController?.pushViewController(reusableViewController, animated: true)
+                    break
+                case .howItWorks: break
                 }
             }
         }
