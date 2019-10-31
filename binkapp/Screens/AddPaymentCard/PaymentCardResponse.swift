@@ -31,7 +31,6 @@ struct PaymentCardResponse: Codable {
         }
     }
     
-    
     let id: Int
     let status: String?
     let card: Card?

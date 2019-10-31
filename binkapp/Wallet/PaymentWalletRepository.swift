@@ -9,10 +9,10 @@
 import Foundation
 import CoreData
 
-struct PaymentWalletRepository: WalletRepository {
+class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     private let apiManager: ApiManager
 
-    init(apiManager: ApiManager) {
+    required init(apiManager: ApiManager) {
         self.apiManager = apiManager
     }
 
@@ -34,5 +34,27 @@ struct PaymentWalletRepository: WalletRepository {
                 completion()
             }
         }
+    }
+
+    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, completion: @escaping (Bool) -> Void) {
+        guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard) else {
+            return
+        }
+
+        try? apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { [weak self] (response: PaymentCardResponse) in
+//            guard let self = self else { return }
+
+            // Create local payment card
+            // the response is PaymentCardResponse
+            // We have a paymentcardcardreponse type already mapping to core data, can we use that?
+//            self.mapCoreDataObjects(objectsToMap: [response], type: CD_PaymentCard.self) {
+//                //
+//            }
+
+            completion(true)
+        }, onError: { error in
+            print(error)
+            completion(false)
+        })
     }
 }
