@@ -19,6 +19,11 @@ public extension NSManagedObjectContext {
         return results?.first
     }
     
+    func fetchAllWithApiIDs<T: NSManagedObject>(_ type: T.Type, ids: [String]) -> [T]? {
+        let results = fetch(type, predicate: NSPredicate(format: "id IN %@", ids))
+        return results
+    }
+    
     func fetch<T: NSManagedObject>(_ type: T.Type, predicate: NSPredicate? = nil, sorting: [NSSortDescriptor]? = nil) -> [T]? {
         guard let fetchRequest = fetchRequestFor(type) else {
             return nil

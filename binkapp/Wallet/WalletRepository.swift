@@ -12,3 +12,7 @@ protocol WalletRepository: CoreDataRepositoryProtocol {
     init(apiManager: ApiManager)
     func delete<T: WalletCard>(_ card: T, completion: @escaping () -> Void)
 }
+
+protocol PaymentWalletRepositoryProtocol: WalletRepository {
+    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, completion: @escaping (Bool) -> Void)
+}

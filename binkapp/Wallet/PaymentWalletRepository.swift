@@ -9,10 +9,10 @@
 import Foundation
 import CoreData
 
-struct PaymentWalletRepository: WalletRepository {
+class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     private let apiManager: ApiManager
 
-    init(apiManager: ApiManager) {
+    required init(apiManager: ApiManager) {
         self.apiManager = apiManager
     }
 
@@ -34,5 +34,26 @@ struct PaymentWalletRepository: WalletRepository {
                 completion()
             }
         }
+    }
+
+    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, completion: @escaping (Bool) -> Void) {
+        guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard) else {
+            return
+        }
+
+        try? apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardModel) in
+            Current.database.performBackgroundTask { context in
+                response.mapToCoreData(context, .update, overrideID: nil)
+
+                try? context.save()
+
+                DispatchQueue.main.async {
+                    completion(true)
+                }
+            }
+        }, onError: { error in
+            print(error)
+            completion(false)
+        })
     }
 }

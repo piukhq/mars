@@ -187,7 +187,6 @@
 		BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2E12354945000823FC4 /* SettingsTableViewCell.swift */; };
 		BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */; };
 		BD9FB68B2333DE3E00E5559A /* String+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68A2333DE3E00E5559A /* String+Random.swift */; };
-		BD9FB68D2333FB7000E5559A /* PaymentCardResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68C2333FB7000E5559A /* PaymentCardResponse.swift */; };
 		BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */; };
 		BD9FB6B223380C0900E5559A /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */; };
 		BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B32338120700E5559A /* TransactionsViewController.swift */; };
@@ -567,7 +566,6 @@
 		BD99D2E12354945000823FC4 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiffAware+Extension.swift"; sourceTree = "<group>"; };
 		BD9FB68A2333DE3E00E5559A /* String+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Random.swift"; sourceTree = "<group>"; };
-		BD9FB68C2333FB7000E5559A /* PaymentCardResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardResponse.swift; sourceTree = "<group>"; };
 		BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILayoutPriority+Extension.swift"; sourceTree = "<group>"; };
 		BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		BD9FB6B32338120700E5559A /* TransactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
@@ -1400,7 +1398,6 @@
 				BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */,
 				BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */,
 				BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */,
-				BD9FB68C2333FB7000E5559A /* PaymentCardResponse.swift */,
 				BDB01885232ED6F800BFFA18 /* SpreedlyRequest.swift */,
 				BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */,
 			);
@@ -2278,7 +2275,6 @@
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
 				BDB0187C232E1B5900BFFA18 /* PaymentCardCreateModel.swift in Sources */,
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
-				BD9FB68D2333FB7000E5559A /* PaymentCardResponse.swift in Sources */,
 				EF8BF1ED233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift in Sources */,
 				B774E9AD233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift in Sources */,
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
