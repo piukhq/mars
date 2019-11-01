@@ -17,7 +17,7 @@ class LinkedLoyaltyCardTableViewCell: UITableViewCell {
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var companyNameLabel: UILabel!
     @IBOutlet private weak var pointsValueLabel: UILabel!
-    @IBOutlet private weak var linkToggle: UISwitch!
+    @IBOutlet private weak var linkToggle: BinkSwitch!
 
     private var viewModel: LinkedLoyaltyCellViewModel!
     private weak var delegate: LinkedLoyaltyCardCellDelegate?
@@ -40,6 +40,7 @@ class LinkedLoyaltyCardTableViewCell: UITableViewCell {
     }
 
     @IBAction private func didToggle() {
+        linkToggle.isGradientVisible = linkToggle.isOn
         delegate?.linkedLoyaltyCardCell(self, shouldToggleLinkedStateForMembershipCard: viewModel.membershipCard)
     }
     
