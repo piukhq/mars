@@ -48,7 +48,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     private var viewModel: WalletLoyaltyCardCellViewModel!
     private weak var delegate: WalletLoyaltyCardCollectionViewCellDelegate?
 
-    private var gradientLayer: CAGradientLayer?
+    private var swipeGradientLayer: CAGradientLayer?
     private var startingOffset: CGFloat = 0
     
     override func awakeFromNib() {
@@ -176,16 +176,16 @@ extension WalletLoyaltyCardCollectionViewCell {
     }
 
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
-        if gradientLayer == nil {
-            gradientLayer = CAGradientLayer()
-            contentView.layer.insertSublayer(gradientLayer!, at: 0)
+        if swipeGradientLayer == nil {
+            swipeGradientLayer = CAGradientLayer()
+            contentView.layer.insertSublayer(swipeGradientLayer!, at: 0)
         }
 
-        gradientLayer?.frame = bounds
-        gradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
-        gradientLayer?.locations = [0.0, 1.0]
-        gradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
-        gradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
+        swipeGradientLayer?.frame = bounds
+        swipeGradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
+        swipeGradientLayer?.locations = [0.0, 1.0]
+        swipeGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
+        swipeGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
     }
 
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
