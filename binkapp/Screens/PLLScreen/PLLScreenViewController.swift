@@ -87,6 +87,12 @@ class PLLScreenViewController: UIViewController {
         self.viewModel = viewModel
         self.journey = journey
         super.init(nibName: nil, bundle: nil)
+        
+        if journey == .newCard {
+            viewModel.paymentCards?.forEach {
+                viewModel.addCardToChangedCardsArray(card: $0)
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -95,8 +101,15 @@ class PLLScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        navigationItem.leftBarButtonItem = backButton
+        
+        if viewModel.shouldShowBackButton {
+            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+            navigationItem.leftBarButtonItem = backButton
+        } else {
+            // Catch the default back button
+            navigationItem.setHidesBackButton(true, animated: false)
+        }
+
         view.backgroundColor = .white
         
         configureBrandHeader()
@@ -104,10 +117,6 @@ class PLLScreenViewController: UIViewController {
         configureUI()
         paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
         floatingButtonsView.delegate = self
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     private func configureLayout() {
@@ -179,10 +188,14 @@ extension PLLScreenViewController: UITableViewDataSource {
         if let paymentCards = viewModel.paymentCards {
             let paymentCard = paymentCards[indexPath.row]
             let isLastCell = indexPath.row == paymentCards.count - 1
-            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self, journey: journey, isLastCell: isLastCell)
-            if journey == .newCard {
-                viewModel.addCardToChangedCardsArray(card: paymentCard)
-            }
+            cell.configureUI(
+                paymentCard: paymentCard,
+                cardIndex: indexPath.row,
+                delegate: self,
+                journey: journey,
+                isLastCell: isLastCell,
+                showAsLinked: viewModel.linkedPaymentCards?.contains(paymentCard) == true
+            )
         }
         return cell 
     }
@@ -206,7 +219,6 @@ private extension PLLScreenViewController {
     }
     
     func configureUI() {
-        navigationController?.setNavigationBarHidden(viewModel.isNavigationVisisble, animated: false)
         titleLabel.text = viewModel.titleText
         primaryMessageLabel.text = viewModel.primaryMessageText
         secondaryMessageLabel.text = viewModel.secondaryMessageText

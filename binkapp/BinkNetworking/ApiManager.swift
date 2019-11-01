@@ -95,6 +95,7 @@ class ApiManager {
                         onError(error)
                     } else {
                         print("something went wrong, statusCode: \(statusCode)")
+                        onError(NSError(domain: "", code: statusCode, userInfo: nil) as Error)
                     }
                 } catch (let error) {
                     print("decoding error: \(error)")
