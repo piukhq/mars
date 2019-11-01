@@ -16,24 +16,20 @@ class MainScreenRouter {
         NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
     }
 
-    func toMainScreen() {
+    func launchWallets() {
         let viewModel = MainTabBarViewModel(router: self)
         let viewController = MainTabBarViewController(viewModel: viewModel)
+        navController = PortraitNavigationController(rootViewController: viewController)
+        UIApplication.shared.keyWindow?.rootViewController = navController
+    }
 
-        navController?.pushViewController(viewController, animated: true)
+    func getOnboardingViewController() -> UIViewController {
+        let viewModel = OnboardingViewModel(router: self, repository: LoginRepository())
+        return OnboardingViewController(viewModel: viewModel)
     }
-    
-    func getNavigationControllerWithLoginScreen() -> UIViewController{
-        navController = PortraitNavigationController(rootViewController: getLoginScreen())
-        return navController!
-    }
-    
-    func getLoginScreen() -> UIViewController {
-        let repository = LoginRepository()
-        let viewModel = LoginViewModel(repository: repository, router: self)
-        let viewController = LoginViewController(viewModel: viewModel)
-        
-        return viewController
+
+    func featureNotImplemented() {
+        displaySimplePopup(title: "Oops", message: "This feature has not yet been implemented.")
     }
     
     func toSettings() {
