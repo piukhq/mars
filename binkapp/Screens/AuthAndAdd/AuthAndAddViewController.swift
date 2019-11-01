@@ -124,7 +124,7 @@ class AuthAndAddViewController: BaseFormViewController {
     
     @objc func accountButtonTapped() {
         let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
-        guard (fields?.contains(where: { $0.value == "REGISTRATION" }) ?? false) else {
+        guard (fields?.contains(where: { $0.value == LinkingSupportType.registration.rawValue }) ?? false) else {
             viewModel.toReusableTemplate(title: "native_join_unavailable_title".localized, description: "ghost_native_join_unavailable_description".localized)
             return
         }
