@@ -137,10 +137,6 @@
 		5ECE04B222CE582E001BA964 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE04A422CE582E001BA964 /* LoginViewController.swift */; };
 		92CE3430695A6558F2EC1793 /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */; };
 		9C26930409A757F7CD2C794E /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */; };
-		AF06D42F48491D78B0040221 /* DataAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */; };
-		AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D82C12A979885545793C /* CoreDataAccess.swift */; };
-		AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */; };
-		AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06D82C12A979885545793C /* CoreDataAccess.swift */; };
 		B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */; };
 		B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */; };
 		B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662A2329374D008A0ED7 /* OfferTileView.swift */; };
@@ -512,8 +508,6 @@
 		8C693B19B5628C75E50BD6CF /* Pods-binkapp.alpha.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.alpha.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.alpha.xcconfig"; sourceTree = "<group>"; };
 		9AB9FBE38BA00B9339ECF93E /* Pods-binkapp.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.nightly.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.nightly.xcconfig"; sourceTree = "<group>"; };
 		AE0DB4F03CE314B533DEA419 /* Pods-binkappUITests.merge request.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.merge request.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.merge request.xcconfig"; sourceTree = "<group>"; };
-		AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataAccessible.swift; sourceTree = "<group>"; };
-		AF06D82C12A979885545793C /* CoreDataAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataAccess.swift; sourceTree = "<group>"; };
 		B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewController.swift; sourceTree = "<group>"; };
 		B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModel.swift; sourceTree = "<group>"; };
 		B713662A2329374D008A0ED7 /* OfferTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferTileView.swift; sourceTree = "<group>"; };
@@ -1249,8 +1243,6 @@
 				EF758E1823229972000D26A9 /* Entities */,
 				EF758E1723225FAC000D26A9 /* Model */,
 				EF758E0623225F1C000D26A9 /* SwiftDatabase */,
-				AF06D82C12A979885545793C /* CoreDataAccess.swift */,
-				AF06D2B78E62D4C6A766B015 /* DataAccessible.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -2319,7 +2311,6 @@
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
 				BDD9C874233BE6B1003CD616 /* _CD_MembershipCard.swift in Sources */,
 				BDD9C88E233BE6B1003CD616 /* _CD_PaymentCard.swift in Sources */,
-				AF06D909D5AA7EB9E74268CC /* CoreDataAccess.swift in Sources */,
 				BDD9C888233BE6B1003CD616 /* CD_MembershipPlanImage.swift in Sources */,
 				EF8BF1F6233E60AE00D2E5F3 /* Cache.swift in Sources */,
 				EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */,
@@ -2401,7 +2392,6 @@
 				BDD9C882233BE6B1003CD616 /* CD_Card.swift in Sources */,
 				BDB0187E232E1FC800BFFA18 /* PaymentCardType.swift in Sources */,
 				3CF029F822F45B8C009A0E61 /* AddingOptionsEnum.swift in Sources */,
-				AF06DC6EF72B5BA9474542D9 /* DataAccessible.swift in Sources */,
 				B774E9AA233123BD006D4131 /* PaymentTermsAndConditionsViewController.swift in Sources */,
 				3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */,
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
@@ -2432,14 +2422,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
-				AF06DF778FCCE46E1643835A /* CoreDataAccess.swift in Sources */,
 				EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
 				EF586FE52357A90C000917B6 /* PaymentCardCellViewModelTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
-				AF06D42F48491D78B0040221 /* DataAccessible.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
