@@ -298,7 +298,6 @@
 		EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */; };
 		EF586FE023578735000917B6 /* WalletPromptCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF586FDF23578735000917B6 /* WalletPromptCollectionViewCell.swift */; };
 		EF586FE52357A90C000917B6 /* PaymentCardCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF586FE42357A90C000917B6 /* PaymentCardCellViewModelTests.swift */; };
-		EF58844723605F9F0011698D /* PagingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58844623605F9F0011698D /* PagingScrollView.swift */; };
 		EF58844C236060B50011698D /* OnboardingLearningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58844B236060B50011698D /* OnboardingLearningView.swift */; };
 		EF758E0823225F35000D26A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0723225F35000D26A9 /* Database.swift */; };
 		EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */; };
@@ -683,7 +682,6 @@
 		EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewModel.swift; sourceTree = "<group>"; };
 		EF586FDF23578735000917B6 /* WalletPromptCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletPromptCollectionViewCell.swift; sourceTree = "<group>"; };
 		EF586FE42357A90C000917B6 /* PaymentCardCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCellViewModelTests.swift; sourceTree = "<group>"; };
-		EF58844623605F9F0011698D /* PagingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingScrollView.swift; sourceTree = "<group>"; };
 		EF58844B236060B50011698D /* OnboardingLearningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLearningView.swift; sourceTree = "<group>"; };
 		EF758E0723225F35000D26A9 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		EF758E0923225F3B000D26A9 /* SwiftDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftDatabase.h; sourceTree = "<group>"; };
@@ -1068,7 +1066,6 @@
 		3CF054D322FDABCA0069E98A /* BinkUI */ = {
 			isa = PBXGroup;
 			children = (
-				EF58844523605F7D0011698D /* Paging Scroll View */,
 				EF2E8823233A6FB000F678F3 /* Wallets */,
 				BDB0186A232D95EC00BFFA18 /* Form */,
 				3C36071D230FF01400AC76A3 /* BrandHeader */,
@@ -1566,14 +1563,6 @@
 				EF586FE42357A90C000917B6 /* PaymentCardCellViewModelTests.swift */,
 			);
 			path = "Cell View Model";
-			sourceTree = "<group>";
-		};
-		EF58844523605F7D0011698D /* Paging Scroll View */ = {
-			isa = PBXGroup;
-			children = (
-				EF58844623605F9F0011698D /* PagingScrollView.swift */,
-			);
-			path = "Paging Scroll View";
 			sourceTree = "<group>";
 		};
 		EF5884482360604B0011698D /* Views */ = {
@@ -2298,7 +2287,6 @@
 				BDD9C899233BE6B1003CD616 /* CD_FieldChoice.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				EF46E288235E01DD00BA2CAF /* BinkPillButton.swift in Sources */,
-				EF58844723605F9F0011698D /* PagingScrollView.swift in Sources */,
 				BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */,
 				3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */,
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
