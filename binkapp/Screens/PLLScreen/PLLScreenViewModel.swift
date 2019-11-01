@@ -72,9 +72,9 @@ class PLLScreenViewModel {
     func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion()
-        }) {
+        }) { [weak self] in
             completion()
-            self.displaySimplePopup(
+            self?.displaySimplePopup(
                 title: "pll_error_title".localized,
                 message: "pll_error_message".localized
             )

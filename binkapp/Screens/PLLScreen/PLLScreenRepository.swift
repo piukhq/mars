@@ -45,8 +45,8 @@ class PLLScreenRepository {
             }
         }
                 
-        group.notify(queue: .main) {
-            self.saveChanges(
+        group.notify(queue: .main) { [weak self] in
+            self?.saveChanges(
                 toAdd: idsToAdd,
                 toRemove: idsToRemove,
                 membershipCard: membershipCard) {
