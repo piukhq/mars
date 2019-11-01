@@ -31,11 +31,11 @@ final class WalletPromptFactory {
                     walletPrompts.append(WalletPrompt(type: .loyaltyJoin(membershipPlan: plan)))
                 }
             }
+        }
 
-            // add payment cards prompt
-            if shouldShowAddPaymentCard() {
-                walletPrompts.append(WalletPrompt(type: .addPaymentCards))
-            }
+        // add payment cards prompt
+        if shouldShowAddPaymentCard() {
+            walletPrompts.append(WalletPrompt(type: .addPaymentCards))
         }
 
         return walletPrompts
