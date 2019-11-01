@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CardDetailsInfoViewDelegate {
+protocol CardDetailsInfoViewDelegate: NSObject {
     func cardDetailsInfoViewDidTapMoreInfo(_ cardDetailsInfoView: CardDetailsInfoView)
 }
 
@@ -15,7 +15,7 @@ class CardDetailsInfoView: CustomView {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var infoLabel: UILabel!
     
-    var delegate: CardDetailsInfoViewDelegate?
+    weak var delegate: CardDetailsInfoViewDelegate?
     
     func configure(title: String, andInfo info: String){
         titleLabel.text = title
