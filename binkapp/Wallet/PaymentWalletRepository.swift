@@ -41,17 +41,16 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
             return
         }
 
-        try? apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { [weak self] (response: PaymentCardResponse) in
-//            guard let self = self else { return }
+        try? apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardModel) in
+            Current.database.performBackgroundTask { context in
+                response.mapToCoreData(context, .update, overrideID: nil)
 
-            // Create local payment card
-            // the response is PaymentCardResponse
-            // We have a paymentcardcardreponse type already mapping to core data, can we use that?
-//            self.mapCoreDataObjects(objectsToMap: [response], type: CD_PaymentCard.self) {
-//                //
-//            }
+                try? context.save()
 
-            completion(true)
+                DispatchQueue.main.async {
+                    completion(true)
+                }
+            }
         }, onError: { error in
             print(error)
             completion(false)
