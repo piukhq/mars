@@ -27,22 +27,22 @@ extension CoreDataRepositoryProtocol {
             
             recordsToDelete.removeAll(where: { ids.contains($0.id) })
             
-            Current.database.performBackgroundTask { context in
+            Current.database.performBackgroundTask { backgroundContext in
                 objects.forEach {
-                    _ = $0.mapToCoreData(context, .update, overrideID: nil)
+                    _ = $0.mapToCoreData(backgroundContext, .update, overrideID: nil)
                 }
                 
                 if !recordsToDelete.isEmpty {
                     let managedObjectIds = recordsToDelete.map { $0.objectID }
                     
                     managedObjectIds.forEach { id in
-                        if let object = context.fetchWithID(type, id: id) {
-                            context.delete(object)
+                        if let object = backgroundContext.fetchWithID(type, id: id) {
+                            backgroundContext.delete(object)
                         }
                     }
                 }
                 
-                try? context.save()
+                try? backgroundContext.save()
                 
                 DispatchQueue.main.async {
                     completion()

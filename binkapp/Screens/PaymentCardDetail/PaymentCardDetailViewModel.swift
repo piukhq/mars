@@ -87,7 +87,7 @@ class PaymentCardDetailViewModel {
     func deletePaymentCard() {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }
-            self.repository.deletePaymentCard(self.paymentCard) {
+            self.repository.delete(self.paymentCard) {
                 Current.wallet.refreshLocal()
                 self.router.popToRootViewController()
             }
@@ -129,6 +129,12 @@ class PaymentCardDetailViewModel {
     }
 
     private func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
-        repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard, completion: completion)
+        repository.removeLinkToMembershipCard(membershipCard, forPaymentCard: paymentCard) { [weak self] paymentCard in
+            if let paymentCard = paymentCard {
+                self?.paymentCard = paymentCard
+            }
+
+            completion()
+        }
     }
 }

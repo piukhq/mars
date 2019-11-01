@@ -33,6 +33,11 @@ struct PaymentWalletViewModel: WalletViewModel {
     }
 
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
-        // TODO: Implement as part of IB20-167
+        switch walletPrompt.type {
+        case .addPaymentCards:
+            router.toAddPaymentViewController()
+        default:
+            return
+        }
     }
 }

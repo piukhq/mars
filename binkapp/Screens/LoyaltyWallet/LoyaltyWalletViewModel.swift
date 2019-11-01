@@ -59,6 +59,5 @@ class LoyaltyWalletViewModel: WalletViewModel {
         case .addPaymentCards:
             router.toAddPaymentViewController()
         }
-
     }
 }

@@ -53,6 +53,10 @@ extension UIColor {
         return UIColor(red: 245/255, green: 166/255, blue: 35/255, alpha: 1)
     }
 
+    static var facebookButton: UIColor {
+        return UIColor(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
+    }
+
     // MARK: - Payment Card Gradient Colours
 
     static let visaGradientLeft = UIColor(hexString: "13288d")

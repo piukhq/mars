@@ -9,14 +9,51 @@
 import Foundation
 import CoreData
 
-struct PaymentWalletRepository: WalletRepository {
+class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     private let apiManager: ApiManager
 
-    init(apiManager: ApiManager) {
+    required init(apiManager: ApiManager) {
         self.apiManager = apiManager
     }
 
     func delete<T: WalletCard>(_ card: T, completion: @escaping () -> Void) {
-        //
+        // Process the backend delete, but fail silently
+        let url = RequestURL.deletePaymentCard(cardId: card.id)
+        let method = RequestHTTPMethod.delete
+        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
+
+        // Process core data deletion
+        Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
+            if let cardToDelete = cardToDelete {
+                context.delete(cardToDelete)
+            }
+
+            try? context.save()
+
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
+
+    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, completion: @escaping (Bool) -> Void) {
+        guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard) else {
+            return
+        }
+
+        try? apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardModel) in
+            Current.database.performBackgroundTask { context in
+                response.mapToCoreData(context, .update, overrideID: nil)
+
+                try? context.save()
+
+                DispatchQueue.main.async {
+                    completion(true)
+                }
+            }
+        }, onError: { error in
+            print(error)
+            completion(false)
+        })
     }
 }
