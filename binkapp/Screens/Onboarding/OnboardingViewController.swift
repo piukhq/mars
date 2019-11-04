@@ -64,7 +64,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.currentPageIndicatorTintColor = .black
         pageControl.pageIndicatorTintColor = .lightGray
-        pageControl.numberOfPages = 3
+        pageControl.numberOfPages = onboardingViews.count
         pageControl.currentPage = 0
         pageControl.addTarget(self, action: #selector(changePage(pageControl:)), for: .valueChanged)
         learningContainer.addSubview(pageControl)
@@ -95,11 +95,11 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     }
 
     private func setLayout() {
-        let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: 382)
+        let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.learningContainerHeight)
         learningContainerHeightConstraint.priority = .init(999)
 
         NSLayoutConstraint.activate([
-            learningContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
+            learningContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LayoutHelper.Onboarding.learningContainerTopPadding),
             learningContainer.leftAnchor.constraint(equalTo: view.leftAnchor),
             learningContainer.rightAnchor.constraint(equalTo: view.rightAnchor),
             learningContainerHeightConstraint,
@@ -114,9 +114,9 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             facebookPillButton.bottomAnchor.constraint(equalTo: floatingButtonsView.topAnchor, constant: -LayoutHelper.PillButton.verticalSpacing),
 
             pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            pageControl.bottomAnchor.constraint(lessThanOrEqualTo: facebookPillButton.topAnchor, constant: -25),
-            pageControl.heightAnchor.constraint(equalToConstant: 40),
-            pageControl.widthAnchor.constraint(equalToConstant: 40),
+            pageControl.bottomAnchor.constraint(lessThanOrEqualTo: facebookPillButton.topAnchor, constant: LayoutHelper.Onboarding.pageControlMinimumBottomPadding),
+            pageControl.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.height),
+            pageControl.widthAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.width),
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor),
         ])
     }
@@ -164,7 +164,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
 
     private func startTimer() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 12, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: LayoutHelper.Onboarding.autoScrollTimeInterval, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
     }
 
     @objc private func fireTimer() {
@@ -192,5 +192,16 @@ extension OnboardingViewController: BinkPrimarySecondaryButtonViewDelegate {
 
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         viewModel.login()
+    }
+}
+
+extension LayoutHelper {
+    struct Onboarding {
+        static let learningContainerHeight: CGFloat = 382
+        static let learningContainerTopPadding: CGFloat = 12
+        static let pageControlMinimumBottomPadding: CGFloat = -25
+        static let pageControlSize: CGSize = CGSize(width: 40, height: 40)
+        static let autoScrollTimeInterval: TimeInterval = 12
+        static let learningViewTopPadding: CGFloat = 50
     }
 }

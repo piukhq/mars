@@ -16,22 +16,22 @@ enum OnboardingLearningType: Int {
     var headerText: String {
         switch self {
         case .pll:
-            return "Payment linked loyalty. Magic!"
+            return "onboarding_slide1_header".localized
         case .wallet:
-            return "All your cards in one place"
+            return "onboarding_slide2_header".localized
         case .barcodeOrCollect:
-            return "Never miss out"
+            return "onboarding_slide3_header".localized
         }
     }
 
     var bodyText: String {
         switch self {
         case .pll:
-            return "Link your payment cards to selected loyalty cards and earn rewards and benefits automatically when you pay."
+            return "onboarding_slide1_body".localized
         case .wallet:
-            return "Store all your loyalty cards in a single digital wallet. View your rewards and points balances any time, anywhere."
+            return "onboarding_slide2_body".localized
         case .barcodeOrCollect:
-            return "Show your loyalty cards’ barcodes on screen, or collect points instantly when you pay. Whichever way, you’re always covered."
+            return "onboarding_slide3_body".localized
         }
     }
 
@@ -51,7 +51,7 @@ enum OnboardingLearningType: Int {
         case .pll:
             return 0
         case .wallet, .barcodeOrCollect:
-            return 50
+            return LayoutHelper.Onboarding.learningViewTopPadding
         }
     }
 }
