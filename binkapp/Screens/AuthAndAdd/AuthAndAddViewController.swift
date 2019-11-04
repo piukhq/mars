@@ -22,7 +22,7 @@ class AuthAndAddViewController: BaseFormViewController {
 
     private lazy var floatingButtons: BinkPrimarySecondaryButtonView = {
         let floatingButtons = BinkPrimarySecondaryButtonView()
-        floatingButtons.configure(primaryButtonTitle: "login".localized, secondaryButtonTitle: "no_account_button_title".localized)
+        floatingButtons.configure(primaryButtonTitle: viewModel.buttonTitle, secondaryButtonTitle: "no_account_button_title".localized)
         floatingButtons.primaryButton.isEnabled = false
         floatingButtons.delegate = self
         floatingButtons.translatesAutoresizingMaskIntoConstraints = false
