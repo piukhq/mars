@@ -19,25 +19,33 @@ class TransactionTableViewCell: UITableViewCell {
     }
     
     func configure(transaction: CD_MembershipTransaction) {
-       let transactionValue = transaction.formattedAmounts?.first?.value?.intValue ?? 0
-       let timestamp = transaction.timestamp?.doubleValue ?? 0.0
-       let prefix = transaction.formattedAmounts?.first?.prefix
-       let suffix = transaction.formattedAmounts?.first?.suffix != "" ? transaction.formattedAmounts?.first?.currency : nil
+        let transactionValue = transaction.formattedAmounts?.first?.value?.intValue ?? 0
+        let timestamp = transaction.timestamp?.doubleValue ?? 0.0
         
+        let timestampDate = Date(timeIntervalSince1970: timestamp)
+        descriptionLabel.text = timestampDate.getFormattedString(format: DateFormat.dayMonthYear.rawValue)
+
+        guard let prefix = transaction.formattedAmounts?.first?.prefix else {
+            let suffix = transaction.formattedAmounts?.first?.suffix != "" ? transaction.formattedAmounts?.first?.currency : nil
+            setValueLabel(text: "%d \(suffix ?? "")", transactionValue: transactionValue)
+            return
+        }
+        setValueLabel(text: "\(prefix)%d", transactionValue: transactionValue)
+    }
+    
+    func setValueLabel(text: String, transactionValue: Int) {
         if transactionValue < 0 {
-            valueLabel.text = "-" + (prefix ?? "") + "\(abs(transactionValue)) " + (suffix ?? "")
+            valueLabel.text = "-" + String(format: text, abs(transactionValue))
             valueLabel.textColor = .black
             transactionImageView.image = UIImage(named: "down")
         } else if transactionValue > 0 {
-            valueLabel.text = "+" + (prefix ?? "") + "\(transactionValue) " + (suffix ?? "")
+            valueLabel.text = "+" + String(format: text, transactionValue)
             valueLabel.textColor = .greenOk
             transactionImageView.image = UIImage(named: "up")
         } else {
-            valueLabel.text = (prefix ?? "") + "\(transactionValue) " + (suffix ?? "")
+            valueLabel.text = String(format: text, transactionValue)
             valueLabel.textColor = .amber
         }
-        let timestampDate = Date(timeIntervalSince1970: timestamp)
-        descriptionLabel.text = timestampDate.getFormattedString(format: DateFormat.dayMonthYear.rawValue)
     }
     
     func configureUI() {
