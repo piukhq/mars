@@ -45,6 +45,10 @@ class PaymentCardDetailViewModel {
 
     // MARK: - Linked cards
 
+    var pllEnabledMembershipPlans: [CD_MembershipPlan]? {
+        return Current.wallet.membershipPlans?.filter { $0.featureSet?.planCardType == .link }
+    }
+
     var linkableMembershipCards: [CD_MembershipCard]? {
         return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
     }
