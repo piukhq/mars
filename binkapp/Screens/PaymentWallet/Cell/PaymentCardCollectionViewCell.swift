@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TECH DEBT: This is duplicated from loyalty cards.
 protocol WalletPaymentCardCollectionViewCellDelegate: NSObject {
     func cellSwipeBegan(cell: PaymentCardCollectionViewCell)
     func cellDidFullySwipe(action: SwipeMode?, cell: PaymentCardCollectionViewCell)
@@ -26,7 +27,6 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     @IBOutlet private weak var deleteButton: UIButton!
 
     private var cardGradientLayer: CAGradientLayer?
-
     private var swipeGradientLayer: CAGradientLayer?
     private var startingOffset: CGFloat = 0
 
@@ -221,6 +221,9 @@ private extension Selector {
 
 // MARK: - Swiping
 
+// TECH DEBT: This is all tech debt, as it duplicates in majority the code from loyalty card cells
+// Should be made reusable across all WalletCard types
+
 extension PaymentCardCollectionViewCell {
     private func updateColor(with swipeMode: SwipeMode) {
         let firstColor, secondColor: UIColor
@@ -265,7 +268,7 @@ extension PaymentCardCollectionViewCell {
 
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return false }
-
+        guard pan.velocity(in: pan.view).x < 0 else { return false }
         return abs((pan.velocity(in: pan.view)).x) > abs((pan.velocity(in: pan.view)).y)
     }
 
@@ -303,11 +306,7 @@ extension PaymentCardCollectionViewCell {
             var minValue: CGFloat?
 
             if swipeMode == .barcode {
-                maxValue = view.frame.size.width * 0.9
-                minValue = 0
-
-                let limitToUpper = min(translationX, maxValue!)
-                constant = max(limitToUpper, minValue!)
+                constant = 0 // Barcode is disabled on payment card swipes
             } else if swipeMode == .delete {
                 maxValue = -(view.frame.size.width * 0.5)
                 minValue = 0
@@ -345,22 +344,20 @@ extension PaymentCardCollectionViewCell {
 
         switch state {
         case .closed:
-            constant = 0
+            constant = 0 
         case .peek:
-
             guard let type = type else { return }
 
             if type == .barcode {
-                constant = width * 0.3
+                constant = 0 // Barcode is disabled on payment card swipes
             } else {
                 constant = -(width * 0.3)
             }
         case .expanded:
-
             guard let type = type else { return }
 
             if type == .barcode {
-                constant = width
+                constant = 0 // Barcode is disabled on payment card swipes
             } else {
                 constant = -(width * 0.5)
             }
