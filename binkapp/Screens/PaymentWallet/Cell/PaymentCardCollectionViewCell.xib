@@ -20,6 +20,9 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ulb-bk-PeF">
                         <rect key="frame" x="273.5" y="0.0" width="117.5" height="120"/>
                         <state key="normal" image="iconSwipeDelete"/>
+                        <connections>
+                            <action selector="deleteButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="q0x-qm-TKL"/>
+                        </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ti-Yy-XeC">
                         <rect key="frame" x="0.0" y="0.0" width="391" height="120"/>
