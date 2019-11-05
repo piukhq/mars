@@ -23,13 +23,13 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
         self.viewModel = viewModel
         self.delegate = delegate
 
-        headerLabel.text = viewModel.companyNameText
+        headerLabel.text = viewModel.headerText
+        detailLabel.text = viewModel.detailText
         if let iconImageUrl = viewModel.iconUrl {
             iconImageView.af_setImage(withURL: iconImageUrl)
         }
 
         linkToggle.isOn = viewModel.isLinked
-        detailLabel.text = viewModel.pointsValueText
     }
 
     @IBAction private func didToggle() {

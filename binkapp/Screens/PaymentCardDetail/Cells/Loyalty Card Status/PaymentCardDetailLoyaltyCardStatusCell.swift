@@ -8,17 +8,16 @@
 
 import UIKit
 
-class PaymentCardDetailLoyaltyCardStatusCell: UITableViewCell {
+class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
+    @IBOutlet private weak var statusLabel: UILabel!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    private var viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel!
+
+    func configureWithViewModel(_ viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel) {
+        headerLabel.text = viewModel.headerText
+        detailLabel.text = viewModel.detailText
+        if let iconImageUrl = viewModel.iconUrl {
+            iconImageView.af_setImage(withURL: iconImageUrl)
+        }
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }

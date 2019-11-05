@@ -138,7 +138,7 @@ class PaymentCardDetailViewController: UIViewController {
         ])
 
         linkedCardsTableView.register(PaymentCardDetailLinkLoyaltyCardCell.self, asNib: true)
-        otherCardsTableView.register(PaymentCardDetailLinkLoyaltyCardCell.self, asNib: true)
+        otherCardsTableView.register(PaymentCardDetailAddLoyaltyCardCell.self, asNib: true)
         informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
         linkedCardsTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
         otherCardsTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
@@ -176,8 +176,12 @@ class PaymentCardDetailViewController: UIViewController {
 
 extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == linkedCardsTableView || tableView == otherCardsTableView {
+        if tableView == linkedCardsTableView {
             return viewModel.pllEnabledMembershipCardsCount
+        }
+
+        if tableView == otherCardsTableView {
+            return viewModel.pllPlansNotAddedToWallet?.count ?? 0 // TODO: Improve from viewmodel
         }
 
         if tableView == informationTableView {
@@ -188,7 +192,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == linkedCardsTableView || tableView == otherCardsTableView {
+        if tableView == linkedCardsTableView {
             let cell: PaymentCardDetailLinkLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
 
             guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
@@ -199,6 +203,19 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
             let cellViewModel = PaymentCardDetailLinkLoyaltyCardCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
 
             cell.configureWithViewModel(cellViewModel, delegate: self)
+
+            return cell
+        } else if tableView == otherCardsTableView {
+            let cell: PaymentCardDetailAddLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
+
+            // TODO: Improve in viewmodel
+            guard let plan = viewModel.pllPlansNotAddedToWallet?[indexPath.row] else {
+                return cell
+            }
+
+            let cellViewModel = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: plan)
+
+            cell.configureWithViewModel(cellViewModel)
 
             return cell
         } else { // This will always be the information table view
