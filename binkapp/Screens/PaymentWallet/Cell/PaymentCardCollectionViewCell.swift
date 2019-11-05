@@ -226,19 +226,13 @@ private extension Selector {
 
 extension PaymentCardCollectionViewCell {
     private func updateColor(with swipeMode: SwipeMode) {
-        let firstColor, secondColor: UIColor
-
         switch swipeMode {
         case .delete:
-            firstColor = UIColor(red: 1, green: 107/255.0, blue: 54/255.0, alpha: 1.0)
-            secondColor = UIColor(red: 235/255.0, green: 0, blue: 27/255.0, alpha: 1.0)
-            processGradient(firstColor, secondColor)
+            processGradient(.deleteSwipeGradientLeft, .deleteSwipeGradientRight)
         case .barcode:
-            firstColor = UIColor(red: 180/255.0, green: 111/255.0, blue: 234/255.0, alpha: 1.0)
-            secondColor = UIColor(red: 67/255.0, green: 113/255.0, blue: 254/255.0, alpha: 1.0)
-            processGradient(firstColor, secondColor)
+            return
         case .unset:
-            print()
+            return
         }
     }
 
@@ -273,7 +267,6 @@ extension PaymentCardCollectionViewCell {
     }
 
     @IBAction func logInButtonTapped(_ sender: Any) {
-        //TODO: Add implementation
         delegate?.cellPerform(action: .login, cell: self)
     }
 
