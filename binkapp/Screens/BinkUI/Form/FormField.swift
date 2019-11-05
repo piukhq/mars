@@ -24,18 +24,22 @@ struct FormPickerData: Equatable {
 class FormField {
     enum FieldInputType: Equatable {
         case text
+        case email
         case sensitive
         case choice(data: [FormPickerData])
         case checkbox
         case cardNumber
+        case confirmPassword
         case expiry(months: [FormPickerData], years: [FormPickerData])
         
         func keyboardType() -> UIKeyboardType {
             switch self {
             case .cardNumber:
                 return .numberPad
-            case .text, .sensitive:
+            case .text, .sensitive, .confirmPassword:
                 return .alphabet
+            case .email:
+                return .emailAddress
             default:
                 return .default
             }
@@ -52,6 +56,15 @@ class FormField {
         
         func autoCorrection() -> UITextAutocorrectionType {
             return .no
+        }
+        
+        func isSecureTextEntry() -> Bool {
+            switch self {
+            case .sensitive, .confirmPassword:
+                return true
+            default:
+                return false
+            }
         }
         
         static func fieldInputType(for simpleFieldInputType: InputType?, choices: [String]? = nil) -> FieldInputType {
@@ -85,23 +98,27 @@ class FormField {
     let title: String
     let placeholder: String
     let validation: String?
+    let validationErrorMessage: String?
     let columnKind: ColumnKind?
     let fieldType: FieldInputType
     let valueUpdated: ValueUpdatedBlock
     let fieldExited: FieldExitedBlock
     let pickerOptionsUpdated: PickerUpdatedBlock?
     let shouldChange: TextFieldShouldChange
+    let manualValidate: ManualValidateBlock?
     private(set) var value: String?
     
     typealias ValueUpdatedBlock = (FormField, String?) -> ()
     typealias PickerUpdatedBlock = (FormField, [Any]) -> ()
     typealias TextFieldShouldChange = (FormField, UITextField, NSRange, String?) -> (Bool)
     typealias FieldExitedBlock = (FormField) -> ()
+    typealias ManualValidateBlock = (FormField) -> (Bool)
         
-    init(title: String, placeholder: String, validation: String?, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil) {
+    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation
+        self.validationErrorMessage = validationErrorMessage
         self.fieldType = fieldType
         self.value = value
         self.valueUpdated = updated
@@ -109,6 +126,7 @@ class FormField {
         self.fieldExited = fieldExited
         self.pickerOptionsUpdated = pickerSelected
         self.columnKind = columnKind
+        self.manualValidate = manualValidate
     }
     
     func isValid() -> Bool {
@@ -117,6 +135,12 @@ class FormField {
         
         if fieldType == .cardNumber {
             return PaymentCardType.validate(fullPan: value)
+        } else if fieldType == .confirmPassword {
+            if let validateBlock = manualValidate{
+                return validateBlock(self)
+            } else {
+                return false
+            }
         } else {
             guard let validation = validation else { return !value.isEmpty }
             

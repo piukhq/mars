@@ -8,26 +8,34 @@
 import Foundation
 import UIKit
 
+protocol MainScreenRouterDelegate: NSObjectProtocol {
+    func router(_ router: MainScreenRouter, didLogin: Bool)
+}
+
 class MainScreenRouter {
     var navController: PortraitNavigationController?
+    weak var delegate: MainScreenRouterDelegate?
     let apiManager = ApiManager()
     
-    init() {
+    init(delegate: MainScreenRouterDelegate) {
+        self.delegate = delegate
         NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
     }
-
-    func launchWallets() {
+    
+    func wallet() -> UIViewController {
         let viewModel = MainTabBarViewModel(router: self)
         let viewController = MainTabBarViewController(viewModel: viewModel)
-        navController = PortraitNavigationController(rootViewController: viewController)
-        UIApplication.shared.keyWindow?.rootViewController = navController
+        let nav = PortraitNavigationController(rootViewController: viewController)
+        navController = nav
+        return nav
     }
 
     func getOnboardingViewController() -> UIViewController {
         let viewModel = OnboardingViewModel(router: self, repository: LoginRepository())
-        return OnboardingViewController(viewModel: viewModel)
+        let nav = PortraitNavigationController(rootViewController: OnboardingViewController(viewModel: viewModel))
+        return nav
     }
 
     func featureNotImplemented() {
@@ -231,6 +239,10 @@ class MainScreenRouter {
         } else {
             navController?.popToRootViewController(animated: true)
         }
+    }
+    
+    func didLogin() {
+        delegate?.router(self, didLogin: true)
     }
     
     class func openExternalURL(with urlString: String) {

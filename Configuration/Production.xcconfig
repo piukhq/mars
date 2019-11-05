@@ -1,13 +1,12 @@
 //
-//  Dev.xcconfig
+//  Production.xcconfig
 //  binkapp
 //
-//  Created by Max Woodhams on 10/09/2019.
+//  Created by Max Woodhams on 03/11/2019.
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-API_BASE_URL = api.dev.gb.bink.com
-SECRET = dev // USE DEV SECRET
+API_BASE_URL = api.bink.com

@@ -9,7 +9,7 @@
 import Foundation
 
 class OnboardingViewModel {
-    private let router: MainScreenRouter
+    let router: MainScreenRouter
     private let repository: LoginRepository
 
     private let fallbackUserEmail = "Bink20iteration1@testbink.com"
@@ -33,13 +33,6 @@ class OnboardingViewModel {
 
     var loginWithEmailButtonText: String {
         return "login_with_email_button".localized
-    }
-
-    func login() {
-        repository.register(email: userEmail) { [weak self] in
-            guard let self = self else { return }
-            self.router.launchWallets()
-        }
     }
 
     func notImplemented() {

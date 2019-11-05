@@ -28,7 +28,16 @@ struct SettingsFactory {
             ),
             SettingsRow(
                 title: "settings_row_logout_title".localized,
-                action: .notImplemented
+                action: .customAction(action: {
+                    
+                    let api = ApiManager()
+                    
+                    api.doRequest(url: .logout, httpMethod: .post, parameters: nil, onSuccess: { (response: LogoutResponse) in
+                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                    }) { (error) in
+                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                    }
+                })
             )
         ])
         

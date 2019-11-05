@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet private weak var facebookPillButton: BinkPillButton!
@@ -79,6 +80,16 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -144,7 +155,25 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     // MARK: Button handlers
 
     @objc private func handleFacebookButtonPressed() {
-        viewModel.notImplemented()
+        FacebookLoginController.login(with: self, onSuccess: { [weak self] facebookRequest in
+            // If we have no email address, push them onto the add email screen
+            guard facebookRequest.email != nil else {
+                let addEmail = AddEmailViewController(router: self?.viewModel.router, request: facebookRequest) { [weak self] request in
+                    self?.pushToSocialTermsAndConditions(request: request)
+                }
+                self?.navigationController?.pushViewController(addEmail, animated: true)
+                return
+            }
+            
+            self?.pushToSocialTermsAndConditions(request: facebookRequest)
+        }) { error in
+            
+        }
+    }
+    
+    private func pushToSocialTermsAndConditions(request: FacebookRequest) {
+        let termsAndConditions = SocialTermsAndConditionsViewController(router: viewModel.router, request: request)
+        navigationController?.pushViewController(termsAndConditions, animated: true)
     }
 
     // MARK: - Scroll view delegate & handlers
@@ -187,11 +216,11 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
 
 extension OnboardingViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        viewModel.notImplemented()
+        navigationController?.pushViewController(RegisterViewController(router: viewModel.router), animated: true)
     }
 
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        viewModel.login()
+        navigationController?.pushViewController(LoginViewController(router: viewModel.router), animated: true)
     }
 }
 
