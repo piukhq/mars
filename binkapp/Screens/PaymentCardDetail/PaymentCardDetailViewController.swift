@@ -137,8 +137,8 @@ class PaymentCardDetailViewController: UIViewController {
             informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
         ])
 
-        linkedCardsTableView.register(LinkedLoyaltyCardTableViewCell.self, asNib: true)
-        otherCardsTableView.register(LinkedLoyaltyCardTableViewCell.self, asNib: true)
+        linkedCardsTableView.register(PaymentCardDetailLinkLoyaltyCardCell.self, asNib: true)
+        otherCardsTableView.register(PaymentCardDetailLinkLoyaltyCardCell.self, asNib: true)
         informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
         linkedCardsTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
         otherCardsTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
@@ -189,14 +189,14 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == linkedCardsTableView || tableView == otherCardsTableView {
-            let cell: LinkedLoyaltyCardTableViewCell = tableView.dequeue(indexPath: indexPath)
+            let cell: PaymentCardDetailLinkLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
 
             guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
                 return cell
             }
 
             let isLinked = viewModel.membershipCardIsLinked(membershipCard)
-            let cellViewModel = LinkedLoyaltyCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
+            let cellViewModel = PaymentCardDetailLinkLoyaltyCardCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
 
             cell.configureWithViewModel(cellViewModel, delegate: self)
 
@@ -236,7 +236,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 }
 
 extension PaymentCardDetailViewController: LinkedLoyaltyCardCellDelegate {
-    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard) {
+    func linkedLoyaltyCardCell(_ cell: PaymentCardDetailLinkLoyaltyCardCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard) {
         viewModel.toggleLinkForMembershipCard(membershipCard) { [weak self] in
             self?.refreshViews()
         }

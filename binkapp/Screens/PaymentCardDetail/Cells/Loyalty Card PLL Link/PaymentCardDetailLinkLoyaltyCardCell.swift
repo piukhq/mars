@@ -1,5 +1,5 @@
 //
-//  LinkedLoyaltyCardTableViewCell.swift
+//  PaymentCardDetailLinkLoyaltyCardCell.swift
 //  binkapp
 //
 //  Created by Nick Farrant on 07/10/2019.
@@ -10,33 +10,26 @@ import UIKit
 import AlamofireImage
 
 protocol LinkedLoyaltyCardCellDelegate: AnyObject {
-    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard)
+    func linkedLoyaltyCardCell(_ cell: PaymentCardDetailLinkLoyaltyCardCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard)
 }
 
-class LinkedLoyaltyCardTableViewCell: UITableViewCell {
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var companyNameLabel: UILabel!
-    @IBOutlet private weak var pointsValueLabel: UILabel!
+class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
     @IBOutlet private weak var linkToggle: BinkSwitch!
 
-    private var viewModel: LinkedLoyaltyCellViewModel!
+    private var viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel!
     private weak var delegate: LinkedLoyaltyCardCellDelegate?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    func configureWithViewModel(_ viewModel: LinkedLoyaltyCellViewModel, delegate: LinkedLoyaltyCardCellDelegate?) {
+    func configureWithViewModel(_ viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel, delegate: LinkedLoyaltyCardCellDelegate?) {
         self.viewModel = viewModel
         self.delegate = delegate
 
-        companyNameLabel.text = viewModel.companyNameText
+        headerLabel.text = viewModel.companyNameText
         if let iconImageUrl = viewModel.iconUrl {
             iconImageView.af_setImage(withURL: iconImageUrl)
         }
 
         linkToggle.isOn = viewModel.isLinked
-        pointsValueLabel.text = viewModel.pointsValueText
+        detailLabel.text = viewModel.pointsValueText
     }
 
     @IBAction private func didToggle() {

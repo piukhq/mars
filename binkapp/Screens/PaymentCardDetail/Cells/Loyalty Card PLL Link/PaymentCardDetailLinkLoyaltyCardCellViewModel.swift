@@ -1,5 +1,5 @@
 //
-//  LinkedLoyaltyCardCellViewModel.swift
+//  PaymentCardDetailLinkLoyaltyCardCellViewModel.swift
 //  binkapp
 //
 //  Created by Nick Farrant on 07/10/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LinkedLoyaltyCellViewModel {
+struct PaymentCardDetailLinkLoyaltyCardCellViewModel {
     private(set) var membershipCard: CD_MembershipCard
     let isLinked: Bool
 
