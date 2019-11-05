@@ -31,12 +31,20 @@ class PaymentCardDetailViewModel {
         return "•••• \(paymentCard.card?.lastFour ?? "")"
     }
 
-    var titleText: String {
+    var addedCardsTitle: String {
         return "Linked cards"
     }
 
-    var descriptionText: String {
+    var addedCardsDescription: String {
         return "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points."
+    }
+
+    var otherCardsTitle: String {
+        return shouldShowAddedLoyaltyCardTableView ? "Other cards you can add" : "No linked cards"
+    }
+
+    var otherCardsDescription: String {
+        return shouldShowAddedLoyaltyCardTableView ? "You can also add the cards below and link them to your payment cards." : "You do not have any linked loyalty cards. Add some cards to collect points."
     }
 
     var paymentCardCellViewModel: PaymentCardCellViewModel {
@@ -44,6 +52,14 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: - PLL plan decisioning
+
+    var shouldShowAddedLoyaltyCardTableView: Bool {
+        return pllEnabledMembershipCardsCount != 0
+    }
+
+    var shouldShowOtherCardsTableView: Bool {
+        return pllPlansNotAddedToWallet?.count != 0
+    }
 
     var pllEnabledMembershipPlans: [CD_MembershipPlan]? {
         return Current.wallet.membershipPlans?.filter { $0.featureSet?.planCardType == .link }
