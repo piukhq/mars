@@ -51,7 +51,17 @@ struct PaymentCardCellViewModel {
         guard let expiryDate = Date.makeDate(year: expiryYear.intValue, month: expiryMonth.intValue, day: 01, hr: 00, min: 00, sec: 00) else {
             return false
         }
-        return expiryDate < Date()
+        
+        let comparisonResult = Calendar.current.compare(expiryDate, to: Date(), toGranularity: .month)
+        
+        switch comparisonResult {
+        case .orderedSame:
+            return false
+        case .orderedDescending:
+            return false
+        case .orderedAscending:
+            return true
+        }
     }
 
     private func cardNumberAttributedString() -> NSAttributedString? {
