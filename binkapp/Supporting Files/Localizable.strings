@@ -189,3 +189,16 @@
 
 "pll_error_title" = "Error";
 "pll_error_message" = "Unfortunately some of your cards failed to link, please try again later.";
+
+// MARK: - Buttons
+"continue_with_facebook_button" = "Continue with Facebook";
+"signup_with_email_button" = "Sign up with email";
+"login_with_email_button" = "Log in with email";
+
+// MARK: - Onboarding
+"onboarding_slide1_header" = "Payment linked loyalty. Magic!";
+"onboarding_slide1_body" = "Link your payment cards to selected loyalty cards and earn rewards and benefits automatically when you pay.";
+"onboarding_slide2_header" = "All your cards in one place";
+"onboarding_slide2_body" = "Store all your loyalty cards in a single digital wallet. View your rewards and points balances any time, anywhere.";
+"onboarding_slide3_header" = "Never miss out";
+"onboarding_slide3_body" = "Show your loyalty cards’ barcodes on screen, or collect points instantly when you pay. Whichever way, you’re always covered.";

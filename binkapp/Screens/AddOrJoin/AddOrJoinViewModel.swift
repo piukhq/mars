@@ -25,7 +25,8 @@ class AddOrJoinViewModel {
     }
     
     func didSelectAddNewCard() {
-        guard let enrolFields = membershipPlan.account?.enrolFields, enrolFields.count > 0 else {
+        let fields = membershipPlan.featureSet?.formattedLinkingSupport
+        guard (fields?.contains(where: { $0.value == LinkingSupportType.enrol.rawValue }) ?? false) else {
             toNativeJoinUnavailable()
             return
         }
@@ -43,9 +44,9 @@ class AddOrJoinViewModel {
         )
         
         var configurationModel: ReusableModalConfiguration
-                
+        
         guard let planURL = membershipPlan.account?.planURL else {
-            configurationModel = ReusableModalConfiguration(title: "", text: attributedText)
+            configurationModel = ReusableModalConfiguration(title: "", text: attributedText, showCloseButton: true)
             router.toReusableModalTemplateViewController(configurationModel: configurationModel)
             return
         }

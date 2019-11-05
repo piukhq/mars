@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         if let mainWindow = self.window {
-            mainWindow.rootViewController = router.getNavigationControllerWithLoginScreen()
+            mainWindow.rootViewController = router.getOnboardingViewController()
             mainWindow.tintColor = .black
             mainWindow.makeKeyAndVisible()
         }

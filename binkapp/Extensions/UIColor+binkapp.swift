@@ -53,6 +53,10 @@ extension UIColor {
         return UIColor(red: 245/255, green: 166/255, blue: 35/255, alpha: 1)
     }
 
+    static var facebookButton: UIColor {
+        return UIColor(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
+    }
+
     // MARK: - Card swipe gradients
     static let barcodeSwipeGradientLeft = UIColor(red: 180/255.0, green: 111/255.0, blue: 234/255.0, alpha: 1.0)
     static let barcodeSwipeGradientRight = UIColor(red: 67/255.0, green: 113/255.0, blue: 254/255.0, alpha: 1.0)

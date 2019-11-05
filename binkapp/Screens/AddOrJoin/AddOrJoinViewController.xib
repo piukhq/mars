@@ -35,19 +35,15 @@
                         <constraint firstAttribute="height" constant="477" placeholder="YES" id="SUc-6q-7eo"/>
                     </constraints>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhF-oE-Ivd" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
-                    <rect key="frame" x="57" y="736" width="300" height="45"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="45" id="0ac-N9-D9q"/>
-                        <constraint firstAttribute="width" constant="300" id="ytb-KG-rwU"/>
-                    </constraints>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhF-oE-Ivd" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
+                    <rect key="frame" x="184" y="761" width="46" height="30"/>
                     <state key="normal" title="Button"/>
                     <connections>
                         <action selector="addCardButtonAction:" destination="-1" eventType="touchUpInside" id="hzh-fD-DkV"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GaW-1z-bOB" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
-                    <rect key="frame" x="57" y="797" width="300" height="45"/>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GaW-1z-bOB" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
+                    <rect key="frame" x="184" y="816" width="46" height="30"/>
                     <state key="normal" title="Button"/>
                     <connections>
                         <action selector="newCardButtonAction:" destination="-1" eventType="touchUpInside" id="225-vT-L4k"/>
@@ -56,19 +52,15 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="GaW-1z-bOB" firstAttribute="top" secondItem="NhF-oE-Ivd" secondAttribute="bottom" constant="16" id="9cr-2S-Njo"/>
                 <constraint firstItem="NhF-oE-Ivd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="U7E-3X-eA4" secondAttribute="bottom" constant="20" id="Aix-LO-m3J"/>
                 <constraint firstItem="U7E-3X-eA4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="Brp-R9-3KS"/>
-                <constraint firstItem="GaW-1z-bOB" firstAttribute="width" secondItem="NhF-oE-Ivd" secondAttribute="width" id="DmT-sn-CXc"/>
-                <constraint firstItem="NhF-oE-Ivd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="K8I-bw-zVf"/>
-                <constraint firstItem="GaW-1z-bOB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="MxU-3T-cN3"/>
+                <constraint firstItem="NhF-oE-Ivd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="L8Y-14-0NY"/>
                 <constraint firstItem="e0u-b7-Tam" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="NuI-MJ-bCe"/>
                 <constraint firstItem="e0u-b7-Tam" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="RCp-Nd-sv3"/>
+                <constraint firstItem="GaW-1z-bOB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Zgp-DC-Cf2"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="e0u-b7-Tam" secondAttribute="trailing" constant="25" id="aUj-WE-ERR"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="GaW-1z-bOB" secondAttribute="bottom" constant="20" id="fBO-Fb-bic"/>
                 <constraint firstItem="U7E-3X-eA4" firstAttribute="top" secondItem="e0u-b7-Tam" secondAttribute="bottom" constant="30" id="gAe-tZ-s3h"/>
                 <constraint firstItem="U7E-3X-eA4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="kJP-Tk-y7u"/>
-                <constraint firstItem="GaW-1z-bOB" firstAttribute="height" secondItem="NhF-oE-Ivd" secondAttribute="height" id="mso-Px-alh"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="131.8840579710145" y="107.8125"/>
