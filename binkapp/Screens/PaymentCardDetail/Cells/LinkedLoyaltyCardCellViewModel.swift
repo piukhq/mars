@@ -28,9 +28,22 @@ struct LinkedLoyaltyCellViewModel {
 
     var pointsValueText: String? {
         let balance = membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
-        guard let balanceValue = balance?.value?.stringValue else {
+        guard let balanceValue = balance?.value else {
             return nil // If there is no value, don't show the points label
         }
-        return "\(balance?.prefix ?? "")\(balanceValue) \(balance?.suffix ?? "")"
+        
+        guard balance?.prefix != nil else {
+            return "\(balanceValue) \(balance?.suffix ?? "")"
+        }
+        
+        let floatBalanceValue = Float(truncating: balanceValue)
+        
+        if (floatBalanceValue - floatBalanceValue.rounded(.down) > 0) {
+            return "\(balance?.prefix ?? "")" + String(format: "%.02f", balanceValue)
+        } else {
+            return "\(balance?.prefix ?? "") \(balanceValue)"
+        }
+        
+//        return "\(balance?.prefix ?? "")\(balanceValue) \(balance?.suffix ?? "")"
     }
 }
