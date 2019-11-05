@@ -43,11 +43,46 @@ class PaymentCardDetailViewModel {
         return PaymentCardCellViewModel(paymentCard: paymentCard)
     }
 
-    // MARK: - Linked cards
+    // MARK: - PLL plan decisioning
 
     var pllEnabledMembershipPlans: [CD_MembershipPlan]? {
         return Current.wallet.membershipPlans?.filter { $0.featureSet?.planCardType == .link }
     }
+
+    var pllPlansAddedToWallet: [CD_MembershipPlan]? {
+        guard let pllMembershipCards = linkableMembershipCards else { return nil }
+
+        var plansInWallet: [CD_MembershipPlan] = []
+
+        /// For each membership card added to the wallet, track it's membership plan if not tracked already
+        pllMembershipCards.forEach {
+            if let plan = $0.membershipPlan {
+                if !plansInWallet.contains(plan) {
+                    plansInWallet.append(plan)
+                }
+            }
+        }
+        return plansInWallet
+    }
+
+    var pllPlansNotAddedToWallet: [CD_MembershipPlan]? {
+        guard let pllEnabledPlans = pllEnabledMembershipPlans else { return nil }
+
+        var plansNotInWallet: [CD_MembershipPlan] = []
+
+        /// For each pll enabled membership plan, if it doesn't exist in the plans already added, add it here
+        pllEnabledPlans.forEach {
+            if let addedPlans = pllPlansAddedToWallet {
+                if !addedPlans.contains($0) {
+                    plansNotInWallet.append($0)
+                }
+            }
+        }
+
+        return plansNotInWallet
+    }
+
+    // MARK: - Linked cards
 
     var linkableMembershipCards: [CD_MembershipCard]? {
         return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
