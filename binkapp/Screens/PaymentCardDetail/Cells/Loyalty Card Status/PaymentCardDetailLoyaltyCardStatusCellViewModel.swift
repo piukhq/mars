@@ -38,7 +38,7 @@ struct PaymentCardDetailLoyaltyCardStatusCellViewModel: PaymentCardDetailCellVie
         case .unauthorised, .failed:
             return "Retry"
         default:
-            return status?.status?.rawValue.uppercased()
+            return status?.status?.rawValue.capitalized
         }
     }
 }

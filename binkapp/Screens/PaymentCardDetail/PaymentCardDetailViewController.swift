@@ -256,7 +256,16 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: Implement for other tableviews
+        if tableView == addedCardsTableView {
+            guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else { return }
+            viewModel.toCardDetail(forMembershipCard: membershipCard)
+        }
+
+        if tableView == otherCardsTableView {
+            guard let membershipPlan = viewModel.pllEnabledMembershipPlans?[indexPath.row] else { return }
+            viewModel.toAddOrJoin(forMembershipPlan: membershipPlan)
+        }
+
         if tableView == informationTableView {
             viewModel.performActionForInformationRow(atIndexPath: indexPath)
         }

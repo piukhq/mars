@@ -127,6 +127,16 @@ class PaymentCardDetailViewModel {
         return linkableMembershipCards?[indexPath.row]
     }
 
+    // MARK: Routing
+
+    func toCardDetail(forMembershipCard membershipCard: CD_MembershipCard) {
+        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
+    }
+
+    func toAddOrJoin(forMembershipPlan membershipPlan: CD_MembershipPlan) {
+        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+    }
+
     // MARK: Information rows
 
     var informationRows: [CardDetailInformationRow] {
