@@ -131,8 +131,11 @@ extension SettingsViewController: UITableViewDelegate {
             case let .customAction(action):
                 action()
                 break
-            case .notImplemented, .contactUsAction:
+            case .contactUsAction:
                 sendEmail()
+                break
+            case .notImplemented:
+                UIAlertController.presentFeatureNotImplementedAlert(on: self)
                 break
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {
