@@ -17,15 +17,28 @@ struct PaymentCardDetailLoyaltyCardStatusCellViewModel: PaymentCardDetailCellVie
     }
 
     var headerText: String? {
-        return "Testing"
+        return membershipCard.membershipPlan?.account?.companyName
     }
 
     var detailText: String? {
-        return "123"
+        return "You can link this card"
     }
 
     var iconUrl: URL? {
         let iconImage = membershipCard.membershipPlan?.firstIconImage()
         return URL(string: iconImage?.url ?? "")
+    }
+
+    var status: CD_MembershipCardStatus? {
+        return membershipCard.status
+    }
+
+    var statusText: String? {
+        switch status?.status {
+        case .unauthorised, .failed:
+            return "Retry"
+        default:
+            return status?.status?.rawValue.uppercased()
+        }
     }
 }

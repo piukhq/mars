@@ -153,6 +153,7 @@ class PaymentCardDetailViewController: UIViewController {
         ])
 
         addedCardsTableView.register(PaymentCardDetailLinkLoyaltyCardCell.self, asNib: true)
+        addedCardsTableView.register(PaymentCardDetailLoyaltyCardStatusCell.self, asNib: true)
         otherCardsTableView.register(PaymentCardDetailAddLoyaltyCardCell.self, asNib: true)
         informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
         addedCardsTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
@@ -208,18 +209,29 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == addedCardsTableView {
-            let cell: PaymentCardDetailLinkLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
-
             guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
-                return cell
+                fatalError("Could not get membership card at index path")
+            }
+            guard let cardStatus = viewModel.statusForMembershipCard(atIndexPath: indexPath) else {
+                fatalError("Could not get status for membership card")
             }
 
-            let isLinked = viewModel.membershipCardIsLinked(membershipCard)
-            let cellViewModel = PaymentCardDetailLinkLoyaltyCardCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
+            if cardStatus.status == .authorised {
+                let cell: PaymentCardDetailLinkLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
+                let isLinked = viewModel.membershipCardIsLinked(membershipCard)
+                let cellViewModel = PaymentCardDetailLinkLoyaltyCardCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
 
-            cell.configureWithViewModel(cellViewModel, delegate: self)
+                cell.configureWithViewModel(cellViewModel, delegate: self)
 
-            return cell
+                return cell
+            } else {
+                let cell: PaymentCardDetailLoyaltyCardStatusCell = tableView.dequeue(indexPath: indexPath)
+                let cellViewModel = PaymentCardDetailLoyaltyCardStatusCellViewModel(membershipCard: membershipCard)
+
+                cell.configureWithViewModel(cellViewModel)
+
+                return cell
+            }
         } else if tableView == otherCardsTableView {
             let cell: PaymentCardDetailAddLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
 
@@ -244,6 +256,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: Implement for other tableviews
         if tableView == informationTableView {
             viewModel.performActionForInformationRow(atIndexPath: indexPath)
         }

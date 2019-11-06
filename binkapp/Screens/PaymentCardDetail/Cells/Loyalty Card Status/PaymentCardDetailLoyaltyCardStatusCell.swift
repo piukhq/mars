@@ -19,5 +19,16 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
         if let iconImageUrl = viewModel.iconUrl {
             iconImageView.af_setImage(withURL: iconImageUrl)
         }
+        statusLabel.text = viewModel.statusText
+        statusLabel.textColor = textColor(forStatus: viewModel.status)
+    }
+
+    private func textColor(forStatus status: CD_MembershipCardStatus?) -> UIColor {
+        switch status?.status {
+        case .pending:
+            return .orange
+        default:
+            return .red
+        }
     }
 }

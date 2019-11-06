@@ -53,6 +53,11 @@ class PaymentCardDetailViewModel {
 
     // MARK: - PLL plan decisioning
 
+    func statusForMembershipCard(atIndexPath indexPath: IndexPath) -> CD_MembershipCardStatus? {
+        // TODO: rename linkable membership cards
+        return linkableMembershipCards?[indexPath.row].status
+    }
+
     var shouldShowAddedLoyaltyCardTableView: Bool {
         return pllEnabledMembershipCardsCount != 0
     }
@@ -101,6 +106,7 @@ class PaymentCardDetailViewModel {
     // MARK: - Linked cards
 
     var linkableMembershipCards: [CD_MembershipCard]? {
+        // TODO: this should have the same sort as in the loyalty wallet
         return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
     }
 
