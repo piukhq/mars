@@ -184,7 +184,9 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
         if MFMailComposeViewController.canSendMail() {
             //TODO: Get the current bink id after the login implementation is done.
             let binkId = "RandomBinkId"
-            guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
+            let shortVersionNumber = Bundle.shortVersionNumber ?? ""
+            let buildNumber = Bundle.bundleVersion ?? ""
+            let appVersion = String(format: "support_mail_app_version".localized, shortVersionNumber, buildNumber)
             let osVersion = UIDevice.current.systemVersion
             let mailBody = String.init(format: "support_mail_body".localized, binkId, appVersion, osVersion)
             let mailViewController = MFMailComposeViewController()
