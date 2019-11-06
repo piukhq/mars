@@ -52,13 +52,12 @@
                             <constraint firstAttribute="height" constant="39" id="0AH-L6-P6c"/>
                         </constraints>
                     </stackView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSa-do-efA">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSa-do-efA" customClass="BinkMiniGradientButton" customModule="binkapp" customModuleProvider="target">
                         <rect key="frame" x="308" y="36" width="82" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="82" id="9hI-Se-CWG"/>
                             <constraint firstAttribute="height" constant="28" id="xM7-Jz-hxf"/>
                         </constraints>
-                        <state key="normal" title="Add card"/>
                     </button>
                 </subviews>
                 <constraints>
@@ -73,7 +72,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="HMu-E8-LRw"/>
             <connections>
-                <outlet property="addCardButton" destination="nSa-do-efA" id="3vk-jb-Zne"/>
+                <outlet property="addCardButton" destination="nSa-do-efA" id="XPm-jK-89E"/>
                 <outlet property="detailLabel" destination="bPj-CX-yeD" id="rCJ-1H-6z6"/>
                 <outlet property="headerLabel" destination="kPf-y6-9Ig" id="ofc-zw-dmJ"/>
                 <outlet property="iconImageView" destination="8M6-6t-As1" id="tY8-ba-6Hy"/>

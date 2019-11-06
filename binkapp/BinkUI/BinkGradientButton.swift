@@ -37,3 +37,10 @@ class BinkGradientButton: BinkPillButton {
         gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
     }
 }
+
+class BinkMiniGradientButton: BinkGradientButton {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        titleLabel?.font = .miniButtonText
+    }
+}

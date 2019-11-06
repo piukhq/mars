@@ -9,7 +9,7 @@
 import UIKit
 
 class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
-    @IBOutlet private weak var addCardButton: UIButton!
+    @IBOutlet private weak var addCardButton: BinkMiniGradientButton!
 
     private var viewModel: PaymentCardDetailAddLoyaltyCardCellViewModel!
 
@@ -19,5 +19,6 @@ class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
         if let iconImageUrl = viewModel.iconUrl {
             iconImageView.af_setImage(withURL: iconImageUrl)
         }
+        addCardButton.setTitle("Add card", for: .normal)
     }
 }

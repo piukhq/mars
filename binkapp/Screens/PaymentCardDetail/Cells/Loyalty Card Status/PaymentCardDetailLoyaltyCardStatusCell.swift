@@ -24,6 +24,7 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
     }
 
     private func textColor(forStatus status: CD_MembershipCardStatus?) -> UIColor {
+        // TODO: Get colours from design and add to extension
         switch status?.status {
         case .pending:
             return .orange

@@ -88,6 +88,13 @@ class BinkPillButton: UIButton {
     }
 }
 
+class BinkMiniPillButton: BinkPillButton {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        titleLabel?.font = .miniButtonText
+    }
+}
+
 extension LayoutHelper {
     struct PillButton {
         static let height: CGFloat = 52
