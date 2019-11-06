@@ -10,7 +10,7 @@ import Foundation
 
 class PaymentCardDetailViewModel {
     private var paymentCard: CD_PaymentCard
-    private let router: MainScreenRouter
+    private(set) var router: MainScreenRouter
     private let repository: PaymentCardDetailRepository
     private let informationRowFactory: PaymentCardDetailInformationRowFactory
 

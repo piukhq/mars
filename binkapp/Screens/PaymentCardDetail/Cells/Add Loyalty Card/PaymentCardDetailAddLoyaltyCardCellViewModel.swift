@@ -11,9 +11,11 @@ import Foundation
 struct PaymentCardDetailAddLoyaltyCardCellViewModel: PaymentCardDetailCellViewModelProtocol {
 
     private let membershipPlan: CD_MembershipPlan
+    private let router: MainScreenRouter
 
-    init(membershipPlan: CD_MembershipPlan) {
+    init(membershipPlan: CD_MembershipPlan, router: MainScreenRouter) {
         self.membershipPlan = membershipPlan
+        self.router = router
     }
 
     var headerText: String? {
@@ -27,5 +29,9 @@ struct PaymentCardDetailAddLoyaltyCardCellViewModel: PaymentCardDetailCellViewMo
     var iconUrl: URL? {
         let iconImage = membershipPlan.firstIconImage()
         return URL(string: iconImage?.url ?? "")
+    }
+
+    func toAddOrJoin() {
+        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
     }
 }

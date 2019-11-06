@@ -240,7 +240,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
                 return cell
             }
 
-            let cellViewModel = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: plan)
+            let cellViewModel = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: plan, router: viewModel.router)
 
             cell.configureWithViewModel(cellViewModel)
 
