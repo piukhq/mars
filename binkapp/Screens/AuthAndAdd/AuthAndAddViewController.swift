@@ -103,7 +103,7 @@ extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
     }
-
+    
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
         guard (fields?.contains(where: { $0.value == LinkingSupportType.registration.rawValue }) ?? false) else {
