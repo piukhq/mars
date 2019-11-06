@@ -131,9 +131,8 @@ extension SettingsViewController: UITableViewDelegate {
             case let .customAction(action):
                 action()
                 break
-                //TODO: Add sendEmail call with correct content.
             case .notImplemented, .contactUsAction:
-                UIAlertController.presentFeatureNotImplementedAlert(on: self)
+                sendEmail()
                 break
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {
@@ -180,10 +179,16 @@ extension SettingsViewController: UITableViewDelegate {
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
     private func sendEmail() {
         if MFMailComposeViewController.canSendMail() {
+            //TODO: Get the current bink id after the login implementation is done.
+            let binkId = "RandomBinkId"
+            guard let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
+            let osVersion = UIDevice.current.systemVersion
+            let mailBody = String.init(format: "support_mail_body".localized, binkId, appVersion, osVersion)
             let mailViewController = MFMailComposeViewController()
             mailViewController.mailComposeDelegate = self
             mailViewController.setToRecipients([Constants.supportEmail])
-            mailViewController.setMessageBody("lorem_ipsum".localized, isHTML: false)
+            mailViewController.setSubject("support_mail_subject".localized)
+            mailViewController.setMessageBody(mailBody, isHTML: false)
             
             present(mailViewController, animated: true)
         } else {
