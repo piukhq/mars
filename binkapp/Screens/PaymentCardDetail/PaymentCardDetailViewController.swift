@@ -120,7 +120,7 @@ class PaymentCardDetailViewController: UIViewController {
         if !hasSetupCell {
             hasSetupCell = true
             card.frame = CGRect(origin: .zero, size: CGSize(width: stackScrollView.frame.width - 50, height: LayoutHelper.WalletDimensions.cardSize.height))
-            card.configureWithViewModel(viewModel.paymentCardCellViewModel)
+            card.configureWithViewModel(viewModel.paymentCardCellViewModel, delegate: nil)
         }
     }
 
@@ -131,7 +131,7 @@ class PaymentCardDetailViewController: UIViewController {
     }
 
     private func refreshViews() {
-        self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel)
+        self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, delegate: nil)
         self.linkedCardsTableView.reloadData()
         Current.wallet.refreshLocal()
     }

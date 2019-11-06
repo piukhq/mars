@@ -8,7 +8,14 @@
 
 import UIKit
 
-class PaymentCardCollectionViewCell: WalletCardCollectionViewCell {
+// TECH DEBT: This is duplicated from loyalty cards.
+protocol WalletPaymentCardCollectionViewCellDelegate: NSObject {
+    func cellSwipeBegan(cell: PaymentCardCollectionViewCell)
+    func cellDidFullySwipe(action: SwipeMode?, cell: PaymentCardCollectionViewCell)
+    func cellPerform(action: CellAction, cell: PaymentCardCollectionViewCell)
+}
+
+class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureRecognizerDelegate {
     @IBOutlet private weak var nameOnCardLabel: UILabel!
     @IBOutlet private weak var cardNumberLabel: UILabel!
     @IBOutlet private weak var pllStatusLabel: UILabel!
@@ -16,19 +23,53 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell {
     @IBOutlet private weak var providerLogoImageView: UIImageView!
     @IBOutlet private weak var providerWatermarkImageView: UIImageView!
     @IBOutlet private weak var alertView: CardAlertView!
+    @IBOutlet private weak var cardContainerCenterXConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var deleteButton: UIButton!
 
-    private var gradientLayer: CAGradientLayer?
+    private var cardGradientLayer: CAGradientLayer?
+    private var swipeGradientLayer: CAGradientLayer?
+    private var startingOffset: CGFloat = 0
+
     private var viewModel: PaymentCardCellViewModel!
+    private weak var delegate: WalletPaymentCardCollectionViewCellDelegate?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setupGestureRecognizer()
+    }
+
+    override var bounds: CGRect {
+        didSet {
+            setupShadow()
+        }
+    }
+
+    private func setupGestureRecognizer() {
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: .handlePan)
+        gestureRecognizer.delegate = self
+        containerView.addGestureRecognizer(gestureRecognizer)
+    }
+
+    private var swipeMode: SwipeMode? {
+        didSet {
+            guard let mode = swipeMode, mode != oldValue else { return }
+            updateColor(with: mode)
+            updateButtonState(with: mode)
+        }
+    }
+    private (set) var swipeState: SwipeState?
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        set(to: .closed)
         alertView.isHidden = true
         pllStatusLabel.isHidden = false
         linkedStatusImageView.isHidden = false
     }
 
-    func configureWithViewModel(_ viewModel: PaymentCardCellViewModel) {
+    func configureWithViewModel(_ viewModel: PaymentCardCellViewModel, delegate: WalletPaymentCardCollectionViewCellDelegate?) {
         self.viewModel = viewModel
+        self.delegate = delegate
 
         nameOnCardLabel.text = viewModel.nameOnCardText
         cardNumberLabel.attributedText = viewModel.cardNumberText
@@ -52,7 +93,6 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell {
     }
     
     private func cardNumberAttributedString(for incompletePan: String, type: PaymentCardType?) -> NSAttributedString? {
-        
         let unredacted = 4
         var stripped = incompletePan.replacingOccurrences(of: " ", with: "")
         let cardNumberLength = 16 // Hardcoded, fix later
@@ -150,28 +190,177 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell {
     }
 
     private func processGradient(type: PaymentCardType?) {
-        
-        if gradientLayer == nil {
+        if cardGradientLayer == nil {
             let gradient = CAGradientLayer()
-            layer.insertSublayer(gradient, at: 0)
-            gradientLayer = gradient
+            containerView.layer.insertSublayer(gradient, at: 0)
+            cardGradientLayer = gradient
         }
 
         switch type {
         case .visa:
-            gradientLayer?.colors = UIColor.visaPaymentCardGradients
+            cardGradientLayer?.colors = UIColor.visaPaymentCardGradients
         case .mastercard:
-            gradientLayer?.colors = UIColor.mastercardPaymentCardGradients
+            cardGradientLayer?.colors = UIColor.mastercardPaymentCardGradients
         case .amex:
-            gradientLayer?.colors = UIColor.amexPaymentCardGradients
+            cardGradientLayer?.colors = UIColor.amexPaymentCardGradients
         case .none:
-            gradientLayer?.colors = UIColor.unknownPaymentCardGradients
+            cardGradientLayer?.colors = UIColor.unknownPaymentCardGradients
         }
 
-        gradientLayer?.frame = bounds
-        gradientLayer?.locations = [0.0, 1.0]
-        gradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
-        gradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
-        gradientLayer?.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
+        cardGradientLayer?.frame = bounds
+        cardGradientLayer?.locations = [0.0, 1.0]
+        cardGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
+        cardGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
+        cardGradientLayer?.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
+    }
+}
+
+private extension Selector {
+    static let handlePan = #selector(PaymentCardCollectionViewCell.handlePan(gestureRecognizer:))
+}
+
+// MARK: - Swiping
+
+// TECH DEBT: This is all tech debt, as it duplicates in majority the code from loyalty card cells
+// Should be made reusable across all WalletCard types
+
+extension PaymentCardCollectionViewCell {
+    private func updateColor(with swipeMode: SwipeMode) {
+        switch swipeMode {
+        case .delete:
+            processGradient(.deleteSwipeGradientLeft, .deleteSwipeGradientRight)
+        case .barcode:
+            return
+        case .unset:
+            return
+        }
+    }
+
+    private func updateButtonState(with swipeMode: SwipeMode) {
+        switch swipeMode {
+        case .delete:
+            deleteButton.isHidden = false
+        case .barcode:
+            deleteButton.isHidden = true
+        case .unset:
+            deleteButton.isHidden = true
+        }
+    }
+
+    private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
+        if swipeGradientLayer == nil {
+            swipeGradientLayer = CAGradientLayer()
+            contentView.layer.insertSublayer(swipeGradientLayer!, at: 0)
+        }
+
+        swipeGradientLayer?.frame = bounds
+        swipeGradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
+        swipeGradientLayer?.locations = [0.0, 1.0]
+        swipeGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
+        swipeGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
+    }
+
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return false }
+        guard pan.velocity(in: pan.view).x < 0 else { return false }
+        return abs((pan.velocity(in: pan.view)).x) > abs((pan.velocity(in: pan.view)).y)
+    }
+
+    @IBAction func logInButtonTapped(_ sender: Any) {
+        delegate?.cellPerform(action: .login, cell: self)
+    }
+
+
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        delegate?.cellPerform(action: .delete, cell: self)
+    }
+
+    @IBAction func barcodeButtonTapped(_ sender: Any) {
+        delegate?.cellPerform(action: .barcode, cell: self)
+    }
+
+    @objc func handlePan(gestureRecognizer: UIPanGestureRecognizer) {
+        guard let view = gestureRecognizer.view else { return }
+
+        let translationX = startingOffset + gestureRecognizer.translation(in: view.superview).x * 1.3
+
+        if gestureRecognizer.state == .began {
+            // Save the view's original position.
+            swipeMode = .unset
+            delegate?.cellSwipeBegan(cell: self)
+        }
+
+        if gestureRecognizer.state == .changed {
+            // Save the view's original position.
+
+            swipeMode = translationX > 0 ? .barcode : .delete
+            var constant: CGFloat = translationX
+            var maxValue: CGFloat?
+            var minValue: CGFloat?
+
+            if swipeMode == .barcode {
+                constant = 0 // Barcode is disabled on payment card swipes
+            } else if swipeMode == .delete {
+                maxValue = -(view.frame.size.width * 0.5)
+                minValue = 0
+
+                let limitToUpper = max(translationX, maxValue!)
+                constant = min(limitToUpper, minValue!)
+            }
+
+            cardContainerCenterXConstraint.constant = constant
+        }
+
+        if gestureRecognizer.state == .ended || gestureRecognizer.state == .cancelled {
+
+            // Get percentage through
+
+            let percentage = abs(translationX) / view.frame.size.width
+
+            if percentage < 0.3 {
+                swipeMode = .unset
+                set(to: .closed, as: swipeMode)
+            } else if percentage < 0.6 {
+                set(to: .peek, as: swipeMode)
+            } else {
+                // Commit action
+                set(to: .expanded, as: swipeMode)
+                delegate?.cellDidFullySwipe(action: swipeMode, cell: self)
+            }
+        }
+    }
+
+    func set(to state: SwipeState, as type: SwipeMode? = nil) {
+        swipeState = state
+        let width = containerView.frame.size.width
+        let constant: CGFloat
+
+        switch state {
+        case .closed:
+            constant = 0 
+        case .peek:
+            guard let type = type else { return }
+
+            if type == .barcode {
+                constant = 0 // Barcode is disabled on payment card swipes
+            } else {
+                constant = -(width * 0.3)
+            }
+        case .expanded:
+            guard let type = type else { return }
+
+            if type == .barcode {
+                constant = 0 // Barcode is disabled on payment card swipes
+            } else {
+                constant = -(width * 0.5)
+            }
+        }
+
+        startingOffset = constant
+
+        UIView.animate(withDuration: 0.3) {
+            self.cardContainerCenterXConstraint.constant = constant
+            self.layoutIfNeeded()
+        }
     }
 }

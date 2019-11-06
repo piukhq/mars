@@ -48,7 +48,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     private var viewModel: WalletLoyaltyCardCellViewModel!
     private weak var delegate: WalletLoyaltyCardCollectionViewCellDelegate?
 
-    private var gradientLayer: CAGradientLayer?
+    private var swipeGradientLayer: CAGradientLayer?
     private var startingOffset: CGFloat = 0
     
     override func awakeFromNib() {
@@ -133,6 +133,8 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         cardValueSuffixLabel.text = viewModel.pointsValueSuffixText
         cardValuePointsLabel.isHidden = !viewModel.shouldShowPointsValueLabels
         cardValueSuffixLabel.isHidden = !viewModel.shouldShowPointsValueLabels
+
+        containerView.backgroundColor = .clear
     }
 
 }
@@ -145,17 +147,11 @@ private extension Selector {
 
 extension WalletLoyaltyCardCollectionViewCell {
     private func updateColor(with swipeMode: SwipeMode) {
-        let firstColor, secondColor: UIColor
-
         switch swipeMode {
         case .delete:
-            firstColor = UIColor(red: 1, green: 107/255.0, blue: 54/255.0, alpha: 1.0)
-            secondColor = UIColor(red: 235/255.0, green: 0, blue: 27/255.0, alpha: 1.0)
-            processGradient(firstColor, secondColor)
+            processGradient(.deleteSwipeGradientLeft, .deleteSwipeGradientRight)
         case .barcode:
-            firstColor = UIColor(red: 180/255.0, green: 111/255.0, blue: 234/255.0, alpha: 1.0)
-            secondColor = UIColor(red: 67/255.0, green: 113/255.0, blue: 254/255.0, alpha: 1.0)
-            processGradient(firstColor, secondColor)
+            processGradient(.barcodeSwipeGradientLeft, .barcodeSwipeGradientRight)
         case .unset:
             print()
         }
@@ -176,26 +172,24 @@ extension WalletLoyaltyCardCollectionViewCell {
     }
 
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
-        if gradientLayer == nil {
-            gradientLayer = CAGradientLayer()
-            contentView.layer.insertSublayer(gradientLayer!, at: 0)
+        if swipeGradientLayer == nil {
+            swipeGradientLayer = CAGradientLayer()
+            contentView.layer.insertSublayer(swipeGradientLayer!, at: 0)
         }
 
-        gradientLayer?.frame = bounds
-        gradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
-        gradientLayer?.locations = [0.0, 1.0]
-        gradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
-        gradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
+        swipeGradientLayer?.frame = bounds
+        swipeGradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
+        swipeGradientLayer?.locations = [0.0, 1.0]
+        swipeGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
+        swipeGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
     }
 
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return false }
-
         return abs((pan.velocity(in: pan.view)).x) > abs((pan.velocity(in: pan.view)).y)
     }
 
     @IBAction func logInButtonTapped(_ sender: Any) {
-        //TODO: Add implementation
         delegate?.cellPerform(action: .login, cell: self)
     }
 

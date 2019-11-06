@@ -22,6 +22,7 @@ protocol WalletViewModel {
     func refreshLocalWallet()
     func toCardDetail(for card: T)
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt)
+    func showDeleteConfirmationAlert(card: T, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void)
 }
 
 extension WalletViewModel {
