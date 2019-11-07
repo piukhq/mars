@@ -325,6 +325,7 @@
 		EF8BF2122341501300D2E5F3 /* CD_PaymentCardAccountConsents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BF2102341501300D2E5F3 /* CD_PaymentCardAccountConsents.swift */; };
 		EF8BF2132341501300D2E5F3 /* _CD_PaymentCardAccountConsents.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BF2112341501300D2E5F3 /* _CD_PaymentCardAccountConsents.swift */; };
 		EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F6BF237429D30027AB80 /* UITableViewCellExtension.swift */; };
+		EFA5F6C2237467CC0027AB80 /* NestedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F6C1237467CC0027AB80 /* NestedTableView.swift */; };
 		EFCAF91A2371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF9182371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.swift */; };
 		EFCAF91B2371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCAF9192371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib */; };
 		EFCAF9212371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF91F2371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift */; };
@@ -716,6 +717,7 @@
 		EF8BF2102341501300D2E5F3 /* CD_PaymentCardAccountConsents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_PaymentCardAccountConsents.swift; sourceTree = "<group>"; };
 		EF8BF2112341501300D2E5F3 /* _CD_PaymentCardAccountConsents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_PaymentCardAccountConsents.swift; sourceTree = "<group>"; };
 		EFA5F6BF237429D30027AB80 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
+		EFA5F6C1237467CC0027AB80 /* NestedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestedTableView.swift; sourceTree = "<group>"; };
 		EFCAF9182371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLoyaltyCardStatusCell.swift; sourceTree = "<group>"; };
 		EFCAF9192371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailLoyaltyCardStatusCell.xib; sourceTree = "<group>"; };
 		EFCAF91F2371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCell.swift; sourceTree = "<group>"; };
@@ -1087,6 +1089,7 @@
 				3CD39615231E8E7100CD5C31 /* LayoutHelper.swift */,
 				BDB01883232EB14A00BFFA18 /* StackScrollView.swift */,
 				EF46E287235E01DD00BA2CAF /* BinkPillButton.swift */,
+				EFA5F6C1237467CC0027AB80 /* NestedTableView.swift */,
 			);
 			name = BinkUI;
 			path = Screens/BinkUI;
@@ -2353,6 +2356,7 @@
 				3C25BDFF23019BC100E931EE /* BrandTableViewCell.swift in Sources */,
 				3CEABFD02316AB88009B1122 /* MembershipCardBalanceModel.swift in Sources */,
 				3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */,
+				EFA5F6C2237467CC0027AB80 /* NestedTableView.swift in Sources */,
 				EF8BF1F1233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift in Sources */,
 				EF54911E2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift in Sources */,
 				3CD7E90B2302AC42001889FE /* ApiManager.swift in Sources */,

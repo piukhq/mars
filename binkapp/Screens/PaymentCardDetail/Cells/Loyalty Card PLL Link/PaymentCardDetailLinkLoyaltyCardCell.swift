@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 
-protocol LinkedLoyaltyCardCellDelegate: AnyObject {
+protocol PaymentCardDetailLinkLoyaltyCardCellDelegate: AnyObject {
     func linkedLoyaltyCardCell(_ cell: PaymentCardDetailLinkLoyaltyCardCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard)
 }
 
@@ -17,9 +17,9 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
     @IBOutlet private weak var linkToggle: BinkSwitch!
 
     private var viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel!
-    private weak var delegate: LinkedLoyaltyCardCellDelegate?
+    private weak var delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?
 
-    func configureWithViewModel(_ viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel, delegate: LinkedLoyaltyCardCellDelegate?) {
+    func configureWithViewModel(_ viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel, delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?) {
         self.viewModel = viewModel
         self.delegate = delegate
 
