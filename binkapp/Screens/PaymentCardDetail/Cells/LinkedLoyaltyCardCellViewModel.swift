@@ -32,18 +32,16 @@ struct LinkedLoyaltyCellViewModel {
             return nil // If there is no value, don't show the points label
         }
         
-        guard balance?.prefix != nil else {
+        let floatBalanceValue = balanceValue.floatValue
+        
+        guard let prefix = balance?.prefix else {
             return "\(balanceValue) \(balance?.suffix ?? "")"
         }
         
-        let floatBalanceValue = Float(truncating: balanceValue)
-        
         if (floatBalanceValue - floatBalanceValue.rounded(.down) > 0) {
-            return "\(balance?.prefix ?? "")" + String(format: "%.02f", balanceValue)
+            return "\(prefix)" + String(format: "%.02f", floatBalanceValue)
         } else {
-            return "\(balance?.prefix ?? "") \(balanceValue)"
+            return "\(prefix) \(floatBalanceValue)"
         }
-        
-//        return "\(balance?.prefix ?? "")\(balanceValue) \(balance?.suffix ?? "")"
     }
 }

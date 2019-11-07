@@ -98,7 +98,22 @@ struct WalletLoyaltyCardCellViewModel {
         guard !shouldShowRetryStatus else {
             return "retry_title".localized
         }
-        return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "")"
+        
+        //        let floatBalanceValue = balance?.value?.floatValue ?? 0
+        let floatBalanceValue = 12.20
+        
+        guard let prefix = balance?.prefix else {
+            return "\(floatBalanceValue)"
+        }
+        
+        
+        if (floatBalanceValue - floatBalanceValue.rounded(.down) > 0) {
+            return "\(prefix)" + String(format: "%.02f", floatBalanceValue)
+        } else {
+            return "\(prefix) \(Int(floatBalanceValue))"
+        }
+        
+//        return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "")"
     }
 
     var pointsValueSuffixText: String? {
