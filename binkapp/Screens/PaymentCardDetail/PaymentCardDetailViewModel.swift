@@ -36,19 +36,19 @@ class PaymentCardDetailViewModel {
     }
 
     var addedCardsTitle: String {
-        return "Linked cards"
+        return "pcd_added_card_title".localized
     }
 
     var addedCardsDescription: String {
-        return "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points."
+        return "pcd_added_card_description".localized
     }
 
     var otherCardsTitle: String {
-        return shouldShowAddedLoyaltyCardTableView ? "Other cards you can add" : "No linked cards"
+        return shouldShowAddedLoyaltyCardTableView ? "pcd_other_card_title_cards_added".localized : "pcd_other_card_title_no_cards_added".localized
     }
 
     var otherCardsDescription: String {
-        return shouldShowAddedLoyaltyCardTableView ? "You can also add the cards below and link them to your payment cards." : "You do not have any linked loyalty cards. Add some cards to collect points."
+        return shouldShowAddedLoyaltyCardTableView ? "pcd_other_card_description_cards_added".localized : "pcd_other_card_description_no_cards_added".localized
     }
 
     // MARK: - View configuration decisioning

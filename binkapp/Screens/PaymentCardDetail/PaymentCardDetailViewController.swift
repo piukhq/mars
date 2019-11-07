@@ -112,7 +112,7 @@ class PaymentCardDetailViewController: UIViewController {
         // This is due to strange layout issues on first appearance
         if !hasSetupCell {
             hasSetupCell = true
-            card.frame = CGRect(origin: .zero, size: CGSize(width: stackScrollView.frame.width - 50, height: LayoutHelper.WalletDimensions.cardSize.height))
+            card.frame = CGRect(origin: .zero, size: CGSize(width: stackScrollView.frame.width - LayoutHelper.PaymentCardDetail.cardViewPadding, height: LayoutHelper.WalletDimensions.cardSize.height))
             card.configureWithViewModel(viewModel.paymentCardCellViewModel)
         }
     }
@@ -133,29 +133,29 @@ private extension PaymentCardDetailViewController {
     }
 
     func configureLayout() {
-        stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: 30)
+        stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: LayoutHelper.PaymentCardDetail.stackScrollViewTopPadding)
 
         if viewModel.shouldShowAddedLoyaltyCardTableView {
             stackScrollView.add(arrangedSubviews: [addedCardsTitleLabel, addedCardsDescriptionLabel, addedCardsTableView])
             NSLayoutConstraint.activate([
-                addedCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-                addedCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
-                addedCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-                addedCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
+                addedCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                addedCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                addedCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                addedCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
                 addedCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             ])
         }
         if viewModel.shouldShowOtherCardsTableView {
             if viewModel.shouldShowAddedLoyaltyCardTableView {
-                stackScrollView.customPadding(25, after: addedCardsTableView)
+                stackScrollView.customPadding(LayoutHelper.PaymentCardDetail.headerViewsPadding, after: addedCardsTableView)
             }
 
             stackScrollView.add(arrangedSubviews: [otherCardsTitleLabel, otherCardsDescriptionLabel, otherCardsTableView])
             NSLayoutConstraint.activate([
-                otherCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-                otherCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
-                otherCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-                otherCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
+                otherCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                otherCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                otherCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                otherCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
                 otherCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             ])
         }
@@ -167,7 +167,7 @@ private extension PaymentCardDetailViewController {
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
             card.heightAnchor.constraint(equalToConstant: LayoutHelper.WalletDimensions.cardSize.height),
-            card.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50),
+            card.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -LayoutHelper.PaymentCardDetail.cardViewPadding),
             informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
         ])
     }
@@ -176,7 +176,7 @@ private extension PaymentCardDetailViewController {
         [addedCardsTableView, otherCardsTableView, informationTableView].forEach {
             $0.delegate = self
             $0.dataSource = self
-            $0.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+            $0.separatorInset = LayoutHelper.PaymentCardDetail.tableViewCellSeparatorInsets
         }
 
         addedCardsTableView.register(PaymentCardDetailLinkLoyaltyCardCell.self, asNib: true)
@@ -317,11 +317,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView == addedCardsTableView || tableView == otherCardsTableView ? 100 : 88
-    }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return tableView == addedCardsTableView || tableView == otherCardsTableView ? 1.0 : 0.0
+        return tableView == addedCardsTableView || tableView == otherCardsTableView ? LayoutHelper.PaymentCardDetail.pllCellRowHeight : LayoutHelper.PaymentCardDetail.informationRowCellHeight
     }
 }
 
@@ -371,6 +367,12 @@ extension LayoutHelper {
         }
 
         static let stackScrollViewMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        static let stackScrollViewTopPadding: CGFloat = 30
         static let stackScrollViewContentInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        static let headerViewsPadding: CGFloat = 25
+        static let cardViewPadding: CGFloat = 50
+        static let tableViewCellSeparatorInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        static let pllCellRowHeight: CGFloat = 100
+        static let informationRowCellHeight: CGFloat = 88
     }
 }
