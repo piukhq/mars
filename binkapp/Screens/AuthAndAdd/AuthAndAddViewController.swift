@@ -22,7 +22,7 @@ class AuthAndAddViewController: BaseFormViewController {
 
     private lazy var floatingButtons: BinkPrimarySecondaryButtonView = {
         let floatingButtons = BinkPrimarySecondaryButtonView()
-        floatingButtons.configure(primaryButtonTitle: "login".localized, secondaryButtonTitle: "no_account_button_title".localized)
+        floatingButtons.configure(primaryButtonTitle: viewModel.buttonTitle, secondaryButtonTitle: "no_account_button_title".localized)
         floatingButtons.primaryButton.isEnabled = false
         floatingButtons.delegate = self
         floatingButtons.translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +103,7 @@ extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
     }
-
+    
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
         guard (fields?.contains(where: { $0.value == LinkingSupportType.registration.rawValue }) ?? false) else {

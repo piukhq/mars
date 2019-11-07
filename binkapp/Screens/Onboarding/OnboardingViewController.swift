@@ -106,12 +106,12 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
 
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
 
             facebookPillButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
             facebookPillButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
             facebookPillButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            facebookPillButton.bottomAnchor.constraint(equalTo: floatingButtonsView.topAnchor, constant: LayoutHelper.PillButton.verticalSpacing),
+            facebookPillButton.bottomAnchor.constraint(equalTo: floatingButtonsView.topAnchor, constant: -LayoutHelper.PillButton.verticalSpacing),
             facebookPillButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25),
 
             pageControl.topAnchor.constraint(equalTo: learningContainer.bottomAnchor),
