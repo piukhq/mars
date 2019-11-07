@@ -35,13 +35,13 @@ struct LinkedLoyaltyCellViewModel {
         let floatBalanceValue = balanceValue.floatValue
         
         guard let prefix = balance?.prefix else {
-            return "\(balanceValue) \(balance?.suffix ?? "")"
+            return "\(floatBalanceValue) \(balance?.suffix ?? "")"
         }
         
         if (floatBalanceValue - floatBalanceValue.rounded(.down) > 0) {
             return "\(prefix)" + String(format: "%.02f", floatBalanceValue)
         } else {
-            return "\(prefix) \(floatBalanceValue)"
+            return "\(prefix) \(Int(floatBalanceValue))"
         }
     }
 }

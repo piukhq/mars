@@ -96,13 +96,12 @@ private extension BinkModuleView {
                 let prefix = balance.prefix ?? ""
                 let suffix = balance.suffix ?? ""
                 
-//                let floatBalanceValue = balance.value?.floatValue ?? 0
-                let floatBalanceValue = 12.20
+                let floatBalanceValue = balance.value?.floatValue ?? 0
                 
                 if (floatBalanceValue - floatBalanceValue.rounded(.down) > 0) {
                     titleText = prefix + String(format: "%.02f", floatBalanceValue) + " " + suffix
                 } else {
-                    titleText = prefix + value.stringValue + " " + suffix
+                    titleText = prefix + "\(value.intValue)" + " " + suffix
                 }
                 
                 let transactionsAvailable = plan.featureSet?.transactionsAvailable?.boolValue == true
