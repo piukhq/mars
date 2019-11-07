@@ -113,7 +113,7 @@ class PaymentCardDetailViewController: UIViewController {
         if !hasSetupCell {
             hasSetupCell = true
             card.frame = CGRect(origin: .zero, size: CGSize(width: stackScrollView.frame.width - LayoutHelper.PaymentCardDetail.cardViewPadding, height: LayoutHelper.WalletDimensions.cardSize.height))
-            card.configureWithViewModel(viewModel.paymentCardCellViewModel)
+            card.configureWithViewModel(viewModel.paymentCardCellViewModel, delegate: nil)
         }
     }
 
@@ -183,25 +183,11 @@ private extension PaymentCardDetailViewController {
         addedCardsTableView.register(PaymentCardDetailLoyaltyCardStatusCell.self, asNib: true)
         otherCardsTableView.register(PaymentCardDetailAddLoyaltyCardCell.self, asNib: true)
         informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
-        addedCardsTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
-        otherCardsTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
-        informationTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
 
         getLinkedCards()
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        // This is due to strange layout issues on first appearance
-        if !hasSetupCell {
-            hasSetupCell = true
-            card.frame = CGRect(origin: .zero, size: CGSize(width: stackScrollView.frame.width - 50, height: LayoutHelper.WalletDimensions.cardSize.height))
-            card.configureWithViewModel(viewModel.paymentCardCellViewModel, delegate: nil)
-        }
-    }
-
-    private func getLinkedCards() {
+    func getLinkedCards() {
         viewModel.getLinkedMembershipCards { [weak self] in
             self?.addedCardsTableView.reloadData()
             self?.otherCardsTableView.reloadData()
@@ -209,7 +195,7 @@ private extension PaymentCardDetailViewController {
     }
 
     func refreshViews() {
-        self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel)
+        self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, delegate: nil)
         self.addedCardsTableView.reloadData()
         self.otherCardsTableView.reloadData()
         Current.wallet.refreshLocal()
