@@ -20,10 +20,23 @@ class AuthAndAddRepository {
         self.apiManager = apiManager
     }
     
-    func addMembershipCard(request: AddMembershipCardRequest) {
-        let url = RequestURL.membershipCards
-        let method = RequestHTTPMethod.post
-        apiManager.doRequest(url: url, httpMethod: method, parameters: request.jsonCard, onSuccess: { (response: MembershipCardModel) in
+    func addMembershipCard(request: AddMembershipCardRequest, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?) {
+        var url: RequestURL?
+        var method: RequestHTTPMethod?
+        switch formPurpose {
+        case .login:
+            url = .membershipCards
+            method = .post
+            break
+        case .loginFailed:
+            url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
+            method = .put
+            break
+        default:
+            break
+        }
+        
+        apiManager.doRequest(url: url ?? .membershipCards, httpMethod: method ?? .post, parameters: request.jsonCard, onSuccess: { (response: MembershipCardModel) in
             // Map to core data
             Current.database.performBackgroundTask { context in
                 let newObject = response.mapToCoreData(context, .none, overrideID: nil)

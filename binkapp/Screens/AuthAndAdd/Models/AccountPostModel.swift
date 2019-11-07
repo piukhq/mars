@@ -8,9 +8,9 @@
 import Foundation
 
 struct AccountPostModel: Codable {
-    var addFields: [AddFieldPostModel]?
-    var authoriseFields: [AuthoriseFieldPostModel]?
-    var enrolFields: [EnrolFieldPostModel]?
+    var addFields: [AddFieldPostModel] = []
+    var authoriseFields: [AuthoriseFieldPostModel] = []
+    var enrolFields: [EnrolFieldPostModel] = []
     
     enum CodingKeys: String, CodingKey {
         case addFields = "add_fields"

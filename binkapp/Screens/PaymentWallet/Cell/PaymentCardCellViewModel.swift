@@ -51,7 +51,8 @@ struct PaymentCardCellViewModel {
         guard let expiryDate = Date.makeDate(year: expiryYear.intValue, month: expiryMonth.intValue, day: 01, hr: 00, min: 00, sec: 00) else {
             return false
         }
-        return expiryDate < Date()
+        
+        return expiryDate.isLaterThan(date: Date(), toGranularity: .month)
     }
 
     private func cardNumberAttributedString() -> NSAttributedString? {

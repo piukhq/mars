@@ -18,7 +18,7 @@ struct LoyaltyWalletRepository: WalletRepository {
 
     func delete<T: WalletCard>(_ card: T, completion: @escaping () -> Void) {
         // Process the backend delete, but fail silently
-        let url = RequestURL.deleteMembershipCard(cardId: card.id)
+        let url = RequestURL.membershipCard(cardId: card.id)
         let method = RequestHTTPMethod.delete
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
 
