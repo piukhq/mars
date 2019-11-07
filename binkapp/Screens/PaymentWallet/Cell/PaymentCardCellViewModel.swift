@@ -52,7 +52,7 @@ struct PaymentCardCellViewModel {
             return false
         }
         
-        return expiryDate.isLaterThan(date: Date())
+        return expiryDate.isLaterThan(date: Date(), toGranularity: .month)
     }
 
     private func cardNumberAttributedString() -> NSAttributedString? {

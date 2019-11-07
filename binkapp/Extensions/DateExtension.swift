@@ -46,8 +46,8 @@ extension Date {
         return calendar.date(from: components)
     }
     
-    func isLaterThan(date: Date) -> Bool {
-        let comparisonResult = Calendar.current.compare(self, to: date, toGranularity: .month)
+    func isLaterThan(date: Date, toGranularity: Calendar.Component) -> Bool {
+        let comparisonResult = Calendar.current.compare(self, to: date, toGranularity: toGranularity)
         
         switch comparisonResult {
         case .orderedSame:
