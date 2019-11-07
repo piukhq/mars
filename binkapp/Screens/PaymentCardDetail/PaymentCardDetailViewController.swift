@@ -66,19 +66,19 @@ class PaymentCardDetailViewController: UIViewController {
         return description
     }()
 
-    lazy var addedCardsTableView: NestedTableView = {
+    private lazy var addedCardsTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
 
-    lazy var otherCardsTableView: NestedTableView = {
+    private lazy var otherCardsTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
 
-    lazy var informationTableView: NestedTableView = {
+    private lazy var informationTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
