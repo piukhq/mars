@@ -45,4 +45,17 @@ extension Date {
         let components = DateComponents(year: year, month: month, day: day, hour: hr, minute: min, second: sec)
         return calendar.date(from: components)
     }
+    
+    func isLaterThan(date: Date, toGranularity: Calendar.Component) -> Bool {
+        let comparisonResult = Calendar.current.compare(self, to: date, toGranularity: toGranularity)
+        
+        switch comparisonResult {
+        case .orderedSame:
+            return false
+        case .orderedDescending:
+            return false
+        case .orderedAscending:
+            return true
+        }
+    }
 }
