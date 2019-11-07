@@ -23,7 +23,7 @@ struct PaymentCardDetailAddLoyaltyCardCellViewModel: PaymentCardDetailCellViewMo
     }
 
     var detailText: String? {
-        return "You can link this card"
+        return "pcd_you_can_link".localized
     }
 
     var iconUrl: URL? {

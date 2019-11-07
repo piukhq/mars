@@ -211,4 +211,4 @@
 "pcd_other_card_title_no_cards_added" = "No linked cards";
 "pcd_other_card_description_cards_added" = "You can also add the cards below and link them to your payment cards.";
 "pcd_other_card_description_no_cards_added" = "You do not have any linked loyalty cards. Add some cards to collect points.";
-
+"pcd_you_can_link" = "You can link this card";
