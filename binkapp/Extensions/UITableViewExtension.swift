@@ -24,4 +24,8 @@ public extension UITableView {
         }
         return cell
     }
+
+    func cellAtIndexPathIsLastInSection(_ indexPath: IndexPath) -> Bool {
+        return indexPath.row == numberOfRows(inSection: indexPath.section) - 1
+    }
 }

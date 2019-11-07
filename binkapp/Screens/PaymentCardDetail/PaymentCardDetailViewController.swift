@@ -222,12 +222,20 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
                 cell.configureWithViewModel(cellViewModel, delegate: self)
 
+                if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+                    cell.setSeparatorFullWidth()
+                }
+
                 return cell
             } else {
                 let cell: PaymentCardDetailLoyaltyCardStatusCell = tableView.dequeue(indexPath: indexPath)
                 let cellViewModel = PaymentCardDetailLoyaltyCardStatusCellViewModel(membershipCard: membershipCard)
 
                 cell.configureWithViewModel(cellViewModel)
+
+                if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+                    cell.setSeparatorFullWidth()
+                }
 
                 return cell
             }
@@ -243,12 +251,20 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
             cell.configureWithViewModel(cellViewModel)
 
+            if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+                cell.setSeparatorFullWidth()
+            }
+
             return cell
         } else { // This will always be the information table view
             let cell: CardDetailInfoTableViewCell = tableView.dequeue(indexPath: indexPath)
 
             let informationRow = viewModel.informationRow(forIndexPath: indexPath)
             cell.configureWithInformationRow(informationRow)
+
+            if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+                cell.hideSeparator()
+            }
 
             return cell
         }
@@ -274,10 +290,6 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView == addedCardsTableView || tableView == otherCardsTableView ? 100 : 88
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return makeTableViewSeparator()
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -338,11 +350,5 @@ extension LayoutHelper {
 
         static let stackScrollViewMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         static let stackScrollViewContentInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
-    }
-}
-
-extension UITableView {
-    func cellAtIndexPathIsLastInSection(_ indexPath: IndexPath) -> Bool {
-        return indexPath.row == numberOfRows(inSection: indexPath.section) - 1
     }
 }
