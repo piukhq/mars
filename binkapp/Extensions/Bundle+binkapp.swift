@@ -10,5 +10,5 @@ import Foundation
 
 extension Bundle {
     static let shortVersionNumber = main.infoDictionary?["CFBundleShortVersionString"] as? String
-    static let bundleVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+    static let bundleVersion = main.infoDictionary?["CFBundleVersion"] as? String
 }
