@@ -23,6 +23,10 @@ class PaymentCardDetailViewModel {
 
     // MARK: - Header views
 
+    var paymentCardCellViewModel: PaymentCardCellViewModel {
+        return PaymentCardCellViewModel(paymentCard: paymentCard)
+    }
+
     var navigationViewTitleText: String {
         return paymentCard.card?.nameOnCard ?? ""
     }
@@ -47,31 +51,24 @@ class PaymentCardDetailViewModel {
         return shouldShowAddedLoyaltyCardTableView ? "You can also add the cards below and link them to your payment cards." : "You do not have any linked loyalty cards. Add some cards to collect points."
     }
 
-    var paymentCardCellViewModel: PaymentCardCellViewModel {
-        return PaymentCardCellViewModel(paymentCard: paymentCard)
-    }
-
-    // MARK: - PLL plan decisioning
-
-    func statusForMembershipCard(atIndexPath indexPath: IndexPath) -> CD_MembershipCardStatus? {
-        // TODO: rename linkable membership cards
-        return linkableMembershipCards?[indexPath.row].status
-    }
+    // MARK: - View configuration decisioning
 
     var shouldShowAddedLoyaltyCardTableView: Bool {
-        return pllEnabledMembershipCardsCount != 0
+        return pllMembershipCardsCount != 0
     }
 
     var shouldShowOtherCardsTableView: Bool {
         return pllPlansNotAddedToWallet?.count != 0
     }
 
-    var pllEnabledMembershipPlans: [CD_MembershipPlan]? {
+    // MARK: PLL membership plans
+
+    var pllMembershipPlans: [CD_MembershipPlan]? {
         return Current.wallet.membershipPlans?.filter { $0.featureSet?.planCardType == .link }
     }
 
     var pllPlansAddedToWallet: [CD_MembershipPlan]? {
-        guard let pllMembershipCards = linkableMembershipCards else { return nil }
+        guard let pllMembershipCards = pllMembershipCards else { return nil }
 
         var plansInWallet: [CD_MembershipPlan] = []
 
@@ -87,7 +84,7 @@ class PaymentCardDetailViewModel {
     }
 
     var pllPlansNotAddedToWallet: [CD_MembershipPlan]? {
-        guard let pllEnabledPlans = pllEnabledMembershipPlans else { return nil }
+        guard let pllEnabledPlans = pllMembershipPlans else { return nil }
 
         var plansNotInWallet: [CD_MembershipPlan] = []
 
@@ -103,15 +100,23 @@ class PaymentCardDetailViewModel {
         return plansNotInWallet
     }
 
-    // MARK: - Linked cards
+    var pllPlansNotAddedToWalletCount: Int {
+        return pllPlansNotAddedToWallet?.count ?? 0
+    }
 
-    var linkableMembershipCards: [CD_MembershipCard]? {
+    func pllPlanNotAddedToWallet(forIndexPath indexPath: IndexPath) -> CD_MembershipPlan? {
+        return pllPlansNotAddedToWallet?[indexPath.row]
+    }
+
+    // MARK: - PLL membership cards in wallet
+
+    var pllMembershipCards: [CD_MembershipCard]? {
         // TODO: this should have the same sort as in the loyalty wallet
         return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
     }
 
-    var pllEnabledMembershipCardsCount: Int {
-        return linkableMembershipCards?.count ?? 0
+    var pllMembershipCardsCount: Int {
+        return pllMembershipCards?.count ?? 0
     }
 
     var linkedMembershipCardIds: [String]? {
@@ -124,7 +129,12 @@ class PaymentCardDetailViewModel {
     }
 
     func membershipCard(forIndexPath indexPath: IndexPath) -> CD_MembershipCard? {
-        return linkableMembershipCards?[indexPath.row]
+        return pllMembershipCards?[indexPath.row]
+    }
+
+    func statusForMembershipCard(atIndexPath indexPath: IndexPath) -> CD_MembershipCardStatus? {
+        // TODO: rename linkable membership cards
+        return pllMembershipCards?[indexPath.row].status
     }
 
     // MARK: Routing

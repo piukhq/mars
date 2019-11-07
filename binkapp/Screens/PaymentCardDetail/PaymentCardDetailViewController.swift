@@ -221,11 +221,11 @@ private extension PaymentCardDetailViewController {
 extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == addedCardsTableView {
-            return viewModel.pllEnabledMembershipCardsCount
+            return viewModel.pllMembershipCardsCount
         }
 
         if tableView == otherCardsTableView {
-            return viewModel.pllPlansNotAddedToWallet?.count ?? 0 // TODO: Improve from viewmodel
+            return viewModel.pllPlansNotAddedToWalletCount
         }
 
         if tableView == informationTableView {
@@ -271,8 +271,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
         } else if tableView == otherCardsTableView {
             let cell: PaymentCardDetailAddLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
 
-            // TODO: Improve in viewmodel
-            guard let plan = viewModel.pllPlansNotAddedToWallet?[indexPath.row] else {
+            guard let plan = viewModel.pllPlanNotAddedToWallet(forIndexPath: indexPath) else {
                 return cell
             }
 
@@ -306,7 +305,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
         }
 
         if tableView == otherCardsTableView {
-            guard let membershipPlan = viewModel.pllEnabledMembershipPlans?[indexPath.row] else { return }
+            guard let membershipPlan = viewModel.pllMembershipPlans?[indexPath.row] else { return }
             viewModel.toAddOrJoin(forMembershipPlan: membershipPlan)
         }
 
