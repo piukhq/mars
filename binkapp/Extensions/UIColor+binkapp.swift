@@ -48,10 +48,6 @@ extension UIColor {
     class var greenOk: UIColor {
         return UIColor(red: 0/255, green: 193/255, blue: 118/255, alpha: 1)
     }
-    
-    class var amber: UIColor {
-        return UIColor(red: 245/255, green: 166/255, blue: 35/255, alpha: 1)
-    }
 
     static var facebookButton: UIColor {
         return UIColor(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
@@ -63,6 +59,10 @@ extension UIColor {
 
     static let deleteSwipeGradientLeft = UIColor(red: 1, green: 107/255.0, blue: 54/255.0, alpha: 1.0)
     static let deleteSwipeGradientRight = UIColor(red: 235/255.0, green: 0, blue: 27/255.0, alpha: 1.0)
+
+    static let amberPending = UIColor(hexString: "#f5a623")
+    static let redAttention = UIColor(hexString: "#eb001b")
+    static let grey10 = UIColor(hexString: "#e5e5e5")
 
     // MARK: - Payment Card Gradient Colours
 

@@ -44,7 +44,7 @@ class TransactionTableViewCell: UITableViewCell {
             transactionImageView.image = UIImage(named: "up")
         } else {
             valueLabel.text = String(format: text, transactionValue)
-            valueLabel.textColor = .amber
+            valueLabel.textColor = .amberPending
         }
     }
     

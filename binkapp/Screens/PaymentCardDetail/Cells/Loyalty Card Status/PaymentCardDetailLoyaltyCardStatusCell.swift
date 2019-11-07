@@ -27,9 +27,9 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
         // TODO: Get colours from design and add to extension
         switch status?.status {
         case .pending:
-            return .orange
+            return .amberPending
         default:
-            return .red
+            return .redAttention
         }
     }
 }

@@ -84,8 +84,7 @@ class PaymentCardDetailViewController: UIViewController {
 
     func makeTableViewSeparator() -> UIView {
         let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = addedCardsTableView.separatorColor
+        view.backgroundColor = .grey10
         return view
     }
 
@@ -282,10 +281,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if viewModel.pllEnabledMembershipCardsCount == 0 {
-            return 0.0
-        }
-        return tableView == addedCardsTableView || tableView == otherCardsTableView ? 0.5 : 0.0
+        return tableView == addedCardsTableView || tableView == otherCardsTableView ? 1.0 : 0.0
     }
 }
 
@@ -342,5 +338,11 @@ extension LayoutHelper {
 
         static let stackScrollViewMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         static let stackScrollViewContentInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+    }
+}
+
+extension UITableView {
+    func cellAtIndexPathIsLastInSection(_ indexPath: IndexPath) -> Bool {
+        return indexPath.row == numberOfRows(inSection: indexPath.section) - 1
     }
 }
