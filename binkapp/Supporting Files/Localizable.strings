@@ -104,6 +104,8 @@
 "delete_card_plan_title" = "Delete %@";
 "delete_card_message" = "Remove this card from Bink";
 
+"transaction_history_not_supported_title" = "Transaction history not supported";
+"transaction_history_not_supported_description" = "Unfortunately we're not able to show your points balance and transaction history for this brand just yet.";
 "transaction_history_unavailable_title" = "Transaction history unavailable";
 "transaction_history_unavailable_description" = "Your %@ history is not available yet.";
 "last_checked" = "Last Checked %@ ago.";

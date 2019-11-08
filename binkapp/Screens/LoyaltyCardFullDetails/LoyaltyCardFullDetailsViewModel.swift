@@ -78,7 +78,9 @@ class LoyaltyCardFullDetailsViewModel {
             break
         case .loginUnavailable:
             //TODO: change to login unavailable screen after is implemented
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            let title = "transaction_history_not_supported_title".localized
+            let description = "transaction_history_not_supported_description".localized
+            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .signUp:
             //TODO: change to sign up screen after is implemented
