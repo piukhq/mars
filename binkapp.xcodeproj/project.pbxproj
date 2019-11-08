@@ -58,6 +58,7 @@
 		3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */; };
 		3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C794D8E23018DBA000A31FD /* BrowseBrandsViewModel.swift */; };
 		3C794D9123018E67000A31FD /* BrowseBrandsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C794D9023018E67000A31FD /* BrowseBrandsRepository.swift */; };
+		3C7AF52B23757FB0005964E0 /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7AF52A23757FB0005964E0 /* FloatExtension.swift */; };
 		3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FD222F073B500FA3031 /* MainScreenRouter.swift */; };
 		3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FDF22F073CE00FA3031 /* MainTabBarViewModel.swift */; };
 		3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE022F073CE00FA3031 /* MainTabBarViewController.swift */; };
@@ -411,6 +412,7 @@
 		3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowseBrandsViewController.xib; sourceTree = "<group>"; };
 		3C794D8E23018DBA000A31FD /* BrowseBrandsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewModel.swift; sourceTree = "<group>"; };
 		3C794D9023018E67000A31FD /* BrowseBrandsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsRepository.swift; sourceTree = "<group>"; };
+		3C7AF52A23757FB0005964E0 /* FloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtension.swift; sourceTree = "<group>"; };
 		3C873FD222F073B500FA3031 /* MainScreenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreenRouter.swift; sourceTree = "<group>"; };
 		3C873FDF22F073CE00FA3031 /* MainTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModel.swift; sourceTree = "<group>"; };
 		3C873FE022F073CE00FA3031 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
@@ -1327,6 +1329,7 @@
 				BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */,
 				3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */,
 				EF8BF1EE233CBCE300D2E5F3 /* CAGradientLayerExtension.swift */,
+				3C7AF52A23757FB0005964E0 /* FloatExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2291,6 +2294,7 @@
 				EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */,
 				BD99D2D8234FDF2C00823FC4 /* SettingsViewController.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,
+				3C7AF52B23757FB0005964E0 /* FloatExtension.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
 				EFF59F19234B73C900CF3992 /* CardDetailInfoTableViewCell.swift in Sources */,
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
