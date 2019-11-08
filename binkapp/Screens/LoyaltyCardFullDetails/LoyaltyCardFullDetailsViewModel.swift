@@ -137,6 +137,10 @@ class LoyaltyCardFullDetailsViewModel {
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
+    func toSecurityAndPrivacyScreen() {
+        router.toPrivacyAndSecurityViewController()
+    }
+    
     func popToRootController() {
         router.popToRootViewController()
     }
