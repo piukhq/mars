@@ -93,7 +93,7 @@ class BarcodeViewController: UIViewController {
         ])
         
         if maximized {
-            numberLabel.text = viewModel.getBarcode()
+            numberLabel.text = viewModel.getBarcodeNumber()
         } else {
             numberLabel.isHidden = viewModel.getCardNumber() == nil
             numberLabel.text = viewModel.getCardNumber()

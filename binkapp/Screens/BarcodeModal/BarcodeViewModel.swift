@@ -33,7 +33,7 @@ class BarcodeViewModel {
         return membershipCard.card?.membershipId
     }
     
-    func getBarcode() -> String {
+    func getBarcodeNumber() -> String {
         return membershipCard.card?.barcode ?? ""
     }
     
