@@ -58,19 +58,13 @@ class BarcodeViewController: UIViewController {
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black
         titleLabel.text = "card_number_title".localized
-        titleLabel.isHidden = maximized
+        titleLabel.isHidden = maximized || viewModel.getCardNumber() == nil
         labelStackView.setCustomSpacing(0.0, after: titleLabel)
         
         labelStackView.alignment = maximized ? .center : .fill
         
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = maximized ? .black : .blueAccent
-        
-        if maximized {
-            numberLabel.text = viewModel.getBarcode()
-        } else {
-            numberLabel.text = viewModel.getCardNumber()
-        }
         
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textColor = .black
@@ -97,6 +91,13 @@ class BarcodeViewController: UIViewController {
             maximiseButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
             maximiseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
+        
+        if maximized {
+            numberLabel.text = viewModel.getBarcode()
+        } else {
+            numberLabel.isHidden = viewModel.getCardNumber() == nil
+            numberLabel.text = viewModel.getCardNumber()
+        }
     }
     
     func maximizeBarcode() {

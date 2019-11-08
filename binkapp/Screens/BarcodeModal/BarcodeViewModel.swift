@@ -29,8 +29,8 @@ class BarcodeViewModel {
         self.membershipCard = membershipCard
     }
     
-    func getCardNumber() -> String {
-        return membershipCard.card?.membershipId ?? ""
+    func getCardNumber() -> String? {
+        return membershipCard.card?.membershipId
     }
     
     func getBarcode() -> String {
