@@ -168,36 +168,26 @@ class MainScreenRouter {
     }
     
     func toPrivacyAndSecurityViewController() {
-        let title = "privacy_and_security_title".localized
-        let body = "privacy_and_security_body".localized
-        let linkText = "privacy_and_security_link".localized
+        let title = "security_and_privacy_title".localized
+        let body = "security_and_privacy_description".localized
         let screenText = title + "\n" + body
         
         let attributedText = NSMutableAttributedString(string: screenText)
-        
+
         attributedText.addAttribute(
             NSAttributedString.Key.font,
             value: UIFont.headline,
             range: NSRange(location: 0, length: title.count)
         )
-        
+
         attributedText.addAttribute(
             NSAttributedString.Key.font,
             value: UIFont.bodyTextLarge,
             range: NSRange(location: title.count, length: body.count)
         )
-        
-        let urlString = "https://bink.com/terms-and-conditions/#privacy-policy"
-        if let validUrl = URL(string: urlString), let range = screenText.range(of: linkText)  {
-            attributedText.addAttribute(.link,
-                                        value: validUrl,
-                                        range: NSRange(range, in: body))
-        }
             
         let configurationModel = ReusableModalConfiguration(title: title, text: attributedText, primaryButtonTitle: nil, secondaryButtonTitle: nil, tabBarBackButton: nil, showCloseButton: true)
-        let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
-        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, delegate: nil)
-        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
+        toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
     func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
