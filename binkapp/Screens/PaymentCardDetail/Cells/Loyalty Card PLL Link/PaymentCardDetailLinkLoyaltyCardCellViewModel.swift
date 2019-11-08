@@ -29,10 +29,21 @@ struct PaymentCardDetailLinkLoyaltyCardCellViewModel: PaymentCardDetailCellViewM
 
     var detailText: String? {
         let balance = membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
-        guard let balanceValue = balance?.value?.stringValue else {
+        guard let balanceValue = balance?.value else {
             return nil // If there is no value, don't show the points label
         }
-        return "\(balance?.prefix ?? "")\(balanceValue) \(balance?.suffix ?? "")"
+        
+        let floatBalanceValue = balanceValue.floatValue
+        
+        guard let prefix = balance?.prefix else {
+            return balanceValue.stringValue + " \(balance?.suffix ?? "")"
+        }
+        
+        if floatBalanceValue.hasDecimals {
+            return "\(prefix)" + String(format: "%.02f", floatBalanceValue)
+        } else {
+            return "\(prefix) \(Int(floatBalanceValue))"
+        }
     }
     
     var iconUrl: URL? {
