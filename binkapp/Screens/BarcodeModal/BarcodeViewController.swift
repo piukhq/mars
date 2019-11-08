@@ -58,7 +58,7 @@ class BarcodeViewController: UIViewController {
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black
         titleLabel.text = "card_number_title".localized
-        titleLabel.isHidden = maximized || viewModel.getCardNumber() == nil
+        titleLabel.isHidden = maximized || viewModel.cardNumber == nil
         labelStackView.setCustomSpacing(0.0, after: titleLabel)
         
         labelStackView.alignment = maximized ? .center : .fill
@@ -71,7 +71,7 @@ class BarcodeViewController: UIViewController {
         descriptionLabel.textAlignment = .justified
         descriptionLabel.isHidden = maximized
         
-        switch viewModel.getBarcodeType() {
+        switch viewModel.barcodeType {
         case .loyaltyCard:
             descriptionLabel.text = "barcode_card_description".localized
         case .coupon:
@@ -93,10 +93,10 @@ class BarcodeViewController: UIViewController {
         ])
         
         if maximized {
-            numberLabel.text = viewModel.getBarcodeNumber()
+            numberLabel.text = viewModel.barcodeNumber
         } else {
-            numberLabel.isHidden = viewModel.getCardNumber() == nil
-            numberLabel.text = viewModel.getCardNumber()
+            numberLabel.isHidden = viewModel.cardNumber == nil
+            numberLabel.text = viewModel.cardNumber
         }
     }
     
