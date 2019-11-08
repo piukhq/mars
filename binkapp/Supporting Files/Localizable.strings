@@ -94,16 +94,15 @@
 "about_membership_title" = "About membership";
 "about_membership_plan_title" = "About %@";
 "learn_more" = "Learn more about how it works";
+
 "security_and_privacy_title" = "Security and privacy";
+"security_and_privacy_description" = "Bink takes the security of your information extremely seriously and uses a range of best in class methods to protect your information.\nBink is a registered PCI Level 1 Service Provider for the protection of sensitive first party data and personally identifiable information.";
 "security_and_privacy_message" = "How we protect your data";
 "security_and_privacy_alert_title" = "Is my Data Secure?";
-"security_and_privacy_alert_message" = "We take security very seriously and keeping your personal details safe is very important to us.\nWe are a PCI certified service provider which means that we meet the highest level of security standards set by the payment card industry. This certification requires us to employ a wide range of measures designed to protect the security of your information. We recommend that you secure your app with Touch ID and/or a passcode for an extra layer of security.\nWe carefully check all the parties who we share your personal information with. To find out more you can see our Privacy Policy here.";
+
 "delete_card_title" = "Delete this card";
 "delete_card_plan_title" = "Delete %@";
 "delete_card_message" = "Remove this card from Bink";
-
-"privacy_and_security_body" = "We take security very seriously and keeping your personal details safe is very important to us.\nWe are a PCI certified service provider which means that we meet the highest level of security standards set by the payment card industry. This certification requires us to employ a wide range of measures designed to protect the security of your information. We recommend that you secure your app with Touch ID and/or a passcode for an extra layer of security.\nWe carefully check all the parties who we share your personal information with. To find out more you can see our Privacy Policy here.";
-"privacy_and_security_link" = "here";
 
 "transaction_history_unavailable_title" = "Transaction history unavailable";
 "transaction_history_unavailable_description" = "Your %@ history is not available yet.";
@@ -146,7 +145,6 @@
 "link_module_to_number_of_payment_cards_message" = "To %d of %d cards";
 
 "terms_and_conditions_title" = "Terms and conditions";
-"privacy_and_security_title" = "Privacy and Security";
 
 "native_join_unavailable_title" = "Native join unavailable";
 "native_join_unavailable_description" = "You can go to the merchant website to join then come back and add your card. Or we can email you the link so you can sign up on your computer. Copy needed.";
@@ -158,7 +156,6 @@
 
 "lorem_ipsum" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque, nisi ut sagittis luctus, justo orci porttitor nulla, ac ultricies sem mi quis nunc. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Curabitur placerat sagittis tortor quis vehicula. Fusce et aliquam tellus, eu semper sem. Proin eu eleifend nunc. Aliquam id lacus faucibus, euismod orci in, tempor felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam finibus commodo dui sit amet imperdiet. Phasellus tincidunt elementum euismod. Aliquam lobortis sapien in justo varius pulvinar. Morbi ac placerat sem. Maecenas ut auctor purus.Etiam quis blandit sapien. Nam urna quam, tempus ut massa sed, blandit ultrices neque. Sed sagittis vel quam ac interdum. Nunc tempus eros eget leo volutpat, ac sodales ex scelerisque. Aenean vel nibh lacus. Sed convallis faucibus euismod. Sed diam dui, commodo blandit tempus in, faucibus quis ligula. Integer condimentum mollis bibendum. Nullam feugiat rutrum mauris a luctus. Morbi dignissim, orci ac tempor bibendum, augue diam pharetra massa, vel commodo leo sem sed nisl. Pellentesque egestas egestas quam, nec laoreet dolor. Curabitur commodo scelerisque nisl ac mollis. Morbi egestas arcu nec convallis mollis.";
 
-"security_and_privacy_description" = "Bink takes the security of your information extremely seriously and uses a range of best in class methods to protect your information.\nBink is a registered PCI Level 1 Service Provider for the protection of sensitive first party data and personally identifiable information.";
 "how_it_works_title" = "How it works";
 "how_it_works_description" = "Bink is the only app where you can store and view all your loyalty programmes on your mobile, and link your everyday payment cards to automatically collect points and rewards.\nThrough our unique technology platform, Payment Linked Loyalty, you can use your everyday payment cards to automatically collect rewards. Using Bink, you will never miss rewards opportunities from your favourite brands again.";
 
