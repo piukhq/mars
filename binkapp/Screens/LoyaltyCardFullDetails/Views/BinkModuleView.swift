@@ -98,7 +98,7 @@ private extension BinkModuleView {
                 
                 let floatBalanceValue = balance.value?.floatValue ?? 0
                 
-                if (floatBalanceValue - floatBalanceValue.rounded(.down) > 0) {
+                if floatBalanceValue.hasDecimals {
                     titleText = prefix + String(format: "%.02f", floatBalanceValue) + " " + suffix
                 } else {
                     titleText = prefix + "\(value.intValue)" + " " + suffix

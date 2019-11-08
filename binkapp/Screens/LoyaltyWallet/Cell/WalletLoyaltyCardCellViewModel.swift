@@ -105,7 +105,7 @@ struct WalletLoyaltyCardCellViewModel {
             return balance?.value?.stringValue ?? ""
         }
         
-        if (floatBalanceValue - floatBalanceValue.rounded(.down) > 0) {
+        if floatBalanceValue.hasDecimals {
             return "\(prefix)" + String(format: "%.02f", floatBalanceValue)
         } else {
             return "\(prefix) \(Int(floatBalanceValue))"
