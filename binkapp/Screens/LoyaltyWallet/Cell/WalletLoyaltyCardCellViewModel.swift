@@ -102,7 +102,7 @@ struct WalletLoyaltyCardCellViewModel {
         let floatBalanceValue = balance?.value?.floatValue ?? 0
         
         guard let prefix = balance?.prefix else {
-            return "\(floatBalanceValue)"
+            return balance?.value?.stringValue ?? ""
         }
         
         if (floatBalanceValue - floatBalanceValue.rounded(.down) > 0) {
