@@ -348,6 +348,11 @@
 		EFA5F7672379BD690027AB80 /* PLRStampsActiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA5F7652379BD690027AB80 /* PLRStampsActiveCell.xib */; };
 		EFA5F76A2379BD790027AB80 /* PLRStampsInactiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F7682379BD790027AB80 /* PLRStampsInactiveCell.swift */; };
 		EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */; };
+		EFB7ED5C2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */; };
+		EFB7ED612379CA4000B72D06 /* PLRRewardsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */; };
+		EFB7ED622379CA4000B72D06 /* PLRRewardsHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */; };
+		EFB7ED652379CA5900B72D06 /* PLRRewardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */; };
+		EFB7ED662379CA5900B72D06 /* PLRRewardDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */; };
 		EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8653A232FCDD800036C17 /* ReasonCode.swift */; };
 		EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */; };
 		EFF59F15234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */; };
@@ -758,6 +763,11 @@
 		EFA5F7652379BD690027AB80 /* PLRStampsActiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRStampsActiveCell.xib; sourceTree = "<group>"; };
 		EFA5F7682379BD790027AB80 /* PLRStampsInactiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRStampsInactiveCell.swift; sourceTree = "<group>"; };
 		EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRStampsInactiveCell.xib; sourceTree = "<group>"; };
+		EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRBaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardsHistoryViewController.swift; sourceTree = "<group>"; };
+		EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRRewardsHistoryViewController.xib; sourceTree = "<group>"; };
+		EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewController.swift; sourceTree = "<group>"; };
+		EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRRewardDetailViewController.xib; sourceTree = "<group>"; };
 		EFD8653A232FCDD800036C17 /* ReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCode.swift; sourceTree = "<group>"; };
 		EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingSupportModel.swift; sourceTree = "<group>"; };
 		EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLinkLoyaltyCardCell.swift; sourceTree = "<group>"; };
@@ -1821,6 +1831,8 @@
 		EFA5F7562379B0EF0027AB80 /* PLR */ = {
 			isa = PBXGroup;
 			children = (
+				EFB7ED5E2379CA1800B72D06 /* PLR History */,
+				EFB7ED5D2379CA0C00B72D06 /* PLR Detail */,
 				EFA5F7572379B0F70027AB80 /* Views */,
 			);
 			path = PLR;
@@ -1831,6 +1843,7 @@
 			children = (
 				EFA5F75B2379BD160027AB80 /* Stamps */,
 				EFA5F75A2379BD100027AB80 /* Accumulator */,
+				EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1855,6 +1868,24 @@
 				EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */,
 			);
 			path = Stamps;
+			sourceTree = "<group>";
+		};
+		EFB7ED5D2379CA0C00B72D06 /* PLR Detail */ = {
+			isa = PBXGroup;
+			children = (
+				EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */,
+				EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */,
+			);
+			path = "PLR Detail";
+			sourceTree = "<group>";
+		};
+		EFB7ED5E2379CA1800B72D06 /* PLR History */ = {
+			isa = PBXGroup;
+			children = (
+				EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */,
+				EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */,
+			);
+			path = "PLR History";
 			sourceTree = "<group>";
 		};
 		EFCB2C172329366A0060F73B /* Supporting Files */ = {
@@ -2063,11 +2094,13 @@
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
+				EFB7ED662379CA5900B72D06 /* PLRRewardDetailViewController.xib in Resources */,
 				3CD3493822F99E1D000C1F4D /* NunitoSans-Regular.ttf in Resources */,
 				3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */,
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,
 				EFF59F25234DEE8E00CF3992 /* DetailNavigationTitleView.xib in Resources */,
 				EFA5F7632379BD520027AB80 /* PLRAccumulatorInactiveCell.xib in Resources */,
+				EFB7ED622379CA4000B72D06 /* PLRRewardsHistoryViewController.xib in Resources */,
 				EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */,
 				3CD3493E22F99E1D000C1F4D /* NunitoSans-Black.ttf in Resources */,
 				EFA5F7672379BD690027AB80 /* PLRStampsActiveCell.xib in Resources */,
@@ -2427,6 +2460,7 @@
 				EF4B465E2343B5FF009A3651 /* RectangleView.swift in Sources */,
 				EF758E1023225F45000D26A9 /* UIApplication.swift in Sources */,
 				3CEABFCE2316AB74009B1122 /* MembershipCardAccountModel.swift in Sources */,
+				EFB7ED5C2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift in Sources */,
 				B7385F54234780D2007B88DA /* BinkSwitch.swift in Sources */,
 				EFA5F7382379A7C70027AB80 /* CD_LinkingSupport.swift in Sources */,
 				B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */,
@@ -2515,6 +2549,7 @@
 				EFA5F7262379A7C70027AB80 /* CD_PaymentCardAccountConsents.swift in Sources */,
 				EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */,
 				3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */,
+				EFB7ED612379CA4000B72D06 /* PLRRewardsHistoryViewController.swift in Sources */,
 				EFA5F72C2379A7C70027AB80 /* CD_MembershipTransaction.swift in Sources */,
 				EFA5F7102379A7C70027AB80 /* _CD_MembershipCard.swift in Sources */,
 				B7665992231E57AE00B327BE /* CardDetailsInfoView.swift in Sources */,
@@ -2602,6 +2637,7 @@
 				EFA5F7252379A7C70027AB80 /* CD_Card.swift in Sources */,
 				3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */,
 				EFA5F7402379A7C70027AB80 /* _CD_PaymentCardCard.swift in Sources */,
+				EFB7ED652379CA5900B72D06 /* PLRRewardDetailViewController.swift in Sources */,
 				EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */,
 				EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */,
 				3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */,

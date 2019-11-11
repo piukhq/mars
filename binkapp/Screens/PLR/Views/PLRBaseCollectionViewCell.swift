@@ -1,5 +1,5 @@
-///
-//  PLRStampsInactiveCell.swift
+//
+//  PLRBaseCollectionViewCell.swift
 //  binkapp
 //
 //  Created by Nick Farrant on 11/11/2019.
@@ -8,8 +8,6 @@
 
 import UIKit
 
-class PLRStampsInactiveCell: PLRBaseCollectionViewCell {
-
+class PLRBaseCollectionViewCell: UICollectionViewCell {
     
-
 }

@@ -8,11 +8,8 @@
 
 import UIKit
 
-class PLRStampsActiveCell: UICollectionViewCell {
+class PLRStampsActiveCell: PLRBaseCollectionViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    
 
 }

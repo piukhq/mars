@@ -8,11 +8,8 @@
 
 import UIKit
 
-class PLRAccumulatorActiveCell: UICollectionViewCell {
+class PLRAccumulatorActiveCell: PLRBaseCollectionViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    
 
 }
