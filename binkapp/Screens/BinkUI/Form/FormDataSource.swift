@@ -90,6 +90,11 @@ extension FormDataSource {
             guard let self = self else { return }
             self.delegate?.formDataSource(self, fieldDidExit: field)
         }
+
+        let manualValidateBlock: FormField.ManualValidateBlock = { [weak self] field in
+            guard let self = self, let delegate = self.delegate else { return false }
+            return delegate.formDataSource(self, manualValidate: field)
+        }
         
         // Card Number
         
@@ -109,18 +114,19 @@ extension FormDataSource {
         
         let yearValue = Calendar.current.component(.year, from: Date())
         let yearData = Array(yearValue...yearValue + Constants.expiryYearsInTheFuture).compactMap { FormPickerData("\($0)", backingData: $0) }
-        
+
         let expiryField = FormField(
             title: "Expiry",
             placeholder: "MM/YY",
             validation: "^(0[1-9]|1[012])[\\/](19|20)\\d\\d$",
+            validationErrorMessage: "Invalid expiry date",
             fieldType: .expiry(months: monthData, years: yearData),
             updated: updatedBlock,
             shouldChange: shouldChangeBlock,
             fieldExited: fieldExitedBlock,
-            pickerSelected: pickerUpdatedBlock
-        )
-        
+            pickerSelected: pickerUpdatedBlock,
+            manualValidate: manualValidateBlock)
+
         let nameOnCardField = FormField(
             title: "Name on card",
             placeholder: "J Appleseed",

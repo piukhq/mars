@@ -213,6 +213,10 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
 
         viewModel.setPaymentCardExpiry(month: month, year: year)
     }
+
+    func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
+        return false
+    }
 }
 
 private extension Selector {

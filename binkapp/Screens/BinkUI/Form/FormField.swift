@@ -135,13 +135,11 @@ class FormField {
         
         if fieldType == .cardNumber {
             return PaymentCardType.validate(fullPan: value)
-        } else if fieldType == .confirmPassword {
+        } else {
             if let validateBlock = manualValidate{
                 return validateBlock(self)
-            } else {
-                return false
             }
-        } else {
+            
             guard let validation = validation else { return !value.isEmpty }
             
             let predicate = NSPredicate(format: "SELF MATCHES %@", validation)
