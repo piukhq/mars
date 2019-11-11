@@ -215,7 +215,21 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
     }
 
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
-        return false
+        switch field.fieldType {
+        case .expiry(months: _, years: _):
+            // Create date using components from string e.g. 11/2019
+            // Check if date is valid
+            guard let dateStrings = field.value?.components(separatedBy: "/") else { return false }
+            let monthString = dateStrings[0]
+            let yearString = dateStrings[1]
+            guard let month = Int(monthString) else { return false }
+            guard let year = Int(yearString) else { return false }
+            guard let expiryDate = Date.makeDate(year: year, month: month, day: 01, hr: 00, min: 00, sec: 00) else { return false }
+
+            return !expiryDate.isLaterThan(date: Date(), toGranularity: .month)
+        default:
+            return false
+        }
     }
 }
 
