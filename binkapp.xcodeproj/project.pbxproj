@@ -340,6 +340,14 @@
 		EFA5F7532379AAB20027AB80 /* _CD_VoucherEarn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F74F2379AAB20027AB80 /* _CD_VoucherEarn.swift */; };
 		EFA5F7542379AAB20027AB80 /* CD_VoucherEarn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F7502379AAB20027AB80 /* CD_VoucherEarn.swift */; };
 		EFA5F7552379AAB20027AB80 /* _CD_VoucherBurn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F7512379AAB20027AB80 /* _CD_VoucherBurn.swift */; };
+		EFA5F75E2379BD3A0027AB80 /* PLRAccumulatorActiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F75C2379BD3A0027AB80 /* PLRAccumulatorActiveCell.swift */; };
+		EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA5F75D2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib */; };
+		EFA5F7622379BD520027AB80 /* PLRAccumulatorInactiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F7602379BD520027AB80 /* PLRAccumulatorInactiveCell.swift */; };
+		EFA5F7632379BD520027AB80 /* PLRAccumulatorInactiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA5F7612379BD520027AB80 /* PLRAccumulatorInactiveCell.xib */; };
+		EFA5F7662379BD690027AB80 /* PLRStampsActiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F7642379BD690027AB80 /* PLRStampsActiveCell.swift */; };
+		EFA5F7672379BD690027AB80 /* PLRStampsActiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA5F7652379BD690027AB80 /* PLRStampsActiveCell.xib */; };
+		EFA5F76A2379BD790027AB80 /* PLRStampsInactiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F7682379BD790027AB80 /* PLRStampsInactiveCell.swift */; };
+		EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */; };
 		EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8653A232FCDD800036C17 /* ReasonCode.swift */; };
 		EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */; };
 		EFF59F15234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */; };
@@ -742,6 +750,14 @@
 		EFA5F74F2379AAB20027AB80 /* _CD_VoucherEarn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_VoucherEarn.swift; sourceTree = "<group>"; };
 		EFA5F7502379AAB20027AB80 /* CD_VoucherEarn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_VoucherEarn.swift; sourceTree = "<group>"; };
 		EFA5F7512379AAB20027AB80 /* _CD_VoucherBurn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_VoucherBurn.swift; sourceTree = "<group>"; };
+		EFA5F75C2379BD3A0027AB80 /* PLRAccumulatorActiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRAccumulatorActiveCell.swift; sourceTree = "<group>"; };
+		EFA5F75D2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRAccumulatorActiveCell.xib; sourceTree = "<group>"; };
+		EFA5F7602379BD520027AB80 /* PLRAccumulatorInactiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRAccumulatorInactiveCell.swift; sourceTree = "<group>"; };
+		EFA5F7612379BD520027AB80 /* PLRAccumulatorInactiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRAccumulatorInactiveCell.xib; sourceTree = "<group>"; };
+		EFA5F7642379BD690027AB80 /* PLRStampsActiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRStampsActiveCell.swift; sourceTree = "<group>"; };
+		EFA5F7652379BD690027AB80 /* PLRStampsActiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRStampsActiveCell.xib; sourceTree = "<group>"; };
+		EFA5F7682379BD790027AB80 /* PLRStampsInactiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRStampsInactiveCell.swift; sourceTree = "<group>"; };
+		EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRStampsInactiveCell.xib; sourceTree = "<group>"; };
 		EFD8653A232FCDD800036C17 /* ReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCode.swift; sourceTree = "<group>"; };
 		EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingSupportModel.swift; sourceTree = "<group>"; };
 		EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLinkLoyaltyCardCell.swift; sourceTree = "<group>"; };
@@ -1243,6 +1259,7 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				EFA5F7562379B0EF0027AB80 /* PLR */,
 				EF8B7013235DDC36006CE3DD /* Onboarding */,
 				EF335C7C234F432700D49223 /* EmptyWallet */,
 				3CC267F322F45A3500F0F9E3 /* AddingOptions */,
@@ -1801,6 +1818,45 @@
 			path = PLR;
 			sourceTree = "<group>";
 		};
+		EFA5F7562379B0EF0027AB80 /* PLR */ = {
+			isa = PBXGroup;
+			children = (
+				EFA5F7572379B0F70027AB80 /* Views */,
+			);
+			path = PLR;
+			sourceTree = "<group>";
+		};
+		EFA5F7572379B0F70027AB80 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EFA5F75B2379BD160027AB80 /* Stamps */,
+				EFA5F75A2379BD100027AB80 /* Accumulator */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EFA5F75A2379BD100027AB80 /* Accumulator */ = {
+			isa = PBXGroup;
+			children = (
+				EFA5F75C2379BD3A0027AB80 /* PLRAccumulatorActiveCell.swift */,
+				EFA5F75D2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib */,
+				EFA5F7602379BD520027AB80 /* PLRAccumulatorInactiveCell.swift */,
+				EFA5F7612379BD520027AB80 /* PLRAccumulatorInactiveCell.xib */,
+			);
+			path = Accumulator;
+			sourceTree = "<group>";
+		};
+		EFA5F75B2379BD160027AB80 /* Stamps */ = {
+			isa = PBXGroup;
+			children = (
+				EFA5F7642379BD690027AB80 /* PLRStampsActiveCell.swift */,
+				EFA5F7652379BD690027AB80 /* PLRStampsActiveCell.xib */,
+				EFA5F7682379BD790027AB80 /* PLRStampsInactiveCell.swift */,
+				EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */,
+			);
+			path = Stamps;
+			sourceTree = "<group>";
+		};
 		EFCB2C172329366A0060F73B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -2011,7 +2067,10 @@
 				3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */,
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,
 				EFF59F25234DEE8E00CF3992 /* DetailNavigationTitleView.xib in Resources */,
+				EFA5F7632379BD520027AB80 /* PLRAccumulatorInactiveCell.xib in Resources */,
+				EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */,
 				3CD3493E22F99E1D000C1F4D /* NunitoSans-Black.ttf in Resources */,
+				EFA5F7672379BD690027AB80 /* PLRStampsActiveCell.xib in Resources */,
 				3CD3493422F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf in Resources */,
 				B7665994231E57CC00B327BE /* CardDetailsInfoView.xib in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
@@ -2033,6 +2092,7 @@
 				B766599A2320F68D00B327BE /* HyperlinkAlertController.xib in Resources */,
 				BD9FB6B72338120700E5559A /* TransactionsViewController.xib in Resources */,
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
+				EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */,
 				3C7067F0232FD52D00AB88A5 /* SimpleInfoViewController.xib in Resources */,
 				3CD3493D22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf in Resources */,
 				3CADDEB1231566E5006C3D9C /* LoginTextFieldView.xib in Resources */,
@@ -2332,6 +2392,7 @@
 				3CF029EF22F45ACE009A0E61 /* AddingOptionView.swift in Sources */,
 				B7D577B823180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift in Sources */,
 				EF8BF1EF233CBCE300D2E5F3 /* CAGradientLayerExtension.swift in Sources */,
+				EFA5F76A2379BD790027AB80 /* PLRStampsInactiveCell.swift in Sources */,
 				EFA5F7302379A7C70027AB80 /* CD_FeatureSet.swift in Sources */,
 				EF58844C236060B50011698D /* OnboardingLearningView.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
@@ -2361,6 +2422,7 @@
 				3CEABFD22316ABA9009B1122 /* MembershipCardAmount.swift in Sources */,
 				EFA5F7522379AAB20027AB80 /* CD_VoucherBurn.swift in Sources */,
 				3C17FC2F22F2C69200E423A2 /* MembershipCardModel.swift in Sources */,
+				EFA5F7662379BD690027AB80 /* PLRStampsActiveCell.swift in Sources */,
 				B7FE19BA234391B000F2D6A0 /* PaymentCardCell.swift in Sources */,
 				EF4B465E2343B5FF009A3651 /* RectangleView.swift in Sources */,
 				EF758E1023225F45000D26A9 /* UIApplication.swift in Sources */,
@@ -2516,6 +2578,7 @@
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
 				EFA5F6CD2379A4F00027AB80 /* VoucherModel.swift in Sources */,
 				EF2E8825233A6FCF00F678F3 /* CardAlertView.swift in Sources */,
+				EFA5F75E2379BD3A0027AB80 /* PLRAccumulatorActiveCell.swift in Sources */,
 				3CF029F222F45AEC009A0E61 /* AddingOptionsViewController.swift in Sources */,
 				BDB0187E232E1FC800BFFA18 /* PaymentCardType.swift in Sources */,
 				3CF029F822F45B8C009A0E61 /* AddingOptionsEnum.swift in Sources */,
@@ -2533,6 +2596,7 @@
 				3CEABFCC2316AB65009B1122 /* MembershipCardStatusModel.swift in Sources */,
 				EFA5F7122379A7C70027AB80 /* _CD_Balance.swift in Sources */,
 				EFA5F73E2379A7C70027AB80 /* CD_MembershipCardBalance.swift in Sources */,
+				EFA5F7622379BD520027AB80 /* PLRAccumulatorInactiveCell.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,
 				EFA5F7332379A7C70027AB80 /* CD_AuthoriseField.swift in Sources */,
 				EFA5F7252379A7C70027AB80 /* CD_Card.swift in Sources */,
