@@ -61,12 +61,12 @@ class LoyaltyCardFullDetailsViewModel {
         case .login:
             //TODO: change to login screen after is implemented
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .otherLogin)
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .loginFailed, existingMembershipCard: membershipCard)
             break
         case .loginChanges:
             //TODO: change to login changes screen after is implemented
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .otherLogin)
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .loginFailed, existingMembershipCard: membershipCard)
             break
         case .transactions:
             router.toTransactionsViewController(membershipCard: membershipCard)
@@ -137,6 +137,10 @@ class LoyaltyCardFullDetailsViewModel {
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
+    func toSecurityAndPrivacyScreen() {
+        router.toPrivacyAndSecurityViewController()
+    }
+    
     func popToRootController() {
         router.popToRootViewController()
     }
@@ -152,14 +156,10 @@ class LoyaltyCardFullDetailsViewModel {
     
     func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.repository.deleteMembershipCard(id: self.membershipCard.id, onSuccess: { _ in
+            guard let self = self else { return }
+            self.repository.delete(self.membershipCard) {
                 yesCompletion()
-            }, onError: { (error: Error) in
-                self.router.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
-            })
+            }
         }, noCompletion: {
             noCompletion()
         })

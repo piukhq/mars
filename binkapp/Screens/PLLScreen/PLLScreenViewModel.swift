@@ -21,8 +21,8 @@ class PLLScreenViewModel {
         return paymentCards == nil ? true : paymentCards?.count == 0
     }
     
-    var isNavigationVisisble: Bool {
-        return isEmptyPll || journey == .newCard
+    var shouldShowBackButton: Bool {
+        return journey != .newCard
     }
     
     var linkedPaymentCards: [CD_PaymentCard]? {
@@ -36,6 +36,10 @@ class PLLScreenViewModel {
     
     var primaryMessageText: String {
         return isEmptyPll ? "pll_screen_link_message".localized : "pll_screen_add_message".localized
+    }
+    
+    var secondaryMessageText: String {
+        return "pll_screen_secondary_message".localized
     }
         
     init(membershipCard: CD_MembershipCard, repository: PLLScreenRepository, router: MainScreenRouter, journey: PllScreenJourney) {
@@ -62,14 +66,18 @@ class PLLScreenViewModel {
     }
     
     func reloadPaymentCards(){
-        Current.wallet.reload()
+        Current.wallet.refreshLocal()
     }
     
     func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion()
-        }) { (error) in
-            self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+        }) { [weak self] in
+            completion()
+            self?.displaySimplePopup(
+                title: "pll_error_title".localized,
+                message: "pll_error_message".localized
+            )
         }
     }
     

@@ -42,6 +42,15 @@ class LoyaltyWalletViewModel: WalletViewModel {
         router.toLoyaltyFullDetailsScreen(membershipCard: card)
     }
 
+    func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
+        switch walletPrompt.type {
+        case .loyaltyJoin(let membershipPlan):
+            router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+        case .addPaymentCards:
+            router.toAddPaymentViewController()
+        }
+    }
+
     func showDeleteConfirmationAlert(card: CD_MembershipCard, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             self?.repository.delete(card, completion: yesCompletion)
@@ -50,15 +59,5 @@ class LoyaltyWalletViewModel: WalletViewModel {
                 noCompletion()
             }
         })
-    }
-
-    func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
-        switch walletPrompt.type {
-        case .loyaltyJoin(let membershipPlan):
-            router.toAddOrJoinViewController(membershipPlan: membershipPlan)
-        case .addPaymentCards:
-            router.toAddPaymentViewController()
-        }
-
     }
 }

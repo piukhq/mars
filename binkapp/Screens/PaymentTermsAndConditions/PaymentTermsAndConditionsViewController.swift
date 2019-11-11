@@ -13,7 +13,7 @@ protocol PaymentTermsAndConditionsViewControllerDelegate: AnyObject {
 }
 
 class PaymentTermsAndConditionsViewController: UIViewController {
-    @IBOutlet private weak var floatingButtonsContainer: BinkFloatingButtonsView!
+    @IBOutlet private weak var floatingButtonsContainer: BinkPrimarySecondaryButtonView!
     @IBOutlet private weak var textView: UITextView!
 
     weak var delegate: PaymentTermsAndConditionsViewControllerDelegate?
@@ -50,12 +50,20 @@ class PaymentTermsAndConditionsViewController: UIViewController {
         textView.attributedText = viewModel.text
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
         
-        floatingButtonsContainer.isHidden = viewModel.shouldHideButtonsView
-        
-        floatingButtonsContainer.configure(
-            primaryButtonTitle: primary,
-            secondaryButtonTitle: secondary
-        )
+        floatingButtonsContainer.configure(primaryButtonTitle: primary, secondaryButtonTitle: secondary, floating: true)
+
+        floatingButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
+        textView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            floatingButtonsContainer.leftAnchor.constraint(equalTo: view.leftAnchor),
+            floatingButtonsContainer.rightAnchor.constraint(equalTo: view.rightAnchor),
+            floatingButtonsContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
+            textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            textView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
+            textView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
+            textView.bottomAnchor.constraint(equalTo: floatingButtonsContainer.bottomAnchor),
+        ])
     }
 }
 
@@ -82,15 +90,15 @@ private extension PaymentTermsAndConditionsViewController {
 
 // MARK: - BinkFloatingButtonsDelegate
 
-extension PaymentTermsAndConditionsViewController: BinkFloatingButtonsViewDelegate {
-    func binkFloatingButtonsPrimaryButtonWasTapped(_: BinkFloatingButtonsView) {
+extension PaymentTermsAndConditionsViewController: BinkPrimarySecondaryButtonViewDelegate {
+    func binkFloatingButtonsPrimaryButtonWasTapped(_: BinkPrimarySecondaryButtonView) {
         viewModel.mainButtonWasTapped() { [weak self] in
             guard let self = self, let delegate = self.delegate else { return }
             delegate.paymentTermsAndConditionsViewControllerDidAccept(self)
         }
     }
     
-    func binkFloatingButtonsSecondaryButtonWasTapped(_: BinkFloatingButtonsView) {
+    func binkFloatingButtonsSecondaryButtonWasTapped(_: BinkPrimarySecondaryButtonView) {
         viewModel.secondaryButtonWasTapped()
     }
 }

@@ -9,13 +9,13 @@
 import Foundation
 
 struct AddPaymentCardViewModel {
-    private let apiManager: ApiManager
     private let router: MainScreenRouter
+    private let repository: PaymentWalletRepositoryProtocol
     let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
-    init(apiManager: ApiManager, router: MainScreenRouter, paymentCard: PaymentCardCreateModel) {
-        self.apiManager = apiManager
+    init(router: MainScreenRouter, repository: PaymentWalletRepositoryProtocol, paymentCard: PaymentCardCreateModel) {
         self.router = router
+        self.repository = repository
         self.paymentCard = paymentCard
     }
 
@@ -53,16 +53,7 @@ struct AddPaymentCardViewModel {
     }
 
     func addPaymentCard(completion: @escaping (Bool) -> Void) {
-        guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard) else {
-            return
-        }
-
-        try? apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest.asDictionary(), onSuccess: { (response: PaymentCardResponse) in
-            completion(true)
-        }, onError: { error in
-            print(error)
-            completion(false)
-        })
+        repository.addPaymentCard(paymentCard, completion: completion)
     }
 
     func popToRootViewController() {

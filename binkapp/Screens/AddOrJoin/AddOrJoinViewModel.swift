@@ -21,11 +21,12 @@ class AddOrJoinViewModel {
     }
     
     func toAuthAndAddScreen() {
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .firstLogin)
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .login)
     }
     
     func didSelectAddNewCard() {
-        guard let enrolFields = membershipPlan.account?.enrolFields, enrolFields.count > 0 else {
+        let fields = membershipPlan.featureSet?.formattedLinkingSupport
+        guard (fields?.contains(where: { $0.value == LinkingSupportType.enrol.rawValue }) ?? false) else {
             toNativeJoinUnavailable()
             return
         }
@@ -44,10 +45,8 @@ class AddOrJoinViewModel {
         
         var configurationModel: ReusableModalConfiguration
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        
         guard let planURL = membershipPlan.account?.planURL else {
-            configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
+            configurationModel = ReusableModalConfiguration(title: "", text: attributedText, showCloseButton: true)
             router.toReusableModalTemplateViewController(configurationModel: configurationModel)
             return
         }
@@ -56,7 +55,7 @@ class AddOrJoinViewModel {
             if let url = URL(string: planURL) {
                 UIApplication.shared.open(url)
             }
-        }, tabBarBackButton: backButton)
+        }, showCloseButton: true)
         
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
@@ -81,6 +80,10 @@ class AddOrJoinViewModel {
     
     @objc func popViewController() {
         router.popViewController()
+    }
+    
+    @objc func dismissViewController() {
+        router.dismissViewController()
     }
     
     func popToRootViewController() {

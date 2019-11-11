@@ -9,6 +9,12 @@
 import UIKit
 
 struct SettingsFactory {
+    private let router: MainScreenRouter
+    
+    init(router: MainScreenRouter) {
+        self.router = router
+    }
+    
     func sectionData() -> [SettingsSection] {
         
         var sections = [SettingsSection]()
@@ -34,7 +40,11 @@ struct SettingsFactory {
             SettingsRow(
                 title: "settings_row_faqs_title".localized,
                 subtitle: "settings_row_faqs_subtitle".localized,
-                action: .notImplemented
+                action: .customAction(action: {
+                    MainScreenRouter.openExternalURL(
+                        with: "http://help.bink.com/en/collections/321300-bink-faq-s"
+                    )
+                })
             ),
             SettingsRow(
                 title: "settings_row_contact_title".localized,
@@ -59,12 +69,12 @@ struct SettingsFactory {
             SettingsRow(
                 title: "settings_row_security_title".localized,
                 subtitle: "settings_row_security_subtitle".localized,
-                action: .notImplemented
+                action: .pushToReusable(screen: .securityAndPrivacy)
             ),
             SettingsRow(
                 title: "settings_row_howitworks_title".localized,
                 subtitle: "settings_row_howitworks_subtitle".localized,
-                action: .notImplemented
+                action: .pushToReusable(screen: .howItWorks)
             )
         ])
         

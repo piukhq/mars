@@ -22,8 +22,8 @@ enum InputType: Int {
 }
 
 enum FormPurpose {
-    case firstLogin
-    case otherLogin
+    case login
+    case loginFailed
     case signUp
     case ghostCard
 }
@@ -34,15 +34,16 @@ class AuthAndAddViewModel {
     private let membershipPlan: CD_MembershipPlan
     
     private var fieldsViews: [InputValidation] = []
-    private var membershipCard: MembershipCardPostModel?
+    private var membershipCardPostModel: MembershipCardPostModel?
+    private var existingMembershipCard: CD_MembershipCard?
     
     var formPurpose: FormPurpose
     
     var title: String {
         switch formPurpose {
         case .signUp: return "sign_up_new_card_title".localized
-        case .firstLogin: return "log_in_title".localized
-        case .otherLogin: return "log_in_title".localized
+        case .login: return "log_in_title".localized
+        case .loginFailed: return "log_in_title".localized
         case .ghostCard: return "register_ghost_card_title".localized
         }
     }
@@ -50,30 +51,31 @@ class AuthAndAddViewModel {
     var buttonTitle: String {
         switch formPurpose {
         case .signUp: return "sign_up_button_title".localized
-        case .firstLogin: return "log_in_title".localized
-        case .otherLogin: return "log_in_title".localized
+        case .login: return "log_in_title".localized
+        case .loginFailed: return "log_in_title".localized
         case .ghostCard: return "register_card_title".localized
         }
     }
     
     var accountButtonShouldHide: Bool {
-        return formPurpose != .firstLogin || formPurpose == .ghostCard
+        return formPurpose != .login || formPurpose == .ghostCard
     }
     
-    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose) {
+    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil) {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
-        self.membershipCard = MembershipCardPostModel(account: AccountPostModel(addFields: [], authoriseFields: [], enrolFields: []), membershipPlan: Int(membershipPlan.id))
+        self.membershipCardPostModel = MembershipCardPostModel(account: AccountPostModel(), membershipPlan: Int(membershipPlan.id))
+        self.existingMembershipCard = existingMembershipCard
         self.formPurpose = formPurpose
     }
     
     func getDescription() -> String? {
         switch formPurpose {
-        case .firstLogin:
+        case .login:
             guard let planName = membershipPlan.account?.planName else { return nil }
             return String(format: "auth_screen_description".localized, planName)
-        case .otherLogin:
+        case .loginFailed:
             return getDescriptionForOtherLogin()
         case .signUp:
             guard let companyName = membershipPlan.account?.companyName else { return nil }
@@ -110,8 +112,13 @@ class AuthAndAddViewModel {
     func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
+        
+        guard formPurpose != .ghostCard else {
+            try addGhostCard(with: formFields, checkboxes: checkboxes)
+            return
+        }
                     
-        let request = try AddMembershipCardRequest(jsonCard: membershipCard.asDictionary(), completion: { [weak self] card in
+        let request = try AddMembershipCardRequest(jsonCard: membershipCardPostModel.asDictionary(), completion: { [weak self] card in
             guard let self = self else {return}
             if let card = card {
                 if card.membershipPlan?.featureSet?.planCardType == .link {
@@ -119,15 +126,57 @@ class AuthAndAddViewModel {
                 } else {
                     self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
                 }
+                Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
-        }, onError: { error in
+        }, onError: { [weak self] error in
             print(error)
+            self?.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
         })
         
-        repository.addMembershipCard(request: request)
+        repository.addMembershipCard(request: request, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard)
     }
-
+    
+    private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {
+        formFields.forEach {
+            if $0.columnKind == .add {
+                addFieldToCard(formField: $0)
+            }
+        }
+        checkboxes?.forEach {
+            if $0.columnKind == .add {
+                addCheckboxToCard(checkbox: $0)
+            }
+        }
+        
+        let addJsonCard = try membershipCardPostModel.asDictionary()
+        
+        repository.postGhostCard(parameters: addJsonCard, onSuccess: { (response) in
+            formFields.forEach {
+                if $0.columnKind == .register {
+                    self.addFieldToCard(formField: $0)
+                }
+            }
+            checkboxes?.forEach {
+                if $0.columnKind == .register {
+                    self.addCheckboxToCard(checkbox: $0)
+                }
+            }
+            
+            var registrationCard = self.membershipCardPostModel
+            registrationCard?.account?.addFields = []
+            let registrationJsonCard = try? registrationCard.asDictionary()
+            self.repository.patchGhostCard(cardId: response, parameters: registrationJsonCard ?? [:], onSuccess: { _ in
+                Current.wallet.refreshLocal()
+                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+            }) { (error) in
+                self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+            }
+        }) { (error) in
+            self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+        }
+    }
+    
     func convertToDictionary(from text: String) throws -> [String: Any]? {
         guard let data = text.data(using: .utf8) else { return [:] }
         let anyResult: Any = try JSONSerialization.jsonObject(with: data, options: [])
@@ -141,25 +190,33 @@ class AuthAndAddViewModel {
     func addFieldToCard(formField: FormField) {
         switch formField.columnKind {
         case .add:
-            let addFieldsArray = membershipCard?.account?.addFields
+            let addFieldsArray = membershipCardPostModel?.account?.addFields
             if var existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
                 existingField.value = formField.value
             } else {
-                membershipCard?.account?.addFields?.append(AddFieldPostModel(column: formField.title, value: formField.value))
+                membershipCardPostModel?.account?.addFields.append(AddFieldPostModel(column: formField.title, value: formField.value))
             }
         case .auth:
-            let authoriseFieldsArray = membershipCard?.account?.authoriseFields
+            let authoriseFieldsArray = membershipCardPostModel?.account?.authoriseFields
             if var existingField = authoriseFieldsArray?.first(where: { $0.column == formField.title }) {
                 existingField.value = formField.value
             } else {
-                membershipCard?.account?.authoriseFields?.append(AuthoriseFieldPostModel(column: formField.title, value: formField.value))
+                membershipCardPostModel?.account?.authoriseFields.append(AuthoriseFieldPostModel(column: formField.title, value: formField.value))
             }
         case .enrol:
-            let enrolFieldsArray = membershipCard?.account?.enrolFields
+            let enrolFieldsArray = membershipCardPostModel?.account?.enrolFields
             if var existingField = enrolFieldsArray?.first(where: { $0.column == formField.title }) {
                 existingField.value = formField.value
             } else {
-                membershipCard?.account?.enrolFields?.append(EnrolFieldPostModel(column: formField.title, value: formField.value))
+                membershipCardPostModel?.account?.enrolFields.append(EnrolFieldPostModel(column: formField.title, value: formField.value))
+            }
+            
+        case .register:
+            let registrationFieldsArray = membershipCardPostModel?.account?.registrationFields
+            if var existingField = registrationFieldsArray?.first(where: { $0.column == formField.title }) {
+                existingField.value = formField.value
+            } else {
+                membershipCardPostModel?.account?.registrationFields.append(RegistrationFieldPostModel(column: formField.title, value: formField.value))
             }
         default:
             break
@@ -169,27 +226,27 @@ class AuthAndAddViewModel {
     func addCheckboxToCard(checkbox: CheckboxView) {
         switch checkbox.columnKind {
         case .add:
-            let addFieldsArray = membershipCard?.account?.addFields
+            let addFieldsArray = membershipCardPostModel?.account?.addFields
             if var existingField = addFieldsArray?.first(where: { $0.column == checkbox.title }) {
                 existingField.value = String(checkbox.isValid)
             } else {
-                membershipCard?.account?.addFields?.append(AddFieldPostModel(column: checkbox.title, value:  String(checkbox.isValid)))
+                membershipCardPostModel?.account?.addFields.append(AddFieldPostModel(column: checkbox.title, value:  String(checkbox.isValid)))
             }
         case .auth:
-            let authoriseFieldsArray = membershipCard?.account?.authoriseFields
+            let authoriseFieldsArray = membershipCardPostModel?.account?.authoriseFields
             if var existingField = authoriseFieldsArray?.first(where: { $0.column == checkbox.title }) {
                 existingField.value = String(checkbox.isValid)
             } else {
-                membershipCard?.account?.authoriseFields?.append(AuthoriseFieldPostModel(column: checkbox.title, value: String(checkbox.isValid)))
+                membershipCardPostModel?.account?.authoriseFields.append(AuthoriseFieldPostModel(column: checkbox.title, value: String(checkbox.isValid)))
             }
             
         case .enrol:
-            let enrolFieldsArray = membershipCard?.account?.enrolFields
+            let enrolFieldsArray = membershipCardPostModel?.account?.enrolFields
             if var existingField = enrolFieldsArray?.first(where: { $0.column == checkbox.columnName }) {
                 existingField.column = checkbox.columnName
                 existingField.value = String(checkbox.isValid)
             } else {
-                membershipCard?.account?.enrolFields?.append(EnrolFieldPostModel(column: checkbox.columnName, value: String(checkbox.isValid)))
+                membershipCardPostModel?.account?.enrolFields.append(EnrolFieldPostModel(column: checkbox.columnName, value: String(checkbox.isValid)))
             }
         default:
             break
@@ -200,10 +257,7 @@ class AuthAndAddViewModel {
         router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPuropse)
     }
     
-    func brandHeaderWasTapped() {
-        let title: String = membershipPlan.account?.planNameCard ?? ""
-        let description: String = membershipPlan.account?.planDescription ?? ""
-        
+    func toReusableTemplate(title: String, description: String) {
         let attributedString = NSMutableAttributedString()
         let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
         let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
@@ -212,6 +266,13 @@ class AuthAndAddViewModel {
         
         let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
         router.toReusableModalTemplateViewController(configurationModel: configuration)
+    }
+    
+    func brandHeaderWasTapped() {
+        let title: String = membershipPlan.account?.planNameCard ?? ""
+        let description: String = membershipPlan.account?.planDescription ?? ""
+        
+        toReusableTemplate(title: title, description: description)
     }
     
     func displaySimplePopup(title: String?, message: String?) {

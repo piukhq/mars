@@ -58,7 +58,7 @@ class BarcodeViewController: UIViewController {
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black
         titleLabel.text = "card_number_title".localized
-        titleLabel.isHidden = maximized
+        titleLabel.isHidden = maximized || viewModel.cardNumber == nil
         labelStackView.setCustomSpacing(0.0, after: titleLabel)
         
         labelStackView.alignment = maximized ? .center : .fill
@@ -66,18 +66,12 @@ class BarcodeViewController: UIViewController {
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = maximized ? .black : .blueAccent
         
-        if maximized {
-            numberLabel.text = viewModel.getBarcode()
-        } else {
-            numberLabel.text = viewModel.getCardNumber()
-        }
-        
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textColor = .black
         descriptionLabel.textAlignment = .justified
         descriptionLabel.isHidden = maximized
         
-        switch viewModel.getBarcodeType() {
+        switch viewModel.barcodeType {
         case .loyaltyCard:
             descriptionLabel.text = "barcode_card_description".localized
         case .coupon:
@@ -89,6 +83,21 @@ class BarcodeViewController: UIViewController {
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
         hasDrawnBarcode = true
+
+        maximiseButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            maximiseButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
+            maximiseButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
+            maximiseButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
+            maximiseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
+        
+        if maximized {
+            numberLabel.text = viewModel.barcodeNumber
+        } else {
+            numberLabel.isHidden = viewModel.cardNumber == nil
+            numberLabel.text = viewModel.cardNumber
+        }
     }
     
     func maximizeBarcode() {

@@ -108,18 +108,6 @@ private extension LoyaltyCardFullDetailsViewController {
     @objc func popToRootController() {
         viewModel.popToRootController()
     }
-    
-    func displaySecurityAndPrivacyPopup() {
-        let securityAdnPrivacyLink = NSURL(string: "https://bink.com/terms-and-conditions/#privacy-policy")
-        let title = "security_and_privacy_alert_title".localized
-        let description = "security_and_privacy_alert_message".localized
-        let attributedString = NSMutableAttributedString(string: title + "\n" + description)
-        attributedString.addAttribute(.link, value: securityAdnPrivacyLink ?? "", range: NSRange(location: attributedString.length - 5, length: 4))
-        attributedString.addAttribute(.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
-        
-        viewModel.toReusableModalTemplate(title: title, description: attributedString)
-    }
 }
 
 // MARK: - CardDetailsInfoViewDelegate
@@ -152,12 +140,11 @@ extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
             }
             break
         case securityAndPrivacyInfoRow:
-            //TODO: Replace me with Terms and Conditions VC when complete
-            displaySecurityAndPrivacyPopup()
+            viewModel.toSecurityAndPrivacyScreen()
             break
         case deleteInfoRow:
             viewModel.showDeleteConfirmationAlert(yesCompletion: {
-                NotificationCenter.default.post(Notification(name: .didDeleteMemebershipCard))
+                Current.wallet.refreshLocal()
                 self.popToRootController()
             }) {}
             break

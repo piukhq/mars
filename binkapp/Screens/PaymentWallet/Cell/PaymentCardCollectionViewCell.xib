@@ -17,6 +17,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="391" height="120"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ulb-bk-PeF">
+                        <rect key="frame" x="273.5" y="0.0" width="117.5" height="120"/>
+                        <state key="normal" image="iconSwipeDelete"/>
+                        <connections>
+                            <action selector="deleteButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="q0x-qm-TKL"/>
+                        </connections>
+                    </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ti-Yy-XeC">
                         <rect key="frame" x="0.0" y="0.0" width="391" height="120"/>
                         <subviews>
@@ -100,17 +107,23 @@
             </view>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="5ti-Yy-XeC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="9x1-lc-Gjo"/>
-                <constraint firstAttribute="trailing" secondItem="5ti-Yy-XeC" secondAttribute="trailing" id="JrU-5Y-5yu"/>
+                <constraint firstItem="Ulb-bk-PeF" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0Pc-U6-OGt"/>
+                <constraint firstItem="5ti-Yy-XeC" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="4Ps-2S-hnQ"/>
+                <constraint firstItem="5ti-Yy-XeC" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" id="E0k-tz-KZA"/>
+                <constraint firstAttribute="bottom" secondItem="Ulb-bk-PeF" secondAttribute="bottom" id="XLQ-eU-tHs"/>
                 <constraint firstItem="5ti-Yy-XeC" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="clY-IF-Dt2"/>
+                <constraint firstAttribute="trailing" secondItem="Ulb-bk-PeF" secondAttribute="trailing" id="jWF-C4-0yO"/>
+                <constraint firstItem="Ulb-bk-PeF" firstAttribute="width" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="0.3" id="n4R-am-WS5"/>
                 <constraint firstAttribute="bottom" secondItem="5ti-Yy-XeC" secondAttribute="bottom" id="uk2-4V-uU7"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="391" height="116"/>
             <connections>
                 <outlet property="alertView" destination="7wp-r2-0PR" id="eIi-eo-t0m"/>
+                <outlet property="cardContainerCenterXConstraint" destination="4Ps-2S-hnQ" id="ClV-vs-6ap"/>
                 <outlet property="cardNumberLabel" destination="LQa-TU-DPB" id="cbA-D8-Uan"/>
                 <outlet property="containerView" destination="5ti-Yy-XeC" id="hNF-Bk-Kzh"/>
+                <outlet property="deleteButton" destination="Ulb-bk-PeF" id="o80-1j-NFg"/>
                 <outlet property="linkedStatusImageView" destination="Gpr-Cg-2C1" id="vZ5-Ff-E54"/>
                 <outlet property="nameOnCardLabel" destination="x78-gd-0FT" id="WuN-XY-iIX"/>
                 <outlet property="pllStatusLabel" destination="2nB-iq-pM6" id="84j-0s-av8"/>
@@ -122,5 +135,6 @@
     </objects>
     <resources>
         <image name="cardPaymentLogoVisa" width="78" height="42"/>
+        <image name="iconSwipeDelete" width="44" height="62"/>
     </resources>
 </document>

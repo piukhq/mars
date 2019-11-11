@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct PaymentWalletViewModel: WalletViewModel {
+class PaymentWalletViewModel: WalletViewModel {
     typealias T = CD_PaymentCard
     typealias R = PaymentWalletRepository
 
     private let repository: R
     let router: MainScreenRouter
 
-    init(repository: R, router: MainScreenRouter) {
+    required init(repository: R, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
     }
@@ -33,6 +33,21 @@ struct PaymentWalletViewModel: WalletViewModel {
     }
 
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
-        // TODO: Implement as part of IB20-167
+        switch walletPrompt.type {
+        case .addPaymentCards:
+            router.toAddPaymentViewController()
+        default:
+            return
+        }
+    }
+
+    func showDeleteConfirmationAlert(card: CD_PaymentCard, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
+            self?.repository.delete(card, completion: yesCompletion)
+        }, noCompletion: {
+            DispatchQueue.main.async {
+                noCompletion()
+            }
+        })
     }
 }

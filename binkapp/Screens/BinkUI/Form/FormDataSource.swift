@@ -150,7 +150,7 @@ extension FormDataSource {
             self.delegate?.formDataSource(self, fieldDidExit: field)
         }
         
-        if formPurpose == .firstLogin || formPurpose == .ghostCard {
+        if formPurpose == .login || formPurpose == .ghostCard {
             model.account?.formattedAddFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
@@ -174,7 +174,7 @@ extension FormDataSource {
             }
         }
         
-        if formPurpose != .signUp {
+        if formPurpose != .signUp && formPurpose != .ghostCard {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)

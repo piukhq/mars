@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol FullDetailsBrandHeaderDelegate {
+protocol FullDetailsBrandHeaderDelegate: NSObject {
     func fullDetailsBrandHeaderDidTapShowBarcode(_ fullDetailsBrandHeader: FullDetailsBrandHeader)
 }
 
@@ -17,7 +17,7 @@ class FullDetailsBrandHeader: CustomView {
     @IBOutlet private weak var brandImageBackgroundView: UIView!
     @IBOutlet private weak var showBarcodeTapGesture: UITapGestureRecognizer!
     
-    private var delegate: FullDetailsBrandHeaderDelegate?
+    private weak var delegate: FullDetailsBrandHeaderDelegate?
     
     func configure(imageUrl: String?, showBarcode: Bool,  delegate: FullDetailsBrandHeaderDelegate) {
         self.delegate = delegate

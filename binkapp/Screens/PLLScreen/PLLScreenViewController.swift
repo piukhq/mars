@@ -13,21 +13,94 @@ enum PllScreenJourney {
 }
 
 class PLLScreenViewController: UIViewController {
-    @IBOutlet private weak var brandHeaderView: BrandHeaderView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var primaryMessageLabel: UILabel!
-    @IBOutlet private weak var secondaryMesageLabel: UILabel!
-    @IBOutlet private weak var floatingButtonsView: BinkFloatingButtonsView!
-    @IBOutlet private weak var paymentCardsTableView: UITableView!
-    @IBOutlet private weak var floatingButtonsViewHeightConstraint: NSLayoutConstraint!
+    
+    // MARK: - Properties
     
     private let viewModel: PLLScreenViewModel
     private let journey: PllScreenJourney
     
+    private lazy var stackScroll: StackScrollView = {
+        let stackScroll = StackScrollView(
+            axis: .vertical,
+            arrangedSubviews: [brandHeaderView, titleLabel, primaryMessageLabel, secondaryMessageLabel, paymentCardsTableView],
+            adjustForKeyboard: false
+        )
+        stackScroll.translatesAutoresizingMaskIntoConstraints = false
+        stackScroll.alignment = .center
+        stackScroll.customPadding(25.0, after: brandHeaderView)
+        view.addSubview(stackScroll)
+        return stackScroll
+    }()
+    
+    private lazy var brandHeaderView: BrandHeaderView = {
+        let brandHeader = BrandHeaderView()
+        brandHeader.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        return brandHeader
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.headline
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var primaryMessageLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.bodyTextLarge
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var secondaryMessageLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.bodyTextLarge
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var paymentCardsTableView: NestedTableView = {
+        let tableView = NestedTableView(frame: .zero)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.rowHeight = 100.0
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        return tableView
+    }()
+    
+    private lazy var floatingButtonsView: BinkPrimarySecondaryButtonView = {
+        let floatingButtonsView = BinkPrimarySecondaryButtonView(frame: .zero)
+        floatingButtonsView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(floatingButtonsView)
+        return floatingButtonsView
+    }()
+    
+    // MARK: - Initialisation
+    
     init(viewModel: PLLScreenViewModel, journey: PllScreenJourney) {
         self.viewModel = viewModel
         self.journey = journey
-        super.init(nibName: "PLLScreenViewController", bundle: Bundle(for: PLLScreenViewController.self))
+        super.init(nibName: nil, bundle: nil)
+        
+        if journey == .newCard {
+            let card = viewModel.getMembershipCard()
+            
+            viewModel.paymentCards?.forEach {
+                /*
+                 Filter out cards already associated with this account.
+                 This means that we don't try to re-add any cards that we have already linked to this account.
+                 For arguments sake sometimes this is not a new card.. it's a re-authenticated old card.
+                 */
+                if !card.linkedPaymentCards.contains($0) {
+                    viewModel.addCardToChangedCardsArray(card: $0)
+                }
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,17 +109,43 @@ class PLLScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        navigationItem.leftBarButtonItem = backButton
         
-        floatingButtonsView.delegate = self
+        if viewModel.shouldShowBackButton {
+            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+            navigationItem.leftBarButtonItem = backButton
+        } else {
+            // Catch the default back button
+            navigationItem.setHidesBackButton(true, animated: false)
+        }
+
+        view.backgroundColor = .white
+        
         configureBrandHeader()
+        configureLayout()
         configureUI()
         paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
+        floatingButtonsView.delegate = self
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
+    private func configureLayout() {
+        NSLayoutConstraint.activate([
+            stackScroll.topAnchor.constraint(equalTo: view.topAnchor),
+            stackScroll.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackScroll.leftAnchor.constraint(equalTo: view.leftAnchor),
+            stackScroll.rightAnchor.constraint(equalTo: view.rightAnchor),
+            paymentCardsTableView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -50.0),
+            titleLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
+            titleLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
+            primaryMessageLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
+            primaryMessageLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
+            secondaryMessageLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
+            secondaryMessageLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
+            brandHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
+            floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        ])
     }
 }
 
@@ -60,12 +159,12 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 
 // MARK: - BinkFloatingButtonsViewDelegate
 
-extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
-    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
+    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         floatingButtons.primaryButton.startLoading()
         view.isUserInteractionEnabled = false
         viewModel.toggleLinkForMembershipCards { [weak self] in
-            guard let self = self else {return}
+            guard let self = self else { return }
             self.reloadContent()
             self.view.isUserInteractionEnabled = true
             floatingButtons.primaryButton.stopLoading()
@@ -73,7 +172,7 @@ extension PLLScreenViewController: BinkFloatingButtonsViewDelegate {
         }
     }
     
-    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkFloatingButtonsView) {
+    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         viewModel.toAddPaymentCardScreen()
     }
 }
@@ -97,10 +196,14 @@ extension PLLScreenViewController: UITableViewDataSource {
         if let paymentCards = viewModel.paymentCards {
             let paymentCard = paymentCards[indexPath.row]
             let isLastCell = indexPath.row == paymentCards.count - 1
-            cell.configureUI(membershipCard: viewModel.getMembershipCard(), paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self, journey: journey, isLastCell: isLastCell)
-            if journey == .newCard {
-                viewModel.addCardToChangedCardsArray(card: paymentCard)
-            }
+            cell.configureUI(
+                paymentCard: paymentCard,
+                cardIndex: indexPath.row,
+                delegate: self,
+                journey: journey,
+                isLastCell: isLastCell,
+                showAsLinked: viewModel.linkedPaymentCards?.contains(paymentCard) == true
+            )
         }
         return cell 
     }
@@ -124,13 +227,12 @@ private extension PLLScreenViewController {
     }
     
     func configureUI() {
-        navigationController?.setNavigationBarHidden(viewModel.isNavigationVisisble, animated: false)
         titleLabel.text = viewModel.titleText
         primaryMessageLabel.text = viewModel.primaryMessageText
-        secondaryMesageLabel.isHidden = !viewModel.isEmptyPll
+        secondaryMessageLabel.text = viewModel.secondaryMessageText
+        secondaryMessageLabel.isHidden = !viewModel.isEmptyPll
         paymentCardsTableView.isHidden = viewModel.isEmptyPll
-        floatingButtonsViewHeightConstraint.constant = viewModel.isEmptyPll ? 210.0 : 130.0
-        paymentCardsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: floatingButtonsViewHeightConstraint.constant, right: 0)
+        stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
         viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: "pll_screen_add_cards_button_title".localized) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil)
     }
     
@@ -146,7 +248,7 @@ private extension PLLScreenViewController {
     }
 }
 
-// MARK: - PaymentCardCellDelegat3
+// MARK: - PaymentCardCellDelegate
 
 extension PLLScreenViewController: PaymentCardCellDelegate {
     func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, cardIndex: Int) {
@@ -155,4 +257,3 @@ extension PLLScreenViewController: PaymentCardCellDelegate {
         }
     }
 }
-

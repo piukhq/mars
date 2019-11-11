@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,8 +18,9 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JPW-kV-XX9">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JPW-kV-XX9">
                     <rect key="frame" x="25" y="88" width="364" height="808"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <attributedString key="attributedText">
                         <fragment content="TERMS AND CONDITIONS. ">
@@ -52,24 +51,13 @@
                         <outlet property="delegate" destination="-1" id="U3z-Og-Xng"/>
                     </connections>
                 </textView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Gs-VS-QJP" customClass="BinkFloatingButtonsView" customModule="binkapp" customModuleProvider="target">
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Gs-VS-QJP" customClass="BinkPrimarySecondaryButtonView" customModule="binkapp" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="687" width="414" height="209"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="209" id="IQH-2i-P2G"/>
-                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7Gs-VS-QJP" secondAttribute="trailing" id="BFU-wW-kPb"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="JPW-kV-XX9" secondAttribute="trailing" constant="25" id="Dvx-Lx-h8D"/>
-                <constraint firstAttribute="bottom" secondItem="7Gs-VS-QJP" secondAttribute="bottom" id="NEC-WR-62v"/>
-                <constraint firstItem="JPW-kV-XX9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="Vmy-Dm-PqW"/>
-                <constraint firstAttribute="bottom" secondItem="JPW-kV-XX9" secondAttribute="bottom" id="idQ-KR-W9Y"/>
-                <constraint firstItem="JPW-kV-XX9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="lDg-wf-VfV"/>
-                <constraint firstItem="7Gs-VS-QJP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="olz-Sb-gwK"/>
-            </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="131.8840579710145" y="120.53571428571428"/>

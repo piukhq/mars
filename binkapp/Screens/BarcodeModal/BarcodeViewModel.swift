@@ -24,21 +24,21 @@ class BarcodeViewModel {
     var isBarcodeAvailable: Bool {
         return ((membershipCard.card?.barcode) != nil)
     }
-
-    init(membershipCard: CD_MembershipCard) {
-        self.membershipCard = membershipCard
+    
+    var cardNumber: String? {
+        return membershipCard.card?.membershipId
     }
     
-    func getCardNumber() -> String {
-        return membershipCard.card?.membershipId ?? ""
-    }
-    
-    func getBarcode() -> String {
+    var barcodeNumber: String {
         return membershipCard.card?.barcode ?? ""
     }
     
-    func getBarcodeType() -> BarcodeType {
+    var barcodeType: BarcodeType {
         return .loyaltyCard
+    }
+
+    init(membershipCard: CD_MembershipCard) {
+        self.membershipCard = membershipCard
     }
     
     private func getBarcodeType() -> BINKBarcodeType {

@@ -23,7 +23,7 @@ class PaymentCardCell: UITableViewCell {
     private var cardIndex = 0
     private var firstUse = true
     
-    func configureUI(membershipCard: CD_MembershipCard, paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, journey: PllScreenJourney, isLastCell: Bool) {
+    func configureUI(paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, journey: PllScreenJourney, isLastCell: Bool, showAsLinked: Bool) {
         self.delegate = delegate
         self.cardIndex = cardIndex
 
@@ -43,10 +43,9 @@ class PaymentCardCell: UITableViewCell {
         separatorView.isHidden = isLastCell
         titleLabel.text = paymentCard.card?.nameOnCard
         subtitleLabel.text = "pll_screen_card_ending".localized + (paymentCard.card?.lastFour ?? "")
-        if firstUse {
-            switchButton.isOn = journey == .newCard ? true : membershipCard.linkedPaymentCards.contains(paymentCard)
-            firstUse = false
-        }
+        switchButton.isOn = journey == .newCard ? true : showAsLinked
+        
+        selectionStyle = .none
     }
     
     // MARK: - Actions
