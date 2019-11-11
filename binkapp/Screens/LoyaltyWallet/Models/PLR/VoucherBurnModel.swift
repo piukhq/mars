@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct VoucherBurnModel: Codable {
     var apiId: Int?
@@ -21,5 +22,17 @@ struct VoucherBurnModel: Codable {
         case prefix
         case suffix
         case value
+    }
+}
+
+extension VoucherBurnModel: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_VoucherBurn, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_VoucherBurn {
+        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.currency, with: currency, delta: delta)
+        update(cdObject, \.prefix, with: prefix, delta: delta)
+        update(cdObject, \.suffix, with: suffix, delta: delta)
+        update(cdObject, \.value, with: NSNumber(value: value ?? 0.0), delta: delta)
+
+        return cdObject
     }
 }
