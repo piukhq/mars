@@ -108,7 +108,7 @@ private extension ApiManager {
     private func getHeader() -> [String: String] {
         let header = [
             "Authorization": "Bearer " + generateToken(email: userEmail),
-            "Content-Type": "application/json"]
+            "Content-Type": "application/json;v=1.1"]
         return header
     }
     
