@@ -32,10 +32,12 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     private lazy var brandHeader: UIImageView = {
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = true
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 12
+        imageView.contentMode = .scaleAspectFill
         let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
         imageView.addGestureRecognizer(gestureRecogniser)
         imageView.layer.applyDefaultBinkShow()
-        imageView.clipsToBounds = true
         return imageView
     }()
 
@@ -148,8 +150,6 @@ private extension LoyaltyCardFullDetailsViewController {
     func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
-        brandHeader.clipsToBounds = true
-        brandHeader.layer.cornerRadius = 12
         if let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url {
             if let url = URL(string: imageURL) {
                 brandHeader.af_setImage(withURL: url)
