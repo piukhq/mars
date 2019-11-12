@@ -10,6 +10,7 @@ import UIKit
 class LoyaltyCardFullDetailsViewModel {
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
+    private let informationRowFactory: PaymentCardDetailInformationRowFactory
     
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
@@ -32,10 +33,11 @@ class LoyaltyCardFullDetailsViewModel {
         }
     }
 
-    init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter, informationRowFactory: PaymentCardDetailInformationRowFactory) {
         self.router = router
         self.repository = repository
         self.membershipCard = membershipCard
+        self.informationRowFactory = informationRowFactory
     }  
 
     var brandName: String {
@@ -153,15 +155,30 @@ class LoyaltyCardFullDetailsViewModel {
         let planImages = membershipCard.membershipPlan?.imagesSet
         return planImages?.filter({ $0.type?.intValue == 2}).compactMap { $0.url }
     }
-    
-    func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+}
+
+// MARK: Information rows
+
+extension LoyaltyCardFullDetailsViewModel {
+    var informationRows: [CardDetailInformationRow] {
+        return informationRowFactory.makeInformationRows()
+    }
+
+    func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
+        return informationRows[indexPath.row]
+    }
+
+    func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
+        informationRows[indexPath.row].action()
+    }
+
+    func deleteMembershipCard() {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }
             self.repository.delete(self.membershipCard) {
-                yesCompletion()
+                Current.wallet.refreshLocal()
+                self.router.popToRootViewController()
             }
-        }, noCompletion: {
-            noCompletion()
-        })
+        }, noCompletion: {})
     }
 }
