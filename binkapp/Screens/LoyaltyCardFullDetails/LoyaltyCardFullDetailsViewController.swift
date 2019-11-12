@@ -25,6 +25,7 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         stackView.margin = LayoutHelper.PaymentCardDetail.stackScrollViewMargins
         stackView.distribution = .fill
         stackView.alignment = .center
+        stackView.delegate = self
         stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
         return stackView
     }()
@@ -50,7 +51,7 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     }()
 
     private lazy var modulesStackView: UIStackView = {
-        let stackView = UIStackView()
+        let stackView = UIStackView(arrangedSubviews: [pointsModule, linkModule])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .white
         stackView.distribution = .fillEqually
@@ -58,6 +59,14 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         stackView.axis = .horizontal
         stackView.spacing = 12
         return stackView
+    }()
+
+    private lazy var pointsModule: BinkModuleView = {
+        return BinkModuleView()
+    }()
+
+    private lazy var linkModule: BinkModuleView = {
+        return BinkModuleView()
     }()
 
     private lazy var offerTilesStackView: UIStackView = {
@@ -94,12 +103,11 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         view.backgroundColor = .white
 
         setCloseButton()
-        stackScrollView.delegate = self
         configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        configureCardDetails(viewModel.paymentCards)
+        configureModules()
     }
     
     // MARK: - Navigation Bar Blurring
@@ -167,7 +175,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.customPadding(25, after: showBarcodeButton)
 
         stackScrollView.add(arrangedSubview: modulesStackView)
-        configureCardDetails(viewModel.paymentCards)
+        configureModules()
 
         stackScrollView.customPadding(25, after: modulesStackView)
 
@@ -212,20 +220,9 @@ private extension LoyaltyCardFullDetailsViewController {
         ])
     }
     
-    func configureCardDetails(_ paymentCards: [CD_PaymentCard]?) {
-        if modulesStackView.subviews.count > 0 {
-            for subview in modulesStackView.subviews {
-                modulesStackView.removeArrangedSubview(subview)
-            }
-        }
-
-        let pointsModuleView = BinkModuleView()
-        pointsModuleView.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
-        modulesStackView.addArrangedSubview(pointsModuleView)
-
-        let linkModuleView = BinkModuleView()
-        linkModuleView.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: paymentCards, delegate: self)
-        modulesStackView.addArrangedSubview(linkModuleView)
+    func configureModules() {
+        pointsModule.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
+        linkModule.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards, delegate: self)
     }
     
     @objc func popToRootController() {
