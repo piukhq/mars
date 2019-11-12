@@ -28,6 +28,11 @@ class BinkGradientButton: BinkPillButton {
         super.layoutSubviews()
     }
 
+    func configure(title: String, hasShadow: Bool = true) {
+        setTitle(title, for: .normal)
+        self.hasShadow = hasShadow
+    }
+
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
         gradientLayer.frame = bounds
         gradientLayer.colors = [firstColor.cgColor, secondColor.cgColor]

@@ -20,7 +20,7 @@ class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
         if let iconImageUrl = viewModel.iconUrl {
             iconImageView.af_setImage(withURL: iconImageUrl)
         }
-        addCardButton.setTitle("pcd_add_card_button_title".localized, for: .normal)
+        addCardButton.configure(title: "pcd_add_card_button_title".localized, hasShadow: false)
     }
 
     @IBAction private func handleAddCardButtonPress() {
