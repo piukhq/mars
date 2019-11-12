@@ -112,7 +112,9 @@ class PaymentCardDetailViewController: UIViewController {
         // This is due to strange layout issues on first appearance
         if !hasSetupCell {
             hasSetupCell = true
-            card.frame = CGRect(origin: .zero, size: CGSize(width: stackScrollView.frame.width - LayoutHelper.PaymentCardDetail.cardViewPadding, height: LayoutHelper.WalletDimensions.cardSize.height))
+            let cardWidth = stackScrollView.frame.width - LayoutHelper.PaymentCardDetail.cardViewPadding
+            let cardHeight = LayoutHelper.WalletDimensions.cardSize.height
+            card.frame = CGRect(origin: .zero, size: CGSize(width: cardWidth, height: cardHeight))
             card.configureWithViewModel(viewModel.paymentCardCellViewModel, delegate: nil)
         }
     }

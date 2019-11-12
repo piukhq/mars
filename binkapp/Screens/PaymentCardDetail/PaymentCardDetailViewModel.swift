@@ -133,7 +133,6 @@ class PaymentCardDetailViewModel {
     }
 
     func statusForMembershipCard(atIndexPath indexPath: IndexPath) -> CD_MembershipCardStatus? {
-        // TODO: rename linkable membership cards
         return pllMembershipCards?[indexPath.row].status
     }
 

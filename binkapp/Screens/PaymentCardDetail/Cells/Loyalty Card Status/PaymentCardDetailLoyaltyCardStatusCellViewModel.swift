@@ -36,7 +36,7 @@ struct PaymentCardDetailLoyaltyCardStatusCellViewModel: PaymentCardDetailCellVie
     var statusText: String? {
         switch status?.status {
         case .unauthorised, .failed:
-            return "pcd_retry_status_text".localized
+            return "retry_title".localized
         default:
             return status?.status?.rawValue.capitalized
         }
