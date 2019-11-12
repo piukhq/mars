@@ -76,9 +76,7 @@ class LoyaltyCardFullDetailsViewModel {
             let description = "log_in_pending_description".localized
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
-        case .loginUnavailable:
-            //TODO: change to login unavailable screen after is implemented
-            let title = "transaction_history_not_supported_title".localized
+        case .loginUnavailable:            let title = "transaction_history_not_supported_title".localized
             let description = "transaction_history_not_supported_description".localized
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
