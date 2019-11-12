@@ -348,6 +348,7 @@
 		EFB7ED622379CA4000B72D06 /* PLRRewardsHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */; };
 		EFB7ED652379CA5900B72D06 /* PLRRewardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */; };
 		EFB7ED662379CA5900B72D06 /* PLRRewardDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */; };
+		EFBDB103237B1468002D7898 /* CALayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBDB102237B1468002D7898 /* CALayerExtension.swift */; };
 		EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8653A232FCDD800036C17 /* ReasonCode.swift */; };
 		EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */; };
 		EFF59F15234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */; };
@@ -758,6 +759,7 @@
 		EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRRewardsHistoryViewController.xib; sourceTree = "<group>"; };
 		EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewController.swift; sourceTree = "<group>"; };
 		EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRRewardDetailViewController.xib; sourceTree = "<group>"; };
+		EFBDB102237B1468002D7898 /* CALayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayerExtension.swift; sourceTree = "<group>"; };
 		EFD8653A232FCDD800036C17 /* ReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCode.swift; sourceTree = "<group>"; };
 		EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingSupportModel.swift; sourceTree = "<group>"; };
 		EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLinkLoyaltyCardCell.swift; sourceTree = "<group>"; };
@@ -1381,6 +1383,7 @@
 				EF8BF1EE233CBCE300D2E5F3 /* CAGradientLayerExtension.swift */,
 				EFA5F6BF237429D30027AB80 /* UITableViewCellExtension.swift */,
 				3C7AF52A23757FB0005964E0 /* FloatExtension.swift */,
+				EFBDB102237B1468002D7898 /* CALayerExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2499,6 +2502,7 @@
 				3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */,
 				EF7B65D6232FDB8A0025D167 /* FieldChoice.swift in Sources */,
 				EFA5F7552379AAB20027AB80 /* _CD_VoucherBurn.swift in Sources */,
+				EFBDB103237B1468002D7898 /* CALayerExtension.swift in Sources */,
 				EFA5F7212379A7C70027AB80 /* _CD_FieldChoice.swift in Sources */,
 				BDD9C83C233BE493003CD616 /* MembershipPlanImageModel.swift in Sources */,
 				EFA5F7242379A7C70027AB80 /* _CD_RegistrationField.swift in Sources */,

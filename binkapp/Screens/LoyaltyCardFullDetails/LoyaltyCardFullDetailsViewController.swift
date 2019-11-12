@@ -11,15 +11,21 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
 
     // MARK: - UI Lazy Variables
 
+//    private lazy var headerBackgroundView: UIView = {
+//        let backgroundView = UIView(frame: .zero)
+//        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+//        backgroundView.backgroundColor = .lightGray
+//        return backgroundView
+//    }()
+
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         stackView.margin = LayoutHelper.PaymentCardDetail.stackScrollViewMargins
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
-        view.addSubview(stackView)
         return stackView
     }()
 
@@ -28,6 +34,8 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         imageView.isUserInteractionEnabled = true
         let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
         imageView.addGestureRecognizer(gestureRecogniser)
+        imageView.layer.applyDefaultBinkShow()
+        imageView.clipsToBounds = true
         return imageView
     }()
 
@@ -83,70 +91,9 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         super.viewDidLoad()
         view.backgroundColor = .white
 
+
         setCloseButton()
-
         stackScrollView.delegate = self
-
-        stackScrollView.add(arrangedSubview: brandHeader)
-        brandHeader.clipsToBounds = true
-        brandHeader.layer.cornerRadius = 12
-        if let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url {
-            if let url = URL(string: imageURL) {
-                brandHeader.af_setImage(withURL: url)
-            }
-        }
-
-        stackScrollView.customPadding(12, after: brandHeader)
-
-        // TODO: Use viewmodel to check if the offer tiles will be shown
-        let showBarcode = viewModel.membershipCard.card?.barcode != nil
-        let buttonTitle = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
-        showBarcodeButton.setTitle(buttonTitle, for: .normal)
-        stackScrollView.add(arrangedSubview: showBarcodeButton)
-
-        stackScrollView.customPadding(25, after: showBarcodeButton)
-
-        stackScrollView.add(arrangedSubview: modulesStackView)
-        configureCardDetails(viewModel.paymentCards)
-
-        stackScrollView.customPadding(25, after: modulesStackView)
-
-        // TODO: Use viewmodel to check if the offer tiles will be shown
-        stackScrollView.add(arrangedSubview: offerTilesStackView)
-        if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
-            offerTileImageUrls.forEach { offer in
-                let offerView = OfferTileView()
-                offerView.translatesAutoresizingMaskIntoConstraints = false
-                offerView.configure(imageUrl: offer)
-                offerTilesStackView.addArrangedSubview(offerView)
-            }
-        }
-
-        stackScrollView.customPadding(25, after: offerTilesStackView)
-
-        stackScrollView.add(arrangedSubview: informationTableView)
-        informationTableView.delegate = self
-        informationTableView.dataSource = self
-        informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
-        informationTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
-
-        NSLayoutConstraint.activate([
-            stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            brandHeader.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-            brandHeader.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
-            brandHeader.heightAnchor.constraint(equalTo: brandHeader.widthAnchor, multiplier: 115/182),
-            showBarcodeButton.heightAnchor.constraint(equalToConstant: 22),
-            modulesStackView.heightAnchor.constraint(equalToConstant: 128),
-            modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-            modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
-            offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-            offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
-            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-        ])
-
         configureUI()
     }
     
@@ -200,26 +147,70 @@ private extension LoyaltyCardFullDetailsViewController {
     }
 
     func configureUI() {
-//
-//
-//        let aboutInfoTitle = viewModel.aboutTitle
-//        let aboutInfoMessage = "learn_more".localized
-//        aboutInfoRow.delegate = self
-//        aboutInfoRow.configure(title: aboutInfoTitle, andInfo: aboutInfoMessage)
-//
-//        let securityInfoTitle = "security_and_privacy_title".localized
-//        let securityInfoMessage = "security_and_privacy_message".localized
-//        securityAndPrivacyInfoRow.delegate = self
-//        securityAndPrivacyInfoRow.configure(title: securityInfoTitle, andInfo: securityInfoMessage)
-//
-//        let deleteInfoTitle = viewModel.deleteTitle
-//        let deleteInfoMessage = "delete_card_message".localized
-//        deleteInfoRow.delegate = self
-//        deleteInfoRow.configure(title: deleteInfoTitle, andInfo: deleteInfoMessage)
-//
-//        let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url
-//        let showBarcode = viewModel.membershipCard.card?.barcode != nil
-//        brandHeader.configure(imageUrl: imageURL, showBarcode: showBarcode, delegate: self)
+        view.addSubview(stackScrollView)
+        stackScrollView.add(arrangedSubview: brandHeader)
+        brandHeader.clipsToBounds = true
+        brandHeader.layer.cornerRadius = 12
+        if let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url {
+            if let url = URL(string: imageURL) {
+                brandHeader.af_setImage(withURL: url)
+            }
+        }
+
+        stackScrollView.customPadding(12, after: brandHeader)
+
+        // TODO: Use viewmodel to check if the offer tiles will be shown
+        let showBarcode = viewModel.membershipCard.card?.barcode != nil
+        let buttonTitle = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
+        showBarcodeButton.setTitle(buttonTitle, for: .normal)
+        stackScrollView.add(arrangedSubview: showBarcodeButton)
+
+        stackScrollView.customPadding(25, after: showBarcodeButton)
+
+        stackScrollView.add(arrangedSubview: modulesStackView)
+        configureCardDetails(viewModel.paymentCards)
+
+        stackScrollView.customPadding(25, after: modulesStackView)
+
+        // TODO: Use viewmodel to check if the offer tiles will be shown
+        stackScrollView.add(arrangedSubview: offerTilesStackView)
+        if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
+            offerTileImageUrls.forEach { offer in
+                let offerView = OfferTileView()
+                offerView.translatesAutoresizingMaskIntoConstraints = false
+                offerView.configure(imageUrl: offer)
+                offerTilesStackView.addArrangedSubview(offerView)
+            }
+        }
+
+        stackScrollView.customPadding(25, after: offerTilesStackView)
+
+        stackScrollView.add(arrangedSubview: informationTableView)
+        informationTableView.delegate = self
+        informationTableView.dataSource = self
+        informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
+        informationTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+
+        configureLayout()
+    }
+
+    func configureLayout() {
+        NSLayoutConstraint.activate([
+            stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            brandHeader.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
+            brandHeader.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
+            brandHeader.heightAnchor.constraint(equalTo: brandHeader.widthAnchor, multiplier: 115/182),
+            showBarcodeButton.heightAnchor.constraint(equalToConstant: 22),
+            modulesStackView.heightAnchor.constraint(equalToConstant: 128),
+            modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
+            modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
+            offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
+            offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
+            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+        ])
     }
     
     func configureCardDetails(_ paymentCards: [CD_PaymentCard]?) {
