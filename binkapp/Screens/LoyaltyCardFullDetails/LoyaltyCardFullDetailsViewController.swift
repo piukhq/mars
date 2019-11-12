@@ -91,7 +91,6 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         super.viewDidLoad()
         view.backgroundColor = .white
 
-
         setCloseButton()
         stackScrollView.delegate = self
         configureUI()

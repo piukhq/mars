@@ -14,6 +14,7 @@ class WalletCardCollectionViewCell: UICollectionViewCell {
     func setupShadow() {
         containerView.layer.cornerRadius = 8
         containerView.layer.masksToBounds = true
+        contentView.layer.cornerRadius = 8
         clipsToBounds = false
         layer.applyDefaultBinkShow()
     }
