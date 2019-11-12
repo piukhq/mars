@@ -122,7 +122,7 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
             }
         }
 
-        stackScrollView.customPadding(12, after: offerTilesStackView)
+        stackScrollView.customPadding(25, after: offerTilesStackView)
 
         stackScrollView.add(arrangedSubview: informationTableView)
         informationTableView.delegate = self
@@ -247,59 +247,19 @@ private extension LoyaltyCardFullDetailsViewController {
     }
 }
 
-// MARK: - CardDetailsInfoViewDelegate
-
-//extension LoyaltyCardFullDetailsViewController: CardDetailsInfoViewDelegate {
-//    func cardDetailsInfoViewDidTapMoreInfo(_ cardDetailsInfoView: CardDetailsInfoView) {
-//        switch cardDetailsInfoView {
-//        case aboutInfoRow:
-//            var title = ""
-//
-//            if let planName = viewModel.membershipCard.membershipPlan?.account?.planName {
-//                title = String(format: "about_custom_title".localized, planName)
-//            } else {
-//                title = "info_title".localized
-//            }
-//
-//            if let infoMessage = viewModel.membershipCard.membershipPlan?.account?.planDescription {
-//                let attributedString = NSMutableAttributedString()
-//                let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-//                let attributedBody = NSAttributedString(string: infoMessage, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
-//                attributedString.append(attributedTitle)
-//                attributedString.append(attributedBody)
-//
-//
-//                viewModel.toReusableModalTemplate(title: title, description: attributedString)
-//            } else {
-//                let attributedTitle = NSMutableAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-//
-//                viewModel.toReusableModalTemplate(title: title, description: attributedTitle)
-//            }
-//            break
-//        case securityAndPrivacyInfoRow:
-//            viewModel.toSecurityAndPrivacyScreen()
-//            break
-//        case deleteInfoRow:
-//            viewModel.showDeleteConfirmationAlert(yesCompletion: {
-//                Current.wallet.refreshLocal()
-//                self.popToRootController()
-//            }) {}
-//            break
-//        default:
-//            break
-//        }
-//    }
-//}
-
 // MARK: - CardDetailInformationRowFactoryDelegate
 
 extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryDelegate {
     func cardDetailInformationRowFactory(_ factory: PaymentCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
         switch informationRowType {
+        case .about:
+            viewModel.toAboutMembershipPlanScreen()
         case .securityAndPrivacy:
             viewModel.toSecurityAndPrivacyScreen()
-        case .deletePaymentCard:
+        case .deleteMembershipCard:
             viewModel.deleteMembershipCard()
+        default:
+            return
         }
     }
 }

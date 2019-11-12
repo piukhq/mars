@@ -138,6 +138,11 @@ class LoyaltyCardFullDetailsViewModel {
         
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
+
+    func toAboutMembershipPlanScreen() {
+        let config = getBasicReusableConfiguration(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
+        router.toReusableModalTemplateViewController(configurationModel: config)
+    }
     
     func toSecurityAndPrivacyScreen() {
         router.toPrivacyAndSecurityViewController()
@@ -161,7 +166,7 @@ class LoyaltyCardFullDetailsViewModel {
 
 extension LoyaltyCardFullDetailsViewModel {
     var informationRows: [CardDetailInformationRow] {
-        return informationRowFactory.makeInformationRows()
+        return informationRowFactory.makeLoyaltyInformationRows(membershipCard: membershipCard)
     }
 
     func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
