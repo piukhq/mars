@@ -9,7 +9,7 @@
 import UIKit
 
 class PaymentCardDetailTableViewCell: UITableViewCell {
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var headerLabel: UILabel!
-    @IBOutlet private weak var detailLabel: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
 }
