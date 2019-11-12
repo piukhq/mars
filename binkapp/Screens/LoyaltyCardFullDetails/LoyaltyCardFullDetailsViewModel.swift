@@ -165,18 +165,3 @@ class LoyaltyCardFullDetailsViewModel {
         })
     }
 }
-
-// MARK: - Private methods
-
-private extension LoyaltyCardFullDetailsViewModel {
-    func toReusableModalTemplate(title: String, description: String) {
-        let attributedText = NSMutableAttributedString(string: title + "\n" + description)
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
-        
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
-        
-        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
-    }
-}

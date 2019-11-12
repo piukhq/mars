@@ -12,28 +12,24 @@ protocol FullDetailsBrandHeaderDelegate: NSObject {
 }
 
 class FullDetailsBrandHeader: CustomView {
-    @IBOutlet private weak var brandImage: UIImageView!
-    @IBOutlet private weak var messageLabel: UILabel!
-    @IBOutlet private weak var brandImageBackgroundView: UIView!
-    @IBOutlet private weak var showBarcodeTapGesture: UITapGestureRecognizer!
-    
+    @IBOutlet private weak var brandImageView: UIImageView!
+    @IBOutlet private weak var showBarcodeButton: UIButton!
+
     private weak var delegate: FullDetailsBrandHeaderDelegate?
     
     func configure(imageUrl: String?, showBarcode: Bool,  delegate: FullDetailsBrandHeaderDelegate) {
         self.delegate = delegate
-        messageLabel.text = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
-        messageLabel.font = .bodyTextLarge
+        let buttonTitle = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
+        showBarcodeButton.setTitle(buttonTitle, for: .normal)
         if let imageURL = imageUrl, let url = URL(string: imageURL) {
-            brandImage.af_setImage(withURL: url)
+            brandImageView.af_setImage(withURL: url)
         }
-        brandImage.clipsToBounds = true
-        brandImage.backgroundColor = .black
-        brandImage.layer.cornerRadius = 4
+        brandImageView.layer.cornerRadius = 8
     }
     
     // MARK: - Actions
 
-    @IBAction func showBarcodeTapped(_ sender: Any) {
+    @IBAction func showBarcodeButtonTapped(_ sender: Any) {
         delegate?.fullDetailsBrandHeaderDidTapShowBarcode(self)
     }
 }
