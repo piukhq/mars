@@ -14,6 +14,8 @@ class MainScreenRouter {
     
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
     }
 
     func launchWallets() {
@@ -250,5 +252,18 @@ class MainScreenRouter {
     class func openExternalURL(with urlString: String) {
         guard let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    //MARK: - App in background
+    
+    @objc func appWillResignActive() {
+        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
+        vc.modalPresentationStyle = .fullScreen
+        navController?.present(vc, animated: false, completion: nil)
+    }
+    
+    @objc func appDidBecomeActive() {
+        navController?.dismiss(animated: false, completion: nil)
     }
 }
