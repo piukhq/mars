@@ -55,20 +55,10 @@ class AuthAndAddRepository {
         })
     }
     
-    func postGhostCard(parameters: [String: Any], onSuccess: @escaping (String) -> Void, onError: @escaping (Error) -> Void) {
+    func postGhostCard(parameters: [String: Any], onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (Error) -> Void) {
         apiManager.doRequest(url: .membershipCards, httpMethod: .post, parameters: parameters, onSuccess: { (card: MembershipCardModel) in
-            onSuccess(card.id)
-        }) { (error) in
-            onError(error)
-        }
-    }
-    
-    func patchGhostCard(cardId: String, parameters: [String: Any], onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (Error) -> Void) {
-        let url = RequestURL.membershipCardsWithId(cardId: cardId)
-        let method = RequestHTTPMethod.patch
-        apiManager.doRequest(url: url, httpMethod: method, parameters: parameters, onSuccess: { (response: MembershipCardModel) in
             Current.database.performBackgroundTask { context in
-                let newObject = response.mapToCoreData(context, .none, overrideID: nil)
+                let newObject = card.mapToCoreData(context, .none, overrideID: nil)
                 
                 try? context.save()
                 
@@ -78,6 +68,14 @@ class AuthAndAddRepository {
                     }
                 }
             }
+        }) { (error) in
+            onError(error)
+        }
+    }
+    
+    func patchGhostCard(cardId: String, parameters: [String: Any], onSuccess: @escaping (MembershipCardModel) -> Void, onError: @escaping (Error) -> Void) {
+        apiManager.doRequest(url: .membershipCard(cardId: cardId), httpMethod: .patch, parameters: parameters, onSuccess: { (response: MembershipCardModel) in
+            
         }) { (error) in
             onError(error)
         }

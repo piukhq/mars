@@ -13,7 +13,6 @@ enum RequestURL {
     case login
     case membershipPlans
     case membershipCards
-    case membershipCardsWithId(cardId: String)
     case membershipCard(cardId: String)
     case paymentCards
     case paymentCard(cardId: String)
@@ -27,8 +26,6 @@ enum RequestURL {
             return "/membership_plans"
         case .membershipCards:
             return "/membership_cards"
-        case .membershipCardsWithId(let cardId):
-            return "/membership_cards/\(cardId)"
         case .membershipCard(let cardId):
             return "/membership_card/\(cardId)"
         case .paymentCards:

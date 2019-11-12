@@ -110,14 +110,14 @@ class AuthAndAddViewModel {
     }
 
     func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {
-        formFields.forEach { addFieldToCard(formField: $0) }
-        checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
-        
         guard formPurpose != .ghostCard else {
             try addGhostCard(with: formFields, checkboxes: checkboxes)
             return
         }
-                    
+        
+        formFields.forEach { addFieldToCard(formField: $0) }
+        checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
+        
         let request = try AddMembershipCardRequest(jsonCard: membershipCardPostModel.asDictionary(), completion: { [weak self] card in
             guard let self = self else {return}
             if let card = card {
@@ -138,42 +138,46 @@ class AuthAndAddViewModel {
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {
-        formFields.forEach {
-            if $0.columnKind == .add {
-                addFieldToCard(formField: $0)
-            }
-        }
-        checkboxes?.forEach {
-            if $0.columnKind == .add {
-                addCheckboxToCard(checkbox: $0)
-            }
-        }
-        
+        populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
         let addJsonCard = try membershipCardPostModel.asDictionary()
         
         repository.postGhostCard(parameters: addJsonCard, onSuccess: { (response) in
-            formFields.forEach {
-                if $0.columnKind == .register {
-                    self.addFieldToCard(formField: $0)
-                }
+            guard let card = response else {
+                Current.wallet.refreshLocal()
+                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+                return
             }
-            checkboxes?.forEach {
-                if $0.columnKind == .register {
-                    self.addCheckboxToCard(checkbox: $0)
-                }
-            }
+            
+            self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+
+            self.populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
             
             var registrationCard = self.membershipCardPostModel
             registrationCard?.account?.addFields = []
             let registrationJsonCard = try? registrationCard.asDictionary()
-            self.repository.patchGhostCard(cardId: response, parameters: registrationJsonCard ?? [:], onSuccess: { _ in
-                Current.wallet.refreshLocal()
-                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
-            }) { (error) in
-                self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+            self.repository.patchGhostCard(cardId: card.id, parameters: registrationJsonCard ?? [:], onSuccess: { _ in
+                
+            }) { _ in
+                
             }
+
+            Current.wallet.refreshLocal()
+            NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
         }) { (error) in
             self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+        }
+    }
+    
+    private func populateCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, columnKind: FormField.ColumnKind) {
+        formFields.forEach {
+            if $0.columnKind == columnKind {
+                addFieldToCard(formField: $0)
+            }
+        }
+        checkboxes?.forEach {
+            if $0.columnKind == columnKind {
+                addCheckboxToCard(checkbox: $0)
+            }
         }
     }
     
