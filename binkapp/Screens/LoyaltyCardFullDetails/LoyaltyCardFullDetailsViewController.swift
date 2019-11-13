@@ -62,6 +62,18 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         return BinkModuleView()
     }()
 
+    private lazy var plrCollectionView: NestedCollectionView = {
+        let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        collectionView.isScrollEnabled = false
+        collectionView.delegate = self
+        collectionView.backgroundColor = .clear
+        collectionView.clipsToBounds = false
+        collectionView.register(PLRAccumulatorActiveCell.self, asNib: true)
+        return collectionView
+    }()
+
     private lazy var offerTilesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -83,6 +95,10 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     lazy var informationTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(CardDetailInfoTableViewCell.self, asNib: true)
+        tableView.separatorInset = LayoutHelper.LoyaltyCardDetail.informationTableSeparatorInset
         return tableView
     }()
     
@@ -183,6 +199,14 @@ private extension LoyaltyCardFullDetailsViewController {
 
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
 
+
+
+
+        stackScrollView.add(arrangedSubview: plrCollectionView)
+        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: plrCollectionView)
+
+
+
         // TODO: Use viewmodel to check if the offer tiles will be shown
         stackScrollView.add(arrangedSubview: offerTilesStackView)
         if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
@@ -199,10 +223,6 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: separator)
 
         stackScrollView.add(arrangedSubview: informationTableView)
-        informationTableView.delegate = self
-        informationTableView.dataSource = self
-        informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
-        informationTableView.separatorInset = LayoutHelper.LoyaltyCardDetail.informationTableSeparatorInset
 
         configureLayout()
     }
@@ -220,6 +240,7 @@ private extension LoyaltyCardFullDetailsViewController {
             modulesStackView.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.modulesStackViewHeight),
             modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            plrCollectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             separator.heightAnchor.constraint(equalToConstant: 0.3),
@@ -276,6 +297,24 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 
         let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
         navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
+    }
+}
+
+// MARK: - PLR Collection View
+
+extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 2
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: PLRAccumulatorActiveCell = collectionView.dequeue(indexPath: indexPath)
+        cell.configure()
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width - 50, height: 188)
     }
 }
 
