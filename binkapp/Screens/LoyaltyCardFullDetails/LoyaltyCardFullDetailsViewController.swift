@@ -73,6 +73,13 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         return stackView
     }()
 
+    lazy var separator: UIView = {
+        let separator = UIView()
+        separator.backgroundColor = .lightGray
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        return separator
+    }()
+
     lazy var informationTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -125,6 +132,10 @@ extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableView
 
         let informationRow = viewModel.informationRow(forIndexPath: indexPath)
         cell.configureWithInformationRow(informationRow)
+
+        if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+            cell.hideSeparator()
+        }
 
         return cell
     }
@@ -185,6 +196,8 @@ private extension LoyaltyCardFullDetailsViewController {
 
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: offerTilesStackView)
 
+        stackScrollView.add(arrangedSubview: separator)
+
         stackScrollView.add(arrangedSubview: informationTableView)
         informationTableView.delegate = self
         informationTableView.dataSource = self
@@ -209,6 +222,8 @@ private extension LoyaltyCardFullDetailsViewController {
             modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            separator.heightAnchor.constraint(equalToConstant: 0.3),
+            separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
         ])
     }
