@@ -8,8 +8,6 @@
 
 import UIKit
 
-class PLRAccumulatorInactiveCell: PLRBaseCollectionViewCell {
-
+class PLRAccumulatorInactiveCell: PLRAccumulatorCell {
     
-
 }
