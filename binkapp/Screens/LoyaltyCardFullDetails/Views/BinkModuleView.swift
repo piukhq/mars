@@ -55,7 +55,7 @@ class BinkModuleView: CustomView {
             break
         }
 
-        layer.applyDefaultBinkShow()
+        layer.applyDefaultBinkShadow()
     }
     
     // MARK: - Actions

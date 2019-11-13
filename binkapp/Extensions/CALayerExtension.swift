@@ -9,7 +9,7 @@
 import UIKit
 
 extension CALayer {
-    func applyDefaultBinkShow() {
+    func applyDefaultBinkShadow() {
         applySketchShadow(color: .black, alpha: 0.1, x: 0, y: 3, blur: 22, spread: 0)
     }
 
@@ -18,8 +18,6 @@ extension CALayer {
         shadowOpacity = alpha
         shadowOffset = CGSize(width: x, height: y)
         shadowRadius = blur / 2.0
-        shouldRasterize = true
-        rasterizationScale = UIScreen.main.scale
 
         if spread == 0 {
             shadowPath = nil

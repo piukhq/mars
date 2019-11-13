@@ -11,13 +11,6 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
 
     // MARK: - UI Lazy Variables
 
-//    private lazy var headerBackgroundView: UIView = {
-//        let backgroundView = UIView(frame: .zero)
-//        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-//        backgroundView.backgroundColor = .lightGray
-//        return backgroundView
-//    }()
-
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +31,7 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         imageView.contentMode = .scaleAspectFill
         let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
         imageView.addGestureRecognizer(gestureRecogniser)
-        imageView.layer.applyDefaultBinkShow()
+        imageView.layer.applyDefaultBinkShadow()
         return imageView
     }()
 
@@ -142,7 +135,7 @@ extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 88
+        return LayoutHelper.PaymentCardDetail.informationRowCellHeight
     }
 }
 
@@ -164,7 +157,7 @@ private extension LoyaltyCardFullDetailsViewController {
             }
         }
 
-        stackScrollView.customPadding(12, after: brandHeader)
+        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
 
         // TODO: Use viewmodel to check if the offer tiles will be shown
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
@@ -172,12 +165,12 @@ private extension LoyaltyCardFullDetailsViewController {
         showBarcodeButton.setTitle(buttonTitle, for: .normal)
         stackScrollView.add(arrangedSubview: showBarcodeButton)
 
-        stackScrollView.customPadding(25, after: showBarcodeButton)
+        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: showBarcodeButton)
 
         stackScrollView.add(arrangedSubview: modulesStackView)
         configureModules()
 
-        stackScrollView.customPadding(25, after: modulesStackView)
+        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
 
         // TODO: Use viewmodel to check if the offer tiles will be shown
         stackScrollView.add(arrangedSubview: offerTilesStackView)
@@ -190,13 +183,13 @@ private extension LoyaltyCardFullDetailsViewController {
             }
         }
 
-        stackScrollView.customPadding(25, after: offerTilesStackView)
+        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: offerTilesStackView)
 
         stackScrollView.add(arrangedSubview: informationTableView)
         informationTableView.delegate = self
         informationTableView.dataSource = self
         informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
-        informationTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        informationTableView.separatorInset = LayoutHelper.LoyaltyCardDetail.informationTableSeparatorInset
 
         configureLayout()
     }
@@ -207,15 +200,15 @@ private extension LoyaltyCardFullDetailsViewController {
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            brandHeader.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-            brandHeader.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
-            brandHeader.heightAnchor.constraint(equalTo: brandHeader.widthAnchor, multiplier: 115/182),
-            showBarcodeButton.heightAnchor.constraint(equalToConstant: 22),
-            modulesStackView.heightAnchor.constraint(equalToConstant: 128),
-            modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-            modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
-            offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-            offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
+            brandHeader.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+            brandHeader.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            brandHeader.heightAnchor.constraint(equalTo: brandHeader.widthAnchor, multiplier: LayoutHelper.LoyaltyCardDetail.brandHeaderAspectRatio),
+            showBarcodeButton.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.barcodeButtonHeight),
+            modulesStackView.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.modulesStackViewHeight),
+            modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+            modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+            offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
         ])
     }
@@ -274,5 +267,11 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 extension LayoutHelper {
     struct LoyaltyCardDetail {
         static let navBarTitleViewScrollOffset: CGFloat = 100
+        static let contentPadding: CGFloat = 25
+        static let headerToBarcodeButtonPadding: CGFloat = 12
+        static let brandHeaderAspectRatio: CGFloat = 115/182
+        static let modulesStackViewHeight: CGFloat = 128
+        static let barcodeButtonHeight: CGFloat = 22
+        static let informationTableSeparatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
     }
 }
