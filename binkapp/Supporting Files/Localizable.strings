@@ -199,3 +199,14 @@
 "onboarding_slide2_body" = "Store all your loyalty cards in a single digital wallet. View your rewards and points balances any time, anywhere.";
 "onboarding_slide3_header" = "Never miss out";
 "onboarding_slide3_body" = "Show your loyalty cards’ barcodes on screen, or collect points instantly when you pay. Whichever way, you’re always covered.";
+
+// MARK: - PCD
+
+"pcd_added_card_title" = "Linked cards";
+"pcd_added_card_description" = "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points.";
+"pcd_other_card_title_cards_added" = "Other cards you can add";
+"pcd_other_card_title_no_cards_added" = "No linked cards";
+"pcd_other_card_description_cards_added" = "You can also add the cards below and link them to your payment cards.";
+"pcd_other_card_description_no_cards_added" = "You do not have any linked loyalty cards. Add some cards to collect points.";
+"pcd_you_can_link" = "You can link this card";
+"pcd_add_card_button_title" = "Add card";

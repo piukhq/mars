@@ -13,6 +13,7 @@ class BinkPillButton: UIButton {
         case facebook
     }
 
+    var hasShadow = true
     private var shadowLayer: CAShapeLayer!
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
@@ -30,7 +31,7 @@ class BinkPillButton: UIButton {
         super.layoutSubviews()
 
         let halfOfButtonHeight = layer.frame.height / 2
-        if shadowLayer == nil {
+        if shadowLayer == nil && hasShadow {
             shadowLayer = CAShapeLayer()
             shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: halfOfButtonHeight).cgPath
             shadowLayer.fillColor = UIColor.clear.cgColor
@@ -49,9 +50,10 @@ class BinkPillButton: UIButton {
         setupActivityIndicator()
     }
 
-    func configureForType(_ type: PillButtonType) {
+    func configureForType(_ type: PillButtonType, hasShadow: Bool = true) {
         backgroundColor = backgroundColor(forType: type)
         setTitle(title(forType: type), for: .normal)
+        self.hasShadow = hasShadow
     }
 
     func startLoading() {
@@ -85,6 +87,13 @@ class BinkPillButton: UIButton {
         case .facebook:
             return "continue_with_facebook_button".localized
         }
+    }
+}
+
+class BinkMiniPillButton: BinkPillButton {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        titleLabel?.font = .miniButtonText
     }
 }
 
