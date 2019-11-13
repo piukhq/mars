@@ -148,7 +148,11 @@ class AuthAndAddViewModel {
                 return
             }
             
-            self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+            if card.membershipPlan?.featureSet?.cardType == 2 {
+                self.router.toPllViewController(membershipCard: card, journey: .newCard)
+            } else {
+                self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+            }
 
             self.populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
             
