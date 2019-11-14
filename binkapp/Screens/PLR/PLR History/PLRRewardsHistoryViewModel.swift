@@ -9,5 +9,9 @@
 import Foundation
 
 class PLRRewardsHistoryViewModel {
-    
+    private let membershipCard: CD_MembershipCard
+
+    init(membershipCard: CD_MembershipCard) {
+        self.membershipCard = membershipCard
+    }
 }

@@ -9,5 +9,9 @@
 import Foundation
 
 class PLRRewardDetailViewModel {
-    
+    private let voucher: CD_Voucher
+
+    init(voucher: CD_Voucher) {
+        self.voucher = voucher
+    }
 }
