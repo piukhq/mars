@@ -68,7 +68,7 @@ class ApiManager {
     }
     
 
-    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Codable {
+    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> () = { _ in }, onError: @escaping (Error) -> () = { _ in }) where Resp: Codable {
         guard Connectivity.isConnectedToInternet() else {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
             return
