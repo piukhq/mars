@@ -10,6 +10,9 @@
 "info_title" = "Info";
 "done" = "Done";
 
+"linked_status_image_name" = "linked";
+"unlinked_status_image_name" = "unlinked";
+
 "barcode_swipe_title" = "Barcode";
 "delete_swipe_title" = "Delete";
 "please_wait_title" = "Please wait";
