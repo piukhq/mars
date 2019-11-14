@@ -9,7 +9,5 @@
 import UIKit
 
 class PLRStampsInactiveCell: PLRBaseCollectionViewCell {
-
-    
-
+    @IBOutlet weak var timeDateLabel: UILabel!
 }

@@ -31,7 +31,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y8j-JX-fSu">
                         <rect key="frame" x="0.0" y="0.0" width="368" height="176"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£5 voucher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJc-5m-7pb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJc-5m-7pb">
                                 <rect key="frame" x="20" y="18" width="288" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="O7a-Bg-79t"/>
@@ -40,7 +40,7 @@
                                 <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 stamps to go!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BOb-Bf-DAv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BOb-Bf-DAv">
                                 <rect key="frame" x="20" y="60" width="328" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="hhx-WI-Ce2"/>
@@ -49,7 +49,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collected:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVN-G4-1pq">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVN-G4-1pq">
                                 <rect key="frame" x="20" y="138" width="328" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="zJx-hy-mO7"/>
@@ -203,7 +203,10 @@
             <size key="customSize" width="368" height="194"/>
             <connections>
                 <outlet property="containerView" destination="y8j-JX-fSu" id="mdt-dF-vjx"/>
+                <outlet property="headlineLabel" destination="BOb-Bf-DAv" id="4bc-y9-OGT"/>
                 <outlet property="infoButton" destination="7Aa-Ev-67S" id="057-dz-Ph1"/>
+                <outlet property="timeDateLabel" destination="xVN-G4-1pq" id="Mba-6C-ssa"/>
+                <outlet property="voucherAmountLabel" destination="qJc-5m-7pb" id="2Og-rd-lz0"/>
             </connections>
             <point key="canvasLocation" x="155.07246376811597" y="152.67857142857142"/>
         </collectionViewCell>

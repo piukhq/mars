@@ -186,7 +186,6 @@ private extension LoyaltyCardFullDetailsViewController {
 
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
 
-        // TODO: Use viewmodel to check if the offer tiles will be shown
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
         let buttonTitle = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
         showBarcodeButton.setTitle(buttonTitle, for: .normal)
@@ -305,12 +304,15 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 
 extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return viewModel.activeVouchersCount
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: PLRAccumulatorActiveCell = collectionView.dequeue(indexPath: indexPath)
-        cell.configure()
+        guard let voucher = viewModel.voucherForIndexPath(indexPath) else { return cell }
+
+        let cellViewModel = PLRCellViewModel(voucher: voucher)
+        cell.configureWithViewModel(cellViewModel)
         return cell
     }
 

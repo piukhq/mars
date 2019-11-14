@@ -172,6 +172,14 @@ class LoyaltyCardFullDetailsViewModel {
     var shouldShouldPLR: Bool {
         return membershipCard.membershipPlan?.isPLR ?? false && membershipCard.vouchers.count != 0
     }
+
+    var activeVouchersCount: Int {
+        return membershipCard.activeVouchers?.count ?? 0
+    }
+
+    func voucherForIndexPath(_ indexPath: IndexPath) -> CD_Voucher? {
+        return membershipCard.activeVouchers?[indexPath.row]
+    }
 }
 
 // MARK: Information rows

@@ -31,7 +31,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7F-pD-dPc">
                         <rect key="frame" x="0.0" y="0.0" width="348" height="170"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£5 voucher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJH-1X-34z">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJH-1X-34z">
                                 <rect key="frame" x="20" y="18" width="268" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="qOH-UB-pNX"/>
@@ -40,7 +40,7 @@
                                 <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expired" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWl-oa-kBb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWl-oa-kBb">
                                 <rect key="frame" x="20" y="60" width="308" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="RF3-4U-699"/>
@@ -49,7 +49,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="on 11 Nov 2019" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnB-qg-UvX">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnB-qg-UvX">
                                 <rect key="frame" x="20" y="132" width="308" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="AVh-bi-ul3"/>
@@ -120,10 +120,13 @@
             <size key="customSize" width="348" height="170"/>
             <connections>
                 <outlet property="containerView" destination="b7F-pD-dPc" id="p0q-88-MNA"/>
+                <outlet property="headlineLabel" destination="oWl-oa-kBb" id="IaZ-Ni-WNU"/>
                 <outlet property="infoButton" destination="qnl-eR-b74" id="7CW-Fh-cZT"/>
                 <outlet property="innerProgressBar" destination="SLs-my-vYo" id="a5s-aP-81R"/>
                 <outlet property="innerProgressBarWidthConstraint" destination="otF-iz-cyB" id="UBU-Tp-BpD"/>
                 <outlet property="outerProgressBar" destination="BGo-MJ-LGd" id="OqW-MW-mBA"/>
+                <outlet property="timeDateLabel" destination="bnB-qg-UvX" id="rgH-Ka-3Zn"/>
+                <outlet property="voucherAmountLabel" destination="gJH-1X-34z" id="FhB-zQ-t5K"/>
             </connections>
             <point key="canvasLocation" x="126.08695652173914" y="153.34821428571428"/>
         </collectionViewCell>

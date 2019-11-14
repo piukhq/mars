@@ -34,7 +34,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kNu-dq-4Fb">
                         <rect key="frame" x="0.0" y="0.0" width="352" height="194"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£5 voucher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqn-4F-Ve7">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqn-4F-Ve7">
                                 <rect key="frame" x="20" y="18" width="272" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="cLt-sz-15T"/>
@@ -43,7 +43,7 @@
                                 <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 stamps to go!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buW-hn-WsP">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buW-hn-WsP">
                                 <rect key="frame" x="20" y="60" width="312" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="E4J-Hu-DkW"/>
@@ -52,7 +52,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collected:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPq-xL-T7c">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPq-xL-T7c">
                                 <rect key="frame" x="20" y="138" width="312" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Hja-Ov-ccJ"/>
@@ -61,7 +61,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3/5 stamps" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZHK-kj-j5n">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZHK-kj-j5n">
                                 <rect key="frame" x="20" y="158" width="312" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="lfN-Yi-YKY"/>
@@ -218,7 +218,10 @@
             <size key="customSize" width="352" height="194"/>
             <connections>
                 <outlet property="containerView" destination="kNu-dq-4Fb" id="FV2-4K-au1"/>
+                <outlet property="earnProgressLabel" destination="EPq-xL-T7c" id="j9J-Y1-mLh"/>
+                <outlet property="headlineLabel" destination="buW-hn-WsP" id="awb-Fw-NbJ"/>
                 <outlet property="infoButton" destination="8FO-lV-MNg" id="YqS-fv-9xx"/>
+                <outlet property="voucherAmountLabel" destination="rqn-4F-Ve7" id="4nn-ac-8Om"/>
             </connections>
             <point key="canvasLocation" x="143.47826086956522" y="152.67857142857142"/>
         </collectionViewCell>

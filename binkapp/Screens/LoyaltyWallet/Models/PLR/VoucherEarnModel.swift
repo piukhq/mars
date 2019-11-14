@@ -11,6 +11,7 @@ import CoreData
 
 enum VoucherEarnType: String, Codable {
     case accumulator
+    case stamp
 }
 
 struct VoucherEarnModel: Codable {
