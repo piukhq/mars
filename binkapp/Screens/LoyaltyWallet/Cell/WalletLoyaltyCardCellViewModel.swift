@@ -54,6 +54,9 @@ struct WalletLoyaltyCardCellViewModel {
     var shouldShowLinkStatus: Bool {
         return planCardType == .link
     }
+    var shouldShowLinkImage: Bool {
+        return !linkStatusImageName.isEmpty
+    }
 
     var brandColorHex: String? {
         return membershipCard.card?.colour
@@ -64,10 +67,12 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var hasLinkedPaymentCards: Bool {
-        return membershipCard.linkedPaymentCards.count > 0
+        return membershipCard.status?.status == .authorised && membershipCard.linkedPaymentCards.count > 0
     }
 
     var linkStatusText: String? {
+        guard !shouldShowRetryStatus else { return "retry_title".localized }
+        guard cardStatus != .pending else { return "pending_title".localized }
         switch (planCardType, hasLinkedPaymentCards) {
         case (.link, true):
             return "Linked".localized
@@ -81,11 +86,15 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var linkStatusImageName: String {
+        guard !shouldShowRetryStatus else { return "" }
+        guard cardStatus != .pending else { return "" }
         switch (planCardType, hasLinkedPaymentCards) {
         case (.link, true):
-            return "linked"
+            return "linked_status_image_name".localized
+        case (.link, false):
+            return "unlinked_status_image_name".localized
         default:
-            return "unlinked"
+            return ""
         }
 
         // Linking error?

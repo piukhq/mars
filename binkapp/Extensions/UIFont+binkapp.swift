@@ -29,6 +29,10 @@ extension UIFont {
     class var buttonText: UIFont {
         return UIFont(name: "NunitoSans-Bold", size: 18.0) ?? UIFont()
     }
+
+    class var miniButtonText: UIFont {
+        return UIFont(name: "NunitoSans-Bold", size: 14.0) ?? UIFont()
+    }
     
     class var linkTextButtonNormal: UIFont {
         return UIFont(name: "NunitoSans-SemiBold", size: 18.0) ?? UIFont()

@@ -12,6 +12,8 @@ class PaymentCardDetailViewController: UIViewController {
     private var viewModel: PaymentCardDetailViewModel
     private var hasSetupCell = false
 
+    // MARK: - UI lazy vars
+
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -30,41 +32,59 @@ class PaymentCardDetailViewController: UIViewController {
         return cell
     }()
 
-    private lazy var titleLabel: UILabel = {
+    private lazy var addedCardsTitleLabel: UILabel = {
         let title = UILabel()
-        title.font = UIFont.headline
+        title.font = .headline
         title.textAlignment = .left
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
 
-    private lazy var descriptionLabel: UILabel = {
+    private lazy var addedCardsDescriptionLabel: UILabel = {
         let description = UILabel()
-        description.font = UIFont.bodyTextLarge
+        description.font = .bodyTextLarge
         description.numberOfLines = 0
         description.textAlignment = .left
         description.translatesAutoresizingMaskIntoConstraints = false
         return description
     }()
 
-    lazy var linkedCardsTableView: NestedTableView = {
+    private lazy var otherCardsTitleLabel: UILabel = {
+        let title = UILabel()
+        title.font = .headline
+        title.textAlignment = .left
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
+
+    private lazy var otherCardsDescriptionLabel: UILabel = {
+        let description = UILabel()
+        description.font = .bodyTextLarge
+        description.numberOfLines = 0
+        description.textAlignment = .left
+        description.translatesAutoresizingMaskIntoConstraints = false
+        return description
+    }()
+
+    private lazy var addedCardsTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
 
-    lazy var informationTableView: NestedTableView = {
+    private lazy var otherCardsTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
 
-    func makeTableViewSeparator() -> UIView {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = linkedCardsTableView.separatorColor
-        return view
-    }
+    private lazy var informationTableView: NestedTableView = {
+        let tableView = NestedTableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+
+    // MARK: - Init
 
     init(viewModel: PaymentCardDetailViewModel) {
         self.viewModel = viewModel
@@ -75,40 +95,13 @@ class PaymentCardDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: View lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = viewModel.titleText
-        descriptionLabel.text = viewModel.descriptionText
-
-        linkedCardsTableView.delegate = self
-        linkedCardsTableView.dataSource = self
-        informationTableView.delegate = self
-        informationTableView.dataSource = self
-
-        stackScrollView.delegate = self
-        stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: 30)
-        stackScrollView.add(arrangedSubviews: [titleLabel, descriptionLabel, linkedCardsTableView, informationTableView])
-
-        NSLayoutConstraint.activate([
-            stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            card.heightAnchor.constraint(equalToConstant: LayoutHelper.WalletDimensions.cardSize.height),
-            card.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50),
-            titleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-            titleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
-            descriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-            descriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
-            linkedCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-        ])
-
-        linkedCardsTableView.register(LinkedLoyaltyCardTableViewCell.self, asNib: true)
-        informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
-        linkedCardsTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
-        informationTableView.separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        configureUI()
+        setupTables()
 
         getLinkedCards()
     }
@@ -119,29 +112,108 @@ class PaymentCardDetailViewController: UIViewController {
         // This is due to strange layout issues on first appearance
         if !hasSetupCell {
             hasSetupCell = true
-            card.frame = CGRect(origin: .zero, size: CGSize(width: stackScrollView.frame.width - 50, height: LayoutHelper.WalletDimensions.cardSize.height))
+            let cardWidth = stackScrollView.frame.width - LayoutHelper.PaymentCardDetail.cardViewPadding
+            let cardHeight = LayoutHelper.WalletDimensions.cardSize.height
+            card.frame = CGRect(origin: .zero, size: CGSize(width: cardWidth, height: cardHeight))
             card.configureWithViewModel(viewModel.paymentCardCellViewModel, delegate: nil)
         }
     }
 
-    private func getLinkedCards() {
+}
+
+// MARK - Private methods
+
+private extension PaymentCardDetailViewController {
+    func configureUI() {
+        addedCardsTitleLabel.text = viewModel.addedCardsTitle
+        addedCardsDescriptionLabel.text = viewModel.addedCardsDescription
+        otherCardsTitleLabel.text = viewModel.otherCardsTitle
+        otherCardsDescriptionLabel.text = viewModel.otherCardsDescription
+
+        stackScrollView.delegate = self
+        configureLayout()
+    }
+
+    func configureLayout() {
+        stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: LayoutHelper.PaymentCardDetail.stackScrollViewTopPadding)
+
+        if viewModel.shouldShowAddedLoyaltyCardTableView {
+            stackScrollView.add(arrangedSubviews: [addedCardsTitleLabel, addedCardsDescriptionLabel, addedCardsTableView])
+            NSLayoutConstraint.activate([
+                addedCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                addedCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                addedCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                addedCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                addedCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            ])
+        }
+        if viewModel.shouldShowOtherCardsTableView {
+            if viewModel.shouldShowAddedLoyaltyCardTableView {
+                stackScrollView.customPadding(LayoutHelper.PaymentCardDetail.headerViewsPadding, after: addedCardsTableView)
+            }
+
+            stackScrollView.add(arrangedSubviews: [otherCardsTitleLabel, otherCardsDescriptionLabel, otherCardsTableView])
+            NSLayoutConstraint.activate([
+                otherCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                otherCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                otherCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                otherCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                otherCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            ])
+        }
+
+        stackScrollView.add(arrangedSubviews: [informationTableView])
+        NSLayoutConstraint.activate([
+            stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            card.heightAnchor.constraint(equalToConstant: LayoutHelper.WalletDimensions.cardSize.height),
+            card.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -LayoutHelper.PaymentCardDetail.cardViewPadding),
+            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+        ])
+    }
+
+    func setupTables() {
+        [addedCardsTableView, otherCardsTableView, informationTableView].forEach {
+            $0.delegate = self
+            $0.dataSource = self
+            $0.separatorInset = LayoutHelper.PaymentCardDetail.tableViewCellSeparatorInsets
+        }
+
+        addedCardsTableView.register(PaymentCardDetailLinkLoyaltyCardCell.self, asNib: true)
+        addedCardsTableView.register(PaymentCardDetailLoyaltyCardStatusCell.self, asNib: true)
+        otherCardsTableView.register(PaymentCardDetailAddLoyaltyCardCell.self, asNib: true)
+        informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
+
+        getLinkedCards()
+    }
+
+    func getLinkedCards() {
         viewModel.getLinkedMembershipCards { [weak self] in
-            self?.linkedCardsTableView.reloadData()
+            self?.addedCardsTableView.reloadData()
+            self?.otherCardsTableView.reloadData()
         }
     }
 
-    private func refreshViews() {
+    func refreshViews() {
         self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, delegate: nil)
-        self.linkedCardsTableView.reloadData()
+        self.addedCardsTableView.reloadData()
+        self.otherCardsTableView.reloadData()
         Current.wallet.refreshLocal()
     }
-
 }
+
+// MARK: Table view delegate & datasource
 
 extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == linkedCardsTableView {
-            return viewModel.pllEnabledMembershipCardsCount
+        if tableView == addedCardsTableView {
+            return viewModel.pllMembershipCardsCount
+        }
+
+        if tableView == otherCardsTableView {
+            return viewModel.pllPlansNotAddedToWalletCount
         }
 
         if tableView == informationTableView {
@@ -152,17 +224,52 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == linkedCardsTableView {
-            let cell: LinkedLoyaltyCardTableViewCell = tableView.dequeue(indexPath: indexPath)
-
+        if tableView == addedCardsTableView {
             guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else {
+                fatalError("Could not get membership card at index path")
+            }
+            guard let cardStatus = viewModel.statusForMembershipCard(atIndexPath: indexPath) else {
+                fatalError("Could not get status for membership card")
+            }
+
+            if cardStatus.status == .authorised {
+                let cell: PaymentCardDetailLinkLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
+                let isLinked = viewModel.membershipCardIsLinked(membershipCard)
+                let cellViewModel = PaymentCardDetailLinkLoyaltyCardCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
+
+                cell.configureWithViewModel(cellViewModel, delegate: self)
+
+                if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+                    cell.setSeparatorFullWidth()
+                }
+
+                return cell
+            } else {
+                let cell: PaymentCardDetailLoyaltyCardStatusCell = tableView.dequeue(indexPath: indexPath)
+                let cellViewModel = PaymentCardDetailLoyaltyCardStatusCellViewModel(membershipCard: membershipCard)
+
+                cell.configureWithViewModel(cellViewModel)
+
+                if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+                    cell.setSeparatorFullWidth()
+                }
+
+                return cell
+            }
+        } else if tableView == otherCardsTableView {
+            let cell: PaymentCardDetailAddLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
+
+            guard let plan = viewModel.pllPlanNotAddedToWallet(forIndexPath: indexPath) else {
                 return cell
             }
 
-            let isLinked = viewModel.membershipCardIsLinked(membershipCard)
-            let cellViewModel = LinkedLoyaltyCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
+            let cellViewModel = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: plan, router: viewModel.router)
 
-            cell.configureWithViewModel(cellViewModel, delegate: self)
+            cell.configureWithViewModel(cellViewModel)
+
+            if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+                cell.setSeparatorFullWidth()
+            }
 
             return cell
         } else { // This will always be the information table view
@@ -171,11 +278,25 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
             let informationRow = viewModel.informationRow(forIndexPath: indexPath)
             cell.configureWithInformationRow(informationRow)
 
+            if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+                cell.hideSeparator()
+            }
+
             return cell
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == addedCardsTableView {
+            guard let membershipCard = viewModel.membershipCard(forIndexPath: indexPath) else { return }
+            viewModel.toCardDetail(forMembershipCard: membershipCard)
+        }
+
+        if tableView == otherCardsTableView {
+            guard let membershipPlan = viewModel.pllMembershipPlans?[indexPath.row] else { return }
+            viewModel.toAddOrJoin(forMembershipPlan: membershipPlan)
+        }
+
         if tableView == informationTableView {
             viewModel.performActionForInformationRow(atIndexPath: indexPath)
         }
@@ -184,28 +305,21 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView == linkedCardsTableView ? 100 : 88
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return makeTableViewSeparator()
-    }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if viewModel.pllEnabledMembershipCardsCount == 0 {
-            return 0.0
-        }
-        return tableView == linkedCardsTableView ? 0.5 : 0.0
+        return tableView == addedCardsTableView || tableView == otherCardsTableView ? LayoutHelper.PaymentCardDetail.pllCellRowHeight : LayoutHelper.PaymentCardDetail.informationRowCellHeight
     }
 }
 
-extension PaymentCardDetailViewController: LinkedLoyaltyCardCellDelegate {
-    func linkedLoyaltyCardCell(_ cell: LinkedLoyaltyCardTableViewCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard) {
+// MARK: - PaymentCardDetailLinkLoyaltyCardCellDelegate
+
+extension PaymentCardDetailViewController: PaymentCardDetailLinkLoyaltyCardCellDelegate {
+    func linkedLoyaltyCardCell(_ cell: PaymentCardDetailLinkLoyaltyCardCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard) {
         viewModel.toggleLinkForMembershipCard(membershipCard) { [weak self] in
             self?.refreshViews()
         }
     }
 }
+
+// MARK: - CardDetailInformationRowFactoryDelegate
 
 extension PaymentCardDetailViewController: CardDetailInformationRowFactoryDelegate {
     func cardDetailInformationRowFactory(_ factory: PaymentCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
@@ -230,17 +344,7 @@ extension PaymentCardDetailViewController: UIScrollViewDelegate {
     }
 }
 
-class NestedTableView: UITableView {
-    override var contentSize: CGSize {
-        didSet {
-            invalidateIntrinsicContentSize()
-        }
-    }
-
-    override var intrinsicContentSize: CGSize {
-        return contentSize
-    }
-}
+// MARK: - Layout Helper
 
 extension LayoutHelper {
     struct PaymentCardDetail {
@@ -251,6 +355,12 @@ extension LayoutHelper {
         }
 
         static let stackScrollViewMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        static let stackScrollViewTopPadding: CGFloat = 30
         static let stackScrollViewContentInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        static let headerViewsPadding: CGFloat = 25
+        static let cardViewPadding: CGFloat = 50
+        static let tableViewCellSeparatorInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        static let pllCellRowHeight: CGFloat = 100
+        static let informationRowCellHeight: CGFloat = 88
     }
 }

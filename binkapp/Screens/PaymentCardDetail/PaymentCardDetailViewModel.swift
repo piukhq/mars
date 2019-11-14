@@ -10,7 +10,7 @@ import Foundation
 
 class PaymentCardDetailViewModel {
     private var paymentCard: CD_PaymentCard
-    private let router: MainScreenRouter
+    private(set) var router: MainScreenRouter
     private let repository: PaymentCardDetailRepository
     private let informationRowFactory: PaymentCardDetailInformationRowFactory
 
@@ -23,6 +23,10 @@ class PaymentCardDetailViewModel {
 
     // MARK: - Header views
 
+    var paymentCardCellViewModel: PaymentCardCellViewModel {
+        return PaymentCardCellViewModel(paymentCard: paymentCard)
+    }
+
     var navigationViewTitleText: String {
         return paymentCard.card?.nameOnCard ?? ""
     }
@@ -31,26 +35,88 @@ class PaymentCardDetailViewModel {
         return "•••• \(paymentCard.card?.lastFour ?? "")"
     }
 
-    var titleText: String {
-        return "Linked cards"
+    var addedCardsTitle: String {
+        return "pcd_added_card_title".localized
     }
 
-    var descriptionText: String {
-        return "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points."
+    var addedCardsDescription: String {
+        return "pcd_added_card_description".localized
     }
 
-    var paymentCardCellViewModel: PaymentCardCellViewModel {
-        return PaymentCardCellViewModel(paymentCard: paymentCard)
+    var otherCardsTitle: String {
+        return shouldShowAddedLoyaltyCardTableView ? "pcd_other_card_title_cards_added".localized : "pcd_other_card_title_no_cards_added".localized
     }
 
-    // MARK: - Linked cards
+    var otherCardsDescription: String {
+        return shouldShowAddedLoyaltyCardTableView ? "pcd_other_card_description_cards_added".localized : "pcd_other_card_description_no_cards_added".localized
+    }
 
-    var linkableMembershipCards: [CD_MembershipCard]? {
+    // MARK: - View configuration decisioning
+
+    var shouldShowAddedLoyaltyCardTableView: Bool {
+        return pllMembershipCardsCount != 0
+    }
+
+    var shouldShowOtherCardsTableView: Bool {
+        return pllPlansNotAddedToWallet?.count != 0
+    }
+
+    // MARK: PLL membership plans
+
+    var pllMembershipPlans: [CD_MembershipPlan]? {
+        return Current.wallet.membershipPlans?.filter { $0.featureSet?.planCardType == .link }
+    }
+
+    var pllPlansAddedToWallet: [CD_MembershipPlan]? {
+        guard let pllMembershipCards = pllMembershipCards else { return nil }
+
+        var plansInWallet: [CD_MembershipPlan] = []
+
+        /// For each membership card added to the wallet, track it's membership plan if not tracked already
+        pllMembershipCards.forEach {
+            if let plan = $0.membershipPlan {
+                if !plansInWallet.contains(plan) {
+                    plansInWallet.append(plan)
+                }
+            }
+        }
+        return plansInWallet
+    }
+
+    var pllPlansNotAddedToWallet: [CD_MembershipPlan]? {
+        guard let pllEnabledPlans = pllMembershipPlans else { return nil }
+
+        var plansNotInWallet: [CD_MembershipPlan] = []
+
+        /// For each pll enabled membership plan, if it doesn't exist in the plans already added, add it here
+        pllEnabledPlans.forEach {
+            if let addedPlans = pllPlansAddedToWallet {
+                if !addedPlans.contains($0) {
+                    plansNotInWallet.append($0)
+                }
+            }
+        }
+
+        return plansNotInWallet
+    }
+
+    var pllPlansNotAddedToWalletCount: Int {
+        return pllPlansNotAddedToWallet?.count ?? 0
+    }
+
+    func pllPlanNotAddedToWallet(forIndexPath indexPath: IndexPath) -> CD_MembershipPlan? {
+        return pllPlansNotAddedToWallet?[indexPath.row]
+    }
+
+    // MARK: - PLL membership cards in wallet
+
+    var pllMembershipCards: [CD_MembershipCard]? {
+        // TODO: this should have the same sort as in the loyalty wallet
         return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
     }
 
-    var pllEnabledMembershipCardsCount: Int {
-        return linkableMembershipCards?.count ?? 0
+    var pllMembershipCardsCount: Int {
+        return pllMembershipCards?.count ?? 0
     }
 
     var linkedMembershipCardIds: [String]? {
@@ -63,7 +129,21 @@ class PaymentCardDetailViewModel {
     }
 
     func membershipCard(forIndexPath indexPath: IndexPath) -> CD_MembershipCard? {
-        return linkableMembershipCards?[indexPath.row]
+        return pllMembershipCards?[indexPath.row]
+    }
+
+    func statusForMembershipCard(atIndexPath indexPath: IndexPath) -> CD_MembershipCardStatus? {
+        return pllMembershipCards?[indexPath.row].status
+    }
+
+    // MARK: Routing
+
+    func toCardDetail(forMembershipCard membershipCard: CD_MembershipCard) {
+        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
+    }
+
+    func toAddOrJoin(forMembershipPlan membershipPlan: CD_MembershipPlan) {
+        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
     }
 
     // MARK: Information rows
