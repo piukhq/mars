@@ -42,14 +42,9 @@ struct VoucherModel: Codable {
 enum VoucherState: String, Codable {
     case redeemed
     case issued
-    case inProgress
+    case inProgress = "inprogress"
     case expired
     case cancelled
-}
-
-enum VoucherType: String, Codable {
-    case voucher
-    case coupon
 }
 
 extension VoucherModel: CoreDataMappable, CoreDataIDMappable {

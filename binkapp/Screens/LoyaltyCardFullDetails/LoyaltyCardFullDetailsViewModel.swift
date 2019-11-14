@@ -52,6 +52,12 @@ class LoyaltyCardFullDetailsViewModel {
         return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "") \(balance?.suffix ?? "")"
     }
 
+    var shouldShowOfferTiles: Bool {
+        // If there are no images, there are no offer tiles! Return early
+        guard let planImages = membershipCard.membershipPlan?.imagesSet else { return false }
+        return planImages.filter({ $0.type?.intValue == 2}).count != 0
+    }
+
     // MARK: - Public methods
     
     func toBarcodeModel() {
@@ -159,6 +165,12 @@ class LoyaltyCardFullDetailsViewModel {
     func getOfferTileImageUrls() -> [String]? {
         let planImages = membershipCard.membershipPlan?.imagesSet
         return planImages?.filter({ $0.type?.intValue == 2}).compactMap { $0.url }
+    }
+
+    // MARK: PLR
+
+    var shouldShouldPLR: Bool {
+        return membershipCard.membershipPlan?.isPLR ?? false && membershipCard.vouchers.count != 0
     }
 }
 

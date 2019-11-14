@@ -9,12 +9,17 @@
 import Foundation
 import CoreData
 
+enum VoucherBurnType: String, Codable {
+    case voucher
+}
+
 struct VoucherBurnModel: Codable {
     var apiId: Int?
     var currency: String?
     var prefix: String?
     var suffix: String?
     var value: Double?
+    var type: VoucherBurnType?
 
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -22,6 +27,7 @@ struct VoucherBurnModel: Codable {
         case prefix
         case suffix
         case value
+        case type
     }
 }
 
@@ -32,6 +38,7 @@ extension VoucherBurnModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.prefix, with: prefix, delta: delta)
         update(cdObject, \.suffix, with: suffix, delta: delta)
         update(cdObject, \.value, with: NSNumber(value: value ?? 0.0), delta: delta)
+        update(cdObject, \.type, with: type?.rawValue, delta: delta)
 
         return cdObject
     }

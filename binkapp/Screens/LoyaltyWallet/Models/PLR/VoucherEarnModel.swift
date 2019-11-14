@@ -9,12 +9,16 @@
 import Foundation
 import CoreData
 
+enum VoucherEarnType: String, Codable {
+    case accumulator
+}
+
 struct VoucherEarnModel: Codable {
     var apiId: Int?
     var currency: String?
     var prefix: String?
     var suffix: String?
-    var type: VoucherType?
+    var type: VoucherEarnType?
     var targetValue: Double?
     var value: Double?
 

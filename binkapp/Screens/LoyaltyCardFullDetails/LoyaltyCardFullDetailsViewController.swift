@@ -199,26 +199,30 @@ private extension LoyaltyCardFullDetailsViewController {
 
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
 
-
-
-
-        stackScrollView.add(arrangedSubview: plrCollectionView)
-        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: plrCollectionView)
-
-
-
-        // TODO: Use viewmodel to check if the offer tiles will be shown
-        stackScrollView.add(arrangedSubview: offerTilesStackView)
-        if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
-            offerTileImageUrls.forEach { offer in
-                let offerView = OfferTileView()
-                offerView.translatesAutoresizingMaskIntoConstraints = false
-                offerView.configure(imageUrl: offer)
-                offerTilesStackView.addArrangedSubview(offerView)
-            }
+        if viewModel.shouldShouldPLR {
+            stackScrollView.add(arrangedSubview: plrCollectionView)
+            stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: plrCollectionView)
+            NSLayoutConstraint.activate([
+                plrCollectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            ])
         }
 
-        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: offerTilesStackView)
+        if viewModel.shouldShowOfferTiles {
+            stackScrollView.add(arrangedSubview: offerTilesStackView)
+            if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
+                offerTileImageUrls.forEach { offer in
+                    let offerView = OfferTileView()
+                    offerView.translatesAutoresizingMaskIntoConstraints = false
+                    offerView.configure(imageUrl: offer)
+                    offerTilesStackView.addArrangedSubview(offerView)
+                }
+            }
+            stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: offerTilesStackView)
+            NSLayoutConstraint.activate([
+                offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+                offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            ])
+        }
 
         stackScrollView.add(arrangedSubview: separator)
 
@@ -240,9 +244,6 @@ private extension LoyaltyCardFullDetailsViewController {
             modulesStackView.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.modulesStackViewHeight),
             modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
-            plrCollectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
-            offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             separator.heightAnchor.constraint(equalToConstant: 0.3),
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),

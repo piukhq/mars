@@ -8,6 +8,7 @@ public enum CD_VoucherBurnAttributes: String {
     case currency = "currency"
     case prefix = "prefix"
     case suffix = "suffix"
+    case type = "type"
     case value = "value"
 }
 
@@ -53,6 +54,9 @@ open class _CD_VoucherBurn: CD_BaseObject {
 
     @NSManaged open
     var suffix: String?
+
+    @NSManaged open
+    var type: String?
 
     @NSManaged open
     var value: NSNumber?

@@ -127,6 +127,20 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             }
         }
 
+        cdObject.vouchers.forEach {
+            guard let voucher = $0 as? CD_Voucher else { return }
+            context.delete(voucher)
+        }
+
+        if let vouchers = vouchers {
+            for (index, voucher) in vouchers.enumerated() {
+                let indexID = MembershipCardModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdVoucher = voucher.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdVoucher, \.membershipCard, with: cdObject, delta: false)
+                cdObject.addVouchersObject(cdVoucher)
+            }
+        }
+
         return cdObject
     }
 }
