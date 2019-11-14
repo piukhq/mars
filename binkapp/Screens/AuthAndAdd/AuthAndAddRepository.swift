@@ -73,11 +73,11 @@ class AuthAndAddRepository {
         }
     }
     
-    func patchGhostCard(cardId: String, parameters: [String: Any], onSuccess: @escaping (MembershipCardModel) -> Void, onError: @escaping (Error) -> Void) {
+    func patchGhostCard(cardId: String, parameters: [String: Any]) {
         apiManager.doRequest(url: .membershipCard(cardId: cardId), httpMethod: .patch, parameters: parameters, onSuccess: { (response: MembershipCardModel) in
             
         }) { (error) in
-            onError(error)
+            
         }
     }
 }

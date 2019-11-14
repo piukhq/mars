@@ -141,7 +141,7 @@ class AuthAndAddViewModel {
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
         let addJsonCard = try membershipCardPostModel.asDictionary()
         
-        repository.postGhostCard(parameters: addJsonCard, onSuccess: { (response) in
+        repository.postGhostCard(parameters: addJsonCard, onSuccess: { [weak self] (response) in
             guard let card = response else {
                 Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
@@ -149,21 +149,17 @@ class AuthAndAddViewModel {
             }
             
             if card.membershipPlan?.featureSet?.cardType == 2 {
-                self.router.toPllViewController(membershipCard: card, journey: .newCard)
+                self?.router.toPllViewController(membershipCard: card, journey: .newCard)
             } else {
-                self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+                self?.router.toLoyaltyFullDetailsScreen(membershipCard: card)
             }
 
-            self.populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
+            self?.populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
             
-            var registrationCard = self.membershipCardPostModel
+            var registrationCard = self?.membershipCardPostModel
             registrationCard?.account?.addFields = []
             let registrationJsonCard = try? registrationCard.asDictionary()
-            self.repository.patchGhostCard(cardId: card.id, parameters: registrationJsonCard ?? [:], onSuccess: { _ in
-                
-            }) { _ in
-                
-            }
+            self?.repository.patchGhostCard(cardId: card.id, parameters: registrationJsonCard ?? [:])
 
             Current.wallet.refreshLocal()
             NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
