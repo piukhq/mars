@@ -30,7 +30,7 @@ class AuthAndAddRepository {
             break
         case .loginFailed:
             url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
-            method = .patch
+            method = .put
             break
         default:
             break
