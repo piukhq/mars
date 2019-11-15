@@ -82,6 +82,7 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
 
     lazy var informationTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
+        tableView.separatorColor = .lightGray
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -222,7 +223,7 @@ private extension LoyaltyCardFullDetailsViewController {
             modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
-            separator.heightAnchor.constraint(equalToConstant: 0.3),
+            separator.heightAnchor.constraint(equalToConstant: CGFloat.onePointScaled()),
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
         ])
