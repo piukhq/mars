@@ -149,7 +149,7 @@ class PaymentCardDetailViewModel {
     // MARK: Information rows
 
     var informationRows: [CardDetailInformationRow] {
-        return informationRowFactory.makeInformationRows()
+        return informationRowFactory.makePaymentInformationRows()
     }
 
     func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {

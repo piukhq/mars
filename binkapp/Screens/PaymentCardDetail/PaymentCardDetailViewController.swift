@@ -328,6 +328,8 @@ extension PaymentCardDetailViewController: CardDetailInformationRowFactoryDelega
             viewModel.toSecurityAndPrivacyScreen()
         case .deletePaymentCard:
             viewModel.deletePaymentCard()
+        default:
+            return
         }
     }
 }

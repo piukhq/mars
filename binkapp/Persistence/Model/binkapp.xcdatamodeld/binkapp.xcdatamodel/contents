@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18F203" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CD_AddField" representedClassName="CD_AddField" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="column" optional="YES" attributeType="String"/>
         <attribute name="fieldDescription" optional="YES" attributeType="String"/>
@@ -209,6 +209,35 @@
         <attribute name="tierDescription" optional="YES" attributeType="String"/>
         <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="tiers" inverseEntity="CD_MembershipPlanAccount"/>
     </entity>
+    <entity name="CD_Voucher" representedClassName="CD_Voucher" parentEntity="CD_BaseObject" syncable="YES">
+        <attribute name="barcode" optional="YES" attributeType="String"/>
+        <attribute name="barcodeType" optional="YES" attributeType="String"/>
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="dateIssued" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="dateRedeemed" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="expiryDate" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="headline" optional="YES" attributeType="String"/>
+        <attribute name="state" optional="YES" attributeType="String"/>
+        <attribute name="subtext" optional="YES" attributeType="String"/>
+        <relationship name="burn" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_VoucherBurn" inverseName="voucher" inverseEntity="CD_VoucherBurn"/>
+        <relationship name="earn" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_VoucherEarn" inverseName="voucher" inverseEntity="CD_VoucherEarn"/>
+    </entity>
+    <entity name="CD_VoucherBurn" representedClassName="CD_VoucherBurn" parentEntity="CD_BaseObject" syncable="YES">
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="prefix" optional="YES" attributeType="String"/>
+        <attribute name="suffix" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO"/>
+        <relationship name="voucher" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Voucher" inverseName="burn" inverseEntity="CD_Voucher"/>
+    </entity>
+    <entity name="CD_VoucherEarn" representedClassName="CD_VoucherEarn" parentEntity="CD_BaseObject" syncable="YES">
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="prefix" optional="YES" attributeType="String"/>
+        <attribute name="suffix" optional="YES" attributeType="String"/>
+        <attribute name="targetValue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO"/>
+        <relationship name="voucher" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Voucher" inverseName="earn" inverseEntity="CD_Voucher"/>
+    </entity>
     <elements>
         <element name="CD_AddField" positionX="-9" positionY="117" width="128" height="148"/>
         <element name="CD_App" positionX="0" positionY="126" width="128" height="88"/>
@@ -238,5 +267,8 @@
         <element name="CD_ReasonCode" positionX="155.49609375" positionY="275.58984375" width="128" height="73"/>
         <element name="CD_RegistrationField" positionX="-316.20703125" positionY="336.09375" width="128" height="148"/>
         <element name="CD_Tier" positionX="300.71875" positionY="-61.54296875" width="128" height="88"/>
+        <element name="CD_Voucher" positionX="-279" positionY="36" width="128" height="208"/>
+        <element name="CD_VoucherEarn" positionX="-270" positionY="45" width="128" height="148"/>
+        <element name="CD_VoucherBurn" positionX="-261" positionY="54" width="128" height="118"/>
     </elements>
 </model>
