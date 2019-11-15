@@ -118,7 +118,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         /// Link Status
         cardLinkStatusLabel.text = viewModel.linkStatusText
         cardLinkStatusImage.image = UIImage(named: viewModel.linkStatusImageName)
-        cardLinkStatusImage.isHidden = !viewModel.shouldShowLinkStatus
+        cardLinkStatusImage.isHidden = !viewModel.shouldShowLinkImage
         cardLinkStatusLabel.isHidden = !viewModel.shouldShowLinkStatus
         
         /// Login Button will not be visible for the MVP and waiting for the correct reason codes/state to display it
