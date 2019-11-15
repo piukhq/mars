@@ -17,7 +17,7 @@ class PLRRewardDetailViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         stackView.distribution = .fill
-        stackView.alignment = .center
+        stackView.alignment = .leading
         stackView.clipsToBounds = false
         stackView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
         view.addSubview(stackView)
@@ -32,50 +32,54 @@ class PLRRewardDetailViewController: UIViewController {
 
     private lazy var codeLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .left
         label.font = .headline
-        label.text = "012 345 678 910"
         return label
     }()
 
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .left
         label.font = .headline
-        label.text = "Your £5 voucher is ready!"
         return label
     }()
 
     private lazy var subtextLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .left
         label.font = .bodyTextLarge
-        label.text = "for joining FatFace Rewards"
         return label
     }()
 
     private lazy var issuedDateLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .left
         label.font = .bodyTextSmall
-        label.text = "Issued date"
         return label
     }()
 
     private lazy var redeemedDateLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .left
         label.font = .bodyTextSmall
-        label.text = "Redeemed date"
         return label
     }()
 
     private lazy var expiryDateLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .left
         label.font = .bodyTextSmall
-        label.text = "Expired date"
         return label
+    }()
+
+    private lazy var termsAndConditionsButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Terms & Conditions", for: .normal)
+        button.setTitleColor(.blueAccent, for: .normal)
+        button.titleLabel?.font = .linkUnderlined
+        return button
+    }()
+
+    private lazy var privacyPolicyButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Privacy Policy", for: .normal)
+        button.setTitleColor(.blueAccent, for: .normal)
+        button.titleLabel?.font = .linkUnderlined
+        return button
     }()
 
     // MARK: - Properties
@@ -97,7 +101,7 @@ class PLRRewardDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "FatFace"
+        title = "FatFace" // TODO: get plan.company_name
 
         setupUI()
     }
@@ -106,23 +110,64 @@ class PLRRewardDetailViewController: UIViewController {
 private extension PLRRewardDetailViewController {
     func setupUI() {
         voucher.configureWithViewModel(viewModel.voucherCellViewModel)
-        stackScrollView.add(arrangedSubviews: [voucher, codeLabel, headerLabel, subtextLabel, issuedDateLabel, redeemedDateLabel, expiryDateLabel])
+        stackScrollView.add(arrangedSubviews: [voucher])
 
         // View decisioning
-        codeLabel.isHidden = !viewModel.shouldShowCode
-        headerLabel.isHidden = !viewModel.shouldShowHeader
-        subtextLabel.isHidden = !viewModel.shouldShowSubtext
-        issuedDateLabel.isHidden = !viewModel.shouldShowIssuedDate
-        redeemedDateLabel.isHidden = !viewModel.shouldShowRedeemedDate
-        expiryDateLabel.isHidden = !viewModel.shouldShowExpiredDate
+        if viewModel.shouldShowCode {
+            codeLabel.text = viewModel.codeString
+            stackScrollView.add(arrangedSubview: codeLabel)
+            NSLayoutConstraint.activate([
+                codeLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            ])
+            stackScrollView.customPadding(48, before: codeLabel)
+        }
 
-        // Values
-        codeLabel.text = viewModel.codeString
-        headerLabel.text = viewModel.headerString
-        subtextLabel.text = viewModel.subtextString
-        issuedDateLabel.text = viewModel.issuedDateString
-        redeemedDateLabel.text = viewModel.redeemedDateString
-        expiryDateLabel.text = viewModel.expiredDateString
+        if viewModel.shouldShowHeader {
+            headerLabel.text = viewModel.headerString
+            stackScrollView.add(arrangedSubview: headerLabel)
+            NSLayoutConstraint.activate([
+                headerLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            ])
+            stackScrollView.customPadding(30, before: headerLabel)
+        }
+
+        if viewModel.shouldShowSubtext {
+            subtextLabel.text = viewModel.subtextString
+            stackScrollView.add(arrangedSubview: subtextLabel)
+            NSLayoutConstraint.activate([
+                subtextLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            ])
+            stackScrollView.customPadding(4, before: subtextLabel)
+        }
+
+        if viewModel.shouldShowIssuedDate {
+            issuedDateLabel.text = viewModel.issuedDateString
+            stackScrollView.add(arrangedSubview: issuedDateLabel)
+            NSLayoutConstraint.activate([
+                issuedDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            ])
+            stackScrollView.customPadding(8, before: issuedDateLabel)
+        }
+
+        if viewModel.shouldShowRedeemedDate {
+            redeemedDateLabel.text = viewModel.redeemedDateString
+            stackScrollView.add(arrangedSubview: redeemedDateLabel)
+            NSLayoutConstraint.activate([
+                redeemedDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            ])
+            stackScrollView.customPadding(8, before: redeemedDateLabel)
+        }
+
+        if viewModel.shouldShowExpiredDate {
+            expiryDateLabel.text = viewModel.expiredDateString
+            stackScrollView.add(arrangedSubview: expiryDateLabel)
+            NSLayoutConstraint.activate([
+                expiryDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            ])
+            stackScrollView.customPadding(8, before: expiryDateLabel)
+        }
+
+        stackScrollView.add(arrangedSubviews: [termsAndConditionsButton, privacyPolicyButton])
 
         setupLayout()
     }
@@ -131,17 +176,33 @@ private extension PLRRewardDetailViewController {
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
-            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
+            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: LayoutHelper.PLRRewardDetail.stackViewPadding),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -LayoutHelper.PLRRewardDetail.stackViewPadding),
             voucher.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
             voucher.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            voucher.heightAnchor.constraint(equalToConstant: 188),
-            codeLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            headerLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            subtextLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            issuedDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            redeemedDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            expiryDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            voucher.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight),
+            termsAndConditionsButton.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor),
         ])
     }
 }
+
+extension LayoutHelper {
+    struct PLRRewardDetail {
+        static let stackViewPadding: CGFloat = 25
+    }
+}
+
+
+//private func hyperlinkButton(title: String) -> UIButton {
+//    let button = UIButton(type: .custom)
+//    button.translatesAutoresizingMaskIntoConstraints = false
+//    let attrString = NSAttributedString(
+//        string: title,
+//        attributes: [.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+//    )
+//    button.setAttributedTitle(attrString, for: .normal)
+//    button.contentHorizontalAlignment = .left
+//    button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
+//    button.addTarget(self, action: .privacyButtonTapped, for: .touchUpInside)
+//    return button
+//}

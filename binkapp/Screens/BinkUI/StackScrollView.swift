@@ -177,6 +177,22 @@ open class StackScrollView: UIScrollView {
     public func customPadding(_ padding: CGFloat, after: UIView) {
         stackView.setCustomSpacing(padding, after: after)
     }
+
+    /// A method to leverage the customPaddingAfter method by finding the view before the subview in question, and adding padding after it
+    /// - Parameter padding: The desired padding
+    /// - Parameter before: The view which the padding should be applied before
+    public func customPadding(_ padding: CGFloat, before: UIView) {
+        var index = 0
+        stackView.subviews.forEach {
+            if $0 == before {
+                guard index != 0 else { return }
+                let view = stackView.subviews[index - 1]
+                customPadding(padding, after: view)
+                return
+            }
+            index += 1
+        }
+    }
     
     public func setHeaderHeight(_ height: CGFloat) {
         stackViewTopConstraint.constant = height

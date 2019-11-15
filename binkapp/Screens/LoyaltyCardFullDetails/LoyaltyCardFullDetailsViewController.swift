@@ -318,7 +318,7 @@ extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 50, height: 188)
+        return CGSize(width: collectionView.frame.width - (LayoutHelper.LoyaltyCardDetail.contentPadding * 2), height: LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
