@@ -42,8 +42,7 @@ class AuthAndAddViewModel {
     var title: String {
         switch formPurpose {
         case .signUp: return "sign_up_new_card_title".localized
-        case .login: return "log_in_title".localized
-        case .loginFailed: return "log_in_title".localized
+        case .login, .loginFailed: return "log_in_title".localized
         case .ghostCard: return "register_ghost_card_title".localized
         }
     }
@@ -51,8 +50,7 @@ class AuthAndAddViewModel {
     var buttonTitle: String {
         switch formPurpose {
         case .signUp: return "sign_up_button_title".localized
-        case .login: return "log_in_title".localized
-        case .loginFailed: return "log_in_title".localized
+        case .login, .loginFailed: return "log_in_title".localized
         case .ghostCard: return "register_card_title".localized
         }
     }
