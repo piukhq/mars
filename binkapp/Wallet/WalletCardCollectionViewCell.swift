@@ -15,6 +15,7 @@ class WalletCardCollectionViewCell: UICollectionViewCell {
         containerView.layer.cornerRadius = 8
         containerView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 8
+        contentView.clipsToBounds = true
         clipsToBounds = false
         layer.applyDefaultBinkShadow()
         layer.shouldRasterize = true
