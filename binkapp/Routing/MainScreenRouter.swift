@@ -133,8 +133,6 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    
-    
     func toTransactionsViewController(membershipCard: CD_MembershipCard) {
         let viewModel = TransactionsViewModel(membershipCard: membershipCard, router: self)
         let viewController = TransactionsViewController(viewModel: viewModel)
