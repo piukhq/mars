@@ -343,7 +343,6 @@
 		EFB7ED612379CA4000B72D06 /* PLRRewardsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */; };
 		EFB7ED622379CA4000B72D06 /* PLRRewardsHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */; };
 		EFB7ED652379CA5900B72D06 /* PLRRewardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */; };
-		EFB7ED662379CA5900B72D06 /* PLRRewardDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */; };
 		EFBDB103237B1468002D7898 /* CALayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBDB102237B1468002D7898 /* CALayerExtension.swift */; };
 		EFCAF91A2371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF9182371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.swift */; };
 		EFCAF91B2371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCAF9192371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib */; };
@@ -759,7 +758,6 @@
 		EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardsHistoryViewController.swift; sourceTree = "<group>"; };
 		EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRRewardsHistoryViewController.xib; sourceTree = "<group>"; };
 		EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewController.swift; sourceTree = "<group>"; };
-		EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRRewardDetailViewController.xib; sourceTree = "<group>"; };
 		EFBDB102237B1468002D7898 /* CALayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayerExtension.swift; sourceTree = "<group>"; };
 		EFCAF9182371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLoyaltyCardStatusCell.swift; sourceTree = "<group>"; };
 		EFCAF9192371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailLoyaltyCardStatusCell.xib; sourceTree = "<group>"; };
@@ -1845,7 +1843,6 @@
 			isa = PBXGroup;
 			children = (
 				EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */,
-				EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */,
 				EFEB5BF0237C7BA300E18743 /* PLRRewardDetailViewModel.swift */,
 			);
 			path = "PLR Detail";
@@ -2097,7 +2094,6 @@
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
-				EFB7ED662379CA5900B72D06 /* PLRRewardDetailViewController.xib in Resources */,
 				3CD3493822F99E1D000C1F4D /* NunitoSans-Regular.ttf in Resources */,
 				3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */,
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,

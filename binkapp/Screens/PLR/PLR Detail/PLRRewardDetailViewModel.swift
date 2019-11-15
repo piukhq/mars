@@ -14,4 +14,8 @@ class PLRRewardDetailViewModel {
     init(voucher: CD_Voucher) {
         self.voucher = voucher
     }
+
+    var voucherCellViewModel: PLRCellViewModel {
+        return PLRCellViewModel(voucher: voucher)
+    }
 }
