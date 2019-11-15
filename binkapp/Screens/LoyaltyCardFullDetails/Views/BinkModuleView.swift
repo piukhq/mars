@@ -43,8 +43,7 @@ class BinkModuleView: CustomView {
     
     func configure(moduleType: ModuleType, membershipCard: CD_MembershipCard, paymentCards: [CD_PaymentCard]? = nil, delegate: BinkModuleViewDelegate? = nil) {
         self.delegate = delegate
-        layer.shadowColor = UIColor.black.cgColor
-        
+
         switch moduleType{
         case .points:
             configurePointsModule(membershipCard: membershipCard)
@@ -55,6 +54,8 @@ class BinkModuleView: CustomView {
             }
             break
         }
+
+        layer.applyDefaultBinkShadow()
     }
     
     // MARK: - Actions

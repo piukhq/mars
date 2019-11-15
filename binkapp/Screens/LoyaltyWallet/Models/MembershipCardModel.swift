@@ -19,6 +19,7 @@ struct MembershipCardModel: Codable {
     let account: MembershipCardAccountModel?
     let paymentCards: [LinkedCardResponse]?
     let balances: [MembershipCardBalanceModel]?
+    let vouchers: [VoucherModel]?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -30,6 +31,7 @@ struct MembershipCardModel: Codable {
         case account
         case paymentCards = "payment_cards"
         case balances
+        case vouchers
     }
 }
 
