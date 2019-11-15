@@ -319,6 +319,11 @@ extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width - 50, height: 188)
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let voucher = viewModel.voucherForIndexPath(indexPath) else { return }
+        viewModel.toVoucherDetailScreen(voucher: voucher)
+    }
 }
 
 extension LayoutHelper {

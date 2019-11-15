@@ -180,6 +180,10 @@ class LoyaltyCardFullDetailsViewModel {
     func voucherForIndexPath(_ indexPath: IndexPath) -> CD_Voucher? {
         return membershipCard.activeVouchers?[indexPath.row]
     }
+
+    func toVoucherDetailScreen(voucher: CD_Voucher) {
+        router.toVoucherDetailViewController(voucher: voucher)
+    }
 }
 
 // MARK: Information rows
