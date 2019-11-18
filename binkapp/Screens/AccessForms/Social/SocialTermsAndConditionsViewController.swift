@@ -51,13 +51,8 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     @objc func continueButtonTapped() {                        
         let api = ApiManager()
-        let params = try? request?.asDictionary()
         
-        guard let parameters = params else {
-            return
-        }
-                
-        api.doRequest(url: .facebook, httpMethod: .post, parameters: parameters, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+        api.doRequest(url: .facebook, httpMethod: .post, parameters: request, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             Current.userManager.setNewUser(with: response)
             self?.router?.didLogin()
             self?.request = nil

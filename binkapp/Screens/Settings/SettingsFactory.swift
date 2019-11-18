@@ -32,7 +32,7 @@ struct SettingsFactory {
                     
                     let api = ApiManager()
                     
-                    api.doRequest(url: .logout, httpMethod: .post, parameters: nil, onSuccess: { (response: LogoutResponse) in
+                    api.doRequest(url: .logout, httpMethod: .post, onSuccess: { (response: LogoutResponse) in
                         NotificationCenter.default.post(name: .shouldLogout, object: nil)
                     }) { (error) in
                         NotificationCenter.default.post(name: .shouldLogout, object: nil)

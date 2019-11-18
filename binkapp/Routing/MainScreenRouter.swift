@@ -33,7 +33,7 @@ class MainScreenRouter {
     }
 
     func getOnboardingViewController() -> UIViewController {
-        let viewModel = OnboardingViewModel(router: self, repository: LoginRepository())
+        let viewModel = OnboardingViewModel(router: self)
         let nav = PortraitNavigationController(rootViewController: OnboardingViewController(viewModel: viewModel))
         return nav
     }

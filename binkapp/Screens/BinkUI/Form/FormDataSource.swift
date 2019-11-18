@@ -349,11 +349,12 @@ extension FormDataSource {
         
         if accessForm == .socialTermsAndConditions || accessForm == .register {
             let checkbox = CheckboxView(frame: .zero)
-            checkbox.configure(title: "I accept the ts and cs", columnName: "", columnKind: .register, delegate: self)
+            checkbox.configure(
+                title: "I accept the ts and cs", columnName: "", columnKind: .none, delegate: self)
             checkboxes.append(checkbox)
             
             let marketingCheckbox = CheckboxView(frame: .zero)
-            marketingCheckbox.configure(title: "Receive marketing messages", columnName: "a", columnKind: .register, delegate: self, optional: true)
+            marketingCheckbox.configure(title: "Receive marketing messages", columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
             checkboxes.append(marketingCheckbox)
         }
     }

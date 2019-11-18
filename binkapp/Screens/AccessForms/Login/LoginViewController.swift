@@ -74,20 +74,12 @@ class LoginViewController: BaseFormViewController {
                 
         let loginRequest = LoginRegisterRequest(
             email: fields["email"],
-            password: fields["password"],
-            clientID: "MKd3FfDGBi1CIUQwtahmPap64lneCa2R6GvVWKg6dNg4w9Jnpd",
-            bundleID: "com.bink.wallet"
+            password: fields["password"]
         )
         
         let api = ApiManager()
         
-        let params = try? loginRequest.asDictionary()
-        
-        guard let parameters = params else {
-            return
-        }
-                
-        api.doRequest(url: .login, httpMethod: .post, parameters: parameters, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+        api.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             Current.userManager.setNewUser(with: response)
             self?.router.didLogin()
         }) { (error) in

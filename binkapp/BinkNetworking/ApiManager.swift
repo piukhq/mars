@@ -15,6 +15,7 @@ enum RequestURL {
     case facebook
     case logout
     case renew
+    case preferences
     case membershipPlans
     case membershipCards
     case membershipCard(cardId: String)
@@ -34,12 +35,14 @@ enum RequestURL {
             return "/users/me/logout"
         case .renew:
             return "/users/renew_token"
+        case .preferences:
+            return "/users/me/settings"
         case .membershipPlans:
             return "/ubiquity/membership_plans"
         case .membershipCards:
-            return "/membership_cards"
+            return "/ubiquity/membership_cards"
         case .membershipCard(let cardId):
-            return "/membership_card/\(cardId)"
+            return "/ubiquity/membership_card/\(cardId)"
         case .paymentCards:
             return "/ubiquity/payment_cards"
         case .paymentCard(let cardId):
@@ -78,59 +81,133 @@ enum RequestHTTPMethod {
 }
 
 class ApiManager {
-    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Codable {
+    
+    private let session: Session
+    
+    struct Certificates {
+      static let bink = Certificates.certificate(filename: "bink-com")
+      
+      private static func certificate(filename: String) -> SecCertificate {
+        let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
+        let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
+        let certificate = SecCertificateCreateWithData(nil, data as CFData)!
+        
+        return certificate
+      }
+    }
+    
+    init() {
+        let evaluators = [
+          "api.bink.com":
+            PinnedCertificatesTrustEvaluator(certificates: [
+              Certificates.bink
+            ])
+        ]
+        
+        session = Session(serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
+    }
+    
+    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Decodable {
         guard Connectivity.isConnectedToInternet() else {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
             return
         }
         
         let authRequired = url.authRequired()
-        let requestHeaders = headers != nil ? headers : getHeader(authRequired: authRequired)
+        let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
+        let requestHeaders = HTTPHeaders(headerDict)
         
-        Alamofire.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders)
-            .responseJSON { response in
-                guard let data = response.data else {
-                    print("No data found")
-                    return
-                }
+        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { (response) in
+            self.responseHandler(response: response, authRequired: authRequired, onSuccess: onSuccess, onError: onError)
+        }
+    }
+
+    func doRequest<Resp, T: Encodable>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, parameters: T, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Decodable {
+        guard Connectivity.isConnectedToInternet() else {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            return
+        }
+        
+        let authRequired = url.authRequired()
+        let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
+        let requestHeaders = HTTPHeaders(headerDict)
                 
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .useDefaultKeys
-                
-                do {
-                    let statusCode = response.response?.statusCode ?? 0
-                    if statusCode == 200 || statusCode == 201 {
-                        let models = try decoder.decode(Resp.self, from: data)
-                        onSuccess(models)
-                    } else if statusCode == 403 && authRequired {
-                        /*
-                         If the endpoint expects an authorisation token,
-                         ensure that we aggressively respond in app to a 403.
-                         */
-                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
-                    } else if let error = response.error {
-                        print(error)
-                        onError(error)
-                    } else {
-                        print("something went wrong, statusCode: \(statusCode)")
-                        onError(NSError(domain: "", code: statusCode, userInfo: nil) as Error)
-                    }
-                } catch (let error) {
-                    print("decoding error: \(error)")
-                    onError(error)
-                }
+        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { (response) in
+            self.responseHandler(response: response, authRequired: authRequired, onSuccess: onSuccess, onError: onError)
         }
     }
     
+    private func responseHandler<Resp: Decodable>(response: AFDataResponse <Any>, authRequired: Bool, onSuccess: (Resp) -> (), onError: (Error) -> ()) {
+            guard let data = response.data else {
+                print("No data found")
+                return
+            }
+
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .useDefaultKeys
+
+            do {
+                let statusCode = response.response?.statusCode ?? 0
+                if statusCode == 200 || statusCode == 201 {
+                    let models = try decoder.decode(Resp.self, from: data)
+                    onSuccess(models)
+                } else if statusCode == 403 && authRequired {
+                    /*
+                     If the endpoint expects an authorisation token,
+                     ensure that we aggressively respond in app to a 403.
+                     */
+                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                } else if let error = response.error {
+                    print(error)
+                    onError(error)
+                } else {
+                    print("something went wrong, statusCode: \(statusCode)")
+                    onError(NSError(domain: "", code: statusCode, userInfo: nil) as Error)
+                }
+            } catch (let error) {
+                print("decoding error: \(error)")
+                onError(error)
+            }
+    }
     
+    typealias NoCodableResponse = (_ success: Bool, _ error: Error?) -> ()
+    
+    func doRequestWithNoResponse<T: Encodable>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: T? = nil, completion: NoCodableResponse?) {
+        guard Connectivity.isConnectedToInternet() else {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            return
+        }
+        
+        let authRequired = url.authRequired()
+        let requestHeaders = HTTPHeaders(getHeader(authRequired: authRequired))
+        
+        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { response in
+            let statusCode = response.response?.statusCode ?? 0
+            if statusCode == 200 || statusCode == 201 || statusCode == 204 {
+                completion?(true, nil)
+            } else if statusCode == 403 && authRequired {
+                /*
+                 If the endpoint expects an authorisation token,
+                 ensure that we aggressively respond in app to a 403.
+                 */
+                NotificationCenter.default.post(name: .shouldLogout, object: nil)
+            } else if let error = response.error {
+                print(error)
+                completion?(false, error)
+            } else {
+                print("something went wrong, statusCode: \(statusCode)")
+                completion?(false, NSError(domain: "", code: statusCode, userInfo: nil) as Error)
+            }
+        }
+    }
 }
 
 private extension ApiManager {
-    private func getHeader(authRequired: Bool) -> [String: String]? {
+    private func getHeader(authRequired: Bool) -> [String: String] {
         var header = ["Content-Type": "application/json;v=1.1"]
         
         if authRequired {
-            guard let token = Current.userManager.currentToken() else { return nil }
+            guard let token = Current.userManager.currentToken else { return header }
             header["Authorization"] = "Token " + token
         }
 

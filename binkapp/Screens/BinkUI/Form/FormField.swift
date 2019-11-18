@@ -89,10 +89,12 @@ class FormField {
     }
     
     enum ColumnKind {
+        case none
         case add
         case auth
         case enrol
         case register
+        case userPreference
     }
     
     let title: String

@@ -9,6 +9,8 @@
 import UIKit
 
 class RegisterViewController: BaseFormViewController {
+    private let api = ApiManager()
+
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -53,36 +55,41 @@ class RegisterViewController: BaseFormViewController {
                 
         let loginRequest = LoginRegisterRequest(
             email: fields["email"],
-            password: fields["password"],
-            clientID: "MKd3FfDGBi1CIUQwtahmPap64lneCa2R6GvVWKg6dNg4w9Jnpd",
-            bundleID: "com.bink.wallet"
+            password: fields["password"]
         )
         
-        let api = ApiManager()
-        
-        let params = try? loginRequest.asDictionary()
-        
-        guard let parameters = params else {
-            return
-        }
+        let preferenceCheckboxes = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
                 
-        api.doRequest(url: .register, httpMethod: .post, parameters: parameters, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+        api.doRequest(url: .register, httpMethod: .post, parameters: loginRequest, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             Current.userManager.setNewUser(with: response)
             self?.router.didLogin()
+            self?.updatePreferences(checkboxes: preferenceCheckboxes)
+            // Silently process the preferences
         }) { (error) in
             print(error)
         }
+    }
+    
+    func updatePreferences(checkboxes: [CheckboxView]) {
         
+        var params = [String: Any]()
+        
+        checkboxes.forEach {
+            if let columnName = $0.columnName {
+                params[columnName] = $0.value
+            }
+        }
+        
+        guard params.count > 0 else { return }
+        
+        // We don't worry about whether this was successful or not
+//        api.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
     }
 }
 
 extension RegisterViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return true
-    }
-    
-    func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {
-        print(checkboxUpdated.columnName)
     }
     
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {

@@ -24,7 +24,7 @@ class RootStateMachine: NSObject {
     }
     
     func launch() {
-        if Current.userManager.currentToken() == nil {
+        if Current.userManager.currentToken == nil {
             handleUnauthenticated()
         } else {
             moveTo(router?.wallet())

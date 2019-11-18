@@ -115,8 +115,10 @@ class AuthAndAddViewModel {
         
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
-        
-        let request = try AddMembershipCardRequest(jsonCard: membershipCardPostModel.asDictionary(), completion: { [weak self] card in
+
+        guard let model = membershipCardPostModel else { return }
+                
+        repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, onSuccess: { [weak self] card in
             guard let self = self else {return}
             if let card = card {
                 if card.membershipPlan?.featureSet?.planCardType == .link {
@@ -128,12 +130,12 @@ class AuthAndAddViewModel {
                 Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
-        }, onError: { [weak self] error in
-            print(error)
-            self?.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+            }, onError: { [weak self] error in
+                
+                print(error)
+                self?.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+                
         })
-        
-        repository.addMembershipCard(request: request, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard)
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {

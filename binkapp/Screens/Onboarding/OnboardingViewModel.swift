@@ -10,7 +10,6 @@ import Foundation
 
 class OnboardingViewModel {
     let router: MainScreenRouter
-    private let repository: LoginRepository
 
     private let fallbackUserEmail = "Bink20iteration1@testbink.com"
 
@@ -22,9 +21,8 @@ class OnboardingViewModel {
         return userEmail
     }
 
-    init(router: MainScreenRouter, repository: LoginRepository) {
+    init(router: MainScreenRouter) {
         self.router = router
-        self.repository = repository
     }
 
     var signUpWithEmailButtonText: String {

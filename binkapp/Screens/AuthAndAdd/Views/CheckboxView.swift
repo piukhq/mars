@@ -38,6 +38,10 @@ class CheckboxView: CustomView {
         titleLabel.font = UIFont.bodyTextSmall
         checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
     }
+    
+    var value: String {
+        return checkboxView.checkState == .checked ? "1" : "0"
+    }
 }
 
 extension CheckboxView: InputValidation {

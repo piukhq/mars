@@ -39,8 +39,8 @@ struct UserMigrationController {
         apiManager.doRequest(
             url: .renew,
             httpMethod: .post,
-            headers: ["Authorization" : "Token " + token, "Content-Type": "application/json"],
-            parameters: nil, onSuccess: { (response: RenewTokenResponse) in
+            headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json"],
+            onSuccess: { (response: RenewTokenResponse) in
                 Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
                 Current.userManager.setNewUser(with: response)
                 completion(true)
@@ -71,7 +71,6 @@ struct UserMigrationController {
         if let dict = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String : AnyObject],
             let user = dict["BINKCurrentUserKey"] as? User {
             // If we were successful in mapping to our new class types
-            
             return user.token.accessToken
         }
         
