@@ -26,7 +26,16 @@ class PLRRewardDetailViewModel {
     }
 
     var headerString: String? {
-        return voucher.headline
+        switch voucherState {
+        case .issued:
+            return "Your \(voucherAmountText) is ready!"
+        case .redeemed:
+            return "Your \(voucherAmountText) was redeemed"
+        case .expired:
+            return "Your \(voucherAmountText) has expired"
+        default:
+            return nil
+        }
     }
 
     var subtextString: String? {
@@ -36,19 +45,25 @@ class PLRRewardDetailViewModel {
     var issuedDateString: String? {
         guard let timestamp = voucher.dateIssued else { return nil }
         let date = Date(timeIntervalSince1970: timestamp.doubleValue)
-        return date.timeIntervalSince1970.stringFromTimeInterval()
+        let formatter = DateFormatter()
+        formatter.dateFormat = DateFormat.PLR.voucherDetail.rawValue
+        return "Added \(formatter.string(from: date))"
     }
 
     var redeemedDateString: String? {
         guard let timestamp = voucher.dateRedeemed else { return nil }
         let date = Date(timeIntervalSince1970: timestamp.doubleValue)
-        return date.timeIntervalSince1970.stringFromTimeInterval()
+        let formatter = DateFormatter()
+        formatter.dateFormat = DateFormat.PLR.voucherDetail.rawValue
+        return "Redeemed \(formatter.string(from: date))"
     }
 
     var expiredDateString: String? {
         guard let timestamp = voucher.expiryDate else { return nil }
         let date = Date(timeIntervalSince1970: timestamp.doubleValue)
-        return date.timeIntervalSince1970.stringFromTimeInterval()
+        let formatter = DateFormatter()
+        formatter.dateFormat = DateFormat.PLR.voucherDetail.rawValue
+        return "Expired \(formatter.string(from: date))"
     }
 
     // MARK: - View decisioning
@@ -81,5 +96,9 @@ class PLRRewardDetailViewModel {
 
     var voucherState: VoucherState? {
         return VoucherState(rawValue: voucher.state ?? "")
+    }
+
+    var voucherAmountText: String {
+        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
     }
 }

@@ -115,6 +115,7 @@ private extension PLRRewardDetailViewController {
         // View decisioning
         if viewModel.shouldShowCode {
             codeLabel.text = viewModel.codeString
+            codeLabel.textColor = codeLabelColor(forState: viewModel.voucherState)
             stackScrollView.add(arrangedSubview: codeLabel)
             NSLayoutConstraint.activate([
                 codeLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
@@ -185,6 +186,15 @@ private extension PLRRewardDetailViewController {
             voucher.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight),
             termsAndConditionsButton.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor),
         ])
+    }
+
+    func codeLabelColor(forState state: VoucherState?) -> UIColor {
+        switch state {
+        case .issued:
+            return .greenOk
+        default:
+            return .blueInactive
+        }
     }
 }
 

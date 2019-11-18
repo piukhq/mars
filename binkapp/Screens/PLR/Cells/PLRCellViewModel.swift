@@ -29,8 +29,12 @@ class PLRCellViewModel {
 
     var amountAccumulated: Double {
         guard let target = voucher.earn?.targetValue?.doubleValue else { return 0 }
-        guard target != 0 else { return 0 }
         guard let value = voucher.earn?.value?.doubleValue else { return 0 }
+        // Cannot divide by 0, so return early
+        guard target != 0 else {
+            // This ensures that if target is 0 but value is also 0, then progress is 100%
+            return value == 0 ? 1 : 0
+        }
         return value/target
     }
 
