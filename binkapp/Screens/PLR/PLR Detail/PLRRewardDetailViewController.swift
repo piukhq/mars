@@ -66,16 +66,16 @@ class PLRRewardDetailViewController: UIViewController {
         return label
     }()
 
-    private lazy var termsAndConditionsButton: UIButton = {
-        let button = UIButton()
+    private lazy var termsAndConditionsButton: HyperlinkButton = {
+        let button = HyperlinkButton()
         button.setTitle("Terms & Conditions", for: .normal)
         button.setTitleColor(.blueAccent, for: .normal)
         button.titleLabel?.font = .linkUnderlined
         return button
     }()
 
-    private lazy var privacyPolicyButton: UIButton = {
-        let button = UIButton()
+    private lazy var privacyPolicyButton: HyperlinkButton = {
+        let button = HyperlinkButton()
         button.setTitle("Privacy Policy", for: .normal)
         button.setTitleColor(.blueAccent, for: .normal)
         button.titleLabel?.font = .linkUnderlined
@@ -168,6 +168,8 @@ private extension PLRRewardDetailViewController {
         }
 
         stackScrollView.add(arrangedSubviews: [termsAndConditionsButton, privacyPolicyButton])
+        stackScrollView.customPadding(30, before: termsAndConditionsButton)
+        stackScrollView.customPadding(34, before: privacyPolicyButton)
 
         setupLayout()
     }
@@ -191,18 +193,3 @@ extension LayoutHelper {
         static let stackViewPadding: CGFloat = 25
     }
 }
-
-
-//private func hyperlinkButton(title: String) -> UIButton {
-//    let button = UIButton(type: .custom)
-//    button.translatesAutoresizingMaskIntoConstraints = false
-//    let attrString = NSAttributedString(
-//        string: title,
-//        attributes: [.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
-//    )
-//    button.setAttributedTitle(attrString, for: .normal)
-//    button.contentHorizontalAlignment = .left
-//    button.heightAnchor.constraint(equalToConstant: Constants.hyperlinkHeight).isActive = true
-//    button.addTarget(self, action: .privacyButtonTapped, for: .touchUpInside)
-//    return button
-//}
