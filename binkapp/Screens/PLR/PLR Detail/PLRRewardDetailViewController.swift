@@ -101,7 +101,7 @@ class PLRRewardDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "FatFace" // TODO: get plan.company_name
+        title = viewModel.title
 
         setupUI()
     }

@@ -183,7 +183,10 @@ class LoyaltyCardFullDetailsViewModel {
     }
 
     func toVoucherDetailScreen(voucher: CD_Voucher) {
-        router.toVoucherDetailViewController(voucher: voucher)
+        guard let plan = membershipCard.membershipPlan else {
+            fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
+        }
+        router.toVoucherDetailViewController(voucher: voucher, plan: plan)
     }
 }
 

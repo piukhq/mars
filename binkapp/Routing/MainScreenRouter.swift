@@ -133,8 +133,8 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toVoucherDetailViewController(voucher: CD_Voucher) {
-        let viewModel = PLRRewardDetailViewModel(voucher: voucher)
+    func toVoucherDetailViewController(voucher: CD_Voucher, plan: CD_MembershipPlan) {
+        let viewModel = PLRRewardDetailViewModel(voucher: voucher, plan: plan)
         let viewController = PLRRewardDetailViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }

@@ -10,9 +10,11 @@ import Foundation
 
 class PLRRewardDetailViewModel {
     private let voucher: CD_Voucher
+    private let membershipPlan: CD_MembershipPlan
 
-    init(voucher: CD_Voucher) {
+    init(voucher: CD_Voucher, plan: CD_MembershipPlan) {
         self.voucher = voucher
+        self.membershipPlan = plan
     }
 
     var voucherCellViewModel: PLRCellViewModel {
@@ -20,6 +22,10 @@ class PLRRewardDetailViewModel {
     }
 
     // MARK: - String values
+
+    var title: String? {
+        return membershipPlan.account?.companyName
+    }
 
     var codeString: String? {
         return voucher.code
