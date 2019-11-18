@@ -184,7 +184,6 @@ private extension PLRRewardDetailViewController {
             voucher.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
             voucher.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             voucher.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight),
-            termsAndConditionsButton.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor),
         ])
     }
 

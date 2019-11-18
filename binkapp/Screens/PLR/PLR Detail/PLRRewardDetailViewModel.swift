@@ -43,27 +43,15 @@ class PLRRewardDetailViewModel {
     }
 
     var issuedDateString: String? {
-        guard let timestamp = voucher.dateIssued else { return nil }
-        let date = Date(timeIntervalSince1970: timestamp.doubleValue)
-        let formatter = DateFormatter()
-        formatter.dateFormat = DateFormat.PLR.voucherDetail.rawValue
-        return "Added \(formatter.string(from: date))"
+        return dateString(forTimestamp: voucher.dateIssued?.doubleValue, withPrefix: "Added ")
     }
 
     var redeemedDateString: String? {
-        guard let timestamp = voucher.dateRedeemed else { return nil }
-        let date = Date(timeIntervalSince1970: timestamp.doubleValue)
-        let formatter = DateFormatter()
-        formatter.dateFormat = DateFormat.PLR.voucherDetail.rawValue
-        return "Redeemed \(formatter.string(from: date))"
+        return dateString(forTimestamp: voucher.dateRedeemed?.doubleValue, withPrefix: "Redeemed ")
     }
 
     var expiredDateString: String? {
-        guard let timestamp = voucher.expiryDate else { return nil }
-        let date = Date(timeIntervalSince1970: timestamp.doubleValue)
-        let formatter = DateFormatter()
-        formatter.dateFormat = DateFormat.PLR.voucherDetail.rawValue
-        return "Expired \(formatter.string(from: date))"
+        return dateString(forTimestamp: voucher.expiryDate?.doubleValue, withPrefix: "Expired ")
     }
 
     // MARK: - View decisioning
@@ -92,7 +80,7 @@ class PLRRewardDetailViewModel {
         return voucherState == .expired
     }
 
-    // MARK: - Private helpers
+    // MARK: - Helpers
 
     var voucherState: VoucherState? {
         return VoucherState(rawValue: voucher.state ?? "")
@@ -100,5 +88,13 @@ class PLRRewardDetailViewModel {
 
     var voucherAmountText: String {
         return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+    }
+
+    func dateString(forTimestamp timestamp: Double?, withPrefix prefix: String? = nil) -> String? {
+        guard let timestamp = timestamp else { return nil }
+        let date = Date(timeIntervalSince1970: timestamp)
+        let formatter = DateFormatter()
+        formatter.dateFormat = DateFormat.PLR.voucherDetail.rawValue
+        return "\(prefix ?? "")\(formatter.string(from: date))"
     }
 }
