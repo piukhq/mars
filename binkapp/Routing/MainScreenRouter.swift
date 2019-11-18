@@ -253,22 +253,31 @@ class MainScreenRouter {
     //MARK: - App in background
     
     @objc func appWillResignActive() {
-        if let visibileVC = getVisibleViewController(), visibileVC.isModal {
-            //If there is a modal presented dismiss it before presenting the Launch screen.
+        let visibleVC = getVisibleViewController()
+        if visibleVC?.isKind(of: UIAlertController.self) ?? false {
+            //Dismiss alert controller before presenting the Launch screen.
             navController?.dismiss(animated: false, completion: nil)
         }
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
-        navController?.present(vc, animated: false, completion: nil)
+        if let modalNavigationController = visibleVC?.navigationController, visibleVC?.isModal ?? false {
+            modalNavigationController.present(vc, animated: false, completion: nil)
+        } else {
+            navController?.present(vc, animated: false, completion: nil)
+        }
     }
     
     @objc func appDidBecomeActive() {
-        navController?.dismiss(animated: false, completion: nil)
+        let visibleVC = getVisibleViewController()
+        if let modalNavigationController = visibleVC?.navigationController {
+           modalNavigationController.dismiss(animated: false, completion: nil)
+        } else {
+            navController?.dismiss(animated: false, completion: nil)
+        }
     }
     
     func getVisibleViewController() -> UIViewController? {
-
         let rootVC = UIApplication.shared.keyWindow?.rootViewController
 
         if rootVC?.presentedViewController == nil {
