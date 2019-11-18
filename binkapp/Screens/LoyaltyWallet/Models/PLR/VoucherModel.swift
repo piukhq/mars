@@ -49,7 +49,7 @@ enum VoucherState: String, Codable {
 
 extension VoucherModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_Voucher, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_Voucher {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.state, with: state?.rawValue, delta: delta)
         update(cdObject, \.code, with: code, delta: delta)
         update(cdObject, \.barcode, with: barcode, delta: delta)

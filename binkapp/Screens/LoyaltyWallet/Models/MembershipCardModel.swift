@@ -59,7 +59,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
                 
         if let membershipTransactions = membershipTransactions {
             for (index, transaction) in membershipTransactions.enumerated() {
-                let indexID = MembershipCardModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let indexID = MembershipTransaction.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdTransaction = transaction.mapToCoreData(context, .update, overrideID: indexID)
                 cdObject.addTransactionsObject(cdTransaction)
                 update(cdTransaction, \.card, with: cdObject, delta: false)
@@ -120,7 +120,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         
         if let balances = balances {
             for (index, balance) in balances.enumerated() {
-                let indexID = MembershipCardModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let indexID = MembershipCardBalanceModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdBalance = balance.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdBalance, \.card, with: cdObject, delta: false)
                 cdObject.addBalancesObject(cdBalance)
@@ -134,7 +134,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
 
         if let vouchers = vouchers {
             for (index, voucher) in vouchers.enumerated() {
-                let indexID = MembershipCardModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let indexID = VoucherModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdVoucher = voucher.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdVoucher, \.membershipCard, with: cdObject, delta: false)
                 cdObject.addVouchersObject(cdVoucher)
