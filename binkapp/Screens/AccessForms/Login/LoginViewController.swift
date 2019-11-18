@@ -70,6 +70,8 @@ class LoginViewController: BaseFormViewController {
     
     @objc func continueButtonTapped() {
         
+        continueButton.startLoading()
+        
         let fields = dataSource.currentFieldValues()
                 
         let loginRequest = LoginRegisterRequest(
@@ -80,10 +82,11 @@ class LoginViewController: BaseFormViewController {
         let api = ApiManager()
         
         api.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, onSuccess: { [weak self] (response: LoginRegisterResponse) in
-            Current.userManager.setNewUser(with: response)
-            self?.router.didLogin()
-        }) { (error) in
-            print(error)
+                self?.continueButton.stopLoading()
+                Current.userManager.setNewUser(with: response)
+                self?.router.didLogin()
+        }) { [weak self] error in
+            self?.continueButton.stopLoading()
         }
         
     }
