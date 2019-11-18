@@ -19,7 +19,7 @@ class PLRRewardDetailViewController: UIViewController {
         stackView.distribution = .fill
         stackView.alignment = .leading
         stackView.clipsToBounds = false
-        stackView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
+        stackView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 20, right: 0)
         view.addSubview(stackView)
         return stackView
     }()
@@ -33,36 +33,42 @@ class PLRRewardDetailViewController: UIViewController {
     private lazy var codeLabel: UILabel = {
         let label = UILabel()
         label.font = .headline
+        label.numberOfLines = 0
         return label
     }()
 
     private lazy var headerLabel: UILabel = {
         let label = UILabel()
         label.font = .headline
+        label.numberOfLines = 0
         return label
     }()
 
     private lazy var subtextLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyTextLarge
+        label.numberOfLines = 0
         return label
     }()
 
     private lazy var issuedDateLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyTextSmall
+        label.numberOfLines = 0
         return label
     }()
 
     private lazy var redeemedDateLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyTextSmall
+        label.numberOfLines = 0
         return label
     }()
 
     private lazy var expiryDateLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyTextSmall
+        label.numberOfLines = 0
         return label
     }()
 
