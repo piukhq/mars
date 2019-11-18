@@ -34,11 +34,11 @@ class PLRRewardDetailViewModel {
     var headerString: String? {
         switch voucherState {
         case .issued:
-            return "Your \(voucherAmountText) is ready!"
+            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
         case .redeemed:
-            return "Your \(voucherAmountText) was redeemed"
+            return String(format: "plr_voucher_detail_redeemed_header".localized, voucherAmountText)
         case .expired:
-            return "Your \(voucherAmountText) has expired"
+            return String(format: "plr_voucher_detail_expired_header".localized, voucherAmountText)
         default:
             return nil
         }
@@ -49,15 +49,15 @@ class PLRRewardDetailViewModel {
     }
 
     var issuedDateString: String? {
-        return dateString(forTimestamp: voucher.dateIssued?.doubleValue, withPrefix: "Added ")
+        return dateString(forTimestamp: voucher.dateIssued?.doubleValue, withPrefix: "plr_voucher_detail_issued_date_prefix".localized)
     }
 
     var redeemedDateString: String? {
-        return dateString(forTimestamp: voucher.dateRedeemed?.doubleValue, withPrefix: "Redeemed ")
+        return dateString(forTimestamp: voucher.dateRedeemed?.doubleValue, withPrefix: "plr_voucher_detail_redeemed_date_prefix".localized)
     }
 
     var expiredDateString: String? {
-        return dateString(forTimestamp: voucher.expiryDate?.doubleValue, withPrefix: "Expired ")
+        return dateString(forTimestamp: voucher.expiryDate?.doubleValue, withPrefix: "plr_voucher_detail_expired_date_prefix".localized)
     }
 
     // MARK: - View decisioning

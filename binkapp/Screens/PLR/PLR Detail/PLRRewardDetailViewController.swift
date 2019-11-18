@@ -68,7 +68,7 @@ class PLRRewardDetailViewController: UIViewController {
 
     private lazy var termsAndConditionsButton: HyperlinkButton = {
         let button = HyperlinkButton()
-        button.setTitle("Terms & Conditions", for: .normal)
+        button.setTitle("plr_voucher_detail_tandc_button_title".localized, for: .normal)
         button.setTitleColor(.blueAccent, for: .normal)
         button.titleLabel?.font = .linkUnderlined
         return button
@@ -76,7 +76,7 @@ class PLRRewardDetailViewController: UIViewController {
 
     private lazy var privacyPolicyButton: HyperlinkButton = {
         let button = HyperlinkButton()
-        button.setTitle("Privacy Policy", for: .normal)
+        button.setTitle("plr_voucher_detail_privacy_button_title".localized, for: .normal)
         button.setTitleColor(.blueAccent, for: .normal)
         button.titleLabel?.font = .linkUnderlined
         return button
