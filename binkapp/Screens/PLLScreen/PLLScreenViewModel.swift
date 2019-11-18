@@ -31,7 +31,7 @@ class PLLScreenViewModel {
     }
     
     var titleText: String {
-        return isEmptyPll ? "pll_screen_add_title".localized : "pll_screen_link_title".localized
+        return "pll_screen_link_title".localized
     }
     
     var primaryMessageText: String {
