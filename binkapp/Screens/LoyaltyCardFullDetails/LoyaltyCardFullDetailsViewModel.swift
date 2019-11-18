@@ -146,6 +146,10 @@ class LoyaltyCardFullDetailsViewModel {
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
 
+    func toRewardsHistoryScreen() {
+        router.toRewardsHistoryViewController(membershipCard: membershipCard)
+    }
+
     func toAboutMembershipPlanScreen() {
         let config = getBasicReusableConfiguration(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
         router.toReusableModalTemplateViewController(configurationModel: config)
