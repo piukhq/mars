@@ -4,11 +4,11 @@ platform :ios, '12.0'
 def common_pods
 
 pod 'Firebase'
-pod 'Alamofire'
+pod 'Alamofire', '~> 5.0.0-rc.3'
 pod 'SwipeCellKit'
 pod 'Fabric'
 pod 'Crashlytics'
-pod 'AlamofireImage'
+pod 'AlamofireImage', '~> 4.0.0-beta.6'
 pod 'iOSDropDown'
 pod 'M13Checkbox'
 pod 'AlamofireNetworkActivityLogger'

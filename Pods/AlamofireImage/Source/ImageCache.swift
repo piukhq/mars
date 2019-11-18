@@ -106,7 +106,7 @@ open class AutoPurgingImageCache: ImageRequestCache {
     /// The current total memory usage in bytes of all images stored within the cache.
     open var memoryUsage: UInt64 {
         var memoryUsage: UInt64 = 0
-        synchronizationQueue.sync { memoryUsage = self.currentMemoryUsage }
+        synchronizationQueue.sync(flags: [.barrier]) { memoryUsage = self.currentMemoryUsage }
 
         return memoryUsage
     }
@@ -151,11 +151,8 @@ open class AutoPurgingImageCache: ImageRequestCache {
         }()
 
         #if os(iOS) || os(tvOS)
-        #if swift(>=4.2)
         let notification = UIApplication.didReceiveMemoryWarningNotification
-        #else
-        let notification = Notification.Name.UIApplicationDidReceiveMemoryWarning
-        #endif
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(AutoPurgingImageCache.removeAllImages),
