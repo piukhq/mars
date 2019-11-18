@@ -120,7 +120,7 @@ private extension PLRRewardDetailViewController {
             NSLayoutConstraint.activate([
                 codeLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             ])
-            stackScrollView.customPadding(48, before: codeLabel)
+            stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.codeLabelTopPadding, before: codeLabel)
         }
 
         if viewModel.shouldShowHeader {
@@ -129,7 +129,7 @@ private extension PLRRewardDetailViewController {
             NSLayoutConstraint.activate([
                 headerLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             ])
-            stackScrollView.customPadding(30, before: headerLabel)
+            stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.headerLabelTopPadding, before: headerLabel)
         }
 
         if viewModel.shouldShowSubtext {
@@ -138,7 +138,7 @@ private extension PLRRewardDetailViewController {
             NSLayoutConstraint.activate([
                 subtextLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             ])
-            stackScrollView.customPadding(4, before: subtextLabel)
+            stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.subtextLabelTopPadding, before: subtextLabel)
         }
 
         if viewModel.shouldShowIssuedDate {
@@ -147,7 +147,7 @@ private extension PLRRewardDetailViewController {
             NSLayoutConstraint.activate([
                 issuedDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             ])
-            stackScrollView.customPadding(8, before: issuedDateLabel)
+            stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.dateLabelsTopPadding, before: issuedDateLabel)
         }
 
         if viewModel.shouldShowRedeemedDate {
@@ -156,7 +156,7 @@ private extension PLRRewardDetailViewController {
             NSLayoutConstraint.activate([
                 redeemedDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             ])
-            stackScrollView.customPadding(8, before: redeemedDateLabel)
+            stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.dateLabelsTopPadding, before: redeemedDateLabel)
         }
 
         if viewModel.shouldShowExpiredDate {
@@ -165,12 +165,12 @@ private extension PLRRewardDetailViewController {
             NSLayoutConstraint.activate([
                 expiryDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             ])
-            stackScrollView.customPadding(8, before: expiryDateLabel)
+            stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.dateLabelsTopPadding, before: expiryDateLabel)
         }
 
         stackScrollView.add(arrangedSubviews: [termsAndConditionsButton, privacyPolicyButton])
-        stackScrollView.customPadding(30, before: termsAndConditionsButton)
-        stackScrollView.customPadding(34, before: privacyPolicyButton)
+        stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.tAndCButtonTopPadding, before: termsAndConditionsButton)
+        stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.privacyPolicyButtonTopPadding, before: privacyPolicyButton)
 
         setupLayout()
     }
@@ -200,5 +200,11 @@ private extension PLRRewardDetailViewController {
 extension LayoutHelper {
     struct PLRRewardDetail {
         static let stackViewPadding: CGFloat = 25
+        static let codeLabelTopPadding: CGFloat = 48
+        static let headerLabelTopPadding: CGFloat = 30
+        static let subtextLabelTopPadding: CGFloat = 4
+        static let dateLabelsTopPadding: CGFloat = 8
+        static let tAndCButtonTopPadding: CGFloat = 30
+        static let privacyPolicyButtonTopPadding: CGFloat = 34
     }
 }
