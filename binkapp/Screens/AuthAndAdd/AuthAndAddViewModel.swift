@@ -107,7 +107,7 @@ class AuthAndAddViewModel {
         return membershipPlan
     }
 
-    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {
+    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, completion: @escaping () -> Void) throws {
         guard formPurpose != .ghostCard else {
             try addGhostCard(with: formFields, checkboxes: checkboxes)
             return
@@ -124,6 +124,7 @@ class AuthAndAddViewModel {
                 } else {
                     self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
                 }
+                completion()
                 Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
