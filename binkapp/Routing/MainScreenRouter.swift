@@ -139,25 +139,7 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPaymentTermsAndConditionsViewController(delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
-        let description = "terms_and_conditions_description".localized
-        let titleAttributedString = NSMutableAttributedString(string: "terms_and_conditions_title".localized + "\n", attributes: [
-            .font: UIFont.headline
-        ])
-        let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: [
-            .font: UIFont.bodyTextLarge
-        ])
-        let urlString = "privacy_policy".localized
-        if let urlRange = description.range(of: urlString) {
-            let nsRange = NSRange(urlRange, in: description)
-            descriptionAttributedString.addAttribute(.link, value: "https://bink.com/privacy-policy/", range: nsRange)
-        }
-
-        let attributedText = NSMutableAttributedString()
-        attributedText.append(titleAttributedString)
-        attributedText.append(descriptionAttributedString)
-        
-        let configurationModel = ReusableModalConfiguration(title: "terms_and_conditions_title".localized, text: attributedText, tabBarBackButton: nil)
+    func toPaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
         let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, delegate: delegate)
         let navigationController = PortraitNavigationController(rootViewController: viewController)
