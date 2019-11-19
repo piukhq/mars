@@ -73,4 +73,23 @@ class PLRCellViewModel {
         guard let value = voucher.earn?.targetValue?.floatValue else { return nil }
         return "\(voucher.earn?.prefix ?? "")\(String(format: "%.02f", value)) \(voucher.earn?.suffix ?? "")"
     }
+
+    var dateText: String? {
+        switch voucherState {
+        case .expired:
+            return dateString(forTimestamp: voucher.expiryDate?.doubleValue, withPrefix: "on ")
+        case .redeemed:
+            return dateString(forTimestamp: voucher.dateRedeemed?.doubleValue, withPrefix: "on ")
+        default:
+            return nil
+        }
+    }
+
+    private func dateString(forTimestamp timestamp: Double?, withPrefix prefix: String? = nil) -> String? {
+        guard let timestamp = timestamp else { return nil }
+        let date = Date(timeIntervalSince1970: timestamp)
+        let formatter = DateFormatter()
+        formatter.dateFormat = DateFormat.PLR.voucherCard.rawValue
+        return "\(prefix ?? "")\(formatter.string(from: date))"
+    }
 }

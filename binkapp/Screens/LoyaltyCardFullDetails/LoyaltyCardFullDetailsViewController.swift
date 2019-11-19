@@ -63,7 +63,9 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     }()
 
     private lazy var plrCollectionView: NestedCollectionView = {
-        let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 12
+        let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.isScrollEnabled = false

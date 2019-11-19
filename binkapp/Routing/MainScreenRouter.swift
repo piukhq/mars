@@ -140,13 +140,7 @@ class MainScreenRouter {
     }
 
     func toRewardsHistoryViewController(membershipCard: CD_MembershipCard) {
-        let viewModel = PLRRewardsHistoryViewModel(membershipCard: membershipCard)
-        let viewController = PLRRewardsHistoryViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
-    }
-
-    func toVoucherHistoryViewController(membershipCard: CD_MembershipCard) {
-        let viewModel = PLRRewardsHistoryViewModel(membershipCard: membershipCard)
+        let viewModel = PLRRewardsHistoryViewModel(membershipCard: membershipCard, router: self)
         let viewController = PLRRewardsHistoryViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }

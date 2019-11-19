@@ -71,7 +71,7 @@
                                     <constraint firstItem="SLs-my-vYo" firstAttribute="top" secondItem="BGo-MJ-LGd" secondAttribute="top" id="AUv-zu-Rfi"/>
                                     <constraint firstAttribute="height" constant="12" id="agm-du-br7"/>
                                     <constraint firstAttribute="bottom" secondItem="SLs-my-vYo" secondAttribute="bottom" id="brM-05-iXo"/>
-                                    <constraint firstItem="SLs-my-vYo" firstAttribute="width" secondItem="BGo-MJ-LGd" secondAttribute="width" multiplier="0.6" id="otF-iz-cyB"/>
+                                    <constraint firstItem="SLs-my-vYo" firstAttribute="width" secondItem="BGo-MJ-LGd" secondAttribute="width" multiplier="0.6" priority="999" id="otF-iz-cyB"/>
                                     <constraint firstItem="SLs-my-vYo" firstAttribute="leading" secondItem="BGo-MJ-LGd" secondAttribute="leading" id="tZ4-0I-SYh"/>
                                 </constraints>
                             </view>
