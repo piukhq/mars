@@ -76,6 +76,7 @@
 		3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB81C12231E74220075D3AC /* ImageTypeEnum.swift */; };
 		3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CC267EF22F4276E00F0F9E3 /* Localizable.strings */; };
 		3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC267F122F428A400F0F9E3 /* String+Localization.swift */; };
+		3CCAB7522379B520001B566D /* RegistrationFieldPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCAB7512379B520001B566D /* RegistrationFieldPostModel.swift */; };
 		3CCC46C422FC652C008476E3 /* BarcodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC46C222FC652C008476E3 /* BarcodeViewController.swift */; };
 		3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */; };
 		3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */; };
@@ -460,6 +461,7 @@
 		3CB81C12231E74220075D3AC /* ImageTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTypeEnum.swift; sourceTree = "<group>"; };
 		3CC267EF22F4276E00F0F9E3 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		3CC267F122F428A400F0F9E3 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
+		3CCAB7512379B520001B566D /* RegistrationFieldPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFieldPostModel.swift; sourceTree = "<group>"; };
 		3CCC46C222FC652C008476E3 /* BarcodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewController.swift; sourceTree = "<group>"; };
 		3CCC46C322FC652C008476E3 /* BarcodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewController.xib; sourceTree = "<group>"; };
 		3CCC46C622FC6540008476E3 /* BarcodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModel.swift; sourceTree = "<group>"; };
@@ -871,6 +873,7 @@
 				3C2C90FC23193F0000D112E3 /* MembershipCardPostModel.swift */,
 				3C2C90FE23193F6700D112E3 /* AccountPostModel.swift */,
 				3CD2CBBE2346059100862A5A /* EnrolFieldPostModel.swift */,
+				3CCAB7512379B520001B566D /* RegistrationFieldPostModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2518,6 +2521,9 @@
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
 				EF8BF1F6233E60AE00D2E5F3 /* Cache.swift in Sources */,
 				EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */,
+				BDD9C881233BE6B1003CD616 /* CD_ReasonCode.swift in Sources */,
+				3CCAB7522379B520001B566D /* RegistrationFieldPostModel.swift in Sources */,
+				BDD9C872233BE6B1003CD616 /* CD_MembershipCard.swift in Sources */,
 				EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */,
 				EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */,
 				BDB01886232ED6F800BFFA18 /* SpreedlyRequest.swift in Sources */,

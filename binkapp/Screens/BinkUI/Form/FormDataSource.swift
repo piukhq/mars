@@ -150,11 +150,11 @@ extension FormDataSource {
             self.delegate?.formDataSource(self, fieldDidExit: field)
         }
         
-        if formPurpose == .login {
+        if formPurpose == .login || formPurpose == .ghostCard {
             model.account?.formattedAddFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
-                    checkbox.configure(title: field.fieldDescription ?? "", columnName: field.column ?? "", columnKind: .enrol, delegate: self)
+                    checkbox.configure(title: field.fieldDescription ?? "", columnName: field.column ?? "", columnKind: .add, delegate: self)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -174,11 +174,11 @@ extension FormDataSource {
             }
         }
         
-        if formPurpose != .signUp {
+        if formPurpose != .signUp && formPurpose != .ghostCard {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
-                    checkbox.configure(title: field.fieldDescription ?? "", columnName: field.column ?? "", columnKind: .enrol, delegate: self)
+                    checkbox.configure(title: field.fieldDescription ?? "", columnName: field.column ?? "", columnKind: .auth, delegate: self)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -217,6 +217,29 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             columnKind: .enrol
                         )
+                    )
+                }
+            }
+        }
+        
+        if formPurpose == .ghostCard {
+            model.account?.formattedRegistrationFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
+                if field.fieldInputType == .checkbox {
+                    let checkbox = CheckboxView(frame: .zero)
+                    checkbox.configure(title: field.fieldDescription ?? "", columnName: field.column ?? "", columnKind: .register, delegate: self)
+                    checkboxes.append(checkbox)
+                } else {
+                    fields.append(
+                        FormField(
+                            title: field.column ?? "",
+                            placeholder: field.fieldDescription ?? "",
+                            validation: field.validation,
+                            fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, choices: field.choicesArray),
+                            updated: updatedBlock,
+                            shouldChange: shouldChangeBlock,
+                            fieldExited: fieldExitedBlock,
+                            columnKind: .register
+                            )
                     )
                 }
             }

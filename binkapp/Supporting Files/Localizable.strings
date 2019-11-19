@@ -23,6 +23,9 @@
 "history_title" = "History";
 "not_available_title" = "Not available";
 "pending_title" = "Pending";
+"register_ghost_card_title" = "Register your card";
+"register_ghost_card_description" = "Fill out the form below to get a new %@ card, and start earning points";
+"register_card_title" = "Register card";
 "retry_title" = "Retry";
 
 "add_loyalty_card_title" = "Add loyalty card";
