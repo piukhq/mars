@@ -49,15 +49,15 @@ class PLRRewardDetailViewModel {
     }
 
     var issuedDateString: String? {
-        return dateString(forTimestamp: voucher.dateIssued?.doubleValue, withPrefix: "plr_voucher_detail_issued_date_prefix".localized)
+        return String.fromTimestamp(voucher.dateIssued?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
     }
 
     var redeemedDateString: String? {
-        return dateString(forTimestamp: voucher.dateRedeemed?.doubleValue, withPrefix: "plr_voucher_detail_redeemed_date_prefix".localized)
+        return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
     }
 
     var expiredDateString: String? {
-        return dateString(forTimestamp: voucher.expiryDate?.doubleValue, withPrefix: "plr_voucher_detail_expired_date_prefix".localized)
+        return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
     }
 
     // MARK: - View decisioning
@@ -94,13 +94,5 @@ class PLRRewardDetailViewModel {
 
     var voucherAmountText: String {
         return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
-    }
-
-    func dateString(forTimestamp timestamp: Double?, withPrefix prefix: String? = nil) -> String? {
-        guard let timestamp = timestamp else { return nil }
-        let date = Date(timeIntervalSince1970: timestamp)
-        let formatter = DateFormatter()
-        formatter.dateFormat = DateFormat.PLR.voucherDetail.rawValue
-        return "\(prefix ?? "")\(formatter.string(from: date))"
     }
 }

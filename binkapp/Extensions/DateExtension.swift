@@ -10,11 +10,8 @@ import Foundation
 
 enum DateFormat: String {
     case dayMonthYear = "dd MMMM YYYY"
-
-    enum PLR: String {
-        case voucherDetail = "dd MMM yyyy HH:mm:ss"
-        case voucherCard = "dd MMM yyyy"
-    }
+    case dayShortMonthYear = "dd MMM YYYY"
+    case dayShortMonthYear24HourSecond = "dd MMM yyyy HH:mm:ss"
 }
 
 extension Date {

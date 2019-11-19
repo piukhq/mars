@@ -77,19 +77,11 @@ class PLRCellViewModel {
     var dateText: String? {
         switch voucherState {
         case .expired:
-            return dateString(forTimestamp: voucher.expiryDate?.doubleValue, withPrefix: "on ")
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear, prefix: "on ")
         case .redeemed:
-            return dateString(forTimestamp: voucher.dateRedeemed?.doubleValue, withPrefix: "on ")
+            return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear, prefix: "on ")
         default:
             return nil
         }
-    }
-
-    private func dateString(forTimestamp timestamp: Double?, withPrefix prefix: String? = nil) -> String? {
-        guard let timestamp = timestamp else { return nil }
-        let date = Date(timeIntervalSince1970: timestamp)
-        let formatter = DateFormatter()
-        formatter.dateFormat = DateFormat.PLR.voucherCard.rawValue
-        return "\(prefix ?? "")\(formatter.string(from: date))"
     }
 }
