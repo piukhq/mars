@@ -138,10 +138,16 @@ class ApiManager {
     }
     
     private func responseHandler<Resp: Decodable>(response: AFDataResponse <Any>, authRequired: Bool, onSuccess: (Resp) -> (), onError: (Error) -> ()) {
-            guard let data = response.data else {
-                print("No data found")
-                return
-            }
+        
+        if case let .failure(error) = response.result, error.isServerTrustEvaluationError {
+            // SSL/TLS Pinning Failure
+            onError(error)
+            return
+        }
+        
+        guard let data = response.data else {
+            return
+        }
 
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .useDefaultKeys
@@ -151,10 +157,10 @@ class ApiManager {
                 if statusCode == 200 || statusCode == 201 {
                     let models = try decoder.decode(Resp.self, from: data)
                     onSuccess(models)
-                } else if statusCode == 403 && authRequired {
+                } else if statusCode == 401 && authRequired {
                     /*
                      If the endpoint expects an authorisation token,
-                     ensure that we aggressively respond in app to a 403.
+                     ensure that we aggressively respond in app to a 401.
                      */
                     NotificationCenter.default.post(name: .shouldLogout, object: nil)
                 } else if let error = response.error {
@@ -185,7 +191,7 @@ class ApiManager {
             let statusCode = response.response?.statusCode ?? 0
             if statusCode == 200 || statusCode == 201 || statusCode == 204 {
                 completion?(true, nil)
-            } else if statusCode == 403 && authRequired {
+            } else if statusCode == 401 && authRequired {
                 /*
                  If the endpoint expects an authorisation token,
                  ensure that we aggressively respond in app to a 403.
@@ -214,3 +220,4 @@ private extension ApiManager {
         return header
     }
 }
+

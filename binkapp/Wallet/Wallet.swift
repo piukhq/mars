@@ -99,7 +99,7 @@ class Wallet: CoreDataRepositoryProtocol {
                 }
             })
         }, onError: {_ in
-            print("error")
+           completion()
         })
     }
 
@@ -123,7 +123,7 @@ class Wallet: CoreDataRepositoryProtocol {
                 })
             })
         }, onError: {_ in
-            print("error")
+            completion()
         })
     }
 
@@ -147,7 +147,7 @@ class Wallet: CoreDataRepositoryProtocol {
                 }
             })
         }, onError: {_ in
-            print("error")
+            completion()
         })
     }
 }

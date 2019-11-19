@@ -87,12 +87,18 @@ class LoginViewController: BaseFormViewController {
                 self?.router.didLogin()
         }) { [weak self] error in
             self?.continueButton.stopLoading()
+            self?.showError()
         }
-        
     }
     
     @objc func forgotPasswordTapped() {
         
+    }
+    
+    func showError() {
+        let alert = UIAlertController(title: "Error", message: "Incorrect email/password. Please try again.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
 

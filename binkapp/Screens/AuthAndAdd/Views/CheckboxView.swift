@@ -13,34 +13,45 @@ protocol CheckboxViewDelegate: NSObjectProtocol {
 }
 
 class CheckboxView: CustomView {
+    typealias TextAction = () -> ()
     @IBOutlet private weak var checkboxView: M13Checkbox!
     @IBOutlet private weak var titleLabel: UILabel!
  
     private(set) var optional: Bool = false
     private(set) var columnName: String?
     private(set) var columnKind: FormField.ColumnKind?
+    private(set) var textSelected: TextAction?
     private(set) var title: String? {
         didSet {
             titleLabel.text = title
         }
     }
+    
+    private lazy var tapGesture = UITapGestureRecognizer(target: self, action: .textSelected)
+    
     weak var delegate: CheckboxViewDelegate?
     
-    func configure(title: String, columnName: String, columnKind: FormField.ColumnKind, delegate: CheckboxViewDelegate? = nil, optional: Bool = false) {
+    func configure(title: String? = nil, attributedTitle: NSAttributedString? = nil, columnName: String, columnKind: FormField.ColumnKind, delegate: CheckboxViewDelegate? = nil, optional: Bool = false, textSelected: TextAction? = nil) {
         checkboxView.boxType = .square
         checkboxView.stateChangeAnimation = .flat(.fill)
         self.columnName = columnName
-        self.title = title
+        self.title = title != nil ? title : attributedTitle?.string
         self.columnKind = columnKind
         self.delegate = delegate
         self.optional = optional
+        self.textSelected = textSelected
         
         titleLabel.font = UIFont.bodyTextSmall
+        titleLabel.addGestureRecognizer(tapGesture)
         checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
     }
     
     var value: String {
         return checkboxView.checkState == .checked ? "1" : "0"
+    }
+    
+    @objc func textSelectedSelector() {
+        textSelected?()
     }
 }
 
@@ -55,4 +66,8 @@ extension CheckboxView: InputValidation {
         guard let columnType = columnKind, let columnName = title else { return }
         delegate?.checkboxView(self, didCompleteWithColumn: columnName, value: String(isChecked), fieldType: columnType)
     }
+}
+
+fileprivate extension Selector {
+    static let textSelected = #selector(CheckboxView.textSelectedSelector)
 }

@@ -348,18 +348,26 @@ extension FormDataSource {
         }
         
         if accessForm == .socialTermsAndConditions || accessForm == .register {
-            let checkbox = CheckboxView(frame: .zero)
-            checkbox.configure(
-                title: "I accept the ts and cs", columnName: "", columnKind: .none, delegate: self)
-            checkboxes.append(checkbox)
+            let termsAndConditions = CheckboxView(frame: .zero)
+            termsAndConditions.configure(
+                attributedTitle: hyperlinkString("I accept Bink's Terms and Conditions", hyperlink: "Terms and Conditions"), columnName: "", columnKind: .none, delegate: self)
+            checkboxes.append(termsAndConditions)
+            
+            let privacyPolicy = CheckboxView(frame: .zero)
+            privacyPolicy.configure(
+                attributedTitle: hyperlinkString("I accept Bink's Privacy Policy", hyperlink: "Privacy Policy"), columnName: "", columnKind: .none, delegate: self)
+            checkboxes.append(privacyPolicy)
             
             let marketingCheckbox = CheckboxView(frame: .zero)
-            marketingCheckbox.configure(title: "Receive marketing messages", columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
+            marketingCheckbox.configure(title: "I opt in to receive marketing messages", columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
             checkboxes.append(marketingCheckbox)
         }
     }
+    
+    private func hyperlinkString(_ text: String, hyperlink: String) -> NSAttributedString {
+        return NSAttributedString(string: text)
+    }
 }
-
 
 extension FormDataSource: CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
