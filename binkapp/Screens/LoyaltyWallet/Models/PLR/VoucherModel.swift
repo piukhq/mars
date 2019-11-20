@@ -14,7 +14,7 @@ struct VoucherModel: Codable {
     var state: VoucherState?
     var code: String?
     var barcode: String?
-    var barcodeType: String?
+    var barcodeType: Int?
     var headline: String?
     var subtext: String?
     var dateRedeemed: Int?
@@ -42,45 +42,7 @@ struct VoucherModel: Codable {
 enum VoucherState: String, Codable {
     case redeemed
     case issued
-    case inProgress
+    case inProgress = "inprogress"
     case expired
     case cancelled
-}
-
-enum VoucherType: String, Codable {
-    case voucher
-    case coupon
-}
-
-extension VoucherModel: CoreDataMappable, CoreDataIDMappable {
-    func objectToMapTo(_ cdObject: CD_Voucher, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_Voucher {
-        update(cdObject, \.id, with: id, delta: delta)
-        update(cdObject, \.state, with: state?.rawValue, delta: delta)
-        update(cdObject, \.code, with: code, delta: delta)
-        update(cdObject, \.barcode, with: barcode, delta: delta)
-        update(cdObject, \.barcodeType, with: barcodeType, delta: delta)
-        update(cdObject, \.headline, with: headline, delta: delta)
-        update(cdObject, \.subtext, with: subtext, delta: delta)
-        update(cdObject, \.dateRedeemed, with: NSNumber(value: dateRedeemed ?? 0), delta: delta)
-        update(cdObject, \.dateIssued, with: NSNumber(value: dateIssued ?? 0), delta: delta)
-        update(cdObject, \.expiryDate, with: NSNumber(value: expiryDate ?? 0), delta: delta)
-
-        if let earn = earn {
-            let cdEarn = earn.mapToCoreData(context, .update, overrideID: VoucherEarnModel.overrideId(forParentId: id))
-            update(cdEarn, \.voucher, with: cdObject, delta: delta)
-            update(cdObject, \.earn, with: cdEarn, delta: delta)
-        } else {
-            update(cdObject, \.earn, with: nil, delta: false)
-        }
-
-        if let burn = burn {
-            let cdBurn = burn.mapToCoreData(context, .update, overrideID: VoucherBurnModel.overrideId(forParentId: id))
-            update(cdBurn, \.voucher, with: cdObject, delta: delta)
-            update(cdObject, \.burn, with: cdBurn, delta: delta)
-        } else {
-            update(cdObject, \.burn, with: nil, delta: false)
-        }
-
-        return cdObject
-    }
 }
