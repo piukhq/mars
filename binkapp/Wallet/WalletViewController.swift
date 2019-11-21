@@ -50,6 +50,11 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
         configureCollectionView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Current.wallet.reloadIfNecessary()
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         refreshControl.endRefreshing()
         super.viewWillDisappear(animated)
