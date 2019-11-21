@@ -52,7 +52,7 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Current.wallet.reloadIfNecessary()
+        Current.wallet.reloadWalletsIfNecessary()
     }
 
     override func viewWillDisappear(_ animated: Bool) {

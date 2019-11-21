@@ -26,10 +26,9 @@ class Wallet: CoreDataRepositoryProtocol {
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
     func launch() {
-        loadWallet(forType: .local) { [weak self] _ in
-            self?.loadWallet(forType: .reload) { success in
+        loadWallets(forType: .local, reloadPlans: false) { [weak self] _ in
+            self?.loadWallets(forType: .reload, reloadPlans: true) { success in
                 if success {
-                    // Launch requests succeeded, so start the refresh manager to handle future requests
                     self?.refreshManager.start()
                 }
             }
@@ -39,27 +38,42 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Fetch the wallets from the API.
     /// Should only be called from a pull to refresh.
     func reload() {
-        /// Not nested in a refresh manager check, as pull to refresh should always be permitted
-        loadWallet(forType: .reload) { [weak self] success in
+        /// Not nested in a refresh manager condition, as pull to refresh should always be permitted
+        loadWallets(forType: .reload, reloadPlans: true) { [weak self] success in
             if success {
-                /// We should only reset the refresh manager if the wallet load was successful
-                self?.refreshManager.reset()
+                self?.refreshManager.resetAll()
             }
         }
     }
 
-    /// Full API refresh, nested in a refresh manager condition
+    /// Full API refresh of loyalty and payment wallets, nested in a refresh manager condition
     /// Called each time a wallet becomes visible
-    func reloadIfNecessary() {
+    func reloadWalletsIfNecessary() {
         if refreshManager.isActive && refreshManager.canRefreshAccounts {
-            reload()
+            loadWallets(forType: .reload, reloadPlans: false) { [weak self] success in
+                if success {
+                    self?.refreshManager.resetAccountsTimer()
+                }
+            }
+        }
+    }
+
+    /// Full API refresh of membership plans, nested in a refresh manager condition
+    /// Called each time the app enters the foreground
+    func refreshMembershipPlansIfNecessary() {
+        if refreshManager.isActive && refreshManager.canRefreshPlans {
+            getMembershipPlans(forceRefresh: true) { [weak self] success in
+                if success {
+                    self?.refreshManager.resetPlansTimer()
+                }
+            }
         }
     }
 
     /// Refresh from our local data
     /// Useful for calling after card deletions
     func refreshLocal() {
-        loadWallet(forType: .local)
+        loadWallets(forType: .local, reloadPlans: false)
     }
 
     var hasPaymentCards: Bool {
@@ -68,12 +82,12 @@ class Wallet: CoreDataRepositoryProtocol {
 
     // MARK: - Private
 
-    private func loadWallet(forType type: FetchType, completion: ((Bool) -> Void)? = nil) {
+    private func loadWallets(forType type: FetchType, reloadPlans: Bool, completion: ((Bool) -> Void)? = nil) {
         let dispatchGroup = DispatchGroup()
         let forceRefresh = type == .reload
 
         dispatchGroup.enter()
-        getLoyaltyWallet(forceRefresh: forceRefresh) { success in
+        getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans) { success in
             // if this failed, the entire function should fail
             guard success else {
                 completion?(success)
@@ -101,8 +115,8 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Even though we want to get the loyalty and payment card wallets asyncronously and complete once both finish regardless of order,
     /// membership cards still have a dependancy on membership plans having been downloaded.
     /// This provides a convenient way to get the loyalty wallet as a whole, while honouring that dependancy.
-    private func getLoyaltyWallet(forceRefresh: Bool = false, completion: @escaping (Bool) -> Void) {
-        getMembershipPlans(forceRefresh: forceRefresh) { [weak self] success in
+    private func getLoyaltyWallet(forceRefresh: Bool = false, reloadPlans: Bool, completion: @escaping (Bool) -> Void) {
+        getMembershipPlans(forceRefresh: reloadPlans) { [weak self] success in
             self?.getMembershipCards(forceRefresh: forceRefresh, completion: { success in
                 completion(success)
             })

@@ -9,8 +9,8 @@
 import Foundation
 
 class WalletRefreshManager {
-    private static let oneMinute: TimeInterval = 5
-    private static let twoMinutes: TimeInterval = 10
+    private static let oneHour: TimeInterval = 3600
+    private static let twoMinutes: TimeInterval = 120
 
     private var accountsRefreshTimer: Timer!
     private var plansRefreshTimer: Timer!
@@ -20,17 +20,32 @@ class WalletRefreshManager {
     var isActive = false
 
     func start() {
-        canRefreshAccounts = false
-        canRefreshPlans = false
-        accountsRefreshTimer = Timer.scheduledTimer(timeInterval: WalletRefreshManager.twoMinutes, target: self, selector: #selector(handleAccountsRefreshTimerTrigger), userInfo: nil, repeats: false)
-        plansRefreshTimer = Timer.scheduledTimer(timeInterval: WalletRefreshManager.oneMinute, target: self, selector: #selector(handlePlansRefreshTimerTrigger), userInfo: nil, repeats: false)
+        resetAll()
         isActive = true
     }
 
-    func reset() {
-        accountsRefreshTimer.invalidate()
-        plansRefreshTimer.invalidate()
-        start()
+    /// This should only be called after a pull to refresh
+    func resetAll() {
+        resetAccountsTimer()
+        resetPlansTimer()
+    }
+
+    /// This should only be called on wallet appear
+    func resetAccountsTimer() {
+        if accountsRefreshTimer != nil {
+            accountsRefreshTimer.invalidate()
+            canRefreshAccounts = false
+        }
+        accountsRefreshTimer = Timer.scheduledTimer(timeInterval: WalletRefreshManager.twoMinutes, target: self, selector: #selector(handleAccountsRefreshTimerTrigger), userInfo: nil, repeats: false)
+    }
+
+    /// This should only be called on background launch
+    func resetPlansTimer() {
+        if plansRefreshTimer != nil {
+            plansRefreshTimer.invalidate()
+            canRefreshPlans = false
+        }
+        plansRefreshTimer = Timer.scheduledTimer(timeInterval: WalletRefreshManager.oneHour, target: self, selector: #selector(handlePlansRefreshTimerTrigger), userInfo: nil, repeats: false)
     }
 
     @objc private func handleAccountsRefreshTimerTrigger() {
