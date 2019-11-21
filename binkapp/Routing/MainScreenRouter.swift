@@ -139,25 +139,7 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPaymentTermsAndConditionsViewController(delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
-        let title = "terms_and_conditions_title".localized
-        let screenText = title + "\n" + "lorem_ipsum".localized
-        
-        let attributedText = NSMutableAttributedString(string: screenText)
-        
-        attributedText.addAttribute(
-            NSAttributedString.Key.font,
-            value: UIFont.headline,
-            range: NSRange(location: 0, length: title.count)
-        )
-        
-        attributedText.addAttribute(
-            NSAttributedString.Key.font,
-            value: UIFont.bodyTextLarge,
-            range: NSRange(location: title.count, length: ("lorem_ipsum".localized).count)
-        )
-        
-        let configurationModel = ReusableModalConfiguration(title: title, text: attributedText, primaryButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: nil)
+    func toPaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
         let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, delegate: delegate)
         let navigationController = PortraitNavigationController(rootViewController: viewController)

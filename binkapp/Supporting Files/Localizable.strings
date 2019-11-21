@@ -86,6 +86,8 @@
 "ok" = "OK";
 "accept" = "Accept";
 "decline" = "Decline";
+"i_accept" = "I accept";
+"i_decline" = "I decline";
 "login" = "Log in";
 
 "no_account_button_title" = "I don't have an account";
@@ -156,6 +158,8 @@
 "link_module_to_number_of_payment_cards_message" = "To %d of %d cards";
 
 "terms_and_conditions_title" = "Terms and conditions";
+"terms_and_conditions_description" = "I authorise MasterCard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction for MasterCard, Visa and American Express to share such transaction details with Loyalty Angels Limited to enable my card-linked offer(s) and target offers that may be of interest to me. For information about Loyalty Angels Limited privacy practices, please see our Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.";
+"privacy_policy" = "Privacy Policy";
 
 "native_join_unavailable_title" = "Native join unavailable";
 "native_join_unavailable_description" = "You can go to the merchant website to join then come back and add your card. Or we can email you the link so you can sign up on your computer. Copy needed.";
