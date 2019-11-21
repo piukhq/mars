@@ -27,10 +27,8 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
     func launch() {
         loadWallets(forType: .local, reloadPlans: false) { [weak self] _ in
-            self?.loadWallets(forType: .reload, reloadPlans: true) { success in
-                if success {
-                    self?.refreshManager.start()
-                }
+            self?.loadWallets(forType: .reload, reloadPlans: true) { _ in
+                self?.refreshManager.start()
             }
         }
     }
