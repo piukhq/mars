@@ -11,9 +11,10 @@ import UIKit
 class PreferencesViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var checkboxView: CheckboxView!
+    @IBOutlet weak var stackView: UIStackView!
     
     private let viewModel: PreferencesViewModel
+    private var checkboxes: [CheckboxView] = []
     
     init(viewModel: PreferencesViewModel) {
         self.viewModel = viewModel
@@ -44,7 +45,15 @@ class PreferencesViewController: UIViewController {
         attributedString.addAttribute(.font, value: UIFont.subtitle, range: NSRange(location: 71, length: 7))
         descriptionLabel.attributedText = attributedString
         
+    }
+    
+    private func setCheckboxes() {
+        let checkboxView = CheckboxView()
         checkboxView.configure(title: "preferences_marketing_checkbox".localized, columnName: "preferences_marketing_checkbox".localized, columnKind: .add, delegate: self)
+        
+        checkboxes.append(checkboxView)
+        
+        
     }
     
     @objc private func popViewController() {

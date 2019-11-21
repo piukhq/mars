@@ -14,4 +14,8 @@ class PreferencesRepository {
     init(apiManager: ApiManager) {
         self.apiManager = apiManager
     }
+    
+    func getPreferences() {
+        apiManager.doRequest(url: <#T##RequestURL#>, httpMethod: <#T##RequestHTTPMethod#>, parameters: <#T##[String : Any]?#>, onSuccess: <#T##(Decodable & Encodable) -> ()#>, onError: <#T##(Error) -> ()#>)
+    }
 }

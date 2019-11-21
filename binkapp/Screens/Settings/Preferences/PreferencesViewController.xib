@@ -10,8 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreferencesViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
-                <outlet property="checkboxView" destination="RG8-Yu-q67" id="lj3-St-vgP"/>
                 <outlet property="descriptionLabel" destination="rSP-uq-IcU" id="v94-BY-ErL"/>
+                <outlet property="stackView" destination="epj-PS-NWS" id="hIK-wK-VHt"/>
                 <outlet property="titleLabel" destination="PNt-mw-rpw" id="VWc-mY-LRp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -34,22 +34,16 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="epj-PS-NWS">
-                    <rect key="frame" x="25" y="93" width="325" height="22"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RG8-Yu-q67" customClass="CheckboxView" customModule="binkapp" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="325" height="22"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="22" placeholder="YES" id="ZnK-Q4-BKG"/>
-                            </constraints>
-                        </view>
-                    </subviews>
+                    <rect key="frame" x="25" y="89" width="325" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" placeholder="YES" id="fcF-zB-c22"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="epj-PS-NWS" secondAttribute="bottom" constant="50" id="1tT-Fw-Z69"/>
-                <constraint firstItem="epj-PS-NWS" firstAttribute="top" secondItem="rSP-uq-IcU" secondAttribute="bottom" constant="24" id="A0D-wb-DVu"/>
+                <constraint firstItem="epj-PS-NWS" firstAttribute="top" secondItem="rSP-uq-IcU" secondAttribute="bottom" constant="20" id="A0D-wb-DVu"/>
                 <constraint firstItem="rSP-uq-IcU" firstAttribute="leading" secondItem="PNt-mw-rpw" secondAttribute="leading" id="FZi-X3-rBc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PNt-mw-rpw" secondAttribute="trailing" constant="25" id="U0H-9s-XvH"/>
                 <constraint firstItem="PNt-mw-rpw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="WXj-Dy-Y2b"/>
