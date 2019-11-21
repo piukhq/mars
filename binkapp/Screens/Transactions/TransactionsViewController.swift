@@ -11,7 +11,6 @@ import UIKit
 class TransactionsViewController: UIViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var lastCheckedLabel: UILabel!
     @IBOutlet private weak var brandHeaderView: BrandHeaderView!
     @IBOutlet private weak var tableView: UITableView!
     
@@ -36,7 +35,6 @@ class TransactionsViewController: UIViewController {
     private func configureUI() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         titleLabel.font = .headline
-        lastCheckedLabel.font = .bodyTextLarge
         descriptionLabel.font = .bodyTextLarge
 
         titleLabel.text = viewModel.title
@@ -45,11 +43,8 @@ class TransactionsViewController: UIViewController {
         if !viewModel.transactions.isEmpty {
             let imageUrl = viewModel.membershipCard.membershipPlan?.firstIconImage()?.url
             brandHeaderView.configure(imageURLString: imageUrl, loyaltyPlanNameCard: (viewModel.membershipCard.membershipPlan?.account?.planNameCard ?? nil), delegate: self)
-        } else {
-            lastCheckedLabel.text = viewModel.lastCheckedString ?? ""
         }
 
-        lastCheckedLabel.isHidden = !viewModel.transactions.isEmpty
         brandHeaderView.isHidden = viewModel.transactions.isEmpty
         tableView.isHidden = viewModel.transactions.isEmpty
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
