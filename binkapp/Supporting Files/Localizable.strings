@@ -140,6 +140,9 @@
 
 "debug_menu_tools_section_title" = "Tools";
 
+//MARK: - Bink module view
+"generic_pending_module_title" = "Request pending";
+"generic_pending_module_description" = "Please wait while we work with the merchant to set up your card. This shouldn’t take long.";
 "points_module_view_history_message" = "View history";
 "points_module_last_checked" = "Last checked";
 "points_module_to_see_history" = "To see history";
