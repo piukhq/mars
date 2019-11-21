@@ -28,6 +28,7 @@ class PreferencesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        viewModel.getPreferences()
     }
 
     private func configureUI() {
@@ -45,14 +46,15 @@ class PreferencesViewController: UIViewController {
         attributedString.addAttribute(.font, value: UIFont.subtitle, range: NSRange(location: 71, length: 7))
         descriptionLabel.attributedText = attributedString
         
+        createCheckboxes()
     }
     
-    private func setCheckboxes() {
-        let checkboxView = CheckboxView()
-        checkboxView.configure(title: "preferences_marketing_checkbox".localized, columnName: "preferences_marketing_checkbox".localized, columnKind: .add, delegate: self)
-        
-        checkboxes.append(checkboxView)
-        
+    private func createCheckboxes() {
+        viewModel.preferences.forEach {
+            let checkboxView = CheckboxView()
+            checkboxView.configure(columnName: $0.label == "marketing-bink" ? "preferences_marketing_checkbox".localized : $0.label ?? "", columnKind: .add)
+            stackView.addArrangedSubview(checkboxView)
+        }
         
     }
     
