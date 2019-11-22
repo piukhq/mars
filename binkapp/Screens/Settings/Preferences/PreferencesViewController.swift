@@ -15,6 +15,7 @@ class PreferencesViewController: UIViewController {
     
     private let viewModel: PreferencesViewModel
     private var checkboxes: [CheckboxView] = []
+    private var modifiedPreferences: [PreferencesModel] = []
     
     init(viewModel: PreferencesViewModel) {
         self.viewModel = viewModel
@@ -28,12 +29,10 @@ class PreferencesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        viewModel.getPreferences()
     }
 
     private func configureUI() {
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        navigationItem.leftBarButtonItem = backButton
+        navigationItem.leftBarButtonItem?.title = nil
         
         titleLabel.text = "settings_row_preferences_title".localized
         titleLabel.font = UIFont.headline
@@ -46,25 +45,36 @@ class PreferencesViewController: UIViewController {
         attributedString.addAttribute(.font, value: UIFont.subtitle, range: NSRange(location: 71, length: 7))
         descriptionLabel.attributedText = attributedString
         
-        createCheckboxes()
-    }
-    
-    private func createCheckboxes() {
-        viewModel.preferences.forEach {
-            let checkboxView = CheckboxView()
-            checkboxView.configure(columnName: $0.label == "marketing-bink" ? "preferences_marketing_checkbox".localized : $0.label ?? "", columnKind: .add)
-            stackView.addArrangedSubview(checkboxView)
+        viewModel.getPreferences { [weak self] (preferences) in
+            self?.createCheckboxes(preferences: preferences)
         }
-        
     }
     
-    @objc private func popViewController() {
-        viewModel.popViewController()
+    private func createCheckboxes(preferences: [PreferencesModel]) {
+        preferences.forEach {
+            let checkboxView = CheckboxView()
+            checkboxView.configure(title: $0.slug == "marketing-bink" ? "preferences_marketing_checkbox".localized : $0.label ?? "", columnName: $0.slug ?? "", columnKind: .add)
+            
+            checkboxView.delegate = self
+            checkboxView.setValue(newValue: $0.value ?? "0")
+            
+            stackView.addArrangedSubview(checkboxView)
+            checkboxes.append(checkboxView)
+        }
     }
 }
 
 extension PreferencesViewController: CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
+        guard let columnName = checkboxView.columnName else { return }
         
+        let checkboxState = value == "true" ? "1" : "0"
+        let dictionary = [columnName: checkboxState]
+        
+        viewModel.putPreferences(preferences: dictionary, onSuccess: {
+
+        }) { (error) in
+            checkboxView.toggleState()
+        }
     }
 }

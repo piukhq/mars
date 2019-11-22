@@ -21,7 +21,11 @@ class CheckboxView: CustomView {
     private(set) var columnName: String?
     private(set) var columnKind: FormField.ColumnKind?
     private(set) var textSelected: TextAction?
-    private(set) var title: String?
+    private(set) var title: String? {
+        didSet {
+            titleLabel.text = title
+        }
+    }
     
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: .textSelected)
     
@@ -38,24 +42,43 @@ class CheckboxView: CustomView {
         self.textSelected = textSelected
         
         titleLabel.font = UIFont.bodyTextSmall
-        
-        if let attributedTitle = attributedTitle {
-            titleLabel.attributedText = attributedTitle
-        } else {
-            titleLabel.text = title
-        }
-        
         titleLabel.addGestureRecognizer(tapGesture)
-        titleLabel.isUserInteractionEnabled = true
         checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
     }
     
-    var jsonValue: String {
+    func getValue() -> String {
         return checkboxView.checkState == .checked ? "1" : "0"
+    }
+    
+    func setValue(newValue: String) {
+        switch newValue {
+        case "0":
+            checkboxView.checkState = .unchecked
+            break
+        case "1":
+            checkboxView.checkState = .checked
+            break
+        default:
+            checkboxView.checkState = .unchecked
+            break
+        }
     }
     
     @objc func textSelectedSelector() {
         textSelected?()
+    }
+    
+    func toggleState() {
+        switch checkboxView.checkState {
+        case .checked:
+            checkboxView.checkState = .unchecked
+            break
+        case .unchecked:
+            checkboxView.checkState = .checked
+            break
+        case .mixed:
+            break
+        }
     }
 }
 

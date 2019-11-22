@@ -22,4 +22,15 @@ class PreferencesRepository {
             onError(error)
         }
     }
+    
+    func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+
+        apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: preferences) { (bool, error) in
+            guard let safeError = error else {
+                onSuccess()
+                return
+            }
+            onError(safeError)
+        }
+    }
 }
