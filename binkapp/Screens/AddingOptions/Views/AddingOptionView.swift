@@ -25,13 +25,11 @@ class AddingOptionView: CustomView {
         titleLabel.font = UIFont.headline
         descriptionLabel.font = UIFont.bodyTextLarge
         
-        self.view.layer.cornerRadius = 10
-        self.clipsToBounds = true
+        view.layer.cornerRadius = 10
+        clipsToBounds = true
         
-        self.layer.shadowOffset = CGSize(width: 10, height: 10)
-        self.layer.shadowRadius = 15
-        self.layer.shadowOpacity = 0.1
-        self.layer.masksToBounds = false
+        layer.applyDefaultBinkShadow()
+        layer.masksToBounds = false
     }
     
     func configureByAddingOption(option: AddingOptions) {
