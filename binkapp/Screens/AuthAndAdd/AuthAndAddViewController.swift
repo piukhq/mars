@@ -102,10 +102,8 @@ class AuthAndAddViewController: BaseFormViewController {
 extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         floatingButtons.primaryButton.startLoading()
-        floatingButtons.primaryButton.setTitleColor(.clear, for: .normal)
         try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes) {
             floatingButtons.primaryButton.stopLoading()
-            floatingButtons.primaryButton.setTitleColor(.white, for: .normal)
         }
     }
     
