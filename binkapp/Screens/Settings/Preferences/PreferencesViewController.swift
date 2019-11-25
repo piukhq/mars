@@ -12,6 +12,7 @@ class PreferencesViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var errorLabel: UILabel!
     
     private let viewModel: PreferencesViewModel
     private var checkboxes: [CheckboxView] = []
@@ -37,6 +38,9 @@ class PreferencesViewController: UIViewController {
         titleLabel.text = "settings_row_preferences_title".localized
         titleLabel.font = UIFont.headline
         
+        errorLabel.font = UIFont.bodyTextSmall
+        errorLabel.textColor = .red
+        
         let attributedString = NSMutableAttributedString(string: "preferences_screen_description".localized, attributes: [
             .font: UIFont.bodyTextLarge
         ])
@@ -45,8 +49,11 @@ class PreferencesViewController: UIViewController {
         attributedString.addAttribute(.font, value: UIFont.subtitle, range: NSRange(location: 71, length: 7))
         descriptionLabel.attributedText = attributedString
         
-        viewModel.getPreferences { [weak self] (preferences) in
+        viewModel.getPreferences(onSuccess: { [weak self] (preferences) in
             self?.createCheckboxes(preferences: preferences)
+        }) { [weak self] in
+            self?.errorLabel.text = "preferences_retrieve_fail".localized
+            self?.errorLabel.isHidden = false
         }
     }
     
@@ -71,10 +78,12 @@ extension PreferencesViewController: CheckboxViewDelegate {
         let checkboxState = value == "true" ? "1" : "0"
         let dictionary = [columnName: checkboxState]
         
-        viewModel.putPreferences(preferences: dictionary, onSuccess: {
-
-        }) { (error) in
+        viewModel.putPreferences(preferences: dictionary, onSuccess: { [weak self] in
+            self?.errorLabel.isHidden = true
+        }) { [weak self] (error) in
             checkboxView.toggleState()
+            self?.errorLabel.text = "preferences_update_fail".localized
+            self?.errorLabel.isHidden = false
         }
     }
 }

@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreferencesViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
                 <outlet property="descriptionLabel" destination="rSP-uq-IcU" id="v94-BY-ErL"/>
+                <outlet property="errorLabel" destination="rBP-di-IJc" id="w6L-nk-n4X"/>
                 <outlet property="stackView" destination="epj-PS-NWS" id="hIK-wK-VHt"/>
                 <outlet property="titleLabel" destination="PNt-mw-rpw" id="VWc-mY-LRp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -39,12 +40,21 @@
                         <constraint firstAttribute="height" constant="22" placeholder="YES" id="fcF-zB-c22"/>
                     </constraints>
                 </stackView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBP-di-IJc">
+                    <rect key="frame" x="25" y="127" width="325" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="epj-PS-NWS" secondAttribute="bottom" constant="50" id="1tT-Fw-Z69"/>
                 <constraint firstItem="epj-PS-NWS" firstAttribute="top" secondItem="rSP-uq-IcU" secondAttribute="bottom" constant="20" id="A0D-wb-DVu"/>
                 <constraint firstItem="rSP-uq-IcU" firstAttribute="leading" secondItem="PNt-mw-rpw" secondAttribute="leading" id="FZi-X3-rBc"/>
+                <constraint firstItem="rBP-di-IJc" firstAttribute="top" secondItem="epj-PS-NWS" secondAttribute="bottom" constant="16" id="IlB-4I-IXL"/>
+                <constraint firstItem="rBP-di-IJc" firstAttribute="leading" secondItem="epj-PS-NWS" secondAttribute="leading" id="JZd-Ed-Y5W"/>
+                <constraint firstItem="rBP-di-IJc" firstAttribute="trailing" secondItem="epj-PS-NWS" secondAttribute="trailing" id="KDk-i9-3Du"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PNt-mw-rpw" secondAttribute="trailing" constant="25" id="U0H-9s-XvH"/>
                 <constraint firstItem="PNt-mw-rpw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="WXj-Dy-Y2b"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="epj-PS-NWS" secondAttribute="trailing" constant="25" id="gBM-zS-JO7"/>

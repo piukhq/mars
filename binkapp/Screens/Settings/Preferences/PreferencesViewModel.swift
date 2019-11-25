@@ -29,12 +29,12 @@ class PreferencesViewModel {
         self.router = router
     }
     
-    func getPreferences(completion: @escaping ([PreferencesModel]) -> Void) {
+    func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping () -> Void) {
         repository.getPreferences(onSuccess: { (preferences) in
             self.preferences = preferences
-            completion(preferences)
+            onSuccess(preferences)
         }) { (error) in
-            self.router.displaySimplePopup(title: nil, message: error.localizedDescription)
+            onError()
         }
     }
     
@@ -42,6 +42,7 @@ class PreferencesViewModel {
         repository.putPreferences(preferences: preferences, onSuccess: {
             onSuccess()
         }) { (error) in
+            print(error)
             onError(error)
         }
     }
