@@ -22,6 +22,30 @@ class RegisterViewController: BaseFormViewController {
         return button
     }()
     
+    private lazy var message: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.attributedText = messageString
+        return label
+    }()
+    
+    private lazy var messageString: NSAttributedString = {
+        let attrString = NSMutableAttributedString(string: "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.", attributes: [.font : UIFont.bodyTextLarge])
+        let base: NSString = NSString(string: attrString.string)
+        let rewardsRange = base.range(of: "rewards")
+        let offersRange = base.range(of: "offers")
+        let updatesRange = base.range(of: "updates")
+        
+        let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont.subtitle]
+        
+        attrString.addAttributes(attributes, range: rewardsRange)
+        attrString.addAttributes(attributes, range: offersRange)
+        attrString.addAttributes(attributes, range: updatesRange)
+        
+        return attrString
+    }()
+    
     private let router: MainScreenRouter
         
     init(router: MainScreenRouter) {
@@ -43,6 +67,13 @@ class RegisterViewController: BaseFormViewController {
             continueButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
             continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+        
+        let lastView = stackScrollView.arrangedSubviews.last
+        stackScrollView.add(arrangedSubview: message)
+        
+        if let lastView = lastView {
+            stackScrollView.customPadding(18.0, after: lastView)
+        }
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {

@@ -9,6 +9,8 @@
 import UIKit
 
 class SocialTermsAndConditionsViewController: BaseFormViewController {
+    private let api = ApiManager()
+
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -18,6 +20,30 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         button.isEnabled = false
         view.addSubview(button)
         return button
+    }()
+    
+    private lazy var message: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.attributedText = messageString
+        return label
+    }()
+    
+    private lazy var messageString: NSAttributedString = {
+        let attrString = NSMutableAttributedString(string: "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.", attributes: [.font : UIFont.bodyTextLarge])
+        let base: NSString = NSString(string: attrString.string)
+        let rewardsRange = base.range(of: "rewards")
+        let offersRange = base.range(of: "offers")
+        let updatesRange = base.range(of: "updates")
+        
+        let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont.subtitle]
+        
+        attrString.addAttributes(attributes, range: rewardsRange)
+        attrString.addAttributes(attributes, range: offersRange)
+        attrString.addAttributes(attributes, range: updatesRange)
+        
+        return attrString
     }()
     
     private let router: MainScreenRouter?
@@ -43,26 +69,49 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
             continueButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
             continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+        let lastView = stackScrollView.arrangedSubviews.last
+        stackScrollView.add(arrangedSubview: message)
+        
+        if let lastView = lastView {
+            stackScrollView.customPadding(18.0, after: lastView)
+        }
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
         continueButton.isEnabled = fullFormIsValid
     }
     
-    @objc func continueButtonTapped() {                        
-        let api = ApiManager()
+    @objc func continueButtonTapped() {
+        let preferenceCheckboxes = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
         
         continueButton.startLoading()
         
         api.doRequest(url: .facebook, httpMethod: .post, parameters: request, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             Current.userManager.setNewUser(with: response)
             self?.router?.didLogin()
+            self?.updatePreferences(checkboxes: preferenceCheckboxes)
             self?.request = nil
             self?.continueButton.stopLoading()
         }) { [weak self] (error) in
             self?.continueButton.stopLoading()
         }
     }
+    
+    func updatePreferences(checkboxes: [CheckboxView]) {
+         
+         var params = [String: Any]()
+         
+         checkboxes.forEach {
+             if let columnName = $0.columnName {
+                 params[columnName] = $0.jsonValue
+             }
+         }
+         
+         guard params.count > 0 else { return }
+         
+         // We don't worry about whether this was successful or not
+         api.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
+     }
 }
 
 extension SocialTermsAndConditionsViewController: FormDataSourceDelegate {
