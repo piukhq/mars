@@ -141,8 +141,6 @@ class FormCollectionViewCell: UICollectionViewCell {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
         }  else if case let .choice(data) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [data], delegate: self)
-        } else {
-            textField.inputView = nil
         }
     }
     
@@ -157,7 +155,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func accessoryDoneTouchUpInside() {
-        textField.resignFirstResponder()
+        textField.superview?.superview?.endEditing(true)
     }
 }
 

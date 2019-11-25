@@ -350,12 +350,16 @@ extension FormDataSource {
         if accessForm == .socialTermsAndConditions || accessForm == .register {
             let termsAndConditions = CheckboxView(frame: .zero)
             termsAndConditions.configure(
-                attributedTitle: hyperlinkString("I accept Bink's Terms and Conditions", hyperlink: "Terms and Conditions"), columnName: "", columnKind: .none, delegate: self)
+            attributedTitle: hyperlinkString("I accept Bink's Terms and Conditions", hyperlink: "Terms and Conditions"), columnName: "", columnKind: .none, delegate: self) {
+                MainScreenRouter.openExternalURL(with: "https://bink.com/terms-and-conditions/")
+            }
             checkboxes.append(termsAndConditions)
             
             let privacyPolicy = CheckboxView(frame: .zero)
             privacyPolicy.configure(
-                attributedTitle: hyperlinkString("I accept Bink's Privacy Policy", hyperlink: "Privacy Policy"), columnName: "", columnKind: .none, delegate: self)
+            attributedTitle: hyperlinkString("I accept Bink's Privacy Policy", hyperlink: "Privacy Policy"), columnName: "", columnKind: .none, delegate: self) {
+                MainScreenRouter.openExternalURL(with: "https://bink.com/privacy-policy/")
+            }
             checkboxes.append(privacyPolicy)
             
             let marketingCheckbox = CheckboxView(frame: .zero)
@@ -365,7 +369,11 @@ extension FormDataSource {
     }
     
     private func hyperlinkString(_ text: String, hyperlink: String) -> NSAttributedString {
-        return NSAttributedString(string: text)
+        let attributed = NSMutableAttributedString(string: text, attributes: [.font : UIFont.bodyTextSmall])
+        let countMinusHyperlinkString = text.count - hyperlink.count
+        attributed.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.blueAccent, .font : UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
+                
+        return attributed
     }
 }
 

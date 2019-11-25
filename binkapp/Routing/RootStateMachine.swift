@@ -21,9 +21,10 @@ class RootStateMachine: NSObject {
         launch()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleLogout), name: .shouldLogout, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(completeLogout), name: .didLogout, object: nil)
     }
     
-    func launch() {
+    private func launch() {
         if Current.userManager.currentToken == nil {
             handleUnauthenticated()
         } else {
@@ -34,24 +35,55 @@ class RootStateMachine: NSObject {
         window.makeKeyAndVisible()
     }
     
-    func handleUnauthenticated() {
-        
-        // At the moment, move them to the login screen
-        moveTo(router?.getOnboardingViewController())
-        
+    private func handleUnauthenticated() {
         if migrationController.shouldMigrate() {
+            // Move to splash
+            let loading = LoadingScreen()
+            moveTo(loading)
             migrationController.renewTokenFromLegacyAppIfPossible { success in
                 DispatchQueue.main.async { [weak self] in
                     if success {
                         self?.moveTo(self?.router?.wallet())
-                        return
+                    } else {
+                        self?.moveTo(self?.router?.getOnboardingViewController())
                     }
                 }
+            }
+        } else {
+            moveTo(router?.getOnboardingViewController())
+        }
+    }
+    
+    /// User driven logout that triggers API call and clears local storage
+    @objc func handleLogout() {
+        
+        // Move to splash
+        let loading = LoadingScreen()
+        moveTo(loading)
+                
+        clearLocalStorage {
+            let api = ApiManager()
+            
+            api.doRequest(url: .logout, httpMethod: .post, onSuccess: { [weak self] (response: LogoutResponse) in
+                self?.completeLogout()
+            }) { [weak self] (error) in
+                self?.completeLogout()
             }
         }
     }
     
-    @objc func handleLogout() {
+    private func clearLocalStorage(completion: @escaping () -> ()) {
+        Current.database.performBackgroundTask { context in
+            context.deleteAll(CD_MembershipCard.self)
+            context.deleteAll(CD_PaymentCard.self)
+            try? context.save()
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
+    
+    @objc func completeLogout() {
         Current.userManager.removeUser()
         moveTo(router?.getOnboardingViewController())
     }

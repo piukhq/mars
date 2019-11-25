@@ -74,6 +74,10 @@ extension UIFont {
         return UIFont(name: "NunitoSans-Regular", size: 14.0) ?? UIFont()
     }
     
+    class var checkboxText: UIFont {
+        return UIFont(name: "NunitoSans-SemiBold", size: 14.0) ?? UIFont()
+    }
+    
     class var textFieldError: UIFont {
         return UIFont(name: "NunitoSans-Regular", size: 14.0) ?? UIFont()
     }

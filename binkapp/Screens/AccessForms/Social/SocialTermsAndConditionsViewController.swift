@@ -52,12 +52,15 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     @objc func continueButtonTapped() {                        
         let api = ApiManager()
         
+        continueButton.startLoading()
+        
         api.doRequest(url: .facebook, httpMethod: .post, parameters: request, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             Current.userManager.setNewUser(with: response)
             self?.router?.didLogin()
             self?.request = nil
-        }) { (error) in
-            print(error)
+            self?.continueButton.stopLoading()
+        }) { [weak self] (error) in
+            self?.continueButton.stopLoading()
         }
     }
 }

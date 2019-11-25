@@ -108,7 +108,6 @@ extension LoginViewController: FormDataSourceDelegate {
     }
     
     func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {
-        print(checkboxUpdated.columnName)
     }
 }
 

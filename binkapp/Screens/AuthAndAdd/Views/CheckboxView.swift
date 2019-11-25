@@ -21,11 +21,7 @@ class CheckboxView: CustomView {
     private(set) var columnName: String?
     private(set) var columnKind: FormField.ColumnKind?
     private(set) var textSelected: TextAction?
-    private(set) var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
-    }
+    private(set) var title: String?
     
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: .textSelected)
     
@@ -42,11 +38,19 @@ class CheckboxView: CustomView {
         self.textSelected = textSelected
         
         titleLabel.font = UIFont.bodyTextSmall
+        
+        if let attributedTitle = attributedTitle {
+            titleLabel.attributedText = attributedTitle
+        } else {
+            titleLabel.text = title
+        }
+        
         titleLabel.addGestureRecognizer(tapGesture)
+        titleLabel.isUserInteractionEnabled = true
         checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
     }
     
-    var value: String {
+    var jsonValue: String {
         return checkboxView.checkState == .checked ? "1" : "0"
     }
     

@@ -162,7 +162,7 @@ class ApiManager {
                      If the endpoint expects an authorisation token,
                      ensure that we aggressively respond in app to a 401.
                      */
-                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                    NotificationCenter.default.post(name: .didLogout, object: nil)
                 } else if let error = response.error {
                     print(error)
                     onError(error)
@@ -178,7 +178,7 @@ class ApiManager {
     
     typealias NoCodableResponse = (_ success: Bool, _ error: Error?) -> ()
     
-    func doRequestWithNoResponse<T: Encodable>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: T? = nil, completion: NoCodableResponse?) {
+    func doRequestWithNoResponse(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any], completion: NoCodableResponse?) {
         guard Connectivity.isConnectedToInternet() else {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
             return
@@ -187,7 +187,8 @@ class ApiManager {
         let authRequired = url.authRequired()
         let requestHeaders = HTTPHeaders(getHeader(authRequired: authRequired))
         
-        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { response in
+        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { response in
+            
             let statusCode = response.response?.statusCode ?? 0
             if statusCode == 200 || statusCode == 201 || statusCode == 204 {
                 completion?(true, nil)
@@ -196,7 +197,7 @@ class ApiManager {
                  If the endpoint expects an authorisation token,
                  ensure that we aggressively respond in app to a 403.
                  */
-                NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                NotificationCenter.default.post(name: .didLogout, object: nil)
             } else if let error = response.error {
                 print(error)
                 completion?(false, error)

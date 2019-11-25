@@ -60,13 +60,15 @@ class RegisterViewController: BaseFormViewController {
         
         let preferenceCheckboxes = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
                 
+        continueButton.startLoading()
+        
         api.doRequest(url: .register, httpMethod: .post, parameters: loginRequest, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             Current.userManager.setNewUser(with: response)
             self?.router.didLogin()
             self?.updatePreferences(checkboxes: preferenceCheckboxes)
-            // Silently process the preferences
-        }) { (error) in
-            print(error)
+            self?.continueButton.stopLoading()
+        }) { [weak self] (error) in
+            self?.continueButton.stopLoading()
         }
     }
     
@@ -76,14 +78,14 @@ class RegisterViewController: BaseFormViewController {
         
         checkboxes.forEach {
             if let columnName = $0.columnName {
-                params[columnName] = $0.value
+                params[columnName] = $0.jsonValue
             }
         }
         
         guard params.count > 0 else { return }
         
         // We don't worry about whether this was successful or not
-//        api.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
+        api.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
     }
 }
 
