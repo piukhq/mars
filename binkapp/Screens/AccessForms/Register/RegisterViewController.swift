@@ -68,6 +68,7 @@ class RegisterViewController: BaseFormViewController {
             self?.updatePreferences(checkboxes: preferenceCheckboxes)
             self?.continueButton.stopLoading()
         }) { [weak self] (error) in
+            self?.showError()
             self?.continueButton.stopLoading()
         }
     }
@@ -86,6 +87,12 @@ class RegisterViewController: BaseFormViewController {
         
         // We don't worry about whether this was successful or not
         api.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
+    }
+    
+    func showError() {
+        let alert = UIAlertController(title: "Error", message: "Registration failed.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
 

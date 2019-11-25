@@ -131,18 +131,18 @@ class AuthAndAddViewModel {
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
             }, onError: { [weak self] error in
-                
-                print(error)
-                self?.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
-                
+                self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
         })
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
-        let addJsonCard = try membershipCardPostModel.asDictionary()
         
-        repository.postGhostCard(parameters: addJsonCard, onSuccess: { [weak self] (response) in
+        guard let model = membershipCardPostModel else {
+            return
+        }
+        
+        repository.postGhostCard(parameters: model, onSuccess: { [weak self] (response) in
             guard let card = response else {
                 Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
@@ -157,15 +157,14 @@ class AuthAndAddViewModel {
 
             self?.populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
             
-            var registrationCard = self?.membershipCardPostModel
-            registrationCard?.account?.addFields = []
-            let registrationJsonCard = try? registrationCard.asDictionary()
-            self?.repository.patchGhostCard(cardId: card.id, parameters: registrationJsonCard ?? [:])
+            var registrationCard = model
+            registrationCard.account?.addFields = []
+            self?.repository.patchGhostCard(cardId: card.id, parameters: registrationCard)
 
             Current.wallet.refreshLocal()
             NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
         }) { (error) in
-            self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+            self.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
         }
     }
     

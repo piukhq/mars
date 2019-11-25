@@ -166,9 +166,17 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             }
             
             self?.pushToSocialTermsAndConditions(request: facebookRequest)
-        }) { error in
-            
+        }) { [weak self] isCancelled in
+            self?.showError(isCancelled)
         }
+    }
+    
+    func showError(_ isCancelled: Bool) {
+        let message = isCancelled ? "Facebook login was cancelled." : "Facebook is currently unavailable."
+        
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
     
     private func pushToSocialTermsAndConditions(request: FacebookRequest) {

@@ -107,9 +107,10 @@ class ApiManager {
         session = Session(serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
     }
     
-    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Decodable {
+    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error?) -> () = { _ in }) where Resp: Decodable {
         guard Connectivity.isConnectedToInternet() else {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            onError(nil)
             return
         }
         
@@ -122,9 +123,10 @@ class ApiManager {
         }
     }
 
-    func doRequest<Resp, T: Encodable>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, parameters: T, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error) -> () = { _ in }) where Resp: Decodable {
+    func doRequest<Resp, T: Encodable>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, parameters: T, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error?) -> () = { _ in }) where Resp: Decodable {
         guard Connectivity.isConnectedToInternet() else {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            onError(nil)
             return
         }
         

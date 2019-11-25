@@ -10,14 +10,21 @@ import Foundation
 import FBSDKLoginKit
 
 struct FacebookLoginController {
-    static func login(with baseViewController: UIViewController, onSuccess: @escaping (_ request: FacebookRequest) -> (), onError: @escaping (_ error: Error?) -> ()) {
+    static func login(with baseViewController: UIViewController, onSuccess: @escaping (_ request: FacebookRequest) -> (), onError: @escaping (_ isCancelled: Bool) -> ()) {
         
         let loginManager = LoginManager()
         
         loginManager.logIn(permissions: ["email"], from: baseViewController) { (result, error) in
-            guard let token = AccessToken.current?.tokenString, let id = AccessToken.current?.userID, result?.isCancelled == false else {
+            guard result?.isCancelled == false else {
                 DispatchQueue.main.async {
-                    onError(error)
+                    onError(result?.isCancelled == true)
+                }
+                return
+            }
+            
+            guard let token = AccessToken.current?.tokenString, let id = AccessToken.current?.userID else {
+                DispatchQueue.main.async {
+                    onError(false)
                 }
                 return
             }

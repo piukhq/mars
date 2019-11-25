@@ -20,7 +20,7 @@ class AuthAndAddRepository {
         self.apiManager = apiManager
     }
     
-    func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (Error) -> ()) {
+    func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (Error?) -> ()) {
         let url: RequestURL
         let method: RequestHTTPMethod
         switch formPurpose {
@@ -50,25 +50,25 @@ class AuthAndAddRepository {
         }, onError: onError)
     }
     
-    func postGhostCard(parameters: [String: Any], onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (Error) -> Void) {
+    func postGhostCard(parameters: MembershipCardPostModel, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (Error?) -> Void) {
         apiManager.doRequest(url: .membershipCards, httpMethod: .post, parameters: parameters, onSuccess: { (card: MembershipCardModel) in
             Current.database.performBackgroundTask { context in
                 let newObject = card.mapToCoreData(context, .none, overrideID: nil)
-                
+
                 try? context.save()
-                
+
                 DispatchQueue.main.async {
                     Current.database.performTask(with: newObject) { (context, safeObject) in
                         onSuccess(safeObject)
                     }
                 }
             }
-        }) { (error) in
+        }) { error in
             onError(error)
         }
     }
     
-    func patchGhostCard(cardId: String, parameters: [String: Any]) {
+    func patchGhostCard(cardId: String, parameters: MembershipCardPostModel) {
         apiManager.doRequest(url: .membershipCard(cardId: cardId), httpMethod: .patch, parameters: parameters, onSuccess:
             { (response: MembershipCardModel) in }
         )
