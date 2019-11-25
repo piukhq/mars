@@ -253,15 +253,15 @@ class MainScreenRouter {
     //MARK: - App in background
     
     @objc func appWillResignActive() {
-        let visibleVC = getVisibleViewController()
-        if visibleVC?.isKind(of: UIAlertController.self) ?? false {
+        guard let visibleVC = navController?.getVisibleViewController() else { return }
+        if visibleVC.isKind(of: UIAlertController.self) {
             //Dismiss alert controller before presenting the Launch screen.
-            navController?.dismiss(animated: false, completion: nil)
+            visibleVC.dismiss(animated: false, completion: nil)
         }
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
-        if let modalNavigationController = visibleVC?.navigationController, visibleVC?.isModal ?? false {
+        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal {
             modalNavigationController.present(vc, animated: false, completion: nil)
         } else {
             navController?.present(vc, animated: false, completion: nil)
@@ -269,34 +269,11 @@ class MainScreenRouter {
     }
     
     @objc func appDidBecomeActive() {
-        let visibleVC = getVisibleViewController()
+        let visibleVC = navController?.getVisibleViewController()
         if let modalNavigationController = visibleVC?.navigationController {
            modalNavigationController.dismiss(animated: false, completion: nil)
         } else {
-            navController?.dismiss(animated: false, completion: nil)
+            visibleVC?.dismiss(animated: false, completion: nil)
         }
-    }
-    
-    func getVisibleViewController() -> UIViewController? {
-        let rootVC = UIApplication.shared.keyWindow?.rootViewController
-
-        if rootVC?.presentedViewController == nil {
-            return rootVC
-        }
-
-        if let presented = rootVC?.presentedViewController {
-            if presented.isKind(of: UINavigationController.self) {
-                let navigationController = presented as! UINavigationController
-                return navigationController.viewControllers.last
-            }
-
-            if presented.isKind(of: UITabBarController.self) {
-                let tabBarController = presented as! UITabBarController
-                return tabBarController.selectedViewController
-            }
-
-            return presented
-        }
-        return nil
     }
 }
