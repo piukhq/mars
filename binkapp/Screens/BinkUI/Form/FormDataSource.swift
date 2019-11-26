@@ -156,6 +156,8 @@ extension FormDataSource {
                     let checkbox = CheckboxView(frame: .zero)
                     checkbox.configure(title: field.fieldDescription ?? "", columnName: field.column ?? "", columnKind: .add, delegate: self)
                     checkboxes.append(checkbox)
+                    
+                    
                 } else {
                     fields.append(
                         FormField(
@@ -244,6 +246,22 @@ extension FormDataSource {
                 }
             }
         }
+    }
+    
+    private func getPlanDocumentsCheckboxes(journey: FormField.ColumnKind, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
+        var checkboxes = [CheckboxView]()
+        
+        membershipPlan.account?.formattedPlanDocuments?.forEach { field in
+            
+            
+            let checkbox = CheckboxView(frame: .zero)
+            
+            let url = URL(fileURLWithPath: field.url ?? "")
+            checkbox.configure(title: field.name ?? "", columnName: field.name ?? "", columnKind: journey, url: url, delegate: self)
+            checkboxes.append(checkbox)
+        }
+        
+        return checkboxes
     }
 }
 

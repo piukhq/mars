@@ -25,7 +25,7 @@ class CheckboxView: CustomView {
     }
     weak var delegate: CheckboxViewDelegate?
     
-    func configure(title: String, columnName: String, columnKind: FormField.ColumnKind, delegate: CheckboxViewDelegate? = nil) {
+    func configure(title: String, columnName: String, columnKind: FormField.ColumnKind, url: URL? = nil, delegate: CheckboxViewDelegate? = nil) {
         checkboxView.boxType = .square
         checkboxView.stateChangeAnimation = .flat(.fill)
         self.columnName = columnName

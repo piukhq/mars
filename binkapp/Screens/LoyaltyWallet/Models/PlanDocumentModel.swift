@@ -32,6 +32,7 @@ extension PlanDocumentModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.name, with: name, delta: delta)
         update(cdObject, \.documentDescription, with: documentDescription, delta: delta)
         update(cdObject, \.url, with: url, delta: delta)
+        update(cdObject, \.display, with: display, delta: delta)
         update(cdObject, \.checkbox, with: NSNumber(value: checkbox ?? false), delta: delta)
 
         return cdObject
