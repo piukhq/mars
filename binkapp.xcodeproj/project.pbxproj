@@ -2573,9 +2573,7 @@
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
 				EF8BF1F6233E60AE00D2E5F3 /* Cache.swift in Sources */,
 				EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */,
-				BDD9C881233BE6B1003CD616 /* CD_ReasonCode.swift in Sources */,
 				3CCAB7522379B520001B566D /* RegistrationFieldPostModel.swift in Sources */,
-				BDD9C872233BE6B1003CD616 /* CD_MembershipCard.swift in Sources */,
 				EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */,
 				EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */,
 				BDB01886232ED6F800BFFA18 /* SpreedlyRequest.swift in Sources */,
@@ -2894,10 +2892,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.alpha;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME) α";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.neo.alpha";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.alpha";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2932,10 +2930,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.beta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME) β";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.beta";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.beta";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -3129,10 +3127,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.mr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.mr;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME) MR";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.mr";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.mr";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -3275,10 +3273,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.nightly;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.nightly;
 				PRODUCT_MODULE_NAME = binkapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.nightly";
+				PRODUCT_NAME = Bink;
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.nightly";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -3413,10 +3411,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet.neo";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -3551,10 +3549,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo.gamma;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.gamma;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo.gamma";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.gamma";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -3689,10 +3687,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.neo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.neo";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
