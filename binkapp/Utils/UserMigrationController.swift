@@ -21,15 +21,15 @@ struct UserMigrationController {
     }
     
     func shouldMigrate() -> Bool {
-        return hasMigrated() == false && legacyToken != nil
+        return hasMigrated == false && legacyToken != nil
     }
     
-    private func hasMigrated() -> Bool {
+    private var hasMigrated: Bool {
         return Current.userDefaults.bool(forKey: Constants.hasMigratedFromBinkLegacyKey)
     }
     
     func renewTokenFromLegacyAppIfPossible(completion: @escaping (Bool) -> ()) {
-        guard hasMigrated() == false, let token = legacyToken else {
+        guard hasMigrated == false, let token = legacyToken else {
             completion(false)
             return
         }
@@ -39,7 +39,7 @@ struct UserMigrationController {
         apiManager.doRequest(
             url: .renew,
             httpMethod: .post,
-            headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json"],
+            headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json;v1.1"],
             onSuccess: { (response: RenewTokenResponse) in
                 Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
                 Current.userManager.setNewUser(with: response)

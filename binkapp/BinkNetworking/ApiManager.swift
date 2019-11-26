@@ -52,7 +52,7 @@ enum RequestURL {
         }
     }
     
-    func authRequired() -> Bool {
+    var authRequired: Bool {
         switch self {
         case .register, .login, .renew:
             return false
@@ -114,7 +114,7 @@ class ApiManager {
             return
         }
         
-        let authRequired = url.authRequired()
+        let authRequired = url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
         let requestHeaders = HTTPHeaders(headerDict)
         
@@ -130,7 +130,7 @@ class ApiManager {
             return
         }
         
-        let authRequired = url.authRequired()
+        let authRequired = url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
         let requestHeaders = HTTPHeaders(headerDict)
                 
@@ -186,7 +186,7 @@ class ApiManager {
             return
         }
         
-        let authRequired = url.authRequired()
+        let authRequired = url.authRequired
         let requestHeaders = HTTPHeaders(getHeader(authRequired: authRequired))
         
         session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { response in
