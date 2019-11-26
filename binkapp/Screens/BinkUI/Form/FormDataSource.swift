@@ -156,8 +156,6 @@ extension FormDataSource {
                     let checkbox = CheckboxView(frame: .zero)
                     checkbox.configure(title: field.fieldDescription ?? "", columnName: field.column ?? "", columnKind: .add, delegate: self)
                     checkboxes.append(checkbox)
-                    
-                    
                 } else {
                     fields.append(
                         FormField(
@@ -174,6 +172,7 @@ extension FormDataSource {
                     )
                 }
             }
+            checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: .add, membershipPlan: model))
         }
         
         if formPurpose != .signUp && formPurpose != .ghostCard {
@@ -222,6 +221,7 @@ extension FormDataSource {
                     )
                 }
             }
+            checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: .enrol, membershipPlan: model))
         }
         
         if formPurpose == .ghostCard {
@@ -245,20 +245,38 @@ extension FormDataSource {
                     )
                 }
             }
+            checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: .registration, membershipPlan: model))
         }
     }
     
-    private func getPlanDocumentsCheckboxes(journey: FormField.ColumnKind, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
+    private func getPlanDocumentsCheckboxes(journey: LinkingSupportType, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
         var checkboxes = [CheckboxView]()
         
         membershipPlan.account?.formattedPlanDocuments?.forEach { field in
             
-            
+            let displayFields = field.formattedDisplay
+            guard displayFields.contains(where: { $0.value == journey.rawValue }) else { return }
+        
             let checkbox = CheckboxView(frame: .zero)
             
             let url = URL(fileURLWithPath: field.url ?? "")
-            checkbox.configure(title: field.name ?? "", columnName: field.name ?? "", columnKind: journey, url: url, delegate: self)
-            checkboxes.append(checkbox)
+            
+            let fieldText = (field.documentDescription ?? "") + " " + (field.name ?? "")
+            
+            switch journey {
+            case .add:
+                checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .add, url: url, delegate: self)
+                checkboxes.append(checkbox)
+                break
+            case .enrol:
+                checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .enrol, url: url, delegate: self)
+                checkboxes.append(checkbox)
+                break
+            case .registration:
+                checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .register, url: url, delegate: self)
+                checkboxes.append(checkbox)
+                break
+            }
         }
         
         return checkboxes

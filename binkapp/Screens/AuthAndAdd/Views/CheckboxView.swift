@@ -29,12 +29,19 @@ class CheckboxView: CustomView {
         checkboxView.boxType = .square
         checkboxView.stateChangeAnimation = .flat(.fill)
         self.columnName = columnName
-        self.title = title
         self.columnKind = columnKind
         self.delegate = delegate
         
         titleLabel.font = UIFont.bodyTextSmall
         checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
+
+        if let safeUrl = url {
+            let attributedString = NSMutableAttributedString(string: title)
+            attributedString.addAttribute(.link, value: safeUrl, range: NSRange(location: title.count - columnName.count, length: columnName.count))
+            self.titleLabel.attributedText = attributedString
+        } else {
+            self.title = title
+        }
     }
 }
 

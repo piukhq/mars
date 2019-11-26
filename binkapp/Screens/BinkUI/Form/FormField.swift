@@ -75,7 +75,7 @@ class FormField {
         }
     }
     
-    enum ColumnKind {
+    enum ColumnKind: String {
         case add
         case auth
         case enrol
