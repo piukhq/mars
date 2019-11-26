@@ -28,9 +28,7 @@ struct SettingsFactory {
             ),
             SettingsRow(
                 title: "settings_row_logout_title".localized,
-                action: .customAction(action: {
-                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
-                })
+                action: .logout
             )
         ])
         
