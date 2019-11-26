@@ -36,7 +36,7 @@ class RootStateMachine: NSObject {
     }
     
     private func handleUnauthenticated() {
-        if migrationController.shouldMigrate() {
+        if migrationController.shouldMigrate {
             // Move to splash
             let loading = LoadingScreen()
             moveTo(loading)

@@ -131,7 +131,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     func configure(with field: FormField) {
         titleLabel.text = field.title
         textField.placeholder = field.placeholder
-        textField.isSecureTextEntry = field.fieldType.isSecureTextEntry()
+        textField.isSecureTextEntry = field.fieldType.isSecureTextEntry
         textField.keyboardType = field.fieldType.keyboardType()
         textField.autocorrectionType = field.fieldType.autoCorrection()
         textField.autocapitalizationType = field.fieldType.capitalization()

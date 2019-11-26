@@ -58,7 +58,7 @@ class FormField {
             return .no
         }
         
-        func isSecureTextEntry() -> Bool {
+        var isSecureTextEntry: Bool {
             switch self {
             case .sensitive, .confirmPassword:
                 return true

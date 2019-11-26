@@ -20,7 +20,7 @@ struct UserMigrationController {
         legacyToken = retrieveBinkLegacyToken()
     }
     
-    func shouldMigrate() -> Bool {
+    var shouldMigrate: Bool {
         return hasMigrated == false && legacyToken != nil
     }
     
