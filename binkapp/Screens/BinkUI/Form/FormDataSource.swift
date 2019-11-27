@@ -296,10 +296,10 @@ extension FormDataSource {
         
         if accessForm != .socialTermsAndConditions {
             let emailField = FormField(
-                title: "Email",
-                placeholder: "Enter email address",
+                title: "access_form_email_title".localized,
+                placeholder: "access_form_email_placeholder".localized,
                 validation: "^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$",
-                validationErrorMessage: "Invalid Email",
+                validationErrorMessage: "access_form_email_validation".localized,
                 fieldType: .email,
                 updated: updatedBlock,
                 shouldChange: shouldChangeBlock,
@@ -313,10 +313,10 @@ extension FormDataSource {
         
         if accessForm == .login || accessForm == .register {
             let passwordField = FormField(
-                title: "Password",
-                placeholder: "Enter password",
+                title: "access_form_password_title".localized,
+                placeholder: "access_form_password_placeholder".localized,
                 validation: "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,30}$",
-                validationErrorMessage: "Must contain at least 8 characters, including 1 uppercase, 1 lowercase and a number",
+                validationErrorMessage: "access_form_password_validation".localized,
                 fieldType: .sensitive,
                 updated: updatedBlock,
                 shouldChange: shouldChangeBlock,
@@ -333,10 +333,10 @@ extension FormDataSource {
             }
             
             let confirmPasswordField = FormField(
-                title: "Confirm password",
-                placeholder: "Confirm password",
+                title: "access_form_confirm_password_title".localized,
+                placeholder: "access_form_confirm_password_placeholder".localized,
                 validation: nil,
-                validationErrorMessage: "Passwords do not match",
+                validationErrorMessage: "access_form_confirm_password_validation".localized,
                 fieldType: .confirmPassword,
                 updated: updatedBlock,
                 shouldChange: shouldChangeBlock,
@@ -350,20 +350,20 @@ extension FormDataSource {
         if accessForm == .socialTermsAndConditions || accessForm == .register {
             let termsAndConditions = CheckboxView(frame: .zero)
             termsAndConditions.configure(
-            attributedTitle: hyperlinkString("I accept Bink's Terms and Conditions", hyperlink: "Terms and Conditions"), columnName: "", columnKind: .none, delegate: self) {
+            attributedTitle: hyperlinkString("tandcs_title".localized, hyperlink: "tandcs_link".localized), columnName: "", columnKind: .none, delegate: self) {
                 MainScreenRouter.openExternalURL(with: "https://bink.com/terms-and-conditions/")
             }
             checkboxes.append(termsAndConditions)
             
             let privacyPolicy = CheckboxView(frame: .zero)
             privacyPolicy.configure(
-            attributedTitle: hyperlinkString("I accept Bink's Privacy Policy", hyperlink: "Privacy Policy"), columnName: "", columnKind: .none, delegate: self) {
+            attributedTitle: hyperlinkString("ppolicy_title".localized, hyperlink: "ppolicy_link".localized), columnName: "", columnKind: .none, delegate: self) {
                 MainScreenRouter.openExternalURL(with: "https://bink.com/privacy-policy/")
             }
             checkboxes.append(privacyPolicy)
             
             let marketingCheckbox = CheckboxView(frame: .zero)
-            marketingCheckbox.configure(title: "I opt in to receive marketing messages", columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
+            marketingCheckbox.configure(title: "marketing_title".localized, columnName: "marketing-bink", columnKind: .userPreference, delegate: self, optional: true)
             checkboxes.append(marketingCheckbox)
         }
     }
