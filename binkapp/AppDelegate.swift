@@ -82,5 +82,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Only allow portrait (standard behaviour)
         return .portrait
     }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        Current.wallet.refreshMembershipPlansIfNecessary()
+    }
 }
 

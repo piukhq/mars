@@ -353,6 +353,7 @@
 		EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8653A232FCDD800036C17 /* ReasonCode.swift */; };
 		EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */; };
 		EFEB5BFD237E96F500E18743 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */; };
+		EFEB5C0123853B7900E18743 /* WalletRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5C0023853B7900E18743 /* WalletRefreshManager.swift */; };
 		EFF59F15234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */; };
 		EFF59F16234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFF59F14234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib */; };
 		EFF59F19234B73C900CF3992 /* CardDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F17234B73C900CF3992 /* CardDetailInfoTableViewCell.swift */; };
@@ -766,6 +767,7 @@
 		EFD8653A232FCDD800036C17 /* ReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCode.swift; sourceTree = "<group>"; };
 		EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingSupportModel.swift; sourceTree = "<group>"; };
 		EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
+		EFEB5C0023853B7900E18743 /* WalletRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRefreshManager.swift; sourceTree = "<group>"; };
 		EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLinkLoyaltyCardCell.swift; sourceTree = "<group>"; };
 		EFF59F14234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailLinkLoyaltyCardCell.xib; sourceTree = "<group>"; };
 		EFF59F17234B73C900CF3992 /* CardDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -1525,6 +1527,7 @@
 				EF335C882350D2C600D49223 /* WalletCard.swift */,
 				EF1110532354D4BE009A4438 /* WalletCardCollectionViewCell.swift */,
 				EF480C192355F9470060B7C1 /* WalletViewController.swift */,
+				EFEB5C0023853B7900E18743 /* WalletRefreshManager.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -2380,6 +2383,7 @@
 				EF5491202371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift in Sources */,
 				EF8B700F23585F76006CE3DD /* PaymentCardCellViewModelMock.swift in Sources */,
 				3C8BBC27232651E900363349 /* Connectivity.swift in Sources */,
+				EFEB5C0123853B7900E18743 /* WalletRefreshManager.swift in Sources */,
 				BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */,
 				EFA5F7222379A7C70027AB80 /* _CD_EnrolField.swift in Sources */,
 				3C7067EF232FD52D00AB88A5 /* SimpleInfoViewController.swift in Sources */,
