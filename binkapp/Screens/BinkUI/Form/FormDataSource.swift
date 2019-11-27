@@ -259,24 +259,12 @@ extension FormDataSource {
         
             let checkbox = CheckboxView(frame: .zero)
             
-            let url = URL(fileURLWithPath: field.url ?? "")
+            let url = URL(string: field.url ?? "")
             
             let fieldText = (field.documentDescription ?? "") + " " + (field.name ?? "")
             
-            switch journey {
-            case .add:
-                checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .add, url: url, delegate: self)
-                checkboxes.append(checkbox)
-                break
-            case .enrol:
-                checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .enrol, url: url, delegate: self)
-                checkboxes.append(checkbox)
-                break
-            case .registration:
-                checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .register, url: url, delegate: self)
-                checkboxes.append(checkbox)
-                break
-            }
+            checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
+            checkboxes.append(checkbox)
         }
         
         return checkboxes

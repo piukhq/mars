@@ -174,7 +174,7 @@ class AuthAndAddViewModel {
             }
         }
         checkboxes?.forEach {
-            if $0.columnKind == columnKind {
+            if $0.columnKind == columnKind && $0.columnKind != FormField.ColumnKind.planDocument {
                 addCheckboxToCard(checkbox: $0)
             }
         }

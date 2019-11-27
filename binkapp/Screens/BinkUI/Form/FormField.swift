@@ -80,6 +80,7 @@ class FormField {
         case auth
         case enrol
         case register
+        case planDocument
     }
     
     let title: String

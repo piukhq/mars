@@ -15,33 +15,47 @@ protocol CheckboxViewDelegate: NSObjectProtocol {
 class CheckboxView: CustomView {
     @IBOutlet private weak var checkboxView: M13Checkbox!
     @IBOutlet private weak var titleLabel: UILabel!
- 
+    @IBOutlet private weak var textView: UITextView!
+    
     private(set) var columnName: String?
     private(set) var columnKind: FormField.ColumnKind?
     private(set) var title: String? {
         didSet {
-            titleLabel.text = title
+            textView.text = title
         }
     }
     weak var delegate: CheckboxViewDelegate?
     
     func configure(title: String, columnName: String, columnKind: FormField.ColumnKind, url: URL? = nil, delegate: CheckboxViewDelegate? = nil) {
-        checkboxView.boxType = .square
-        checkboxView.stateChangeAnimation = .flat(.fill)
         self.columnName = columnName
         self.columnKind = columnKind
         self.delegate = delegate
         
-        titleLabel.font = UIFont.bodyTextSmall
         checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
 
         if let safeUrl = url {
             let attributedString = NSMutableAttributedString(string: title)
             attributedString.addAttribute(.link, value: safeUrl, range: NSRange(location: title.count - columnName.count, length: columnName.count))
-            self.titleLabel.attributedText = attributedString
+            textView.attributedText = attributedString
         } else {
             self.title = title
         }
+
+        textView.font = UIFont.bodyTextSmall
+    }
+    
+    override func configureUI() {
+        textView.isUserInteractionEnabled = true
+        textView.delegate = self
+        textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
+        checkboxView.boxType = .square
+        checkboxView.stateChangeAnimation = .flat(.fill)
+    }
+}
+
+extension CheckboxView: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return true
     }
 }
 
