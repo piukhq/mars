@@ -258,6 +258,15 @@ class MainScreenRouter {
             //Dismiss alert controller before presenting the Launch screen.
             visibleVC.dismiss(animated: false, completion: nil)
         }
+        
+        if visibleVC.isKind(of: BarcodeViewController.self),
+            let nc = visibleVC.presentedViewController as? UINavigationController,
+            let vc = nc.viewControllers.first as? BarcodeViewController,
+            vc.isBarcodeFullsize {
+            //Dismiss full screen barcode before presenting the Launch screen.
+            nc.dismiss(animated: false, completion: nil)
+        }
+        
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
