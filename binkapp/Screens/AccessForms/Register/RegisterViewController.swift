@@ -31,11 +31,11 @@ class RegisterViewController: BaseFormViewController {
     }()
     
     private lazy var messageString: NSAttributedString = {
-        let attrString = NSMutableAttributedString(string: "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.", attributes: [.font : UIFont.bodyTextLarge])
+        let attrString = NSMutableAttributedString(string: "preferences_prompt".localized, attributes: [.font : UIFont.bodyTextLarge])
         let base: NSString = NSString(string: attrString.string)
-        let rewardsRange = base.range(of: "rewards")
-        let offersRange = base.range(of: "offers")
-        let updatesRange = base.range(of: "updates")
+        let rewardsRange = base.range(of: "preferences_prompt_highlight_rewards".localized)
+        let offersRange = base.range(of: "preferences_prompt_highlight_offers".localized)
+        let updatesRange = base.range(of: "preferences_prompt_highlight_updates".localized)
         
         let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont.subtitle]
         
@@ -50,7 +50,7 @@ class RegisterViewController: BaseFormViewController {
         
     init(router: MainScreenRouter) {
         self.router = router
-        super.init(title: "Sign up with email", description: "All it takes is an email and password.", dataSource: FormDataSource(accessForm: .register))
+        super.init(title: "register_title".localized, description: "register_subtitle".localized, dataSource: FormDataSource(accessForm: .register))
         dataSource.delegate = self
     }
     
@@ -121,8 +121,8 @@ class RegisterViewController: BaseFormViewController {
     }
     
     func showError() {
-        let alert = UIAlertController(title: "Error", message: "Registration failed.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        let alert = UIAlertController(title: "error_title".localized, message: "register_failed".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         present(alert, animated: true)
     }
 }

@@ -94,6 +94,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
+        viewModel.navigationController = navigationController
     }
 
     override func viewDidLayoutSubviews() {
@@ -158,30 +159,22 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
         FacebookLoginController.login(with: self, onSuccess: { [weak self] facebookRequest in
             // If we have no email address, push them onto the add email screen
             guard facebookRequest.email != nil else {
-                let addEmail = AddEmailViewController(router: self?.viewModel.router, request: facebookRequest) { [weak self] request in
-                    self?.pushToSocialTermsAndConditions(request: request)
-                }
-                self?.navigationController?.pushViewController(addEmail, animated: true)
+                self?.viewModel.pushToAddEmail(request: facebookRequest)
                 return
             }
             
-            self?.pushToSocialTermsAndConditions(request: facebookRequest)
+            self?.viewModel.pushToSocialTermsAndConditions(request: facebookRequest)
         }) { [weak self] isCancelled in
             self?.showError(isCancelled)
         }
     }
     
     func showError(_ isCancelled: Bool) {
-        let message = isCancelled ? "Facebook login was cancelled." : "Facebook is currently unavailable."
+        let message = isCancelled ? viewModel.facebookLoginCancelledText : viewModel.facebookLoginErrorText
         
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        let alert = UIAlertController(title: viewModel.facebookLoginErrorTitle, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: viewModel.facebookLoginOK, style: .default))
         present(alert, animated: true)
-    }
-    
-    private func pushToSocialTermsAndConditions(request: FacebookRequest) {
-        let termsAndConditions = SocialTermsAndConditionsViewController(router: viewModel.router, request: request)
-        navigationController?.pushViewController(termsAndConditions, animated: true)
     }
 
     // MARK: - Scroll view delegate & handlers
@@ -224,11 +217,11 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
 
 extension OnboardingViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        navigationController?.pushViewController(RegisterViewController(router: viewModel.router), animated: true)
+        viewModel.pushToRegister()
     }
 
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        navigationController?.pushViewController(LoginViewController(router: viewModel.router), animated: true)
+        viewModel.pushToLogin()
     }
 }
 

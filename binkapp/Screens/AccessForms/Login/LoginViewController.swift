@@ -17,7 +17,7 @@ class LoginViewController: BaseFormViewController {
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Continue", for: .normal)
+        button.setTitle("continue_button_title".localized, for: .normal)
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .continueButtonTapped, for: .touchUpInside)
         button.isEnabled = false
@@ -29,7 +29,7 @@ class LoginViewController: BaseFormViewController {
         
     init(router: MainScreenRouter) {
         self.router = router
-        super.init(title: "Log in with email", description: "Welcome back!", dataSource: FormDataSource(accessForm: .login))
+        super.init(title: "login_title".localized, description: "login_subtitle".localized, dataSource: FormDataSource(accessForm: .login))
         dataSource.delegate = self
     }
     
@@ -40,7 +40,7 @@ class LoginViewController: BaseFormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "Forgot Password")])
+        stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "login_forgot_password".localized)])
         
         NSLayoutConstraint.activate([
             continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
@@ -92,12 +92,12 @@ class LoginViewController: BaseFormViewController {
     }
     
     @objc func forgotPasswordTapped() {
-        
+        //TODO:
     }
     
     func showError() {
-        let alert = UIAlertController(title: "Error", message: "Incorrect email/password. Please try again.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        let alert = UIAlertController(title: "error_title".localized, message: "login_error".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         present(alert, animated: true)
     }
 }

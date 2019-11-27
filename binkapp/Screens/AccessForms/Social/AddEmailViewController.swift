@@ -14,7 +14,7 @@ class AddEmailViewController: BaseFormViewController {
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Continue", for: .normal)
+        button.setTitle("continue_button_title".localized, for: .normal)
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .continueButtonTapped, for: .touchUpInside)
         button.isEnabled = false
@@ -30,7 +30,7 @@ class AddEmailViewController: BaseFormViewController {
         self.router = router
         self.request = request
         self.completion = completion
-        super.init(title: "Add email", description: "Please add your email address below.", dataSource: FormDataSource(accessForm: .addEmail))
+        super.init(title: "add_email_title".localized, description: "add_email_subtitle".localized, dataSource: FormDataSource(accessForm: .addEmail))
         dataSource.delegate = self
     }
     

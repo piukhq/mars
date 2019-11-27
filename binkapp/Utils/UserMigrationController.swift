@@ -12,6 +12,10 @@ struct UserMigrationController {
     
     private struct Constants {
         static let hasMigratedFromBinkLegacyKey = "hasMigratedFromBinkLegacyKey"
+        static let internalDictKey = "BINKKeychainInternalDictionary"
+        static let userClass = "BINKUser"
+        static let authTokenClass = "BINKAuthToken"
+        static let currentUserKey = "BINKCurrentUserKey"
     }
     
     private var legacyToken: String? = nil
@@ -53,7 +57,7 @@ struct UserMigrationController {
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
                                     kSecMatchLimit as String: kSecMatchLimitOne,
                                     kSecReturnAttributes as String: true,
-                                    kSecAttrAccount as String: "BINKKeychainInternalDictionary",
+                                    kSecAttrAccount as String: Constants.internalDictKey,
                                     kSecReturnData as String: true]
         
         var item: CFTypeRef?
@@ -65,11 +69,11 @@ struct UserMigrationController {
             return nil
         }
         
-        NSKeyedUnarchiver.setClass(User.self, forClassName: "BINKUser")
-        NSKeyedUnarchiver.setClass(AuthToken.self, forClassName: "BINKAuthToken")
+        NSKeyedUnarchiver.setClass(User.self, forClassName: Constants.userClass)
+        NSKeyedUnarchiver.setClass(AuthToken.self, forClassName: Constants.authTokenClass)
         
         if let dict = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String : AnyObject],
-            let user = dict["BINKCurrentUserKey"] as? User {
+            let user = dict[Constants.currentUserKey] as? User {
             // If we were successful in mapping to our new class types
             return user.token.accessToken
         }

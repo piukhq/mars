@@ -14,7 +14,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Continue", for: .normal)
+        button.setTitle("continue_button_title".localized, for: .normal)
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .continueButtonTapped, for: .touchUpInside)
         button.isEnabled = false
@@ -31,11 +31,11 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     }()
     
     private lazy var messageString: NSAttributedString = {
-        let attrString = NSMutableAttributedString(string: "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.", attributes: [.font : UIFont.bodyTextLarge])
+        let attrString = NSMutableAttributedString(string: "preferences_prompt".localized, attributes: [.font : UIFont.bodyTextLarge])
         let base: NSString = NSString(string: attrString.string)
-        let rewardsRange = base.range(of: "rewards")
-        let offersRange = base.range(of: "offers")
-        let updatesRange = base.range(of: "updates")
+        let rewardsRange = base.range(of: "preferences_prompt_highlight_rewards".localized)
+        let offersRange = base.range(of: "preferences_prompt_highlight_offers".localized)
+        let updatesRange = base.range(of: "preferences_prompt_highlight_updates".localized)
         
         let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont.subtitle]
         
@@ -52,7 +52,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     init(router: MainScreenRouter?, request: FacebookRequest) {
         self.router = router
         self.request = request
-        super.init(title: "Terms and conditions", description: "One last step...", dataSource: FormDataSource(accessForm: .socialTermsAndConditions))
+        super.init(title: "social_tandcs_title".localized, description: "social_tandcs_subtitle".localized, dataSource: FormDataSource(accessForm: .socialTermsAndConditions))
         dataSource.delegate = self
     }
     
@@ -93,6 +93,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
             self?.request = nil
             self?.continueButton.stopLoading()
         }) { [weak self] (error) in
+            self?.showError()
             self?.continueButton.stopLoading()
         }
     }
@@ -112,6 +113,12 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
          // We don't worry about whether this was successful or not
          api.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
      }
+    
+    func showError() {
+        let alert = UIAlertController(title: "error_title".localized, message: "social_tandcs_error".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
+        present(alert, animated: true)
+    }
 }
 
 extension SocialTermsAndConditionsViewController: FormDataSourceDelegate {
