@@ -264,7 +264,7 @@
 
 "access_form_email_title" = "Email";
 "access_form_email_placeholder" = "Enter email address";
-"access_form_email_validation" = "Invalid Email";
+"access_form_email_validation" = "Incorrect email format";
 
 "access_form_password_title" = "Password";
 "access_form_password_placeholder" = "Enter password";
