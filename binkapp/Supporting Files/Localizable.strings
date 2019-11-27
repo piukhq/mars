@@ -75,7 +75,7 @@
 "pll_screen_add_title" = "Add card";
 "pll_screen_link_title" = "Link to payment cards";
 "pll_screen_link_message" = "You have not added any payment cards yet.";
-"pll_screen_add_message" = "The payment cards below will be linked to this loyalty card. Simply pay with them to collect points.";
+"pll_screen_add_message" = "The payment cards below will be linked to your %@. Simply pay with them to collect points.";
 "pll_screen_card_ending" = "Card ending in ";
 "pll_screen_add_cards_button_title" = "Add payment cards";
 "pll_screen_secondary_message" = "Add them to link this card and others.";
