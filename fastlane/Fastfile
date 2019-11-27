@@ -7,6 +7,9 @@ platform :ios do
   # Lifecycle
 
   before_all do |lane, options|
+
+    ENV["MATCH_PASSWORD"] = "c3rt1f1cat3s"
+
     # This excludes these targets from the code coverage, required if we just want BinkApp posted to Slack
     ENV["COVERAGE_EXCLUDE_TARGETS"] = ""
 
@@ -32,13 +35,47 @@ platform :ios do
 
     # Bink
 
-    match(type: "appstore", app_identifier: "com.bink.wallet.neo", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.neo", readonly: true)
-    match(type: "development", app_identifier: "com.bink.wallet.neo.alpha", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.beta", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.mr", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.nightly", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.neo.gamma", readonly: true)
+    match(type: "appstore", app_identifier: "com.bink.wallet", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet", readonly: true)
+    match(type: "development", app_identifier: "com.bink.wallet.alpha", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.beta", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.mr", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.nightly", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.gamma", readonly: true)
+
+  end
+
+  # Add device
+
+desc "Adds a device to the portal"
+lane :addDevice do |parameters|
+ if !parameters[:name]
+   raise "No name specified"
+ elsif !parameters[:uuid]
+   raise "No UUID specified"
+ end
+
+ register_devices(
+   devices: {
+     parameters[:name] => parameters[:uuid]
+    }
+ )
+
+ setupForce
+end
+
+desc "Retrieve and force update all the certificates for all targets and configures your machine to compile against devices, including new ones. NOTE: This should only be run if new devices are required in the profiles and certificates"
+  lane :setupForce do
+
+    # Bink
+
+    match(type: "appstore", app_identifier: "com.bink.wallet", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet", readonly: false, force_for_new_devices: true)
+    match(type: "development", app_identifier: "com.bink.wallet.alpha", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.beta", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.mr", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.nightly", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.wallet.gamma", readonly: false, force_for_new_devices: true)
 
   end
 

@@ -10,6 +10,12 @@ import Foundation
 
 extension String {
     var localized: String {
-        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+        let string = NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+        
+        if string == self {
+            fatalError("Missing localization for key \(self)!")
+        }
+        
+        return string
     }
 }

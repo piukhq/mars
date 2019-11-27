@@ -11,6 +11,11 @@ import Alamofire
 
 enum RequestURL {
     case login
+    case register
+    case facebook
+    case logout
+    case renew
+    case preferences
     case membershipPlans
     case membershipCards
     case membershipCard(cardId: String)
@@ -21,19 +26,38 @@ enum RequestURL {
     var value: String {
         switch self {
         case .login:
-            return "/service"
+            return "/users/login"
+        case .register:
+            return "/users/register"
+        case .facebook:
+            return "/users/auth/facebook"
+        case .logout:
+            return "/users/me/logout"
+        case .renew:
+            return "/users/renew_token"
+        case .preferences:
+            return "/users/me/settings"
         case .membershipPlans:
-            return "/membership_plans"
+            return "/ubiquity/membership_plans"
         case .membershipCards:
-            return "/membership_cards"
+            return "/ubiquity/membership_cards"
         case .membershipCard(let cardId):
-            return "/membership_card/\(cardId)"
+            return "/ubiquity/membership_card/\(cardId)"
         case .paymentCards:
-            return "/payment_cards"
+            return "/ubiquity/payment_cards"
         case .paymentCard(let cardId):
-            return "/payment_card/\(cardId)"
+            return "/ubiquity/payment_card/\(cardId)"
         case .linkMembershipCardToPaymentCard(let membershipCardId, let paymentCardId):
-            return "/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
+            return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
+        }
+    }
+    
+    var authRequired: Bool {
+        switch self {
+        case .register, .login, .renew:
+            return false
+        default:
+            return true
         }
     }
 }
@@ -57,126 +81,146 @@ enum RequestHTTPMethod {
 }
 
 class ApiManager {
-    private let fallbackUserEmail = "Bink20iteration1@testbink.com"
-
-    private var userEmail: String {
-        guard let userEmail = Current.userDefaults.string(forKey: "userEmail") else {
-            Current.userDefaults.set(fallbackUserEmail, forKey: "userEmail")
-            return fallbackUserEmail
-        }
-        return userEmail
+    
+    private let session: Session
+    
+    struct Certificates {
+      static let bink = Certificates.certificate(filename: "bink-com")
+      
+      private static func certificate(filename: String) -> SecCertificate {
+        let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
+        let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
+        let certificate = SecCertificateCreateWithData(nil, data as CFData)!
+        
+        return certificate
+      }
     }
     
+    init() {
+        let evaluators = [
+          "api.bink.com":
+            PinnedCertificatesTrustEvaluator(certificates: [
+              Certificates.bink
+            ])
+        ]
+        
+        session = Session(serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
+    }
+    
+    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error?) -> () = { _ in }) where Resp: Decodable {
+        guard Connectivity.isConnectedToInternet() else {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            onError(nil)
+            return
+        }
+        
+        let authRequired = url.authRequired
+        let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
+        let requestHeaders = HTTPHeaders(headerDict)
+        
+        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { (response) in
+            self.responseHandler(response: response, authRequired: authRequired, onSuccess: onSuccess, onError: onError)
+        }
+    }
 
-    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any]? = nil, onSuccess: @escaping (Resp) -> () = { _ in }, onError: @escaping (Error) -> () = { _ in }) where Resp: Codable {
+    func doRequest<Resp, T: Encodable>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, parameters: T, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error?) -> () = { _ in }) where Resp: Decodable {
+        guard Connectivity.isConnectedToInternet() else {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            onError(nil)
+            return
+        }
+        
+        let authRequired = url.authRequired
+        let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
+        let requestHeaders = HTTPHeaders(headerDict)
+                
+        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { (response) in
+            self.responseHandler(response: response, authRequired: authRequired, onSuccess: onSuccess, onError: onError)
+        }
+    }
+    
+    private func responseHandler<Resp: Decodable>(response: AFDataResponse <Any>, authRequired: Bool, onSuccess: (Resp) -> (), onError: (Error) -> ()) {
+        
+        if case let .failure(error) = response.result, error.isServerTrustEvaluationError {
+            // SSL/TLS Pinning Failure
+            onError(error)
+            return
+        }
+        
+        guard let data = response.data else {
+            return
+        }
+
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .useDefaultKeys
+
+            do {
+                let statusCode = response.response?.statusCode ?? 0
+                if statusCode == 200 || statusCode == 201 {
+                    let models = try decoder.decode(Resp.self, from: data)
+                    onSuccess(models)
+                } else if statusCode == 401 && authRequired {
+                    /*
+                     If the endpoint expects an authorisation token,
+                     ensure that we aggressively respond in app to a 401.
+                     */
+                    NotificationCenter.default.post(name: .didLogout, object: nil)
+                } else if let error = response.error {
+                    print(error)
+                    onError(error)
+                } else {
+                    print("something went wrong, statusCode: \(statusCode)")
+                    onError(NSError(domain: "", code: statusCode, userInfo: nil) as Error)
+                }
+            } catch (let error) {
+                print("decoding error: \(error)")
+                onError(error)
+            }
+    }
+    
+    typealias NoCodableResponse = (_ success: Bool, _ error: Error?) -> ()
+    
+    func doRequestWithNoResponse(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any], completion: NoCodableResponse?) {
         guard Connectivity.isConnectedToInternet() else {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
             return
         }
         
-        Alamofire.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: getHeader() )
-            .responseJSON { response in
-                guard let data = response.data else {
-                    print("No data found")
-                    return
-                }
-                
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .useDefaultKeys
-                
-                do {
-                    let statusCode = response.response?.statusCode ?? 0
-                    if statusCode == 200 || statusCode == 201 {
-                        let models = try decoder.decode(Resp.self, from: data)
-                        onSuccess(models)
-                    } else if let error = response.error {
-                        print(error)
-                        onError(error)
-                    } else {
-                        print("something went wrong, statusCode: \(statusCode)")
-                        onError(NSError(domain: "", code: statusCode, userInfo: nil) as Error)
-                    }
-                } catch (let error) {
-                    print("decoding error: \(error)")
-                    onError(error)
-                }
+        let authRequired = url.authRequired
+        let requestHeaders = HTTPHeaders(getHeader(authRequired: authRequired))
+        
+        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { response in
+            
+            let statusCode = response.response?.statusCode ?? 0
+            if statusCode == 200 || statusCode == 201 || statusCode == 204 {
+                completion?(true, nil)
+            } else if statusCode == 401 && authRequired {
+                /*
+                 If the endpoint expects an authorisation token,
+                 ensure that we aggressively respond in app to a 403.
+                 */
+                NotificationCenter.default.post(name: .didLogout, object: nil)
+            } else if let error = response.error {
+                print(error)
+                completion?(false, error)
+            } else {
+                print("something went wrong, statusCode: \(statusCode)")
+                completion?(false, NSError(domain: "", code: statusCode, userInfo: nil) as Error)
+            }
         }
     }
 }
 
 private extension ApiManager {
-    private func getHeader() -> [String: String] {
-        let header = [
-            "Authorization": "Bearer " + generateToken(email: userEmail),
-            "Content-Type": "application/json;v=1.1"]
+    private func getHeader(authRequired: Bool) -> [String: String] {
+        var header = ["Content-Type": "application/json;v=1.1"]
+        
+        if authRequired {
+            guard let token = Current.userManager.currentToken else { return header }
+            header["Authorization"] = "Token " + token
+        }
+
         return header
     }
-    
-    private func getParameters() -> [String: [String: Any]] {
-        let parameters = [
-            "consent": [
-                "email": userEmail,
-                "latitude": 51.405372,
-                "longitude": 0.00001,
-                "timestamp": Date().timeIntervalSince1970.stringFromTimeInterval()
-            ]
-        ]
-        
-        return parameters
-    }
-    
-    private func generateToken(email: String) -> String {
-        let keys = BinkappKeys()
-        let header = [
-            "alg": "HS512",
-            "typ": "JWT"]
-        
-        // Encode header
-        var headerDataEncoded: String?
-        do {
-            let headerData = try JSONSerialization.data(withJSONObject: header, options: JSONSerialization.WritingOptions.prettyPrinted)
-            let headerDataEncodedWithEquals = headerData.base64EncodedString()
-            headerDataEncoded = headerDataEncodedWithEquals.replacingOccurrences(of: "=", with: "")
-            
-        } catch {
-            print("Could not make header data")
-        }
-        
-        let payload = [
-            "organisation_id": keys.organisationIdKey,
-            "bundle_id": keys.bundleIdKey,
-            "user_id": email,
-            "property_id": keys.propertyIdKey,
-            "iat": Date().timeIntervalSince1970.stringFromTimeInterval()]
-        
-        // Encode payload
-        var payloadDataEncoded: String?
-        do {
-            let payloadData = try JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
-            payloadDataEncoded = payloadData.base64EncodedString()
-        } catch {
-            print("Could not make payload data")
-        }
-        
-        let key: String
-        
-        switch APIConstants.secretKeyType {
-        case .dev?:
-            key = keys.secretKey
-        case .staging?:
-            key = keys.stagingSecretKey
-        default:
-            fatalError()
-        }
-        
-        if let encodedHeader = headerDataEncoded, let encodedPayload = payloadDataEncoded {
-            let hmackString = encodedHeader + "." + encodedPayload
-            let hexSignature = hmackString.hmac(algorithm: .SHA512, key: key)
-            let signatureData = hexSignature.hexadecimal
-            let signature = signatureData?.base64EncodedString().replacingOccurrences(of: "=", with: "") ?? ""
-            let token  = hmackString + "." + signature
-            return token
-        }
-        return ""
-    }
 }
+

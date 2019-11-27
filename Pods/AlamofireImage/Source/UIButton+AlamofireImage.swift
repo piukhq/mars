@@ -29,11 +29,7 @@ import Foundation
 
 import UIKit
 
-#if swift(>=4.2)
 public typealias ControlState = UIControl.State
-#else
-public typealias ControlState = UIControlState
-#endif
 
 extension UIButton {
 
@@ -137,7 +133,7 @@ extension UIButton {
         filter: ImageFilter? = nil,
         progress: ImageDownloader.ProgressHandler? = nil,
         progressQueue: DispatchQueue = DispatchQueue.main,
-        completion: ((DataResponse<UIImage>) -> Void)? = nil)
+        completion: ((AFIDataResponse<UIImage>) -> Void)? = nil)
     {
         af_setImage(
             for: state,
@@ -176,11 +172,17 @@ extension UIButton {
         filter: ImageFilter? = nil,
         progress: ImageDownloader.ProgressHandler? = nil,
         progressQueue: DispatchQueue = DispatchQueue.main,
-        completion: ((DataResponse<UIImage>) -> Void)? = nil)
+        completion: ((AFIDataResponse<UIImage>) -> Void)? = nil)
     {
         guard !isImageURLRequest(urlRequest, equalToActiveRequestURLForState: state) else {
-            let error = AFIError.requestCancelled
-            let response = DataResponse<UIImage>(request: nil, response: nil, data: nil, result: .failure(error))
+            let response = AFIDataResponse<UIImage>(
+                request: nil,
+                response: nil,
+                data: nil,
+                metrics: nil,
+                serializationDuration: 0.0,
+                result: .failure(AFIError.requestCancelled)
+            )
 
             completion?(response)
 
@@ -197,10 +199,12 @@ extension UIButton {
             let request = urlRequest.urlRequest,
             let image = imageCache?.image(for: request, withIdentifier: filter?.identifier)
         {
-            let response = DataResponse<UIImage>(
+            let response = AFIDataResponse<UIImage>(
                 request: urlRequest.urlRequest,
                 response: nil,
                 data: nil,
+                metrics: nil,
+                serializationDuration: 0.0,
                 result: .success(image)
             )
 
@@ -233,7 +237,7 @@ extension UIButton {
                     return
                 }
 
-                if let image = response.result.value {
+                if case .success(let image) = response.result {
                     strongSelf.setImage(image, for: state)
                 }
 
@@ -284,7 +288,7 @@ extension UIButton {
         filter: ImageFilter? = nil,
         progress: ImageDownloader.ProgressHandler? = nil,
         progressQueue: DispatchQueue = DispatchQueue.main,
-        completion: ((DataResponse<UIImage>) -> Void)? = nil)
+        completion: ((AFIDataResponse<UIImage>) -> Void)? = nil)
     {
         af_setBackgroundImage(
             for: state,
@@ -323,11 +327,17 @@ extension UIButton {
         filter: ImageFilter? = nil,
         progress: ImageDownloader.ProgressHandler? = nil,
         progressQueue: DispatchQueue = DispatchQueue.main,
-        completion: ((DataResponse<UIImage>) -> Void)? = nil)
+        completion: ((AFIDataResponse<UIImage>) -> Void)? = nil)
     {
         guard !isImageURLRequest(urlRequest, equalToActiveRequestURLForState: state) else {
-            let error = AFIError.requestCancelled
-            let response = DataResponse<UIImage>(request: nil, response: nil, data: nil, result: .failure(error))
+            let response = AFIDataResponse<UIImage>(
+                request: nil,
+                response: nil,
+                data: nil,
+                metrics: nil,
+                serializationDuration: 0.0,
+                result: .failure(AFIError.requestCancelled)
+            )
 
             completion?(response)
 
@@ -344,10 +354,12 @@ extension UIButton {
             let request = urlRequest.urlRequest,
             let image = imageCache?.image(for: request, withIdentifier: filter?.identifier)
         {
-            let response = DataResponse<UIImage>(
+            let response = AFIDataResponse<UIImage>(
                 request: urlRequest.urlRequest,
                 response: nil,
                 data: nil,
+                metrics: nil,
+                serializationDuration: 0.0,
                 result: .success(image)
             )
 
@@ -380,7 +392,7 @@ extension UIButton {
                     return
                 }
 
-                if let image = response.result.value {
+                if case .success(let image) = response.result {
                     strongSelf.setBackgroundImage(image, for: state)
                 }
 
@@ -468,7 +480,7 @@ extension UIButton {
     private func urlRequest(with url: URL) -> URLRequest {
         var urlRequest = URLRequest(url: url)
 
-        for mimeType in DataRequest.acceptableImageContentTypes {
+        for mimeType in ImageResponseSerializer.acceptableImageContentTypes {
             urlRequest.addValue(mimeType, forHTTPHeaderField: "Accept")
         }
 

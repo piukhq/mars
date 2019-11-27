@@ -161,6 +161,15 @@ extension SettingsViewController: UITableViewDelegate {
                     toHowItWorksVC()
                     break
                 }
+            case .logout:
+                let alert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+                alert.addAction(
+                    UIAlertAction(title: "Log out", style: .default, handler: { _ in
+                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                    })
+                )
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                present(alert, animated: true)
             }
         }
     }

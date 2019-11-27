@@ -20,6 +20,7 @@ struct LoyaltyWalletRepository: WalletRepository {
         // Process the backend delete, but fail silently
         let url = RequestURL.membershipCard(cardId: card.id)
         let method = RequestHTTPMethod.delete
+        
         apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
 
         // Process core data deletion
