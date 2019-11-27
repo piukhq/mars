@@ -182,8 +182,7 @@ extension SettingsViewController: UITableViewDelegate {
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
     private func sendEmail() {
         if MFMailComposeViewController.canSendMail() {
-            //TODO: Get the current bink id after the login implementation is done.
-            let binkId = "RandomBinkId"
+            let binkId = Current.userManager.currentEmailAddress ?? ""
             let shortVersionNumber = Bundle.shortVersionNumber ?? ""
             let buildNumber = Bundle.bundleVersion ?? ""
             let appVersion = String(format: "support_mail_app_version".localized, shortVersionNumber, buildNumber)
