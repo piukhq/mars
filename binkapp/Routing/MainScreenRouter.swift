@@ -253,13 +253,36 @@ class MainScreenRouter {
     //MARK: - App in background
     
     @objc func appWillResignActive() {
+        guard let visibleVC = navController?.getVisibleViewController() else { return }
+        if visibleVC.presentedViewController?.isKind(of: UIAlertController.self) == true {
+            //Dismiss alert controller before presenting the Launch screen.
+            visibleVC.dismiss(animated: false, completion: nil)
+        }
+        
+        if visibleVC.isKind(of: BarcodeViewController.self),
+            let nc = visibleVC.presentedViewController as? UINavigationController,
+            let vc = nc.viewControllers.first as? BarcodeViewController,
+            vc.isBarcodeFullsize {
+            //Dismiss full screen barcode before presenting the Launch screen.
+            nc.dismiss(animated: false, completion: nil)
+        }
+        
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
-        navController?.present(vc, animated: false, completion: nil)
+        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal {
+            modalNavigationController.present(vc, animated: false, completion: nil)
+        } else {
+            navController?.present(vc, animated: false, completion: nil)
+        }
     }
     
     @objc func appDidBecomeActive() {
-        navController?.dismiss(animated: false, completion: nil)
+        let visibleVC = navController?.getVisibleViewController()
+        if let modalNavigationController = visibleVC?.navigationController {
+           modalNavigationController.dismiss(animated: false, completion: nil)
+        } else {
+            visibleVC?.dismiss(animated: false, completion: nil)
+        }
     }
 }

@@ -221,6 +221,7 @@
 		BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */; };
 		DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB088544234FD8A30041A67A /* PLLScreenRepository.swift */; };
 		DB8DE35A2373130100F07F11 /* Bundle+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8DE3592373130100F07F11 /* Bundle+binkapp.swift */; };
+		DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */; };
 		EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1110532354D4BE009A4438 /* WalletCardCollectionViewCell.swift */; };
 		EF2E8811233385A400F678F3 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E8810233385A400F678F3 /* World.swift */; };
 		EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2E881223351A6000F678F3 /* CoreDataRepositoryProtocol.swift */; };
@@ -651,6 +652,7 @@
 		DAD06B97E6DBC2FAA6900787 /* Pods-binkapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.debug.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.debug.xcconfig"; sourceTree = "<group>"; };
 		DB088544234FD8A30041A67A /* PLLScreenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenRepository.swift; sourceTree = "<group>"; };
 		DB8DE3592373130100F07F11 /* Bundle+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+binkapp.swift"; sourceTree = "<group>"; };
+		DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+binkapp.swift"; sourceTree = "<group>"; };
 		E7354EC1FB3CF368988428AD /* Pods-binkappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.release.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ED4CD3B619FA32A249E98CC6 /* Pods-binkappTests.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.nightly.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.nightly.xcconfig"; sourceTree = "<group>"; };
 		EF1110532354D4BE009A4438 /* WalletCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1433,6 +1435,7 @@
 				3C7AF52A23757FB0005964E0 /* FloatExtension.swift */,
 				EFBDB102237B1468002D7898 /* CALayerExtension.swift */,
 				EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */,
+				DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2675,6 +2678,7 @@
 				3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */,
 				EFA5F7112379A7C70027AB80 /* CD_MembershipPlanAccount.swift in Sources */,
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
+                DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
 				EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */,
 				BDB01870232D99D200BFFA18 /* FormField.swift in Sources */,
 				B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */,
