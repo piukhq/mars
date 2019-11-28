@@ -85,7 +85,7 @@ extension CheckboxView: InputValidation {
     @objc func checkboxValueChanged(_ sender: Any) {
         let isChecked = checkboxView.checkState == .checked
         
-        guard let columnType = columnKind, let columnName = title else { return }
+        guard let columnType = columnKind, let columnName = textView.text else { return }
         delegate?.checkboxView(self, didCompleteWithColumn: columnName, value: String(isChecked), fieldType: columnType)
     }
 }
