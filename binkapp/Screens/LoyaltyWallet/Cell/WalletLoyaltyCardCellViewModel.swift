@@ -75,9 +75,9 @@ struct WalletLoyaltyCardCellViewModel {
         guard cardStatus != .pending else { return "pending_title".localized }
         switch (planCardType, hasLinkedPaymentCards) {
         case (.link, true):
-            return "Linked".localized
+            return "card_linked_status".localized
         case (.link, false):
-            return "Link now".localized
+            return "card_link_now_status".localized
         default:
             return nil
         }
