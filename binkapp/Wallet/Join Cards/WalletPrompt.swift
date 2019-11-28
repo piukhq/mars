@@ -31,12 +31,22 @@ enum WalletPromptType {
     }
 
     var userDefaultsDismissKey: String {
+        
+        var userDefaultsDismiss = ""
+        
+        // Let these be on a per user basis
+        if let email = Current.userManager.currentEmailAddress {
+            userDefaultsDismiss += "\(email)_"
+        }
+        
         switch self {
         case .loyaltyJoin(let plan):
-            return "join_card_\(plan.account?.planName ?? "")_was_dismissed"
+            userDefaultsDismiss += "join_card_\(plan.account?.planName ?? "")_was_dismissed"
         case .addPaymentCards:
-            return "add_payment_card_prompt_was_dismissed"
+            userDefaultsDismiss += "add_payment_card_prompt_was_dismissed"
         }
+        
+        return userDefaultsDismiss
     }
 
     var membershipPlan: CD_MembershipPlan? {

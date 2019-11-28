@@ -28,7 +28,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         button.setTitle("Add", for: .normal)
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .addButtonTapped, for: .touchUpInside)
-        button.isEnabled = false
+        button.isEnabled = true
         view.addSubview(button)
         return button
     }()
@@ -212,6 +212,23 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
         let year = options.last as? Int
 
         viewModel.setPaymentCardExpiry(month: month, year: year)
+    }
+
+    func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
+        switch field.fieldType {
+        case .expiry(months: _, years: _):
+            // Create date using components from string e.g. 11/2019
+            guard let dateStrings = field.value?.components(separatedBy: "/") else { return false }
+            guard let monthString = dateStrings[safe: 0] else { return false }
+            guard let yearString = dateStrings[safe: 1] else { return false }
+            guard let month = Int(monthString) else { return false }
+            guard let year = Int(yearString) else { return false }
+            guard let expiryDate = Date.makeDate(year: year, month: month, day: 01, hr: 00, min: 00, sec: 00) else { return false }
+
+            return expiryDate.monthIsExpired
+        default:
+            return false
+        }
     }
 }
 

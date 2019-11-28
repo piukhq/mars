@@ -24,18 +24,22 @@ struct FormPickerData: Equatable {
 class FormField {
     enum FieldInputType: Equatable {
         case text
+        case email
         case sensitive
         case choice(data: [FormPickerData])
         case checkbox
         case cardNumber
+        case confirmPassword
         case expiry(months: [FormPickerData], years: [FormPickerData])
         
         func keyboardType() -> UIKeyboardType {
             switch self {
             case .cardNumber:
                 return .numberPad
-            case .text, .sensitive:
+            case .text, .sensitive, .confirmPassword:
                 return .alphabet
+            case .email:
+                return .emailAddress
             default:
                 return .default
             }
@@ -52,6 +56,15 @@ class FormField {
         
         func autoCorrection() -> UITextAutocorrectionType {
             return .no
+        }
+        
+        var isSecureTextEntry: Bool {
+            switch self {
+            case .sensitive, .confirmPassword:
+                return true
+            default:
+                return false
+            }
         }
         
         static func fieldInputType(for simpleFieldInputType: InputType?, choices: [String]? = nil) -> FieldInputType {
@@ -74,35 +87,41 @@ class FormField {
             }
         }
     }
-    
-    enum ColumnKind: String {
+
+    enum ColumnKind {
+        case none
         case add
         case auth
         case enrol
         case register
         case planDocument
+        case userPreference
     }
     
     let title: String
     let placeholder: String
     let validation: String?
+    let validationErrorMessage: String?
     let columnKind: ColumnKind?
     let fieldType: FieldInputType
     let valueUpdated: ValueUpdatedBlock
     let fieldExited: FieldExitedBlock
     let pickerOptionsUpdated: PickerUpdatedBlock?
     let shouldChange: TextFieldShouldChange
+    let manualValidate: ManualValidateBlock?
     private(set) var value: String?
     
     typealias ValueUpdatedBlock = (FormField, String?) -> ()
     typealias PickerUpdatedBlock = (FormField, [Any]) -> ()
     typealias TextFieldShouldChange = (FormField, UITextField, NSRange, String?) -> (Bool)
     typealias FieldExitedBlock = (FormField) -> ()
+    typealias ManualValidateBlock = (FormField) -> (Bool)
         
-    init(title: String, placeholder: String, validation: String?, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil) {
+    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation
+        self.validationErrorMessage = validationErrorMessage
         self.fieldType = fieldType
         self.value = value
         self.valueUpdated = updated
@@ -110,11 +129,17 @@ class FormField {
         self.fieldExited = fieldExited
         self.pickerOptionsUpdated = pickerSelected
         self.columnKind = columnKind
+        self.manualValidate = manualValidate
     }
     
     func isValid() -> Bool {
         // If our value is unset then  we do not pass the validation check
         guard let value = value else { return false }
+
+        // If the field has manual validation, apply it
+        if let validateBlock = manualValidate {
+            return validateBlock(self)
+        }
         
         if fieldType == .cardNumber {
             return PaymentCardType.validate(fullPan: value)

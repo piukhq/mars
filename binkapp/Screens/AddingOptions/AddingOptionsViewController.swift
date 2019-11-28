@@ -12,8 +12,8 @@ class AddingOptionsViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     
     let viewModel: AddingOptionsViewModel
-    
-    let loyaltyCardView = AddingOptionView()
+    // Not needed for MVP
+    //let loyaltyCardView = AddingOptionView()
     let browseBrandsView = AddingOptionView()
     let addPaymentCardView = AddingOptionView()
     
@@ -47,20 +47,21 @@ class AddingOptionsViewController: UIViewController {
     
     func configureUI() {
         self.title = ""
-        
-        loyaltyCardView.configure(addingOption: .loyalty)
+        // Not needed for MVP
+        //loyaltyCardView.configure(addingOption: .loyalty)
         browseBrandsView.configure(addingOption: .browse)
         addPaymentCardView.configure(addingOption: .payment)
         
         addGesturesToViews()
-
-        stackView.addArrangedSubview(loyaltyCardView)
+        // Not needed for MVP
+        //stackView.addArrangedSubview(loyaltyCardView)
         stackView.addArrangedSubview(browseBrandsView)
         stackView.addArrangedSubview(addPaymentCardView)
     }
     
     func addGesturesToViews() {
-        loyaltyCardView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.toAddLoyaltyCard)))
+        // Not needed for MVP
+        //loyaltyCardView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.toAddLoyaltyCard)))
         browseBrandsView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.toBrowseBrands)))
         addPaymentCardView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.toAddPaymentCard)))
     }

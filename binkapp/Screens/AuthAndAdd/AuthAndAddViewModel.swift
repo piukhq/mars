@@ -115,8 +115,10 @@ class AuthAndAddViewModel {
         
         formFields.forEach { addFieldToCard(formField: $0) }
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
-        
-        let request = try AddMembershipCardRequest(jsonCard: membershipCardPostModel.asDictionary(), completion: { [weak self] card in
+
+        guard let model = membershipCardPostModel else { return }
+                
+        repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, onSuccess: { [weak self] card in
             guard let self = self else {return}
             if let card = card {
                 if card.membershipPlan?.featureSet?.planCardType == .link {
@@ -128,19 +130,19 @@ class AuthAndAddViewModel {
                 Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
-        }, onError: { [weak self] error in
-            print(error)
-            self?.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+            }, onError: { [weak self] error in
+                self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
         })
-        
-        repository.addMembershipCard(request: request, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard)
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
-        let addJsonCard = try membershipCardPostModel.asDictionary()
         
-        repository.postGhostCard(parameters: addJsonCard, onSuccess: { [weak self] (response) in
+        guard let model = membershipCardPostModel else {
+            return
+        }
+        
+        repository.postGhostCard(parameters: model, onSuccess: { [weak self] (response) in
             guard let card = response else {
                 Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
@@ -155,15 +157,14 @@ class AuthAndAddViewModel {
 
             self?.populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
             
-            var registrationCard = self?.membershipCardPostModel
-            registrationCard?.account?.addFields = []
-            let registrationJsonCard = try? registrationCard.asDictionary()
-            self?.repository.patchGhostCard(cardId: card.id, parameters: registrationJsonCard ?? [:])
+            var registrationCard = model
+            registrationCard.account?.addFields = []
+            self?.repository.patchGhostCard(cardId: card.id, parameters: registrationCard)
 
             Current.wallet.refreshLocal()
             NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
         }) { (error) in
-            self.displaySimplePopup(title: "error_title".localized, message: error.localizedDescription)
+            self.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
         }
     }
     

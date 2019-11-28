@@ -25,22 +25,25 @@ class AddingOptionView: CustomView {
         titleLabel.font = UIFont.headline
         descriptionLabel.font = UIFont.bodyTextLarge
         
-        self.view.layer.cornerRadius = 10
-        self.clipsToBounds = true
+        frame.size.height = 150
         
-        self.layer.shadowOffset = CGSize(width: 10, height: 10)
-        self.layer.shadowRadius = 15
-        self.layer.shadowOpacity = 0.1
-        self.layer.masksToBounds = false
+        view.layer.cornerRadius = 10
+        clipsToBounds = true
+        
+        layer.shadowOffset = CGSize(width: 10, height: 10)
+        layer.shadowRadius = 15
+        layer.shadowOpacity = 0.1
+        layer.masksToBounds = false
     }
     
     func configureByAddingOption(option: AddingOptions) {
         switch option {
-        case .loyalty:
-            optionTypeImageView.image = UIImage(named: "loyalty")
-            titleLabel.text = "add_loyalty_card_title".localized
-            descriptionLabel.text = "scan_a_card_description".localized
-            break
+            // Not needed for MVP
+//        case .loyalty:
+//            optionTypeImageView.image = UIImage(named: "loyalty")
+//            titleLabel.text = "add_loyalty_card_title".localized
+//            descriptionLabel.text = "scan_a_card_description".localized
+//            break
         case .browse:
             optionTypeImageView.image = UIImage(named: "browse")
             titleLabel.text = "browse_brands_title".localized

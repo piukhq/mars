@@ -14,6 +14,7 @@ class World {
     lazy var database = Database(named: "binkapp")
     lazy var wallet = Wallet()
     lazy var userDefaults: BinkUserDefaults = UserDefaults.standard
+    lazy var userManager = UserManager()
 }
 
 protocol BinkUserDefaults {

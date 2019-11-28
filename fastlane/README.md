@@ -21,6 +21,16 @@ or alternatively using `brew cask install fastlane`
 fastlane ios setup
 ```
 Retrieve all the certificates for all targets and configures your machine to compile against devices
+### ios addDevice
+```
+fastlane ios addDevice
+```
+Adds a device to the portal
+### ios setupForce
+```
+fastlane ios setupForce
+```
+Retrieve and force update all the certificates for all targets and configures your machine to compile against devices, including new ones. NOTE: This should only be run if new devices are required in the profiles and certificates
 
 ----
 

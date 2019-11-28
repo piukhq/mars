@@ -17,7 +17,7 @@ class LoyaltyCardFullDetailsRepository: WalletRepository {
     func getPaymentCards(completion: @escaping ([PaymentCardModel]) -> Void) {
         let url = RequestURL.paymentCards
         let httpMethod = RequestHTTPMethod.get
-        apiManager.doRequest(url: url, httpMethod: httpMethod, parameters: nil, onSuccess: { (results: [PaymentCardModel]) in
+        apiManager.doRequest(url: url, httpMethod: httpMethod, onSuccess: { (results: [PaymentCardModel]) in
             completion(results)
         }) { (error) in }
     }
