@@ -10,6 +10,7 @@ import UIKit
 class LoyaltyCardFullDetailsViewModel {
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
+    private let informationRowFactory: PaymentCardDetailInformationRowFactory
     
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
@@ -32,10 +33,11 @@ class LoyaltyCardFullDetailsViewModel {
         }
     }
 
-    init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter, informationRowFactory: PaymentCardDetailInformationRowFactory) {
         self.router = router
         self.repository = repository
         self.membershipCard = membershipCard
+        self.informationRowFactory = informationRowFactory
     }  
 
     var brandName: String {
@@ -71,9 +73,9 @@ class LoyaltyCardFullDetailsViewModel {
         case .transactions:
             router.toTransactionsViewController(membershipCard: membershipCard)
             break
-        case .loginPending:
-            let title = "log_in_pending_title".localized
-            let description = "log_in_pending_description".localized
+        case .pending:
+            let title = "generic_pending_module_title".localized
+            let description = "generic_pending_module_description".localized
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .loginUnavailable:
@@ -85,19 +87,9 @@ class LoyaltyCardFullDetailsViewModel {
             //TODO: change to sign up screen after is implemented
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
-        case .signUpPending:
-            let title = "sign_up_pending_title".localized
-            let description = "sign_up_pending_description".localized
-            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
-            break
         case .registerGhostCard:
             //TODO: change to sign up screen after is implemented
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
-            break
-        case .registerGhostCardPending:
-            let title = "sign_up_pending_title".localized
-            let description = "sign_up_pending_description".localized
-            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .pllEmpty:
             router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)
@@ -137,6 +129,11 @@ class LoyaltyCardFullDetailsViewModel {
         
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
+
+    func toAboutMembershipPlanScreen() {
+        let config = getBasicReusableConfiguration(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
+        router.toReusableModalTemplateViewController(configurationModel: config)
+    }
     
     func toSecurityAndPrivacyScreen() {
         router.toPrivacyAndSecurityViewController()
@@ -154,30 +151,30 @@ class LoyaltyCardFullDetailsViewModel {
         let planImages = membershipCard.membershipPlan?.imagesSet
         return planImages?.filter({ $0.type?.intValue == 2}).compactMap { $0.url }
     }
-    
-    func showDeleteConfirmationAlert(yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+}
+
+// MARK: Information rows
+
+extension LoyaltyCardFullDetailsViewModel {
+    var informationRows: [CardDetailInformationRow] {
+        return informationRowFactory.makeLoyaltyInformationRows(membershipCard: membershipCard)
+    }
+
+    func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
+        return informationRows[indexPath.row]
+    }
+
+    func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
+        informationRows[indexPath.row].action()
+    }
+
+    func deleteMembershipCard() {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }
             self.repository.delete(self.membershipCard) {
-                yesCompletion()
+                Current.wallet.refreshLocal()
+                self.router.popToRootViewController()
             }
-        }, noCompletion: {
-            noCompletion()
-        })
-    }
-}
-
-// MARK: - Private methods
-
-private extension LoyaltyCardFullDetailsViewModel {
-    func toReusableModalTemplate(title: String, description: String) {
-        let attributedText = NSMutableAttributedString(string: title + "\n" + description)
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
-        
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        let configurationModel = ReusableModalConfiguration(title: "", text: attributedText, tabBarBackButton: backButton)
-        
-        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
+        }, noCompletion: {})
     }
 }

@@ -29,11 +29,7 @@ import Foundation
 
 import UIKit
 
-#if swift(>=4.2)
 public typealias AnimationOptions = UIView.AnimationOptions
-#else
-public typealias AnimationOptions = UIViewAnimationOptions
-#endif
 
 extension UIImageView {
 
@@ -214,7 +210,7 @@ extension UIImageView {
         progressQueue: DispatchQueue = DispatchQueue.main,
         imageTransition: ImageTransition = .noTransition,
         runImageTransitionIfCached: Bool = false,
-        completion: ((DataResponse<UIImage>) -> Void)? = nil)
+        completion: ((AFIDataResponse<UIImage>) -> Void)? = nil)
     {
         af_setImage(
             withURLRequest: urlRequest(with: url),
@@ -267,11 +263,17 @@ extension UIImageView {
         progressQueue: DispatchQueue = DispatchQueue.main,
         imageTransition: ImageTransition = .noTransition,
         runImageTransitionIfCached: Bool = false,
-        completion: ((DataResponse<UIImage>) -> Void)? = nil)
+        completion: ((AFIDataResponse<UIImage>) -> Void)? = nil)
     {
         guard !isURLRequestURLEqualToActiveRequestURL(urlRequest) else {
-            let error = AFIError.requestCancelled
-            let response = DataResponse<UIImage>(request: nil, response: nil, data: nil, result: .failure(error))
+            let response = AFIDataResponse<UIImage>(
+                request: nil,
+                response: nil,
+                data: nil,
+                metrics: nil,
+                serializationDuration: 0.0,
+                result: .failure(AFIError.requestCancelled)
+            )
 
             completion?(response)
 
@@ -288,7 +290,14 @@ extension UIImageView {
             let request = urlRequest.urlRequest,
             let image = imageCache?.image(for: request, withIdentifier: filter?.identifier)
         {
-            let response = DataResponse<UIImage>(request: request, response: nil, data: nil, result: .success(image))
+            let response = AFIDataResponse<UIImage>(
+                request: request,
+                response: nil,
+                data: nil,
+                metrics: nil,
+                serializationDuration: 0.0,
+                result: .success(image)
+            )
 
             if runImageTransitionIfCached {
                 let tinyDelay = DispatchTime.now() + Double(Int64(0.001 * Float(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
@@ -329,7 +338,7 @@ extension UIImageView {
                     return
                 }
 
-                if let image = response.result.value {
+                if case .success(let image) = response.result {
                     strongSelf.run(imageTransition, with: image)
                 }
 
@@ -375,7 +384,7 @@ extension UIImageView {
     private func urlRequest(with url: URL) -> URLRequest {
         var urlRequest = URLRequest(url: url)
 
-        for mimeType in DataRequest.acceptableImageContentTypes {
+        for mimeType in ImageResponseSerializer.acceptableImageContentTypes {
             urlRequest.addValue(mimeType, forHTTPHeaderField: "Accept")
         }
 

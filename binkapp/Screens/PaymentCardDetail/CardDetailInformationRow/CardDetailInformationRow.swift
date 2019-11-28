@@ -13,13 +13,23 @@ struct CardDetailInformationRow {
     var action: () -> Void
 
     enum RowType {
+        case about(membershipCard: CD_MembershipCard)
         case securityAndPrivacy
+        case deleteMembershipCard(membershipCard: CD_MembershipCard)
         case deletePaymentCard
 
         var title: String {
             switch self {
+            case .about(let card):
+                if let planName = card.membershipPlan?.account?.planName {
+                    return String(format: "about_custom_title".localized, planName)
+                } else {
+                    return "info_title".localized
+                }
             case .securityAndPrivacy:
                 return "Security and privacy"
+            case .deleteMembershipCard(let card):
+                return "Delete \(card.membershipPlan?.account?.planName ?? "this card")"
             case .deletePaymentCard:
                 return "Delete this card"
             }
@@ -27,9 +37,11 @@ struct CardDetailInformationRow {
 
         var subtitle: String {
             switch self {
+            case .about:
+                return "Learn more about how it works"
             case .securityAndPrivacy:
                 return "How we protect your data"
-            case .deletePaymentCard:
+            case .deletePaymentCard, .deleteMembershipCard:
                 return "Remove this card from Bink"
             }
         }
@@ -37,7 +49,8 @@ struct CardDetailInformationRow {
 }
 
 protocol CardDetailInformationRowFactory {
-    func makeInformationRows() -> [CardDetailInformationRow]
+    func makeLoyaltyInformationRows(membershipCard: CD_MembershipCard) -> [CardDetailInformationRow]
+    func makePaymentInformationRows() -> [CardDetailInformationRow]
 }
 
 protocol CardDetailInformationRowFactoryDelegate: AnyObject {
@@ -47,14 +60,32 @@ protocol CardDetailInformationRowFactoryDelegate: AnyObject {
 class PaymentCardDetailInformationRowFactory: CardDetailInformationRowFactory {
     weak var delegate: CardDetailInformationRowFactoryDelegate?
 
-    func makeInformationRows() -> [CardDetailInformationRow] {
+    func makeLoyaltyInformationRows(membershipCard: CD_MembershipCard) -> [CardDetailInformationRow] {
+        return [makeAboutPlanRow(membershipCard: membershipCard), makeSecurityAndPrivacyRow(), makeDeleteMembershipCardRow(membershipCard: membershipCard)]
+    }
+
+    func makePaymentInformationRows() -> [CardDetailInformationRow] {
         return [makeSecurityAndPrivacyRow(), makeDeletePaymentCardRow()]
+    }
+
+    private func makeAboutPlanRow(membershipCard: CD_MembershipCard) -> CardDetailInformationRow {
+        return CardDetailInformationRow(type: .about(membershipCard: membershipCard)) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.cardDetailInformationRowFactory(self, shouldPerformActionForRowType: .about(membershipCard: membershipCard))
+        }
     }
 
     private func makeSecurityAndPrivacyRow() -> CardDetailInformationRow {
         return CardDetailInformationRow(type: .securityAndPrivacy) { [weak self] in
             guard let self = self else { return }
             self.delegate?.cardDetailInformationRowFactory(self, shouldPerformActionForRowType: .securityAndPrivacy)
+        }
+    }
+
+    private func makeDeleteMembershipCardRow(membershipCard: CD_MembershipCard) -> CardDetailInformationRow {
+        return CardDetailInformationRow(type: .deleteMembershipCard(membershipCard: membershipCard)) { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.cardDetailInformationRowFactory(self, shouldPerformActionForRowType: .deleteMembershipCard(membershipCard: membershipCard))
         }
     }
 

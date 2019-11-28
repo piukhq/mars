@@ -56,9 +56,10 @@ class FormCollectionViewCell: UICollectionViewCell {
     private lazy var validationLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         label.font = UIFont.textFieldExplainer
         label.textColor = .red
-        label.text = "Incorrect Format"
+        label.text = "form_field_validation_error".localized
         label.isHidden = true
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         return label
@@ -130,7 +131,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     func configure(with field: FormField) {
         titleLabel.text = field.title
         textField.placeholder = field.placeholder
-        textField.isSecureTextEntry = field.fieldType == .sensitive
+        textField.isSecureTextEntry = field.fieldType.isSecureTextEntry
         textField.keyboardType = field.fieldType.keyboardType()
         textField.autocorrectionType = field.fieldType.autoCorrection()
         textField.autocapitalizationType = field.fieldType.capitalization()
@@ -156,7 +157,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func accessoryDoneTouchUpInside() {
-        textField.resignFirstResponder()
+        textField.superview?.superview?.endEditing(true)
     }
 }
 
@@ -167,6 +168,7 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let field = formField else { return }
+        validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : "form_field_validation_error".localized
         validationLabel.isHidden = field.isValid()
         field.fieldWasExited()
     }
