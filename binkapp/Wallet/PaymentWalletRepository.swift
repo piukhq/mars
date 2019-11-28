@@ -41,7 +41,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
             return
         }
 
-        try? apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest, onSuccess: { (response: PaymentCardModel) in
+        apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask { context in
                 response.mapToCoreData(context, .update, overrideID: nil)
 
@@ -52,7 +52,6 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
                 }
             }
         }, onError: { error in
-            print(error)
             completion(false)
         })
     }

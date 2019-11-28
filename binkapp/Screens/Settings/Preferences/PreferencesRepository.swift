@@ -15,7 +15,7 @@ class PreferencesRepository {
         self.apiManager = apiManager
     }
     
-    func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (Error) -> Void) {
+    func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (Error?) -> Void) {
         apiManager.doRequest(url: .preferences, httpMethod: .get, onSuccess: { (preferences: [PreferencesModel]) in
             onSuccess(preferences)
         }) { (error) in
