@@ -9,9 +9,11 @@ public enum CD_RegistrationFieldAttributes: String {
     case fieldDescription = "fieldDescription"
     case order = "order"
     case type = "type"
+    case validation = "validation"
 }
 
 public enum CD_RegistrationFieldRelationships: String {
+    case choices = "choices"
     case planAccount = "planAccount"
 }
 
@@ -57,10 +59,48 @@ open class _CD_RegistrationField: CD_BaseObject {
     @NSManaged open
     var type: NSNumber?
 
+    @NSManaged open
+    var validation: String?
+
     // MARK: - Relationships
 
     @NSManaged open
+    var choices: NSSet
+
+    open func choicesSet() -> NSMutableSet {
+        return self.choices.mutableCopy() as! NSMutableSet
+    }
+
+    @NSManaged open
     var planAccount: CD_MembershipPlanAccount?
+
+}
+
+extension _CD_RegistrationField {
+
+    open func addChoices(_ objects: NSSet) {
+        let mutable = self.choices.mutableCopy() as! NSMutableSet
+        mutable.union(objects as Set<NSObject>)
+        self.choices = mutable.copy() as! NSSet
+    }
+
+    open func removeChoices(_ objects: NSSet) {
+        let mutable = self.choices.mutableCopy() as! NSMutableSet
+        mutable.minus(objects as Set<NSObject>)
+        self.choices = mutable.copy() as! NSSet
+    }
+
+    open func addChoicesObject(_ value: CD_FieldChoice) {
+        let mutable = self.choices.mutableCopy() as! NSMutableSet
+        mutable.add(value)
+        self.choices = mutable.copy() as! NSSet
+    }
+
+    open func removeChoicesObject(_ value: CD_FieldChoice) {
+        let mutable = self.choices.mutableCopy() as! NSMutableSet
+        mutable.remove(value)
+        self.choices = mutable.copy() as! NSSet
+    }
 
 }
 

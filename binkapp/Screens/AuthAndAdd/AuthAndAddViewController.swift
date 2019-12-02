@@ -101,16 +101,19 @@ class AuthAndAddViewController: BaseFormViewController {
 
 extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes)
+        floatingButtons.primaryButton.startLoading()
+        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes) {
+            floatingButtons.primaryButton.stopLoading()
+        }
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
         guard (fields?.contains(where: { $0.value == LinkingSupportType.registration.rawValue }) ?? false) else {
-            viewModel.toReusableTemplate(title: "ghost_card_sign_up_unavailable_title".localized, description: "ghost_native_join_unavailable_description".localized)
+            viewModel.toReusableTemplate(title:"native_join_unavailable_title".localized, description: "ghost_native_join_unavailable_description".localized)
             return
         }
-        viewModel.displaySimplePopup(title: "has registration fields", message: nil)
+        viewModel.reloadWith(newFormPuropse: .ghostCard)
     }
 }
 

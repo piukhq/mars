@@ -26,12 +26,10 @@ class BinkModuleView: CustomView {
         case login
         case loginChanges
         case transactions
-        case loginPending
+        case pending
         case loginUnavailable
         case signUp
-        case signUpPending
         case registerGhostCard
-        case registerGhostCardPending
         case pllEmpty
         case pll
         case unLinkable
@@ -111,43 +109,23 @@ private extension BinkModuleView {
                 configure(imageName: "lcdModuleIconsPointsActive", titleText: titleText, subtitleText: subtitleText, touchAction: .transactions)
             }
             break
-        case .unauthorised:
-            // Points Module 1.3, 1.4
-            configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .login)
-            break
         case .pending:
             let imageName = "lcdModuleIconsPointsLoginPending"
-
-            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.value {
-                switch reasonCode {
-                case "X200":
-                    // Points module 1.9
-                    configure(imageName: imageName, titleText: "points_module_signing_up_status".localized, subtitleText: "please_wait_title".localized, touchAction: .signUpPending)
-                    break
-                case "X000", "X301":
-                    // Points module 1.7
-                    configure(imageName: imageName, titleText: "points_module_signing_up_status".localized, subtitleText: "please_wait_title".localized, touchAction: .loginPending)
-                    break
-                default:
-                    // Points module 1.11 (need reason codes, set by defaul)
-                    configure(imageName: imageName, titleText: "points_module_registering_card_status".localized, subtitleText: "please_wait_title".localized, touchAction: .registerGhostCardPending)
-                    break
-                }
-            }
+            configure(imageName: imageName, titleText: "pending_title".localized, subtitleText: "please_wait_title".localized, touchAction: .pending)
             break
-        case .failed:
+        case .failed, .unauthorised:
             let imageName = "lcdModuleIconsPointsLogin"
-            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.value {
+            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.code {
                 switch reasonCode {
-                case "X201":
+                case .X201:
                     // Points module 1.8
                     configure(imageName: imageName, titleText: "sign_up_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .signUp)
                     break
-                case "X105", "X202":
+                case .X105, .X202:
                     // Points module 1.x (to be defined)
                     configure(imageName: imageName, titleText: "log_in_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
                     break
-                case "X101", "X102", "X103", "X104", "X302", "X303", "X304":
+                case .X101, .X102, .X103, .X104, .X302, .X303, .X304:
                     // Points module 1.6
                     configure(imageName: imageName, titleText: "points_module_retry_log_in_status".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
                     break
@@ -203,7 +181,7 @@ private extension BinkModuleView {
             break
         case .pending:
             // Link moduel 2.6
-            configure(imageName: "lcdModuleIconsPointsLoginPending", titleText: "pending_title".localized, subtitleText: "please_wait_title".localized, touchAction: .loginPending)
+            configure(imageName: "lcdModuleIconsPointsLoginPending", titleText: "pending_title".localized, subtitleText: "please_wait_title".localized, touchAction: .pending)
             break
         case .failed:
             // Link module 2.7

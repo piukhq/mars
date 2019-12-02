@@ -21,15 +21,9 @@ struct TransactionsViewModel {
     
     var description: String {
         if transactions.isEmpty {
-            return String(format: "transaction_history_unavailable_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
+            return "transaction_history_unavailable_description".localized
         }
         return "recent_transaction_history_subtitle".localized
-    }
-    
-    var lastCheckedString: String? {
-        let date = Date(timeIntervalSince1970: membershipCard.formattedBalances?.first?.updatedAt?.doubleValue ?? 0)
-        guard let dateString = date.timeAgoString() else { return nil }
-        return String(format: "last_checked".localized, dateString)
     }
     
     init(membershipCard: CD_MembershipCard, router: MainScreenRouter) {

@@ -12,6 +12,7 @@
 
 "linked_status_image_name" = "linked";
 "unlinked_status_image_name" = "unlinked";
+"form_field_validation_error" = "Incorrect Format";
 
 "barcode_swipe_title" = "Barcode";
 "delete_swipe_title" = "Delete";
@@ -23,6 +24,9 @@
 "history_title" = "History";
 "not_available_title" = "Not available";
 "pending_title" = "Pending";
+"register_ghost_card_title" = "Register your card";
+"register_ghost_card_description" = "Fill out the form below to get a new %@ card, and start earning points";
+"register_card_title" = "Register card";
 "retry_title" = "Retry";
 
 "add_loyalty_card_title" = "Add loyalty card";
@@ -72,7 +76,7 @@
 "pll_screen_add_title" = "Add card";
 "pll_screen_link_title" = "Link to payment cards";
 "pll_screen_link_message" = "You have not added any payment cards yet.";
-"pll_screen_add_message" = "The payment cards below will be linked to this loyalty card. Simply pay with them to collect points.";
+"pll_screen_add_message" = "The payment cards below will be linked to your %@. Simply pay with them to collect points.";
 "pll_screen_card_ending" = "Card ending in ";
 "pll_screen_add_cards_button_title" = "Add payment cards";
 "pll_screen_secondary_message" = "Add them to link this card and others.";
@@ -83,6 +87,8 @@
 "ok" = "OK";
 "accept" = "Accept";
 "decline" = "Decline";
+"i_accept" = "I accept";
+"i_decline" = "I decline";
 "login" = "Log in";
 
 "no_account_button_title" = "I don't have an account";
@@ -107,11 +113,13 @@
 "delete_card_plan_title" = "Delete %@";
 "delete_card_message" = "Remove this card from Bink";
 
+// MARK: - Transactions
+
+"transaction_history_unavailable_title" = "Points history";
+"transaction_history_unavailable_description" = "No transactions to display since adding your card to Bink.\nIn some cases transactions take longer to update";
 "transaction_history_not_supported_title" = "Transaction history not supported";
 "transaction_history_not_supported_description" = "Unfortunately we're not able to show your points balance and transaction history for this brand just yet.";
-"transaction_history_unavailable_title" = "Transaction history unavailable";
-"transaction_history_unavailable_description" = "Your %@ history is not available yet.";
-"last_checked" = "Last Checked %@ ago.";
+
 "day" = "day";
 "days" = "days";
 "hour" = "hour";
@@ -137,6 +145,9 @@
 
 "debug_menu_tools_section_title" = "Tools";
 
+//MARK: - Bink module view
+"generic_pending_module_title" = "Request pending";
+"generic_pending_module_description" = "Please wait while we work with the merchant to set up your card. This shouldn’t take long.";
 "points_module_view_history_message" = "View history";
 "points_module_last_checked" = "Last checked";
 "points_module_to_see_history" = "To see history";
@@ -150,10 +161,11 @@
 "link_module_to_number_of_payment_cards_message" = "To %d of %d cards";
 
 "terms_and_conditions_title" = "Terms and conditions";
+"terms_and_conditions_description" = "I authorise MasterCard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction for MasterCard, Visa and American Express to share such transaction details with Loyalty Angels Limited to enable my card-linked offer(s) and target offers that may be of interest to me. For information about Loyalty Angels Limited privacy practices, please see our Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.";
+"privacy_policy" = "Privacy Policy";
 
 "native_join_unavailable_title" = "Native join unavailable";
 "native_join_unavailable_description" = "You can go to the merchant website to join then come back and add your card. Or we can email you the link so you can sign up on your computer. Copy needed.";
-"ghost_card_sign_up_unavailable_title" = "Sign up currently unavailable";
 "ghost_native_join_unavailable_description" = "Go to merchant website and join and then come back and add your card.";
 "to_merchant_site_button" = "Go to merchant site";
 
@@ -190,6 +202,12 @@
 "settings_row_privacypolicy_title" = "Privacy policy";
 "settings_row_termsandconditions_title" = "Terms and conditions";
 
+// MARK: - Support mail
+
+"support_mail_subject" = "Bink App Support";
+"support_mail_body" = "\n\n\n\nThe below information will help you, please don’t change it.\nBink ID: %@\nVersion: %@\niOS Version: %@";
+"support_mail_app_version" = "%@ build %@";
+
 "pll_error_title" = "Error";
 "pll_error_message" = "Unfortunately some of your cards failed to link, please try again later.";
 
@@ -205,6 +223,8 @@
 "onboarding_slide2_body" = "Store all your loyalty cards in a single digital wallet. View your rewards and points balances any time, anywhere.";
 "onboarding_slide3_header" = "Never miss out";
 "onboarding_slide3_body" = "Show your loyalty cards’ barcodes on screen, or collect points instantly when you pay. Whichever way, you’re always covered.";
+"facebook_error" = "Facebook is currently unavailable.";
+"facebook_cancelled" = "Facebook login was cancelled.";
 
 // MARK: - PCD
 
@@ -216,3 +236,45 @@
 "pcd_other_card_description_no_cards_added" = "You do not have any linked loyalty cards. Add some cards to collect points.";
 "pcd_you_can_link" = "You can link this card";
 "pcd_add_card_button_title" = "Add card";
+
+// MARK: - Login, Register, Social T&Cs
+
+"continue_button_title" = "Continue";
+
+"add_email_title" = "Add email";
+"add_email_subtitle" = "Please add your email address below.";
+"social_tandcs_title" = "Terms and conditions";
+"social_tandcs_subtitle" = "One last step...";
+"social_tandcs_error" = "Continue with Facebook failed.";
+
+"preferences_prompt" = "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.";
+"preferences_prompt_highlight_rewards" = "rewards";
+"preferences_prompt_highlight_offers" = "offers";
+"preferences_prompt_highlight_updates" = "updates";
+
+"register_title" = "Sign up with email";
+"register_subtitle" = "All it takes is an email and password.";
+"register_failed" = "Registration failed.";
+
+"login_title" = "Log in with email";
+"login_subtitle" = "Welcome back!";
+"login_forgot_password" = "Forgot Password";
+"login_error" =  "Incorrect email/password. Please try again.";
+
+"tandcs_title" = "I accept Bink's Terms and Conditions";
+"tandcs_link" = "Terms and Conditions";
+"ppolicy_title" = "I accept Bink's Privacy Policy";
+"ppolicy_link" = "Privacy Policy";
+"marketing_title" = "I opt in to receive marketing messages";
+
+"access_form_email_title" = "Email";
+"access_form_email_placeholder" = "Enter email address";
+"access_form_email_validation" = "Incorrect email format";
+
+"access_form_password_title" = "Password";
+"access_form_password_placeholder" = "Enter password";
+"access_form_password_validation" = "Must contain at least 8 characters, including 1 uppercase, 1 lowercase and a number";
+
+"access_form_confirm_password_title" = "Confirm password";
+"access_form_confirm_password_placeholder" = "Confirm password";
+"access_form_confirm_password_validation" = "Passwords do not match";

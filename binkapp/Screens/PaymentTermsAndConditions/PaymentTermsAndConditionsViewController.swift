@@ -12,7 +12,9 @@ protocol PaymentTermsAndConditionsViewControllerDelegate: AnyObject {
     func paymentTermsAndConditionsViewControllerDidAccept(_ viewController: PaymentTermsAndConditionsViewController)
 }
 
-class PaymentTermsAndConditionsViewController: UIViewController {
+class PaymentTermsAndConditionsViewController: UIViewController, BarBlurring {
+    lazy var blurBackground = defaultBlurredBackground()
+    
     @IBOutlet private weak var floatingButtonsContainer: BinkPrimarySecondaryButtonView!
     @IBOutlet private weak var textView: UITextView!
 
@@ -38,7 +40,12 @@ class PaymentTermsAndConditionsViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         textView.setContentOffset(.zero, animated: false)
+        
+        guard let bar = navigationController?.navigationBar else { return }
+        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
     
     private func configureUI() {
