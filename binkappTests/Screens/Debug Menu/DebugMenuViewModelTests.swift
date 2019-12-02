@@ -52,8 +52,8 @@ class DebugMenuViewModelTests: XCTestCase {
         let factory = DebugMenuFactory()
         let sut = DebugMenuViewModel(debugMenuFactory: factory)
 
-        let versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        let versionNumber = Bundle.shortVersionNumber
+        let buildNumber = Bundle.bundleVersion
 
         let versionNumberRow = sut.row(atIndexPath: IndexPath(row: 0, section: 0))
         XCTAssertEqual(versionNumberRow.subtitle, "\(versionNumber ?? "") build \(buildNumber ?? "")")

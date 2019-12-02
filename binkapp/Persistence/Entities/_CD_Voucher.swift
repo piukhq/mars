@@ -56,7 +56,7 @@ open class _CD_Voucher: CD_BaseObject {
     var barcode: String?
 
     @NSManaged open
-    var barcodeType: String?
+    var barcodeType: NSNumber?
 
     @NSManaged open
     var code: String?

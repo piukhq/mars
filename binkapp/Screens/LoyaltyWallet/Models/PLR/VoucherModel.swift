@@ -14,7 +14,7 @@ struct VoucherModel: Codable {
     var state: VoucherState?
     var code: String?
     var barcode: String?
-    var barcodeType: String?
+    var barcodeType: Int?
     var headline: String?
     var subtext: String?
     var dateRedeemed: Int?
@@ -53,7 +53,7 @@ extension VoucherModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.state, with: state?.rawValue, delta: delta)
         update(cdObject, \.code, with: code, delta: delta)
         update(cdObject, \.barcode, with: barcode, delta: delta)
-        update(cdObject, \.barcodeType, with: barcodeType, delta: delta)
+        update(cdObject, \.barcodeType, with: NSNumber(value: barcodeType ?? 0), delta: delta)
         update(cdObject, \.headline, with: headline, delta: delta)
         update(cdObject, \.subtext, with: subtext, delta: delta)
         update(cdObject, \.dateRedeemed, with: NSNumber(value: dateRedeemed ?? 0), delta: delta)

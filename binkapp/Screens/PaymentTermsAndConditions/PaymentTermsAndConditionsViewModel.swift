@@ -11,11 +11,11 @@ import UIKit
 class PaymentTermsAndConditionsViewModel: ReusableModalViewModel {
     
     override var primaryButtonTitle: String? {
-        return "accept".localized
+        return "i_accept".localized
     }
     
     override var secondaryButtonTitle: String? {
-        return "decline".localized
+        return "i_decline".localized
     }
         
     override func mainButtonWasTapped(completion: (() -> Void)? = nil) {
