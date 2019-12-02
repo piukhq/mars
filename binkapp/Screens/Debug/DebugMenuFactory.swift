@@ -25,9 +25,9 @@ class DebugMenuFactory {
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
-        let versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        return DebugMenuRow(title: "Current version", subtitle: "\(versionNumber ?? "") build \(buildNumber ?? "")", action: nil)
+        let versionNumber = Bundle.shortVersionNumber ?? ""
+        let buildNumber = Bundle.bundleVersion ?? ""
+        return DebugMenuRow(title: "Current version", subtitle: String(format: "support_mail_app_version".localized, versionNumber, buildNumber), action: nil)
     }
 
     private func makeEmailAddressRow() -> DebugMenuRow {

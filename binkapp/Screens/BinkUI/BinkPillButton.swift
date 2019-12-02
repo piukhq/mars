@@ -57,12 +57,12 @@ class BinkPillButton: UIButton {
     }
 
     func startLoading() {
-        titleLabel?.alpha = 0.0
+        setTitleColor(.clear, for: .normal)
         activityIndicator.startAnimating()
     }
 
     func stopLoading() {
-        titleLabel?.alpha = 1.0
+        setTitleColor(.white, for: .normal)
         activityIndicator.stopAnimating()
     }
 

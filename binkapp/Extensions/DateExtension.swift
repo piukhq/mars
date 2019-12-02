@@ -63,4 +63,8 @@ extension Date {
             return true
         }
     }
+
+    var monthIsExpired: Bool {
+        return !self.isLaterThan(date: Date(), toGranularity: .month)
+    }
 }

@@ -79,9 +79,9 @@ class LoyaltyCardFullDetailsViewModel {
         case .transactions:
             router.toTransactionsViewController(membershipCard: membershipCard)
             break
-        case .loginPending:
-            let title = "log_in_pending_title".localized
-            let description = "log_in_pending_description".localized
+        case .pending:
+            let title = "generic_pending_module_title".localized
+            let description = "generic_pending_module_description".localized
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .loginUnavailable:
@@ -93,19 +93,9 @@ class LoyaltyCardFullDetailsViewModel {
             //TODO: change to sign up screen after is implemented
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
-        case .signUpPending:
-            let title = "sign_up_pending_title".localized
-            let description = "sign_up_pending_description".localized
-            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
-            break
         case .registerGhostCard:
             //TODO: change to sign up screen after is implemented
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
-            break
-        case .registerGhostCardPending:
-            let title = "sign_up_pending_title".localized
-            let description = "sign_up_pending_description".localized
-            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .pllEmpty:
             router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)

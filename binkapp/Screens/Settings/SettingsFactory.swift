@@ -28,7 +28,7 @@ struct SettingsFactory {
             ),
             SettingsRow(
                 title: "settings_row_logout_title".localized,
-                action: .notImplemented
+                action: .logout
             )
         ])
         

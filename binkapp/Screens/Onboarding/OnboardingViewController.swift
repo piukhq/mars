@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet private weak var facebookPillButton: BinkPillButton!
@@ -79,10 +80,21 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
+        viewModel.navigationController = navigationController
     }
 
     override func viewDidLayoutSubviews() {
@@ -144,7 +156,25 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     // MARK: Button handlers
 
     @objc private func handleFacebookButtonPressed() {
-        viewModel.notImplemented()
+        FacebookLoginController.login(with: self, onSuccess: { [weak self] facebookRequest in
+            // If we have no email address, push them onto the add email screen
+            guard facebookRequest.email != nil else {
+                self?.viewModel.pushToAddEmail(request: facebookRequest)
+                return
+            }
+            
+            self?.viewModel.pushToSocialTermsAndConditions(request: facebookRequest)
+        }) { [weak self] isCancelled in
+            self?.showError(isCancelled)
+        }
+    }
+    
+    func showError(_ isCancelled: Bool) {
+        let message = isCancelled ? viewModel.facebookLoginCancelledText : viewModel.facebookLoginErrorText
+        
+        let alert = UIAlertController(title: viewModel.facebookLoginErrorTitle, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: viewModel.facebookLoginOK, style: .default))
+        present(alert, animated: true)
     }
 
     // MARK: - Scroll view delegate & handlers
@@ -187,11 +217,11 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
 
 extension OnboardingViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        viewModel.notImplemented()
+        viewModel.pushToRegister()
     }
 
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        viewModel.login()
+        viewModel.pushToLogin()
     }
 }
 

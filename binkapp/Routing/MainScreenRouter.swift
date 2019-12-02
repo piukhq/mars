@@ -8,26 +8,34 @@
 import Foundation
 import UIKit
 
+protocol MainScreenRouterDelegate: NSObjectProtocol {
+    func router(_ router: MainScreenRouter, didLogin: Bool)
+}
+
 class MainScreenRouter {
     var navController: PortraitNavigationController?
+    weak var delegate: MainScreenRouterDelegate?
     let apiManager = ApiManager()
     
-    init() {
+    init(delegate: MainScreenRouterDelegate) {
+        self.delegate = delegate
         NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
     }
-
-    func launchWallets() {
+    
+    func wallet() -> UIViewController {
         let viewModel = MainTabBarViewModel(router: self)
         let viewController = MainTabBarViewController(viewModel: viewModel)
-        navController = PortraitNavigationController(rootViewController: viewController)
-        UIApplication.shared.keyWindow?.rootViewController = navController
+        let nav = PortraitNavigationController(rootViewController: viewController)
+        navController = nav
+        return nav
     }
 
     func getOnboardingViewController() -> UIViewController {
-        let viewModel = OnboardingViewModel(router: self, repository: LoginRepository())
-        return OnboardingViewController(viewModel: viewModel)
+        let viewModel = OnboardingViewModel(router: self)
+        let nav = PortraitNavigationController(rootViewController: OnboardingViewController(viewModel: viewModel))
+        return nav
     }
 
     func featureNotImplemented() {
@@ -151,25 +159,7 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPaymentTermsAndConditionsViewController(delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
-        let title = "terms_and_conditions_title".localized
-        let screenText = title + "\n" + "lorem_ipsum".localized
-        
-        let attributedText = NSMutableAttributedString(string: screenText)
-        
-        attributedText.addAttribute(
-            NSAttributedString.Key.font,
-            value: UIFont.headline,
-            range: NSRange(location: 0, length: title.count)
-        )
-        
-        attributedText.addAttribute(
-            NSAttributedString.Key.font,
-            value: UIFont.bodyTextLarge,
-            range: NSRange(location: title.count, length: ("lorem_ipsum".localized).count)
-        )
-        
-        let configurationModel = ReusableModalConfiguration(title: title, text: attributedText, primaryButtonTitle: "accept".localized, secondaryButtonTitle: "decline".localized, tabBarBackButton: nil)
+    func toPaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
         let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, delegate: delegate)
         let navigationController = PortraitNavigationController(rootViewController: viewController)
@@ -263,6 +253,10 @@ class MainScreenRouter {
         }
     }
     
+    func didLogin() {
+        delegate?.router(self, didLogin: true)
+    }
+    
     class func openExternalURL(with urlString: String) {
         guard let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -271,13 +265,36 @@ class MainScreenRouter {
     //MARK: - App in background
     
     @objc func appWillResignActive() {
+        guard let visibleVC = navController?.getVisibleViewController() else { return }
+        if visibleVC.presentedViewController?.isKind(of: UIAlertController.self) == true {
+            //Dismiss alert controller before presenting the Launch screen.
+            visibleVC.dismiss(animated: false, completion: nil)
+        }
+        
+        if visibleVC.isKind(of: BarcodeViewController.self),
+            let nc = visibleVC.presentedViewController as? UINavigationController,
+            let vc = nc.viewControllers.first as? BarcodeViewController,
+            vc.isBarcodeFullsize {
+            //Dismiss full screen barcode before presenting the Launch screen.
+            nc.dismiss(animated: false, completion: nil)
+        }
+        
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
-        navController?.present(vc, animated: false, completion: nil)
+        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal {
+            modalNavigationController.present(vc, animated: false, completion: nil)
+        } else {
+            navController?.present(vc, animated: false, completion: nil)
+        }
     }
     
     @objc func appDidBecomeActive() {
-        navController?.dismiss(animated: false, completion: nil)
+        let visibleVC = navController?.getVisibleViewController()
+        if let modalNavigationController = visibleVC?.navigationController {
+           modalNavigationController.dismiss(animated: false, completion: nil)
+        } else {
+            visibleVC?.dismiss(animated: false, completion: nil)
+        }
     }
 }
