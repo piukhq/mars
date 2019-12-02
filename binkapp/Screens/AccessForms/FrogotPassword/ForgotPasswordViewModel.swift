@@ -29,7 +29,9 @@ class ForgotPasswordViewModel {
     
     private func displaySimplePopup() {
         let alert = UIAlertController(title: "login_forgot_password".localized, message: "fogrot_password_popup_text".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
+            self.navigationController?.popToRootViewController(animated: true)
+        }))
         navigationController?.present(alert, animated: true, completion: nil)
     }
 }
