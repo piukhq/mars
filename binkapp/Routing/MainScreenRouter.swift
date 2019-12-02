@@ -186,7 +186,7 @@ class MainScreenRouter {
     
     func toForgotPasswordViewController(navigationController: UINavigationController?) {
         let repository = ForgotPasswordRepository(apiManager: apiManager)
-        let viewModel = ForgotPasswordViewModel(repository: repository, router: self)
+        let viewModel = ForgotPasswordViewModel(repository: repository)
         let viewController = ForgotPasswordViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
     }

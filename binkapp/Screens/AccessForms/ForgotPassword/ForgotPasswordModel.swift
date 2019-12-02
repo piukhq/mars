@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct ForgotPasswordModel: Codable {
+struct ForgotPasswordPostModel: Codable {
     var email: String?
 }

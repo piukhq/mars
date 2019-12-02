@@ -16,7 +16,7 @@ class ForgotPasswordRepository {
     }
     
     func continueButtonTapped(email: String, completion: @escaping () -> Void) {
-        let model = ForgotPasswordModel(email: email)
+        let model = ForgotPasswordPostModel(email: email)
         apiManager.doRequest(url: .forgotPassword, httpMethod: .post, parameters: model, onSuccess: { (response: EmptyResponse) in
             completion()
         }) { _ in

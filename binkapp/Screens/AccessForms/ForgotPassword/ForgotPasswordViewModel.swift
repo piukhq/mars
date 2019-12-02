@@ -11,18 +11,17 @@ import UIKit
 
 class ForgotPasswordViewModel {
     private let repository: ForgotPasswordRepository
-    private let router: MainScreenRouter
     
     var navigationController: UINavigationController?
-    var email: String = ""
+    var email: String?
     
-    init(repository: ForgotPasswordRepository, router: MainScreenRouter) {
+    init(repository: ForgotPasswordRepository) {
         self.repository = repository
-        self.router = router
     }
     
     func continueButtonTapped() {
-        repository.continueButtonTapped(email: email, completion: {
+        guard let safeEmail = email else { return }
+        repository.continueButtonTapped(email: safeEmail, completion: {
             self.displaySimplePopup()
         })
     }

@@ -92,7 +92,6 @@ class LoginViewController: BaseFormViewController {
     }
     
     @objc func forgotPasswordTapped() {
-        //TODO:
         router.toForgotPasswordViewController(navigationController: navigationController)
     }
     
