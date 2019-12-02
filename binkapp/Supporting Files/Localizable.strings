@@ -260,7 +260,7 @@
 "login_subtitle" = "Welcome back!";
 "login_error" =  "Incorrect email/password. Please try again.";
 "login_forgot_password" = "Forgot Password";
-"forgot_password_description" = "Please enter your email address and it is associated with a Bink account, then a password reset email will be sent";
+"forgot_password_description" = "Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent";
 "fogrot_password_popup_text" = "If the email address you entered is associated with a Bink account, then a password reset email will be sent.";
 
 "tandcs_title" = "I accept Bink's Terms and Conditions";
