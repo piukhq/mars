@@ -132,6 +132,7 @@ class AuthAndAddViewModel {
             }
             }, onError: { [weak self] error in
                 self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
+                completion()
         })
     }
     
