@@ -3,109 +3,109 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "Bink App Icon 20pt~@2x-1.png",
+      "filename" : "icon - 40.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "Bink App Icon 20pt~@3x.png",
+      "filename" : "icon - 60.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "Bink App Icon 29pt~@2x-1.png",
+      "filename" : "icon - 29.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "icon - 58.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "Bink App Icon 29pt~@3x.png",
+      "filename" : "icon - 87.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "Bink App Icon 40pt~@2x-1.png",
+      "filename" : "icon - 80.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "Bink App Icon 40pt~@3x.png",
+      "filename" : "icon - 120.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Bink App Icon 60pt~@2x.png",
+      "filename" : "icon - 120-1.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Bink App Icon 60pt~@3x.png",
+      "filename" : "icon - 180.png",
       "scale" : "3x"
     },
     {
-      "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "Bink App Icon 20pt~@1x.png",
+      "size" : "20x20",
       "scale" : "1x"
     },
     {
-      "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "Bink App Icon 20pt~@2x.png",
+      "size" : "20x20",
       "scale" : "2x"
     },
     {
-      "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "Bink App Icon 29pt~@1x.png",
+      "size" : "29x29",
       "scale" : "1x"
     },
     {
-      "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "Bink App Icon 29pt~@2x.png",
+      "size" : "29x29",
       "scale" : "2x"
     },
     {
-      "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "Bink App Icon 40pt~@1x.png",
+      "size" : "40x40",
       "scale" : "1x"
     },
     {
-      "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "Bink App Icon 40pt~@2x.png",
+      "size" : "40x40",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "Bink App Icon 76pt~@1x.png",
+      "filename" : "icon - 76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "Bink App Icon 76pt~@2x.png",
+      "filename" : "icon - 152.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "Bink App Icon 83.5pt~@2x.png",
+      "filename" : "icon - 167.png",
       "scale" : "2x"
     },
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "Bink App Icon 1024pt~@1x.png",
+      "filename" : "icon - 1024.png",
       "scale" : "1x"
     }
   ],

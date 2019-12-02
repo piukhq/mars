@@ -142,8 +142,10 @@ extension SettingsViewController: UITableViewDelegate {
             case let .customAction(action):
                 action()
                 break
-                //TODO: Add sendEmail call with correct content.
-            case .notImplemented, .contactUsAction:
+            case .contactUsAction:
+                sendEmail()
+                break
+            case .notImplemented:
                 UIAlertController.presentFeatureNotImplementedAlert(on: self)
                 break
             case let .pushToViewController(viewController: viewControllerType):
@@ -172,6 +174,15 @@ extension SettingsViewController: UITableViewDelegate {
                     toHowItWorksVC()
                     break
                 }
+            case .logout:
+                let alert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+                alert.addAction(
+                    UIAlertAction(title: "Log out", style: .default, handler: { _ in
+                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                    })
+                )
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                present(alert, animated: true)
             }
         }
     }
@@ -182,10 +193,17 @@ extension SettingsViewController: UITableViewDelegate {
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
     private func sendEmail() {
         if MFMailComposeViewController.canSendMail() {
+            let binkId = Current.userManager.currentEmailAddress ?? ""
+            let shortVersionNumber = Bundle.shortVersionNumber ?? ""
+            let buildNumber = Bundle.bundleVersion ?? ""
+            let appVersion = String(format: "support_mail_app_version".localized, shortVersionNumber, buildNumber)
+            let osVersion = UIDevice.current.systemVersion
+            let mailBody = String.init(format: "support_mail_body".localized, binkId, appVersion, osVersion)
             let mailViewController = MFMailComposeViewController()
             mailViewController.mailComposeDelegate = self
             mailViewController.setToRecipients([Constants.supportEmail])
-            mailViewController.setMessageBody("lorem_ipsum".localized, isHTML: false)
+            mailViewController.setSubject("support_mail_subject".localized)
+            mailViewController.setMessageBody(mailBody, isHTML: false)
             
             present(mailViewController, animated: true)
         } else {

@@ -1,0 +1,12 @@
+//
+//  Production.xcconfig
+//  binkapp
+//
+//  Created by Max Woodhams on 03/11/2019.
+//  Copyright © 2019 Bink. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+API_BASE_URL = api.bink.com
