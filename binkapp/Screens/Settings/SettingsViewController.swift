@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, BarBlurring {
     
     // MARK: - Helpers
     
@@ -35,6 +35,8 @@ class SettingsViewController: UIViewController {
         view.addSubview(tableView)
         return tableView
     }()
+
+    internal lazy var blurBackground = defaultBlurredBackground()
     
     // MARK: - View Lifecycle
     
@@ -53,6 +55,15 @@ class SettingsViewController: UIViewController {
         title = viewModel.title
         let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(close))
         navigationItem.rightBarButtonItem = closeButton
+    }
+
+    // MARK: - Navigation Bar Blurring
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard let bar = navigationController?.navigationBar else { return }
+        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
     
     private func configureLayout() {
