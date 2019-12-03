@@ -119,6 +119,7 @@
                 <outlet property="outerProgressBar" destination="gb2-na-7DD" id="HRO-Pz-VUc"/>
                 <outlet property="timeDateLabel" destination="SWO-AP-Uwy" id="jV5-SF-MWM"/>
                 <outlet property="voucherAmountLabel" destination="3Pk-GO-8t9" id="owa-qb-aao"/>
+                <outlet property="voucherDescriptionLabel" destination="XdF-rL-zBJ" id="Pup-oh-DT7"/>
             </connections>
             <point key="canvasLocation" x="-21.739130434782609" y="147.99107142857142"/>
         </collectionViewCell>
