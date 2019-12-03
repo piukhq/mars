@@ -67,7 +67,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         }
 
         if let status = status {
-            let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: id))
+            let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
             update(cdStatus, \.card, with: cdObject, delta: delta)
             update(cdObject, \.status, with: cdStatus, delta: delta)
         } else {
@@ -75,7 +75,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         }
 
         if let card = card {
-            let cdCard = card.mapToCoreData(context, .update, overrideID: CardModel.overrideId(forParentId: id))
+            let cdCard = card.mapToCoreData(context, .update, overrideID: CardModel.overrideId(forParentId: overrideID ?? id))
             update(cdCard, \.membershipCard, with: cdObject, delta: delta)
             update(cdObject, \.card, with: cdCard, delta: delta)
         } else {
@@ -95,7 +95,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         }
 
         if let account = account {
-            let cdAccount = account.mapToCoreData(context, .update, overrideID: MembershipCardAccountModel.overrideId(forParentId: id))
+            let cdAccount = account.mapToCoreData(context, .update, overrideID: MembershipCardAccountModel.overrideId(forParentId: overrideID ?? id))
             update(cdAccount, \.card, with: cdObject, delta: delta)
             update(cdObject, \.account, with: cdAccount, delta: delta)
         } else {

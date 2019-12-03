@@ -54,7 +54,7 @@ struct MembershipPlanAccountModel: Codable {
 
 extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipPlanAccount, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlanAccount {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.planName, with: planName, delta: delta)
         update(cdObject, \.planNameCard, with: planNameCard, delta: delta)
         update(cdObject, \.planURL, with: planURL, delta: delta)
