@@ -104,7 +104,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
          
          checkboxes.forEach {
              if let columnName = $0.columnName {
-                 params[columnName] = $0.getValue()
+                 params[columnName] = $0.value
              }
          }
          

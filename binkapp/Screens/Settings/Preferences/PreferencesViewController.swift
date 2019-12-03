@@ -9,10 +9,10 @@
 import UIKit
 
 class PreferencesViewController: UIViewController {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var errorLabel: UILabel!
     
     private let viewModel: PreferencesViewModel
     private var checkboxes: [CheckboxView] = []
@@ -45,12 +45,18 @@ class PreferencesViewController: UIViewController {
         errorLabel.font = UIFont.bodyTextSmall
         errorLabel.textColor = .red
         
-        let attributedString = NSMutableAttributedString(string: "preferences_screen_description".localized, attributes: [
-            .font: UIFont.bodyTextLarge
-        ])
-        attributedString.addAttribute(.font, value: UIFont.subtitle, range: NSRange(location: 51, length: 7))
-        attributedString.addAttribute(.font, value: UIFont.subtitle, range: NSRange(location: 60, length: 6))
-        attributedString.addAttribute(.font, value: UIFont.subtitle, range: NSRange(location: 71, length: 7))
+        let attributedString = NSMutableAttributedString(string: "preferences_screen_description".localized, attributes: [.font : UIFont.bodyTextLarge])
+        let base: NSString = NSString(string: attributedString.string)
+        let rewardsRange = base.range(of: "preferences_prompt_highlight_rewards".localized)
+        let offersRange = base.range(of: "preferences_prompt_highlight_offers".localized)
+        let updatesRange = base.range(of: "preferences_prompt_highlight_updates".localized)
+        
+        let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont.subtitle]
+        
+        attributedString.addAttributes(attributes, range: rewardsRange)
+        attributedString.addAttributes(attributes, range: offersRange)
+        attributedString.addAttributes(attributes, range: updatesRange)
+        
         descriptionLabel.attributedText = attributedString
         
         viewModel.getPreferences(onSuccess: { [weak self] (preferences) in

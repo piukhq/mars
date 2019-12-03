@@ -46,7 +46,7 @@ class CheckboxView: CustomView {
         checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
     }
     
-    func getValue() -> String {
+    var value: String {
         return checkboxView.checkState == .checked ? "1" : "0"
     }
     
