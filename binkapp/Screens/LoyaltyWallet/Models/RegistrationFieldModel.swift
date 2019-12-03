@@ -28,7 +28,7 @@ struct RegistrationFieldModel: Codable {
 
 extension RegistrationFieldModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_RegistrationField, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_RegistrationField {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.column, with: column, delta: delta)
         update(cdObject, \.validation, with: validation, delta: delta)
         update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)
