@@ -10,8 +10,8 @@ import UIKit
 
 class PLRBaseCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var voucherAmountLabel: UILabel!
+    @IBOutlet weak var voucherDescriptionLabel: UILabel!
     @IBOutlet weak var headlineLabel: UILabel!
 
     override var bounds: CGRect {
@@ -23,7 +23,6 @@ class PLRBaseCollectionViewCell: UICollectionViewCell {
     func configureWithViewModel(_ viewModel: PLRCellViewModel) {
         setupShadow()
 
-        infoButton.layer.cornerRadius = LayoutHelper.PLRCollectionViewCell.infoButtonCornerRadius
         voucherAmountLabel.text = viewModel.voucherAmountText
         headlineLabel.text = viewModel.headlineText
     }
