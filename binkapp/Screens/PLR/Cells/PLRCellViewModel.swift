@@ -23,6 +23,10 @@ class PLRCellViewModel {
         return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
     }
 
+    var voucherDescriptionText: String? {
+        return "for spending \(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)"
+    }
+
     var headlineText: String? {
         return voucher.headline
     }

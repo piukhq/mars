@@ -24,7 +24,7 @@ class PLRBaseCollectionViewCell: UICollectionViewCell {
         setupShadow()
 
         voucherAmountLabel.text = viewModel.voucherAmountText
-        voucherDescriptionLabel.text = "for spending x"
+        voucherDescriptionLabel.text = viewModel.voucherDescriptionText
         headlineLabel.text = viewModel.headlineText
     }
 
