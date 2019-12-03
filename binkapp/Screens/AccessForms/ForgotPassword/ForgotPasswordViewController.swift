@@ -11,7 +11,7 @@ import UIKit
 class ForgotPasswordViewController: BaseFormViewController {
     private let viewModel: ForgotPasswordViewModel
     
-    private lazy var continueButton: BinkGradientButton = {
+    private lazy var continueButton: BinkPillButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("continue_button_title".localized, for: .normal)
@@ -52,7 +52,10 @@ class ForgotPasswordViewController: BaseFormViewController {
     }
     
     @objc func continueButtonTapped() {
-        viewModel.continueButtonTapped()
+        continueButton.startLoading()
+        viewModel.continueButtonTapped(completion: {
+            self.continueButton.stopLoading()
+        })
     }
 }
 

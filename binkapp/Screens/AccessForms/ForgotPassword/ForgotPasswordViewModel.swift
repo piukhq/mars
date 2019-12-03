@@ -19,7 +19,7 @@ class ForgotPasswordViewModel {
         self.repository = repository
     }
     
-    func continueButtonTapped() {
+    func continueButtonTapped(completion: @escaping () -> Void) {
         guard let safeEmail = email else { return }
         repository.continueButtonTapped(email: safeEmail, completion: {
             self.displaySimplePopup()
