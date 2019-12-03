@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SafariServices
 import UIKit
 
 protocol MainScreenRouterDelegate: NSObjectProtocol {
@@ -281,7 +282,7 @@ class MainScreenRouter {
         let visibleVC = navController?.getVisibleViewController()
         if let modalNavigationController = visibleVC?.navigationController {
            modalNavigationController.dismiss(animated: false, completion: nil)
-        } else {
+        } else if visibleVC?.isKind(of: SFSafariViewController.self) == false {
             visibleVC?.dismiss(animated: false, completion: nil)
         }
     }

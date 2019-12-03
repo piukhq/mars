@@ -110,7 +110,7 @@ extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
         guard (fields?.contains(where: { $0.value == LinkingSupportType.registration.rawValue }) ?? false) else {
-            viewModel.toReusableTemplate(title:"native_join_unavailable_title".localized, description: "ghost_native_join_unavailable_description".localized)
+            viewModel.toReusableTemplate(title: "registration_unavailable_title".localized, description: "registration_unavailable_description".localized)
             return
         }
         viewModel.reloadWith(newFormPuropse: .ghostCard)
