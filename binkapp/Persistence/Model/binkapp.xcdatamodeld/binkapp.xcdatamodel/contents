@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="18F203" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="18F203" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CD_AddField" representedClassName="CD_AddField" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="column" optional="YES" attributeType="String"/>
         <attribute name="fieldDescription" optional="YES" attributeType="String"/>
@@ -113,6 +113,7 @@
         <relationship name="reasonCodes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_ReasonCode" inverseName="status" inverseEntity="CD_ReasonCode"/>
     </entity>
     <entity name="CD_MembershipPlan" representedClassName="CD_MembershipPlan" parentEntity="CD_BaseObject" syncable="YES">
+        <attribute name="hasVouchers" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
         <attribute name="status" optional="YES" attributeType="String"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="plan" inverseEntity="CD_MembershipPlanAccount"/>
         <relationship name="balances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Balance" inverseName="plan" inverseEntity="CD_Balance"/>
@@ -258,7 +259,7 @@
         <element name="CD_MembershipCardBalance" positionX="-16.28515625" positionY="-84.171875" width="128" height="133"/>
         <element name="CD_MembershipCardImage" positionX="0" positionY="72" width="128" height="133"/>
         <element name="CD_MembershipCardStatus" positionX="9" positionY="99" width="128" height="88"/>
-        <element name="CD_MembershipPlan" positionX="36" positionY="171" width="128" height="133"/>
+        <element name="CD_MembershipPlan" positionX="36" positionY="171" width="128" height="148"/>
         <element name="CD_MembershipPlanAccount" positionX="0" positionY="126" width="128" height="328"/>
         <element name="CD_MembershipPlanImage" positionX="-9" positionY="135" width="128" height="118"/>
         <element name="CD_MembershipTransaction" positionX="-432.36328125" positionY="41.8515625" width="128" height="118"/>

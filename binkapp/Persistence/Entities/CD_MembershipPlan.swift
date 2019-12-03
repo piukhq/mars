@@ -17,6 +17,6 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
     }
 
     var isPLR: Bool {
-        return account?.companyName?.lowercased() == "fatface"
+        return hasVouchers?.boolValue ?? false
     }
 }

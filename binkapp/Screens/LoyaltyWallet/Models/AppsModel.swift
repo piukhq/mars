@@ -24,7 +24,7 @@ struct AppsModel: Codable {
 
 extension AppsModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_App, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_App {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.appId, with: appId, delta: delta)
         update(cdObject, \.appStoreUrl, with: appStoreUrl, delta: delta)
         update(cdObject, \.appType, with: NSNumber(value: appType ?? 0), delta: delta)
