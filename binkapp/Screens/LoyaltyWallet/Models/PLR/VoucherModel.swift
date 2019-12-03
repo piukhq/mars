@@ -61,7 +61,7 @@ extension VoucherModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.expiryDate, with: NSNumber(value: expiryDate ?? 0), delta: delta)
 
         if let earn = earn {
-            let cdEarn = earn.mapToCoreData(context, .update, overrideID: VoucherEarnModel.overrideId(forParentId: id))
+            let cdEarn = earn.mapToCoreData(context, .update, overrideID: VoucherEarnModel.overrideId(forParentId: overrideID ?? id))
             update(cdEarn, \.voucher, with: cdObject, delta: delta)
             update(cdObject, \.earn, with: cdEarn, delta: delta)
         } else {
@@ -69,7 +69,7 @@ extension VoucherModel: CoreDataMappable, CoreDataIDMappable {
         }
 
         if let burn = burn {
-            let cdBurn = burn.mapToCoreData(context, .update, overrideID: VoucherBurnModel.overrideId(forParentId: id))
+            let cdBurn = burn.mapToCoreData(context, .update, overrideID: VoucherBurnModel.overrideId(forParentId: overrideID ?? id))
             update(cdBurn, \.voucher, with: cdObject, delta: delta)
             update(cdObject, \.burn, with: cdBurn, delta: delta)
         } else {
