@@ -28,7 +28,7 @@ extension MembershipTransaction: CoreDataMappable, CoreDataIDMappable {
         
         if let amounts = amounts {
             for (index, amount) in amounts.enumerated() {
-                let indexID = MembershipCardModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let indexID = MembershipCardAmount.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdAmount = amount.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdAmount, \.transaction, with: cdObject, delta: delta)
                 cdObject.addAmountsObject(cdAmount)
