@@ -16,6 +16,7 @@ enum RequestURL {
     case logout
     case renew
     case preferences
+    case forgotPassword
     case membershipPlans
     case membershipCards
     case membershipCard(cardId: String)
@@ -37,6 +38,8 @@ enum RequestURL {
             return "/users/renew_token"
         case .preferences:
             return "/users/me/settings"
+        case .forgotPassword:
+            return "/users/forgotten_password"
         case .membershipPlans:
             return "/ubiquity/membership_plans"
         case .membershipCards:

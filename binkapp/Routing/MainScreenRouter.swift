@@ -185,6 +185,13 @@ class MainScreenRouter {
         toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
+    func toForgotPasswordViewController(navigationController: UINavigationController?) {
+        let repository = ForgotPasswordRepository(apiManager: apiManager)
+        let viewModel = ForgotPasswordViewModel(repository: repository)
+        let viewController = ForgotPasswordViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
