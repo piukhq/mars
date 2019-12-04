@@ -69,7 +69,7 @@
 "add_my_card_button" = "Add my card";
 "get_new_card_button" = "Get a new card";
 
-"auth_screen_description" = "Please enter your %@ details below to add this card to your wallet.";
+"auth_screen_description" = "You can log in to your %@ account to view your %@ details";
 
 "pll_title" = "PLL";
 "popular_title" = "Popular";

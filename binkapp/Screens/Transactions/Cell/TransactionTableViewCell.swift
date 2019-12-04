@@ -21,10 +21,13 @@ class TransactionTableViewCell: UITableViewCell {
     func configure(transaction: CD_MembershipTransaction) {
         let transactionValue = transaction.formattedAmounts?.first?.value?.intValue ?? 0
         let timestamp = transaction.timestamp?.doubleValue ?? 0.0
-        
         let timestampDate = Date(timeIntervalSince1970: timestamp)
-        descriptionLabel.text = timestampDate.getFormattedString(format: DateFormat.dayMonthYear.rawValue)
-
+        if let transactionDescription = transaction.transactionDescription {
+            descriptionLabel.text = timestampDate.getFormattedString(format: DateFormat.dayMonthYear.rawValue) + ", " + transactionDescription
+        } else {
+            descriptionLabel.text = timestampDate.getFormattedString(format: DateFormat.dayMonthYear.rawValue)
+        }
+        
         guard let prefix = transaction.formattedAmounts?.first?.prefix else {
             let suffix = transaction.formattedAmounts?.first?.suffix != "" ? transaction.formattedAmounts?.first?.currency : nil
             setValueLabel(text: "%d \(suffix ?? "")", transactionValue: transactionValue)
