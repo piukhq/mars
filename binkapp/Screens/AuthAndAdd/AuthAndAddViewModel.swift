@@ -71,8 +71,8 @@ class AuthAndAddViewModel {
     func getDescription() -> String? {
         switch formPurpose {
         case .login:
-            guard let planName = membershipPlan.account?.planName else { return nil }
-            return String(format: "auth_screen_description".localized, planName)
+            guard let planName = membershipPlan.account?.planName, let companyName = membershipPlan.account?.companyName else { return nil }
+            return String(format: "auth_screen_description".localized, companyName, planName)
         case .loginFailed:
             return getDescriptionForOtherLogin()
         case .signUp:
