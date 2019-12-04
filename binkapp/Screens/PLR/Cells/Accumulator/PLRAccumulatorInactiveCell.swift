@@ -9,7 +9,7 @@
 import UIKit
 
 class PLRAccumulatorInactiveCell: PLRAccumulatorCell {
-    @IBOutlet weak var timeDateLabel: UILabel!
+    @IBOutlet private weak var timeDateLabel: UILabel!
 
     override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
         super.configureWithViewModel(viewModel)

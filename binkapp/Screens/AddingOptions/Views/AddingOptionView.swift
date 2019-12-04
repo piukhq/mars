@@ -30,9 +30,7 @@ class AddingOptionView: CustomView {
         view.layer.cornerRadius = 10
         clipsToBounds = true
         
-        layer.shadowOffset = CGSize(width: 10, height: 10)
-        layer.shadowRadius = 15
-        layer.shadowOpacity = 0.1
+        layer.applyDefaultBinkShadow()
         layer.masksToBounds = false
     }
     

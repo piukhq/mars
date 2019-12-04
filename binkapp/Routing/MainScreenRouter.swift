@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SafariServices
 import UIKit
 
 protocol MainScreenRouterDelegate: NSObjectProtocol {
@@ -196,6 +197,13 @@ class MainScreenRouter {
         toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
     
+    func toForgotPasswordViewController(navigationController: UINavigationController?) {
+        let repository = ForgotPasswordRepository(apiManager: apiManager)
+        let viewModel = ForgotPasswordViewModel(repository: repository)
+        let viewController = ForgotPasswordViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
         let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
@@ -293,7 +301,7 @@ class MainScreenRouter {
         let visibleVC = navController?.getVisibleViewController()
         if let modalNavigationController = visibleVC?.navigationController {
            modalNavigationController.dismiss(animated: false, completion: nil)
-        } else {
+        } else if visibleVC?.isKind(of: SFSafariViewController.self) == false {
             visibleVC?.dismiss(animated: false, completion: nil)
         }
     }
