@@ -33,7 +33,7 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.status, with: status, delta: delta)
 
         if let card = card {
-            let cdCard = card.mapToCoreData(context, .update, overrideID: PaymentCardCardResponse.overrideId(forParentId: id))
+            let cdCard = card.mapToCoreData(context, .update, overrideID: PaymentCardCardResponse.overrideId(forParentId: overrideID ?? id))
             update(cdCard, \.paymentCard, with: cdObject, delta: delta)
             update(cdObject, \.card, with: cdCard, delta: delta)
         } else {
@@ -41,7 +41,7 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
         }
 
         if let account = account {
-            let cdAccount = account.mapToCoreData(context, .update, overrideID: PaymentCardAccountResponse.overrideId(forParentId: id))
+            let cdAccount = account.mapToCoreData(context, .update, overrideID: PaymentCardAccountResponse.overrideId(forParentId: overrideID ?? id))
             update(cdAccount, \.paymentCard, with: cdObject, delta: delta)
             update(cdObject, \.account, with: cdAccount, delta: delta)
         } else {

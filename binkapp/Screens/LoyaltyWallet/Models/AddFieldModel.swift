@@ -28,7 +28,7 @@ struct AddFieldModel: Codable {
 
 extension AddFieldModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_AddField, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_AddField {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.column, with: column, delta: delta)
         update(cdObject, \.validation, with: validation, delta: delta)
         update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)
