@@ -25,7 +25,7 @@
 "not_available_title" = "Not available";
 "pending_title" = "Pending";
 "register_ghost_card_title" = "Register your card";
-"register_ghost_card_description" = "Fill out the form below to get a new %@ card, and start earning points";
+"register_ghost_card_description" = "Fill out the form below to get a new %@ and start collecting rewards";
 "registration_unavailable_title" = "Registration unavailable";
 "registration_unavailable_description" = "Please go to the merchant’s website to join this scheme. You can then come back and add your card.";
 "register_card_title" = "Register card";
