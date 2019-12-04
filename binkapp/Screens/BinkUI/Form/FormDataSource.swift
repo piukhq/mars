@@ -52,7 +52,9 @@ class FormDataSource: NSObject {
         var checkboxesValid = true
         checkboxes.forEach { checkbox in
             if checkbox.columnKind == FormField.ColumnKind.planDocument {
-                checkboxesValid = checkbox.isValid
+                if !checkbox.isValid {
+                    checkboxesValid = false
+                }
             }
         }
         
