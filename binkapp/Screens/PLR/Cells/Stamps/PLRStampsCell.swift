@@ -11,13 +11,5 @@ import UIKit
 class PLRStampsCell: PLRBaseCollectionViewCell {
     override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
         super.configureWithViewModel(viewModel)
-        setupUI()
-
-        
-    }
-
-    private func setupUI() {
-
     }
 }
-

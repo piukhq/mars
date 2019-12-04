@@ -9,10 +9,10 @@
 import UIKit
 
 class PLRAccumulatorActiveCell: PLRAccumulatorCell {
-    @IBOutlet weak var earnProgressLabel: UILabel!
-    @IBOutlet weak var earnTargetLabel: UILabel!
-    @IBOutlet weak var earnProgressValueLabel: UILabel!
-    @IBOutlet weak var earnTargetValueLabel: UILabel!
+    @IBOutlet private weak var earnProgressLabel: UILabel!
+    @IBOutlet private weak var earnTargetLabel: UILabel!
+    @IBOutlet private weak var earnProgressValueLabel: UILabel!
+    @IBOutlet private weak var earnTargetValueLabel: UILabel!
 
     override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
         super.configureWithViewModel(viewModel)

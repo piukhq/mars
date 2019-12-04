@@ -9,9 +9,9 @@
 import UIKit
 
 class PLRAccumulatorCell: PLRBaseCollectionViewCell {
-    @IBOutlet weak var innerProgressBar: UIView!
-    @IBOutlet weak var outerProgressBar: UIView!
-    @IBOutlet weak var innerProgressBarWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var innerProgressBar: UIView!
+    @IBOutlet private weak var outerProgressBar: UIView!
+    @IBOutlet private weak var innerProgressBarWidthConstraint: NSLayoutConstraint!
 
     override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
         super.configureWithViewModel(viewModel)

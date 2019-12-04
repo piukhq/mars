@@ -9,10 +9,10 @@
 import UIKit
 
 class PLRBaseCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var infoButton: UIButton!
-    @IBOutlet weak var voucherAmountLabel: UILabel!
-    @IBOutlet weak var headlineLabel: UILabel!
+    @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var infoButton: UIButton!
+    @IBOutlet private weak var voucherAmountLabel: UILabel!
+    @IBOutlet private weak var headlineLabel: UILabel!
 
     override var bounds: CGRect {
         didSet {
