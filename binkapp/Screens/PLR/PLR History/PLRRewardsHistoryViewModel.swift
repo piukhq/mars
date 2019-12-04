@@ -1,0 +1,13 @@
+//
+//  PLRRewardsHistoryViewModel.swift
+//  binkapp
+//
+//  Created by Nick Farrant on 13/11/2019.
+//  Copyright © 2019 Bink. All rights reserved.
+//
+
+import Foundation
+
+class PLRRewardsHistoryViewModel {
+    
+}

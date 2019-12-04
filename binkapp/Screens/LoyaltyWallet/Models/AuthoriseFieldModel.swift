@@ -28,7 +28,7 @@ struct AuthoriseFieldModel: Codable {
 
 extension AuthoriseFieldModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_AuthoriseField, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_AuthoriseField {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.column, with: column, delta: delta)
         update(cdObject, \.validation, with: validation, delta: delta)
         update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)

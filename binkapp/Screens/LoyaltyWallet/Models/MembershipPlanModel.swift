@@ -15,6 +15,7 @@ struct MembershipPlanModel: Codable {
     let images: [MembershipPlanImageModel]?
     let account: MembershipPlanAccountModel?
     let balances: [BalanceModel]?
+    let hasVouchers: Bool?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -23,6 +24,7 @@ struct MembershipPlanModel: Codable {
         case images
         case account
         case balances
+        case hasVouchers = "has_vouchers"
     }
 }
 
@@ -30,10 +32,10 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipPlan, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlan {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.status, with: status, delta: delta)
-
+        update(cdObject, \.hasVouchers, with: NSNumber(value: hasVouchers ?? false), delta: delta)
 
         if let featureSet = featureSet {
-            let cdFeatureSet = featureSet.mapToCoreData(context, .update, overrideID: FeatureSetModel.overrideId(forParentId: id))
+            let cdFeatureSet = featureSet.mapToCoreData(context, .update, overrideID: FeatureSetModel.overrideId(forParentId: overrideID ?? id))
             update(cdFeatureSet, \.plan, with: cdObject, delta: delta)
             update(cdObject, \.featureSet, with: cdFeatureSet, delta: delta)
         } else {
@@ -52,7 +54,7 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
         }
 
         if let account = account {
-            let cdAccount = account.mapToCoreData(context, .update, overrideID: MembershipPlanAccountModel.overrideId(forParentId: id))
+            let cdAccount = account.mapToCoreData(context, .update, overrideID: MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id))
             update(cdAccount, \.plan, with: cdObject, delta: delta)
 //            update(cdObject, \.account, with: cdAccount, delta: delta)
         } else {

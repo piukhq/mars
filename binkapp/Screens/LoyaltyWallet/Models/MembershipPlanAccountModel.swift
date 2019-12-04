@@ -54,7 +54,7 @@ struct MembershipPlanAccountModel: Codable {
 
 extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipPlanAccount, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlanAccount {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.planName, with: planName, delta: delta)
         update(cdObject, \.planNameCard, with: planNameCard, delta: delta)
         update(cdObject, \.planURL, with: planURL, delta: delta)
@@ -97,7 +97,7 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
         
         if let addFields = addFields {
             for (index, field) in addFields.enumerated() {
-                let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let indexID = AddFieldModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdAddField = field.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdAddField, \.planAccount, with: cdObject, delta: delta)
                 update(cdAddField, \.order, with: NSNumber(value: index), delta: delta)
@@ -112,7 +112,7 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
         
         if let authFields = authoriseFields {
             for (index, field) in authFields.enumerated() {
-                let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let indexID = AuthoriseFieldModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdAuthField = field.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdAuthField, \.planAccount, with: cdObject, delta: delta)
                 update(cdAuthField, \.order, with: NSNumber(value: index), delta: delta)
@@ -127,7 +127,7 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
         
         if let registrationFields = registrationFields {
             for (index, field) in registrationFields.enumerated() {
-                let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let indexID = RegistrationFieldModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdRegField = field.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdRegField, \.planAccount, with: cdObject, delta: delta)
                 update(cdRegField, \.order, with: NSNumber(value: index), delta: delta)
@@ -142,7 +142,7 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
         
         if let enrolFields = enrolFields {
             for (index, field) in enrolFields.enumerated() {
-                let indexID = MembershipPlanAccountModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let indexID = EnrolFieldModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdEnrolField = field.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdEnrolField, \.planAccount, with: cdObject, delta: delta)
                 update(cdEnrolField, \.order, with: NSNumber(value: index), delta: delta)

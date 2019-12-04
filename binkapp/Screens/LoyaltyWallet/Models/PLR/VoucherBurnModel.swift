@@ -30,3 +30,16 @@ struct VoucherBurnModel: Codable {
         case type
     }
 }
+
+extension VoucherBurnModel: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_VoucherBurn, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_VoucherBurn {
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
+        update(cdObject, \.currency, with: currency, delta: delta)
+        update(cdObject, \.prefix, with: prefix, delta: delta)
+        update(cdObject, \.suffix, with: suffix, delta: delta)
+        update(cdObject, \.value, with: NSNumber(value: value ?? 0.0), delta: delta)
+        update(cdObject, \.type, with: type?.rawValue, delta: delta)
+
+        return cdObject
+    }
+}

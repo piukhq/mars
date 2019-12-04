@@ -11,6 +11,7 @@ import CoreData
 
 enum VoucherEarnType: String, Codable {
     case accumulator
+    case stamp
 }
 
 struct VoucherEarnModel: Codable {
@@ -30,5 +31,19 @@ struct VoucherEarnModel: Codable {
         case type
         case targetValue = "target_value"
         case value
+    }
+}
+
+extension VoucherEarnModel: CoreDataMappable, CoreDataIDMappable {
+    func objectToMapTo(_ cdObject: CD_VoucherEarn, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_VoucherEarn {
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
+        update(cdObject, \.currency, with: currency, delta: delta)
+        update(cdObject, \.prefix, with: prefix, delta: delta)
+        update(cdObject, \.suffix, with: suffix, delta: delta)
+        update(cdObject, \.value, with: NSNumber(value: value ?? 0.0), delta: delta)
+        update(cdObject, \.targetValue, with: NSNumber(value: targetValue ?? 0.0), delta: delta)
+        update(cdObject, \.type, with: type?.rawValue, delta: delta)
+
+        return cdObject
     }
 }

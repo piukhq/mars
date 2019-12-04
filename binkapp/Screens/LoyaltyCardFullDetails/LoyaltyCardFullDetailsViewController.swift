@@ -62,6 +62,18 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         return BinkModuleView()
     }()
 
+    private lazy var plrCollectionView: NestedCollectionView = {
+        let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.dataSource = self
+        collectionView.isScrollEnabled = false
+        collectionView.delegate = self
+        collectionView.backgroundColor = .clear
+        collectionView.clipsToBounds = false
+        collectionView.register(PLRAccumulatorActiveCell.self, asNib: true)
+        return collectionView
+    }()
+
     private lazy var offerTilesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,6 +96,10 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.separatorColor = .lightGray
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(CardDetailInfoTableViewCell.self, asNib: true)
+        tableView.separatorInset = LayoutHelper.LoyaltyCardDetail.informationTableSeparatorInset
         return tableView
     }()
     
@@ -171,7 +187,6 @@ private extension LoyaltyCardFullDetailsViewController {
 
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
 
-        // TODO: Use viewmodel to check if the offer tiles will be shown
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
         let buttonTitle = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
         showBarcodeButton.setTitle(buttonTitle, for: .normal)
@@ -184,26 +199,34 @@ private extension LoyaltyCardFullDetailsViewController {
 
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
 
-        // TODO: Use viewmodel to check if the offer tiles will be shown
-        stackScrollView.add(arrangedSubview: offerTilesStackView)
-        if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
-            offerTileImageUrls.forEach { offer in
-                let offerView = OfferTileView()
-                offerView.translatesAutoresizingMaskIntoConstraints = false
-                offerView.configure(imageUrl: offer)
-                offerTilesStackView.addArrangedSubview(offerView)
-            }
+        if viewModel.shouldShouldPLR {
+            stackScrollView.add(arrangedSubview: plrCollectionView)
+            stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: plrCollectionView)
+            NSLayoutConstraint.activate([
+                plrCollectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            ])
         }
 
-        stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: offerTilesStackView)
+        if viewModel.shouldShowOfferTiles {
+            stackScrollView.add(arrangedSubview: offerTilesStackView)
+            if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
+                offerTileImageUrls.forEach { offer in
+                    let offerView = OfferTileView()
+                    offerView.translatesAutoresizingMaskIntoConstraints = false
+                    offerView.configure(imageUrl: offer)
+                    offerTilesStackView.addArrangedSubview(offerView)
+                }
+            }
+            stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: offerTilesStackView)
+            NSLayoutConstraint.activate([
+                offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+                offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            ])
+        }
 
         stackScrollView.add(arrangedSubview: separator)
 
         stackScrollView.add(arrangedSubview: informationTableView)
-        informationTableView.delegate = self
-        informationTableView.dataSource = self
-        informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
-        informationTableView.separatorInset = LayoutHelper.LoyaltyCardDetail.informationTableSeparatorInset
 
         configureLayout()
     }
@@ -221,8 +244,6 @@ private extension LoyaltyCardFullDetailsViewController {
             modulesStackView.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.modulesStackViewHeight),
             modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
-            offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
-            offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             separator.heightAnchor.constraint(equalToConstant: CGFloat.onePointScaled()),
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
@@ -277,6 +298,27 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 
         let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
         navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
+    }
+}
+
+// MARK: - PLR Collection View
+
+extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.activeVouchersCount
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: PLRAccumulatorActiveCell = collectionView.dequeue(indexPath: indexPath)
+        guard let voucher = viewModel.voucherForIndexPath(indexPath) else { return cell }
+
+        let cellViewModel = PLRCellViewModel(voucher: voucher)
+        cell.configureWithViewModel(cellViewModel)
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width - 50, height: 188)
     }
 }
 
