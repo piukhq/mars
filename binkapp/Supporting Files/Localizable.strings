@@ -25,7 +25,9 @@
 "not_available_title" = "Not available";
 "pending_title" = "Pending";
 "register_ghost_card_title" = "Register your card";
-"register_ghost_card_description" = "Fill out the form below to get a new %@ card, and start earning points";
+"register_ghost_card_description" = "Fill out the form below to get a new %@ and start collecting rewards";
+"registration_unavailable_title" = "Registration unavailable";
+"registration_unavailable_description" = "Please go to the merchant’s website to join this scheme. You can then come back and add your card.";
 "register_card_title" = "Register card";
 "retry_title" = "Retry";
 
@@ -67,7 +69,7 @@
 "add_my_card_button" = "Add my card";
 "get_new_card_button" = "Get a new card";
 
-"auth_screen_description" = "Please enter your %@ details below to add this card to your wallet.";
+"auth_screen_description" = "You can log in to your %@ account to view your %@ details";
 
 "pll_title" = "PLL";
 "popular_title" = "Popular";
@@ -165,9 +167,7 @@
 "privacy_policy" = "Privacy Policy";
 
 "native_join_unavailable_title" = "Native join unavailable";
-"native_join_unavailable_description" = "You can go to the merchant website to join then come back and add your card. Or we can email you the link so you can sign up on your computer. Copy needed.";
-"ghost_native_join_unavailable_description" = "Go to merchant website and join and then come back and add your card.";
-"to_merchant_site_button" = "Go to merchant site";
+"native_join_unavailable_description" = "You can go to the merchant website to join then come back and add your card. Or we can email you the link so you can sign up on your computer. Copy needed.";"to_merchant_site_button" = "Go to merchant site";
 
 "unlinkable_pll_title" = "Payment Linked Loyalty unavailable";
 "unlinkable_pll_description" = "Payment Linked Loyalty (PLL) allows customers’ payment cards to be securely linked to loyalty programmes, enabling every customer to be identified and rewarded every time they shop.\nThis is currently not available for this merchant.";
@@ -258,8 +258,10 @@
 
 "login_title" = "Log in with email";
 "login_subtitle" = "Welcome back!";
-"login_forgot_password" = "Forgot Password";
 "login_error" =  "Incorrect email/password. Please try again.";
+"login_forgot_password" = "Forgot password";
+"forgot_password_description" = "Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent";
+"fogrot_password_popup_text" = "If the email address you entered is associated with a Bink account, then a password reset email will be sent.";
 
 "tandcs_title" = "I accept Bink's Terms and Conditions";
 "tandcs_link" = "Terms and Conditions";

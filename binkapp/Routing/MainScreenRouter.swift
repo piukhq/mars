@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SafariServices
 import UIKit
 
 protocol MainScreenRouterDelegate: NSObjectProtocol {
@@ -140,7 +141,7 @@ class MainScreenRouter {
         let viewController = PLLScreenViewController(viewModel: viewModel, journey: journey)
         navController?.pushViewController(viewController, animated: true)
     }
-    
+
     func toTransactionsViewController(membershipCard: CD_MembershipCard) {
         let viewModel = TransactionsViewModel(membershipCard: membershipCard, router: self)
         let viewController = TransactionsViewController(viewModel: viewModel)
@@ -182,6 +183,13 @@ class MainScreenRouter {
             
         let configurationModel = ReusableModalConfiguration(title: title, text: attributedText, primaryButtonTitle: nil, secondaryButtonTitle: nil, tabBarBackButton: nil, showCloseButton: true)
         toReusableModalTemplateViewController(configurationModel: configurationModel)
+    }
+    
+    func toForgotPasswordViewController(navigationController: UINavigationController?) {
+        let repository = ForgotPasswordRepository(apiManager: apiManager)
+        let viewModel = ForgotPasswordViewModel(repository: repository)
+        let viewController = ForgotPasswordViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
@@ -281,7 +289,7 @@ class MainScreenRouter {
         let visibleVC = navController?.getVisibleViewController()
         if let modalNavigationController = visibleVC?.navigationController {
            modalNavigationController.dismiss(animated: false, completion: nil)
-        } else {
+        } else if visibleVC?.isKind(of: SFSafariViewController.self) == false {
             visibleVC?.dismiss(animated: false, completion: nil)
         }
     }

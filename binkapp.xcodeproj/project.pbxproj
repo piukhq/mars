@@ -101,6 +101,10 @@
 		3CD6B3B3232B98CE00058514 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD6B3B1232B98CE00058514 /* TransactionTableViewCell.swift */; };
 		3CD6B3B4232B98CE00058514 /* TransactionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD6B3B2232B98CE00058514 /* TransactionTableViewCell.xib */; };
 		3CD7E90B2302AC42001889FE /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD7E90A2302AC42001889FE /* ApiManager.swift */; };
+		3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD8027D239130EE00D26888 /* ForgotPasswordViewController.swift */; };
+		3CD802802391313D00D26888 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD8027F2391313D00D26888 /* ForgotPasswordViewModel.swift */; };
+		3CD802822391314900D26888 /* ForgotPasswordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD802812391314900D26888 /* ForgotPasswordRepository.swift */; };
+		3CD802862391484600D26888 /* ForgotPasswordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD802852391484600D26888 /* ForgotPasswordModel.swift */; };
 		3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */; };
 		3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE24B292304014500B258C8 /* AddOrJoinViewModel.swift */; };
 		3CE24B2D2304014600B258C8 /* AddOrJoinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE24B2A2304014500B258C8 /* AddOrJoinViewController.xib */; };
@@ -371,6 +375,11 @@
 		EFCAF9222371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCAF9202371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib */; };
 		EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8653A232FCDD800036C17 /* ReasonCode.swift */; };
 		EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */; };
+		EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF0237C7BA300E18743 /* PLRRewardDetailViewModel.swift */; };
+		EFEB5BF3237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF2237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift */; };
+		EFEB5BF5237D9F6900E18743 /* PLRCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF4237D9F6900E18743 /* PLRCellViewModel.swift */; };
+		EFEB5BF7237DCA5A00E18743 /* PLRAccumulatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF6237DCA5A00E18743 /* PLRAccumulatorCell.swift */; };
+		EFEB5BF9237E062500E18743 /* PLRStampsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF8237E062500E18743 /* PLRStampsCell.swift */; };
 		EFEB5BFD237E96F500E18743 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */; };
 		EFEB5C0123853B7900E18743 /* WalletRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5C0023853B7900E18743 /* WalletRefreshManager.swift */; };
 		EFF59F15234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */; };
@@ -506,6 +515,10 @@
 		3CD6B3B1232B98CE00058514 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		3CD6B3B2232B98CE00058514 /* TransactionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionTableViewCell.xib; sourceTree = "<group>"; };
 		3CD7E90A2302AC42001889FE /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		3CD8027D239130EE00D26888 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		3CD8027F2391313D00D26888 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
+		3CD802812391314900D26888 /* ForgotPasswordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordRepository.swift; sourceTree = "<group>"; };
+		3CD802852391484600D26888 /* ForgotPasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordModel.swift; sourceTree = "<group>"; };
 		3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewController.swift; sourceTree = "<group>"; };
 		3CE24B292304014500B258C8 /* AddOrJoinViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewModel.swift; sourceTree = "<group>"; };
 		3CE24B2A2304014500B258C8 /* AddOrJoinViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddOrJoinViewController.xib; sourceTree = "<group>"; };
@@ -805,6 +818,11 @@
 		EFCAF9202371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailAddLoyaltyCardCell.xib; sourceTree = "<group>"; };
 		EFD8653A232FCDD800036C17 /* ReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCode.swift; sourceTree = "<group>"; };
 		EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingSupportModel.swift; sourceTree = "<group>"; };
+		EFEB5BF0237C7BA300E18743 /* PLRRewardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModel.swift; sourceTree = "<group>"; };
+		EFEB5BF2237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardsHistoryViewModel.swift; sourceTree = "<group>"; };
+		EFEB5BF4237D9F6900E18743 /* PLRCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRCellViewModel.swift; sourceTree = "<group>"; };
+		EFEB5BF6237DCA5A00E18743 /* PLRAccumulatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRAccumulatorCell.swift; sourceTree = "<group>"; };
+		EFEB5BF8237E062500E18743 /* PLRStampsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRStampsCell.swift; sourceTree = "<group>"; };
 		EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
 		EFEB5C0023853B7900E18743 /* WalletRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRefreshManager.swift; sourceTree = "<group>"; };
 		EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLinkLoyaltyCardCell.swift; sourceTree = "<group>"; };
@@ -1121,6 +1139,17 @@
 				3CD6B3B2232B98CE00058514 /* TransactionTableViewCell.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		3CD8027C239130C700D26888 /* ForgotPassword */ = {
+			isa = PBXGroup;
+			children = (
+				3CD8027D239130EE00D26888 /* ForgotPasswordViewController.swift */,
+				3CD8027F2391313D00D26888 /* ForgotPasswordViewModel.swift */,
+				3CD802812391314900D26888 /* ForgotPasswordRepository.swift */,
+				3CD802852391484600D26888 /* ForgotPasswordModel.swift */,
+			);
+			path = ForgotPassword;
 			sourceTree = "<group>";
 		};
 		3CE24B272304014500B258C8 /* AddOrJoin */ = {
@@ -1478,6 +1507,7 @@
 		BD458B45236ED1240029A538 /* AccessForms */ = {
 			isa = PBXGroup;
 			children = (
+				3CD8027C239130C700D26888 /* ForgotPassword */,
 				BD9E4CD2237076E100C6F098 /* Loading */,
 				BD458B49236ED5A30029A538 /* Social */,
 				BD458B3A236B5B600029A538 /* Model */,
@@ -1898,24 +1928,26 @@
 			children = (
 				EFB7ED5E2379CA1800B72D06 /* PLR History */,
 				EFB7ED5D2379CA0C00B72D06 /* PLR Detail */,
-				EFA5F7572379B0F70027AB80 /* Views */,
+				EFA5F7572379B0F70027AB80 /* Cells */,
 			);
 			path = PLR;
 			sourceTree = "<group>";
 		};
-		EFA5F7572379B0F70027AB80 /* Views */ = {
+		EFA5F7572379B0F70027AB80 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				EFEB5BF4237D9F6900E18743 /* PLRCellViewModel.swift */,
+				EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */,
 				EFA5F75B2379BD160027AB80 /* Stamps */,
 				EFA5F75A2379BD100027AB80 /* Accumulator */,
-				EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */,
 			);
-			path = Views;
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		EFA5F75A2379BD100027AB80 /* Accumulator */ = {
 			isa = PBXGroup;
 			children = (
+				EFEB5BF6237DCA5A00E18743 /* PLRAccumulatorCell.swift */,
 				EFA5F75C2379BD3A0027AB80 /* PLRAccumulatorActiveCell.swift */,
 				EFA5F75D2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib */,
 				EFA5F7602379BD520027AB80 /* PLRAccumulatorInactiveCell.swift */,
@@ -1927,6 +1959,7 @@
 		EFA5F75B2379BD160027AB80 /* Stamps */ = {
 			isa = PBXGroup;
 			children = (
+				EFEB5BF8237E062500E18743 /* PLRStampsCell.swift */,
 				EFA5F7642379BD690027AB80 /* PLRStampsActiveCell.swift */,
 				EFA5F7652379BD690027AB80 /* PLRStampsActiveCell.xib */,
 				EFA5F7682379BD790027AB80 /* PLRStampsInactiveCell.swift */,
@@ -1940,6 +1973,7 @@
 			children = (
 				EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */,
 				EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */,
+				EFEB5BF0237C7BA300E18743 /* PLRRewardDetailViewModel.swift */,
 			);
 			path = "PLR Detail";
 			sourceTree = "<group>";
@@ -1949,6 +1983,7 @@
 			children = (
 				EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */,
 				EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */,
+				EFEB5BF2237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift */,
 			);
 			path = "PLR History";
 			sourceTree = "<group>";
@@ -2425,6 +2460,7 @@
 				BD9E4CC7236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift in Sources */,
 				EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */,
 				BD25E6992388677E0027FF3E /* LoadingScreen.swift in Sources */,
+				3CD802802391313D00D26888 /* ForgotPasswordViewModel.swift in Sources */,
 				EFA5F73F2379A7C70027AB80 /* _CD_MembershipTransaction.swift in Sources */,
 				EF8B701A235DDC75006CE3DD /* OnboardingViewController.swift in Sources */,
 				BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */,
@@ -2445,6 +2481,7 @@
 				3C17FC3222F2CCAD00E423A2 /* MembershipCardImageModel.swift in Sources */,
 				3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */,
 				EFEB5BFD237E96F500E18743 /* CGFloatExtension.swift in Sources */,
+				3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */,
 				3C33E33D23166FF9005E97DC /* DropdownView.swift in Sources */,
 				BD458B44236EC4060029A538 /* RegisterViewController.swift in Sources */,
 				BD458B40236C987F0029A538 /* UserManager.swift in Sources */,
@@ -2467,6 +2504,7 @@
 				BD9FB68B2333DE3E00E5559A /* String+Random.swift in Sources */,
 				EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */,
 				EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */,
+				EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */,
 				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,
 				BD9FB6B82338120700E5559A /* TransactionsViewModel.swift in Sources */,
 				EF8BF1F9234147E000D2E5F3 /* LinkedCardResponse.swift in Sources */,
@@ -2503,6 +2541,7 @@
 				3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */,
 				3C453CB72338E84F00287B56 /* PaymentWalletViewModel.swift in Sources */,
 				EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */,
+				EFEB5BF7237DCA5A00E18743 /* PLRAccumulatorCell.swift in Sources */,
 				EFA5F7272379A7C70027AB80 /* _CD_ReasonCode.swift in Sources */,
 				EFA5F72E2379A7C70027AB80 /* _CD_AddField.swift in Sources */,
 				B72633432305899200951037 /* AddFieldModel.swift in Sources */,
@@ -2541,6 +2580,7 @@
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
 				EFA5F7542379AAB20027AB80 /* CD_VoucherEarn.swift in Sources */,
 				EFA5F7202379A7C70027AB80 /* CD_MembershipCardStatus.swift in Sources */,
+				EFEB5BF3237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift in Sources */,
 				EFA5F7532379AAB20027AB80 /* _CD_VoucherEarn.swift in Sources */,
 				3C2C90FD23193F0000D112E3 /* MembershipCardPostModel.swift in Sources */,
 				3C794D9123018E67000A31FD /* BrowseBrandsRepository.swift in Sources */,
@@ -2552,6 +2592,7 @@
 				EFA5F7362379A7C70027AB80 /* CD_EnrolField.swift in Sources */,
 				EF8BF1F1233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift in Sources */,
 				EF54911E2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift in Sources */,
+				EFEB5BF5237D9F6900E18743 /* PLRCellViewModel.swift in Sources */,
 				3CD7E90B2302AC42001889FE /* ApiManager.swift in Sources */,
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
@@ -2559,6 +2600,7 @@
 				BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */,
 				EFA5F7372379A7C70027AB80 /* CD_FieldChoice.swift in Sources */,
 				3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */,
+				3CD802822391314900D26888 /* ForgotPasswordRepository.swift in Sources */,
 				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
 				EF3BC911234771AA00FE52ED /* WalletRepository.swift in Sources */,
 				EF8F0481238D582300BD708B /* _CD_PlanDocument.swift in Sources */,
@@ -2580,10 +2622,12 @@
 				B713662D232A63AA008A0ED7 /* BinkModuleView.swift in Sources */,
 				EFA5F7142379A7C70027AB80 /* _CD_AuthoriseField.swift in Sources */,
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
+				EFEB5BF9237E062500E18743 /* PLRStampsCell.swift in Sources */,
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
 				EF8BF1F6233E60AE00D2E5F3 /* Cache.swift in Sources */,
 				EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */,
 				3CCAB7522379B520001B566D /* RegistrationFieldPostModel.swift in Sources */,
+				3CD802862391484600D26888 /* ForgotPasswordModel.swift in Sources */,
 				EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */,
 				EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */,
 				BDB01886232ED6F800BFFA18 /* SpreedlyRequest.swift in Sources */,
@@ -2678,7 +2722,7 @@
 				3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */,
 				EFA5F7112379A7C70027AB80 /* CD_MembershipPlanAccount.swift in Sources */,
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
-                DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
+				DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
 				EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */,
 				BDB01870232D99D200BFFA18 /* FormField.swift in Sources */,
 				B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */,
@@ -2891,7 +2935,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jenkins Server (SJHC7DA3J5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;

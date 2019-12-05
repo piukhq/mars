@@ -79,6 +79,7 @@
         <relationship name="membershipPlan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlan" inverseName="membershipCards" inverseEntity="CD_MembershipPlan"/>
         <relationship name="status" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_MembershipCardStatus" inverseName="card" inverseEntity="CD_MembershipCardStatus"/>
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipTransaction" inverseName="card" inverseEntity="CD_MembershipTransaction"/>
+        <relationship name="vouchers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Voucher" inverseName="membershipCard" inverseEntity="CD_Voucher"/>
     </entity>
     <entity name="CD_MembershipCardAccount" representedClassName="CD_MembershipCardAccount" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="tier" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
@@ -113,6 +114,7 @@
         <relationship name="reasonCodes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_ReasonCode" inverseName="status" inverseEntity="CD_ReasonCode"/>
     </entity>
     <entity name="CD_MembershipPlan" representedClassName="CD_MembershipPlan" parentEntity="CD_BaseObject" syncable="YES">
+        <attribute name="hasVouchers" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
         <attribute name="status" optional="YES" attributeType="String"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="plan" inverseEntity="CD_MembershipPlanAccount"/>
         <relationship name="balances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Balance" inverseName="plan" inverseEntity="CD_Balance"/>
@@ -213,7 +215,7 @@
     </entity>
     <entity name="CD_Voucher" representedClassName="CD_Voucher" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="barcode" optional="YES" attributeType="String"/>
-        <attribute name="barcodeType" optional="YES" attributeType="String"/>
+        <attribute name="barcodeType" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="code" optional="YES" attributeType="String"/>
         <attribute name="dateIssued" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="dateRedeemed" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
@@ -223,11 +225,13 @@
         <attribute name="subtext" optional="YES" attributeType="String"/>
         <relationship name="burn" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_VoucherBurn" inverseName="voucher" inverseEntity="CD_VoucherBurn"/>
         <relationship name="earn" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_VoucherEarn" inverseName="voucher" inverseEntity="CD_VoucherEarn"/>
+        <relationship name="membershipCard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="vouchers" inverseEntity="CD_MembershipCard"/>
     </entity>
     <entity name="CD_VoucherBurn" representedClassName="CD_VoucherBurn" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="currency" optional="YES" attributeType="String"/>
         <attribute name="prefix" optional="YES" attributeType="String"/>
         <attribute name="suffix" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO"/>
         <relationship name="voucher" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Voucher" inverseName="burn" inverseEntity="CD_Voucher"/>
     </entity>
@@ -250,14 +254,14 @@
         <element name="CD_EnrolField" positionX="422.5390625" positionY="110.3046875" width="128" height="148"/>
         <element name="CD_FeatureSet" positionX="27" positionY="153" width="128" height="148"/>
         <element name="CD_FieldChoice" positionX="0" positionY="144" width="128" height="118"/>
-        <element name="CD_LinkingSupport" positionX="-9" positionY="135" width="128" height="88"/>
-        <element name="CD_MembershipCard" positionX="9" positionY="81" width="128" height="163"/>
+        <element name="CD_LinkingSupport" positionX="-9" positionY="135" width="128" height="73"/>
+        <element name="CD_MembershipCard" positionX="9" positionY="81" width="128" height="178"/>
         <element name="CD_MembershipCardAccount" positionX="-9" positionY="90" width="128" height="73"/>
         <element name="CD_MembershipCardAmount" positionX="-375.85546875" positionY="-115.16796875" width="128" height="118"/>
         <element name="CD_MembershipCardBalance" positionX="-16.28515625" positionY="-84.171875" width="128" height="133"/>
         <element name="CD_MembershipCardImage" positionX="0" positionY="72" width="128" height="133"/>
         <element name="CD_MembershipCardStatus" positionX="9" positionY="99" width="128" height="88"/>
-        <element name="CD_MembershipPlan" positionX="36" positionY="171" width="128" height="133"/>
+        <element name="CD_MembershipPlan" positionX="36" positionY="171" width="128" height="148"/>
         <element name="CD_MembershipPlanAccount" positionX="0" positionY="126" width="128" height="328"/>
         <element name="CD_MembershipPlanImage" positionX="-9" positionY="135" width="128" height="118"/>
         <element name="CD_MembershipTransaction" positionX="-432.36328125" positionY="41.8515625" width="128" height="118"/>
@@ -269,8 +273,8 @@
         <element name="CD_ReasonCode" positionX="155.49609375" positionY="275.58984375" width="128" height="73"/>
         <element name="CD_RegistrationField" positionX="-316.20703125" positionY="336.09375" width="128" height="148"/>
         <element name="CD_Tier" positionX="300.71875" positionY="-61.54296875" width="128" height="88"/>
-        <element name="CD_Voucher" positionX="-279" positionY="36" width="128" height="208"/>
-        <element name="CD_VoucherBurn" positionX="-261" positionY="54" width="128" height="118"/>
+        <element name="CD_Voucher" positionX="-279" positionY="36" width="128" height="223"/>
+        <element name="CD_VoucherBurn" positionX="-261" positionY="54" width="128" height="133"/>
         <element name="CD_VoucherEarn" positionX="-270" positionY="45" width="128" height="148"/>
     </elements>
 </model>
