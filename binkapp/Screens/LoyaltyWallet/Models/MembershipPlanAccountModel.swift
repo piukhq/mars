@@ -79,15 +79,13 @@ extension MembershipPlanAccountModel: CoreDataMappable, CoreDataIDMappable {
             cdObject.addTiersObject(cdTier)
         }
 
-        cdObject.planDocuments.forEach {
-            guard let document = $0 as? CD_PlanDocument else { return }
-            context.delete(document)
-        }
-        
-        planDocuments?.forEach { document in
-            let cdPlanDocument = document.mapToCoreData(context, .update, overrideID: nil)
-            update(cdPlanDocument, \.planAccount, with: cdObject, delta: delta)
-            cdObject.addPlanDocumentsObject(cdPlanDocument)
+        if let planDocuments = planDocuments {
+            for (index, document) in planDocuments.enumerated() {
+                let indexID = PlanDocumentModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdPlanDocument = document.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdPlanDocument, \.planAccount, with: cdObject, delta: delta)
+                cdObject.addPlanDocumentsObject(cdPlanDocument)
+            }
         }
 
         cdObject.addFields.forEach {

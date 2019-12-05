@@ -68,6 +68,7 @@
     <entity name="CD_LinkingSupport" representedClassName="CD_LinkingSupport" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="value" optional="YES" attributeType="String"/>
         <relationship name="featureSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_FeatureSet" inverseName="linkingSupport" inverseEntity="CD_FeatureSet"/>
+        <relationship name="planDocument" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_PlanDocument" inverseName="display" inverseEntity="CD_PlanDocument"/>
     </entity>
     <entity name="CD_MembershipCard" representedClassName="CD_MembershipCard" parentEntity="CD_BaseObject" syncable="YES">
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_MembershipCardAccount" inverseName="card" inverseEntity="CD_MembershipCardAccount"/>
@@ -191,6 +192,7 @@
         <attribute name="documentDescription" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="String"/>
+        <relationship name="display" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_LinkingSupport" inverseName="planDocument" inverseEntity="CD_LinkingSupport"/>
         <relationship name="planAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="planDocuments" inverseEntity="CD_MembershipPlanAccount"/>
     </entity>
     <entity name="CD_ReasonCode" representedClassName="CD_ReasonCode" parentEntity="CD_BaseObject" syncable="YES">
@@ -267,7 +269,7 @@
         <element name="CD_PaymentCardAccount" positionX="9" positionY="153" width="128" height="103"/>
         <element name="CD_PaymentCardAccountConsents" positionX="27" positionY="171" width="128" height="88"/>
         <element name="CD_PaymentCardCard" positionX="-443.7578125" positionY="146.37109375" width="128" height="193"/>
-        <element name="CD_PlanDocument" positionX="282.79296875" positionY="288.09765625" width="128" height="118"/>
+        <element name="CD_PlanDocument" positionX="282.79296875" positionY="288.09765625" width="128" height="133"/>
         <element name="CD_ReasonCode" positionX="155.49609375" positionY="275.58984375" width="128" height="73"/>
         <element name="CD_RegistrationField" positionX="-316.20703125" positionY="336.09375" width="128" height="148"/>
         <element name="CD_Tier" positionX="300.71875" positionY="-61.54296875" width="128" height="88"/>
