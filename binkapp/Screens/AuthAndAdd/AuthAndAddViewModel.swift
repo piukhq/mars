@@ -71,16 +71,16 @@ class AuthAndAddViewModel {
     func getDescription() -> String? {
         switch formPurpose {
         case .login:
-            guard let planName = membershipPlan.account?.planName else { return nil }
-            return String(format: "auth_screen_description".localized, planName)
+            guard let planName = membershipPlan.account?.planName, let companyName = membershipPlan.account?.companyName else { return nil }
+            return String(format: "auth_screen_description".localized, companyName, planName)
         case .loginFailed:
             return getDescriptionForOtherLogin()
         case .signUp:
             guard let companyName = membershipPlan.account?.companyName else { return nil }
             return String(format: "sign_up_new_card_description".localized, companyName)
         case .ghostCard:
-            guard let companyName = membershipPlan.account?.companyName else { return nil }
-            return String(format: "register_ghost_card_description".localized, companyName)
+            guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
+            return String(format: "register_ghost_card_description".localized, planNameCard)
         }
     }
     
@@ -176,7 +176,7 @@ class AuthAndAddViewModel {
             }
         }
         checkboxes?.forEach {
-            if $0.columnKind == columnKind {
+            if $0.columnKind == columnKind && $0.columnKind != FormField.ColumnKind.planDocument {
                 addCheckboxToCard(checkbox: $0)
             }
         }

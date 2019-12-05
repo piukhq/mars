@@ -49,7 +49,14 @@ class FormDataSource: NSObject {
     
     var fullFormIsValid: Bool {
         let formFieldsValid = fields.reduce(true, { $0 && $1.isValid() })
-        let checkboxesValid = checkboxes.reduce(true, { $0 && $1.isValid })
+        var checkboxesValid = true
+        checkboxes.forEach { checkbox in
+            if checkbox.columnKind == FormField.ColumnKind.planDocument {
+                if !checkbox.isValid {
+                    checkboxesValid = false
+                }
+            }
+        }
         
         return formFieldsValid && checkboxesValid
     }
@@ -192,6 +199,7 @@ extension FormDataSource {
                     )
                 }
             }
+            checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: .add, membershipPlan: model))
         }
         
         if formPurpose != .signUp && formPurpose != .ghostCard {
@@ -240,6 +248,7 @@ extension FormDataSource {
                     )
                 }
             }
+            checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: .enrol, membershipPlan: model))
         }
         
         if formPurpose == .ghostCard {
@@ -263,7 +272,29 @@ extension FormDataSource {
                     )
                 }
             }
+            checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: .registration, membershipPlan: model))
         }
+    }
+    
+    private func getPlanDocumentsCheckboxes(journey: LinkingSupportType, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
+        var checkboxes = [CheckboxView]()
+        
+        membershipPlan.account?.formattedPlanDocuments?.forEach { field in
+            
+            let displayFields = field.formattedDisplay
+            guard displayFields.contains(where: { $0.value == journey.rawValue }) else { return }
+        
+            let checkbox = CheckboxView(frame: .zero)
+            
+            let url = URL(string: field.url ?? "")
+            
+            let fieldText = (field.documentDescription ?? "") + " " + (field.name ?? "")
+            
+            checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
+            checkboxes.append(checkbox)
+        }
+        
+        return checkboxes
     }
 }
 
@@ -349,17 +380,11 @@ extension FormDataSource {
         
         if accessForm == .socialTermsAndConditions || accessForm == .register {
             let termsAndConditions = CheckboxView(frame: .zero)
-            termsAndConditions.configure(
-            attributedTitle: hyperlinkString("tandcs_title".localized, hyperlink: "tandcs_link".localized), columnName: "", columnKind: .none, delegate: self) {
-                MainScreenRouter.openExternalURL(with: "https://bink.com/terms-and-conditions/")
-            }
+            termsAndConditions.configure(title: "tandcs_title".localized, columnName: "tandcs_link".localized, columnKind: .none, url: URL(string: "https://bink.com/terms-and-conditions/"), delegate: self)
             checkboxes.append(termsAndConditions)
             
             let privacyPolicy = CheckboxView(frame: .zero)
-            privacyPolicy.configure(
-            attributedTitle: hyperlinkString("ppolicy_title".localized, hyperlink: "ppolicy_link".localized), columnName: "", columnKind: .none, delegate: self) {
-                MainScreenRouter.openExternalURL(with: "https://bink.com/privacy-policy/")
-            }
+            privacyPolicy.configure(title: "ppolicy_title".localized, columnName: "ppolicy_link".localized, columnKind: .none, url: URL(string: "https://bink.com/privacy-policy/"), delegate: self)
             checkboxes.append(privacyPolicy)
             
             let marketingCheckbox = CheckboxView(frame: .zero)

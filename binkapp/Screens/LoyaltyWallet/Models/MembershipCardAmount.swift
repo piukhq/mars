@@ -18,7 +18,7 @@ struct MembershipCardAmount: Codable, Hashable {
 
 extension MembershipCardAmount: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCardAmount, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCardAmount {
-        update(cdObject, \.id, with: id, delta: delta)
+        update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.currency, with: currency, delta: delta)
         update(cdObject, \.prefix, with: prefix, delta: delta)
         update(cdObject, \.suffix, with: suffix, delta: delta)

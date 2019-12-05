@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,46 +11,50 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckboxView" customModule="binkapp" customModuleProvider="target">
             <connections>
                 <outlet property="checkboxView" destination="Lme-6v-KTv" id="hZe-Se-Vlp"/>
-                <outlet property="titleLabel" destination="Mud-OW-STF" id="M37-Bd-vEU"/>
+                <outlet property="textView" destination="ycF-ZM-e6G" id="ko8-Iq-eRn"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="449" height="142"/>
+            <rect key="frame" x="0.0" y="0.0" width="449" height="65"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lme-6v-KTv" customClass="M13Checkbox" customModule="M13Checkbox">
-                    <rect key="frame" x="0.0" y="60" width="22" height="22"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="AIv-ae-bG4"/>
-                        <constraint firstAttribute="width" constant="22" id="qtk-rH-7rD"/>
-                    </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="boxLineWidth">
-                            <real key="value" value="2"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mud-OW-STF">
-                    <rect key="frame" x="30" y="15" width="419" height="112"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="O5E-5P-JST">
+                    <rect key="frame" x="0.0" y="15" width="449" height="35"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lme-6v-KTv" customClass="M13Checkbox" customModule="M13Checkbox">
+                            <rect key="frame" x="0.0" y="6.5" width="22" height="22"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="AIv-ae-bG4"/>
+                                <constraint firstAttribute="width" constant="22" id="qtk-rH-7rD"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="boxLineWidth">
+                                    <real key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Dummy text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ycF-ZM-e6G">
+                            <rect key="frame" x="30" y="1" width="419" height="33"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Mud-OW-STF" secondAttribute="trailing" id="6BT-5B-AC8"/>
-                <constraint firstItem="Lme-6v-KTv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="6xg-cS-m04"/>
-                <constraint firstItem="Mud-OW-STF" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="KQZ-5f-C98"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Mud-OW-STF" secondAttribute="bottom" constant="15" id="KsC-g9-aRg"/>
-                <constraint firstItem="Mud-OW-STF" firstAttribute="leading" secondItem="Lme-6v-KTv" secondAttribute="trailing" constant="8" id="oz9-OW-Q4H"/>
-                <constraint firstItem="Lme-6v-KTv" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="xHO-zV-H9r"/>
+                <constraint firstItem="O5E-5P-JST" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="7bv-i2-xk5"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="O5E-5P-JST" secondAttribute="trailing" id="F1s-n8-fdj"/>
+                <constraint firstItem="O5E-5P-JST" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="e9K-lg-VjK"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="O5E-5P-JST" secondAttribute="bottom" constant="15" id="uOn-ia-3Z4"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="159.19999999999999" y="-213.19340329835083"/>
+            <point key="canvasLocation" x="159.19999999999999" y="-247.82608695652175"/>
         </view>
     </objects>
 </document>

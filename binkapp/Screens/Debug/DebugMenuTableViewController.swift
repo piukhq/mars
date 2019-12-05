@@ -26,8 +26,7 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
         
         title = viewModel.title
         
-        let closeBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(close))
-        navigationItem.rightBarButtonItem = closeBarButton
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(close))
         
         tableView.register(DebugMenuTableViewCell.self, asNib: true)
     }

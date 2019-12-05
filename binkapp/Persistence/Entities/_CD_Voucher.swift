@@ -19,6 +19,7 @@ public enum CD_VoucherAttributes: String {
 public enum CD_VoucherRelationships: String {
     case burn = "burn"
     case earn = "earn"
+    case membershipCard = "membershipCard"
 }
 
 open class _CD_Voucher: CD_BaseObject {
@@ -55,7 +56,7 @@ open class _CD_Voucher: CD_BaseObject {
     var barcode: String?
 
     @NSManaged open
-    var barcodeType: String?
+    var barcodeType: NSNumber?
 
     @NSManaged open
     var code: String?
@@ -85,6 +86,9 @@ open class _CD_Voucher: CD_BaseObject {
 
     @NSManaged open
     var earn: CD_VoucherEarn?
+
+    @NSManaged open
+    var membershipCard: CD_MembershipCard?
 
 }
 

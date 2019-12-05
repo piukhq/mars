@@ -87,13 +87,14 @@ class FormField {
             }
         }
     }
-    
+
     enum ColumnKind {
         case none
         case add
         case auth
         case enrol
         case register
+        case planDocument
         case userPreference
     }
     
