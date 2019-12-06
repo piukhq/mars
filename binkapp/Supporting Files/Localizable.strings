@@ -275,7 +275,7 @@
 
 "access_form_password_title" = "Password";
 "access_form_password_placeholder" = "Enter password";
-"access_form_password_validation" = "Password should be 8 or more characters, with at least 1 uppercase. 1 lowercase and a number";
+"access_form_password_validation" = "Password should be 8 or more characters, with at least 1 uppercase, 1 lowercase and a number";
 
 "access_form_confirm_password_title" = "Confirm password";
 "access_form_confirm_password_placeholder" = "Confirm password";
