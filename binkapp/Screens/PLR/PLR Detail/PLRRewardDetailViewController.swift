@@ -80,14 +80,6 @@ class PLRRewardDetailViewController: UIViewController {
         return button
     }()
 
-    private lazy var privacyPolicyButton: HyperlinkButton = {
-        let button = HyperlinkButton()
-        button.setTitle("plr_voucher_detail_privacy_button_title".localized, for: .normal)
-        button.setTitleColor(.blueAccent, for: .normal)
-        button.titleLabel?.font = .linkUnderlined
-        return button
-    }()
-
     // MARK: - Properties
 
     private let viewModel: PLRRewardDetailViewModel
@@ -174,9 +166,10 @@ private extension PLRRewardDetailViewController {
             stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.dateLabelsTopPadding, before: expiryDateLabel)
         }
 
-        stackScrollView.add(arrangedSubviews: [termsAndConditionsButton, privacyPolicyButton])
-        stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.tAndCButtonTopPadding, before: termsAndConditionsButton)
-        stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.privacyPolicyButtonTopPadding, before: privacyPolicyButton)
+        if viewModel.shouldShowTermsAndConditionsButton {
+            stackScrollView.add(arrangedSubview: termsAndConditionsButton)
+            stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.tAndCButtonTopPadding, before: termsAndConditionsButton)
+        }
 
         setupLayout()
     }
@@ -208,9 +201,9 @@ extension LayoutHelper {
         static let stackViewPadding: CGFloat = 25
         static let codeLabelTopPadding: CGFloat = 48
         static let headerLabelTopPadding: CGFloat = 30
-        static let subtextLabelTopPadding: CGFloat = 4
+        static let subtextLabelTopPadding: CGFloat = 25
+        static let subtextLabelUnderHeaderTopPadding: CGFloat = 4
         static let dateLabelsTopPadding: CGFloat = 8
         static let tAndCButtonTopPadding: CGFloat = 30
-        static let privacyPolicyButtonTopPadding: CGFloat = 34
     }
 }

@@ -45,7 +45,7 @@ class PLRRewardDetailViewModel {
     }
 
     var subtextString: String? {
-        return voucher.subtext
+        return "Spend \(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0) with us and you'll get a \(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0) \(voucher.burn?.type ?? "")."
     }
 
     var issuedDateString: String? {
@@ -71,7 +71,7 @@ class PLRRewardDetailViewModel {
     }
 
     var shouldShowSubtext: Bool {
-        return false
+        return true
     }
 
     var shouldShowIssuedDate: Bool {
@@ -84,6 +84,17 @@ class PLRRewardDetailViewModel {
 
     var shouldShowExpiredDate: Bool {
         return voucherState == .expired
+    }
+
+    var shouldShowTermsAndConditionsButton: Bool {
+        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return false }
+        var shouldDisplay = false
+        planDocuments.forEach {
+            if $0.display.contains(LinkingSupportType.voucher.rawValue) {
+                shouldDisplay = true
+            }
+        }
+        return shouldDisplay
     }
 
     // MARK: - Helpers
