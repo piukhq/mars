@@ -82,7 +82,7 @@ class PLRRewardDetailViewModel {
     }
 
     var shouldShowIssuedDate: Bool {
-        return voucherState == .issued
+        return voucherState == .issued || voucherState == .expired
     }
 
     var shouldShowRedeemedDate: Bool {
