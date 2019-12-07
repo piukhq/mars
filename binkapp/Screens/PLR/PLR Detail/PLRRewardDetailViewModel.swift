@@ -45,7 +45,14 @@ class PLRRewardDetailViewModel {
     }
 
     var subtextString: String? {
-        return "Spend \(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0) with us and you'll get a \(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0) \(voucher.burn?.type ?? "")."
+        switch voucherState {
+        case .inProgress:
+            return "Spend \(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0) with us and you'll get a \(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0) \(voucher.burn?.type ?? "")."
+        case .issued:
+            return "Use the code above to redeem your reward. You will get \(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") off your purchase."
+        default:
+            return nil
+        }
     }
 
     var issuedDateString: String? {

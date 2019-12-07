@@ -136,7 +136,8 @@ private extension PLRRewardDetailViewController {
             NSLayoutConstraint.activate([
                 subtextLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             ])
-            stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.subtextLabelTopPadding, before: subtextLabel)
+            let topPadding = viewModel.shouldShowHeader ? LayoutHelper.PLRRewardDetail.subtextLabelUnderHeaderTopPadding : LayoutHelper.PLRRewardDetail.subtextLabelTopPadding
+            stackScrollView.customPadding(topPadding, before: subtextLabel)
         }
 
         if viewModel.shouldShowIssuedDate {
