@@ -12,6 +12,7 @@ public enum CD_PlanDocumentAttributes: String {
 }
 
 public enum CD_PlanDocumentRelationships: String {
+    case display = "display"
     case planAccount = "planAccount"
 }
 
@@ -60,7 +61,42 @@ open class _CD_PlanDocument: CD_BaseObject {
     // MARK: - Relationships
 
     @NSManaged open
+    var display: NSSet
+
+    open func displaySet() -> NSMutableSet {
+        return self.display.mutableCopy() as! NSMutableSet
+    }
+
+    @NSManaged open
     var planAccount: CD_MembershipPlanAccount?
+
+}
+
+extension _CD_PlanDocument {
+
+    open func addDisplay(_ objects: NSSet) {
+        let mutable = self.display.mutableCopy() as! NSMutableSet
+        mutable.union(objects as Set<NSObject>)
+        self.display = mutable.copy() as! NSSet
+    }
+
+    open func removeDisplay(_ objects: NSSet) {
+        let mutable = self.display.mutableCopy() as! NSMutableSet
+        mutable.minus(objects as Set<NSObject>)
+        self.display = mutable.copy() as! NSSet
+    }
+
+    open func addDisplayObject(_ value: CD_LinkingSupport) {
+        let mutable = self.display.mutableCopy() as! NSMutableSet
+        mutable.add(value)
+        self.display = mutable.copy() as! NSSet
+    }
+
+    open func removeDisplayObject(_ value: CD_LinkingSupport) {
+        let mutable = self.display.mutableCopy() as! NSMutableSet
+        mutable.remove(value)
+        self.display = mutable.copy() as! NSSet
+    }
 
 }
 

@@ -16,38 +16,56 @@ class CheckboxView: CustomView {
     typealias TextAction = () -> ()
     @IBOutlet private weak var checkboxView: M13Checkbox!
     @IBOutlet private weak var titleLabel: UILabel!
- 
+    @IBOutlet private weak var textView: UITextView!
+
     private(set) var optional: Bool = false
     private(set) var columnName: String?
     private(set) var columnKind: FormField.ColumnKind?
     private(set) var textSelected: TextAction?
-    private(set) var title: String?
+    private(set) var title: String? {
+        didSet {
+            textView.text = title
+        }
+    }
     
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: .textSelected)
     
     weak var delegate: CheckboxViewDelegate?
     
-    func configure(title: String? = nil, attributedTitle: NSAttributedString? = nil, columnName: String, columnKind: FormField.ColumnKind, delegate: CheckboxViewDelegate? = nil, optional: Bool = false, textSelected: TextAction? = nil) {
+    func configure(title: String, columnName: String, columnKind: FormField.ColumnKind, url: URL? = nil, delegate: CheckboxViewDelegate? = nil, optional: Bool = false, textSelected: TextAction? = nil) {
         checkboxView.boxType = .square
         checkboxView.stateChangeAnimation = .flat(.fill)
         self.columnName = columnName
-        self.title = title != nil ? title : attributedTitle?.string
         self.columnKind = columnKind
         self.delegate = delegate
         self.optional = optional
         self.textSelected = textSelected
         
-        titleLabel.font = UIFont.bodyTextSmall
-        
-        if let attributedTitle = attributedTitle {
-            titleLabel.attributedText = attributedTitle
-        } else {
-            titleLabel.text = title
-        }
-        
-        titleLabel.addGestureRecognizer(tapGesture)
-        titleLabel.isUserInteractionEnabled = true
         checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
+
+        if let safeUrl = url {
+            let attributedString = NSMutableAttributedString(string: title)
+            attributedString.addAttribute(.link, value: safeUrl, range: NSRange(location: title.count - columnName.count, length: columnName.count))
+            textView.attributedText = attributedString
+        } else {
+            self.title = title
+        }
+
+        textView.font = UIFont.bodyTextSmall
+    }
+    
+    override func configureUI() {
+        textView.isUserInteractionEnabled = true
+        textView.delegate = self
+        textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
+        checkboxView.boxType = .square
+        checkboxView.stateChangeAnimation = .flat(.fill)
+    }
+}
+
+extension CheckboxView: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return true
     }
     
     var jsonValue: String {
@@ -67,7 +85,7 @@ extension CheckboxView: InputValidation {
     @objc func checkboxValueChanged(_ sender: Any) {
         let isChecked = checkboxView.checkState == .checked
         
-        guard let columnType = columnKind, let columnName = title else { return }
+        guard let columnType = columnKind, let columnName = textView.text else { return }
         delegate?.checkboxView(self, didCompleteWithColumn: columnName, value: String(isChecked), fieldType: columnType)
     }
 }

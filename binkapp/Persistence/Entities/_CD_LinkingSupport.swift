@@ -10,6 +10,7 @@ public enum CD_LinkingSupportAttributes: String {
 
 public enum CD_LinkingSupportRelationships: String {
     case featureSet = "featureSet"
+    case planDocument = "planDocument"
 }
 
 open class _CD_LinkingSupport: CD_BaseObject {
@@ -49,6 +50,9 @@ open class _CD_LinkingSupport: CD_BaseObject {
 
     @NSManaged open
     var featureSet: CD_FeatureSet?
+
+    @NSManaged open
+    var planDocument: CD_PlanDocument?
 
 }
 
