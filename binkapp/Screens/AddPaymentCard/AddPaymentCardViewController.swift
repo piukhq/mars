@@ -122,16 +122,8 @@ class AddPaymentCardViewController: BaseFormViewController {
 extension AddPaymentCardViewController: PaymentTermsAndConditionsViewControllerDelegate {
     func paymentTermsAndConditionsViewControllerDidAccept(_ viewController: PaymentTermsAndConditionsViewController) {
         addButton.startLoading()
-        viewModel.addPaymentCard { [weak self] success in
-            if success {
-                Current.wallet.refreshLocal()
-                // We post the notification so that we can switch tabs if necessary
-                NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
-                self?.viewModel.popToRootViewController()
-            } else {
-                self?.addButton.stopLoading()
-                self?.viewModel.displayError()
-            }
+        viewModel.addPaymentCard { [weak self] in
+            self?.addButton.stopLoading()
         }
     }
 }

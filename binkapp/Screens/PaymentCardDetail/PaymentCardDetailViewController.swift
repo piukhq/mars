@@ -99,7 +99,10 @@ class PaymentCardDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popToRoot))
+        self.navigationItem.leftBarButtonItem = backButton
+        
         configureUI()
         setupTables()
 
@@ -201,6 +204,10 @@ private extension PaymentCardDetailViewController {
         self.addedCardsTableView.reloadData()
         self.otherCardsTableView.reloadData()
         Current.wallet.refreshLocal()
+    }
+    
+    @objc func popToRoot() {
+        viewModel.popToRootViewController()
     }
 }
 
