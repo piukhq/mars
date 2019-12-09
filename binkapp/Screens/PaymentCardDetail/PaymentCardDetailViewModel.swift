@@ -164,6 +164,10 @@ class PaymentCardDetailViewModel {
         router.toPrivacyAndSecurityViewController()
     }
 
+    func popToRootViewController(){
+        router.popToRootViewController()
+    }
+    
     func deletePaymentCard() {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }

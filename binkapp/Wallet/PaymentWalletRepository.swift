@@ -36,23 +36,26 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
     }
 
-    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, completion: @escaping (Bool) -> Void) {
+    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping() -> Void) {
         guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard) else {
             return
         }
 
         apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask { context in
-                response.mapToCoreData(context, .update, overrideID: nil)
-
+                let newObject = response.mapToCoreData(context, .update, overrideID: nil)
+                
                 try? context.save()
-
+                
                 DispatchQueue.main.async {
-                    completion(true)
+                    Current.database.performTask(with: newObject) { (context, safeObject) in
+                        onSuccess(safeObject)
+                    }
                 }
             }
         }, onError: { error in
-            completion(false)
+            print(error)
+            onError()
         })
     }
 }

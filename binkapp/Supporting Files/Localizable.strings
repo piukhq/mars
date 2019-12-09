@@ -9,6 +9,8 @@
 "to_be_implemented_message" = "To be implemented";
 "info_title" = "Info";
 "done" = "Done";
+"oops" = "Oops";
+"went_wrong" = "Something went wrong.";
 
 "linked_status_image_name" = "linked";
 "unlinked_status_image_name" = "unlinked";
