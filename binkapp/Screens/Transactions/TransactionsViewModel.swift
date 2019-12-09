@@ -41,8 +41,8 @@ struct TransactionsViewModel {
     }
     
     func brandHeaderWasTapped() {
-        let title: String = membershipCard.membershipPlan?.account?.planNameCard ?? ""
-        let description: String = membershipCard.membershipPlan?.account?.planDescription ?? ""
+        let title = membershipCard.membershipPlan?.account?.planName ?? ""
+        let description = membershipCard.membershipPlan?.account?.planDescription ?? ""
         
         let attributedString = NSMutableAttributedString()
         let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])

@@ -9,6 +9,8 @@
 "to_be_implemented_message" = "To be implemented";
 "info_title" = "Info";
 "done" = "Done";
+"oops" = "Oops";
+"went_wrong" = "Something went wrong.";
 
 "linked_status_image_name" = "linked";
 "unlinked_status_image_name" = "unlinked";
@@ -211,6 +213,12 @@
 "pll_error_title" = "Error";
 "pll_error_message" = "Unfortunately some of your cards failed to link, please try again later.";
 
+// MARK: - Preferences
+"preferences_screen_description" = "Make sure you’re the first to know about available rewards, offers and updates!";
+"preferences_marketing_checkbox" = "Receive marketing messages";
+"preferences_retrieve_fail" = "Cannot retrieve your preferences at the moment. Please try again later.";
+"preferences_update_fail" = "We can't update your preferences at the moment. Please try again later.";
+
 // MARK: - Buttons
 "continue_with_facebook_button" = "Continue with Facebook";
 "signup_with_email_button" = "Sign up with email";
@@ -275,7 +283,7 @@
 
 "access_form_password_title" = "Password";
 "access_form_password_placeholder" = "Enter password";
-"access_form_password_validation" = "Must contain at least 8 characters, including 1 uppercase, 1 lowercase and a number";
+"access_form_password_validation" = "Password should be 8 or more characters, with at least 1 uppercase, 1 lowercase and a number";
 
 "access_form_confirm_password_title" = "Confirm password";
 "access_form_confirm_password_placeholder" = "Confirm password";

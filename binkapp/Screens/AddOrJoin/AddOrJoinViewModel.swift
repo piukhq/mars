@@ -61,7 +61,7 @@ class AddOrJoinViewModel {
     }
     
     func brandHeaderWasTapped() {
-        let title: String = membershipPlan.account?.planNameCard ?? ""
+        let title: String = membershipPlan.account?.planName ?? ""
         let description: String = membershipPlan.account?.planDescription ?? ""
         
         let attributedString = NSMutableAttributedString()

@@ -161,6 +161,11 @@ extension SettingsViewController: UITableViewDelegate {
                     debugMenuFactory.delegate = debugMenuViewController
                     navigationController?.pushViewController(debugMenuViewController, animated: true)
                     break
+                case is PreferencesViewController.Type:
+                    let repository = PreferencesRepository(apiManager: viewModel.router.apiManager)
+                    let viewModel = PreferencesViewModel(repository: repository, router: self.viewModel.router)
+                    let viewController = PreferencesViewController(viewModel: viewModel)
+                    navigationController?.pushViewController(viewController, animated: true)
                 default:
                     print("Unsupported VC for presentation")
                     break

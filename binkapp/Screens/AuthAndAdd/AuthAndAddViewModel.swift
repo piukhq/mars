@@ -279,8 +279,8 @@ class AuthAndAddViewModel {
     }
     
     func brandHeaderWasTapped() {
-        let title: String = membershipPlan.account?.planNameCard ?? ""
-        let description: String = membershipPlan.account?.planDescription ?? ""
+        let title = membershipPlan.account?.planName ?? ""
+        let description = membershipPlan.account?.planDescription ?? ""
         
         toReusableTemplate(title: title, description: description)
     }

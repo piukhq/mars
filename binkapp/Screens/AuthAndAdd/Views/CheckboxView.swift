@@ -68,12 +68,39 @@ extension CheckboxView: UITextViewDelegate {
         return true
     }
     
-    var jsonValue: String {
+    var value: String {
         return checkboxView.checkState == .checked ? "1" : "0"
+    }
+    
+    func setValue(newValue: String) {
+        switch newValue {
+        case "0":
+            checkboxView.checkState = .unchecked
+            break
+        case "1":
+            checkboxView.checkState = .checked
+            break
+        default:
+            checkboxView.checkState = .unchecked
+            break
+        }
     }
     
     @objc func textSelectedSelector() {
         textSelected?()
+    }
+    
+    func toggleState() {
+        switch checkboxView.checkState {
+        case .checked:
+            checkboxView.checkState = .unchecked
+            break
+        case .unchecked:
+            checkboxView.checkState = .checked
+            break
+        case .mixed:
+            break
+        }
     }
 }
 
