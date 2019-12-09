@@ -262,7 +262,7 @@ class MainScreenRouter {
     
     @objc func appWillResignActive() {
         guard let visibleVC = navController?.getVisibleViewController() else { return }
-        if visibleVC.isKind(of: UIAlertController.self) == true {
+        if visibleVC.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: UIAlertController.self) == true {
             //Dismiss alert controller before presenting the Launch screen.
             visibleVC.dismiss(animated: false, completion: nil)
         }
