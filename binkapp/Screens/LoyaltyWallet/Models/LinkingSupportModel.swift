@@ -13,6 +13,7 @@ enum LinkingSupportType: String, Codable {
     case add = "ADD"
     case registration = "REGISTRATION"
     case enrol = "ENROL"
+    case voucher = "VOUCHER"
 
     var apiId: Int? {
         return nil // This will force CoreDataIDMappable to kick in and give this object a computed id based on the parent object

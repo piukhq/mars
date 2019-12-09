@@ -288,3 +288,13 @@
 "access_form_confirm_password_title" = "Confirm password";
 "access_form_confirm_password_placeholder" = "Confirm password";
 "access_form_confirm_password_validation" = "Passwords do not match";
+
+// MARK: - PLR
+"plr_voucher_detail_tandc_button_title" = "Terms & Conditions";
+"plr_voucher_detail_privacy_button_title" = "Privacy Policy";
+"plr_voucher_detail_issued_header" = "Your %@ is ready!";
+"plr_voucher_detail_redeemed_header" = "Your %@ was redeemed";
+"plr_voucher_detail_expired_header" = "Your %@ has expired";
+"plr_voucher_detail_issued_date_prefix" = "Added ";
+"plr_voucher_detail_redeemed_date_prefix" = "Redeemed ";
+"plr_voucher_detail_expired_date_prefix" = "Expired ";

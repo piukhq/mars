@@ -63,7 +63,9 @@ class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
     }()
 
     private lazy var plrCollectionView: NestedCollectionView = {
-        let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 12
+        let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.isScrollEnabled = false
@@ -275,6 +277,8 @@ extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryD
             viewModel.toSecurityAndPrivacyScreen()
         case .deleteMembershipCard:
             viewModel.deleteMembershipCard()
+        case .rewardsHistory:
+            viewModel.toRewardsHistoryScreen()
         default:
             return
         }
@@ -318,7 +322,12 @@ extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 50, height: 188)
+        return CGSize(width: collectionView.frame.width - (LayoutHelper.LoyaltyCardDetail.contentPadding * 2), height: LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let voucher = viewModel.voucherForIndexPath(indexPath) else { return }
+        viewModel.toVoucherDetailScreen(voucher: voucher)
     }
 }
 

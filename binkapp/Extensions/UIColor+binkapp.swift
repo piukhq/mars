@@ -49,6 +49,10 @@ extension UIColor {
         return UIColor(red: 0/255, green: 193/255, blue: 118/255, alpha: 1)
     }
 
+    class var blueInactive: UIColor {
+        return UIColor(red: 177/255, green: 194/255, blue: 203/255, alpha: 1)
+    }
+
     static var facebookButton: UIColor {
         return UIColor(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
     }

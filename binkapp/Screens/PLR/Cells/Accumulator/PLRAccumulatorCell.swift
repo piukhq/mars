@@ -39,7 +39,7 @@ class PLRAccumulatorCell: PLRBaseCollectionViewCell {
         case .inProgress:
             return .amberPending
         case .expired, .none:
-            return .init(red: 177/255, green: 194/255, blue: 203/255, alpha: 1)
+            return .blueInactive
         }
     }
 }

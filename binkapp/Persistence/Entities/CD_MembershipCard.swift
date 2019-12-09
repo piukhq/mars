@@ -16,7 +16,10 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
     }
 
     var sortedVouchers: [CD_Voucher]? {
-        return vouchers.allObjects as? [CD_Voucher]
+        guard let vouchers = vouchers.allObjects as? [CD_Voucher] else { return nil }
+        return vouchers.sorted { (voucher1, voucher2) -> Bool in
+            return voucher1.id < voucher2.id
+        }
     }
 
     // State == .issued or .inProgress
