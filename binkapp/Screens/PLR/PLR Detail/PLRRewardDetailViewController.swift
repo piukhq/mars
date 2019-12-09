@@ -98,15 +98,15 @@ class PLRRewardDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        title = viewModel.title
-
         setupUI()
     }
 }
 
 private extension PLRRewardDetailViewController {
     func setupUI() {
+        view.backgroundColor = .white
+        title = viewModel.title
+
         voucher.configureWithViewModel(viewModel.voucherCellViewModel)
         stackScrollView.add(arrangedSubviews: [voucher])
 

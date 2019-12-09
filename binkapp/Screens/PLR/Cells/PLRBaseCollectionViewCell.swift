@@ -10,7 +10,6 @@ import UIKit
 
 class PLRBaseCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var containerView: UIView!
-    @IBOutlet private weak var infoButton: UIButton!
     @IBOutlet private weak var voucherAmountLabel: UILabel!
     @IBOutlet private weak var headlineLabel: UILabel!
     @IBOutlet private weak var voucherDescriptionLabel: UILabel!
