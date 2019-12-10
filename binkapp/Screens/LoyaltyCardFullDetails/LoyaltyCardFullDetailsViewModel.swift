@@ -75,7 +75,7 @@ class LoyaltyCardFullDetailsViewModel {
             //TODO: change to login changes screen after is implemented
             guard let membershipPlan = membershipCard.membershipPlan else { return }
 //            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .loginFailed, existingMembershipCard: membershipCard)
-            router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+            router.toAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
             break
         case .transactions:
             router.toTransactionsViewController(membershipCard: membershipCard)

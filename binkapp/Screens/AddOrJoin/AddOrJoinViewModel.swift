@@ -9,10 +9,12 @@ import UIKit
 
 class AddOrJoinViewModel {
     private let membershipPlan: CD_MembershipPlan
+    private let membershipCard: CD_MembershipCard?
     private let router: MainScreenRouter
     
-    init(membershipPlan: CD_MembershipPlan, router: MainScreenRouter) {
+    init(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil, router: MainScreenRouter) {
         self.membershipPlan = membershipPlan
+        self.membershipCard = membershipCard
         self.router = router
     }
     
@@ -31,7 +33,11 @@ class AddOrJoinViewModel {
             return
         }
         
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
+        guard let existingCard = membershipCard else {
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
+            return
+        }
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingCard)
     }
     
     func toNativeJoinUnavailable() {

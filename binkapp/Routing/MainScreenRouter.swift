@@ -104,8 +104,8 @@ class MainScreenRouter {
         navController?.present(navigationController,  animated: true, completion: completion)
     }
     
-    func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan) {
-        let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, router: self)
+    func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) {
+        let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard, router: self)
         let viewController = AddOrJoinViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }

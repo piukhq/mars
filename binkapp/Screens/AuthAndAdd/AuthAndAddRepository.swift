@@ -23,16 +23,25 @@ class AuthAndAddRepository {
     func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (Error?) -> ()) {
         let url: RequestURL
         let method: RequestHTTPMethod
-        switch formPurpose {
-        case .loginFailed:
-            url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
+        
+        if let existingCard = existingMembershipCard {
+            url = .membershipCard(cardId: existingCard.id)
             method = .put
-            break
-        default:
+        } else {
             url = .membershipCards
             method = .post
-            break
         }
+        
+//        switch formPurpose {
+//        case .loginFailed:
+//            url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
+//            method = .put
+//            break
+//        default:
+//            url = .membershipCards
+//            method = .post
+//            break
+//        }
         
         apiManager.doRequest(url: url, httpMethod: method, headers: nil, parameters: request, onSuccess: { (response: MembershipCardModel) in
             // Map to core data
