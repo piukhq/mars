@@ -24,7 +24,7 @@ class PLRCellViewModel {
     }
 
     var voucherDescriptionText: String? {
-        return "for spending \(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)"
+        return String(format: "plr_voucher_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue ?? 0.0)
     }
 
     var headlineText: String? {
@@ -52,9 +52,9 @@ class PLRCellViewModel {
         guard let type = earnType else { return nil }
         switch type {
         case .accumulator:
-            return "Spent"
+            return "plr_voucher_earn_value_title".localized
         case .stamp:
-            return "Collected"
+            return ""
         }
     }
 
@@ -67,7 +67,7 @@ class PLRCellViewModel {
         guard let type = earnType else { return nil }
         switch type {
         case .accumulator:
-            return "Goal"
+            return "plr_voucher_earn_target_value_title".localized
         case .stamp:
             return ""
         }
@@ -81,9 +81,9 @@ class PLRCellViewModel {
     var dateText: String? {
         switch voucherState {
         case .expired:
-            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear, prefix: "on ")
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear, prefix: "plr_voucher_date_prefix".localized)
         case .redeemed:
-            return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear, prefix: "on ")
+            return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear, prefix: "plr_voucher_date_prefix".localized)
         default:
             return nil
         }
