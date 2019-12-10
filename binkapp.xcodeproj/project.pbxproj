@@ -66,6 +66,11 @@
 		3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE622F073CE00FA3031 /* LoyaltyWalletViewModel.swift */; };
 		3C8BBC27232651E900363349 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8BBC26232651E900363349 /* Connectivity.swift */; };
 		3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8BBC282326541D00363349 /* NotificationNameExtension.swift */; };
+		3C93975D2386A2E00063C0B3 /* PreferencesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93975C2386A2E00063C0B3 /* PreferencesModel.swift */; };
+		3C9B1A2223854B9D0078A1EC /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9B1A2023854B9D0078A1EC /* PreferencesViewController.swift */; };
+		3C9B1A2323854B9D0078A1EC /* PreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9B1A2123854B9D0078A1EC /* PreferencesViewController.xib */; };
+		3C9B1A2723854BF60078A1EC /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9B1A2623854BF60078A1EC /* PreferencesViewModel.swift */; };
+		3C9B1A2923854C040078A1EC /* PreferencesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9B1A2823854C040078A1EC /* PreferencesRepository.swift */; };
 		3C9CCD2D2316958300FAF589 /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9CCD2C2316958300FAF589 /* CheckboxView.swift */; };
 		3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9CCD2E231695AE00FAF589 /* CheckboxView.xib */; };
 		3CADDEAF231566C9006C3D9C /* LoginTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CADDEAE231566C9006C3D9C /* LoginTextFieldView.swift */; };
@@ -200,7 +205,7 @@
 		BD9E4CD623738B4900C6F098 /* PreferenceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */; };
 		BD9E4CD823740A7500C6F098 /* PreferenceChangeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD723740A7500C6F098 /* PreferenceChangeResponse.swift */; };
 		BD9E4CDA2375B45B00C6F098 /* bink-com.der in Resources */ = {isa = PBXBuildFile; fileRef = BD9E4CD92375B45900C6F098 /* bink-com.der */; };
-		BD9FB68B2333DE3E00E5559A /* String+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68A2333DE3E00E5559A /* String+Random.swift */; };
+		BD9FB68B2333DE3E00E5559A /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68A2333DE3E00E5559A /* StringExtension.swift */; };
 		BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */; };
 		BD9FB6B223380C0900E5559A /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */; };
 		BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B32338120700E5559A /* TransactionsViewController.swift */; };
@@ -365,9 +370,7 @@
 		EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */; };
 		EFB7ED5C2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */; };
 		EFB7ED612379CA4000B72D06 /* PLRRewardsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */; };
-		EFB7ED622379CA4000B72D06 /* PLRRewardsHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */; };
 		EFB7ED652379CA5900B72D06 /* PLRRewardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */; };
-		EFB7ED662379CA5900B72D06 /* PLRRewardDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */; };
 		EFBDB103237B1468002D7898 /* CALayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBDB102237B1468002D7898 /* CALayerExtension.swift */; };
 		EFCAF91A2371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF9182371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.swift */; };
 		EFCAF91B2371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCAF9192371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib */; };
@@ -381,6 +384,7 @@
 		EFEB5BF7237DCA5A00E18743 /* PLRAccumulatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF6237DCA5A00E18743 /* PLRAccumulatorCell.swift */; };
 		EFEB5BF9237E062500E18743 /* PLRStampsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF8237E062500E18743 /* PLRStampsCell.swift */; };
 		EFEB5BFD237E96F500E18743 /* CGFloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */; };
+		EFEB5BFF2382984B00E18743 /* HyperlinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BFE2382984B00E18743 /* HyperlinkButton.swift */; };
 		EFEB5C0123853B7900E18743 /* WalletRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5C0023853B7900E18743 /* WalletRefreshManager.swift */; };
 		EFF59F15234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */; };
 		EFF59F16234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFF59F14234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib */; };
@@ -479,6 +483,11 @@
 		3C873FE622F073CE00FA3031 /* LoyaltyWalletViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletViewModel.swift; sourceTree = "<group>"; };
 		3C8BBC26232651E900363349 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		3C8BBC282326541D00363349 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
+		3C93975C2386A2E00063C0B3 /* PreferencesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesModel.swift; sourceTree = "<group>"; };
+		3C9B1A2023854B9D0078A1EC /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		3C9B1A2123854B9D0078A1EC /* PreferencesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesViewController.xib; sourceTree = "<group>"; };
+		3C9B1A2623854BF60078A1EC /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
+		3C9B1A2823854C040078A1EC /* PreferencesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesRepository.swift; sourceTree = "<group>"; };
 		3C9CCD2C2316958300FAF589 /* CheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
 		3C9CCD2E231695AE00FAF589 /* CheckboxView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckboxView.xib; sourceTree = "<group>"; };
 		3CADDEAE231566C9006C3D9C /* LoginTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextFieldView.swift; sourceTree = "<group>"; };
@@ -636,7 +645,7 @@
 		BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceResponse.swift; sourceTree = "<group>"; };
 		BD9E4CD723740A7500C6F098 /* PreferenceChangeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceChangeResponse.swift; sourceTree = "<group>"; };
 		BD9E4CD92375B45900C6F098 /* bink-com.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bink-com.der"; sourceTree = "<group>"; };
-		BD9FB68A2333DE3E00E5559A /* String+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Random.swift"; sourceTree = "<group>"; };
+		BD9FB68A2333DE3E00E5559A /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILayoutPriority+Extension.swift"; sourceTree = "<group>"; };
 		BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
 		BD9FB6B32338120700E5559A /* TransactionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
@@ -808,9 +817,7 @@
 		EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRStampsInactiveCell.xib; sourceTree = "<group>"; };
 		EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRBaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardsHistoryViewController.swift; sourceTree = "<group>"; };
-		EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRRewardsHistoryViewController.xib; sourceTree = "<group>"; };
 		EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewController.swift; sourceTree = "<group>"; };
-		EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRRewardDetailViewController.xib; sourceTree = "<group>"; };
 		EFBDB102237B1468002D7898 /* CALayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayerExtension.swift; sourceTree = "<group>"; };
 		EFCAF9182371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLoyaltyCardStatusCell.swift; sourceTree = "<group>"; };
 		EFCAF9192371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailLoyaltyCardStatusCell.xib; sourceTree = "<group>"; };
@@ -824,6 +831,7 @@
 		EFEB5BF6237DCA5A00E18743 /* PLRAccumulatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRAccumulatorCell.swift; sourceTree = "<group>"; };
 		EFEB5BF8237E062500E18743 /* PLRStampsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRStampsCell.swift; sourceTree = "<group>"; };
 		EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
+		EFEB5BFE2382984B00E18743 /* HyperlinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkButton.swift; sourceTree = "<group>"; };
 		EFEB5C0023853B7900E18743 /* WalletRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRefreshManager.swift; sourceTree = "<group>"; };
 		EFF59F13234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLinkLoyaltyCardCell.swift; sourceTree = "<group>"; };
 		EFF59F14234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailLinkLoyaltyCardCell.xib; sourceTree = "<group>"; };
@@ -1063,6 +1071,18 @@
 			path = BrowseBrands;
 			sourceTree = "<group>";
 		};
+		3C9B1A1F23854B820078A1EC /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				3C93975C2386A2E00063C0B3 /* PreferencesModel.swift */,
+				3C9B1A2823854C040078A1EC /* PreferencesRepository.swift */,
+				3C9B1A2623854BF60078A1EC /* PreferencesViewModel.swift */,
+				3C9B1A2023854B9D0078A1EC /* PreferencesViewController.swift */,
+				3C9B1A2123854B9D0078A1EC /* PreferencesViewController.xib */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		3CA0CBA723141C610055FDE8 /* AuthAndAdd */ = {
 			isa = PBXGroup;
 			children = (
@@ -1207,6 +1227,7 @@
 				BDB01883232EB14A00BFFA18 /* StackScrollView.swift */,
 				EF46E287235E01DD00BA2CAF /* BinkPillButton.swift */,
 				EFA5F6C1237467CC0027AB80 /* NestedTableView.swift */,
+				EFEB5BFE2382984B00E18743 /* HyperlinkButton.swift */,
 			);
 			name = BinkUI;
 			path = Screens/BinkUI;
@@ -1455,7 +1476,7 @@
 				BD1E7289232AB91C002CC85E /* UIAlertController+Extension.swift */,
 				BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */,
 				BDB01879232E144C00BFFA18 /* Array+Extension.swift */,
-				BD9FB68A2333DE3E00E5559A /* String+Random.swift */,
+				BD9FB68A2333DE3E00E5559A /* StringExtension.swift */,
 				BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */,
 				BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */,
 				3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */,
@@ -1538,6 +1559,7 @@
 		BD99D2D6234FDF1B00823FC4 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				3C9B1A1F23854B820078A1EC /* Preferences */,
 				BD99D2E02354943900823FC4 /* View */,
 				BD99D2D7234FDF2C00823FC4 /* SettingsViewController.swift */,
 				BD99D2D9234FDF6F00823FC4 /* SettingsViewModel.swift */,
@@ -1972,7 +1994,6 @@
 			isa = PBXGroup;
 			children = (
 				EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */,
-				EFB7ED642379CA5900B72D06 /* PLRRewardDetailViewController.xib */,
 				EFEB5BF0237C7BA300E18743 /* PLRRewardDetailViewModel.swift */,
 			);
 			path = "PLR Detail";
@@ -1982,7 +2003,6 @@
 			isa = PBXGroup;
 			children = (
 				EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */,
-				EFB7ED602379CA4000B72D06 /* PLRRewardsHistoryViewController.xib */,
 				EFEB5BF2237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift */,
 			);
 			path = "PLR History";
@@ -2223,13 +2243,13 @@
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
+				3C9B1A2323854B9D0078A1EC /* PreferencesViewController.xib in Resources */,
 				EFB7ED662379CA5900B72D06 /* PLRRewardDetailViewController.xib in Resources */,
 				3CD3493822F99E1D000C1F4D /* NunitoSans-Regular.ttf in Resources */,
 				3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */,
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,
 				EFF59F25234DEE8E00CF3992 /* DetailNavigationTitleView.xib in Resources */,
 				EFA5F7632379BD520027AB80 /* PLRAccumulatorInactiveCell.xib in Resources */,
-				EFB7ED622379CA4000B72D06 /* PLRRewardsHistoryViewController.xib in Resources */,
 				EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */,
 				3CD3493E22F99E1D000C1F4D /* NunitoSans-Black.ttf in Resources */,
 				EFA5F7672379BD690027AB80 /* PLRStampsActiveCell.xib in Resources */,
@@ -2503,6 +2523,7 @@
 				EFA5F70F2379A7C70027AB80 /* CD_MembershipPlanImage.swift in Sources */,
 				BD9FB68B2333DE3E00E5559A /* String+Random.swift in Sources */,
 				EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */,
+				BD9FB68B2333DE3E00E5559A /* StringExtension.swift in Sources */,
 				EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */,
 				EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */,
 				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,
@@ -2525,6 +2546,7 @@
 				EFA5F7352379A7C70027AB80 /* CD_MembershipCardAmount.swift in Sources */,
 				BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */,
 				EFA5F72F2379A7C70027AB80 /* _CD_App.swift in Sources */,
+				3C9B1A2923854C040078A1EC /* PreferencesRepository.swift in Sources */,
 				B726334B23058A5C00951037 /* FeatureSetModel.swift in Sources */,
 				BD01E125231FA3A900D52713 /* BarBlur.swift in Sources */,
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
@@ -2559,6 +2581,8 @@
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				EF46E288235E01DD00BA2CAF /* BinkPillButton.swift in Sources */,
 				BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */,
+				EFA5F72D2379A7C70027AB80 /* CD_PlanDocument.swift in Sources */,
+				3C9B1A2223854B9D0078A1EC /* PreferencesViewController.swift in Sources */,
 				3CEABFCA2316AB42009B1122 /* MembershipTransaction.swift in Sources */,
 				B7E2EC0A22E7050800BB201A /* TimeInterval+StringConversion.swift in Sources */,
 				BD9E4CD823740A7500C6F098 /* PreferenceChangeResponse.swift in Sources */,
@@ -2574,6 +2598,7 @@
 				EFA5F71D2379A7C70027AB80 /* CD_Tier.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,
 				EFA5F7162379A7C70027AB80 /* _CD_PaymentCard.swift in Sources */,
+				3C9B1A2723854BF60078A1EC /* PreferencesViewModel.swift in Sources */,
 				3C7AF52B23757FB0005964E0 /* FloatExtension.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
 				EFF59F19234B73C900CF3992 /* CardDetailInfoTableViewCell.swift in Sources */,
@@ -2644,6 +2669,7 @@
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
 				EFA5F7452379A7C70027AB80 /* _CD_PaymentCardAccountConsents.swift in Sources */,
 				EFA5F7312379A7C70027AB80 /* CD_Balance.swift in Sources */,
+				EFEB5BFF2382984B00E18743 /* HyperlinkButton.swift in Sources */,
 				B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */,
 				BD99D2DF2350E4BD00823FC4 /* SettingsSection.swift in Sources */,
 				EFA5F7262379A7C70027AB80 /* CD_PaymentCardAccountConsents.swift in Sources */,
@@ -2712,6 +2738,7 @@
 				BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */,
 				EFA5F7172379A7C70027AB80 /* CD_MembershipCard.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
+				3C93975D2386A2E00063C0B3 /* PreferencesModel.swift in Sources */,
 				EFA5F6CD2379A4F00027AB80 /* VoucherModel.swift in Sources */,
 				EF2E8825233A6FCF00F678F3 /* CardAlertView.swift in Sources */,
 				EFA5F75E2379BD3A0027AB80 /* PLRAccumulatorActiveCell.swift in Sources */,

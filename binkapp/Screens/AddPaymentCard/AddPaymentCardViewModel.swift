@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct AddPaymentCardViewModel {
+class AddPaymentCardViewModel {
     private let router: MainScreenRouter
     private let repository: PaymentWalletRepositoryProtocol
     let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
@@ -71,8 +71,17 @@ struct AddPaymentCardViewModel {
         router.toPrivacyAndSecurityViewController()
     }
 
-    func addPaymentCard(completion: @escaping (Bool) -> Void) {
-        repository.addPaymentCard(paymentCard, completion: completion)
+    func addPaymentCard(onError: @escaping () -> Void) {
+        repository.addPaymentCard(paymentCard, onSuccess: { [weak self] response in
+            guard let paymentCard = response, let self = self  else {return}
+            Current.wallet.refreshLocal()
+            // We post the notification so that we can switch tabs if necessary
+            NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
+            self.router.toPaymentCardDetailViewController(paymentCard: paymentCard)
+        }) {
+            onError()
+            self.displayError()
+        }
     }
 
     func popToRootViewController() {
@@ -80,6 +89,6 @@ struct AddPaymentCardViewModel {
     }
 
     func displayError() {
-        router.displaySimplePopup(title: "Oops", message: "Something went wrong.")
+        router.displaySimplePopup(title: "0ops".localized, message: "went_wrong".localized)
     }
 }

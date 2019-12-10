@@ -10,6 +10,8 @@ import Foundation
 
 enum DateFormat: String {
     case dayMonthYear = "dd MMMM YYYY"
+    case dayShortMonthYear = "dd MMM YYYY"
+    case dayShortMonthYear24HourSecond = "dd MMM yyyy HH:mm:ss"
 }
 
 extension Date {

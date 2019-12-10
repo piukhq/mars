@@ -23,8 +23,6 @@ class PaymentTermsAndConditionsViewModel: ReusableModalViewModel {
     }
     
     override func secondaryButtonWasTapped() {
-        router.dismissViewController() { [weak self] in
-            self?.router.popToRootViewController()            
-        }
+        router.dismissViewController()
     }
 }

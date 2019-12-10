@@ -24,7 +24,7 @@ struct SettingsFactory {
         let accountSection = SettingsSection(title: "settings_section_account_title".localized, rows: [
             SettingsRow(
                 title: "settings_row_preferences_title".localized,
-                action: .notImplemented
+                action: .pushToViewController(viewController: PreferencesViewController.self)
             ),
             SettingsRow(
                 title: "settings_row_logout_title".localized,

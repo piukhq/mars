@@ -137,6 +137,10 @@ class LoyaltyCardFullDetailsViewModel {
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
 
+    func toRewardsHistoryScreen() {
+        router.toRewardsHistoryViewController(membershipCard: membershipCard)
+    }
+
     func toAboutMembershipPlanScreen() {
         let config = getBasicReusableConfiguration(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
         router.toReusableModalTemplateViewController(configurationModel: config)
@@ -171,6 +175,13 @@ class LoyaltyCardFullDetailsViewModel {
 
     func voucherForIndexPath(_ indexPath: IndexPath) -> CD_Voucher? {
         return membershipCard.activeVouchers?[indexPath.row]
+    }
+
+    func toVoucherDetailScreen(voucher: CD_Voucher) {
+        guard let plan = membershipCard.membershipPlan else {
+            fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
+        }
+        router.toVoucherDetailViewController(voucher: voucher, plan: plan)
     }
 }
 
