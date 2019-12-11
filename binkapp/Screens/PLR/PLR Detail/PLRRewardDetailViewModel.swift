@@ -67,6 +67,16 @@ class PLRRewardDetailViewModel {
         return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
     }
 
+    var termsAndConditionsButtonTitle: String? {
+        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return nil }
+        // Currently we assume the only plan document for PLR will be terms and conditions
+        // Change this when this is no longer the case
+        let voucherDocument = planDocuments.first { document in
+            document.display.contains(LinkingSupportType.voucher.rawValue)
+        }
+        return voucherDocument?.url
+    }
+
     // MARK: - View decisioning
 
     var shouldShowCode: Bool {
@@ -94,8 +104,8 @@ class PLRRewardDetailViewModel {
     }
 
     var shouldShowTermsAndConditionsButton: Bool {
-        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return false }
         var shouldDisplay = false
+        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return shouldDisplay }
         planDocuments.forEach {
             if $0.display.contains(LinkingSupportType.voucher.rawValue) {
                 shouldDisplay = true

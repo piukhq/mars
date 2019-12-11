@@ -74,7 +74,7 @@ class PLRRewardDetailViewController: UIViewController {
 
     private lazy var termsAndConditionsButton: HyperlinkButton = {
         let button = HyperlinkButton()
-        button.setTitle("plr_voucher_detail_tandc_button_title".localized, for: .normal)
+        button.setTitle(viewModel.termsAndConditionsButtonTitle, for: .normal)
         button.setTitleColor(.blueAccent, for: .normal)
         button.titleLabel?.font = .linkUnderlined
         return button
