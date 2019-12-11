@@ -118,6 +118,8 @@ class LoyaltyCardFullDetailsViewModel {
     
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: "error_title".localized, description: description))
             break
+        case .aboutMembership:
+            toAboutMembershipPlanScreen()
         }
     }
     
