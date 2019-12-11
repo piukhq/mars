@@ -24,14 +24,6 @@ class LoyaltyCardFullDetailsViewModel {
            return "about_membership_title".localized
         }
     }
-    
-    var deleteTitle: String {
-        if let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-            return String(format: "delete_card_plan_title".localized, planNameCard)
-        } else {
-            return "delete_card_title".localized
-        }
-    }
 
     init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter, informationRowFactory: PaymentCardDetailInformationRowFactory) {
         self.router = router
