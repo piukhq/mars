@@ -137,13 +137,17 @@ class AuthAndAddViewModel {
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {
-        populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
+        if existingMembershipCard == nil {
+            populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
+        } else {
+            populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
+        }
         
         guard let model = membershipCardPostModel else {
             return
         }
         
-        repository.postGhostCard(parameters: model, onSuccess: { [weak self] (response) in
+        repository.postGhostCard(parameters: model, existingMembershipCard: existingMembershipCard, onSuccess: { [weak self] (response) in
             guard let card = response else {
                 Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
@@ -156,11 +160,13 @@ class AuthAndAddViewModel {
                 self?.router.toLoyaltyFullDetailsScreen(membershipCard: card)
             }
 
-            self?.populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
             
-            var registrationCard = model
-            registrationCard.account?.addFields = []
-            self?.repository.patchGhostCard(cardId: card.id, parameters: registrationCard)
+            if self?.existingMembershipCard == nil {
+                self?.populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
+                var registrationCard = model
+                registrationCard.account?.addFields = []
+                self?.repository.patchGhostCard(cardId: card.id, parameters: registrationCard)
+            }
 
             Current.wallet.refreshLocal()
             NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
@@ -264,7 +270,7 @@ class AuthAndAddViewModel {
     }
     
     func reloadWith(newFormPuropse: FormPurpose) {
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPuropse)
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPuropse, existingMembershipCard: existingMembershipCard)
     }
     
     func toReusableTemplate(title: String, description: String) {

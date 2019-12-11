@@ -59,8 +59,16 @@ class AuthAndAddRepository {
         }, onError: onError)
     }
     
-    func postGhostCard(parameters: MembershipCardPostModel, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (Error?) -> Void) {
-        apiManager.doRequest(url: .membershipCards, httpMethod: .post, parameters: parameters, onSuccess: { (card: MembershipCardModel) in
+    func postGhostCard(parameters: MembershipCardPostModel, existingMembershipCard: CD_MembershipCard? = nil, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (Error?) -> Void) {
+        var method = RequestHTTPMethod.post
+        var url = RequestURL.membershipCards
+        
+        if let existingCard = existingMembershipCard {
+            method = .put
+            url = .membershipCard(cardId: existingCard.id)
+        }
+        
+        apiManager.doRequest(url: url, httpMethod: method, parameters: parameters, onSuccess: { (card: MembershipCardModel) in
             Current.database.performBackgroundTask { context in
                 let newObject = card.mapToCoreData(context, .update, overrideID: nil)
 
