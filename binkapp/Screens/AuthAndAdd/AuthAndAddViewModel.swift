@@ -137,9 +137,9 @@ class AuthAndAddViewModel {
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil) throws {
-        if existingMembershipCard == nil {
             populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
-        } else {
+            
+        if existingMembershipCard != nil {
             populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
         }
         
