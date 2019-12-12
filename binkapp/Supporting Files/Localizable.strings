@@ -168,8 +168,9 @@
 "terms_and_conditions_description" = "I authorise MasterCard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction for MasterCard, Visa and American Express to share such transaction details with Loyalty Angels Limited to enable my card-linked offer(s) and target offers that may be of interest to me. For information about Loyalty Angels Limited privacy practices, please see our Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.";
 "privacy_policy" = "Privacy Policy";
 
-"native_join_unavailable_title" = "Native join unavailable";
-"native_join_unavailable_description" = "You can go to the merchant website to join then come back and add your card. Or we can email you the link so you can sign up on your computer. Copy needed.";"to_merchant_site_button" = "Go to merchant site";
+"native_join_unavailable_title" = "Sign up currently unavailable";
+"native_join_unavailable_description" = "Go to the %@ website to join then come back and add your card.";
+"to_merchant_site_button" = "Go to merchant site";
 
 "unlinkable_pll_title" = "Payment Linked Loyalty unavailable";
 "unlinkable_pll_description" = "Payment Linked Loyalty (PLL) allows customers’ payment cards to be securely linked to loyalty programmes, enabling every customer to be identified and rewarded every time they shop.\nThis is currently not available for this merchant.";
