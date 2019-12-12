@@ -54,6 +54,7 @@ struct WalletLoyaltyCardCellViewModel {
     var shouldShowLinkStatus: Bool {
         return planCardType == .link
     }
+
     var shouldShowLinkImage: Bool {
         return !linkStatusImageName.isEmpty
     }
@@ -107,7 +108,13 @@ struct WalletLoyaltyCardCellViewModel {
         guard !shouldShowRetryStatus else {
             return "retry_title".localized
         }
-        
+
+        // PLR
+        if membershipPlan?.isPLR == true && cardStatus == .authorised {
+            guard let voucher = membershipCard.activeVouchers?.first else { return "" }
+            return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value ?? 0.0)/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)\(voucher.earn?.suffix ?? "")"
+        }
+
         let floatBalanceValue = balance?.value?.floatValue ?? 0
         
         guard let prefix = balance?.prefix else {
@@ -122,6 +129,10 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var pointsValueSuffixText: String? {
+        // PLR
+        if membershipPlan?.isPLR == true && cardStatus == .authorised {
+            return "plr_loyalty_card_subtitle".localized
+        }
         return balance?.suffix
     }
 }
