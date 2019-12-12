@@ -26,6 +26,18 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     @IBOutlet private weak var cardContainerCenterXConstraint: NSLayoutConstraint!
     @IBOutlet private weak var deleteButton: UIButton!
 
+    private lazy var width: NSLayoutConstraint = {
+        let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
+        width.isActive = true
+        return width
+    }()
+    
+    private lazy var height: NSLayoutConstraint = {
+           let height = contentView.heightAnchor.constraint(equalToConstant: bounds.size.height)
+           height.isActive = true
+           return height
+       }()
+    
     private var cardGradientLayer: CAGradientLayer?
     private var swipeGradientLayer: CAGradientLayer?
     private var startingOffset: CGFloat = 0
@@ -212,6 +224,12 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         cardGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
         cardGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
         cardGradientLayer?.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
+    }
+    
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        width.constant = bounds.size.width
+        height.constant = bounds.size.height
+        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: targetSize.height))
     }
 }
 
