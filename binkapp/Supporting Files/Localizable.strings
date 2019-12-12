@@ -303,8 +303,9 @@
 "plr_lcd_points_module_title" = "Collecting";
 "plr_lcd_points_module_description" = "Towards rewards";
 "plr_voucher_burn_description" = "for spending %@%@";
-"plr_voucher_earn_value_title" = "Spent";
-"plr_voucher_earn_target_value_title" = "Goal";
+"plr_voucher_earn_value_title" = "Spent:";
+"plr_voucher_earn_target_value_title" = "Goal:";
 "plr_voucher_date_prefix" = "on ";
 "plr_history_title" = "Rewards history";
 "plr_history_subtitle" = "Your past rewards";
+"plr_loyalty_card_subtitle" = "Until next reward";
