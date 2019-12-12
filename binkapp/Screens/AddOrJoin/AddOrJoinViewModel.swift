@@ -27,7 +27,8 @@ class AddOrJoinViewModel {
     func didSelectAddNewCard() {
         // PLR
         if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
-            toNoPaymentCardScreen()
+            toPaymentCardNeededScreen()
+            return
         }
 
         let fields = membershipPlan.featureSet?.formattedLinkingSupport
@@ -96,7 +97,7 @@ class AddOrJoinViewModel {
         router.popToRootViewController()
     }
 
-    private func toNoPaymentCardScreen() {
-        router.featureNotImplemented()
+    private func toPaymentCardNeededScreen() {
+        router.toPaymentCardNeededScreen()
     }
 }
