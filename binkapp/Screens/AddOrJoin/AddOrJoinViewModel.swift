@@ -26,7 +26,7 @@ class AddOrJoinViewModel {
     
     func didSelectAddNewCard() {
         // PLR
-        if membershipPlan.isPLR == true && !Current.wallet.hasPaymentCards {
+        if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
             toNoPaymentCardScreen()
         }
 
