@@ -22,6 +22,7 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = LayoutHelper.WalletDimensions.cardLineSpacing
+        layout.estimatedItemSize = LayoutHelper.WalletDimensions.cardSize
         return layout
     }()
 

@@ -44,6 +44,18 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     @IBOutlet private weak var deleteButton: UIButton!
     @IBOutlet private weak var barcodeButton: UIButton!
     @IBOutlet private weak var rectangleView: RectangleView!
+    
+    private lazy var width: NSLayoutConstraint = {
+        let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
+        width.isActive = true
+        return width
+    }()
+    
+    private lazy var height: NSLayoutConstraint = {
+           let height = contentView.heightAnchor.constraint(equalToConstant: bounds.size.height)
+           height.isActive = true
+           return height
+       }()
 
     private var viewModel: WalletLoyaltyCardCellViewModel!
     private weak var delegate: WalletLoyaltyCardCollectionViewCellDelegate?
@@ -54,6 +66,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         setupGestureRecognizer()
         setupTheming()
     }
@@ -136,7 +149,12 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
 
         containerView.backgroundColor = .clear
     }
-
+    
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        width.constant = bounds.size.width
+        height.constant = bounds.size.height
+        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: targetSize.height))
+    }
 }
 
 private extension Selector {
