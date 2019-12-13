@@ -199,7 +199,6 @@ extension FormDataSource {
                     )
                 }
             }
-            checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: .add, membershipPlan: model))
         }
         
         if formPurpose != .signUp && formPurpose != .ghostCard {
@@ -248,7 +247,6 @@ extension FormDataSource {
                     )
                 }
             }
-            checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: .enrol, membershipPlan: model))
         }
         
         if formPurpose == .ghostCard {
@@ -272,22 +270,23 @@ extension FormDataSource {
                     )
                 }
             }
-            checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: .registration, membershipPlan: model))
         }
+        
+        checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: formPurpose.planDocumentDisplayMatching, membershipPlan: model))
     }
     
-    private func getPlanDocumentsCheckboxes(journey: LinkingSupportType, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
+    private func getPlanDocumentsCheckboxes(journey: PlanDocumentDisplayModel, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
         var checkboxes = [CheckboxView]()
         
         membershipPlan.account?.formattedPlanDocuments?.forEach { field in
-            
+                        
             let displayFields = field.formattedDisplay
+            
             guard displayFields.contains(where: { $0.value == journey.rawValue }) else { return }
         
             let checkbox = CheckboxView(frame: .zero)
             
             let url = URL(string: field.url ?? "")
-            
             let fieldText = (field.documentDescription ?? "") + " " + (field.name ?? "")
             
             checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)

@@ -86,13 +86,13 @@ extension _CD_PlanDocument {
         self.display = mutable.copy() as! NSSet
     }
 
-    open func addDisplayObject(_ value: CD_LinkingSupport) {
+    open func addDisplayObject(_ value: CD_PlanDocumentDisplay) {
         let mutable = self.display.mutableCopy() as! NSMutableSet
         mutable.add(value)
         self.display = mutable.copy() as! NSSet
     }
 
-    open func removeDisplayObject(_ value: CD_LinkingSupport) {
+    open func removeDisplayObject(_ value: CD_PlanDocumentDisplay) {
         let mutable = self.display.mutableCopy() as! NSMutableSet
         mutable.remove(value)
         self.display = mutable.copy() as! NSSet

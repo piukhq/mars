@@ -189,6 +189,9 @@
 		BD458B42236CA3910029A538 /* LogoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B41236CA3910029A538 /* LogoutResponse.swift */; };
 		BD458B44236EC4060029A538 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B43236EC4060029A538 /* RegisterViewController.swift */; };
 		BD458B4B236ED5B90029A538 /* AddEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD458B4A236ED5B90029A538 /* AddEmailViewController.swift */; };
+		BD475E6B23A255570071302A /* PlanDocumentDisplayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD475E6A23A255570071302A /* PlanDocumentDisplayModel.swift */; };
+		BD475E7123A2AED80071302A /* CD_PlanDocumentDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD475E6F23A2AED80071302A /* CD_PlanDocumentDisplay.swift */; };
+		BD475E7223A2AED80071302A /* _CD_PlanDocumentDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD475E7023A2AED80071302A /* _CD_PlanDocumentDisplay.swift */; };
 		BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */; };
 		BD99D2D8234FDF2C00823FC4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2D7234FDF2C00823FC4 /* SettingsViewController.swift */; };
 		BD99D2DA234FDF6F00823FC4 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99D2D9234FDF6F00823FC4 /* SettingsViewModel.swift */; };
@@ -628,6 +631,10 @@
 		BD458B41236CA3910029A538 /* LogoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutResponse.swift; sourceTree = "<group>"; };
 		BD458B43236EC4060029A538 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		BD458B4A236ED5B90029A538 /* AddEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEmailViewController.swift; sourceTree = "<group>"; };
+		BD475E6A23A255570071302A /* PlanDocumentDisplayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanDocumentDisplayModel.swift; sourceTree = "<group>"; };
+		BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - Plan Documents Display.xcdatamodel"; sourceTree = "<group>"; };
+		BD475E6F23A2AED80071302A /* CD_PlanDocumentDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_PlanDocumentDisplay.swift; sourceTree = "<group>"; };
+		BD475E7023A2AED80071302A /* _CD_PlanDocumentDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_PlanDocumentDisplay.swift; sourceTree = "<group>"; };
 		BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCreateRequest.swift; sourceTree = "<group>"; };
 		BD99D2D7234FDF2C00823FC4 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		BD99D2D9234FDF6F00823FC4 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -917,6 +924,7 @@
 				3C61FCDD230AF0BB004721A3 /* AppsModel.swift */,
 				EFD8653A232FCDD800036C17 /* ReasonCode.swift */,
 				EF7B65D5232FDB8A0025D167 /* FieldChoice.swift */,
+				BD475E6A23A255570071302A /* PlanDocumentDisplayModel.swift */,
 				EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */,
 				BDD9C83B233BE493003CD616 /* MembershipPlanImageModel.swift */,
 			);
@@ -1847,6 +1855,7 @@
 				EFA5F70B2379A7C70027AB80 /* _CD_PaymentCardAccountConsents.swift */,
 				EFA5F7062379A7C70027AB80 /* _CD_PaymentCardCard.swift */,
 				EF8F047F238D582300BD708B /* _CD_PlanDocument.swift */,
+				BD475E7023A2AED80071302A /* _CD_PlanDocumentDisplay.swift */,
 				EFA5F6ED2379A7C50027AB80 /* _CD_ReasonCode.swift */,
 				EFA5F6EA2379A7C50027AB80 /* _CD_RegistrationField.swift */,
 				EFA5F6DB2379A7C40027AB80 /* _CD_Tier.swift */,
@@ -1878,6 +1887,7 @@
 				EFA5F6EC2379A7C50027AB80 /* CD_PaymentCardAccountConsents.swift */,
 				EFA5F7022379A7C70027AB80 /* CD_PaymentCardCard.swift */,
 				EF8F0480238D582300BD708B /* CD_PlanDocument.swift */,
+				BD475E6F23A2AED80071302A /* CD_PlanDocumentDisplay.swift */,
 				EFA5F6D42379A7C40027AB80 /* CD_ReasonCode.swift */,
 				EFA5F6E12379A7C40027AB80 /* CD_RegistrationField.swift */,
 				EFA5F6E32379A7C50027AB80 /* CD_Tier.swift */,
@@ -2670,6 +2680,7 @@
 				EFEB5BFF2382984B00E18743 /* HyperlinkButton.swift in Sources */,
 				B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */,
 				BD99D2DF2350E4BD00823FC4 /* SettingsSection.swift in Sources */,
+				BD475E6B23A255570071302A /* PlanDocumentDisplayModel.swift in Sources */,
 				EFA5F7262379A7C70027AB80 /* CD_PaymentCardAccountConsents.swift in Sources */,
 				EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */,
 				3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */,
@@ -2748,6 +2759,7 @@
 				EFA5F7112379A7C70027AB80 /* CD_MembershipPlanAccount.swift in Sources */,
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
 				DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
+				BD475E7123A2AED80071302A /* CD_PlanDocumentDisplay.swift in Sources */,
 				EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */,
 				BDB01870232D99D200BFFA18 /* FormField.swift in Sources */,
 				B76659992320F68D00B327BE /* HyperlinkAlertController.swift in Sources */,
@@ -2759,6 +2771,7 @@
 				3CEABFCC2316AB65009B1122 /* MembershipCardStatusModel.swift in Sources */,
 				EFA5F7122379A7C70027AB80 /* _CD_Balance.swift in Sources */,
 				EFA5F73E2379A7C70027AB80 /* CD_MembershipCardBalance.swift in Sources */,
+				BD475E7223A2AED80071302A /* _CD_PlanDocumentDisplay.swift in Sources */,
 				EFA5F7622379BD520027AB80 /* PLRAccumulatorInactiveCell.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,
 				EFA5F7332379A7C70027AB80 /* CD_AuthoriseField.swift in Sources */,
@@ -3963,9 +3976,10 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = 5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */;
+			currentVersion = BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
