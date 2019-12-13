@@ -1,23 +1,23 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to CD_LinkingSupport.swift instead.
+// Make changes to CD_PlanDocumentDisplay.swift instead.
 
 import Foundation
 import CoreData
 
-public enum CD_LinkingSupportAttributes: String {
+public enum CD_PlanDocumentDisplayAttributes: String {
     case value = "value"
 }
 
-public enum CD_LinkingSupportRelationships: String {
-    case featureSet = "featureSet"
+public enum CD_PlanDocumentDisplayRelationships: String {
+    case planDocument = "planDocument"
 }
 
-open class _CD_LinkingSupport: CD_BaseObject {
+open class _CD_PlanDocumentDisplay: CD_BaseObject {
 
     // MARK: - Class methods
 
     override open class func entityName () -> String {
-        return "CD_LinkingSupport"
+        return "CD_PlanDocumentDisplay"
     }
 
     override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
@@ -25,7 +25,7 @@ open class _CD_LinkingSupport: CD_BaseObject {
     }
 
     @nonobjc
-    open class func fetchRequest() -> NSFetchRequest<CD_LinkingSupport> {
+    open class func fetchRequest() -> NSFetchRequest<CD_PlanDocumentDisplay> {
         return NSFetchRequest(entityName: self.entityName())
     }
 
@@ -36,7 +36,7 @@ open class _CD_LinkingSupport: CD_BaseObject {
     }
 
     public convenience init?(managedObjectContext: NSManagedObjectContext) {
-        guard let entity = _CD_LinkingSupport.entity(managedObjectContext: managedObjectContext) else { return nil }
+        guard let entity = _CD_PlanDocumentDisplay.entity(managedObjectContext: managedObjectContext) else { return nil }
         self.init(entity: entity, insertInto: managedObjectContext)
     }
 
@@ -48,7 +48,7 @@ open class _CD_LinkingSupport: CD_BaseObject {
     // MARK: - Relationships
 
     @NSManaged open
-    var featureSet: CD_FeatureSet?
+    var planDocument: CD_PlanDocument?
 
 }
 

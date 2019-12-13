@@ -72,7 +72,7 @@ class PLRRewardDetailViewModel {
         // Currently we assume the only plan document for PLR will be terms and conditions
         // Change this when this is no longer the case
         let voucherDocument = planDocuments.first { document in
-            document.display.contains(LinkingSupportType.voucher.rawValue)
+            document.display.contains(PlanDocumentDisplayModel.voucher.rawValue)
         }
         return voucherDocument?.url
     }
@@ -107,7 +107,7 @@ class PLRRewardDetailViewModel {
         var shouldDisplay = false
         guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return shouldDisplay }
         planDocuments.forEach {
-            if $0.display.contains(LinkingSupportType.voucher.rawValue) {
+            if $0.display.contains(PlanDocumentDisplayModel.voucher.rawValue) {
                 shouldDisplay = true
             }
         }

@@ -4,7 +4,7 @@ import Foundation
 open class CD_PlanDocument: _CD_PlanDocument {
 	// Custom logic goes here.
     
-    var formattedDisplay: [CD_LinkingSupport] {
-        return display.allObjects as? [CD_LinkingSupport] ?? []
+    var formattedDisplay: [CD_PlanDocumentDisplay] {
+        return display.allObjects as? [CD_PlanDocumentDisplay] ?? []
     }
 }
