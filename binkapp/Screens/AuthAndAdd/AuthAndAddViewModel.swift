@@ -26,6 +26,17 @@ enum FormPurpose {
     case loginFailed
     case signUp
     case ghostCard
+    
+    var planDocumentDisplayMatching: PlanDocumentDisplayModel {
+        switch self {
+        case .login, .loginFailed:
+            return .add
+        case .signUp:
+            return .enrol
+        case .ghostCard:
+            return .registration
+        }
+    }
 }
 
 class AuthAndAddViewModel {
