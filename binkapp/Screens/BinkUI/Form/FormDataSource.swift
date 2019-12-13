@@ -272,10 +272,10 @@ extension FormDataSource {
             }
         }
         
-        checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: formPurpose.linkingSupportMatching, membershipPlan: model))
+        checkboxes.append(contentsOf: getPlanDocumentsCheckboxes(journey: formPurpose.planDocumentDisplayMatching, membershipPlan: model))
     }
     
-    private func getPlanDocumentsCheckboxes(journey: LinkingSupportType, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
+    private func getPlanDocumentsCheckboxes(journey: PlanDocumentDisplayModel, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
         var checkboxes = [CheckboxView]()
         
         membershipPlan.account?.formattedPlanDocuments?.forEach { field in
