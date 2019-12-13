@@ -41,6 +41,12 @@ class LoyaltyCardFullDetailsViewModel {
     }
 
     var pointsValueText: String {
+        // PLR
+        if membershipCard.membershipPlan?.isPLR == true {
+            guard let voucher = membershipCard.activeVouchers?.first else { return "" }
+            return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value ?? 0.0)/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)\(voucher.earn?.suffix ?? "")"
+        }
+
         return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "") \(balance?.suffix ?? "")"
     }
 
