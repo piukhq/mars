@@ -40,12 +40,9 @@ class TransactionsViewController: UIViewController {
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
         
-        if !viewModel.transactions.isEmpty {
-            let imageUrl = viewModel.membershipCard.membershipPlan?.firstIconImage()?.url
-            brandHeaderView.configure(imageURLString: imageUrl, loyaltyPlanNameCard: (viewModel.membershipCard.membershipPlan?.account?.planNameCard ?? nil), delegate: self)
-        }
+        let imageUrl = viewModel.membershipCard.membershipPlan?.firstIconImage()?.url
+        brandHeaderView.configure(imageURLString: imageUrl, loyaltyPlanNameCard: (viewModel.membershipCard.membershipPlan?.account?.planNameCard ?? nil), delegate: self)
 
-        brandHeaderView.isHidden = viewModel.transactions.isEmpty
         tableView.isHidden = viewModel.transactions.isEmpty
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
     }
