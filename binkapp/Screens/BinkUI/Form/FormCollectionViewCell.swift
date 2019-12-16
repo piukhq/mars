@@ -129,7 +129,13 @@ class FormCollectionViewCell: UICollectionViewCell {
     // MARK: - Public Methods
     
     func configure(with field: FormField) {
+        let isEnabled = field.forcedValue == nil
+
         titleLabel.text = field.title
+        titleLabel.textColor = isEnabled ? .black : .disabledTextGrey
+        textField.textColor = isEnabled ? .black : .disabledTextGrey
+        textField.text = field.forcedValue
+        textField.isEnabled = isEnabled
         textField.placeholder = field.placeholder
         textField.isSecureTextEntry = field.fieldType.isSecureTextEntry
         textField.keyboardType = field.fieldType.keyboardType()
