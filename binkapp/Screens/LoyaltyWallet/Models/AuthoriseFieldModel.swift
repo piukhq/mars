@@ -15,6 +15,7 @@ struct AuthoriseFieldModel: Codable {
     let fieldDescription: String?
     let type: Int?
     let choices: [FieldChoice]?
+    let commonName: String?
 
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -23,6 +24,7 @@ struct AuthoriseFieldModel: Codable {
         case fieldDescription = "description"
         case type
         case choices = "choice"
+        case commonName = "common_name"
     }
 }
 
@@ -33,6 +35,7 @@ extension AuthoriseFieldModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.validation, with: validation, delta: delta)
         update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)
         update(cdObject, \.type, with: NSNumber(value: type ?? 0), delta: delta)
+        update(cdObject, \.commonName, with: commonName, delta: delta)
 
         cdObject.choices.forEach {
             guard let choice = $0 as? CD_FieldChoice else { return }
