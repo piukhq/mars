@@ -221,6 +221,14 @@ class MainScreenRouter {
         let viewController = SimpleInfoViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
+
+    func toPaymentCardNeededScreen() {
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
+            self?.toAddPaymentViewController()
+        }, tabBarBackButton: backButton)
+        pushReusableModalTemplateVC(configurationModel: configuration, navigationController: navController)
+    }
     
     func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -245,7 +253,7 @@ class MainScreenRouter {
         navController?.present(alert, animated: true, completion: nil)
     }
     
-    func popViewController() {
+    @objc func popViewController() {
         navController?.popViewController(animated: true)
     }
     

@@ -309,4 +309,6 @@
 "plr_voucher_date_prefix" = "on ";
 "plr_history_title" = "Rewards history";
 "plr_history_subtitle" = "Your past rewards";
+"plr_payment_card_needed_title" = "Payment card needed";
+"plr_payment_card_needed_body" = "You currently don’t have any linked payment cards.\nYou can only earn rewards by shopping with a linked payment card.\nPlease add a card so you can start earning rewards.";
 "plr_loyalty_card_subtitle" = "Until next reward";

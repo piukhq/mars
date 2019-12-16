@@ -25,6 +25,12 @@ class AddOrJoinViewModel {
     }
     
     func didSelectAddNewCard() {
+        // PLR
+        if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
+            toPaymentCardNeededScreen()
+            return
+        }
+
         let fields = membershipPlan.featureSet?.formattedLinkingSupport
         guard (fields?.contains(where: { $0.value == LinkingSupportType.enrol.rawValue }) ?? false) else {
             toNativeJoinUnavailable()
@@ -89,5 +95,9 @@ class AddOrJoinViewModel {
     
     func popToRootViewController() {
         router.popToRootViewController()
+    }
+
+    private func toPaymentCardNeededScreen() {
+        router.toPaymentCardNeededScreen()
     }
 }
