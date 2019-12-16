@@ -40,7 +40,18 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
     }
 
-    var pointsValueText: String {
+    var pointsValueText: String? {
+        // Only authed cards will have a balance
+        guard membershipCard.status?.status == .authorised else {
+            return nil
+        }
+
+        // PLR
+        if membershipCard.membershipPlan?.isPLR == true {
+            guard let voucher = membershipCard.activeVouchers?.first else { return nil }
+            return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value ?? 0.0)/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)\(voucher.earn?.suffix ?? "")"
+        }
+
         return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "") \(balance?.suffix ?? "")"
     }
 

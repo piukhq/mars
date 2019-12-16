@@ -130,8 +130,8 @@ struct WalletLoyaltyCardCellViewModel {
 
     var pointsValueSuffixText: String? {
         // PLR
-        if membershipPlan?.isPLR == true && cardStatus == .authorised {
-            return "plr_loyalty_card_subtitle".localized
+        if membershipPlan?.isPLR == true {
+            return nil
         }
         return balance?.suffix
     }
