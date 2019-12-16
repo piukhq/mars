@@ -24,12 +24,6 @@ class PLRRewardDetailViewController: UIViewController {
         return stackView
     }()
 
-    private lazy var voucher: PLRAccumulatorActiveCell = {
-        let cell: PLRAccumulatorActiveCell = .fromNib()
-        cell.translatesAutoresizingMaskIntoConstraints = false
-        return cell
-    }()
-
     private lazy var codeLabel: UILabel = {
         let label = UILabel()
         label.font = .headline
@@ -74,7 +68,7 @@ class PLRRewardDetailViewController: UIViewController {
 
     private lazy var termsAndConditionsButton: HyperlinkButton = {
         let button = HyperlinkButton()
-        button.setTitle("plr_voucher_detail_tandc_button_title".localized, for: .normal)
+        button.setTitle(viewModel.termsAndConditionsButtonTitle, for: .normal)
         button.setTitleColor(.blueAccent, for: .normal)
         button.titleLabel?.font = .linkUnderlined
         return button
@@ -107,8 +101,28 @@ private extension PLRRewardDetailViewController {
         view.backgroundColor = .white
         title = viewModel.title
 
-        voucher.configureWithViewModel(viewModel.voucherCellViewModel)
-        stackScrollView.add(arrangedSubviews: [voucher])
+        switch viewModel.voucherState {
+        case .inProgress, .issued:
+            let cell: PLRAccumulatorActiveCell = .fromNib()
+            cell.configureWithViewModel(viewModel.voucherCellViewModel)
+            stackScrollView.add(arrangedSubview: cell)
+            NSLayoutConstraint.activate([
+                cell.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
+                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+                cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight),
+            ])
+        case .redeemed, .expired:
+            let cell: PLRAccumulatorInactiveCell = .fromNib()
+            cell.configureWithViewModel(viewModel.voucherCellViewModel)
+            stackScrollView.add(arrangedSubview: cell)
+            NSLayoutConstraint.activate([
+                cell.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
+                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+                cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorInactiveCellHeight),
+            ])
+        default:
+            break
+        }
 
         // View decisioning
         if viewModel.shouldShowCode {
@@ -181,9 +195,6 @@ private extension PLRRewardDetailViewController {
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: LayoutHelper.PLRRewardDetail.stackViewPadding),
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -LayoutHelper.PLRRewardDetail.stackViewPadding),
-            voucher.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
-            voucher.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            voucher.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight),
         ])
     }
 

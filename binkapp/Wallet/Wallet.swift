@@ -78,6 +78,12 @@ class Wallet: CoreDataRepositoryProtocol {
         return paymentCards != nil && paymentCards?.count != 0
     }
 
+    var hasValidPaymentCards: Bool {
+        guard let paymentCards = paymentCards else { return false }
+        let validPaymentCards = paymentCards.filter { !$0.isExpired() }
+        return !validPaymentCards.isEmpty
+    }
+
     // MARK: - Private
 
     private func loadWallets(forType type: FetchType, reloadPlans: Bool, completion: ((Bool) -> Void)? = nil) {

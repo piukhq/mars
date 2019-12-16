@@ -28,6 +28,12 @@ struct PaymentCardDetailLinkLoyaltyCardCellViewModel: PaymentCardDetailCellViewM
     }
 
     var detailText: String? {
+        // PLR
+        if membershipCard.membershipPlan?.isPLR == true {
+            guard let voucher = membershipCard.activeVouchers?.first else { return "" }
+            return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value ?? 0.0)/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)\(voucher.earn?.suffix ?? "")"
+        }
+
         let balance = membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
         guard let balanceValue = balance?.value else {
             return nil // If there is no value, don't show the points label

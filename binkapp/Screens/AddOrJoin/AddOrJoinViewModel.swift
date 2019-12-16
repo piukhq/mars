@@ -25,6 +25,12 @@ class AddOrJoinViewModel {
     }
     
     func didSelectAddNewCard() {
+        // PLR
+        if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
+            toPaymentCardNeededScreen()
+            return
+        }
+
         let fields = membershipPlan.featureSet?.formattedLinkingSupport
         guard (fields?.contains(where: { $0.value == LinkingSupportType.enrol.rawValue }) ?? false) else {
             toNativeJoinUnavailable()
@@ -35,12 +41,13 @@ class AddOrJoinViewModel {
     }
     
     func toNativeJoinUnavailable() {
-        let screenText = "native_join_unavailable_title".localized + "\n" + "native_join_unavailable_description".localized
+        let descriptionText = String(format: "native_join_unavailable_description".localized, membershipPlan.account?.companyName ?? "")
+        let screenText = "native_join_unavailable_title".localized + "\n" + descriptionText
         
         let attributedText = NSMutableAttributedString(string: screenText)
         attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.headline, range: NSRange(location: 0, length: ("native_join_unavailable_title".localized).count)
         )
-        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: ("native_join_unavailable_title".localized).count, length: ("native_join_unavailable_description".localized).count)
+        attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: ("native_join_unavailable_title".localized).count, length: descriptionText.count)
         )
         
         var configurationModel: ReusableModalConfiguration
@@ -88,5 +95,9 @@ class AddOrJoinViewModel {
     
     func popToRootViewController() {
         router.popToRootViewController()
+    }
+
+    private func toPaymentCardNeededScreen() {
+        router.toPaymentCardNeededScreen()
     }
 }

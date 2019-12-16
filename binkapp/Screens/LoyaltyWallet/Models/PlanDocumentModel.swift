@@ -13,7 +13,7 @@ struct PlanDocumentModel: Codable {
     let name: String?
     let documentDescription: String?
     let url: String?
-    let display: [LinkingSupportType]?
+    let display: [PlanDocumentDisplayModel]?
     let checkbox: Bool?
 
     enum CodingKeys: String, CodingKey {
@@ -36,7 +36,7 @@ extension PlanDocumentModel: CoreDataMappable, CoreDataIDMappable {
 
         if let display = display {
             for (index, display) in display.enumerated() {
-                let indexID = LinkingSupportType.overrideId(forParentId: overrideID ?? id) + String(index)
+                let indexID = PlanDocumentDisplayModel.overrideId(forParentId: overrideID ?? id) + String(index)
                 let cdDisplay = display.mapToCoreData(context, .update, overrideID: indexID)
                 update(cdDisplay, \.planDocument, with: cdObject, delta: delta)
                 cdObject.addDisplayObject(cdDisplay)
