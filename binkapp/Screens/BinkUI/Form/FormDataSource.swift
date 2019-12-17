@@ -51,7 +51,7 @@ class FormDataSource: NSObject {
         let formFieldsValid = fields.reduce(true, { $0 && $1.isValid() })
         var checkboxesValid = true
         checkboxes.forEach { checkbox in
-            if checkbox.columnKind == FormField.ColumnKind.planDocument {
+            if checkbox.columnKind == FormField.ColumnKind.planDocument || checkbox.columnKind == FormField.ColumnKind.none {
                 if !checkbox.isValid {
                     checkboxesValid = false
                 }
