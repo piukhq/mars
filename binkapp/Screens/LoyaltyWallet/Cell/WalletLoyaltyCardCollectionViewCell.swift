@@ -79,7 +79,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        set(to: .closed)
+        set(to: .closed, animated: false)
         cardIconImageView.image = nil
     }
     
@@ -275,7 +275,7 @@ extension WalletLoyaltyCardCollectionViewCell {
         }
     }
 
-    func set(to state: SwipeState, as type: SwipeMode? = nil) {
+    func set(to state: SwipeState, as type: SwipeMode? = nil, animated: Bool = true) {
         swipeState = state
         let width = rectangleView.frame.size.width
         let constant: CGFloat
@@ -305,9 +305,18 @@ extension WalletLoyaltyCardCollectionViewCell {
 
         startingOffset = constant
 
+        let block = { [weak self] in
+            self?.cardContainerCenterXConstraint.constant = constant
+            self?.layoutIfNeeded()
+        }
+
+        guard animated else {
+            block()
+            return
+        }
+
         UIView.animate(withDuration: 0.3) {
-            self.cardContainerCenterXConstraint.constant = constant
-            self.layoutIfNeeded()
+            block()
         }
     }
 }
