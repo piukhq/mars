@@ -87,8 +87,8 @@ class AuthAndAddViewModel {
         case .loginFailed:
             return getDescriptionForOtherLogin()
         case .signUp:
-            guard let companyName = membershipPlan.account?.companyName else { return nil }
-            return String(format: "sign_up_new_card_description".localized, companyName)
+            guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
+            return String(format: "sign_up_new_card_description".localized, planNameCard)
         case .ghostCard:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "register_ghost_card_description".localized, planNameCard)
