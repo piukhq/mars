@@ -92,14 +92,17 @@ class PLRRewardDetailViewModel {
     }
 
     var shouldShowIssuedDate: Bool {
+        guard voucher.dateIssued != 0 else { return false }
         return voucherState == .issued || voucherState == .expired
     }
 
     var shouldShowRedeemedDate: Bool {
+        guard voucher.dateRedeemed != 0 else { return false }
         return voucherState == .redeemed
     }
 
     var shouldShowExpiredDate: Bool {
+        guard voucher.expiryDate != 0 else { return false }
         return voucherState == .expired
     }
 
