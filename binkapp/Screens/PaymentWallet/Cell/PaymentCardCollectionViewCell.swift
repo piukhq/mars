@@ -73,7 +73,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        set(to: .closed)
+        set(to: .closed, animated: false)
         alertView.isHidden = true
         pllStatusLabel.isHidden = false
         linkedStatusImageView.isHidden = false
@@ -348,7 +348,7 @@ extension PaymentCardCollectionViewCell {
         }
     }
 
-    func set(to state: SwipeState, as type: SwipeMode? = nil) {
+    func set(to state: SwipeState, as type: SwipeMode? = nil, animated: Bool = true) {
         swipeState = state
         let width = containerView.frame.size.width
         let constant: CGFloat
@@ -376,9 +376,18 @@ extension PaymentCardCollectionViewCell {
 
         startingOffset = constant
 
+        let block = { [weak self] in
+            self?.cardContainerCenterXConstraint.constant = constant
+            self?.layoutIfNeeded()
+        }
+
+        guard animated else {
+            block()
+            return
+        }
+
         UIView.animate(withDuration: 0.3) {
-            self.cardContainerCenterXConstraint.constant = constant
-            self.layoutIfNeeded()
+            block()
         }
     }
 }

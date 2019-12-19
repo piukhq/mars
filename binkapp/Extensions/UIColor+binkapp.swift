@@ -67,6 +67,7 @@ extension UIColor {
     static let amberPending = UIColor(hexString: "#f5a623")
     static let redAttention = UIColor(hexString: "#eb001b")
     static let grey10 = UIColor(hexString: "#e5e5e5")
+    static let disabledTextGrey = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
 
     // MARK: - Payment Card Gradient Colours
 

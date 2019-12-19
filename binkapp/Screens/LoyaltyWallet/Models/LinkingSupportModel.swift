@@ -13,9 +13,15 @@ enum LinkingSupportType: String, Codable {
     case add = "ADD"
     case registration = "REGISTRATION"
     case enrol = "ENROL"
+    case unknown
 
     var apiId: Int? {
         return nil // This will force CoreDataIDMappable to kick in and give this object a computed id based on the parent object
+    }
+    
+    /// Support that sometimes Plan Document Display could refer to non Bink native applications
+    public init(from decoder: Decoder) throws {
+        self = try LinkingSupportType(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
     }
 }
 
