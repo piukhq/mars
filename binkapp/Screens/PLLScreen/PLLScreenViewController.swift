@@ -161,8 +161,10 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 
 extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        floatingButtons.primaryButton.startLoading()
-        view.isUserInteractionEnabled = false
+        if !viewModel.isEmptyPll && !viewModel.changedLinkCards.isEmpty {
+            floatingButtons.primaryButton.startLoading()
+            view.isUserInteractionEnabled = false
+        }
         viewModel.toggleLinkForMembershipCards { [weak self] in
             guard let self = self else { return }
             self.reloadContent()
