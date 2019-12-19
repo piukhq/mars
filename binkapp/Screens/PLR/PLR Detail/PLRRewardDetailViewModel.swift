@@ -68,13 +68,18 @@ class PLRRewardDetailViewModel {
     }
 
     var termsAndConditionsButtonTitle: String? {
-        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return nil }
-        // Currently we assume the only plan document for PLR will be terms and conditions
-        // Change this when this is no longer the case
-        let voucherDocument = planDocuments.first { document in
-            document.display.contains(PlanDocumentDisplayModel.voucher.rawValue)
-        }
-        return voucherDocument?.url
+        guard let document = voucherPlanDocument else { return nil }
+        return document.name
+    }
+
+    private var termsAndConditionsButtonUrlString: String? {
+        guard let document = voucherPlanDocument else { return nil }
+        return document.url
+    }
+
+    func openTermsAndConditionsUrl() {
+        guard let url = termsAndConditionsButtonUrlString else { return }
+        MainScreenRouter.openExternalURL(with: url)
     }
 
     // MARK: - View decisioning
@@ -109,9 +114,12 @@ class PLRRewardDetailViewModel {
     var shouldShowTermsAndConditionsButton: Bool {
         var shouldDisplay = false
         guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return shouldDisplay }
-        planDocuments.forEach {
-            if $0.display.contains(PlanDocumentDisplayModel.voucher.rawValue) {
-                shouldDisplay = true
+        for document in planDocuments {
+            for display in document.formattedDisplay {
+                if display.value == PlanDocumentDisplayModel.voucher.rawValue {
+                    shouldDisplay = true
+                    break
+                }
             }
         }
         return shouldDisplay
@@ -125,5 +133,15 @@ class PLRRewardDetailViewModel {
 
     var voucherAmountText: String {
         return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+    }
+
+    private var voucherPlanDocument: CD_PlanDocument? {
+        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return nil }
+        // Currently we assume the only plan document for PLR will be terms and conditions
+        // Change this when this is no longer the case
+        guard let voucherDocument = planDocuments.first else { return nil }
+        guard let display = voucherDocument.formattedDisplay.first else { return nil }
+        guard display.value == PlanDocumentDisplayModel.voucher.rawValue else { return nil }
+        return voucherDocument
     }
 }
