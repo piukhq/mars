@@ -52,6 +52,7 @@ class CheckboxView: CustomView {
         }
 
         textView.font = UIFont.bodyTextSmall
+        checkboxView.isHidden = delegate == nil
     }
     
     override func configureUI() {
