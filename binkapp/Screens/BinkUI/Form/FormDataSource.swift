@@ -293,6 +293,7 @@ extension FormDataSource {
             if field.checkbox?.boolValue == true {
                 checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
             } else {
+                //If we don't want a checkbox, we don't need a delegate for it, so we will hide the checkbox by checking if we have a delegate or not
                 checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: nil)
             }
             checkboxes.append(checkbox)
