@@ -300,6 +300,7 @@
 		EF8F0482238D582300BD708B /* CD_PlanDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0480238D582300BD708B /* CD_PlanDocument.swift */; };
 		EF8F0485238D583300BD708B /* _CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0483238D583200BD708B /* _CD_LinkingSupport.swift */; };
 		EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */; };
+		EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */; };
 		EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F6BF237429D30027AB80 /* UITableViewCellExtension.swift */; };
 		EFA5F6C2237467CC0027AB80 /* NestedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F6C1237467CC0027AB80 /* NestedTableView.swift */; };
 		EFA5F6CD2379A4F00027AB80 /* VoucherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F6CC2379A4F00027AB80 /* VoucherModel.swift */; };
@@ -751,6 +752,7 @@
 		EF8F0480238D582300BD708B /* CD_PlanDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_PlanDocument.swift; sourceTree = "<group>"; };
 		EF8F0483238D583200BD708B /* _CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_LinkingSupport.swift; sourceTree = "<group>"; };
 		EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_LinkingSupport.swift; sourceTree = "<group>"; };
+		EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtension.swift; sourceTree = "<group>"; };
 		EFA5F6BF237429D30027AB80 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		EFA5F6C1237467CC0027AB80 /* NestedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestedTableView.swift; sourceTree = "<group>"; };
 		EFA5F6CC2379A4F00027AB80 /* VoucherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoucherModel.swift; sourceTree = "<group>"; };
@@ -1495,6 +1497,7 @@
 				EFBDB102237B1468002D7898 /* CALayerExtension.swift */,
 				EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */,
 				DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */,
+				EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2609,6 +2612,7 @@
 				EFA5F7162379A7C70027AB80 /* _CD_PaymentCard.swift in Sources */,
 				3C9B1A2723854BF60078A1EC /* PreferencesViewModel.swift in Sources */,
 				3C7AF52B23757FB0005964E0 /* FloatExtension.swift in Sources */,
+				EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */,
 				3C36071F230FF03000AC76A3 /* BrandHeaderView.swift in Sources */,
 				EFF59F19234B73C900CF3992 /* CardDetailInfoTableViewCell.swift in Sources */,
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
