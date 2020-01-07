@@ -80,7 +80,8 @@ class LoyaltyCardFullDetailsViewModel {
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .loginFailed, existingMembershipCard: membershipCard)
             break
         case .transactions:
-            if (membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue ?? false) == false {
+            let transactionsAvailable = membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue
+            if transactionsAvailable == false {
                 let title = "transaction_history_not_supported_title".localized
                 let description = "transaction_history_not_supported_description".localized
                 let attributedTitle = NSMutableAttributedString(string: title + "\n", attributes: [.font: UIFont.headline])
