@@ -112,7 +112,7 @@ struct WalletLoyaltyCardCellViewModel {
         // PLR
         if membershipPlan?.isPLR == true && cardStatus == .authorised {
             guard let voucher = membershipCard.activeVouchers?.first else { return "" }
-            return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value ?? 0.0)/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)\(voucher.earn?.suffix ?? "")"
+            return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value?.twoDecimalPointString() ?? "")/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue?.twoDecimalPointString() ?? "")\(voucher.earn?.suffix ?? "")"
         }
 
         let floatBalanceValue = balance?.value?.floatValue ?? 0
@@ -131,7 +131,7 @@ struct WalletLoyaltyCardCellViewModel {
     var pointsValueSuffixText: String? {
         // PLR
         if membershipPlan?.isPLR == true {
-            return nil
+            return "plr_loyalty_card_subtitle".localized
         }
         return balance?.suffix
     }

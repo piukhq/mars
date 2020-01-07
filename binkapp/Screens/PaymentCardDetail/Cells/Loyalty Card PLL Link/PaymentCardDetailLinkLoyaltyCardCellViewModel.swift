@@ -31,7 +31,7 @@ struct PaymentCardDetailLinkLoyaltyCardCellViewModel: PaymentCardDetailCellViewM
         // PLR
         if membershipCard.membershipPlan?.isPLR == true {
             guard let voucher = membershipCard.activeVouchers?.first else { return "" }
-            return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value ?? 0.0)/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)\(voucher.earn?.suffix ?? "")"
+            return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value?.twoDecimalPointString() ?? "")/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue?.twoDecimalPointString() ?? "")\(voucher.earn?.suffix ?? "")"
         }
 
         let balance = membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
