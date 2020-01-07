@@ -161,8 +161,10 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 
 extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        floatingButtons.primaryButton.startLoading()
-        view.isUserInteractionEnabled = false
+        if !viewModel.isEmptyPll && !viewModel.changedLinkCards.isEmpty {
+            floatingButtons.primaryButton.startLoading()
+            view.isUserInteractionEnabled = false
+        }
         viewModel.toggleLinkForMembershipCards { [weak self] in
             guard let self = self else { return }
             self.reloadContent()
@@ -233,7 +235,12 @@ private extension PLLScreenViewController {
         secondaryMessageLabel.isHidden = !viewModel.isEmptyPll
         paymentCardsTableView.isHidden = viewModel.isEmptyPll
         stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
-        viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: "pll_screen_add_cards_button_title".localized) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil)
+        switch journey {
+        case .newCard:
+            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: "pll_screen_add_cards_button_title".localized)
+        case .existingCard:
+            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil)
+        }
     }
     
     func navigateToLCDScreen() {
@@ -242,7 +249,7 @@ private extension PLLScreenViewController {
             viewModel.toFullDetailsCardScreen()
             break
         case .existingCard:
-            viewModel.popViewController()
+            viewModel.isEmptyPll ? viewModel.toAddPaymentCardScreen() : viewModel.toFullDetailsCardScreen()
             break
         }
     }

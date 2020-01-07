@@ -71,6 +71,7 @@ class PLRRewardDetailViewController: UIViewController {
         button.setTitle(viewModel.termsAndConditionsButtonTitle, for: .normal)
         button.setTitleColor(.blueAccent, for: .normal)
         button.titleLabel?.font = .linkUnderlined
+        button.addTarget(self, action: #selector(handleTermsAndConditionsButtonPress), for: .touchUpInside)
         return button
     }()
 
@@ -206,6 +207,10 @@ private extension PLRRewardDetailViewController {
             return .blueInactive
         }
     }
+
+    @objc func handleTermsAndConditionsButtonPress() {
+        viewModel.openTermsAndConditionsUrl()
+    }
 }
 
 extension LayoutHelper {
@@ -218,4 +223,8 @@ extension LayoutHelper {
         static let dateLabelsTopPadding: CGFloat = 8
         static let tAndCButtonTopPadding: CGFloat = 30
     }
+}
+
+private extension Selector {
+    static let openTermsAndConditions = #selector(PLRRewardDetailViewController.handleTermsAndConditionsButtonPress)
 }

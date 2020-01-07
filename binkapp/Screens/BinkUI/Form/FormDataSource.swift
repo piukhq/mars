@@ -51,7 +51,7 @@ class FormDataSource: NSObject {
         let formFieldsValid = fields.reduce(true, { $0 && $1.isValid() })
         var checkboxesValid = true
         checkboxes.forEach { checkbox in
-            if checkbox.columnKind == FormField.ColumnKind.planDocument {
+            if checkbox.columnKind == FormField.ColumnKind.planDocument || checkbox.columnKind == FormField.ColumnKind.none {
                 if !checkbox.isValid {
                     checkboxesValid = false
                 }
@@ -242,7 +242,8 @@ extension FormDataSource {
                             updated: updatedBlock,
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
-                            columnKind: .enrol
+                            columnKind: .enrol,
+                            forcedValue: model.isPLR && field.commonName == FieldCommonName.email.rawValue ? Current.userManager.currentEmailAddress : nil
                         )
                     )
                 }
@@ -289,7 +290,12 @@ extension FormDataSource {
             let url = URL(string: field.url ?? "")
             let fieldText = (field.documentDescription ?? "") + " " + (field.name ?? "")
             
-            checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
+            if field.checkbox?.boolValue == true {
+                checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
+            } else {
+                //If we don't want a checkbox, we don't need a delegate for it, so we will hide the checkbox by checking if we have a delegate or not
+                checkbox.configure(title: fieldText, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: nil)
+            }
             checkboxes.append(checkbox)
         }
         

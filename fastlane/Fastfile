@@ -47,24 +47,24 @@ platform :ios do
 
   # Add device
 
-desc "Adds a device to the portal"
-lane :addDevice do |parameters|
- if !parameters[:name]
-   raise "No name specified"
- elsif !parameters[:uuid]
-   raise "No UUID specified"
- end
+  desc "Adds a device to the portal"
+  lane :addDevice do |parameters|
+    if !parameters[:name]
+    raise "No name specified"
+    elsif !parameters[:uuid]
+    raise "No UUID specified"
+    end
 
- register_devices(
-   devices: {
-     parameters[:name] => parameters[:uuid]
-    }
- )
+    register_devices(
+      devices: {
+      parameters[:name] => parameters[:uuid]
+     }
+    )
 
- setupForce
-end
+    setupForce
+  end
 
-desc "Retrieve and force update all the certificates for all targets and configures your machine to compile against devices, including new ones. NOTE: This should only be run if new devices are required in the profiles and certificates"
+  desc "Retrieve and force update all the certificates for all targets and configures your machine to compile against devices, including new ones. NOTE: This should only be run if new devices are required in the profiles and certificates"
   lane :setupForce do
 
     # Bink
@@ -77,6 +77,12 @@ desc "Retrieve and force update all the certificates for all targets and configu
     match(type: "adhoc", app_identifier: "com.bink.wallet.nightly", readonly: false, force_for_new_devices: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.gamma", readonly: false, force_for_new_devices: true)
 
+  end
+
+  desc "Submit branch to TestFlight"
+  lane :beta do |parameters|
+    build_app(scheme: "binkapp app store")
+    upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 
 end
