@@ -15,7 +15,7 @@ class PLLScreenViewModel {
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
     }
-    private var changedLinkCards = [CD_PaymentCard]()
+    private(set) var changedLinkCards = [CD_PaymentCard]()
     
     var isEmptyPll: Bool {
         return paymentCards == nil ? true : paymentCards?.count == 0
