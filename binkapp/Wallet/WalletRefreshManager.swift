@@ -15,8 +15,8 @@ class WalletRefreshManager {
     private var accountsRefreshTimer: Timer!
     private var plansRefreshTimer: Timer!
 
-    var canRefreshAccounts = true
-    var canRefreshPlans = true
+    var canRefreshAccounts = false
+    var canRefreshPlans = false
     var isActive = false
 
     func start() {
