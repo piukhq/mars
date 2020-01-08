@@ -103,7 +103,7 @@ class AuthAndAddViewModel {
                 return String(format: "only_points_log_in_description".localized, planNameCard)
             }
             
-            return transactionsAvailable.boolValue ? String(format: "only_points_log_in_description".localized, planNameCard) : String(format: "points_and_transactions_log_in_description".localized, planNameCard)
+            return transactionsAvailable.boolValue ? String(format: "points_and_transactions_log_in_description".localized, planNameCard) : String(format: "only_points_log_in_description".localized, planNameCard)
         } else {
             return ""
         }
