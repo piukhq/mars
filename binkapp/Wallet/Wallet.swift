@@ -22,6 +22,11 @@ class Wallet: CoreDataRepositoryProtocol {
     private(set) var paymentCards: [CD_PaymentCard]?
 
     private(set) var shouldDisplayWalletPrompts: Bool?
+    var shouldDisplayLoadingIndicator: Bool {
+        let hasLaunched = Current.userDefaults.bool(forKey: "hasLaunched")
+        return !hasLaunched && isRefreshing
+    }
+    private var isRefreshing = false
 
     // MARK: - Public
 
@@ -89,13 +94,16 @@ class Wallet: CoreDataRepositoryProtocol {
     // MARK: - Private
 
     private func loadWallets(forType type: FetchType, reloadPlans: Bool, completion: ((Bool) -> Void)? = nil) {
+        isRefreshing = true
+
         let dispatchGroup = DispatchGroup()
         let forceRefresh = type == .reload
 
         dispatchGroup.enter()
-        getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans) { success in
+        getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans) { [weak self] success in
             // if this failed, the entire function should fail
             guard success else {
+                self?.isRefreshing = false
                 completion?(success)
                 return
             }
@@ -103,9 +111,10 @@ class Wallet: CoreDataRepositoryProtocol {
         }
 
         dispatchGroup.enter()
-        getPaymentWallet(forceRefresh: forceRefresh) { success in
+        getPaymentWallet(forceRefresh: forceRefresh) { [weak self] success in
             // if this failed, the entire function should fail
             guard success else {
+                self?.isRefreshing = false
                 completion?(success)
                 return
             }
@@ -113,8 +122,10 @@ class Wallet: CoreDataRepositoryProtocol {
         }
 
         dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.isRefreshing = false
             self?.shouldDisplayWalletPrompts = type == .reload
-            NotificationCenter.default.post(name: .didLoadWallet, object: nil)
+            Current.userDefaults.set(type == .reload, forKey: "hasLaunched")
+            NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true)
         }
     }

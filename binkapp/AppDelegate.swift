@@ -22,11 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        let hasLaunched = Current.userDefaults.bool(forKey: "hasLaunched")
-        if !hasLaunched {
-            Current.userDefaults.set(true, forKey: "hasLaunched")
-        }
-
         #if DEBUG
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
