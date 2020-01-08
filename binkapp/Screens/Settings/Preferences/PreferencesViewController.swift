@@ -70,9 +70,8 @@ class PreferencesViewController: UIViewController {
     private func createCheckboxes(preferences: [PreferencesModel]) {
         preferences.forEach {
             let checkboxView = CheckboxView()
-            checkboxView.configure(title: $0.slug == "marketing-bink" ? "preferences_marketing_checkbox".localized : $0.label ?? "", columnName: $0.slug ?? "", columnKind: .add)
+            checkboxView.configure(title: $0.slug == "marketing-bink" ? "preferences_marketing_checkbox".localized : $0.label ?? "", columnName: $0.slug ?? "", columnKind: .add, delegate: self)
             
-            checkboxView.delegate = self
             checkboxView.setValue(newValue: $0.value ?? "0")
             
             stackView.addArrangedSubview(checkboxView)
