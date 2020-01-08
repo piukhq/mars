@@ -21,6 +21,8 @@ class Wallet: CoreDataRepositoryProtocol {
     private(set) var membershipCards: [CD_MembershipCard]?
     private(set) var paymentCards: [CD_PaymentCard]?
 
+    private(set) var shouldDisplayWalletPrompts: Bool?
+
     // MARK: - Public
 
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
@@ -110,7 +112,8 @@ class Wallet: CoreDataRepositoryProtocol {
             dispatchGroup.leave()
         }
 
-        dispatchGroup.notify(queue: .main) {
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.shouldDisplayWalletPrompts = type == .reload
             NotificationCenter.default.post(name: .didLoadWallet, object: nil)
             completion?(true)
         }
