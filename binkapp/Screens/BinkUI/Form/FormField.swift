@@ -137,6 +137,7 @@ class FormField {
         self.columnKind = columnKind
         self.manualValidate = manualValidate
         self.forcedValue = forcedValue
+        self.value = forcedValue // Initialise the field's value with any forced value. If there isn't a forced value, the value will default to nil as normal.
     }
     
     func isValid() -> Bool {
