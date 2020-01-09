@@ -10,8 +10,9 @@ import Foundation
 
 class Wallet: CoreDataRepositoryProtocol {
     private enum FetchType {
-        case local
-        case reload
+        case localLaunch // Specifically used on launch to perform desired behaviour not needed at any other time
+        case localReactive // Any local fetch other than on launch
+        case reload // A fetch from the API
     }
 
     private let apiManager = ApiManager()
@@ -23,7 +24,7 @@ class Wallet: CoreDataRepositoryProtocol {
 
     private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
-        let hasLaunched = Current.userDefaults.bool(forKey: "hasLaunched")
+        let hasLaunched = Current.userDefaults.bool(forKey: .hasFetchedDataOnLaunch)
         return !hasLaunched && isRefreshing
     }
     private var isRefreshing = false
@@ -33,7 +34,7 @@ class Wallet: CoreDataRepositoryProtocol {
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
     func launch() {
-        loadWallets(forType: .local, reloadPlans: false) { [weak self] _ in
+        loadWallets(forType: .localLaunch, reloadPlans: false) { [weak self] _ in
             self?.loadWallets(forType: .reload, reloadPlans: true) { _ in
                 self?.refreshManager.start()
             }
@@ -78,7 +79,7 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Refresh from our local data
     /// Useful for calling after card deletions
     func refreshLocal() {
-        loadWallets(forType: .local, reloadPlans: false)
+        loadWallets(forType: .localReactive, reloadPlans: false)
     }
 
     var hasPaymentCards: Bool {
@@ -123,8 +124,8 @@ class Wallet: CoreDataRepositoryProtocol {
 
         dispatchGroup.notify(queue: .main) { [weak self] in
             self?.isRefreshing = false
-            self?.shouldDisplayWalletPrompts = type == .reload
-            Current.userDefaults.set(type == .reload, forKey: "hasLaunched")
+            self?.shouldDisplayWalletPrompts = type == .reload || type == .localReactive
+            Current.userDefaults.set(type == .reload, forKey: .hasFetchedDataOnLaunch)
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true)
         }
