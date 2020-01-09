@@ -73,12 +73,16 @@ class BarcodeViewController: UIViewController {
         
         switch viewModel.barcodeType {
         case .loyaltyCard:
-            descriptionLabel.text = "barcode_card_description".localized
+            if viewModel.isBarcodeAvailable {
+                descriptionLabel.text = "barcode_card_description".localized
+            } else {
+                descriptionLabel.text = "barcode_card_number_description".localized
+            }
         case .coupon:
             descriptionLabel.text = "barcode_coupon_description".localized
         }
         
-        maximiseButton.isHidden = maximized
+        maximiseButton.isHidden = !viewModel.isBarcodeAvailable ? true : maximized
         maximiseButton.setTitleColor(.white, for: .normal)
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)

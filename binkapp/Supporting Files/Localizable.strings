@@ -57,6 +57,7 @@
 
 "card_number_title" = "Card number:";
 "barcode_card_description" = "Scan this barcode at the store, just like you would a physical loyalty card. Bear in mind that some store scanners cannot read from screens.";
+"barcode_card_number_description" = "Show this card number in-store just like you would a physical loyalty card.";
 "barcode_coupon_description" = "Scan this barcode at the store, just like you would a physical coupon. Bear in mind that some store scanners cannot read from screens.";
 "barcode_maximise_button" = "Maximise barcode";
 
