@@ -143,11 +143,3 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
         }
     }
 }
-
-extension UIRefreshControl {
-    func programaticallyBeginRefreshing(in collectionView: UICollectionView) {
-        beginRefreshing()
-        let offsetPoint = CGPoint.init(x: 0, y: -168.33)
-        collectionView.setContentOffset(offsetPoint, animated: true)
-    }
-}
