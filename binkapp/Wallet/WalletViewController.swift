@@ -59,8 +59,10 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        refreshControl.endRefreshing()
         super.viewWillDisappear(animated)
+        DispatchQueue.main.async { [weak self] in
+            self?.refreshControl.endRefreshing()
+        }
     }
 
     override func viewDidLayoutSubviews() {
