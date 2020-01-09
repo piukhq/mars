@@ -80,7 +80,20 @@ class LoyaltyCardFullDetailsViewModel {
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .loginFailed, existingMembershipCard: membershipCard)
             break
         case .transactions:
-            router.toTransactionsViewController(membershipCard: membershipCard)
+            let transactionsAvailable = membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue
+            if transactionsAvailable == false {
+                let title = "transaction_history_not_supported_title".localized
+                let description = "transaction_history_not_supported_description".localized
+                let attributedTitle = NSMutableAttributedString(string: title + "\n", attributes: [.font: UIFont.headline])
+                let attributedDescription = NSMutableAttributedString(string: description, attributes: [.font: UIFont.bodyTextLarge])
+                let attributedString = NSMutableAttributedString()
+                attributedString.append(attributedTitle)
+                attributedString.append(attributedDescription)
+                let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
+                router.toReusableModalTemplateViewController(configurationModel: configuration)
+            } else {
+                router.toTransactionsViewController(membershipCard: membershipCard)
+            }
             break
         case .pending:
             let title = "generic_pending_module_title".localized
