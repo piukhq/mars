@@ -159,7 +159,7 @@
 "points_module_signing_up_status" = "Signing up";
 "points_module_logging_in_status" = "Logging in";
 "points_module_registering_card_status" = "Registering card";
-"points_module_retry_log_in_status" = "Retry log in";
+"points_module_retry_log_in_status" = "Retry login";
 "link_module_to_payment_cards_message" = "To payment cards";
 "link_module_error_title" = "Link error";
 "link_module_to_link_to_cards_message" = "To link to cards";
