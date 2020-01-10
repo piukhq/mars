@@ -287,8 +287,9 @@ class MainScreenRouter {
         if visibleVC.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: MFMailComposeViewController.self) == true {
             //Dismiss alert controller and mail composer before presenting the Launch screen.
             visibleVC.dismiss(animated: false) {
-                self.displayLaunchScreen()
+                self.displayLaunchScreen(visibleViewController: visibleVC)
             }
+            return
         }
         
         if visibleVC.isKind(of: BarcodeViewController.self),
@@ -297,18 +298,24 @@ class MainScreenRouter {
             vc.isBarcodeFullsize {
             //Dismiss full screen barcode before presenting the Launch screen.
             nc.dismiss(animated: false) {
-                self.displayLaunchScreen()
+                self.displayLaunchScreen(visibleViewController: visibleVC)
             }
+            return
         }
-        displayLaunchScreen()
+        if visibleVC.isModal {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.displayLaunchScreen(visibleViewController: visibleVC)
+            }
+        } else {
+            displayLaunchScreen(visibleViewController: visibleVC)
+        }
     }
     
-    private func displayLaunchScreen() {
-        guard let visibleVC = navController?.getVisibleViewController() else { return }
+    private func displayLaunchScreen(visibleViewController: UIViewController) {
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
-        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal {
+        if let modalNavigationController = visibleViewController.navigationController, visibleViewController.isModal {
             modalNavigationController.present(vc, animated: false, completion: nil)
         } else {
             navController?.present(vc, animated: false, completion: nil)
