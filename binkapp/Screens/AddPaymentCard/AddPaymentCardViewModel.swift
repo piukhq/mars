@@ -88,7 +88,7 @@ class AddPaymentCardViewModel {
         router.popToRootViewController()
     }
 
-    func displayError() {
-        router.displaySimplePopup(title: "0ops".localized, message: "went_wrong".localized)
+    func displayError() {        
+        router.displaySimplePopup(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
     }
 }
