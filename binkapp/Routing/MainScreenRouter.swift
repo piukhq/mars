@@ -8,6 +8,7 @@
 import Foundation
 import SafariServices
 import UIKit
+import MessageUI
 
 protocol MainScreenRouterDelegate: NSObjectProtocol {
     func router(_ router: MainScreenRouter, didLogin: Bool)
@@ -36,6 +37,7 @@ class MainScreenRouter {
     func getOnboardingViewController() -> UIViewController {
         let viewModel = OnboardingViewModel(router: self)
         let nav = PortraitNavigationController(rootViewController: OnboardingViewController(viewModel: viewModel))
+        navController = nav
         return nav
     }
 
@@ -282,9 +284,12 @@ class MainScreenRouter {
     
     @objc func appWillResignActive() {
         guard let visibleVC = navController?.getVisibleViewController() else { return }
-        if visibleVC.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: UIAlertController.self) == true {
-            //Dismiss alert controller before presenting the Launch screen.
-            visibleVC.dismiss(animated: false, completion: nil)
+        if visibleVC.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: MFMailComposeViewController.self) == true {
+            //Dismiss alert controller and mail composer before presenting the Launch screen.
+            visibleVC.dismiss(animated: false) {
+                self.displayLaunchScreen(visibleViewController: visibleVC)
+            }
+            return
         }
         
         if visibleVC.isKind(of: BarcodeViewController.self),
@@ -292,13 +297,25 @@ class MainScreenRouter {
             let vc = nc.viewControllers.first as? BarcodeViewController,
             vc.isBarcodeFullsize {
             //Dismiss full screen barcode before presenting the Launch screen.
-            nc.dismiss(animated: false, completion: nil)
+            nc.dismiss(animated: false) {
+                self.displayLaunchScreen(visibleViewController: visibleVC)
+            }
+            return
         }
-        
+        if visibleVC.isModal {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.displayLaunchScreen(visibleViewController: visibleVC)
+            }
+        } else {
+            displayLaunchScreen(visibleViewController: visibleVC)
+        }
+    }
+    
+    private func displayLaunchScreen(visibleViewController: UIViewController) {
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
-        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal {
+        if let modalNavigationController = visibleViewController.navigationController, visibleViewController.isModal {
             modalNavigationController.present(vc, animated: false, completion: nil)
         } else {
             navController?.present(vc, animated: false, completion: nil)
@@ -307,7 +324,7 @@ class MainScreenRouter {
     
     @objc func appDidBecomeActive() {
         let visibleVC = navController?.getVisibleViewController()
-        if let modalNavigationController = visibleVC?.navigationController {
+        if let modalNavigationController = visibleVC?.navigationController, visibleVC?.isModal == true {
            modalNavigationController.dismiss(animated: false, completion: nil)
         } else if visibleVC?.isKind(of: SFSafariViewController.self) == false {
             visibleVC?.dismiss(animated: false, completion: nil)
