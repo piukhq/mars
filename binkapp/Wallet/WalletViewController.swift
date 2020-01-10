@@ -61,7 +61,8 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         DispatchQueue.main.async { [weak self] in
-            self?.refreshControl.endRefreshing()
+            guard let self = self else { return }
+            self.refreshControl.endRefreshing()
         }
     }
 
@@ -102,7 +103,10 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     }
 
     @objc private func refresh() {
-        refreshControl.endRefreshing()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.refreshControl.endRefreshing()
+        }
         collectionView.reloadData()
     }
 

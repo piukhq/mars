@@ -24,10 +24,8 @@ class Wallet: CoreDataRepositoryProtocol {
 
     private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
-        let hasLaunched = Current.userDefaults.bool(forKey: .hasFetchedDataOnLaunch)
-        return !hasLaunched && isRefreshing
+        return !Current.userDefaults.bool(forDefaultsKey: .hasFetchedDataOnLaunch)
     }
-    private var isRefreshing = false
 
     // MARK: - Public
 
@@ -95,16 +93,13 @@ class Wallet: CoreDataRepositoryProtocol {
     // MARK: - Private
 
     private func loadWallets(forType type: FetchType, reloadPlans: Bool, completion: ((Bool) -> Void)? = nil) {
-        isRefreshing = true
-
         let dispatchGroup = DispatchGroup()
         let forceRefresh = type == .reload
 
         dispatchGroup.enter()
-        getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans) { [weak self] success in
+        getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans) { success in
             // if this failed, the entire function should fail
             guard success else {
-                self?.isRefreshing = false
                 completion?(success)
                 return
             }
@@ -112,10 +107,9 @@ class Wallet: CoreDataRepositoryProtocol {
         }
 
         dispatchGroup.enter()
-        getPaymentWallet(forceRefresh: forceRefresh) { [weak self] success in
+        getPaymentWallet(forceRefresh: forceRefresh) { success in
             // if this failed, the entire function should fail
             guard success else {
-                self?.isRefreshing = false
                 completion?(success)
                 return
             }
@@ -123,11 +117,20 @@ class Wallet: CoreDataRepositoryProtocol {
         }
 
         dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.isRefreshing = false
             self?.shouldDisplayWalletPrompts = type == .reload || type == .localReactive
-            Current.userDefaults.set(type == .reload, forKey: .hasFetchedDataOnLaunch)
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true)
+
+            // if type is reload and launch hasn't happened yet
+            guard Current.userDefaults.value(forDefaultsKey: .hasFetchedDataOnLaunch) == nil else {
+                return
+            }
+
+            // the value is nil, must be first launch
+            // only set the value if we've done a full api reload
+            if type == .reload {
+                Current.userDefaults.set(true, forDefaultsKey: .hasFetchedDataOnLaunch)
+            }
         }
     }
 
