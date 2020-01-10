@@ -20,11 +20,11 @@ class PLRCellViewModel {
     }
 
     var voucherAmountText: String? {
-        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
     }
 
     var voucherDescriptionText: String? {
-        return String(format: "plr_voucher_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue ?? 0.0)
+        return String(format: "plr_voucher_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "")
     }
 
     var headlineText: String? {
