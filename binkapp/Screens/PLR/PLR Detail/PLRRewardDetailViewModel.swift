@@ -47,9 +47,9 @@ class PLRRewardDetailViewModel {
     var subtextString: String? {
         switch voucherState {
         case .inProgress:
-            return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue ?? 0.0, voucher.burn?.prefix ?? "", voucher.burn?.value ?? 0.0, voucher.burn?.type ?? "")
+            return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.type ?? "")
         case .issued:
-            return String(format: "plr_voucher_detail_subtext_issued".localized, voucher.burn?.prefix ?? "", voucher.burn?.value ?? 0.0, voucher.burn?.suffix ?? "")
+            return String(format: "plr_voucher_detail_subtext_issued".localized, voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
         default:
             return nil
         }
@@ -132,7 +132,7 @@ class PLRRewardDetailViewModel {
     }
 
     var voucherAmountText: String {
-        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
     }
 
     private var voucherPlanDocument: CD_PlanDocument? {
