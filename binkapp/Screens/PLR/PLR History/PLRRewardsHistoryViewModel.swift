@@ -28,8 +28,13 @@ class PLRRewardsHistoryViewModel {
     var subtitleText: String {
         return "plr_history_subtitle".localized
     }
-
+    
     var vouchers: [CD_Voucher]? {
+        let redeemDateDescriptor = NSSortDescriptor(key: "dateRedeemed", ascending: false)
+        let expiryDateDescriptor =  NSSortDescriptor(key: "expiryDate", ascending: false)
+        if let inactiveVouchers = membershipCard.inactiveVouchers as NSArray? {
+            return inactiveVouchers.sortedArray(using: [expiryDateDescriptor, redeemDateDescriptor]) as? [CD_Voucher]
+        }
         return membershipCard.inactiveVouchers
     }
 
