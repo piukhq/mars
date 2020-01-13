@@ -28,7 +28,7 @@ class PLRRewardsHistoryViewModel {
     var subtitleText: String {
         return "plr_history_subtitle".localized
     }
-
+    
     var vouchers: [CD_Voucher]? {
         return membershipCard.inactiveVouchers
     }

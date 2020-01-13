@@ -31,6 +31,12 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
     // State == .cancelled or .redeemed or .expired
     var inactiveVouchers: [CD_Voucher]? {
         guard let vouchers = sortedVouchers else { return nil }
-        return vouchers.filter { $0.state == VoucherState.redeemed.rawValue || $0.state == VoucherState.cancelled.rawValue || $0.state == VoucherState.expired.rawValue }
+        let filteredVouchers = vouchers.filter { $0.state == VoucherState.redeemed.rawValue || $0.state == VoucherState.cancelled.rawValue || $0.state == VoucherState.expired.rawValue }
+        let redeemDateDescriptor = NSSortDescriptor(key: "dateRedeemed", ascending: false)
+        let expiryDateDescriptor =  NSSortDescriptor(key: "expiryDate", ascending: false)
+        if let inactiveVouchers = filteredVouchers as NSArray? {
+            return inactiveVouchers.sortedArray(using: [expiryDateDescriptor, redeemDateDescriptor]) as? [CD_Voucher]
+        }
+        return filteredVouchers
     }
 }
