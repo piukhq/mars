@@ -48,7 +48,7 @@ struct WalletLoyaltyCardCellViewModel {
         guard membershipPlan?.featureSet?.planCardType != .store  else {
             return false
         }
-        return shouldShowRetryStatus || cardStatus == .pending || planHasPoints && balanceValue != nil
+        return shouldShowRetryStatus || cardStatus == .pending || planHasPoints && balanceValue != nil || cardStatus == .authorised && membershipCard.balances.allObjects.isEmpty
     }
 
     var shouldShowLinkStatus: Bool {
@@ -114,13 +114,17 @@ struct WalletLoyaltyCardCellViewModel {
             guard let voucher = membershipCard.activeVouchers?.first else { return "" }
             return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value?.twoDecimalPointString() ?? "")/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue?.twoDecimalPointString() ?? "")\(voucher.earn?.suffix ?? "")"
         }
+        
+        if cardStatus == .authorised && membershipCard.balances.allObjects.isEmpty {
+            return "pending_title".localized
+        }
 
         let floatBalanceValue = balance?.value?.floatValue ?? 0
         
         guard let prefix = balance?.prefix else {
             return balance?.value?.stringValue ?? ""
         }
-        
+
         if floatBalanceValue.hasDecimals {
             return "\(prefix)" + String(format: "%.02f", floatBalanceValue)
         } else {
