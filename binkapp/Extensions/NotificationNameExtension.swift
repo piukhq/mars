@@ -19,4 +19,5 @@ extension Notification.Name {
     static let didAddPaymentCard = Notification.Name("did_add_payment_card")
     static let didDeleteMemebershipCard = Notification.Name("did_delete_membership_card")
     static let didAddMembershipCard = Notification.Name("did_add_membership_card")
+    static let shouldTrashLocalWallets = Notification.Name("should_trash_local_wallets")
 }
