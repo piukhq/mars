@@ -9,7 +9,6 @@
 import UIKit
 
 class SocialTermsAndConditionsViewController: BaseFormViewController {
-    private let api = ApiManager()
 
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
@@ -86,7 +85,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         
         continueButton.startLoading()
         
-        api.doRequest(url: .facebook, httpMethod: .post, parameters: request, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+        Current.apiManager.doRequest(url: .facebook, httpMethod: .post, parameters: request, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             Current.userManager.setNewUser(with: response)
             self?.router?.didLogin()
             self?.updatePreferences(checkboxes: preferenceCheckboxes)
@@ -111,7 +110,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
          guard params.count > 0 else { return }
          
          // We don't worry about whether this was successful or not
-         api.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
+         Current.apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
      }
     
     func showError() {

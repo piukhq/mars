@@ -17,7 +17,7 @@ protocol MainScreenRouterDelegate: NSObjectProtocol {
 class MainScreenRouter {
     var navController: PortraitNavigationController?
     weak var delegate: MainScreenRouterDelegate?
-    let apiManager = ApiManager()
+    let apiManager = Current.apiManager
     
     init(delegate: MainScreenRouterDelegate) {
         self.delegate = delegate
