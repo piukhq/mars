@@ -301,6 +301,8 @@
 		EF8F0485238D583300BD708B /* _CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0483238D583200BD708B /* _CD_LinkingSupport.swift */; };
 		EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */; };
 		EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */; };
+		EF9E9BD023C72930002FF18E /* RefreshControlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */; };
+		EF9E9BD223C73BA1002FF18E /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */; };
 		EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F6BF237429D30027AB80 /* UITableViewCellExtension.swift */; };
 		EFA5F6C2237467CC0027AB80 /* NestedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F6C1237467CC0027AB80 /* NestedTableView.swift */; };
 		EFA5F6CD2379A4F00027AB80 /* VoucherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F6CC2379A4F00027AB80 /* VoucherModel.swift */; };
@@ -753,6 +755,8 @@
 		EF8F0483238D583200BD708B /* _CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_LinkingSupport.swift; sourceTree = "<group>"; };
 		EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_LinkingSupport.swift; sourceTree = "<group>"; };
 		EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtension.swift; sourceTree = "<group>"; };
+		EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControlExtension.swift; sourceTree = "<group>"; };
+		EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		EFA5F6BF237429D30027AB80 /* UITableViewCellExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewCellExtension.swift; sourceTree = "<group>"; };
 		EFA5F6C1237467CC0027AB80 /* NestedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestedTableView.swift; sourceTree = "<group>"; };
 		EFA5F6CC2379A4F00027AB80 /* VoucherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoucherModel.swift; sourceTree = "<group>"; };
@@ -1498,6 +1502,8 @@
 				EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */,
 				DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */,
 				EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */,
+				EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */,
+				EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2571,6 +2577,7 @@
 				EFA5F7422379A7C70027AB80 /* _CD_MembershipPlan.swift in Sources */,
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
 				3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */,
+				EF9E9BD023C72930002FF18E /* RefreshControlExtension.swift in Sources */,
 				3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */,
 				BD458B42236CA3910029A538 /* LogoutResponse.swift in Sources */,
 				3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */,
@@ -2675,6 +2682,7 @@
 				3C794D8C23018C25000A31FD /* BrowseBrandsViewController.swift in Sources */,
 				3C05A9DC2327CD3D00620583 /* AppDelegate+Extension.swift in Sources */,
 				EF48556C231D696800FC9E5F /* DebugMenuTableViewCell.swift in Sources */,
+				EF9E9BD223C73BA1002FF18E /* UIDeviceExtension.swift in Sources */,
 				B7D577B3231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift in Sources */,
 				3CD6B3B3232B98CE00058514 /* TransactionTableViewCell.swift in Sources */,
 				EF8BF1FD2341480800D2E5F3 /* PaymentCardAccountConsentsResponse.swift in Sources */,

@@ -45,6 +45,7 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .didLoadLocalWallet, object: nil)
 
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
 
@@ -54,11 +55,15 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Current.wallet.reloadWalletsIfNecessary()
+        configureLoadingIndicator()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        refreshControl.endRefreshing()
         super.viewWillDisappear(animated)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.refreshControl.endRefreshing()
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -84,12 +89,28 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
         ])
     }
 
+    func configureLoadingIndicator() {
+        if Current.wallet.shouldDisplayLoadingIndicator {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.refreshControl.programaticallyBeginRefreshing(in: self.collectionView)
+            }
+        }
+    }
+
     @objc func reloadWallet() {
         viewModel.reloadWallet()
     }
 
     @objc private func refresh() {
-        refreshControl.endRefreshing()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.refreshControl.endRefreshing()
+        }
+        collectionView.reloadData()
+    }
+
+    @objc private func refreshLocal() {
         collectionView.reloadData()
     }
 
