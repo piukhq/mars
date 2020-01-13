@@ -114,6 +114,8 @@ private extension BinkModuleView {
                 
                 let subtitleText = (transactionsAvailable) ? "points_module_view_history_message".localized : "points_module_last_checked".localized + (balance.updatedAt?.stringValue ?? "")
                 configure(imageName: "lcdModuleIconsPointsActive", titleText: titleText, subtitleText: subtitleText, touchAction: .transactions)
+            } else {
+                configure(imageName: "lcdModuleIconsPointsLoginPending", titleText: "pending_title".localized, subtitleText: "please_wait_title".localized, touchAction: .pending)
             }
             break
         case .pending:
