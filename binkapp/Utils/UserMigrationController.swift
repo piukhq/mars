@@ -37,10 +37,9 @@ struct UserMigrationController {
             completion(false)
             return
         }
+    
         
-        let apiManager = ApiManager()
-        
-        apiManager.doRequest(
+        Current.apiManager.doRequest(
             url: .renew,
             httpMethod: .post,
             headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json;v1.1"],

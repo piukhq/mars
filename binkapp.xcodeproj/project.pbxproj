@@ -64,7 +64,6 @@
 		3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE022F073CE00FA3031 /* MainTabBarViewController.swift */; };
 		3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE222F073CE00FA3031 /* LoyaltyWalletViewController.swift */; };
 		3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE622F073CE00FA3031 /* LoyaltyWalletViewModel.swift */; };
-		3C8BBC27232651E900363349 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8BBC26232651E900363349 /* Connectivity.swift */; };
 		3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8BBC282326541D00363349 /* NotificationNameExtension.swift */; };
 		3C93975D2386A2E00063C0B3 /* PreferencesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93975C2386A2E00063C0B3 /* PreferencesModel.swift */; };
 		3C9B1A2223854B9D0078A1EC /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9B1A2023854B9D0078A1EC /* PreferencesViewController.swift */; };
@@ -487,7 +486,6 @@
 		3C873FE222F073CE00FA3031 /* LoyaltyWalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletViewController.swift; sourceTree = "<group>"; };
 		3C873FE422F073CE00FA3031 /* WalletLoyaltyCardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		3C873FE622F073CE00FA3031 /* LoyaltyWalletViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletViewModel.swift; sourceTree = "<group>"; };
-		3C8BBC26232651E900363349 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		3C8BBC282326541D00363349 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
 		3C93975C2386A2E00063C0B3 /* PreferencesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesModel.swift; sourceTree = "<group>"; };
 		3C9B1A2023854B9D0078A1EC /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -1218,7 +1216,6 @@
 				3CF029F522F45B53009A0E61 /* CustomView.swift */,
 				3C2C90F523190A8700D112E3 /* KeyboardLayoutConstraint.swift */,
 				3CB81C12231E74220075D3AC /* ImageTypeEnum.swift */,
-				3C8BBC26232651E900363349 /* Connectivity.swift */,
 				3C05A9DF2327D35100620583 /* PortraitNavigationController.swift */,
 				EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */,
 				BD458B3F236C987F0029A538 /* UserManager.swift */,
@@ -2506,7 +2503,6 @@
 				EF5491202371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift in Sources */,
 				EF8B700F23585F76006CE3DD /* PaymentCardCellViewModelMock.swift in Sources */,
 				BD458B3E236B5C0E0029A538 /* LoginRegisterRequest.swift in Sources */,
-				3C8BBC27232651E900363349 /* Connectivity.swift in Sources */,
 				EFEB5C0123853B7900E18743 /* WalletRefreshManager.swift in Sources */,
 				BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */,
 				EFA5F7222379A7C70027AB80 /* _CD_EnrolField.swift in Sources */,

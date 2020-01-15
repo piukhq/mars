@@ -100,7 +100,7 @@
 
 "no_account_button_title" = "I don't have an account";
 
-"no_internet_connection_title" = "Your selected activity cannot be performed at this time due to a connection issue";
+"no_internet_connection_message" = "You are currently offline. This action cannot be performed whilst offline. Please check your internet connection and try again.";
 
 "about_custom_title" = "About %@";
 

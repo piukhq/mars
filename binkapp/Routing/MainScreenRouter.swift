@@ -17,11 +17,14 @@ protocol MainScreenRouterDelegate: NSObjectProtocol {
 class MainScreenRouter {
     var navController: PortraitNavigationController?
     weak var delegate: MainScreenRouterDelegate?
-    let apiManager = ApiManager()
+    let apiManager = Current.apiManager
     
     init(delegate: MainScreenRouterDelegate) {
         self.delegate = delegate
-        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+
+        // TODO: Reinstate when we have a strategy for showing this alert for specific app paths
+//        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
     }
@@ -250,7 +253,7 @@ class MainScreenRouter {
     }
     
     @objc func presentNoConnectivityPopup() {
-        let alert = UIAlertController(title: nil, message: "no_internet_connection_title".localized, preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
     }

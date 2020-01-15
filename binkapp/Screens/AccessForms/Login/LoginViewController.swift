@@ -26,7 +26,7 @@ class LoginViewController: BaseFormViewController {
     }()
     
     private let router: MainScreenRouter
-        
+
     init(router: MainScreenRouter) {
         self.router = router
         super.init(title: "login_title".localized, description: "login_subtitle".localized, dataSource: FormDataSource(accessForm: .login))
@@ -73,18 +73,16 @@ class LoginViewController: BaseFormViewController {
         continueButton.startLoading()
         
         let fields = dataSource.currentFieldValues()
-                
+
         let loginRequest = LoginRegisterRequest(
             email: fields["email"],
             password: fields["password"]
         )
         
-        let api = ApiManager()
-        
-        api.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, onSuccess: { [weak self] (response: LoginRegisterResponse) in
-                self?.continueButton.stopLoading()
-                Current.userManager.setNewUser(with: response)
-                self?.router.didLogin()
+        Current.apiManager.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+            self?.continueButton.stopLoading()
+            Current.userManager.setNewUser(with: response)
+            self?.router.didLogin()
         }) { [weak self] error in
             self?.continueButton.stopLoading()
             self?.showError()

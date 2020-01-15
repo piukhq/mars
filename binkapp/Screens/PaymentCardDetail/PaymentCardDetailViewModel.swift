@@ -181,6 +181,11 @@ class PaymentCardDetailViewModel {
     // MARK: - Repository
 
     func toggleLinkForMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
+        guard Current.apiManager.networkIsReachable else {
+            router.presentNoConnectivityPopup()
+            completion()
+            return
+        }
         if membershipCardIsLinked(membershipCard) {
             removeLinkToMembershipCard(membershipCard, completion: completion)
         } else {
