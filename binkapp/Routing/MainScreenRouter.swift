@@ -312,6 +312,11 @@ class MainScreenRouter {
     }
     
     private func displayLaunchScreen(visibleViewController: UIViewController) {
+        // If there is no current user, we have no need to present the splash screen
+        guard Current.userManager.hasCurrentUser else {
+            return
+        }
+
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
