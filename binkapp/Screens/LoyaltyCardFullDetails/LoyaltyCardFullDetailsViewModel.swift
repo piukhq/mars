@@ -49,7 +49,7 @@ class LoyaltyCardFullDetailsViewModel {
         // PLR
         if membershipCard.membershipPlan?.isPLR == true {
             guard let voucher = membershipCard.activeVouchers?.first else { return nil }
-            return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value ?? 0.0)/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)\(voucher.earn?.suffix ?? "")"
+            return voucher.balanceString
         }
         
         return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "") \(balance?.suffix ?? "")"
