@@ -21,46 +21,46 @@ class LoyaltyCardFullDetailsViewModel {
         if let planName = membershipCard.membershipPlan?.account?.planName {
             return String(format: "about_membership_plan_title".localized, planName)
         } else {
-           return "about_membership_title".localized
+            return "about_membership_title".localized
         }
     }
-
+    
     init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter, informationRowFactory: PaymentCardDetailInformationRowFactory) {
         self.router = router
         self.repository = repository
         self.membershipCard = membershipCard
         self.informationRowFactory = informationRowFactory
     }  
-
+    
     var brandName: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
-
+    
     var balance: CD_MembershipCardBalance? {
         return membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
     }
-
+    
     var pointsValueText: String? {
         // Only authed cards will have a balance
         guard membershipCard.status?.status == .authorised else {
             return nil
         }
-
+        
         // PLR
         if membershipCard.membershipPlan?.isPLR == true {
             guard let voucher = membershipCard.activeVouchers?.first else { return nil }
             return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value ?? 0.0)/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)\(voucher.earn?.suffix ?? "")"
         }
-
+        
         return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "") \(balance?.suffix ?? "")"
     }
-
+    
     var shouldShowOfferTiles: Bool {
         // If there are no images, there are no offer tiles! Return early
         guard let planImages = membershipCard.membershipPlan?.imagesSet else { return false }
         return planImages.filter({ $0.type?.intValue == 2}).count != 0
     }
-
+    
     // MARK: - Public methods
     
     func toBarcodeModel() {
@@ -80,10 +80,9 @@ class LoyaltyCardFullDetailsViewModel {
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .loginFailed, existingMembershipCard: membershipCard)
             break
         case .transactions:
-            let transactionsAvailable = membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue
-            if transactionsAvailable == false {
+            guard membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue ?? false else {
                 let title = "transaction_history_not_supported_title".localized
-                let description = "transaction_history_not_supported_description".localized
+                let description = String(format: "transaction_history_not_supported_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
                 let attributedTitle = NSMutableAttributedString(string: title + "\n", attributes: [.font: UIFont.headline])
                 let attributedDescription = NSMutableAttributedString(string: description, attributes: [.font: UIFont.bodyTextLarge])
                 let attributedString = NSMutableAttributedString()
@@ -91,9 +90,9 @@ class LoyaltyCardFullDetailsViewModel {
                 attributedString.append(attributedDescription)
                 let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
                 router.toReusableModalTemplateViewController(configurationModel: configuration)
-            } else {
-                router.toTransactionsViewController(membershipCard: membershipCard)
+                return
             }
+            router.toTransactionsViewController(membershipCard: membershipCard)
             break
         case .pending:
             let title = "generic_pending_module_title".localized
@@ -131,7 +130,7 @@ class LoyaltyCardFullDetailsViewModel {
             membershipCard.status?.formattedReasonCodes?.forEach {
                 description += $0.value ?? ""
             }
-    
+            
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: "error_title".localized, description: description))
             break
         case .aboutMembership:
@@ -153,11 +152,11 @@ class LoyaltyCardFullDetailsViewModel {
         
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
-
+    
     func toRewardsHistoryScreen() {
         router.toRewardsHistoryViewController(membershipCard: membershipCard)
     }
-
+    
     func toAboutMembershipPlanScreen() {
         let config = getBasicReusableConfiguration(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
         router.toReusableModalTemplateViewController(configurationModel: config)
@@ -179,21 +178,21 @@ class LoyaltyCardFullDetailsViewModel {
         let planImages = membershipCard.membershipPlan?.imagesSet
         return planImages?.filter({ $0.type?.intValue == 2}).compactMap { $0.url }
     }
-
+    
     // MARK: PLR
-
+    
     var shouldShouldPLR: Bool {
         return membershipCard.membershipPlan?.isPLR ?? false && membershipCard.vouchers.count != 0
     }
-
+    
     var activeVouchersCount: Int {
         return membershipCard.activeVouchers?.count ?? 0
     }
-
+    
     func voucherForIndexPath(_ indexPath: IndexPath) -> CD_Voucher? {
         return membershipCard.activeVouchers?[indexPath.row]
     }
-
+    
     func toVoucherDetailScreen(voucher: CD_Voucher) {
         guard let plan = membershipCard.membershipPlan else {
             fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
@@ -208,15 +207,15 @@ extension LoyaltyCardFullDetailsViewModel {
     var informationRows: [CardDetailInformationRow] {
         return informationRowFactory.makeLoyaltyInformationRows(membershipCard: membershipCard)
     }
-
+    
     func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
         return informationRows[indexPath.row]
     }
-
+    
     func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
         informationRows[indexPath.row].action()
     }
-
+    
     func deleteMembershipCard() {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }
@@ -224,6 +223,6 @@ extension LoyaltyCardFullDetailsViewModel {
                 Current.wallet.refreshLocal()
                 self.router.popToRootViewController()
             }
-        }, noCompletion: {})
+            }, noCompletion: {})
     }
 }
