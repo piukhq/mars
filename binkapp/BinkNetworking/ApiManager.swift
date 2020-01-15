@@ -146,7 +146,8 @@ class ApiManager {
         
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError {
             // SSL/TLS Pinning Failure
-            onError(error)
+            let customError = CustomError(error)
+            onError(customError)
             return
         }
         
@@ -169,11 +170,13 @@ class ApiManager {
                      */
                     NotificationCenter.default.post(name: .didLogout, object: nil)
                 } else if let error = response.error {
-                    print(error)
-                    onError(error)
+                    let customError = CustomError(error)
+                    print(customError)
+                    onError(customError)
                 } else {
                     print("something went wrong, statusCode: \(statusCode)")
-                    onError(NSError(domain: "", code: statusCode, userInfo: nil) as Error)
+                    let error = NSError(domain: "", code: statusCode, userInfo: nil) as Error
+                    onError(error)
                 }
             } catch (let error) {
                 print("decoding error: \(error)")
