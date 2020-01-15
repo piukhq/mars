@@ -56,8 +56,13 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        refreshControl.beginRefreshing()
-        refreshControl.endRefreshing()
+        // We are doing this because the loading indicator is getting stuck when quickly switching between tabs
+        // May need to change the approach
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.refreshControl.beginRefreshing()
+            self.refreshControl.endRefreshing()
+        }
         
         Current.wallet.reloadWalletsIfNecessary()
         configureLoadingIndicator()
