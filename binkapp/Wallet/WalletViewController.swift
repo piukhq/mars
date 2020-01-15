@@ -55,6 +55,10 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        refreshControl.beginRefreshing()
+        refreshControl.endRefreshing()
+        
         Current.wallet.reloadWalletsIfNecessary()
         configureLoadingIndicator()
     }
