@@ -101,7 +101,7 @@ struct WalletLoyaltyCardCellViewModel {
         // Linking error?
     }
 
-    var pointsValueText: String {
+    var pointsValueText: String? {
         guard cardStatus != .pending else {
             return "pending_title".localized
         }
@@ -112,7 +112,7 @@ struct WalletLoyaltyCardCellViewModel {
         // PLR
         if membershipPlan?.isPLR == true && cardStatus == .authorised {
             guard let voucher = membershipCard.activeVouchers?.first else { return "" }
-            return "\(voucher.earn?.prefix ?? "")\(voucher.earn?.value?.twoDecimalPointString() ?? "")/\(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue?.twoDecimalPointString() ?? "")\(voucher.earn?.suffix ?? "")"
+            return voucher.balanceString
         }
         
         if cardStatus == .authorised && membershipCard.balances.allObjects.isEmpty {
