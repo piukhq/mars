@@ -125,7 +125,7 @@
 "transaction_history_unavailable_title" = "Points history";
 "transaction_history_unavailable_description" = "No transactions to display since adding your card to Bink.\nIn some cases transactions take longer to update.";
 "transaction_history_not_supported_title" = "Transaction history not supported";
-"transaction_history_not_supported_description" = "Unfortunately we're not able to show your points balance and transaction history for this brand just yet.";
+"transaction_history_not_supported_description" = "Your %@ history is not available yet";
 
 "day" = "day";
 "days" = "days";
