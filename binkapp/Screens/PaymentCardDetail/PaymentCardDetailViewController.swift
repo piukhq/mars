@@ -118,7 +118,7 @@ class PaymentCardDetailViewController: UIViewController {
             let cardWidth = stackScrollView.frame.width - LayoutHelper.PaymentCardDetail.cardViewPadding
             let cardHeight = LayoutHelper.WalletDimensions.cardSize.height
             card.frame = CGRect(origin: .zero, size: CGSize(width: cardWidth, height: cardHeight))
-            card.configureWithViewModel(viewModel.paymentCardCellViewModel, delegate: nil)
+            card.configureWithViewModel(viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
         }
     }
 
