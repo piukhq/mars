@@ -44,6 +44,8 @@ extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelega
         switch action {
         case .delete:
             promptForDelete(with: index, cell: cell)
+        case .barcode:
+            break
         default:
             return
         }
