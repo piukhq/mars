@@ -31,10 +31,6 @@ class PreferencesViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
-    }
     
     private func configureUI() {
         navigationItem.leftBarButtonItem?.title = nil
@@ -77,12 +73,6 @@ class PreferencesViewController: UIViewController {
             stackView.addArrangedSubview(checkboxView)
             checkboxes.append(checkboxView)
         }
-    }
-    
-    @objc private func presentNoConnectivityPopup() {
-        let alert = UIAlertController(title: nil, message: "no_internet_connection_title".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
-        navigationController?.present(alert, animated: true, completion: nil)
     }
 }
 

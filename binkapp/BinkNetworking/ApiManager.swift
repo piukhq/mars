@@ -84,6 +84,7 @@ enum RequestHTTPMethod {
 }
 
 class ApiManager {
+    private let reachabilityManager = NetworkReachabilityManager()
     
     private let session: Session
     
@@ -98,6 +99,10 @@ class ApiManager {
         return certificate
       }
     }
+
+    var networkIsReachable: Bool {
+        return reachabilityManager?.isReachable ?? false
+    }
     
     init() {
         let evaluators = [
@@ -110,12 +115,7 @@ class ApiManager {
         session = Session(serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
     }
     
-    func doRequest<Resp>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error?) -> () = { _ in }) where Resp: Decodable {
-        guard Connectivity.isConnectedToInternet() else {
-            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
-            onError(nil)
-            return
-        }
+    func doRequest<Resp: Decodable>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error?) -> () = { _ in }) {
         
         let authRequired = url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
@@ -127,11 +127,6 @@ class ApiManager {
     }
 
     func doRequest<Resp, T: Encodable>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, parameters: T, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error?) -> () = { _ in }) where Resp: Decodable {
-        guard Connectivity.isConnectedToInternet() else {
-            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
-            onError(nil)
-            return
-        }
         
         let authRequired = url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
@@ -189,11 +184,7 @@ class ApiManager {
     typealias NoCodableResponse = (_ success: Bool, _ error: Error?) -> ()
     
     func doRequestWithNoResponse(url: RequestURL, httpMethod: RequestHTTPMethod, parameters: [String: Any], completion: NoCodableResponse?) {
-        guard Connectivity.isConnectedToInternet() else {
-            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
-            return
-        }
-        
+
         let authRequired = url.authRequired
         let requestHeaders = HTTPHeaders(getHeader(authRequired: authRequired))
         
@@ -205,7 +196,7 @@ class ApiManager {
             } else if statusCode == 401 && authRequired {
                 /*
                  If the endpoint expects an authorisation token,
-                 ensure that we aggressively respond in app to a 403.
+                 ensure that we aggressively respond in app to a 401.
                  */
                 NotificationCenter.default.post(name: .didLogout, object: nil)
             } else if let error = response.error {

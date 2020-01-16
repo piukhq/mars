@@ -11,7 +11,7 @@ import Foundation
 extension NSNumber {
     func twoDecimalPointString() -> String {
         guard floatValue.hasDecimals else {
-            return "\(self).00"
+            return "\(self)"
         }
         return String(format: "%.02f", floatValue)
     }
