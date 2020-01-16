@@ -64,7 +64,14 @@ class PLRRewardDetailViewModel {
     }
 
     var expiredDateString: String? {
-        return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
+        switch voucherState {
+        case .expired:
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
+        case .issued:
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
+        default:
+            return ""
+        }
     }
 
     var termsAndConditionsButtonTitle: String? {
@@ -108,7 +115,7 @@ class PLRRewardDetailViewModel {
 
     var shouldShowExpiredDate: Bool {
         guard voucher.expiryDate != 0 else { return false }
-        return voucherState == .expired
+        return voucherState == .expired || voucherState == .issued
     }
 
     var shouldShowTermsAndConditionsButton: Bool {
