@@ -44,11 +44,15 @@ struct WalletLoyaltyCardCellViewModel {
         return (cardStatus == .failed || cardStatus == .unauthorised) && membershipPlan?.featureSet?.planCardType != .store
     }
 
-    var shouldShowPointsValueLabels: Bool {
+    var shouldShowPointsValueLabel: Bool {
         guard membershipPlan?.featureSet?.planCardType != .store  else {
             return false
         }
         return shouldShowRetryStatus || cardStatus == .pending || planHasPoints && balanceValue != nil || cardStatus == .authorised && membershipCard.balances.allObjects.isEmpty
+    }
+
+    var shouldShowPointsSuffixLabel: Bool {
+        return cardStatus == .authorised
     }
 
     var shouldShowLinkStatus: Bool {
