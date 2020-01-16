@@ -48,8 +48,8 @@
                         <constraint firstAttribute="height" constant="22" id="Y2T-N6-vmM"/>
                     </constraints>
                 </stackView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAU-Ag-eW7">
-                    <rect key="frame" x="20" y="112.5" width="43" height="25"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAU-Ag-eW7">
+                    <rect key="frame" x="20" y="112.5" width="516" height="25"/>
                     <fontDescription key="fontDescription" name="NunitoSans-Light" family="Nunito Sans" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -59,6 +59,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="jAU-Ag-eW7" secondAttribute="bottom" constant="19.5" id="0dV-OW-YSi"/>
                 <constraint firstItem="mRL-af-gxA" firstAttribute="centerY" secondItem="FtI-NM-vir" secondAttribute="centerY" id="3aP-q7-j2B"/>
+                <constraint firstAttribute="trailing" secondItem="jAU-Ag-eW7" secondAttribute="trailing" constant="10" id="ZSr-mw-Ff1"/>
                 <constraint firstItem="jAU-Ag-eW7" firstAttribute="top" secondItem="eWc-me-K41" secondAttribute="bottom" id="ca0-dR-4ym"/>
                 <constraint firstItem="mRL-af-gxA" firstAttribute="leading" secondItem="FtI-NM-vir" secondAttribute="trailing" constant="12" id="eal-AX-eix"/>
                 <constraint firstItem="eWc-me-K41" firstAttribute="leading" secondItem="FtI-NM-vir" secondAttribute="leading" id="gGn-U3-Ogc"/>
@@ -66,6 +67,7 @@
                 <constraint firstItem="jAU-Ag-eW7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="ith-Ca-ADi"/>
                 <constraint firstItem="eWc-me-K41" firstAttribute="top" secondItem="FtI-NM-vir" secondAttribute="bottom" constant="14" id="jrx-oA-JCa"/>
                 <constraint firstItem="FtI-NM-vir" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="s29-Rp-hsQ"/>
+                <constraint firstItem="jAU-Ag-eW7" firstAttribute="top" secondItem="eWc-me-K41" secondAttribute="bottom" id="vu8-rp-7h5"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="132.80000000000001" y="-228.48575712143929"/>
