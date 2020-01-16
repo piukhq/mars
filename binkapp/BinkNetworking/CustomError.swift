@@ -8,17 +8,16 @@
 
 import Foundation
 
-class CustomError: LocalizedError {
-    private let error: Error
+class CustomError: Error {
+    private let errorMessage: String
+    private let statusCode: Int
     
-    init(_ error: Error) {
-        self.error = error
+    init(errorMessage: String, statusCode: Int) {
+        self.errorMessage = errorMessage
+        self.statusCode = statusCode
     }
     
     var localizedDescription: String {
-        guard let errorDescription = errorDescription else {
-            return ""
-        }
-        return errorDescription
+        return errorMessage
     }
 }

@@ -142,7 +142,12 @@ class AuthAndAddViewModel {
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
             }, onError: { [weak self] error in
-                self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
+                guard let customError = error as? CustomError else {
+                    self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
+                    completion()
+                    return
+                }
+                self?.displaySimplePopup(title: "error_title".localized, message: customError.localizedDescription)
                 completion()
         })
     }

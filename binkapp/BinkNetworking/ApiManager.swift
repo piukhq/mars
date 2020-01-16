@@ -146,8 +146,7 @@ class ApiManager {
         
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError {
             // SSL/TLS Pinning Failure
-            let customError = CustomError(error)
-            onError(customError)
+            onError(error)
             return
         }
         
@@ -169,10 +168,13 @@ class ApiManager {
                      ensure that we aggressively respond in app to a 401.
                      */
                     NotificationCenter.default.post(name: .didLogout, object: nil)
-                } else if let error = response.error {
-                    let customError = CustomError(error)
-                    print(customError)
+                } else if statusCode == 400 {
+                    let errorArray = try decoder.decode([String].self, from: data)
+                    let customError = CustomError(errorMessage: errorArray.first ?? "", statusCode: statusCode)
                     onError(customError)
+                } else if let error = response.error {
+                    print(error)
+                    onError(error)
                 } else {
                     print("something went wrong, statusCode: \(statusCode)")
                     let error = NSError(domain: "", code: statusCode, userInfo: nil) as Error
