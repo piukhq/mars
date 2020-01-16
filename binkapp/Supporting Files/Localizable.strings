@@ -302,6 +302,7 @@
 "plr_voucher_detail_issued_date_prefix" = "Added ";
 "plr_voucher_detail_redeemed_date_prefix" = "Redeemed ";
 "plr_voucher_detail_expired_date_prefix" = "Expired ";
+"plr_voucher_detail_expires_date_prefix" = "Expires ";
 "plr_voucher_detail_subtext_inprogress" = "Spend %@%@ with us and you'll get a %@%@ %@.";
 "plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
 "plr_lcd_points_module_title" = "Collecting";
