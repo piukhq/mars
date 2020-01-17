@@ -8,6 +8,8 @@
 import UIKit
 
 class LoyaltyCardFullDetailsViewModel {
+    typealias EmptyCompletionBlock = () -> Void
+
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
     private let informationRowFactory: PaymentCardDetailInformationRowFactory
@@ -216,13 +218,19 @@ extension LoyaltyCardFullDetailsViewModel {
         informationRows[indexPath.row].action()
     }
     
-    func deleteMembershipCard() {
+    func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }
-            self.repository.delete(self.membershipCard) {
-                Current.wallet.refreshLocal()
-                self.router.popToRootViewController()
+            guard Current.apiManager.networkIsReachable else {
+                self.router.presentNoConnectivityPopup()
+                noCompletion?()
+                return
             }
-            }, noCompletion: {})
+            self.repository.delete(self.membershipCard, completion: yesCompletion)
+        }, noCompletion: {
+            DispatchQueue.main.async {
+                noCompletion?()
+            }
+        })
     }
 }

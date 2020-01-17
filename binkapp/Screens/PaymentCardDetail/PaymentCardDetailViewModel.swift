@@ -9,6 +9,8 @@
 import Foundation
 
 class PaymentCardDetailViewModel {
+    typealias EmptyCompletionBlock = () -> Void
+
     private var paymentCard: CD_PaymentCard
     private(set) var router: MainScreenRouter
     private let repository: PaymentCardDetailRepository
@@ -168,14 +170,20 @@ class PaymentCardDetailViewModel {
         router.popToRootViewController()
     }
     
-    func deletePaymentCard() {
+    func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }
-            self.repository.delete(self.paymentCard) {
-                Current.wallet.refreshLocal()
-                self.router.popToRootViewController()
+            guard Current.apiManager.networkIsReachable else {
+                self.router.presentNoConnectivityPopup()
+                noCompletion?()
+                return
             }
-        }, noCompletion: {})
+            self.repository.delete(self.paymentCard, completion: yesCompletion)
+        }, noCompletion: {
+            DispatchQueue.main.async {
+                noCompletion?()
+            }
+        })
     }
 
     // MARK: - Repository
