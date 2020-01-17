@@ -40,7 +40,7 @@ class PaymentCardDetailRepository: WalletRepository {
         })
     }
 
-    func delete<T: WalletCard>(_ card: T, completion: @escaping () -> Void) {
+    func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
         // Process the backend delete, but fail silently
         let url = RequestURL.paymentCard(cardId: card.id)
         let method = RequestHTTPMethod.delete
@@ -55,7 +55,7 @@ class PaymentCardDetailRepository: WalletRepository {
             try? context.save()
 
             DispatchQueue.main.async {
-                completion()
+                completion?()
             }
         }
     }
