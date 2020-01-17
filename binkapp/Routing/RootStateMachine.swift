@@ -62,7 +62,7 @@ class RootStateMachine: NSObject {
         moveTo(loading)
                 
         clearLocalStorage {
-            Current.apiManager.doRequest(url: .logout, httpMethod: .post, onSuccess: { [weak self] (response: LogoutResponse) in
+            Current.apiManager.doRequest(url: .logout, httpMethod: .post, isUserDriven: false, onSuccess: { [weak self] (response: LogoutResponse) in
                 self?.completeLogout()
             }) { [weak self] (error) in
                 self?.completeLogout()

@@ -22,9 +22,7 @@ class MainScreenRouter {
     init(delegate: MainScreenRouterDelegate) {
         self.delegate = delegate
 
-        // TODO: Reinstate when we have a strategy for showing this alert for specific app paths
-//        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
     }
@@ -255,7 +253,10 @@ class MainScreenRouter {
     @objc func presentNoConnectivityPopup() {
         let alert = UIAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
-        navController?.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.navController?.present(alert, animated: true, completion: nil)
+        }
     }
     
     @objc func popViewController() {

@@ -156,7 +156,7 @@ class Wallet: CoreDataRepositoryProtocol {
         let url = RequestURL.membershipPlans
         let method = RequestHTTPMethod.get
 
-        Current.apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
+        Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
             self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
                 self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { plans in
                     self?.membershipPlans = plans
@@ -180,7 +180,7 @@ class Wallet: CoreDataRepositoryProtocol {
         let url = RequestURL.membershipCards
         let method = RequestHTTPMethod.get
 
-        Current.apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipCardModel]) in
+        Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { [weak self] (response: [MembershipCardModel]) in
             self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
                 self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: { cards in
                     self?.membershipCards = cards
@@ -204,7 +204,7 @@ class Wallet: CoreDataRepositoryProtocol {
         let url = RequestURL.paymentCards
         let method = RequestHTTPMethod.get
 
-        Current.apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [PaymentCardModel]) in
+        Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { [weak self] (response: [PaymentCardModel]) in
             self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
                 self?.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { cards in
                     self?.paymentCards = cards

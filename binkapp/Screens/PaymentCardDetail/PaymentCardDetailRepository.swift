@@ -19,7 +19,7 @@ class PaymentCardDetailRepository: WalletRepository {
         let url = RequestURL.paymentCard(cardId: id)
         let method = RequestHTTPMethod.get
 
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
+        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask { backgroundContext in
                 let newObject = response.mapToCoreData(backgroundContext, .update, overrideID: nil)
                 guard let newObjectId = newObject.id else {
@@ -44,7 +44,7 @@ class PaymentCardDetailRepository: WalletRepository {
         // Process the backend delete, but fail silently
         let url = RequestURL.paymentCard(cardId: card.id)
         let method = RequestHTTPMethod.delete
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
+        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
@@ -64,7 +64,7 @@ class PaymentCardDetailRepository: WalletRepository {
         let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
         let method: RequestHTTPMethod = .patch
 
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
+        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask { backgroundContext in
                 // TODO: Should we be using .none here? Only option that works...
                 // It's functional but we're not sure why it doesn't work otherwise and that is concerning.
@@ -96,7 +96,7 @@ class PaymentCardDetailRepository: WalletRepository {
         let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
         let method: RequestHTTPMethod = .delete
         
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
+        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
                 
                 if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCardId) {
