@@ -178,7 +178,11 @@ class PaymentCardDetailViewModel {
                 noCompletion?()
                 return
             }
-            self.repository.delete(self.paymentCard, completion: yesCompletion)
+            self.repository.delete(self.paymentCard) {
+                Current.wallet.refreshLocal()
+                self.router.popToRootViewController()
+                yesCompletion?()
+            }
         }, noCompletion: {
             DispatchQueue.main.async {
                 noCompletion?()

@@ -226,7 +226,11 @@ extension LoyaltyCardFullDetailsViewModel {
                 noCompletion?()
                 return
             }
-            self.repository.delete(self.membershipCard, completion: yesCompletion)
+            self.repository.delete(self.membershipCard) {
+                Current.wallet.refreshLocal()
+                self.router.popToRootViewController()
+                yesCompletion?()
+            }
         }, noCompletion: {
             DispatchQueue.main.async {
                 noCompletion?()
