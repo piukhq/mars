@@ -163,12 +163,17 @@ class ApiManager {
                      ensure that we aggressively respond in app to a 401.
                      */
                     NotificationCenter.default.post(name: .didLogout, object: nil)
+                } else if statusCode == 400 {
+                    let errorArray = try decoder.decode([String].self, from: data)
+                    let customError = CustomError(errorMessage: errorArray.first ?? "", statusCode: statusCode)
+                    onError(customError)
                 } else if let error = response.error {
                     print(error)
                     onError(error)
                 } else {
                     print("something went wrong, statusCode: \(statusCode)")
-                    onError(NSError(domain: "", code: statusCode, userInfo: nil) as Error)
+                    let error = NSError(domain: "", code: statusCode, userInfo: nil) as Error
+                    onError(error)
                 }
             } catch (let error) {
                 print("decoding error: \(error)")
