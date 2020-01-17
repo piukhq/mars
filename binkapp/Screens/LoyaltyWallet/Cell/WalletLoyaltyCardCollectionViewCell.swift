@@ -144,8 +144,8 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         /// Card Value
         cardValuePointsLabel.text = viewModel.pointsValueText
         cardValueSuffixLabel.text = viewModel.pointsValueSuffixText
-        cardValuePointsLabel.isHidden = !viewModel.shouldShowPointsValueLabels
-        cardValueSuffixLabel.isHidden = !viewModel.shouldShowPointsValueLabels
+        cardValuePointsLabel.isHidden = !viewModel.shouldShowPointsValueLabel
+        cardValueSuffixLabel.isHidden = !viewModel.shouldShowPointsSuffixLabel
 
         containerView.backgroundColor = .clear
     }
