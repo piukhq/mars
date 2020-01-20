@@ -72,10 +72,15 @@ class FormField {
             }
         }
         
-        static func fieldInputType(for simpleFieldInputType: InputType?, choices: [String]? = nil) -> FieldInputType {
+        static func fieldInputType(for simpleFieldInputType: InputType?, commonName: FieldCommonName?, choices: [String]? = nil) -> FieldInputType {
             switch simpleFieldInputType {
             case .textfield:
-                return .text
+                switch commonName {
+                case .email:
+                    return .email
+                default:
+                    return .text
+                }
             case .password:
                 return .sensitive
             case .checkbox:
