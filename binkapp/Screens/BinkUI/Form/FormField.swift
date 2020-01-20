@@ -75,7 +75,7 @@ class FormField {
         static func fieldInputType(for simpleFieldInputType: InputType?, commonName: String?, choices: [String]? = nil) -> FieldInputType {
             switch simpleFieldInputType {
             case .textfield:
-                if commonName == "email" {
+                if commonName == FieldCommonName.email.rawValue {
                     return .email
                 } else {
                     return .text
