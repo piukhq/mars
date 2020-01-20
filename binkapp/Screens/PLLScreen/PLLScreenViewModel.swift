@@ -74,6 +74,7 @@ class PLLScreenViewModel {
     
     func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
         guard Current.apiManager.networkIsReachable else {
+            // If PLL screen is showing after card add, and offline, there is now way out!
             router.presentNoConnectivityPopup()
             completion()
             return

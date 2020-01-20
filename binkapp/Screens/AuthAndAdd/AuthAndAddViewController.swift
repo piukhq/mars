@@ -103,6 +103,7 @@ extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         floatingButtons.primaryButton.startLoading()
         try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes) {
+            // This doesn't get called if offline
             floatingButtons.primaryButton.stopLoading()
         }
     }
