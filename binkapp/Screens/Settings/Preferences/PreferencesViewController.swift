@@ -66,7 +66,9 @@ class PreferencesViewController: UIViewController {
     private func createCheckboxes(preferences: [PreferencesModel]) {
         preferences.forEach {
             let checkboxView = CheckboxView()
-            checkboxView.configure(title: $0.slug == "marketing-bink" ? "preferences_marketing_checkbox".localized : $0.label ?? "", columnName: $0.slug ?? "", columnKind: .add, delegate: self)
+            checkboxView.configure(title: $0.slug == "marketing-bink" ?
+                                NSMutableAttributedString(string: "preferences_marketing_checkbox".localized) :
+                                NSMutableAttributedString(string: $0.label ?? ""), columnName: $0.slug ?? "", columnKind: .add, delegate: self)
             
             checkboxView.setValue(newValue: $0.value ?? "0")
             

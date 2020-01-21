@@ -276,10 +276,11 @@
 "fogrot_password_popup_text" = "If the email address you entered is associated with a Bink account, then a password reset email will be sent.";
 
 "tandcs_title" = "I accept Bink's Terms and Conditions";
+"tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";
 "tandcs_link" = "Terms and Conditions";
 "ppolicy_title" = "I accept Bink's Privacy Policy";
 "ppolicy_link" = "Privacy Policy";
-"marketing_title" = "I opt in to receive marketing messages";
+"marketing_title" = "Opt in to receive marketing messages";
 
 "access_form_email_title" = "Email";
 "access_form_email_placeholder" = "Enter email address";
