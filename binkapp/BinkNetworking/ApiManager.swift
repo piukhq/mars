@@ -23,8 +23,9 @@ enum RequestURL {
     case paymentCards
     case paymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
+    case spreedly
     
-    var value: String {
+    private var value: String {
         switch self {
         case .login:
             return "/users/login"
@@ -52,6 +53,8 @@ enum RequestURL {
             return "/ubiquity/payment_card/\(cardId)"
         case .linkMembershipCardToPaymentCard(let membershipCardId, let paymentCardId):
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
+        case .spreedly:
+            return "core.spreedly.com/v1/payment_methods"
         }
     }
     
@@ -62,6 +65,19 @@ enum RequestURL {
         default:
             return true
         }
+    }
+
+    private var baseUrlString: String {
+        switch self {
+        case .spreedly:
+            return ""
+        default:
+            return APIConstants.baseURLString
+        }
+    }
+
+    var fullUrlString: String {
+        return "\(baseUrlString)\(value)"
     }
 }
 
@@ -150,7 +166,7 @@ class ApiManager {
         let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
         let requestHeaders = HTTPHeaders(headerDict)
         
-        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { (response) in
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { (response) in
             self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
     }
@@ -167,7 +183,7 @@ class ApiManager {
         let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
         let requestHeaders = HTTPHeaders(headerDict)
                 
-        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { (response) in
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { (response) in
             self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
     }
@@ -254,7 +270,7 @@ class ApiManager {
         let authRequired = url.authRequired
         let requestHeaders = HTTPHeaders(getHeader(authRequired: authRequired))
         
-        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { response in
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { response in
             
             let statusCode = response.response?.statusCode ?? 0
             if statusCode == 200 || statusCode == 201 || statusCode == 204 {
