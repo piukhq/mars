@@ -22,6 +22,7 @@
 "sign_up_failed_title" = "Sign up failed";
 "please_try_again_title" = "Please try again";
 "log_in_title" = "Log in";
+"credentials_title" = "Enter credentials";
 "registration_failed_title" = "Registration failed";
 "history_title" = "History";
 "not_available_title" = "Not available";
@@ -74,7 +75,7 @@
 "add_my_card_button" = "Add my card";
 "get_new_card_button" = "Get a new card";
 
-"auth_screen_description" = "You can log in to your %@ account to view your %@ details.";
+"auth_screen_description" = "Please enter your %@ credentials below to add this card to your wallet";
 
 "pll_title" = "PLL";
 "popular_title" = "Popular";
