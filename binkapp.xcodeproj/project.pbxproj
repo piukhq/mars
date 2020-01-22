@@ -220,7 +220,6 @@
 		BDB0187E232E1FC800BFFA18 /* PaymentCardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */; };
 		BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */; };
 		BDB01884232EB14A00BFFA18 /* StackScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01883232EB14A00BFFA18 /* StackScrollView.swift */; };
-		BDB01886232ED6F800BFFA18 /* SpreedlyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01885232ED6F800BFFA18 /* SpreedlyRequest.swift */; };
 		BDBAA1BA235E1BBB00087E12 /* SettingsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBAA1B9235E1BBB00087E12 /* SettingsTableViewHeader.swift */; };
 		BDD9C83C233BE493003CD616 /* MembershipPlanImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C83B233BE493003CD616 /* MembershipPlanImageModel.swift */; };
 		BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */; };
@@ -303,6 +302,7 @@
 		EF94AF0D23D9F04700AAA039 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */; };
 		EF94AF0F23DF55EE00AAA039 /* BinkTrackableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0E23DF55EE00AAA039 /* BinkTrackableButton.swift */; };
 		EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF1323E05B5D00AAA039 /* ImageService.swift */; };
+		EF94AF0523D887AE00AAA039 /* SpreedlyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0423D887AE00AAA039 /* SpreedlyModels.swift */; };
 		EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */; };
 		EF9E9BD023C72930002FF18E /* RefreshControlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */; };
 		EF9E9BD223C73BA1002FF18E /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */; };
@@ -668,7 +668,6 @@
 		BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardType.swift; sourceTree = "<group>"; };
 		BDB01881232E93A100BFFA18 /* FormMultipleChoiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormMultipleChoiceInput.swift; sourceTree = "<group>"; };
 		BDB01883232EB14A00BFFA18 /* StackScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackScrollView.swift; sourceTree = "<group>"; };
-		BDB01885232ED6F800BFFA18 /* SpreedlyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpreedlyRequest.swift; sourceTree = "<group>"; };
 		BDBAA1B9235E1BBB00087E12 /* SettingsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewHeader.swift; sourceTree = "<group>"; };
 		BDD9C83B233BE493003CD616 /* MembershipPlanImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanImageModel.swift; sourceTree = "<group>"; };
 		BDD9C8A4233C0476003CD616 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -760,6 +759,7 @@
 		EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		EF94AF0E23DF55EE00AAA039 /* BinkTrackableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTrackableButton.swift; sourceTree = "<group>"; };
 		EF94AF1323E05B5D00AAA039 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		EF94AF0423D887AE00AAA039 /* SpreedlyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpreedlyModels.swift; sourceTree = "<group>"; };
 		EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtension.swift; sourceTree = "<group>"; };
 		EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControlExtension.swift; sourceTree = "<group>"; };
 		EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
@@ -947,6 +947,7 @@
 		3C25BE012301A0F600E931EE /* BinkNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				EF94AF0323D8879F00AAA039 /* Spreedly */,
 				3C3C604A2302DD0800D9EA25 /* Responses */,
 				3CD7E90A2302AC42001889FE /* ApiManager.swift */,
 				3C98F80C23CF555A006EB66C /* CustomError.swift */,
@@ -1613,7 +1614,6 @@
 				BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */,
 				BDB0187B232E1B5900BFFA18 /* PaymentCardCreateModel.swift */,
 				BDB0187D232E1FC800BFFA18 /* PaymentCardType.swift */,
-				BDB01885232ED6F800BFFA18 /* SpreedlyRequest.swift */,
 				BD553CCE2332615900DA7D2A /* PaymentCardCreateRequest.swift */,
 			);
 			path = AddPaymentCard;
@@ -1971,6 +1971,14 @@
 				EF94AF1323E05B5D00AAA039 /* ImageService.swift */,
 			);
 			path = "Image Service";
+			sourceTree = "<group>";
+		};
+		EF94AF0323D8879F00AAA039 /* Spreedly */ = {
+			isa = PBXGroup;
+			children = (
+				EF94AF0423D887AE00AAA039 /* SpreedlyModels.swift */,
+			);
+			path = Spreedly;
 			sourceTree = "<group>";
 		};
 		EFA5F6CB2379A4810027AB80 /* PLR */ = {
@@ -2554,6 +2562,7 @@
 				BD9FB68B2333DE3E00E5559A /* StringExtension.swift in Sources */,
 				EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */,
 				EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */,
+				EF94AF0523D887AE00AAA039 /* SpreedlyModels.swift in Sources */,
 				BD9FB68B2333DE3E00E5559A /* StringExtension.swift in Sources */,
 				EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */,
 				EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */,
