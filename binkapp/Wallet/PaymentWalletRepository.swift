@@ -39,13 +39,18 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
         if apiManager.isProduction {
             requestSpreedlyToken(paymentCard: paymentCard, onSuccess: { [weak self] spreedlyResponse in
+                guard spreedlyResponse.isValid else {
+                    onError(nil)
+                    return
+                }
+
                 self?.createPaymentCard(paymentCard, spreedlyResponse: spreedlyResponse, onSuccess: { createdPaymentCard in
                     onSuccess(createdPaymentCard)
                 }, onError: { error in
                     onError(error)
                 })
             }) { error in
-                // handle spreedly errors
+                onError(error)
             }
             return
         } else {

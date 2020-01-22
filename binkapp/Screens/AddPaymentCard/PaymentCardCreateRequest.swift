@@ -39,13 +39,13 @@ struct PaymentCardCreateRequest: Codable {
             let timestamp: Int
             let type: Int
         }
-        
-        let consents: [Consents]
+
+        // These are default consents by design from architecture
+        var consents: [Consents]?
     }
     
     let card: Card
 
-    // TODO: Can we send no consents and still add payment cards?
     let account: Account
     
     /// This should only be used for creating test payment cards as it naturally bypasses the Spreedly path

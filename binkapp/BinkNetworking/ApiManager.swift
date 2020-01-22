@@ -54,7 +54,7 @@ enum RequestURL {
         case .linkMembershipCardToPaymentCard(let membershipCardId, let paymentCardId):
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
         case .spreedly:
-            return "core.spreedly.com/v1/payment_methods?environment_key=\(BinkappKeys().spreedlyEnvironmentKey)"
+            return "https://core.spreedly.com/v1/payment_methods?environment_key=\(BinkappKeys().spreedlyEnvironmentKey)"
         }
     }
     
@@ -70,7 +70,7 @@ enum RequestURL {
     private var baseUrlString: String {
         switch self {
         case .spreedly:
-            return "https://"
+            return ""
         default:
             return APIConstants.baseURLString
         }
