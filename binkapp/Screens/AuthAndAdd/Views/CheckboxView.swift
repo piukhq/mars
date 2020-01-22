@@ -45,7 +45,6 @@ class CheckboxView: CustomView {
 
         guard let safeUrl = url else {
             self.title = title
-//            textView.font = UIFont.bodyTextSmall
             
             //We don't need a delegate if we don't have a checkbox, so we send a nil delegate to hide it
             checkboxView.isHidden = delegate == nil
