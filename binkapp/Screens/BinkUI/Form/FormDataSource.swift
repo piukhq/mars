@@ -388,7 +388,7 @@ extension FormDataSource {
             let baseTCs = NSString(string: attributedTCs.string)
             let tcsRange = baseTCs.range(of: "tandcs_link".localized)
             let privacyPolicyRange = baseTCs.range(of: "ppolicy_link".localized)
-            attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: tcsRange)
+            attributedTCs.addAttributes([.link: "https://bink.com/terms-and-conditions/"], range: tcsRange)
             attributedTCs.addAttributes([.link: "https://bink.com/privacy-policy/"], range: privacyPolicyRange)
             
             let termsAndConditions = CheckboxView(frame: .zero)
