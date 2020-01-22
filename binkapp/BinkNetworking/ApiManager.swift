@@ -54,13 +54,13 @@ enum RequestURL {
         case .linkMembershipCardToPaymentCard(let membershipCardId, let paymentCardId):
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
         case .spreedly:
-            return "core.spreedly.com/v1/payment_methods"
+            return "core.spreedly.com/v1/payment_methods?environment_key=1Lf7DiKgkcx5Anw7QxWdDxaKtTa" // TODO: Move env key to config
         }
     }
     
     var authRequired: Bool {
         switch self {
-        case .register, .login, .renew:
+        case .register, .login, .renew, .spreedly:
             return false
         default:
             return true
@@ -70,7 +70,7 @@ enum RequestURL {
     private var baseUrlString: String {
         switch self {
         case .spreedly:
-            return ""
+            return "https://"
         default:
             return APIConstants.baseURLString
         }
@@ -141,6 +141,10 @@ class ApiManager {
             return .wifi
         }
         return .unknown
+    }
+
+    var isProduction: Bool {
+        return APIConstants.baseURLString == APIConstants.productionBaseURL
     }
     
     init() {

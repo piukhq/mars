@@ -36,7 +36,77 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
     }
 
+    struct SpreedlyRequest: Codable {
+        var paymentMethod: PaymentMethod?
+        var retained: Bool?
+
+        enum CodingKeys: String, CodingKey {
+            case paymentMethod = "payment_method"
+        }
+
+        struct PaymentMethod: Codable {
+            var creditCard: CreditCard?
+
+            enum CodingKeys: String, CodingKey {
+                case creditCard = "credit_card"
+            }
+
+            struct CreditCard: Codable {
+                var number: String?
+                var month: Int?
+                var year: Int?
+                var fullName: String?
+
+                enum CodingKeys: String, CodingKey {
+                    case number
+                    case month
+                    case year
+                    case fullName = "full_name"
+                }
+            }
+        }
+    }
+
+    struct SpreedlyResponse: Codable {
+        var transaction: Transaction?
+
+        struct Transaction: Codable {
+            var paymentMethod: PaymentMethod?
+
+            enum CodingKeys: String, CodingKey {
+                case paymentMethod = "payment_method"
+            }
+
+            struct PaymentMethod: Codable {
+                var token: String?
+                var lastFour: String?
+                var firstSix: String?
+                var fingerprint: String?
+
+                enum CodingKeys: String, CodingKey {
+                    case token
+                    case lastFour = "last_four_digits"
+                    case firstSix = "first_six_digits"
+                    case fingerprint
+                }
+            }
+        }
+    }
+
     func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping() -> Void) {
+        if apiManager.isProduction {
+            let spreedlyRequest = SpreedlyRequest(paymentMethod: SpreedlyRequest.PaymentMethod(creditCard: SpreedlyRequest.PaymentMethod.CreditCard(number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year, fullName: paymentCard.nameOnCard)), retained: true)
+
+            apiManager.doRequest(url: .spreedly, httpMethod: .post, parameters: spreedlyRequest, onSuccess: { (response: SpreedlyResponse) in
+                // Success, make call to bink API
+            }, onError: { error in
+                print(error)
+                onError()
+            })
+        }
+
+        return
+
         guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard) else {
             return
         }
