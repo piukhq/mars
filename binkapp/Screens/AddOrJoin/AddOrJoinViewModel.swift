@@ -21,7 +21,7 @@ class AddOrJoinViewModel {
     }
     
     func toAuthAndAddScreen() {
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .login)
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
     }
     
     func didSelectAddNewCard() {
