@@ -65,7 +65,6 @@ struct PaymentCardCreateRequest: Codable {
             lastFour = String(pan[lastFourStartIndex..<pan.endIndex])
         }
 
-        // TODO: Handle optionals?
         card = Card(
             token: spreedlyResponse == nil ? PaymentCardCreateRequest.fakeToken() : spreedlyResponse?.transaction?.paymentMethod?.token ?? "",
             firstSixDigits: spreedlyResponse == nil ? firstSix! : spreedlyResponse?.transaction?.paymentMethod?.firstSix ?? "",
