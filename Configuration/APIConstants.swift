@@ -21,7 +21,7 @@ enum Configuration {
 }
 
 enum APIConstants {
-    static let productionBaseURL = "https://api.staging.gb.bink.com"
+    static let productionBaseURL = "https://api.bink.com"
 
     static var baseURLString: String {
         do {
