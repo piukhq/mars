@@ -394,11 +394,6 @@ extension FormDataSource {
             let termsAndConditions = CheckboxView(frame: .zero)
             termsAndConditions.configure(title: attributedTCs, columnName: "tandcs_link".localized, columnKind: .none, delegate: self)
             checkboxes.append(termsAndConditions)
-            
-        //TODO: remove this if we don't need to display the old screen at all
-//            let privacyPolicy = CheckboxView(frame: .zero)
-//            privacyPolicy.configure(title: NSMutableAttributedString(string: "ppolicy_title".localized), columnName: "ppolicy_link".localized, columnKind: .none, url: URL(string: "https://bink.com/privacy-policy/"), delegate: self)
-//            checkboxes.append(privacyPolicy)
         
             let attributedMarketing = NSMutableAttributedString(string: "marketing_title".localized + "\n" + "preferences_prompt".localized, attributes: [.font: UIFont.bodyTextSmall])
             let baseMarketing = NSString(string: attributedMarketing.string)
