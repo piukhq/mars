@@ -49,7 +49,7 @@ struct PaymentCardCreateRequest: Codable {
     let account: Account
     
     /// This should only be used for creating test payment cards as it naturally bypasses the Spreedly path
-    init?(model: PaymentCardCreateModel) {
+    init?(model: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil) {
         guard let pan = model.fullPan?.replacingOccurrences(of: " ", with: ""),
             let year = model.year,
             let month = model.month
@@ -64,16 +64,17 @@ struct PaymentCardCreateRequest: Codable {
             firstSix = String(pan[pan.startIndex..<firstSixEndIndex])
             lastFour = String(pan[lastFourStartIndex..<pan.endIndex])
         }
-        
+
+        // TODO: Handle optionals?
         card = Card(
-            token: PaymentCardCreateRequest.fakeToken(),
-            firstSixDigits: firstSix!,
-            lastFourDigits: lastFour!,
+            token: spreedlyResponse == nil ? PaymentCardCreateRequest.fakeToken() : spreedlyResponse?.transaction?.paymentMethod?.token ?? "",
+            firstSixDigits: spreedlyResponse == nil ? firstSix! : spreedlyResponse?.transaction?.paymentMethod?.firstSix ?? "",
+            lastFourDigits: spreedlyResponse == nil ? lastFour! : spreedlyResponse?.transaction?.paymentMethod?.lastFour ?? "",
             country: "GB", //TODO: Needs resolving!
             nameOnCard: model.nameOnCard!,
             month: month,
             year: year,
-            fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month))
+            fingerprint: spreedlyResponse == nil ? PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month)) : spreedlyResponse?.transaction?.paymentMethod?.fingerprint ?? ""
         )
 
         let timestamp = Date().timeIntervalSince1970

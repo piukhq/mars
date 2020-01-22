@@ -36,30 +36,48 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
     }
 
-    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping() -> Void) {
+    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
         if apiManager.isProduction {
-            let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
-
-            apiManager.doRequest(url: .spreedly, httpMethod: .post, parameters: spreedlyRequest, onSuccess: { (response: SpreedlyResponse) in
-                // Success, make call to bink API
+            requestSpreedlyToken(paymentCard: paymentCard, onSuccess: { [weak self] spreedlyResponse in
+                self?.createPaymentCard(paymentCard, spreedlyResponse: spreedlyResponse, onSuccess: { createdPaymentCard in
+                    onSuccess(createdPaymentCard)
+                }, onError: { error in
+                    onError(error)
+                })
+            }) { error in
+                // handle spreedly errors
+            }
+            return
+        } else {
+            createPaymentCard(paymentCard, onSuccess: { createdPaymentCard in
+                onSuccess(createdPaymentCard)
             }, onError: { error in
-                print(error)
-                onError()
+                onError(error)
             })
         }
+    }
 
-        return
+    private func requestSpreedlyToken(paymentCard: PaymentCardCreateModel, onSuccess: @escaping (SpreedlyResponse) -> Void, onError: @escaping (Error?) -> Void) {
+        let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
-        guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard) else {
+        apiManager.doRequest(url: .spreedly, httpMethod: .post, parameters: spreedlyRequest, onSuccess: { (response: SpreedlyResponse) in
+            onSuccess(response)
+        }, onError: { error in
+            onError(error)
+        })
+    }
+
+    private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
+        guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard, spreedlyResponse: spreedlyResponse) else {
             return
         }
 
         apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest, isUserDriven: true, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask { context in
                 let newObject = response.mapToCoreData(context, .update, overrideID: nil)
-                
+
                 try? context.save()
-                
+
                 DispatchQueue.main.async {
                     Current.database.performTask(with: newObject) { (context, safeObject) in
                         onSuccess(safeObject)
@@ -67,8 +85,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
                 }
             }
         }, onError: { error in
-            print(error)
-            onError()
+            onError(error)
         })
     }
 }
