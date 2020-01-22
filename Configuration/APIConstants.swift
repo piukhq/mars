@@ -22,6 +22,7 @@ enum Configuration {
 
 enum APIConstants {
     static let productionBaseURL = "https://api.staging.gb.bink.com"
+
     static var baseURLString: String {
         do {
             let configURL = try Configuration.value(for: "API_BASE_URL")

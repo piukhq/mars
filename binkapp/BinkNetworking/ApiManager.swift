@@ -54,7 +54,7 @@ enum RequestURL {
         case .linkMembershipCardToPaymentCard(let membershipCardId, let paymentCardId):
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
         case .spreedly:
-            return "core.spreedly.com/v1/payment_methods?environment_key=1Lf7DiKgkcx5Anw7QxWdDxaKtTa" // TODO: Move env key to config
+            return "core.spreedly.com/v1/payment_methods?environment_key=\(BinkappKeys().spreedlyEnvironmentKey)"
         }
     }
     
