@@ -300,6 +300,7 @@
 		EF8F0482238D582300BD708B /* CD_PlanDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0480238D582300BD708B /* CD_PlanDocument.swift */; };
 		EF8F0485238D583300BD708B /* _CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0483238D583200BD708B /* _CD_LinkingSupport.swift */; };
 		EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */; };
+		EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0723D9B89B00AAA039 /* Anaytics.swift */; };
 		EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */; };
 		EF9E9BD023C72930002FF18E /* RefreshControlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */; };
 		EF9E9BD223C73BA1002FF18E /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */; };
@@ -754,6 +755,7 @@
 		EF8F0480238D582300BD708B /* CD_PlanDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_PlanDocument.swift; sourceTree = "<group>"; };
 		EF8F0483238D583200BD708B /* _CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_LinkingSupport.swift; sourceTree = "<group>"; };
 		EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_LinkingSupport.swift; sourceTree = "<group>"; };
+		EF94AF0723D9B89B00AAA039 /* Anaytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anaytics.swift; sourceTree = "<group>"; };
 		EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtension.swift; sourceTree = "<group>"; };
 		EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControlExtension.swift; sourceTree = "<group>"; };
 		EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
@@ -1211,6 +1213,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EF94AF0623D9B88600AAA039 /* Analytics */,
 				EF8BF1F4233E60A300D2E5F3 /* Cache */,
 				EF2E880F2333859900F678F3 /* World */,
 				BD01E124231FA3A900D52713 /* BarBlur.swift */,
@@ -1955,6 +1958,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		EF94AF0623D9B88600AAA039 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				EF94AF0723D9B89B00AAA039 /* Anaytics.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		EFA5F6CB2379A4810027AB80 /* PLR */ = {
 			isa = PBXGroup;
 			children = (
@@ -2541,6 +2552,7 @@
 				EFA5F70F2379A7C70027AB80 /* CD_MembershipPlanImage.swift in Sources */,
 				BD9FB68B2333DE3E00E5559A /* StringExtension.swift in Sources */,
 				EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */,
+				EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */,
 				BD9FB68B2333DE3E00E5559A /* StringExtension.swift in Sources */,
 				EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */,
 				EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */,
