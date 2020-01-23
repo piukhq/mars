@@ -107,7 +107,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     // MARK: - Actions
     
     @objc func addButtonTapped() {
-        if Current.wallet.hasPaymentCards {
+        if viewModel.shouldDisplayTermsAndConditions {
             addButton.startLoading()
             viewModel.addPaymentCard { [weak self] in
                 self?.addButton.stopLoading()
