@@ -108,12 +108,12 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     @objc func addButtonTapped() {
         if viewModel.shouldDisplayTermsAndConditions {
+            viewModel.toPaymentTermsAndConditions(delegate: self)
+        } else {
             addButton.startLoading()
             viewModel.addPaymentCard { [weak self] in
                 self?.addButton.stopLoading()
             }
-        } else {
-            viewModel.toPaymentTermsAndConditions(delegate: self)
         }
     }
     
