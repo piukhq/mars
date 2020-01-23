@@ -33,7 +33,7 @@ class TransactionTableViewCell: UITableViewCell {
             setValueLabel(text: "%d \(suffix ?? "")", transactionValue: transactionValue)
             return
         }
-        setValueLabel(text: "\(prefix)%d", transactionValue: transactionValue)
+        setValueLabel(text: "\(prefix)%d.2f", transactionValue: transactionValue)
     }
     
     func setValueLabel(text: String, transactionValue: Int) {
