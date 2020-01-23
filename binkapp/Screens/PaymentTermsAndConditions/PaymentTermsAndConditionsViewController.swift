@@ -12,7 +12,7 @@ protocol PaymentTermsAndConditionsViewControllerDelegate: AnyObject {
     func paymentTermsAndConditionsViewControllerDidAccept(_ viewController: PaymentTermsAndConditionsViewController)
 }
 
-class PaymentTermsAndConditionsViewController: UIViewController, BarBlurring {
+class PaymentTermsAndConditionsViewController: BinkTrackableViewController, BarBlurring {
     lazy var blurBackground = defaultBlurredBackground()
     
     @IBOutlet private weak var floatingButtonsContainer: BinkPrimarySecondaryButtonView!

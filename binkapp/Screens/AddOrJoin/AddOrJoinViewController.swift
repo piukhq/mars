@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddOrJoinViewController: UIViewController {
+class AddOrJoinViewController: BinkTrackableViewController {
     @IBOutlet private weak var brandHeaderView: BrandHeaderView!
     @IBOutlet private weak var plansStackView: UIStackView!
     @IBOutlet private weak var addCardButton: BinkGradientButton!

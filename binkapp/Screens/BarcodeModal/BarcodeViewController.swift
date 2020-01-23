@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BarcodeViewController: UIViewController {
+class BarcodeViewController: BinkTrackableViewController {
     @IBOutlet private weak var barcodeImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var numberLabel: UILabel!

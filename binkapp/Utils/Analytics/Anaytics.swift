@@ -6,14 +6,14 @@
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import FirebaseAnalytics
 
 protocol AnalyticsTrackable {
-    func track(_ event: AnalyticsEvent)
+    var trackableEvent: BinkAnalyticsEvent { get }
 }
 
-enum AnalyticsEvent {
+enum BinkAnalyticsEvent {
     case screenView(screenName: String)
     case callToAction(identifier: String)
 
@@ -33,5 +33,19 @@ enum AnalyticsEvent {
         case .callToAction(let identifier):
             return ["identifier": identifier]
         }
+    }
+}
+
+struct BinkAnalytics {
+    static func track(_ event: BinkAnalyticsEvent) {
+        print("TRACKING \(event.name): \(event.data ?? [:])")
+//        Analytics.logEvent(event.name, parameters: event.data)
+    }
+}
+
+extension UIViewController: AnalyticsTrackable {
+    var trackableEvent: BinkAnalyticsEvent {
+        let className = String(describing: Self.self)
+        return .screenView(screenName: className)
     }
 }

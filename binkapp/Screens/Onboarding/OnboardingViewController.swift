@@ -9,7 +9,7 @@
 import UIKit
 import FBSDKLoginKit
 
-class OnboardingViewController: UIViewController, UIScrollViewDelegate {
+class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegate {
     @IBOutlet private weak var facebookPillButton: BinkPillButton!
     @IBOutlet private weak var floatingButtonsView: BinkPrimarySecondaryButtonView!
     private let viewModel: OnboardingViewModel

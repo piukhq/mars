@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddingOptionsViewController: UIViewController {
+class AddingOptionsViewController: BinkTrackableViewController {
     @IBOutlet weak var stackView: UIStackView!
     
     let viewModel: AddingOptionsViewModel

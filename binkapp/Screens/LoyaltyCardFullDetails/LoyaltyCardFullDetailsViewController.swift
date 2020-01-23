@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoyaltyCardFullDetailsViewController: UIViewController, BarBlurring {
+class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring {
 
     // MARK: - UI Lazy Variables
 

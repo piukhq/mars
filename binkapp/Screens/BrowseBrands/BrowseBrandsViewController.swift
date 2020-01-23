@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BrowseBrandsViewController: UIViewController {
+class BrowseBrandsViewController: BinkTrackableViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     let viewModel: BrowseBrandsViewModel
