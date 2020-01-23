@@ -22,6 +22,7 @@ class BinkTrackableViewController: UIViewController {
 }
 
 extension BinkTrackableViewController: AnalyticsTrackable {
+    /// Set the trackable event for all subclassing view controllers
     var trackableEvent: BinkAnalyticsEvent {
         let className = String(describing: Self.self)
         return .screenView(screenName: className)

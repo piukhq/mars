@@ -95,6 +95,8 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
         super.viewDidLoad()
         startTimer()
         viewModel.navigationController = navigationController
+
+        setAdditionalTrackingData(["testing": "123", "hello": true])
     }
 
     override func viewDidLayoutSubviews() {

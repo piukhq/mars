@@ -9,15 +9,13 @@
 import UIKit
 import FirebaseAnalytics
 
+/// Conformance to this protocol makes a class trackable
 protocol AnalyticsTrackable {
     var trackableEvent: BinkAnalyticsEvent { get }
     func setAdditionalTrackingData(_ data: [String: Any]?)
 }
 
-extension AnalyticsTrackable {
-    func setAdditionalTrackingData(_ data: [String: Any]?) {}
-}
-
+/// Events that can be tracked across the app
 enum BinkAnalyticsEvent {
     case screenView(screenName: String)
     case callToAction(identifier: String)
@@ -41,6 +39,8 @@ enum BinkAnalyticsEvent {
     }
 }
 
+/// Convenience class wrapping access to the app's current tracking tool.
+/// Classes that conform to AnalyticsTrackable should call this method passing their trackableEvent and additionalTrackingData properties
 struct BinkAnalytics {
     static func track(_ event: BinkAnalyticsEvent, additionalTrackingData: [String: Any]?) {
         var trackingData: [String: Any] = [:]
