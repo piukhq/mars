@@ -9,10 +9,21 @@
 import UIKit
 
 class BinkTrackableViewController: UIViewController {
-
+    private var additionalTrackingData: [String: Any]?
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        BinkAnalytics.track(trackableEvent)
+        BinkAnalytics.track(trackableEvent, additionalTrackingData: additionalTrackingData)
     }
 
+    func setAdditionalTrackingData(_ data: [String: Any]?) {
+        additionalTrackingData = data
+    }
+}
+
+extension BinkTrackableViewController: AnalyticsTrackable {
+    var trackableEvent: BinkAnalyticsEvent {
+        let className = String(describing: Self.self)
+        return .screenView(screenName: className)
+    }
 }

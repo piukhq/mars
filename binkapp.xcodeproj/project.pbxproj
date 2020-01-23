@@ -302,6 +302,7 @@
 		EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */; };
 		EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0723D9B89B00AAA039 /* Anaytics.swift */; };
 		EF94AF0A23D9C24900AAA039 /* BinkTrackableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0923D9C24900AAA039 /* BinkTrackableViewController.swift */; };
+		EF94AF0D23D9F04700AAA039 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */; };
 		EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */; };
 		EF9E9BD023C72930002FF18E /* RefreshControlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */; };
 		EF9E9BD223C73BA1002FF18E /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */; };
@@ -758,6 +759,7 @@
 		EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_LinkingSupport.swift; sourceTree = "<group>"; };
 		EF94AF0723D9B89B00AAA039 /* Anaytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anaytics.swift; sourceTree = "<group>"; };
 		EF94AF0923D9C24900AAA039 /* BinkTrackableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTrackableViewController.swift; sourceTree = "<group>"; };
+		EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtension.swift; sourceTree = "<group>"; };
 		EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControlExtension.swift; sourceTree = "<group>"; };
 		EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
@@ -1482,34 +1484,35 @@
 		B7E2EC0622E5ED1800BB201A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				3C48E7E5232A5E6700ADE410 /* DateExtension.swift */,
-				B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */,
-				DB8DE3592373130100F07F11 /* Bundle+binkapp.swift */,
-				B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */,
-				3CC267F122F428A400F0F9E3 /* String+Localization.swift */,
-				3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */,
-				3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */,
-				3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */,
-				EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */,
-				BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */,
-				3C8BBC282326541D00363349 /* NotificationNameExtension.swift */,
 				3C05A9DB2327CD3D00620583 /* AppDelegate+Extension.swift */,
-				BD1E7289232AB91C002CC85E /* UIAlertController+Extension.swift */,
-				BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */,
 				BDB01879232E144C00BFFA18 /* Array+Extension.swift */,
-				BD9FB68A2333DE3E00E5559A /* StringExtension.swift */,
-				BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */,
-				BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */,
-				3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */,
+				DB8DE3592373130100F07F11 /* Bundle+binkapp.swift */,
 				EF8BF1EE233CBCE300D2E5F3 /* CAGradientLayerExtension.swift */,
-				EFA5F6BF237429D30027AB80 /* UITableViewCellExtension.swift */,
-				3C7AF52A23757FB0005964E0 /* FloatExtension.swift */,
 				EFBDB102237B1468002D7898 /* CALayerExtension.swift */,
 				EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */,
-				DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */,
+				3C48E7E5232A5E6700ADE410 /* DateExtension.swift */,
+				BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */,
+				BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */,
+				3C7AF52A23757FB0005964E0 /* FloatExtension.swift */,
+				3C8BBC282326541D00363349 /* NotificationNameExtension.swift */,
 				EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */,
 				EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */,
+				B7E2EC0722E5ED6600BB201A /* String+Encrypting.swift */,
+				3CC267F122F428A400F0F9E3 /* String+Localization.swift */,
+				BD9FB68A2333DE3E00E5559A /* StringExtension.swift */,
+				B7E2EC0922E7050800BB201A /* TimeInterval+StringConversion.swift */,
+				BD1E7289232AB91C002CC85E /* UIAlertController+Extension.swift */,
+				BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */,
+				3CCC46C822FC6EB7008476E3 /* UIColor+binkapp.swift */,
 				EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */,
+				3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */,
+				3CE892672338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift */,
+				BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */,
+				EFA5F6BF237429D30027AB80 /* UITableViewCellExtension.swift */,
+				EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */,
+				3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */,
+				DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */,
+				EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2665,6 +2668,7 @@
 				EF3BC911234771AA00FE52ED /* WalletRepository.swift in Sources */,
 				EF8F0481238D582300BD708B /* _CD_PlanDocument.swift in Sources */,
 				EF2E8811233385A400F678F3 /* World.swift in Sources */,
+				EF94AF0D23D9F04700AAA039 /* DictionaryExtension.swift in Sources */,
 				EF3BC90F234770E000FE52ED /* WalletViewModel.swift in Sources */,
 				3CADDEAF231566C9006C3D9C /* LoginTextFieldView.swift in Sources */,
 				EF8BF1FF2341481A00D2E5F3 /* PaymentCardCardResponse.swift in Sources */,

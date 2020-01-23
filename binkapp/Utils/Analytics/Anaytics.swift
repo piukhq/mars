@@ -11,6 +11,11 @@ import FirebaseAnalytics
 
 protocol AnalyticsTrackable {
     var trackableEvent: BinkAnalyticsEvent { get }
+    func setAdditionalTrackingData(_ data: [String: Any]?)
+}
+
+extension AnalyticsTrackable {
+    func setAdditionalTrackingData(_ data: [String: Any]?) {}
 }
 
 enum BinkAnalyticsEvent {
@@ -20,16 +25,16 @@ enum BinkAnalyticsEvent {
     var name: String {
         switch self {
         case .screenView:
-            return "screenView"
+            return "screen_viewed"
         case .callToAction:
-            return "callToAction"
+            return "call_to_action_pressed"
         }
     }
 
-    var data: [String: Any]? {
+    var data: [String: Any] {
         switch self {
         case .screenView(let screenName):
-            return ["screenName": screenName]
+            return ["screen_name": screenName]
         case .callToAction(let identifier):
             return ["identifier": identifier]
         }
@@ -37,15 +42,20 @@ enum BinkAnalyticsEvent {
 }
 
 struct BinkAnalytics {
-    static func track(_ event: BinkAnalyticsEvent) {
-        print("TRACKING \(event.name): \(event.data ?? [:])")
-//        Analytics.logEvent(event.name, parameters: event.data)
-    }
-}
+    static func track(_ event: BinkAnalyticsEvent, additionalTrackingData: [String: Any]?) {
+        var trackingData: [String: Any] = [:]
 
-extension UIViewController: AnalyticsTrackable {
-    var trackableEvent: BinkAnalyticsEvent {
-        let className = String(describing: Self.self)
-        return .screenView(screenName: className)
+        defer {
+            print("TRACKING // \(event.name) = \(trackingData)")
+//            Analytics.logEvent(event.name, parameters: trackingData)
+        }
+
+        guard var data = additionalTrackingData else {
+            trackingData = event.data
+            return
+        }
+
+        data.merge(dict: event.data)
+        trackingData = data
     }
 }
