@@ -15,6 +15,12 @@ class BinkGradientButton: BinkPillButton {
         return gradient
     }()
 
+    private lazy var whiteLayer: CALayer = {
+        let whiteLayer = CALayer()
+        layer.insertSublayer(whiteLayer, at: 0)
+        return whiteLayer
+    }()
+    
     override var isEnabled: Bool {
         didSet {
             gradientLayer.opacity = isEnabled ? 1.0 : 0.5
@@ -26,11 +32,18 @@ class BinkGradientButton: BinkPillButton {
         // So we call super.layoutSubviews last
         processGradient(.binkPurple, .blueAccent)
         super.layoutSubviews()
+        setWhiteLayer()
     }
 
     func configure(title: String, hasShadow: Bool = true) {
         setTitle(title, for: .normal)
         self.hasShadow = hasShadow
+    }
+    
+    private func setWhiteLayer() {
+        whiteLayer.frame = bounds
+        whiteLayer.backgroundColor = UIColor.white.cgColor
+        whiteLayer.cornerRadius = self.frame.size.height / 2
     }
 
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {

@@ -181,7 +181,8 @@ extension FormDataSource {
             model.account?.formattedAddFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
-                    checkbox.configure(title: NSMutableAttributedString(string: field.fieldDescription ?? ""), columnName: field.column ?? "", columnKind: .add, delegate: self)
+                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
+                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -205,7 +206,8 @@ extension FormDataSource {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
-                    checkbox.configure(title: NSMutableAttributedString(string: field.fieldDescription ?? ""), columnName: field.column ?? "", columnKind: .auth, delegate: self)
+                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
+                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .auth, delegate: self)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -230,7 +232,8 @@ extension FormDataSource {
             model.account?.formattedEnrolFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
-                    checkbox.configure(title: NSMutableAttributedString(string: field.fieldDescription ?? ""), columnName: field.column ?? "", columnKind: .enrol, delegate: self)
+                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
+                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .enrol, delegate: self)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -254,7 +257,8 @@ extension FormDataSource {
             model.account?.formattedRegistrationFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
-                    checkbox.configure(title: NSMutableAttributedString(string: field.fieldDescription ?? ""), columnName: field.column ?? "", columnKind: .register, delegate: self)
+                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
+                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .register, delegate: self)
                     checkboxes.append(checkbox)
                 } else {
                     fields.append(
@@ -289,12 +293,13 @@ extension FormDataSource {
             
             let url = URL(string: field.url ?? "")
             let fieldText = (field.documentDescription ?? "") + " " + (field.name ?? "")
+            let attributedString = NSMutableAttributedString(string: fieldText, attributes: [.font: UIFont.bodyTextSmall])
             
             if field.checkbox?.boolValue == true {
-                checkbox.configure(title: NSMutableAttributedString(string: fieldText), columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
+                checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: self)
             } else {
                 //If we don't want a checkbox, we don't need a delegate for it, so we will hide the checkbox by checking if we have a delegate or not
-                checkbox.configure(title: NSMutableAttributedString(string: fieldText), columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: nil)
+                checkbox.configure(title: attributedString, columnName: field.name ?? "", columnKind: .planDocument, url: url, delegate: nil)
             }
             checkboxes.append(checkbox)
         }
