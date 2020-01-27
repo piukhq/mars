@@ -141,6 +141,7 @@ class ApiManager {
         
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError {
             // SSL/TLS Pinning Failure
+            NotificationCenter.default.post(name: .didFailServerTrustEvaluation, object: nil)
             onError(error)
             return
         }

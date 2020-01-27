@@ -20,4 +20,7 @@ extension Notification.Name {
     static let didDeleteMemebershipCard = Notification.Name("did_delete_membership_card")
     static let didAddMembershipCard = Notification.Name("did_add_membership_card")
     static let shouldTrashLocalWallets = Notification.Name("should_trash_local_wallets")
+
+    // MARK: - SSL Pinning
+    static let didFailServerTrustEvaluation = Notification.Name("did_fail_server_trust_evaluation")
 }
