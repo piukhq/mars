@@ -9,6 +9,9 @@
 import UIKit
 
 class BinkTrackableViewController: UIViewController {
+    /// Subclasses should set this if the view controller's class name isn't desirable
+    var screenName: String?
+
     private var additionalTrackingData: [String: Any]?
     
     override func viewDidAppear(_ animated: Bool) {
@@ -25,6 +28,6 @@ extension BinkTrackableViewController: AnalyticsTrackable {
     /// Set the trackable event for all subclassing view controllers
     var trackableEvent: BinkAnalyticsEvent {
         let className = String(describing: Self.self)
-        return .screenView(screenName: className)
+        return .screenView(screenName: screenName ?? className)
     }
 }
