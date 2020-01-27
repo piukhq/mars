@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddingOptionsViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
+                <outlet property="cancelButton" destination="fsR-c8-e0u" id="oQD-Dm-0ch"/>
                 <outlet property="stackView" destination="nU1-gx-D1w" id="n0P-eO-MNz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -38,7 +39,7 @@
                 <constraint firstItem="fsR-c8-e0u" firstAttribute="top" secondItem="nU1-gx-D1w" secondAttribute="bottom" constant="115" id="LAN-yc-C1W"/>
                 <constraint firstItem="fsR-c8-e0u" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ULV-ZH-ICX"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nU1-gx-D1w" secondAttribute="trailing" constant="25" id="a6e-ti-H7j"/>
-                <constraint firstItem="nU1-gx-D1w" firstAttribute="top" relation="lessThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="340" id="aFu-YB-EMD"/>
+                <constraint firstItem="nU1-gx-D1w" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="100" id="aFu-YB-EMD"/>
                 <constraint firstItem="nU1-gx-D1w" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="oRH-wN-S4C"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="fsR-c8-e0u" secondAttribute="bottom" constant="9" id="x4z-Ck-beb"/>
             </constraints>

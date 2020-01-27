@@ -10,6 +10,7 @@ import UIKit
 
 class AddingOptionsViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var cancelButton: UIButton!
     
     let viewModel: AddingOptionsViewModel
     // Not needed for MVP
@@ -57,6 +58,12 @@ class AddingOptionsViewController: UIViewController {
         //stackView.addArrangedSubview(loyaltyCardView)
         stackView.addArrangedSubview(browseBrandsView)
         stackView.addArrangedSubview(addPaymentCardView)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.bottomAnchor.constraint(equalTo: cancelButton.topAnchor, constant: -addPaymentCardView.frame.height * 0.75)
+        ])
+        
     }
     
     func addGesturesToViews() {
