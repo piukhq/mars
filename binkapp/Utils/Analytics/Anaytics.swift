@@ -12,7 +12,7 @@ import FirebaseAnalytics
 /// Conformance to this protocol makes a class trackable
 protocol AnalyticsTrackable {
     var trackableEvent: BinkAnalyticsEvent { get }
-    func setAdditionalTrackingData(_ data: [String: Any]?)
+    var additionalTrackingData: [String: Any]? { get }
 }
 
 /// Events that can be tracked across the app
@@ -47,7 +47,9 @@ struct BinkAnalytics {
 
         defer {
             print("TRACKING // \(event.name) = \(trackingData)")
-//            Analytics.logEvent(event.name, parameters: trackingData)
+            #if RELEASE
+            Analytics.logEvent(event.name, parameters: trackingData)
+            #endif
         }
 
         guard var data = additionalTrackingData else {

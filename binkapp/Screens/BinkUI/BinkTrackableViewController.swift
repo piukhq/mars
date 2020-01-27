@@ -8,26 +8,21 @@
 
 import UIKit
 
-class BinkTrackableViewController: UIViewController {
-    /// Subclasses should set this if the view controller's class name isn't desirable
-    var screenName: String?
+class BinkTrackableViewController: UIViewController, AnalyticsTrackable {
+    /// Optional additional data to pass to analytics along with the default tracking event data
+    var additionalTrackingData: [String: Any]?
 
-    private var additionalTrackingData: [String: Any]?
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        BinkAnalytics.track(trackableEvent, additionalTrackingData: additionalTrackingData)
-    }
-
-    func setAdditionalTrackingData(_ data: [String: Any]?) {
-        additionalTrackingData = data
-    }
-}
-
-extension BinkTrackableViewController: AnalyticsTrackable {
     /// Set the trackable event for all subclassing view controllers
     var trackableEvent: BinkAnalyticsEvent {
         let className = String(describing: Self.self)
         return .screenView(screenName: screenName ?? className)
+    }
+    
+    /// Subclasses should set this if the view controller's class name isn't desirable
+    var screenName: String?
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        BinkAnalytics.track(trackableEvent, additionalTrackingData: additionalTrackingData)
     }
 }
