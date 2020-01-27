@@ -14,7 +14,7 @@ class BinkTrackableButton: UIButton, AnalyticsTrackable {
     }
 
     var additionalTrackingData: [String : Any]?
-    var identifier: String {
+    private var identifier: String {
         guard let viewController = viewController() else { return "" }
         let className = String(describing: type(of: viewController).self)
         let buttonName = titleLabel?.text?.capitalized.replacingOccurrences(of: " ", with: "")
