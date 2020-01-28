@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum FieldCommonName: String {
+    case email
+    // TODO: Done as light-touch as possible for now. Add the rest of the cases later.
+}
+
 struct FormPickerData: Equatable {
     
     let title: String
@@ -67,10 +72,15 @@ class FormField {
             }
         }
         
-        static func fieldInputType(for simpleFieldInputType: InputType?, choices: [String]? = nil) -> FieldInputType {
+        static func fieldInputType(for simpleFieldInputType: InputType?, commonName: FieldCommonName?, choices: [String]? = nil) -> FieldInputType {
             switch simpleFieldInputType {
             case .textfield:
-                return .text
+                switch commonName {
+                case .email:
+                    return .email
+                default:
+                    return .text
+                }
             case .password:
                 return .sensitive
             case .checkbox:
@@ -109,6 +119,7 @@ class FormField {
     let pickerOptionsUpdated: PickerUpdatedBlock?
     let shouldChange: TextFieldShouldChange
     let manualValidate: ManualValidateBlock?
+    let forcedValue: String?
     private(set) var value: String?
     
     typealias ValueUpdatedBlock = (FormField, String?) -> ()
@@ -117,7 +128,7 @@ class FormField {
     typealias FieldExitedBlock = (FormField) -> ()
     typealias ManualValidateBlock = (FormField) -> (Bool)
         
-    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil) {
+    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation
@@ -130,6 +141,8 @@ class FormField {
         self.pickerOptionsUpdated = pickerSelected
         self.columnKind = columnKind
         self.manualValidate = manualValidate
+        self.forcedValue = forcedValue
+        self.value = forcedValue // Initialise the field's value with any forced value. If there isn't a forced value, the value will default to nil as normal.
     }
     
     func isValid() -> Bool {

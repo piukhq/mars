@@ -13,6 +13,10 @@ class AddPaymentCardViewModel {
     private let repository: PaymentWalletRepositoryProtocol
     let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
+    var shouldDisplayTermsAndConditions: Bool {
+        return !Current.wallet.hasPaymentCards
+    }
+    
     init(router: MainScreenRouter, repository: PaymentWalletRepositoryProtocol, paymentCard: PaymentCardCreateModel) {
         self.router = router
         self.repository = repository
@@ -88,7 +92,7 @@ class AddPaymentCardViewModel {
         router.popToRootViewController()
     }
 
-    func displayError() {
-        router.displaySimplePopup(title: "0ops".localized, message: "went_wrong".localized)
+    func displayError() {        
+        router.displaySimplePopup(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
     }
 }

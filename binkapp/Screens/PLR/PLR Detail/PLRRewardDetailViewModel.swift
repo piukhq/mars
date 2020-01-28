@@ -47,9 +47,9 @@ class PLRRewardDetailViewModel {
     var subtextString: String? {
         switch voucherState {
         case .inProgress:
-            return "Spend \(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0) with us and you'll get a \(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0) \(voucher.burn?.type ?? "")."
+            return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.type ?? "")
         case .issued:
-            return "Use the code above to redeem your reward. You will get \(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") off your purchase."
+            return String(format: "plr_voucher_detail_subtext_issued".localized, voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
         default:
             return nil
         }
@@ -64,7 +64,29 @@ class PLRRewardDetailViewModel {
     }
 
     var expiredDateString: String? {
-        return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
+        switch voucherState {
+        case .expired:
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
+        case .issued:
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
+        default:
+            return ""
+        }
+    }
+
+    var termsAndConditionsButtonTitle: String? {
+        guard let document = voucherPlanDocument else { return nil }
+        return document.name
+    }
+
+    private var termsAndConditionsButtonUrlString: String? {
+        guard let document = voucherPlanDocument else { return nil }
+        return document.url
+    }
+
+    func openTermsAndConditionsUrl() {
+        guard let url = termsAndConditionsButtonUrlString else { return }
+        MainScreenRouter.openExternalURL(with: url)
     }
 
     // MARK: - View decisioning
@@ -82,23 +104,29 @@ class PLRRewardDetailViewModel {
     }
 
     var shouldShowIssuedDate: Bool {
+        guard voucher.dateIssued != 0 else { return false }
         return voucherState == .issued || voucherState == .expired
     }
 
     var shouldShowRedeemedDate: Bool {
+        guard voucher.dateRedeemed != 0 else { return false }
         return voucherState == .redeemed
     }
 
     var shouldShowExpiredDate: Bool {
-        return voucherState == .expired
+        guard voucher.expiryDate != 0 else { return false }
+        return voucherState == .expired || voucherState == .issued
     }
 
     var shouldShowTermsAndConditionsButton: Bool {
-        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return false }
         var shouldDisplay = false
-        planDocuments.forEach {
-            if $0.display.contains(LinkingSupportType.voucher.rawValue) {
-                shouldDisplay = true
+        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return shouldDisplay }
+        for document in planDocuments {
+            for display in document.formattedDisplay {
+                if display.value == PlanDocumentDisplayModel.voucher.rawValue {
+                    shouldDisplay = true
+                    break
+                }
             }
         }
         return shouldDisplay
@@ -111,6 +139,16 @@ class PLRRewardDetailViewModel {
     }
 
     var voucherAmountText: String {
-        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+    }
+
+    private var voucherPlanDocument: CD_PlanDocument? {
+        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return nil }
+        // Currently we assume the only plan document for PLR will be terms and conditions
+        // Change this when this is no longer the case
+        guard let voucherDocument = planDocuments.first else { return nil }
+        guard let display = voucherDocument.formattedDisplay.first else { return nil }
+        guard display.value == PlanDocumentDisplayModel.voucher.rawValue else { return nil }
+        return voucherDocument
     }
 }

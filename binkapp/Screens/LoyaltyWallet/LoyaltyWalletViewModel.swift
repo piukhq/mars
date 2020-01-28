@@ -53,6 +53,11 @@ class LoyaltyWalletViewModel: WalletViewModel {
 
     func showDeleteConfirmationAlert(card: CD_MembershipCard, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
+            guard Current.apiManager.networkIsReachable else {
+                self?.router.presentNoConnectivityPopup()
+                noCompletion()
+                return
+            }
             self?.repository.delete(card, completion: yesCompletion)
         }, noCompletion: {
             DispatchQueue.main.async {

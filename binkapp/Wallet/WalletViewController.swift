@@ -22,6 +22,7 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = LayoutHelper.WalletDimensions.cardLineSpacing
+        layout.estimatedItemSize = LayoutHelper.WalletDimensions.cardSize
         return layout
     }()
 
@@ -44,6 +45,8 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .didLoadLocalWallet, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .shouldTrashLocalWallets, object: nil)
 
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
 
@@ -52,12 +55,25 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // We are doing this because the loading indicator is getting stuck when quickly switching between tabs
+        // May need to change the approach
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.refreshControl.beginRefreshing()
+            self.refreshControl.endRefreshing()
+        }
+        
         Current.wallet.reloadWalletsIfNecessary()
+        configureLoadingIndicator()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        refreshControl.endRefreshing()
         super.viewWillDisappear(animated)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.refreshControl.endRefreshing()
+        }
     }
 
     override func viewDidLayoutSubviews() {
@@ -83,12 +99,28 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
         ])
     }
 
+    func configureLoadingIndicator() {
+        if Current.wallet.shouldDisplayLoadingIndicator {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.refreshControl.programaticallyBeginRefreshing(in: self.collectionView)
+            }
+        }
+    }
+
     @objc func reloadWallet() {
         viewModel.reloadWallet()
     }
 
     @objc private func refresh() {
-        refreshControl.endRefreshing()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.refreshControl.endRefreshing()
+        }
+        collectionView.reloadData()
+    }
+
+    @objc private func refreshLocal() {
         collectionView.reloadData()
     }
 

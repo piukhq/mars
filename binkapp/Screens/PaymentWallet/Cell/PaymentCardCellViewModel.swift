@@ -42,17 +42,7 @@ struct PaymentCardCellViewModel {
     }
 
     var paymentCardIsExpired: Bool {
-        guard let card = paymentCard.card,
-            let expiryYear = card.year,
-            let expiryMonth = card.month else {
-                return false
-        }
-        // Tech debt (casting to int)
-        guard let expiryDate = Date.makeDate(year: expiryYear.intValue, month: expiryMonth.intValue, day: 01, hr: 00, min: 00, sec: 00) else {
-            return false
-        }
-        
-        return expiryDate.isLaterThan(date: Date(), toGranularity: .month)
+        return paymentCard.isExpired()
     }
 
     private func cardNumberAttributedString() -> NSAttributedString? {

@@ -6,6 +6,7 @@ import CoreData
 
 public enum CD_AddFieldAttributes: String {
     case column = "column"
+    case commonName = "commonName"
     case fieldDescription = "fieldDescription"
     case order = "order"
     case type = "type"
@@ -49,6 +50,9 @@ open class _CD_AddField: CD_BaseObject {
 
     @NSManaged open
     var column: String?
+
+    @NSManaged open
+    var commonName: String?
 
     @NSManaged open
     var fieldDescription: String?

@@ -17,6 +17,10 @@ final class WalletPromptFactory {
     static func makeWalletPrompts(forWallet walletType: WalletType) -> [WalletPrompt] {
         var walletPrompts: [WalletPrompt] = []
 
+        guard Current.wallet.shouldDisplayWalletPrompts == true else {
+            return walletPrompts
+        }
+
         if walletType == .loyalty {
             guard let plans = Current.wallet.membershipPlans else {
                 return walletPrompts

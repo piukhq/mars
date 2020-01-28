@@ -8,6 +8,8 @@
 import UIKit
 
 class LoyaltyCardFullDetailsViewModel {
+    typealias EmptyCompletionBlock = () -> Void
+
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
     private let informationRowFactory: PaymentCardDetailInformationRowFactory
@@ -21,43 +23,46 @@ class LoyaltyCardFullDetailsViewModel {
         if let planName = membershipCard.membershipPlan?.account?.planName {
             return String(format: "about_membership_plan_title".localized, planName)
         } else {
-           return "about_membership_title".localized
+            return "about_membership_title".localized
         }
     }
     
-    var deleteTitle: String {
-        if let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-            return String(format: "delete_card_plan_title".localized, planNameCard)
-        } else {
-            return "delete_card_title".localized
-        }
-    }
-
     init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter, informationRowFactory: PaymentCardDetailInformationRowFactory) {
         self.router = router
         self.repository = repository
         self.membershipCard = membershipCard
         self.informationRowFactory = informationRowFactory
     }  
-
+    
     var brandName: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
     }
-
+    
     var balance: CD_MembershipCardBalance? {
         return membershipCard.balances.allObjects.first as? CD_MembershipCardBalance
     }
-
-    var pointsValueText: String {
+    
+    var pointsValueText: String? {
+        // Only authed cards will have a balance
+        guard membershipCard.status?.status == .authorised else {
+            return nil
+        }
+        
+        // PLR
+        if membershipCard.membershipPlan?.isPLR == true {
+            guard let voucher = membershipCard.activeVouchers?.first else { return nil }
+            return voucher.balanceString
+        }
+        
         return "\(balance?.prefix ?? "")\(balance?.value?.stringValue ?? "") \(balance?.suffix ?? "")"
     }
-
+    
     var shouldShowOfferTiles: Bool {
         // If there are no images, there are no offer tiles! Return early
         guard let planImages = membershipCard.membershipPlan?.imagesSet else { return false }
         return planImages.filter({ $0.type?.intValue == 2}).count != 0
     }
-
+    
     // MARK: - Public methods
     
     func toBarcodeModel() {
@@ -69,15 +74,29 @@ class LoyaltyCardFullDetailsViewModel {
         case .login:
             //TODO: change to login screen after is implemented
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .loginFailed, existingMembershipCard: membershipCard)
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
             break
         case .loginChanges:
             //TODO: change to login changes screen after is implemented
             guard let membershipPlan = membershipCard.membershipPlan else { return }
+
 //            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .loginFailed, existingMembershipCard: membershipCard)
             router.toAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
+
             break
         case .transactions:
+            guard membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue ?? false else {
+                let title = "transaction_history_not_supported_title".localized
+                let description = String(format: "transaction_history_not_supported_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
+                let attributedTitle = NSMutableAttributedString(string: title + "\n", attributes: [.font: UIFont.headline])
+                let attributedDescription = NSMutableAttributedString(string: description, attributes: [.font: UIFont.bodyTextLarge])
+                let attributedString = NSMutableAttributedString()
+                attributedString.append(attributedTitle)
+                attributedString.append(attributedDescription)
+                let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
+                router.toReusableModalTemplateViewController(configurationModel: configuration)
+                return
+            }
             router.toTransactionsViewController(membershipCard: membershipCard)
             break
         case .pending:
@@ -116,9 +135,11 @@ class LoyaltyCardFullDetailsViewModel {
             membershipCard.status?.formattedReasonCodes?.forEach {
                 description += $0.value ?? ""
             }
-    
+            
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: "error_title".localized, description: description))
             break
+        case .aboutMembership:
+            toAboutMembershipPlanScreen()
         }
     }
     
@@ -136,11 +157,11 @@ class LoyaltyCardFullDetailsViewModel {
         
         router.toReusableModalTemplateViewController(configurationModel: configurationModel)
     }
-
+    
     func toRewardsHistoryScreen() {
         router.toRewardsHistoryViewController(membershipCard: membershipCard)
     }
-
+    
     func toAboutMembershipPlanScreen() {
         let config = getBasicReusableConfiguration(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
         router.toReusableModalTemplateViewController(configurationModel: config)
@@ -162,21 +183,21 @@ class LoyaltyCardFullDetailsViewModel {
         let planImages = membershipCard.membershipPlan?.imagesSet
         return planImages?.filter({ $0.type?.intValue == 2}).compactMap { $0.url }
     }
-
+    
     // MARK: PLR
-
+    
     var shouldShouldPLR: Bool {
         return membershipCard.membershipPlan?.isPLR ?? false && membershipCard.vouchers.count != 0
     }
-
+    
     var activeVouchersCount: Int {
         return membershipCard.activeVouchers?.count ?? 0
     }
-
+    
     func voucherForIndexPath(_ indexPath: IndexPath) -> CD_Voucher? {
         return membershipCard.activeVouchers?[indexPath.row]
     }
-
+    
     func toVoucherDetailScreen(voucher: CD_Voucher) {
         guard let plan = membershipCard.membershipPlan else {
             fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
@@ -191,22 +212,32 @@ extension LoyaltyCardFullDetailsViewModel {
     var informationRows: [CardDetailInformationRow] {
         return informationRowFactory.makeLoyaltyInformationRows(membershipCard: membershipCard)
     }
-
+    
     func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
         return informationRows[indexPath.row]
     }
-
+    
     func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
         informationRows[indexPath.row].action()
     }
-
-    func deleteMembershipCard() {
+    
+    func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }
+            guard Current.apiManager.networkIsReachable else {
+                self.router.presentNoConnectivityPopup()
+                noCompletion?()
+                return
+            }
             self.repository.delete(self.membershipCard) {
                 Current.wallet.refreshLocal()
                 self.router.popToRootViewController()
+                yesCompletion?()
             }
-        }, noCompletion: {})
+        }, noCompletion: {
+            DispatchQueue.main.async {
+                noCompletion?()
+            }
+        })
     }
 }

@@ -276,7 +276,7 @@ extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryD
         case .securityAndPrivacy:
             viewModel.toSecurityAndPrivacyScreen()
         case .deleteMembershipCard:
-            viewModel.deleteMembershipCard()
+            viewModel.showDeleteConfirmationAlert()
         case .rewardsHistory:
             viewModel.toRewardsHistoryScreen()
         default:

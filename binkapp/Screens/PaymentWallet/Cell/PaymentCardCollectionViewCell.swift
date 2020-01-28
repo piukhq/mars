@@ -25,31 +25,38 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     @IBOutlet private weak var alertView: CardAlertView!
     @IBOutlet private weak var cardContainerCenterXConstraint: NSLayoutConstraint!
     @IBOutlet private weak var deleteButton: UIButton!
-
+    
+    private lazy var width: NSLayoutConstraint = {
+        let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
+        width.isActive = true
+        return width
+    }()
+    
+    private lazy var height: NSLayoutConstraint = {
+        let height = contentView.heightAnchor.constraint(equalToConstant: bounds.size.height)
+        height.isActive = true
+        return height
+    }()
+    
     private var cardGradientLayer: CAGradientLayer?
     private var swipeGradientLayer: CAGradientLayer?
     private var startingOffset: CGFloat = 0
-
+    
     private var viewModel: PaymentCardCellViewModel!
     private weak var delegate: WalletPaymentCardCollectionViewCellDelegate?
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setupGestureRecognizer()
-    }
-
+    
     override var bounds: CGRect {
         didSet {
             setupShadow()
         }
     }
-
+    
     private func setupGestureRecognizer() {
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: .handlePan)
         gestureRecognizer.delegate = self
         containerView.addGestureRecognizer(gestureRecognizer)
     }
-
+    
     private var swipeMode: SwipeMode? {
         didSet {
             guard let mode = swipeMode, mode != oldValue else { return }
@@ -58,25 +65,29 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         }
     }
     private (set) var swipeState: SwipeState?
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        set(to: .closed)
+        set(to: .closed, animated: false)
         alertView.isHidden = true
         pllStatusLabel.isHidden = false
         linkedStatusImageView.isHidden = false
     }
-
-    func configureWithViewModel(_ viewModel: PaymentCardCellViewModel, delegate: WalletPaymentCardCollectionViewCellDelegate?) {
+    
+    func configureWithViewModel(_ viewModel: PaymentCardCellViewModel, enableSwipeGesture: Bool? = true, delegate: WalletPaymentCardCollectionViewCellDelegate?) {
         self.viewModel = viewModel
         self.delegate = delegate
-
+        
+        if enableSwipeGesture ?? true {
+            setupGestureRecognizer()
+        }
+        
         nameOnCardLabel.text = viewModel.nameOnCardText
         cardNumberLabel.attributedText = viewModel.cardNumberText
-
+        
         configureForProvider(cardType: viewModel.paymentCardType)
         configurePaymentCardLinkingStatus()
-
+        
         setLabelStyling()
         setupShadow()
     }
@@ -86,7 +97,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         cardNumberLabel.attributedText = cardNumberAttributedString(for: viewModel.fullPan ?? "", type: viewModel.cardType)
         
         configureForProvider(cardType: viewModel.cardType)
-
+        
         setLabelStyling()
         pllStatusLabel.isHidden = true
         setupShadow()
@@ -99,26 +110,26 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         let cardNumberLengthFromCardType = type?.lengthRange().length ?? cardNumberLength
         let lengthDiff = cardNumberLength - cardNumberLengthFromCardType
         let whitespaceIndexLocations = [4, 11, 18] // Harcoded, fix later
-
+        
         // If the string is too long, cut it from the right
         if stripped.count > cardNumberLength {
             let range = stripped.index(stripped.endIndex, offsetBy: -(cardNumberLength - lengthDiff)) ..< stripped.endIndex
             stripped = String(stripped[range])
         }
-
+        
         let redactTo = cardNumberLength - unredacted
         let offset = max(0, stripped.count - redactTo)
         let length = min(stripped.count, redactTo)
         let endIndex = stripped.index(stripped.endIndex, offsetBy: -offset)
         let range = stripped.startIndex ..< endIndex
-
+        
         // THE AMEX CASE
         if (cardNumberLength - cardNumberLengthFromCardType == 1) && stripped.count >= redactTo {
             stripped.insert("#", at: stripped.startIndex)
         }
-
+        
         var redacted = stripped.replacingCharacters(in: range, with: String(repeating: "•", count: length))
-
+        
         // FORMAT
         let textOffset = (UIFont.buttonText.capHeight - UIFont.redactedCardNumberPrefix.capHeight) / 2
         var padRange = 0
@@ -150,12 +161,12 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     private func setLabelStyling() {
         nameOnCardLabel.font = .subtitle
         pllStatusLabel.font = .statusLabel
-
+        
         [nameOnCardLabel, cardNumberLabel, pllStatusLabel].forEach {
             $0?.textColor = .white
         }
     }
-
+    
     private func configureForProvider(cardType: PaymentCardType?) {
         guard let type = cardType else {
             processGradient(type: cardType)
@@ -163,13 +174,13 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
             providerWatermarkImageView.image = nil
             return
         }
-
+        
         providerLogoImageView.image = UIImage(named: type.logoName)
         providerWatermarkImageView.image = UIImage(named: type.sublogoName)
-
+        
         processGradient(type: type)
     }
-
+    
     private func configurePaymentCardLinkingStatus() {
         guard !viewModel.paymentCardIsExpired else {
             alertView.configureForType(.paymentExpired) { [weak self] in
@@ -180,22 +191,22 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
             linkedStatusImageView.isHidden = true
             return
         }
-
+        
         pllStatusLabel.text = viewModel.linkedText
         linkedStatusImageView.image = imageForLinkedStatus()
     }
-
+    
     private func imageForLinkedStatus() -> UIImage? {
         return viewModel.paymentCardIsLinkedToMembershipCards ? UIImage(named: "linked") : UIImage(named: "unlinked")
     }
-
+    
     private func processGradient(type: PaymentCardType?) {
         if cardGradientLayer == nil {
             let gradient = CAGradientLayer()
             containerView.layer.insertSublayer(gradient, at: 0)
             cardGradientLayer = gradient
         }
-
+        
         switch type {
         case .visa:
             cardGradientLayer?.colors = UIColor.visaPaymentCardGradients
@@ -206,12 +217,18 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         case .none:
             cardGradientLayer?.colors = UIColor.unknownPaymentCardGradients
         }
-
+        
         cardGradientLayer?.frame = bounds
         cardGradientLayer?.locations = [0.0, 1.0]
         cardGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
         cardGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
         cardGradientLayer?.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
+    }
+    
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        width.constant = bounds.size.width
+        height.constant = bounds.size.height
+        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: targetSize.height))
     }
 }
 
@@ -235,7 +252,7 @@ extension PaymentCardCollectionViewCell {
             return
         }
     }
-
+    
     private func updateButtonState(with swipeMode: SwipeMode) {
         switch swipeMode {
         case .delete:
@@ -246,77 +263,77 @@ extension PaymentCardCollectionViewCell {
             deleteButton.isHidden = true
         }
     }
-
+    
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
         if swipeGradientLayer == nil {
             swipeGradientLayer = CAGradientLayer()
             contentView.layer.insertSublayer(swipeGradientLayer!, at: 0)
         }
-
+        
         swipeGradientLayer?.frame = bounds
         swipeGradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
         swipeGradientLayer?.locations = [0.0, 1.0]
         swipeGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
         swipeGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
     }
-
+    
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return false }
-        guard pan.velocity(in: pan.view).x < 0 else { return false }
         return abs((pan.velocity(in: pan.view)).x) > abs((pan.velocity(in: pan.view)).y)
     }
-
+    
     @IBAction func logInButtonTapped(_ sender: Any) {
         delegate?.cellPerform(action: .login, cell: self)
     }
-
-
+    
+    
     @IBAction func deleteButtonTapped(_ sender: Any) {
         delegate?.cellPerform(action: .delete, cell: self)
     }
-
+    
     @IBAction func barcodeButtonTapped(_ sender: Any) {
         delegate?.cellPerform(action: .barcode, cell: self)
     }
-
+    
     @objc func handlePan(gestureRecognizer: UIPanGestureRecognizer) {
         guard let view = gestureRecognizer.view else { return }
-
+        
         let translationX = startingOffset + gestureRecognizer.translation(in: view.superview).x * 1.3
-
+        
         if gestureRecognizer.state == .began {
             // Save the view's original position.
             swipeMode = .unset
             delegate?.cellSwipeBegan(cell: self)
         }
-
+        
         if gestureRecognizer.state == .changed {
             // Save the view's original position.
-
+            
             swipeMode = translationX > 0 ? .barcode : .delete
             var constant: CGFloat = translationX
             var maxValue: CGFloat?
             var minValue: CGFloat?
-
-            if swipeMode == .barcode {
-                constant = 0 // Barcode is disabled on payment card swipes
+            
+            if swipeMode == .barcode && translationX > 0 {
+                // Barcode is disabled on payment card but the cell can be swiped back when the cell is in peek mode
+                constant = 0
             } else if swipeMode == .delete {
                 maxValue = -(view.frame.size.width * 0.5)
                 minValue = 0
-
+                
                 let limitToUpper = max(translationX, maxValue!)
                 constant = min(limitToUpper, minValue!)
             }
-
+            
             cardContainerCenterXConstraint.constant = constant
         }
-
+        
         if gestureRecognizer.state == .ended || gestureRecognizer.state == .cancelled {
-
+            
             // Get percentage through
-
+            
             let percentage = abs(translationX) / view.frame.size.width
-
+            
             if percentage < 0.3 {
                 swipeMode = .unset
                 set(to: .closed, as: swipeMode)
@@ -329,18 +346,18 @@ extension PaymentCardCollectionViewCell {
             }
         }
     }
-
-    func set(to state: SwipeState, as type: SwipeMode? = nil) {
+    
+    func set(to state: SwipeState, as type: SwipeMode? = nil, animated: Bool = true) {
         swipeState = state
         let width = containerView.frame.size.width
         let constant: CGFloat
-
+        
         switch state {
         case .closed:
             constant = 0 
         case .peek:
             guard let type = type else { return }
-
+            
             if type == .barcode {
                 constant = 0 // Barcode is disabled on payment card swipes
             } else {
@@ -348,19 +365,28 @@ extension PaymentCardCollectionViewCell {
             }
         case .expanded:
             guard let type = type else { return }
-
+            
             if type == .barcode {
                 constant = 0 // Barcode is disabled on payment card swipes
             } else {
                 constant = -(width * 0.5)
             }
         }
-
+        
         startingOffset = constant
-
+        
+        let block = { [weak self] in
+            self?.cardContainerCenterXConstraint.constant = constant
+            self?.layoutIfNeeded()
+        }
+        
+        guard animated else {
+            block()
+            return
+        }
+        
         UIView.animate(withDuration: 0.3) {
-            self.cardContainerCenterXConstraint.constant = constant
-            self.layoutIfNeeded()
+            block()
         }
     }
 }

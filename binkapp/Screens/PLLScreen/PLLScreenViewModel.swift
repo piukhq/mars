@@ -15,7 +15,10 @@ class PLLScreenViewModel {
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
     }
-    private var changedLinkCards = [CD_PaymentCard]()
+    var hasPaymentCards: Bool {
+        return Current.wallet.hasPaymentCards
+    }
+    private(set) var changedLinkCards = [CD_PaymentCard]()
     
     var isEmptyPll: Bool {
         return paymentCards == nil ? true : paymentCards?.count == 0
@@ -70,6 +73,11 @@ class PLLScreenViewModel {
     }
     
     func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
+        guard Current.apiManager.networkIsReachable else {
+            router.presentNoConnectivityPopup()
+            completion()
+            return
+        }
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion()
         }) { [weak self] in

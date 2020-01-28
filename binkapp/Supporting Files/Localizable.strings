@@ -22,6 +22,7 @@
 "sign_up_failed_title" = "Sign up failed";
 "please_try_again_title" = "Please try again";
 "log_in_title" = "Log in";
+"credentials_title" = "Enter credentials";
 "registration_failed_title" = "Registration failed";
 "history_title" = "History";
 "not_available_title" = "Not available";
@@ -38,7 +39,9 @@
 "browse_brands_title" = "Browse brands";
 "find_and_join_description" = "Find and join loyalty schemes";
 "add_payment_card_title" = "Add payment card";
-"scan_and_link_description" = "Scan and link your payment card";
+"add_payment_error_title" = "Error Adding Card";
+"add_payment_error_message" = "There was a problem adding your payment card. Please try again.";
+"scan_and_link_description" = "Fill in your card details and link your payment card";
 "card_linked_status" = "Linked";
 "card_link_now_status" = "Link now";
 "card_linking_status" = "Linking";
@@ -57,6 +60,7 @@
 
 "card_number_title" = "Card number:";
 "barcode_card_description" = "Scan this barcode at the store, just like you would a physical loyalty card. Bear in mind that some store scanners cannot read from screens.";
+"barcode_card_number_description" = "Show this card number in-store just like you would a physical loyalty card.";
 "barcode_coupon_description" = "Scan this barcode at the store, just like you would a physical coupon. Bear in mind that some store scanners cannot read from screens.";
 "barcode_maximise_button" = "Maximise barcode";
 
@@ -71,7 +75,7 @@
 "add_my_card_button" = "Add my card";
 "get_new_card_button" = "Get a new card";
 
-"auth_screen_description" = "You can log in to your %@ account to view your %@ details";
+"auth_screen_description" = "Please enter your %@ credentials below to add this card to your wallet";
 
 "pll_title" = "PLL";
 "popular_title" = "Popular";
@@ -97,7 +101,7 @@
 
 "no_account_button_title" = "I don't have an account";
 
-"no_internet_connection_title" = "Your selected activity cannot be performed at this time due to a connection issue";
+"no_internet_connection_message" = "You are currently offline. This action cannot be performed whilst offline. Please check your internet connection and try again.";
 
 "about_custom_title" = "About %@";
 
@@ -120,9 +124,9 @@
 // MARK: - Transactions
 
 "transaction_history_unavailable_title" = "Points history";
-"transaction_history_unavailable_description" = "No transactions to display since adding your card to Bink.\nIn some cases transactions take longer to update";
+"transaction_history_unavailable_description" = "No transactions to display since adding your card to Bink.\nIn some cases transactions take longer to update.";
 "transaction_history_not_supported_title" = "Transaction history not supported";
-"transaction_history_not_supported_description" = "Unfortunately we're not able to show your points balance and transaction history for this brand just yet.";
+"transaction_history_not_supported_description" = "Your %@ history is not available yet";
 
 "day" = "day";
 "days" = "days";
@@ -135,7 +139,7 @@
 
 "only_points_log_in_description" = "You can log in to your %@ account to see your points balance. This is optional.";
 "points_and_transactions_log_in_description" = "You can log in to your %@ account to see your points balance and transaction history. This is optional.";
-"sign_up_new_card_description" = "Fill out the form below to get a new %@ card, and start earning points.";
+"sign_up_new_card_description" = "Fill out the form below to get a new %@ and start collecting rewards";
 "sign_up_new_card_title" = "Sign up for a new card";
 "sign_up_button_title" = "Sign up";
 
@@ -158,7 +162,7 @@
 "points_module_signing_up_status" = "Signing up";
 "points_module_logging_in_status" = "Logging in";
 "points_module_registering_card_status" = "Registering card";
-"points_module_retry_log_in_status" = "Retry log in";
+"points_module_retry_log_in_status" = "Retry login";
 "link_module_to_payment_cards_message" = "To payment cards";
 "link_module_error_title" = "Link error";
 "link_module_to_link_to_cards_message" = "To link to cards";
@@ -168,8 +172,9 @@
 "terms_and_conditions_description" = "I authorise MasterCard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction for MasterCard, Visa and American Express to share such transaction details with Loyalty Angels Limited to enable my card-linked offer(s) and target offers that may be of interest to me. For information about Loyalty Angels Limited privacy practices, please see our Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.";
 "privacy_policy" = "Privacy Policy";
 
-"native_join_unavailable_title" = "Native join unavailable";
-"native_join_unavailable_description" = "You can go to the merchant website to join then come back and add your card. Or we can email you the link so you can sign up on your computer. Copy needed.";"to_merchant_site_button" = "Go to merchant site";
+"native_join_unavailable_title" = "Sign up currently unavailable";
+"native_join_unavailable_description" = "Go to the %@ website to join then come back and add your card.";
+"to_merchant_site_button" = "Go to merchant site";
 
 "unlinkable_pll_title" = "Payment Linked Loyalty unavailable";
 "unlinkable_pll_description" = "Payment Linked Loyalty (PLL) allows customers’ payment cards to be securely linked to loyalty programmes, enabling every customer to be identified and rewarded every time they shop.\nThis is currently not available for this merchant.";
@@ -271,11 +276,12 @@
 "forgot_password_description" = "Please enter your email address and if it is associated with a Bink account, then a password reset email will be sent";
 "fogrot_password_popup_text" = "If the email address you entered is associated with a Bink account, then a password reset email will be sent.";
 
-"tandcs_title" = "I accept Bink's Terms and Conditions";
+"tandcs_title" = "I agree to Bink's Terms and Conditions";
+"tandcs_description" = "Please read the Bink Privacy Policy for further details of how your data will be processed";
 "tandcs_link" = "Terms and Conditions";
 "ppolicy_title" = "I accept Bink's Privacy Policy";
 "ppolicy_link" = "Privacy Policy";
-"marketing_title" = "I opt in to receive marketing messages";
+"marketing_title" = "Opt in to receive marketing messages";
 
 "access_form_email_title" = "Email";
 "access_form_email_placeholder" = "Enter email address";
@@ -298,3 +304,20 @@
 "plr_voucher_detail_issued_date_prefix" = "Added ";
 "plr_voucher_detail_redeemed_date_prefix" = "Redeemed ";
 "plr_voucher_detail_expired_date_prefix" = "Expired ";
+"plr_voucher_detail_expires_date_prefix" = "Expires ";
+"plr_voucher_detail_subtext_inprogress" = "Spend %@%@ with us and you'll get a %@%@ %@.";
+"plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
+"plr_lcd_points_module_title" = "Collecting";
+"plr_lcd_points_module_description" = "Towards rewards";
+"plr_voucher_burn_description" = "for spending %@%@";
+"plr_voucher_earn_value_title" = "Spent:";
+"plr_voucher_earn_target_value_title" = "Goal:";
+"plr_voucher_date_prefix" = "on ";
+"plr_history_title" = "Rewards history";
+"plr_history_subtitle" = "Your past rewards";
+"plr_payment_card_needed_title" = "Payment card needed";
+"plr_payment_card_needed_body" = "You currently don’t have any linked payment cards.\nYou can only earn rewards by shopping with a linked payment card.\nPlease add a card so you can start earning rewards.";
+"plr_loyalty_card_subtitle" = "Until next reward";
+
+"ssl_pinning_failure_title" = "Error";
+"ssl_pinning_failure_text" = "Connection error. Please try again.";

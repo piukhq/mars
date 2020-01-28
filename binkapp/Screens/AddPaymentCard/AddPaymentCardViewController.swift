@@ -107,7 +107,14 @@ class AddPaymentCardViewController: BaseFormViewController {
     // MARK: - Actions
     
     @objc func addButtonTapped() {
-        viewModel.toPaymentTermsAndConditions(delegate: self)
+        if viewModel.shouldDisplayTermsAndConditions {
+            viewModel.toPaymentTermsAndConditions(delegate: self)
+        } else {
+            addButton.startLoading()
+            viewModel.addPaymentCard { [weak self] in
+                self?.addButton.stopLoading()
+            }
+        }
     }
     
     @objc func privacyButtonTapped() {

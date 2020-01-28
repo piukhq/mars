@@ -9,7 +9,6 @@
 import UIKit
 
 class SocialTermsAndConditionsViewController: BaseFormViewController {
-    private let api = ApiManager()
 
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
@@ -21,30 +20,30 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         view.addSubview(button)
         return button
     }()
-    
-    private lazy var message: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.attributedText = messageString
-        return label
-    }()
-    
-    private lazy var messageString: NSAttributedString = {
-        let attrString = NSMutableAttributedString(string: "preferences_prompt".localized, attributes: [.font : UIFont.bodyTextLarge])
-        let base: NSString = NSString(string: attrString.string)
-        let rewardsRange = base.range(of: "preferences_prompt_highlight_rewards".localized)
-        let offersRange = base.range(of: "preferences_prompt_highlight_offers".localized)
-        let updatesRange = base.range(of: "preferences_prompt_highlight_updates".localized)
-        
-        let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont.subtitle]
-        
-        attrString.addAttributes(attributes, range: rewardsRange)
-        attrString.addAttributes(attributes, range: offersRange)
-        attrString.addAttributes(attributes, range: updatesRange)
-        
-        return attrString
-    }()
+    //TODO: remove this if we don't need to display the old screen at all
+//    private lazy var message: UILabel = {
+//        let label = UILabel(frame: .zero)
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.numberOfLines = 0
+//        label.attributedText = messageString
+//        return label
+//    }()
+//
+//    private lazy var messageString: NSAttributedString = {
+//        let attrString = NSMutableAttributedString(string: "preferences_prompt".localized, attributes: [.font : UIFont.bodyTextLarge])
+//        let base: NSString = NSString(string: attrString.string)
+//        let rewardsRange = base.range(of: "preferences_prompt_highlight_rewards".localized)
+//        let offersRange = base.range(of: "preferences_prompt_highlight_offers".localized)
+//        let updatesRange = base.range(of: "preferences_prompt_highlight_updates".localized)
+//
+//        let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont.subtitle]
+//
+//        attrString.addAttributes(attributes, range: rewardsRange)
+//        attrString.addAttributes(attributes, range: offersRange)
+//        attrString.addAttributes(attributes, range: updatesRange)
+//
+//        return attrString
+//    }()
     
     private let router: MainScreenRouter?
     private var request: FacebookRequest? // Variable so we can nil this object
@@ -69,12 +68,14 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
             continueButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
             continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-        let lastView = stackScrollView.arrangedSubviews.last
-        stackScrollView.add(arrangedSubview: message)
         
-        if let lastView = lastView {
-            stackScrollView.customPadding(18.0, after: lastView)
-        }
+        //TODO: remove this if we don't need to display the old screen at all
+//        let lastView = stackScrollView.arrangedSubviews.last
+//        stackScrollView.add(arrangedSubview: message)
+//
+//        if let lastView = lastView {
+//            stackScrollView.customPadding(18.0, after: lastView)
+//        }
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
@@ -86,7 +87,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         
         continueButton.startLoading()
         
-        api.doRequest(url: .facebook, httpMethod: .post, parameters: request, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+        Current.apiManager.doRequest(url: .facebook, httpMethod: .post, parameters: request, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             Current.userManager.setNewUser(with: response)
             self?.router?.didLogin()
             self?.updatePreferences(checkboxes: preferenceCheckboxes)
@@ -111,7 +112,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
          guard params.count > 0 else { return }
          
          // We don't worry about whether this was successful or not
-         api.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
+         Current.apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
      }
     
     func showError() {

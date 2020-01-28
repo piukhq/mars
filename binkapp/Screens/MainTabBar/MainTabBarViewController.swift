@@ -26,13 +26,13 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        Current.wallet.launch()
+
         setupNotifications()
         
         self.title = ""
         setNavigationBar()
         populateTabBar()
-
-        Current.wallet.launch()
     }
 
     // MARK: - Navigation Bar Blurring

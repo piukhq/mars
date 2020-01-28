@@ -30,23 +30,24 @@ class TransactionTableViewCell: UITableViewCell {
         
         guard let prefix = transaction.formattedAmounts?.first?.prefix else {
             let suffix = transaction.formattedAmounts?.first?.suffix != "" ? transaction.formattedAmounts?.first?.currency : nil
-            setValueLabel(text: "%d \(suffix ?? "")", transactionValue: transactionValue)
+            setValueLabel(text: "%d \(suffix ?? "")", transactionValue: transactionValue, addDecimals: false)
             return
         }
-        setValueLabel(text: "\(prefix)%d", transactionValue: transactionValue)
+        setValueLabel(text: "\(prefix)%.02f", transactionValue: transactionValue, addDecimals: true)
     }
     
-    func setValueLabel(text: String, transactionValue: Int) {
+    func setValueLabel(text: String, transactionValue: Int, addDecimals: Bool) {
         if transactionValue < 0 {
-            valueLabel.text = "-" + String(format: text, abs(transactionValue))
+            let value = abs(transactionValue)
+            valueLabel.text = "-" + String(format: text, addDecimals ? Float(value) : value)
             valueLabel.textColor = .black
             transactionImageView.image = UIImage(named: "down")
         } else if transactionValue > 0 {
-            valueLabel.text = "+" + String(format: text, transactionValue)
+            valueLabel.text = "+" + String(format: text, addDecimals ? Float(transactionValue) : transactionValue)
             valueLabel.textColor = .greenOk
             transactionImageView.image = UIImage(named: "up")
         } else {
-            valueLabel.text = String(format: text, transactionValue)
+            valueLabel.text = String(format: text, addDecimals ? Float(transactionValue) : transactionValue)
             valueLabel.textColor = .amberPending
         }
     }

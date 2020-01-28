@@ -10,23 +10,28 @@ import Foundation
 
 class Wallet: CoreDataRepositoryProtocol {
     private enum FetchType {
-        case local
-        case reload
+        case localLaunch // Specifically used on launch to perform desired behaviour not needed at any other time
+        case localReactive // Any local fetch other than on launch
+        case reload // A fetch from the API
     }
-
-    private let apiManager = ApiManager()
+    
     private let refreshManager = WalletRefreshManager()
 
     private(set) var membershipPlans: [CD_MembershipPlan]?
     private(set) var membershipCards: [CD_MembershipCard]?
     private(set) var paymentCards: [CD_PaymentCard]?
 
+    private(set) var shouldDisplayWalletPrompts: Bool?
+    var shouldDisplayLoadingIndicator: Bool {
+        return !Current.userDefaults.bool(forDefaultsKey: .hasFetchedDataOnLaunch)
+    }
+
     // MARK: - Public
 
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
     func launch() {
-        loadWallets(forType: .local, reloadPlans: false) { [weak self] _ in
+        loadWallets(forType: .localLaunch, reloadPlans: false) { [weak self] _ in
             self?.loadWallets(forType: .reload, reloadPlans: true) { _ in
                 self?.refreshManager.start()
             }
@@ -71,11 +76,17 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Refresh from our local data
     /// Useful for calling after card deletions
     func refreshLocal() {
-        loadWallets(forType: .local, reloadPlans: false)
+        loadWallets(forType: .localReactive, reloadPlans: false)
     }
 
     var hasPaymentCards: Bool {
         return paymentCards != nil && paymentCards?.count != 0
+    }
+
+    var hasValidPaymentCards: Bool {
+        guard let paymentCards = paymentCards else { return false }
+        let validPaymentCards = paymentCards.filter { !$0.isExpired() }
+        return !validPaymentCards.isEmpty
     }
 
     // MARK: - Private
@@ -104,9 +115,21 @@ class Wallet: CoreDataRepositoryProtocol {
             dispatchGroup.leave()
         }
 
-        dispatchGroup.notify(queue: .main) {
-            NotificationCenter.default.post(name: .didLoadWallet, object: nil)
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.shouldDisplayWalletPrompts = type == .reload || type == .localReactive
+            NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true)
+
+            // if type is reload and launch hasn't happened yet
+            guard Current.userDefaults.value(forDefaultsKey: .hasFetchedDataOnLaunch) == nil else {
+                return
+            }
+
+            // the value is nil, must be first launch
+            // only set the value if we've done a full api reload
+            if type == .reload {
+                Current.userDefaults.set(true, forDefaultsKey: .hasFetchedDataOnLaunch)
+            }
         }
     }
 
@@ -133,7 +156,7 @@ class Wallet: CoreDataRepositoryProtocol {
         let url = RequestURL.membershipPlans
         let method = RequestHTTPMethod.get
 
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
+        Current.apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
             self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
                 self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { plans in
                     self?.membershipPlans = plans
@@ -157,7 +180,7 @@ class Wallet: CoreDataRepositoryProtocol {
         let url = RequestURL.membershipCards
         let method = RequestHTTPMethod.get
 
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipCardModel]) in
+        Current.apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [MembershipCardModel]) in
             self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
                 self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: { cards in
                     self?.membershipCards = cards
@@ -181,7 +204,7 @@ class Wallet: CoreDataRepositoryProtocol {
         let url = RequestURL.paymentCards
         let method = RequestHTTPMethod.get
 
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [PaymentCardModel]) in
+        Current.apiManager.doRequest(url: url, httpMethod: method, onSuccess: { [weak self] (response: [PaymentCardModel]) in
             self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
                 self?.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { cards in
                     self?.paymentCards = cards

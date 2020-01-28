@@ -79,7 +79,7 @@ class SettingsViewController: UIViewController, BarBlurring {
         let title: String = "settings_row_security_title".localized
         let description: String = "security_and_privacy_description".localized
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        let configuration = ReusableModalConfiguration(title: title, text: viewModel.getAttributedString(title: title, description: description), tabBarBackButton: backButton)
+        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description), tabBarBackButton: backButton)
         viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
     }
     
@@ -87,7 +87,7 @@ class SettingsViewController: UIViewController, BarBlurring {
         let title: String = "how_it_works_title".localized
         let description: String = "how_it_works_description".localized
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        let configuration = ReusableModalConfiguration(title: title, text: viewModel.getAttributedString(title: title, description: description), tabBarBackButton: backButton)
+        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description), tabBarBackButton: backButton)
         viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
     }
     

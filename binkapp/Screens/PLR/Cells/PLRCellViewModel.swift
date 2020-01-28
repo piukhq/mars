@@ -20,11 +20,11 @@ class PLRCellViewModel {
     }
 
     var voucherAmountText: String? {
-        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value ?? 0.0)\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
     }
 
     var voucherDescriptionText: String? {
-        return "for spending \(voucher.earn?.prefix ?? "")\(voucher.earn?.targetValue ?? 0.0)"
+        return String(format: "plr_voucher_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "")
     }
 
     var headlineText: String? {
@@ -52,9 +52,9 @@ class PLRCellViewModel {
         guard let type = earnType else { return nil }
         switch type {
         case .accumulator:
-            return "Spent"
+            return "plr_voucher_earn_value_title".localized
         case .stamp:
-            return "Collected"
+            return ""
         }
     }
 
@@ -67,7 +67,7 @@ class PLRCellViewModel {
         guard let type = earnType else { return nil }
         switch type {
         case .accumulator:
-            return "Goal"
+            return "plr_voucher_earn_target_value_title".localized
         case .stamp:
             return ""
         }
@@ -81,9 +81,11 @@ class PLRCellViewModel {
     var dateText: String? {
         switch voucherState {
         case .expired:
-            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear, prefix: "on ")
+            guard voucher.expiryDate != 0 else { return nil }
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear, prefix: "plr_voucher_date_prefix".localized)
         case .redeemed:
-            return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear, prefix: "on ")
+            guard voucher.dateRedeemed != 0 else { return nil }
+            return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear, prefix: "plr_voucher_date_prefix".localized)
         default:
             return nil
         }

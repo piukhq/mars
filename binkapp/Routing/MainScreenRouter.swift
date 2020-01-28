@@ -8,6 +8,7 @@
 import Foundation
 import SafariServices
 import UIKit
+import MessageUI
 
 protocol MainScreenRouterDelegate: NSObjectProtocol {
     func router(_ router: MainScreenRouter, didLogin: Bool)
@@ -16,13 +17,19 @@ protocol MainScreenRouterDelegate: NSObjectProtocol {
 class MainScreenRouter {
     var navController: PortraitNavigationController?
     weak var delegate: MainScreenRouterDelegate?
-    let apiManager = ApiManager()
+    let apiManager = Current.apiManager
     
     init(delegate: MainScreenRouterDelegate) {
         self.delegate = delegate
-        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+
+        // TODO: Reinstate when we have a strategy for showing this alert for specific app paths
+//        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+
+        // SSL Pinning failure
+        NotificationCenter.default.addObserver(self, selector: #selector(presentSSLPinningFailurePopup), name: .didFailServerTrustEvaluation, object: nil)
     }
     
     func wallet() -> UIViewController {
@@ -36,6 +43,7 @@ class MainScreenRouter {
     func getOnboardingViewController() -> UIViewController {
         let viewModel = OnboardingViewModel(router: self)
         let nav = PortraitNavigationController(rootViewController: OnboardingViewController(viewModel: viewModel))
+        navController = nav
         return nav
     }
 
@@ -221,6 +229,14 @@ class MainScreenRouter {
         let viewController = SimpleInfoViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
+
+    func toPaymentCardNeededScreen() {
+        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+        let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
+            self?.toAddPaymentViewController()
+        }, tabBarBackButton: backButton)
+        pushReusableModalTemplateVC(configurationModel: configuration, navigationController: navController)
+    }
     
     func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -240,12 +256,18 @@ class MainScreenRouter {
     }
     
     @objc func presentNoConnectivityPopup() {
-        let alert = UIAlertController(title: nil, message: "no_internet_connection_title".localized, preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
+        navController?.present(alert, animated: true, completion: nil)
+    }
+
+    @objc func presentSSLPinningFailurePopup() {
+        let alert = UIAlertController(title: "ssl_pinning_failure_title".localized, message: "ssl_pinning_failure_text".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
     }
     
-    func popViewController() {
+    @objc func popViewController() {
         navController?.popViewController(animated: true)
     }
     
@@ -274,9 +296,12 @@ class MainScreenRouter {
     
     @objc func appWillResignActive() {
         guard let visibleVC = navController?.getVisibleViewController() else { return }
-        if visibleVC.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: UIAlertController.self) == true {
-            //Dismiss alert controller before presenting the Launch screen.
-            visibleVC.dismiss(animated: false, completion: nil)
+        if visibleVC.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: MFMailComposeViewController.self) == true {
+            //Dismiss alert controller and mail composer before presenting the Launch screen.
+            visibleVC.dismiss(animated: false) {
+                self.displayLaunchScreen(visibleViewController: visibleVC)
+            }
+            return
         }
         
         if visibleVC.isKind(of: BarcodeViewController.self),
@@ -284,13 +309,30 @@ class MainScreenRouter {
             let vc = nc.viewControllers.first as? BarcodeViewController,
             vc.isBarcodeFullsize {
             //Dismiss full screen barcode before presenting the Launch screen.
-            nc.dismiss(animated: false, completion: nil)
+            nc.dismiss(animated: false) {
+                self.displayLaunchScreen(visibleViewController: visibleVC)
+            }
+            return
         }
-        
+        if visibleVC.isModal {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.displayLaunchScreen(visibleViewController: visibleVC)
+            }
+        } else {
+            displayLaunchScreen(visibleViewController: visibleVC)
+        }
+    }
+    
+    private func displayLaunchScreen(visibleViewController: UIViewController) {
+        // If there is no current user, we have no need to present the splash screen
+        guard Current.userManager.hasCurrentUser else {
+            return
+        }
+
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
-        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal {
+        if let modalNavigationController = visibleViewController.navigationController, visibleViewController.isModal {
             modalNavigationController.present(vc, animated: false, completion: nil)
         } else {
             navController?.present(vc, animated: false, completion: nil)
@@ -299,7 +341,7 @@ class MainScreenRouter {
     
     @objc func appDidBecomeActive() {
         let visibleVC = navController?.getVisibleViewController()
-        if let modalNavigationController = visibleVC?.navigationController {
+        if let modalNavigationController = visibleVC?.navigationController, visibleVC?.isModal == true {
            modalNavigationController.dismiss(animated: false, completion: nil)
         } else if visibleVC?.isKind(of: SFSafariViewController.self) == false {
             visibleVC?.dismiss(animated: false, completion: nil)

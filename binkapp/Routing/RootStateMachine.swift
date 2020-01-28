@@ -62,9 +62,7 @@ class RootStateMachine: NSObject {
         moveTo(loading)
                 
         clearLocalStorage {
-            let api = ApiManager()
-            
-            api.doRequest(url: .logout, httpMethod: .post, onSuccess: { [weak self] (response: LogoutResponse) in
+            Current.apiManager.doRequest(url: .logout, httpMethod: .post, onSuccess: { [weak self] (response: LogoutResponse) in
                 self?.completeLogout()
             }) { [weak self] (error) in
                 self?.completeLogout()
@@ -86,6 +84,7 @@ class RootStateMachine: NSObject {
     @objc func completeLogout() {
         Current.userManager.removeUser()
         moveTo(router?.getOnboardingViewController())
+        NotificationCenter.default.post(name: .shouldTrashLocalWallets, object: nil)
     }
     
     func moveTo(_ viewController: UIViewController?) {

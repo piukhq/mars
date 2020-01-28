@@ -30,7 +30,11 @@ struct CardDetailInformationRow {
             case .securityAndPrivacy:
                 return "Security and privacy"
             case .deleteMembershipCard(let card):
-                return "Delete \(card.membershipPlan?.account?.planName ?? "this card")"
+                if let planNameCard = card.membershipPlan?.account?.planNameCard {
+                    return String(format: "delete_card_plan_title".localized, planNameCard)
+                } else {
+                    return "delete_card_title".localized
+                }
             case .deletePaymentCard:
                 return "Delete this card"
             case .rewardsHistory:

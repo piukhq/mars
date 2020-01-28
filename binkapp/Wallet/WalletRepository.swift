@@ -9,8 +9,9 @@
 import Foundation
 
 protocol WalletRepository: CoreDataRepositoryProtocol {
+    typealias EmptyCompletionBlock = () -> Void
     init(apiManager: ApiManager)
-    func delete<T: WalletCard>(_ card: T, completion: @escaping () -> Void)
+    func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock?)
 }
 
 protocol PaymentWalletRepositoryProtocol: WalletRepository {

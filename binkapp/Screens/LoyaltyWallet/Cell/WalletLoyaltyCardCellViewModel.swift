@@ -44,16 +44,21 @@ struct WalletLoyaltyCardCellViewModel {
         return (cardStatus == .failed || cardStatus == .unauthorised) && membershipPlan?.featureSet?.planCardType != .store
     }
 
-    var shouldShowPointsValueLabels: Bool {
+    var shouldShowPointsValueLabel: Bool {
         guard membershipPlan?.featureSet?.planCardType != .store  else {
             return false
         }
-        return shouldShowRetryStatus || cardStatus == .pending || planHasPoints && balanceValue != nil
+        return shouldShowRetryStatus || cardStatus == .pending || planHasPoints && balanceValue != nil || cardStatus == .authorised && membershipCard.balances.allObjects.isEmpty
+    }
+
+    var shouldShowPointsSuffixLabel: Bool {
+        return cardStatus == .authorised
     }
 
     var shouldShowLinkStatus: Bool {
         return planCardType == .link
     }
+
     var shouldShowLinkImage: Bool {
         return !linkStatusImageName.isEmpty
     }
@@ -100,20 +105,30 @@ struct WalletLoyaltyCardCellViewModel {
         // Linking error?
     }
 
-    var pointsValueText: String {
+    var pointsValueText: String? {
         guard cardStatus != .pending else {
             return "pending_title".localized
         }
         guard !shouldShowRetryStatus else {
             return "retry_title".localized
         }
+
+        // PLR
+        if membershipPlan?.isPLR == true && cardStatus == .authorised {
+            guard let voucher = membershipCard.activeVouchers?.first else { return "" }
+            return voucher.balanceString
+        }
         
+        if cardStatus == .authorised && membershipCard.balances.allObjects.isEmpty {
+            return "pending_title".localized
+        }
+
         let floatBalanceValue = balance?.value?.floatValue ?? 0
         
         guard let prefix = balance?.prefix else {
             return balance?.value?.stringValue ?? ""
         }
-        
+
         if floatBalanceValue.hasDecimals {
             return "\(prefix)" + String(format: "%.02f", floatBalanceValue)
         } else {
@@ -122,6 +137,10 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var pointsValueSuffixText: String? {
+        // PLR
+        if membershipPlan?.isPLR == true && cardStatus == .authorised {
+            return "plr_loyalty_card_subtitle".localized
+        }
         return balance?.suffix
     }
 }

@@ -31,10 +31,6 @@ class PreferencesViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
-    }
     
     private func configureUI() {
         navigationItem.leftBarButtonItem?.title = nil
@@ -70,20 +66,16 @@ class PreferencesViewController: UIViewController {
     private func createCheckboxes(preferences: [PreferencesModel]) {
         preferences.forEach {
             let checkboxView = CheckboxView()
-            checkboxView.configure(title: $0.slug == "marketing-bink" ? "preferences_marketing_checkbox".localized : $0.label ?? "", columnName: $0.slug ?? "", columnKind: .add)
+            let attributedString = $0.slug == "marketing-bink" ?
+                NSMutableAttributedString(string: "preferences_marketing_checkbox".localized, attributes: [.font: UIFont.bodyTextSmall]) :
+                NSMutableAttributedString(string: $0.label ?? "", attributes: [.font: UIFont.bodyTextSmall])
+            checkboxView.configure(title: attributedString, columnName: $0.slug ?? "", columnKind: .add, delegate: self)
             
-            checkboxView.delegate = self
             checkboxView.setValue(newValue: $0.value ?? "0")
             
             stackView.addArrangedSubview(checkboxView)
             checkboxes.append(checkboxView)
         }
-    }
-    
-    @objc private func presentNoConnectivityPopup() {
-        let alert = UIAlertController(title: nil, message: "no_internet_connection_title".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
-        navigationController?.present(alert, animated: true, completion: nil)
     }
 }
 

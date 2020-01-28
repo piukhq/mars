@@ -22,10 +22,21 @@ enum InputType: Int {
 }
 
 enum FormPurpose {
-    case login
-    case loginFailed
+    case add
+    case addFailed
     case signUp
     case ghostCard
+    
+    var planDocumentDisplayMatching: PlanDocumentDisplayModel {
+        switch self {
+        case .add, .addFailed:
+            return .add
+        case .signUp:
+            return .enrol
+        case .ghostCard:
+            return .registration
+        }
+    }
 }
 
 class AuthAndAddViewModel {
@@ -42,7 +53,7 @@ class AuthAndAddViewModel {
     var title: String {
         switch formPurpose {
         case .signUp: return "sign_up_new_card_title".localized
-        case .login, .loginFailed: return "log_in_title".localized
+        case .add, .addFailed: return "credentials_title".localized
         case .ghostCard: return "register_ghost_card_title".localized
         }
     }
@@ -50,13 +61,13 @@ class AuthAndAddViewModel {
     var buttonTitle: String {
         switch formPurpose {
         case .signUp: return "sign_up_button_title".localized
-        case .login, .loginFailed: return "log_in_title".localized
+        case .add, .addFailed: return "pll_screen_add_title".localized
         case .ghostCard: return "register_card_title".localized
         }
     }
     
     var accountButtonShouldHide: Bool {
-        return formPurpose != .login || formPurpose == .ghostCard
+        return formPurpose != .add || formPurpose == .ghostCard
     }
     
     init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil) {
@@ -70,14 +81,14 @@ class AuthAndAddViewModel {
     
     func getDescription() -> String? {
         switch formPurpose {
-        case .login:
-            guard let planName = membershipPlan.account?.planName, let companyName = membershipPlan.account?.companyName else { return nil }
-            return String(format: "auth_screen_description".localized, companyName, planName)
-        case .loginFailed:
+        case .add:
+            guard let companyName = membershipPlan.account?.companyName else { return nil }
+            return String(format: "auth_screen_description".localized, companyName)
+        case .addFailed:
             return getDescriptionForOtherLogin()
         case .signUp:
-            guard let companyName = membershipPlan.account?.companyName else { return nil }
-            return String(format: "sign_up_new_card_description".localized, companyName)
+            guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
+            return String(format: "sign_up_new_card_description".localized, planNameCard)
         case .ghostCard:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "register_ghost_card_description".localized, planNameCard)
@@ -92,7 +103,7 @@ class AuthAndAddViewModel {
                 return String(format: "only_points_log_in_description".localized, planNameCard)
             }
             
-            return transactionsAvailable.boolValue ? String(format: "only_points_log_in_description".localized, planNameCard) : String(format: "points_and_transactions_log_in_description".localized, planNameCard)
+            return transactionsAvailable.boolValue ? String(format: "points_and_transactions_log_in_description".localized, planNameCard) : String(format: "only_points_log_in_description".localized, planNameCard)
         } else {
             return ""
         }
@@ -131,7 +142,12 @@ class AuthAndAddViewModel {
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
             }, onError: { [weak self] error in
-                self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
+                guard let customError = error as? CustomError else {
+                    self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
+                    completion()
+                    return
+                }
+                self?.displaySimplePopup(title: "error_title".localized, message: customError.localizedDescription)
                 completion()
         })
     }

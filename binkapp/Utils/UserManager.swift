@@ -24,6 +24,13 @@ class UserManager {
     
     lazy var currentToken: String? = getKeychainValue(for: Constants.tokenKey)
     lazy var currentEmailAddress: String? = getKeychainValue(for: Constants.emailKey)
+
+    var hasCurrentUser: Bool {
+        // We can safely assume that if we have no token, we have no user
+        guard let token = currentToken else { return false }
+        guard !token.isEmpty else { return false }
+        return true
+    }
     
     private func getKeychainValue(for key: String) -> String? {
         var token: String? = nil

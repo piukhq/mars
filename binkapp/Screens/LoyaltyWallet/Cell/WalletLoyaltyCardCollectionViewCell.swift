@@ -44,6 +44,18 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     @IBOutlet private weak var deleteButton: UIButton!
     @IBOutlet private weak var barcodeButton: UIButton!
     @IBOutlet private weak var rectangleView: RectangleView!
+    
+    private lazy var width: NSLayoutConstraint = {
+        let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
+        width.isActive = true
+        return width
+    }()
+    
+    private lazy var height: NSLayoutConstraint = {
+           let height = contentView.heightAnchor.constraint(equalToConstant: bounds.size.height)
+           height.isActive = true
+           return height
+       }()
 
     private var viewModel: WalletLoyaltyCardCellViewModel!
     private weak var delegate: WalletLoyaltyCardCollectionViewCellDelegate?
@@ -54,6 +66,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         setupGestureRecognizer()
         setupTheming()
     }
@@ -66,7 +79,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        set(to: .closed)
+        set(to: .closed, animated: false)
         cardIconImageView.image = nil
     }
     
@@ -131,12 +144,17 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         /// Card Value
         cardValuePointsLabel.text = viewModel.pointsValueText
         cardValueSuffixLabel.text = viewModel.pointsValueSuffixText
-        cardValuePointsLabel.isHidden = !viewModel.shouldShowPointsValueLabels
-        cardValueSuffixLabel.isHidden = !viewModel.shouldShowPointsValueLabels
+        cardValuePointsLabel.isHidden = !viewModel.shouldShowPointsValueLabel
+        cardValueSuffixLabel.isHidden = !viewModel.shouldShowPointsSuffixLabel
 
         containerView.backgroundColor = .clear
     }
-
+    
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        width.constant = bounds.size.width
+        height.constant = bounds.size.height
+        return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: targetSize.height))
+    }
 }
 
 private extension Selector {
@@ -257,7 +275,7 @@ extension WalletLoyaltyCardCollectionViewCell {
         }
     }
 
-    func set(to state: SwipeState, as type: SwipeMode? = nil) {
+    func set(to state: SwipeState, as type: SwipeMode? = nil, animated: Bool = true) {
         swipeState = state
         let width = rectangleView.frame.size.width
         let constant: CGFloat
@@ -287,9 +305,18 @@ extension WalletLoyaltyCardCollectionViewCell {
 
         startingOffset = constant
 
+        let block = { [weak self] in
+            self?.cardContainerCenterXConstraint.constant = constant
+            self?.layoutIfNeeded()
+        }
+
+        guard animated else {
+            block()
+            return
+        }
+
         UIView.animate(withDuration: 0.3) {
-            self.cardContainerCenterXConstraint.constant = constant
-            self.layoutIfNeeded()
+            block()
         }
     }
 }

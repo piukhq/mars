@@ -28,6 +28,16 @@ public struct ReusableModalConfiguration {
         self.tabBarBackButton = tabBarBackButton
         self.showCloseButton = showCloseButton
     }
+
+    static func makeAttributedString(title: String, description: String) -> NSMutableAttributedString {
+        let attributedString = NSMutableAttributedString()
+        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
+        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+        attributedString.append(attributedTitle)
+        attributedString.append(attributedBody)
+
+        return attributedString
+    }
 }
 
 open class ReusableModalViewModel {

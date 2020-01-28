@@ -34,6 +34,7 @@ class BinkModuleView: CustomView {
         case pll
         case unLinkable
         case genericError
+        case aboutMembership
     }
     
     private var action: BinkModuleAction?
@@ -86,6 +87,12 @@ private extension BinkModuleView {
         
         switch membershipCard.status?.status {
         case .authorised:
+            // PLR
+            if membershipCard.membershipPlan?.isPLR == true {
+                configure(imageName: "lcdModuleIconsPointsActive", titleText: "plr_lcd_points_module_title".localized, subtitleText: "plr_lcd_points_module_description".localized, touchAction: .aboutMembership)
+                break
+            }
+
             // Points module 1.1, 1.2
             if let balances = membershipCard.balances.allObjects as? [CD_MembershipCardBalance],
                 let balance = balances.first,
@@ -107,6 +114,8 @@ private extension BinkModuleView {
                 
                 let subtitleText = (transactionsAvailable) ? "points_module_view_history_message".localized : "points_module_last_checked".localized + (balance.updatedAt?.stringValue ?? "")
                 configure(imageName: "lcdModuleIconsPointsActive", titleText: titleText, subtitleText: subtitleText, touchAction: .transactions)
+            } else {
+                configure(imageName: "lcdModuleIconsPointsLoginPending", titleText: "pending_title".localized, subtitleText: "please_wait_title".localized, touchAction: .pending)
             }
             break
         case .pending:
