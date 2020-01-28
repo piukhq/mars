@@ -55,7 +55,6 @@ struct BinkAnalytics {
         var trackingData: [String: Any] = [:]
 
         defer {
-            print("TRACKING // \(event.name) = \(trackingData)")
             #if RELEASE
             Analytics.logEvent(event.name, parameters: trackingData)
             #endif
