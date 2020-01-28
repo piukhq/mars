@@ -64,7 +64,7 @@ class AddOrJoinViewModel {
             }
         }, showCloseButton: true)
         
-        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
+        router.toReusableModalTemplateViewController(configurationModel: configurationModel, floatingButtons: false)
     }
     
     func brandHeaderWasTapped() {
