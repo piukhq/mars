@@ -35,6 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Crashlytics
         Fabric.with([Crashlytics.self])
+
+        // Tracking
+        #if RELEASE
+        BinkAnalytics.beginSessionTracking()
+        #endif
         
         let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)

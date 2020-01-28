@@ -85,7 +85,6 @@ enum RequestHTTPMethod {
 
 class ApiManager {
     private let reachabilityManager = NetworkReachabilityManager()
-    
     private let session: Session
     
     struct Certificates {
@@ -102,6 +101,16 @@ class ApiManager {
 
     var networkIsReachable: Bool {
         return reachabilityManager?.isReachable ?? false
+    }
+
+    var networkStrength: String {
+        if reachabilityManager?.isReachableOnCellular == true {
+            return "cellular"
+        }
+        if reachabilityManager?.isReachableOnEthernetOrWiFi == true {
+            return "wifi"
+        }
+        return "unknown"
     }
     
     init() {
