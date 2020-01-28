@@ -1,5 +1,5 @@
 //
-//  PaymentTermsAndConditionsViewController.swift
+//  ReusableTemplateViewController.swift
 //  binkapp
 //
 //  Created by Dorin Pop on 17/09/2019.
@@ -8,24 +8,24 @@
 
 import UIKit
 
-protocol PaymentTermsAndConditionsViewControllerDelegate: AnyObject {
-    func paymentTermsAndConditionsViewControllerDidAccept(_ viewController: PaymentTermsAndConditionsViewController)
+protocol ReusableTemplateViewControllerDelegate: AnyObject {
+    func primaryButtonWasTapped(_ viewController: ReusableTemplateViewController)
 }
 
-class PaymentTermsAndConditionsViewController: BinkTrackableViewController, BarBlurring {
+class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
     lazy var blurBackground = defaultBlurredBackground()
     
     @IBOutlet private weak var floatingButtonsContainer: BinkPrimarySecondaryButtonView!
     @IBOutlet private weak var textView: UITextView!
 
-    weak var delegate: PaymentTermsAndConditionsViewControllerDelegate?
+    weak var delegate: ReusableTemplateViewControllerDelegate?
     
     private let viewModel: ReusableModalViewModel
     
-    init(viewModel: ReusableModalViewModel, delegate: PaymentTermsAndConditionsViewControllerDelegate? = nil) {
+    init(viewModel: ReusableModalViewModel, delegate: ReusableTemplateViewControllerDelegate? = nil) {
         self.viewModel = viewModel
         self.delegate = delegate
-        super.init(nibName: "PaymentTermsAndConditionsViewController", bundle: Bundle(for: PaymentTermsAndConditionsViewController.self))
+        super.init(nibName: "ReusableTemplateViewController", bundle: Bundle(for: ReusableTemplateViewController.self))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,6 +37,8 @@ class PaymentTermsAndConditionsViewController: BinkTrackableViewController, BarB
         floatingButtonsContainer.delegate = self
         textView.delegate = self
         configureUI()
+
+        screenName = "\(String(describing: Self.self)):\(viewModel.title.capitalized.replacingOccurrences(of: " ", with: ""))"
     }
     
     override func viewDidLayoutSubviews() {
@@ -76,7 +78,7 @@ class PaymentTermsAndConditionsViewController: BinkTrackableViewController, BarB
 
 // MARK: - Private methods
 
-private extension PaymentTermsAndConditionsViewController {
+private extension ReusableTemplateViewController {
     func setCloseButton() {
         if viewModel.showCloseButton {
                     let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(dismissViewController))
@@ -97,11 +99,11 @@ private extension PaymentTermsAndConditionsViewController {
 
 // MARK: - BinkFloatingButtonsDelegate
 
-extension PaymentTermsAndConditionsViewController: BinkPrimarySecondaryButtonViewDelegate {
+extension ReusableTemplateViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_: BinkPrimarySecondaryButtonView) {
         viewModel.mainButtonWasTapped() { [weak self] in
-            guard let self = self, let delegate = self.delegate else { return }
-            delegate.paymentTermsAndConditionsViewControllerDidAccept(self)
+            guard let self = self else { return }
+            self.delegate?.primaryButtonWasTapped(self)
         }
     }
     
@@ -112,7 +114,7 @@ extension PaymentTermsAndConditionsViewController: BinkPrimarySecondaryButtonVie
 
 // MARK: - UITextViewDelegate
 
-extension PaymentTermsAndConditionsViewController: UITextViewDelegate {
+extension ReusableTemplateViewController: UITextViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let textViewFont = textView.font {
             title = scrollView.contentOffset.y > textViewFont.lineHeight ? viewModel.title : ""

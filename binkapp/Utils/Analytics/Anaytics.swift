@@ -79,7 +79,7 @@ struct BinkAnalytics {
 
         guard let appVersion = Bundle.shortVersionNumber else { return }
         guard let buildNumber = Bundle.bundleVersion else { return }
-        BinkAnalytics.setUserProperty(value: "\(appVersion) (build \(buildNumber))", forKey: .binkVersion)
+        BinkAnalytics.setUserProperty(value: "Version: \(appVersion), build: \(buildNumber)", forKey: .binkVersion)
     }
 
     private static func setUserProperty(value: String?, forKey key: UserPropertyKey) {
