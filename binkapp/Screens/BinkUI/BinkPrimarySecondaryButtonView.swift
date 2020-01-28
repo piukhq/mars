@@ -35,6 +35,7 @@ class BinkPrimarySecondaryButtonView: CustomView {
         secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
         secondaryButton.isHidden = secondaryButtonTitle == nil
         secondaryButton.titleLabel?.font = .buttonText
+        layoutSubviews()
     }
     
     override func configureUI() {
