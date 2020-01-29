@@ -18,29 +18,43 @@ final class ImageService {
     // TODO: Enum and associated values for a nice API for easily accessing image urls
     // TODO: Replace all af_setImage calls across the app
 
-    fileprivate func retrieveImage(forPath path: String, forceRefresh: Bool = false, completion: @escaping ImageCompletionHandler) {
+    enum PathType {
+        case brandHeader(plan: CD_MembershipPlan)
+    }
+
+    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, completion: @escaping ImageCompletionHandler) {
+
+        guard let imagePath = path(forType: pathType) else { return }
 
         // Are we forcing a refresh?
         if !forceRefresh {
             // Is the image in memory?
-            if let cachedImage = Cache.sharedImageCache.object(forKey: path.toNSString()) {
+            if let cachedImage = Cache.sharedImageCache.object(forKey: imagePath.toNSString()) {
                 completion(cachedImage)
                 return
             }
 
             // If not, is the image on disk?
-            if let imageFromDisk = try? Disk.retrieve(path, from: .caches, as: UIImage.self) {
+            if let imageFromDisk = try? Disk.retrieve(imagePath, from: .caches, as: UIImage.self) {
                 completion(imageFromDisk)
 
                 // Promote the image to local memory
-                Cache.sharedImageCache.setObject(imageFromDisk, forKey: path.toNSString())
+                Cache.sharedImageCache.setObject(imageFromDisk, forKey: imagePath.toNSString())
                 return
             }
         }
 
         // Retrieve the image from the API
         // Either the image is not stored locally, or we are forcing a refresh
-        downloadImage(forPath: path, completion: completion)
+        downloadImage(forPath: imagePath, completion: completion)
+    }
+
+    private func path(forType type: PathType) -> String? {
+        switch type {
+        case .brandHeader(let plan):
+            guard let url = plan.image(of: ImageType.hero.rawValue)?.url else { return nil }
+            return url
+        }
     }
 
     private func downloadImage(forPath path: String, completion: @escaping ImageCompletionHandler) {
@@ -67,12 +81,12 @@ final class ImageService {
 }
 
 extension UIImageView {
-    func setImage(fromUrlString urlString: String, withPlaceholderImage placeholder: UIImage? = nil, forceRefresh: Bool = false) {
+    func setImage(forPathType pathType: ImageService.PathType, withPlaceholderImage placeholder: UIImage? = nil, forceRefresh: Bool = false) {
         image = placeholder
 
         let imageService = ImageService()
-        imageService.retrieveImage(forPath: urlString, forceRefresh: forceRefresh) { [weak self] image in
-            self?.image = image
+        imageService.retrieveImage(forPathType: pathType) { [weak self] retrievedImage in
+            self?.image = retrievedImage
         }
     }
 }

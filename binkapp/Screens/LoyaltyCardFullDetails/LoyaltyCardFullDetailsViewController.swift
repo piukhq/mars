@@ -181,12 +181,9 @@ private extension LoyaltyCardFullDetailsViewController {
     func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
-        if let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url {
-//            if let url = URL(string: imageURL) {
-//                brandHeader.af_setImage(withURL: url)
-//            }
-            brandHeader.setImage(fromUrlString: imageURL)
-        }
+
+        guard let plan = viewModel.membershipCard.membershipPlan else { return }
+        brandHeader.setImage(forPathType: .brandHeader(plan: plan))
 
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
 
