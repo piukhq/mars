@@ -13,13 +13,15 @@ import AlamofireImage
 
 final class ImageService {
 
+    // TODO: force refresh after plan refresh
+
     typealias ImageCompletionHandler = (UIImage?) -> Void
 
     enum PathType {
         case membershipPlanImage(plan: CD_MembershipPlan, imageType: ImageType)
     }
 
-    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, completion: @escaping ImageCompletionHandler) {
+    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
 
         guard let imagePath = path(forType: pathType) else { return }
 
@@ -43,7 +45,7 @@ final class ImageService {
 
         // Retrieve the image from the API
         // Either the image is not stored locally, or we are forcing a refresh
-        downloadImage(forPath: imagePath, completion: completion)
+        downloadImage(forPath: imagePath, withPolicy: policy, completion: completion)
     }
 
     private func path(forType type: PathType) -> String? {
@@ -54,7 +56,7 @@ final class ImageService {
         }
     }
 
-    private func downloadImage(forPath path: String, completion: @escaping ImageCompletionHandler) {
+    private func downloadImage(forPath path: String, withPolicy policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
         Current.apiManager.getImage(fromUrlString: path) { (image, error) in
             guard let downloadedImage = image else {
                 completion(nil)
@@ -62,47 +64,35 @@ final class ImageService {
             }
             completion(downloadedImage)
 
-            // Store the downloaded image to Disk and fail silently
+            // Store the downloaded image to disk and fail silently
             try? Disk.save(downloadedImage, to: .caches, as: path)
 
             // Store the downloaded image to local memory
             Cache.sharedImageCache.setObject(downloadedImage, forKey: path.toNSString())
 
-            // Add object to sharedStoredObjects
-            let storedObject = StorageUtility.StoredObject(objectPath: path, storedDate: Date(), policy: .month)
-            StorageUtility.sharedStoredObjects.append(storedObject)
-            try? Disk.save(StorageUtility.sharedStoredObjects, to: .applicationSupport, as: "sharedStoredObjects")
+            // Add object to sharedStoredObjects, and save to disk
+            let storedObject = StorageUtility.StoredObject(objectPath: path, storedDate: Date(), policy: policy)
+            StorageUtility.addStoredObject(storedObject)
         }
     }
 
 }
 
 extension UIImageView {
-    // TODO: Set policy here, or default to 30 days
-    func setImage(forPathType pathType: ImageService.PathType, withPlaceholderImage placeholder: UIImage? = nil, forceRefresh: Bool = false) {
+    func setImage(forPathType pathType: ImageService.PathType, withPlaceholderImage placeholder: UIImage? = nil, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy = .month) {
         image = placeholder
 
         let imageService = ImageService()
-        imageService.retrieveImage(forPathType: pathType) { [weak self] retrievedImage in
+        imageService.retrieveImage(forPathType: pathType, policy: policy) { [weak self] retrievedImage in
             self?.image = retrievedImage
         }
     }
 }
 
+/// A utility class to handle the expiration of objects stored to disk. When an object is
 final class StorageUtility {
-    static var sharedStoredObjects = [StoredObject]()
-
-    static func start() {
-        let storedObjectsOnDisk = try? Disk.retrieve("sharedStoredObjects", from: .applicationSupport, as: [StoredObject].self)
-        guard let storedObjects = storedObjectsOnDisk else { return }
-        sharedStoredObjects = storedObjects
-
-        purgeExpiredStoredObjects()
-    }
-
-    static private func purgeExpiredStoredObjects() {
-        // TODO: Implement this
-    }
+    fileprivate static var sharedStoredObjects = [StoredObject]()
+    fileprivate static let sharedStoredObjectsKey = "sharedStoredObjects"
 
     enum ExpiryPolicy: Int, Codable {
         case week = 7
@@ -110,13 +100,36 @@ final class StorageUtility {
         case year = 365
     }
 
-    struct StoredObject: Codable {
+    fileprivate struct StoredObject: Codable {
         let objectPath: String
         let storedDate: Date
         let policy: ExpiryPolicy
 
-        var expiryDate: Date? {
-            return Calendar.current.date(byAdding: .day, value: +policy.rawValue, to: storedDate)
+        var isExpired: Bool {
+            return expiryDate < Date()
         }
+
+        private var expiryDate: Date {
+            return Calendar.current.date(byAdding: .day, value: +policy.rawValue, to: storedDate) ?? Date()
+        }
+    }
+
+    static func start() {
+        let storedObjectsOnDisk = try? Disk.retrieve(sharedStoredObjectsKey, from: .applicationSupport, as: [StoredObject].self)
+        guard let storedObjects = storedObjectsOnDisk else { return }
+        sharedStoredObjects = storedObjects
+
+        purgeExpiredStoredObjects()
+    }
+
+    fileprivate static func addStoredObject(_ object: StoredObject) {
+        StorageUtility.sharedStoredObjects.append(object)
+        try? Disk.save(StorageUtility.sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
+    }
+
+    private static func purgeExpiredStoredObjects() {
+        let validStoredObjects = sharedStoredObjects.filter { !$0.isExpired }
+        sharedStoredObjects = validStoredObjects
+        try? Disk.save(StorageUtility.sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
     }
 }
