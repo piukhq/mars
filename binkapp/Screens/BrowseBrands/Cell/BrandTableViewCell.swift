@@ -23,6 +23,10 @@ class BrandTableViewCell: UITableViewCell {
         if let imageURLString = imageURL, let url = URL(string: imageURLString) {
             logoImageView.af_setImage(withURL: url, placeholderImage: UIImage())
         }
+
+//        if let path = imageURL {
+//            logoImageView.setImage(fromUrlString: path)
+//        }
             
         brandLabel.font = UIFont.subtitle
         brandLabel.text = brandName

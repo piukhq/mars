@@ -23,4 +23,8 @@ extension String {
         formatter.dateFormat = format.rawValue
         return "\(prefix ?? "")\(formatter.string(from: date))\(suffix ?? "")"
     }
+
+    func toNSString() -> NSString {
+        return self as NSString
+    }
 }
