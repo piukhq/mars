@@ -58,16 +58,16 @@ class RootStateMachine: NSObject {
     @objc func handleLogout() {
         
         // Move to splash
-        let loading = LoadingScreen()
-        moveTo(loading)
-                
-        clearLocalStorage {
-            Current.apiManager.doRequest(url: .logout, httpMethod: .post, isUserDriven: false, onSuccess: { [weak self] (response: LogoutResponse) in
-                self?.completeLogout()
-            }) { [weak self] (error) in
+        if Current.apiManager.networkIsReachable {
+            let loading = LoadingScreen()
+            moveTo(loading)
+        }
+        
+        Current.apiManager.doRequest(url: .logout, httpMethod: .post, isUserDriven: true, onSuccess: { [weak self] (response: LogoutResponse) in
+            self?.clearLocalStorage {
                 self?.completeLogout()
             }
-        }
+        })
     }
     
     private func clearLocalStorage(completion: @escaping () -> ()) {

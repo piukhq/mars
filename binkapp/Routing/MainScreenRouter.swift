@@ -251,11 +251,13 @@ class MainScreenRouter {
     }
     
     @objc func presentNoConnectivityPopup() {
+        guard let visibleVC = navController?.getVisibleViewController() else { return }
         let alert = UIAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.navController?.present(alert, animated: true, completion: nil)
+        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal {
+            modalNavigationController.present(alert, animated: false, completion: nil)
+        } else {
+            navController?.present(alert, animated: false, completion: nil)
         }
     }
     
