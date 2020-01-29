@@ -229,7 +229,7 @@ private extension LoyaltyCardFullDetailsViewController {
         configureLayout()
         
         guard let plan = viewModel.membershipCard.membershipPlan else { return }
-        brandHeader.setImage(forPathType: .hero(plan: plan))
+        brandHeader.setImage(forPathType: .membershipPlanImage(plan: plan, imageType: .hero))
     }
 
     func configureLayout() {

@@ -25,7 +25,7 @@ class BrandHeaderView: CustomView {
         self.delegate = delegate
         guard let membershipPlan = plan else { return }
         
-        logoImageView.setImage(forPathType: .icon(plan: membershipPlan))
+        logoImageView.setImage(forPathType: .membershipPlanImage(plan: membershipPlan, imageType: .icon))
         
         if let planNameCard = membershipPlan.account?.planNameCard {
             loyaltyPlanButton.setTitle(planNameCard + " info", for: .normal)

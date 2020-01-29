@@ -38,7 +38,7 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
         detailLabel.sizeToFit()
         
         guard let membershipPlan = walletPrompt.membershipPlan else { return }
-        brandIconImageView.setImage(forPathType: .icon(plan: membershipPlan))
+        brandIconImageView.setImage(forPathType: .membershipPlanImage(plan: membershipPlan, imageType: .icon))
     }
 
     @IBAction private func dismissButtonWasPressed() {

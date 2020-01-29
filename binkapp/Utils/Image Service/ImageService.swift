@@ -15,13 +15,8 @@ final class ImageService {
 
     typealias ImageCompletionHandler = (UIImage?) -> Void
 
-    // TODO: Enum and associated values for a nice API for easily accessing image urls
-    // TODO: Replace all af_setImage calls across the app
-
     enum PathType {
-        case hero(plan: CD_MembershipPlan)
-        case icon(plan: CD_MembershipPlan)
-        case offer(plan: CD_MembershipPlan)
+        case membershipPlanImage(plan: CD_MembershipPlan, imageType: ImageType)
     }
 
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, completion: @escaping ImageCompletionHandler) {
@@ -53,14 +48,8 @@ final class ImageService {
 
     private func path(forType type: PathType) -> String? {
         switch type {
-        case .hero(let plan):
-            guard let url = plan.image(of: .hero)?.url else { return nil }
-            return url
-        case .icon(let plan):
-            guard let url = plan.image(of: .icon)?.url else { return nil }
-            return url
-        case .offer(let plan):
-            guard let url = plan.image(of: .offer)?.url else { return nil }
+        case .membershipPlanImage(let plan, let imageType):
+            guard let url = plan.image(of: imageType)?.url else { return nil }
             return url
         }
     }
@@ -89,6 +78,7 @@ final class ImageService {
 }
 
 extension UIImageView {
+    // TODO: Set policy here, or default to 30 days
     func setImage(forPathType pathType: ImageService.PathType, withPlaceholderImage placeholder: UIImage? = nil, forceRefresh: Bool = false) {
         image = placeholder
 

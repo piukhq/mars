@@ -14,7 +14,7 @@ class OfferTileView: CustomView {
     func configure(plan: CD_MembershipPlan) {
         offerImageView.clipsToBounds = true
         offerImageView.layer.cornerRadius = 8
-        offerImageView.setImage(forPathType: .offer(plan: plan))
+        offerImageView.setImage(forPathType: .membershipPlanImage(plan: plan, imageType: .offer))
     }
 }
 
