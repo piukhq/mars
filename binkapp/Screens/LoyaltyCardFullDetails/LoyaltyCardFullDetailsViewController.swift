@@ -182,9 +182,6 @@ private extension LoyaltyCardFullDetailsViewController {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
 
-        guard let plan = viewModel.membershipCard.membershipPlan else { return }
-        brandHeader.setImage(forPathType: .brandHeader(plan: plan))
-
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
 
         let showBarcode = viewModel.membershipCard.card?.barcode != nil
@@ -208,12 +205,13 @@ private extension LoyaltyCardFullDetailsViewController {
         }
 
         if viewModel.shouldShowOfferTiles {
+            guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
             stackScrollView.add(arrangedSubview: offerTilesStackView)
             if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
                 offerTileImageUrls.forEach { offer in
                     let offerView = OfferTileView()
                     offerView.translatesAutoresizingMaskIntoConstraints = false
-                    offerView.configure(imageUrl: offer)
+                    offerView.configure(plan: membershipPlan)
                     offerTilesStackView.addArrangedSubview(offerView)
                 }
             }
@@ -229,6 +227,9 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: informationTableView)
 
         configureLayout()
+        
+        guard let plan = viewModel.membershipCard.membershipPlan else { return }
+        brandHeader.setImage(forPathType: .hero(plan: plan))
     }
 
     func configureLayout() {

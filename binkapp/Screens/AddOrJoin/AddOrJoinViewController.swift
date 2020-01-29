@@ -53,7 +53,7 @@ class AddOrJoinViewController: UIViewController {
     func configureUI() {
         let membershipPlan = viewModel.getMembershipPlan()
         
-        brandHeaderView.configure(imageURLString: ((membershipPlan.firstIconImage()?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
+        brandHeaderView.configure(plan: membershipPlan, delegate: self)
         
         addCardButton.titleLabel?.font = UIFont.buttonText
         addCardButton.setTitle("add_my_card_button".localized, for: .normal)

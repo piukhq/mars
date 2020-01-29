@@ -25,11 +25,9 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
 
         headerLabel.text = viewModel.headerText
         detailLabel.text = viewModel.detailText
-        if let iconImageUrl = viewModel.iconUrl {
-            iconImageView.af_setImage(withURL: iconImageUrl)
-        }
-
         linkToggle.isOn = viewModel.isLinked
+        guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
+        iconImageView.setImage(forPathType: .icon(plan: membershipPlan))
     }
 
     @IBAction private func didToggle() {

@@ -34,13 +34,11 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
         
         titleLabel.text = walletPrompt.title
         detailLabel.text = walletPrompt.body
-        if let iconImageUrl = walletPrompt.iconImageUrl {
-            brandIconImageView.af_setImage(withURL: iconImageUrl)
-        } else {
-            brandIconImageView.image = UIImage(named: walletPrompt.iconImageName ?? "")
-        }
         titleLabel.sizeToFit()
         detailLabel.sizeToFit()
+        
+        guard let membershipPlan = walletPrompt.membershipPlan else { return }
+        brandIconImageView.setImage(forPathType: .icon(plan: membershipPlan))
     }
 
     @IBAction private func dismissButtonWasPressed() {

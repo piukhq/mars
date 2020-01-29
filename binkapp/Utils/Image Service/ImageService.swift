@@ -19,7 +19,9 @@ final class ImageService {
     // TODO: Replace all af_setImage calls across the app
 
     enum PathType {
-        case brandHeader(plan: CD_MembershipPlan)
+        case hero(plan: CD_MembershipPlan)
+        case icon(plan: CD_MembershipPlan)
+        case offer(plan: CD_MembershipPlan)
     }
 
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, completion: @escaping ImageCompletionHandler) {
@@ -51,8 +53,14 @@ final class ImageService {
 
     private func path(forType type: PathType) -> String? {
         switch type {
-        case .brandHeader(let plan):
-            guard let url = plan.image(of: ImageType.hero.rawValue)?.url else { return nil }
+        case .hero(let plan):
+            guard let url = plan.image(of: .hero)?.url else { return nil }
+            return url
+        case .icon(let plan):
+            guard let url = plan.image(of: .icon)?.url else { return nil }
+            return url
+        case .offer(let plan):
+            guard let url = plan.image(of: .offer)?.url else { return nil }
             return url
         }
     }

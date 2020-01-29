@@ -19,15 +19,9 @@ class BrandTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func configure(imageURL: String?, brandName: String, description: Bool = false) {
-        if let imageURLString = imageURL, let url = URL(string: imageURLString) {
-            logoImageView.af_setImage(withURL: url, placeholderImage: UIImage())
-        }
+    func configure(plan: CD_MembershipPlan, brandName: String, description: Bool = false) {
+        logoImageView.setImage(forPathType: .icon(plan: plan))
 
-//        if let path = imageURL {
-//            logoImageView.setImage(fromUrlString: path)
-//        }
-            
         brandLabel.font = UIFont.subtitle
         brandLabel.text = brandName
         

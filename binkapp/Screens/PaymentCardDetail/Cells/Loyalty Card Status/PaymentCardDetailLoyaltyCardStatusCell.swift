@@ -16,11 +16,11 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
     func configureWithViewModel(_ viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel) {
         headerLabel.text = viewModel.headerText
         detailLabel.text = viewModel.detailText
-        if let iconImageUrl = viewModel.iconUrl {
-            iconImageView.af_setImage(withURL: iconImageUrl)
-        }
         statusLabel.text = viewModel.statusText
         statusLabel.textColor = textColor(forStatus: viewModel.status)
+        
+        guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
+        iconImageView.setImage(forPathType: .icon(plan: membershipPlan))
     }
 
     private func textColor(forStatus status: CD_MembershipCardStatus?) -> UIColor {
