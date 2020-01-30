@@ -8,8 +8,7 @@
 
 import UIKit
 import Disk
-import Alamofire
-import AlamofireImage
+import DeepDiff
 
 final class ImageService {
 
@@ -123,13 +122,51 @@ final class StorageUtility {
     }
 
     fileprivate static func addStoredObject(_ object: StoredObject) {
-        StorageUtility.sharedStoredObjects.append(object)
-        try? Disk.save(StorageUtility.sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
+        // Check we aren't already storing this object
+        let storedObjectPaths = sharedStoredObjects.map {
+            $0.objectPath
+        }
+        guard !storedObjectPaths.contains(object.objectPath) else { return }
+        sharedStoredObjects.append(object)
+        print(sharedStoredObjects)
+        try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
     }
 
     private static func purgeExpiredStoredObjects() {
         let validStoredObjects = sharedStoredObjects.filter { !$0.isExpired }
         sharedStoredObjects = validStoredObjects
-        try? Disk.save(StorageUtility.sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
+        try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
+    }
+
+    static func refreshPlanImages() {
+        // Get all plan images from core data
+        var planImages: [CD_MembershipPlanImage] = []
+        Current.database.performTask { context in
+            let images = context.fetchAll(CD_MembershipPlanImage.self)
+            planImages = images
+        }
+
+        // Get urls from plan images
+        let planImageUrls = planImages.map { $0.url ?? "" }
+
+        // Get urls from stored objects
+        let storedObjectUrls = sharedStoredObjects.map { $0.objectPath }
+
+        // Diff two collections
+        let changes = diff(old: storedObjectUrls, new: planImageUrls)
+
+        // We are left with a collection of urls that were stored but not found in the latest plan refresh
+        // These will be marked as deletions and can be removed
+        let deletions = changes.compactMap {
+            $0.delete
+        }
+        let deletionIds = deletions.map {
+            $0.index
+        }
+
+        deletionIds.forEach {
+            sharedStoredObjects.remove(at: $0)
+        }
+        try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
     }
 }
