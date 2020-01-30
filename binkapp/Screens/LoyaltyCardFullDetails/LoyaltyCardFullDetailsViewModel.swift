@@ -8,6 +8,8 @@
 import UIKit
 
 class LoyaltyCardFullDetailsViewModel {
+    typealias EmptyCompletionBlock = () -> Void
+
     private let router: MainScreenRouter
     private let repository: LoyaltyCardFullDetailsRepository
     private let informationRowFactory: PaymentCardDetailInformationRowFactory
@@ -72,12 +74,12 @@ class LoyaltyCardFullDetailsViewModel {
         case .login:
             //TODO: change to login screen after is implemented
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .loginFailed, existingMembershipCard: membershipCard)
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
             break
         case .loginChanges:
             //TODO: change to login changes screen after is implemented
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .loginFailed, existingMembershipCard: membershipCard)
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
             break
         case .transactions:
             guard membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue ?? false else {
@@ -216,13 +218,23 @@ extension LoyaltyCardFullDetailsViewModel {
         informationRows[indexPath.row].action()
     }
     
-    func deleteMembershipCard() {
+    func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }
+            guard Current.apiManager.networkIsReachable else {
+                self.router.presentNoConnectivityPopup()
+                noCompletion?()
+                return
+            }
             self.repository.delete(self.membershipCard) {
                 Current.wallet.refreshLocal()
                 self.router.popToRootViewController()
+                yesCompletion?()
             }
-            }, noCompletion: {})
+        }, noCompletion: {
+            DispatchQueue.main.async {
+                noCompletion?()
+            }
+        })
     }
 }

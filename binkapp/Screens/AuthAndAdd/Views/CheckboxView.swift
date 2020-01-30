@@ -22,9 +22,9 @@ class CheckboxView: CustomView {
     private(set) var columnName: String?
     private(set) var columnKind: FormField.ColumnKind?
     private(set) var textSelected: TextAction?
-    private(set) var title: String? {
+    private(set) var title: NSMutableAttributedString? {
         didSet {
-            textView.text = title
+            textView.attributedText = title
         }
     }
     
@@ -32,7 +32,7 @@ class CheckboxView: CustomView {
     
     weak var delegate: CheckboxViewDelegate?
     
-    func configure(title: String, columnName: String, columnKind: FormField.ColumnKind, url: URL? = nil, delegate: CheckboxViewDelegate? = nil, optional: Bool = false, textSelected: TextAction? = nil) {
+    func configure(title: NSMutableAttributedString, columnName: String, columnKind: FormField.ColumnKind, url: URL? = nil, delegate: CheckboxViewDelegate? = nil, optional: Bool = false, textSelected: TextAction? = nil) {
         checkboxView.boxType = .square
         checkboxView.stateChangeAnimation = .flat(.fill)
         self.columnName = columnName
@@ -43,18 +43,17 @@ class CheckboxView: CustomView {
         
         checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
 
-        if let safeUrl = url {
-            let attributedString = NSMutableAttributedString(string: title)
-            attributedString.addAttribute(.link, value: safeUrl, range: NSRange(location: title.count - columnName.count, length: columnName.count))
-            textView.attributedText = attributedString
-        } else {
+        guard let safeUrl = url else {
             self.title = title
+            
+            //We don't need a delegate if we don't have a checkbox, so we send a nil delegate to hide it
+            checkboxView.isHidden = delegate == nil
+            return
         }
-
-        textView.font = UIFont.bodyTextSmall
         
-        //We don't need a delegate if we don't have a checkbox, so we send a nil delegate to hide it
-        checkboxView.isHidden = delegate == nil
+        let attributedString = title
+        attributedString.addAttribute(.link, value: safeUrl, range: NSRange(location: title.length - columnName.count, length: columnName.count))
+        textView.attributedText = attributedString
     }
     
     override func configureUI() {

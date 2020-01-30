@@ -102,9 +102,7 @@ class AuthAndAddViewController: BaseFormViewController {
 extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         floatingButtons.primaryButton.startLoading()
-        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, onSuccess: {
-            floatingButtons.primaryButton.stopLoading()
-        }, onError: {
+        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: {
             floatingButtons.primaryButton.stopLoading()
         })
     }

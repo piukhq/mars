@@ -16,7 +16,7 @@ struct LoyaltyWalletRepository: WalletRepository {
         self.apiManager = apiManager
     }
 
-    func delete<T: WalletCard>(_ card: T, completion: @escaping () -> Void) {
+    func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
         // Process the backend delete, but fail silently
         let url = RequestURL.membershipCard(cardId: card.id)
         let method = RequestHTTPMethod.delete
@@ -32,7 +32,7 @@ struct LoyaltyWalletRepository: WalletRepository {
             try? context.save()
 
             DispatchQueue.main.async {
-                completion()
+                completion?()
             }
         }
     }

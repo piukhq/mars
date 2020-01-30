@@ -13,4 +13,9 @@ open class CD_AuthoriseField: _CD_AuthoriseField {
         guard let formatted = choices.allObjects as? [CD_FieldChoice] else { return  nil }
         return formatted.compactMap { $0.value }
     }
+    
+    var fieldCommonName: FieldCommonName? {
+        guard let rawType = commonName, let type = FieldCommonName(rawValue: rawType) else { return nil }
+        return type
+    }
 }

@@ -22,14 +22,14 @@ enum InputType: Int {
 }
 
 enum FormPurpose {
-    case login
-    case loginFailed
+    case add
+    case addFailed
     case signUp
     case ghostCard
     
     var planDocumentDisplayMatching: PlanDocumentDisplayModel {
         switch self {
-        case .login, .loginFailed:
+        case .add, .addFailed:
             return .add
         case .signUp:
             return .enrol
@@ -53,7 +53,7 @@ class AuthAndAddViewModel {
     var title: String {
         switch formPurpose {
         case .signUp: return "sign_up_new_card_title".localized
-        case .login, .loginFailed: return "log_in_title".localized
+        case .add, .addFailed: return "credentials_title".localized
         case .ghostCard: return "register_ghost_card_title".localized
         }
     }
@@ -61,13 +61,13 @@ class AuthAndAddViewModel {
     var buttonTitle: String {
         switch formPurpose {
         case .signUp: return "sign_up_button_title".localized
-        case .login, .loginFailed: return "log_in_title".localized
+        case .add, .addFailed: return "pll_screen_add_title".localized
         case .ghostCard: return "register_card_title".localized
         }
     }
     
     var accountButtonShouldHide: Bool {
-        return formPurpose != .login || formPurpose == .ghostCard
+        return formPurpose != .add || formPurpose == .ghostCard
     }
     
     init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil) {
@@ -81,10 +81,10 @@ class AuthAndAddViewModel {
     
     func getDescription() -> String? {
         switch formPurpose {
-        case .login:
-            guard let planName = membershipPlan.account?.planName, let companyName = membershipPlan.account?.companyName else { return nil }
-            return String(format: "auth_screen_description".localized, companyName, planName)
-        case .loginFailed:
+        case .add:
+            guard let companyName = membershipPlan.account?.companyName else { return nil }
+            return String(format: "auth_screen_description".localized, companyName)
+        case .addFailed:
             return getDescriptionForOtherLogin()
         case .signUp:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
@@ -118,7 +118,7 @@ class AuthAndAddViewModel {
         return membershipPlan
     }
 
-    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, onSuccess: @escaping () -> Void, onError: @escaping () -> Void) throws {
+    func addMembershipCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, completion: @escaping () -> Void) throws {
         guard formPurpose != .ghostCard else {
             try addGhostCard(with: formFields, checkboxes: checkboxes)
             return
@@ -137,13 +137,18 @@ class AuthAndAddViewModel {
                 } else {
                     self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
                 }
-                onSuccess()
+                completion()
                 Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
             }, onError: { [weak self] error in
-                self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
-                onError()
+                guard let customError = error as? CustomError else {
+                    self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
+                    completion()
+                    return
+                }
+                self?.displaySimplePopup(title: "error_title".localized, message: customError.localizedDescription)
+                completion()
         })
     }
     

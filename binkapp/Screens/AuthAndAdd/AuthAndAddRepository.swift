@@ -24,7 +24,7 @@ class AuthAndAddRepository {
         let url: RequestURL
         let method: RequestHTTPMethod
         switch formPurpose {
-        case .loginFailed:
+        case .addFailed:
             url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
             method = .put
             break

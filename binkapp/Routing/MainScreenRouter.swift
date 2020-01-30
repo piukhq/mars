@@ -25,6 +25,9 @@ class MainScreenRouter {
         NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+
+        // SSL Pinning failure
+        NotificationCenter.default.addObserver(self, selector: #selector(presentSSLPinningFailurePopup), name: .didFailServerTrustEvaluation, object: nil)
     }
     
     func wallet() -> UIViewController {
@@ -267,6 +270,12 @@ class MainScreenRouter {
         } else {
             navController?.present(alert, animated: false, completion: nil)
         }
+    }
+
+    @objc func presentSSLPinningFailurePopup() {
+        let alert = UIAlertController(title: "ssl_pinning_failure_title".localized, message: "ssl_pinning_failure_text".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
+        navController?.present(alert, animated: true, completion: nil)
     }
     
     @objc func popViewController() {
