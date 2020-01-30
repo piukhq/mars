@@ -76,6 +76,7 @@ final class ImageService {
         }
     }
     
+    /// Retrieve an image returned in a completion handler
     static func getImage(forPathType pathType: ImageService.PathType, policy: StorageUtility.ExpiryPolicy = .month, completion: @escaping (UIImage?) -> Void) {
         let imageService = ImageService()
         imageService.retrieveImage(forPathType: pathType, policy: policy) { retrievedImage in
