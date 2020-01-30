@@ -21,9 +21,11 @@ class PaymentTermsAndConditionsViewController: UIViewController, BarBlurring {
     weak var delegate: PaymentTermsAndConditionsViewControllerDelegate?
     
     private let viewModel: ReusableModalViewModel
+    private let floatingButtons: Bool
     
-    init(viewModel: ReusableModalViewModel, delegate: PaymentTermsAndConditionsViewControllerDelegate? = nil) {
+    init(viewModel: ReusableModalViewModel, floatingButtons: Bool = true, delegate: PaymentTermsAndConditionsViewControllerDelegate? = nil) {
         self.viewModel = viewModel
+        self.floatingButtons = floatingButtons
         self.delegate = delegate
         super.init(nibName: "PaymentTermsAndConditionsViewController", bundle: Bundle(for: PaymentTermsAndConditionsViewController.self))
     }
@@ -57,7 +59,7 @@ class PaymentTermsAndConditionsViewController: UIViewController, BarBlurring {
         textView.attributedText = viewModel.text
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
         
-        floatingButtonsContainer.configure(primaryButtonTitle: primary, secondaryButtonTitle: secondary, floating: true)
+        floatingButtonsContainer.configure(primaryButtonTitle: primary, secondaryButtonTitle: secondary, floating: floatingButtons)
 
         floatingButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
         textView.translatesAutoresizingMaskIntoConstraints = false

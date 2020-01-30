@@ -212,9 +212,9 @@ class MainScreenRouter {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
+    func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration, floatingButtons: Bool = true) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
-        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, floatingButtons: floatingButtons)
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
