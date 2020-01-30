@@ -23,6 +23,9 @@ class PreferencesViewModel {
             delegate?.didReceivePreferences()
         }
     }
+    var noConectivity: Bool {
+        return repository.networkIsReachable
+    }
     
     init(repository: PreferencesRepository, router: MainScreenRouter) {
         self.repository = repository
@@ -30,6 +33,10 @@ class PreferencesViewModel {
     }
     
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping () -> Void) {
+        guard repository.networkIsReachable else {
+            router.presentNoConnectivityPopup()
+            return
+        }
         repository.getPreferences(onSuccess: { (preferences) in
             self.preferences = preferences
             onSuccess(preferences)
@@ -45,5 +52,9 @@ class PreferencesViewModel {
             print(error)
             onError(error)
         }
+    }
+    
+    func presentNoConectivityPopup() {
+        router.presentNoConnectivityPopup()
     }
 }

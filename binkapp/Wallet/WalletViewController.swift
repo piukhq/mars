@@ -47,7 +47,7 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .didLoadLocalWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .shouldTrashLocalWallets, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stopRefresh), name: .noInternetConnection, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .noInternetConnection, object: nil)
 
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
 
@@ -122,11 +122,6 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     }
 
     @objc private func refreshLocal() {
-        collectionView.reloadData()
-    }
-    
-    @objc private func stopRefresh() {
-        refreshControl.endRefreshing()
         collectionView.reloadData()
     }
 

@@ -15,6 +15,10 @@ class PreferencesRepository {
         self.apiManager = apiManager
     }
     
+    var networkIsReachable: Bool {
+        return apiManager.networkIsReachable
+    }
+    
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (Error?) -> Void) {
         // If offline, the red error text doesn't display
         apiManager.doRequest(url: .preferences, httpMethod: .get, isUserDriven: false, onSuccess: { (preferences: [PreferencesModel]) in
