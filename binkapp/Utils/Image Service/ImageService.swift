@@ -21,10 +21,10 @@ final class ImageService {
         case membershipPlanImage(plan: CD_MembershipPlan, imageType: ImageType)
     }
 
-    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
+    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = true, policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
 
         guard let imagePath = path(forType: pathType) else { return }
-
+        
         // Are we forcing a refresh?
         if !forceRefresh {
             // Is the image in memory?
@@ -75,16 +75,30 @@ final class ImageService {
             StorageUtility.addStoredObject(storedObject)
         }
     }
-
+    
+    static func getImage(forPathType pathType: ImageService.PathType, policy: StorageUtility.ExpiryPolicy = .month, completion: @escaping (UIImage?) -> Void) {
+        let imageService = ImageService()
+        imageService.retrieveImage(forPathType: pathType, policy: policy) { retrievedImage in
+            completion(retrievedImage)
+        }
+    }
 }
 
 extension UIImageView {
-    func setImage(forPathType pathType: ImageService.PathType, withPlaceholderImage placeholder: UIImage? = nil, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy = .month) {
+    func setImage(forPathType pathType: ImageService.PathType, withPlaceholderImage placeholder: UIImage? = nil, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy = .month, animated: Bool = false) {
         image = placeholder
 
         let imageService = ImageService()
         imageService.retrieveImage(forPathType: pathType, policy: policy) { [weak self] retrievedImage in
-            self?.image = retrievedImage
+            if let self = self, animated {
+                UIView.transition(with: self,
+                duration: 0.3,
+                options: .transitionCrossDissolve,
+                animations: { self.image = retrievedImage },
+                completion: nil)
+            } else {
+                self?.image = retrievedImage
+            }
         }
     }
 }
