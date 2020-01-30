@@ -86,6 +86,12 @@ enum RequestHTTPMethod {
 class ApiManager {
     private let reachabilityManager = NetworkReachabilityManager()
     private let session: Session
+
+    enum NetworkStrength: String {
+        case wifi
+        case cellular
+        case unknown
+    }
     
     struct Certificates {
       static let bink = Certificates.certificate(filename: "bink-com")
@@ -103,14 +109,14 @@ class ApiManager {
         return reachabilityManager?.isReachable ?? false
     }
 
-    var networkStrength: String {
+    var networkStrength: NetworkStrength {
         if reachabilityManager?.isReachableOnCellular == true {
-            return "cellular"
+            return .cellular
         }
         if reachabilityManager?.isReachableOnEthernetOrWiFi == true {
-            return "wifi"
+            return .wifi
         }
-        return "unknown"
+        return .unknown
     }
     
     init() {
