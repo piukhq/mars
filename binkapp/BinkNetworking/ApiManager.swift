@@ -67,6 +67,15 @@ enum RequestURL {
         }
     }
 
+    var shouldVersionPin: Bool {
+        switch self {
+        case .spreedly:
+            return false
+        default:
+            return true
+        }
+    }
+
     private var baseUrlString: String {
         switch self {
         case .spreedly:
@@ -167,7 +176,7 @@ class ApiManager {
         }
         
         let authRequired = url.authRequired
-        let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
+        let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
         
         session.request(url.fullUrlString, method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { (response) in
@@ -184,7 +193,7 @@ class ApiManager {
         }
         
         let authRequired = url.authRequired
-        let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
+        let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
                 
         session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { (response) in
@@ -272,7 +281,7 @@ class ApiManager {
         }
 
         let authRequired = url.authRequired
-        let requestHeaders = HTTPHeaders(getHeader(authRequired: authRequired))
+        let requestHeaders = HTTPHeaders(getHeader(endpoint: url))
         
         session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { response in
             
@@ -303,10 +312,10 @@ class ApiManager {
 }
 
 private extension ApiManager {
-    private func getHeader(authRequired: Bool) -> [String: String] {
-        var header = ["Content-Type": "application/json;v=1.1"]
+    private func getHeader(endpoint: RequestURL) -> [String: String] {
+        var header = ["Content-Type": "application/json\(endpoint.shouldVersionPin ? ";v=1.1" : "")"]
         
-        if authRequired {
+        if endpoint.authRequired {
             guard let token = Current.userManager.currentToken else { return header }
             header["Authorization"] = "Token " + token
         }

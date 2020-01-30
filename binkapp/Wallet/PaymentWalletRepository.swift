@@ -38,6 +38,9 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
 
     func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
         if apiManager.isProduction {
+            #if DEBUG
+            fatalError("You are targetting production, but on a debug scheme. You should use a release scheme to test adding production payment cards.")
+            #endif
             requestSpreedlyToken(paymentCard: paymentCard, onSuccess: { [weak self] spreedlyResponse in
                 guard spreedlyResponse.isValid else {
                     onError(nil)
@@ -73,11 +76,20 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     }
 
     private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
-        guard let paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard, spreedlyResponse: spreedlyResponse) else {
+        var paymentCreateRequest: PaymentCardCreateRequest?
+
+        if let spreedlyResponse = spreedlyResponse {
+            paymentCreateRequest = PaymentCardCreateRequest(spreedlyResponse: spreedlyResponse)
+        } else {
+            paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard)
+        }
+
+        guard let request = paymentCreateRequest else {
+            onError(nil)
             return
         }
 
-        apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest, isUserDriven: true, onSuccess: { (response: PaymentCardModel) in
+        apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: request, isUserDriven: true, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask { context in
                 let newObject = response.mapToCoreData(context, .update, overrideID: nil)
 

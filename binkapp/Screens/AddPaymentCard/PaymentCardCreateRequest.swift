@@ -49,7 +49,7 @@ struct PaymentCardCreateRequest: Codable {
     let account: Account
     
     /// This should only be used for creating test payment cards as it naturally bypasses the Spreedly path
-    init?(model: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil) {
+    init?(model: PaymentCardCreateModel) {
         guard let pan = model.fullPan?.replacingOccurrences(of: " ", with: ""),
             let year = model.year,
             let month = model.month
@@ -66,14 +66,31 @@ struct PaymentCardCreateRequest: Codable {
         }
 
         card = Card(
-            token: spreedlyResponse == nil ? PaymentCardCreateRequest.fakeToken() : spreedlyResponse?.transaction?.paymentMethod?.token ?? "",
-            firstSixDigits: spreedlyResponse == nil ? firstSix! : spreedlyResponse?.transaction?.paymentMethod?.firstSix ?? "",
-            lastFourDigits: spreedlyResponse == nil ? lastFour! : spreedlyResponse?.transaction?.paymentMethod?.lastFour ?? "",
+            token: PaymentCardCreateRequest.fakeToken(),
+            firstSixDigits: firstSix!,
+            lastFourDigits: lastFour!,
             country: "GB", //TODO: Needs resolving!
             nameOnCard: model.nameOnCard!,
             month: month,
             year: year,
-            fingerprint: spreedlyResponse == nil ? PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month)) : spreedlyResponse?.transaction?.paymentMethod?.fingerprint ?? ""
+            fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month))
+        )
+
+        let timestamp = Date().timeIntervalSince1970
+        account = Account(consents: [Account.Consents(latitude: 0.0, longitude: 0.0, timestamp: Int(timestamp), type: 0)])
+    }
+
+    /// This should only be used for creating genuine payment cards using Spreedly path in a production environment
+    init?(spreedlyResponse: SpreedlyResponse) {
+        card = Card(
+            token: spreedlyResponse.transaction?.paymentMethod?.token ?? "",
+            firstSixDigits: spreedlyResponse.transaction?.paymentMethod?.firstSix ?? "",
+            lastFourDigits: spreedlyResponse.transaction?.paymentMethod?.lastFour ?? "",
+            country: "GB", //TODO: Needs resolving!
+            nameOnCard: spreedlyResponse.transaction?.paymentMethod?.fullName ?? "",
+            month: spreedlyResponse.transaction?.paymentMethod?.month ?? 0,
+            year: spreedlyResponse.transaction?.paymentMethod?.year ?? 0,
+            fingerprint: spreedlyResponse.transaction?.paymentMethod?.fingerprint ?? ""
         )
 
         let timestamp = Date().timeIntervalSince1970

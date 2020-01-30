@@ -62,6 +62,9 @@ struct SpreedlyResponse: Codable {
             var lastFour: String?
             var firstSix: String?
             var fingerprint: String?
+            var fullName: String?
+            var month: Int?
+            var year: Int?
             var errors: [SpreedlyError]?
 
             enum CodingKeys: String, CodingKey {
@@ -69,6 +72,10 @@ struct SpreedlyResponse: Codable {
                 case lastFour = "last_four_digits"
                 case firstSix = "first_six_digits"
                 case fingerprint
+                case fullName = "full_name"
+                case month
+                case year
+                case errors
             }
 
             struct SpreedlyError: Codable {
