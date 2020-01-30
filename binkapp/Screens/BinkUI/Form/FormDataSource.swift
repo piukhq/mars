@@ -202,7 +202,7 @@ extension FormDataSource {
             }
         }
         
-        if formPurpose != .signUp && formPurpose != .ghostCard {
+        if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .ghostCardFailed {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
@@ -228,7 +228,7 @@ extension FormDataSource {
         }
         
         
-        if formPurpose == .signUp {
+        if formPurpose == .signUp || formPurpose == .signUpFailed {
             model.account?.formattedEnrolFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
@@ -253,7 +253,7 @@ extension FormDataSource {
             }
         }
         
-        if formPurpose == .ghostCard {
+        if formPurpose == .ghostCard || formPurpose == .ghostCardFailed {
             model.account?.formattedRegistrationFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)

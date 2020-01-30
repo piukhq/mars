@@ -113,7 +113,7 @@ extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
             viewModel.toReusableTemplate(title: "registration_unavailable_title".localized, description: "registration_unavailable_description".localized)
             return
         }
-        viewModel.reloadWith(newFormPuropse: .ghostCard)
+        viewModel.reloadWithGhostCardFields()
     }
 }
 

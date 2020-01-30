@@ -27,7 +27,7 @@ class AddOrJoinViewModel {
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
             return
         }
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add, existingMembershipCard: existingCard)
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: existingCard)
     }
     
     func didSelectAddNewCard() {
@@ -47,7 +47,7 @@ class AddOrJoinViewModel {
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
             return
         }
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingCard)
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUpFailed, existingMembershipCard: existingCard)
     }
     
     func toNativeJoinUnavailable() {

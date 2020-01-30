@@ -25,15 +25,17 @@ enum FormPurpose {
     case add
     case addFailed
     case signUp
+    case signUpFailed
     case ghostCard
+    case ghostCardFailed
     
     var planDocumentDisplayMatching: PlanDocumentDisplayModel {
         switch self {
         case .add, .addFailed:
             return .add
-        case .signUp:
+        case .signUp, .signUpFailed:
             return .enrol
-        case .ghostCard:
+        case .ghostCard, .ghostCardFailed:
             return .registration
         }
     }
@@ -52,22 +54,22 @@ class AuthAndAddViewModel {
     
     var title: String {
         switch formPurpose {
-        case .signUp: return "sign_up_new_card_title".localized
+        case .signUp, .signUpFailed: return "sign_up_new_card_title".localized
         case .add, .addFailed: return "credentials_title".localized
-        case .ghostCard: return "register_ghost_card_title".localized
+        case .ghostCard, .ghostCardFailed: return "register_ghost_card_title".localized
         }
     }
     
     var buttonTitle: String {
         switch formPurpose {
-        case .signUp: return "sign_up_button_title".localized
+        case .signUp, .signUpFailed: return "sign_up_button_title".localized
         case .add, .addFailed: return "pll_screen_add_title".localized
-        case .ghostCard: return "register_card_title".localized
+        case .ghostCard, .ghostCardFailed: return "register_card_title".localized
         }
     }
     
     var accountButtonShouldHide: Bool {
-        return formPurpose != .add || formPurpose == .ghostCard
+        return (formPurpose != .add && formPurpose != .addFailed) || formPurpose == .ghostCard
     }
     
     init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil) {
@@ -89,7 +91,9 @@ class AuthAndAddViewModel {
         case .signUp:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "sign_up_new_card_description".localized, planNameCard)
-        case .ghostCard:
+        case .signUpFailed:
+            return getDescriptionForOtherLogin()
+        case .ghostCard, .ghostCardFailed:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "register_ghost_card_description".localized, planNameCard)
         }
@@ -285,8 +289,9 @@ class AuthAndAddViewModel {
         }
     }
     
-    func reloadWith(newFormPuropse: FormPurpose) {
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPuropse, existingMembershipCard: existingMembershipCard)
+    func reloadWithGhostCardFields() {
+        let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .ghostCardFailed : .ghostCard
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
     }
     
     func toReusableTemplate(title: String, description: String) {
