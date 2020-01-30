@@ -32,17 +32,6 @@ class AuthAndAddRepository {
             method = .post
         }
         
-//        switch formPurpose {
-//        case .loginFailed:
-//            url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
-//            method = .put
-//            break
-//        default:
-//            url = .membershipCards
-//            method = .post
-//            break
-//        }
-        
         apiManager.doRequest(url: url, httpMethod: method, headers: nil, parameters: request, onSuccess: { (response: MembershipCardModel) in
             // Map to core data
             Current.database.performBackgroundTask { context in
