@@ -21,7 +21,7 @@ final class ImageService {
         case membershipPlanImage(plan: CD_MembershipPlan, imageType: ImageType)
     }
 
-    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = true, policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
+    fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
 
         guard let imagePath = path(forType: pathType) else { return }
         
