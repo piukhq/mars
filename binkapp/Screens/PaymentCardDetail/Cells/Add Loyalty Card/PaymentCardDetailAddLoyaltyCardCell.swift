@@ -17,9 +17,7 @@ class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
         self.viewModel = viewModel
         headerLabel.text = viewModel.headerText
         detailLabel.text = viewModel.detailText
-        if let iconImageUrl = viewModel.iconUrl {
-            iconImageView.af_setImage(withURL: iconImageUrl)
-        }
+        iconImageView.setImage(forPathType: .membershipPlanImage(plan: viewModel.membershipPlan, imageType: .icon))
         addCardButton.configure(title: "pcd_add_card_button_title".localized, hasShadow: false)
     }
 

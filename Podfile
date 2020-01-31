@@ -17,6 +17,7 @@ pod 'CryptoSwift'
 pod 'KeychainAccess', '~> 4.1'
 pod 'FacebookSDK', '~> 5.9'
 pod 'FBSDKLoginKit', '~> 5.8'
+pod 'Disk'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",

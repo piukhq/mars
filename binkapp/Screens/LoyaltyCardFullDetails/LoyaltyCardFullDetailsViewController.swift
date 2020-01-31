@@ -181,11 +181,6 @@ private extension LoyaltyCardFullDetailsViewController {
     func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
-        if let imageURL = viewModel.membershipCard.membershipPlan?.image(of: ImageType.hero.rawValue)?.url {
-            if let url = URL(string: imageURL) {
-                brandHeader.af_setImage(withURL: url)
-            }
-        }
 
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
 
@@ -210,12 +205,13 @@ private extension LoyaltyCardFullDetailsViewController {
         }
 
         if viewModel.shouldShowOfferTiles {
+            guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
             stackScrollView.add(arrangedSubview: offerTilesStackView)
             if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
                 offerTileImageUrls.forEach { offer in
                     let offerView = OfferTileView()
                     offerView.translatesAutoresizingMaskIntoConstraints = false
-                    offerView.configure(imageUrl: offer)
+                    offerView.configure(plan: membershipPlan)
                     offerTilesStackView.addArrangedSubview(offerView)
                 }
             }
@@ -231,6 +227,19 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: informationTableView)
 
         configureLayout()
+        
+        guard let plan = viewModel.membershipCard.membershipPlan else { return }
+        
+        // Build Placeholder
+        if let hexStringColor = viewModel.membershipCard.card?.colour {
+            brandHeader.backgroundColor = UIColor(hexString: hexStringColor)
+            brandHeader.layoutIfNeeded()
+            let placeholderName = plan.account?.planNameCard ?? plan.account?.planName ?? ""
+            let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeader.frame.size)
+            brandHeader.backgroundColor = UIColor(patternImage: placeholder)
+        }
+        
+        brandHeader.setImage(forPathType: .membershipPlanImage(plan: plan, imageType: .hero), animated: true)
     }
 
     func configureLayout() {

@@ -136,6 +136,22 @@ class ApiManager {
             self.responseHandler(response: response, authRequired: authRequired, onSuccess: onSuccess, onError: onError)
         }
     }
+
+    func getImage(fromUrlString urlString: String, completion: @escaping (UIImage?, Error?) -> Void) {
+        session.request(urlString).responseImage { response in
+            if let error = response.error {
+                completion(nil, error)
+                return
+            }
+
+            do {
+                let image = try response.result.get()
+                completion(image, nil)
+            } catch let error {
+                completion(nil, error)
+            }
+        }
+    }
     
     private func responseHandler<Resp: Decodable>(response: AFDataResponse <Any>, authRequired: Bool, onSuccess: (Resp) -> (), onError: (Error) -> ()) {
         

@@ -10,7 +10,7 @@ import Foundation
 
 struct PaymentCardDetailLoyaltyCardStatusCellViewModel: PaymentCardDetailCellViewModelProtocol {
 
-    private let membershipCard: CD_MembershipCard
+    let membershipCard: CD_MembershipCard
 
     init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
@@ -22,11 +22,6 @@ struct PaymentCardDetailLoyaltyCardStatusCellViewModel: PaymentCardDetailCellVie
 
     var detailText: String? {
         return "pcd_you_can_link".localized
-    }
-
-    var iconUrl: URL? {
-        let iconImage = membershipCard.membershipPlan?.firstIconImage()
-        return URL(string: iconImage?.url ?? "")
     }
 
     var status: CD_MembershipCardStatus? {

@@ -231,6 +231,8 @@
 		BDBAA1BA235E1BBB00087E12 /* SettingsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBAA1B9235E1BBB00087E12 /* SettingsTableViewHeader.swift */; };
 		BDD9C83C233BE493003CD616 /* MembershipPlanImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C83B233BE493003CD616 /* MembershipPlanImageModel.swift */; };
 		BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */; };
+		BDFAA07B23E243EF00949271 /* LCDPlaceholderGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */; };
+		BDFAA07D23E24DC600949271 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */; };
 		DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB088544234FD8A30041A67A /* PLLScreenRepository.swift */; };
 		DB8DE35A2373130100F07F11 /* Bundle+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8DE3592373130100F07F11 /* Bundle+binkapp.swift */; };
 		DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */; };
@@ -284,6 +286,8 @@
 		EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E1423225F95000D26A9 /* DatabaseTests.swift */; };
 		EF762583236B1967002214C3 /* OnboardingLearningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF762582236B1967002214C3 /* OnboardingLearningView.xib */; };
 		EF7B65D6232FDB8A0025D167 /* FieldChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7B65D5232FDB8A0025D167 /* FieldChoice.swift */; };
+		EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F6E6023E4288C00352DCF /* StorageUtilityTests.swift */; };
+		EF7F6E6323E4296C00352DCF /* StorageUtilityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F6E6223E4296C00352DCF /* StorageUtilityMock.swift */; };
 		EF8B700F23585F76006CE3DD /* PaymentCardCellViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B700E23585F76006CE3DD /* PaymentCardCellViewModelMock.swift */; };
 		EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */; };
 		EF8B701A235DDC75006CE3DD /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */; };
@@ -300,6 +304,7 @@
 		EF8F0482238D582300BD708B /* CD_PlanDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0480238D582300BD708B /* CD_PlanDocument.swift */; };
 		EF8F0485238D583300BD708B /* _CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0483238D583200BD708B /* _CD_LinkingSupport.swift */; };
 		EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */; };
+		EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF1323E05B5D00AAA039 /* ImageService.swift */; };
 		EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */; };
 		EF9E9BD023C72930002FF18E /* RefreshControlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */; };
 		EF9E9BD223C73BA1002FF18E /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */; };
@@ -560,7 +565,7 @@
 		5E1B5010232105CD00890C7E /* com.bink.wallet.neo.nightly.GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "com.bink.wallet.neo.nightly.GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5E1B5011232105CD00890C7E /* com.bink.wallet.neo.beta.GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "com.bink.wallet.neo.beta.GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5E1B5012232105CD00890C7E /* com.bink.wallet.neo.external.GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "com.bink.wallet.neo.external.GoogleService-Info.plist"; sourceTree = "<group>"; };
-		5ECE046822CE5798001BA964 /* Bink α.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bink α.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ECE046822CE5798001BA964 /* binkapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = binkapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ECE046B22CE5798001BA964 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5ECE047022CE5798001BA964 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = binkapp.xcdatamodel; sourceTree = "<group>"; };
@@ -678,6 +683,8 @@
 		BDD9C8A4233C0476003CD616 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
 		BDE778A523204F8E0014567A /* BarcodeGenerator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BarcodeGenerator.framework; sourceTree = "<group>"; };
+		BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCDPlaceholderGenerator.swift; sourceTree = "<group>"; };
+		BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		C5D1F95CBE07939CA29E03E5 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
 		CBE46BB3E6386EE997F95088 /* Pods-binkappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.debug.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D43061FB7A72A290DA13F3BF /* Pods-binkappUITests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store.xcconfig"; sourceTree = "<group>"; };
@@ -738,6 +745,8 @@
 		EF758E1423225F95000D26A9 /* DatabaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseTests.swift; sourceTree = "<group>"; };
 		EF762582236B1967002214C3 /* OnboardingLearningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingLearningView.xib; sourceTree = "<group>"; };
 		EF7B65D5232FDB8A0025D167 /* FieldChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldChoice.swift; sourceTree = "<group>"; };
+		EF7F6E6023E4288C00352DCF /* StorageUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageUtilityTests.swift; sourceTree = "<group>"; };
+		EF7F6E6223E4296C00352DCF /* StorageUtilityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageUtilityMock.swift; sourceTree = "<group>"; };
 		EF8B700E23585F76006CE3DD /* PaymentCardCellViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCellViewModelMock.swift; sourceTree = "<group>"; };
 		EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardBalanceModelTests.swift; sourceTree = "<group>"; };
 		EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -754,6 +763,7 @@
 		EF8F0480238D582300BD708B /* CD_PlanDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_PlanDocument.swift; sourceTree = "<group>"; };
 		EF8F0483238D583200BD708B /* _CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_LinkingSupport.swift; sourceTree = "<group>"; };
 		EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_LinkingSupport.swift; sourceTree = "<group>"; };
+		EF94AF1323E05B5D00AAA039 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtension.swift; sourceTree = "<group>"; };
 		EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControlExtension.swift; sourceTree = "<group>"; };
 		EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
@@ -1211,6 +1221,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EF94AF1223E05B4D00AAA039 /* Image Service */,
 				EF8BF1F4233E60A300D2E5F3 /* Cache */,
 				EF2E880F2333859900F678F3 /* World */,
 				BD01E124231FA3A900D52713 /* BarBlur.swift */,
@@ -1324,7 +1335,7 @@
 		5ECE046922CE5798001BA964 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5ECE046822CE5798001BA964 /* Bink α.app */,
+				5ECE046822CE5798001BA964 /* binkapp.app */,
 				5ECE047F22CE579B001BA964 /* binkappTests.xctest */,
 				5ECE048A22CE579B001BA964 /* binkappUITests.xctest */,
 			);
@@ -1353,6 +1364,7 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
+				EF7F6E5F23E4286F00352DCF /* Utils */,
 				EF8B701023587BB0006CE3DD /* Models */,
 				EF586FE12357A8DC000917B6 /* Wallet */,
 				EF758E1123225F6D000D26A9 /* SwiftDatabase */,
@@ -1456,6 +1468,7 @@
 				B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */,
 				B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */,
 				B7D577B723180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift */,
+				BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */,
 			);
 			path = LoyaltyCardFullDetails;
 			sourceTree = "<group>";
@@ -1504,6 +1517,7 @@
 				EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */,
 				EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */,
 				EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */,
+				BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1908,10 +1922,19 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
+		EF7F6E5F23E4286F00352DCF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				EF7F6E6023E4288C00352DCF /* StorageUtilityTests.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		EF8B700D23585BF0006CE3DD /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
 				EF8B700E23585F76006CE3DD /* PaymentCardCellViewModelMock.swift */,
+				EF7F6E6223E4296C00352DCF /* StorageUtilityMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1953,6 +1976,14 @@
 				EF8BF1FE2341481A00D2E5F3 /* PaymentCardCardResponse.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		EF94AF1223E05B4D00AAA039 /* Image Service */ = {
+			isa = PBXGroup;
+			children = (
+				EF94AF1323E05B5D00AAA039 /* ImageService.swift */,
+			);
+			path = "Image Service";
 			sourceTree = "<group>";
 		};
 		EFA5F6CB2379A4810027AB80 /* PLR */ = {
@@ -2135,7 +2166,7 @@
 			);
 			name = binkapp;
 			productName = binkapp;
-			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
+			productReference = 5ECE046822CE5798001BA964 /* binkapp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5ECE047E22CE579B001BA964 /* binkappTests */ = {
@@ -2539,6 +2570,7 @@
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
 				EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */,
 				EFA5F70F2379A7C70027AB80 /* CD_MembershipPlanImage.swift in Sources */,
+				EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */,
 				BD9FB68B2333DE3E00E5559A /* StringExtension.swift in Sources */,
 				EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */,
 				BD9FB68B2333DE3E00E5559A /* StringExtension.swift in Sources */,
@@ -2568,6 +2600,7 @@
 				B726334B23058A5C00951037 /* FeatureSetModel.swift in Sources */,
 				BD01E125231FA3A900D52713 /* BarBlur.swift in Sources */,
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
+				EF7F6E6323E4296C00352DCF /* StorageUtilityMock.swift in Sources */,
 				EFA5F7432379A7C70027AB80 /* CD_PaymentCardAccount.swift in Sources */,
 				BDB0187C232E1B5900BFFA18 /* PaymentCardCreateModel.swift in Sources */,
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
@@ -2674,6 +2707,7 @@
 				3CD802862391484600D26888 /* ForgotPasswordModel.swift in Sources */,
 				EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */,
 				EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */,
+				BDFAA07B23E243EF00949271 /* LCDPlaceholderGenerator.swift in Sources */,
 				BDB01886232ED6F800BFFA18 /* SpreedlyRequest.swift in Sources */,
 				EFA5F7232379A7C70027AB80 /* CD_MembershipCardAccount.swift in Sources */,
 				B72633412305883D00951037 /* MembershipPlanAccountModel.swift in Sources */,
@@ -2785,6 +2819,7 @@
 				EFA5F7122379A7C70027AB80 /* _CD_Balance.swift in Sources */,
 				EFA5F73E2379A7C70027AB80 /* CD_MembershipCardBalance.swift in Sources */,
 				BD475E7223A2AED80071302A /* _CD_PlanDocumentDisplay.swift in Sources */,
+				BDFAA07D23E24DC600949271 /* UIImage+Extension.swift in Sources */,
 				EFA5F7622379BD520027AB80 /* PLRAccumulatorInactiveCell.swift in Sources */,
 				3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */,
 				EFA5F7332379A7C70027AB80 /* CD_AuthoriseField.swift in Sources */,
@@ -2804,6 +2839,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
@@ -3001,7 +3037,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
-				PRODUCT_NAME = "Bink α";
+				PRODUCT_NAME = binkapp;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.bink.wallet.alpha";
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3039,7 +3075,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
-				PRODUCT_NAME = "Bink β";
+				PRODUCT_NAME = binkapp;
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.beta";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
@@ -3070,7 +3106,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp α.app/binkapp α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp.app/binkapp";
 			};
 			name = Alpha;
 		};
@@ -3094,7 +3130,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp α.app/binkapp α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp.app/binkapp";
 			};
 			name = Beta;
 		};
@@ -3236,7 +3272,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.mr;
 				PRODUCT_MODULE_NAME = binkapp;
-				PRODUCT_NAME = "Bink MR";
+				PRODUCT_NAME = binkapp;
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.mr";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
@@ -3265,7 +3301,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp α.app/binkapp α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp.app/binkapp";
 			};
 			name = "Merge Request";
 		};
@@ -3382,7 +3418,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.nightly;
 				PRODUCT_MODULE_NAME = binkapp;
-				PRODUCT_NAME = Bink;
+				PRODUCT_NAME = binkapp;
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.nightly";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
@@ -3411,7 +3447,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp α.app/binkapp α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp.app/binkapp";
 			};
 			name = Nightly;
 		};
@@ -3520,7 +3556,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
-				PRODUCT_NAME = Bink;
+				PRODUCT_NAME = binkapp;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.bink.wallet";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
@@ -3549,7 +3585,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp α.app/binkapp α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp.app/binkapp";
 			};
 			name = "App Store";
 		};
@@ -3658,7 +3694,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.gamma;
 				PRODUCT_MODULE_NAME = binkapp;
-				PRODUCT_NAME = Bink;
+				PRODUCT_NAME = binkapp;
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet.gamma";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
@@ -3687,7 +3723,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp α.app/binkapp α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp.app/binkapp";
 			};
 			name = Gamma;
 		};
@@ -3796,7 +3832,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
-				PRODUCT_NAME = Bink;
+				PRODUCT_NAME = binkapp;
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.bink.wallet";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "binkapp/Supporting Files/binkapp-Bridging-Header.h";
@@ -3825,7 +3861,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp α.app/binkapp α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/binkapp.app/binkapp";
 			};
 			name = "App Store (Internal)";
 		};
