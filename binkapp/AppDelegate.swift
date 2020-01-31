@@ -78,6 +78,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Facebook
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+
+        // Device storage
+        StorageUtility.start()
     
         return true
     }

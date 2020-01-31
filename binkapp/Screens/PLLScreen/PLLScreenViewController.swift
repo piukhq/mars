@@ -225,7 +225,7 @@ private extension PLLScreenViewController {
     
     func configureBrandHeader() {
         let membershipPlan = viewModel.getMembershipPlan()
-        brandHeaderView.configure(imageURLString: membershipPlan?.firstIconImage()?.url, loyaltyPlanNameCard: (membershipPlan?.account?.planNameCard ?? nil), delegate: self)
+        brandHeaderView.configure(plan: membershipPlan, delegate: self)
     }
     
     func configureUI() {

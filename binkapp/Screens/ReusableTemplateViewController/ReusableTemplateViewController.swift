@@ -21,9 +21,11 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
     weak var delegate: ReusableTemplateViewControllerDelegate?
     
     private let viewModel: ReusableModalViewModel
+    private let floatingButtons: Bool
     
-    init(viewModel: ReusableModalViewModel, delegate: ReusableTemplateViewControllerDelegate? = nil) {
+    init(viewModel: ReusableModalViewModel, floatingButtons: Bool = true, delegate: ReusableTemplateViewControllerDelegate? = nil) {
         self.viewModel = viewModel
+        self.floatingButtons = floatingButtons
         self.delegate = delegate
         super.init(nibName: "ReusableTemplateViewController", bundle: Bundle(for: ReusableTemplateViewController.self))
     }
@@ -59,7 +61,7 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
         textView.attributedText = viewModel.text
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
         
-        floatingButtonsContainer.configure(primaryButtonTitle: primary, secondaryButtonTitle: secondary, floating: true)
+        floatingButtonsContainer.configure(primaryButtonTitle: primary, secondaryButtonTitle: secondary, floating: floatingButtons)
 
         floatingButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
         textView.translatesAutoresizingMaskIntoConstraints = false

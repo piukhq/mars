@@ -72,7 +72,7 @@ class DebugMenuViewModelTests: XCTestCase {
         let sut = DebugMenuViewModel(debugMenuFactory: factory)
 
         let emailAddressRow = sut.row(atIndexPath: IndexPath(row: 2, section: 0))
-        XCTAssertEqual(emailAddressRow.subtitle, UserDefaults.standard.string(forKey: .userEmail))
+        XCTAssertEqual(emailAddressRow.subtitle, Current.userDefaults.string(forDefaultsKey: .userEmail))
     }
 
 }

@@ -11,7 +11,6 @@ import Foundation
 protocol PaymentCardDetailCellViewModelProtocol {
     var headerText: String? { get }
     var detailText: String? { get }
-    var iconUrl: URL? { get }
 }
 
 struct PaymentCardDetailLinkLoyaltyCardCellViewModel: PaymentCardDetailCellViewModelProtocol {
@@ -50,10 +49,5 @@ struct PaymentCardDetailLinkLoyaltyCardCellViewModel: PaymentCardDetailCellViewM
         } else {
             return "\(prefix) \(Int(floatBalanceValue))"
         }
-    }
-    
-    var iconUrl: URL? {
-        let iconImage = membershipCard.membershipPlan?.firstIconImage()
-        return URL(string: iconImage?.url ?? "")
     }
 }

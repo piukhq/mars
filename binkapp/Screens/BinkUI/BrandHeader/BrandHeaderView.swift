@@ -21,14 +21,13 @@ class BrandHeaderView: CustomView {
         delegate?.brandHeaderViewWasTapped(self)
     }
     
-    func configure(imageURLString: String?, loyaltyPlanNameCard: String? = nil, delegate: LoyaltyButtonDelegate) {
+    func configure(plan: CD_MembershipPlan?, delegate: LoyaltyButtonDelegate) {
         self.delegate = delegate
+        guard let membershipPlan = plan else { return }
         
-        if let imageURL = imageURLString, let url = URL(string: imageURL) {
-            logoImageView.af_setImage(withURL: url)
-        }
+        logoImageView.setImage(forPathType: .membershipPlanImage(plan: membershipPlan, imageType: .icon))
         
-        if let planNameCard = loyaltyPlanNameCard {
+        if let planNameCard = membershipPlan.account?.planNameCard {
             loyaltyPlanButton.setTitle(planNameCard + " info", for: .normal)
             loyaltyPlanButton.setImage(UIImage(named: "iconsChevronRight")?.withRenderingMode(.alwaysTemplate), for: .normal)
         } else {

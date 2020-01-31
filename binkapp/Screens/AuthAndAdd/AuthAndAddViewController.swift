@@ -76,7 +76,7 @@ class AuthAndAddViewController: BaseFormViewController {
     func configureUI() {
         let membershipPlan = viewModel.getMembershipPlan()
         
-        brandHeaderView.configure(imageURLString: ((membershipPlan.firstIconImage()?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
+        brandHeaderView.configure(plan: membershipPlan, delegate: self)
         
         titleLabel.text = viewModel.title
         titleLabel.font = UIFont.headline
