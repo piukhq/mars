@@ -4,6 +4,7 @@ platform :ios, '12.0'
 def common_pods
 
 pod 'Firebase'
+pod 'Firebase/Analytics'
 pod 'Alamofire', '~> 5.0.0-rc.3'
 pod 'SwipeCellKit'
 pod 'Fabric'

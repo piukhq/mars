@@ -72,14 +72,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
         
         // Firebase
-        
-        if let bundleIdentifier = Bundle.main.bundleIdentifier {
-            if let filePath = Bundle.main.path(forResource: "\(bundleIdentifier).GoogleService-Info", ofType: "plist") {
-                if let fileopts = FirebaseOptions(contentsOfFile: filePath) {
-                    FirebaseApp.configure(options: fileopts)
-                }
-            }
-        }
+        #if RELEASE
+        FirebaseApp.configure()
+        #endif
         
         // Facebook
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)

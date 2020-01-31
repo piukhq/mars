@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>720854562599-8ijlpn4s2l197bqu3ilp3sc7rse25a9t.apps.googleusercontent.com</string>
+	<string>532636841265-sbqg4rmi0parhludps183lgfcdkm8d9g.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.720854562599-8ijlpn4s2l197bqu3ilp3sc7rse25a9t</string>
+	<string>com.googleusercontent.apps.532636841265-sbqg4rmi0parhludps183lgfcdkm8d9g</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCm48-u-E9VBgvroUP91GEVrTjRCO2DwMM</string>
+	<string>AIzaSyA3hfbcFFwjotwewHuHCjAU4ASFhB8Wyjw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>720854562599</string>
+	<string>532636841265</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.bink.wallet.neo.gamma</string>
+	<string>com.bink.wallet</string>
 	<key>PROJECT_ID</key>
-	<string>bink-ios-v2</string>
+	<string>bink-ac226</string>
 	<key>STORAGE_BUCKET</key>
-	<string>bink-ios-v2.appspot.com</string>
+	<string>bink-ac226.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:720854562599:ios:ae57cbcb44233b26</string>
+	<string>1:532636841265:ios:b725c51913efbcf372ec10</string>
 	<key>DATABASE_URL</key>
-	<string>https://bink-ios-v2.firebaseio.com</string>
+	<string>https://bink-ac226.firebaseio.com</string>
 </dict>
 </plist>
