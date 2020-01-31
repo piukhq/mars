@@ -56,18 +56,20 @@ class RootStateMachine: NSObject {
     
     /// User driven logout that triggers API call and clears local storage
     @objc func handleLogout() {
-        
-        // Move to splash
+        let loading = LoadingScreen()
+        moveTo(loading)
+
         if Current.apiManager.networkIsReachable {
-            let loading = LoadingScreen()
-            moveTo(loading)
-        }
-        
-        Current.apiManager.doRequest(url: .logout, httpMethod: .post, isUserDriven: true, onSuccess: { [weak self] (response: LogoutResponse) in
-            self?.clearLocalStorage {
+            Current.apiManager.doRequest(url: .logout, httpMethod: .post, isUserDriven: false, onSuccess: { [weak self] (response: LogoutResponse) in
+                self?.clearLocalStorage {
+                    self?.completeLogout()
+                }
+            })
+        } else {
+            clearLocalStorage { [weak self] in
                 self?.completeLogout()
             }
-        })
+        }
     }
     
     private func clearLocalStorage(completion: @escaping () -> ()) {
