@@ -148,6 +148,11 @@ final class StorageUtility {
     }
 
     private static func purgeExpiredStoredObjects() {
+        // We don't want to remove any stored object if we are offline
+        guard Current.apiManager.networkIsReachable else {
+            return
+        }
+
         let validStoredObjects = sharedStoredObjects.filter { !$0.isExpired }
         sharedStoredObjects = validStoredObjects
         try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
