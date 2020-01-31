@@ -48,7 +48,6 @@ class CheckboxView: CustomView {
 
         guard let safeUrl = url else {
             self.title = title
-            checkboxView.isHidden = true
             return
         }
         
