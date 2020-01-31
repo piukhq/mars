@@ -108,6 +108,9 @@ extension CheckboxView: UITextViewDelegate {
 
 extension CheckboxView: InputValidation {
     var isValid: Bool {
+        if delegate == nil {
+            return true
+        }
         return optional ? true : checkboxView.checkState == .checked
     }
     
