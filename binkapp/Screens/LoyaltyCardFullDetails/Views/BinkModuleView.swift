@@ -29,6 +29,7 @@ class BinkModuleView: CustomView {
         case pending
         case loginUnavailable
         case signUp
+        case patchGhostCard
         case registerGhostCard
         case pllEmpty
         case pll
@@ -130,7 +131,11 @@ private extension BinkModuleView {
                     // Points module 1.8
                     configure(imageName: imageName, titleText: "sign_up_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .signUp)
                     break
-                case .X105, .X202:
+                case .X105:
+                     // Points module 1.x (to be defined)
+                     configure(imageName: imageName, titleText: "register_gc_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .patchGhostCard)
+                    break
+                case .X202:
                     // Points module 1.x (to be defined)
                     configure(imageName: imageName, titleText: "log_in_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
                     break
@@ -193,8 +198,15 @@ private extension BinkModuleView {
             configure(imageName: "lcdModuleIconsPointsLoginPending", titleText: "pending_title".localized, subtitleText: "please_wait_title".localized, touchAction: .pending)
             break
         case .failed:
-            // Link module 2.7
-            configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
+            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.code, reasonCode == .X105 {
+                // Link module 2.7
+                configure(imageName: "lcdModuleIconsPointsLogin", titleText: "register_gc_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .patchGhostCard)
+            } else {
+                // Link module 2.7
+                configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
+            }
+            
+
             break
         default:
             return

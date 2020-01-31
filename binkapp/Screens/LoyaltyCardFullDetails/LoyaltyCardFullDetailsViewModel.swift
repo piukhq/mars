@@ -112,8 +112,11 @@ class LoyaltyCardFullDetailsViewModel {
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
         case .registerGhostCard:
-            //TODO: change to sign up screen after is implemented
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            break
+        case .patchGhostCard:
+            guard let membershipPlan = membershipCard.membershipPlan else { return }
+            router.toPatchGhostCard(membershipPlan: membershipPlan, existingMembershipCard: membershipCard)
             break
         case .pllEmpty:
             router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)
