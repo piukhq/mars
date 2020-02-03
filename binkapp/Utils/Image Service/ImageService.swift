@@ -185,6 +185,9 @@ final class StorageUtility {
         }
 
         deletionIds.forEach {
+            guard sharedStoredObjects.indices.contains($0) else {
+                return
+            }
             sharedStoredObjects.remove(at: $0)
         }
         try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
