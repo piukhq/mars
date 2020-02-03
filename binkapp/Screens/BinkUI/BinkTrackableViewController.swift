@@ -23,6 +23,8 @@ class BinkTrackableViewController: UIViewController, AnalyticsTrackable {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        BinkAnalytics.track(trackableEvent, additionalTrackingData: additionalTrackingData)
+        
+        /// Disabling in favour of Firebase's out-of-the-box screen name tracking
+//        BinkAnalytics.track(trackableEvent, additionalTrackingData: additionalTrackingData)
     }
 }

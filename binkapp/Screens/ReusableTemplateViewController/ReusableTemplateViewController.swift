@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 protocol ReusableTemplateViewControllerDelegate: AnyObject {
     func primaryButtonWasTapped(_ viewController: ReusableTemplateViewController)
@@ -40,7 +41,10 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
         textView.delegate = self
         configureUI()
 
-        screenName = "\(String(describing: Self.self)):\(viewModel.title.capitalized.replacingOccurrences(of: " ", with: ""))"
+        Analytics.setScreenName("\(String(describing: Self.self)):\(viewModel.title.capitalized.replacingOccurrences(of: " ", with: ""))", screenClass: nil)
+
+        /// Disabling in favour of Firebase's out-of-the-box screen name tracking
+//        screenName = "\(String(describing: Self.self)):\(viewModel.title.capitalized.replacingOccurrences(of: " ", with: ""))"
     }
     
     override func viewDidLayoutSubviews() {
