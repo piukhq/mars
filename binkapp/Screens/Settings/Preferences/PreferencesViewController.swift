@@ -82,7 +82,7 @@ class PreferencesViewController: UIViewController {
 extension PreferencesViewController: CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
         guard Current.apiManager.networkIsReachable else {
-            viewModel.presentNoConectivityPopup()
+            viewModel.presentNoConnectivityPopup()
             checkboxView.toggleState()
             return
         }

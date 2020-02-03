@@ -20,7 +20,6 @@ class PreferencesRepository {
     }
     
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (Error?) -> Void) {
-        // If offline, the red error text doesn't display
         apiManager.doRequest(url: .preferences, httpMethod: .get, isUserDriven: false, onSuccess: { (preferences: [PreferencesModel]) in
             onSuccess(preferences)
         }) { (error) in
@@ -29,7 +28,6 @@ class PreferencesRepository {
     }
     
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
-        // Why doesn't alert view show on this call?
         apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: preferences, isUserDriven: true) { (bool, error) in
             guard let safeError = error else {
                 onSuccess()

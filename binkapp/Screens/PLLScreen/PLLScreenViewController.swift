@@ -162,7 +162,6 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         guard Current.apiManager.networkIsReachable else {
-            // If PLL screen is showing after card add, and offline, there is now way out!
             viewModel.displayNoConnectivityPopup { [weak self] in
                 self?.viewModel.toFullDetailsCardScreen()
             }
