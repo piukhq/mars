@@ -18,6 +18,7 @@ class CheckboxView: CustomView {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var textView: UITextView!
 
+    private(set) var hideCheckbox: Bool = false
     private(set) var optional: Bool = false
     private(set) var columnName: String?
     private(set) var columnKind: FormField.ColumnKind?
@@ -32,7 +33,7 @@ class CheckboxView: CustomView {
     
     weak var delegate: CheckboxViewDelegate?
     
-    func configure(title: NSMutableAttributedString, columnName: String, columnKind: FormField.ColumnKind, url: URL? = nil, delegate: CheckboxViewDelegate? = nil, optional: Bool = false, textSelected: TextAction? = nil) {
+    func configure(title: NSMutableAttributedString, columnName: String, columnKind: FormField.ColumnKind, url: URL? = nil, delegate: CheckboxViewDelegate? = nil, optional: Bool = false, textSelected: TextAction? = nil, hideCheckbox: Bool = false) {
         checkboxView.boxType = .square
         checkboxView.stateChangeAnimation = .flat(.fill)
         self.columnName = columnName
@@ -40,11 +41,12 @@ class CheckboxView: CustomView {
         self.delegate = delegate
         self.optional = optional
         self.textSelected = textSelected
+        self.hideCheckbox = hideCheckbox
         
         checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
 
         //We don't need a delegate if we don't have a checkbox, so we send a nil delegate to hide it
-        checkboxView.isHidden = delegate == nil
+        checkboxView.isHidden = hideCheckbox
 
         guard let safeUrl = url else {
             self.title = title
@@ -108,7 +110,7 @@ extension CheckboxView: UITextViewDelegate {
 
 extension CheckboxView: InputValidation {
     var isValid: Bool {
-        if delegate == nil {
+        if hideCheckbox {
             return true
         }
         return optional ? true : checkboxView.checkState == .checked
