@@ -144,6 +144,9 @@ private extension BinkModuleView {
                     break
                 }
             }
+            else {
+                configure(imageName: imageName, titleText: "error_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
+            }
             break
         default:
             return
