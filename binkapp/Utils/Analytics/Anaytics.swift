@@ -82,6 +82,6 @@ struct BinkAnalytics {
     }
 
     private static func setUserProperty(value: String?, forKey key: UserPropertyKey) {
-        Analytics.setUserProperty(value, forName: "\(BinkAnalytics.keyPrefix)\(key.rawValue)")
+        Analytics.setUserProperty(value, forName: key.rawValue)
     }
 }
