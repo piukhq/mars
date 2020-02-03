@@ -198,15 +198,21 @@ private extension BinkModuleView {
             configure(imageName: "lcdModuleIconsPointsLoginPending", titleText: "pending_title".localized, subtitleText: "please_wait_title".localized, touchAction: .pending)
             break
         case .failed:
-            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.code, reasonCode == .X105 {
-                // Link module 2.7
-                configure(imageName: "lcdModuleIconsPointsLogin", titleText: "register_gc_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .patchGhostCard)
+            
+            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.code {
+                switch reasonCode {
+                case .X201:
+                    configure(imageName: "lcdModuleIconsPointsLogin", titleText: "sign_up_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .signUp)
+                case .X105:
+                    configure(imageName: "lcdModuleIconsPointsLogin", titleText: "register_gc_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .patchGhostCard)
+                default:
+                    configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
+                    break
+                }
             } else {
                 // Link module 2.7
                 configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
             }
-            
-
             break
         default:
             return

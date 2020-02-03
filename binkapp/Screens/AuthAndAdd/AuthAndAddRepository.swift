@@ -28,6 +28,14 @@ class AuthAndAddRepository {
             url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
             method = .put
             break
+        case .signUp:
+            if existingMembershipCard != nil {
+                url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
+                method = .put
+            } else {
+                url = .membershipCards
+                method = .post
+            }
         default:
             url = .membershipCards
             method = .post
