@@ -20,7 +20,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         // Process the backend delete, but fail silently
         let url = RequestURL.paymentCard(cardId: card.id)
         let method = RequestHTTPMethod.delete
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
+        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
@@ -41,7 +41,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
             return
         }
 
-        apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest, onSuccess: { (response: PaymentCardModel) in
+        apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: paymentCreateRequest, isUserDriven: true, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask { context in
                 let newObject = response.mapToCoreData(context, .update, overrideID: nil)
                 

@@ -32,7 +32,7 @@ class AuthAndAddRepository {
             method = .post
         }
         
-        apiManager.doRequest(url: url, httpMethod: method, headers: nil, parameters: request, onSuccess: { (response: MembershipCardModel) in
+        apiManager.doRequest(url: url, httpMethod: method, headers: nil, parameters: request, isUserDriven: true, onSuccess: { (response: MembershipCardModel) in
             // Map to core data
             Current.database.performBackgroundTask { context in
                 let newObject = response.mapToCoreData(context, .update, overrideID: nil)
@@ -57,7 +57,7 @@ class AuthAndAddRepository {
             url = .membershipCard(cardId: existingCard.id)
         }
         
-        apiManager.doRequest(url: url, httpMethod: method, parameters: parameters, onSuccess: { (card: MembershipCardModel) in
+        apiManager.doRequest(url: url, httpMethod: method, parameters: parameters, isUserDriven: true, onSuccess: { (card: MembershipCardModel) in
             Current.database.performBackgroundTask { context in
                 let newObject = card.mapToCoreData(context, .update, overrideID: nil)
 
@@ -75,7 +75,7 @@ class AuthAndAddRepository {
     }
     
     func patchGhostCard(cardId: String, parameters: MembershipCardPostModel) {
-        apiManager.doRequest(url: .membershipCard(cardId: cardId), httpMethod: .patch, parameters: parameters, onSuccess:
+        apiManager.doRequest(url: .membershipCard(cardId: cardId), httpMethod: .patch, parameters: parameters, isUserDriven: true, onSuccess:
             { (response: MembershipCardModel) in }
         )
     }

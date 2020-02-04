@@ -76,7 +76,7 @@ class AuthAndAddViewController: BaseFormViewController {
     func configureUI() {
         let membershipPlan = viewModel.getMembershipPlan()
         
-        brandHeaderView.configure(imageURLString: ((membershipPlan.firstIconImage()?.url) ?? nil), loyaltyPlanNameCard: (membershipPlan.account?.planNameCard ?? nil), delegate: self)
+        brandHeaderView.configure(plan: membershipPlan, delegate: self)
         
         titleLabel.text = viewModel.title
         titleLabel.font = UIFont.headline
@@ -102,9 +102,9 @@ class AuthAndAddViewController: BaseFormViewController {
 extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         floatingButtons.primaryButton.startLoading()
-        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes) {
+        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: {
             floatingButtons.primaryButton.stopLoading()
-        }
+        })
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {

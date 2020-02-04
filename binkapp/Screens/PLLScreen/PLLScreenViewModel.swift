@@ -73,11 +73,6 @@ class PLLScreenViewModel {
     }
     
     func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
-        guard Current.apiManager.networkIsReachable else {
-            router.presentNoConnectivityPopup()
-            completion()
-            return
-        }
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion()
         }) { [weak self] in
@@ -113,6 +108,12 @@ class PLLScreenViewModel {
     
     func displaySimplePopup(title: String, message: String) {
         router.displaySimplePopup(title: title, message: message)
+    }
+    
+    func displayNoConnectivityPopup(completion: @escaping () -> Void){
+        router.displayNoConnectivityPopup {
+            completion()
+        }
     }
     
     func toFullDetailsCardScreen() {

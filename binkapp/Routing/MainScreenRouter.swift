@@ -22,9 +22,7 @@ class MainScreenRouter {
     init(delegate: MainScreenRouterDelegate) {
         self.delegate = delegate
 
-        // TODO: Reinstate when we have a strategy for showing this alert for specific app paths
-//        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
 
@@ -168,9 +166,9 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
+    func toPaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: ReusableTemplateViewControllerDelegate?) {
         let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel, router: self)
-        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, delegate: delegate)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel, delegate: delegate)
         let navigationController = PortraitNavigationController(rootViewController: viewController)
         
         // This is to stop dismissal of the card style presentation
@@ -212,15 +210,15 @@ class MainScreenRouter {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration) {
+    func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration, floatingButtons: Bool = true) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
-        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel)
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
     func pushReusableModalTemplateVC(configurationModel: ReusableModalConfiguration, navigationController: UINavigationController?) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
-        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -256,9 +254,22 @@ class MainScreenRouter {
     }
     
     @objc func presentNoConnectivityPopup() {
+        displayNoConnectivityPopup(completion: nil)
+    }
+    
+    func displayNoConnectivityPopup(completion: (() -> Void)? = nil) {
+        guard let visibleVC = navController?.getVisibleViewController() else { return }
         let alert = UIAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
-        navController?.present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
+            if let completion = completion {
+                completion()
+            }
+        }))
+        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal {
+            modalNavigationController.present(alert, animated: false, completion: nil)
+        } else {
+            navController?.present(alert, animated: false, completion: nil)
+        }
     }
 
     @objc func presentSSLPinningFailurePopup() {

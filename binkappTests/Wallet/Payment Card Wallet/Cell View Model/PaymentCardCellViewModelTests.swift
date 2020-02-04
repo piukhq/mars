@@ -84,7 +84,7 @@ class PaymentCardCellViewModelTests: XCTestCase {
 
     func test_paymentCard_isExpired_recognisedCorrectly_whenNotExpired() {
         basePaymentCard.card?.month = 01
-        basePaymentCard.card?.year = 2020
+        basePaymentCard.card?.year = 2030
         let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
         XCTAssertFalse(sut.paymentCardIsExpired)
     }

@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class SettingsViewController: UIViewController, BarBlurring {
+class SettingsViewController: BinkTrackableViewController, BarBlurring {
     
     // MARK: - Helpers
     

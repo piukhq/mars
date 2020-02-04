@@ -104,7 +104,8 @@ class LoyaltyCardFullDetailsViewModel {
             break
         case .loginUnavailable:
             let title = "transaction_history_not_supported_title".localized
-            let description = "transaction_history_not_supported_description".localized
+            let description = String(format: "transaction_history_not_supported_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
+
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
             break
         case .signUp:
@@ -142,10 +143,11 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func getBasicReusableConfiguration(title: String, description: String) -> ReusableModalConfiguration {
-        let attributedString = NSMutableAttributedString(string: title + "\n" + description)
-        
-        attributedString.addAttribute(.font, value: UIFont.headline, range: NSRange(location: 0, length: title.count))
-        attributedString.addAttribute(.font, value: UIFont.bodyTextLarge, range: NSRange(location: title.count, length: description.count))
+        let attributedString = NSMutableAttributedString()
+        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
+        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+        attributedString.append(attributedTitle)
+        attributedString.append(attributedBody)
         
         return ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
     }

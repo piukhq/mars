@@ -15,7 +15,7 @@ protocol BinkPrimarySecondaryButtonViewDelegate: AnyObject {
 
 class BinkPrimarySecondaryButtonView: CustomView {
     @IBOutlet weak var primaryButton: BinkGradientButton!
-    @IBOutlet weak var secondaryButton: UIButton!
+    @IBOutlet weak var secondaryButton: BinkTrackableButton!
     weak var delegate: BinkPrimarySecondaryButtonViewDelegate?
 
     private var isFloating: Bool = false
@@ -35,7 +35,6 @@ class BinkPrimarySecondaryButtonView: CustomView {
         secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
         secondaryButton.isHidden = secondaryButtonTitle == nil
         secondaryButton.titleLabel?.font = .buttonText
-        layoutSubviews()
     }
     
     override func configureUI() {

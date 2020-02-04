@@ -66,15 +66,6 @@ enum WalletPromptType {
             return nil
         }
     }
-
-    var iconImageUrl: URL? {
-        switch self {
-        case .loyaltyJoin(let plan):
-            return URL(string: plan.firstIconImage()?.url ?? "")
-        default:
-            return nil
-        }
-    }
 }
 
 protocol WalletPromptProtocol {
@@ -83,7 +74,6 @@ protocol WalletPromptProtocol {
     var userDefaultsDismissKey: String { get }
     var membershipPlan: CD_MembershipPlan? { get }
     var iconImageName: String? { get }
-    var iconImageUrl: URL? { get }
     static func userDefaultsDismissKey(forType type: WalletPromptType) -> String
     init(type: WalletPromptType)
 }
@@ -113,10 +103,6 @@ class WalletPrompt: WalletPromptProtocol {
 
     var iconImageName: String? {
         return type.iconImageName
-    }
-
-    var iconImageUrl: URL? {
-        return type.iconImageUrl
     }
 
     static func userDefaultsDismissKey(forType type: WalletPromptType) -> String {

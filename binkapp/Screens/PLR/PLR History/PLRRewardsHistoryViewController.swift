@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PLRRewardsHistoryViewController: UIViewController {
+class PLRRewardsHistoryViewController: BinkTrackableViewController {
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
