@@ -127,7 +127,7 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
     
     @objc private func stopRefreshing() {
         if let navigationBar = self.navigationController?.navigationBar {
-            refreshControl.programaaticallyEndRefreshing(in: self.collectionView, with: navigationBar)
+            refreshControl.programaticallyEndRefreshing(in: self.collectionView, with: navigationBar)
             collectionView.reloadData()
         }
     }
