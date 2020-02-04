@@ -126,8 +126,8 @@ class AddPaymentCardViewController: BaseFormViewController {
     }
 }
 
-extension AddPaymentCardViewController: PaymentTermsAndConditionsViewControllerDelegate {
-    func paymentTermsAndConditionsViewControllerDidAccept(_ viewController: PaymentTermsAndConditionsViewController) {
+extension AddPaymentCardViewController: ReusableTemplateViewControllerDelegate {
+    func primaryButtonWasTapped(_ viewController: ReusableTemplateViewController) {
         addButton.startLoading()
         viewModel.addPaymentCard { [weak self] in
             self?.addButton.stopLoading()

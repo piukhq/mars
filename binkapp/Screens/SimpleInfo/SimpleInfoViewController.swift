@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SimpleInfoViewController: UIViewController {
+class SimpleInfoViewController: BinkTrackableViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     

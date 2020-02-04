@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring {
+class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false

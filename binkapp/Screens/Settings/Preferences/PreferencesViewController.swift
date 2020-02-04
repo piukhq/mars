@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreferencesViewController: UIViewController {
+class PreferencesViewController: BinkTrackableViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var stackView: UIStackView!

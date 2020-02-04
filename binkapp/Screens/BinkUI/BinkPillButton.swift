@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BinkPillButton: UIButton {
+class BinkPillButton: BinkTrackableButton {
     enum PillButtonType {
         case facebook
     }

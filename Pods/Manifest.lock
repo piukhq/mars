@@ -32,6 +32,8 @@ PODS:
     - FBSDKCoreKit (~> 5.5)
   - Firebase (6.12.0):
     - Firebase/Core (= 6.12.0)
+  - Firebase/Analytics (6.12.0):
+    - Firebase/Core
   - Firebase/Core (6.12.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.1.5)
@@ -113,6 +115,7 @@ DEPENDENCIES:
   - FacebookSDK (~> 5.9)
   - FBSDKLoginKit (~> 5.8)
   - Firebase
+  - Firebase/Analytics
   - iOSDropDown
   - KeychainAccess (~> 4.1)
   - Keys (from `Pods/CocoaPodsKeys`)
@@ -184,6 +187,6 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: 45b26f5e533baaf1d41a80c861e5136cae4e1385
+PODFILE CHECKSUM: 240aebc87bb036e6fbfeff5252f12e393f5d0843
 
 COCOAPODS: 1.8.4

@@ -26,15 +26,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
         #endif
-        
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        
-        if let mainWindow = self.window {
-            stateMachine = RootStateMachine(window: mainWindow)
-        }
 
         // Crashlytics
         Fabric.with([Crashlytics.self])
+
+        // Analytics
+        #if RELEASE
+        FirebaseApp.configure()
+        BinkAnalytics.beginSessionTracking()
+        #endif
+
+        // Facebook
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+
+        // Device storage
+        StorageUtility.start()
+
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+
+        if let mainWindow = self.window {
+            stateMachine = RootStateMachine(window: mainWindow)
+        }
         
         let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
@@ -65,22 +77,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
-        
-        // Firebase
-        
-        if let bundleIdentifier = Bundle.main.bundleIdentifier {
-            if let filePath = Bundle.main.path(forResource: "\(bundleIdentifier).GoogleService-Info", ofType: "plist") {
-                if let fileopts = FirebaseOptions(contentsOfFile: filePath) {
-                    FirebaseApp.configure(options: fileopts)
-                }
-            }
-        }
-        
-        // Facebook
-        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-
-        // Device storage
-        StorageUtility.start()
     
         return true
     }

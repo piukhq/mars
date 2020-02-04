@@ -12,7 +12,7 @@ enum PllScreenJourney {
     case existingCard
 }
 
-class PLLScreenViewController: UIViewController {
+class PLLScreenViewController: BinkTrackableViewController {
     
     // MARK: - Properties
     

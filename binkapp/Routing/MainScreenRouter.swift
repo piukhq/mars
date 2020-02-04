@@ -166,9 +166,9 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
+    func toPaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: ReusableTemplateViewControllerDelegate?) {
         let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel, router: self)
-        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, delegate: delegate)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel, delegate: delegate)
         let navigationController = PortraitNavigationController(rootViewController: viewController)
         
         // This is to stop dismissal of the card style presentation
@@ -212,13 +212,13 @@ class MainScreenRouter {
     
     func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration, floatingButtons: Bool = true) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
-        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel, floatingButtons: floatingButtons)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel)
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
     func pushReusableModalTemplateVC(configurationModel: ReusableModalConfiguration, navigationController: UINavigationController?) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
-        let viewController = PaymentTermsAndConditionsViewController(viewModel: viewModel)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
     }
     
