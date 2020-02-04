@@ -87,7 +87,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         
         continueButton.startLoading()
         
-        Current.apiManager.doRequest(url: .facebook, httpMethod: .post, parameters: request, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+        Current.apiManager.doRequest(url: .facebook, httpMethod: .post, parameters: request, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             Current.userManager.setNewUser(with: response)
             self?.router?.didLogin()
             self?.updatePreferences(checkboxes: preferenceCheckboxes)
@@ -112,7 +112,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
          guard params.count > 0 else { return }
          
          // We don't worry about whether this was successful or not
-         Current.apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, completion: nil)
+         Current.apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, isUserDriven: false, completion: nil)
      }
     
     func showError() {

@@ -12,7 +12,7 @@ enum PllScreenJourney {
     case existingCard
 }
 
-class PLLScreenViewController: UIViewController {
+class PLLScreenViewController: BinkTrackableViewController {
     
     // MARK: - Properties
     
@@ -161,6 +161,12 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 
 extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
+        guard Current.apiManager.networkIsReachable else {
+            viewModel.displayNoConnectivityPopup { [weak self] in
+                self?.viewModel.toFullDetailsCardScreen()
+            }
+            return
+        }
         if !viewModel.isEmptyPll && !viewModel.changedLinkCards.isEmpty {
             floatingButtons.primaryButton.startLoading()
             view.isUserInteractionEnabled = false

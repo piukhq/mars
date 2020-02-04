@@ -48,7 +48,7 @@ class AddPaymentCardViewModel {
         paymentCard.year = year
     }
 
-    func toPaymentTermsAndConditions(delegate: PaymentTermsAndConditionsViewControllerDelegate?) {
+    func toPaymentTermsAndConditions(delegate: ReusableTemplateViewControllerDelegate?) {
         let description = "terms_and_conditions_description".localized
         let titleAttributedString = NSMutableAttributedString(string: "terms_and_conditions_title".localized + "\n", attributes: [
             .font: UIFont.headline

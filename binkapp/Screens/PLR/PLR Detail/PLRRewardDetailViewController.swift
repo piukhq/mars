@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PLRRewardDetailViewController: UIViewController {
+class PLRRewardDetailViewController: BinkTrackableViewController {
 
     // MARK: - UI properties
 

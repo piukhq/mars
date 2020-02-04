@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring {
+class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,6 +47,7 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .didLoadLocalWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .shouldTrashLocalWallets, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .noInternetConnection, object: nil)
 
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
 
@@ -122,6 +123,13 @@ class WalletViewController<T: WalletViewModel>: UIViewController, UICollectionVi
 
     @objc private func refreshLocal() {
         collectionView.reloadData()
+    }
+    
+    @objc private func stopRefreshing() {
+        if let navigationBar = self.navigationController?.navigationBar {
+            refreshControl.programaticallyEndRefreshing(in: self.collectionView, with: navigationBar)
+            collectionView.reloadData()
+        }
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {

@@ -67,7 +67,7 @@ private extension PLLScreenRepository {
         let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
         let method: RequestHTTPMethod = .patch
         
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
+        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
             completion(response.id)
         }, onError: { error in
             completion(nil)
@@ -80,7 +80,7 @@ private extension PLLScreenRepository {
         let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
         let method: RequestHTTPMethod = .delete
         
-        apiManager.doRequest(url: url, httpMethod: method, onSuccess: { (response: PaymentCardModel) in
+        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
             completion(paymentCardId)
         }, onError: { error in
             completion(nil)
