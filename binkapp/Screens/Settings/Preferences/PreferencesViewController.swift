@@ -81,11 +81,16 @@ class PreferencesViewController: UIViewController {
 
 extension PreferencesViewController: CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
+        guard Current.apiManager.networkIsReachable else {
+            viewModel.presentNoConnectivityPopup()
+            checkboxView.toggleState()
+            return
+        }
         guard let columnName = checkboxView.columnName else { return }
         
         let checkboxState = value == "true" ? "1" : "0"
         let dictionary = [columnName: checkboxState]
-        
+
         viewModel.putPreferences(preferences: dictionary, onSuccess: { [weak self] in
             self?.errorLabel.isHidden = true
         }) { [weak self] (error) in

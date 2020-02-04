@@ -97,10 +97,10 @@ extension CheckboxView: UITextViewDelegate {
     func toggleState() {
         switch checkboxView.checkState {
         case .checked:
-            checkboxView.checkState = .unchecked
+            checkboxView.setCheckState(.unchecked, animated: true)
             break
         case .unchecked:
-            checkboxView.checkState = .checked
+            checkboxView.setCheckState(.checked, animated: true)
             break
         case .mixed:
             break

@@ -79,7 +79,7 @@ class LoginViewController: BaseFormViewController {
             password: fields["password"]
         )
         
-        Current.apiManager.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+        Current.apiManager.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             self?.continueButton.stopLoading()
             Current.userManager.setNewUser(with: response)
             self?.router.didLogin()

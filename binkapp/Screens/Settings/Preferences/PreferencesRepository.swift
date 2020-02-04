@@ -15,8 +15,12 @@ class PreferencesRepository {
         self.apiManager = apiManager
     }
     
+    var networkIsReachable: Bool {
+        return apiManager.networkIsReachable
+    }
+    
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (Error?) -> Void) {
-        apiManager.doRequest(url: .preferences, httpMethod: .get, onSuccess: { (preferences: [PreferencesModel]) in
+        apiManager.doRequest(url: .preferences, httpMethod: .get, isUserDriven: false, onSuccess: { (preferences: [PreferencesModel]) in
             onSuccess(preferences)
         }) { (error) in
             onError(error)
@@ -24,7 +28,7 @@ class PreferencesRepository {
     }
     
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
-        apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: preferences) { (bool, error) in
+        apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: preferences, isUserDriven: true) { (bool, error) in
             guard let safeError = error else {
                 onSuccess()
                 return

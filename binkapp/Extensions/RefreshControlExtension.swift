@@ -18,4 +18,14 @@ extension UIRefreshControl {
         let offsetPoint = CGPoint.init(x: 0, y: contentOffsetY)
         collectionView.setContentOffset(offsetPoint, animated: true)
     }
+    
+    func programaticallyEndRefreshing(in collectionView: UICollectionView, with navigationBar: UINavigationBar) {
+        endRefreshing()
+        // The following are collection view resting values in notch and non-notch devices
+        let notchDeviceOffsetY = -108.0
+        let nonNotchDeviceOffsetY = -84.0
+        let contentOffsetY = UIDevice.current.hasNotch ? notchDeviceOffsetY : nonNotchDeviceOffsetY
+        let offsetPoint = CGPoint.init(x: 0, y: contentOffsetY)
+        collectionView.setContentOffset(offsetPoint, animated: true)
+    }
 }

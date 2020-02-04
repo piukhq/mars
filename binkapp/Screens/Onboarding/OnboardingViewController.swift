@@ -156,6 +156,10 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
     // MARK: Button handlers
 
     @objc private func handleFacebookButtonPressed() {
+        guard Current.apiManager.networkIsReachable else {
+            viewModel.router.presentNoConnectivityPopup()
+            return
+        }
         FacebookLoginController.login(with: self, onSuccess: { [weak self] facebookRequest in
             // If we have no email address, push them onto the add email screen
             guard facebookRequest.email != nil else {
