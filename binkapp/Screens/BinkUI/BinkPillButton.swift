@@ -61,7 +61,7 @@ class BinkPillButton: BinkTrackableButton {
         activityIndicator.startAnimating()
     }
 
-    func stopLoading() {
+    @objc func stopLoading() {
         setTitleColor(.white, for: .normal)
         activityIndicator.stopAnimating()
     }
