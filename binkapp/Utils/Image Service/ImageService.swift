@@ -23,28 +23,36 @@ final class ImageService {
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
 
         guard let imagePath = path(forType: pathType) else { return }
-        
-        // Are we forcing a refresh?
-        if !forceRefresh {
-            // Is the image in memory?
-            if let cachedImage = Cache.sharedImageCache.object(forKey: imagePath.toNSString()) {
-                completion(cachedImage)
-                return
+
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            // Are we forcing a refresh?
+            if !forceRefresh {
+                // Is the image in memory?
+                if let cachedImage = Cache.sharedImageCache.object(forKey: imagePath.toNSString()) {
+                    DispatchQueue.main.async {
+                        completion(cachedImage)
+                        return
+                    }
+                }
+
+                // If not, is the image on disk?
+                if let imageFromDisk = try? Disk.retrieve(imagePath, from: .caches, as: UIImage.self) {
+                    DispatchQueue.main.async {
+                        completion(imageFromDisk)
+                    }
+
+                    DispatchQueue.global(qos: .background).async {
+                        // Promote the image to local memory
+                        Cache.sharedImageCache.setObject(imageFromDisk, forKey: imagePath.toNSString())
+                        return
+                    }
+                }
             }
 
-            // If not, is the image on disk?
-            if let imageFromDisk = try? Disk.retrieve(imagePath, from: .caches, as: UIImage.self) {
-                completion(imageFromDisk)
-
-                // Promote the image to local memory
-                Cache.sharedImageCache.setObject(imageFromDisk, forKey: imagePath.toNSString())
-                return
-            }
+            // Retrieve the image from the API
+            // Either the image is not stored locally, or we are forcing a refresh
+            self?.downloadImage(forPath: imagePath, withPolicy: policy, completion: completion)
         }
-
-        // Retrieve the image from the API
-        // Either the image is not stored locally, or we are forcing a refresh
-        downloadImage(forPath: imagePath, withPolicy: policy, completion: completion)
     }
 
     private func path(forType type: PathType) -> String? {
@@ -61,17 +69,22 @@ final class ImageService {
                 completion(nil)
                 return
             }
-            completion(downloadedImage)
 
-            // Store the downloaded image to disk and fail silently
-            try? Disk.save(downloadedImage, to: .caches, as: path)
+            DispatchQueue.main.async {
+                completion(downloadedImage)
+            }
 
-            // Store the downloaded image to local memory
-            Cache.sharedImageCache.setObject(downloadedImage, forKey: path.toNSString())
+            DispatchQueue.global(qos: .background).async {
+                // Store the downloaded image to disk and fail silently
+                try? Disk.save(downloadedImage, to: .caches, as: path)
 
-            // Add object to sharedStoredObjects, and save to disk
-            let storedObject = StorageUtility.StoredObject(objectPath: path, storedDate: Date(), policy: policy)
-            StorageUtility.addStoredObject(storedObject)
+                // Store the downloaded image to local memory
+                Cache.sharedImageCache.setObject(downloadedImage, forKey: path.toNSString())
+
+                // Add object to sharedStoredObjects, and save to disk
+                let storedObject = StorageUtility.StoredObject(objectPath: path, storedDate: Date(), policy: policy)
+                StorageUtility.addStoredObject(storedObject)
+            }
         }
     }
     
@@ -137,13 +150,13 @@ final class StorageUtility {
     }
 
     fileprivate static func addStoredObject(_ object: StoredObject) {
+
         // Check we aren't already storing this object
         let storedObjectPaths = sharedStoredObjects.map {
             $0.objectPath
         }
         guard !storedObjectPaths.contains(object.objectPath) else { return }
         sharedStoredObjects.append(object)
-        print(sharedStoredObjects)
         try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
     }
 
