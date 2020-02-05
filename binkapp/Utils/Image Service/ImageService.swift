@@ -195,8 +195,10 @@ final class StorageUtility {
         }
 
         deletions.forEach {
-            sharedStoredObjects.remove(at: $0.index)
-            try? Disk.remove($0.item, from: .caches)
+            if sharedStoredObjects.indices.contains($0.index) {
+                sharedStoredObjects.remove(at: $0.index)
+                try? Disk.remove($0.item, from: .caches)
+            }
         }
         try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
     }

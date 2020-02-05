@@ -67,12 +67,4 @@ class DebugMenuViewModelTests: XCTestCase {
         XCTAssertEqual(endpointRow.subtitle, APIConstants.baseURLString)
     }
 
-    func test_subtitleText_forEmailAddressRow_inToolsSection() {
-        let factory = DebugMenuFactory()
-        let sut = DebugMenuViewModel(debugMenuFactory: factory)
-
-        let emailAddressRow = sut.row(atIndexPath: IndexPath(row: 2, section: 0))
-        XCTAssertEqual(emailAddressRow.subtitle, Current.userDefaults.string(forDefaultsKey: .userEmail))
-    }
-
 }
