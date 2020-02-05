@@ -12,12 +12,12 @@ import DeepDiff
 
 final class ImageService {
 
-    // TODO: force refresh after plan refresh
-
     typealias ImageCompletionHandler = (UIImage?) -> Void
 
     enum PathType {
-        case membershipPlanImage(plan: CD_MembershipPlan, imageType: ImageType)
+        case membershipPlanIcon(plan: CD_MembershipPlan)
+        case membershipPlanHero(plan: CD_MembershipPlan)
+        case membershipPlanOfferTile(url: String)
     }
 
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
@@ -49,8 +49,13 @@ final class ImageService {
 
     private func path(forType type: PathType) -> String? {
         switch type {
-        case .membershipPlanImage(let plan, let imageType):
-            guard let url = plan.image(of: imageType)?.url else { return nil }
+        case .membershipPlanIcon(let plan):
+            guard let url = plan.image(of: .icon)?.url else { return nil }
+            return url
+        case .membershipPlanHero(let plan):
+            guard let url = plan.image(of: .hero)?.url else { return nil }
+            return url
+        case .membershipPlanOfferTile(let url):
             return url
         }
     }

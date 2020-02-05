@@ -205,13 +205,12 @@ private extension LoyaltyCardFullDetailsViewController {
         }
 
         if viewModel.shouldShowOfferTiles {
-            guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
             stackScrollView.add(arrangedSubview: offerTilesStackView)
             if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
                 offerTileImageUrls.forEach { offer in
                     let offerView = OfferTileView()
                     offerView.translatesAutoresizingMaskIntoConstraints = false
-                    offerView.configure(plan: membershipPlan)
+                    offerView.configure(imageUrl: offer)
                     offerTilesStackView.addArrangedSubview(offerView)
                 }
             }
@@ -239,7 +238,7 @@ private extension LoyaltyCardFullDetailsViewController {
             brandHeader.backgroundColor = UIColor(patternImage: placeholder)
         }
         
-        brandHeader.setImage(forPathType: .membershipPlanImage(plan: plan, imageType: .hero), animated: true)
+        brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
     }
 
     func configureLayout() {
