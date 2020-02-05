@@ -68,11 +68,11 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     private func requestSpreedlyToken(paymentCard: PaymentCardCreateModel, onSuccess: @escaping (SpreedlyResponse) -> Void, onError: @escaping (Error?) -> Void) {
         let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
-        apiManager.doRequest(url: .spreedly, httpMethod: .post, parameters: spreedlyRequest, onSuccess: { (response: SpreedlyResponse) in
+        apiManager.doRequest(url: .spreedly, httpMethod: .post, parameters: spreedlyRequest, isUserDriven: true, onSuccess: { (response: SpreedlyResponse) in
             onSuccess(response)
-        }, onError: { error in
+        }) { error in
             onError(error)
-        })
+        }
     }
 
     private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
