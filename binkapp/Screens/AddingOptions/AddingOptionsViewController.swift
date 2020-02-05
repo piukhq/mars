@@ -67,6 +67,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
 
         stackView.layoutIfNeeded()
         let constant = addPaymentCardView.frame.height * 0.75
+        stackviewBottomConstraint.priority = .defaultLow
         stackviewBottomConstraint.constant = constant
     }
     
