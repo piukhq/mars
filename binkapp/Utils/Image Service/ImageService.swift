@@ -154,6 +154,14 @@ final class StorageUtility {
         }
 
         let validStoredObjects = sharedStoredObjects.filter { !$0.isExpired }
+        let expiredStoredObjects = sharedStoredObjects.filter { $0.isExpired }
+
+        // Purge on disk
+        expiredStoredObjects.forEach {
+            try? Disk.remove($0.objectPath, from: .caches)
+        }
+
+        // Purge object references
         sharedStoredObjects = validStoredObjects
         try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
     }
@@ -180,12 +188,10 @@ final class StorageUtility {
         let deletions = changes.compactMap {
             $0.delete
         }
-        let deletionIds = deletions.map {
-            $0.index
-        }
 
-        deletionIds.forEach {
-            sharedStoredObjects.remove(at: $0)
+        deletions.forEach {
+            sharedStoredObjects.remove(at: $0.index)
+            try? Disk.remove($0.item, from: .caches)
         }
         try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
     }
