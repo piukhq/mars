@@ -48,6 +48,7 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .didLoadLocalWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .shouldTrashLocalWallets, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .noInternetConnection, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .outageError, object: nil)
 
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
 
