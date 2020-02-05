@@ -66,8 +66,11 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
             self.refreshControl.endRefreshing()
         }
         
-        Current.wallet.reloadWalletsIfNecessary()
-        configureLoadingIndicator()
+        Current.wallet.reloadWalletsIfNecessary(refreshStarted: {
+            self.configureLoadingIndicator()
+        }) {
+            self.refreshControl.endRefreshing()
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
