@@ -62,24 +62,43 @@ class AuthAndAddRepository {
         
         let url: RequestURL
         let method: RequestHTTPMethod
+        var mutableParams = parameters
+        var registrationParams: [PostModel]? = nil
         
         if existingMembershipCard != nil {
             url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
             method = .patch
+            mutableParams.account?.addFields = nil
+            mutableParams.account?.authoriseFields = nil
         } else {
             url = .membershipCards
             method = .post
+            registrationParams = mutableParams.account?.registrationFields
+            mutableParams.account?.registrationFields = nil
         }
         
-        apiManager.doRequest(url: url, httpMethod: method, parameters: parameters, isUserDriven: true, onSuccess: { (card: MembershipCardModel) in
+        apiManager.doRequest(url: url, httpMethod: method, parameters: mutableParams, isUserDriven: true, onSuccess: { (card: MembershipCardModel) in
             Current.database.performBackgroundTask { context in
                 let newObject = card.mapToCoreData(context, .update, overrideID: nil)
 
                 try? context.save()
 
                 DispatchQueue.main.async {
-                    Current.database.performTask(with: newObject) { (context, safeObject) in
-                        onSuccess(safeObject)
+                    Current.database.performTask(with: newObject) { [weak self] (context, safeObject) in
+                        
+                        if method == .post {
+                            
+                            mutableParams.account?.registrationFields = registrationParams
+                            
+                            self?.postGhostCard(
+                                parameters: mutableParams,
+                                existingMembershipCard: safeObject,
+                                onSuccess: onSuccess,
+                                onError: onError
+                            )
+                        } else {
+                            onSuccess(safeObject)
+                        }
                     }
                 }
             }
