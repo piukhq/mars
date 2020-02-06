@@ -55,7 +55,8 @@ class AuthAndAddViewModel {
     var title: String {
         switch formPurpose {
         case .signUp, .signUpFailed: return "sign_up_new_card_title".localized
-        case .add, .addFailed: return "credentials_title".localized
+        case .add: return "credentials_title".localized
+        case .addFailed: return "log_in_title".localized
         case .ghostCard, .ghostCardFailed: return "register_ghost_card_title".localized
         }
     }
@@ -69,7 +70,7 @@ class AuthAndAddViewModel {
     }
     
     var accountButtonShouldHide: Bool {
-        return (formPurpose != .add && formPurpose != .addFailed) || formPurpose == .ghostCard
+        return formPurpose != .add || formPurpose == .ghostCard
     }
     
     init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil) {
