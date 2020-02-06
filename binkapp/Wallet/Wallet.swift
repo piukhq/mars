@@ -51,12 +51,14 @@ class Wallet: CoreDataRepositoryProtocol {
 
     /// Full API refresh of loyalty and payment wallets, nested in a refresh manager condition
     /// Called each time a wallet becomes visible
-    func reloadWalletsIfNecessary() {
+    func reloadWalletsIfNecessary(refreshStarted: @escaping () -> Void, refreshEnded: @escaping () -> Void) {
         if refreshManager.isActive && refreshManager.canRefreshAccounts {
+            refreshStarted()
             loadWallets(forType: .reload, reloadPlans: false) { [weak self] success in
                 if success {
                     self?.refreshManager.resetAccountsTimer()
                 }
+                refreshEnded()
             }
         }
     }

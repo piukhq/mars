@@ -28,6 +28,9 @@ class MainScreenRouter {
 
         // SSL Pinning failure
         NotificationCenter.default.addObserver(self, selector: #selector(presentSSLPinningFailurePopup), name: .didFailServerTrustEvaluation, object: nil)
+        
+        //Outage error - Server 500-599 status code
+        NotificationCenter.default.addObserver(self, selector: #selector(displayOutageError), name: .outageError, object: nil)
     }
     
     func wallet() -> UIViewController {
@@ -250,6 +253,12 @@ class MainScreenRouter {
     func displaySimplePopup(title: String?, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
+        navController?.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func displayOutageError() {
+        let alert = UIAlertController(title: "error_title".localized, message: "communication_error".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
     }
     

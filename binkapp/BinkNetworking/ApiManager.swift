@@ -211,6 +211,10 @@ class ApiManager {
                     let errorArray = try decoder.decode([String].self, from: data)
                     let customError = CustomError(errorMessage: errorArray.first ?? "", statusCode: statusCode)
                     onError(customError)
+                } else if (500...599).contains(statusCode) {
+                    NotificationCenter.default.post(name: .outageError, object: nil)
+                    let customError = CustomError(errorMessage: "", statusCode: statusCode)
+                    onError(customError)
                 } else if let error = response.error {
                     print(error)
                     onError(error)
@@ -248,6 +252,10 @@ class ApiManager {
                  ensure that we aggressively respond in app to a 401.
                  */
                 NotificationCenter.default.post(name: .didLogout, object: nil)
+            } else if (500...599).contains(statusCode) {
+                NotificationCenter.default.post(name: .outageError, object: nil)
+                let customError = CustomError(errorMessage: "", statusCode: statusCode)
+                completion?(false, customError)
             } else if let error = response.error {
                 print(error)
                 completion?(false, error)
