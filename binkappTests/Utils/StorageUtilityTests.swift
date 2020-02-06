@@ -66,4 +66,12 @@ class StorageUtilityTests: XCTestCase {
         XCTAssertEqual(StorageUtilityMock.sharedStoredObjects.count, 1)
     }
 
+    func test_refreshPlanImages_doesNotCrashOnIndexOutOfBounds() {
+        StorageUtilityMock.addStoredObject(StorageUtilityMock.StoredObject(objectPath: "xyz", storedDate: Date(), policy: .year))
+        XCTAssertEqual(StorageUtilityMock.sharedStoredObjects.count, 1)
+        StorageUtilityMock.sharedStoredObjects.remove(at: 0)
+        StorageUtilityMock.refreshPlanImages()
+        XCTAssertEqual(StorageUtilityMock.sharedStoredObjects.count, 0)
+    }
+
 }

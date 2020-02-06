@@ -72,7 +72,9 @@ class StorageUtilityMock {
         }
 
         deletionIds.forEach {
-            sharedStoredObjects.remove(at: $0)
+            if sharedStoredObjects.indices.contains($0) {
+                sharedStoredObjects.remove(at: $0)
+            }
         }
     }
 }

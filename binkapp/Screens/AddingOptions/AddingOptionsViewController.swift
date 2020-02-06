@@ -11,6 +11,7 @@ import UIKit
 class AddingOptionsViewController: BinkTrackableViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var stackviewBottomConstraint: NSLayoutConstraint!
     
     let viewModel: AddingOptionsViewModel
     // Not needed for MVP
@@ -52,18 +53,22 @@ class AddingOptionsViewController: BinkTrackableViewController {
         //loyaltyCardView.configure(addingOption: .loyalty)
         browseBrandsView.configure(addingOption: .browse)
         addPaymentCardView.configure(addingOption: .payment)
+
+        NSLayoutConstraint.activate([
+            browseBrandsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 150),
+            addPaymentCardView.heightAnchor.constraint(greaterThanOrEqualToConstant: 150)
+        ])
         
         addGesturesToViews()
         // Not needed for MVP
         //stackView.addArrangedSubview(loyaltyCardView)
         stackView.addArrangedSubview(browseBrandsView)
         stackView.addArrangedSubview(addPaymentCardView)
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stackView.bottomAnchor.constraint(equalTo: cancelButton.topAnchor, constant: -addPaymentCardView.frame.height * 0.75)
-        ])
-        
+
+        stackView.layoutIfNeeded()
+        let constant = addPaymentCardView.frame.height * 0.75
+        stackviewBottomConstraint.priority = .defaultLow
+        stackviewBottomConstraint.constant = constant
     }
     
     func addGesturesToViews() {

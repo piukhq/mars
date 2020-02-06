@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="cancelButton" destination="fsR-c8-e0u" id="oQD-Dm-0ch"/>
                 <outlet property="stackView" destination="nU1-gx-D1w" id="n0P-eO-MNz"/>
+                <outlet property="stackviewBottomConstraint" destination="LAN-yc-C1W" id="N0L-nw-ric"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="nU1-gx-D1w">
-                    <rect key="frame" x="25" y="384" width="364" height="300"/>
+                    <rect key="frame" x="25" y="499" width="364" height="300"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="300" placeholder="YES" id="IEc-2o-yfB"/>
                     </constraints>
@@ -36,10 +37,10 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fsR-c8-e0u" firstAttribute="top" secondItem="nU1-gx-D1w" secondAttribute="bottom" priority="1" constant="115" id="LAN-yc-C1W"/>
+                <constraint firstItem="fsR-c8-e0u" firstAttribute="top" secondItem="nU1-gx-D1w" secondAttribute="bottom" priority="999" id="LAN-yc-C1W"/>
                 <constraint firstItem="fsR-c8-e0u" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ULV-ZH-ICX"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nU1-gx-D1w" secondAttribute="trailing" constant="25" id="a6e-ti-H7j"/>
-                <constraint firstItem="nU1-gx-D1w" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="aFu-YB-EMD"/>
+                <constraint firstItem="nU1-gx-D1w" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" priority="750" constant="30" id="aFu-YB-EMD"/>
                 <constraint firstItem="nU1-gx-D1w" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="oRH-wN-S4C"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="fsR-c8-e0u" secondAttribute="bottom" constant="9" id="x4z-Ck-beb"/>
             </constraints>
