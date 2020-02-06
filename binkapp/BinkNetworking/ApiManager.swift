@@ -83,6 +83,14 @@ enum RequestHTTPMethod {
     }
 }
 
+struct ResponseErrors: Decodable {
+    let nonFieldErrors: [String]?
+
+    enum CodingKeys: String, CodingKey {
+        case nonFieldErrors = "non_field_errors"
+    }
+}
+
 class ApiManager {
     private let reachabilityManager = NetworkReachabilityManager()
     private let session: Session
@@ -208,8 +216,11 @@ class ApiManager {
                      */
                     NotificationCenter.default.post(name: .didLogout, object: nil)
                 } else if statusCode == 400 {
-                    let errorArray = try decoder.decode([String].self, from: data)
-                    let customError = CustomError(errorMessage: errorArray.first ?? "", statusCode: statusCode)
+                    let decodedResponseErrors = try? decoder.decode(ResponseErrors.self, from: data)
+                    let otherErrors = try? decoder.decode([String].self, from: data)
+                    
+                    let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? otherErrors?.first ?? "went_wrong".localized
+                    let customError = CustomError(errorMessage: errorMessage, statusCode: statusCode)
                     onError(customError)
                 } else if (500...599).contains(statusCode) {
                     if isUserDriven {
