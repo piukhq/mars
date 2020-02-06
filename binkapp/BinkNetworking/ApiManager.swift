@@ -143,7 +143,7 @@ class ApiManager {
         let requestHeaders = HTTPHeaders(headerDict)
         
         session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { (response) in
-            self.responseHandler(response: response, authRequired: authRequired, onSuccess: onSuccess, onError: onError)
+            self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
     }
 
@@ -160,7 +160,7 @@ class ApiManager {
         let requestHeaders = HTTPHeaders(headerDict)
                 
         session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { (response) in
-            self.responseHandler(response: response, authRequired: authRequired, onSuccess: onSuccess, onError: onError)
+            self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
     }
 
@@ -180,7 +180,7 @@ class ApiManager {
         }
     }
     
-    private func responseHandler<Resp: Decodable>(response: AFDataResponse <Any>, authRequired: Bool, onSuccess: (Resp) -> (), onError: (Error) -> ()) {
+    private func responseHandler<Resp: Decodable>(response: AFDataResponse <Any>, authRequired: Bool, isUserDriven: Bool, onSuccess: (Resp) -> (), onError: (Error) -> ()) {
         
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError {
             // SSL/TLS Pinning Failure
@@ -212,7 +212,9 @@ class ApiManager {
                     let customError = CustomError(errorMessage: errorArray.first ?? "", statusCode: statusCode)
                     onError(customError)
                 } else if (500...599).contains(statusCode) {
-                    NotificationCenter.default.post(name: .outageError, object: nil)
+                    if isUserDriven {
+                        NotificationCenter.default.post(name: .outageError, object: nil)
+                    }
                     let customError = CustomError(errorMessage: "", statusCode: statusCode)
                     onError(customError)
                 } else if let error = response.error {
@@ -253,7 +255,9 @@ class ApiManager {
                  */
                 NotificationCenter.default.post(name: .didLogout, object: nil)
             } else if (500...599).contains(statusCode) {
-                NotificationCenter.default.post(name: .outageError, object: nil)
+                if isUserDriven {
+                    NotificationCenter.default.post(name: .outageError, object: nil)
+                }
                 let customError = CustomError(errorMessage: "", statusCode: statusCode)
                 completion?(false, customError)
             } else if let error = response.error {

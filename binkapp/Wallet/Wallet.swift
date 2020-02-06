@@ -31,8 +31,8 @@ class Wallet: CoreDataRepositoryProtocol {
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
     func launch() {
-        loadWallets(forType: .localLaunch, reloadPlans: false) { [weak self] _ in
-            self?.loadWallets(forType: .reload, reloadPlans: true) { _ in
+        loadWallets(forType: .localLaunch, reloadPlans: false, isUserDriven: false) { [weak self] _ in
+            self?.loadWallets(forType: .reload, reloadPlans: true, isUserDriven: false) { _ in
                 self?.refreshManager.start()
             }
         }
@@ -42,7 +42,7 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Should only be called from a pull to refresh.
     func reload() {
         /// Not nested in a refresh manager condition, as pull to refresh should always be permitted
-        loadWallets(forType: .reload, reloadPlans: true) { [weak self] success in
+        loadWallets(forType: .reload, reloadPlans: true, isUserDriven: true) { [weak self] success in
             if success {
                 self?.refreshManager.resetAll()
             }
@@ -54,7 +54,7 @@ class Wallet: CoreDataRepositoryProtocol {
     func reloadWalletsIfNecessary(refreshStarted: @escaping () -> Void, refreshEnded: @escaping () -> Void) {
         if refreshManager.isActive && refreshManager.canRefreshAccounts {
             refreshStarted()
-            loadWallets(forType: .reload, reloadPlans: false) { [weak self] success in
+            loadWallets(forType: .reload, reloadPlans: false, isUserDriven: false) { [weak self] success in
                 if success {
                     self?.refreshManager.resetAccountsTimer()
                 }
@@ -67,7 +67,7 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Called each time the app enters the foreground
     func refreshMembershipPlansIfNecessary() {
         if refreshManager.isActive && refreshManager.canRefreshPlans {
-            getMembershipPlans(forceRefresh: true) { [weak self] success in
+            getMembershipPlans(forceRefresh: true, isUserDriven: false) { [weak self] success in
                 if success {
                     self?.refreshManager.resetPlansTimer()
                 }
@@ -78,7 +78,7 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Refresh from our local data
     /// Useful for calling after card deletions
     func refreshLocal() {
-        loadWallets(forType: .localReactive, reloadPlans: false)
+        loadWallets(forType: .localReactive, reloadPlans: false, isUserDriven: false)
     }
 
     var hasPaymentCards: Bool {
@@ -93,12 +93,12 @@ class Wallet: CoreDataRepositoryProtocol {
 
     // MARK: - Private
 
-    private func loadWallets(forType type: FetchType, reloadPlans: Bool, completion: ((Bool) -> Void)? = nil) {
+    private func loadWallets(forType type: FetchType, reloadPlans: Bool, isUserDriven: Bool, completion: ((Bool) -> Void)? = nil) {
         let dispatchGroup = DispatchGroup()
         let forceRefresh = type == .reload
 
         dispatchGroup.enter()
-        getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans) { success in
+        getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans, isUserDriven: isUserDriven) { success in
             // if this failed, the entire function should fail
             guard success else {
                 completion?(success)
@@ -108,7 +108,7 @@ class Wallet: CoreDataRepositoryProtocol {
         }
 
         dispatchGroup.enter()
-        getPaymentWallet(forceRefresh: forceRefresh) { success in
+        getPaymentWallet(forceRefresh: forceRefresh, isUserDriven: isUserDriven) { success in
             // if this failed, the entire function should fail
             guard success else {
                 completion?(success)
@@ -138,15 +138,15 @@ class Wallet: CoreDataRepositoryProtocol {
     /// Even though we want to get the loyalty and payment card wallets asyncronously and complete once both finish regardless of order,
     /// membership cards still have a dependancy on membership plans having been downloaded.
     /// This provides a convenient way to get the loyalty wallet as a whole, while honouring that dependancy.
-    private func getLoyaltyWallet(forceRefresh: Bool = false, reloadPlans: Bool, completion: @escaping (Bool) -> Void) {
-        getMembershipPlans(forceRefresh: reloadPlans) { [weak self] success in
-            self?.getMembershipCards(forceRefresh: forceRefresh, completion: { success in
+    private func getLoyaltyWallet(forceRefresh: Bool = false, reloadPlans: Bool, isUserDriven: Bool, completion: @escaping (Bool) -> Void) {
+        getMembershipPlans(forceRefresh: reloadPlans, isUserDriven: isUserDriven) { [weak self] success in
+            self?.getMembershipCards(forceRefresh: forceRefresh, isUserDriven: isUserDriven, completion: { success in
                 completion(success)
             })
         }
     }
 
-    private func getMembershipPlans(forceRefresh: Bool = false, completion: @escaping (Bool) -> Void) {
+    private func getMembershipPlans(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping (Bool) -> Void) {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { [weak self] plans in
                 self?.membershipPlans = plans
@@ -158,7 +158,7 @@ class Wallet: CoreDataRepositoryProtocol {
         let url = RequestURL.membershipPlans
         let method = RequestHTTPMethod.get
 
-        Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: forceRefresh, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
+        Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: isUserDriven, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
             self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
                 self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { plans in
                     self?.membershipPlans = plans
@@ -171,7 +171,7 @@ class Wallet: CoreDataRepositoryProtocol {
         })
     }
 
-    private func getMembershipCards(forceRefresh: Bool = false, completion: @escaping (Bool) -> Void) {
+    private func getMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping (Bool) -> Void) {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
                 self?.membershipCards = cards
@@ -183,7 +183,7 @@ class Wallet: CoreDataRepositoryProtocol {
         let url = RequestURL.membershipCards
         let method = RequestHTTPMethod.get
 
-        Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: forceRefresh, onSuccess: { [weak self] (response: [MembershipCardModel]) in
+        Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: isUserDriven, onSuccess: { [weak self] (response: [MembershipCardModel]) in
             self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
                 self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: { cards in
                     self?.membershipCards = cards
@@ -195,7 +195,7 @@ class Wallet: CoreDataRepositoryProtocol {
         })
     }
 
-    private func getPaymentWallet(forceRefresh: Bool = false, completion: @escaping (Bool) -> Void) {
+    private func getPaymentWallet(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping (Bool) -> Void) {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { [weak self] cards in
                 self?.paymentCards = cards
@@ -207,7 +207,7 @@ class Wallet: CoreDataRepositoryProtocol {
         let url = RequestURL.paymentCards
         let method = RequestHTTPMethod.get
 
-        Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { [weak self] (response: [PaymentCardModel]) in
+        Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: isUserDriven, onSuccess: { [weak self] (response: [PaymentCardModel]) in
             self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
                 self?.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { cards in
                     self?.paymentCards = cards
