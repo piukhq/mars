@@ -76,13 +76,13 @@ class AddPaymentCardViewModel {
     }
 
     func addPaymentCard(onError: @escaping () -> Void) {
-        repository.addPaymentCard(paymentCard, onSuccess: { [weak self] response in
-            guard let paymentCard = response, let self = self  else {return}
+        repository.addPaymentCard(paymentCard, onSuccess: { [weak self] paymentCard in
+            guard let paymentCard = paymentCard, let self = self  else {return}
             Current.wallet.refreshLocal()
             // We post the notification so that we can switch tabs if necessary
             NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
             self.router.toPaymentCardDetailViewController(paymentCard: paymentCard)
-        }) {
+        }) { error in
             onError()
             self.displayError()
         }

@@ -39,11 +39,13 @@ struct PaymentCardCreateRequest: Codable {
             let timestamp: Int
             let type: Int
         }
-        
-        let consents: [Consents]
+
+        // These are default consents by design from architecture
+        var consents: [Consents]?
     }
     
     let card: Card
+
     let account: Account
     
     /// This should only be used for creating test payment cards as it naturally bypasses the Spreedly path
@@ -62,7 +64,7 @@ struct PaymentCardCreateRequest: Codable {
             firstSix = String(pan[pan.startIndex..<firstSixEndIndex])
             lastFour = String(pan[lastFourStartIndex..<pan.endIndex])
         }
-        
+
         card = Card(
             token: PaymentCardCreateRequest.fakeToken(),
             firstSixDigits: firstSix!,
@@ -72,6 +74,23 @@ struct PaymentCardCreateRequest: Codable {
             month: month,
             year: year,
             fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month))
+        )
+
+        let timestamp = Date().timeIntervalSince1970
+        account = Account(consents: [Account.Consents(latitude: 0.0, longitude: 0.0, timestamp: Int(timestamp), type: 0)])
+    }
+
+    /// This should only be used for creating genuine payment cards using Spreedly path in a production environment
+    init?(spreedlyResponse: SpreedlyResponse) {
+        card = Card(
+            token: spreedlyResponse.transaction?.paymentMethod?.token ?? "",
+            firstSixDigits: spreedlyResponse.transaction?.paymentMethod?.firstSix ?? "",
+            lastFourDigits: spreedlyResponse.transaction?.paymentMethod?.lastFour ?? "",
+            country: "GB", //TODO: Needs resolving!
+            nameOnCard: spreedlyResponse.transaction?.paymentMethod?.fullName ?? "",
+            month: spreedlyResponse.transaction?.paymentMethod?.month ?? 0,
+            year: spreedlyResponse.transaction?.paymentMethod?.year ?? 0,
+            fingerprint: spreedlyResponse.transaction?.paymentMethod?.fingerprint ?? ""
         )
 
         let timestamp = Date().timeIntervalSince1970
