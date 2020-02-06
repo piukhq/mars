@@ -116,7 +116,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         guard let plan = viewModel.membershipPlan else { return }
 
         /// Brand icon
-        cardIconImageView.setImage(forPathType: .membershipPlanImage(plan: plan, imageType: .icon))
+        cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
         
         /// Brand colours
         rectangleView.firstColorHex = viewModel.brandColorHex ?? ""

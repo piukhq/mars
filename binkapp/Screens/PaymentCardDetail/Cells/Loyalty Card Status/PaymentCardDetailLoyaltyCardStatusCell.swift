@@ -20,7 +20,7 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
         statusLabel.textColor = textColor(forStatus: viewModel.status)
         
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
-        iconImageView.setImage(forPathType: .membershipPlanImage(plan: membershipPlan, imageType: .icon))
+        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
     }
 
     private func textColor(forStatus status: CD_MembershipCardStatus?) -> UIColor {

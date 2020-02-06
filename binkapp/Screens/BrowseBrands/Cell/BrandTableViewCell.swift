@@ -20,7 +20,7 @@ class BrandTableViewCell: UITableViewCell {
     }
     
     func configure(plan: CD_MembershipPlan, brandName: String, description: Bool = false) {
-        logoImageView.setImage(forPathType: .membershipPlanImage(plan: plan, imageType: .icon))
+        logoImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
 
         brandLabel.font = UIFont.subtitle
         brandLabel.text = brandName

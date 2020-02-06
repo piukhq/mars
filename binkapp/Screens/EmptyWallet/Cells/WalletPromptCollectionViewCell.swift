@@ -41,7 +41,7 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
             brandIconImageView.image = UIImage(named: iconName)
         } else {
             guard let membershipPlan = walletPrompt.membershipPlan else { return }
-            brandIconImageView.setImage(forPathType: .membershipPlanImage(plan: membershipPlan, imageType: .icon))
+            brandIconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
         }
     }
 
