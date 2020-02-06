@@ -195,9 +195,9 @@ class ApiManager {
 
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .useDefaultKeys
-let statusCode = 500
+
             do {
-//                let statusCode = response.response?.statusCode ?? 0
+                let statusCode = response.response?.statusCode ?? 0
                 if statusCode == 200 || statusCode == 201 {
                     let models = try decoder.decode(Resp.self, from: data)
                     onSuccess(models)
@@ -212,16 +212,9 @@ let statusCode = 500
                     let customError = CustomError(errorMessage: errorArray.first ?? "", statusCode: statusCode)
                     onError(customError)
                 } else if (500...599).contains(statusCode) {
-                    guard let url = response.request?.url else {
-                        NotificationCenter.default.post(name: .outageError, object: nil)
-                        return
-                    }
-                    
-                    if url.absoluteString == APIConstants.baseURLString + RequestURL.logout.value {
-                        NotificationCenter.default.post(name: .logoutOutage, object: nil)
-                    } else {
-                        NotificationCenter.default.post(name: .outageError, object: nil)
-                    }
+                    NotificationCenter.default.post(name: .outageError, object: nil)
+                    let customError = CustomError(errorMessage: "", statusCode: statusCode)
+                    onError(customError)
                 } else if let error = response.error {
                     print(error)
                     onError(error)
@@ -261,6 +254,8 @@ let statusCode = 500
                 NotificationCenter.default.post(name: .didLogout, object: nil)
             } else if (500...599).contains(statusCode) {
                 NotificationCenter.default.post(name: .outageError, object: nil)
+                let customError = CustomError(errorMessage: "", statusCode: statusCode)
+                completion?(false, customError)
             } else if let error = response.error {
                 print(error)
                 completion?(false, error)

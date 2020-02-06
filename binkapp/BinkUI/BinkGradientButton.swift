@@ -33,7 +33,6 @@ class BinkGradientButton: BinkPillButton {
         processGradient(.binkPurple, .blueAccent)
         super.layoutSubviews()
         setWhiteLayer()
-        NotificationCenter.default.addObserver(self, selector: #selector(stopLoading), name: .outageError, object: nil)
     }
 
     func configure(title: String, hasShadow: Bool = true) {
