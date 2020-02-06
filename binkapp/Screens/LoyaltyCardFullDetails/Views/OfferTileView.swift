@@ -11,10 +11,10 @@ import UIKit
 class OfferTileView: CustomView {
     @IBOutlet private weak var offerImageView: UIImageView!
     
-    func configure(plan: CD_MembershipPlan) {
+    func configure(imageUrl: String) {
         offerImageView.clipsToBounds = true
         offerImageView.layer.cornerRadius = 8
-        offerImageView.setImage(forPathType: .membershipPlanImage(plan: plan, imageType: .offer))
+        offerImageView.setImage(forPathType: .membershipPlanOfferTile(url: imageUrl))
     }
 }
 
