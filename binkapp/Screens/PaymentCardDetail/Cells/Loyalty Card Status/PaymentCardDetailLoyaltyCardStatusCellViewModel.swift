@@ -24,7 +24,8 @@ struct PaymentCardDetailLoyaltyCardStatusCellViewModel: PaymentCardDetailCellVie
         switch status?.status {
         case .unauthorised, .failed, .pending:
             return nil
-        default: return "pdc_you_can_link".localized
+        default:
+            return "pdc_you_can_link".localized
         }
     }
 
