@@ -15,23 +15,36 @@ enum DateFormat: String {
 }
 
 extension Date {
-    func timeAgoString() -> String? {
+    func timeAgoString(short: Bool = false) -> String? {
         let interval = Calendar.current.dateComponents([.day, .hour, .minute], from: self, to: Date())
         let days = interval.day ?? 0
         let hours = interval.hour ?? 0
         let minutes = interval.minute ?? 0
         
         if days > 0 {
+            if short {
+                return "\(days)d"
+            }
+            
             return "\(days) \(days > 1 ? "days".localized : "day".localized)"
         }
         
         if hours > 0 {
+            if short {
+                return "\(hours)h"
+            }
+            
             return "\(hours) \(hours > 1 ? "hours".localized : "hour".localized)"
         }
         
-        if minutes > 0 {
+        if minutes >= 0 {
+            if short {
+                return "\(minutes)m"
+            }
+            
             return "\(minutes) \(minutes > 1 ? "minutes".localized : "minute".localized)"
         }
+    
         
         return nil
     }
