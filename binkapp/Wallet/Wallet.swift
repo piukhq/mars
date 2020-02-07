@@ -23,8 +23,8 @@ class Wallet: CoreDataRepositoryProtocol {
 
     private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
-        let shouldDisplay = !Current.userDefaults.bool(forDefaultsKey: .isFirstLaunch)
-        Current.userDefaults.set(true, forDefaultsKey: .isFirstLaunch)
+        let shouldDisplay = !Current.userDefaults.bool(forDefaultsKey: .hasLaunchedWallet)
+        Current.userDefaults.set(true, forDefaultsKey: .hasLaunchedWallet)
         return shouldDisplay
     }
 
