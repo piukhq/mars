@@ -11,7 +11,8 @@ open class CD_EnrolField: _CD_EnrolField {
     
     var choicesArray: [String]? {
         guard let formatted = choices.allObjects as? [CD_FieldChoice] else { return  nil }
-        return formatted.compactMap { $0.value }
+        let sortedChoices = formatted.sorted(by: { $0.id < $1.id })
+        return sortedChoices.compactMap { $0.value }
     }
     
     var fieldCommonName: FieldCommonName? {
