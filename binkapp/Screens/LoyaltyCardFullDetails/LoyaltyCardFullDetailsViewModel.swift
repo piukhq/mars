@@ -111,7 +111,6 @@ class LoyaltyCardFullDetailsViewModel {
             guard let membershipPlan = membershipCard.membershipPlan else { return }
             router.toSignUp(membershipPlan: membershipPlan, existingMembershipCard: membershipCard)
             break
-            //TODO: FOLLOW THE ROUTE OF PATCH GHOST CARD FOR X105!!! IE, WE HAVE THE ADD CREDENTIAL ALREADY ON THE SYSTEM FOR THIS STATE SO PATCH UP THE ADDITIONAL REGISTRATION FIELDS AND WE SHOULD BE GOLDEN!!!
         case .registerGhostCard:
             router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
             break
