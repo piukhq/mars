@@ -82,7 +82,18 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
         guard let index = collectionView.indexPath(for: cell) else { return }
         
         if action == .barcode {
-            toBarcode(with: index, cell: cell)
+            guard let card = viewModel.card(forIndexPath: index) else {
+                cell.set(to: .closed)
+                return
+            }
+            
+            if card.card?.barcode == nil && card.card?.membershipId == nil {
+                viewModel.showNoBarcodeAlert {
+                    cell.set(to: .closed)
+                }
+            } else {
+                toBarcode(with: index, cell: cell)
+            }
         } else {
             promptForDelete(with: index, cell: cell)
         }
