@@ -144,6 +144,20 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
+    func toPatchGhostCard(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
+        let repository = AuthAndAddRepository(apiManager: apiManager)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
+        let viewController = AuthAndAddViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
+    func toSignUp(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
+        let repository = AuthAndAddRepository(apiManager: apiManager)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
+        let viewController = AuthAndAddViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
     func toPllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney ) {
         let repository = PLLScreenRepository(apiManager: apiManager)
         let viewModel = PLLScreenViewModel(membershipCard: membershipCard, repository: repository, router: self, journey: journey)
