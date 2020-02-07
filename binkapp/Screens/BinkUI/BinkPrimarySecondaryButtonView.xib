@@ -27,7 +27,6 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="52" id="a0S-hW-old"/>
                             </constraints>
-                            <state key="normal" title="Primary"/>
                             <connections>
                                 <action selector="primaryButtonWasTapped:" destination="-1" eventType="touchUpInside" id="bzr-c2-szs"/>
                             </connections>
@@ -38,7 +37,6 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="52" id="sFw-y0-SoD"/>
                             </constraints>
-                            <state key="normal" title="Secondary"/>
                             <connections>
                                 <action selector="secondaryButtonWasTapped:" destination="-1" eventType="touchUpInside" id="Yx0-fx-qZ4"/>
                             </connections>
