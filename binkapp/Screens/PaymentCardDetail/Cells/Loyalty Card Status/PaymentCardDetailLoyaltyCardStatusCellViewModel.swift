@@ -21,7 +21,11 @@ struct PaymentCardDetailLoyaltyCardStatusCellViewModel: PaymentCardDetailCellVie
     }
 
     var detailText: String? {
-        return "pcd_you_can_link".localized
+        switch status?.status {
+        case .unauthorised, .failed, .pending:
+            return nil
+        default: return "pdc_you_can_link".localized
+        }
     }
 
     var status: CD_MembershipCardStatus? {
