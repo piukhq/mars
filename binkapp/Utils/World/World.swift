@@ -35,7 +35,7 @@ protocol BinkUserDefaults {
 extension UserDefaults: BinkUserDefaults {
 
     enum Keys: String {
-        case hasFetchedDataOnLaunch
+        case isFirstLaunch
         case userEmail
     }
 

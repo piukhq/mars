@@ -30,7 +30,6 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
 
     let refreshControl = UIRefreshControl()
 
-    let spinner = UIActivityIndicatorView()
     let viewModel: T
 
     init(viewModel: T) {
@@ -50,6 +49,7 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .shouldTrashLocalWallets, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .noInternetConnection, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .outageError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .outageSilentFail, object: nil)
 
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
 
@@ -67,21 +67,8 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
             self.refreshControl.endRefreshing()
         }
         
-        Current.wallet.reloadWalletsIfNecessary(refreshStarted: {
-            self.configureLoadingIndicator()
-        }) {
-            self.refreshControl.endRefreshing()
-        }
-
-        if viewModel.cardCount == 0 {
-            view.addSubview(spinner)
-            spinner.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            ])
-            spinner.startAnimating()
-        }
+        Current.wallet.reloadWalletsIfNecessary()
+        configureLoadingIndicator()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -132,19 +119,11 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
-            self.spinner.stopAnimating()
-            self.spinner.removeFromSuperview()
         }
         collectionView.reloadData()
     }
 
     @objc private func refreshLocal() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            if self.viewModel.cardCount != 0 {
-                self.spinner.stopAnimating()
-            }
-        }
         collectionView.reloadData()
     }
     

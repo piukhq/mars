@@ -26,5 +26,6 @@ extension Notification.Name {
     
     //MARK: - Server Errors
     static let outageError = Notification.Name("outage_error")
+    static let outageSilentFail = Notification.Name("outage_silent_fail")
     static let logoutOutage = Notification.Name("logout_outage")
 }

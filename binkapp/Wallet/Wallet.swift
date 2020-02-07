@@ -23,7 +23,9 @@ class Wallet: CoreDataRepositoryProtocol {
 
     private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
-        return !Current.userDefaults.bool(forDefaultsKey: .hasFetchedDataOnLaunch)
+        let shouldDisplay = !Current.userDefaults.bool(forDefaultsKey: .isFirstLaunch)
+        Current.userDefaults.set(true, forDefaultsKey: .isFirstLaunch)
+        return shouldDisplay
     }
 
     // MARK: - Public
@@ -51,14 +53,12 @@ class Wallet: CoreDataRepositoryProtocol {
 
     /// Full API refresh of loyalty and payment wallets, nested in a refresh manager condition
     /// Called each time a wallet becomes visible
-    func reloadWalletsIfNecessary(refreshStarted: @escaping () -> Void, refreshEnded: @escaping () -> Void) {
+    func reloadWalletsIfNecessary() {
         if refreshManager.isActive && refreshManager.canRefreshAccounts {
-            refreshStarted()
             loadWallets(forType: .reload, reloadPlans: false, isUserDriven: false) { [weak self] success in
                 if success {
                     self?.refreshManager.resetAccountsTimer()
                 }
-                refreshEnded()
             }
         }
     }
@@ -121,17 +121,6 @@ class Wallet: CoreDataRepositoryProtocol {
             self?.shouldDisplayWalletPrompts = type == .reload || type == .localReactive
             NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
             completion?(true)
-
-            // if type is reload and launch hasn't happened yet
-            guard Current.userDefaults.value(forDefaultsKey: .hasFetchedDataOnLaunch) == nil else {
-                return
-            }
-
-            // the value is nil, must be first launch
-            // only set the value if we've done a full api reload
-            if type == .reload {
-                Current.userDefaults.set(true, forDefaultsKey: .hasFetchedDataOnLaunch)
-            }
         }
     }
 
