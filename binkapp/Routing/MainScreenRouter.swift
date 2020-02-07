@@ -250,6 +250,14 @@ class MainScreenRouter {
         navController?.present(alert, animated: true, completion: nil)
     }
     
+    func showNoBarcodeAlert(completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: "No Barcode", message: "No barcode or card number to display. Please check the status of this card.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: { _ in
+            completion()
+        }))
+        navController?.present(alert, animated: true, completion: nil)
+    }
+    
     func displaySimplePopup(title: String?, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
