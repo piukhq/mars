@@ -30,6 +30,7 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
 
     let refreshControl = UIRefreshControl()
 
+    let spinner = UIActivityIndicatorView()
     let viewModel: T
 
     init(viewModel: T) {
@@ -70,6 +71,16 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
             self.configureLoadingIndicator()
         }) {
             self.refreshControl.endRefreshing()
+        }
+
+        if viewModel.cardCount == 0 {
+            view.addSubview(spinner)
+            spinner.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            ])
+            spinner.startAnimating()
         }
     }
 
@@ -121,11 +132,19 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
+            self.spinner.stopAnimating()
+            self.spinner.removeFromSuperview()
         }
         collectionView.reloadData()
     }
 
     @objc private func refreshLocal() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            if self.viewModel.cardCount != 0 {
+                self.spinner.stopAnimating()
+            }
+        }
         collectionView.reloadData()
     }
     
