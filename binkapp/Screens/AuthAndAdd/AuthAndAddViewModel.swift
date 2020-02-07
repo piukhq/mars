@@ -213,9 +213,6 @@ class AuthAndAddViewModel {
             let addFieldsArray = membershipCardPostModel?.account?.addFields
             if var existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
                 existingField.value = formField.value
-                membershipCardPostModel?.account?.addFields?.removeAll(where: { $0.column == formField.title })
-                let model = PostModel(column: formField.title, value: formField.value)
-                membershipCardPostModel?.account?.addField(model, to: .auth)
             } else {
                 let model = PostModel(column: formField.title, value: formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .add)
