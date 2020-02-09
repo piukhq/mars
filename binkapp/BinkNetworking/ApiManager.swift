@@ -252,9 +252,7 @@ class ApiManager {
                     let customError = CustomError(errorMessage: errorMessage, statusCode: statusCode)
                     onError(customError)
                 } else if (500...599).contains(statusCode) {
-                    if isUserDriven {
-                        NotificationCenter.default.post(name: .outageError, object: nil)
-                    }
+                    NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
                     let customError = CustomError(errorMessage: "", statusCode: statusCode)
                     onError(customError)
                 } else if let error = response.error {
@@ -295,9 +293,7 @@ class ApiManager {
                  */
                 NotificationCenter.default.post(name: .didLogout, object: nil)
             } else if (500...599).contains(statusCode) {
-                if isUserDriven {
-                    NotificationCenter.default.post(name: .outageError, object: nil)
-                }
+                NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
                 let customError = CustomError(errorMessage: "", statusCode: statusCode)
                 completion?(false, customError)
             } else if let error = response.error {
