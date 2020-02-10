@@ -9,6 +9,8 @@
 import UIKit
 
 class PLRStampsCell: PLRBaseCollectionViewCell {
+    @IBOutlet private weak var stampsStackView: UIStackView!
+    
     override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
         super.configureWithViewModel(viewModel)
     }

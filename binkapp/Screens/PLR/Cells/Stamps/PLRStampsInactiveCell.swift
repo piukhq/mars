@@ -8,6 +8,6 @@
 
 import UIKit
 
-class PLRStampsInactiveCell: PLRBaseCollectionViewCell {
+class PLRStampsInactiveCell: PLRStampsCell {
     @IBOutlet weak var timeDateLabel: UILabel!
 }

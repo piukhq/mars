@@ -8,6 +8,7 @@
 
 import UIKit
 
-class PLRStampsActiveCell: PLRBaseCollectionViewCell {
-    @IBOutlet weak var earnProgressLabel: UILabel!
+class PLRStampsActiveCell: PLRStampsCell {
+    @IBOutlet private weak var earnProgressLabel: UILabel!
+    @IBOutlet private weak var earnProgressValueLabel: UILabel!
 }
