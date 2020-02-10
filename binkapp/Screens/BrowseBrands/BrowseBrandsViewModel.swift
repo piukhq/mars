@@ -12,6 +12,9 @@ class BrowseBrandsViewModel {
     private let router: MainScreenRouter
     private var membershipPlans = [CD_MembershipPlan]()
     
+    var searchActive = false
+    var filteredData = [CD_MembershipPlan]()
+    
     init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
@@ -25,10 +28,14 @@ class BrowseBrandsViewModel {
     }
     
     func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan {
-        if indexPath.section == 0 {
-            return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
+        if filteredData.isEmpty {
+            if indexPath.section == 0 {
+                return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
+            }
+            return getNonPllMembershipPlans()[indexPath.row]
+        } else {
+            return filteredData[indexPath.row]
         }
-        return getNonPllMembershipPlans()[indexPath.row]
     }
     
     func getSectionTitleText(section: Int) -> String {
@@ -78,13 +85,17 @@ class BrowseBrandsViewModel {
 
     
     func getNumberOfRowsFor(section: Int) -> Int {
-        switch section {
-        case 0:
-            return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans().count : getPllMembershipPlans().count
-        case 1:
-            return getNonPllMembershipPlans().count
-        default:
-            return 0
+        if filteredData.isEmpty {
+            switch section {
+            case 0:
+                return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans().count : getPllMembershipPlans().count
+            case 1:
+                return getNonPllMembershipPlans().count
+            default:
+                return 0
+            }
+        } else {
+            return filteredData.count
         }
     }
     
