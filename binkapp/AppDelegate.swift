@@ -8,41 +8,97 @@
 
 import UIKit
 import CoreData
+import Fabric
+import Crashlytics
+import Firebase
+import FBSDKCoreKit
+import AlamofireNetworkActivityLogger
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var dataAccess:DataAccessible? // FIXME: Inject from Swinject
+    var stateMachine: RootStateMachine?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
+        #if DEBUG
+        NetworkActivityLogger.shared.level = .debug
+        NetworkActivityLogger.shared.startLogging()
+        #endif
+
+        // Crashlytics
+        Fabric.with([Crashlytics.self])
+
+        // Analytics
+        #if RELEASE
+        FirebaseApp.configure()
+        BinkAnalytics.beginSessionTracking()
+        #endif
+
+        // Facebook
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+
+        // Device storage
+        StorageUtility.start()
+
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+
+        if let mainWindow = self.window {
+            stateMachine = RootStateMachine(window: mainWindow)
+        }
         
+        let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
+        let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
+        
+        if #available(iOS 13, *) {
+            let navAppearance = UINavigationBarAppearance()
+            navAppearance.configureWithTransparentBackground()
+            navAppearance.shadowImage = UIImage()
+            navAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
+            navAppearance.backgroundEffect = UIBlurEffect(style: .light)
+            navAppearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: UIColor.black]
+            // HACK: The transition mask image is.. broken
+            navAppearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
+            UINavigationBar.appearance().standardAppearance = navAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
+            
+            let tabAppearance = UITabBarAppearance()
+            tabAppearance.configureWithTransparentBackground()
+            tabAppearance.shadowImage = UIImage()
+            tabAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
+            tabAppearance.backgroundEffect = UIBlurEffect(style: .light)
+            UITabBar.appearance().standardAppearance = tabAppearance
+        } else {
+            UINavigationBar.appearance().backIndicatorImage = backButtonImage
+            UINavigationBar.appearance().backIndicatorTransitionMaskImage = backButtonImage
+        }
+        
+        let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
+        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
+    
         return true
     }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        if let rootViewController = application.topViewControllerWithRootViewController(rootViewController: window?.rootViewController),
+            let barcodeModal = rootViewController as? BarcodeViewController,
+            barcodeModal.isBarcodeFullsize {
+            return .landscapeRight
+        }
+        
+        // Only allow portrait (standard behaviour)
+        return .portrait
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        Current.wallet.refreshMembershipPlansIfNecessary()
     }
 
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
-        dataAccess?.save()
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        // Facebook
+        ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 }
 

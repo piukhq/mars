@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NunitoSans-Bold.ttf">
+            <string>NunitoSans-Bold</string>
+        </array>
+        <array key="NunitoSans-Regular.ttf">
+            <string>NunitoSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="WalletPromptCollectionViewCell" customModule="binkapp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jpz-VD-l7V">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AmH-Y0-910">
+                                <rect key="frame" x="20" y="20" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Ehu-Jf-ro1"/>
+                                    <constraint firstAttribute="width" constant="60" id="fNa-W9-jY8"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Link this card to your payment cards to automatically collect rewards." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOM-Yi-6H3">
+                                <rect key="frame" x="95" y="42" width="284" height="41"/>
+                                <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Co-op Membership Card" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="beb-B2-R6Y">
+                                <rect key="frame" x="95" y="19" width="247" height="23"/>
+                                <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="18"/>
+                                <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5RO-Fi-2MV">
+                                <rect key="frame" x="352" y="6" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="GmG-Dz-3rj"/>
+                                    <constraint firstAttribute="width" constant="44" id="bF8-f9-Ock"/>
+                                </constraints>
+                                <inset key="contentEdgeInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                                <state key="normal" title="Button" image="join-card-close-icon"/>
+                                <connections>
+                                    <action selector="dismissButtonWasPressed" destination="gTV-IL-0wX" eventType="touchUpInside" id="KIR-BQ-qz9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="aOM-Yi-6H3" secondAttribute="bottom" constant="17" id="0ER-rM-7na"/>
+                            <constraint firstItem="aOM-Yi-6H3" firstAttribute="leading" secondItem="AmH-Y0-910" secondAttribute="trailing" constant="15" id="6AG-67-Yp6"/>
+                            <constraint firstItem="AmH-Y0-910" firstAttribute="centerY" secondItem="jpz-VD-l7V" secondAttribute="centerY" id="7rR-EL-vih"/>
+                            <constraint firstItem="5RO-Fi-2MV" firstAttribute="leading" secondItem="beb-B2-R6Y" secondAttribute="trailing" constant="10" id="8E6-Ne-gs9"/>
+                            <constraint firstAttribute="trailing" secondItem="aOM-Yi-6H3" secondAttribute="trailing" constant="21" id="BD1-0Q-ueq"/>
+                            <constraint firstItem="beb-B2-R6Y" firstAttribute="top" secondItem="jpz-VD-l7V" secondAttribute="top" constant="19" id="BIp-d1-19E"/>
+                            <constraint firstItem="aOM-Yi-6H3" firstAttribute="top" secondItem="beb-B2-R6Y" secondAttribute="bottom" id="DSa-pT-XSl"/>
+                            <constraint firstItem="beb-B2-R6Y" firstAttribute="leading" secondItem="AmH-Y0-910" secondAttribute="trailing" constant="15" id="NQa-ep-i7A"/>
+                            <constraint firstAttribute="trailing" secondItem="5RO-Fi-2MV" secondAttribute="trailing" constant="4" id="dIP-Kd-z7S"/>
+                            <constraint firstItem="5RO-Fi-2MV" firstAttribute="top" secondItem="jpz-VD-l7V" secondAttribute="top" constant="6" id="myF-gS-hoe"/>
+                            <constraint firstItem="AmH-Y0-910" firstAttribute="leading" secondItem="jpz-VD-l7V" secondAttribute="leading" constant="20" id="zA2-5w-pWA"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="jpz-VD-l7V" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="033-Ac-F19"/>
+                <constraint firstItem="jpz-VD-l7V" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="kqN-IS-CTm"/>
+                <constraint firstAttribute="bottom" secondItem="jpz-VD-l7V" secondAttribute="bottom" id="lq8-zH-P4B"/>
+                <constraint firstAttribute="trailing" secondItem="jpz-VD-l7V" secondAttribute="trailing" id="rgc-Hd-x39"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="400" height="100"/>
+            <connections>
+                <outlet property="brandIconImageView" destination="AmH-Y0-910" id="9HG-vA-sel"/>
+                <outlet property="containerView" destination="jpz-VD-l7V" id="H61-cy-s8h"/>
+                <outlet property="detailLabel" destination="aOM-Yi-6H3" id="OwP-Xn-L68"/>
+                <outlet property="titleLabel" destination="beb-B2-R6Y" id="Y3Q-F3-b6n"/>
+            </connections>
+            <point key="canvasLocation" x="391.304347826087" y="169.41964285714286"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="join-card-close-icon" width="12" height="12"/>
+    </resources>
+</document>
