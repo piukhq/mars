@@ -198,7 +198,7 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
             noMatchesLabel.isHidden = true
         }
         
-        textField.textColor = searchText != nil ? UIColor.black : UIColor.greyFifty
+        textField.textColor = searchText != "" ? UIColor.black : UIColor.greyFifty
         return true
     }
     
