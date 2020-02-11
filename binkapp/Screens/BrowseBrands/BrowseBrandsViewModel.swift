@@ -7,13 +7,22 @@
 
 import Foundation
 
+protocol FilteredDataDelegate {
+    func filteredDataWasChanged()
+}
+
 class BrowseBrandsViewModel {
     private let repository: BrowseBrandsRepository
     private let router: MainScreenRouter
     private var membershipPlans = [CD_MembershipPlan]()
     
+    var delegate: FilteredDataDelegate?
     var searchActive = false
-    var filteredData = [CD_MembershipPlan]()
+    var filteredData = [CD_MembershipPlan]() {
+        didSet {
+            delegate?.filteredDataWasChanged()
+        }
+    }
     
     init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
         self.repository = repository
@@ -28,14 +37,14 @@ class BrowseBrandsViewModel {
     }
     
     func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan {
-        if filteredData.isEmpty {
-            if indexPath.section == 0 {
-                return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
-            }
-            return getNonPllMembershipPlans()[indexPath.row]
-        } else {
+        if !filteredData.isEmpty {
             return filteredData[indexPath.row]
         }
+        
+        if indexPath.section == 0 {
+            return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
+        }
+        return getNonPllMembershipPlans()[indexPath.row]
     }
     
     func getSectionTitleText(section: Int) -> String {
@@ -74,6 +83,10 @@ class BrowseBrandsViewModel {
     }
     
     func numberOfSections() -> Int {
+        if !filteredData.isEmpty {
+            return 1
+        }
+        
         var sections = 0
         [getPllMembershipPlans(), getNonPllMembershipPlans()].forEach {
             if !$0.isEmpty {
@@ -85,17 +98,17 @@ class BrowseBrandsViewModel {
 
     
     func getNumberOfRowsFor(section: Int) -> Int {
-        if filteredData.isEmpty {
-            switch section {
-            case 0:
-                return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans().count : getPllMembershipPlans().count
-            case 1:
-                return getNonPllMembershipPlans().count
-            default:
-                return 0
-            }
-        } else {
+        if !filteredData.isEmpty {
             return filteredData.count
+        }
+        
+        switch section {
+        case 0:
+            return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans().count : getPllMembershipPlans().count
+        case 1:
+            return getNonPllMembershipPlans().count
+        default:
+            return 0
         }
     }
     

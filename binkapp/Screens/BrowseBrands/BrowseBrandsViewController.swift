@@ -16,6 +16,7 @@ fileprivate struct Constants {
 class BrowseBrandsViewController: BinkTrackableViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var searchTextField: BinkTextField!
+    @IBOutlet private weak var noMatchesLabel: UILabel!
     
     let viewModel: BrowseBrandsViewModel
     
@@ -35,6 +36,10 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         tableView.delegate = self
         tableView.dataSource = self
         searchTextField.delegate = self
+        viewModel.delegate = self
+        
+        noMatchesLabel.font = UIFont.bodyTextLarge
+        noMatchesLabel.text = "no_matches".localized
         
         configureSearchTextField()
     }
@@ -77,19 +82,13 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         
         searchTextField.leftView = searchIconView
         
-        // Full close button
-//        let closeIconView = UIView(frame: CGRect(x: 0, y: 0, width: searchTextField.frame.height, height: searchTextField.frame.height))
-//        let closeImageView = UIImageView(frame:
-//                   CGRect(x: Constants.searchIconLeftPadding,
-//                             y: Constants.searchIconTopPadding,
-//                             width: Constants.searchIconSideSize,
-//                             height: Constants.searchIconSideSize))
-//
-//       closeImageView.contentMode = .scaleAspectFit
-//       closeImageView.image = UIImage(named: "fullclose")
-//       closeIconView.addSubview(closeImageView)
-//
-//       searchTextField.rightView = closeIconView
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     @objc func notImplementedPopup() {
@@ -140,6 +139,10 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard viewModel.filteredData.isEmpty else {
+            return nil
+        }
+        
         let view = UIView()
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 47))
         titleLabel.font = UIFont.headline
@@ -153,7 +156,11 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 47
+        if viewModel.filteredData.isEmpty {
+            return 47
+        }
+        
+        return 0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -166,8 +173,12 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         viewModel.filteredData = []
         
-        guard let text = textField.text, text != "" else {
-            return true
+        var searchText = ""
+        if string == "" && range.length > 0 {
+            searchText = textField.text ?? ""
+            searchText.popLast()
+        } else {
+            searchText = (textField.text ?? "") + string
         }
         
         viewModel.getMembershipPlans().forEach { (plan) in
@@ -175,12 +186,30 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
                 return
             }
             
-            if companyName.contains(text) {
+            if companyName.localizedCaseInsensitiveContains(searchText) {
                 viewModel.filteredData.append(plan)
             }
         }
-        
-        tableView.reloadData()
+        if !searchText.isEmpty && viewModel.filteredData.isEmpty {
+            tableView.isHidden = true
+            noMatchesLabel.isHidden = false
+        } else {
+            tableView.isHidden = false
+            noMatchesLabel.isHidden = true
+        }
         return true
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        viewModel.filteredData = []
+        tableView.isHidden = false
+        noMatchesLabel.isHidden = true
+        return true
+    }
+}
+
+extension BrowseBrandsViewController: FilteredDataDelegate {
+    func filteredDataWasChanged() {
+        tableView.reloadData()
     }
 }
