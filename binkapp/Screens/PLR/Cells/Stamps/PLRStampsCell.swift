@@ -17,12 +17,29 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
     }
 
     private func configureStamps(viewModel: PLRCellViewModel) {
-        for stamp in 0..<viewModel.stampsAvailable {
+        for index in 0..<viewModel.stampsAvailable {
             let stampView = PLRStampView()
             stampView.translatesAutoresizingMaskIntoConstraints = false
             stampsStackView.addArrangedSubview(stampView)
             stampView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-            stampView.backgroundColor = stamp < viewModel.stampsCollected ? .green : .lightGray
+            stampView.backgroundColor = stampColor(atIndex: index, viewModel: viewModel)
+        }
+    }
+
+    private func stampColor(atIndex index: Int, viewModel: PLRCellViewModel) -> UIColor {
+        if index < viewModel.stampsCollected {
+            switch viewModel.voucherState {
+            case .redeemed:
+                return .blueAccent
+            case .issued:
+                return .greenOk
+            case .inProgress:
+                return .amberPending
+            default:
+                return .blueInactive
+            }
+        } else {
+            return .grey10
         }
     }
 }
