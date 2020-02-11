@@ -206,6 +206,12 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
         noMatchesLabel.isHidden = true
         return true
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        tableView.reloadData()
+        view.endEditing(true)
+        return true
+    }
 }
 
 extension BrowseBrandsViewController: FilteredDataDelegate {
