@@ -311,8 +311,10 @@
 "plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
 "plr_lcd_points_module_title" = "Collecting";
 "plr_lcd_points_module_description" = "Towards rewards";
-"plr_voucher_burn_description" = "for spending %@%@";
-"plr_voucher_earn_value_title" = "Spent:";
+"plr_voucher_accumulator_burn_description" = "for spending %@%@";
+"plr_voucher_stamp_burn_description" = "for collecting %@%@ %@";
+"plr_voucher_accumulator_earn_value_title" = "Spent:";
+"plr_voucher_stamps_earn_value_title" = "Collected:";
 "plr_voucher_earn_target_value_title" = "Goal:";
 "plr_voucher_date_prefix" = "on ";
 "plr_history_title" = "Rewards history";
