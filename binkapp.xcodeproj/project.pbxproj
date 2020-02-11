@@ -264,6 +264,8 @@
 		EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */; };
 		EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */; };
 		EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */; };
+		EF4DE93223F1AE23008CB6AC /* PLRStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4DE93123F1AE23008CB6AC /* PLRStampView.swift */; };
+		EF4DE93423F1AE3E008CB6AC /* PLRStampView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF4DE93323F1AE3E008CB6AC /* PLRStampView.xib */; };
 		EF54911C2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54911B2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift */; };
 		EF54911E2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54911D2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift */; };
 		EF5491202371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54911F2371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift */; };
@@ -720,6 +722,8 @@
 		EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewController.swift; sourceTree = "<group>"; };
 		EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailViewController.xib; sourceTree = "<group>"; };
 		EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewModel.swift; sourceTree = "<group>"; };
+		EF4DE93123F1AE23008CB6AC /* PLRStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRStampView.swift; sourceTree = "<group>"; };
+		EF4DE93323F1AE3E008CB6AC /* PLRStampView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRStampView.xib; sourceTree = "<group>"; };
 		EF54911B2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailTableViewCell.swift; sourceTree = "<group>"; };
 		EF54911D2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLoyaltyCardStatusCellViewModel.swift; sourceTree = "<group>"; };
 		EF54911F2371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCellViewModel.swift; sourceTree = "<group>"; };
@@ -2032,6 +2036,8 @@
 				EFA5F7652379BD690027AB80 /* PLRStampsActiveCell.xib */,
 				EFA5F7682379BD790027AB80 /* PLRStampsInactiveCell.swift */,
 				EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */,
+				EF4DE93123F1AE23008CB6AC /* PLRStampView.swift */,
+				EF4DE93323F1AE3E008CB6AC /* PLRStampView.xib */,
 			);
 			path = Stamps;
 			sourceTree = "<group>";
@@ -2315,6 +2321,7 @@
 				3CD3493D22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf in Resources */,
 				3CADDEB1231566E5006C3D9C /* LoginTextFieldView.xib in Resources */,
 				EF2E8827233A6FDB00F678F3 /* CardAlertView.xib in Resources */,
+				EF4DE93423F1AE3E008CB6AC /* PLRStampView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2796,6 +2803,7 @@
 				B774E9AA233123BD006D4131 /* ReusableTemplateViewController.swift in Sources */,
 				3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */,
 				EFA5F7112379A7C70027AB80 /* CD_MembershipPlanAccount.swift in Sources */,
+				EF4DE93223F1AE23008CB6AC /* PLRStampView.swift in Sources */,
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
 				DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
 				BD475E7123A2AED80071302A /* CD_PlanDocumentDisplay.swift in Sources */,
@@ -2887,7 +2895,7 @@
 /* Begin XCBuildConfiguration section */
 		5ECE049122CE579B001BA964 /* Alpha */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BD3CB9432328573C005C37AE /* Dev.xcconfig */;
+			baseConfigurationReference = BD3CB9442328574A005C37AE /* Staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "";
