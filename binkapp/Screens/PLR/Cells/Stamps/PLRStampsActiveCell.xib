@@ -79,14 +79,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="URR-C4-F24">
-                                <rect key="frame" x="20" y="110" width="330" height="24"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="URR-C4-F24">
+                                <rect key="frame" x="20" y="110" width="168" height="24"/>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9sa-1W-oCR" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="3mp-Be-tLx"/>
-                            <constraint firstAttribute="trailing" secondItem="URR-C4-F24" secondAttribute="trailing" constant="20" id="Ago-AE-BMr"/>
                             <constraint firstAttribute="bottom" secondItem="1HV-cm-aY3" secondAttribute="bottom" constant="20" id="FSe-wr-yX2"/>
                             <constraint firstItem="DPf-NE-gRU" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="HCH-rh-cth"/>
                             <constraint firstItem="1HV-cm-aY3" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="O3j-Ls-RTg"/>

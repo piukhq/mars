@@ -13,5 +13,16 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
     
     override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
         super.configureWithViewModel(viewModel)
+        configureStamps(viewModel: viewModel)
+    }
+
+    private func configureStamps(viewModel: PLRCellViewModel) {
+        for stamp in 0..<viewModel.stampsAvailable {
+            let stampView = PLRStampView()
+            stampView.translatesAutoresizingMaskIntoConstraints = false
+            stampsStackView.addArrangedSubview(stampView)
+            stampView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+            stampView.backgroundColor = stamp < viewModel.stampsCollected ? .green : .lightGray
+        }
     }
 }
