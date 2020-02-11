@@ -147,10 +147,10 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.row < viewModel.walletPromptsCount {
-            return LayoutHelper.WalletDimensions.walletPromptSize
-        } else {
+        if indexPath.row < viewModel.cardCount {
             return LayoutHelper.WalletDimensions.cardSize
+        } else {
+            return LayoutHelper.WalletDimensions.walletPromptSize
         }
     }
 
@@ -159,17 +159,17 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row < viewModel.walletPromptsCount {
-            guard let joinCard = viewModel.walletPrompts?[indexPath.row] else {
+        if indexPath.row < viewModel.cardCount {
+            guard let card = viewModel.cards?[indexPath.row] else {
+                return
+            }
+            viewModel.toCardDetail(for: card)
+            
+        } else {
+            guard let joinCard = viewModel.promptCard(forIndexPath: indexPath) else {
                 return
             }
             viewModel.didSelectWalletPrompt(joinCard)
-        } else {
-            guard let card = viewModel.card(forIndexPath: indexPath) else {
-                return
-            }
-
-            viewModel.toCardDetail(for: card)
         }
     }
 }
