@@ -83,6 +83,7 @@ platform :ios do
   lane :beta do |parameters|
     build_app(scheme: "binkapp app store")
     upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_symbols_to_crashlytics(dsym_path: "./Bink.app.dSYM.zip")
   end
 
 end
