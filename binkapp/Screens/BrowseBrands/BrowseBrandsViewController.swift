@@ -8,6 +8,7 @@
 import UIKit
 
 fileprivate struct Constants {
+    static let tableViewHeaderHeight: CGFloat = 47.0
     static let searchIconLeftPadding = 12
     static let searchIconTopPadding = 13
     static let searchIconSideSize = 14
@@ -17,6 +18,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var searchTextField: BinkTextField!
     @IBOutlet private weak var noMatchesLabel: UILabel!
+    @IBOutlet private weak var searchTextFieldContainer: UIView!
     
     let viewModel: BrowseBrandsViewModel
     
@@ -87,7 +89,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         view.addGestureRecognizer(tap)
     }
     
-    @objc func dismissKeyboard() {
+    @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
     
@@ -144,7 +146,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         }
         
         let view = UIView()
-        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 47))
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: Constants.tableViewHeaderHeight))
         titleLabel.font = UIFont.headline
         titleLabel.text = viewModel.getSectionTitleText(section: section)
         view.addSubview(titleLabel)
@@ -157,7 +159,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if viewModel.filteredData.isEmpty {
-            return 47
+            return Constants.tableViewHeaderHeight
         }
         
         return 0
@@ -178,10 +180,10 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
             searchText = textField.text ?? ""
             searchText.popLast()
         } else {
-            searchText = (textField.text ?? "") + string
+            searchText = "\(textField.text ?? "")\(string)"
         }
         
-        viewModel.getMembershipPlans().forEach { (plan) in
+        viewModel.getMembershipPlans().forEach { plan in
             guard let companyName = plan.account?.companyName else {
                 return
             }
@@ -198,7 +200,7 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
             noMatchesLabel.isHidden = true
         }
         
-        textField.textColor = searchText != "" ? UIColor.black : UIColor.greyFifty
+        textField.textColor = searchText != "" ? .black : .greyFifty
         return true
     }
     
@@ -216,8 +218,8 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
     }
 }
 
-extension BrowseBrandsViewController: FilteredDataDelegate {
-    func filteredDataWasChanged() {
+extension BrowseBrandsViewController: BrowseBrandsViewModelDelegate {
+    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan]) {
         tableView.reloadData()
     }
 }

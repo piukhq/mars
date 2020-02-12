@@ -7,8 +7,8 @@
 
 import Foundation
 
-protocol FilteredDataDelegate {
-    func filteredDataWasChanged()
+protocol BrowseBrandsViewModelDelegate: class {
+    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])
 }
 
 class BrowseBrandsViewModel {
@@ -16,11 +16,11 @@ class BrowseBrandsViewModel {
     private let router: MainScreenRouter
     private var membershipPlans = [CD_MembershipPlan]()
     
-    var delegate: FilteredDataDelegate?
+    weak var delegate: BrowseBrandsViewModelDelegate?
     var searchActive = false
     var filteredData = [CD_MembershipPlan]() {
         didSet {
-            delegate?.filteredDataWasChanged()
+            delegate?.browseBrandsViewModel(self, didUpdateFilteredData: filteredData)
         }
     }
     

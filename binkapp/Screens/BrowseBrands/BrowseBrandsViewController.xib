@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="noMatchesLabel" destination="wZU-1d-SYO" id="zCu-vQ-qAU"/>
                 <outlet property="searchTextField" destination="Cu4-Iv-pDu" id="IGg-E6-KMY"/>
+                <outlet property="searchTextFieldContainer" destination="V71-or-ZOr" id="lUR-SV-1la"/>
                 <outlet property="tableView" destination="1MC-ks-eDc" id="wd1-uP-rhH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
