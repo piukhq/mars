@@ -20,7 +20,15 @@ class PLRCellViewModel {
     }
 
     var voucherAmountText: String? {
-        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+        switch voucherEarnType {
+        case .accumulator:
+            return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+        case .stamp:
+            // We need to be able to return the value in between, but when we don't get it back we map by default to 0 which isn't good
+            return "\(voucher.burn?.prefix ?? "") \(voucher.burn?.suffix ?? "")"
+        default:
+            return ""
+        }
     }
 
     var voucherDescriptionText: String? {
@@ -103,8 +111,14 @@ class PLRCellViewModel {
     }
 
     var earnTargetValueString: String? {
-        guard let value = voucher.earn?.targetValue?.floatValue else { return nil }
-        return "\(voucher.earn?.prefix ?? "")\(String(format: "%.02f", value)) \(voucher.earn?.suffix ?? "")"
+        guard let type = earnType else { return nil }
+        switch type {
+        case .accumulator:
+            guard let value = voucher.earn?.targetValue?.floatValue else { return nil }
+            return "\(voucher.earn?.prefix ?? "")\(String(format: "%.02f", value)) \(voucher.earn?.suffix ?? "")"
+        default:
+            return ""
+        }
     }
 
     var dateText: String? {

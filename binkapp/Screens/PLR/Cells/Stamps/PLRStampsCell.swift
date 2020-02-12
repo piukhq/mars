@@ -18,11 +18,10 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
 
     private func configureStamps(viewModel: PLRCellViewModel) {
         for index in 0..<viewModel.stampsAvailable {
-            let stampView = PLRStampView()
+            let stampView = PLRStampView(color: stampColor(atIndex: index, viewModel: viewModel))
             stampView.translatesAutoresizingMaskIntoConstraints = false
             stampsStackView.addArrangedSubview(stampView)
             stampView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-            stampView.backgroundColor = stampColor(atIndex: index, viewModel: viewModel)
         }
     }
 

@@ -11,4 +11,11 @@ import UIKit
 class PLRStampsActiveCell: PLRStampsCell {
     @IBOutlet private weak var earnProgressLabel: UILabel!
     @IBOutlet private weak var earnProgressValueLabel: UILabel!
+
+    override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
+        super.configureWithViewModel(viewModel)
+
+        earnProgressLabel.text = viewModel.earnProgressString
+        earnProgressValueLabel.text = viewModel.earnProgressValueString
+    }
 }
