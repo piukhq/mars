@@ -7,9 +7,14 @@
 
 import Foundation
 
-struct PostModel: Codable {
+class PostModel: Codable {
     var column: String?
     var value: String?
+    
+    init(column: String?, value: String?) {
+        self.column = column
+        self.value = value
+    }
 }
 
 enum MembershipAccountPostModelType {
