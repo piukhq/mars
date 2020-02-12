@@ -71,6 +71,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
         collectionView.register(PLRAccumulatorActiveCell.self, asNib: true)
+        collectionView.register(PLRStampsActiveCell.self, asNib: true)
         return collectionView
     }()
 
@@ -323,16 +324,31 @@ extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: PLRAccumulatorActiveCell = collectionView.dequeue(indexPath: indexPath)
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else { return cell }
+        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
+            fatalError("Could not get voucher for index path")
+        }
 
-        let cellViewModel = PLRCellViewModel(voucher: voucher)
-        cell.configureWithViewModel(cellViewModel)
-        return cell
+        if voucher.earnType == .accumulator {
+            let cell: PLRAccumulatorActiveCell = collectionView.dequeue(indexPath: indexPath)
+            let cellViewModel = PLRCellViewModel(voucher: voucher)
+            cell.configureWithViewModel(cellViewModel)
+            return cell
+        } else if voucher.earnType == .stamp {
+            let cell: PLRStampsActiveCell = collectionView.dequeue(indexPath: indexPath)
+            let cellViewModel = PLRCellViewModel(voucher: voucher)
+            cell.configureWithViewModel(cellViewModel)
+            return cell
+        } else {
+            fatalError("Could not get voucher earn type")
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - (LayoutHelper.LoyaltyCardDetail.contentPadding * 2), height: LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight)
+        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
+            fatalError("Could not get voucher for index path")
+        }
+        let height = voucher.earnType == .accumulator ? LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight : LayoutHelper.PLRCollectionViewCell.stampsActiveCellHeight
+        return CGSize(width: collectionView.frame.width - (LayoutHelper.LoyaltyCardDetail.contentPadding * 2), height: height)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
