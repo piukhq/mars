@@ -35,6 +35,7 @@ class BinkModuleView: CustomView {
         case unLinkable
         case genericError
         case aboutMembership
+        case noReasonCode
     }
     
     private var action: BinkModuleAction?
@@ -136,7 +137,7 @@ private extension BinkModuleView {
                     break
                 case .X101, .X102, .X103, .X104, .X302, .X303, .X304:
                     // Points module 1.6
-                    configure(imageName: imageName, titleText: "error_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
+                    configure(imageName: imageName, titleText: "points_module_retry_log_in_status".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
                     break
                 default:
                     // Points module 1.10 (need reason codes, set by default)
@@ -145,7 +146,7 @@ private extension BinkModuleView {
                 }
             }
             else {
-                configure(imageName: imageName, titleText: "error_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
+                configure(imageName: imageName, titleText: "error_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .noReasonCode)
             }
             break
         default:
@@ -197,7 +198,7 @@ private extension BinkModuleView {
             break
         case .failed:
             // Link module 2.7
-            configure(imageName: "lcdModuleIconsPointsLogin", titleText: "error_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
+            configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
             break
         default:
             return

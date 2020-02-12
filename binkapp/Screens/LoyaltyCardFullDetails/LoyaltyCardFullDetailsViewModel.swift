@@ -79,8 +79,7 @@ class LoyaltyCardFullDetailsViewModel {
         case .loginChanges:
             //TODO: change to login changes screen after is implemented
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
-
+            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
             break
         case .transactions:
             guard membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue ?? false else {
@@ -139,6 +138,9 @@ class LoyaltyCardFullDetailsViewModel {
             break
         case .aboutMembership:
             toAboutMembershipPlanScreen()
+        case .noReasonCode:
+            guard let membershipPlan = membershipCard.membershipPlan else { return }
+            router.toAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
         }
     }
     
