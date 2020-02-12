@@ -11,6 +11,7 @@ import DeepDiff
 import CoreData
 
 class LoyaltyWalletViewModel: WalletViewModel {
+    
     typealias T = CD_MembershipCard
     typealias R = LoyaltyWalletRepository
 
@@ -31,7 +32,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
      }
 
     func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> ()) {
-        guard let card = card(forIndexPath: indexPath) else {
+        guard let card = cards?[indexPath.row] else {
             return
         }
         
