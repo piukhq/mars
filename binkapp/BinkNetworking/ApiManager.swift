@@ -229,7 +229,6 @@ class ApiManager {
         }
         
         guard let data = response.data else {
-            print("Timed out")
             onError(response.error ?? NSError(domain: "", code: 408, userInfo: nil) as Error)
             return
         }
