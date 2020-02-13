@@ -181,20 +181,6 @@ class AuthAndAddViewModel {
             } else {
                 self?.router.toLoyaltyFullDetailsScreen(membershipCard: card)
             }
-//<<<<<<< HEAD
-//
-//
-//            if self?.existingMembershipCard == nil {
-//                self?.populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
-//                var registrationCard = model
-//                registrationCard.account?.addFields = []
-//                self?.repository.patchGhostCard(cardId: card.id, parameters: registrationCard)
-//            }
-//
-//            Current.wallet.refreshLocal()
-//            NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
-//=======
-//>>>>>>> develop
         }) { (error) in
             self.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
         }

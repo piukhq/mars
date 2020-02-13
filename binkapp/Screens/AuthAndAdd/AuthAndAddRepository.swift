@@ -48,18 +48,6 @@ class AuthAndAddRepository {
         }, onError: onError)
     }
     
-//<<<<<<< HEAD
-//    func postGhostCard(parameters: MembershipCardPostModel, existingMembershipCard: CD_MembershipCard? = nil, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (Error?) -> Void) {
-//        var method = RequestHTTPMethod.post
-//        var url = RequestURL.membershipCards
-//        
-//        if let existingCard = existingMembershipCard {
-//            method = .put
-//            url = .membershipCard(cardId: existingCard.id)
-//        }
-//        
-//        apiManager.doRequest(url: url, httpMethod: method, parameters: parameters, isUserDriven: true, onSuccess: { (card: MembershipCardModel) in
-//=======
     func postGhostCard(parameters: MembershipCardPostModel, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (Error?) -> Void) {
 
         let url: RequestURL
@@ -67,8 +55,8 @@ class AuthAndAddRepository {
         var mutableParams = parameters
         var registrationParams: [PostModel]? = nil
 
-        if existingMembershipCard != nil {
-            url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
+        if let existingCard = existingMembershipCard {
+            url = .membershipCard(cardId: existingCard.id)
             method = .patch
             mutableParams.account?.addFields = nil
             mutableParams.account?.authoriseFields = nil
@@ -80,7 +68,6 @@ class AuthAndAddRepository {
         }
 
         apiManager.doRequest(url: url, httpMethod: method, parameters: mutableParams, isUserDriven: true, onSuccess: { (card: MembershipCardModel) in
-//>>>>>>> develop
             Current.database.performBackgroundTask { context in
                 let newObject = card.mapToCoreData(context, .update, overrideID: nil)
 
@@ -108,11 +95,5 @@ class AuthAndAddRepository {
         }) { error in
             onError(error)
         }
-    }
-    
-    func patchGhostCard(cardId: String, parameters: MembershipCardPostModel) {
-        apiManager.doRequest(url: .membershipCard(cardId: cardId), httpMethod: .patch, parameters: parameters, isUserDriven: true, onSuccess:
-            { (response: MembershipCardModel) in }
-        )
     }
 }
