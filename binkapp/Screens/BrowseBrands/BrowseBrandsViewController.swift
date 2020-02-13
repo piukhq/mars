@@ -44,6 +44,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         noMatchesLabel.text = "no_matches".localized
         
         configureSearchTextField()
+        addBlurToSearchTextField()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -87,6 +88,16 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+    }
+    
+    private func addBlurToSearchTextField() {
+        let visualEffectView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect.init(style: .light))
+        visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+        visualEffectView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        visualEffectView.frame = searchTextFieldContainer.frame
+        visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        searchTextFieldContainer.insertSubview(visualEffectView, at: 0)
     }
     
     @objc private func dismissKeyboard() {
