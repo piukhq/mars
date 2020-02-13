@@ -59,16 +59,16 @@ class RootStateMachine: NSObject {
         let loading = LoadingScreen()
         moveTo(loading)
 
-        if Current.apiManager.networkIsReachable {
-            Current.apiManager.doRequest(url: .logout, httpMethod: .post, isUserDriven: false, onSuccess: { [weak self] (response: LogoutResponse) in
-                self?.clearLocalStorage {
-                    self?.completeLogout()
-                }
-            })
-        } else {
+        defer {
             clearLocalStorage { [weak self] in
                 self?.completeLogout()
             }
+        }
+
+        if Current.apiManager.networkIsReachable {
+            // Call the logout endpoint, but we don't care about the response.
+            // On success or error, we will defer to clearing local storage and clearing the user's token.
+            Current.apiManager.doRequest(url: .logout, httpMethod: .post, isUserDriven: false, onSuccess: { (_: LogoutResponse) in })
         }
     }
     
@@ -85,8 +85,9 @@ class RootStateMachine: NSObject {
     
     @objc func completeLogout() {
         Current.userManager.removeUser()
-        moveTo(router?.getOnboardingViewController())
+        Current.userDefaults.set(false, forDefaultsKey: .hasLaunchedWallet)
         NotificationCenter.default.post(name: .shouldTrashLocalWallets, object: nil)
+        moveTo(router?.getOnboardingViewController())
     }
     
     func moveTo(_ viewController: UIViewController?) {

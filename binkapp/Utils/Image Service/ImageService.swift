@@ -12,18 +12,18 @@ import DeepDiff
 
 final class ImageService {
 
-    // TODO: force refresh after plan refresh
-
     typealias ImageCompletionHandler = (UIImage?) -> Void
 
     enum PathType {
-        case membershipPlanImage(plan: CD_MembershipPlan, imageType: ImageType)
+        case membershipPlanIcon(plan: CD_MembershipPlan)
+        case membershipPlanHero(plan: CD_MembershipPlan)
+        case membershipPlanOfferTile(url: String)
     }
 
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
 
         guard let imagePath = path(forType: pathType) else { return }
-        
+
         // Are we forcing a refresh?
         if !forceRefresh {
             // Is the image in memory?
@@ -49,8 +49,13 @@ final class ImageService {
 
     private func path(forType type: PathType) -> String? {
         switch type {
-        case .membershipPlanImage(let plan, let imageType):
-            guard let url = plan.image(of: imageType)?.url else { return nil }
+        case .membershipPlanIcon(let plan):
+            guard let url = plan.image(of: .icon)?.url else { return nil }
+            return url
+        case .membershipPlanHero(let plan):
+            guard let url = plan.image(of: .hero)?.url else { return nil }
+            return url
+        case .membershipPlanOfferTile(let url):
             return url
         }
     }
@@ -61,6 +66,7 @@ final class ImageService {
                 completion(nil)
                 return
             }
+
             completion(downloadedImage)
 
             // Store the downloaded image to disk and fail silently
@@ -137,13 +143,13 @@ final class StorageUtility {
     }
 
     fileprivate static func addStoredObject(_ object: StoredObject) {
+
         // Check we aren't already storing this object
         let storedObjectPaths = sharedStoredObjects.map {
             $0.objectPath
         }
         guard !storedObjectPaths.contains(object.objectPath) else { return }
         sharedStoredObjects.append(object)
-        print(sharedStoredObjects)
         try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
     }
 
@@ -154,6 +160,14 @@ final class StorageUtility {
         }
 
         let validStoredObjects = sharedStoredObjects.filter { !$0.isExpired }
+        let expiredStoredObjects = sharedStoredObjects.filter { $0.isExpired }
+
+        // Purge on disk
+        expiredStoredObjects.forEach {
+            try? Disk.remove($0.objectPath, from: .caches)
+        }
+
+        // Purge object references
         sharedStoredObjects = validStoredObjects
         try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)
     }
@@ -180,13 +194,11 @@ final class StorageUtility {
         let deletions = changes.compactMap {
             $0.delete
         }
-        let deletionIds = deletions.map {
-            $0.index
-        }
 
-        deletionIds.forEach {
-            if sharedStoredObjects.indices.contains($0) {
-                sharedStoredObjects.remove(at: $0)
+        deletions.forEach {
+            if sharedStoredObjects.indices.contains($0.index) {
+                sharedStoredObjects.remove(at: $0.index)
+                try? Disk.remove($0.item, from: .caches)
             }
         }
         try? Disk.save(sharedStoredObjects, to: .applicationSupport, as: StorageUtility.sharedStoredObjectsKey)

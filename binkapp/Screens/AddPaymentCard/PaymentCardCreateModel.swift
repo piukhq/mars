@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PaymentCardCreateModel {
+class PaymentCardCreateModel: Codable {
     var fullPan: String?
     var nameOnCard: String?
     var month: Int?

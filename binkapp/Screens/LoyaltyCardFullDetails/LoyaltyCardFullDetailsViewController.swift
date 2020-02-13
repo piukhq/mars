@@ -29,8 +29,6 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 12
         imageView.contentMode = .scaleAspectFill
-        let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
-        imageView.addGestureRecognizer(gestureRecogniser)
         imageView.layer.applyDefaultBinkShadow()
         return imageView
     }()
@@ -183,11 +181,15 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: brandHeader)
 
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
-
-        let showBarcode = viewModel.membershipCard.card?.barcode != nil
-        let buttonTitle = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
-        showBarcodeButton.setTitle(buttonTitle, for: .normal)
-        stackScrollView.add(arrangedSubview: showBarcodeButton)
+        
+        if viewModel.membershipCard.card?.barcode != nil || viewModel.membershipCard.card?.membershipId != nil {
+            let showBarcode = viewModel.membershipCard.card?.barcode != nil
+            let buttonTitle = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
+            showBarcodeButton.setTitle(buttonTitle, for: .normal)
+            stackScrollView.add(arrangedSubview: showBarcodeButton)
+            let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
+            brandHeader.addGestureRecognizer(gestureRecogniser)
+        }
 
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: showBarcodeButton)
 
@@ -205,13 +207,12 @@ private extension LoyaltyCardFullDetailsViewController {
         }
 
         if viewModel.shouldShowOfferTiles {
-            guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
             stackScrollView.add(arrangedSubview: offerTilesStackView)
             if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
                 offerTileImageUrls.forEach { offer in
                     let offerView = OfferTileView()
                     offerView.translatesAutoresizingMaskIntoConstraints = false
-                    offerView.configure(plan: membershipPlan)
+                    offerView.configure(imageUrl: offer)
                     offerTilesStackView.addArrangedSubview(offerView)
                 }
             }
@@ -239,7 +240,7 @@ private extension LoyaltyCardFullDetailsViewController {
             brandHeader.backgroundColor = UIColor(patternImage: placeholder)
         }
         
-        brandHeader.setImage(forPathType: .membershipPlanImage(plan: plan, imageType: .hero), animated: true)
+        brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
     }
 
     func configureLayout() {

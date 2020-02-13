@@ -22,6 +22,7 @@
 "sign_up_failed_title" = "Sign up failed";
 "please_try_again_title" = "Please try again";
 "log_in_title" = "Log in";
+"register_gc_title" = "Register";
 "credentials_title" = "Enter credentials";
 "registration_failed_title" = "Registration failed";
 "history_title" = "History";
@@ -321,3 +322,6 @@
 
 "ssl_pinning_failure_title" = "Error";
 "ssl_pinning_failure_text" = "Connection error. Please try again.";
+
+// MARK: - Errors
+"communication_error" = "There was a problem communicating with the server. Please try again later.";

@@ -85,6 +85,7 @@ class LoginViewController: BaseFormViewController {
             self?.router.didLogin()
         }) { [weak self] error in
             self?.continueButton.stopLoading()
+            // FIXME: If there is a 5xx outage, this will complain as there will already be an alert presented. This will be addressed when we tidy our error handling.
             self?.showError()
         }
     }

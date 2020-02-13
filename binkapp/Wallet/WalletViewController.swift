@@ -46,8 +46,10 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
 
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .didLoadLocalWallet, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .shouldTrashLocalWallets, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshPostClear), name: .shouldTrashLocalWallets, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .noInternetConnection, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .outageError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .outageSilentFail, object: nil)
 
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
 
@@ -119,6 +121,10 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
             self.refreshControl.endRefreshing()
         }
         collectionView.reloadData()
+    }
+    
+    @objc private func refreshPostClear() {
+        viewModel.refreshLocalWallet()
     }
 
     @objc private func refreshLocal() {

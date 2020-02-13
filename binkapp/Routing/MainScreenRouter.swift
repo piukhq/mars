@@ -28,6 +28,9 @@ class MainScreenRouter {
 
         // SSL Pinning failure
         NotificationCenter.default.addObserver(self, selector: #selector(presentSSLPinningFailurePopup), name: .didFailServerTrustEvaluation, object: nil)
+        
+        //Outage error - Server 500-599 status code
+        NotificationCenter.default.addObserver(self, selector: #selector(displayOutageError), name: .outageError, object: nil)
     }
     
     func wallet() -> UIViewController {
@@ -141,6 +144,20 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
+    func toPatchGhostCard(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
+        let repository = AuthAndAddRepository(apiManager: apiManager)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
+        let viewController = AuthAndAddViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
+    func toSignUp(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
+        let repository = AuthAndAddRepository(apiManager: apiManager)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
+        let viewController = AuthAndAddViewController(viewModel: viewModel)
+        navController?.pushViewController(viewController, animated: true)
+    }
+    
     func toPllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney ) {
         let repository = PLLScreenRepository(apiManager: apiManager)
         let viewModel = PLLScreenViewModel(membershipCard: membershipCard, repository: repository, router: self, journey: journey)
@@ -247,9 +264,23 @@ class MainScreenRouter {
         navController?.present(alert, animated: true, completion: nil)
     }
     
+    func showNoBarcodeAlert(completion: @escaping () -> Void) {
+        let alert = UIAlertController(title: "No Barcode", message: "No barcode or card number to display. Please check the status of this card.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: { _ in
+            completion()
+        }))
+        navController?.present(alert, animated: true, completion: nil)
+    }
+    
     func displaySimplePopup(title: String?, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
+        navController?.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func displayOutageError() {
+        let alert = UIAlertController(title: "error_title".localized, message: "communication_error".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
     }
     

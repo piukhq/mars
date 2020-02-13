@@ -23,8 +23,9 @@ enum RequestURL {
     case paymentCards
     case paymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
+    case spreedly
     
-    var value: String {
+    private var value: String {
         switch self {
         case .login:
             return "/users/login"
@@ -52,16 +53,40 @@ enum RequestURL {
             return "/ubiquity/payment_card/\(cardId)"
         case .linkMembershipCardToPaymentCard(let membershipCardId, let paymentCardId):
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
+        case .spreedly:
+            return "https://core.spreedly.com/v1/payment_methods?environment_key=\(BinkappKeys().spreedlyEnvironmentKey)"
         }
     }
     
     var authRequired: Bool {
         switch self {
-        case .register, .login, .renew:
+        case .register, .login, .renew, .spreedly:
             return false
         default:
             return true
         }
+    }
+
+    var shouldVersionPin: Bool {
+        switch self {
+        case .spreedly:
+            return false
+        default:
+            return true
+        }
+    }
+
+    private var baseUrlString: String {
+        switch self {
+        case .spreedly:
+            return ""
+        default:
+            return APIConstants.baseURLString
+        }
+    }
+
+    var fullUrlString: String {
+        return "\(baseUrlString)\(value)"
     }
 }
 
@@ -80,6 +105,14 @@ enum RequestHTTPMethod {
         case .delete: return .delete
         case .patch: return .patch
         }
+    }
+}
+
+struct ResponseErrors: Decodable {
+    let nonFieldErrors: [String]?
+
+    enum CodingKeys: String, CodingKey {
+        case nonFieldErrors = "non_field_errors"
     }
 }
 
@@ -118,6 +151,10 @@ class ApiManager {
         }
         return .unknown
     }
+
+    var isProduction: Bool {
+        return APIConstants.baseURLString == APIConstants.productionBaseURL
+    }
     
     init() {
         let evaluators = [
@@ -139,11 +176,11 @@ class ApiManager {
         }
         
         let authRequired = url.authRequired
-        let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
+        let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
         
-        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { (response) in
-            self.responseHandler(response: response, authRequired: authRequired, onSuccess: onSuccess, onError: onError)
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { (response) in
+            self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
     }
 
@@ -156,11 +193,11 @@ class ApiManager {
         }
         
         let authRequired = url.authRequired
-        let headerDict = headers != nil ? headers! : getHeader(authRequired: authRequired)
+        let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
                 
-        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { (response) in
-            self.responseHandler(response: response, authRequired: authRequired, onSuccess: onSuccess, onError: onError)
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { (response) in
+            self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
     }
 
@@ -180,7 +217,7 @@ class ApiManager {
         }
     }
     
-    private func responseHandler<Resp: Decodable>(response: AFDataResponse <Any>, authRequired: Bool, onSuccess: (Resp) -> (), onError: (Error) -> ()) {
+    private func responseHandler<Resp: Decodable>(response: AFDataResponse <Any>, authRequired: Bool, isUserDriven: Bool, onSuccess: (Resp) -> (), onError: (Error) -> ()) {
         
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError {
             // SSL/TLS Pinning Failure
@@ -208,8 +245,15 @@ class ApiManager {
                      */
                     NotificationCenter.default.post(name: .didLogout, object: nil)
                 } else if statusCode == 400 {
-                    let errorArray = try decoder.decode([String].self, from: data)
-                    let customError = CustomError(errorMessage: errorArray.first ?? "", statusCode: statusCode)
+                    let decodedResponseErrors = try? decoder.decode(ResponseErrors.self, from: data)
+                    let otherErrors = try? decoder.decode([String].self, from: data)
+                    
+                    let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? otherErrors?.first ?? "went_wrong".localized
+                    let customError = CustomError(errorMessage: errorMessage, statusCode: statusCode)
+                    onError(customError)
+                } else if (500...599).contains(statusCode) {
+                    NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
+                    let customError = CustomError(errorMessage: "", statusCode: statusCode)
                     onError(customError)
                 } else if let error = response.error {
                     print(error)
@@ -235,9 +279,9 @@ class ApiManager {
         }
 
         let authRequired = url.authRequired
-        let requestHeaders = HTTPHeaders(getHeader(authRequired: authRequired))
+        let requestHeaders = HTTPHeaders(getHeader(endpoint: url))
         
-        session.request(APIConstants.baseURLString + "\(url.value)", method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { response in
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { response in
             
             let statusCode = response.response?.statusCode ?? 0
             if statusCode == 200 || statusCode == 201 || statusCode == 204 {
@@ -248,6 +292,10 @@ class ApiManager {
                  ensure that we aggressively respond in app to a 401.
                  */
                 NotificationCenter.default.post(name: .didLogout, object: nil)
+            } else if (500...599).contains(statusCode) {
+                NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
+                let customError = CustomError(errorMessage: "", statusCode: statusCode)
+                completion?(false, customError)
             } else if let error = response.error {
                 print(error)
                 completion?(false, error)
@@ -260,10 +308,10 @@ class ApiManager {
 }
 
 private extension ApiManager {
-    private func getHeader(authRequired: Bool) -> [String: String] {
-        var header = ["Content-Type": "application/json;v=1.1"]
+    private func getHeader(endpoint: RequestURL) -> [String: String] {
+        var header = ["Content-Type": "application/json\(endpoint.shouldVersionPin ? ";v=1.1" : "")"]
         
-        if authRequired {
+        if endpoint.authRequired {
             guard let token = Current.userManager.currentToken else { return header }
             header["Authorization"] = "Token " + token
         }

@@ -65,4 +65,12 @@ class LoyaltyWalletViewModel: WalletViewModel {
             }
         })
     }
+    
+    func showNoBarcodeAlert(completion: @escaping () -> Void) {
+        router.showNoBarcodeAlert {
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
 }

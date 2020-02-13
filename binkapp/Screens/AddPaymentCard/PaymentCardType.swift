@@ -59,7 +59,7 @@ enum PaymentCardType: String, Codable {
             length = 16
             whitespaceIndexLocations = [4, 9, 14]
         }
-        
+
         return FormatValues(prefixes: prefix, length: length, whitespaceIndexLocations: whitespaceIndexLocations)
     }
     
