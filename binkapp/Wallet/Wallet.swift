@@ -101,6 +101,7 @@ class Wallet: CoreDataRepositoryProtocol {
         getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans, isUserDriven: isUserDriven) { success in
             // if this failed, the entire function should fail
             guard success else {
+                NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
                 completion?(success)
                 return
             }
@@ -111,6 +112,7 @@ class Wallet: CoreDataRepositoryProtocol {
         getPaymentWallet(forceRefresh: forceRefresh, isUserDriven: isUserDriven) { success in
             // if this failed, the entire function should fail
             guard success else {
+                NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
                 completion?(success)
                 return
             }

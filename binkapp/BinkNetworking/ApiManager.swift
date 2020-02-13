@@ -163,8 +163,10 @@ class ApiManager {
               Certificates.bink
             ])
         ]
-        
-        session = Session(serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
+       
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 10.0
+        session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
     }
     
     func doRequest<Resp: Decodable>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, isUserDriven: Bool, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error?) -> () = { _ in }) {
@@ -227,6 +229,7 @@ class ApiManager {
         }
         
         guard let data = response.data else {
+            onError(response.error ?? NSError(domain: "", code: 408, userInfo: nil) as Error)
             return
         }
 
