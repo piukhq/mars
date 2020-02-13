@@ -38,7 +38,7 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
                 return .blueInactive
             }
         } else {
-            return .grey10
+            return .black15
         }
     }
 }
