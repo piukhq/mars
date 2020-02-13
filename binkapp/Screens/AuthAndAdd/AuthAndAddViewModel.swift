@@ -27,7 +27,6 @@ enum FormPurpose {
     case signUp
     case signUpFailed
     case ghostCard
-    case ghostCardFailed
     case patchGhostCard
     
     var planDocumentDisplayMatching: PlanDocumentDisplayModel {
@@ -36,7 +35,7 @@ enum FormPurpose {
             return .add
         case .signUp, .signUpFailed:
             return .enrol
-        case .ghostCard, .ghostCardFailed, .patchGhostCard:
+        case .ghostCard, .patchGhostCard:
             return .registration
         }
     }
@@ -58,7 +57,7 @@ class AuthAndAddViewModel {
         case .signUp, .signUpFailed: return "sign_up_new_card_title".localized
         case .add: return "credentials_title".localized
         case .addFailed: return "log_in_title".localized
-        case .ghostCard, .patchGhostCard, .ghostCardFailed: return "register_ghost_card_title".localized
+        case .ghostCard, .patchGhostCard: return "register_ghost_card_title".localized
         }
     }
     
@@ -66,7 +65,7 @@ class AuthAndAddViewModel {
         switch formPurpose {
         case .signUp, .signUpFailed: return "sign_up_button_title".localized
         case .add, .addFailed: return "pll_screen_add_title".localized
-        case .ghostCard, .ghostCardFailed, .patchGhostCard: return "register_card_title".localized
+        case .ghostCard, .patchGhostCard: return "register_card_title".localized
         }
     }
     
@@ -94,7 +93,7 @@ class AuthAndAddViewModel {
         case .ghostCard, .patchGhostCard:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "register_ghost_card_description".localized, planNameCard)
-        case .addFailed, .signUpFailed, .ghostCardFailed:
+        case .addFailed, .signUpFailed:
             return getDescriptionForOtherLogin()
         }
     }
@@ -304,7 +303,7 @@ class AuthAndAddViewModel {
     }
     
     func reloadWithGhostCardFields() {
-        let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .ghostCardFailed : .ghostCard
+        let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .patchGhostCard : .ghostCard
         router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
     }
     
