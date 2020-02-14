@@ -63,9 +63,10 @@ class AuthAndAddViewModel {
     
     var buttonTitle: String {
         switch formPurpose {
-        case .signUp, .signUpFailed: return "sign_up_button_title".localized
-        case .add, .addFailed: return "pll_screen_add_title".localized
-        case .ghostCard, .patchGhostCard: return "register_card_title".localized
+        case .signUp: return "sign_up_button_title".localized
+        case .add: return "pll_screen_add_title".localized
+        case .ghostCard: return "register_card_title".localized
+        case .signUpFailed, .addFailed, .patchGhostCard: return "log_in_title".localized
         }
     }
     
