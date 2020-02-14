@@ -11,6 +11,8 @@ import UIKit
 class PLRStampView: UIView {
     struct Constants {
         static let innerViewWidthHeight: CGFloat = 10
+        static let innerViewCornerRadius: CGFloat = 5
+        static let outerViewCornerRadius: CGFloat = 12
     }
 
     init(color: UIColor) {
@@ -24,12 +26,12 @@ class PLRStampView: UIView {
     }
 
     private func configureView() {
-        layer.cornerRadius = 12
+        layer.cornerRadius = Constants.outerViewCornerRadius
 
         let innerView = UIView()
         innerView.backgroundColor = .white
         innerView.translatesAutoresizingMaskIntoConstraints = false
-        innerView.layer.cornerRadius = 5
+        innerView.layer.cornerRadius = Constants.innerViewCornerRadius
         addSubview(innerView)
         NSLayoutConstraint.activate([
             innerView.widthAnchor.constraint(equalToConstant: Constants.innerViewWidthHeight),
