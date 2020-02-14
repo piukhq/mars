@@ -29,7 +29,7 @@ extension LayoutHelper {
         static let infoButtonCornerRadius: CGFloat = 10
         static let accumulatorActiveCellHeight: CGFloat = 188
         static let accumulatorInactiveCellHeight: CGFloat = 170
-        static let stampsActiveCellHeight: CGFloat = 194
+        static let stampsActiveCellHeight: CGFloat = 200
         static let stampsInactiveCellHeight: CGFloat = 176
 
         struct Accumulator {

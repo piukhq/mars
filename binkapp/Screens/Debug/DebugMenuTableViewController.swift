@@ -74,44 +74,11 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
 extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
     func debugMenuFactory(_ debugMenuFactory: DebugMenuFactory, shouldPerformActionForType type: DebugMenuRow.RowType) {
         switch type {
-        case .email:
-            let alert = UIAlertController(title: "Edit Email Address", message: "This will overwrite the current logged in email address and reboot the app.", preferredStyle: .alert)
-            alert.addTextField { textField in
-                textField.placeholder = "New email address"
-                textField.text = Current.userDefaults.string(forDefaultsKey: .userEmail)
-            }
-
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
-                guard let textField = alert.textFields?.first else {
-                    return
-                }
-                guard let newEmail = textField.text else {
-                    return
-                }
-
-                Current.userDefaults.set(newEmail, forDefaultsKey: .userEmail)
-            
-                self?.clearMembershipCards {
-                    exit(0)
-                }
-                
-            }
-            alert.addAction(cancelAction)
-            alert.addAction(okAction)
-            navigationController?.present(alert, animated: true, completion: nil)
+        case .mockBKWallet:
+            Current.userDefaults.set(!Current.userDefaults.bool(forDefaultsKey: .mockBKWalletIsEnabled), forDefaultsKey: .mockBKWalletIsEnabled)
+            tableView.reloadData()
         default:
             return
-        }
-    }
-    
-    private func clearMembershipCards(completion: @escaping () -> Void) {
-        Current.database.performBackgroundTask { context in
-            context.deleteAll(CD_MembershipCard.self)
-            try? context.save()
-            DispatchQueue.main.async {
-                completion()
-            }
         }
     }
 }

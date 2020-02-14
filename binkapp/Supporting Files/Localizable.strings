@@ -168,6 +168,7 @@
 "link_module_error_title" = "Link error";
 "link_module_to_link_to_cards_message" = "To link to cards";
 "link_module_to_number_of_payment_cards_message" = "To %d of %d cards";
+"link_module_to_number_of_payment_card_message" = "To %d of %d card";
 
 "terms_and_conditions_title" = "Terms and conditions";
 "terms_and_conditions_description" = "I authorise MasterCard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction for MasterCard, Visa and American Express to share such transaction details with Loyalty Angels Limited to enable my card-linked offer(s) and target offers that may be of interest to me. For information about Loyalty Angels Limited privacy practices, please see our Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.";
@@ -310,8 +311,10 @@
 "plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
 "plr_lcd_points_module_title" = "Collecting";
 "plr_lcd_points_module_description" = "Towards rewards";
-"plr_voucher_burn_description" = "for spending %@%@";
-"plr_voucher_earn_value_title" = "Spent:";
+"plr_voucher_accumulator_burn_description" = "for spending %@%@";
+"plr_voucher_stamp_burn_description" = "for collecting %@%@ %@";
+"plr_voucher_accumulator_earn_value_title" = "Spent:";
+"plr_voucher_stamp_earn_value_title" = "Collected:";
 "plr_voucher_earn_target_value_title" = "Goal:";
 "plr_voucher_date_prefix" = "on ";
 "plr_history_title" = "Rewards history";

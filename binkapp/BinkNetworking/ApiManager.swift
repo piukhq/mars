@@ -9,7 +9,7 @@ import Foundation
 import Keys
 import Alamofire
 
-enum RequestURL {
+enum RequestURL: Equatable {
     case login
     case register
     case facebook
@@ -24,6 +24,7 @@ enum RequestURL {
     case paymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
     case spreedly
+    case mockBKWallet
     
     private var value: String {
         switch self {
@@ -55,12 +56,14 @@ enum RequestURL {
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
         case .spreedly:
             return "https://core.spreedly.com/v1/payment_methods?environment_key=\(BinkappKeys().spreedlyEnvironmentKey)"
+        case .mockBKWallet:
+            return "https://virtserver.swaggerhub.com/Bink_API/Bink_External_API/1.2/membership_cards"
         }
     }
     
     var authRequired: Bool {
         switch self {
-        case .register, .login, .renew, .spreedly:
+        case .register, .login, .renew, .spreedly, .mockBKWallet:
             return false
         default:
             return true
@@ -78,7 +81,7 @@ enum RequestURL {
 
     private var baseUrlString: String {
         switch self {
-        case .spreedly:
+        case .spreedly, .mockBKWallet:
             return ""
         default:
             return APIConstants.baseURLString

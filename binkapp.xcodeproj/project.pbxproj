@@ -377,6 +377,7 @@
 		EFA5F7672379BD690027AB80 /* PLRStampsActiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA5F7652379BD690027AB80 /* PLRStampsActiveCell.xib */; };
 		EFA5F76A2379BD790027AB80 /* PLRStampsInactiveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA5F7682379BD790027AB80 /* PLRStampsInactiveCell.swift */; };
 		EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */; };
+		EFB055A623F453C400D64F86 /* PLRStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB055A523F453C400D64F86 /* PLRStampView.swift */; };
 		EFB7ED5C2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */; };
 		EFB7ED612379CA4000B72D06 /* PLRRewardsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */; };
 		EFB7ED652379CA5900B72D06 /* PLRRewardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */; };
@@ -834,6 +835,7 @@
 		EFA5F7652379BD690027AB80 /* PLRStampsActiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRStampsActiveCell.xib; sourceTree = "<group>"; };
 		EFA5F7682379BD790027AB80 /* PLRStampsInactiveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRStampsInactiveCell.swift; sourceTree = "<group>"; };
 		EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRStampsInactiveCell.xib; sourceTree = "<group>"; };
+		EFB055A523F453C400D64F86 /* PLRStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRStampView.swift; sourceTree = "<group>"; };
 		EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRBaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardsHistoryViewController.swift; sourceTree = "<group>"; };
 		EFB7ED632379CA5900B72D06 /* PLRRewardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewController.swift; sourceTree = "<group>"; };
@@ -2032,6 +2034,7 @@
 				EFA5F7652379BD690027AB80 /* PLRStampsActiveCell.xib */,
 				EFA5F7682379BD790027AB80 /* PLRStampsInactiveCell.swift */,
 				EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */,
+				EFB055A523F453C400D64F86 /* PLRStampView.swift */,
 			);
 			path = Stamps;
 			sourceTree = "<group>";
@@ -2796,6 +2799,7 @@
 				B774E9AA233123BD006D4131 /* ReusableTemplateViewController.swift in Sources */,
 				3CB6BF7223141CF400B74882 /* AuthAndAddViewController.swift in Sources */,
 				EFA5F7112379A7C70027AB80 /* CD_MembershipPlanAccount.swift in Sources */,
+				EFB055A623F453C400D64F86 /* PLRStampView.swift in Sources */,
 				3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */,
 				DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */,
 				BD475E7123A2AED80071302A /* CD_PlanDocumentDisplay.swift in Sources */,
