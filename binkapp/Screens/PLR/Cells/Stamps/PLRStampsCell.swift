@@ -9,6 +9,10 @@
 import UIKit
 
 class PLRStampsCell: PLRBaseCollectionViewCell {
+    struct Constants {
+        static let stampViewWidth: CGFloat = 24
+    }
+
     @IBOutlet private weak var stampsStackView: UIStackView!
     
     override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
@@ -21,7 +25,7 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
             let stampView = PLRStampView(color: stampColor(atIndex: index, viewModel: viewModel))
             stampView.translatesAutoresizingMaskIntoConstraints = false
             stampsStackView.addArrangedSubview(stampView)
-            stampView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+            stampView.widthAnchor.constraint(equalToConstant: Constants.stampViewWidth).isActive = true
         }
     }
 

@@ -96,14 +96,13 @@ extension PLRRewardsHistoryViewController: UICollectionViewDataSource, UICollect
             fatalError("Could not get voucher for index path")
         }
 
+        let cellViewModel = PLRCellViewModel(voucher: voucher)
         if voucher.earnType == .accumulator {
             let cell: PLRAccumulatorInactiveCell = collectionView.dequeue(indexPath: indexPath)
-            let cellViewModel = PLRCellViewModel(voucher: voucher)
             cell.configureWithViewModel(cellViewModel)
             return cell
         } else if voucher.earnType == .stamp {
             let cell: PLRStampsInactiveCell = collectionView.dequeue(indexPath: indexPath)
-            let cellViewModel = PLRCellViewModel(voucher: voucher)
             cell.configureWithViewModel(cellViewModel)
             return cell
         } else {

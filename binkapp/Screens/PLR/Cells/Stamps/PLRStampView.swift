@@ -9,6 +9,10 @@
 import UIKit
 
 class PLRStampView: UIView {
+    struct Constants {
+        static let innerViewWidthHeight: CGFloat = 10
+    }
+
     init(color: UIColor) {
         super.init(frame: .zero)
         backgroundColor = color
@@ -28,8 +32,8 @@ class PLRStampView: UIView {
         innerView.layer.cornerRadius = 5
         addSubview(innerView)
         NSLayoutConstraint.activate([
-            innerView.widthAnchor.constraint(equalToConstant: 10),
-            innerView.heightAnchor.constraint(equalToConstant: 10),
+            innerView.widthAnchor.constraint(equalToConstant: Constants.innerViewWidthHeight),
+            innerView.heightAnchor.constraint(equalToConstant: Constants.innerViewWidthHeight),
             innerView.centerYAnchor.constraint(equalTo: centerYAnchor),
             innerView.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])

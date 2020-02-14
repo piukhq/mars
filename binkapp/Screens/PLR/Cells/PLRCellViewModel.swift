@@ -96,7 +96,7 @@ class PLRCellViewModel {
             let earnSuffix = voucher.earn?.suffix
             return "\(earnValue ?? 0)/\(earnTargetValue ?? 0) \(earnSuffix ?? "")"
         default:
-            return ""
+            return nil
         }
     }
 
@@ -117,7 +117,7 @@ class PLRCellViewModel {
             guard let value = voucher.earn?.targetValue?.floatValue else { return nil }
             return "\(voucher.earn?.prefix ?? "")\(String(format: "%.02f", value)) \(voucher.earn?.suffix ?? "")"
         default:
-            return ""
+            return nil
         }
     }
 
