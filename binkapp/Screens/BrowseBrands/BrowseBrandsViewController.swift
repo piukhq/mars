@@ -37,6 +37,8 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        tableView.contentInsetAdjustmentBehavior = .never
         searchTextField.delegate = self
         viewModel.delegate = self
         
@@ -172,8 +174,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         if viewModel.filteredData.isEmpty {
             return Constants.tableViewHeaderHeight
         }
-        
-        return 0
+        return CGFloat.leastNormalMagnitude
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
