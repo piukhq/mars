@@ -8,10 +8,11 @@
 import UIKit
 
 fileprivate struct Constants {
-    static let searchBarHeight: CGFloat = 50.0
+    static let tableViewHeaderHeight: CGFloat = 47.0
     static let searchIconLeftPadding = 12
     static let searchIconTopPadding = 13
     static let searchIconSideSize = 14
+    static let contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
 }
 
 class BrowseBrandsViewController: BinkTrackableViewController {
@@ -37,7 +38,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.contentInset = UIEdgeInsets(top: Constants.searchBarHeight, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = Constants.contentInset
         searchTextField.delegate = self
         viewModel.delegate = self
         
