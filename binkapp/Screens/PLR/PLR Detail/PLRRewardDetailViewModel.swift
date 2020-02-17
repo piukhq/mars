@@ -138,6 +138,10 @@ class PLRRewardDetailViewModel {
         return VoucherState(rawValue: voucher.state ?? "")
     }
 
+    var voucherEarnType: VoucherEarnType? {
+        return voucher.earnType
+    }
+
     var voucherAmountText: String {
         return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
     }
