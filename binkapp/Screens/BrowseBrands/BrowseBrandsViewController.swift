@@ -8,7 +8,7 @@
 import UIKit
 
 fileprivate struct Constants {
-    static let tableViewHeaderHeight: CGFloat = 47.0
+    static let searchBarHeight: CGFloat = 50.0
     static let searchIconLeftPadding = 12
     static let searchIconTopPadding = 13
     static let searchIconSideSize = 14
@@ -37,8 +37,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.tableHeaderView = UIView(frame: .zero)
-        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.contentInset = UIEdgeInsets(top: Constants.searchBarHeight, left: 0, bottom: 0, right: 0)
         searchTextField.delegate = self
         viewModel.delegate = self
         
@@ -98,7 +97,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         visualEffectView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         visualEffectView.frame = searchTextFieldContainer.frame
         visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
         searchTextFieldContainer.insertSubview(visualEffectView, at: 0)
     }
     

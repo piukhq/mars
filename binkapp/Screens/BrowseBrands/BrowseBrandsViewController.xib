@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="1MC-ks-eDc">
-                    <rect key="frame" x="25" y="94" width="364" height="802"/>
+                    <rect key="frame" x="25" y="0.0" width="364" height="896"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
@@ -35,17 +35,19 @@
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cu4-Iv-pDu" customClass="BinkTextField" customModule="binkapp" customModuleProvider="target">
                                     <rect key="frame" x="25" y="0.0" width="364" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="ZrJ-EU-TCa"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="Cu4-Iv-pDu" secondAttribute="trailing" constant="25" id="2hJ-Xr-baD"/>
                                 <constraint firstItem="Cu4-Iv-pDu" firstAttribute="leading" secondItem="V71-or-ZOr" secondAttribute="leading" constant="25" id="Q1y-Xy-ebF"/>
+                                <constraint firstItem="Cu4-Iv-pDu" firstAttribute="top" secondItem="V71-or-ZOr" secondAttribute="top" id="QP7-2F-Fuf"/>
                                 <constraint firstAttribute="height" constant="50" id="eHa-91-CAE"/>
-                                <constraint firstItem="Cu4-Iv-pDu" firstAttribute="top" secondItem="V71-or-ZOr" secondAttribute="top" id="kIb-PL-kFh"/>
-                                <constraint firstAttribute="bottom" secondItem="Cu4-Iv-pDu" secondAttribute="bottom" constant="10" id="nY9-Ud-0mH"/>
                             </constraints>
                         </view>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZU-1d-SYO">
@@ -60,7 +62,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ccM-nf-ZMN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4tc-3l-0Zu"/>
-                <constraint firstItem="1MC-ks-eDc" firstAttribute="top" secondItem="ccM-nf-ZMN" secondAttribute="bottom" id="Svo-PM-r8O"/>
+                <constraint firstItem="1MC-ks-eDc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Svo-PM-r8O"/>
                 <constraint firstItem="1MC-ks-eDc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="hId-fZ-Z73"/>
                 <constraint firstItem="ccM-nf-ZMN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="hnU-da-8Bj"/>
                 <constraint firstItem="ccM-nf-ZMN" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="lmh-JR-au4"/>
