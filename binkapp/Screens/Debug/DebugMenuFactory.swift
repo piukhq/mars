@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol DebugMenuFactoryDelegate: AnyObject {
     func debugMenuFactory(_ debugMenuFactory: DebugMenuFactory, shouldPerformActionForType type: DebugMenuRow.RowType)
@@ -36,7 +37,12 @@ class DebugMenuFactory {
     }
     
     private func makeEndpointRow() -> DebugMenuRow {
-        return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: nil)
+        return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: {
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
+                
+            }))
+        })
     }
 
     private func makeMockBKWalletRow() -> DebugMenuRow {
