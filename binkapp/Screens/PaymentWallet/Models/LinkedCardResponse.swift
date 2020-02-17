@@ -11,7 +11,7 @@ import CoreData
 
 struct LinkedCardResponse: Codable {
     var id: Int?
-    var activeLink: Bool
+    var activeLink: Bool?
 
     enum CodingKeys: String, CodingKey {
         case id

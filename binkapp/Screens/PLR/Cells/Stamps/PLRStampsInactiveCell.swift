@@ -8,6 +8,11 @@
 
 import UIKit
 
-class PLRStampsInactiveCell: PLRBaseCollectionViewCell {
-    @IBOutlet weak var timeDateLabel: UILabel!
+class PLRStampsInactiveCell: PLRStampsCell {
+    @IBOutlet private weak var timeDateLabel: UILabel!
+
+    override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
+        super.configureWithViewModel(viewModel)
+        timeDateLabel.text = viewModel.dateText
+    }
 }

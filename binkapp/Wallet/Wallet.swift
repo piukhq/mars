@@ -101,6 +101,7 @@ class Wallet: CoreDataRepositoryProtocol {
         getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans, isUserDriven: isUserDriven) { success in
             // if this failed, the entire function should fail
             guard success else {
+                NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
                 completion?(success)
                 return
             }
@@ -111,6 +112,7 @@ class Wallet: CoreDataRepositoryProtocol {
         getPaymentWallet(forceRefresh: forceRefresh, isUserDriven: isUserDriven) { success in
             // if this failed, the entire function should fail
             guard success else {
+                NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
                 completion?(success)
                 return
             }
@@ -169,7 +171,16 @@ class Wallet: CoreDataRepositoryProtocol {
             return
         }
 
-        let url = RequestURL.membershipCards
+        // Temporary debug mode where we provide a mock json response for BK PLR implementation
+        // TODO: Remove once BK data is live
+        var url: RequestURL
+        #if DEBUG
+        let isMockBKWalletEnabled = Current.userDefaults.bool(forDefaultsKey: .mockBKWalletIsEnabled)
+        url = isMockBKWalletEnabled ? RequestURL.mockBKWallet : RequestURL.membershipCards
+        #else
+        url = RequestURL.membershipCards
+        #endif
+
         let method = RequestHTTPMethod.get
 
         Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: isUserDriven, onSuccess: { [weak self] (response: [MembershipCardModel]) in
