@@ -74,4 +74,12 @@ class OnboardingViewModel {
     func pushToLogin() {
         navigationController?.pushViewController(LoginViewController(router: router), animated: true)
     }
+    
+    func openDebugMenu() {
+        let debugMenuFactory = DebugMenuFactory()
+        let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
+        let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
+        debugMenuFactory.delegate = debugMenuViewController
+        navigationController?.pushViewController(debugMenuViewController, animated: true)
+    }
 }

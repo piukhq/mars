@@ -76,27 +76,29 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
         switch type {
         case .endpoint:
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { [weak self] _ in
+            alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
                 APIConstants.changeEnvironment(environment: .dev)
-                self?.tableView.reloadData()
+                NotificationCenter.default.post(name: .shouldLogout, object: nil)
             }))
-            alert.addAction(UIAlertAction(title: "Staging", style: .default, handler: { [weak self] _ in
+            alert.addAction(UIAlertAction(title: "Staging", style: .default, handler: { _ in
                 APIConstants.changeEnvironment(environment: .staging)
-                self?.tableView.reloadData()
+                NotificationCenter.default.post(name: .shouldLogout, object: nil)
             }))
-            alert.addAction(UIAlertAction(title: "Daedalus", style: .default, handler: { [weak self] _ in
+            alert.addAction(UIAlertAction(title: "Daedalus", style: .default, handler: { _ in
                 APIConstants.changeEnvironment(environment: .daedalus)
-                self?.tableView.reloadData()
+                NotificationCenter.default.post(name: .shouldLogout, object: nil)
             }))
             alert.addAction(UIAlertAction(title: "Custom", style: .destructive, handler: { [weak self] _ in
                 let customAlert = UIAlertController(title: "Base URL", message: "Please insert a valid URL.", preferredStyle: .alert)
                 customAlert.addTextField { textField in
                     textField.placeholder = "api.dev.gb.com"
                 }
-                if let textField = customAlert.textFields?.first, let textFieldText = textField.text {
+                if let textField = customAlert.textFields?.first {
                     customAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                        APIConstants.moveToCustomURL(url: textFieldText)
-                        self?.tableView.reloadData()
+                        if let textFieldText = textField.text {
+                            APIConstants.moveToCustomURL(url: textFieldText)
+                            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                        }
                     }))
                     self?.navigationController?.present(customAlert, animated: true, completion: nil)
                 }
