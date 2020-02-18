@@ -15,19 +15,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BarcodeViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
+                <outlet property="barcodeCenterVerticallyConstraint" destination="b9H-Oz-JIy" id="07E-u8-Jvc"/>
                 <outlet property="barcodeImageView" destination="IzY-K3-FYy" id="lJ2-0L-5mK"/>
                 <outlet property="barcodeStackView" destination="jOx-j2-dLl" id="0pH-Na-obZ"/>
-                <outlet property="barcodeStackViewLeadingConstraint" destination="EG9-Jd-xzR" id="ovY-7D-Eyl"/>
-                <outlet property="barcodeStackViewTopConstraint" destination="9td-Lr-KqC" id="cmS-aT-ygJ"/>
-                <outlet property="barcodeStackViewTrailingConstraint" destination="B3c-QL-sic" id="dFC-hH-dNs"/>
+                <outlet property="barcodeStackViewTopConstraint" destination="THV-9a-xNO" id="S6D-R1-afS"/>
                 <outlet property="descriptionLabel" destination="tjc-ff-zGD" id="OVV-FH-diX"/>
+                <outlet property="labelCenterVerticallyConstraint" destination="iMn-Et-YTD" id="2gA-P6-xAU"/>
                 <outlet property="labelStackView" destination="1Jn-zV-sJX" id="ejJ-IC-1qM"/>
                 <outlet property="labelStackViewLeadingConstraint" destination="p5w-6V-rrj" id="zwB-YU-1UZ"/>
-                <outlet property="labelStackViewTopConstraint" destination="z0E-Kq-2k0" id="HC3-hG-Ojr"/>
+                <outlet property="labelStackViewTopConstraint" destination="bk3-mQ-N41" id="HQL-Dg-xI7"/>
                 <outlet property="labelStackViewTrailingConstraint" destination="wRb-67-6zz" id="MW3-mE-Csw"/>
                 <outlet property="maximiseButton" destination="zFJ-Yy-zw9" id="kAd-i6-Pny"/>
-                <outlet property="maximizedTiltleLabel" destination="7Gp-ML-hjo" id="k78-9k-fLU"/>
-                <outlet property="minimiseButton" destination="Sc9-VW-qY9" id="lI5-iu-r7T"/>
+                <outlet property="maximizedTitleLabel" destination="7Gp-ML-hjo" id="Pl8-qg-Qz2"/>
+                <outlet property="minimizeButton" destination="Sc9-VW-qY9" id="yv0-EJ-SbA"/>
                 <outlet property="numberLabel" destination="heL-au-EqW" id="Otc-kE-oDY"/>
                 <outlet property="titleLabel" destination="52l-XX-9PQ" id="DnI-g2-YAL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -51,7 +51,7 @@
                     <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </stackView>
                 <stackView verifyAmbiguity="off" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="1Jn-zV-sJX">
-                    <rect key="frame" x="25" y="239" width="325" height="89.5"/>
+                    <rect key="frame" x="25" y="239" width="325" height="189"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="52l-XX-9PQ">
                             <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
@@ -60,13 +60,13 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="heL-au-EqW">
-                            <rect key="frame" x="0.0" y="34.5" width="42" height="20.5"/>
+                            <rect key="frame" x="0.0" y="34.5" width="42" height="120"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjc-ff-zGD">
-                            <rect key="frame" x="0.0" y="69" width="42" height="20.5"/>
+                            <rect key="frame" x="0.0" y="168.5" width="42" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -102,15 +102,17 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Sc9-VW-qY9" secondAttribute="bottom" constant="25" id="3fF-JC-sox"/>
-                <constraint firstItem="jOx-j2-dLl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="9td-Lr-KqC"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jOx-j2-dLl" secondAttribute="trailing" constant="25" id="B3c-QL-sic"/>
                 <constraint firstItem="jOx-j2-dLl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="EG9-Jd-xzR"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7Gp-ML-hjo" secondAttribute="trailing" id="Elp-q8-ol8"/>
+                <constraint firstAttribute="trailing" secondItem="7Gp-ML-hjo" secondAttribute="trailing" id="Elp-q8-ol8"/>
                 <constraint firstItem="7Gp-ML-hjo" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="LPS-L4-e67"/>
+                <constraint firstItem="jOx-j2-dLl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="THV-9a-xNO"/>
+                <constraint firstItem="jOx-j2-dLl" firstAttribute="centerY" secondItem="7Gp-ML-hjo" secondAttribute="centerY" priority="250" id="b9H-Oz-JIy"/>
+                <constraint firstItem="1Jn-zV-sJX" firstAttribute="top" secondItem="IzY-K3-FYy" secondAttribute="bottom" id="bk3-mQ-N41"/>
                 <constraint firstItem="Sc9-VW-qY9" firstAttribute="centerX" secondItem="7Gp-ML-hjo" secondAttribute="centerX" id="eQW-H9-DTD"/>
+                <constraint firstItem="1Jn-zV-sJX" firstAttribute="centerY" secondItem="7Gp-ML-hjo" secondAttribute="centerY" id="iMn-Et-YTD"/>
                 <constraint firstItem="1Jn-zV-sJX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="p5w-6V-rrj"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1Jn-zV-sJX" secondAttribute="trailing" constant="25" id="wRb-67-6zz"/>
-                <constraint firstItem="1Jn-zV-sJX" firstAttribute="top" secondItem="jOx-j2-dLl" secondAttribute="bottom" id="z0E-Kq-2k0"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
