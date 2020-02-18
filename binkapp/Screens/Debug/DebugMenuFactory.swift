@@ -37,11 +37,9 @@ class DebugMenuFactory {
     }
     
     private func makeEndpointRow() -> DebugMenuRow {
-        return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: {
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
-                
-            }))
+        return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .endpoint)
         })
     }
 
