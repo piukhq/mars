@@ -75,35 +75,8 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
     func debugMenuFactory(_ debugMenuFactory: DebugMenuFactory, shouldPerformActionForType type: DebugMenuRow.RowType) {
         switch type {
         case .endpoint:
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
-                APIConstants.changeEnvironment(environment: .dev)
-                NotificationCenter.default.post(name: .shouldLogout, object: nil)
-            }))
-            alert.addAction(UIAlertAction(title: "Staging", style: .default, handler: { _ in
-                APIConstants.changeEnvironment(environment: .staging)
-                NotificationCenter.default.post(name: .shouldLogout, object: nil)
-            }))
-            alert.addAction(UIAlertAction(title: "Daedalus", style: .default, handler: { _ in
-                APIConstants.changeEnvironment(environment: .daedalus)
-                NotificationCenter.default.post(name: .shouldLogout, object: nil)
-            }))
-            alert.addAction(UIAlertAction(title: "Custom", style: .destructive, handler: { [weak self] _ in
-                let customAlert = UIAlertController(title: "Base URL", message: "Please insert a valid URL.", preferredStyle: .alert)
-                customAlert.addTextField { textField in
-                    textField.placeholder = "api.dev.gb.com"
-                }
-                if let textField = customAlert.textFields?.first {
-                    customAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                        if let textFieldText = textField.text {
-                            APIConstants.moveToCustomURL(url: textFieldText)
-                            NotificationCenter.default.post(name: .shouldLogout, object: nil)
-                        }
-                    }))
-                    self?.navigationController?.present(customAlert, animated: true, completion: nil)
-                }
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            guard let navController = navigationController else { return }
+            let alert = debugMenuFactory.makeEnvironmentAlertController(navigationController: navController)
             navigationController?.present(alert, animated: true, completion: nil)
         case .mockBKWallet:
             Current.userDefaults.set(!Current.userDefaults.bool(forDefaultsKey: .mockBKWalletIsEnabled), forDefaultsKey: .mockBKWalletIsEnabled)

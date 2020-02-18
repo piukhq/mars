@@ -50,4 +50,38 @@ class DebugMenuFactory {
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .mockBKWallet)
         })
     }
+    
+    func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
+            APIConstants.changeEnvironment(environment: .dev)
+            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Staging", style: .default, handler: { _ in
+            APIConstants.changeEnvironment(environment: .staging)
+            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Daedalus", style: .default, handler: { _ in
+            APIConstants.changeEnvironment(environment: .daedalus)
+            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Custom", style: .destructive, handler: { _ in
+            let customAlert = UIAlertController(title: "Base URL", message: "Please insert a valid URL.", preferredStyle: .alert)
+            customAlert.addTextField { textField in
+                textField.placeholder = "api.dev.gb.com"
+            }
+            if let textField = customAlert.textFields?.first {
+                customAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    if let textFieldText = textField.text {
+                        APIConstants.moveToCustomURL(url: textFieldText)
+                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                    }
+                }))
+                navigationController.present(customAlert, animated: true, completion: nil)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        return alert
+    }
 }
