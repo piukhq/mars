@@ -96,6 +96,7 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
                 if let textField = customAlert.textFields?.first, let textFieldText = textField.text {
                     customAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                         APIConstants.moveToCustomURL(url: textFieldText)
+                        self?.tableView.reloadData()
                     }))
                     self?.navigationController?.present(customAlert, animated: true, completion: nil)
                 }
