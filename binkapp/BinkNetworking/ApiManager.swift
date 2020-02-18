@@ -30,7 +30,7 @@ enum RequestURL: Equatable {
     private var value: String {
         switch self {
         case .service:
-            return "/service"
+            return "/ubiquity/service"
         case .login:
             return "/users/login"
         case .register:
@@ -66,7 +66,7 @@ enum RequestURL: Equatable {
     
     var authRequired: Bool {
         switch self {
-        case .register, .login, .renew, .spreedly, .mockBKWallet, .service:
+        case .register, .login, .renew, .spreedly, .mockBKWallet:
             return false
         default:
             return true

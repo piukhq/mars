@@ -88,17 +88,20 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         continueButton.startLoading()
         
         Current.apiManager.doRequest(url: .facebook, httpMethod: .post, parameters: request, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
-
-            // DO SERVICE CALL HERE
-
-            Current.userManager.setNewUser(with: response)
-            self?.router?.didLogin()
-            self?.updatePreferences(checkboxes: preferenceCheckboxes)
-            self?.request = nil
-            self?.continueButton.stopLoading()
-        }) { [weak self] (error) in
-            self?.showError()
-            self?.continueButton.stopLoading()
+            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: response.email), isUserDriven: false) { [weak self] (success, error) in
+                // If there is an error, or the response is not successful, bail out
+                guard error != nil, success else {
+                    self?.handleAuthError()
+                    return
+                }
+                Current.userManager.setNewUser(with: response)
+                self?.router?.didLogin()
+                self?.updatePreferences(checkboxes: preferenceCheckboxes)
+                self?.request = nil
+                self?.continueButton.stopLoading()
+            }
+        }) { [weak self] _ in
+            self?.handleAuthError()
         }
     }
     
@@ -118,10 +121,15 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
          Current.apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, isUserDriven: false, completion: nil)
      }
     
-    func showError() {
+    private func showError() {
         let alert = UIAlertController(title: "error_title".localized, message: "social_tandcs_error".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         present(alert, animated: true)
+    }
+
+    private func handleAuthError() {
+        continueButton.stopLoading()
+        showError()
     }
 }
 

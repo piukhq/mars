@@ -80,16 +80,18 @@ class LoginViewController: BaseFormViewController {
         )
         
         Current.apiManager.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
-
-            // DO SERVICE CALL HERE
-
-            self?.continueButton.stopLoading()
-            Current.userManager.setNewUser(with: response)
-            self?.router.didLogin()
-        }) { [weak self] error in
-            self?.continueButton.stopLoading()
-            // FIXME: If there is a 5xx outage, this will complain as there will already be an alert presented. This will be addressed when we tidy our error handling.
-            self?.showError()
+            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: response.email), isUserDriven: false) { [weak self] (success, error) in
+                // If there is an error, or the response is not successful, bail out
+                guard error != nil, success else {
+                    self?.handleLoginError()
+                    return
+                }
+                self?.continueButton.stopLoading()
+                Current.userManager.setNewUser(with: response)
+                self?.router.didLogin()
+            }
+        }) { [weak self] _ in
+            self?.handleLoginError()
         }
     }
     
@@ -97,10 +99,15 @@ class LoginViewController: BaseFormViewController {
         router.toForgotPasswordViewController(navigationController: navigationController)
     }
     
-    func showError() {
+    private func showError() {
         let alert = UIAlertController(title: "error_title".localized, message: "login_error".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         present(alert, animated: true)
+    }
+
+    private func handleLoginError() {
+        continueButton.stopLoading()
+        showError()
     }
 }
 

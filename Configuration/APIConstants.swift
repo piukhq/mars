@@ -51,4 +51,14 @@ enum APIConstants {
     
     static let clientID = "MKd3FfDGBi1CIUQwtahmPap64lneCa2R6GvVWKg6dNg4w9Jnpd"
     static let bundleID = "com.bink.wallet"
+
+    static func makeServicePostRequest(email: String?) -> [String: [String: Any]] {
+        return [
+            "consent":
+                [
+                    "email": email ?? "",
+                    "timestamp": Int(Date().timeIntervalSince1970)
+                ]
+        ]
+    }
 }

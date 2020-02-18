@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import JWTDecode
 
 struct UserMigrationController {
     
@@ -37,7 +38,6 @@ struct UserMigrationController {
             completion(false)
             return
         }
-    
         
         Current.apiManager.doRequest(
             url: .renew,
@@ -45,12 +45,24 @@ struct UserMigrationController {
             headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json;v1.1"],
             isUserDriven: false,
             onSuccess: { (response: RenewTokenResponse) in
+                var email: String?
+                do {
+                    let jwt = try decode(jwt: token)
+                    email = jwt.body["user_id"] as? String
+                } catch {
+                    completion(false)
+                }
 
-                // DO SERVICE CALL HERE
-
-                Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
-                Current.userManager.setNewUser(with: response)
-                completion(true)
+                Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { (success, error) in
+                    // If there is an error, or the response is not successful, bail out
+                    guard error != nil, success else {
+                        completion(false)
+                        return
+                    }
+                    Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
+                    Current.userManager.setNewUser(with: response)
+                    completion(true)
+                }
         }) { (error) in
             completion(false)
         }
