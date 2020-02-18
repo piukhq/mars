@@ -45,6 +45,9 @@ struct UserMigrationController {
             headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json;v1.1"],
             isUserDriven: false,
             onSuccess: { (response: RenewTokenResponse) in
+
+                // DO SERVICE CALL HERE
+
                 Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
                 Current.userManager.setNewUser(with: response)
                 completion(true)

@@ -88,6 +88,9 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         continueButton.startLoading()
         
         Current.apiManager.doRequest(url: .facebook, httpMethod: .post, parameters: request, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+
+            // DO SERVICE CALL HERE
+
             Current.userManager.setNewUser(with: response)
             self?.router?.didLogin()
             self?.updatePreferences(checkboxes: preferenceCheckboxes)

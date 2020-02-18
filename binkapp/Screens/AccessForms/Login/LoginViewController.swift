@@ -80,6 +80,9 @@ class LoginViewController: BaseFormViewController {
         )
         
         Current.apiManager.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+
+            // DO SERVICE CALL HERE
+
             self?.continueButton.stopLoading()
             Current.userManager.setNewUser(with: response)
             self?.router.didLogin()
