@@ -53,17 +53,19 @@ struct UserMigrationController {
                     completion(false)
                 }
 
+                Current.userManager.setNewUser(with: response)
                 Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { (success, error) in
                     // If there is an error, or the response is not successful, bail out
-                    guard error != nil, success else {
+                    guard error == nil, success else {
+                        Current.userManager.removeUser()
                         completion(false)
                         return
                     }
                     Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
-                    Current.userManager.setNewUser(with: response)
                     completion(true)
                 }
         }) { (error) in
+            Current.userManager.removeUser()
             completion(false)
         }
     }

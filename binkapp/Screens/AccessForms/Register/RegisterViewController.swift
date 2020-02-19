@@ -62,13 +62,13 @@ class RegisterViewController: BaseFormViewController {
         continueButton.startLoading()
         
         Current.apiManager.doRequest(url: .register, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+            Current.userManager.setNewUser(with: response)
             Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: response.email), isUserDriven: false) { [weak self] (success, error) in
                 // If there is an error, or the response is not successful, bail out
-                guard error != nil, success else {
+                guard error == nil, success else {
                     self?.handleRegistrationError()
                     return
                 }
-                Current.userManager.setNewUser(with: response)
                 self?.router.didLogin()
                 self?.updatePreferences(checkboxes: preferenceCheckboxes)
                 self?.continueButton.stopLoading()
@@ -101,6 +101,7 @@ class RegisterViewController: BaseFormViewController {
     }
 
     private func handleRegistrationError() {
+        Current.userManager.removeUser()
         continueButton.stopLoading()
         showError()
     }
