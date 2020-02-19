@@ -9,16 +9,11 @@
 import UIKit
 
 class SegmentedTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        segmentedControl.setTitle("API v1.1", forSegmentAt: 0)
+        segmentedControl.setTitle("API v1.2", forSegmentAt: 1)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
 }

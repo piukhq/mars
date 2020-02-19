@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeMockBKWalletRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeMockBKWalletRow(), makeApiVersionRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -45,5 +45,9 @@ class DebugMenuFactory {
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .mockBKWallet)
         })
+    }
+    
+    private func makeApiVersionRow() -> DebugMenuRow {
+        return DebugMenuRow(title: "", subtitle: "", action: nil)
     }
 }
