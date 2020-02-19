@@ -80,6 +80,10 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
 extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
     func debugMenuFactory(_ debugMenuFactory: DebugMenuFactory, shouldPerformActionForType type: DebugMenuRow.RowType) {
         switch type {
+        case .endpoint:
+            guard let navController = navigationController else { return }
+            let alert = debugMenuFactory.makeEnvironmentAlertController(navigationController: navController)
+            navController.present(alert, animated: true, completion: nil)
         case .mockBKWallet:
             Current.userDefaults.set(!Current.userDefaults.bool(forDefaultsKey: .mockBKWalletIsEnabled), forDefaultsKey: .mockBKWalletIsEnabled)
             tableView.reloadData()

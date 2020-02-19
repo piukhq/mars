@@ -129,6 +129,11 @@ class ApiManager {
         case unknown
     }
     
+    enum ApiVersion: String {
+        case v11 = "v=1.1"
+        case v12 = "v=1.2"
+    }
+    
     struct Certificates {
       static let bink = Certificates.certificate(filename: "bink-com")
       
@@ -158,6 +163,8 @@ class ApiManager {
     var isProduction: Bool {
         return APIConstants.baseURLString == APIConstants.productionBaseURL
     }
+    
+    static var apiVersion: ApiVersion = .v11
     
     init() {
         let evaluators = [
@@ -315,7 +322,7 @@ class ApiManager {
 
 private extension ApiManager {
     private func getHeader(endpoint: RequestURL) -> [String: String] {
-        var header = ["Content-Type": "application/json\(endpoint.shouldVersionPin ? ";v=1.1" : "")"]
+        var header = ["Content-Type": "application/json\(endpoint.shouldVersionPin ? ";\(ApiManager.apiVersion.rawValue)" : "")"]
         
         if endpoint.authRequired {
             guard let token = Current.userManager.currentToken else { return header }

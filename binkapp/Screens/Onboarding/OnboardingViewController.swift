@@ -151,6 +151,12 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
             onboardingViews[i].frame = CGRect(x: learningContainer.frame.width * CGFloat(i), y: 0, width: learningContainer.frame.width, height: learningContainer.frame.height)
             scrollView.addSubview(onboardingViews[i])
         }
+        
+        #if DEBUG
+        let tap = UITapGestureRecognizer(target: self, action: #selector(openDebugMenu))
+        tap.numberOfTapsRequired = 3
+        learningContainer.addGestureRecognizer(tap)
+        #endif
     }
 
     // MARK: Button handlers
@@ -216,6 +222,12 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
             scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             pageControl.currentPage = 0
         }
+    }
+    
+    // MARK: - Debug Menu
+    
+    @objc func openDebugMenu() {
+        viewModel.openDebugMenu()
     }
 }
 
