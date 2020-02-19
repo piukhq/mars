@@ -77,7 +77,7 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
         case .endpoint:
             guard let navController = navigationController else { return }
             let alert = debugMenuFactory.makeEnvironmentAlertController(navigationController: navController)
-            navigationController?.present(alert, animated: true, completion: nil)
+            navController.present(alert, animated: true, completion: nil)
         case .mockBKWallet:
             Current.userDefaults.set(!Current.userDefaults.bool(forDefaultsKey: .mockBKWalletIsEnabled), forDefaultsKey: .mockBKWalletIsEnabled)
             tableView.reloadData()
