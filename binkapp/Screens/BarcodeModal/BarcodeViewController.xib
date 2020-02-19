@@ -19,6 +19,7 @@
                 <outlet property="barcodeImageView" destination="IzY-K3-FYy" id="lJ2-0L-5mK"/>
                 <outlet property="barcodeStackView" destination="jOx-j2-dLl" id="0pH-Na-obZ"/>
                 <outlet property="barcodeStackViewTopConstraint" destination="THV-9a-xNO" id="S6D-R1-afS"/>
+                <outlet property="barcodeStackViewTrailingConstraint" destination="B3c-QL-sic" id="OiM-Si-b9G"/>
                 <outlet property="descriptionLabel" destination="tjc-ff-zGD" id="OVV-FH-diX"/>
                 <outlet property="labelCenterVerticallyConstraint" destination="iMn-Et-YTD" id="2gA-P6-xAU"/>
                 <outlet property="labelStackView" destination="1Jn-zV-sJX" id="ejJ-IC-1qM"/>
@@ -45,6 +46,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="325" height="239"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="239" id="XnK-b3-AyU"/>
+                                <constraint firstAttribute="width" secondItem="IzY-K3-FYy" secondAttribute="height" multiplier="1:1" id="YKh-Fl-MRd"/>
                             </constraints>
                         </imageView>
                     </subviews>
@@ -108,7 +110,7 @@
                 <constraint firstItem="7Gp-ML-hjo" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="LPS-L4-e67"/>
                 <constraint firstItem="jOx-j2-dLl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="THV-9a-xNO"/>
                 <constraint firstItem="jOx-j2-dLl" firstAttribute="centerY" secondItem="7Gp-ML-hjo" secondAttribute="centerY" priority="250" id="b9H-Oz-JIy"/>
-                <constraint firstItem="1Jn-zV-sJX" firstAttribute="top" secondItem="IzY-K3-FYy" secondAttribute="bottom" id="bk3-mQ-N41"/>
+                <constraint firstItem="1Jn-zV-sJX" firstAttribute="top" secondItem="jOx-j2-dLl" secondAttribute="bottom" id="bk3-mQ-N41"/>
                 <constraint firstItem="Sc9-VW-qY9" firstAttribute="centerX" secondItem="7Gp-ML-hjo" secondAttribute="centerX" id="eQW-H9-DTD"/>
                 <constraint firstItem="1Jn-zV-sJX" firstAttribute="centerY" secondItem="7Gp-ML-hjo" secondAttribute="centerY" id="iMn-Et-YTD"/>
                 <constraint firstItem="1Jn-zV-sJX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="p5w-6V-rrj"/>

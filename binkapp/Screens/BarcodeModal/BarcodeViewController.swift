@@ -19,10 +19,11 @@ class BarcodeViewController: BinkTrackableViewController {
     @IBOutlet private weak var maximizedTitleLabel: UILabel!
     @IBOutlet private weak var labelStackViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var labelStackViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var labelStackViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet private var labelStackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var barcodeStackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet private var labelCenterVerticallyConstraint: NSLayoutConstraint!
     @IBOutlet private var barcodeCenterVerticallyConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var barcodeStackViewTrailingConstraint: NSLayoutConstraint!
     
     private let viewModel: BarcodeViewModel
     var isBarcodeFullsize = false
@@ -30,7 +31,7 @@ class BarcodeViewController: BinkTrackableViewController {
     
     private struct Constants {
         static let marginDefaultConstant: CGFloat = 25
-        static let maximizedLeadingConstraint: CGFloat = -10
+        static let maximizedLeadingConstraint: CGFloat = 10
         static let labelTrailingInset: CGFloat = 200.0
     }
     
@@ -108,6 +109,7 @@ class BarcodeViewController: BinkTrackableViewController {
         maximizedTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         maximiseButton.translatesAutoresizingMaskIntoConstraints = false
         labelCenterVerticallyConstraint.isActive = false
+        barcodeCenterVerticallyConstraint.isActive = false
         NSLayoutConstraint.activate([
             maximiseButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
             maximiseButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
@@ -117,7 +119,6 @@ class BarcodeViewController: BinkTrackableViewController {
         ])
         numberLabel.isHidden = viewModel.cardNumber == nil
         numberLabel.text = viewModel.cardNumber
-        
     }
     
     private func maximizeContent() {
@@ -132,9 +133,10 @@ class BarcodeViewController: BinkTrackableViewController {
         labelStackView.transform = labelStackView.transform.rotated(by: CGFloat.pi / 2)
         barcodeStackView.transform = barcodeStackView.transform.rotated(by: CGFloat.pi / 2)
         labelStackViewLeadingConstraint.constant = Constants.maximizedLeadingConstraint
-        labelStackViewTrailingConstraint.constant = labelStackView.frame.size.width + Constants.labelTrailingInset
-        labelStackViewTrailingConstraint.priority = .defaultLow
-        labelStackViewTopConstraint.priority = .defaultLow
+        labelStackViewTrailingConstraint.constant = view.frame.size.width - Constants.marginDefaultConstant * 2
+        labelStackViewTrailingConstraint.priority = .defaultHigh
+        labelStackViewLeadingConstraint.priority = .defaultHigh
+        labelStackViewTopConstraint.isActive = false
         barcodeStackViewTopConstraint.priority = .defaultLow
         barcodeCenterVerticallyConstraint.priority = .defaultHigh
         labelCenterVerticallyConstraint.isActive = true
@@ -152,7 +154,7 @@ class BarcodeViewController: BinkTrackableViewController {
         labelStackView.alignment = .fill
         barcodeCenterVerticallyConstraint.priority = .defaultLow
         labelStackViewTrailingConstraint.priority = .defaultHigh
-        labelStackViewTopConstraint.priority = .defaultHigh
+        labelStackViewTopConstraint.isActive = true
         barcodeStackViewTopConstraint.priority = .defaultHigh
         labelStackView.transform = labelStackView.transform.rotated(by: -(CGFloat.pi / 2))
         barcodeStackView.transform = barcodeStackView.transform.rotated(by: -(CGFloat.pi / 2))
