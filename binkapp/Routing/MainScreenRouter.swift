@@ -346,16 +346,6 @@ class MainScreenRouter {
             return
         }
         
-        if visibleVC.isKind(of: BarcodeViewController.self),
-            let nc = visibleVC.presentedViewController as? UINavigationController,
-            let vc = nc.viewControllers.first as? BarcodeViewController,
-            vc.isBarcodeFullsize {
-            //Dismiss full screen barcode before presenting the Launch screen.
-            nc.dismiss(animated: false) {
-                self.displayLaunchScreen(visibleViewController: visibleVC)
-            }
-            return
-        }
         if visibleVC.isModal {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.displayLaunchScreen(visibleViewController: visibleVC)
