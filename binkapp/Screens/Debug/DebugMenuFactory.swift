@@ -27,19 +27,19 @@ class DebugMenuFactory {
     private func makeVersionNumberRow() -> DebugMenuRow {
         let versionNumber = Bundle.shortVersionNumber ?? ""
         let buildNumber = Bundle.bundleVersion ?? ""
-        return DebugMenuRow(title: "Current version", subtitle: String(format: "support_mail_app_version".localized, versionNumber, buildNumber), action: nil)
+        return DebugMenuRow(title: "Current version", subtitle: String(format: "support_mail_app_version".localized, versionNumber, buildNumber), action: nil, cellType: .titleSubtitle)
     }
 
     private func makeEmailAddressRow() -> DebugMenuRow {
         let currentEmailAddress = Current.userManager.currentEmailAddress
-        return DebugMenuRow(title: "Current email address", subtitle: currentEmailAddress, action: nil)
+        return DebugMenuRow(title: "Current email address", subtitle: currentEmailAddress, action: nil, cellType: .titleSubtitle)
     }
     
     private func makeEndpointRow() -> DebugMenuRow {
         return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .endpoint)
-        })
+        }, cellType: .titleSubtitle)
     }
 
     private func makeMockBKWalletRow() -> DebugMenuRow {
@@ -47,11 +47,11 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "Enable mock BK wallet", subtitle: isEnabled ? "Enabled" : "Not enabled", action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .mockBKWallet)
-        })
+        }, cellType: .titleSubtitle)
     }
     
     private func makeApiVersionRow() -> DebugMenuRow {
-        return DebugMenuRow(title: "", subtitle: "", action: nil)
+        return DebugMenuRow(cellType: .segmentedControl)
     }
     
     func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {

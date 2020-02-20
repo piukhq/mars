@@ -130,8 +130,8 @@ class ApiManager {
     }
     
     enum ApiVersion: String {
-        case v11 = "v=1.1"
-        case v12 = "v=1.2"
+        case v1_1 = "v=1.1"
+        case v1_2 = "v=1.2"
     }
     
     struct Certificates {
@@ -164,7 +164,7 @@ class ApiManager {
         return APIConstants.baseURLString == APIConstants.productionBaseURL
     }
     
-    static var apiVersion: ApiVersion = .v11
+    static var apiVersion: ApiVersion = .v1_1
     
     init() {
         let evaluators = [

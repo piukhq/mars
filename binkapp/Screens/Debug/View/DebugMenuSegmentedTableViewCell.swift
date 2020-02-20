@@ -8,14 +8,14 @@
 
 import UIKit
 
-class SegmentedTableViewCell: UITableViewCell {
+class DebugMenuSegmentedTableViewCell: UITableViewCell {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     @IBAction func segmentedControlAction(_ sender: Any) {
-        if segmentedControl.selectedSegmentIndex == 0 {
-            ApiManager.apiVersion = .v11
-        } else {
-            ApiManager.apiVersion = .v12
+        switch segmentedControl.selectedSegmentIndex {
+            case 0: ApiManager.apiVersion = .v1_1
+            case 1: ApiManager.apiVersion = .v1_2
+            default: break
         }
     }
     
@@ -24,10 +24,9 @@ class SegmentedTableViewCell: UITableViewCell {
         segmentedControl.setTitle("API v1.1", forSegmentAt: 0)
         segmentedControl.setTitle("API v1.2", forSegmentAt: 1)
         
-        if ApiManager.apiVersion == .v11 {
-            segmentedControl.selectedSegmentIndex = 0
-        } else {
-            segmentedControl.selectedSegmentIndex = 1
+        switch ApiManager.apiVersion {
+            case .v1_1: segmentedControl.selectedSegmentIndex = 0
+            case .v1_2: segmentedControl.selectedSegmentIndex = 1
         }
     }
 }
