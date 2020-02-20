@@ -13,39 +13,12 @@ class BarcodeViewController: BinkTrackableViewController {
     @IBOutlet private weak var numberLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var maximiseButton: BinkGradientButton!
-    @IBOutlet private weak var labelStackView: UIStackView!
-    @IBOutlet private weak var barcodeStackView: UIStackView!
-    @IBOutlet private weak var minimizeButton: UIButton!
-    @IBOutlet private weak var maximizedTitleLabel: UILabel!
-    @IBOutlet private weak var labelStackViewTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var labelStackViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private var labelStackViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var barcodeStackViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet private var labelCenterVerticallyConstraint: NSLayoutConstraint!
-    @IBOutlet private var barcodeCenterVerticallyConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var barcodeStackViewTrailingConstraint: NSLayoutConstraint!
     
     private let viewModel: BarcodeViewModel
-    var isBarcodeFullsize = false
     var hasDrawnBarcode = false
-    
-    private struct Constants {
-        static let marginDefaultConstant: CGFloat = 25
-        static let maximizedLeadingConstraint: CGFloat = 10
-        static let labelTrailingInset: CGFloat = 200.0
-    }
-    
-    @IBAction func maximiseButtonAction(_ sender: Any) {
-        UIView.animate(withDuration: 0.5, animations: {
-            self.maximizeContent()
-        }) {[weak self] _ in
-            self?.navigationController?.navigationBar.isHidden = true
-        }
-    }
     
     init(viewModel: BarcodeViewModel, showFullSize: Bool = false) {
         self.viewModel = viewModel
-        isBarcodeFullsize = showFullSize
         super.init(nibName: "BarcodeViewController", bundle: Bundle(for: BarcodeViewController.self))
     }
     
@@ -69,17 +42,18 @@ class BarcodeViewController: BinkTrackableViewController {
         guard !hasDrawnBarcode else { return }
         
         viewModel.generateBarcodeImage(for: barcodeImageView)
+
         barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
+        numberLabel.isHidden = viewModel.cardNumber == nil
+        maximiseButton.isHidden = !viewModel.isBarcodeAvailable
         
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black
         titleLabel.text = "card_number_title".localized
-        labelStackView.setCustomSpacing(0.0, after: titleLabel)
-        
-        labelStackView.alignment = .fill
         
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = .blueAccent
+        numberLabel.text = viewModel.cardNumber
         
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textColor = .black
@@ -95,86 +69,31 @@ class BarcodeViewController: BinkTrackableViewController {
         case .coupon:
             descriptionLabel.text = "barcode_coupon_description".localized
         }
-        
-        maximiseButton.isHidden = !viewModel.isBarcodeAvailable 
+
         maximiseButton.setTitleColor(.white, for: .normal)
         maximiseButton.titleLabel?.font = UIFont.subtitle
         maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
+        maximiseButton.addTarget(self, action: #selector(maximizeButtonPressed), for: .touchUpInside)
+
         hasDrawnBarcode = true
-        
-        minimizeButton.alpha = 0
-        maximizedTitleLabel.text = viewModel.title
-        maximizedTitleLabel.transform = barcodeImageView.transform.rotated(by: CGFloat.pi / 2)
-        maximizedTitleLabel.alpha = 0
-        maximizedTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+
         maximiseButton.translatesAutoresizingMaskIntoConstraints = false
-        labelCenterVerticallyConstraint.isActive = false
-        barcodeCenterVerticallyConstraint.isActive = false
         NSLayoutConstraint.activate([
             maximiseButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
             maximiseButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
             maximiseButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
             maximiseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            maximizedTitleLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
-        numberLabel.isHidden = viewModel.cardNumber == nil
-        numberLabel.text = viewModel.cardNumber
-    }
-    
-    private func maximizeContent() {
-        navigationController?.navigationBar.alpha = 0
-        numberLabel.textColor = .black
-        labelStackView.alignment = .center
-        titleLabel.isHidden = true
-        descriptionLabel.isHidden = true
-        maximiseButton.alpha = 0
-        minimizeButton.alpha = 1
-        maximizedTitleLabel.alpha = 1
-        labelStackView.transform = labelStackView.transform.rotated(by: CGFloat.pi / 2)
-        barcodeStackView.transform = barcodeStackView.transform.rotated(by: CGFloat.pi / 2)
-        labelStackViewLeadingConstraint.constant = Constants.maximizedLeadingConstraint
-        labelStackViewTrailingConstraint.constant = view.frame.size.width - Constants.marginDefaultConstant * 2
-        labelStackViewTrailingConstraint.priority = .defaultHigh
-        labelStackViewLeadingConstraint.priority = .defaultHigh
-        labelStackViewTopConstraint.isActive = false
-        barcodeStackViewTopConstraint.priority = .defaultLow
-        barcodeCenterVerticallyConstraint.priority = .defaultHigh
-        labelCenterVerticallyConstraint.isActive = true
-        barcodeCenterVerticallyConstraint.isActive = true
-    }
-    
-    private func minimizeContent() {
-        navigationController?.navigationBar.alpha = 1
-        titleLabel.isHidden = false
-        descriptionLabel.isHidden = false
-        minimizeButton.alpha = 0
-        maximiseButton.alpha = 1
-        numberLabel.textColor = .blue
-        maximizedTitleLabel.alpha = 0
-        labelStackView.alignment = .fill
-        barcodeCenterVerticallyConstraint.priority = .defaultLow
-        labelStackViewTrailingConstraint.priority = .defaultHigh
-        labelStackViewTopConstraint.isActive = true
-        barcodeStackViewTopConstraint.priority = .defaultHigh
-        labelStackView.transform = labelStackView.transform.rotated(by: -(CGFloat.pi / 2))
-        barcodeStackView.transform = barcodeStackView.transform.rotated(by: -(CGFloat.pi / 2))
-        labelCenterVerticallyConstraint.isActive = false
-        barcodeCenterVerticallyConstraint.isActive = false
-        barcodeStackViewTopConstraint.constant = LayoutHelper.heightForNavigationBar(navigationController?.navigationBar)
-        labelStackViewLeadingConstraint.constant = Constants.marginDefaultConstant
-        labelStackViewTrailingConstraint.constant = Constants.marginDefaultConstant
-        labelStackViewTopConstraint.constant = 0
-    }
-    
-    @IBAction func minimiseBarcode(_ sender: Any) {
-        UIView.animate(withDuration: 0.5, animations: {
-            self.minimizeContent()
-        }) { [weak self] _ in
-            self?.navigationController?.navigationBar.isHidden = false
-        }
     }
     
     @objc private func popViewController() {
         dismiss(animated: true, completion: nil)
+    }
+
+    @objc private func maximizeButtonPressed() {
+        let vc = BarcodeMaximizedViewController(barcodeImage: barcodeImageView.image, planName: viewModel.title, cardNumber: viewModel.cardNumber)
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        present(vc, animated: true, completion: nil)
     }
 }
