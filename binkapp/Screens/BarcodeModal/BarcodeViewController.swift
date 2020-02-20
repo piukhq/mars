@@ -13,6 +13,8 @@ class BarcodeViewController: BinkTrackableViewController {
     @IBOutlet private weak var numberLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var maximiseButton: BinkGradientButton!
+    @IBOutlet private weak var titleLabelBarcodeConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var titleLabelNoBarcodeConstraint: NSLayoutConstraint!
     
     private let viewModel: BarcodeViewModel
     var hasDrawnBarcode = false
@@ -78,6 +80,11 @@ class BarcodeViewController: BinkTrackableViewController {
         hasDrawnBarcode = true
 
         maximiseButton.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        titleLabelBarcodeConstraint.priority = viewModel.isBarcodeAvailable ? .required : .defaultLow
+        titleLabelNoBarcodeConstraint.priority = viewModel.isBarcodeAvailable ? .defaultLow : .required
+
         NSLayoutConstraint.activate([
             maximiseButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
             maximiseButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),

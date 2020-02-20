@@ -15,6 +15,8 @@
                 <outlet property="maximiseButton" destination="zFJ-Yy-zw9" id="kAd-i6-Pny"/>
                 <outlet property="numberLabel" destination="heL-au-EqW" id="Otc-kE-oDY"/>
                 <outlet property="titleLabel" destination="52l-XX-9PQ" id="DnI-g2-YAL"/>
+                <outlet property="titleLabelBarcodeConstraint" destination="akA-do-UmU" id="hW3-TL-zRa"/>
+                <outlet property="titleLabelNoBarcodeConstraint" destination="S4D-Kx-eo1" id="pH1-OQ-K8C"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,7 +25,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView verifyAmbiguity="off" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IzY-K3-FYy">
+                <imageView verifyAmbiguity="off" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="IzY-K3-FYy">
                     <rect key="frame" x="25" y="8" width="325" height="215"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="215" id="Kwr-Fy-KNH"/>
@@ -63,6 +65,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tjc-ff-zGD" secondAttribute="trailing" constant="25" id="NVu-2y-m1h"/>
                 <constraint firstItem="IzY-K3-FYy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="Prj-mB-baQ"/>
                 <constraint firstItem="heL-au-EqW" firstAttribute="top" secondItem="52l-XX-9PQ" secondAttribute="bottom" constant="4" id="R0f-XR-jye"/>
+                <constraint firstItem="52l-XX-9PQ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" priority="999" constant="25" id="S4D-Kx-eo1"/>
                 <constraint firstItem="tjc-ff-zGD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="UtN-Xw-HLL"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="52l-XX-9PQ" secondAttribute="trailing" constant="25" id="YVo-VF-j5i"/>
                 <constraint firstItem="52l-XX-9PQ" firstAttribute="top" secondItem="IzY-K3-FYy" secondAttribute="bottom" constant="16" id="akA-do-UmU"/>
@@ -70,6 +73,7 @@
                 <constraint firstItem="tjc-ff-zGD" firstAttribute="top" secondItem="heL-au-EqW" secondAttribute="bottom" constant="25" id="dJT-Sm-1RJ"/>
                 <constraint firstItem="heL-au-EqW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="ggl-0x-KIx"/>
                 <constraint firstItem="IzY-K3-FYy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="knH-wj-ACD"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="IzY-K3-FYy" secondAttribute="trailing" constant="25" id="qpP-wI-Gph"/>
                 <constraint firstItem="52l-XX-9PQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="s9g-v9-eR3"/>
                 <constraint firstItem="zFJ-Yy-zw9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tjc-ff-zGD" secondAttribute="bottom" constant="8" id="tWn-fP-McS"/>
             </constraints>
