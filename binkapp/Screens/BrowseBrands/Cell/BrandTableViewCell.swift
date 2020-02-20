@@ -19,6 +19,12 @@ class BrandTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        logoImageView.image = nil
+        separatorView.isHidden = false
+    }
+    
     func configure(plan: CD_MembershipPlan, brandName: String, description: Bool = false) {
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
 
