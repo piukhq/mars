@@ -8,6 +8,14 @@
 
 import UIKit
 
-class PLRStampsActiveCell: PLRBaseCollectionViewCell {
-    @IBOutlet weak var earnProgressLabel: UILabel!
+class PLRStampsActiveCell: PLRStampsCell {
+    @IBOutlet private weak var earnProgressLabel: UILabel!
+    @IBOutlet private weak var earnProgressValueLabel: UILabel!
+
+    override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
+        super.configureWithViewModel(viewModel)
+
+        earnProgressLabel.text = viewModel.earnProgressString
+        earnProgressValueLabel.text = viewModel.earnProgressValueString
+    }
 }

@@ -46,6 +46,7 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
         collectionView.register(PLRAccumulatorInactiveCell.self, asNib: true)
+        collectionView.register(PLRStampsInactiveCell.self, asNib: true)
         return collectionView
     }()
 
@@ -91,17 +92,30 @@ extension PLRRewardsHistoryViewController: UICollectionViewDataSource, UICollect
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: PLRAccumulatorInactiveCell = collectionView.dequeue(indexPath: indexPath)
-
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else { return cell }
+        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
+            fatalError("Could not get voucher for index path")
+        }
 
         let cellViewModel = PLRCellViewModel(voucher: voucher)
-        cell.configureWithViewModel(cellViewModel)
-        return cell
+        if voucher.earnType == .accumulator {
+            let cell: PLRAccumulatorInactiveCell = collectionView.dequeue(indexPath: indexPath)
+            cell.configureWithViewModel(cellViewModel)
+            return cell
+        } else if voucher.earnType == .stamp {
+            let cell: PLRStampsInactiveCell = collectionView.dequeue(indexPath: indexPath)
+            cell.configureWithViewModel(cellViewModel)
+            return cell
+        } else {
+            fatalError("Could not get voucher earn type")
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: LayoutHelper.PLRCollectionViewCell.accumulatorInactiveCellHeight)
+        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
+            fatalError("Could not get voucher for index path")
+        }
+        let height = voucher.earnType == .accumulator ? LayoutHelper.PLRCollectionViewCell.accumulatorInactiveCellHeight : LayoutHelper.PLRCollectionViewCell.stampsInactiveCellHeight
+        return CGSize(width: collectionView.frame.width, height: height)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -20,11 +20,30 @@ class PLRCellViewModel {
     }
 
     var voucherAmountText: String? {
-        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+        switch voucherEarnType {
+        case .accumulator:
+            return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+        case .stamp:
+            // We need to be able to return the value in between, but when we don't get it back we map by default to 0 which isn't good
+            return "\(voucher.burn?.prefix ?? "") \(voucher.burn?.suffix ?? "")"
+        default:
+            return ""
+        }
     }
 
     var voucherDescriptionText: String? {
-        return String(format: "plr_voucher_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "")
+        switch voucherEarnType {
+        case .accumulator:
+            return String(format: "plr_voucher_accumulator_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "")
+        case .stamp:
+            return String(format: "plr_voucher_stamp_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.earn?.suffix ?? "")
+        default:
+            return ""
+        }
+    }
+
+    var voucherEarnType: VoucherEarnType? {
+        return VoucherEarnType(rawValue: voucher.earn?.type ?? "")
     }
 
     var headlineText: String? {
@@ -42,6 +61,14 @@ class PLRCellViewModel {
         return value/target
     }
 
+    var stampsCollected: Int {
+        return voucher.earn?.value?.intValue ?? 0
+    }
+
+    var stampsAvailable: Int {
+        return voucher.earn?.targetValue?.intValue ?? 0
+    }
+
     private var earnType: VoucherEarnType? {
         guard let earnType = voucher.earn?.type else { return nil }
         guard let type = VoucherEarnType(rawValue: earnType) else { return nil }
@@ -52,15 +79,25 @@ class PLRCellViewModel {
         guard let type = earnType else { return nil }
         switch type {
         case .accumulator:
-            return "plr_voucher_earn_value_title".localized
+            return "plr_voucher_accumulator_earn_value_title".localized
         case .stamp:
-            return ""
+            return "plr_voucher_stamp_earn_value_title".localized
         }
     }
 
     var earnProgressValueString: String? {
-        guard let value = voucher.earn?.value?.floatValue else { return nil }
-        return "\(voucher.earn?.prefix ?? "")\(String(format: "%.02f", value)) \(voucher.earn?.suffix ?? "")"
+        switch voucherEarnType {
+        case .accumulator:
+            guard let value = voucher.earn?.value?.floatValue else { return nil }
+            return "\(voucher.earn?.prefix ?? "")\(String(format: "%.02f", value)) \(voucher.earn?.suffix ?? "")"
+        case .stamp:
+            let earnValue = voucher.earn?.value?.intValue
+            let earnTargetValue = voucher.earn?.targetValue?.intValue
+            let earnSuffix = voucher.earn?.suffix
+            return "\(earnValue ?? 0)/\(earnTargetValue ?? 0) \(earnSuffix ?? "")"
+        default:
+            return nil
+        }
     }
 
     var earnTargetString: String? {
@@ -68,14 +105,20 @@ class PLRCellViewModel {
         switch type {
         case .accumulator:
             return "plr_voucher_earn_target_value_title".localized
-        case .stamp:
+        default:
             return ""
         }
     }
 
     var earnTargetValueString: String? {
-        guard let value = voucher.earn?.targetValue?.floatValue else { return nil }
-        return "\(voucher.earn?.prefix ?? "")\(String(format: "%.02f", value)) \(voucher.earn?.suffix ?? "")"
+        guard let type = earnType else { return nil }
+        switch type {
+        case .accumulator:
+            guard let value = voucher.earn?.targetValue?.floatValue else { return nil }
+            return "\(voucher.earn?.prefix ?? "")\(String(format: "%.02f", value)) \(voucher.earn?.suffix ?? "")"
+        default:
+            return nil
+        }
     }
 
     var dateText: String? {

@@ -18,6 +18,12 @@ struct DebugMenuRow {
         case version
         case email
         case endpoint
+        case mockBKWallet
+    }
+    
+    enum CellType {
+        case titleSubtitle
+        case segmentedControl
     }
 
     typealias DebugRowAction = () -> Void
@@ -25,4 +31,12 @@ struct DebugMenuRow {
     let title: String
     let subtitle: String?
     let action: DebugRowAction?
+    let cellType: CellType
+    
+    init(title: String = "", subtitle: String? = nil, action: DebugRowAction? = nil, cellType: CellType) {
+        self.title = title
+        self.subtitle = subtitle
+        self.action = action
+        self.cellType = cellType
+    }
 }

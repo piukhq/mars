@@ -37,6 +37,7 @@ extension UserDefaults: BinkUserDefaults {
     enum Keys: String {
         case hasLaunchedWallet
         case userEmail
+        case mockBKWalletIsEnabled
     }
 
     func set(_ value: Any?, forDefaultsKey defaultName: UserDefaults.Keys) {

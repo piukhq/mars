@@ -59,11 +59,23 @@ class BrowseBrandsViewModel {
     }
     
     func getPllMembershipPlans() -> [CD_MembershipPlan] {
-        return membershipPlans.filter { $0.featureSet?.planCardType == .link }
+        let plans = membershipPlans.filter { $0.featureSet?.planCardType == .link }
+        return plans.sorted {
+            guard let first = $0.account?.companyName?.lowercased() else { return false }
+            guard let second = $1.account?.companyName?.lowercased() else { return true }
+            
+            return first < second
+        }
     }
     
     func getNonPllMembershipPlans() -> [CD_MembershipPlan] {
-        return membershipPlans.filter { $0.featureSet?.planCardType != .link }
+        let plans = membershipPlans.filter { $0.featureSet?.planCardType != .link }
+        return plans.sorted {
+            guard let first = $0.account?.companyName?.lowercased() else { return false }
+            guard let second = $1.account?.companyName?.lowercased() else { return true }
+            
+            return first < second
+        }
     }
     
     func numberOfSections() -> Int {
