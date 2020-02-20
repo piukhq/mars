@@ -216,7 +216,7 @@ private extension BinkModuleView {
                 }
             } else {
                 // Link module 2.7
-                configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
+                configure(imageName: "lcdModuleIconsPointsLogin", titleText: "error_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .noReasonCode)
             }
             break
         default:
