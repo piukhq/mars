@@ -17,7 +17,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .LoyaltyWallet)
+        setScreenName(trackedScreen: .loyaltyWallet)
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

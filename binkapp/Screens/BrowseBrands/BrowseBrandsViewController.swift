@@ -23,7 +23,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .BrowseBrands)
+        setScreenName(trackedScreen: .browseBrands)
         
         tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
         tableView.delegate = self

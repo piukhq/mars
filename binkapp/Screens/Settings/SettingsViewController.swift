@@ -51,7 +51,7 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .Settings)
+        setScreenName(trackedScreen: .settings)
         
         configureLayout()
         title = viewModel.title

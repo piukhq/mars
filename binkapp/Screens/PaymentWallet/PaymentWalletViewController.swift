@@ -11,7 +11,7 @@ import UIKit
 class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .PaymentWallet)
+        setScreenName(trackedScreen: .paymentWallet)
     }
     
     override func configureCollectionView() {

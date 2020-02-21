@@ -39,7 +39,7 @@ class LoginViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .Login)
+        setScreenName(trackedScreen: .login)
         
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "login_forgot_password".localized)])
         
