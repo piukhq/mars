@@ -109,6 +109,7 @@ class PLLScreenViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .pll)
         
         if viewModel.shouldShowBackButton {
             let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))

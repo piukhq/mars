@@ -25,6 +25,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .addOptions)
         configureUI()
     }
 

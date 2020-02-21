@@ -9,6 +9,11 @@
 import UIKit
 
 class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setScreenName(trackedScreen: .paymentWallet)
+    }
+    
     override func configureCollectionView() {
         super.configureCollectionView()
         collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
