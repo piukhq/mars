@@ -141,6 +141,9 @@ class LoyaltyCardFullDetailsViewModel {
             break
         case .aboutMembership:
             toAboutMembershipPlanScreen()
+        case .noReasonCode:
+            guard let membershipPlan = membershipCard.membershipPlan else { return }
+            router.toAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
         }
     }
     

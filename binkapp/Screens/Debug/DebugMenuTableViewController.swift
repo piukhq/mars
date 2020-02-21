@@ -29,6 +29,7 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(close))
         
         tableView.register(DebugMenuTableViewCell.self, asNib: true)
+        tableView.register(DebugMenuSegmentedTableViewCell.self, asNib: true)
     }
 
     // MARK: - Table view data source
@@ -46,6 +47,11 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if viewModel.sections.first?.rows[indexPath.row].cellType == DebugMenuRow.CellType.segmentedControl {
+            let cell: DebugMenuSegmentedTableViewCell = tableView.dequeue(indexPath: indexPath)
+            return cell
+        }
+        
         let cell: DebugMenuTableViewCell = tableView.dequeue(indexPath: indexPath)
         
         let row = viewModel.row(atIndexPath: indexPath)
@@ -74,6 +80,10 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
 extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
     func debugMenuFactory(_ debugMenuFactory: DebugMenuFactory, shouldPerformActionForType type: DebugMenuRow.RowType) {
         switch type {
+        case .endpoint:
+            guard let navController = navigationController else { return }
+            let alert = debugMenuFactory.makeEnvironmentAlertController(navigationController: navController)
+            navController.present(alert, animated: true, completion: nil)
         case .mockBKWallet:
             Current.userDefaults.set(!Current.userDefaults.bool(forDefaultsKey: .mockBKWalletIsEnabled), forDefaultsKey: .mockBKWalletIsEnabled)
             tableView.reloadData()

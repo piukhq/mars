@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol DebugMenuFactoryDelegate: AnyObject {
     func debugMenuFactory(_ debugMenuFactory: DebugMenuFactory, shouldPerformActionForType type: DebugMenuRow.RowType)
@@ -21,22 +21,25 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeMockBKWalletRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeMockBKWalletRow(), makeApiVersionRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
         let versionNumber = Bundle.shortVersionNumber ?? ""
         let buildNumber = Bundle.bundleVersion ?? ""
-        return DebugMenuRow(title: "Current version", subtitle: String(format: "support_mail_app_version".localized, versionNumber, buildNumber), action: nil)
+        return DebugMenuRow(title: "Current version", subtitle: String(format: "support_mail_app_version".localized, versionNumber, buildNumber), action: nil, cellType: .titleSubtitle)
     }
 
     private func makeEmailAddressRow() -> DebugMenuRow {
         let currentEmailAddress = Current.userManager.currentEmailAddress
-        return DebugMenuRow(title: "Current email address", subtitle: currentEmailAddress, action: nil)
+        return DebugMenuRow(title: "Current email address", subtitle: currentEmailAddress, action: nil, cellType: .titleSubtitle)
     }
     
     private func makeEndpointRow() -> DebugMenuRow {
-        return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: nil)
+        return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .endpoint)
+        }, cellType: .titleSubtitle)
     }
 
     private func makeMockBKWalletRow() -> DebugMenuRow {
@@ -44,6 +47,44 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "Enable mock BK wallet", subtitle: isEnabled ? "Enabled" : "Not enabled", action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .mockBKWallet)
-        })
+        }, cellType: .titleSubtitle)
+    }
+    
+    private func makeApiVersionRow() -> DebugMenuRow {
+        return DebugMenuRow(cellType: .segmentedControl)
+    }
+    
+    func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
+            APIConstants.changeEnvironment(environment: .dev)
+            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Staging", style: .default, handler: { _ in
+            APIConstants.changeEnvironment(environment: .staging)
+            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Daedalus", style: .default, handler: { _ in
+            APIConstants.changeEnvironment(environment: .daedalus)
+            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Custom", style: .destructive, handler: { _ in
+            let customAlert = UIAlertController(title: "Base URL", message: "Please insert a valid URL.", preferredStyle: .alert)
+            customAlert.addTextField { textField in
+                textField.placeholder = "api.dev.gb.com"
+            }
+            if let textField = customAlert.textFields?.first {
+                customAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    if let textFieldText = textField.text {
+                        APIConstants.moveToCustomURL(url: textFieldText)
+                        NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                    }
+                }))
+                navigationController.present(customAlert, animated: true, completion: nil)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        return alert
     }
 }

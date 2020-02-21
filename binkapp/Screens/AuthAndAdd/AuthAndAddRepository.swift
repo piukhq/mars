@@ -23,23 +23,13 @@ class AuthAndAddRepository {
     func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (Error?) -> ()) {
         let url: RequestURL
         let method: RequestHTTPMethod
-        switch formPurpose {
-        case .addFailed:
-            url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
+        
+        if let existingCard = existingMembershipCard {
+            url = .membershipCard(cardId: existingCard.id)
             method = .put
-            break
-        case .signUp:
-            if existingMembershipCard != nil {
-                url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
-                method = .put
-            } else {
-                url = .membershipCards
-                method = .post
-            }
-        default:
+        } else {
             url = .membershipCards
             method = .post
-            break
         }
         
         apiManager.doRequest(url: url, httpMethod: method, headers: nil, parameters: request, isUserDriven: true, onSuccess: { (response: MembershipCardModel) in
@@ -59,14 +49,14 @@ class AuthAndAddRepository {
     }
     
     func postGhostCard(parameters: MembershipCardPostModel, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (Error?) -> Void) {
-        
+
         let url: RequestURL
         let method: RequestHTTPMethod
         var mutableParams = parameters
         var registrationParams: [PostModel]? = nil
-        
-        if existingMembershipCard != nil {
-            url = .membershipCard(cardId: existingMembershipCard?.id ?? "")
+
+        if let existingCard = existingMembershipCard {
+            url = .membershipCard(cardId: existingCard.id)
             method = .patch
             mutableParams.account?.addFields = nil
             mutableParams.account?.authoriseFields = nil
@@ -76,7 +66,7 @@ class AuthAndAddRepository {
             registrationParams = mutableParams.account?.registrationFields
             mutableParams.account?.registrationFields = nil
         }
-        
+
         apiManager.doRequest(url: url, httpMethod: method, parameters: mutableParams, isUserDriven: true, onSuccess: { (card: MembershipCardModel) in
             Current.database.performBackgroundTask { context in
                 let newObject = card.mapToCoreData(context, .update, overrideID: nil)
@@ -105,11 +95,5 @@ class AuthAndAddRepository {
         }) { error in
             onError(error)
         }
-    }
-    
-    func patchGhostCard(cardId: String, parameters: MembershipCardPostModel) {
-        apiManager.doRequest(url: .membershipCard(cardId: cardId), httpMethod: .patch, parameters: parameters, isUserDriven: true, onSuccess:
-            { (response: MembershipCardModel) in }
-        )
     }
 }

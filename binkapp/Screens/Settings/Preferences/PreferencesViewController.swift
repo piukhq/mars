@@ -29,6 +29,8 @@ class PreferencesViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .preferences)
+        
         configureUI()
     }
     

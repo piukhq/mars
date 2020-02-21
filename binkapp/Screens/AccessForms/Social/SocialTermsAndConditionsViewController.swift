@@ -61,6 +61,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .socialTermsAndConditions)
                 
         NSLayoutConstraint.activate([
             continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),

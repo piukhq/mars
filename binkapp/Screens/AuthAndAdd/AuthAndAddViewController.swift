@@ -44,6 +44,12 @@ class AuthAndAddViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        switch viewModel.formPurpose {
+            case .add, .addFailed: setScreenName(trackedScreen: .addAuthForm)
+            case .signUp, .signUpFailed: setScreenName(trackedScreen: .enrolForm)
+            case .ghostCard, .patchGhostCard: setScreenName(trackedScreen: .registrationForm)
+        }
+        
         setNavigationBar()
         configureUI()
         configureLayout()
@@ -113,7 +119,9 @@ extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
 //        let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
 //        guard (fields?.contains(where: { $0.value == LinkingSupportType.registration.rawValue }) ?? false) else {
             viewModel.toReusableTemplate(title: "registration_unavailable_title".localized, description: "registration_unavailable_description".localized)
-            return
+//            return
+//        }
+//        viewModel.reloadWithGhostCardFields()
 //        }
 //        viewModel.reloadWith(newFormPuropse: .ghostCard)
     }
