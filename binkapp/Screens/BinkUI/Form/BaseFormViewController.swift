@@ -160,6 +160,7 @@ extension BaseFormViewController: UICollectionViewDelegateFlowLayout {
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {
         collectionView.collectionViewLayout.invalidateLayout()
         formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
+        stackScrollView.contentInset.bottom = Constants.bottomInset
     }
 }
 
