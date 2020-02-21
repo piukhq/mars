@@ -39,12 +39,7 @@ struct UserMigrationController {
             return
         }
         
-        Current.apiManager.doRequest(
-            url: .renew,
-            httpMethod: .post,
-            headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json;v1.1"],
-            isUserDriven: false,
-            onSuccess: { (response: RenewTokenResponse) in
+        Current.apiManager.doRequest(url: .renew, httpMethod: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json;\(ApiManager.apiVersion.rawValue)"], isUserDriven: false, onSuccess: { (response: RenewTokenResponse) in
                 var email: String?
                 do {
                     let jwt = try decode(jwt: token)
