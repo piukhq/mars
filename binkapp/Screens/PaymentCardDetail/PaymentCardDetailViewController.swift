@@ -99,6 +99,7 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .PaymentDetail)
         
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popToRoot))
         self.navigationItem.leftBarButtonItem = backButton

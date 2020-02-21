@@ -44,6 +44,12 @@ class AuthAndAddViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        switch viewModel.formPurpose {
+            case .add, .addFailed: setScreenName(trackedScreen: .AddAuthForm)
+            case .signUp, .signUpFailed: setScreenName(trackedScreen: .EnrolForm)
+            case .ghostCard, .patchGhostCard: setScreenName(trackedScreen: .RegistrationForm)
+        }
+        
         setNavigationBar()
         configureUI()
         configureLayout()

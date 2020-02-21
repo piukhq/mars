@@ -69,6 +69,7 @@
 		3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8BBC282326541D00363349 /* NotificationNameExtension.swift */; };
 		3C93975D2386A2E00063C0B3 /* PreferencesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C93975C2386A2E00063C0B3 /* PreferencesModel.swift */; };
 		3C98F80D23CF555A006EB66C /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C98F80C23CF555A006EB66C /* CustomError.swift */; };
+		3C9AA2F623FFD1B2005D1EE0 /* TrackedScreensEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9AA2F523FFD1B2005D1EE0 /* TrackedScreensEnum.swift */; };
 		3C9B1A2223854B9D0078A1EC /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9B1A2023854B9D0078A1EC /* PreferencesViewController.swift */; };
 		3C9B1A2323854B9D0078A1EC /* PreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9B1A2123854B9D0078A1EC /* PreferencesViewController.xib */; };
 		3C9B1A2723854BF60078A1EC /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9B1A2623854BF60078A1EC /* PreferencesViewModel.swift */; };
@@ -500,6 +501,7 @@
 		3C8BBC282326541D00363349 /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
 		3C93975C2386A2E00063C0B3 /* PreferencesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesModel.swift; sourceTree = "<group>"; };
 		3C98F80C23CF555A006EB66C /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
+		3C9AA2F523FFD1B2005D1EE0 /* TrackedScreensEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedScreensEnum.swift; sourceTree = "<group>"; };
 		3C9B1A2023854B9D0078A1EC /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		3C9B1A2123854B9D0078A1EC /* PreferencesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesViewController.xib; sourceTree = "<group>"; };
 		3C9B1A2623854BF60078A1EC /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
@@ -1348,6 +1350,7 @@
 				EFCB2C172329366A0060F73B /* Supporting Files */,
 				3CF029F422F45B48009A0E61 /* Utils */,
 				EF3BC90B234750ED00FE52ED /* Wallet */,
+				3C9AA2F523FFD1B2005D1EE0 /* TrackedScreensEnum.swift */,
 			);
 			path = binkapp;
 			sourceTree = "<group>";
@@ -2610,6 +2613,7 @@
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
 				EF7F6E6323E4296C00352DCF /* StorageUtilityMock.swift in Sources */,
 				EFA5F7432379A7C70027AB80 /* CD_PaymentCardAccount.swift in Sources */,
+				3C9AA2F623FFD1B2005D1EE0 /* TrackedScreensEnum.swift in Sources */,
 				BDB0187C232E1B5900BFFA18 /* PaymentCardCreateModel.swift in Sources */,
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
 				EF8BF1ED233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift in Sources */,

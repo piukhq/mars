@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class BinkTrackableViewController: UIViewController, AnalyticsTrackable {
     /// Optional additional data to pass to analytics along with the default tracking event data
@@ -15,11 +16,12 @@ class BinkTrackableViewController: UIViewController, AnalyticsTrackable {
     /// Set the trackable event for all subclassing view controllers
     var trackableEvent: BinkAnalyticsEvent {
         let className = String(describing: Self.self)
-        return .screenView(screenName: screenName ?? className)
+        return .screenView(screenName: className)
     }
     
-    /// Subclasses should set this if the view controller's class name isn't desirable
-    var screenName: String?
+    func setScreenName(trackedScreen: TrackedScreensEnum) {
+        Analytics.setScreenName(trackedScreen.rawValue, screenClass: nil)
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
