@@ -8,8 +8,11 @@
 
 import Foundation
 
-fileprivate var debugChangedEnvironment = false
-fileprivate var customURLString = ""
+fileprivate var customURLString = "" {
+    didSet {
+        Current.userDefaults.set(customURLString, forDefaultsKey: .environmentBaseUrl)
+    }
+}
 
 enum EnvironmentType: String {
     case dev = "api.dev.gb.bink.com"
@@ -33,10 +36,12 @@ enum APIConstants {
     static let productionBaseURL = "https://api.bink.com"
 
     static var baseURLString: String {
-        if debugChangedEnvironment {
-            return "https://" + customURLString
+        #if DEBUG
+        if let customBaseUrl = Current.userDefaults.value(forDefaultsKey: .environmentBaseUrl) as? String {
+            return "https://" + customBaseUrl
         }
-        
+        #endif
+
         do {
             let configURL = try Configuration.value(for: "API_BASE_URL")
             return "https://" + configURL
@@ -47,12 +52,10 @@ enum APIConstants {
     }
     
     static func changeEnvironment(environment: EnvironmentType) {
-        debugChangedEnvironment = true
         customURLString = environment.rawValue
     }
     
     static func moveToCustomURL(url: String) {
-        debugChangedEnvironment = true
         customURLString = url
     }
     
