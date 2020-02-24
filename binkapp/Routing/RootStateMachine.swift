@@ -85,10 +85,6 @@ class RootStateMachine: NSObject {
             }
         }
     }
-
-    private func handleJailbrokenDevice() {
-        print("Nah mate you're jailbroke, you ain't Binking today son")
-    }
     
     @objc func completeLogout() {
         Current.userManager.removeUser()
