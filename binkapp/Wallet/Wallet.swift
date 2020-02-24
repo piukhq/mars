@@ -101,14 +101,16 @@ class Wallet: CoreDataRepositoryProtocol {
         getLoyaltyWallet(forceRefresh: forceRefresh, reloadPlans: reloadPlans, isUserDriven: isUserDriven) { success in
             // if this failed, the entire function should fail
             guard success else {
+                // NF: we should fall in here when membership plans fails and we don't have any stored locally
                 NotificationCenter.default.post(name: type == .reload ? .didLoadWallet : .didLoadLocalWallet, object: nil)
                 completion?(success)
-                return
+                return // NF: does this definitely stop any further api calls for the wallet?
             }
             dispatchGroup.leave()
         }
 
         dispatchGroup.enter()
+        // NF: can we confirm that if membership plans fails, and we don't have any stored locally, then this doesn't get called?
         getPaymentWallet(forceRefresh: forceRefresh, isUserDriven: isUserDriven) { success in
             // if this failed, the entire function should fail
             guard success else {
@@ -131,6 +133,11 @@ class Wallet: CoreDataRepositoryProtocol {
     /// This provides a convenient way to get the loyalty wallet as a whole, while honouring that dependancy.
     private func getLoyaltyWallet(forceRefresh: Bool = false, reloadPlans: Bool, isUserDriven: Bool, completion: @escaping (Bool) -> Void) {
         getMembershipPlans(forceRefresh: reloadPlans, isUserDriven: isUserDriven) { [weak self] success in
+            guard success else {
+                // NF: membership plans failed, and we don't have any stored locally
+                // NF: completion(false)
+                return
+            }
             self?.getMembershipCards(forceRefresh: forceRefresh, isUserDriven: isUserDriven, completion: { success in
                 completion(success)
             })
@@ -157,12 +164,12 @@ class Wallet: CoreDataRepositoryProtocol {
                     StorageUtility.refreshPlanImages()
                 }
             })
-        }, onError: { [weak self] _ in
-            self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { [weak self] plans in
-                self?.membershipPlans = plans
-                completion(true)
-                return
-            }
+        }, onError: {_ in
+            // NF: couldn't get membership plans
+            // NF: check if we have any locally
+            // NF: if we do, completion(true), which will then follow through with membership and payment card calls
+            // NF: if we don't, completion(false) which should stop any further api calls
+            completion(false)
         })
     }
 
