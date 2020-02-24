@@ -7,10 +7,22 @@
 
 import Foundation
 
+protocol BrowseBrandsViewModelDelegate: class {
+    func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])
+}
+
 class BrowseBrandsViewModel {
     private let repository: BrowseBrandsRepository
     private let router: MainScreenRouter
     private var membershipPlans = [CD_MembershipPlan]()
+    
+    weak var delegate: BrowseBrandsViewModelDelegate?
+    var searchActive = false
+    var filteredData = [CD_MembershipPlan]() {
+        didSet {
+            delegate?.browseBrandsViewModel(self, didUpdateFilteredData: filteredData)
+        }
+    }
     
     init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
         self.repository = repository
@@ -25,6 +37,10 @@ class BrowseBrandsViewModel {
     }
     
     func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan {
+        if !filteredData.isEmpty {
+            return filteredData[indexPath.row]
+        }
+        
         if indexPath.section == 0 {
             return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
         }
@@ -79,6 +95,10 @@ class BrowseBrandsViewModel {
     }
     
     func numberOfSections() -> Int {
+        if !filteredData.isEmpty {
+            return 1
+        }
+        
         var sections = 0
         [getPllMembershipPlans(), getNonPllMembershipPlans()].forEach {
             if !$0.isEmpty {
@@ -90,6 +110,10 @@ class BrowseBrandsViewModel {
 
     
     func getNumberOfRowsFor(section: Int) -> Int {
+        if !filteredData.isEmpty {
+            return filteredData.count
+        }
+        
         switch section {
         case 0:
             return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans().count : getPllMembershipPlans().count

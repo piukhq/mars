@@ -129,6 +129,11 @@ class ApiManager {
         case unknown
     }
     
+    enum ApiVersion: String {
+        case v1_1 = "v=1.1"
+        case v1_2 = "v=1.2"
+    }
+    
     struct Certificates {
       static let bink = Certificates.certificate(filename: "bink-com")
       
@@ -159,6 +164,8 @@ class ApiManager {
         return APIConstants.baseURLString == APIConstants.productionBaseURL
     }
     
+    static var apiVersion: ApiVersion = .v1_1
+    
     init() {
         let evaluators = [
           "api.bink.com":
@@ -184,7 +191,7 @@ class ApiManager {
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
         
-        session.request(url.fullUrlString, method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { (response) in
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { (response) in
             self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
     }
@@ -201,7 +208,7 @@ class ApiManager {
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
                 
-        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { (response) in
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { (response) in
             self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
     }
@@ -287,7 +294,7 @@ class ApiManager {
         let authRequired = url.authRequired
         let requestHeaders = HTTPHeaders(getHeader(endpoint: url))
         
-        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { response in
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { response in
             
             let statusCode = response.response?.statusCode ?? 0
             if statusCode == 200 || statusCode == 201 || statusCode == 204 {
@@ -315,7 +322,7 @@ class ApiManager {
 
 private extension ApiManager {
     private func getHeader(endpoint: RequestURL) -> [String: String] {
-        var header = ["Content-Type": "application/json\(endpoint.shouldVersionPin ? ";v=1.1" : "")"]
+        var header = ["Content-Type": "application/json\(endpoint.shouldVersionPin ? ";\(ApiManager.apiVersion.rawValue)" : "")"]
         
         if endpoint.authRequired {
             guard let token = Current.userManager.currentToken else { return header }

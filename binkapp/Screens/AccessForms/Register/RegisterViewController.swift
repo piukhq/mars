@@ -35,6 +35,7 @@ class RegisterViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .register)
                 
         NSLayoutConstraint.activate([
             continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),

@@ -51,6 +51,8 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .settings)
+        
         configureLayout()
         title = viewModel.title
         let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(close))

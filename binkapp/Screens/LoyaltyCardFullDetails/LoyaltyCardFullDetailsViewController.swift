@@ -120,6 +120,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         super.viewDidLoad()
         view.backgroundColor = .white
 
+        setScreenName(trackedScreen: .loyaltyDetail)
         setCloseButton()
         configureUI()
     }

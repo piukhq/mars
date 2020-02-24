@@ -37,6 +37,8 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .informationModal)
+        
         floatingButtonsContainer.delegate = self
         textView.delegate = self
         configureUI()
