@@ -12,7 +12,7 @@ fileprivate struct Constants {
     static let searchIconLeftPadding = 12
     static let searchIconTopPadding = 13
     static let searchIconSideSize = 14
-    static let contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+    static let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 }
 
 class BrowseBrandsViewController: BinkTrackableViewController {
@@ -46,7 +46,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         noMatchesLabel.text = "no_matches".localized
         
         configureSearchTextField()
-        addBlurToSearchTextField()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -90,15 +89,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-    }
-    
-    private func addBlurToSearchTextField() {
-        let visualEffectView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect.init(style: .light))
-        visualEffectView.translatesAutoresizingMaskIntoConstraints = false
-        visualEffectView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        visualEffectView.frame = searchTextFieldContainer.frame
-        visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        searchTextFieldContainer.insertSubview(visualEffectView, at: 0)
     }
     
     @objc private func dismissKeyboard() {
