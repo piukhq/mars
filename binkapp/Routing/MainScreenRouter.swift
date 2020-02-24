@@ -41,6 +41,10 @@ class MainScreenRouter {
         return nav
     }
 
+    func jailbroken() -> UIViewController {
+        return JailbrokenViewController()
+    }
+
     func getOnboardingViewController() -> UIViewController {
         let viewModel = OnboardingViewModel(router: self)
         let nav = PortraitNavigationController(rootViewController: OnboardingViewController(viewModel: viewModel))
