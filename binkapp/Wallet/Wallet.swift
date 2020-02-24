@@ -157,8 +157,12 @@ class Wallet: CoreDataRepositoryProtocol {
                     StorageUtility.refreshPlanImages()
                 }
             })
-        }, onError: {_ in
-            completion(false)
+        }, onError: { [weak self] _ in
+            self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { [weak self] plans in
+                self?.membershipPlans = plans
+                completion(true)
+                return
+            }
         })
     }
 
