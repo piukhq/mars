@@ -136,6 +136,7 @@ class Wallet: CoreDataRepositoryProtocol {
             guard success else {
                 // NF: membership plans failed, and we don't have any stored locally
                 // NF: completion(false)
+                completion(false)
                 return
             }
             self?.getMembershipCards(forceRefresh: forceRefresh, isUserDriven: isUserDriven, completion: { success in
@@ -164,12 +165,12 @@ class Wallet: CoreDataRepositoryProtocol {
                     StorageUtility.refreshPlanImages()
                 }
             })
-        }, onError: {_ in
-            // NF: couldn't get membership plans
-            // NF: check if we have any locally
-            // NF: if we do, completion(true), which will then follow through with membership and payment card calls
-            // NF: if we don't, completion(false) which should stop any further api calls
-            completion(false)
+        }, onError: { [weak self] _ in
+            guard let localPlans = self?.membershipPlans, !localPlans.isEmpty else {
+                completion(false)
+                return
+            }
+            completion(true)
         })
     }
 
