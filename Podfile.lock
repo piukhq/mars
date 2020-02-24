@@ -93,7 +93,6 @@ PODS:
   - GoogleUtilities/UserDefaults (6.3.1):
     - GoogleUtilities/Logger
   - iOSDropDown (0.3.4)
-  - JWTDecode (2.4.1)
   - KeychainAccess (4.1.0)
   - Keys (1.0.1)
   - M13Checkbox (3.4.0)
@@ -118,7 +117,6 @@ DEPENDENCIES:
   - Firebase
   - Firebase/Analytics
   - iOSDropDown
-  - JWTDecode (~> 2.4)
   - KeychainAccess (~> 4.1)
   - Keys (from `Pods/CocoaPodsKeys`)
   - M13Checkbox
@@ -154,7 +152,6 @@ SPEC REPOS:
     - SwipeCellKit
   trunk:
     - Disk
-    - JWTDecode
 
 EXTERNAL SOURCES:
   Keys:
@@ -184,13 +181,12 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
-  JWTDecode: 4bd4da0cdf0f8154fd467fa48499f34ec057fb88
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   M13Checkbox: 6f59404540ac98ba83a3d1afac335895a40c6a5d
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: 8995a8f65f7ae60f21f68023b47f332b93f00836
+PODFILE CHECKSUM: b8e54d9da3f7da02e468aa28613036407170a9e1
 
 COCOAPODS: 1.8.4

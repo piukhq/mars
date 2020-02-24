@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import JWTDecode
+//import JWTDecode
 
 struct UserMigrationController {
     
@@ -40,21 +40,21 @@ struct UserMigrationController {
         }
         
         Current.apiManager.doRequest(url: .renew, httpMethod: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json;\(ApiManager.apiVersion.rawValue)"], isUserDriven: false, onSuccess: { (response: RenewTokenResponse) in
-            var email: String?
-            do {
-                let jwt = try decode(jwt: token)
-                email = jwt.body["user_id"] as? String
-            } catch {
-                completion(false)
-            }
-
-            guard let renewEmail = email else {
-                completion(false)
-                return
-            }
+//            var email: String?
+//            do {
+//                let jwt = try decode(jwt: token)
+//                email = jwt.body["user_id"] as? String
+//            } catch {
+//                completion(false)
+//            }
+//
+//            guard let renewEmail = email else {
+//                completion(false)
+//                return
+//            }
 
             Current.userManager.setNewUser(with: response)
-            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: renewEmail), isUserDriven: false) { (success, error) in
+            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: "renewEmail"), isUserDriven: false) { (success, error) in
                 // If there is an error, or the response is not successful, bail out
                 guard error == nil, success else {
                     Current.userManager.removeUser()
