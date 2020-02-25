@@ -131,6 +131,10 @@ class Wallet: CoreDataRepositoryProtocol {
     /// This provides a convenient way to get the loyalty wallet as a whole, while honouring that dependancy.
     private func getLoyaltyWallet(forceRefresh: Bool = false, reloadPlans: Bool, isUserDriven: Bool, completion: @escaping (Bool) -> Void) {
         getMembershipPlans(forceRefresh: reloadPlans, isUserDriven: isUserDriven) { [weak self] success in
+            guard success else {
+                completion(false)
+                return
+            }
             self?.getMembershipCards(forceRefresh: forceRefresh, isUserDriven: isUserDriven, completion: { success in
                 completion(success)
             })
@@ -157,8 +161,12 @@ class Wallet: CoreDataRepositoryProtocol {
                     StorageUtility.refreshPlanImages()
                 }
             })
-        }, onError: {_ in
-            completion(false)
+        }, onError: { [weak self] _ in
+            guard let localPlans = self?.membershipPlans, !localPlans.isEmpty else {
+                completion(false)
+                return
+            }
+            completion(true)
         })
     }
 

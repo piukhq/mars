@@ -72,6 +72,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         searchTextField.clearButtonMode = .whileEditing
         searchTextField.leftViewMode = .always
         searchTextField.autocapitalizationType = .words
+        searchTextField.autocorrectionType = .no
         
         // Magnifying glass icon
         let searchIconView = UIView(frame: CGRect(x: 0, y: 0, width: searchTextField.frame.height, height: searchTextField.frame.height))
