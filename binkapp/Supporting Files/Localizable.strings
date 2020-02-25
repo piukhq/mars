@@ -34,6 +34,7 @@
 "registration_unavailable_description" = "Please go to the merchant’s website to join this scheme. You can then come back and add your card.";
 "register_card_title" = "Register card";
 "retry_title" = "Retry";
+"enter_plan_name_card" = "Enter %@";
 
 "add_loyalty_card_title" = "Add loyalty card";
 "scan_a_card_description" = "Scan a card you already have";
@@ -78,6 +79,7 @@
 "get_new_card_button" = "Get a new card";
 
 "auth_screen_description" = "Please enter your %@ credentials below to add this card to your wallet";
+"auth_add_description" = "Please enter your %@.";
 
 "pll_title" = "PLL";
 "popular_title" = "Popular";
