@@ -847,6 +847,7 @@
 		EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRStampsInactiveCell.xib; sourceTree = "<group>"; };
 		EFA81013240405070000D21D /* JailbrokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JailbrokenViewController.swift; sourceTree = "<group>"; };
 		EFA81014240405070000D21D /* JailbrokenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JailbrokenViewController.xib; sourceTree = "<group>"; };
+		EFA8101724055F570000D21D /* binkapp - Plan Dynamic Content.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - Plan Dynamic Content.xcdatamodel"; sourceTree = "<group>"; };
 		EFB055A523F453C400D64F86 /* PLRStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRStampView.swift; sourceTree = "<group>"; };
 		EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRBaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardsHistoryViewController.swift; sourceTree = "<group>"; };
@@ -4060,11 +4061,12 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EFA8101724055F570000D21D /* binkapp - Plan Dynamic Content.xcdatamodel */,
 				EFBC94F123A7CF4400574086 /* binkapp - Fields Common Name.xcdatamodel */,
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = EFBC94F123A7CF4400574086 /* binkapp - Fields Common Name.xcdatamodel */;
+			currentVersion = EFA8101724055F570000D21D /* binkapp - Plan Dynamic Content.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
