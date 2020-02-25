@@ -79,10 +79,15 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
             guard let contentObject = $0 as? CD_PlanDynamicContent else { return }
             context.delete(contentObject)
         }
-        dynamicContent?.forEach { contentObject in
-            let cdContentObject = contentObject.mapToCoreData(context, .update, overrideID: nil)
-            update(cdContentObject, \.plan, with: cdObject, delta: delta)
-            cdObject.addDynamicContentObject(cdContentObject)
+
+
+        if let dynamicContent = dynamicContent {
+            for (index, contentObject) in dynamicContent.enumerated() {
+                let indexID = DynamicContentField.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdContentObject = contentObject.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdContentObject, \.plan, with: cdObject, delta: delta)
+                cdObject.addDynamicContentObject(cdContentObject)
+            }
         }
 
         return cdObject
