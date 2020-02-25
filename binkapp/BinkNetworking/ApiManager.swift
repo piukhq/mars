@@ -10,6 +10,7 @@ import Keys
 import Alamofire
 
 enum RequestURL: Equatable {
+    case service
     case login
     case register
     case facebook
@@ -28,6 +29,8 @@ enum RequestURL: Equatable {
     
     private var value: String {
         switch self {
+        case .service:
+            return "/ubiquity/service"
         case .login:
             return "/users/login"
         case .register:
