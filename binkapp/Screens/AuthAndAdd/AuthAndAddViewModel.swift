@@ -55,7 +55,9 @@ class AuthAndAddViewModel {
     var title: String {
         switch formPurpose {
         case .signUp, .signUpFailed: return "sign_up_new_card_title".localized
-        case .add: return "credentials_title".localized
+        case .add:
+            guard let planNameCard = membershipPlan.account?.planNameCard else { return "" }
+            return String(format: "enter_plan_name_card".localized, planNameCard)
         case .addFailed: return "log_in_title".localized
         case .ghostCard, .patchGhostCard: return "register_ghost_card_title".localized
         }
@@ -86,8 +88,8 @@ class AuthAndAddViewModel {
     func getDescription() -> String? {
         switch formPurpose {
         case .add:
-            guard let companyName = membershipPlan.account?.companyName else { return nil }
-            return String(format: "auth_screen_description".localized, companyName)
+            guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
+            return String(format: "auth_add_description".localized, planNameCard)
         case .signUp:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "sign_up_new_card_description".localized, planNameCard)
