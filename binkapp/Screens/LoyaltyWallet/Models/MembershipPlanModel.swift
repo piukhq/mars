@@ -26,7 +26,7 @@ struct MembershipPlanModel: Codable {
         case account
         case balances
         case hasVouchers = "has_vouchers"
-        case dynamicContent
+        case dynamicContent = "content"
     }
 }
 

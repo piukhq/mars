@@ -58,9 +58,9 @@ enum RequestURL: Equatable {
         case .spreedly:
             return "https://core.spreedly.com/v1/payment_methods?environment_key=\(BinkappKeys().spreedlyEnvironmentKey)"
         case .mockBKWalletCards:
-            return "https://virtserver.swaggerhub.com/Bink_API/Bink_External_API/1.2/membership_cards"
+            return "http://172.20.10.11:8080/mock_cards"
         case .mockBKWalletPlans:
-            return "https://virtserver.swaggerhub.com/Bink_API/Bink_External_API/1.2/membership_plans"
+            return "http://172.20.10.11:8080/mock_plans"
         }
     }
     
