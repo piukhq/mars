@@ -120,6 +120,7 @@
         <attribute name="status" optional="YES" attributeType="String"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlanAccount" inverseName="plan" inverseEntity="CD_MembershipPlanAccount"/>
         <relationship name="balances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Balance" inverseName="plan" inverseEntity="CD_Balance"/>
+        <relationship name="dynamicContent" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_PlanDynamicContent" inverseName="plan" inverseEntity="CD_PlanDynamicContent"/>
         <relationship name="featureSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_FeatureSet" inverseName="plan" inverseEntity="CD_FeatureSet"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipPlanImage" inverseName="plan" inverseEntity="CD_MembershipPlanImage"/>
         <relationship name="membershipCards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="membershipPlan" inverseEntity="CD_MembershipCard"/>
@@ -201,6 +202,11 @@
         <attribute name="value" optional="YES" attributeType="String"/>
         <relationship name="planDocument" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_PlanDocument" inverseName="display" inverseEntity="CD_PlanDocument"/>
     </entity>
+    <entity name="CD_PlanDynamicContent" representedClassName="CD_PlanDynamicContent" parentEntity="CD_BaseObject" syncable="YES">
+        <attribute name="column" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
+        <relationship name="plan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlan" inverseName="dynamicContent" inverseEntity="CD_MembershipPlan"/>
+    </entity>
     <entity name="CD_ReasonCode" representedClassName="CD_ReasonCode" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="value" optional="YES" attributeType="String"/>
         <relationship name="status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCardStatus" inverseName="reasonCodes" inverseEntity="CD_MembershipCardStatus"/>
@@ -268,7 +274,7 @@
         <element name="CD_MembershipCardBalance" positionX="-16.28515625" positionY="-84.171875" width="128" height="133"/>
         <element name="CD_MembershipCardImage" positionX="0" positionY="72" width="128" height="133"/>
         <element name="CD_MembershipCardStatus" positionX="9" positionY="99" width="128" height="88"/>
-        <element name="CD_MembershipPlan" positionX="36" positionY="171" width="128" height="148"/>
+        <element name="CD_MembershipPlan" positionX="36" positionY="171" width="128" height="163"/>
         <element name="CD_MembershipPlanAccount" positionX="0" positionY="126" width="128" height="328"/>
         <element name="CD_MembershipPlanImage" positionX="-9" positionY="135" width="128" height="118"/>
         <element name="CD_MembershipTransaction" positionX="-432.36328125" positionY="41.8515625" width="128" height="118"/>
@@ -284,5 +290,6 @@
         <element name="CD_Voucher" positionX="-279" positionY="36" width="128" height="223"/>
         <element name="CD_VoucherBurn" positionX="-261" positionY="54" width="128" height="133"/>
         <element name="CD_VoucherEarn" positionX="-270" positionY="45" width="128" height="148"/>
+        <element name="CD_PlanDynamicContent" positionX="-279" positionY="36" width="128" height="88"/>
     </elements>
 </model>

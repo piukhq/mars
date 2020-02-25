@@ -12,6 +12,7 @@ public enum CD_MembershipPlanAttributes: String {
 public enum CD_MembershipPlanRelationships: String {
     case account = "account"
     case balances = "balances"
+    case dynamicContent = "dynamicContent"
     case featureSet = "featureSet"
     case images = "images"
     case membershipCards = "membershipCards"
@@ -66,6 +67,13 @@ open class _CD_MembershipPlan: CD_BaseObject {
     }
 
     @NSManaged open
+    var dynamicContent: NSSet
+
+    open func dynamicContentSet() -> NSMutableSet {
+        return self.dynamicContent.mutableCopy() as! NSMutableSet
+    }
+
+    @NSManaged open
     var featureSet: CD_FeatureSet?
 
     @NSManaged open
@@ -108,6 +116,34 @@ extension _CD_MembershipPlan {
         let mutable = self.balances.mutableCopy() as! NSMutableSet
         mutable.remove(value)
         self.balances = mutable.copy() as! NSSet
+    }
+
+}
+
+extension _CD_MembershipPlan {
+
+    open func addDynamicContent(_ objects: NSSet) {
+        let mutable = self.dynamicContent.mutableCopy() as! NSMutableSet
+        mutable.union(objects as Set<NSObject>)
+        self.dynamicContent = mutable.copy() as! NSSet
+    }
+
+    open func removeDynamicContent(_ objects: NSSet) {
+        let mutable = self.dynamicContent.mutableCopy() as! NSMutableSet
+        mutable.minus(objects as Set<NSObject>)
+        self.dynamicContent = mutable.copy() as! NSSet
+    }
+
+    open func addDynamicContentObject(_ value: CD_PlanDynamicContent) {
+        let mutable = self.dynamicContent.mutableCopy() as! NSMutableSet
+        mutable.add(value)
+        self.dynamicContent = mutable.copy() as! NSSet
+    }
+
+    open func removeDynamicContentObject(_ value: CD_PlanDynamicContent) {
+        let mutable = self.dynamicContent.mutableCopy() as! NSMutableSet
+        mutable.remove(value)
+        self.dynamicContent = mutable.copy() as! NSSet
     }
 
 }
