@@ -56,6 +56,7 @@
 		3C7067EF232FD52D00AB88A5 /* SimpleInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7067ED232FD52D00AB88A5 /* SimpleInfoViewController.swift */; };
 		3C7067F0232FD52D00AB88A5 /* SimpleInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C7067EE232FD52D00AB88A5 /* SimpleInfoViewController.xib */; };
 		3C7067F2232FD74500AB88A5 /* SimpleInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7067F1232FD74500AB88A5 /* SimpleInfoViewModel.swift */; };
+		3C71683524069F370058701E /* bink.der in Resources */ = {isa = PBXBuildFile; fileRef = 3C71683424069F370058701E /* bink.der */; };
 		3C794D8C23018C25000A31FD /* BrowseBrandsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C794D8A23018C25000A31FD /* BrowseBrandsViewController.swift */; };
 		3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */; };
 		3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C794D8E23018DBA000A31FD /* BrowseBrandsViewModel.swift */; };
@@ -202,7 +203,6 @@
 		BD9E4CD1237014D300C6F098 /* RootStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */; };
 		BD9E4CD623738B4900C6F098 /* PreferenceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */; };
 		BD9E4CD823740A7500C6F098 /* PreferenceChangeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD723740A7500C6F098 /* PreferenceChangeResponse.swift */; };
-		BD9E4CDA2375B45B00C6F098 /* bink-com.der in Resources */ = {isa = PBXBuildFile; fileRef = BD9E4CD92375B45900C6F098 /* bink-com.der */; };
 		BD9FB68B2333DE3E00E5559A /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB68A2333DE3E00E5559A /* StringExtension.swift */; };
 		BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */; };
 		BD9FB6B223380C0900E5559A /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */; };
@@ -488,6 +488,7 @@
 		3C7067ED232FD52D00AB88A5 /* SimpleInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInfoViewController.swift; sourceTree = "<group>"; };
 		3C7067EE232FD52D00AB88A5 /* SimpleInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleInfoViewController.xib; sourceTree = "<group>"; };
 		3C7067F1232FD74500AB88A5 /* SimpleInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInfoViewModel.swift; sourceTree = "<group>"; };
+		3C71683424069F370058701E /* bink.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = bink.der; sourceTree = "<group>"; };
 		3C794D8A23018C25000A31FD /* BrowseBrandsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewController.swift; sourceTree = "<group>"; };
 		3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowseBrandsViewController.xib; sourceTree = "<group>"; };
 		3C794D8E23018DBA000A31FD /* BrowseBrandsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewModel.swift; sourceTree = "<group>"; };
@@ -659,7 +660,6 @@
 		BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStateMachine.swift; sourceTree = "<group>"; };
 		BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceResponse.swift; sourceTree = "<group>"; };
 		BD9E4CD723740A7500C6F098 /* PreferenceChangeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceChangeResponse.swift; sourceTree = "<group>"; };
-		BD9E4CD92375B45900C6F098 /* bink-com.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bink-com.der"; sourceTree = "<group>"; };
 		BD9FB68A2333DE3E00E5559A /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		BD9FB6AF233761C400E5559A /* UILayoutPriority+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILayoutPriority+Extension.swift"; sourceTree = "<group>"; };
 		BD9FB6B123380C0900E5559A /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
@@ -2128,7 +2128,7 @@
 		EFCB2C182329368D0060F73B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BD9E4CD92375B45900C6F098 /* bink-com.der */,
+				3C71683424069F370058701E /* bink.der */,
 				5ECE047522CE579B001BA964 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -2288,13 +2288,13 @@
 				3CD6B3B4232B98CE00058514 /* TransactionTableViewCell.xib in Resources */,
 				3CD3493722F99E1D000C1F4D /* NunitoSans-ExtraBold.ttf in Resources */,
 				EF335C83234F565B00D49223 /* WalletPromptCollectionViewCell.xib in Resources */,
-				BD9E4CDA2375B45B00C6F098 /* bink-com.der in Resources */,
 				3C25BE0023019BC100E931EE /* BrandTableViewCell.xib in Resources */,
 				B71D51F92343692000BB3406 /* OfferTileView.xib in Resources */,
 				EFF59F16234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib in Resources */,
 				3C33E33F23167015005E97DC /* DropdownView.xib in Resources */,
 				3CD3493A22F99E1D000C1F4D /* NunitoSans-Italic.ttf in Resources */,
 				BD01E123231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib in Resources */,
+				3C71683524069F370058701E /* bink.der in Resources */,
 				3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */,
 				EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */,
 				3CF029F322F45AEC009A0E61 /* AddingOptionsViewController.xib in Resources */,
