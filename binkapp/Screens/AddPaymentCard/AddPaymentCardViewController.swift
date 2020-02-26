@@ -28,7 +28,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         button.setTitle("Add", for: .normal)
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .addButtonTapped, for: .touchUpInside)
-        button.isEnabled = true
+        button.isEnabled = false
         view.addSubview(button)
         return button
     }()
