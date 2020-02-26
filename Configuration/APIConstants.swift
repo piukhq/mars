@@ -33,7 +33,7 @@ enum Configuration {
 }
 
 enum APIConstants {
-    static let productionBaseURL = "https://api.bink.com"
+    static let productionBaseURL = "https://api.gb.bink.com"
 
     static var baseURLString: String {
         #if DEBUG

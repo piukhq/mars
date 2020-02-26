@@ -138,7 +138,7 @@ class ApiManager {
     }
     
     struct Certificates {
-      static let bink = Certificates.certificate(filename: "bink-com")
+      static let bink = Certificates.certificate(filename: "bink")
       
       private static func certificate(filename: String) -> SecCertificate {
         let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
