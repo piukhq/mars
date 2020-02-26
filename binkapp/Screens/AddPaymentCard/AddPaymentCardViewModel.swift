@@ -14,7 +14,7 @@ class AddPaymentCardViewModel {
     let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
     var shouldDisplayTermsAndConditions: Bool {
-        return !Current.wallet.hasPaymentCards
+        return true
     }
     
     init(router: MainScreenRouter, repository: PaymentWalletRepositoryProtocol, paymentCard: PaymentCardCreateModel) {
