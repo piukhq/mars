@@ -11,7 +11,7 @@ import FirebaseAnalytics
 
 /// Conformance to this protocol makes a class trackable
 protocol AnalyticsTrackable {
-    var trackableEvent: BinkAnalyticsEvent { get }
+    var trackableEvent: BinkAnalyticsEvent? { get }
     var additionalTrackingData: [String: Any]? { get }
 }
 

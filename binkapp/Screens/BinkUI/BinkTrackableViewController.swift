@@ -32,7 +32,9 @@ enum TrackedScreen: String {
 }
 
 class BinkTrackableViewController: UIViewController {
+    var screenName: String?
     func setScreenName(trackedScreen: TrackedScreen) {
-        Analytics.setScreenName(trackedScreen.rawValue, screenClass: nil)
+        screenName = trackedScreen.rawValue
+        Analytics.setScreenName(screenName, screenClass: nil)
     }
 }
