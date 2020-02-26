@@ -38,7 +38,13 @@ class BrowseBrandsViewModel {
     
     func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan {
         if !filteredData.isEmpty {
-            return filteredData[indexPath.row]
+            let sortedData = filteredData.sorted {
+                guard let first = $0.account?.companyName?.lowercased() else { return false }
+                guard let second = $1.account?.companyName?.lowercased() else { return true }
+                
+                return first < second
+            }
+            return sortedData[indexPath.row]
         }
         
         if indexPath.section == 0 {
