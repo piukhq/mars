@@ -171,7 +171,7 @@ class ApiManager {
     
     init() {
         let evaluators = [
-          "api.bink.com":
+          "api.gb.bink.com":
             PinnedCertificatesTrustEvaluator(certificates: [
               Certificates.bink
             ])
