@@ -24,9 +24,9 @@ enum WalletPromptType {
     var body: String {
         switch self {
         case .loyaltyJoin:
-            return "Link this card to your payment cards to automatically collect rewards."
+            return "wallet_prompt_loyalty".localized
         case .addPaymentCards:
-            return "You will need to add at least one to collect rewards automatically."
+            return "wallet_prompt_payment".localized
         }
     }
 
