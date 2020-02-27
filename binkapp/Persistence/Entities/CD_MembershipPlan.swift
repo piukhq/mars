@@ -19,4 +19,10 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
     var isPLR: Bool {
         return hasVouchers?.boolValue ?? false
     }
+
+    var canAddCard: Bool {
+        guard let linkingSupport = featureSet?.formattedLinkingSupport else { return false }
+        let linkingSupportTypes = linkingSupport.map { LinkingSupportType(rawValue: $0.value ?? "") }
+        return linkingSupportTypes.contains(.add)
+    }
 }

@@ -17,6 +17,11 @@ class AddOrJoinViewModel {
         self.membershipCard = membershipCard
         self.router = router
     }
+
+    var shouldShowAddCardButton: Bool {
+        guard membershipPlan.isPLR else { return true }
+        return membershipPlan.canAddCard
+    }
     
     func getMembershipPlan() -> CD_MembershipPlan {
         return membershipPlan
