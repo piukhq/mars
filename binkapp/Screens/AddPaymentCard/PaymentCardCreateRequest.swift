@@ -68,14 +68,14 @@ struct PaymentCardCreateRequest: Codable {
 
         card = Card(
             token: PaymentCardCreateRequest.fakeToken(),
-            firstSixDigits: firstSix!, // TODO: encrypt this
-            lastFourDigits: lastFour!, // TODO: encrypt this
+            firstSixDigits: SecureUtility.encryptedSensitiveFieldValue(firstSix ?? ""),
+            lastFourDigits: SecureUtility.encryptedSensitiveFieldValue(lastFour ?? ""),
             country: "GB", //TODO: Needs resolving!
             nameOnCard: model.nameOnCard!,
-            month: month, // TODO: encrypt this
-            year: year, // TODO: encrypt this
+            month: SecureUtility.encryptedSensitiveFieldValue(month),
+            year: SecureUtility.encryptedSensitiveFieldValue(year),
             fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month)),
-            hash1: hash // TODO: encrypt this
+            hash1: SecureUtility.encryptedSensitiveFieldValue(hash)
         )
 
         let timestamp = Date().timeIntervalSince1970
@@ -86,14 +86,14 @@ struct PaymentCardCreateRequest: Codable {
     init?(spreedlyResponse: SpreedlyResponse, hash: String) {
         card = Card(
             token: spreedlyResponse.transaction?.paymentMethod?.token ?? "",
-            firstSixDigits: spreedlyResponse.transaction?.paymentMethod?.firstSix ?? "", // TODO: encrypt this
-            lastFourDigits: spreedlyResponse.transaction?.paymentMethod?.lastFour ?? "", // TODO: encrypt this
+            firstSixDigits: SecureUtility.encryptedSensitiveFieldValue(spreedlyResponse.transaction?.paymentMethod?.firstSix ?? ""),
+            lastFourDigits: SecureUtility.encryptedSensitiveFieldValue(spreedlyResponse.transaction?.paymentMethod?.lastFour ?? ""),
             country: "GB", //TODO: Needs resolving!
             nameOnCard: spreedlyResponse.transaction?.paymentMethod?.fullName ?? "",
-            month: spreedlyResponse.transaction?.paymentMethod?.month ?? 0, // TODO: encrypt this
-            year: spreedlyResponse.transaction?.paymentMethod?.year ?? 0, // TODO: encrypt this
+            month: SecureUtility.encryptedSensitiveFieldValue(spreedlyResponse.transaction?.paymentMethod?.month ?? 0),
+            year: SecureUtility.encryptedSensitiveFieldValue(spreedlyResponse.transaction?.paymentMethod?.year ?? 0),
             fingerprint: spreedlyResponse.transaction?.paymentMethod?.fingerprint ?? "",
-            hash1: hash // TODO: encrypt this
+            hash1: SecureUtility.encryptedSensitiveFieldValue(hash)
         )
 
         let timestamp = Date().timeIntervalSince1970

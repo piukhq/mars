@@ -9,17 +9,23 @@
 import Foundation
 
 final class SecureUtility {
-    static func getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String {
-        // pan should have passed luhn check at this point
-        // does expiry need to strip out "/" character?
+    static func
+        getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String {
         // need to get secret1 from keychain for the necessary environment
         // how are we storing the secret in the keychain?
-        return ""
+        let secret = "secret1"
+        return "\(paymentCard.fullPan ?? "")\(paymentCard.month ?? 0)\(paymentCard.year ?? 0)\(secret)".sha512()
     }
 
-    static func encryptAddPaymentCardRequestFieldValue(_ value: String) -> String {
+    static func encryptedSensitiveFieldValue(_ value: Any) -> String {
         // get encryption key from keychain for right environment
         // encrypt value
         return ""
+    }
+
+    static func encryptedSensitiveFieldValue(_ value: Any) -> Int {
+        // get encryption key from keychain for right environment
+        // encrypt value
+        return 0
     }
 }
