@@ -20,6 +20,7 @@ struct PaymentCardCreateRequest: Codable {
             case month
             case year
             case fingerprint
+            case hash1
         }
         
         let token: String
@@ -30,6 +31,7 @@ struct PaymentCardCreateRequest: Codable {
         let month: Int
         let year: Int
         let fingerprint: String
+        let hash1: String
     }
     
     struct Account: Codable {
@@ -45,11 +47,10 @@ struct PaymentCardCreateRequest: Codable {
     }
     
     let card: Card
-
     let account: Account
     
     /// This should only be used for creating test payment cards as it naturally bypasses the Spreedly path
-    init?(model: PaymentCardCreateModel) {
+    init?(model: PaymentCardCreateModel, hash: String) {
         guard let pan = model.fullPan?.replacingOccurrences(of: " ", with: ""),
             let year = model.year,
             let month = model.month
@@ -67,13 +68,14 @@ struct PaymentCardCreateRequest: Codable {
 
         card = Card(
             token: PaymentCardCreateRequest.fakeToken(),
-            firstSixDigits: firstSix!,
-            lastFourDigits: lastFour!,
+            firstSixDigits: firstSix!, // TODO: encrypt this
+            lastFourDigits: lastFour!, // TODO: encrypt this
             country: "GB", //TODO: Needs resolving!
             nameOnCard: model.nameOnCard!,
-            month: month,
-            year: year,
-            fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month))
+            month: month, // TODO: encrypt this
+            year: year, // TODO: encrypt this
+            fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month)),
+            hash1: hash // TODO: encrypt this
         )
 
         let timestamp = Date().timeIntervalSince1970
@@ -81,16 +83,17 @@ struct PaymentCardCreateRequest: Codable {
     }
 
     /// This should only be used for creating genuine payment cards using Spreedly path in a production environment
-    init?(spreedlyResponse: SpreedlyResponse) {
+    init?(spreedlyResponse: SpreedlyResponse, hash: String) {
         card = Card(
             token: spreedlyResponse.transaction?.paymentMethod?.token ?? "",
-            firstSixDigits: spreedlyResponse.transaction?.paymentMethod?.firstSix ?? "",
-            lastFourDigits: spreedlyResponse.transaction?.paymentMethod?.lastFour ?? "",
+            firstSixDigits: spreedlyResponse.transaction?.paymentMethod?.firstSix ?? "", // TODO: encrypt this
+            lastFourDigits: spreedlyResponse.transaction?.paymentMethod?.lastFour ?? "", // TODO: encrypt this
             country: "GB", //TODO: Needs resolving!
             nameOnCard: spreedlyResponse.transaction?.paymentMethod?.fullName ?? "",
-            month: spreedlyResponse.transaction?.paymentMethod?.month ?? 0,
-            year: spreedlyResponse.transaction?.paymentMethod?.year ?? 0,
-            fingerprint: spreedlyResponse.transaction?.paymentMethod?.fingerprint ?? ""
+            month: spreedlyResponse.transaction?.paymentMethod?.month ?? 0, // TODO: encrypt this
+            year: spreedlyResponse.transaction?.paymentMethod?.year ?? 0, // TODO: encrypt this
+            fingerprint: spreedlyResponse.transaction?.paymentMethod?.fingerprint ?? "",
+            hash1: hash // TODO: encrypt this
         )
 
         let timestamp = Date().timeIntervalSince1970
@@ -99,7 +102,7 @@ struct PaymentCardCreateRequest: Codable {
     
     private static func fakeFingerprint(pan: String, expiryYear: String, expiryMonth: String) -> String {
         // Based a hash of the pan, it's the key identifier of the card
-        return "\(pan)|\(expiryMonth)|\(expiryYear)".md5()
+        return "\(pan)|\(expiryMonth)|\(expiryYear)".md5() // Maybe we should do something similar to this for pan hashing?
     }
     
     private static func fakeToken() -> String {

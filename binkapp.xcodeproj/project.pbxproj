@@ -400,6 +400,7 @@
 		EFCAF9212371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF91F2371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift */; };
 		EFCAF9222371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCAF9202371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib */; };
 		EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8653A232FCDD800036C17 /* ReasonCode.swift */; };
+		EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDEBDF62408279900CB755E /* SecureUtility.swift */; };
 		EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */; };
 		EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF0237C7BA300E18743 /* PLRRewardDetailViewModel.swift */; };
 		EFEB5BF3237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF2237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift */; };
@@ -871,6 +872,7 @@
 		EFCAF91F2371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCell.swift; sourceTree = "<group>"; };
 		EFCAF9202371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailAddLoyaltyCardCell.xib; sourceTree = "<group>"; };
 		EFD8653A232FCDD800036C17 /* ReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCode.swift; sourceTree = "<group>"; };
+		EFDEBDF62408279900CB755E /* SecureUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtility.swift; sourceTree = "<group>"; };
 		EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingSupportModel.swift; sourceTree = "<group>"; };
 		EFEB5BF0237C7BA300E18743 /* PLRRewardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModel.swift; sourceTree = "<group>"; };
 		EFEB5BF2237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardsHistoryViewModel.swift; sourceTree = "<group>"; };
@@ -1241,6 +1243,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EFDEBDF52408277F00CB755E /* Security */,
 				EF94AF0623D9B88600AAA039 /* Analytics */,
 				EF94AF1223E05B4D00AAA039 /* Image Service */,
 				EF8BF1F4233E60A300D2E5F3 /* Cache */,
@@ -2151,6 +2154,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		EFDEBDF52408277F00CB755E /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				EFDEBDF62408279900CB755E /* SecureUtility.swift */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
 		EFF3DCDC231D507A006A39C9 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
@@ -2715,6 +2726,7 @@
 				EF8BF1F1233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift in Sources */,
 				EF54911E2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift in Sources */,
 				EFEB5BF5237D9F6900E18743 /* PLRCellViewModel.swift in Sources */,
+				EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */,
 				3CD7E90B2302AC42001889FE /* ApiManager.swift in Sources */,
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,

@@ -77,18 +77,23 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     }
 
     private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
+        // We need the payment card create model to create the pan hash
+        let hash = SecureUtility.getPaymentCardHash(from: paymentCard)
+
         var paymentCreateRequest: PaymentCardCreateRequest?
 
         if let spreedlyResponse = spreedlyResponse {
-            paymentCreateRequest = PaymentCardCreateRequest(spreedlyResponse: spreedlyResponse)
+            paymentCreateRequest = PaymentCardCreateRequest(spreedlyResponse: spreedlyResponse, hash: hash)
         } else {
-            paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard)
+            paymentCreateRequest = PaymentCardCreateRequest(model: paymentCard, hash: hash)
         }
 
         guard let request = paymentCreateRequest else {
             onError(nil)
             return
         }
+
+        // TODO: Check the request values here to confirm hashing and encryption
 
         apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: request, isUserDriven: true, onSuccess: { (response: PaymentCardModel) in
             Current.database.performBackgroundTask { context in
