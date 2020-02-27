@@ -25,7 +25,8 @@ enum RequestURL: Equatable {
     case paymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
     case spreedly
-    case mockBKWallet
+    case mockBKWalletCards
+    case mockBKWalletPlans
     
     private var value: String {
         switch self {
@@ -59,14 +60,16 @@ enum RequestURL: Equatable {
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
         case .spreedly:
             return "https://core.spreedly.com/v1/payment_methods?environment_key=\(BinkappKeys().spreedlyEnvironmentKey)"
-        case .mockBKWallet:
-            return "https://virtserver.swaggerhub.com/Bink_API/Bink_External_API/1.2/membership_cards"
+        case .mockBKWalletCards:
+            return "http://172.20.10.11:8080/mock_cards"
+        case .mockBKWalletPlans:
+            return "http://172.20.10.11:8080/mock_plans"
         }
     }
     
     var authRequired: Bool {
         switch self {
-        case .register, .login, .renew, .spreedly, .mockBKWallet:
+        case .register, .login, .renew, .spreedly, .mockBKWalletCards, .mockBKWalletPlans:
             return false
         default:
             return true
@@ -84,7 +87,7 @@ enum RequestURL: Equatable {
 
     private var baseUrlString: String {
         switch self {
-        case .spreedly, .mockBKWallet:
+        case .spreedly, .mockBKWalletCards, .mockBKWalletPlans:
             return ""
         default:
             return APIConstants.baseURLString

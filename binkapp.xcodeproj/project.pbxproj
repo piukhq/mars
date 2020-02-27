@@ -383,6 +383,9 @@
 		EFA5F76B2379BD790027AB80 /* PLRStampsInactiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */; };
 		EFA81015240405070000D21D /* JailbrokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA81013240405070000D21D /* JailbrokenViewController.swift */; };
 		EFA81016240405070000D21D /* JailbrokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFA81014240405070000D21D /* JailbrokenViewController.xib */; };
+		EFA8101D240562100000D21D /* PlanDynamicContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA8101C240562100000D21D /* PlanDynamicContentModel.swift */; };
+		EFA81024240565750000D21D /* _CD_PlanDynamicContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA81022240565750000D21D /* _CD_PlanDynamicContent.swift */; };
+		EFA81025240565750000D21D /* CD_PlanDynamicContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA81023240565750000D21D /* CD_PlanDynamicContent.swift */; };
 		EFB055A623F453C400D64F86 /* PLRStampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB055A523F453C400D64F86 /* PLRStampView.swift */; };
 		EFB7ED5C2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */; };
 		EFB7ED612379CA4000B72D06 /* PLRRewardsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */; };
@@ -847,6 +850,10 @@
 		EFA5F7692379BD790027AB80 /* PLRStampsInactiveCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PLRStampsInactiveCell.xib; sourceTree = "<group>"; };
 		EFA81013240405070000D21D /* JailbrokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JailbrokenViewController.swift; sourceTree = "<group>"; };
 		EFA81014240405070000D21D /* JailbrokenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JailbrokenViewController.xib; sourceTree = "<group>"; };
+		EFA8101724055F570000D21D /* binkapp - Plan Dynamic Content.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - Plan Dynamic Content.xcdatamodel"; sourceTree = "<group>"; };
+		EFA8101C240562100000D21D /* PlanDynamicContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDynamicContentModel.swift; sourceTree = "<group>"; };
+		EFA81022240565750000D21D /* _CD_PlanDynamicContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_PlanDynamicContent.swift; sourceTree = "<group>"; };
+		EFA81023240565750000D21D /* CD_PlanDynamicContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_PlanDynamicContent.swift; sourceTree = "<group>"; };
 		EFB055A523F453C400D64F86 /* PLRStampView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRStampView.swift; sourceTree = "<group>"; };
 		EFB7ED5B2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRBaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		EFB7ED5F2379CA4000B72D06 /* PLRRewardsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardsHistoryViewController.swift; sourceTree = "<group>"; };
@@ -956,6 +963,7 @@
 				BD475E6A23A255570071302A /* PlanDocumentDisplayModel.swift */,
 				EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */,
 				BDD9C83B233BE493003CD616 /* MembershipPlanImageModel.swift */,
+				EFA8101C240562100000D21D /* PlanDynamicContentModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1852,6 +1860,8 @@
 		EF758E1823229972000D26A9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				EFA81022240565750000D21D /* _CD_PlanDynamicContent.swift */,
+				EFA81023240565750000D21D /* CD_PlanDynamicContent.swift */,
 				EFA5F6F42379A7C60027AB80 /* _CD_AddField.swift */,
 				EFA5F6F52379A7C60027AB80 /* _CD_App.swift */,
 				EFA5F6DA2379A7C40027AB80 /* _CD_AuthoriseField.swift */,
@@ -2559,6 +2569,7 @@
 				BD458B3E236B5C0E0029A538 /* LoginRegisterRequest.swift in Sources */,
 				EFEB5C0123853B7900E18743 /* WalletRefreshManager.swift in Sources */,
 				BD99D2E22354945100823FC4 /* SettingsTableViewCell.swift in Sources */,
+				EFA81024240565750000D21D /* _CD_PlanDynamicContent.swift in Sources */,
 				EFA5F7222379A7C70027AB80 /* _CD_EnrolField.swift in Sources */,
 				3C7067EF232FD52D00AB88A5 /* SimpleInfoViewController.swift in Sources */,
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
@@ -2613,6 +2624,7 @@
 				EFA5F76A2379BD790027AB80 /* PLRStampsInactiveCell.swift in Sources */,
 				EFA5F7302379A7C70027AB80 /* CD_FeatureSet.swift in Sources */,
 				EF58844C236060B50011698D /* OnboardingLearningView.swift in Sources */,
+				EFA81025240565750000D21D /* CD_PlanDynamicContent.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				EF54911C2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift in Sources */,
 				EF94AF0A23D9C24900AAA039 /* BinkTrackableViewController.swift in Sources */,
@@ -2763,6 +2775,7 @@
 				EFA5F70D2379A7C70027AB80 /* _CD_PaymentCardAccount.swift in Sources */,
 				EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */,
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
+				EFA8101D240562100000D21D /* PlanDynamicContentModel.swift in Sources */,
 				3C2C91012319560C00D112E3 /* InputView.swift in Sources */,
 				BD9E4CD1237014D300C6F098 /* RootStateMachine.swift in Sources */,
 				EFF59F1E234C828900CF3992 /* PaymentCardDetailRepository.swift in Sources */,
@@ -4060,11 +4073,12 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EFA8101724055F570000D21D /* binkapp - Plan Dynamic Content.xcdatamodel */,
 				EFBC94F123A7CF4400574086 /* binkapp - Fields Common Name.xcdatamodel */,
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = EFBC94F123A7CF4400574086 /* binkapp - Fields Common Name.xcdatamodel */;
+			currentVersion = EFA8101724055F570000D21D /* binkapp - Plan Dynamic Content.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

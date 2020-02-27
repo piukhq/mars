@@ -102,8 +102,8 @@ private extension PLRRewardDetailViewController {
         view.backgroundColor = .white
         title = viewModel.title
 
-        switch viewModel.voucherState {
-        case .inProgress, .issued:
+        switch (viewModel.voucherState, viewModel.voucherEarnType) {
+        case (.inProgress, .accumulator), (.issued, .accumulator):
             let cell: PLRAccumulatorActiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
@@ -112,7 +112,7 @@ private extension PLRRewardDetailViewController {
                 cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
                 cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight),
             ])
-        case .redeemed, .expired:
+        case (.redeemed, .accumulator), (.expired, .accumulator):
             let cell: PLRAccumulatorInactiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
@@ -120,6 +120,24 @@ private extension PLRRewardDetailViewController {
                 cell.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
                 cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
                 cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorInactiveCellHeight),
+            ])
+        case (.inProgress, .stamp), (.issued, .stamp):
+            let cell: PLRStampsActiveCell = .fromNib()
+            cell.configureWithViewModel(viewModel.voucherCellViewModel)
+            stackScrollView.add(arrangedSubview: cell)
+            NSLayoutConstraint.activate([
+                cell.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
+                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+                cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.stampsActiveCellHeight),
+            ])
+        case (.redeemed, .stamp), (.expired, .stamp):
+            let cell: PLRStampsInactiveCell = .fromNib()
+            cell.configureWithViewModel(viewModel.voucherCellViewModel)
+            stackScrollView.add(arrangedSubview: cell)
+            NSLayoutConstraint.activate([
+                cell.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
+                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+                cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.stampsInactiveCellHeight),
             ])
         default:
             break

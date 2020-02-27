@@ -304,6 +304,12 @@
 "plr_voucher_detail_issued_header" = "Your %@ is ready!";
 "plr_voucher_detail_redeemed_header" = "Your %@ was redeemed";
 "plr_voucher_detail_expired_header" = "Your %@ has expired";
+
+"plr_stamp_voucher_detail_expired_header" = "Your voucher has expired";
+"plr_stamp_voucher_detail_redeemed_header" = "Your voucher was redeemed";
+"plr_stamp_voucher_detail_issued_header" = "Your voucher is ready!";
+"plr_stamp_voucher_detail_inprogress_header" = "About this voucher";
+
 "plr_voucher_detail_issued_date_prefix" = "Added ";
 "plr_voucher_detail_redeemed_date_prefix" = "Redeemed ";
 "plr_voucher_detail_expired_date_prefix" = "Expired ";

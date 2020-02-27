@@ -150,7 +150,16 @@ class Wallet: CoreDataRepositoryProtocol {
             return
         }
 
-        let url = RequestURL.membershipPlans
+        // Temporary debug mode where we provide a mock json response for BK PLR implementation
+        // TODO: Remove once BK data is live
+        var url: RequestURL
+        #if DEBUG
+        let isMockBKWalletEnabled = Current.userDefaults.bool(forDefaultsKey: .mockBKWalletIsEnabled)
+        url = isMockBKWalletEnabled ? RequestURL.mockBKWalletPlans : RequestURL.membershipPlans
+        #else
+        url = RequestURL.membershipCards
+        #endif
+
         let method = RequestHTTPMethod.get
 
         Current.apiManager.doRequest(url: url, httpMethod: method, isUserDriven: isUserDriven, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
@@ -184,7 +193,7 @@ class Wallet: CoreDataRepositoryProtocol {
         var url: RequestURL
         #if DEBUG
         let isMockBKWalletEnabled = Current.userDefaults.bool(forDefaultsKey: .mockBKWalletIsEnabled)
-        url = isMockBKWalletEnabled ? RequestURL.mockBKWallet : RequestURL.membershipCards
+        url = isMockBKWalletEnabled ? RequestURL.mockBKWalletCards : RequestURL.membershipCards
         #else
         url = RequestURL.membershipCards
         #endif
