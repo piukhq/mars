@@ -11,6 +11,7 @@ import UIKit
 class TransactionsViewController: BinkTrackableViewController {
     private struct Constants {
         static let horizontalInset: CGFloat = 25.0
+        static let bottomInset: CGFloat = 25.0
     }
     
     lazy var titleLabel: UILabel = {
@@ -42,6 +43,7 @@ class TransactionsViewController: BinkTrackableViewController {
         stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
         stackView.distribution = .fill
         stackView.alignment = .fill
+        stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
         view.addSubview(stackView)
         return stackView
     }()
@@ -66,7 +68,7 @@ class TransactionsViewController: BinkTrackableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -25),
+            stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
