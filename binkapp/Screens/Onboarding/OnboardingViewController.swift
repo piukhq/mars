@@ -95,6 +95,10 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
         super.viewDidLoad()
         startTimer()
         viewModel.navigationController = navigationController
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         setScreenName(trackedScreen: .onboarding)
     }
 

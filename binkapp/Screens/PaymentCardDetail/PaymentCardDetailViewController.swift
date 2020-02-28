@@ -99,7 +99,6 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .paymentDetail)
         
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popToRoot))
         self.navigationItem.leftBarButtonItem = backButton
@@ -108,6 +107,11 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         setupTables()
 
         getLinkedCards()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        setScreenName(trackedScreen: .paymentDetail)
     }
 
     override func viewDidLayoutSubviews() {

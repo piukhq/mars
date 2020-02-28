@@ -34,7 +34,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .browseBrands)
         
         tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
         tableView.delegate = self
@@ -54,6 +53,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setScreenName(trackedScreen: .browseBrands)
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         

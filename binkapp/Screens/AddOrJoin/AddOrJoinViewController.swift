@@ -33,10 +33,14 @@ class AddOrJoinViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .storeViewLink)
         
         setNavigationBar()
         configureUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        setScreenName(trackedScreen: .storeViewLink)
     }
     
     func setNavigationBar() {

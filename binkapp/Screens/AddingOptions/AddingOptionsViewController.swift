@@ -25,8 +25,12 @@ class AddingOptionsViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .addOptions)
         configureUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        setScreenName(trackedScreen: .addOptions)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

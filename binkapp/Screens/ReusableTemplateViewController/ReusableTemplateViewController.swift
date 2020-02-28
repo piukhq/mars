@@ -37,7 +37,6 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .informationModal)
         
         floatingButtonsContainer.delegate = self
         textView.delegate = self
@@ -47,6 +46,11 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
 
         /// Disabling in favour of Firebase's out-of-the-box screen name tracking
 //        screenName = "\(String(describing: Self.self)):\(viewModel.title.capitalized.replacingOccurrences(of: " ", with: ""))"
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        setScreenName(trackedScreen: .informationModal)
     }
     
     override func viewDidLayoutSubviews() {

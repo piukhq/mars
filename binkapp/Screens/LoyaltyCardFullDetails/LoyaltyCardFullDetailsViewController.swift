@@ -120,13 +120,14 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        setScreenName(trackedScreen: .loyaltyDetail)
         setCloseButton()
         configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         configureModules()
+        setScreenName(trackedScreen: .loyaltyDetail)
     }
     
     // MARK: - Navigation Bar Blurring
