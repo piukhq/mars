@@ -9,10 +9,44 @@
 import UIKit
 
 class TransactionsViewController: BinkTrackableViewController {
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var brandHeaderView: BrandHeaderView!
-    @IBOutlet private weak var tableView: UITableView!
+    private struct Constants {
+        static let horizontalInset: CGFloat = 25.0
+        static let bottomInset: CGFloat = 25.0
+    }
+    
+    lazy var titleLabel: UILabel = {
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.font = UIFont.headline
+        title.text = viewModel.title
+        return title
+    }()
+    
+    lazy var descriptionLabel: UILabel = {
+        let description = UILabel()
+        description.translatesAutoresizingMaskIntoConstraints = false
+        description.font = UIFont.bodyTextLarge
+        description.text = viewModel.description
+        return description
+    }()
+    
+    lazy var brandHeaderView: BrandHeaderView = {
+        let brandHeader = BrandHeaderView()
+        brandHeader.configure(plan: viewModel.membershipCard.membershipPlan, delegate: self)
+        return brandHeader
+    }()
+    
+    lazy var stackScrollView: StackScrollView = {
+        let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel], adjustForKeyboard: true)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = .white
+        stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: Constants.bottomInset, right: 0)
+        view.addSubview(stackView)
+        return stackView
+    }()
     
     private let viewModel: TransactionsViewModel
     
@@ -28,23 +62,29 @@ class TransactionsViewController: BinkTrackableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        tableView.dataSource = self
-        tableView.register(TransactionTableViewCell.self, asNib: true)
     }
     
     private func configureUI() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        titleLabel.font = .headline
-        descriptionLabel.font = .bodyTextLarge
-
-        titleLabel.text = viewModel.title
-        descriptionLabel.text = viewModel.description
+        NSLayoutConstraint.activate([
+            stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
+        stackScrollView.add(arrangedSubviews: [brandHeaderView, titleLabel, descriptionLabel])
+        stackScrollView.customPadding(25, after: brandHeaderView)
         
-//        let imageUrl = viewModel.membershipCard.membershipPlan?.firstIconImage()?.url
-        brandHeaderView.configure(plan: viewModel.membershipCard.membershipPlan, delegate: self)
-
-        tableView.isHidden = viewModel.transactions.isEmpty
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+        viewModel.transactions.forEach { transaction in
+            let transactionView = TransactionView()
+            transactionView.configure(with: transaction)
+            stackScrollView.add(arrangedSubview: transactionView)
+        }
+        
+        guard let lastTransactionView = stackScrollView.arrangedSubviews.last as? TransactionView else {
+            return
+        }
+        lastTransactionView.hideSeparatorView()
     }
     
     @objc private func popViewController() {
@@ -55,19 +95,5 @@ class TransactionsViewController: BinkTrackableViewController {
 extension TransactionsViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.brandHeaderWasTapped()
-    }
-}
-
-extension TransactionsViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.transactions.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: TransactionTableViewCell = tableView.dequeue(indexPath: indexPath)
-        let transaction = viewModel.transactions[indexPath.row]
-        cell.configure(transaction: transaction)
-        
-        return cell
     }
 }
