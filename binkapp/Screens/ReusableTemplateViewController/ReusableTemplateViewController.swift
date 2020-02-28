@@ -49,7 +49,7 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         setScreenName(trackedScreen: .informationModal)
     }
     

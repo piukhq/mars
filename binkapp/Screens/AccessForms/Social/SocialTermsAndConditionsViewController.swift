@@ -79,7 +79,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         setScreenName(trackedScreen: .socialTermsAndConditions)
     }
     

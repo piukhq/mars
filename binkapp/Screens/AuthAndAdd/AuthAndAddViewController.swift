@@ -52,7 +52,7 @@ class AuthAndAddViewController: BaseFormViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+        super.viewDidAppear(animated)
         switch viewModel.formPurpose {
             case .add, .addFailed: setScreenName(trackedScreen: .addAuthForm)
             case .signUp, .signUpFailed: setScreenName(trackedScreen: .enrolForm)
