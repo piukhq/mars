@@ -20,7 +20,7 @@ struct PaymentCardCreateRequest: Codable {
             case month
             case year
             case fingerprint
-            case hash1
+            case hash
         }
         
         let token: String
@@ -31,7 +31,7 @@ struct PaymentCardCreateRequest: Codable {
         let month: Int
         let year: Int
         let fingerprint: String
-        let hash1: String
+        let hash: String
     }
     
     struct Account: Codable {
@@ -75,7 +75,7 @@ struct PaymentCardCreateRequest: Codable {
             month: SecureUtility.encryptedSensitiveFieldValue(month),
             year: SecureUtility.encryptedSensitiveFieldValue(year),
             fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month)),
-            hash1: SecureUtility.encryptedSensitiveFieldValue(hash)
+            hash: SecureUtility.encryptedSensitiveFieldValue(hash)
         )
 
         let timestamp = Date().timeIntervalSince1970
@@ -93,7 +93,7 @@ struct PaymentCardCreateRequest: Codable {
             month: SecureUtility.encryptedSensitiveFieldValue(spreedlyResponse.transaction?.paymentMethod?.month ?? 0),
             year: SecureUtility.encryptedSensitiveFieldValue(spreedlyResponse.transaction?.paymentMethod?.year ?? 0),
             fingerprint: spreedlyResponse.transaction?.paymentMethod?.fingerprint ?? "",
-            hash1: SecureUtility.encryptedSensitiveFieldValue(hash)
+            hash: SecureUtility.encryptedSensitiveFieldValue(hash)
         )
 
         let timestamp = Date().timeIntervalSince1970

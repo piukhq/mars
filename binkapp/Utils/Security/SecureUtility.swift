@@ -9,12 +9,15 @@
 import Foundation
 
 final class SecureUtility {
-    static func
-        getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String {
-        // need to get secret1 from keychain for the necessary environment
-        // how are we storing the secret in the keychain?
+    static func getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String? {
+        // get secret1 from cocoapods keys
+        // base64 encode and save to keychain
+        // base64 decode to read and use here
         let secret = "secret1"
-        return "\(paymentCard.fullPan ?? "")\(paymentCard.month ?? 0)\(paymentCard.year ?? 0)\(secret)".sha512()
+        guard let pan = paymentCard.fullPan?.replacingOccurrences(of: " ", with: "") else { return nil }
+        guard let month = paymentCard.month else { return nil }
+        guard let year = paymentCard.year else { return nil }
+        return "\(pan)\(month)\(year)\(secret)".sha512()
     }
 
     static func encryptedSensitiveFieldValue(_ value: Any) -> String {

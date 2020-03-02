@@ -401,6 +401,7 @@
 		EFCAF9222371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCAF9202371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib */; };
 		EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8653A232FCDD800036C17 /* ReasonCode.swift */; };
 		EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDEBDF62408279900CB755E /* SecureUtility.swift */; };
+		EFDEBDFB240D2DB200CB755E /* publicKey-dev.der in Resources */ = {isa = PBXBuildFile; fileRef = EFDEBDFA240D2DB200CB755E /* publicKey-dev.der */; };
 		EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */; };
 		EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF0237C7BA300E18743 /* PLRRewardDetailViewModel.swift */; };
 		EFEB5BF3237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEB5BF2237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift */; };
@@ -873,6 +874,7 @@
 		EFCAF9202371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailAddLoyaltyCardCell.xib; sourceTree = "<group>"; };
 		EFD8653A232FCDD800036C17 /* ReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCode.swift; sourceTree = "<group>"; };
 		EFDEBDF62408279900CB755E /* SecureUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtility.swift; sourceTree = "<group>"; };
+		EFDEBDFA240D2DB200CB755E /* publicKey-dev.der */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "publicKey-dev.der"; sourceTree = "<group>"; };
 		EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingSupportModel.swift; sourceTree = "<group>"; };
 		EFEB5BF0237C7BA300E18743 /* PLRRewardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModel.swift; sourceTree = "<group>"; };
 		EFEB5BF2237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardsHistoryViewModel.swift; sourceTree = "<group>"; };
@@ -2148,6 +2150,7 @@
 		EFCB2C182329368D0060F73B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EFDEBDFA240D2DB200CB755E /* publicKey-dev.der */,
 				3C71683424069F370058701E /* bink.der */,
 				5ECE047522CE579B001BA964 /* Assets.xcassets */,
 			);
@@ -2341,6 +2344,7 @@
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
 				3C9B1A2323854B9D0078A1EC /* PreferencesViewController.xib in Resources */,
+				EFDEBDFB240D2DB200CB755E /* publicKey-dev.der in Resources */,
 				3CD3493822F99E1D000C1F4D /* NunitoSans-Regular.ttf in Resources */,
 				3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */,
 				3CD3493922F99E1D000C1F4D /* NunitoSans-SemiBoldItalic.ttf in Resources */,

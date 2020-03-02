@@ -78,7 +78,10 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
 
     private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
         // We need the payment card create model to create the pan hash
-        let hash = SecureUtility.getPaymentCardHash(from: paymentCard)
+        guard let hash = SecureUtility.getPaymentCardHash(from: paymentCard) else {
+            onError(nil) // TODO: We should pass an error back here
+            return
+        }
 
         var paymentCreateRequest: PaymentCardCreateRequest?
 
