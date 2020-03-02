@@ -7,17 +7,15 @@
 //
 
 import Foundation
+import Keys
 
 final class SecureUtility {
     static func getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String? {
-        // get secret1 from cocoapods keys
-        // base64 encode and save to keychain
-        // base64 decode to read and use here
-        let secret = "secret1"
         guard let pan = paymentCard.fullPan?.replacingOccurrences(of: " ", with: "") else { return nil }
         guard let month = paymentCard.month else { return nil }
         guard let year = paymentCard.year else { return nil }
-        return "\(pan)\(month)\(year)\(secret)".sha512()
+        guard let decodedSecret = BinkappKeys().devPaymentCardHashingSecret1.base64Decoded() else { return nil }
+        return "\(pan)\(month)\(year)\(decodedSecret)".sha512()
     }
 
     static func encryptedSensitiveFieldValue(_ value: Any) -> String {
@@ -30,5 +28,13 @@ final class SecureUtility {
         // get encryption key from keychain for right environment
         // encrypt value
         return 0
+    }
+}
+
+extension String {
+    func base64Decoded() -> String? {
+        guard let decodedData = Data(base64Encoded: self) else { return nil }
+        guard let decodedString = String(data: decodedData, encoding: .utf8) else { return nil }
+        return decodedString
     }
 }
