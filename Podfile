@@ -23,6 +23,7 @@ pod 'FBSDKLoginKit', '~> 6.0.0'
 pod 'Disk'
 pod 'DTTJailbreakDetection'
 pod 'JWTDecode', '~> 2.4'
+pod 'SwiftyRSA'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
