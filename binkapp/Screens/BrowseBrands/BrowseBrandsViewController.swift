@@ -139,7 +139,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         if let brandName = membershipPlan.account?.companyName {
             switch indexPath.section {
             case 0:
-                cell.configure(plan: membershipPlan, brandName: brandName, description: true)
+                cell.configure(plan: membershipPlan, brandName: brandName)
                 if indexPath.row == viewModel.getPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }
