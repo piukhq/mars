@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -93,7 +93,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ieW-2y-hVv">
-                                <rect key="frame" x="345" y="83" width="0.0" height="21"/>
+                                <rect key="frame" x="345" y="84" width="0.0" height="21"/>
                                 <subviews>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iaS-OT-dXC">
                                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="16"/>
@@ -132,7 +132,7 @@
                             <constraint firstItem="40K-eq-Rsb" firstAttribute="top" secondItem="6Ln-ov-l0D" secondAttribute="bottom" id="rpS-HC-1Qh"/>
                             <constraint firstAttribute="trailing" secondItem="ieW-2y-hVv" secondAttribute="trailing" constant="20" id="xwf-mp-YsD"/>
                             <constraint firstItem="1AT-4M-cCB" firstAttribute="centerY" secondItem="boF-NX-uce" secondAttribute="centerY" id="yEf-p7-39l"/>
-                            <constraint firstAttribute="bottom" secondItem="ieW-2y-hVv" secondAttribute="bottom" constant="16" id="zl6-bC-PqJ"/>
+                            <constraint firstAttribute="bottom" secondItem="ieW-2y-hVv" secondAttribute="bottom" constant="15" id="zl6-bC-PqJ"/>
                         </constraints>
                     </view>
                 </subviews>
