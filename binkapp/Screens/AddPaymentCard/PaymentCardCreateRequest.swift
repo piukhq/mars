@@ -28,8 +28,8 @@ struct PaymentCardCreateRequest: Codable {
         let lastFourDigits: String
         let country: String
         let nameOnCard: String
-        let month: Int
-        let year: Int
+        let month: Int // String
+        let year: Int // String
         let fingerprint: String
         let hash: String
     }
@@ -66,11 +66,12 @@ struct PaymentCardCreateRequest: Codable {
             lastFour = String(pan[lastFourStartIndex..<pan.endIndex])
         }
 
+        // TODO: Is post payment card now expecting string values for the fields that are to be encrypted?
         card = Card(
             token: PaymentCardCreateRequest.fakeToken(),
             firstSixDigits: SecureUtility.encryptedSensitiveFieldValue(firstSix ?? "") ?? "",
             lastFourDigits: SecureUtility.encryptedSensitiveFieldValue(lastFour ?? "") ?? "",
-            country: "GB", //TODO: Needs resolving!
+            country: "GB", //TODO: Sack off
             nameOnCard: model.nameOnCard!,
             month: SecureUtility.encryptedSensitiveFieldValue(month),
             year: SecureUtility.encryptedSensitiveFieldValue(year),

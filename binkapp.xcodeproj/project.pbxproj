@@ -311,6 +311,7 @@
 		EF94AF0D23D9F04700AAA039 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */; };
 		EF94AF0F23DF55EE00AAA039 /* BinkTrackableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0E23DF55EE00AAA039 /* BinkTrackableButton.swift */; };
 		EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF1323E05B5D00AAA039 /* ImageService.swift */; };
+		EF99B025240E74860046D41E /* devPublicKey.der in Resources */ = {isa = PBXBuildFile; fileRef = EF99B024240E74860046D41E /* devPublicKey.der */; };
 		EF9E9BCC23C3AC19002FF18E /* NSNumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */; };
 		EF9E9BD023C72930002FF18E /* RefreshControlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */; };
 		EF9E9BD223C73BA1002FF18E /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */; };
@@ -781,6 +782,7 @@
 		EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		EF94AF0E23DF55EE00AAA039 /* BinkTrackableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTrackableButton.swift; sourceTree = "<group>"; };
 		EF94AF1323E05B5D00AAA039 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		EF99B024240E74860046D41E /* devPublicKey.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = devPublicKey.der; sourceTree = "<group>"; };
 		EF9E9BCB23C3AC19002FF18E /* NSNumberExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtension.swift; sourceTree = "<group>"; };
 		EF9E9BCF23C72930002FF18E /* RefreshControlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControlExtension.swift; sourceTree = "<group>"; };
 		EF9E9BD123C73BA1002FF18E /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
@@ -2148,6 +2150,7 @@
 		EFCB2C182329368D0060F73B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EF99B024240E74860046D41E /* devPublicKey.der */,
 				3C71683424069F370058701E /* bink.der */,
 				5ECE047522CE579B001BA964 /* Assets.xcassets */,
 			);
@@ -2326,6 +2329,7 @@
 				3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */,
 				EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */,
 				DBE54852240D514B00EDEE90 /* FilterBrandsCollectionViewCell.xib in Resources */,
+				EF99B025240E74860046D41E /* devPublicKey.der in Resources */,
 				3CF029F322F45AEC009A0E61 /* AddingOptionsViewController.xib in Resources */,
 				3CD3493322F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf in Resources */,
 				3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */,
