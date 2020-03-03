@@ -61,7 +61,6 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .socialTermsAndConditions)
                 
         NSLayoutConstraint.activate([
             continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
@@ -77,6 +76,11 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
 //        if let lastView = lastView {
 //            stackScrollView.customPadding(18.0, after: lastView)
 //        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setScreenName(trackedScreen: .socialTermsAndConditions)
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {

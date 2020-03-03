@@ -44,16 +44,20 @@ class AuthAndAddViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        switch viewModel.formPurpose {
-            case .add, .addFailed: setScreenName(trackedScreen: .addAuthForm)
-            case .signUp, .signUpFailed: setScreenName(trackedScreen: .enrolForm)
-            case .ghostCard, .patchGhostCard: setScreenName(trackedScreen: .registrationForm)
-        }
         
         setNavigationBar()
         configureUI()
         configureLayout()
         stackScrollView.insert(arrangedSubview: brandHeaderView, atIndex: 0, customSpacing: Constants.cardPadding)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        switch viewModel.formPurpose {
+            case .add, .addFailed: setScreenName(trackedScreen: .addAuthForm)
+            case .signUp, .signUpFailed: setScreenName(trackedScreen: .enrolForm)
+            case .ghostCard, .patchGhostCard: setScreenName(trackedScreen: .registrationForm)
+        }
     }
     
     func setNavigationBar() {

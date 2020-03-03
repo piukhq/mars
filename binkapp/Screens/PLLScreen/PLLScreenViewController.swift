@@ -110,7 +110,6 @@ class PLLScreenViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .pll)
         
         if viewModel.shouldShowBackButton {
             let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
@@ -127,6 +126,11 @@ class PLLScreenViewController: BinkTrackableViewController {
         configureUI()
         paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
         floatingButtonsView.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setScreenName(trackedScreen: .pll)
     }
     
     private func configureLayout() {
