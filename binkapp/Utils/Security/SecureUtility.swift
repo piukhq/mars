@@ -22,21 +22,18 @@ final class SecureUtility {
         return hash
     }
 
-    static func encryptedSensitiveFieldValue(_ value: String) -> String? {
+    static func encryptedSensitiveFieldValue(_ value: String?) -> String? {
+        guard let value = value else { return nil }
         do {
             // TODO: Get correct public key for environment
             let publicKey = try PublicKey(derNamed: "devPublicKey")
             let clear = try ClearMessage(string: value, using: .utf8)
             let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
-            return encrypted.base64String // TODO: Are backend expecting a base64 string?
+            return encrypted.base64String
         } catch let error {
             print(error.localizedDescription)
             return nil
         }
-    }
-
-    static func encryptedSensitiveFieldValue(_ value: Int) -> Int {
-        return 0
     }
 }
 

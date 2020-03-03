@@ -15,7 +15,6 @@ struct PaymentCardCreateRequest: Codable {
             case token
             case firstSixDigits = "first_six_digits"
             case lastFourDigits = "last_four_digits"
-            case country
             case nameOnCard = "name_on_card"
             case month
             case year
@@ -26,10 +25,9 @@ struct PaymentCardCreateRequest: Codable {
         let token: String
         let firstSixDigits: String
         let lastFourDigits: String
-        let country: String
         let nameOnCard: String
-        let month: Int // String
-        let year: Int // String
+        let month: String
+        let year: String
         let fingerprint: String
         let hash: String
     }
@@ -66,15 +64,13 @@ struct PaymentCardCreateRequest: Codable {
             lastFour = String(pan[lastFourStartIndex..<pan.endIndex])
         }
 
-        // TODO: Is post payment card now expecting string values for the fields that are to be encrypted?
         card = Card(
             token: PaymentCardCreateRequest.fakeToken(),
-            firstSixDigits: SecureUtility.encryptedSensitiveFieldValue(firstSix ?? "") ?? "",
-            lastFourDigits: SecureUtility.encryptedSensitiveFieldValue(lastFour ?? "") ?? "",
-            country: "GB", //TODO: Sack off
+            firstSixDigits: SecureUtility.encryptedSensitiveFieldValue(firstSix) ?? "",
+            lastFourDigits: SecureUtility.encryptedSensitiveFieldValue(lastFour) ?? "",
             nameOnCard: model.nameOnCard!,
-            month: SecureUtility.encryptedSensitiveFieldValue(month),
-            year: SecureUtility.encryptedSensitiveFieldValue(year),
+            month: SecureUtility.encryptedSensitiveFieldValue("\(month)") ?? "",
+            year: SecureUtility.encryptedSensitiveFieldValue("\(year)") ?? "",
             fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month)),
             hash: SecureUtility.encryptedSensitiveFieldValue(hash) ?? ""
         )
@@ -85,15 +81,15 @@ struct PaymentCardCreateRequest: Codable {
 
     /// This should only be used for creating genuine payment cards using Spreedly path in a production environment
     init?(spreedlyResponse: SpreedlyResponse, hash: String) {
+        let paymentMethodResponse = spreedlyResponse.transaction?.paymentMethod
         card = Card(
-            token: spreedlyResponse.transaction?.paymentMethod?.token ?? "",
-            firstSixDigits: SecureUtility.encryptedSensitiveFieldValue(spreedlyResponse.transaction?.paymentMethod?.firstSix ?? "") ?? "",
-            lastFourDigits: SecureUtility.encryptedSensitiveFieldValue(spreedlyResponse.transaction?.paymentMethod?.lastFour ?? "") ?? "",
-            country: "GB", //TODO: Needs resolving!
-            nameOnCard: spreedlyResponse.transaction?.paymentMethod?.fullName ?? "",
-            month: SecureUtility.encryptedSensitiveFieldValue(spreedlyResponse.transaction?.paymentMethod?.month ?? 0) ?? 0,
-            year: SecureUtility.encryptedSensitiveFieldValue(spreedlyResponse.transaction?.paymentMethod?.year ?? 0) ?? 0,
-            fingerprint: spreedlyResponse.transaction?.paymentMethod?.fingerprint ?? "",
+            token: paymentMethodResponse?.token ?? "",
+            firstSixDigits: SecureUtility.encryptedSensitiveFieldValue(paymentMethodResponse?.firstSix) ?? "",
+            lastFourDigits: SecureUtility.encryptedSensitiveFieldValue(paymentMethodResponse?.lastFour) ?? "",
+            nameOnCard: paymentMethodResponse?.fullName ?? "",
+            month: SecureUtility.encryptedSensitiveFieldValue("\(paymentMethodResponse?.month ?? 0)") ?? "",
+            year: SecureUtility.encryptedSensitiveFieldValue("\(paymentMethodResponse?.year ?? 0)") ?? "",
+            fingerprint: paymentMethodResponse?.fingerprint ?? "",
             hash: SecureUtility.encryptedSensitiveFieldValue(hash) ?? ""
         )
 
