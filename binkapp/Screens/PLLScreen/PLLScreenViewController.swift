@@ -150,7 +150,8 @@ class PLLScreenViewController: BinkTrackableViewController {
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
             floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
+            floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }
@@ -253,6 +254,9 @@ private extension PLLScreenViewController {
         case .existingCard:
             viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil, floating: true)
         }
+        
+        let floatingButtonsHeight: CGFloat = floatingButtonsView.isSecondaryButtonHidden ? 100 : 150
+        NSLayoutConstraint.activate([floatingButtonsView.heightAnchor.constraint(equalToConstant: floatingButtonsHeight)])
     }
     
     func navigateToLCDScreen() {
