@@ -13,8 +13,8 @@ struct PaymentCardCardResponse: Codable {
     var apiId: Int?
     var firstSix: String?
     var lastFour: String?
-    var month: Int?
-    var year: Int?
+    var month: String?
+    var year: String?
     var country: String?
     var currencyCode: String?
     var nameOnCard: String?
@@ -40,8 +40,8 @@ extension PaymentCardCardResponse: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.firstSix, with: firstSix, delta: delta)
         update(cdObject, \.lastFour, with: lastFour, delta: delta)
-        update(cdObject, \.month, with: NSNumber(value: month ?? 0), delta: delta)
-        update(cdObject, \.year, with: NSNumber(value: year ?? 0), delta: delta)
+        update(cdObject, \.month, with: NSNumber(value: Int(month ?? "") ?? 0), delta: delta)
+        update(cdObject, \.year, with: NSNumber(value: Int(year ?? "") ?? 0), delta: delta)
         update(cdObject, \.country, with: country, delta: delta)
         update(cdObject, \.currencyCode, with: currencyCode, delta: delta)
         update(cdObject, \.nameOnCard, with: nameOnCard, delta: delta)

@@ -9,9 +9,9 @@
 import Foundation
 
 enum PaymentCardType: String, Codable {
-    case visa = "Visa"
-    case amex = "American Express"
-    case mastercard = "Mastercard"
+    case visa = "visa"
+    case amex = "amex"
+    case mastercard = "mastercard"
 
     var redactedPrefix: String {
         return "••••   ••••   ••••   "
