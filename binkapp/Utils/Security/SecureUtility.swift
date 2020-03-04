@@ -17,7 +17,7 @@ final class SecureUtility {
         guard let month = paymentCard.month else { return nil }
         guard let year = paymentCard.year else { return nil }
         // TODO: Get correct secret for environment
-        guard let decodedSecret = BinkappKeys().devPaymentCardHashingSecret1.base64Decoded() else { return nil }
+        guard let decodedSecret = decodedSecret() else { return nil }
         let hash = "\(pan)\(month)\(year)\(decodedSecret)".sha512()
         return hash
     }
@@ -26,7 +26,7 @@ final class SecureUtility {
         guard let value = value else { return nil }
         do {
             // TODO: Get correct public key for environment
-            let publicKey = try PublicKey(derNamed: "devPublicKey")
+            let publicKey = try PublicKey(derNamed: publicKeyName())
             let clear = try ClearMessage(string: value, using: .utf8)
             let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
             return encrypted.base64String
@@ -34,6 +34,18 @@ final class SecureUtility {
             print(error.localizedDescription)
             return nil
         }
+    }
+
+    /// Get the correct secret for the environment
+    /// Return a base 64 decoded copy of the secret
+    private static func decodedSecret() -> String? {
+        // TODO: This needs to be based on the current environment when we have them
+        return BinkappKeys().devPaymentCardHashingSecret1.base64Decoded()
+    }
+
+    private static func publicKeyName() -> String {
+        // TODO: This needs to be based on the current environment when we have them
+        return "devPublicKey"
     }
 }
 
