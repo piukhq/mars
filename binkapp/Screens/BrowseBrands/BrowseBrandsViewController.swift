@@ -285,7 +285,7 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
         var searchText = ""
         if string == "" && range.length > 0 {
             searchText = textField.text ?? ""
-            searchText.popLast()
+            searchText.removeLast()
         } else {
             searchText = "\(textField.text ?? "")\(string)"
         }
