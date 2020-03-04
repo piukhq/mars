@@ -17,7 +17,7 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
     private var timer: Timer?
 
     private struct Constants {
-        static let floatingButtonsHeight: CGFloat = 155.0
+        static let floatingButtonsHeight: CGFloat = 135.0
     }
     
     lazy var learningContainer: UIView = {
