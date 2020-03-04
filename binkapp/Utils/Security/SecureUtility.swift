@@ -28,7 +28,7 @@ final class SecureUtility {
             // TODO: Get correct public key for environment
             let publicKey = try PublicKey(derNamed: publicKeyName())
             let clear = try ClearMessage(string: value, using: .utf8)
-            let encrypted = try clear.encrypted(with: publicKey, padding: .PKCS1)
+            let encrypted = try clear.encrypted(with: publicKey, padding: .OAEP)
             return encrypted.base64String
         } catch let error {
             print(error.localizedDescription)
