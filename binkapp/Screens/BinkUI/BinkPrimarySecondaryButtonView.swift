@@ -19,6 +19,7 @@ class BinkPrimarySecondaryButtonView: CustomView {
     weak var delegate: BinkPrimarySecondaryButtonViewDelegate?
 
     private var isFloating: Bool = false
+    var isSecondaryButtonHidden: Bool = false
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -34,6 +35,7 @@ class BinkPrimarySecondaryButtonView: CustomView {
 
         secondaryButton.setTitle(secondaryButtonTitle, for: .normal)
         secondaryButton.isHidden = secondaryButtonTitle == nil
+        isSecondaryButtonHidden = secondaryButtonTitle == nil
         secondaryButton.titleLabel?.font = .buttonText
     }
     

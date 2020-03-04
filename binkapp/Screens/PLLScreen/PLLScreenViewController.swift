@@ -76,6 +76,7 @@ class PLLScreenViewController: BinkTrackableViewController {
     private lazy var floatingButtonsView: BinkPrimarySecondaryButtonView = {
         let floatingButtonsView = BinkPrimarySecondaryButtonView(frame: .zero)
         floatingButtonsView.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(floatingButtonsView)
         return floatingButtonsView
     }()
@@ -148,8 +149,9 @@ class PLLScreenViewController: BinkTrackableViewController {
             brandHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor),
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
-            floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
+            floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }
@@ -248,10 +250,13 @@ private extension PLLScreenViewController {
         stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
         switch journey {
         case .newCard:
-            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: viewModel.hasPaymentCards ? nil : "pll_screen_add_cards_button_title".localized)
+            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: viewModel.hasPaymentCards ? nil : "pll_screen_add_cards_button_title".localized, floating: true)
         case .existingCard:
-            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil)
+            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil, floating: true)
         }
+        
+        let floatingButtonsHeight: CGFloat = floatingButtonsView.isSecondaryButtonHidden ? 100 : 150
+        NSLayoutConstraint.activate([floatingButtonsView.heightAnchor.constraint(equalToConstant: floatingButtonsHeight)])
     }
     
     func navigateToLCDScreen() {

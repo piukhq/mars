@@ -16,6 +16,10 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
     private var didLayoutSubviews = false
     private var timer: Timer?
 
+    private struct Constants {
+        static let floatingButtonsHeight: CGFloat = 155.0
+    }
+    
     lazy var learningContainer: UIView = {
         let container = UIView()
         view.addSubview(container)
@@ -124,6 +128,7 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
             floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
+            floatingButtonsView.heightAnchor.constraint(equalToConstant: Constants.floatingButtonsHeight),
 
             facebookPillButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
             facebookPillButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
