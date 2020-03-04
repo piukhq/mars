@@ -42,7 +42,7 @@ struct SettingsFactory {
                 subtitle: "settings_row_faqs_subtitle".localized,
                 action: .customAction(action: {
                     MainScreenRouter.openExternalURL(
-                        with: "http://help.bink.com"
+                        with: "https://help.bink.com"
                     )
                 })
             ),
