@@ -40,7 +40,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         if apiManager.isProduction {
             #if DEBUG
             fatalError("You are targetting production, but on a debug scheme. You should use a release scheme to test adding production payment cards.")
-            #endif
+            #else
             requestSpreedlyToken(paymentCard: paymentCard, onSuccess: { [weak self] spreedlyResponse in
                 guard spreedlyResponse.isValid else {
                     onError(nil)
@@ -56,6 +56,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
                 onError(error)
             }
             return
+            #endif
         } else {
             createPaymentCard(paymentCard, onSuccess: { createdPaymentCard in
                 onSuccess(createdPaymentCard)
