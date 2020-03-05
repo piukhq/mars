@@ -24,6 +24,11 @@ class BrowseBrandsViewModel {
         }
     }
     
+    var filters: [String] {
+        let filters = membershipPlans.map({ ($0.account?.category ?? "")})
+        return filters.uniq(source: filters)
+    }
+        
     init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
         self.repository = repository
         self.router = router

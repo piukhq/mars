@@ -13,6 +13,7 @@ fileprivate struct Constants {
     static let searchIconTopPadding = 13
     static let searchIconSideSize = 14
     static let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    static let filterCollectionHeight: CGFloat = 130.0
 }
 
 class BrowseBrandsViewController: BinkTrackableViewController {
@@ -20,11 +21,33 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     @IBOutlet private weak var searchTextField: BinkTextField!
     @IBOutlet private weak var noMatchesLabel: UILabel!
     @IBOutlet private weak var searchTextFieldContainer: UIView!
+    @IBOutlet private weak var topStackView: UIStackView!
+    
+    private var filtersVisible = false
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.alwaysBounceVertical = false
+        collectionView.backgroundColor = .white
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
+    
+    private lazy var layout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0.0
+        layout.minimumLineSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.estimatedItemSize = CGSize(width: (self.view.frame.width - 50) / 2, height: 40.0)
+        return layout
+    }()
     
     let viewModel: BrowseBrandsViewModel
+    private var selectedFilters: [String]
     
     init(viewModel: BrowseBrandsViewModel) {
         self.viewModel = viewModel
+        self.selectedFilters = viewModel.filters
         super.init(nibName: "BrowseBrandsViewController", bundle: Bundle(for: BrowseBrandsViewController.self))
     }
     
@@ -46,11 +69,12 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         noMatchesLabel.text = "no_matches".localized
         
         configureSearchTextField()
+        configureCollectionView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setScreenName(trackedScreen: .browseBrands)
@@ -60,12 +84,19 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         navigationItem.leftBarButtonItem = backButton
         
-        //TODO: uncomment this to display the Filters button
-//        let filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(notImplementedPopup))
-//        navigationItem.rightBarButtonItem = filtersButton
-//        navigationItem.rightBarButtonItem?.tintColor = .black
+        let filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTaped))
+        navigationItem.rightBarButtonItem = filtersButton
+        navigationItem.rightBarButtonItem?.tintColor = .blue
         
         self.title = "browse_brands_title".localized
+    }
+    
+    private func configureCollectionView() {
+        collectionView.register(FilterBrandsCollectionViewCell.self, asNib: true)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        view.addSubview(collectionView)
+        collectionView.frame = CGRect(x: 25, y: topStackView.frame.maxY, width: (view.frame.width - 50) / 2, height: 0.0)
     }
     
     private func configureSearchTextField() {
@@ -81,9 +112,9 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         let searchIconView = UIView(frame: CGRect(x: 0, y: 0, width: searchTextField.frame.height, height: searchTextField.frame.height))
         let searchImageView = UIImageView(frame:
             CGRect(x: Constants.searchIconLeftPadding,
-                      y: Constants.searchIconTopPadding,
-                      width: Constants.searchIconSideSize,
-                      height: Constants.searchIconSideSize))
+                   y: Constants.searchIconTopPadding,
+                   width: Constants.searchIconSideSize,
+                   height: Constants.searchIconSideSize))
         
         searchImageView.contentMode = .scaleAspectFit
         searchImageView.image = UIImage(named: "search")
@@ -110,11 +141,31 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
-    @objc func notImplementedPopup() {
-        let alert = UIAlertController(title: "Feature not implemented", message: nil, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(alertAction)
-        present(alert, animated: true, completion: nil)
+    @objc func filtersButtonTaped() {
+        let tableContentOffsetY = tableView.contentOffset.y
+        if filtersVisible {
+            hideFilters(with: tableContentOffsetY)
+        } else {
+            displayFilters(with: tableContentOffsetY)
+        }
+        filtersVisible = !filtersVisible
+    }
+    
+    private func hideFilters(with contentOffsetY: CGFloat) {
+        UIView.animate(withDuration: 0.3) {
+            self.collectionView.frame = CGRect(x: 25, y: self.topStackView.frame.maxY, width: self.view.frame.width - 50, height: 0)
+            self.tableView.setContentOffset(CGPoint(x: 0.0, y: contentOffsetY), animated: false)
+        }
+        self.tableView.contentInset.top = 0
+    }
+    
+    private func displayFilters(with contentOffsetY: CGFloat) {
+        UIView.animate(withDuration: 0.3) {
+            self.collectionView.frame = CGRect(x: 25, y: self.topStackView.frame.maxY, width: self.view.frame.width - 50, height: Constants.filterCollectionHeight)
+            self.collectionView.reloadData()
+            self.tableView.setContentOffset(CGPoint(x: 0.0, y: contentOffsetY - Constants.filterCollectionHeight), animated: false)
+        }
+        self.tableView.contentInset.top = Constants.filterCollectionHeight
     }
     
     @objc private func popViewController() {
@@ -237,5 +288,48 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
 extension BrowseBrandsViewController: BrowseBrandsViewModelDelegate {
     func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan]) {
         tableView.reloadData()
+    }
+}
+
+extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.filters.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: FilterBrandsCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+        cell.configureCell(with: viewModel.filters[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width / 2 - 5, height: 40.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! FilterBrandsCollectionViewCell
+        if let filter = cell.filterTitle, selectedFilters.contains(filter) {
+            let index = selectedFilters.firstIndex(of: filter)
+            selectedFilters.remove(at: index ?? 0)
+        } else {
+            selectedFilters.append(cell.filterTitle ?? "")
+        }
+        
+        selectedFilters.forEach { (filter) in
+            viewModel.getMembershipPlans().forEach { (plan) in
+                guard let category = plan.account?.category else {return}
+                if filter == category {
+                    if !viewModel.filteredData.contains(plan) {
+                        viewModel.filteredData.append(plan)
+                    }
+                    else {
+                        if let index = viewModel.filteredData.firstIndex(of: plan) {
+                            viewModel.filteredData.remove(at: index)
+                        }
+                    }
+                }
+            }
+        }
+        cell.switchImage()
     }
 }
