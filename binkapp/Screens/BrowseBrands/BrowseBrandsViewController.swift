@@ -314,22 +314,32 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
         } else {
             selectedFilters.append(cell.filterTitle ?? "")
         }
-        
-        selectedFilters.forEach { (filter) in
-            viewModel.getMembershipPlans().forEach { (plan) in
-                guard let category = plan.account?.category else {return}
-                if filter == category {
-                    if !viewModel.filteredData.contains(plan) {
-                        viewModel.filteredData.append(plan)
-                    }
-                    else {
-                        if let index = viewModel.filteredData.firstIndex(of: plan) {
-                            viewModel.filteredData.remove(at: index)
-                        }
-                    }
-                }
+
+        // create an array of membership plans who's categories are in selectedFilters
+        var filteredPlans: [CD_MembershipPlan] = []
+        viewModel.getMembershipPlans().forEach {
+            if selectedFilters.contains($0.account?.category ?? "") {
+                filteredPlans.append($0)
             }
         }
+
+        viewModel.filteredData = filteredPlans
+        
+//        selectedFilters.forEach { (filter) in
+//            viewModel.getMembershipPlans().forEach { (plan) in
+//                guard let category = plan.account?.category else {return}
+//                if filter == category {
+//                    if !viewModel.filteredData.contains(plan) {
+//                        viewModel.filteredData.append(plan)
+//                    }
+//                    else {
+//                        if let index = viewModel.filteredData.firstIndex(of: plan) {
+//                            viewModel.filteredData.remove(at: index)
+//                        }
+//                    }
+//                }
+//            }
+//        }
         cell.switchImage()
     }
 }
