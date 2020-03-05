@@ -99,7 +99,7 @@ struct PaymentCardCreateRequest: Codable {
     
     private static func fakeFingerprint(pan: String, expiryYear: String, expiryMonth: String) -> String {
         // Based a hash of the pan, it's the key identifier of the card
-        return "\(pan)|\(expiryMonth)|\(expiryYear)".md5() // Maybe we should do something similar to this for pan hashing?
+        return "\(pan)|\(expiryMonth)|\(expiryYear)".md5()
     }
     
     private static func fakeToken() -> String {
