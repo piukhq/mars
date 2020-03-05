@@ -270,6 +270,8 @@ class ApiManager {
                     let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? otherErrors?.first ?? "went_wrong".localized
                     let customError = CustomError(errorMessage: errorMessage, statusCode: statusCode)
                     onError(customError)
+                } else if statusCode == 401 {
+                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
                 } else if (500...599).contains(statusCode) {
                     NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
                     let customError = CustomError(errorMessage: "", statusCode: statusCode)
