@@ -18,9 +18,11 @@ class BrowseBrandsViewModel {
     
     weak var delegate: BrowseBrandsViewModelDelegate?
     var searchActive = false
-    var filteredData = [CD_MembershipPlan]() {
+    var searchedData = [CD_MembershipPlan]()
+    var filteredData = [CD_MembershipPlan]()
+    private var allFilteredData = [CD_MembershipPlan]() {
         didSet {
-            delegate?.browseBrandsViewModel(self, didUpdateFilteredData: filteredData)
+            delegate?.browseBrandsViewModel(self, didUpdateFilteredData: allFilteredData)
         }
     }
     
@@ -141,5 +143,9 @@ class BrowseBrandsViewModel {
     
     func popViewController() {
         router.popViewController()
+    }
+    
+    private func getAllFilteredData() {
+        
     }
 }

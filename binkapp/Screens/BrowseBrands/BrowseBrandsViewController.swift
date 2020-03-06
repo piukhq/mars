@@ -240,7 +240,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
 
 extension BrowseBrandsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        viewModel.filteredData = []
+        viewModel.searchedData = []
         
         var searchText = ""
         if string == "" && range.length > 0 {
@@ -256,7 +256,7 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
             }
             
             if companyName.localizedCaseInsensitiveContains(searchText) {
-                viewModel.filteredData.append(plan)
+                viewModel.searchedData.append(plan)
             }
         }
         if !searchText.isEmpty && viewModel.filteredData.isEmpty {
@@ -322,24 +322,7 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
                 filteredPlans.append($0)
             }
         }
-
         viewModel.filteredData = filteredPlans
-        
-//        selectedFilters.forEach { (filter) in
-//            viewModel.getMembershipPlans().forEach { (plan) in
-//                guard let category = plan.account?.category else {return}
-//                if filter == category {
-//                    if !viewModel.filteredData.contains(plan) {
-//                        viewModel.filteredData.append(plan)
-//                    }
-//                    else {
-//                        if let index = viewModel.filteredData.firstIndex(of: plan) {
-//                            viewModel.filteredData.remove(at: index)
-//                        }
-//                    }
-//                }
-//            }
-//        }
         cell.switchImage()
     }
 }
