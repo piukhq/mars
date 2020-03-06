@@ -262,7 +262,7 @@ class ApiManager {
                      If the endpoint expects an authorisation token,
                      ensure that we aggressively respond in app to a 401.
                      */
-                    NotificationCenter.default.post(name: .didLogout, object: nil)
+                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
                 } else if statusCode == 400 {
                     let decodedResponseErrors = try? decoder.decode(ResponseErrors.self, from: data)
                     let otherErrors = try? decoder.decode([String].self, from: data)
@@ -270,8 +270,6 @@ class ApiManager {
                     let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? otherErrors?.first ?? "went_wrong".localized
                     let customError = CustomError(errorMessage: errorMessage, statusCode: statusCode)
                     onError(customError)
-                } else if statusCode == 401 {
-                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
                 } else if (500...599).contains(statusCode) {
                     NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
                     let customError = CustomError(errorMessage: "", statusCode: statusCode)
@@ -312,7 +310,7 @@ class ApiManager {
                  If the endpoint expects an authorisation token,
                  ensure that we aggressively respond in app to a 401.
                  */
-                NotificationCenter.default.post(name: .didLogout, object: nil)
+                NotificationCenter.default.post(name: .shouldLogout, object: nil)
             } else if (500...599).contains(statusCode) {
                 NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
                 let customError = CustomError(errorMessage: "", statusCode: statusCode)
