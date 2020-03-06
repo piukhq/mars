@@ -13,7 +13,6 @@ fileprivate struct Constants {
     static let searchIconTopPadding = 13
     static let searchIconSideSize = 14
     static let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    static let filterCollectionHeight: CGFloat = 130.0
 }
 
 class BrowseBrandsViewController: BinkTrackableViewController {
@@ -41,6 +40,11 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         layout.estimatedItemSize = CGSize(width: (self.view.frame.width - 50) / 2, height: 40.0)
         return layout
     }()
+
+    private var filterViewHeight: CGFloat {
+        let height = CGFloat(round(Double(self.viewModel.filters.count) / 2) * 40)
+        return height + 10
+    }
     
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
@@ -96,7 +100,14 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
-        collectionView.frame = CGRect(x: 25, y: topStackView.frame.maxY, width: (view.frame.width - 50) / 2, height: 0.0)
+        collectionView.alpha = 0
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: searchTextFieldContainer.bottomAnchor, constant: 0),
+            collectionView.leftAnchor.constraint(equalTo: tableView.leftAnchor, constant: 0),
+            collectionView.rightAnchor.constraint(equalTo: tableView.rightAnchor, constant: 0),
+            collectionView.heightAnchor.constraint(equalToConstant: filterViewHeight),
+        ])
     }
     
     private func configureSearchTextField() {
@@ -152,20 +163,22 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     }
     
     private func hideFilters(with contentOffsetY: CGFloat) {
-        UIView.animate(withDuration: 0.3) {
-            self.collectionView.frame = CGRect(x: 25, y: self.topStackView.frame.maxY, width: self.view.frame.width - 50, height: 0)
-            self.tableView.setContentOffset(CGPoint(x: 0.0, y: contentOffsetY), animated: false)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY + self.filterViewHeight)
+            self.collectionView.alpha = 0
+        }) { _ in
+            self.tableView.contentInset.top = 0
         }
-        self.tableView.contentInset.top = 0
     }
     
     private func displayFilters(with contentOffsetY: CGFloat) {
-        UIView.animate(withDuration: 0.3) {
-            self.collectionView.frame = CGRect(x: 25, y: self.topStackView.frame.maxY, width: self.view.frame.width - 50, height: Constants.filterCollectionHeight)
-            self.collectionView.reloadData()
-            self.tableView.setContentOffset(CGPoint(x: 0.0, y: contentOffsetY - Constants.filterCollectionHeight), animated: false)
+        self.collectionView.reloadData()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
+            self.collectionView.alpha = 1
+        }) { _ in
+            self.tableView.contentInset.top = self.filterViewHeight
         }
-        self.tableView.contentInset.top = Constants.filterCollectionHeight
     }
     
     @objc private func popViewController() {
