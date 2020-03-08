@@ -33,6 +33,8 @@ class AddOrJoinViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .storeViewLink)
+        
         setNavigationBar()
         configureUI()
     }
@@ -83,6 +85,8 @@ class AddOrJoinViewController: BinkTrackableViewController {
         let linkView = LoyaltyPlanView()
         linkView.configure(for: .linkCell, cardType: cardType)
         plansStackView.addArrangedSubview(linkView)
+
+        addCardButton.isHidden = !viewModel.shouldShowAddCardButton
     }
     
     @objc func popViewController() {

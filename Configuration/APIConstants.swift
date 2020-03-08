@@ -8,6 +8,18 @@
 
 import Foundation
 
+fileprivate var customURLString = "" {
+    didSet {
+        Current.userDefaults.set(customURLString, forDefaultsKey: .environmentBaseUrl)
+    }
+}
+
+enum EnvironmentType: String {
+    case dev = "api.dev.gb.bink.com"
+    case staging = "api.staging.gb.bink.com"
+    case daedalus = "mcwallet.dev.gb.bink.com"
+}
+
 enum Configuration {
     enum Error: Swift.Error {
         case missingKey, invalidValue
@@ -21,9 +33,15 @@ enum Configuration {
 }
 
 enum APIConstants {
-    static let productionBaseURL = "https://api.bink.com"
+    static let productionBaseURL = "https://api.gb.bink.com"
 
     static var baseURLString: String {
+        #if DEBUG
+        if let customBaseUrl = Current.userDefaults.value(forDefaultsKey: .environmentBaseUrl) as? String {
+            return "https://" + customBaseUrl
+        }
+        #endif
+
         do {
             let configURL = try Configuration.value(for: "API_BASE_URL")
             return "https://" + configURL
@@ -31,6 +49,14 @@ enum APIConstants {
         catch {
             fatalError(error.localizedDescription)
         }
+    }
+    
+    static func changeEnvironment(environment: EnvironmentType) {
+        customURLString = environment.rawValue
+    }
+    
+    static func moveToCustomURL(url: String) {
+        customURLString = url
     }
     
     enum SecretKeyType: String {
@@ -51,4 +77,14 @@ enum APIConstants {
     
     static let clientID = "MKd3FfDGBi1CIUQwtahmPap64lneCa2R6GvVWKg6dNg4w9Jnpd"
     static let bundleID = "com.bink.wallet"
+
+    static func makeServicePostRequest(email: String) -> [String: [String: Any]] {
+        return [
+            "consent":
+                [
+                    "email": email,
+                    "timestamp": Int(Date().timeIntervalSince1970)
+                ]
+        ]
+    }
 }

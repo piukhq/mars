@@ -35,6 +35,7 @@ class RegisterViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .register)
                 
         NSLayoutConstraint.activate([
             continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
@@ -62,13 +63,23 @@ class RegisterViewController: BaseFormViewController {
         continueButton.startLoading()
         
         Current.apiManager.doRequest(url: .register, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+            guard let email = response.email else {
+                self?.handleRegistrationError()
+                return
+            }
             Current.userManager.setNewUser(with: response)
-            self?.router.didLogin()
-            self?.updatePreferences(checkboxes: preferenceCheckboxes)
-            self?.continueButton.stopLoading()
-        }) { [weak self] (error) in
-            self?.showError()
-            self?.continueButton.stopLoading()
+            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
+                // If there is an error, or the response is not successful, bail out
+                guard error == nil, success else {
+                    self?.handleRegistrationError()
+                    return
+                }
+                self?.router.didLogin()
+                self?.updatePreferences(checkboxes: preferenceCheckboxes)
+                self?.continueButton.stopLoading()
+            }
+        }) { [weak self] _ in
+            self?.handleRegistrationError()
         }
     }
     
@@ -88,10 +99,16 @@ class RegisterViewController: BaseFormViewController {
         Current.apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, isUserDriven: true, completion: nil)
     }
     
-    func showError() {
+    private func showError() {
         let alert = UIAlertController(title: "error_title".localized, message: "register_failed".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         present(alert, animated: true)
+    }
+
+    private func handleRegistrationError() {
+        Current.userManager.removeUser()
+        continueButton.stopLoading()
+        showError()
     }
 }
 

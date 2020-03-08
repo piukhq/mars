@@ -19,13 +19,21 @@ class BrandTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func configure(plan: CD_MembershipPlan, brandName: String, description: Bool = false) {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        logoImageView.image = nil
+        separatorView.isHidden = false
+        descriptionLabel.isHidden = true
+    }
+    
+    func configure(plan: CD_MembershipPlan, brandName: String) {
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
 
         brandLabel.font = UIFont.subtitle
         brandLabel.text = brandName
-        
-        descriptionLabel.isHidden = !description
+
+        let isPLL = plan.featureSet?.planCardType == .link
+        descriptionLabel.isHidden = !isPLL
         descriptionLabel.font = UIFont.bodyTextSmall
         descriptionLabel.text = "can_be_linked_description".localized
     }

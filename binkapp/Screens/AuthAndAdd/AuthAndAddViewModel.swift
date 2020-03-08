@@ -25,6 +25,7 @@ enum FormPurpose {
     case add
     case addFailed
     case signUp
+    case signUpFailed
     case ghostCard
     case patchGhostCard
     
@@ -32,7 +33,7 @@ enum FormPurpose {
         switch self {
         case .add, .addFailed:
             return .add
-        case .signUp:
+        case .signUp, .signUpFailed:
             return .enrol
         case .ghostCard, .patchGhostCard:
             return .registration
@@ -53,8 +54,9 @@ class AuthAndAddViewModel {
     
     var title: String {
         switch formPurpose {
-        case .signUp: return "sign_up_new_card_title".localized
-        case .add, .addFailed: return "credentials_title".localized
+        case .signUp, .signUpFailed: return "sign_up_new_card_title".localized
+        case .add: return "credentials_title".localized
+        case .addFailed: return "log_in_title".localized
         case .ghostCard, .patchGhostCard: return "register_ghost_card_title".localized
         }
     }
@@ -62,8 +64,9 @@ class AuthAndAddViewModel {
     var buttonTitle: String {
         switch formPurpose {
         case .signUp: return "sign_up_button_title".localized
-        case .add, .addFailed: return "pll_screen_add_title".localized
-        case .ghostCard, .patchGhostCard: return "register_card_title".localized
+        case .add: return "pll_screen_add_title".localized
+        case .ghostCard: return "register_card_title".localized
+        case .signUpFailed, .addFailed, .patchGhostCard: return "log_in_title".localized
         }
     }
     
@@ -85,14 +88,14 @@ class AuthAndAddViewModel {
         case .add:
             guard let companyName = membershipPlan.account?.companyName else { return nil }
             return String(format: "auth_screen_description".localized, companyName)
-        case .addFailed:
-            return getDescriptionForOtherLogin()
         case .signUp:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "sign_up_new_card_description".localized, planNameCard)
         case .ghostCard, .patchGhostCard:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "register_ghost_card_description".localized, planNameCard)
+        case .addFailed, .signUpFailed:
+            return getDescriptionForOtherLogin()
         }
     }
     
@@ -286,8 +289,9 @@ class AuthAndAddViewModel {
         }
     }
     
-    func reloadWith(newFormPuropse: FormPurpose) {
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPuropse)
+    func reloadWithGhostCardFields() {
+        let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .patchGhostCard : .ghostCard
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
     }
     
     func toReusableTemplate(title: String, description: String) {

@@ -11,19 +11,16 @@ import FirebaseAnalytics
 
 /// Conformance to this protocol makes a class trackable
 protocol AnalyticsTrackable {
-    var trackableEvent: BinkAnalyticsEvent { get }
+    var trackableEvent: BinkAnalyticsEvent? { get }
     var additionalTrackingData: [String: Any]? { get }
 }
 
 /// Events that can be tracked across the app
 enum BinkAnalyticsEvent {
-    case screenView(screenName: String)
     case callToAction(identifier: String)
 
     var name: String {
         switch self {
-        case .screenView:
-            return "screen_viewed"
         case .callToAction:
             return "call_to_action_pressed"
         }
@@ -31,8 +28,6 @@ enum BinkAnalyticsEvent {
 
     var data: [String: Any] {
         switch self {
-        case .screenView(let screenName):
-            return ["screen_name": screenName]
         case .callToAction(let identifier):
             return ["identifier": identifier]
         }

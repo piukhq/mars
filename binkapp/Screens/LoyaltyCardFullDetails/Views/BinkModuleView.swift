@@ -36,6 +36,7 @@ class BinkModuleView: CustomView {
         case unLinkable
         case genericError
         case aboutMembership
+        case noReasonCode
     }
     
     private var action: BinkModuleAction?
@@ -150,6 +151,9 @@ private extension BinkModuleView {
                     break
                 }
             }
+            else {
+                configure(imageName: imageName, titleText: "error_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .noReasonCode)
+            }
             break
         default:
             return
@@ -178,7 +182,7 @@ private extension BinkModuleView {
             let possiblyLinkedCard = paymentCards.first(where: { $0.linkedMembershipCards.count > 0})
             guard membershipCard.linkedPaymentCards.count == 0, !membershipCard.linkedPaymentCards.contains(possiblyLinkedCard as Any) else {
                 // Link module 2.1
-                let subtitleText = String(format: "link_module_to_number_of_payment_cards_message".localized, membershipCard.linkedPaymentCards.count , paymentCards.count)
+                let subtitleText = String(format: paymentCards.count == 1 ? "link_module_to_number_of_payment_card_message".localized : "link_module_to_number_of_payment_cards_message".localized, membershipCard.linkedPaymentCards.count, paymentCards.count)
                 configure(imageName: "lcdModuleIconsLinkActive", titleText: "card_linked_status".localized, subtitleText: subtitleText, touchAction: .pll)
                 return
             }
@@ -212,7 +216,7 @@ private extension BinkModuleView {
                 }
             } else {
                 // Link module 2.7
-                configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)
+                configure(imageName: "lcdModuleIconsPointsLogin", titleText: "error_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .noReasonCode)
             }
             break
         default:

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DTTJailbreakDetection
 
 class RootStateMachine: NSObject {
     
@@ -25,7 +26,9 @@ class RootStateMachine: NSObject {
     }
     
     private func launch() {
-        if Current.userManager.currentToken == nil {
+        if DTTJailbreakDetection.isJailbroken() {
+            moveTo(router?.jailbroken())
+        } else if Current.userManager.currentToken == nil {
             handleUnauthenticated()
         } else {
             moveTo(router?.wallet())

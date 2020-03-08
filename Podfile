@@ -19,6 +19,8 @@ pod 'KeychainAccess', '~> 4.1'
 pod 'FacebookSDK', '~> 5.9'
 pod 'FBSDKLoginKit', '~> 5.8'
 pod 'Disk'
+pod 'DTTJailbreakDetection'
+pod 'JWTDecode', '~> 2.4'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",

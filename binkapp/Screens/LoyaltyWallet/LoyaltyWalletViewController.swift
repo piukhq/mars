@@ -17,27 +17,29 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .loyaltyWallet)
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row < viewModel.walletPromptsCount {
+        if indexPath.row < viewModel.cardCount {
+            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            
+            guard let membershipCard = viewModel.cards?[indexPath.row] else {
+                return cell
+            }
+            
+            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
+            cell.configureUIWithViewModel(viewModel: cellViewModel, delegate: self)
+            
+            return cell
+            
+        } else {
             // join card
             let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let walletPrompt = viewModel.walletPrompts?[indexPath.row] else {
+            guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else {
                 return cell
             }
             cell.configureWithWalletPrompt(walletPrompt)
-            return cell
-        } else {
-            let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-
-            guard let membershipCard = viewModel.card(forIndexPath: indexPath) else {
-                return cell
-            }
-
-            let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
-            cell.configureUIWithViewModel(viewModel: cellViewModel, delegate: self)
-
             return cell
         }
     }
@@ -69,7 +71,7 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     }
     
     func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
-        guard let card = viewModel.card(forIndexPath: index) else { return }
+        guard let card = viewModel.cards?[index.row] else { return }
                 
         viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
             self?.viewModel.refreshLocalWallet()
@@ -82,7 +84,7 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
         guard let index = collectionView.indexPath(for: cell) else { return }
         
         if action == .barcode {
-            guard let card = viewModel.card(forIndexPath: index) else {
+            guard let card = viewModel.cards?[index.row] else {
                 cell.set(to: .closed)
                 return
             }

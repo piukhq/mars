@@ -9,16 +9,17 @@
 import UIKit
 
 class BinkTrackableButton: UIButton, AnalyticsTrackable {
-    var trackableEvent: BinkAnalyticsEvent {
+    var trackableEvent: BinkAnalyticsEvent? {
+        guard let identifier = identifier else { return nil }
         return .callToAction(identifier: identifier)
     }
 
     var additionalTrackingData: [String : Any]?
-    private var identifier: String {
-        guard let viewController = viewController() else { return "" }
-        let className = String(describing: type(of: viewController).self)
-        let buttonName = titleLabel?.text?.capitalized.replacingOccurrences(of: " ", with: "")
-        return "\(className).\(buttonName ?? "")"
+    private var identifier: String? {
+        guard let viewController = viewController() as? BinkTrackableViewController else { return nil }
+        guard let screenName = viewController.screenName else { return nil }
+        guard let buttonName = titleLabel?.text?.capitalized.replacingOccurrences(of: " ", with: "") else { return nil }
+        return "\(screenName).\(buttonName)"
     }
 
     override init(frame: CGRect) {
@@ -32,6 +33,7 @@ class BinkTrackableButton: UIButton, AnalyticsTrackable {
     }
 
     @objc private func trackButtonPress() {
-        BinkAnalytics.track(trackableEvent, additionalTrackingData: additionalTrackingData)
+        guard let event = trackableEvent else { return }
+        BinkAnalytics.track(event, additionalTrackingData: additionalTrackingData)
     }
 }

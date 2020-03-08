@@ -9,7 +9,8 @@ import Foundation
 import Keys
 import Alamofire
 
-enum RequestURL {
+enum RequestURL: Equatable {
+    case service
     case login
     case register
     case facebook
@@ -24,9 +25,12 @@ enum RequestURL {
     case paymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
     case spreedly
+    case mockBKWallet
     
     private var value: String {
         switch self {
+        case .service:
+            return "/ubiquity/service"
         case .login:
             return "/users/login"
         case .register:
@@ -55,12 +59,14 @@ enum RequestURL {
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
         case .spreedly:
             return "https://core.spreedly.com/v1/payment_methods?environment_key=\(BinkappKeys().spreedlyEnvironmentKey)"
+        case .mockBKWallet:
+            return "https://virtserver.swaggerhub.com/Bink_API/Bink_External_API/1.2/membership_cards"
         }
     }
     
     var authRequired: Bool {
         switch self {
-        case .register, .login, .renew, .spreedly:
+        case .register, .login, .renew, .spreedly, .mockBKWallet:
             return false
         default:
             return true
@@ -78,7 +84,7 @@ enum RequestURL {
 
     private var baseUrlString: String {
         switch self {
-        case .spreedly:
+        case .spreedly, .mockBKWallet:
             return ""
         default:
             return APIConstants.baseURLString
@@ -126,8 +132,13 @@ class ApiManager {
         case unknown
     }
     
+    enum ApiVersion: String {
+        case v1_1 = "v=1.1"
+        case v1_2 = "v=1.2"
+    }
+    
     struct Certificates {
-      static let bink = Certificates.certificate(filename: "bink-com")
+      static let bink = Certificates.certificate(filename: "bink")
       
       private static func certificate(filename: String) -> SecCertificate {
         let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
@@ -156,15 +167,19 @@ class ApiManager {
         return APIConstants.baseURLString == APIConstants.productionBaseURL
     }
     
+    static var apiVersion: ApiVersion = .v1_1
+    
     init() {
         let evaluators = [
-          "api.bink.com":
+          "api.gb.bink.com":
             PinnedCertificatesTrustEvaluator(certificates: [
               Certificates.bink
             ])
         ]
-        
-        session = Session(serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
+       
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 10.0
+        session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
     }
     
     func doRequest<Resp: Decodable>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, isUserDriven: Bool, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error?) -> () = { _ in }) {
@@ -179,7 +194,7 @@ class ApiManager {
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
         
-        session.request(url.fullUrlString, method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { (response) in
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { (response) in
             self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
     }
@@ -196,7 +211,7 @@ class ApiManager {
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
                 
-        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).responseJSON { (response) in
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { (response) in
             self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
     }
@@ -227,6 +242,7 @@ class ApiManager {
         }
         
         guard let data = response.data else {
+            onError(response.error ?? NSError(domain: "", code: 408, userInfo: nil) as Error)
             return
         }
 
@@ -281,7 +297,7 @@ class ApiManager {
         let authRequired = url.authRequired
         let requestHeaders = HTTPHeaders(getHeader(endpoint: url))
         
-        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).responseJSON { response in
+        session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { response in
             
             let statusCode = response.response?.statusCode ?? 0
             if statusCode == 200 || statusCode == 201 || statusCode == 204 {
@@ -309,7 +325,7 @@ class ApiManager {
 
 private extension ApiManager {
     private func getHeader(endpoint: RequestURL) -> [String: String] {
-        var header = ["Content-Type": "application/json\(endpoint.shouldVersionPin ? ";v=1.1" : "")"]
+        var header = ["Content-Type": "application/json\(endpoint.shouldVersionPin ? ";\(ApiManager.apiVersion.rawValue)" : "")"]
         
         if endpoint.authRequired {
             guard let token = Current.userManager.currentToken else { return header }

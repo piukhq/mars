@@ -202,7 +202,7 @@ extension FormDataSource {
             }
         }
         
-        if formPurpose != .signUp && (formPurpose != .ghostCard && formPurpose != .patchGhostCard) {
+        if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .patchGhostCard {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
@@ -228,7 +228,7 @@ extension FormDataSource {
         }
         
         
-        if formPurpose == .signUp {
+        if formPurpose == .signUp || formPurpose == .signUpFailed {
             model.account?.formattedEnrolFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)

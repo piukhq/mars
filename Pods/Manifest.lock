@@ -9,6 +9,7 @@ PODS:
   - CryptoSwift (1.1.3)
   - DeepDiff (2.2.0)
   - Disk (0.6.4)
+  - DTTJailbreakDetection (0.4.0)
   - Fabric (1.10.2)
   - FacebookSDK (5.10.0):
     - FacebookSDK/CoreKit (= 5.10.0)
@@ -93,6 +94,7 @@ PODS:
   - GoogleUtilities/UserDefaults (6.3.1):
     - GoogleUtilities/Logger
   - iOSDropDown (0.3.4)
+  - JWTDecode (2.4.1)
   - KeychainAccess (4.1.0)
   - Keys (1.0.1)
   - M13Checkbox (3.4.0)
@@ -111,12 +113,14 @@ DEPENDENCIES:
   - CryptoSwift
   - DeepDiff
   - Disk
+  - DTTJailbreakDetection
   - Fabric
   - FacebookSDK (~> 5.9)
   - FBSDKLoginKit (~> 5.8)
   - Firebase
   - Firebase/Analytics
   - iOSDropDown
+  - JWTDecode (~> 2.4)
   - KeychainAccess (~> 4.1)
   - Keys (from `Pods/CocoaPodsKeys`)
   - M13Checkbox
@@ -152,6 +156,8 @@ SPEC REPOS:
     - SwipeCellKit
   trunk:
     - Disk
+    - DTTJailbreakDetection
+    - JWTDecode
 
 EXTERNAL SOURCES:
   Keys:
@@ -165,6 +171,7 @@ SPEC CHECKSUMS:
   CryptoSwift: 6b6e488df0598b3e9fa49254ed1a65e8c1b1e10b
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   Disk: dcee5c2e98fb72f9a924cde8da8435b08244a80e
+  DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FacebookSDK: 9b43cd3ff2b19f72227c0b90c688adda1f74d43c
   FBSDKCoreKit: f9bae468a078f20c05c73450825ccd54cfafbbb7
@@ -181,12 +188,13 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
+  JWTDecode: 4bd4da0cdf0f8154fd467fa48499f34ec057fb88
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   M13Checkbox: 6f59404540ac98ba83a3d1afac335895a40c6a5d
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: 240aebc87bb036e6fbfeff5252f12e393f5d0843
+PODFILE CHECKSUM: 5d531a4eb4cb6aec24fdcb0ae46194081df41c0e
 
 COCOAPODS: 1.8.4

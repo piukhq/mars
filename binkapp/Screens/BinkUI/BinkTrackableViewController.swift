@@ -7,24 +7,34 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
-class BinkTrackableViewController: UIViewController, AnalyticsTrackable {
-    /// Optional additional data to pass to analytics along with the default tracking event data
-    var additionalTrackingData: [String: Any]?
+enum TrackedScreen: String {
+    case onboarding = "Onboarding"
+    case login = "Login"
+    case register = "Register"
+    case socialTermsAndConditions = "SocialTermsAndConditions"
+    case loyaltyWallet = "LoyaltyWallet"
+    case paymentWallet = "PaymentWallet"
+    case loyaltyDetail = "LoyaltyDetail"
+    case paymentDetail = "PaymentDetail"
+    case addOptions = "AddOptions"
+    case browseBrands = "BrowseBrands"
+    case storeViewLink = "StoreViewLink"
+    case addPaymentCard = "AddPaymentCard"
+    case addAuthForm = "AddAuthForm"
+    case enrolForm = "EnrolForm"
+    case registrationForm = "RegistrationForm"
+    case pll = "PLL"
+    case informationModal = "InformationModal"
+    case settings = "Settings"
+    case preferences = "Preferences"
+}
 
-    /// Set the trackable event for all subclassing view controllers
-    var trackableEvent: BinkAnalyticsEvent {
-        let className = String(describing: Self.self)
-        return .screenView(screenName: screenName ?? className)
-    }
-    
-    /// Subclasses should set this if the view controller's class name isn't desirable
+class BinkTrackableViewController: UIViewController {
     var screenName: String?
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        /// Disabling in favour of Firebase's out-of-the-box screen name tracking
-//        BinkAnalytics.track(trackableEvent, additionalTrackingData: additionalTrackingData)
+    func setScreenName(trackedScreen: TrackedScreen) {
+        screenName = trackedScreen.rawValue
+        Analytics.setScreenName(screenName, screenClass: nil)
     }
 }

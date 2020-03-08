@@ -56,6 +56,10 @@ extension UIColor {
     static var facebookButton: UIColor {
         return UIColor(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
     }
+    
+    static var greyFifty: UIColor {
+        return UIColor(red: 127/255, green: 127/255, blue: 127/255, alpha: 1.0)
+    }
 
     // MARK: - Card swipe gradients
     static let barcodeSwipeGradientLeft = UIColor(red: 180/255.0, green: 111/255.0, blue: 234/255.0, alpha: 1.0)
@@ -68,6 +72,8 @@ extension UIColor {
     static let redAttention = UIColor(hexString: "#eb001b")
     static let grey10 = UIColor(hexString: "#e5e5e5")
     static let disabledTextGrey = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+    static let black15 = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15)
+
 
     // MARK: - Payment Card Gradient Colours
 

@@ -9,6 +9,11 @@
 import UIKit
 
 class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setScreenName(trackedScreen: .paymentWallet)
+    }
+    
     override func configureCollectionView() {
         super.configureCollectionView()
         collectionView.register(PaymentCardCollectionViewCell.self, asNib: true)
@@ -24,7 +29,7 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
             return cell
         } else {
             let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let paymentCard = viewModel.card(forIndexPath: indexPath) else {
+            guard let paymentCard = viewModel.cards?[indexPath.row] else {
                 return cell
             }
 
@@ -52,7 +57,7 @@ extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelega
     }
 
     func promptForDelete(with index: IndexPath, cell: PaymentCardCollectionViewCell) {
-        guard let card = viewModel.card(forIndexPath: index) else { return }
+        guard let card = viewModel.cards?[index.row] else { return }
 
         viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
             self?.viewModel.refreshLocalWallet()

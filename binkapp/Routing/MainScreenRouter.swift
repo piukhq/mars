@@ -41,6 +41,10 @@ class MainScreenRouter {
         return nav
     }
 
+    func jailbroken() -> UIViewController {
+        return JailbrokenViewController()
+    }
+
     func getOnboardingViewController() -> UIViewController {
         let viewModel = OnboardingViewModel(router: self)
         let nav = PortraitNavigationController(rootViewController: OnboardingViewController(viewModel: viewModel))
@@ -113,8 +117,8 @@ class MainScreenRouter {
         navController?.present(navigationController,  animated: true, completion: completion)
     }
     
-    func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan) {
-        let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, router: self)
+    func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) {
+        let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard, router: self)
         let viewController = AddOrJoinViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
@@ -229,7 +233,7 @@ class MainScreenRouter {
     
     func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration, floatingButtons: Bool = true) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
-        let viewController = ReusableTemplateViewController(viewModel: viewModel)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
@@ -346,16 +350,6 @@ class MainScreenRouter {
             return
         }
         
-        if visibleVC.isKind(of: BarcodeViewController.self),
-            let nc = visibleVC.presentedViewController as? UINavigationController,
-            let vc = nc.viewControllers.first as? BarcodeViewController,
-            vc.isBarcodeFullsize {
-            //Dismiss full screen barcode before presenting the Launch screen.
-            nc.dismiss(animated: false) {
-                self.displayLaunchScreen(visibleViewController: visibleVC)
-            }
-            return
-        }
         if visibleVC.isModal {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.displayLaunchScreen(visibleViewController: visibleVC)

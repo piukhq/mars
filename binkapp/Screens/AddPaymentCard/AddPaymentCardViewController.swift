@@ -28,7 +28,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         button.setTitle("Add", for: .normal)
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .addButtonTapped, for: .touchUpInside)
-        button.isEnabled = true
+        button.isEnabled = false
         view.addSubview(button)
         return button
     }()
@@ -49,6 +49,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setScreenName(trackedScreen: .addPaymentCard)
 
         stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: Constants.cardPadding)
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "security_and_privacy_title".localized)])
