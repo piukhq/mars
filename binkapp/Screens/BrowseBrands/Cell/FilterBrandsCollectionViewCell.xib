@@ -33,18 +33,28 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wqg-4A-tjH">
-                                <rect key="frame" x="40" y="28.5" width="43" height="25"/>
+                                <rect key="frame" x="40" y="30.5" width="44.5" height="21"/>
                                 <fontDescription key="fontDescription" name="NunitoSans-Light" family="Nunito Sans" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lco-dz-YNV">
+                                <rect key="frame" x="0.0" y="81" width="319" height="1"/>
+                                <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="r4l-OQ-buq"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Wqg-4A-tjH" firstAttribute="leading" secondItem="qbj-Fc-crK" secondAttribute="trailing" id="64b-21-43t"/>
                             <constraint firstItem="qbj-Fc-crK" firstAttribute="leading" secondItem="mlB-2r-omJ" secondAttribute="leading" id="BU0-AM-QRF"/>
                             <constraint firstItem="qbj-Fc-crK" firstAttribute="centerY" secondItem="mlB-2r-omJ" secondAttribute="centerY" id="JdX-Ft-yV9"/>
+                            <constraint firstAttribute="bottom" secondItem="Lco-dz-YNV" secondAttribute="bottom" id="LdU-tr-9vU"/>
                             <constraint firstItem="Wqg-4A-tjH" firstAttribute="centerY" secondItem="mlB-2r-omJ" secondAttribute="centerY" id="QcY-54-CpC"/>
+                            <constraint firstItem="Lco-dz-YNV" firstAttribute="leading" secondItem="qbj-Fc-crK" secondAttribute="leading" id="b58-VV-xmI"/>
+                            <constraint firstAttribute="trailing" secondItem="Lco-dz-YNV" secondAttribute="trailing" id="k6a-Dx-nXY"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -58,6 +68,7 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="319" height="82"/>
             <connections>
+                <outlet property="customSeparatorView" destination="Lco-dz-YNV" id="tfv-be-VnP"/>
                 <outlet property="filterTitleLable" destination="Wqg-4A-tjH" id="FMp-PR-U24"/>
                 <outlet property="imageView" destination="qbj-Fc-crK" id="UG4-th-q1k"/>
             </connections>

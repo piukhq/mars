@@ -9,9 +9,10 @@
 import UIKit
 
 class FilterBrandsCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var filterTitleLable: UILabel!
-   
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var filterTitleLable: UILabel!
+    @IBOutlet private weak var customSeparatorView: UIView!
+    
     private var cellWasTapped: Bool = false {
         didSet {
             if cellWasTapped {
@@ -34,5 +35,9 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
 
     func switchImage() {
        cellWasTapped = !cellWasTapped
+    }
+    
+    func hideSeparator() {
+        customSeparatorView.isHidden = true
     }
 }

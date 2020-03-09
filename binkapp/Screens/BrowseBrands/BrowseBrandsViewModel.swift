@@ -17,18 +17,23 @@ class BrowseBrandsViewModel {
     private var membershipPlans = [CD_MembershipPlan]()
     
     weak var delegate: BrowseBrandsViewModelDelegate?
-    var searchActive = false
-    var searchedData = [CD_MembershipPlan]()
-    var filteredData = [CD_MembershipPlan]()
-    private var allFilteredData = [CD_MembershipPlan]() {
+    var shouldShowNoResultsLabel: Bool {
+        return filteredPlans.isEmpty 
+    }
+    var searchText = "" {
         didSet {
-            delegate?.browseBrandsViewModel(self, didUpdateFilteredData: allFilteredData)
+            filterPlans()
         }
     }
+    var filteredPlans = [CD_MembershipPlan]()
     
     var filters: [String] {
-        let filters = membershipPlans.map({ ($0.account?.category ?? "")})
-        return filters.uniq(source: filters)
+        return mapFilters(fromPlans: membershipPlans)
+    }
+    var selectedFilters = [String]() {
+        didSet {
+            filterPlans()
+        }
     }
         
     init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
@@ -40,20 +45,11 @@ class BrowseBrandsViewModel {
             self.membershipPlans = plans.sorted(by: { (firstPlan, secondPlan) -> Bool in
                 (firstPlan.account?.companyName)! < (secondPlan.account?.companyName)!
             })
+            self.selectedFilters = self.mapFilters(fromPlans: self.membershipPlans)
         }
     }
     
     func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan {
-        if !filteredData.isEmpty {
-            let sortedData = filteredData.sorted {
-                guard let first = $0.account?.companyName?.lowercased() else { return false }
-                guard let second = $1.account?.companyName?.lowercased() else { return true }
-                
-                return first < second
-            }
-            return sortedData[indexPath.row]
-        }
-        
         if indexPath.section == 0 {
             return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
         }
@@ -70,7 +66,11 @@ class BrowseBrandsViewModel {
     }
     
     func getMembershipPlans() -> [CD_MembershipPlan] {
-        return membershipPlans
+        if filteredPlans.isEmpty {
+            return membershipPlans
+        } else {
+            return filteredPlans
+        }
     }
     
     func hasMembershipPlans() -> Bool {
@@ -88,7 +88,7 @@ class BrowseBrandsViewModel {
     }
     
     func getPllMembershipPlans() -> [CD_MembershipPlan] {
-        let plans = membershipPlans.filter { $0.featureSet?.planCardType == .link }
+        let plans = getMembershipPlans().filter { $0.featureSet?.planCardType == .link }
         return plans.sorted {
             guard let first = $0.account?.companyName?.lowercased() else { return false }
             guard let second = $1.account?.companyName?.lowercased() else { return true }
@@ -98,7 +98,7 @@ class BrowseBrandsViewModel {
     }
     
     func getNonPllMembershipPlans() -> [CD_MembershipPlan] {
-        let plans = membershipPlans.filter { $0.featureSet?.planCardType != .link }
+        let plans = getMembershipPlans().filter { $0.featureSet?.planCardType != .link }
         return plans.sorted {
             guard let first = $0.account?.companyName?.lowercased() else { return false }
             guard let second = $1.account?.companyName?.lowercased() else { return true }
@@ -108,10 +108,6 @@ class BrowseBrandsViewModel {
     }
     
     func numberOfSections() -> Int {
-        if !filteredData.isEmpty {
-            return 1
-        }
-        
         var sections = 0
         [getPllMembershipPlans(), getNonPllMembershipPlans()].forEach {
             if !$0.isEmpty {
@@ -123,10 +119,6 @@ class BrowseBrandsViewModel {
 
     
     func getNumberOfRowsFor(section: Int) -> Int {
-        if !filteredData.isEmpty {
-            return filteredData.count
-        }
-        
         switch section {
         case 0:
             return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans().count : getPllMembershipPlans().count
@@ -137,15 +129,33 @@ class BrowseBrandsViewModel {
         }
     }
     
+    private func mapFilters(fromPlans plans: [CD_MembershipPlan]) -> [String] {
+        let filters = plans.map({ ($0.account?.category ?? "")})
+        return filters.uniq(source: filters)
+    }
+    
+    private func filterPlans() {
+        filteredPlans = []
+        getMembershipPlans().forEach { (plan) in
+            guard let companyName = plan.account?.companyName, let category = plan.account?.category else {return}
+            if searchText.isEmpty {
+                if selectedFilters.contains(category) && !filteredPlans.contains(plan){
+                    filteredPlans.append(plan)
+                }
+            } else {
+                if selectedFilters.contains(category) && companyName.localizedCaseInsensitiveContains(searchText) && !filteredPlans.contains(plan){
+                    filteredPlans.append(plan)
+                }
+            }
+        }
+        delegate?.browseBrandsViewModel(self, didUpdateFilteredData: filteredPlans)
+    }
+    
     func toAddOrJoinScreen(membershipPlan: CD_MembershipPlan) {
         router.toAddOrJoinViewController(membershipPlan: membershipPlan)
     }
     
     func popViewController() {
         router.popViewController()
-    }
-    
-    private func getAllFilteredData() {
-        
     }
 }
