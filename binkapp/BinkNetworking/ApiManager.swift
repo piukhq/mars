@@ -193,7 +193,7 @@ class ApiManager {
             return
         }
         
-        let authRequired = url.authRequired
+        let authRequired = url == .logout ? false : url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
         
@@ -210,7 +210,7 @@ class ApiManager {
             return
         }
         
-        let authRequired = url.authRequired
+        let authRequired = url == .logout ? false : url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
                 
@@ -297,7 +297,7 @@ class ApiManager {
             return
         }
 
-        let authRequired = url.authRequired
+        let authRequired = url == .logout ? false : url.authRequired
         let requestHeaders = HTTPHeaders(getHeader(endpoint: url))
         
         session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { response in
