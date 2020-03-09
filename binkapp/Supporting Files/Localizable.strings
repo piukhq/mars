@@ -52,7 +52,6 @@
 "browse_brands_title" = "Browse brands";
 "filters_button_title" = "Filters";
 "search" = "Search";
-"can_be_linked_description" = "Can be linked to your payment cards";
 
 "browse_brands_title" = "Browse brands";
 "filters_button_title" = "Filters";
@@ -79,7 +78,7 @@
 
 "auth_screen_description" = "Please enter your %@ credentials below to add this card to your wallet";
 
-"pll_title" = "PLL";
+"pll_title" = "Payment Linked Loyalty";
 "popular_title" = "Popular";
 "all_title" = "All";
 
@@ -128,7 +127,7 @@
 "transaction_history_unavailable_title" = "Points history";
 "transaction_history_unavailable_description" = "No transactions to display since adding your card to Bink.\nIn some cases transactions take longer to update.";
 "transaction_history_not_supported_title" = "Transaction history not supported";
-"transaction_history_not_supported_description" = "Your %@ history is not available yet";
+"transaction_history_not_supported_description" = "%@ does not support displaying your transaction history in the Bink app.\n\nYou can view your history and balance on the merchant’s website.";
 
 "day" = "day";
 "days" = "days";
@@ -175,8 +174,8 @@
 "terms_and_conditions_description" = "I authorise MasterCard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction for MasterCard, Visa and American Express to share such transaction details with Loyalty Angels Limited to enable my card-linked offer(s) and target offers that may be of interest to me. For information about Loyalty Angels Limited privacy practices, please see our Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.";
 "privacy_policy" = "Privacy Policy";
 
-"native_join_unavailable_title" = "Sign up currently unavailable";
-"native_join_unavailable_description" = "Go to the %@ website to join then come back and add your card.";
+"native_join_unavailable_title" = "Sign up not supported";
+"native_join_unavailable_description" = "%@ does not support signing up for a new loyalty account via the Bink app.\n\nPlease go to the merchant’s website to sign up for a card, then return to the Bink app and add your new card details.";
 "to_merchant_site_button" = "Go to merchant site";
 
 "unlinkable_pll_title" = "Payment Linked Loyalty unavailable";
@@ -215,7 +214,7 @@
 // MARK: - Support mail
 
 "support_mail_subject" = "Bink App Support";
-"support_mail_body" = "\n\n\n\nThe below information will help you, please don’t change it.\nBink ID: %@\nVersion: %@\niOS Version: %@";
+"support_mail_body" = "\n\n\n\nThe below information will help us with with your query, please don’t change it.\nBink ID: %@\nVersion: %@\niOS Version: %@";
 "support_mail_app_version" = "%@ build %@";
 
 "pll_error_title" = "Error";
@@ -335,3 +334,7 @@
 
 // MARK: - Errors
 "communication_error" = "There was a problem communicating with the server. Please try again later.";
+
+// MARK: - Wallet prompts
+"wallet_prompt_loyalty" = "Link this card to your payment cards to automatically collect rewards.";
+"wallet_prompt_payment" = "Collect rewards automatically for select loyalty cards by linking them to your payment cards.";

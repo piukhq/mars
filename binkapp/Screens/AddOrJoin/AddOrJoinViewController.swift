@@ -89,6 +89,8 @@ class AddOrJoinViewController: BinkTrackableViewController {
         let linkView = LoyaltyPlanView()
         linkView.configure(for: .linkCell, cardType: cardType)
         plansStackView.addArrangedSubview(linkView)
+
+        addCardButton.isHidden = !viewModel.shouldShowAddCardButton
     }
     
     @objc func popViewController() {
