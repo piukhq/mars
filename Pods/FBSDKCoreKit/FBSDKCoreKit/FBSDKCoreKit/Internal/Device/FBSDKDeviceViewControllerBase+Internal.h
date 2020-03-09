@@ -16,26 +16,38 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import "TargetConditionals.h"
 
-NS_SWIFT_NAME(ViewHierarchy)
-@interface FBSDKViewHierarchy : NSObject
+#if TARGET_OS_TV
 
-+ (NSObject *)getParent:(NSObject *)obj;
-+ (NSArray<NSObject *> *)getChildren:(NSObject *)obj;
-+ (NSArray<NSObject *> *)getPath:(NSObject *)obj;
-+ (NSMutableDictionary<NSString *, id> *)getDetailAttributesOf:(NSObject *)obj;
+#if SWIFT_PACKAGE
+#import "FBSDKDeviceViewControllerBase.h"
+#else
+#import <FBSDKCoreKit/FBSDKDeviceViewControllerBase.h>
+#endif
 
-+ (NSString *)getText:(NSObject *)obj;
-+ (NSString *)getHint:(NSObject *)obj;
-+ (NSIndexPath *)getIndexPath:(NSObject *)obj;
-+ (NSUInteger)getClassBitmask:(NSObject *)obj;
-+ (UITableView *)getParentTableView:(UIView *)cell;
-+ (UICollectionView *)getParentCollectionView:(UIView *)cell;
-+ (NSInteger)getTag:(NSObject *)obj;
-+ (NSNumber *)getViewReactTag:(UIView *)view;
+#import "FBSDKCoreKit+Internal.h"
+#import "FBSDKDeviceDialogView.h"
 
-+ (BOOL)isUserInputView:(NSObject *)obj;
+@class FBSDKDeviceDialogView;
+
+NS_ASSUME_NONNULL_BEGIN
+
+/*
+  An internal base class for device related flows.
+
+ This is an internal API that should not be used directly and is subject to change.
+*/
+@interface FBSDKDeviceViewControllerBase()<
+UIViewControllerAnimatedTransitioning,
+UIViewControllerTransitioningDelegate,
+FBSDKDeviceDialogViewDelegate
+>
+
+@property (nonatomic, strong, readonly) FBSDKDeviceDialogView *deviceDialogView;
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#endif
