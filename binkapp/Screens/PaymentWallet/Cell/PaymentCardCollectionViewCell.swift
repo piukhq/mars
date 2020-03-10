@@ -26,6 +26,13 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     @IBOutlet private weak var cardContainerCenterXConstraint: NSLayoutConstraint!
     @IBOutlet private weak var deleteButton: UIButton!
     
+    private enum CardGradientKey: NSString {
+        case visaGradient
+        case mastercardGradient
+        case amexGradient
+        case unknownGradient
+    }
+    
     private lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
         width.isActive = true
@@ -65,6 +72,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         }
     }
     private (set) var swipeState: SwipeState?
+    private let cache = NSCache<NSString, CAGradientLayer>()
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -72,6 +80,28 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         alertView.isHidden = true
         pllStatusLabel.isHidden = false
         linkedStatusImageView.isHidden = false
+        switch viewModel.paymentCardType {
+        case .visa:
+            if let gradientLayer = cache.object(forKey: CardGradientKey.visaGradient.rawValue) {
+                contentView.layer.insertSublayer(gradientLayer, at: 0)
+                cardGradientLayer = gradientLayer
+            }
+        case .mastercard:
+            if let gradientLayer = cache.object(forKey: CardGradientKey.mastercardGradient.rawValue) {
+                contentView.layer.insertSublayer(gradientLayer, at: 0)
+                cardGradientLayer = gradientLayer
+            }
+        case .amex:
+            if let gradientLayer = cache.object(forKey: CardGradientKey.amexGradient.rawValue) {
+                contentView.layer.insertSublayer(gradientLayer, at: 0)
+                cardGradientLayer = gradientLayer
+            }
+        case .none:
+            if let gradientLayer = cache.object(forKey: CardGradientKey.unknownGradient.rawValue) {
+                contentView.layer.insertSublayer(gradientLayer, at: 0)
+                cardGradientLayer = gradientLayer
+            }
+        }
     }
     
     func configureWithViewModel(_ viewModel: PaymentCardCellViewModel, enableSwipeGesture: Bool? = true, delegate: WalletPaymentCardCollectionViewCellDelegate?) {
@@ -201,28 +231,30 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     }
     
     private func processGradient(type: PaymentCardType?) {
-        if cardGradientLayer == nil {
-            let gradient = CAGradientLayer()
-            containerView.layer.insertSublayer(gradient, at: 0)
-            cardGradientLayer = gradient
-        }
-        
-        switch type {
-        case .visa:
-            cardGradientLayer?.colors = UIColor.visaPaymentCardGradients
-        case .mastercard:
-            cardGradientLayer?.colors = UIColor.mastercardPaymentCardGradients
-        case .amex:
-            cardGradientLayer?.colors = UIColor.amexPaymentCardGradients
-        case .none:
-            cardGradientLayer?.colors = UIColor.unknownPaymentCardGradients
-        }
-        
+        let gradient = CAGradientLayer()
+        containerView.layer.insertSublayer(gradient, at: 0)
+        cardGradientLayer = gradient
         cardGradientLayer?.frame = bounds
         cardGradientLayer?.locations = [0.0, 1.0]
         cardGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
         cardGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
         cardGradientLayer?.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
+        if let cardGradient = cardGradientLayer {
+            switch type {
+            case .visa:
+                cardGradient.colors = UIColor.visaPaymentCardGradients
+                cache.setObject(cardGradient, forKey: CardGradientKey.visaGradient.rawValue)
+            case .mastercard:
+                cardGradient.colors = UIColor.mastercardPaymentCardGradients
+                cache.setObject(cardGradient, forKey: CardGradientKey.mastercardGradient.rawValue)
+            case .amex:
+                cardGradient.colors = UIColor.amexPaymentCardGradients
+                cache.setObject(cardGradient, forKey: CardGradientKey.amexGradient.rawValue)
+            case .none:
+                cardGradient.colors = UIColor.unknownPaymentCardGradients
+                cache.setObject(cardGradient , forKey: CardGradientKey.unknownGradient.rawValue)
+            }
+        }
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
