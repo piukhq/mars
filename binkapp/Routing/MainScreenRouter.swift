@@ -237,9 +237,9 @@ class MainScreenRouter {
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
-    func pushReusableModalTemplateVC(configurationModel: ReusableModalConfiguration, navigationController: UINavigationController?) {
+    func pushReusableModalTemplateVC(configurationModel: ReusableModalConfiguration, navigationController: UINavigationController?, floatingButtons: Bool = true) {
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
-        let viewController = ReusableTemplateViewController(viewModel: viewModel)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
         navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -254,7 +254,7 @@ class MainScreenRouter {
         let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
             self?.toAddPaymentViewController()
         }, tabBarBackButton: backButton)
-        pushReusableModalTemplateVC(configurationModel: configuration, navigationController: navController)
+        pushReusableModalTemplateVC(configurationModel: configuration, navigationController: navController, floatingButtons: false)
     }
     
     func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
