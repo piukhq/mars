@@ -9,12 +9,17 @@
 import UIKit
 
 class OfferTileView: CustomView {
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var offerImageView: UIImageView!
     
     func configure(imageUrl: String) {
-        offerImageView.clipsToBounds = true
-        offerImageView.layer.cornerRadius = 8
+        containerView.layer.cornerRadius = 8
+        containerView.clipsToBounds = true
         offerImageView.setImage(forPathType: .membershipPlanOfferTile(url: imageUrl))
+        
+        DispatchQueue.main.async {
+            self.layer.applyDefaultBinkShadow()
+        }
     }
 }
 
