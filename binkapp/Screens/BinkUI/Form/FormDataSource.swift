@@ -245,8 +245,7 @@ extension FormDataSource {
                             updated: updatedBlock,
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
-                            columnKind: .enrol,
-                            forcedValue: model.isPLR && field.commonName == FieldCommonName.email.rawValue ? Current.userManager.currentEmailAddress : nil
+                            columnKind: .enrol
                         )
                     )
                 }
