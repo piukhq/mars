@@ -335,7 +335,7 @@ extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICo
             let cellViewModel = PLRCellViewModel(voucher: voucher)
             cell.configureWithViewModel(cellViewModel)
             return cell
-        } else if voucher.earnType == .stamp {
+        } else if voucher.earnType == .stamps {
             let cell: PLRStampsActiveCell = collectionView.dequeue(indexPath: indexPath)
             let cellViewModel = PLRCellViewModel(voucher: voucher)
             cell.configureWithViewModel(cellViewModel)

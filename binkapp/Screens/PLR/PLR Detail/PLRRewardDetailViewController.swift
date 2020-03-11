@@ -121,7 +121,7 @@ private extension PLRRewardDetailViewController {
                 cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
                 cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorInactiveCellHeight),
             ])
-        case (.inProgress, .stamp), (.issued, .stamp):
+        case (.inProgress, .stamps), (.issued, .stamps):
             let cell: PLRStampsActiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
@@ -130,7 +130,7 @@ private extension PLRRewardDetailViewController {
                 cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
                 cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.stampsActiveCellHeight),
             ])
-        case (.redeemed, .stamp), (.expired, .stamp):
+        case (.redeemed, .stamps), (.expired, .stamps):
             let cell: PLRStampsInactiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)

@@ -138,8 +138,8 @@ private extension BinkModuleView {
                      configure(imageName: imageName, titleText: "register_gc_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .patchGhostCard)
                     break
                 case .X202:
-                    // Points module 1.x (to be defined)
-                    configure(imageName: imageName, titleText: "log_in_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
+                    // Points module 1.12
+                    configure(imageName: imageName, titleText: "points_module_account_exists_status".localized, subtitleText: "points_module_log_in".localized, touchAction: .loginChanges)
                     break
                 case .X101, .X102, .X103, .X104, .X302, .X303, .X304:
                     // Points module 1.6
