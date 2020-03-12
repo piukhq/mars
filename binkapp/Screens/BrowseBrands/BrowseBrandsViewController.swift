@@ -24,6 +24,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     @IBOutlet private weak var noMatchesLabelTopConstraint: NSLayoutConstraint!
     
     private var filtersVisible = false
+    private var selectedCollectionViewIndexPaths = [IndexPath]()
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +33,14 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
+    //Autolayout solution
+//    private lazy var collectionBackgroundView: UIView = {
+//       let view = UIView()
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.isUserInteractionEnabled = false
+//        view.backgroundColor = .clear
+//        return view
+//    }()
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -75,7 +84,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         
         configureSearchTextField()
         configureCollectionView()
-        
+                
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -100,8 +109,23 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         collectionView.register(FilterBrandsCollectionViewCell.self, asNib: true)
         collectionView.delegate = self
         collectionView.dataSource = self
+        let collectionFrameY = topStackView.frame.maxY + LayoutHelper.heightForNavigationBar(navigationController?.navigationBar)
+        collectionView.frame = CGRect(x: 25, y: collectionFrameY, width: view.frame.width - 50, height: 0.0)
+        // Autolayout solution
+//        collectionView.alpha = 0
+//        view.addSubview(collectionBackgroundView)
         view.addSubview(collectionView)
-        collectionView.frame = CGRect(x: 25, y: topStackView.frame.maxY, width: (view.frame.width - 50) / 2, height: 0.0)
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            collectionView.topAnchor.constraint(equalTo: searchTextFieldContainer.bottomAnchor, constant: 0),
+//            collectionView.leftAnchor.constraint(equalTo: tableView.leftAnchor, constant: 0),
+//            collectionView.rightAnchor.constraint(equalTo: tableView.rightAnchor, constant: 0),
+//            collectionView.heightAnchor.constraint(equalToConstant: filterViewHeight),
+//            collectionBackgroundView.topAnchor.constraint(equalTo: searchTextFieldContainer.bottomAnchor, constant: 0),
+//            collectionBackgroundView.leftAnchor.constraint(equalTo: tableView.leftAnchor, constant: 0),
+//            collectionBackgroundView.rightAnchor.constraint(equalTo: tableView.rightAnchor, constant: 0),
+//            collectionBackgroundView.heightAnchor.constraint(equalToConstant: filterViewHeight),
+//        ])
     }
     
     private func configureSearchTextField() {
@@ -142,7 +166,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
                 tableView.contentInset = UIEdgeInsets(top: filterViewHeight, left: 0, bottom: keyboardSize.height, right: 0)
             } else {
                 tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-
             }
         }
     }
@@ -166,28 +189,56 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     }
     
     private func hideFilters(with contentOffsetY: CGFloat) {
+        if !self.noMatchesLabel.isHidden {
+            self.noMatchesLabelTopConstraint.constant = 0.0
+        }
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: 25, y: self.topStackView.frame.maxY, width: self.view.frame.width - 50, height: 0)
             self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY + self.filterViewHeight)
-            if !self.noMatchesLabel.isHidden {
-                self.noMatchesLabelTopConstraint.constant = 0.0
-            }
+            self.view.layoutIfNeeded()
         }) { [weak self] _ in
             self?.tableView.contentInset.top = 0.0
         }
+        
+        // Autolayout solution
+//        if !self.noMatchesLabel.isHidden {
+//            self.noMatchesLabelTopConstraint.constant = 0.0
+//        }
+//        self.collectionBackgroundView.backgroundColor = .clear
+//        UIView.animate(withDuration: 0.3, animations: {
+//            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY + self.filterViewHeight)
+//            self.collectionView.alpha = 0
+//            self.view.layoutIfNeeded()
+//        }) { [weak self] _ in
+//            self?.tableView.contentInset.top = 0
+//        }
     }
     
     private func displayFilters(with contentOffsetY: CGFloat) {
-        self.collectionView.reloadData()
+        if !self.noMatchesLabel.isHidden {
+            self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
+        }
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: 25, y: self.topStackView.frame.maxY, width: self.view.frame.width - 50, height: self.filterViewHeight)
             self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
-            if !self.noMatchesLabel.isHidden {
-                self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
-            }
+           self.view.layoutIfNeeded()
         }) { [weak self] _ in
-            self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
+                self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
         }
+
+    // Autolayout solution
+//        if !self.noMatchesLabel.isHidden {
+//            self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
+//        }
+//        self.collectionView.reloadData()
+//        collectionBackgroundView.backgroundColor = .white
+//        UIView.animate(withDuration: 0.3, animations: {
+//            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
+//            self.collectionView.alpha = 1
+//            self.view.layoutIfNeeded()
+//        }) { [weak self] _ in
+//            self?.tableView.contentInset.top = self!.filterViewHeight
+//        }
     }
     
     private func switchTableWithNoMatchesLabel() {
@@ -302,8 +353,15 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FilterBrandsCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
         cell.configureCell(with: viewModel.filters[indexPath.row])
-        if indexPath.row == viewModel.filters.count - 2 || indexPath.row == viewModel.filters.count - 1 {
-            cell.hideSeparator()
+        cell.cellWasTapped = selectedCollectionViewIndexPaths.contains(indexPath)
+        if viewModel.filters.count.isMultiple(of: 2) {
+            if indexPath.row == viewModel.filters.count - 2 || indexPath.row == viewModel.filters.count - 1 {
+                cell.hideSeparator()
+            }
+        } else {
+            if  indexPath.row == viewModel.filters.count - 1 {
+                cell.hideSeparator()
+            }
         }
         return cell
     }
@@ -314,6 +372,14 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! FilterBrandsCollectionViewCell
+        cell.cellWasTapped = !cell.cellWasTapped
+        if !selectedCollectionViewIndexPaths.contains(indexPath) {
+            selectedCollectionViewIndexPaths.append(indexPath)
+        } else {
+            if let index = selectedCollectionViewIndexPaths.firstIndex(of: indexPath) {
+                selectedCollectionViewIndexPaths.remove(at: index)
+            }
+        }
         if let filter = cell.filterTitle, selectedFilters.contains(filter) {
             let index = selectedFilters.firstIndex(of: filter)
             selectedFilters.remove(at: index ?? 0)
@@ -322,6 +388,5 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
         }
         viewModel.selectedFilters = selectedFilters
         switchTableWithNoMatchesLabel()
-        cell.switchImage()
     }
 }

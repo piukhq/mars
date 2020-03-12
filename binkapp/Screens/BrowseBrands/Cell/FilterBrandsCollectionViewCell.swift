@@ -13,7 +13,7 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var filterTitleLable: UILabel!
     @IBOutlet private weak var customSeparatorView: UIView!
     
-    private var cellWasTapped: Bool = false {
+    var cellWasTapped: Bool = false {
         didSet {
             if cellWasTapped {
                 imageView.image = UIImage(imageLiteralResourceName: "inactive_check")
@@ -31,10 +31,6 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
     func configureCell(with name: String) {
         filterTitleLable.text = name
         filterTitle = name
-    }
-
-    func switchImage() {
-       cellWasTapped = !cellWasTapped
     }
     
     func hideSeparator() {
