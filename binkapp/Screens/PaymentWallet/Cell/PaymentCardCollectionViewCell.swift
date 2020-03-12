@@ -231,9 +231,11 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     }
     
     private func processGradient(type: PaymentCardType?) {
-        let gradient = CAGradientLayer()
-        containerView.layer.insertSublayer(gradient, at: 0)
-        cardGradientLayer = gradient
+        if cardGradientLayer == nil {
+            let gradient = CAGradientLayer()
+            containerView.layer.insertSublayer(gradient, at: 0)
+            cardGradientLayer = gradient
+        }
         cardGradientLayer?.frame = bounds
         cardGradientLayer?.locations = [0.0, 1.0]
         cardGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
