@@ -193,7 +193,8 @@ class BrowseBrandsViewController: BinkTrackableViewController {
             self.noMatchesLabelTopConstraint.constant = 0.0
         }
         UIView.animate(withDuration: 0.3, animations: {
-            self.collectionView.frame = CGRect(x: 25, y: self.topStackView.frame.maxY, width: self.view.frame.width - 50, height: 0)
+            let frame = self.collectionView.frame
+            self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 0)
             self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY + self.filterViewHeight)
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
@@ -219,8 +220,12 @@ class BrowseBrandsViewController: BinkTrackableViewController {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
         UIView.animate(withDuration: 0.3, animations: {
-            self.collectionView.frame = CGRect(x: 25, y: self.topStackView.frame.maxY, width: self.view.frame.width - 50, height: self.filterViewHeight)
+            let frame = self.collectionView.frame
+            self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: self.filterViewHeight)
             self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
+            UIView.performWithoutAnimation {
+                self.collectionView.performBatchUpdates(nil, completion: nil)
+            }
            self.view.layoutIfNeeded()
         }) { [weak self] _ in
                 self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
