@@ -33,14 +33,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
-    //Autolayout solution
-//    private lazy var collectionBackgroundView: UIView = {
-//       let view = UIView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.isUserInteractionEnabled = false
-//        view.backgroundColor = .clear
-//        return view
-//    }()
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -111,21 +103,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         collectionView.dataSource = self
         let collectionFrameY = topStackView.frame.maxY + LayoutHelper.heightForNavigationBar(navigationController?.navigationBar)
         collectionView.frame = CGRect(x: 25, y: collectionFrameY, width: view.frame.width - 50, height: 0.0)
-        // Autolayout solution
-//        collectionView.alpha = 0
-//        view.addSubview(collectionBackgroundView)
         view.addSubview(collectionView)
-//        collectionView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            collectionView.topAnchor.constraint(equalTo: searchTextFieldContainer.bottomAnchor, constant: 0),
-//            collectionView.leftAnchor.constraint(equalTo: tableView.leftAnchor, constant: 0),
-//            collectionView.rightAnchor.constraint(equalTo: tableView.rightAnchor, constant: 0),
-//            collectionView.heightAnchor.constraint(equalToConstant: filterViewHeight),
-//            collectionBackgroundView.topAnchor.constraint(equalTo: searchTextFieldContainer.bottomAnchor, constant: 0),
-//            collectionBackgroundView.leftAnchor.constraint(equalTo: tableView.leftAnchor, constant: 0),
-//            collectionBackgroundView.rightAnchor.constraint(equalTo: tableView.rightAnchor, constant: 0),
-//            collectionBackgroundView.heightAnchor.constraint(equalToConstant: filterViewHeight),
-//        ])
     }
     
     private func configureSearchTextField() {
@@ -192,35 +170,22 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = 0.0
         }
+        let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
-            let frame = self.collectionView.frame
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 0)
             self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY + self.filterViewHeight)
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
             self?.tableView.contentInset.top = 0.0
         }
-        
-        // Autolayout solution
-//        if !self.noMatchesLabel.isHidden {
-//            self.noMatchesLabelTopConstraint.constant = 0.0
-//        }
-//        self.collectionBackgroundView.backgroundColor = .clear
-//        UIView.animate(withDuration: 0.3, animations: {
-//            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY + self.filterViewHeight)
-//            self.collectionView.alpha = 0
-//            self.view.layoutIfNeeded()
-//        }) { [weak self] _ in
-//            self?.tableView.contentInset.top = 0
-//        }
     }
     
     private func displayFilters(with contentOffsetY: CGFloat) {
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
+        let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
-            let frame = self.collectionView.frame
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: self.filterViewHeight)
             self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
             UIView.performWithoutAnimation {
@@ -230,20 +195,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         }) { [weak self] _ in
                 self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
         }
-
-    // Autolayout solution
-//        if !self.noMatchesLabel.isHidden {
-//            self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
-//        }
-//        self.collectionView.reloadData()
-//        collectionBackgroundView.backgroundColor = .white
-//        UIView.animate(withDuration: 0.3, animations: {
-//            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
-//            self.collectionView.alpha = 1
-//            self.view.layoutIfNeeded()
-//        }) { [weak self] _ in
-//            self?.tableView.contentInset.top = self!.filterViewHeight
-//        }
     }
     
     private func switchTableWithNoMatchesLabel() {
@@ -378,13 +329,14 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! FilterBrandsCollectionViewCell
         cell.cellWasTapped = !cell.cellWasTapped
-        if !selectedCollectionViewIndexPaths.contains(indexPath) {
-            selectedCollectionViewIndexPaths.append(indexPath)
-        } else {
+        if selectedCollectionViewIndexPaths.contains(indexPath) {
             if let index = selectedCollectionViewIndexPaths.firstIndex(of: indexPath) {
                 selectedCollectionViewIndexPaths.remove(at: index)
             }
+        } else {
+            selectedCollectionViewIndexPaths.append(indexPath)
         }
+        
         if let filter = cell.filterTitle, selectedFilters.contains(filter) {
             let index = selectedFilters.firstIndex(of: filter)
             selectedFilters.remove(at: index ?? 0)
