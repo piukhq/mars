@@ -92,7 +92,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         navigationItem.leftBarButtonItem = backButton
         
-        filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTaped))
+        filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTapped))
         filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.blue], for: .disabled)
         navigationItem.rightBarButtonItem = filtersButton
         navigationItem.rightBarButtonItem?.tintColor = .blue
@@ -159,7 +159,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         }
     }
     
-    @objc func filtersButtonTaped() {
+    @objc func filtersButtonTapped() {
         let tableContentOffsetY = tableView.contentOffset.y
         if filtersVisible {
             hideFilters(with: tableContentOffsetY)
