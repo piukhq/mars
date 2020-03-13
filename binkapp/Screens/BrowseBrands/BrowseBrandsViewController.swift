@@ -25,6 +25,8 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     private var filtersVisible = false
     private var selectedCollectionViewIndexPaths = [IndexPath]()
+    
+    private var filtersButton: UIBarButtonItem?
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,7 +92,8 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         navigationItem.leftBarButtonItem = backButton
         
-        let filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTaped))
+        filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTaped))
+        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.blue], for: .disabled)
         navigationItem.rightBarButtonItem = filtersButton
         navigationItem.rightBarButtonItem?.tintColor = .blue
         
@@ -167,6 +170,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     }
     
     private func hideFilters(with contentOffsetY: CGFloat) {
+        filtersButton?.isEnabled = false
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = 0.0
         }
@@ -177,6 +181,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
             self.view.layoutIfNeeded()
         }) { [weak self] _ in
             self?.tableView.contentInset.top = 0.0
+            self?.filtersButton?.isEnabled = true
         }
     }
     
@@ -184,6 +189,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
+        filtersButton?.isEnabled = false
         let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: self.filterViewHeight)
@@ -194,6 +200,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
            self.view.layoutIfNeeded()
         }) { [weak self] _ in
                 self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
+            self?.filtersButton?.isEnabled = true
         }
     }
     
