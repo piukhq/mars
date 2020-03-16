@@ -13,6 +13,9 @@ fileprivate struct Constants {
     static let searchIconTopPadding = 13
     static let searchIconSideSize = 14
     static let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    static let marginPadding: CGFloat = 25.0
+    static let filterCellHeight: CGFloat = 40.0
+    static let filterViewHeightPadding: CGFloat = 10.0
 }
 
 class BrowseBrandsViewController: BinkTrackableViewController {
@@ -41,13 +44,13 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         layout.minimumInteritemSpacing = 0.0
         layout.minimumLineSpacing = 0
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.estimatedItemSize = CGSize(width: (self.view.frame.width - 50) / 2, height: 40.0)
+        layout.estimatedItemSize = CGSize(width: (self.view.frame.width - Constants.marginPadding * 2) / 2, height: Constants.filterCellHeight)
         return layout
     }()
     
     private var filterViewHeight: CGFloat {
-        let height = CGFloat(round(Double(self.viewModel.filters.count) / 2) * 40)
-        return height + 10
+        let height = CGFloat(round(Double(self.viewModel.filters.count) / 2) * Double( Constants.filterCellHeight))
+        return height + Constants.filterViewHeightPadding
     }
     
     let viewModel: BrowseBrandsViewModel
@@ -105,7 +108,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         let collectionFrameY = topStackView.frame.maxY + LayoutHelper.heightForNavigationBar(navigationController?.navigationBar)
-        collectionView.frame = CGRect(x: 25, y: collectionFrameY, width: view.frame.width - 50, height: 0.0)
+        collectionView.frame = CGRect(x: Constants.marginPadding, y: collectionFrameY, width: view.frame.width - (Constants.marginPadding * 2), height: 0.0)
         view.addSubview(collectionView)
     }
     
@@ -330,7 +333,7 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width / 2 - 0.1, height: 40.0)
+        return CGSize(width: collectionView.bounds.width / 2 - 0.1, height: Constants.filterCellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
