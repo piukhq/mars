@@ -77,28 +77,28 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     override func prepareForReuse() {
         super.prepareForReuse()
         set(to: .closed, animated: false)
+        deleteButton.isHidden = true
         alertView.isHidden = true
         pllStatusLabel.isHidden = false
         linkedStatusImageView.isHidden = false
+
+        cardGradientLayer = nil
+        
         switch viewModel.paymentCardType {
         case .visa:
             if let gradientLayer = cache.object(forKey: CardGradientKey.visaGradient.rawValue) {
-                contentView.layer.insertSublayer(gradientLayer, at: 0)
                 cardGradientLayer = gradientLayer
             }
         case .mastercard:
             if let gradientLayer = cache.object(forKey: CardGradientKey.mastercardGradient.rawValue) {
-                contentView.layer.insertSublayer(gradientLayer, at: 0)
                 cardGradientLayer = gradientLayer
             }
         case .amex:
             if let gradientLayer = cache.object(forKey: CardGradientKey.amexGradient.rawValue) {
-                contentView.layer.insertSublayer(gradientLayer, at: 0)
                 cardGradientLayer = gradientLayer
             }
         case .none:
             if let gradientLayer = cache.object(forKey: CardGradientKey.unknownGradient.rawValue) {
-                contentView.layer.insertSublayer(gradientLayer, at: 0)
                 cardGradientLayer = gradientLayer
             }
         }
@@ -126,7 +126,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         nameOnCardLabel.text = viewModel.nameOnCard
         cardNumberLabel.attributedText = cardNumberAttributedString(for: viewModel.fullPan ?? "", type: viewModel.cardType)
         
-        configureForProvider(cardType: viewModel.cardType)
+        configureForProvider(cardType: viewModel.cardType, isAddJourney: true)
         
         setLabelStyling()
         pllStatusLabel.isHidden = true
@@ -197,7 +197,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         }
     }
     
-    private func configureForProvider(cardType: PaymentCardType?) {
+    private func configureForProvider(cardType: PaymentCardType?, isAddJourney: Bool = false) {
         guard let type = cardType else {
             processGradient(type: cardType)
             providerLogoImageView.image = nil
@@ -208,7 +208,9 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         providerLogoImageView.image = UIImage(named: type.logoName)
         providerWatermarkImageView.image = UIImage(named: type.sublogoName)
         
-        processGradient(type: type)
+        if cardGradientLayer == nil  || isAddJourney {
+            processGradient(type: type)
+        }
     }
     
     private func configurePaymentCardLinkingStatus() {
