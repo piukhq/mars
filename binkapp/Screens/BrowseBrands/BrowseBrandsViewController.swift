@@ -32,7 +32,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     private var filtersButton: UIBarButtonItem?
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.alwaysBounceVertical = false
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
@@ -44,7 +43,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         layout.minimumInteritemSpacing = 0.0
         layout.minimumLineSpacing = 0
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.estimatedItemSize = CGSize(width: (self.view.frame.width - Constants.marginPadding * 2) / 2, height: Constants.filterCellHeight)
+        layout.itemSize = CGSize(width: (self.view.frame.width - (Constants.marginPadding * 2)) / 2, height: Constants.filterCellHeight)
         return layout
     }()
     
@@ -96,7 +95,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         navigationItem.leftBarButtonItem = backButton
         
         filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTapped))
-        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.blue], for: .disabled)
+        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.black], for: .disabled)
         navigationItem.rightBarButtonItem = filtersButton
         navigationItem.rightBarButtonItem?.tintColor = .blue
         
@@ -107,7 +106,9 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         collectionView.register(FilterBrandsCollectionViewCell.self, asNib: true)
         collectionView.delegate = self
         collectionView.dataSource = self
-        let collectionFrameY = topStackView.frame.maxY + LayoutHelper.heightForNavigationBar(navigationController?.navigationBar)
+        let notchDeviceCollectionFrameY = topStackView.frame.maxY + LayoutHelper.heightForNavigationBar(navigationController?.navigationBar)
+        let nonNotchDeviceCollectionFrameY = topStackView.frame.maxY + LayoutHelper.statusBarHeight
+        let collectionFrameY = UIDevice.current.hasNotch ? notchDeviceCollectionFrameY : nonNotchDeviceCollectionFrameY
         collectionView.frame = CGRect(x: Constants.marginPadding, y: collectionFrameY, width: view.frame.width - (Constants.marginPadding * 2), height: 0.0)
         view.addSubview(collectionView)
     }
@@ -174,6 +175,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     private func hideFilters(with contentOffsetY: CGFloat) {
         filtersButton?.isEnabled = false
+        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.blue], for: .normal)
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = 0.0
         }
@@ -193,9 +195,10 @@ class BrowseBrandsViewController: BinkTrackableViewController {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
         filtersButton?.isEnabled = false
+        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.black], for: .normal)
         let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
-            self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: self.filterViewHeight)
+            self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: self.view.frame.width - (Constants.marginPadding * 2), height: self.filterViewHeight)
             self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
             UIView.performWithoutAnimation {
                 self.collectionView.performBatchUpdates(nil, completion: nil)
@@ -333,7 +336,7 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width / 2 - 0.1, height: Constants.filterCellHeight)
+        return CGSize(width: (collectionView.bounds.width / 2), height: Constants.filterCellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

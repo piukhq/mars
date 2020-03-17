@@ -32,8 +32,8 @@
                                     <constraint firstAttribute="height" constant="40" id="NkY-ao-5QB"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wqg-4A-tjH">
-                                <rect key="frame" x="40" y="30.5" width="44.5" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wqg-4A-tjH">
+                                <rect key="frame" x="40" y="28.5" width="279" height="25"/>
                                 <fontDescription key="fontDescription" name="NunitoSans-Light" family="Nunito Sans" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -52,6 +52,7 @@
                             <constraint firstItem="qbj-Fc-crK" firstAttribute="leading" secondItem="mlB-2r-omJ" secondAttribute="leading" id="BU0-AM-QRF"/>
                             <constraint firstItem="qbj-Fc-crK" firstAttribute="centerY" secondItem="mlB-2r-omJ" secondAttribute="centerY" id="JdX-Ft-yV9"/>
                             <constraint firstAttribute="bottom" secondItem="Lco-dz-YNV" secondAttribute="bottom" id="LdU-tr-9vU"/>
+                            <constraint firstAttribute="trailing" secondItem="Wqg-4A-tjH" secondAttribute="trailing" id="OCE-kZ-7uQ"/>
                             <constraint firstItem="Wqg-4A-tjH" firstAttribute="centerY" secondItem="mlB-2r-omJ" secondAttribute="centerY" id="QcY-54-CpC"/>
                             <constraint firstItem="Lco-dz-YNV" firstAttribute="leading" secondItem="qbj-Fc-crK" secondAttribute="leading" id="b58-VV-xmI"/>
                             <constraint firstAttribute="trailing" secondItem="Lco-dz-YNV" secondAttribute="trailing" id="k6a-Dx-nXY"/>
