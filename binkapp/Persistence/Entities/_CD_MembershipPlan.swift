@@ -5,7 +5,6 @@ import Foundation
 import CoreData
 
 public enum CD_MembershipPlanAttributes: String {
-    case hasVouchers = "hasVouchers"
     case status = "status"
 }
 
@@ -47,9 +46,6 @@ open class _CD_MembershipPlan: CD_BaseObject {
     }
 
     // MARK: - Properties
-
-    @NSManaged open
-    var hasVouchers: NSNumber?
 
     @NSManaged open
     var status: String?

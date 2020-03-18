@@ -22,6 +22,7 @@ struct FeatureSetModel: Codable {
     let hasPoints: Bool?
     let cardType: PlanCardType?
     let linkingSupport: [LinkingSupportType]?
+    let hasVouchers: Bool?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -31,6 +32,7 @@ struct FeatureSetModel: Codable {
         case hasPoints = "has_points"
         case cardType = "card_type"
         case linkingSupport = "linking_support"
+        case hasVouchers = "has_vouchers"
     }
 }
 
@@ -42,6 +44,7 @@ extension FeatureSetModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.digitalOnly, with: NSNumber(value: digitalOnly ?? false), delta: delta)
         update(cdObject, \.hasPoints, with: NSNumber(value: hasPoints ?? false), delta: delta)
         update(cdObject, \.cardType, with: NSNumber(value: cardType?.rawValue ?? 0), delta: delta)
+        update(cdObject, \.hasVouchers, with: NSNumber(value: hasVouchers ?? false), delta: delta)
 
         cdObject.linkingSupport.forEach {
             guard let support = $0 as? CD_LinkingSupport else { return }
