@@ -17,7 +17,7 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
     }
 
     var isPLR: Bool {
-        return hasVouchers?.boolValue ?? false
+        return featureSet?.hasVouchers?.boolValue ?? false
     }
 
     var canAddCard: Bool {

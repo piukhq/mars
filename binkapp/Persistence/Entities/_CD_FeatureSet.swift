@@ -9,6 +9,7 @@ public enum CD_FeatureSetAttributes: String {
     case cardType = "cardType"
     case digitalOnly = "digitalOnly"
     case hasPoints = "hasPoints"
+    case hasVouchers = "hasVouchers"
     case transactionsAvailable = "transactionsAvailable"
 }
 
@@ -58,6 +59,9 @@ open class _CD_FeatureSet: CD_BaseObject {
 
     @NSManaged open
     var hasPoints: NSNumber?
+
+    @NSManaged open
+    var hasVouchers: NSNumber?
 
     @NSManaged open
     var transactionsAvailable: NSNumber?

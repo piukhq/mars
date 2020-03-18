@@ -883,6 +883,7 @@
 		EFF59F20234CAE5600CF3992 /* CardDetailInformationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailInformationRow.swift; sourceTree = "<group>"; };
 		EFF59F22234DEE7500CF3992 /* DetailNavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailNavigationTitleView.swift; sourceTree = "<group>"; };
 		EFF59F24234DEE8E00CF3992 /* DetailNavigationTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailNavigationTitleView.xib; sourceTree = "<group>"; };
+		EFFF863E24224CB1007ABAB8 /* binkapp - Plan Feature Set Has Vouchers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - Plan Feature Set Has Vouchers.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4080,12 +4081,13 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EFFF863E24224CB1007ABAB8 /* binkapp - Plan Feature Set Has Vouchers.xcdatamodel */,
 				EFA8101724055F570000D21D /* binkapp - Plan Dynamic Content.xcdatamodel */,
 				EFBC94F123A7CF4400574086 /* binkapp - Fields Common Name.xcdatamodel */,
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = EFA8101724055F570000D21D /* binkapp - Plan Dynamic Content.xcdatamodel */;
+			currentVersion = EFFF863E24224CB1007ABAB8 /* binkapp - Plan Feature Set Has Vouchers.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
