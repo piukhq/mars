@@ -31,6 +31,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         case mastercardGradient
         case amexGradient
         case unknownGradient
+        case swipeGradient
     }
     
     private lazy var width: NSLayoutConstraint = {
@@ -82,23 +83,28 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         pllStatusLabel.isHidden = false
         linkedStatusImageView.isHidden = false
 
-        cardGradientLayer = nil
-        
+        if let swipeGradientLayer = cache.object(forKey: CardGradientKey.swipeGradient.rawValue) {
+            contentView.layer.insertSublayer(swipeGradientLayer, at: 0)
+        }
         switch viewModel.paymentCardType {
         case .visa:
             if let gradientLayer = cache.object(forKey: CardGradientKey.visaGradient.rawValue) {
+                contentView.layer.insertSublayer(gradientLayer, at: 0)
                 cardGradientLayer = gradientLayer
             }
         case .mastercard:
             if let gradientLayer = cache.object(forKey: CardGradientKey.mastercardGradient.rawValue) {
+                contentView.layer.insertSublayer(gradientLayer, at: 0)
                 cardGradientLayer = gradientLayer
             }
         case .amex:
             if let gradientLayer = cache.object(forKey: CardGradientKey.amexGradient.rawValue) {
+                contentView.layer.insertSublayer(gradientLayer, at: 0)
                 cardGradientLayer = gradientLayer
             }
         case .none:
             if let gradientLayer = cache.object(forKey: CardGradientKey.unknownGradient.rawValue) {
+                contentView.layer.insertSublayer(gradientLayer, at: 0)
                 cardGradientLayer = gradientLayer
             }
         }
@@ -126,7 +132,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         nameOnCardLabel.text = viewModel.nameOnCard
         cardNumberLabel.attributedText = cardNumberAttributedString(for: viewModel.fullPan ?? "", type: viewModel.cardType)
         
-        configureForProvider(cardType: viewModel.cardType, isAddJourney: true)
+        configureForProvider(cardType: viewModel.cardType)
         
         setLabelStyling()
         pllStatusLabel.isHidden = true
@@ -197,20 +203,16 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         }
     }
     
-    private func configureForProvider(cardType: PaymentCardType?, isAddJourney: Bool = false) {
+    private func configureForProvider(cardType: PaymentCardType?) {
         guard let type = cardType else {
             processGradient(type: cardType)
             providerLogoImageView.image = nil
             providerWatermarkImageView.image = nil
             return
         }
-        
         providerLogoImageView.image = UIImage(named: type.logoName)
         providerWatermarkImageView.image = UIImage(named: type.sublogoName)
-        
-        if cardGradientLayer == nil  || isAddJourney {
-            processGradient(type: type)
-        }
+        processGradient(type: type)
     }
     
     private func configurePaymentCardLinkingStatus() {
@@ -233,11 +235,10 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     }
     
     private func processGradient(type: PaymentCardType?) {
-        if cardGradientLayer == nil {
-            let gradient = CAGradientLayer()
-            containerView.layer.insertSublayer(gradient, at: 0)
-            cardGradientLayer = gradient
-        }
+        cardGradientLayer?.removeFromSuperlayer()
+        let gradient = CAGradientLayer()
+        containerView.layer.insertSublayer(gradient, at: 0)
+        cardGradientLayer = gradient
         cardGradientLayer?.frame = bounds
         cardGradientLayer?.locations = [0.0, 1.0]
         cardGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
@@ -301,16 +302,16 @@ extension PaymentCardCollectionViewCell {
     }
     
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
-        if swipeGradientLayer == nil {
-            swipeGradientLayer = CAGradientLayer()
-            contentView.layer.insertSublayer(swipeGradientLayer!, at: 0)
-        }
-        
+        swipeGradientLayer = CAGradientLayer()
+        contentView.layer.insertSublayer(swipeGradientLayer!, at: 0)
         swipeGradientLayer?.frame = bounds
         swipeGradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
         swipeGradientLayer?.locations = [0.0, 1.0]
         swipeGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
         swipeGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
+        if let swipeGradient = swipeGradientLayer {
+            cache.setObject(swipeGradient, forKey: CardGradientKey.swipeGradient.rawValue)
+        }
     }
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
