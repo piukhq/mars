@@ -16,7 +16,6 @@ final class SecureUtility {
         guard let pan = paymentCard.fullPan?.replacingOccurrences(of: " ", with: "") else { return nil }
         guard let month = paymentCard.month else { return nil }
         guard let year = paymentCard.year else { return nil }
-        // TODO: Get correct secret for environment
         guard let decodedSecret = decodedSecret() else { return nil }
         let hash = "\(pan)\(month)\(year)\(decodedSecret)".sha512()
         return hash
