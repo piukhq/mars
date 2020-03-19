@@ -272,6 +272,8 @@
 		EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */; };
 		EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */; };
 		EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */; };
+		EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */ = {isa = PBXBuildFile; fileRef = EF5229B72423FC4E004AC972 /* stagingPublicKey.der */; };
+		EF5229BA2423FC96004AC972 /* prodPublicKey.der in Resources */ = {isa = PBXBuildFile; fileRef = EF5229B92423FC96004AC972 /* prodPublicKey.der */; };
 		EF54911C2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54911B2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift */; };
 		EF54911E2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54911D2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift */; };
 		EF5491202371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF54911F2371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift */; };
@@ -742,6 +744,8 @@
 		EF4B46642346489B009A3651 /* PaymentCardDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewController.swift; sourceTree = "<group>"; };
 		EF4B46652346489B009A3651 /* PaymentCardDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailViewController.xib; sourceTree = "<group>"; };
 		EF4B46682346491D009A3651 /* PaymentCardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailViewModel.swift; sourceTree = "<group>"; };
+		EF5229B72423FC4E004AC972 /* stagingPublicKey.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = stagingPublicKey.der; sourceTree = "<group>"; };
+		EF5229B92423FC96004AC972 /* prodPublicKey.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = prodPublicKey.der; sourceTree = "<group>"; };
 		EF54911B2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailTableViewCell.swift; sourceTree = "<group>"; };
 		EF54911D2371D93400FE17BE /* PaymentCardDetailLoyaltyCardStatusCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailLoyaltyCardStatusCellViewModel.swift; sourceTree = "<group>"; };
 		EF54911F2371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCellViewModel.swift; sourceTree = "<group>"; };
@@ -2151,6 +2155,8 @@
 			isa = PBXGroup;
 			children = (
 				EF99B024240E74860046D41E /* devPublicKey.der */,
+				EF5229B72423FC4E004AC972 /* stagingPublicKey.der */,
+				EF5229B92423FC96004AC972 /* prodPublicKey.der */,
 				3C71683424069F370058701E /* bink.der */,
 				5ECE047522CE579B001BA964 /* Assets.xcassets */,
 			);
@@ -2340,6 +2346,7 @@
 				3CD3493F22F99E1D000C1F4D /* NunitoSans-ExtraBoldItalic.ttf in Resources */,
 				3CD3493C22F99E1D000C1F4D /* NunitoSans-Bold.ttf in Resources */,
 				3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */,
+				EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */,
 				B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
@@ -2360,6 +2367,7 @@
 				3CD3493622F99E1D000C1F4D /* NunitoSans-BlackItalic.ttf in Resources */,
 				EF46E28E235F642100BA2CAF /* BinkPrimarySecondaryButtonView.xib in Resources */,
 				EFF59F1A234B73C900CF3992 /* CardDetailInfoTableViewCell.xib in Resources */,
+				EF5229BA2423FC96004AC972 /* prodPublicKey.der in Resources */,
 				3CD3493222F99E1D000C1F4D /* NunitoSans-LightItalic.ttf in Resources */,
 				3C5C9E1423FD32FF004ABDC0 /* DebugMenuSegmentedTableViewCell.xib in Resources */,
 				3C119BA22315332B0015CE91 /* LoyaltyPlanView.xib in Resources */,
