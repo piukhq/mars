@@ -170,7 +170,7 @@ class ApiManager {
         return APIConstants.baseURLString == APIConstants.productionBaseURL
     }
     
-    static var apiVersion: ApiVersion = .v1_1
+    var apiVersion: ApiVersion = .v1_1
     
     init() {
         let evaluators = [

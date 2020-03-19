@@ -23,6 +23,9 @@ final class SecureUtility {
     }
 
     static func encryptedSensitiveFieldValue(_ value: String?) -> String? {
+        /// If we are pinning to API v1.1, just return the value without encryption
+        if Current.apiManager.apiVersion == .v1_1 { return value }
+
         guard let value = value else { return nil }
         guard let publicKeyName = publicKeyName() else { return nil }
         do {
