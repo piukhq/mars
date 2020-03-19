@@ -86,28 +86,29 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         if let swipeGradientLayer = cache.object(forKey: CardGradientKey.swipeGradient.rawValue) {
             contentView.layer.insertSublayer(swipeGradientLayer, at: 0)
         }
-        switch viewModel.paymentCardType {
-        case .visa:
-            if let gradientLayer = cache.object(forKey: CardGradientKey.visaGradient.rawValue) {
-                contentView.layer.insertSublayer(gradientLayer, at: 0)
-                cardGradientLayer = gradientLayer
-            }
-        case .mastercard:
-            if let gradientLayer = cache.object(forKey: CardGradientKey.mastercardGradient.rawValue) {
-                contentView.layer.insertSublayer(gradientLayer, at: 0)
-                cardGradientLayer = gradientLayer
-            }
-        case .amex:
-            if let gradientLayer = cache.object(forKey: CardGradientKey.amexGradient.rawValue) {
-                contentView.layer.insertSublayer(gradientLayer, at: 0)
-                cardGradientLayer = gradientLayer
-            }
-        case .none:
-            if let gradientLayer = cache.object(forKey: CardGradientKey.unknownGradient.rawValue) {
-                contentView.layer.insertSublayer(gradientLayer, at: 0)
-                cardGradientLayer = gradientLayer
-            }
-        }
+        processGradient(type: viewModel.paymentCardType)
+//        switch viewModel.paymentCardType {
+//        case .visa:
+//            if let gradientLayer = cache.object(forKey: CardGradientKey.visaGradient.rawValue) {
+//                contentView.layer.insertSublayer(gradientLayer, at: 0)
+//                cardGradientLayer = gradientLayer
+//            }
+//        case .mastercard:
+//            if let gradientLayer = cache.object(forKey: CardGradientKey.mastercardGradient.rawValue) {
+//                contentView.layer.insertSublayer(gradientLayer, at: 0)
+//                cardGradientLayer = gradientLayer
+//            }
+//        case .amex:
+//            if let gradientLayer = cache.object(forKey: CardGradientKey.amexGradient.rawValue) {
+//                contentView.layer.insertSublayer(gradientLayer, at: 0)
+//                cardGradientLayer = gradientLayer
+//            }
+//        case .none:
+//            if let gradientLayer = cache.object(forKey: CardGradientKey.unknownGradient.rawValue) {
+//                contentView.layer.insertSublayer(gradientLayer, at: 0)
+//                cardGradientLayer = gradientLayer
+//            }
+//        }
     }
     
     func configureWithViewModel(_ viewModel: PaymentCardCellViewModel, enableSwipeGesture: Bool? = true, delegate: WalletPaymentCardCollectionViewCellDelegate?) {
@@ -248,16 +249,16 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
             switch type {
             case .visa:
                 cardGradient.colors = UIColor.visaPaymentCardGradients
-                cache.setObject(cardGradient, forKey: CardGradientKey.visaGradient.rawValue)
+//                cache.setObject(cardGradient, forKey: CardGradientKey.visaGradient.rawValue)
             case .mastercard:
                 cardGradient.colors = UIColor.mastercardPaymentCardGradients
-                cache.setObject(cardGradient, forKey: CardGradientKey.mastercardGradient.rawValue)
+//                cache.setObject(cardGradient, forKey: CardGradientKey.mastercardGradient.rawValue)
             case .amex:
                 cardGradient.colors = UIColor.amexPaymentCardGradients
-                cache.setObject(cardGradient, forKey: CardGradientKey.amexGradient.rawValue)
+//                cache.setObject(cardGradient, forKey: CardGradientKey.amexGradient.rawValue)
             case .none:
                 cardGradient.colors = UIColor.unknownPaymentCardGradients
-                cache.setObject(cardGradient , forKey: CardGradientKey.unknownGradient.rawValue)
+//                cache.setObject(cardGradient , forKey: CardGradientKey.unknownGradient.rawValue)
             }
         }
     }
