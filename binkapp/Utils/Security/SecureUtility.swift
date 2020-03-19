@@ -24,9 +24,9 @@ final class SecureUtility {
 
     static func encryptedSensitiveFieldValue(_ value: String?) -> String? {
         guard let value = value else { return nil }
+        guard let publicKeyName = publicKeyName() else { return nil }
         do {
-            // TODO: Get correct public key for environment
-            let publicKey = try PublicKey(derNamed: publicKeyName())
+            let publicKey = try PublicKey(derNamed: publicKeyName)
             let clear = try ClearMessage(string: value, using: .utf8)
             let encrypted = try clear.encrypted(with: publicKey, padding: .OAEP)
             return encrypted.base64String
@@ -39,13 +39,27 @@ final class SecureUtility {
     /// Get the correct secret for the environment
     /// Return a base 64 decoded copy of the secret
     private static func decodedSecret() -> String? {
-        // TODO: This needs to be based on the current environment when we have them
-        return BinkappKeys().devPaymentCardHashingSecret1.base64Decoded()
+        if APIConstants.baseURLString == "https://api.dev.gb.bink.com" {
+            return BinkappKeys().devPaymentCardHashingSecret1.base64Decoded()
+        } else if APIConstants.baseURLString == "https://api.staging.gb.bink.com" {
+            return BinkappKeys().stagingPaymentCardHashingSecret1.base64Decoded()
+        } else if APIConstants.baseURLString == "https://api.gb.bink.com" {
+            return BinkappKeys().prodPaymentCardHashingSecret1.base64Decoded()
+        } else {
+            return nil
+        }
     }
 
-    private static func publicKeyName() -> String {
-        // TODO: This needs to be based on the current environment when we have them
-        return "devPublicKey"
+    private static func publicKeyName() -> String? {
+        if APIConstants.baseURLString == "https://api.dev.gb.bink.com" {
+            return "devPublicKey"
+        } else if APIConstants.baseURLString == "https://api.staging.gb.bink.com" {
+            return "stagingPublicKey"
+        } else if APIConstants.baseURLString == "https://api.gb.bink.com" {
+            return "prodPublicKey"
+        } else {
+            return nil
+        }
     }
 }
 
