@@ -73,7 +73,6 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         }
     }
     private (set) var swipeState: SwipeState?
-    private let cache = NSCache<NSString, CAGradientLayer>()
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -83,32 +82,8 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         pllStatusLabel.isHidden = false
         linkedStatusImageView.isHidden = false
 
-        if let swipeGradientLayer = cache.object(forKey: CardGradientKey.swipeGradient.rawValue) {
-            contentView.layer.insertSublayer(swipeGradientLayer, at: 0)
-        }
+        processGradient(UIColor.deleteSwipeGradientLeft, UIColor.deleteSwipeGradientRight)
         processGradient(type: viewModel.paymentCardType)
-//        switch viewModel.paymentCardType {
-//        case .visa:
-//            if let gradientLayer = cache.object(forKey: CardGradientKey.visaGradient.rawValue) {
-//                contentView.layer.insertSublayer(gradientLayer, at: 0)
-//                cardGradientLayer = gradientLayer
-//            }
-//        case .mastercard:
-//            if let gradientLayer = cache.object(forKey: CardGradientKey.mastercardGradient.rawValue) {
-//                contentView.layer.insertSublayer(gradientLayer, at: 0)
-//                cardGradientLayer = gradientLayer
-//            }
-//        case .amex:
-//            if let gradientLayer = cache.object(forKey: CardGradientKey.amexGradient.rawValue) {
-//                contentView.layer.insertSublayer(gradientLayer, at: 0)
-//                cardGradientLayer = gradientLayer
-//            }
-//        case .none:
-//            if let gradientLayer = cache.object(forKey: CardGradientKey.unknownGradient.rawValue) {
-//                contentView.layer.insertSublayer(gradientLayer, at: 0)
-//                cardGradientLayer = gradientLayer
-//            }
-//        }
     }
     
     func configureWithViewModel(_ viewModel: PaymentCardCellViewModel, enableSwipeGesture: Bool? = true, delegate: WalletPaymentCardCollectionViewCellDelegate?) {
@@ -245,21 +220,15 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         cardGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
         cardGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
         cardGradientLayer?.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
-        if let cardGradient = cardGradientLayer {
-            switch type {
-            case .visa:
-                cardGradient.colors = UIColor.visaPaymentCardGradients
-//                cache.setObject(cardGradient, forKey: CardGradientKey.visaGradient.rawValue)
-            case .mastercard:
-                cardGradient.colors = UIColor.mastercardPaymentCardGradients
-//                cache.setObject(cardGradient, forKey: CardGradientKey.mastercardGradient.rawValue)
-            case .amex:
-                cardGradient.colors = UIColor.amexPaymentCardGradients
-//                cache.setObject(cardGradient, forKey: CardGradientKey.amexGradient.rawValue)
-            case .none:
-                cardGradient.colors = UIColor.unknownPaymentCardGradients
-//                cache.setObject(cardGradient , forKey: CardGradientKey.unknownGradient.rawValue)
-            }
+        switch type {
+        case .visa:
+            cardGradientLayer?.colors = UIColor.visaPaymentCardGradients
+        case .mastercard:
+            cardGradientLayer?.colors = UIColor.mastercardPaymentCardGradients
+        case .amex:
+            cardGradientLayer?.colors = UIColor.amexPaymentCardGradients
+        case .none:
+            cardGradientLayer?.colors = UIColor.unknownPaymentCardGradients
         }
     }
     
@@ -303,16 +272,15 @@ extension PaymentCardCollectionViewCell {
     }
     
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
-        swipeGradientLayer = CAGradientLayer()
-        contentView.layer.insertSublayer(swipeGradientLayer!, at: 0)
+        swipeGradientLayer?.removeFromSuperlayer()
+        let swipeGradient = CAGradientLayer()
+        contentView.layer.insertSublayer(swipeGradient, at: 0)
+        swipeGradientLayer = swipeGradient
         swipeGradientLayer?.frame = bounds
         swipeGradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
         swipeGradientLayer?.locations = [0.0, 1.0]
         swipeGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
         swipeGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
-        if let swipeGradient = swipeGradientLayer {
-            cache.setObject(swipeGradient, forKey: CardGradientKey.swipeGradient.rawValue)
-        }
     }
     
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
