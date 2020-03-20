@@ -36,12 +36,11 @@ class AddingOptionView: CustomView {
     
     func configureByAddingOption(option: AddingOptions) {
         switch option {
-            // Not needed for MVP
-//        case .loyalty:
-//            optionTypeImageView.image = UIImage(named: "loyalty")
-//            titleLabel.text = "add_loyalty_card_title".localized
-//            descriptionLabel.text = "scan_a_card_description".localized
-//            break
+        case .loyalty:
+            optionTypeImageView.image = UIImage(named: "loyalty")
+            titleLabel.text = "add_loyalty_card_title".localized
+            descriptionLabel.text = "scan_a_card_description".localized
+            break
         case .browse:
             optionTypeImageView.image = UIImage(named: "browse")
             titleLabel.text = "browse_brands_title".localized

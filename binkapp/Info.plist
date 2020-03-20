@@ -96,5 +96,7 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need your camera to scan loyalty cards. It will not be used for other purposes.</string>
 </dict>
 </plist>

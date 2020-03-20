@@ -340,3 +340,14 @@
 // MARK: - Wallet prompts
 "wallet_prompt_loyalty" = "Link this card to your payment cards to automatically collect rewards.";
 "wallet_prompt_payment" = "Collect rewards automatically for select loyalty cards by linking them to your payment cards.";
+
+// MARK: - Camera access
+"camera_denied_title" = "Please allow camera access";
+"camera_denied_body" = "To scan your cards, you’ll need to allow Bink access to your device’s camera.";
+"camera_denied_manually_option" = "Enter Manually";
+"camera_denied_allow_access" = "Allow Access";
+
+"camera_permission_title" = "Bink needs camera access";
+"camera_permission_body" = "We need your camera to scan loyalty cards. It will not be used for other purposes.";
+"camera_permission_deny_option" = "Don't Allow";
+"camera_permission_allow_option" = "OK";
