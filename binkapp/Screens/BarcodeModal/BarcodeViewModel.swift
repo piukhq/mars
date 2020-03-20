@@ -62,12 +62,11 @@ class BarcodeViewModel {
     func generateBarcodeImage(for imageView: UIImageView) {
         guard let barcodeString = membershipCard.card?.barcode else { return }
         let imageViewSize = imageView.bounds.size
-        let newImageHeight = getBarcodeType() == .code128 ? imageViewSize.height / 4 : imageViewSize.height
         
         let image = BINKBarcodeGenerator.generateBarcode(
             withContents: barcodeString,
             of: getBarcodeType(),
-            in: CGSize(width: imageViewSize.width, height: newImageHeight)
+            in: CGSize(width: imageViewSize.width, height: imageViewSize.height)
         )
         
         imageView.image = image
