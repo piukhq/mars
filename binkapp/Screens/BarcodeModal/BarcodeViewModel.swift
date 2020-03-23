@@ -25,6 +25,10 @@ class BarcodeViewModel {
         return ((membershipCard.card?.barcode) != nil)
     }
     
+    var isCardNumberAvailable: Bool {
+        return cardNumber != nil
+    }
+    
     var cardNumber: String? {
         return membershipCard.card?.membershipId
     }
@@ -57,13 +61,14 @@ class BarcodeViewModel {
     
     func generateBarcodeImage(for imageView: UIImageView) {
         guard let barcodeString = membershipCard.card?.barcode else { return }
+        let imageViewSize = imageView.bounds.size
         
         let image = BINKBarcodeGenerator.generateBarcode(
             withContents: barcodeString,
             of: getBarcodeType(),
-            in: imageView.bounds.size
+            in: CGSize(width: imageViewSize.width, height: imageViewSize.height)
         )
-                
+        
         imageView.image = image
     }
 }

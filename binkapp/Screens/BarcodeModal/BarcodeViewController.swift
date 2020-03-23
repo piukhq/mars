@@ -9,6 +9,10 @@ import UIKit
 
 class BarcodeViewController: BinkTrackableViewController {
     @IBOutlet private weak var barcodeImageView: UIImageView!
+    @IBOutlet private weak var barcodeContainerView: UIView!
+    @IBOutlet private weak var cardNumberContainerView: UIView!
+    @IBOutlet private weak var barcodeLabel: UILabel!
+    @IBOutlet private weak var barcodeNumberLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var numberLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
@@ -47,7 +51,22 @@ class BarcodeViewController: BinkTrackableViewController {
 
         barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
         numberLabel.isHidden = viewModel.cardNumber == nil
-        maximiseButton.isHidden = !viewModel.isBarcodeAvailable
+        barcodeContainerView.isHidden = !viewModel.isBarcodeAvailable
+        cardNumberContainerView.isHidden = !viewModel.isCardNumberAvailable
+        
+        // MaximiseButton hidden by PT on 17.03.20 due to the change which won't allow the user to maximise the barcode anymore
+        maximiseButton.isHidden = true
+//        maximiseButton.isHidden = !viewModel.isBarcodeAvailable
+        
+        barcodeImageView.contentMode = .scaleAspectFill
+        
+        barcodeLabel.font = UIFont.headline
+        barcodeLabel.textColor = .black
+        barcodeLabel.text = "barcode_title".localized
+        
+        barcodeNumberLabel.font = UIFont.subtitle
+        barcodeNumberLabel.textColor = .black
+        barcodeNumberLabel.text = viewModel.barcodeNumber
         
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black
@@ -82,8 +101,9 @@ class BarcodeViewController: BinkTrackableViewController {
         maximiseButton.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        titleLabelBarcodeConstraint.priority = viewModel.isBarcodeAvailable ? .required : .defaultLow
-        titleLabelNoBarcodeConstraint.priority = viewModel.isBarcodeAvailable ? .defaultLow : .required
+        // TODO: uncomment these when we want to maximise barcode again
+//        titleLabelBarcodeConstraint.priority = viewModel.isBarcodeAvailable ? .required : .defaultLow
+//        titleLabelNoBarcodeConstraint.priority = viewModel.isBarcodeAvailable ? .defaultLow : .required
 
         NSLayoutConstraint.activate([
             maximiseButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),

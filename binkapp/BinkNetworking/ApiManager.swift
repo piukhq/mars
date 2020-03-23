@@ -170,7 +170,7 @@ class ApiManager {
         return APIConstants.baseURLString == APIConstants.productionBaseURL
     }
     
-    static var apiVersion: ApiVersion = .v1_1
+    var apiVersion: ApiVersion = .v1_1
     
     init() {
         let evaluators = [
@@ -193,7 +193,7 @@ class ApiManager {
             return
         }
         
-        let authRequired = url.authRequired
+        let authRequired = url == .logout ? false : url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
         
@@ -210,7 +210,7 @@ class ApiManager {
             return
         }
         
-        let authRequired = url.authRequired
+        let authRequired = url == .logout ? false : url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
                 
@@ -262,7 +262,7 @@ class ApiManager {
                      If the endpoint expects an authorisation token,
                      ensure that we aggressively respond in app to a 401.
                      */
-                    NotificationCenter.default.post(name: .didLogout, object: nil)
+                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
                 } else if statusCode == 400 {
                     let decodedResponseErrors = try? decoder.decode(ResponseErrors.self, from: data)
                     let otherErrors = try? decoder.decode([String].self, from: data)
@@ -297,7 +297,7 @@ class ApiManager {
             return
         }
 
-        let authRequired = url.authRequired
+        let authRequired = url == .logout ? false : url.authRequired
         let requestHeaders = HTTPHeaders(getHeader(endpoint: url))
         
         session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { response in
@@ -310,7 +310,7 @@ class ApiManager {
                  If the endpoint expects an authorisation token,
                  ensure that we aggressively respond in app to a 401.
                  */
-                NotificationCenter.default.post(name: .didLogout, object: nil)
+                NotificationCenter.default.post(name: .shouldLogout, object: nil)
             } else if (500...599).contains(statusCode) {
                 NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
                 let customError = CustomError(errorMessage: "", statusCode: statusCode)
@@ -330,9 +330,9 @@ private extension ApiManager {
     private func getHeader(endpoint: RequestURL) -> [String: String] {
         var headers = [
             "Content-Type": "application/json",
-            "Accept": "application/json\(endpoint.shouldVersionPin ? ";\(ApiManager.apiVersion.rawValue)" : "")"
+            "Accept": "application/json\(endpoint.shouldVersionPin ? ";\(Current.apiManager.apiVersion.rawValue)" : "")"
         ]
-        
+
         if endpoint.authRequired {
             guard let token = Current.userManager.currentToken else { return headers }
             headers["Authorization"] = "Token " + token

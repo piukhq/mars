@@ -42,7 +42,7 @@ class PaymentCardCellViewModelMock {
                 return false
         }
         // Tech debt (casting to int)
-        guard let expiryDate = Date.makeDate(year: expiryYear, month: expiryMonth, day: 01, hr: 00, min: 00, sec: 00) else {
+        guard let expiryDate = Date.makeDate(year: Int(expiryYear), month: Int(expiryMonth), day: 01, hr: 00, min: 00, sec: 00) else {
             return false
         }
         return expiryDate < Date()
