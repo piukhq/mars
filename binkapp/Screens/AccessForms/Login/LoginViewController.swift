@@ -130,6 +130,10 @@ extension LoginViewController: FormDataSourceDelegate {
     }
 }
 
+extension LoginViewController: FormCollectionViewCellDelegate {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
+}
+
 private extension Selector {
     static let continueButtonTapped = #selector(LoginViewController.continueButtonTapped)
     static let forgotPasswordTapped = #selector(LoginViewController.forgotPasswordTapped)
