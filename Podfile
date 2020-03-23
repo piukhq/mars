@@ -34,7 +34,10 @@ plugin 'cocoapods-keys', {
     "bundleIdKey",
     "secretKey",
     "stagingSecretKey",
-    "spreedlyEnvironmentKey"
+    "spreedlyEnvironmentKey",
+    "devPaymentCardHashingSecret1",
+    "stagingPaymentCardHashingSecret1",
+    "prodPaymentCardHashingSecret1"
   ]
 }
 
