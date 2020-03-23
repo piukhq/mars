@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeMockBKWalletRow(), makeApiVersionRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -39,14 +39,6 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .endpoint)
-        }, cellType: .titleSubtitle)
-    }
-
-    private func makeMockBKWalletRow() -> DebugMenuRow {
-        let isEnabled = Current.userDefaults.bool(forDefaultsKey: .mockBKWalletIsEnabled)
-        return DebugMenuRow(title: "Enable mock BK wallet", subtitle: isEnabled ? "Enabled" : "Not enabled", action: { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .mockBKWallet)
         }, cellType: .titleSubtitle)
     }
     
