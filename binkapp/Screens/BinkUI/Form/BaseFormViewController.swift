@@ -80,6 +80,10 @@ class BaseFormViewController: BinkTrackableViewController, Form {
         return flowLayout
     }()
     
+    var initialContentOffset: CGPoint = .zero
+    var keyboardHeight: CGFloat = 0.0
+    var selectedCellYOrigin: CGFloat = 0.0
+    var selectedCellHeight: CGFloat = 0.0
     let dataSource: FormDataSource
     
     // MARK: - Initialisation
@@ -106,6 +110,8 @@ class BaseFormViewController: BinkTrackableViewController, Form {
         super.viewDidLoad()
         configureLayout()
         configureCheckboxes()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
     private func configureLayout() {
@@ -134,6 +140,25 @@ class BaseFormViewController: BinkTrackableViewController, Form {
     private func configureCheckboxes() {
         guard dataSource.checkboxes.count > 0 else { return }
         stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
+    }
+    
+    @objc func handleKeyboardWillShow(_ notification: Notification) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight = keyboardRectangle.height
+                self.keyboardHeight = keyboardHeight
+                
+                let visibleOffset = UIScreen.main.bounds.height - keyboardHeight
+                let cellVisibleOffset = self.selectedCellYOrigin + self.selectedCellHeight
+                
+                if cellVisibleOffset > visibleOffset {
+                    let actualOffset = self.stackScrollView.contentOffset.y
+                    let neededOffset = CGPoint(x: 0, y: actualOffset + cellVisibleOffset - visibleOffset)
+                    self.stackScrollView.setContentOffset(neededOffset, animated: true)
+                }
+            }
+        }
     }
     
     /// This method is designed to be overriden for updating UI elements in response to validity

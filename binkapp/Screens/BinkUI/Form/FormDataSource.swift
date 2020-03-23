@@ -37,7 +37,7 @@ enum AccessForm {
 
 class FormDataSource: NSObject {
     
-    typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate
+    typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate & FormCollectionViewCellDelegate
     
     private struct Constants {
         static let expiryYearsInTheFuture = 50
@@ -441,8 +441,14 @@ extension FormDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
         
-        if let field = fields[safe: indexPath.item] { cell.configure(with: field) }
+        if let field = fields[safe: indexPath.item] { cell.configure(with: field, delegate: self) }
         
         return cell
+    }
+}
+
+extension FormDataSource: FormCollectionViewCellDelegate {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
+        delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
     }
 }

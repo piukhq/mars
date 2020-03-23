@@ -8,8 +8,12 @@
 
 import UIKit
 
+protocol FormCollectionViewCellDelegate: class {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
+}
+
 class FormCollectionViewCell: UICollectionViewCell {
-    
+    private weak var delegate: FormCollectionViewCellDelegate?
     // MARK: - Helpers
     
     private struct Constants {
@@ -96,6 +100,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     weak private var formField: FormField?
+    var isValidationLabelHidden = true
     
     // MARK: - Initialisation
     
@@ -128,7 +133,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Public Methods
     
-    func configure(with field: FormField) {
+    func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
         let isEnabled = field.forcedValue == nil
 
         titleLabel.text = field.title
@@ -150,6 +155,8 @@ class FormCollectionViewCell: UICollectionViewCell {
         } else {
             textField.inputView = nil
         }
+        
+        self.delegate = delegate
     }
     
     func setWidth(_ width: CGFloat) {
@@ -163,7 +170,8 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func accessoryDoneTouchUpInside() {
-        textField.superview?.superview?.endEditing(true)
+        textField.resignFirstResponder()
+        textFieldDidEndEditing(textField)
     }
 }
 
@@ -176,7 +184,12 @@ extension FormCollectionViewCell: UITextFieldDelegate {
         guard let field = formField else { return }
         validationLabel.text = field.validationErrorMessage != nil ? field.validationErrorMessage : "form_field_validation_error".localized
         validationLabel.isHidden = field.isValid()
+        isValidationLabelHidden = field.isValid()
         field.fieldWasExited()
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.delegate?.formCollectionViewCell(self, didSelectField: textField)
     }
 }
 

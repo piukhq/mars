@@ -12,6 +12,7 @@ class AuthAndAddViewController: BaseFormViewController {
     private struct Constants {
         static let postCollectionViewPadding: CGFloat = 15.0
         static let cardPadding: CGFloat = 30.0
+        static let cellErrorLabelSafeSpacing: CGFloat = 60.0
     }
     
     private lazy var brandHeaderView: BrandHeaderView = {
@@ -49,10 +50,12 @@ class AuthAndAddViewController: BaseFormViewController {
         configureUI()
         configureLayout()
         stackScrollView.insert(arrangedSubview: brandHeaderView, atIndex: 0, customSpacing: Constants.cardPadding)
+        collectionView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        initialContentOffset = stackScrollView.contentOffset
         switch viewModel.formPurpose {
             case .add, .addFailed: setScreenName(trackedScreen: .addAuthForm)
             case .signUp, .signUpFailed: setScreenName(trackedScreen: .enrolForm)
@@ -140,5 +143,13 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
 extension AuthAndAddViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.brandHeaderWasTapped()
+    }
+}
+
+extension AuthAndAddViewController: FormCollectionViewCellDelegate {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
+        let cellOrigin = collectionView.convert(cell.frame.origin, to: view)
+        self.selectedCellYOrigin = cellOrigin.y
+        selectedCellHeight = cell.isValidationLabelHidden ? cell.frame.size.height + Constants.cellErrorLabelSafeSpacing : cell.frame.size.height
     }
 }

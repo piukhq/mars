@@ -66,6 +66,10 @@ extension AddEmailViewController: FormDataSourceDelegate {
     }
 }
 
+extension AddEmailViewController: FormCollectionViewCellDelegate {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
+}
+
 private extension Selector {
     static let continueButtonTapped = #selector(AddEmailViewController.continueButtonTapped)
 }
