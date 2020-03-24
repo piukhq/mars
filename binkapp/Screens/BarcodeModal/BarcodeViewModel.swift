@@ -63,12 +63,15 @@ class BarcodeViewModel {
         guard let barcodeString = membershipCard.card?.barcode else { return }
         let imageViewSize = imageView.bounds.size
         
-        let image = BINKBarcodeGenerator.generateBarcode(
+        if let image = BINKBarcodeGenerator.generateBarcode(
             withContents: barcodeString,
             of: getBarcodeType(),
-            in: CGSize(width: imageViewSize.width, height: imageViewSize.height)
-        )
+            in: CGSize(width: imageViewSize.width, height: imageViewSize.height))
+        {
+            imageView.image = image
+        } else {
+            imageView.isHidden = true
+        }
         
-        imageView.image = image
     }
 }

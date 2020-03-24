@@ -47,12 +47,12 @@ class BarcodeViewController: BinkTrackableViewController {
     func configureUI() {
         guard !hasDrawnBarcode else { return }
         
-        viewModel.generateBarcodeImage(for: barcodeImageView)
-
         barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
         numberLabel.isHidden = viewModel.cardNumber == nil
         barcodeContainerView.isHidden = !viewModel.isBarcodeAvailable
         cardNumberContainerView.isHidden = !viewModel.isCardNumberAvailable
+        
+        viewModel.generateBarcodeImage(for: barcodeImageView)
         
         // MaximiseButton hidden by PT on 17.03.20 due to the change which won't allow the user to maximise the barcode anymore
         maximiseButton.isHidden = true
