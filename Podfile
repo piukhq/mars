@@ -24,6 +24,7 @@ pod 'Disk'
 pod 'DTTJailbreakDetection'
 pod 'JWTDecode', '~> 2.4'
 pod 'SwiftyRSA'
+pod 'ZendeskSupportSDK'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
