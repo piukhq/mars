@@ -28,6 +28,12 @@ class AddOrJoinViewModel {
     }
     
     func toAuthAndAddScreen() {
+        // PLR
+        if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
+            toPaymentCardNeededScreen()
+            return
+        }
+        
         guard let existingCard = membershipCard else {
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
             return
