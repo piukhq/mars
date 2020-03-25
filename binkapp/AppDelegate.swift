@@ -13,6 +13,8 @@ import Crashlytics
 import Firebase
 import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
+import ZendeskCoreSDK
+import SupportSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,6 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Device storage
         StorageUtility.start()
 
+        // Zendesk
+        Zendesk.initialize(appId: "933fc7d63c490c33e5fa62b1fe94070a219b8b0ffc8161d0", clientId: "mobile_sdk_client_569de7fcd5547fac2361", zendeskUrl: "https://binkcx.zendesk.com")
+        Support.initialize(withZendesk: Zendesk.instance)
+        let ident = Identity.createAnonymous()
+        Zendesk.instance?.setIdentity(ident)
+
+
+        // Root view
         self.window = UIWindow(frame: UIScreen.main.bounds)
 
         if let mainWindow = self.window {

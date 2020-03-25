@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeZendeskRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -39,6 +39,13 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .endpoint)
+        }, cellType: .titleSubtitle)
+    }
+
+    private func makeZendeskRow() -> DebugMenuRow {
+        return DebugMenuRow(title: "Launch Zendesk", subtitle: nil, action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .zendesk)
         }, cellType: .titleSubtitle)
     }
     
