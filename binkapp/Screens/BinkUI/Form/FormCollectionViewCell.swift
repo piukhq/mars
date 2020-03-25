@@ -170,6 +170,10 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func accessoryDoneTouchUpInside() {
+        if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput {
+            multipleChoiceInputDidUpdate(newValue: multipleChoiceInput.fullContentString, backingData: multipleChoiceInput.backingData)
+        }
+        
         textField.resignFirstResponder()
         textFieldDidEndEditing(textField)
     }
