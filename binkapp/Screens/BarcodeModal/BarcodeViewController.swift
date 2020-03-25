@@ -46,7 +46,6 @@ class BarcodeViewController: BinkTrackableViewController {
     
     func configureUI() {
         guard !hasDrawnBarcode else { return }
-        
         barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
         numberLabel.isHidden = viewModel.cardNumber == nil
         barcodeContainerView.isHidden = !viewModel.isBarcodeAvailable
