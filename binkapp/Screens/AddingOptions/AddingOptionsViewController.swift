@@ -11,9 +11,10 @@ import AVKit
 import AVFoundation
 
 class AddingOptionsViewController: BinkTrackableViewController {
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var stackviewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var cancelButton: UIButton!
+    @IBOutlet private weak var stackviewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var stackviewTopConstraint: NSLayoutConstraint!
     
     let viewModel: AddingOptionsViewModel
     let loyaltyCardView = AddingOptionView()
@@ -55,13 +56,15 @@ class AddingOptionsViewController: BinkTrackableViewController {
     
     func configureUI() {
         self.title = ""
+        let maximumHeight: CGFloat = 185
         loyaltyCardView.configure(addingOption: .loyalty)
         browseBrandsView.configure(addingOption: .browse)
         addPaymentCardView.configure(addingOption: .payment)
 
         NSLayoutConstraint.activate([
-            browseBrandsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 150),
-            addPaymentCardView.heightAnchor.constraint(greaterThanOrEqualToConstant: 150)
+                      loyaltyCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
+                      browseBrandsView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
+                      addPaymentCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
         ])
         
         addGesturesToViews()
