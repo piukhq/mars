@@ -90,7 +90,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="40K-eq-Rsb">
-                                <rect key="frame" x="361" y="33" width="0.0" height="14"/>
+                                <rect key="frame" x="361" y="36" width="0.0" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14" id="PFf-iW-iIL"/>
                                 </constraints>
@@ -133,7 +133,7 @@
                             <constraint firstAttribute="trailing" secondItem="1AT-4M-cCB" secondAttribute="trailing" constant="20" id="h7I-kq-IRG"/>
                             <constraint firstAttribute="trailing" secondItem="3wQ-yx-2v3" secondAttribute="trailing" id="qfp-UH-AVH"/>
                             <constraint firstItem="1AT-4M-cCB" firstAttribute="leading" secondItem="2il-5O-A8c" secondAttribute="trailing" constant="60" id="rTp-qt-dTB"/>
-                            <constraint firstItem="40K-eq-Rsb" firstAttribute="top" secondItem="6Ln-ov-l0D" secondAttribute="bottom" constant="-3" id="rpS-HC-1Qh"/>
+                            <constraint firstItem="40K-eq-Rsb" firstAttribute="top" secondItem="6Ln-ov-l0D" secondAttribute="bottom" id="rpS-HC-1Qh"/>
                             <constraint firstAttribute="trailing" secondItem="ieW-2y-hVv" secondAttribute="trailing" constant="20" id="xwf-mp-YsD"/>
                             <constraint firstItem="1AT-4M-cCB" firstAttribute="centerY" secondItem="boF-NX-uce" secondAttribute="centerY" id="yEf-p7-39l"/>
                             <constraint firstAttribute="bottom" secondItem="ieW-2y-hVv" secondAttribute="bottom" constant="15" id="zl6-bC-PqJ"/>
