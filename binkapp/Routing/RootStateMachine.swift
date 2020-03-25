@@ -22,7 +22,6 @@ class RootStateMachine: NSObject {
         launch()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleLogout), name: .shouldLogout, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(completeLogout), name: .didLogout, object: nil)
     }
     
     private func launch() {

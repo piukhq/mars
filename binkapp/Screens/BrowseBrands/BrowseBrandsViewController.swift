@@ -13,6 +13,9 @@ fileprivate struct Constants {
     static let searchIconTopPadding = 13
     static let searchIconSideSize = 14
     static let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    static let marginPadding: CGFloat = 25.0
+    static let filterCellHeight: CGFloat = 40.0
+    static let filterViewHeightPadding: CGFloat = 10.0
 }
 
 class BrowseBrandsViewController: BinkTrackableViewController {
@@ -20,11 +23,41 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     @IBOutlet private weak var searchTextField: BinkTextField!
     @IBOutlet private weak var noMatchesLabel: UILabel!
     @IBOutlet private weak var searchTextFieldContainer: UIView!
+    @IBOutlet private weak var topStackView: UIStackView!
+    @IBOutlet private weak var noMatchesLabelTopConstraint: NSLayoutConstraint!
+    
+    private var filtersVisible = false
+    private var selectedCollectionViewIndexPaths = [IndexPath]()
+    
+    private var filtersButton: UIBarButtonItem?
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.alwaysBounceVertical = false
+        collectionView.backgroundColor = .white
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
+    
+    private lazy var layout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 0.0
+        layout.minimumLineSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.itemSize = CGSize(width: (self.view.frame.width - (Constants.marginPadding * 2)) / 2, height: Constants.filterCellHeight)
+        return layout
+    }()
+    
+    private var filterViewHeight: CGFloat {
+        let height = CGFloat(round(Double(self.viewModel.filters.count) / 2) * Double( Constants.filterCellHeight))
+        return height + Constants.filterViewHeightPadding
+    }
     
     let viewModel: BrowseBrandsViewModel
+    private var selectedFilters: [String]
     
     init(viewModel: BrowseBrandsViewModel) {
         self.viewModel = viewModel
+        self.selectedFilters = viewModel.filters
         super.init(nibName: "BrowseBrandsViewController", bundle: Bundle(for: BrowseBrandsViewController.self))
     }
     
@@ -46,11 +79,12 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         noMatchesLabel.text = "no_matches".localized
         
         configureSearchTextField()
-        
+        configureCollectionView()
+                
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setScreenName(trackedScreen: .browseBrands)
@@ -60,12 +94,23 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         navigationItem.leftBarButtonItem = backButton
         
-        //TODO: uncomment this to display the Filters button
-//        let filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(notImplementedPopup))
-//        navigationItem.rightBarButtonItem = filtersButton
-//        navigationItem.rightBarButtonItem?.tintColor = .black
+        filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTapped))
+        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.black], for: .disabled)
+        navigationItem.rightBarButtonItem = filtersButton
+        navigationItem.rightBarButtonItem?.tintColor = .blue
         
         self.title = "browse_brands_title".localized
+    }
+    
+    private func configureCollectionView() {
+        collectionView.register(FilterBrandsCollectionViewCell.self, asNib: true)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        let notchDeviceCollectionFrameY = topStackView.frame.maxY + LayoutHelper.heightForNavigationBar(navigationController?.navigationBar)
+        let nonNotchDeviceCollectionFrameY = topStackView.frame.maxY + LayoutHelper.statusBarHeight
+        let collectionFrameY = UIDevice.current.hasNotch ? notchDeviceCollectionFrameY : nonNotchDeviceCollectionFrameY
+        collectionView.frame = CGRect(x: Constants.marginPadding, y: collectionFrameY, width: view.frame.width - (Constants.marginPadding * 2), height: 0.0)
+        view.addSubview(collectionView)
     }
     
     private func configureSearchTextField() {
@@ -81,9 +126,9 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         let searchIconView = UIView(frame: CGRect(x: 0, y: 0, width: searchTextField.frame.height, height: searchTextField.frame.height))
         let searchImageView = UIImageView(frame:
             CGRect(x: Constants.searchIconLeftPadding,
-                      y: Constants.searchIconTopPadding,
-                      width: Constants.searchIconSideSize,
-                      height: Constants.searchIconSideSize))
+                   y: Constants.searchIconTopPadding,
+                   width: Constants.searchIconSideSize,
+                   height: Constants.searchIconSideSize))
         
         searchImageView.contentMode = .scaleAspectFit
         searchImageView.image = UIImage(named: "search")
@@ -102,19 +147,73 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            if filtersVisible {
+                tableView.contentInset = UIEdgeInsets(top: filterViewHeight, left: 0, bottom: keyboardSize.height, right: 0)
+            } else {
+                tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            }
         }
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        if filtersVisible {
+            tableView.contentInset = UIEdgeInsets(top: filterViewHeight, left: 0, bottom: 0, right: 0)
+        } else {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
     }
     
-    @objc func notImplementedPopup() {
-        let alert = UIAlertController(title: "Feature not implemented", message: nil, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(alertAction)
-        present(alert, animated: true, completion: nil)
+    @objc func filtersButtonTapped() {
+        let tableContentOffsetY = tableView.contentOffset.y
+        if filtersVisible {
+            hideFilters(with: tableContentOffsetY)
+        } else {
+            displayFilters(with: tableContentOffsetY)
+        }
+        filtersVisible = !filtersVisible
+    }
+    
+    private func hideFilters(with contentOffsetY: CGFloat) {
+        filtersButton?.isEnabled = false
+        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.blue], for: .normal)
+        if !self.noMatchesLabel.isHidden {
+            self.noMatchesLabelTopConstraint.constant = 0.0
+        }
+        let frame = self.collectionView.frame
+        UIView.animate(withDuration: 0.3, animations: {
+            self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 0)
+            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY + self.filterViewHeight)
+            self.view.layoutIfNeeded()
+        }) { [weak self] _ in
+            self?.tableView.contentInset.top = 0.0
+            self?.filtersButton?.isEnabled = true
+        }
+    }
+    
+    private func displayFilters(with contentOffsetY: CGFloat) {
+        if !self.noMatchesLabel.isHidden {
+            self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
+        }
+        filtersButton?.isEnabled = false
+        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.black], for: .normal)
+        let frame = self.collectionView.frame
+        UIView.animate(withDuration: 0.3, animations: {
+            self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: self.view.frame.width - (Constants.marginPadding * 2), height: self.filterViewHeight)
+            self.tableView.contentOffset = CGPoint(x: self.tableView.contentOffset.x, y: contentOffsetY - self.filterViewHeight)
+            UIView.performWithoutAnimation {
+                self.collectionView.performBatchUpdates(nil, completion: nil)
+            }
+           self.view.layoutIfNeeded()
+        }) { [weak self] _ in
+                self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
+            self?.filtersButton?.isEnabled = true
+        }
+    }
+    
+    private func switchTableWithNoMatchesLabel() {
+        tableView.isHidden = viewModel.shouldShowNoResultsLabel
+        noMatchesLabelTopConstraint.constant = filtersVisible ? filterViewHeight : 0.0
+        noMatchesLabel.isHidden = !viewModel.shouldShowNoResultsLabel
     }
     
     @objc private func popViewController() {
@@ -158,10 +257,6 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard viewModel.filteredData.isEmpty else {
-            return nil
-        }
-        
         let view = UIView()
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: Constants.tableViewHeaderHeight))
         titleLabel.font = UIFont.headline
@@ -175,10 +270,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if viewModel.filteredData.isEmpty {
-            return Constants.tableViewHeaderHeight
-        }
-        return CGFloat.leastNormalMagnitude
+        return Constants.tableViewHeaderHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -189,41 +281,23 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
 
 extension BrowseBrandsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        viewModel.filteredData = []
         
         var searchText = ""
         if string == "" && range.length > 0 {
             searchText = textField.text ?? ""
-            searchText.popLast()
+            searchText.removeLast()
         } else {
             searchText = "\(textField.text ?? "")\(string)"
         }
-        
-        viewModel.getMembershipPlans().forEach { plan in
-            guard let companyName = plan.account?.companyName else {
-                return
-            }
-            
-            if companyName.localizedCaseInsensitiveContains(searchText) {
-                viewModel.filteredData.append(plan)
-            }
-        }
-        if !searchText.isEmpty && viewModel.filteredData.isEmpty {
-            tableView.isHidden = true
-            noMatchesLabel.isHidden = false
-        } else {
-            tableView.isHidden = false
-            noMatchesLabel.isHidden = true
-        }
-        
+        viewModel.searchText = searchText
+        switchTableWithNoMatchesLabel()
         textField.textColor = searchText != "" ? .black : .greyFifty
         return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        viewModel.filteredData = []
-        tableView.isHidden = false
-        noMatchesLabel.isHidden = true
+        viewModel.searchText = ""
+        switchTableWithNoMatchesLabel()
         return true
     }
     
@@ -237,5 +311,52 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
 extension BrowseBrandsViewController: BrowseBrandsViewModelDelegate {
     func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan]) {
         tableView.reloadData()
+    }
+}
+
+extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.filters.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: FilterBrandsCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+        cell.configureCell(with: viewModel.filters[indexPath.row])
+        cell.cellWasTapped = selectedCollectionViewIndexPaths.contains(indexPath)
+        if viewModel.filters.count.isMultiple(of: 2) {
+            if indexPath.row == viewModel.filters.count - 2 || indexPath.row == viewModel.filters.count - 1 {
+                cell.hideSeparator()
+            }
+        } else {
+            if  indexPath.row == viewModel.filters.count - 1 {
+                cell.hideSeparator()
+            }
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.bounds.width / 2), height: Constants.filterCellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! FilterBrandsCollectionViewCell
+        cell.cellWasTapped = !cell.cellWasTapped
+        if selectedCollectionViewIndexPaths.contains(indexPath) {
+            if let index = selectedCollectionViewIndexPaths.firstIndex(of: indexPath) {
+                selectedCollectionViewIndexPaths.remove(at: index)
+            }
+        } else {
+            selectedCollectionViewIndexPaths.append(indexPath)
+        }
+        
+        if let filter = cell.filterTitle, selectedFilters.contains(filter) {
+            let index = selectedFilters.firstIndex(of: filter)
+            selectedFilters.remove(at: index ?? 0)
+        } else {
+            selectedFilters.append(cell.filterTitle ?? "")
+        }
+        viewModel.selectedFilters = selectedFilters
+        switchTableWithNoMatchesLabel()
     }
 }

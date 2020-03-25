@@ -131,6 +131,10 @@ extension RegisterViewController: FormDataSourceDelegate {
     }
 }
 
+extension RegisterViewController: FormCollectionViewCellDelegate {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
+}
+
 private extension Selector {
     static let continueButtonTapped = #selector(RegisterViewController.continueButtonTapped)
 }

@@ -16,6 +16,7 @@ struct MembershipPlanModel: Codable {
     let account: MembershipPlanAccountModel?
     let balances: [BalanceModel]?
     let dynamicContent: [DynamicContentField]?
+    let hasVouchers: Bool?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -25,6 +26,7 @@ struct MembershipPlanModel: Codable {
         case account
         case balances
         case dynamicContent = "content"
+        case hasVouchers = "has_vouchers"
     }
 }
 
@@ -32,6 +34,7 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipPlan, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlan {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.status, with: status, delta: delta)
+        update(cdObject, \.hasVouchers, with: NSNumber(value: hasVouchers ?? false), delta: delta)
 
         if let featureSet = featureSet {
             let cdFeatureSet = featureSet.mapToCoreData(context, .update, overrideID: FeatureSetModel.overrideId(forParentId: overrideID ?? id))

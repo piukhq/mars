@@ -32,7 +32,7 @@ enum Configuration {
     }
 }
 
-enum APIConstants {
+struct APIConstants {
     static let productionBaseURL = "https://api.gb.bink.com"
 
     static var baseURLString: String {

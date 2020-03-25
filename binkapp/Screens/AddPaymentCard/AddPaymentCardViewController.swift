@@ -20,6 +20,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         static let cardPadding: CGFloat = 30.0
         static let cardHeight: CGFloat = 120.0
         static let hyperlinkHeight: CGFloat = 54.0
+        static let cellErrorLabelSafeSpacing: CGFloat = 60.0
     }
     
     private lazy var addButton: BinkGradientButton = {
@@ -233,6 +234,14 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
         default:
             return false
         }
+    }
+}
+
+extension AddPaymentCardViewController: FormCollectionViewCellDelegate {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
+        let cellOrigin = collectionView.convert(cell.frame.origin, to: view)
+        self.selectedCellYOrigin = cellOrigin.y
+        selectedCellHeight = cell.isValidationLabelHidden ? cell.frame.size.height + Constants.cellErrorLabelSafeSpacing : cell.frame.size.height
     }
 }
 

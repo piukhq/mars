@@ -10,11 +10,9 @@ import Foundation
 import UIKit
 
 class Cache {
-    static let sharedGradientCache = NSCache<NSString, CAGradientLayer>()
     static let sharedImageCache = NSCache<NSString, UIImage>()
 
     static func clearAll() {
-        Cache.sharedGradientCache.removeAllObjects()
         Cache.sharedImageCache.removeAllObjects()
     }
 }

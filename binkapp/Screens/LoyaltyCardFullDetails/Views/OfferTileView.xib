@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OfferTileView" customModule="binkapp" customModuleProvider="target">
             <connections>
+                <outlet property="containerView" destination="O9n-bh-1FG" id="9Gd-Mh-S2i"/>
                 <outlet property="offerImageView" destination="cF3-mg-psr" id="6Si-5Q-J46"/>
             </connections>
         </placeholder>
@@ -17,19 +18,31 @@
             <rect key="frame" x="0.0" y="0.0" width="364" height="364"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cF3-mg-psr">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O9n-bh-1FG">
                     <rect key="frame" x="0.0" y="0.0" width="364" height="364"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cF3-mg-psr">
+                            <rect key="frame" x="0.0" y="0.0" width="364" height="364"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="cF3-mg-psr" secondAttribute="height" multiplier="1:1" id="7bZ-jG-zxd"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="cF3-mg-psr" secondAttribute="height" multiplier="1:1" id="7bZ-jG-zxd"/>
+                        <constraint firstItem="cF3-mg-psr" firstAttribute="leading" secondItem="O9n-bh-1FG" secondAttribute="leading" id="3Rt-k6-hZL"/>
+                        <constraint firstItem="cF3-mg-psr" firstAttribute="top" secondItem="O9n-bh-1FG" secondAttribute="top" id="EAW-2x-PcF"/>
+                        <constraint firstAttribute="trailing" secondItem="cF3-mg-psr" secondAttribute="trailing" id="TuA-Dv-r4A"/>
+                        <constraint firstAttribute="bottom" secondItem="cF3-mg-psr" secondAttribute="bottom" id="xN0-qc-UrL"/>
                     </constraints>
-                </imageView>
+                </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="cF3-mg-psr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ALv-v7-aZ1"/>
-                <constraint firstAttribute="bottom" secondItem="cF3-mg-psr" secondAttribute="bottom" id="LNU-Lb-kq7"/>
-                <constraint firstItem="cF3-mg-psr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="iVE-zU-bss"/>
-                <constraint firstAttribute="trailing" secondItem="cF3-mg-psr" secondAttribute="trailing" id="vYJ-Cm-yq1"/>
+                <constraint firstItem="O9n-bh-1FG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="2yn-1D-hfD"/>
+                <constraint firstAttribute="bottom" secondItem="O9n-bh-1FG" secondAttribute="bottom" id="ACI-3S-TXR"/>
+                <constraint firstItem="O9n-bh-1FG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VKT-rm-EP1"/>
+                <constraint firstAttribute="trailing" secondItem="O9n-bh-1FG" secondAttribute="trailing" id="vNX-un-tV3"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="95.652173913043484" y="-59.598214285714285"/>

@@ -37,7 +37,6 @@ extension UserDefaults: BinkUserDefaults {
     enum Keys: String {
         case hasLaunchedWallet
         case userEmail
-        case mockBKWalletIsEnabled
         case environmentBaseUrl
     }
 

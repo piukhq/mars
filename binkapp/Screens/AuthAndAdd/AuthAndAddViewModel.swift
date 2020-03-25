@@ -214,7 +214,7 @@ class AuthAndAddViewModel {
         switch formField.columnKind {
         case .add:
             let addFieldsArray = membershipCardPostModel?.account?.addFields
-            if var existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
+            if let existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
                 existingField.value = formField.value
             } else {
                 let model = PostModel(column: formField.title, value: formField.value)
@@ -222,7 +222,7 @@ class AuthAndAddViewModel {
             }
         case .auth:
             let authoriseFieldsArray = membershipCardPostModel?.account?.authoriseFields
-            if var existingField = authoriseFieldsArray?.first(where: { $0.column == formField.title }) {
+            if let existingField = authoriseFieldsArray?.first(where: { $0.column == formField.title }) {
                 existingField.value = formField.value
             } else {
                 let model = PostModel(column: formField.title, value: formField.value)
@@ -230,7 +230,7 @@ class AuthAndAddViewModel {
             }
         case .enrol:
             let enrolFieldsArray = membershipCardPostModel?.account?.enrolFields
-            if var existingField = enrolFieldsArray?.first(where: { $0.column == formField.title }) {
+            if let existingField = enrolFieldsArray?.first(where: { $0.column == formField.title }) {
                 existingField.value = formField.value
             } else {
                 let model = PostModel(column: formField.title, value: formField.value)
@@ -239,7 +239,7 @@ class AuthAndAddViewModel {
             
         case .register:
             let registrationFieldsArray = membershipCardPostModel?.account?.registrationFields
-            if var existingField = registrationFieldsArray?.first(where: { $0.column == formField.title }) {
+            if let existingField = registrationFieldsArray?.first(where: { $0.column == formField.title }) {
                 existingField.value = formField.value
             } else {
                 let model = PostModel(column: formField.title, value: formField.value)
@@ -254,7 +254,7 @@ class AuthAndAddViewModel {
         switch checkbox.columnKind {
         case .add:
             let addFieldsArray = membershipCardPostModel?.account?.addFields
-            if var existingField = addFieldsArray?.first(where: { $0.column == checkbox.columnName }) {
+            if let existingField = addFieldsArray?.first(where: { $0.column == checkbox.columnName }) {
                 existingField.value = String(checkbox.isValid)
             } else {
                 let model = PostModel(column: checkbox.columnName, value: String(checkbox.isValid))
@@ -262,7 +262,7 @@ class AuthAndAddViewModel {
             }
         case .auth:
             let authoriseFieldsArray = membershipCardPostModel?.account?.authoriseFields
-            if var existingField = authoriseFieldsArray?.first(where: { $0.column == checkbox.columnName }) {
+            if let existingField = authoriseFieldsArray?.first(where: { $0.column == checkbox.columnName }) {
                 existingField.value = String(checkbox.isValid)
             } else {
                 let model = PostModel(column: checkbox.columnName, value: String(checkbox.isValid))
@@ -270,7 +270,7 @@ class AuthAndAddViewModel {
             }
         case .enrol:
             let enrolFieldsArray = membershipCardPostModel?.account?.enrolFields
-            if var existingField = enrolFieldsArray?.first(where: { $0.column == checkbox.columnName }) {
+            if let existingField = enrolFieldsArray?.first(where: { $0.column == checkbox.columnName }) {
                 existingField.value = String(checkbox.isValid)
             } else {
                 let model = PostModel(column: checkbox.columnName, value: String(checkbox.isValid))
@@ -278,7 +278,7 @@ class AuthAndAddViewModel {
             }
         case .register:
             let registerFieldsArray = membershipCardPostModel?.account?.registrationFields
-            if var existingField = registerFieldsArray?.first(where: { $0.column == checkbox.columnName }) {
+            if let existingField = registerFieldsArray?.first(where: { $0.column == checkbox.columnName }) {
                 existingField.value = String(checkbox.isValid)
             } else {
                 let model = PostModel(column: checkbox.columnName, value: String(checkbox.isValid))

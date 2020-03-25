@@ -69,6 +69,10 @@ extension ForgotPasswordViewController: FormDataSourceDelegate {
     }
 }
 
+extension ForgotPasswordViewController: FormCollectionViewCellDelegate {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
+}
+
 private extension Selector {
     static let continueButtonTapped = #selector(ForgotPasswordViewController.continueButtonTapped)
 }
