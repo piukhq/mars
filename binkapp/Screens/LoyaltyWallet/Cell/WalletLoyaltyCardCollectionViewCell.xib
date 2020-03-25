@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -47,7 +47,21 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wQ-yx-2v3" customClass="RectangleView" customModule="binkapp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="-4" width="381" height="130"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEC-Ml-S8b" customClass="CardAlertView" customModule="binkapp" customModuleProvider="target">
+                                        <rect key="frame" x="272" y="22" width="89" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="E6w-L9-sR8"/>
+                                            <constraint firstAttribute="width" constant="89" id="hPh-QU-csv"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="UEC-Ml-S8b" firstAttribute="top" secondItem="3wQ-yx-2v3" secondAttribute="top" constant="22" id="4HX-iA-vZ4"/>
+                                    <constraint firstAttribute="trailing" secondItem="UEC-Ml-S8b" secondAttribute="trailing" constant="20" id="uD6-W5-kNW"/>
+                                </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2il-5O-A8c">
                                 <rect key="frame" x="20" y="26" width="70" height="70"/>
@@ -67,22 +81,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6Ln-ov-l0D">
-                                <rect key="frame" x="361" y="18" width="0.0" height="15"/>
+                                <rect key="frame" x="361" y="18" width="0.0" height="18"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="15" id="jYQ-Xv-hc6"/>
+                                    <constraint firstAttribute="height" constant="18" id="jYQ-Xv-hc6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="NunitoSans-ExtraBold" family="Nunito Sans" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEC-Ml-S8b" customClass="CardAlertView" customModule="binkapp" customModuleProvider="target">
-                                <rect key="frame" x="272" y="18" width="89" height="30"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="E6w-L9-sR8"/>
-                                    <constraint firstAttribute="width" constant="89" id="hPh-QU-csv"/>
-                                </constraints>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="40K-eq-Rsb">
                                 <rect key="frame" x="361" y="33" width="0.0" height="14"/>
                                 <constraints>
@@ -125,11 +131,9 @@
                             <constraint firstItem="3wQ-yx-2v3" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" constant="-4" id="XuJ-7J-oAr"/>
                             <constraint firstItem="6Ln-ov-l0D" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" constant="18" id="gbe-50-MRJ"/>
                             <constraint firstAttribute="trailing" secondItem="1AT-4M-cCB" secondAttribute="trailing" constant="20" id="h7I-kq-IRG"/>
-                            <constraint firstItem="UEC-Ml-S8b" firstAttribute="top" secondItem="boF-NX-uce" secondAttribute="top" constant="18" id="iUC-qo-fFG"/>
-                            <constraint firstAttribute="trailing" secondItem="UEC-Ml-S8b" secondAttribute="trailing" constant="20" id="ltx-zN-ivF"/>
                             <constraint firstAttribute="trailing" secondItem="3wQ-yx-2v3" secondAttribute="trailing" id="qfp-UH-AVH"/>
                             <constraint firstItem="1AT-4M-cCB" firstAttribute="leading" secondItem="2il-5O-A8c" secondAttribute="trailing" constant="60" id="rTp-qt-dTB"/>
-                            <constraint firstItem="40K-eq-Rsb" firstAttribute="top" secondItem="6Ln-ov-l0D" secondAttribute="bottom" id="rpS-HC-1Qh"/>
+                            <constraint firstItem="40K-eq-Rsb" firstAttribute="top" secondItem="6Ln-ov-l0D" secondAttribute="bottom" constant="-3" id="rpS-HC-1Qh"/>
                             <constraint firstAttribute="trailing" secondItem="ieW-2y-hVv" secondAttribute="trailing" constant="20" id="xwf-mp-YsD"/>
                             <constraint firstItem="1AT-4M-cCB" firstAttribute="centerY" secondItem="boF-NX-uce" secondAttribute="centerY" id="yEf-p7-39l"/>
                             <constraint firstAttribute="bottom" secondItem="ieW-2y-hVv" secondAttribute="bottom" constant="15" id="zl6-bC-PqJ"/>
