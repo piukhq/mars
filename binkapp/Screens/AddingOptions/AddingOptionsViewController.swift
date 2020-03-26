@@ -117,13 +117,13 @@ class AddingOptionsViewController: BinkTrackableViewController {
                 }
             }
         case .denied:
-            self.camDenied()
+            self.presentManuallyActionsPopup()
         default:
             return
         }
     }
     
-    private func camDenied() {
+    private func presentManuallyActionsPopup() {
         guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
         
         let alert = UIAlertController(title: "camera_denied_title".localized, message: "camera_denied_body".localized, preferredStyle: .alert)
@@ -135,6 +135,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
         }
         alert.addAction(manualAction)
         alert.addAction(allowAction)
+        alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }
