@@ -16,6 +16,7 @@ protocol FormMultipleChoiceInputDelegate: NSObjectProtocol {
 class FormMultipleChoiceInput: UIInputView {
     var fullContentString = ""
     var backingData: [Int]?
+    var didBeginDisplaying = false
     
     // MARK: - Properties
     

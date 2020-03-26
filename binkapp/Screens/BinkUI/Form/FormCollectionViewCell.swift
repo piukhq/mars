@@ -100,6 +100,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     weak private var formField: FormField?
+    private var pickerFirstChoice: String?
     var isValidationLabelHidden = true
     
     // MARK: - Initialisation
@@ -152,6 +153,7 @@ class FormCollectionViewCell: UICollectionViewCell {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
         }  else if case let .choice(data) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [data], delegate: self)
+            pickerFirstChoice = data.first?.title
         } else {
             textField.inputView = nil
         }
@@ -193,6 +195,10 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.inputView?.isKind(of: FormMultipleChoiceInput.self) ?? false {
+            textField.text = pickerFirstChoice
+        }
+        
         self.delegate?.formCollectionViewCell(self, didSelectField: textField)
     }
 }
