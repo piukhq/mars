@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,35 +22,35 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="WalletLoyaltyCardCollectionViewCell" id="QXi-me-e70" customClass="WalletLoyaltyCardCollectionViewCell" customModule="binkapp" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="365" height="120"/>
+            <rect key="frame" x="0.0" y="0.0" width="381" height="122"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                <rect key="frame" x="0.0" y="0.0" width="365" height="120"/>
+                <rect key="frame" x="0.0" y="0.0" width="381" height="122"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGo-kk-sli">
-                        <rect key="frame" x="0.0" y="0.0" width="109.5" height="120"/>
+                        <rect key="frame" x="0.0" y="0.0" width="114.5" height="122"/>
                         <state key="normal" image="iconSwipeBarcode"/>
                         <connections>
                             <action selector="barcodeButtonTapped:" destination="QXi-me-e70" eventType="touchUpInside" id="N2m-jQ-kSN"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlL-P9-bge">
-                        <rect key="frame" x="255.5" y="0.0" width="109.5" height="120"/>
+                        <rect key="frame" x="266.5" y="0.0" width="114.5" height="122"/>
                         <state key="normal" image="iconSwipeDelete"/>
                         <connections>
                             <action selector="deleteButtonTapped:" destination="QXi-me-e70" eventType="touchUpInside" id="W2a-aq-5z4"/>
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="boF-NX-uce" customClass="RectangleView" customModule="binkapp" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="365" height="120"/>
+                        <rect key="frame" x="0.0" y="0.0" width="381" height="122"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3wQ-yx-2v3" customClass="RectangleView" customModule="binkapp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="-4" width="365" height="128"/>
+                                <rect key="frame" x="0.0" y="-4" width="381" height="130"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2il-5O-A8c">
-                                <rect key="frame" x="20" y="25" width="70" height="70"/>
+                                <rect key="frame" x="20" y="26" width="70" height="70"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="LrZ-d5-qUh"/>
@@ -58,7 +58,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1AT-4M-cCB">
-                                <rect key="frame" x="150" y="49" width="195" height="22"/>
+                                <rect key="frame" x="150" y="50" width="211" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="RWE-fi-VLe"/>
                                 </constraints>
@@ -67,7 +67,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6Ln-ov-l0D">
-                                <rect key="frame" x="345" y="18" width="0.0" height="15"/>
+                                <rect key="frame" x="361" y="18" width="0.0" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="jYQ-Xv-hc6"/>
                                 </constraints>
@@ -76,7 +76,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEC-Ml-S8b" customClass="CardAlertView" customModule="binkapp" customModuleProvider="target">
-                                <rect key="frame" x="256" y="18" width="89" height="30"/>
+                                <rect key="frame" x="272" y="18" width="89" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="E6w-L9-sR8"/>
@@ -84,7 +84,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="40K-eq-Rsb">
-                                <rect key="frame" x="345" y="33" width="0.0" height="14"/>
+                                <rect key="frame" x="361" y="33" width="0.0" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14" id="PFf-iW-iIL"/>
                                 </constraints>
@@ -93,18 +93,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ieW-2y-hVv">
-                                <rect key="frame" x="345" y="83" width="0.0" height="21"/>
+                                <rect key="frame" x="361" y="86" width="0.0" height="21"/>
                                 <subviews>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iaS-OT-dXC">
-                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="16"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="21"/>
                                         <fontDescription key="fontDescription" name="NunitoSans-SemiBold" family="Nunito Sans" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XSF-3v-XU7">
-                                        <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="16" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="eJZ-GO-Xyv"/>
+                                            <constraint firstAttribute="height" constant="21" id="JQm-hX-APl"/>
                                             <constraint firstAttribute="width" constant="16" id="nJi-cR-P6c"/>
                                         </constraints>
                                     </imageView>
@@ -132,7 +132,7 @@
                             <constraint firstItem="40K-eq-Rsb" firstAttribute="top" secondItem="6Ln-ov-l0D" secondAttribute="bottom" id="rpS-HC-1Qh"/>
                             <constraint firstAttribute="trailing" secondItem="ieW-2y-hVv" secondAttribute="trailing" constant="20" id="xwf-mp-YsD"/>
                             <constraint firstItem="1AT-4M-cCB" firstAttribute="centerY" secondItem="boF-NX-uce" secondAttribute="centerY" id="yEf-p7-39l"/>
-                            <constraint firstAttribute="bottom" secondItem="ieW-2y-hVv" secondAttribute="bottom" constant="16" id="zl6-bC-PqJ"/>
+                            <constraint firstAttribute="bottom" secondItem="ieW-2y-hVv" secondAttribute="bottom" constant="15" id="zl6-bC-PqJ"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -152,6 +152,7 @@
                 <constraint firstAttribute="bottom" secondItem="GGo-kk-sli" secondAttribute="bottom" id="rh6-OR-lMm"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZvJ-Je-wpk"/>
+            <size key="customSize" width="381" height="122"/>
             <connections>
                 <outlet property="barcodeButton" destination="GGo-kk-sli" id="Tjc-aX-VXr"/>
                 <outlet property="cardContainerCenterXConstraint" destination="deo-p9-Of0" id="Fmb-fC-udb"/>
@@ -166,7 +167,7 @@
                 <outlet property="logInAlert" destination="UEC-Ml-S8b" id="SBl-aw-HWf"/>
                 <outlet property="rectangleView" destination="3wQ-yx-2v3" id="IcS-qw-Nhj"/>
             </connections>
-            <point key="canvasLocation" x="123.91304347826087" y="150.66964285714286"/>
+            <point key="canvasLocation" x="135.50724637681159" y="151.33928571428569"/>
         </collectionViewCell>
     </objects>
     <resources>

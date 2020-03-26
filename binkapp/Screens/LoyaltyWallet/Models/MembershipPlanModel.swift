@@ -15,6 +15,7 @@ struct MembershipPlanModel: Codable {
     let images: [MembershipPlanImageModel]?
     let account: MembershipPlanAccountModel?
     let balances: [BalanceModel]?
+    let dynamicContent: [DynamicContentField]?
     let hasVouchers: Bool?
     
     enum CodingKeys: String, CodingKey {
@@ -24,6 +25,7 @@ struct MembershipPlanModel: Codable {
         case images
         case account
         case balances
+        case dynamicContent = "content"
         case hasVouchers = "has_vouchers"
     }
 }
@@ -72,6 +74,21 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
             cdObject.addBalancesObject(cdBalance)
         }
 
+
+        cdObject.dynamicContent.forEach {
+            guard let contentObject = $0 as? CD_PlanDynamicContent else { return }
+            context.delete(contentObject)
+        }
+
+
+        if let dynamicContent = dynamicContent {
+            for (index, contentObject) in dynamicContent.enumerated() {
+                let indexID = DynamicContentField.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdContentObject = contentObject.mapToCoreData(context, .update, overrideID: indexID)
+                update(cdContentObject, \.plan, with: cdObject, delta: delta)
+                cdObject.addDynamicContentObject(cdContentObject)
+            }
+        }
 
         return cdObject
     }

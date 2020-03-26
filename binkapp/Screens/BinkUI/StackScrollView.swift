@@ -210,9 +210,9 @@ open class StackScrollView: UIScrollView {
     // MARK: - Keyboard Avoidance
     
     @objc fileprivate func keyboardWillShow(notification: NSNotification) {
-        var userInfo = notification.userInfo!
+        let userInfo = notification.userInfo
         
-        guard let frameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+        guard let frameValue = userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
             return // Do not continue if we cannot get the frame
         }
         

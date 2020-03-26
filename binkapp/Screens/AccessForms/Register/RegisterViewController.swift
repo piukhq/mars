@@ -35,7 +35,6 @@ class RegisterViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .register)
                 
         NSLayoutConstraint.activate([
             continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
@@ -43,6 +42,11 @@ class RegisterViewController: BaseFormViewController {
             continueButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
             continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setScreenName(trackedScreen: .register)
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
@@ -125,6 +129,10 @@ extension RegisterViewController: FormDataSourceDelegate {
         
         return field.value == passwordToCheckAgainst
     }
+}
+
+extension RegisterViewController: FormCollectionViewCellDelegate {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
 }
 
 private extension Selector {

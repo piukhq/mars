@@ -23,7 +23,7 @@ class PLRCellViewModel {
         switch voucherEarnType {
         case .accumulator:
             return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
-        case .stamp:
+        case .stamps:
             // We need to be able to return the value in between, but when we don't get it back we map by default to 0 which isn't good
             return "\(voucher.burn?.prefix ?? "") \(voucher.burn?.suffix ?? "")"
         default:
@@ -35,7 +35,7 @@ class PLRCellViewModel {
         switch voucherEarnType {
         case .accumulator:
             return String(format: "plr_voucher_accumulator_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "")
-        case .stamp:
+        case .stamps:
             return String(format: "plr_voucher_stamp_burn_description".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.earn?.suffix ?? "")
         default:
             return ""
@@ -80,7 +80,7 @@ class PLRCellViewModel {
         switch type {
         case .accumulator:
             return "plr_voucher_accumulator_earn_value_title".localized
-        case .stamp:
+        case .stamps:
             return "plr_voucher_stamp_earn_value_title".localized
         }
     }
@@ -90,7 +90,7 @@ class PLRCellViewModel {
         case .accumulator:
             guard let value = voucher.earn?.value?.floatValue else { return nil }
             return "\(voucher.earn?.prefix ?? "")\(String(format: "%.02f", value)) \(voucher.earn?.suffix ?? "")"
-        case .stamp:
+        case .stamps:
             let earnValue = voucher.earn?.value?.intValue
             let earnTargetValue = voucher.earn?.targetValue?.intValue
             let earnSuffix = voucher.earn?.suffix

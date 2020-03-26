@@ -101,7 +101,7 @@ extension PLRRewardsHistoryViewController: UICollectionViewDataSource, UICollect
             let cell: PLRAccumulatorInactiveCell = collectionView.dequeue(indexPath: indexPath)
             cell.configureWithViewModel(cellViewModel)
             return cell
-        } else if voucher.earnType == .stamp {
+        } else if voucher.earnType == .stamps {
             let cell: PLRStampsInactiveCell = collectionView.dequeue(indexPath: indexPath)
             cell.configureWithViewModel(cellViewModel)
             return cell

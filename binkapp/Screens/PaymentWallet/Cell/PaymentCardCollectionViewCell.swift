@@ -26,6 +26,14 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     @IBOutlet private weak var cardContainerCenterXConstraint: NSLayoutConstraint!
     @IBOutlet private weak var deleteButton: UIButton!
     
+    private enum CardGradientKey: NSString {
+        case visaGradient
+        case mastercardGradient
+        case amexGradient
+        case unknownGradient
+        case swipeGradient
+    }
+    
     private lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
         width.isActive = true
@@ -69,9 +77,13 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     override func prepareForReuse() {
         super.prepareForReuse()
         set(to: .closed, animated: false)
+        deleteButton.isHidden = true
         alertView.isHidden = true
         pllStatusLabel.isHidden = false
         linkedStatusImageView.isHidden = false
+
+        processGradient(UIColor.deleteSwipeGradientLeft, UIColor.deleteSwipeGradientRight)
+        processGradient(type: viewModel.paymentCardType)
     }
     
     func configureWithViewModel(_ viewModel: PaymentCardCellViewModel, enableSwipeGesture: Bool? = true, delegate: WalletPaymentCardCollectionViewCellDelegate?) {
@@ -174,10 +186,8 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
             providerWatermarkImageView.image = nil
             return
         }
-        
         providerLogoImageView.image = UIImage(named: type.logoName)
         providerWatermarkImageView.image = UIImage(named: type.sublogoName)
-        
         processGradient(type: type)
     }
     
@@ -201,12 +211,15 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     }
     
     private func processGradient(type: PaymentCardType?) {
-        if cardGradientLayer == nil {
-            let gradient = CAGradientLayer()
-            containerView.layer.insertSublayer(gradient, at: 0)
-            cardGradientLayer = gradient
-        }
-        
+        cardGradientLayer?.removeFromSuperlayer()
+        let gradient = CAGradientLayer()
+        containerView.layer.insertSublayer(gradient, at: 0)
+        cardGradientLayer = gradient
+        cardGradientLayer?.frame = bounds
+        cardGradientLayer?.locations = [0.0, 1.0]
+        cardGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
+        cardGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
+        cardGradientLayer?.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
         switch type {
         case .visa:
             cardGradientLayer?.colors = UIColor.visaPaymentCardGradients
@@ -217,12 +230,6 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         case .none:
             cardGradientLayer?.colors = UIColor.unknownPaymentCardGradients
         }
-        
-        cardGradientLayer?.frame = bounds
-        cardGradientLayer?.locations = [0.0, 1.0]
-        cardGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
-        cardGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
-        cardGradientLayer?.cornerRadius = LayoutHelper.WalletDimensions.cardCornerRadius
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
@@ -265,11 +272,10 @@ extension PaymentCardCollectionViewCell {
     }
     
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
-        if swipeGradientLayer == nil {
-            swipeGradientLayer = CAGradientLayer()
-            contentView.layer.insertSublayer(swipeGradientLayer!, at: 0)
-        }
-        
+        swipeGradientLayer?.removeFromSuperlayer()
+        let swipeGradient = CAGradientLayer()
+        contentView.layer.insertSublayer(swipeGradient, at: 0)
+        swipeGradientLayer = swipeGradient
         swipeGradientLayer?.frame = bounds
         swipeGradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
         swipeGradientLayer?.locations = [0.0, 1.0]

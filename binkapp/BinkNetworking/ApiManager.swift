@@ -25,7 +25,6 @@ enum RequestURL: Equatable {
     case paymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
     case spreedly
-    case mockBKWallet
     
     private var value: String {
         switch self {
@@ -59,14 +58,12 @@ enum RequestURL: Equatable {
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
         case .spreedly:
             return "https://core.spreedly.com/v1/payment_methods?environment_key=\(BinkappKeys().spreedlyEnvironmentKey)"
-        case .mockBKWallet:
-            return "https://virtserver.swaggerhub.com/Bink_API/Bink_External_API/1.2/membership_cards"
         }
     }
     
     var authRequired: Bool {
         switch self {
-        case .register, .login, .renew, .spreedly, .mockBKWallet:
+        case .register, .login, .renew, .spreedly:
             return false
         default:
             return true
@@ -84,7 +81,7 @@ enum RequestURL: Equatable {
 
     private var baseUrlString: String {
         switch self {
-        case .spreedly, .mockBKWallet:
+        case .spreedly:
             return ""
         default:
             return APIConstants.baseURLString
@@ -167,7 +164,7 @@ class ApiManager {
         return APIConstants.baseURLString == APIConstants.productionBaseURL
     }
     
-    static var apiVersion: ApiVersion = .v1_1
+    var apiVersion: ApiVersion = .v1_1
     
     init() {
         let evaluators = [
@@ -190,7 +187,7 @@ class ApiManager {
             return
         }
         
-        let authRequired = url.authRequired
+        let authRequired = url == .logout ? false : url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
         
@@ -207,7 +204,7 @@ class ApiManager {
             return
         }
         
-        let authRequired = url.authRequired
+        let authRequired = url == .logout ? false : url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
                 
@@ -259,7 +256,7 @@ class ApiManager {
                      If the endpoint expects an authorisation token,
                      ensure that we aggressively respond in app to a 401.
                      */
-                    NotificationCenter.default.post(name: .didLogout, object: nil)
+                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
                 } else if statusCode == 400 {
                     let decodedResponseErrors = try? decoder.decode(ResponseErrors.self, from: data)
                     let otherErrors = try? decoder.decode([String].self, from: data)
@@ -294,7 +291,7 @@ class ApiManager {
             return
         }
 
-        let authRequired = url.authRequired
+        let authRequired = url == .logout ? false : url.authRequired
         let requestHeaders = HTTPHeaders(getHeader(endpoint: url))
         
         session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { response in
@@ -307,7 +304,7 @@ class ApiManager {
                  If the endpoint expects an authorisation token,
                  ensure that we aggressively respond in app to a 401.
                  */
-                NotificationCenter.default.post(name: .didLogout, object: nil)
+                NotificationCenter.default.post(name: .shouldLogout, object: nil)
             } else if (500...599).contains(statusCode) {
                 NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
                 let customError = CustomError(errorMessage: "", statusCode: statusCode)
@@ -325,14 +322,17 @@ class ApiManager {
 
 private extension ApiManager {
     private func getHeader(endpoint: RequestURL) -> [String: String] {
-        var header = ["Content-Type": "application/json\(endpoint.shouldVersionPin ? ";\(ApiManager.apiVersion.rawValue)" : "")"]
-        
+        var headers = [
+            "Content-Type": "application/json",
+            "Accept": "application/json\(endpoint.shouldVersionPin ? ";\(Current.apiManager.apiVersion.rawValue)" : "")"
+        ]
+
         if endpoint.authRequired {
-            guard let token = Current.userManager.currentToken else { return header }
-            header["Authorization"] = "Token " + token
+            guard let token = Current.userManager.currentToken else { return headers }
+            headers["Authorization"] = "Token " + token
         }
 
-        return header
+        return headers
     }
 }
 

@@ -61,7 +61,6 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .socialTermsAndConditions)
                 
         NSLayoutConstraint.activate([
             continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
@@ -77,6 +76,11 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
 //        if let lastView = lastView {
 //            stackScrollView.customPadding(18.0, after: lastView)
 //        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setScreenName(trackedScreen: .socialTermsAndConditions)
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
@@ -143,6 +147,10 @@ extension SocialTermsAndConditionsViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return true
     }
+}
+
+extension SocialTermsAndConditionsViewController: FormCollectionViewCellDelegate {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
 }
 
 private extension Selector {

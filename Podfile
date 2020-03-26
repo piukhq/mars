@@ -1,6 +1,8 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '12.0'
 
+inhibit_all_warnings!
+
 def common_pods
 
 pod 'Firebase'
@@ -16,11 +18,12 @@ pod 'AlamofireNetworkActivityLogger'
 pod 'DeepDiff'
 pod 'CryptoSwift'
 pod 'KeychainAccess', '~> 4.1'
-pod 'FacebookSDK', '~> 5.9'
-pod 'FBSDKLoginKit', '~> 5.8'
+pod 'FacebookSDK', '~> 6.0.0'
+pod 'FBSDKLoginKit', '~> 6.0.0'
 pod 'Disk'
 pod 'DTTJailbreakDetection'
 pod 'JWTDecode', '~> 2.4'
+pod 'SwiftyRSA'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
@@ -31,7 +34,10 @@ plugin 'cocoapods-keys', {
     "bundleIdKey",
     "secretKey",
     "stagingSecretKey",
-    "spreedlyEnvironmentKey"
+    "spreedlyEnvironmentKey",
+    "devPaymentCardHashingSecret1",
+    "stagingPaymentCardHashingSecret1",
+    "prodPaymentCardHashingSecret1"
   ]
 }
 

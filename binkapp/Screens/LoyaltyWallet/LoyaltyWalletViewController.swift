@@ -17,6 +17,10 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyWallet)
     }
 
@@ -56,11 +60,26 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
 
         switch action {
         case .barcode:
-            toBarcode(with: index, cell: cell)
+            handleBarcodeSwipe(with: index, cell: cell)
         case .delete:
             promptForDelete(with: index, cell: cell)
         case .login:
             UIAlertController.presentFeatureNotImplementedAlert(on: self)
+        }
+    }
+    
+    func handleBarcodeSwipe(with indexPath: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
+        guard let card = viewModel.cards?[indexPath.row] else {
+            cell.set(to: .closed)
+            return
+        }
+        
+        if card.card?.barcode == nil && card.card?.membershipId == nil {
+            viewModel.showNoBarcodeAlert {
+                cell.set(to: .closed)
+            }
+        } else {
+            toBarcode(with: indexPath, cell: cell)
         }
     }
     
@@ -84,18 +103,7 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
         guard let index = collectionView.indexPath(for: cell) else { return }
         
         if action == .barcode {
-            guard let card = viewModel.cards?[index.row] else {
-                cell.set(to: .closed)
-                return
-            }
-            
-            if card.card?.barcode == nil && card.card?.membershipId == nil {
-                viewModel.showNoBarcodeAlert {
-                    cell.set(to: .closed)
-                }
-            } else {
-                toBarcode(with: index, cell: cell)
-            }
+            handleBarcodeSwipe(with: index, cell: cell)
         } else {
             promptForDelete(with: index, cell: cell)
         }

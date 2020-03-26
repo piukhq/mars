@@ -76,6 +76,7 @@ class PLLScreenViewController: BinkTrackableViewController {
     private lazy var floatingButtonsView: BinkPrimarySecondaryButtonView = {
         let floatingButtonsView = BinkPrimarySecondaryButtonView(frame: .zero)
         floatingButtonsView.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(floatingButtonsView)
         return floatingButtonsView
     }()
@@ -109,7 +110,6 @@ class PLLScreenViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .pll)
         
         if viewModel.shouldShowBackButton {
             let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
@@ -126,6 +126,11 @@ class PLLScreenViewController: BinkTrackableViewController {
         configureUI()
         paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
         floatingButtonsView.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setScreenName(trackedScreen: .pll)
     }
     
     private func configureLayout() {
@@ -145,7 +150,6 @@ class PLLScreenViewController: BinkTrackableViewController {
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
             floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
-            floatingButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
 }
@@ -244,9 +248,9 @@ private extension PLLScreenViewController {
         stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
         switch journey {
         case .newCard:
-            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: viewModel.hasPaymentCards ? nil : "pll_screen_add_cards_button_title".localized)
+            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: viewModel.hasPaymentCards ? nil : "pll_screen_add_cards_button_title".localized, floating: viewModel.isEmptyPll)
         case .existingCard:
-            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil)
+            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil, floating: true)
         }
     }
     

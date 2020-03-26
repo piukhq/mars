@@ -11,7 +11,6 @@ import Foundation
 extension Notification.Name {
     static let noInternetConnection = Notification.Name("no_internet_connection")
     static let shouldLogout = Notification.Name("should_logout")
-    static let didLogout = Notification.Name("did_logout")
 
     // MARK: - Wallet
     static let didLoadWallet = Notification.Name("did_download_wallets")

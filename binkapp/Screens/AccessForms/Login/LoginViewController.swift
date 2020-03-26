@@ -39,7 +39,6 @@ class LoginViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setScreenName(trackedScreen: .login)
         
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "login_forgot_password".localized)])
         
@@ -49,6 +48,11 @@ class LoginViewController: BaseFormViewController {
             continueButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
             continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setScreenName(trackedScreen: .login)
     }
     
     private func hyperlinkButton(title: String) -> UIButton {
@@ -124,6 +128,10 @@ extension LoginViewController: FormDataSourceDelegate {
     
     func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView) {
     }
+}
+
+extension LoginViewController: FormCollectionViewCellDelegate {
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
 }
 
 private extension Selector {
