@@ -89,8 +89,12 @@ class AuthAndAddViewModel {
             guard let companyName = membershipPlan.account?.companyName else { return nil }
             return String(format: "auth_screen_description".localized, companyName)
         case .signUp:
-            guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
-            return String(format: "sign_up_new_card_description".localized, planNameCard)
+            if let planSummary = membershipPlan.account?.planSummary {
+                return planSummary
+            } else if let planNameCard = membershipPlan.account?.planNameCard {
+                return String(format: "sign_up_new_card_description".localized, planNameCard)
+            }
+            return nil
         case .ghostCard, .patchGhostCard:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "register_ghost_card_description".localized, planNameCard)

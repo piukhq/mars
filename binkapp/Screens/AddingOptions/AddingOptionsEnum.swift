@@ -9,8 +9,7 @@
 import Foundation
 
 enum AddingOptions {
-    // Not needed for MVP.
-    //case loyalty
+    case loyalty
     case browse
     case payment
 }

@@ -24,7 +24,7 @@ class AddingOptionView: CustomView {
     override func configureUI() {
         titleLabel.font = UIFont.headline
         descriptionLabel.font = UIFont.bodyTextLarge
-        
+
         frame.size.height = 150
         
         view.layer.cornerRadius = 10
@@ -36,21 +36,20 @@ class AddingOptionView: CustomView {
     
     func configureByAddingOption(option: AddingOptions) {
         switch option {
-            // Not needed for MVP
-//        case .loyalty:
-//            optionTypeImageView.image = UIImage(named: "loyalty")
-//            titleLabel.text = "add_loyalty_card_title".localized
-//            descriptionLabel.text = "scan_a_card_description".localized
-//            break
+        case .loyalty:
+            optionTypeImageView.image = UIImage(named: "loyalty")
+            titleLabel.text = "add_loyalty_card_title".localized
+            descriptionLabel.text = UIDevice.current.screenSize != .iPhone5Size ? "scan_a_card_description".localized : ""
+            break
         case .browse:
             optionTypeImageView.image = UIImage(named: "browse")
             titleLabel.text = "browse_brands_title".localized
-            descriptionLabel.text = "find_and_join_description".localized
+            descriptionLabel.text = UIDevice.current.screenSize != .iPhone5Size ? "find_and_join_description".localized : ""
             break
         case .payment:
             optionTypeImageView.image = UIImage(named: "payment")
             titleLabel.text = "add_payment_card_title".localized
-            descriptionLabel.text = "scan_and_link_description".localized
+            descriptionLabel.text = UIDevice.current.screenSize != .iPhone5Size ? "scan_and_link_description".localized : ""
             cardsStackView.addArrangedSubview(UIImageView(image: UIImage(named: "mastercard")))
             cardsStackView.addArrangedSubview(UIImageView(image: UIImage(named: "amex")))
             cardsStackView.addArrangedSubview(UIImageView(image: UIImage(named: "visa")))
