@@ -14,6 +14,10 @@ class AddingOptionsViewModel {
     init(router: MainScreenRouter) {
         self.router = router
     }
+
+    func toLoyaltyScanner() {
+        router.toLoyaltyScanner()
+    }
     
     func toBrowseBrandsScreen() {
         router.toBrowseBrandsViewController()

@@ -102,6 +102,11 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
+    func toLoyaltyScanner() {
+        let viewController = LoyaltyScannerViewController()
+        navController?.pushViewController(viewController, animated: true)
+    }
+
     func toAddPaymentViewController() {
         //TODO: Replace with information from scanner
         let card = PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
