@@ -23,6 +23,7 @@ class MainScreenRouter {
         self.delegate = delegate
 
         NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
 
@@ -382,5 +383,9 @@ class MainScreenRouter {
         } else if visibleVC?.isKind(of: SFSafariViewController.self) == false {
             visibleVC?.dismiss(animated: false, completion: nil)
         }
+    }
+    
+    @objc func appWillEnterForeground() {
+        //Fixme: Strange behaviour happening when user has to give canera permissions manually, once the user is on settings page if ge makes some changes(turning camera permissions switch on) when resumes the app this is called and the AddingOptionScreen is dismissed. If the user doesn't change anything on the settings screeen the AddingOptionsScreen will not be dismissed. 
     }
 }
