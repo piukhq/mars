@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Zendesk
         Zendesk.initialize(appId: "99f61aab44ade625ef0c3c98d72e2b3f00ae01beb8f54ddc", clientId: "mobile_sdk_client_bd8c22b8c88c29ff0667", zendeskUrl: "https://binkcx1573467900.zendesk.com")
         Support.initialize(withZendesk: Zendesk.instance)
-        let ident = Identity.createAnonymous()
+        let ident = Identity.createAnonymous(name: nil, email: Current.userManager.currentEmailAddress)
         Zendesk.instance?.setIdentity(ident)
 
 
