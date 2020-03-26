@@ -200,7 +200,7 @@ extension FormCollectionViewCell: UITextFieldDelegate {
         }
         
         self.delegate?.formCollectionViewCell(self, didSelectField: textField)
-    }teu
+    }
 }
 
 extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
