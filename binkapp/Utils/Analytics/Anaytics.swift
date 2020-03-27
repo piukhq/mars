@@ -47,12 +47,11 @@ struct BinkAnalytics {
     static let keyPrefix = "com.bink.wallet.trackingSession."
 
     static func track(_ event: BinkAnalyticsEvent, additionalTrackingData: [String: Any]?) {
+        #if RELEASE
         var trackingData: [String: Any] = [:]
 
         defer {
-            #if RELEASE
             Analytics.logEvent(event.name, parameters: trackingData)
-            #endif
         }
 
         guard var data = additionalTrackingData else {
@@ -62,6 +61,7 @@ struct BinkAnalytics {
 
         data.merge(dict: event.data)
         trackingData = data
+        #endif
     }
 
     static func beginSessionTracking() {

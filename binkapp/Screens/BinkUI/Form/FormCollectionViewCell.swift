@@ -154,6 +154,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         }  else if case let .choice(data) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [data], delegate: self)
             pickerSelectedChoice = data.first?.title
+            formField?.updateValue(pickerSelectedChoice)
         } else {
             textField.inputView = nil
         }
