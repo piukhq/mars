@@ -27,6 +27,8 @@ class LoyaltyScannerViewController: UIViewController {
 
     var rectOfInterest = CGRect.zero
 
+    var schemeIdentifierSample: BINKLoyaltyScannerSchemeIdentifierSample!
+
     lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     }()
@@ -167,6 +169,10 @@ class LoyaltyScannerViewController: UIViewController {
 
 extension LoyaltyScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-
+        if schemeIdentifierSample == nil {
+            schemeIdentifierSample = BINKLoyaltyScannerSchemeIdentifierSample(buffer: sampleBuffer, from: connection)
+        } else {
+            schemeIdentifierSample.update(with: sampleBuffer, from: connection)
+        }
     }
 }
