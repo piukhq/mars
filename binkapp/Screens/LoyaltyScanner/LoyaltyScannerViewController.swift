@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import Vision
+//import Vision
 
 class LoyaltyScannerViewController: UIViewController {
 
@@ -17,11 +17,25 @@ class LoyaltyScannerViewController: UIViewController {
     var videoPreviewLayer: AVCaptureVideoPreviewLayer!
     var previewView = UIView()
 
+    let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
+
     var isLaunching = false
     var visionShouldProcessFrame = false
     var identificationApiShouldProcessFrame = false
     var isProcessingIdentificationApi = false
     var schemeIdentificationFailureCount = 0
+
+    var rectOfInterest = CGRect.zero
+
+    lazy var blurredView: UIVisualEffectView = {
+        return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
+    }()
+
+    lazy var guideImageView: UIImageView = {
+        let image = UIImage(named: "scanner_guide")
+        let imageView = UIImageView(image: image)
+        return imageView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +44,37 @@ class LoyaltyScannerViewController: UIViewController {
 
         view.addSubview(previewView)
 
+        // BLUR AND MASK
+        blurredView.frame = view.frame
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = view.frame
+        maskLayer.fillColor = UIColor.black.cgColor
+        // Setup rect of interest
+        let inset: CGFloat = floor(view.frame.size.width * 0.112)
+        let width = view.frame.size.width - (inset * 2)
+        let viewFrameRatio: CGFloat = 12 / 18
+        let height: CGFloat = floor(viewFrameRatio * width)
+        let maskedAreaFrame = CGRect(x: inset, y: 100, width: width, height: height)
+        rectOfInterest = maskedAreaFrame
+        let maskedPath = UIBezierPath(roundedRect: rectOfInterest, cornerRadius: 8)
+        maskedPath.append(UIBezierPath(rect: view.bounds))
+        maskLayer.fillRule = .evenOdd
+        maskLayer.path = maskedPath.cgPath
+        blurredView.layer.mask = maskLayer
+        view.addSubview(blurredView)
+
+        guideImageView.frame = rectOfInterest.inset(by: UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15))
+        view.addSubview(guideImageView)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         startScanning()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopScanning()
     }
 
     private func startScanning() {
@@ -69,9 +113,19 @@ class LoyaltyScannerViewController: UIViewController {
         }
     }
 
+    private func stopScanning() {
+        schemeScanningQueue.async { [weak self] in
+            self?.session.stopRunning()
+            guard let outputs = self?.session.outputs else { return }
+            for output in outputs {
+                self?.session.removeOutput(output)
+            }
+        }
+    }
+
     private func prepareSchemeScannerOutput() {
         captureSchemeOutput.alwaysDiscardsLateVideoFrames = true
-        captureSchemeOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue"))
+        captureSchemeOutput.setSampleBufferDelegate(self, queue: schemeScanningQueue)
     }
 
     private func performCaptureChecksForDevice(_ device: AVCaptureDevice) {
@@ -112,5 +166,7 @@ class LoyaltyScannerViewController: UIViewController {
 }
 
 extension LoyaltyScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
 
+    }
 }
