@@ -161,10 +161,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         }
         
         self.delegate = delegate
-        
-        
-        // TODO: - delete this
-        textField.text = field.title
     }
     
     func setWidth(_ width: CGFloat) {
