@@ -8,20 +8,32 @@
 
 import UIKit
 import AVFoundation
+import Vision
 
 class LoyaltyScannerViewController: UIViewController {
 
     var session = AVCaptureSession()
-    var captureSchemeOutput: AVCaptureVideoDataOutput?
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+    var captureSchemeOutput: AVCaptureVideoDataOutput!
+    var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+    var previewView = UIView()
 
-    var previewLayer = UIView()
+    var isLaunching = false
+    var visionShouldProcessFrame = false
+    var identificationApiShouldProcessFrame = false
+    var isProcessingIdentificationApi = false
+    var schemeIdentificationFailureCount = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
 
+        view.addSubview(previewView)
+
+        startScanning()
+    }
+
+    private func startScanning() {
         session.sessionPreset = .high
         guard let backCamera = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
@@ -37,11 +49,39 @@ class LoyaltyScannerViewController: UIViewController {
         videoPreviewLayer.videoGravity = .resizeAspect
         videoPreviewLayer.connection?.videoOrientation = .portrait
 
-        previewLayer.layer.addSublayer(videoPreviewLayer)
+        previewView.layer.addSublayer(videoPreviewLayer)
         videoPreviewLayer.frame = view.frame
+
+        if session.outputs.count == 0 {
+            if session.canAddOutput(captureSchemeOutput) {
+                session.addOutput(captureSchemeOutput)
+                prepareSchemeScannerOutput()
+            }
+        }
+
+        visionShouldProcessFrame = true
+        isLaunching = false
+        isProcessingIdentificationApi = false
+        schemeIdentificationFailureCount = 0
+
+        if !session.isRunning {
+            session.startRunning()
+        }
+    }
+
+    private func prepareSchemeScannerOutput() {
+        captureSchemeOutput.alwaysDiscardsLateVideoFrames = true
+        captureSchemeOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue"))
     }
 
     private func performCaptureChecksForDevice(_ device: AVCaptureDevice) {
+        do {
+            try device.lockForConfiguration()
+        } catch let error {
+            // TODO: Handle error
+            print(error.localizedDescription)
+        }
+
         if device.isFocusModeSupported(.continuousAutoFocus) {
             device.focusMode = .continuousAutoFocus
         }
@@ -68,5 +108,9 @@ class LoyaltyScannerViewController: UIViewController {
         device.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 10)
         device.unlockForConfiguration()
     }
+
+}
+
+extension LoyaltyScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
 
 }
