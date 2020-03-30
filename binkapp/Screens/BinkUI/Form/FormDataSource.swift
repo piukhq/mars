@@ -45,6 +45,7 @@ class FormDataSource: NSObject {
     
     private(set) var fields = [FormField]()
     private(set) var checkboxes = [CheckboxView]()
+    private(set) var cellTextFields = [UITextField]()
     weak var delegate: MultiDelegate?
     
     var fullFormIsValid: Bool {
@@ -441,7 +442,13 @@ extension FormDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
         
-        if let field = fields[safe: indexPath.item] { cell.configure(with: field, delegate: self) }
+        if let field = fields[safe: indexPath.item] {
+            cell.configure(with: field, delegate: self)
+    
+            if !cellTextFields.contains(cell.textField) {
+                cellTextFields.append(cell.textField)
+            }
+        }
         
         return cell
     }
@@ -450,5 +457,14 @@ extension FormDataSource: UICollectionViewDataSource {
 extension FormDataSource: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
         delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
+    }
+    
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, fieldShouldReturn: UITextField) {
+        if let currentIndex = cellTextFields.firstIndex(where: { $0 == fieldShouldReturn }) {
+            let nextIndex = currentIndex + 1
+            cellTextFields[nextIndex].becomeFirstResponder()
+        } else {
+            fieldShouldReturn.resignFirstResponder()
+        }
     }
 }

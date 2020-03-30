@@ -152,4 +152,13 @@ extension AuthAndAddViewController: FormCollectionViewCellDelegate {
         self.selectedCellYOrigin = cellOrigin.y
         selectedCellHeight = cell.isValidationLabelHidden ? cell.frame.size.height + Constants.cellErrorLabelSafeSpacing : cell.frame.size.height
     }
+    
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, fieldShouldReturn: UITextField) {
+        //        if let currentIndex = fields.indexOf(fieldShouldReturn) where currentIndex < fields.count - 1 {
+//        if let currentIndex = {
+//            fields[currentIndex + 1].becomeFirstResponder()
+//        } else {
+//            fieldShouldReturn.resignFirstResponder()
+//        }
+    }
 }
