@@ -444,10 +444,10 @@ extension FormDataSource: UICollectionViewDataSource {
         
         if let field = fields[safe: indexPath.item] {
             cell.configure(with: field, delegate: self)
-    
-            if !cellTextFields.contains(cell.textField) {
-                cellTextFields.append(cell.textField)
-            }
+        }
+                
+        if !cellTextFields.contains(cell.textField) {
+            cellTextFields.append(cell.textField)
         }
         
         return cell
@@ -460,7 +460,7 @@ extension FormDataSource: FormCollectionViewCellDelegate {
     }
     
     func formCollectionViewCell(_ cell: FormCollectionViewCell, fieldShouldReturn: UITextField) {
-        if let currentIndex = cellTextFields.firstIndex(where: { $0 == fieldShouldReturn }) {
+        if let currentIndex = cellTextFields.firstIndex(where: { $0 == fieldShouldReturn }), currentIndex < cellTextFields.count - 1 {
             let nextIndex = currentIndex + 1
             cellTextFields[nextIndex].becomeFirstResponder()
         } else {
