@@ -47,7 +47,7 @@ class FormDataSource: NSObject {
     
     private(set) var fields = [FormField]()
     private(set) var checkboxes = [CheckboxView]()
-    private var cellTextFields = [UITextField]()
+    private var cellTextFields = [Int: UITextField]()
     private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
     
@@ -449,9 +449,11 @@ extension FormDataSource: UICollectionViewDataSource {
             cell.configure(with: field, delegate: self)
         }
                 
-        if !cellTextFields.contains(cell.textField) {
-            cellTextFields.append(cell.textField)
-        }
+//        if !cellTextFields.contains(cell.textField) {
+//            cellTextFields.insert(cell.textField, at: indexPath.row)//(cell.textField)
+//        }
+        
+        cellTextFields[indexPath.row] = cell.textField
         
         return cell
     }
@@ -463,13 +465,13 @@ extension FormDataSource: FormCollectionViewCellDelegate {
     }
     
     func formCollectionViewCell(_ cell: FormCollectionViewCell, fieldShouldReturn: UITextField) {
-        if let currentIndex = cellTextFields.firstIndex(where: { $0 == fieldShouldReturn }), currentIndex < cellTextFields.count - 1 {
-            let nextIndex = currentIndex + 1
-            cellTextFields[nextIndex].becomeFirstResponder()
+//        if let currentIndex = cellTextFields.firstIndex(where: { $0 == fieldShouldReturn }), currentIndex < cellTextFields.count - 1 {
+        if let key = cellTextFields.first(where: {$0.value == fieldShouldReturn})?.key {
+            cellTextFields[key + 1]?.becomeFirstResponder()
         } else {
             let checkboxView = checkboxes[selectedCheckboxIndex]
             delegate?.formDataSource(self, scrollTo: checkboxView)
-            
+
             if selectedCheckboxIndex == checkboxes.count - 1 {
                 fieldShouldReturn.resignFirstResponder()
                 selectedCheckboxIndex = 0
