@@ -447,13 +447,8 @@ extension FormDataSource: UICollectionViewDataSource {
         
         if let field = fields[safe: indexPath.item] {
             cell.configure(with: field, delegate: self)
+            cellTextFields[indexPath.row] = cell.textField
         }
-                
-//        if !cellTextFields.contains(cell.textField) {
-//            cellTextFields.insert(cell.textField, at: indexPath.row)//(cell.textField)
-//        }
-        
-        cellTextFields[indexPath.row] = cell.textField
         
         return cell
     }
@@ -465,18 +460,19 @@ extension FormDataSource: FormCollectionViewCellDelegate {
     }
     
     func formCollectionViewCell(_ cell: FormCollectionViewCell, fieldShouldReturn: UITextField) {
-//        if let currentIndex = cellTextFields.firstIndex(where: { $0 == fieldShouldReturn }), currentIndex < cellTextFields.count - 1 {
         if let key = cellTextFields.first(where: {$0.value == fieldShouldReturn})?.key {
-            cellTextFields[key + 1]?.becomeFirstResponder()
-        } else {
-            let checkboxView = checkboxes[selectedCheckboxIndex]
-            delegate?.formDataSource(self, scrollTo: checkboxView)
-
-            if selectedCheckboxIndex == checkboxes.count - 1 {
-                fieldShouldReturn.resignFirstResponder()
-                selectedCheckboxIndex = 0
+            if let textField = cellTextFields[key + 1] {
+                textField.becomeFirstResponder()
             } else {
-                selectedCheckboxIndex += 1
+                let checkboxView = checkboxes[selectedCheckboxIndex]
+                delegate?.formDataSource(self, scrollTo: checkboxView)
+                
+                if selectedCheckboxIndex == checkboxes.count - 1 {
+                    fieldShouldReturn.resignFirstResponder()
+                    selectedCheckboxIndex = 0
+                } else {
+                    selectedCheckboxIndex += 1
+                }
             }
         }
     }

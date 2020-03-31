@@ -140,17 +140,16 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
     }
     
     func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView) {
-        let checkboxOrigin = collectionView.convert(view.frame.origin, to: view)
+        let checkboxOrigin = collectionView.convert(view.frame.origin, to: self.view)
         selectedCellYOrigin = checkboxOrigin.y
         selectedCellHeight = view.frame.height
         
         let visibleOffset = UIScreen.main.bounds.height - keyboardHeight
         let cellVisibleOffset = self.selectedCellYOrigin + self.selectedCellHeight
         
-        if cellVisibleOffset < visibleOffset {
-//            let actualOffset = self.stackScrollView.contentOffset.y
-//            let neededOffset = CGPoint(x: 0, y: actualOffset + cellVisibleOffset - visibleOffset)
-            let neededOffset = CGPoint(x: 0, y: checkboxOrigin.y)
+        if cellVisibleOffset > visibleOffset {
+            let actualOffset = self.stackScrollView.contentOffset.y
+            let neededOffset = CGPoint(x: 0, y: actualOffset + cellVisibleOffset - visibleOffset - keyboardHeight + Constants.postCollectionViewPadding)
             self.stackScrollView.setContentOffset(neededOffset, animated: true)
         }
     }
