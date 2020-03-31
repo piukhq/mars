@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 protocol PaymentCardDetailLinkLoyaltyCardCellDelegate: AnyObject {
     func linkedLoyaltyCardCell(_ cell: PaymentCardDetailLinkLoyaltyCardCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard)

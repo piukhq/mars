@@ -8,6 +8,7 @@
 import Foundation
 import Keys
 import Alamofire
+import AlamofireImage
 
 enum RequestURL: Equatable {
     case service

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class BrandTableViewCell: UITableViewCell {
     @IBOutlet private weak var logoImageView: UIImageView!
