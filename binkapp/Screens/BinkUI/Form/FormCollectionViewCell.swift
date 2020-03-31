@@ -100,6 +100,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     weak private var formField: FormField?
+    private var pickerSelectedChoice: String?
     var isValidationLabelHidden = true
     
     // MARK: - Initialisation
@@ -152,6 +153,8 @@ class FormCollectionViewCell: UICollectionViewCell {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
         }  else if case let .choice(data) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [data], delegate: self)
+            pickerSelectedChoice = data.first?.title
+            formField?.updateValue(pickerSelectedChoice)
         } else {
             textField.inputView = nil
         }
@@ -170,6 +173,10 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func accessoryDoneTouchUpInside() {
+        if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput {
+            multipleChoiceInputDidUpdate(newValue: multipleChoiceInput.fullContentString, backingData: multipleChoiceInput.backingData)
+        }
+        
         textField.resignFirstResponder()
         textFieldDidEndEditing(textField)
     }
@@ -189,6 +196,10 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.inputView?.isKind(of: FormMultipleChoiceInput.self) ?? false {
+            textField.text = pickerSelectedChoice
+        }
+        
         self.delegate?.formCollectionViewCell(self, didSelectField: textField)
     }
 }
@@ -199,6 +210,7 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
     }
     
     func multipleChoiceInputDidUpdate(newValue: String?, backingData: [Int]?) {
+        pickerSelectedChoice = newValue
         formField?.updateValue(newValue)
         textField.text = newValue
         if let options = backingData { formField?.pickerDidSelect(options) }

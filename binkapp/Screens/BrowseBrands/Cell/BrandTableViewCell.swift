@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class BrandTableViewCell: UITableViewCell {
     @IBOutlet private weak var logoImageView: UIImageView!
@@ -14,6 +13,7 @@ class BrandTableViewCell: UITableViewCell {
     @IBOutlet private weak var brandLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var separatorView: UIView!
+    @IBOutlet private weak var existingBrandIcon: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,7 +26,7 @@ class BrandTableViewCell: UITableViewCell {
         descriptionLabel.isHidden = true
     }
     
-    func configure(plan: CD_MembershipPlan, brandName: String) {
+    func configure(plan: CD_MembershipPlan, brandName: String, brandExists: Bool) {
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
 
         brandLabel.font = UIFont.subtitle
@@ -36,6 +36,8 @@ class BrandTableViewCell: UITableViewCell {
         descriptionLabel.isHidden = !isPLL
         descriptionLabel.font = UIFont.bodyTextSmall
         descriptionLabel.text = "can_be_linked_description".localized
+        
+        existingBrandIcon.isHidden = !brandExists
     }
     
     func hideSeparatorView() {
