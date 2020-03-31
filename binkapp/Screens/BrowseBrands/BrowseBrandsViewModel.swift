@@ -35,6 +35,10 @@ class BrowseBrandsViewModel {
             filterPlans()
         }
     }
+    
+    var existingMembershipCards: [String]? {
+        return Current.wallet.membershipCards?.map { ($0.membershipPlan?.account?.companyName ?? "")}
+    }
         
     init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
         self.repository = repository
