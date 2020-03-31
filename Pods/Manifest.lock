@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.0.0-rc.3)
+  - Alamofire (5.0.5)
   - AlamofireImage (4.0.0-beta.6):
     - Alamofire (~> 5.0.0-rc.3)
   - AlamofireNetworkActivityLogger (3.0.0):
@@ -131,14 +131,20 @@ DEPENDENCIES:
   - SwipeCellKit
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Alamofire
     - AlamofireImage
     - AlamofireNetworkActivityLogger
     - Crashlytics
     - CryptoSwift
     - DeepDiff
+    - Disk
+    - DTTJailbreakDetection
     - Fabric
+    - FacebookSDK
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKMarketingKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -149,27 +155,20 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
+    - iOSDropDown
+    - JWTDecode
     - KeychainAccess
     - M13Checkbox
     - nanopb
-    - SwipeCellKit
-  trunk:
-    - Disk
-    - DTTJailbreakDetection
-    - FacebookSDK
-    - FBSDKCoreKit
-    - FBSDKLoginKit
-    - FBSDKMarketingKit
-    - iOSDropDown
-    - JWTDecode
     - SwiftyRSA
+    - SwipeCellKit
 
 EXTERNAL SOURCES:
   Keys:
     :path: Pods/CocoaPodsKeys
 
 SPEC CHECKSUMS:
-  Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
+  Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
   AlamofireImage: edf3216fd178a89d63e681e609909d7ac98fa3c6
   AlamofireNetworkActivityLogger: 94e8a7d454a4a9800cef1d0c1d3699754493684b
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
