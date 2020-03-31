@@ -138,6 +138,22 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return true
     }
+    
+    func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView) {
+        let checkboxOrigin = collectionView.convert(view.frame.origin, to: view)
+        selectedCellYOrigin = checkboxOrigin.y
+        selectedCellHeight = view.frame.height
+        
+        let visibleOffset = UIScreen.main.bounds.height - keyboardHeight
+        let cellVisibleOffset = self.selectedCellYOrigin + self.selectedCellHeight
+        
+        if cellVisibleOffset < visibleOffset {
+//            let actualOffset = self.stackScrollView.contentOffset.y
+//            let neededOffset = CGPoint(x: 0, y: actualOffset + cellVisibleOffset - visibleOffset)
+            let neededOffset = CGPoint(x: 0, y: checkboxOrigin.y)
+            self.stackScrollView.setContentOffset(neededOffset, animated: true)
+        }
+    }
 }
 
 extension AuthAndAddViewController: LoyaltyButtonDelegate {

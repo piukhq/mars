@@ -15,6 +15,7 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField)
     func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
+    func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView)
 }
 
 extension FormDataSourceDelegate {
@@ -25,6 +26,7 @@ extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
         return false
     }
+    func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView) {}
 }
 
 enum AccessForm {
@@ -45,7 +47,8 @@ class FormDataSource: NSObject {
     
     private(set) var fields = [FormField]()
     private(set) var checkboxes = [CheckboxView]()
-    private(set) var cellTextFields = [UITextField]()
+    private var cellTextFields = [UITextField]()
+    private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
     
     var fullFormIsValid: Bool {
@@ -464,7 +467,15 @@ extension FormDataSource: FormCollectionViewCellDelegate {
             let nextIndex = currentIndex + 1
             cellTextFields[nextIndex].becomeFirstResponder()
         } else {
-            fieldShouldReturn.resignFirstResponder()
+            let checkboxView = checkboxes[selectedCheckboxIndex]
+            delegate?.formDataSource(self, scrollTo: checkboxView)
+            
+            if selectedCheckboxIndex == checkboxes.count - 1 {
+                fieldShouldReturn.resignFirstResponder()
+                selectedCheckboxIndex = 0
+            } else {
+                selectedCheckboxIndex += 1
+            }
         }
     }
 }
