@@ -103,7 +103,7 @@ class MainScreenRouter {
     }
 
     func toLoyaltyScanner() {
-        let viewController = LoyaltyScannerViewController()
+        let viewController = BarcodeScannerViewController()
         navController?.pushViewController(viewController, animated: true)
     }
 

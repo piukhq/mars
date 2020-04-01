@@ -168,11 +168,6 @@ class LoyaltyScannerViewController: UIViewController {
         device.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 10)
         device.unlockForConfiguration()
     }
-
-//    private func rectangleDetectionBlock(withImage image: UIImage) -> LoyaltyScannerDetectionBlock {
-//
-//    }
-
 }
 
 extension LoyaltyScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {

@@ -267,6 +267,7 @@
 		EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */; };
 		EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485576231D72E700FC9E5F /* ModalDismissable.swift */; };
 		EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */; };
+		EF48A0322433A6CB003FFB06 /* BarcodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48A0312433A6CB003FFB06 /* BarcodeScannerViewController.swift */; };
 		EF4B465E2343B5FF009A3651 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465D2343B5FF009A3651 /* RectangleView.swift */; };
 		EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */; };
 		EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */; };
@@ -742,6 +743,7 @@
 		EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModel.swift; sourceTree = "<group>"; };
 		EF485576231D72E700FC9E5F /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
+		EF48A0312433A6CB003FFB06 /* BarcodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerViewController.swift; sourceTree = "<group>"; };
 		EF4B465D2343B5FF009A3651 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
 		EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModel.swift; sourceTree = "<group>"; };
 		EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackUtil.swift; sourceTree = "<group>"; };
@@ -2183,6 +2185,7 @@
 			children = (
 				EF134CD224324AF100D0D06E /* SchemeIdentiferSample */,
 				EFD36689242CF24200C517CE /* LoyaltyScannerViewController.swift */,
+				EF48A0312433A6CB003FFB06 /* BarcodeScannerViewController.swift */,
 			);
 			path = LoyaltyScanner;
 			sourceTree = "<group>";
@@ -2824,6 +2827,7 @@
 				BD99D2DF2350E4BD00823FC4 /* SettingsSection.swift in Sources */,
 				BD475E6B23A255570071302A /* PlanDocumentDisplayModel.swift in Sources */,
 				EFA5F7262379A7C70027AB80 /* CD_PaymentCardAccountConsents.swift in Sources */,
+				EF48A0322433A6CB003FFB06 /* BarcodeScannerViewController.swift in Sources */,
 				EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */,
 				3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */,
 				EFB7ED612379CA4000B72D06 /* PLRRewardsHistoryViewController.swift in Sources */,
