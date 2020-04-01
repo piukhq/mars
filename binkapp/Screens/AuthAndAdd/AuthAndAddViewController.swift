@@ -140,7 +140,7 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
     }
     
     func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView) {
-        let checkboxOrigin = collectionView.convert(view.frame.origin, to: self.view)
+        let checkboxOrigin = stackScrollView.convert(view.frame.origin, to: self.view)
         selectedCellYOrigin = checkboxOrigin.y
         selectedCellHeight = view.frame.height
         
@@ -149,7 +149,7 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
         
         if cellVisibleOffset > visibleOffset {
             let actualOffset = self.stackScrollView.contentOffset.y
-            let neededOffset = CGPoint(x: 0, y: actualOffset + cellVisibleOffset - visibleOffset - keyboardHeight + Constants.postCollectionViewPadding)
+            let neededOffset = CGPoint(x: 0, y: actualOffset + cellVisibleOffset - visibleOffset)
             self.stackScrollView.setContentOffset(neededOffset, animated: true)
         }
     }

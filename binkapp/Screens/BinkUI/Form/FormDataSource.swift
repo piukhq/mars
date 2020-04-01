@@ -457,21 +457,42 @@ extension FormDataSource: UICollectionViewDataSource {
 extension FormDataSource: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
         delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
+    
+        if checkboxes.isEmpty {
+            didSelectField.returnKeyType = .done
+        } else {
+            didSelectField.returnKeyType = .next
+        }
     }
     
     func formCollectionViewCell(_ cell: FormCollectionViewCell, fieldShouldReturn: UITextField) {
-        if let key = cellTextFields.first(where: {$0.value == fieldShouldReturn})?.key {
-            if let textField = cellTextFields[key + 1] {
-                textField.becomeFirstResponder()
+        guard let key = cellTextFields.first(where: { $0.value == fieldShouldReturn })?.key else { return }
+        
+        if let textField = cellTextFields[key + 1] {
+            textField.becomeFirstResponder()
+        } else {
+            guard selectedCheckboxIndex < checkboxes.count else {
+                selectedCheckboxIndex = 0
+                fieldShouldReturn.resignFirstResponder()
+                return
+            }
+            
+            let checkboxView = checkboxes[selectedCheckboxIndex]
+            delegate?.formDataSource(self, scrollTo: checkboxView)
+            
+            if selectedCheckboxIndex == checkboxes.count {
+                fieldShouldReturn.resignFirstResponder()
+                selectedCheckboxIndex = 0
             } else {
-                let checkboxView = checkboxes[selectedCheckboxIndex]
-                delegate?.formDataSource(self, scrollTo: checkboxView)
-                
-                if selectedCheckboxIndex == checkboxes.count - 1 {
-                    fieldShouldReturn.resignFirstResponder()
-                    selectedCheckboxIndex = 0
-                } else {
-                    selectedCheckboxIndex += 1
+                selectedCheckboxIndex += 1
+            }
+        }
+        
+        if !checkboxes.isEmpty {
+            if selectedCheckboxIndex == checkboxes.count {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    fieldShouldReturn.returnKeyType = .done
+                    fieldShouldReturn.reloadInputViews()
                 }
             }
         }
