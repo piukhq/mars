@@ -89,13 +89,6 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             navController.present(alert, animated: true, completion: nil)
         case .zendesk:
             guard let navController = navigationController else { return }
-
-            // New support request
-//            let config = RequestUiConfiguration()
-//            config.subject = "Testing"
-//            config.tags = ["testing", "123"]
-//            let viewController = RequestUi.buildRequestUi(with: [config])
-
             // Articles
             let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi()
             navController.pushViewController(viewController, animated: true)
