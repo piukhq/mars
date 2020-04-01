@@ -8,6 +8,9 @@
 
 import UIKit
 
+import ZendeskCoreSDK
+import SupportSDK
+
 class DebugMenuTableViewController: UITableViewController, ModalDismissable {
     
     private let viewModel: DebugMenuViewModel
@@ -84,6 +87,11 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             guard let navController = navigationController else { return }
             let alert = debugMenuFactory.makeEnvironmentAlertController(navigationController: navController)
             navController.present(alert, animated: true, completion: nil)
+        case .zendesk:
+            guard let navController = navigationController else { return }
+            // Articles
+            let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi()
+            navController.pushViewController(viewController, animated: true)
         default:
             return
         }
