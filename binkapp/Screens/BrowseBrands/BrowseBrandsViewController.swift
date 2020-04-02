@@ -240,7 +240,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         
         let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
         
-        if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingMembershipCards?.contains(brandName) {
+        if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
             switch indexPath.section {
             case 0:
                 cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
