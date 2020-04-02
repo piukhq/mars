@@ -458,7 +458,7 @@ extension FormDataSource: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
         delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
     
-        if checkboxes.isEmpty {
+        if checkboxes.isEmpty && cellTextFields.first(where: { $0.value == didSelectField })?.key == cellTextFields.count - 1 {
             didSelectField.returnKeyType = .done
         } else {
             didSelectField.returnKeyType = .next
