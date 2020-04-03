@@ -150,7 +150,9 @@ class PLLScreenViewController: BinkTrackableViewController {
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
             floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            floatingButtonsView.heightAnchor.constraint(equalToConstant: floatingButtonsView.isSecondaryButtonHidden ? LayoutHelper.PrimarySecondaryButtonView.oneButtonHeight : LayoutHelper.PrimarySecondaryButtonView.twoButtonsHeight)
+            floatingButtonsView.heightAnchor.constraint(equalToConstant: floatingButtonsView.isSecondaryButtonHidden ?
+                LayoutHelper.PrimarySecondaryButtonView.oneButtonHeight :
+                LayoutHelper.PrimarySecondaryButtonView.twoButtonsHeight)
         ])
     }
 }
