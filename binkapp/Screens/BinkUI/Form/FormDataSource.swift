@@ -488,13 +488,9 @@ extension FormDataSource: FormCollectionViewCellDelegate {
             }
         }
         
-        if !checkboxes.isEmpty {
-            if selectedCheckboxIndex == checkboxes.count {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    fieldShouldReturn.returnKeyType = .done
-                    fieldShouldReturn.reloadInputViews()
-                }
-            }
+        if !checkboxes.isEmpty && selectedCheckboxIndex == checkboxes.count {
+                fieldShouldReturn.returnKeyType = .done
+                fieldShouldReturn.reloadInputViews()
         }
     }
 }
