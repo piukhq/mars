@@ -9,6 +9,48 @@
 import UIKit
 
 class LoyaltyScannerWidgetView: CustomView {
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var explainerLabel: UILabel!
+
+    private var state: WidgetState = .enterManually
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configure()
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        configure()
+    }
+
+    func scanError() {
+        layer.addBinkAnimation(.shake)
+        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
+        setState(.error)
+    }
+
+    private func configure() {
+        clipsToBounds = true
+        layer.cornerRadius = 4
+
+        titleLabel.font = .subtitle
+        explainerLabel.font = .bodyTextLarge
+        explainerLabel.numberOfLines = 2
+
+        setState(state)
+    }
+
+    private func setState(_ state: WidgetState) {
+        titleLabel.text = state.title
+        explainerLabel.text = state.explainerText
+        imageView.image = UIImage(named: state.imageName)
+        self.state = state
+    }
+}
+
+extension LoyaltyScannerWidgetView {
     enum WidgetState {
         case enterManually
         case error
@@ -39,49 +81,5 @@ class LoyaltyScannerWidgetView: CustomView {
                 return "loyalty_scanner_error"
             }
         }
-    }
-
-    @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var explainerLabel: UILabel!
-
-    private var state: WidgetState = .enterManually
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configure()
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configure()
-    }
-
-    func scanError() {
-        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
-        animation.timingFunction = CAMediaTimingFunction(name: .linear)
-        animation.duration = 0.6
-        animation.speed = 0.8
-        animation.values = [0.9, 1.1, 0.9, 1.1, 0.95, 1.05, 0.98, 1.02, 1.0]
-        layer.add(animation, forKey: "shake")
-        setState(.error)
-    }
-
-    private func configure() {
-        clipsToBounds = true
-        layer.cornerRadius = 4
-
-        titleLabel.font = .subtitle
-        explainerLabel.font = .bodyTextLarge
-        explainerLabel.numberOfLines = 2
-
-        setState(state)
-    }
-
-    private func setState(_ state: WidgetState) {
-        titleLabel.text = state.title
-        explainerLabel.text = state.explainerText
-        imageView.image = UIImage(named: state.imageName)
-        self.state = state
     }
 }

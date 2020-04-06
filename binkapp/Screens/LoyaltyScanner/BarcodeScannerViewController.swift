@@ -189,7 +189,6 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         if let object = metadataObjects.first {
             guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            HapticFeedbackUtil.giveFeedback(forType: .impact(style: .medium))
             print(stringValue)
             DispatchQueue.main.async { [weak self] in
                 self?.widgetView.scanError()

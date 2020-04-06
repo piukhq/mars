@@ -405,6 +405,7 @@
 		EFCAF9212371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCAF91F2371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift */; };
 		EFCAF9222371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFCAF9202371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib */; };
 		EFD602E8243B8627003AC746 /* LoyaltyScannerWidgetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFD602E7243B8627003AC746 /* LoyaltyScannerWidgetView.xib */; };
+		EFD602EC243B9454003AC746 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD602EB243B9454003AC746 /* Animations.swift */; };
 		EFD8653B232FCDD800036C17 /* ReasonCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD8653A232FCDD800036C17 /* ReasonCode.swift */; };
 		EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDEBDF62408279900CB755E /* SecureUtility.swift */; };
 		EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */; };
@@ -883,6 +884,7 @@
 		EFCAF91F2371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardDetailAddLoyaltyCardCell.swift; sourceTree = "<group>"; };
 		EFCAF9202371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailAddLoyaltyCardCell.xib; sourceTree = "<group>"; };
 		EFD602E7243B8627003AC746 /* LoyaltyScannerWidgetView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoyaltyScannerWidgetView.xib; sourceTree = "<group>"; };
+		EFD602EB243B9454003AC746 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		EFD8653A232FCDD800036C17 /* ReasonCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonCode.swift; sourceTree = "<group>"; };
 		EFDEBDF62408279900CB755E /* SecureUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtility.swift; sourceTree = "<group>"; };
 		EFE949462331424E00E29AA4 /* LinkingSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkingSupportModel.swift; sourceTree = "<group>"; };
@@ -1277,6 +1279,7 @@
 		3CF054D322FDABCA0069E98A /* BinkUI */ = {
 			isa = PBXGroup;
 			children = (
+				EFD602EA243B9446003AC746 /* Animations */,
 				EFA81012240404F00000D21D /* Jailbroken */,
 				EF2E8823233A6FB000F678F3 /* Wallets */,
 				BDB0186A232D95EC00BFFA18 /* Form */,
@@ -2188,6 +2191,14 @@
 			path = LoyaltyScanner;
 			sourceTree = "<group>";
 		};
+		EFD602EA243B9446003AC746 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				EFD602EB243B9454003AC746 /* Animations.swift */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		EFDEBDF52408277F00CB755E /* Security */ = {
 			isa = PBXGroup;
 			children = (
@@ -2770,6 +2781,7 @@
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
 				3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */,
+				EFD602EC243B9454003AC746 /* Animations.swift in Sources */,
 				BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */,
 				EFA5F7372379A7C70027AB80 /* CD_FieldChoice.swift in Sources */,
 				3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */,
