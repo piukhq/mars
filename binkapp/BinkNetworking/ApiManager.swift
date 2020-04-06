@@ -232,7 +232,7 @@ class ApiManager {
     
     private func responseHandler<Resp: Decodable>(response: AFDataResponse <Any>, authRequired: Bool, isUserDriven: Bool, onSuccess: (Resp) -> (), onError: (Error) -> ()) {
         
-        if case let .failure(error) = response.result, error.isServerTrustEvaluationError {
+        if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
             // SSL/TLS Pinning Failure
             NotificationCenter.default.post(name: .didFailServerTrustEvaluation, object: nil)
             onError(error)
