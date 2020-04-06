@@ -28,15 +28,16 @@ class BarcodeScannerViewController: UIViewController {
         return imageView
     }()
 
-    @objc func setRectOfInterest() {
-//        captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
-    }
+    lazy var widgetView: LoyaltyScannerWidgetView = {
+        let widgetPadding: CGFloat = 25
+        let widget = LoyaltyScannerWidgetView(frame: CGRect(x: widgetPadding, y: 300, width: view.frame.width - (widgetPadding * 2), height: 100))
+        widget.translatesAutoresizingMaskIntoConstraints = false
+        return widget
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
-        NotificationCenter.default.addObserver(self, selector: #selector(setRectOfInterest), name: NSNotification.Name.AVCaptureInputPortFormatDescriptionDidChange, object: nil)
 
         view.addSubview(previewView)
 
@@ -61,6 +62,8 @@ class BarcodeScannerViewController: UIViewController {
 
         guideImageView.frame = rectOfInterest.inset(by: UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15))
         view.addSubview(guideImageView)
+
+        view.addSubview(widgetView)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -107,7 +110,6 @@ class BarcodeScannerViewController: UIViewController {
                     .interleaved2of5,
                     .code39
                 ]
-//                captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
             }
         }
 
