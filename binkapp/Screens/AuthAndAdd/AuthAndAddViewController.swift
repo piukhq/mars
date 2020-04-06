@@ -139,10 +139,12 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
         return true
     }
     
-    func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView) {
+    func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView, shouldChangeOffset: Bool) {
         let checkboxOrigin = stackScrollView.convert(view.frame.origin, to: self.view)
         selectedCellYOrigin = checkboxOrigin.y
         selectedCellHeight = view.frame.height
+        
+        guard shouldChangeOffset == true else { return }
         
         // Checking what is the lowest point in the screen with the keyboard open
         let visibleOffset = UIScreen.main.bounds.height - keyboardHeight

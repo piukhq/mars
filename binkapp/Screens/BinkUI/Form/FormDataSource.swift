@@ -15,7 +15,7 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField)
     func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
-    func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView)
+    func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView, shouldChangeOffset: Bool)
 }
 
 extension FormDataSourceDelegate {
@@ -26,7 +26,7 @@ extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
         return false
     }
-    func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView) {}
+    func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView, shouldChangeOffset: Bool) {}
 }
 
 enum AccessForm {
@@ -478,7 +478,6 @@ extension FormDataSource: FormCollectionViewCellDelegate {
             }
             
             let checkboxView = checkboxes[selectedCheckboxIndex]
-            delegate?.formDataSource(self, scrollTo: checkboxView)
             
             if selectedCheckboxIndex == checkboxes.count {
                 fieldShouldReturn.resignFirstResponder()
@@ -486,11 +485,14 @@ extension FormDataSource: FormCollectionViewCellDelegate {
             } else {
                 selectedCheckboxIndex += 1
             }
-        }
-        
-        if !checkboxes.isEmpty && selectedCheckboxIndex == checkboxes.count {
+            
+            if !checkboxes.isEmpty && selectedCheckboxIndex == checkboxes.count {
+                delegate?.formDataSource(self, scrollTo: checkboxView, shouldChangeOffset: false)
                 fieldShouldReturn.returnKeyType = .done
                 fieldShouldReturn.reloadInputViews()
+            } else {
+                delegate?.formDataSource(self, scrollTo: checkboxView, shouldChangeOffset: true)
+            }
         }
     }
 }
