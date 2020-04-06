@@ -24,7 +24,6 @@ pod 'Disk'
 pod 'DTTJailbreakDetection'
 pod 'JWTDecode', '~> 2.4'
 pod 'SwiftyRSA'
-pod 'OpenCV', '2.4.9'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
