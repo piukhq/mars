@@ -2,30 +2,21 @@
 //  BarcodeScannerViewController.swift
 //  binkapp
 //
-//  Created by Nick Farrant on 31/03/2020.
+//  Created by Nick Farrant on 02/04/2020.
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
 import UIKit
-import Vision
 import AVFoundation
 
 class BarcodeScannerViewController: UIViewController {
 
     var session = AVCaptureSession()
-    var captureSchemeOutput: AVCaptureVideoDataOutput!
+    var captureOutput: AVCaptureMetadataOutput!
     var videoPreviewLayer: AVCaptureVideoPreviewLayer!
     var previewView = UIView()
-
     let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
-
-    var isLaunching = false
-    var visionShouldProcessFrame = false
-    static let visionRateLimit = 0.2
-
-    var schemeIdentifierSample: BINKLoyaltyScannerSchemeIdentifierSample!
     var rectOfInterest = CGRect.zero
-    var viewFrame = CGRect.zero
 
     lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
@@ -37,10 +28,15 @@ class BarcodeScannerViewController: UIViewController {
         return imageView
     }()
 
+    @objc func setRectOfInterest() {
+//        captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .white
+
+        NotificationCenter.default.addObserver(self, selector: #selector(setRectOfInterest), name: NSNotification.Name.AVCaptureInputPortFormatDescriptionDidChange, object: nil)
 
         view.addSubview(previewView)
 
@@ -56,7 +52,6 @@ class BarcodeScannerViewController: UIViewController {
         let height: CGFloat = floor(viewFrameRatio * width)
         let maskedAreaFrame = CGRect(x: inset, y: 100, width: width, height: height)
         rectOfInterest = maskedAreaFrame
-        viewFrame = view.frame
         let maskedPath = UIBezierPath(roundedRect: rectOfInterest, cornerRadius: 8)
         maskedPath.append(UIBezierPath(rect: view.bounds))
         maskLayer.fillRule = .evenOdd
@@ -83,7 +78,8 @@ class BarcodeScannerViewController: UIViewController {
         guard let backCamera = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
         performCaptureChecksForDevice(backCamera)
-        captureSchemeOutput = AVCaptureVideoDataOutput()
+        captureOutput = AVCaptureMetadataOutput()
+//        captureOutput.rectOfInterest = rectOfInterest
 
         if session.canAddInput(input) {
             session.addInput(input)
@@ -98,18 +94,28 @@ class BarcodeScannerViewController: UIViewController {
         videoPreviewLayer.frame = view.frame
 
         if session.outputs.count == 0 {
-            if session.canAddOutput(captureSchemeOutput) {
-                session.addOutput(captureSchemeOutput)
-                prepareSchemeScannerOutput()
+            if session.canAddOutput(captureOutput) {
+                session.addOutput(captureOutput)
+                captureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
+                captureOutput.metadataObjectTypes = [
+                    .qr,
+                    .code128,
+                    .aztec,
+                    .pdf417,
+                    .ean13,
+                    .dataMatrix,
+                    .interleaved2of5,
+                    .code39
+                ]
+//                captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
             }
         }
-
-        visionShouldProcessFrame = true
-        isLaunching = false
 
         if !session.isRunning {
             session.startRunning()
         }
+
+        captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
     }
 
     private func stopScanning() {
@@ -120,11 +126,6 @@ class BarcodeScannerViewController: UIViewController {
                 self?.session.removeOutput(output)
             }
         }
-    }
-
-    private func prepareSchemeScannerOutput() {
-        captureSchemeOutput.alwaysDiscardsLateVideoFrames = true
-        captureSchemeOutput.setSampleBufferDelegate(self, queue: schemeScanningQueue)
     }
 
     private func performCaptureChecksForDevice(_ device: AVCaptureDevice) {
@@ -161,62 +162,19 @@ class BarcodeScannerViewController: UIViewController {
         device.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 10)
         device.unlockForConfiguration()
     }
-
 }
 
-extension BarcodeScannerViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        // TODO: Get output from rectOfInterest
-
-        // Convert output to image
-        let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
-        let ciimage : CIImage = CIImage(cvPixelBuffer: imageBuffer)
-        let image : UIImage = self.convert(cmage: ciimage)
-
-        guard visionShouldProcessFrame == true else { return }
-        visionShouldProcessFrame = false
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            self?.visionShouldProcessFrame = true
-        }
-
-        let barcodeRequest = VNDetectBarcodesRequest { (request, error) in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-
-            DispatchQueue.main.async {
-                if let bestResult = request.results?.first as? VNBarcodeObservation,
-                    let payload = bestResult.payloadStringValue {
-                    print(payload)
-                } else {
-
-                }
+extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        session.stopRunning()
+        if let object = metadataObjects.first {
+            guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
+            guard let stringValue = readableObject.stringValue else { return }
+            HapticFeedbackUtil.giveFeedback(forType: .impact(style: .medium))
+            print(stringValue)
+            DispatchQueue.main.async { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
             }
         }
-
-        // Convert image to CIImage. Do we need this if we already had the ci image?
-        guard let ciImage = CIImage(image: image) else {
-            fatalError("Unable to create \(CIImage.self) from \(image).")
-        }
-
-        // Perform the classification request on a background thread.
-        DispatchQueue.global(qos: .userInitiated).async {
-            let handler = VNImageRequestHandler(ciImage: ciImage, orientation: CGImagePropertyOrientation.up, options: [:])
-
-            do {
-                try handler.perform([barcodeRequest])
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        }
-    }
-
-    func convert(cmage:CIImage) -> UIImage {
-         let context:CIContext = CIContext.init(options: nil)
-         let cgImage:CGImage = context.createCGImage(cmage, from: cmage.extent)!
-         let image:UIImage = UIImage.init(cgImage: cgImage)
-         return image
     }
 }
