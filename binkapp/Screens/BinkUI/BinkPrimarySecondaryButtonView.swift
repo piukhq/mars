@@ -59,7 +59,7 @@ extension LayoutHelper {
     struct PrimarySecondaryButtonView {
         static let height: CGFloat = (PillButton.height * 2) + PillButton.verticalSpacing + PillButton.bottomPadding
         static let bottomPadding: CGFloat = 16
-        static let oneButtonHeight: CGFloat = 68
-        static let twoButtonsHeight: CGFloat = 145
+        static let oneButtonHeight: CGFloat = 119
+        static let twoButtonsHeight: CGFloat = 179
     }
 }
