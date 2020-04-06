@@ -28,9 +28,16 @@ class BarcodeScannerViewController: UIViewController {
         return imageView
     }()
 
+    lazy var explainerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Hold card here. It will scan automatically."
+        label.font = .bodyTextLarge
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     lazy var widgetView: LoyaltyScannerWidgetView = {
-        let widgetPadding: CGFloat = 25
-        let widget = LoyaltyScannerWidgetView(frame: CGRect(x: widgetPadding, y: 300, width: view.frame.width - (widgetPadding * 2), height: 100))
+        let widget = LoyaltyScannerWidgetView()
         widget.translatesAutoresizingMaskIntoConstraints = false
         return widget
     }()
@@ -63,7 +70,18 @@ class BarcodeScannerViewController: UIViewController {
         guideImageView.frame = rectOfInterest.inset(by: UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15))
         view.addSubview(guideImageView)
 
+        view.addSubview(explainerLabel)
         view.addSubview(widgetView)
+        NSLayoutConstraint.activate([
+            explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: 25),
+            explainerLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
+            explainerLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
+            explainerLabel.heightAnchor.constraint(equalToConstant: 22),
+            widgetView.topAnchor.constraint(equalTo: explainerLabel.bottomAnchor, constant: 30),
+            widgetView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
+            widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
+            widgetView.heightAnchor.constraint(equalToConstant: 100),
+        ])
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +100,6 @@ class BarcodeScannerViewController: UIViewController {
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
         performCaptureChecksForDevice(backCamera)
         captureOutput = AVCaptureMetadataOutput()
-//        captureOutput.rectOfInterest = rectOfInterest
 
         if session.canAddInput(input) {
             session.addInput(input)
@@ -175,7 +192,8 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             HapticFeedbackUtil.giveFeedback(forType: .impact(style: .medium))
             print(stringValue)
             DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
+                self?.widgetView.scanError()
+//                self?.navigationController?.popViewController(animated: true)
             }
         }
     }

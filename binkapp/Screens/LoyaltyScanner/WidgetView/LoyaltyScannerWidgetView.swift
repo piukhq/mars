@@ -8,49 +8,80 @@
 
 import UIKit
 
-class LoyaltyScannerWidgetView: UIView {
+class LoyaltyScannerWidgetView: CustomView {
+    enum WidgetState {
+        case enterManually
+        case error
 
-    lazy var imageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 20, y: 20, width: 48, height: 48))
-        imageView.image = UIImage(named: "attention")
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
+        var title: String {
+            switch self {
+            case .enterManually:
+                return "Enter manually"
+            case .error:
+                return "Unrecognised barcode"
+            }
+        }
 
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Subtitle"
-        label.font = .subtitle
-        return label
-    }()
+        var explainerText: String {
+            switch self {
+            case .enterManually:
+                return "You can also type in the card details yourself."
+            case .error:
+                return "Please try adding the card manually."
+            }
+        }
 
-    lazy var explainerLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 2
-        label.text = """
-        One line of explainer text
-        Second line of explainer text
-        """
-        label.font = UIFont(name: "NunitoSans-Light", size: 17.0) ?? UIFont()
-        return label
-    }()
+        var imageName: String {
+            switch self {
+            case .enterManually:
+                return "loyalty_scanner_enter_manually"
+            case .error:
+                return "loyalty_scanner_error"
+            }
+        }
+    }
+
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var explainerLabel: UILabel!
+
+    private var state: WidgetState = .enterManually
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        configure()
+    }
+
+    func scanError() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.duration = 0.6
+        animation.speed = 0.8
+        animation.values = [0.9, 1.1, 0.9, 1.1, 0.95, 1.05, 0.98, 1.02, 1.0]
+        layer.add(animation, forKey: "shake")
+        setState(.error)
     }
 
     private func configure() {
-        backgroundColor = .white
-        addSubview(imageView)
-        addSubview(titleLabel)
-        addSubview(explainerLabel)
-        titleLabel.frame = CGRect(x: 84, y: 17, width: frame.width - (84 + 20), height: 22)
-        explainerLabel.frame = CGRect(x: 84, y: 40, width: frame.width - (84 + 20), height: 44)
+        clipsToBounds = true
+        layer.cornerRadius = 4
+
+        titleLabel.font = .subtitle
+        explainerLabel.font = .bodyTextLarge
+        explainerLabel.numberOfLines = 2
+
+        setState(state)
     }
 
+    private func setState(_ state: WidgetState) {
+        titleLabel.text = state.title
+        explainerLabel.text = state.explainerText
+        imageView.image = UIImage(named: state.imageName)
+        self.state = state
+    }
 }
