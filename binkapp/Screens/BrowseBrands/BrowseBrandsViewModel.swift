@@ -36,8 +36,8 @@ class BrowseBrandsViewModel {
         }
     }
     
-    var existingMembershipCards: [String]? {
-        return Current.wallet.membershipCards?.map { ($0.membershipPlan?.account?.companyName ?? "")}
+    var existingCardsPlanIDs: [String]? {
+        return Current.wallet.membershipCards?.map { ($0.membershipPlan?.id ?? "")}
     }
         
     init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
