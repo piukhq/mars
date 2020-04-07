@@ -144,4 +144,8 @@ extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcodeForMembershipPlan membershipPlan: CD_MembershipPlan) {
         viewModel.toAddAuth(membershipPlan: membershipPlan)
     }
+
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController) {
+        viewModel.toBrowseBrandsScreen()
+    }
 }

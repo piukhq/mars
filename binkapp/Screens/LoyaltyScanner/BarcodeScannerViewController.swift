@@ -16,13 +16,18 @@ struct BarcodeScannerViewModel {
         self.router = router
     }
 
-    func toAddAuth(membershipPlan: CD_MembershipPlan) {
+    func addCardForPlan(_ membershipPlan: CD_MembershipPlan) {
         router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
+    }
+
+    func enterManually() {
+        router.toBrowseBrandsViewController()
     }
 }
 
 protocol BarcodeScannerViewControllerDelegate: AnyObject {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcodeForMembershipPlan membershipPlan: CD_MembershipPlan)
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController)
 }
 
 class BarcodeScannerViewController: UIViewController {
@@ -56,6 +61,7 @@ class BarcodeScannerViewController: UIViewController {
 
     lazy var widgetView: LoyaltyScannerWidgetView = {
         let widget = LoyaltyScannerWidgetView()
+        widget.addTarget(self, selector: #selector(enterManually))
         widget.translatesAutoresizingMaskIntoConstraints = false
         return widget
     }()
@@ -75,10 +81,6 @@ class BarcodeScannerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] _ in
-            self?.widgetView.scanError()
-        })
 
         view.addSubview(previewView)
 
@@ -169,6 +171,10 @@ class BarcodeScannerViewController: UIViewController {
         }
 
         captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
+
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] _ in
+            self?.widgetView.scanError()
+        })
     }
 
     private func stopScanning() {
@@ -178,6 +184,7 @@ class BarcodeScannerViewController: UIViewController {
             for output in outputs {
                 self?.session.removeOutput(output)
             }
+            self?.timer?.invalidate()
         }
     }
 
@@ -215,6 +222,15 @@ class BarcodeScannerViewController: UIViewController {
         device.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 10)
         device.unlockForConfiguration()
     }
+
+    @objc private func enterManually() {
+        // Option 1: push browse brands
+//        viewModel.enterManually()
+
+        // Option 2: pop and push
+        navigationController?.popViewController(animated: true)
+        delegate?.barcodeScannerViewControllerShouldEnterManually(self)
+    }
 }
 
 extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
@@ -227,8 +243,6 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             guard let stringValue = readableObject.stringValue else { return }
             print(stringValue)
 
-            // TODO: Enable widget CTA
-
             // TODO: Check string value against local plans' barcode regex
             // TODO: If plan found from regex, pop to adding options and push to add auth for plan id
             guard let plans = Current.wallet.membershipPlans else { return }
@@ -240,7 +254,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 // Option 1: Push from scanner to add auth
-//                self.viewModel.toAddAuth(membershipPlan: harveyNicholsPlan)
+//                self.viewModel.addCardForPlan(harveyNicholsPlan)
 
                 // Option 2: Pop and push
                 self.navigationController?.popViewController(animated: true)

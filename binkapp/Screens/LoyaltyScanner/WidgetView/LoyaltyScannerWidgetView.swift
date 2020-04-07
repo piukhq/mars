@@ -31,6 +31,10 @@ class LoyaltyScannerWidgetView: CustomView {
         setState(.error)
     }
 
+    func addTarget(_ target: Any?, selector: Selector?) {
+        addGestureRecognizer(UITapGestureRecognizer(target: target, action: selector))
+    }
+
     private func configure() {
         clipsToBounds = true
         layer.cornerRadius = 4
