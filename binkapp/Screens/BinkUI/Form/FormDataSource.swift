@@ -457,40 +457,40 @@ extension FormDataSource: UICollectionViewDataSource {
 extension FormDataSource: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
         delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
-    
+
         if checkboxes.isEmpty && cellTextFields.first(where: { $0.value == didSelectField })?.key == cellTextFields.count - 1 {
             didSelectField.returnKeyType = .done
         } else {
             didSelectField.returnKeyType = .next
-//            selectedCheckboxIndex = 0
+            selectedCheckboxIndex = 0
         }
     }
     
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField: UITextField) {
-        guard let key = cellTextFields.first(where: { $0.value == shouldResignTextField })?.key else { return }
-        
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {
+        guard let key = cellTextFields.first(where: { $0.value == textField })?.key else { return }
+
         if let nextTextField = cellTextFields[key + 1] {
             nextTextField.becomeFirstResponder()
         } else {
             guard selectedCheckboxIndex < checkboxes.count else {
                 selectedCheckboxIndex = 0
-                shouldResignTextField.resignFirstResponder()
+                textField.resignFirstResponder()
                 return
             }
-            
+
             let checkboxView = checkboxes[selectedCheckboxIndex]
-            
+
             if selectedCheckboxIndex == checkboxes.count {
-                shouldResignTextField.resignFirstResponder()
+                textField.resignFirstResponder()
                 selectedCheckboxIndex = 0
             } else {
                 selectedCheckboxIndex += 1
             }
-            
+
             if !checkboxes.isEmpty && selectedCheckboxIndex == checkboxes.count {
                 delegate?.formDataSource(self, scrollTo: checkboxView, shouldChangeOffset: false)
-                shouldResignTextField.returnKeyType = .done
-                shouldResignTextField.reloadInputViews()
+                textField.returnKeyType = .done
+                textField.reloadInputViews()
             } else {
                 delegate?.formDataSource(self, scrollTo: checkboxView, shouldChangeOffset: true)
             }

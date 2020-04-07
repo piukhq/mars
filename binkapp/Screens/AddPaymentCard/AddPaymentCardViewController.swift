@@ -244,7 +244,7 @@ extension AddPaymentCardViewController: FormCollectionViewCellDelegate {
         selectedCellHeight = cell.isValidationLabelHidden ? cell.frame.size.height + Constants.cellErrorLabelSafeSpacing : cell.frame.size.height
     }
     
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField: UITextField) {}
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
 }
 
 private extension Selector {
