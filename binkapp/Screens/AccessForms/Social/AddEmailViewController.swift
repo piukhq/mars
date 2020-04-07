@@ -68,7 +68,7 @@ extension AddEmailViewController: FormDataSourceDelegate {
 
 extension AddEmailViewController: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, fieldShouldReturn: UITextField) {}
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField: UITextField) {}
 }
 
 private extension Selector {

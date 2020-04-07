@@ -177,5 +177,5 @@ extension AuthAndAddViewController: FormCollectionViewCellDelegate {
         selectedCellHeight = cell.isValidationLabelHidden ? cell.frame.size.height + Constants.cellErrorLabelSafeSpacing : cell.frame.size.height
     }
     
-    func formCollectionViewCell(_ cell: FormCollectionViewCell, fieldShouldReturn: UITextField) {}
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField: UITextField) {}
 }
