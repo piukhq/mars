@@ -18,18 +18,18 @@ class BinkPrimarySecondaryButtonView: CustomView {
     @IBOutlet weak var secondaryButton: BinkTrackableButton!
     weak var delegate: BinkPrimarySecondaryButtonViewDelegate?
 
-    private var isFloating: Bool = false
+    private var hasGradient: Bool = false
     var isSecondaryButtonHidden: Bool = false
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        if isFloating {
+        if hasGradient {
             setGradientBackground(firstColor: .init(white: 255, alpha: 0), secondColor: .init(white: 255, alpha: 1), orientation: .vertical, roundedCorner: false)
         }
     }
     
-    func configure(primaryButtonTitle: String?, secondaryButtonTitle: String?, floating: Bool = false) {
-        isFloating = floating
+    func configure(primaryButtonTitle: String?, secondaryButtonTitle: String?, hasGradient: Bool = false) {
+        self.hasGradient = hasGradient
         primaryButton.setTitle(primaryButtonTitle, for: .normal)
         primaryButton.isHidden = primaryButtonTitle == nil
 
@@ -59,7 +59,7 @@ extension LayoutHelper {
     struct PrimarySecondaryButtonView {
         static let height: CGFloat = (PillButton.height * 2) + PillButton.verticalSpacing + PillButton.bottomPadding
         static let bottomPadding: CGFloat = 16
-        static let oneButtonHeight: CGFloat = 119
+        static let oneButtonHeight: CGFloat = 102
         static let twoButtonsHeight: CGFloat = 179
     }
 }

@@ -251,9 +251,9 @@ private extension PLLScreenViewController {
         stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
         switch journey {
         case .newCard:
-            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: viewModel.hasPaymentCards ? nil : "pll_screen_add_cards_button_title".localized, floating: true)
+            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: viewModel.hasPaymentCards ? nil : "pll_screen_add_cards_button_title".localized, hasGradient: true)
         case .existingCard:
-            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil, floating: true)
+            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil, hasGradient: true)
         }
     }
     

@@ -71,7 +71,7 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
         textView.attributedText = viewModel.text
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
         
-        floatingButtonsContainer.configure(primaryButtonTitle: primary, secondaryButtonTitle: secondary, floating: floatingButtons)
+        floatingButtonsContainer.configure(primaryButtonTitle: primary, secondaryButtonTitle: secondary, hasGradient: floatingButtons)
 
         floatingButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
         textView.translatesAutoresizingMaskIntoConstraints = false
