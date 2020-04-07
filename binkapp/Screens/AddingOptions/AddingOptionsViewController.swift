@@ -106,7 +106,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
         let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         switch status {
         case .authorized:
-            viewModel.toLoyaltyScanner()
+            viewModel.toLoyaltyScanner(delegate: self)
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { (granted) in
                 if granted {
@@ -137,5 +137,11 @@ class AddingOptionsViewController: BinkTrackableViewController {
         alert.addAction(allowAction)
         alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcodeForMembershipPlan membershipPlan: CD_MembershipPlan) {
+        viewModel.toAddAuth(membershipPlan: membershipPlan)
     }
 }

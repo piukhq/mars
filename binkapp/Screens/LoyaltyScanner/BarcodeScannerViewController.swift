@@ -9,7 +9,24 @@
 import UIKit
 import AVFoundation
 
+struct BarcodeScannerViewModel {
+    private let router: MainScreenRouter
+
+    init(router: MainScreenRouter) {
+        self.router = router
+    }
+
+    func toAddAuth(membershipPlan: CD_MembershipPlan) {
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
+    }
+}
+
+protocol BarcodeScannerViewControllerDelegate: AnyObject {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcodeForMembershipPlan membershipPlan: CD_MembershipPlan)
+}
+
 class BarcodeScannerViewController: UIViewController {
+    private weak var delegate: BarcodeScannerViewControllerDelegate?
 
     var session = AVCaptureSession()
     var captureOutput: AVCaptureMetadataOutput!
@@ -42,6 +59,18 @@ class BarcodeScannerViewController: UIViewController {
         widget.translatesAutoresizingMaskIntoConstraints = false
         return widget
     }()
+
+    private let viewModel: BarcodeScannerViewModel
+
+    init(viewModel: BarcodeScannerViewModel, delegate: BarcodeScannerViewControllerDelegate?) {
+        self.viewModel = viewModel
+        self.delegate = delegate
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,20 +220,31 @@ class BarcodeScannerViewController: UIViewController {
 extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         session.stopRunning()
+        timer?.invalidate()
+
         if let object = metadataObjects.first {
             guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
             print(stringValue)
 
-//            guard let plans = Current.wallet.membershipPlans else { return }
-//            guard let mockedPlanForBarcode = plans.filter { $0.account?.companyName == "Harvey Nichols" }(tha)
+            // TODO: Enable widget CTA
 
             // TODO: Check string value against local plans' barcode regex
             // TODO: If plan found from regex, pop to adding options and push to add auth for plan id
-            // TODO: Enable widget CTA
+            guard let plans = Current.wallet.membershipPlans else { return }
+            let mockedPlanForBarcode = plans.filter { $0.account?.companyName == "Harvey Nichols" }.first
+            guard let harveyNicholsPlan = mockedPlanForBarcode else { return }
+
+            HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
 
             DispatchQueue.main.async { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
+                guard let self = self else { return }
+                // Option 1: Push from scanner to add auth
+//                self.viewModel.toAddAuth(membershipPlan: harveyNicholsPlan)
+
+                // Option 2: Pop and push
+                self.navigationController?.popViewController(animated: true)
+                self.delegate?.barcodeScannerViewController(self, didScanBarcodeForMembershipPlan: harveyNicholsPlan)
             }
         }
     }
