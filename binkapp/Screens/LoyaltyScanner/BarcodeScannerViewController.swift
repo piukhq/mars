@@ -17,6 +17,7 @@ class BarcodeScannerViewController: UIViewController {
     var previewView = UIView()
     let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
     var rectOfInterest = CGRect.zero
+    var timer: Timer?
 
     lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
@@ -45,6 +46,10 @@ class BarcodeScannerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] _ in
+            self?.widgetView.scanError()
+        })
 
         view.addSubview(previewView)
 
@@ -190,9 +195,16 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
             print(stringValue)
+
+//            guard let plans = Current.wallet.membershipPlans else { return }
+//            guard let mockedPlanForBarcode = plans.filter { $0.account?.companyName == "Harvey Nichols" }(tha)
+
+            // TODO: Check string value against local plans' barcode regex
+            // TODO: If plan found from regex, pop to adding options and push to add auth for plan id
+            // TODO: Enable widget CTA
+
             DispatchQueue.main.async { [weak self] in
-                self?.widgetView.scanError()
-//                self?.navigationController?.popViewController(animated: true)
+                self?.navigationController?.popViewController(animated: true)
             }
         }
     }
