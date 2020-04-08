@@ -42,8 +42,6 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
         textView.delegate = self
         configureUI()
 
-        Analytics.setScreenName("\(String(describing: Self.self)):\(viewModel.title.capitalized.replacingOccurrences(of: " ", with: ""))", screenClass: nil)
-
         /// Disabling in favour of Firebase's out-of-the-box screen name tracking
 //        screenName = "\(String(describing: Self.self)):\(viewModel.title.capitalized.replacingOccurrences(of: " ", with: ""))"
     }
