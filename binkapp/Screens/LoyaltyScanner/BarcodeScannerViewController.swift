@@ -10,24 +10,12 @@ import UIKit
 import AVFoundation
 
 struct BarcodeScannerViewModel {
-    private let router: MainScreenRouter
-
-    init(router: MainScreenRouter) {
-        self.router = router
-    }
-
-    func addCardForPlan(_ membershipPlan: CD_MembershipPlan) {
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
-    }
-
-    func enterManually() {
-        router.toBrowseBrandsViewController()
-    }
+    
 }
 
 protocol BarcodeScannerViewControllerDelegate: AnyObject {
-    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcodeForMembershipPlan membershipPlan: CD_MembershipPlan)
-    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController)
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcodeForMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?)
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?)
 }
 
 class BarcodeScannerViewController: UIViewController {
@@ -224,12 +212,10 @@ class BarcodeScannerViewController: UIViewController {
     }
 
     @objc private func enterManually() {
-        // Option 1: push browse brands
-//        viewModel.enterManually()
-
-        // Option 2: pop and push
-        navigationController?.popViewController(animated: true)
-        delegate?.barcodeScannerViewControllerShouldEnterManually(self)
+        delegate?.barcodeScannerViewControllerShouldEnterManually(self, completion: { [weak self] in
+            guard let self = self else { return }
+            self.navigationController?.removeViewController(self)
+        })
     }
 }
 
@@ -253,12 +239,9 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                // Option 1: Push from scanner to add auth
-//                self.viewModel.addCardForPlan(harveyNicholsPlan)
-
-                // Option 2: Pop and push
-                self.navigationController?.popViewController(animated: true)
-                self.delegate?.barcodeScannerViewController(self, didScanBarcodeForMembershipPlan: harveyNicholsPlan)
+                self.delegate?.barcodeScannerViewController(self, didScanBarcodeForMembershipPlan: harveyNicholsPlan, completion: {
+                    self.navigationController?.removeViewController(self)
+                })
             }
         }
     }
