@@ -234,7 +234,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             // TODO: If no plan found, prompt widget error
 
             guard let plans = Current.wallet.membershipPlans else { return }
-            let mockedPlanForBarcode = plans.filter { $0.account?.companyName == "Havey Nichols" }.first
+            let mockedPlanForBarcode = plans.filter { $0.account?.companyName == "Harvey Nichols" }.first
             guard let harveyNicholsPlan = mockedPlanForBarcode else {
                 if !hasPresentedScanError {
                     hasPresentedScanError = true
