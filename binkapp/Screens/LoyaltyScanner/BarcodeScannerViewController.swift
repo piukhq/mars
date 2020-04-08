@@ -90,7 +90,7 @@ class BarcodeScannerViewController: UIViewController {
         maskLayer.frame = view.frame
         maskLayer.fillColor = UIColor.black.cgColor
         // Setup rect of interest
-        let inset: CGFloat = floor(view.frame.size.width * 0.112)
+        let inset: CGFloat = 25
         let width = view.frame.size.width - (inset * 2)
         let viewFrameRatio: CGFloat = 12 / 18
         let height: CGFloat = floor(viewFrameRatio * width)
@@ -103,7 +103,7 @@ class BarcodeScannerViewController: UIViewController {
         blurredView.layer.mask = maskLayer
         view.addSubview(blurredView)
 
-        guideImageView.frame = rectOfInterest.inset(by: UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15))
+        guideImageView.frame = rectOfInterest.inset(by: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
         view.addSubview(guideImageView)
 
         view.addSubview(explainerLabel)
