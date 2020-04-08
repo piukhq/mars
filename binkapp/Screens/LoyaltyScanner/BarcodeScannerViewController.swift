@@ -21,25 +21,26 @@ protocol BarcodeScannerViewControllerDelegate: AnyObject {
 class BarcodeScannerViewController: UIViewController {
     private weak var delegate: BarcodeScannerViewControllerDelegate?
 
-    var session = AVCaptureSession()
-    var captureOutput: AVCaptureMetadataOutput!
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer!
-    var previewView = UIView()
-    let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
-    var rectOfInterest = CGRect.zero
-    var timer: Timer?
+    private var session = AVCaptureSession()
+    private var captureOutput: AVCaptureMetadataOutput!
+    private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+    private var previewView = UIView()
+    private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
+    private var rectOfInterest = CGRect.zero
+    private var timer: Timer?
+    private var hasPresentedScanError = false
 
-    lazy var blurredView: UIVisualEffectView = {
+    private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     }()
 
-    lazy var guideImageView: UIImageView = {
+    private lazy var guideImageView: UIImageView = {
         let image = UIImage(named: "scanner_guide")
         let imageView = UIImageView(image: image)
         return imageView
     }()
 
-    lazy var explainerLabel: UILabel = {
+    private lazy var explainerLabel: UILabel = {
         let label = UILabel()
         label.text = "Hold card here. It will scan automatically."
         label.font = .bodyTextLarge
@@ -47,7 +48,7 @@ class BarcodeScannerViewController: UIViewController {
         return label
     }()
 
-    lazy var widgetView: LoyaltyScannerWidgetView = {
+    private lazy var widgetView: LoyaltyScannerWidgetView = {
         let widget = LoyaltyScannerWidgetView()
         widget.addTarget(self, selector: #selector(enterManually))
         widget.translatesAutoresizingMaskIntoConstraints = false
@@ -161,7 +162,7 @@ class BarcodeScannerViewController: UIViewController {
         captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
 
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] _ in
-            self?.widgetView.scanError()
+            self?.widgetView.timeout()
         })
     }
 
@@ -221,7 +222,6 @@ class BarcodeScannerViewController: UIViewController {
 
 extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        session.stopRunning()
         timer?.invalidate()
 
         if let object = metadataObjects.first {
@@ -231,10 +231,22 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 
             // TODO: Check string value against local plans' barcode regex
             // TODO: If plan found from regex, pop to adding options and push to add auth for plan id
-            guard let plans = Current.wallet.membershipPlans else { return }
-            let mockedPlanForBarcode = plans.filter { $0.account?.companyName == "Harvey Nichols" }.first
-            guard let harveyNicholsPlan = mockedPlanForBarcode else { return }
+            // TODO: If no plan found, prompt widget error
 
+            guard let plans = Current.wallet.membershipPlans else { return }
+            let mockedPlanForBarcode = plans.filter { $0.account?.companyName == "Havey Nichols" }.first
+            guard let harveyNicholsPlan = mockedPlanForBarcode else {
+                if !hasPresentedScanError {
+                    hasPresentedScanError = true
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.widgetView.unrecognizedBarcode()
+                    }
+                }
+                return
+            }
+
+            stopScanning()
             HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
 
             DispatchQueue.main.async { [weak self] in

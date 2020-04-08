@@ -25,10 +25,12 @@ class LoyaltyScannerWidgetView: CustomView {
         configure()
     }
 
-    func scanError() {
-        layer.addBinkAnimation(.shake)
-        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
-        setState(.error)
+    func unrecognizedBarcode() {
+        error(state: .unrecognizedBarcode)
+    }
+
+    func timeout() {
+        error(state: .timeout)
     }
 
     func addTarget(_ target: Any?, selector: Selector?) {
@@ -46,6 +48,12 @@ class LoyaltyScannerWidgetView: CustomView {
         setState(state)
     }
 
+    private func error(state: WidgetState) {
+        layer.addBinkAnimation(.shake)
+        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
+        setState(state)
+    }
+
     private func setState(_ state: WidgetState) {
         titleLabel.text = state.title
         explainerLabel.text = state.explainerText
@@ -57,22 +65,23 @@ class LoyaltyScannerWidgetView: CustomView {
 extension LoyaltyScannerWidgetView {
     enum WidgetState {
         case enterManually
-        case error
+        case unrecognizedBarcode
+        case timeout
 
         var title: String {
             switch self {
-            case .enterManually:
+            case .enterManually, .timeout:
                 return "Enter manually"
-            case .error:
+            case .unrecognizedBarcode:
                 return "Unrecognised barcode"
             }
         }
 
         var explainerText: String {
             switch self {
-            case .enterManually:
+            case .enterManually, .timeout:
                 return "You can also type in the card details yourself."
-            case .error:
+            case .unrecognizedBarcode:
                 return "Please try adding the card manually."
             }
         }
@@ -81,7 +90,7 @@ extension LoyaltyScannerWidgetView {
             switch self {
             case .enterManually:
                 return "loyalty_scanner_enter_manually"
-            case .error:
+            case .unrecognizedBarcode, .timeout:
                 return "loyalty_scanner_error"
             }
         }
