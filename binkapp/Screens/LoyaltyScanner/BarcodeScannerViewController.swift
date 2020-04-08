@@ -14,7 +14,7 @@ struct BarcodeScannerViewModel {
 }
 
 protocol BarcodeScannerViewControllerDelegate: AnyObject {
-    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcodeForMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?)
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?)
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?)
 }
 
@@ -235,7 +235,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 
             guard let plans = Current.wallet.membershipPlans else { return }
             let mockedPlanForBarcode = plans.filter { $0.account?.companyName == "Harvey Nichols" }.first
-            guard let harveyNicholsPlan = mockedPlanForBarcode else {
+            guard let membershipPlan = mockedPlanForBarcode else {
                 if !hasPresentedScanError {
                     hasPresentedScanError = true
                     DispatchQueue.main.async { [weak self] in
@@ -251,7 +251,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
 
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.delegate?.barcodeScannerViewController(self, didScanBarcodeForMembershipPlan: harveyNicholsPlan, completion: {
+                self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: membershipPlan, completion: {
                     self.navigationController?.removeViewController(self)
                 })
             }

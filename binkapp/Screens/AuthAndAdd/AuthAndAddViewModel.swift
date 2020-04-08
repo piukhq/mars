@@ -21,10 +21,10 @@ enum InputType: Int {
     case checkbox
 }
 
-enum FormPurpose {
+enum FormPurpose: Equatable {
     case add
     case addFailed
-    case addFromScanner
+    case addFromScanner(barcode: String)
     case signUp
     case signUpFailed
     case ghostCard

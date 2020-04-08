@@ -141,8 +141,8 @@ class AddingOptionsViewController: BinkTrackableViewController {
 }
 
 extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
-    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcodeForMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
-        viewModel.toAddAuth(membershipPlan: membershipPlan)
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        viewModel.toAddAuth(membershipPlan: membershipPlan, barcode: barcode)
         completion?()
     }
 

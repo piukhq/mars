@@ -19,8 +19,8 @@ class AddingOptionsViewModel {
         router.toLoyaltyScanner(delegate: delegate)
     }
 
-    func toAddAuth(membershipPlan: CD_MembershipPlan) {
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
+    func toAddAuth(membershipPlan: CD_MembershipPlan, barcode: String) {
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner(barcode: barcode))
     }
     
     func toBrowseBrandsScreen() {

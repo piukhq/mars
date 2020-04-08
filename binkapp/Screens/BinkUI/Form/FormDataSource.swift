@@ -176,6 +176,32 @@ extension FormDataSource {
             guard let self = self else { return }
             self.delegate?.formDataSource(self, fieldDidExit: field)
         }
+
+        if case .addFromScanner(let barcode) = formPurpose {
+            model.account?.formattedAddFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
+                if field.fieldInputType == .checkbox {
+                    let checkbox = CheckboxView(frame: .zero)
+                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
+                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
+                    checkboxes.append(checkbox)
+                } else {
+                    fields.append(
+                        FormField(
+                            title: field.column ?? "",
+                            placeholder: field.fieldDescription ?? "",
+                            validation: field.validation,
+                            fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, commonName: FieldCommonName(rawValue: field.commonName ?? ""), choices: field.choicesArray),
+                            updated: updatedBlock,
+                            shouldChange: shouldChangeBlock,
+                            fieldExited: fieldExitedBlock,
+                            pickerSelected: pickerUpdatedBlock,
+                            columnKind: .add,
+                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil
+                        )
+                    )
+                }
+            }
+        }
         
         if formPurpose == .add || formPurpose == .addFailed || formPurpose == .ghostCard {
             model.account?.formattedAddFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
@@ -201,8 +227,32 @@ extension FormDataSource {
                 }
             }
         }
-        
-        if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .patchGhostCard {
+
+        if case .addFromScanner(let barcode) = formPurpose {
+            model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
+                if field.fieldInputType == .checkbox {
+                    let checkbox = CheckboxView(frame: .zero)
+                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
+                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .auth, delegate: self)
+                    checkboxes.append(checkbox)
+                } else {
+                    fields.append(
+                        FormField(
+                            title: field.column ?? "",
+                            placeholder: field.fieldDescription ?? "",
+                            validation: field.validation,
+                            fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, commonName: field.fieldCommonName, choices: field.choicesArray),
+                            updated: updatedBlock,
+                            shouldChange: shouldChangeBlock,
+                            fieldExited: fieldExitedBlock,
+                            pickerSelected: pickerUpdatedBlock,
+                            columnKind: .auth,
+                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil
+                        )
+                    )
+                }
+            }
+        } else if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .patchGhostCard {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
@@ -226,7 +276,6 @@ extension FormDataSource {
                 }
             }
         }
-        
         
         if formPurpose == .signUp || formPurpose == .signUpFailed {
             model.account?.formattedEnrolFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
