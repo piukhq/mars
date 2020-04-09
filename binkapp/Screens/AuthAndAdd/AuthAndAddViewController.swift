@@ -13,7 +13,6 @@ class AuthAndAddViewController: BaseFormViewController {
         static let postCollectionViewPadding: CGFloat = 15.0
         static let cardPadding: CGFloat = 30.0
         static let cellErrorLabelSafeSpacing: CGFloat = 60.0
-        static let checkboxesStackScrollViewOffset = 525
     }
     
     private lazy var brandHeaderView: BrandHeaderView = {
@@ -138,30 +137,6 @@ extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
 extension AuthAndAddViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return true
-    }
-    
-    func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView, shouldChangeOffset: Bool) {
-        let checkboxOrigin = stackScrollView.convert(view.frame.origin, to: self.view)
-        selectedCellYOrigin = checkboxOrigin.y
-        selectedCellHeight = view.frame.height
-        
-        guard shouldChangeOffset == true else { return }
-        
-        // Checking what is the lowest point in the screen with the keyboard open
-        let visibleOffset = UIScreen.main.bounds.height - keyboardHeight
-        
-        // Getting the cell's lowest point in the stackScrollView
-        let cellVisibleOffset = self.selectedCellYOrigin + self.selectedCellHeight
-        
-        // If cell's lowest point is further from the top of the screen than the lowest visible point - means that the cell is not being completely visible
-        if cellVisibleOffset > visibleOffset {
-            let actualOffset = self.stackScrollView.contentOffset.y
-            
-            // Setting the offset we need in order to display the selected cell:
-            // - taking the actual offset, where we add the cell's lowest point - which is further than the lowest visible point - then we substract the lowest visible point, as the cell's lowest point already contains the visible offset
-            let neededOffset = CGPoint(x: 0, y: actualOffset + cellVisibleOffset - visibleOffset)
-            self.stackScrollView.setContentOffset(neededOffset, animated: true)
-        }
     }
     
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {
