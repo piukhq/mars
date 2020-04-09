@@ -122,8 +122,8 @@ class PLLScreenViewController: BinkTrackableViewController {
         view.backgroundColor = .white
         
         configureBrandHeader()
-        configureLayout()
         configureUI()
+        configureLayout()
         paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
         floatingButtonsView.delegate = self
     }
@@ -149,7 +149,10 @@ class PLLScreenViewController: BinkTrackableViewController {
             brandHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor),
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
+            floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            floatingButtonsView.heightAnchor.constraint(equalToConstant: floatingButtonsView.isSecondaryButtonHidden ?
+                LayoutHelper.PrimarySecondaryButtonView.oneButtonHeight :
+                LayoutHelper.PrimarySecondaryButtonView.twoButtonsHeight)
         ])
     }
 }
@@ -248,9 +251,9 @@ private extension PLLScreenViewController {
         stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
         switch journey {
         case .newCard:
-            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: viewModel.hasPaymentCards ? nil : "pll_screen_add_cards_button_title".localized, floating: viewModel.isEmptyPll)
+            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: viewModel.hasPaymentCards ? nil : "pll_screen_add_cards_button_title".localized, hasGradient: true)
         case .existingCard:
-            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil, floating: true)
+            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil, hasGradient: true)
         }
     }
     

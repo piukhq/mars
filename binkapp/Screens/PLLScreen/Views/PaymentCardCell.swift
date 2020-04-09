@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 protocol PaymentCardCellDelegate: class {
     func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, cardIndex: Int)

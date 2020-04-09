@@ -87,7 +87,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setScreenName(trackedScreen: .browseBrands)
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         
@@ -101,6 +100,11 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         navigationItem.rightBarButtonItem = filtersButton
         
         self.title = "browse_brands_title".localized
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setScreenName(trackedScreen: .browseBrands)
     }
     
     private func configureCollectionView() {
@@ -240,16 +244,16 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         
         let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
         
-        if let brandName = membershipPlan.account?.companyName {
+        if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
             switch indexPath.section {
             case 0:
-                cell.configure(plan: membershipPlan, brandName: brandName)
+                cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
                 if indexPath.row == viewModel.getPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }
                 break
             case 1:
-                cell.configure(plan: membershipPlan, brandName: brandName)
+                cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
                 if indexPath.row == viewModel.getNonPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }

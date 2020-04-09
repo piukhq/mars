@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 enum SwipeMode {
     case unset // centered
