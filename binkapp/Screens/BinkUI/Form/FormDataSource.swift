@@ -16,6 +16,7 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView, shouldChangeOffset: Bool)
+    func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
 }
 
 extension FormDataSourceDelegate {
@@ -27,6 +28,7 @@ extension FormDataSourceDelegate {
         return false
     }
     func formDataSource(_ dataSource: FormDataSource, scrollTo view: UIView, shouldChangeOffset: Bool) {}
+    func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {}
 }
 
 enum AccessForm {
@@ -458,7 +460,7 @@ extension FormDataSource: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
         delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
 
-        if checkboxes.isEmpty && cellTextFields.first(where: { $0.value == didSelectField })?.key == cellTextFields.count - 1 {
+        if cellTextFields.first(where: { $0.value == didSelectField })?.key == cellTextFields.count - 1 {
             didSelectField.returnKeyType = .done
         } else {
             didSelectField.returnKeyType = .next
@@ -468,32 +470,41 @@ extension FormDataSource: FormCollectionViewCellDelegate {
     
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {
         guard let key = cellTextFields.first(where: { $0.value == textField })?.key else { return }
-
+        
         if let nextTextField = cellTextFields[key + 1] {
             nextTextField.becomeFirstResponder()
         } else {
-            guard selectedCheckboxIndex < checkboxes.count else {
-                selectedCheckboxIndex = 0
-                textField.resignFirstResponder()
-                return
+            textField.resignFirstResponder()
+            if !checkboxes.isEmpty {
+                delegate?.formDataSourceShouldScrollToBottom(self)
             }
-
-            let checkboxView = checkboxes[selectedCheckboxIndex]
-
-            if selectedCheckboxIndex == checkboxes.count {
-                textField.resignFirstResponder()
-                selectedCheckboxIndex = 0
-            } else {
-                selectedCheckboxIndex += 1
-            }
-
-            if !checkboxes.isEmpty && selectedCheckboxIndex == checkboxes.count {
-                delegate?.formDataSource(self, scrollTo: checkboxView, shouldChangeOffset: false)
-                textField.returnKeyType = .done
-                textField.reloadInputViews()
-            } else {
-                delegate?.formDataSource(self, scrollTo: checkboxView, shouldChangeOffset: true)
-            }
+//            if let checkboxView = checkboxes.last {
+//                delegate?.formDataSource(self, scrollTo: checkboxView, shouldChangeOffset: true)
+//            }
         }
+        
+//            guard selectedCheckboxIndex < checkboxes.count else {
+//                selectedCheckboxIndex = 0
+//                textField.resignFirstResponder()
+//                return
+//            }
+//
+//            let checkboxView = checkboxes[selectedCheckboxIndex]
+//
+//            if selectedCheckboxIndex == checkboxes.count {
+//                textField.resignFirstResponder()
+//                selectedCheckboxIndex = 0
+//            } else {
+//                selectedCheckboxIndex += 1
+//            }
+//
+//            if !checkboxes.isEmpty && selectedCheckboxIndex == checkboxes.count {
+//                delegate?.formDataSource(self, scrollTo: checkboxView, shouldChangeOffset: false)
+//                textField.returnKeyType = .done
+//                textField.reloadInputViews()
+//            } else {
+//                delegate?.formDataSource(self, scrollTo: checkboxView, shouldChangeOffset: true)
+//            }
+//        }
     }
 }
