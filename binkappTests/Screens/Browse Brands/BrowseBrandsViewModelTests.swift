@@ -10,16 +10,14 @@ import XCTest
 @testable import binkapp
 
 class BrowseBrandsViewModelTests: XCTestCase {
-    private var repository: BrowseBrandsRepository!
-    private var router: MainScreenRouter!
-    private var viewModel: BrowseBrandsViewModel!
-    private var apiManager: ApiManager!
+    private var viewModel: BrowseBrandsViewModelMock!
     
     override func setUp() {
-        apiManager = ApiManager()
-        repository = BrowseBrandsRepository(apiManager: apiManager)
-        router = MainScreenRouter(delegate: self)
-        viewModel = BrowseBrandsViewModel(repository: repository, router: router)
+        let plans = [
+            MembershipPlanModel(apiId: nil, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil), images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil),
+            MembershipPlanModel(apiId: nil, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .store, linkingSupport: nil, hasVouchers: nil), images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: nil)
+        ]
+        viewModel = BrowseBrandsViewModelMock(membershipPlans: plans)
     }
     
     func test_shouldShowNoResultsLabel_true() {
@@ -45,10 +43,16 @@ class BrowseBrandsViewModelTests: XCTestCase {
     func test_hasMembershipPlans() {
         if viewModel.getMembershipPlans().isEmpty {
             XCTAssertFalse(viewModel.hasMembershipPlans())
+        } else {
+            XCTAssertTrue(viewModel.hasMembershipPlans())
         }
     }
-}
-
-extension BrowseBrandsViewModelTests: MainScreenRouterDelegate {
-    func router(_ router: MainScreenRouter, didLogin: Bool) {}
+    
+    func test_getPllMembershipPlans() {
+        XCTAssertEqual(viewModel.getPllMembershipPlans().count, 1)
+    }
+    
+    func test_getNonPllMembershipPlans() {
+        XCTAssertEqual(viewModel.getNonPllMembershipPlans().count, 1)
+    }
 }
