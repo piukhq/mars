@@ -138,6 +138,12 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return true
     }
+    
+    func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {
+        let y = stackScrollView.contentSize.height - stackScrollView.bounds.size.height + stackScrollView.contentInset.bottom
+        let offset = CGPoint(x: 0, y: y)
+        stackScrollView.setContentOffset(offset, animated: true)
+    }
 }
 
 extension AuthAndAddViewController: LoyaltyButtonDelegate {
@@ -152,4 +158,6 @@ extension AuthAndAddViewController: FormCollectionViewCellDelegate {
         self.selectedCellYOrigin = cellOrigin.y
         selectedCellHeight = cell.isValidationLabelHidden ? cell.frame.size.height + Constants.cellErrorLabelSafeSpacing : cell.frame.size.height
     }
+    
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
 }
