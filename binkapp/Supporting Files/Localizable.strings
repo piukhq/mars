@@ -214,6 +214,9 @@
 "settings_row_privacypolicy_title" = "Privacy policy";
 "settings_row_termsandconditions_title" = "Terms and conditions";
 
+"settings_section_debug_title" = "Debug";
+"settings_section_debug_subtitle" = "Only accessible on debug builds";
+
 // MARK: - Support mail
 
 "support_mail_subject" = "Bink App Support";
