@@ -15,6 +15,7 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField)
     func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
+    func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
 }
 
 extension FormDataSourceDelegate {
@@ -25,6 +26,7 @@ extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
         return false
     }
+    func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {}
 }
 
 enum AccessForm {
@@ -45,6 +47,8 @@ class FormDataSource: NSObject {
     
     private(set) var fields = [FormField]()
     private(set) var checkboxes = [CheckboxView]()
+    private var cellTextFields = [Int: UITextField]()
+    private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
     
     var fullFormIsValid: Bool {
@@ -441,7 +445,10 @@ extension FormDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
         
-        if let field = fields[safe: indexPath.item] { cell.configure(with: field, delegate: self) }
+        if let field = fields[safe: indexPath.item] {
+            cell.configure(with: field, delegate: self)
+            cellTextFields[indexPath.row] = cell.textField
+        }
         
         return cell
     }
@@ -450,5 +457,25 @@ extension FormDataSource: UICollectionViewDataSource {
 extension FormDataSource: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
         delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
+
+        if cellTextFields.first(where: { $0.value == didSelectField })?.key == cellTextFields.count - 1 {
+            didSelectField.returnKeyType = .done
+        } else {
+            didSelectField.returnKeyType = .next
+            selectedCheckboxIndex = 0
+        }
+    }
+    
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {
+        guard let key = cellTextFields.first(where: { $0.value == textField })?.key else { return }
+        
+        if let nextTextField = cellTextFields[key + 1] {
+            nextTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+            if !checkboxes.isEmpty {
+                delegate?.formDataSourceShouldScrollToBottom(self)
+            }
+        }
     }
 }

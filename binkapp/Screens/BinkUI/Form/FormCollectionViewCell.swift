@@ -10,6 +10,7 @@ import UIKit
 
 protocol FormCollectionViewCellDelegate: class {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
 }
 
 class FormCollectionViewCell: UICollectionViewCell {
@@ -26,16 +27,7 @@ class FormCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
     
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.textFieldLabel
-        label.heightAnchor.constraint(equalToConstant: Constants.titleLabelHeight).isActive = true
-        label.setContentCompressionResistancePriority(.required, for: .vertical)
-        return label
-    }()
-    
-    private lazy var textField: UITextField = {
+    lazy var textField: UITextField = {
         let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
         field.font = UIFont.textFieldInput
@@ -46,6 +38,15 @@ class FormCollectionViewCell: UICollectionViewCell {
         field.inputAccessoryView = inputAccessory
         field.clearButtonMode = .whileEditing
         return field
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.textFieldLabel
+        label.heightAnchor.constraint(equalToConstant: Constants.titleLabelHeight).isActive = true
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        return label
     }()
     
     private lazy var inputAccessory: UIToolbar = {
@@ -136,7 +137,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
         let isEnabled = field.forcedValue == nil
-
+        
         titleLabel.text = field.title
         titleLabel.textColor = isEnabled ? .black : .disabledTextGrey
         textField.textColor = isEnabled ? .black : .disabledTextGrey
@@ -201,6 +202,11 @@ extension FormCollectionViewCell: UITextFieldDelegate {
         }
         
         self.delegate?.formCollectionViewCell(self, didSelectField: textField)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.delegate?.formCollectionViewCell(self, shouldResignTextField: textField)
+        return true
     }
 }
 
