@@ -9,7 +9,7 @@
 import Foundation
 
 class BrowseBrandsViewModelMock {
-    private var membershipPlans = [CD_MembershipPlan]()
+    var membershipPlans = [MembershipPlanModel]()
     
     var shouldShowNoResultsLabel: Bool {
         return filteredPlans.isEmpty
@@ -19,7 +19,7 @@ class BrowseBrandsViewModelMock {
             filterPlans()
         }
     }
-    var filteredPlans = [CD_MembershipPlan]()
+    var filteredPlans = [MembershipPlanModel]()
     
     var filters: [String] {
         return mapFilters(fromPlans: membershipPlans)
@@ -35,15 +35,10 @@ class BrowseBrandsViewModelMock {
     }
         
     init(membershipPlans: [MembershipPlanModel]) {
-        membershipPlans.forEach { (plan) in
-            Current.database.performBackgroundTask { context in
-                let newObject = plan.mapToCoreData(context, .update, overrideID: nil)
-                self.membershipPlans.append(newObject)
-            }
-        }
+        self.membershipPlans = membershipPlans
     }
     
-    func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan {
+    func getMembershipPlan(for indexPath: IndexPath) -> MembershipPlanModel {
         if indexPath.section == 0 {
             return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
         }
@@ -59,7 +54,7 @@ class BrowseBrandsViewModelMock {
         return "all_title".localized
     }
     
-    func getMembershipPlans() -> [CD_MembershipPlan] {
+    func getMembershipPlans() -> [MembershipPlanModel] {
         if filteredPlans.isEmpty {
             return membershipPlans
         } else {
@@ -81,8 +76,8 @@ class BrowseBrandsViewModelMock {
         return false
     }
     
-    func getPllMembershipPlans() -> [CD_MembershipPlan] {
-        let plans = getMembershipPlans().filter { $0.featureSet?.planCardType == .link }
+    func getPllMembershipPlans() -> [MembershipPlanModel] {
+        let plans = getMembershipPlans().filter { $0.featureSet?.cardType == .link }
         return plans.sorted {
             guard let first = $0.account?.companyName?.lowercased() else { return false }
             guard let second = $1.account?.companyName?.lowercased() else { return true }
@@ -91,8 +86,8 @@ class BrowseBrandsViewModelMock {
         }
     }
     
-    func getNonPllMembershipPlans() -> [CD_MembershipPlan] {
-        let plans = getMembershipPlans().filter { $0.featureSet?.planCardType != .link }
+    func getNonPllMembershipPlans() -> [MembershipPlanModel] {
+        let plans = getMembershipPlans().filter { $0.featureSet?.cardType != .link }
         return plans.sorted {
             guard let first = $0.account?.companyName?.lowercased() else { return false }
             guard let second = $1.account?.companyName?.lowercased() else { return true }
@@ -123,7 +118,7 @@ class BrowseBrandsViewModelMock {
         }
     }
     
-    private func mapFilters(fromPlans plans: [CD_MembershipPlan]) -> [String] {
+    private func mapFilters(fromPlans plans: [MembershipPlanModel]) -> [String] {
         let filters = plans.map({ ($0.account?.category ?? "")})
         return filters.uniq(source: filters)
     }
