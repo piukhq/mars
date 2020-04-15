@@ -9,7 +9,7 @@
 import Foundation
 
 class BrowseBrandsViewModelMock {
-    var membershipPlans = [MembershipPlanModel]()
+    private var membershipPlans = [MembershipPlanModel]()
     
     var shouldShowNoResultsLabel: Bool {
         return filteredPlans.isEmpty

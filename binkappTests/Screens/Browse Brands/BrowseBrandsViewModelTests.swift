@@ -11,14 +11,17 @@ import XCTest
 
 class BrowseBrandsViewModelTests: XCTestCase {
     private var viewModel: BrowseBrandsViewModelMock!
-    private var plans: [MembershipPlanModel]!
+    private var plans: [MembershipPlanModel]! {
+        didSet {
+            viewModel = BrowseBrandsViewModelMock(membershipPlans: plans)
+        }
+    }
     
     override func setUp() {
         plans = [
             MembershipPlanModel(apiId: nil, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "FirstCard", category: "household", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil),
             MembershipPlanModel(apiId: nil, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .store, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "SecondCard", category: "food", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil)
         ]
-        viewModel = BrowseBrandsViewModelMock(membershipPlans: plans)
     }
     
     func test_shouldShowNoResultsLabel_true() {
@@ -36,23 +39,15 @@ class BrowseBrandsViewModelTests: XCTestCase {
     }
     
     func test_getMembershipPlan_section_0() {
-        let indexPath = IndexPath(row: 0, section: 0)
+        var indexPath = IndexPath(row: 0, section: 0)
         XCTAssertEqual(viewModel.getMembershipPlan(for: indexPath), plans.first)
-    }
-    
-    func test_getMembershipPlan_section_1() {
-        let indexPath = IndexPath(row: 0, section: 1)
+        indexPath = IndexPath(row: 0, section: 1)
         XCTAssertEqual(viewModel.getMembershipPlan(for: indexPath), plans[1])
     }
     
     func test_getSectionTitleText() {
-        if viewModel.getMembershipPlans().isEmpty {
-            XCTAssertEqual(viewModel.getSectionTitleText(section: 0), "All")
-            XCTAssertEqual(viewModel.getSectionTitleText(section: 1), "All")
-        } else {
-            XCTAssertEqual(viewModel.getSectionTitleText(section: 0), "Payment Linked Loyalty")
-            XCTAssertEqual(viewModel.getSectionTitleText(section: 1), "All")
-        }
+        XCTAssertEqual(viewModel.getSectionTitleText(section: 0), "Payment Linked Loyalty")
+        XCTAssertEqual(viewModel.getSectionTitleText(section: 1), "All")
     }
     
     func test_hasMembershipPlans_true() {
@@ -60,12 +55,12 @@ class BrowseBrandsViewModelTests: XCTestCase {
     }
     
     func test_hasMembershipPlans_false() {
-        viewModel.membershipPlans = []
+        plans = []
         XCTAssertFalse(viewModel.hasMembershipPlans())
     }
     
     func test_hasPlansForOneSection_true() {
-        viewModel.membershipPlans.removeLast()
+        plans.removeLast()
         XCTAssertTrue(viewModel.hasPlansForOneSection())
     }
     
