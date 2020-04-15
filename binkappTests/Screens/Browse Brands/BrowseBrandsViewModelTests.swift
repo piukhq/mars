@@ -34,7 +34,7 @@ class BrowseBrandsViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.shouldShowNoResultsLabel)
     }
     
-    func test_filters() {
+    func test_filters_returnsMappedFiltersCorrectly() {
         XCTAssertEqual(viewModel.filters, ["household", "food"])
     }
     
