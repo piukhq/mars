@@ -9,7 +9,7 @@ import UIKit
 
 extension LayoutHelper {
     struct settingsButton {
-        static let width: CGFloat = 40
+        static let widthRatio: CGFloat = 0.13
         static let height: CGFloat = 24
     }
 }
@@ -51,14 +51,21 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
     }
     
     func setNavigationBar() {
-        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .done, target: self, action: #selector(settingsButtonTapped))
-        navigationItem.rightBarButtonItem = settingsButton
-//        let settingsButton = UIButton(type: .custom)
-//        settingsButton.setImage(UIImage(named: "settings"), for: .normal)
-//        settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
-//        settingsButton.frame = CGRect(x: 0, y: 0, width: LayoutHelper.settingsButton.width, height: LayoutHelper.settingsButton.height)
+//        let settingsButton = UIBarButtonItem(image: nil, style: .done, target: self, action: #selector(settingsButtonTapped))
+//        settingsButton.customView = UIImageView(image: UIImage(named: "settings"))
+//        navigationItem.rightBarButtonItem = settingsButton
+        //----
+        let settingsButton = UIButton(type: .custom)
+        settingsButton.setImage(UIImage(named: "settings"), for: .normal)
+        settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
+//        let neededWidth = UIScreen.main.bounds.width * LayoutHelper.settingsButton.widthRatio
+//        settingsButton.frame = CGRect(x: 0, y: 0, width: 32, height: LayoutHelper.settingsButton.height)
 //        let barButton = UIBarButtonItem(customView: settingsButton)
 //        navigationItem.rightBarButtonItem = barButton
+        settingsButton.contentMode = .right
+        settingsButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 7)
+        let barButton = UIBarButtonItem(customView: settingsButton)
+        navigationItem.rightBarButtonItem = barButton
         
         navigationItem.setHidesBackButton(true, animated: true)
         self.title = ""
