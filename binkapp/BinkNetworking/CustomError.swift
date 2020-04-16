@@ -8,6 +8,7 @@
 
 import Foundation
 
+// TODO: Remove this. Only used in old APIManager and add auth, handle this case with modular error
 class CustomError: Error {
     private let errorMessage: String
     private let statusCode: Int

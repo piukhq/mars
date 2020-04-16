@@ -8,8 +8,9 @@
 
 import Foundation
 import Keys
+import Alamofire
 
-enum APIEndpoint {
+enum APIEndpoint: Equatable {
     case service
     case login
     case register
@@ -35,6 +36,21 @@ enum APIEndpoint {
         }
     }
 
+    var headers: [String: String] {
+        // TODO: Don't hardcode the headers
+        var headers = [
+            "Content-Type": "application/json",
+            "Accept": "application/json\(shouldVersionPin ? ";\(Current.apiManager.apiVersion.rawValue)" : "")"
+        ]
+
+        if authRequired {
+            guard let token = Current.userManager.currentToken else { return headers }
+            headers["Authorization"] = "Token " + token
+        }
+
+        return headers
+    }
+
     var shouldVersionPin: Bool {
         switch self {
         case .spreedly:
@@ -44,6 +60,15 @@ enum APIEndpoint {
         }
     }
 
+    // TODO: Split per endpoints
+    var allowedMethods: [HTTPMethod] {
+        return [.get, .post, .put, .patch, .delete]
+    }
+
+    var fullUrlString: String {
+        return "\(baseUrlString)\(value)"
+    }
+
     private var baseUrlString: String {
         switch self {
         case .spreedly:
@@ -51,10 +76,6 @@ enum APIEndpoint {
         default:
             return APIConstants.baseURLString
         }
-    }
-
-    var fullUrlString: String {
-        return "\(baseUrlString)\(value)"
     }
 
     private var value: String {

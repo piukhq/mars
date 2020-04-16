@@ -38,7 +38,8 @@ struct UserMigrationController {
             completion(false)
             return
         }
-        
+
+        // TODO: Only call that injects headers. Work this out when moving over
         Current.apiManager.doRequest(url: .renew, httpMethod: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiManager.apiVersion.rawValue)"], isUserDriven: false, onSuccess: { (response: RenewTokenResponse) in
             var email: String?
             do {

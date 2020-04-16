@@ -10,22 +10,29 @@ import Foundation
 
 enum NetworkingError: BinkError {
     case unauthorized
+    case noInternetConnection
+    case methodNotAllowed
+    case sslPinningFailure
+    case invalidResponse
+    case decodingError
+    case clientError(Int?)
+    case serverError(Int?)
+    case checkStatusCode(Int)
+    case customError(String?)
 
     var domain: BinkErrorDomain {
         return .networking
     }
 
-    var errorCode: String {
-        switch self {
-        case .unauthorized:
-            return "N101"
-        }
+    var errorCode: String? {
+        return nil
     }
 
-    var message: String {
+    var message: String? {
         switch self {
-        case .unauthorized:
-            return ""
+        case .customError(let message):
+            return message
+        default: return nil
         }
     }
 }

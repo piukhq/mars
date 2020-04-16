@@ -46,7 +46,6 @@
 		3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C360720230FF03B00AC76A3 /* BrandHeaderView.xib */; };
 		3C3853D52407DAF5004D6C2A /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3853D42407DAF5004D6C2A /* TransactionView.swift */; };
 		3C3853D72407DB1D004D6C2A /* TransactionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C3853D62407DB1D004D6C2A /* TransactionView.xib */; };
-		3C3C604C2302DD1600D9EA25 /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3C604B2302DD1600D9EA25 /* EmptyResponse.swift */; };
 		3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3C604E2302E65600D9EA25 /* BrandModel.swift */; };
 		3C453CB42338E84500287B56 /* PaymentWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C453CB22338E84500287B56 /* PaymentWalletViewController.swift */; };
 		3C453CB72338E84F00287B56 /* PaymentWalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C453CB62338E84F00287B56 /* PaymentWalletViewModel.swift */; };
@@ -284,6 +283,7 @@
 		EF59A12A2447406B001B60B8 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF59A1292447406B001B60B8 /* APIEndpoint.swift */; };
 		EF59A12D244744D7001B60B8 /* BinkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF59A12C244744D7001B60B8 /* BinkError.swift */; };
 		EF59A12F24474572001B60B8 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF59A12E24474572001B60B8 /* NetworkingError.swift */; };
+		EF59A1312448B769001B60B8 /* APIErrorResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF59A1302448B769001B60B8 /* APIErrorResponses.swift */; };
 		EF758E0823225F35000D26A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0723225F35000D26A9 /* Database.swift */; };
 		EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */; };
 		EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0C23225F45000D26A9 /* NSManagedObjectContext.swift */; };
@@ -491,7 +491,6 @@
 		3C360720230FF03B00AC76A3 /* BrandHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrandHeaderView.xib; sourceTree = "<group>"; };
 		3C3853D42407DAF5004D6C2A /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
 		3C3853D62407DB1D004D6C2A /* TransactionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionView.xib; sourceTree = "<group>"; };
-		3C3C604B2302DD1600D9EA25 /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
 		3C3C604E2302E65600D9EA25 /* BrandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandModel.swift; sourceTree = "<group>"; };
 		3C453CB22338E84500287B56 /* PaymentWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletViewController.swift; sourceTree = "<group>"; };
 		3C453CB62338E84F00287B56 /* PaymentWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletViewModel.swift; sourceTree = "<group>"; };
@@ -760,6 +759,7 @@
 		EF59A1292447406B001B60B8 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		EF59A12C244744D7001B60B8 /* BinkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkError.swift; sourceTree = "<group>"; };
 		EF59A12E24474572001B60B8 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
+		EF59A1302448B769001B60B8 /* APIErrorResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorResponses.swift; sourceTree = "<group>"; };
 		EF758E0723225F35000D26A9 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		EF758E0923225F3B000D26A9 /* SwiftDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftDatabase.h; sourceTree = "<group>"; };
 		EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersistentContainer.swift; sourceTree = "<group>"; };
@@ -1037,7 +1037,7 @@
 		3C3C604A2302DD0800D9EA25 /* Responses */ = {
 			isa = PBXGroup;
 			children = (
-				3C3C604B2302DD1600D9EA25 /* EmptyResponse.swift */,
+				EF59A1302448B769001B60B8 /* APIErrorResponses.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -2646,7 +2646,6 @@
 				EFA5F72A2379A7C70027AB80 /* CD_Voucher.swift in Sources */,
 				EFA5F71A2379A7C70027AB80 /* CD_BaseObject.swift in Sources */,
 				BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */,
-				3C3C604C2302DD1600D9EA25 /* EmptyResponse.swift in Sources */,
 				EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */,
 				BD458B4B236ED5B90029A538 /* AddEmailViewController.swift in Sources */,
 				BD9E4CCF236F8D6100C6F098 /* RenewTokenResponse.swift in Sources */,
@@ -2704,6 +2703,7 @@
 				3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */,
 				3C453CB72338E84F00287B56 /* PaymentWalletViewModel.swift in Sources */,
 				EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */,
+				EF59A1312448B769001B60B8 /* APIErrorResponses.swift in Sources */,
 				EFEB5BF7237DCA5A00E18743 /* PLRAccumulatorCell.swift in Sources */,
 				EFA5F7272379A7C70027AB80 /* _CD_ReasonCode.swift in Sources */,
 				EFA5F72E2379A7C70027AB80 /* _CD_AddField.swift in Sources */,

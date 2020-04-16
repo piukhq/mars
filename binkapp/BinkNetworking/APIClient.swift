@@ -13,20 +13,6 @@ import AlamofireImage
 // MARK: - Config and init
 
 final class APIClient {
-    private let reachabilityManager = NetworkReachabilityManager()
-    private let session: Session
-
-    enum NetworkStrength: String {
-        case wifi
-        case cellular
-        case unknown
-    }
-
-    enum ApiVersion: String {
-        case v1_1 = "v=1.1"
-        case v1_2 = "v=1.2"
-    }
-
     struct Certificates {
         static let bink = Certificates.certificate(filename: "bink")
 
@@ -37,6 +23,17 @@ final class APIClient {
 
             return certificate
         }
+    }
+
+    enum NetworkStrength: String {
+        case wifi
+        case cellular
+        case unknown
+    }
+
+    enum APIVersion: String {
+        case v1_1 = "v=1.1"
+        case v1_2 = "v=1.2"
     }
 
     var networkIsReachable: Bool {
@@ -57,7 +54,16 @@ final class APIClient {
         return APIConstants.baseURLString == APIConstants.productionBaseURL
     }
 
-    var apiVersion: ApiVersion = .v1_1
+    var apiVersion: APIVersion = .v1_1
+
+    private let successStatusRange = 200...299
+    private let clientErrorStatusRange = 400...499
+    private let unauthorizedStatus = 401
+    private let badRequestStatus = 400
+    private let serverErrorStatusRange = 500...599
+
+    private let reachabilityManager = NetworkReachabilityManager()
+    private let session: Session
 
     init() {
         let evaluators = [
@@ -77,15 +83,116 @@ final class APIClient {
 // MARK: - Request handling
 
 extension APIClient {
-    func performRequest<ResponseType, Parameters: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: Parameters? = nil, isUserDriven: Bool, completion: (Result<ResponseType, Error>) -> Void) {
-        
+    func performRequest<ResponseType: Codable, Parameters: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: Parameters? = nil, isUserDriven: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) {
+
+        if !networkIsReachable && isUserDriven {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            completion(.failure(NetworkingError.noInternetConnection))
+            return
+        }
+
+//        guard var urlComponents = URLComponents(string: APIConstants.baseURLString) else {
+//            completion(.failure(nil, NetworkError(reason: .invalidURL)), nil)
+//            return
+//        }
+//
+//        guard let urlString = urlComponents.url?.absoluteString.removingPercentEncoding,
+//            let url = URL(string: urlString) else {
+//                completion(.failure(nil, NetworkError(reason: .invalidURL)), nil)
+//                return
+//        }
+
+        guard endpoint.allowedMethods.contains(method) else {
+            completion(.failure(NetworkingError.methodNotAllowed))
+            return
+        }
+
+        let requestHeaders = HTTPHeaders(endpoint.headers)
+
+        // TODO: Do we not want to cache repsonses?
+        session.request(endpoint.fullUrlString, method: method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+            self?.handleResponse(response, endpoint: endpoint, isUserDriven: isUserDriven, completion: completion)
+        }
     }
+
+//    func getImage(fromUrlString urlString: String, completion: @escaping (UIImage?, Error?) -> Void) {
+//        session.request(urlString).responseImage { response in
+//            if let error = response.error {
+//                completion(nil, error)
+//                return
+//            }
+//
+//            do {
+//                let image = try response.result.get()
+//                completion(image, nil)
+//            } catch let error {
+//                completion(nil, error)
+//            }
+//        }
+//    }
 }
 
 // MARK: - Response handling
 
-private extension APIClient {
-    func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, isUserDriven: Bool, completion: (Result<ResponseType, Error>) -> Void) {
+struct Nothing: Codable {}
 
+private extension APIClient {
+    func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, isUserDriven: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) {
+
+        if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
+            // TODO: Pass error through as object?
+            NotificationCenter.default.post(name: .didFailServerTrustEvaluation, object: nil)
+            completion(.failure(NetworkingError.sslPinningFailure))
+            return
+        }
+
+        guard let data = response.data else {
+            completion(.failure(NetworkingError.invalidResponse))
+            return
+        }
+
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .useDefaultKeys
+
+        do {
+            guard let statusCode = response.response?.statusCode else {
+                completion(.failure(NetworkingError.invalidResponse))
+                return
+            }
+
+            if statusCode == unauthorizedStatus {
+                // Unauthorized response
+                NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                return
+            } else if successStatusRange.contains(statusCode) {
+                // Successful response
+                let decodedResponse = try decoder.decode(ResponseType.self, from: data)
+                completion(.success(decodedResponse))
+                return
+            } else if clientErrorStatusRange.contains(statusCode) {
+                // Failed response, client error
+                if statusCode == badRequestStatus {
+                    let decodedResponseErrors = try decoder.decode(ResponseErrors.self, from: data)
+                    let otherErrors = try decoder.decode([String].self, from: data)
+                    let errorMessage = decodedResponseErrors.nonFieldErrors?.first ?? otherErrors.first ?? "went_wrong".localized
+                    completion(.failure(NetworkingError.customError(errorMessage)))
+                    return
+                }
+                completion(.failure(NetworkingError.clientError(statusCode)))
+                return
+            } else if serverErrorStatusRange.contains(statusCode) {
+                // Failed response, server error
+
+                // TODO: Can we remove this and just respond to the error sent back in completion by either showing the error message or not?
+                NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
+                completion(.failure(NetworkingError.serverError(statusCode)))
+                return
+            } else {
+                completion(.failure(NetworkingError.checkStatusCode(statusCode)))
+                return
+            }
+        } catch {
+            completion(.failure(NetworkingError.decodingError))
+        }
     }
 }

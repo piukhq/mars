@@ -14,12 +14,13 @@ enum BinkErrorDomain: String {
 
 protocol BinkError: Error {
     var domain: BinkErrorDomain { get }
-    var errorCode: String { get }
-    var message: String { get }
+    var errorCode: String? { get }
+    var message: String? { get }
 }
 
 extension BinkError {
     var localizedDescription: String {
-        return "\(message) (Error code: \(errorCode))"
+        let errorCodeString = errorCode ?? ""
+        return "\(message ?? self.localizedDescription)\(errorCodeString.isEmpty ? "" : " Error code: \(errorCodeString)")"
     }
 }

@@ -112,14 +112,6 @@ enum RequestHTTPMethod {
     }
 }
 
-struct ResponseErrors: Decodable {
-    let nonFieldErrors: [String]?
-
-    enum CodingKeys: String, CodingKey {
-        case nonFieldErrors = "non_field_errors"
-    }
-}
-
 class ApiManager {
     private let reachabilityManager = NetworkReachabilityManager()
     private let session: Session
@@ -197,6 +189,8 @@ class ApiManager {
         }
     }
 
+
+    // Only difference is that this has a parameters options..
     func doRequest<Resp, T: Encodable>(url: RequestURL, httpMethod: RequestHTTPMethod, headers: [String: String]? = nil, parameters: T, isUserDriven: Bool, onSuccess: @escaping (Resp) -> (), onError: @escaping (Error?) -> () = { _ in }) where Resp: Decodable {
 
         if !networkIsReachable && isUserDriven {

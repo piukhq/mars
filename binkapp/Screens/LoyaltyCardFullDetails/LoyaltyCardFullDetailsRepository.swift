@@ -26,7 +26,7 @@ class LoyaltyCardFullDetailsRepository: WalletRepository {
         // Process the backend delete, but fail silently
         let url = RequestURL.membershipCard(cardId: card.id)
         let method = RequestHTTPMethod.delete
-        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
+        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: Nothing) in }, onError: { error in })
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
