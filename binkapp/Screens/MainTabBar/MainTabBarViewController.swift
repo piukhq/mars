@@ -51,19 +51,26 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
     }
     
     func setNavigationBar() {
-//        let settingsButton = UIBarButtonItem(image: nil, style: .done, target: self, action: #selector(settingsButtonTapped))
-//        settingsButton.customView = UIImageView(image: UIImage(named: "settings"))
-//        navigationItem.rightBarButtonItem = settingsButton
-        //----
         let settingsButton = UIButton(type: .custom)
         settingsButton.setImage(UIImage(named: "settings"), for: .normal)
         settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
-//        let neededWidth = UIScreen.main.bounds.width * LayoutHelper.settingsButton.widthRatio
-//        settingsButton.frame = CGRect(x: 0, y: 0, width: 32, height: LayoutHelper.settingsButton.height)
-//        let barButton = UIBarButtonItem(customView: settingsButton)
-//        navigationItem.rightBarButtonItem = barButton
         settingsButton.contentMode = .right
-        settingsButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 7)
+        
+        var rightInset: CGFloat = 0
+        
+        switch UIDevice.current.screenWidth {
+            case .iPhone5Size:
+                rightInset = 9
+            case .iPhone6Size:
+                rightInset = 9
+            case .iPhonePlusSize:
+                rightInset = 6
+            default:
+                rightInset = 7
+        }
+        
+        settingsButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: rightInset)
+        
         let barButton = UIBarButtonItem(customView: settingsButton)
         navigationItem.rightBarButtonItem = barButton
         
