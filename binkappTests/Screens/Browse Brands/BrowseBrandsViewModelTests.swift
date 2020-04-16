@@ -10,7 +10,6 @@ import XCTest
 @testable import binkapp
 
 class BrowseBrandsViewModelTests: XCTestCase {
-    private var viewModel: BrowseBrandsViewModelMock!
     private var plans: [MembershipPlanModel]!
     
     override func setUp() {
