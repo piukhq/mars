@@ -30,6 +30,12 @@ struct MembershipPlanModel: Codable {
     }
 }
 
+extension MembershipPlanModel: Equatable {
+    static func == (lhs: MembershipPlanModel, rhs: MembershipPlanModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
 extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipPlan, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlan {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
