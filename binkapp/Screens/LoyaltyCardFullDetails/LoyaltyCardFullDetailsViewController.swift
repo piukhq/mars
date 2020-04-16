@@ -127,6 +127,10 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureModules()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
     }
     

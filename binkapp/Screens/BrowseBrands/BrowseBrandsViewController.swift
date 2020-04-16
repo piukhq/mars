@@ -87,7 +87,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setScreenName(trackedScreen: .browseBrands)
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         
@@ -101,6 +100,11 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         navigationItem.rightBarButtonItem = filtersButton
         
         self.title = "browse_brands_title".localized
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setScreenName(trackedScreen: .browseBrands)
     }
     
     private func configureCollectionView() {
