@@ -136,15 +136,15 @@ class ApiManager {
     }
     
     struct Certificates {
-      static let bink = Certificates.certificate(filename: "bink")
-      
-      private static func certificate(filename: String) -> SecCertificate {
-        let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
-        let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
-        let certificate = SecCertificateCreateWithData(nil, data as CFData)!
-        
-        return certificate
-      }
+        static let bink = Certificates.certificate(filename: "bink")
+
+        private static func certificate(filename: String) -> SecCertificate {
+            let filePath = Bundle.main.path(forResource: filename, ofType: "der")!
+            let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
+            let certificate = SecCertificateCreateWithData(nil, data as CFData)!
+
+            return certificate
+        }
     }
 
     var networkIsReachable: Bool {
@@ -169,12 +169,12 @@ class ApiManager {
     
     init() {
         let evaluators = [
-          "api.gb.bink.com":
-            PinnedCertificatesTrustEvaluator(certificates: [
-              Certificates.bink
-            ])
+            "api.gb.bink.com":
+                PinnedCertificatesTrustEvaluator(certificates: [
+                    Certificates.bink
+                ])
         ]
-       
+
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10.0
         session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
@@ -208,7 +208,7 @@ class ApiManager {
         let authRequired = url == .logout ? false : url.authRequired
         let headerDict = headers != nil ? headers! : getHeader(endpoint: url)
         let requestHeaders = HTTPHeaders(headerDict)
-                
+
         session.request(url.fullUrlString, method: httpMethod.value, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { (response) in
             self.responseHandler(response: response, authRequired: authRequired, isUserDriven: isUserDriven, onSuccess: onSuccess, onError: onError)
         }
@@ -244,43 +244,43 @@ class ApiManager {
             return
         }
 
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .useDefaultKeys
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .useDefaultKeys
 
-            do {
-                let statusCode = response.response?.statusCode ?? 0
-                if statusCode == 200 || statusCode == 201 {
-                    let models = try decoder.decode(Resp.self, from: data)
-                    onSuccess(models)
-                } else if statusCode == 401 && authRequired {
-                    /*
-                     If the endpoint expects an authorisation token,
-                     ensure that we aggressively respond in app to a 401.
-                     */
-                    NotificationCenter.default.post(name: .shouldLogout, object: nil)
-                } else if statusCode == 400 {
-                    let decodedResponseErrors = try? decoder.decode(ResponseErrors.self, from: data)
-                    let otherErrors = try? decoder.decode([String].self, from: data)
-                    
-                    let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? otherErrors?.first ?? "went_wrong".localized
-                    let customError = CustomError(errorMessage: errorMessage, statusCode: statusCode)
-                    onError(customError)
-                } else if (500...599).contains(statusCode) {
-                    NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
-                    let customError = CustomError(errorMessage: "", statusCode: statusCode)
-                    onError(customError)
-                } else if let error = response.error {
-                    print(error)
-                    onError(error)
-                } else {
-                    print("something went wrong, statusCode: \(statusCode)")
-                    let error = NSError(domain: "", code: statusCode, userInfo: nil) as Error
-                    onError(error)
-                }
-            } catch (let error) {
-                print("decoding error: \(error)")
+        do {
+            let statusCode = response.response?.statusCode ?? 0
+            if statusCode == 200 || statusCode == 201 {
+                let models = try decoder.decode(Resp.self, from: data)
+                onSuccess(models)
+            } else if statusCode == 401 && authRequired {
+                /*
+                 If the endpoint expects an authorisation token,
+                 ensure that we aggressively respond in app to a 401.
+                 */
+                NotificationCenter.default.post(name: .shouldLogout, object: nil)
+            } else if statusCode == 400 {
+                let decodedResponseErrors = try? decoder.decode(ResponseErrors.self, from: data)
+                let otherErrors = try? decoder.decode([String].self, from: data)
+
+                let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? otherErrors?.first ?? "went_wrong".localized
+                let customError = CustomError(errorMessage: errorMessage, statusCode: statusCode)
+                onError(customError)
+            } else if (500...599).contains(statusCode) {
+                NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
+                let customError = CustomError(errorMessage: "", statusCode: statusCode)
+                onError(customError)
+            } else if let error = response.error {
+                print(error)
+                onError(error)
+            } else {
+                print("something went wrong, statusCode: \(statusCode)")
+                let error = NSError(domain: "", code: statusCode, userInfo: nil) as Error
                 onError(error)
             }
+        } catch (let error) {
+            print("decoding error: \(error)")
+            onError(error)
+        }
     }
     
     typealias NoCodableResponse = (_ success: Bool, _ error: Error?) -> ()
