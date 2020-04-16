@@ -10,80 +10,82 @@ import XCTest
 @testable import binkapp
 
 class SettingsViewModelTests: XCTestCase {
-    var viewModel: SettingsViewModelMock?
-    var settingsFactory: SettingsFactoryMock?
     
-    override func setUp() {
-        viewModel = SettingsViewModelMock()
-        settingsFactory = SettingsFactoryMock()
-    }
-    
-    override func tearDown() {
-        viewModel = nil
-        settingsFactory = nil
-    }
-    
-    func test_sections_returnsANotNilArrayOfSections(){
-        XCTAssert(viewModel?.sections != nil)
+    func test_sections_returnsANotNilArrayOfSections() {
+        let sut = SettingsViewModelMock()
+        XCTAssertNotNil(sut.sections)
     }
     
     func test_title_returnsCorrectTitle() {
-        XCTAssertEqual(viewModel?.title, "settings_title".localized)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.title, "settings_title".localized)
     }
     
     func test_sectionsCount_returnsCorrectNumberOfSections() {
+        let sut = SettingsViewModelMock()
         #if DEBUG
-        XCTAssertEqual(viewModel?.sectionsCount, 5)
+        XCTAssertEqual(sut.sectionsCount, 5)
         #else
-        XCTAssertEqual(viewModel?.sectionsCount, 4)
+        XCTAssertEqual(sut.sectionsCount, 4)
         #endif
     }
     
     func test_cellHeight_returnsCorrectHeight() {
-        XCTAssertEqual(viewModel?.cellHeight, 60)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.cellHeight, 60)
     }
     
     func test_rowsCount_returnsCorrectCountForAccountSection() {
-        XCTAssertEqual(viewModel?.rowsCount(forSectionAtIndex: 0), 2)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 0), 2)
     }
     
     func test_rowsCount_returnsCorrectCountForSupportSection() {
-        XCTAssertEqual(viewModel?.rowsCount(forSectionAtIndex: 1), 3)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 1), 3)
     }
     
     func test_rowsCount_returnsCorrectCountForAboutSection() {
-        XCTAssertEqual(viewModel?.rowsCount(forSectionAtIndex: 2), 2)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 2), 2)
     }
     
     func test_rowsCount_returnsCorrectCountForLegalSection() {
-        XCTAssertEqual(viewModel?.rowsCount(forSectionAtIndex: 3), 2)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 3), 2)
     }
     
     #if DEBUG
     func test_rowsCount_returnsCorrectCountForDebugSection() {
-        XCTAssertEqual(viewModel?.rowsCount(forSectionAtIndex: 4), 1)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 4), 1)
     }
     #endif
     
     func test_titleForSection_returnsCorrectTitleForAccountSection() {
-        XCTAssertEqual(viewModel?.titleForSection(atIndex: 0), "settings_section_account_title".localized)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.titleForSection(atIndex: 0), "settings_section_account_title".localized)
     }
     
     func test_titleForSection_returnsCorrectTitleForSupportSection() {
-        XCTAssertEqual(viewModel?.titleForSection(atIndex: 1), "settings_section_support_title".localized)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.titleForSection(atIndex: 1), "settings_section_support_title".localized)
     }
     
     func test_titleForSection_returnsCorrectTitleForAboutSection() {
-        XCTAssertEqual(viewModel?.titleForSection(atIndex: 2), "settings_section_about_title".localized)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.titleForSection(atIndex: 2), "settings_section_about_title".localized)
     }
     
     func test_titleForSection_returnsCorrectTitleForLegalSection() {
-        XCTAssertEqual(viewModel?.titleForSection(atIndex: 3), "settings_section_legal_title".localized)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.titleForSection(atIndex: 3), "settings_section_legal_title".localized)
     }
     
     #if DEBUG
     func test_titleForSection_returnsCorrectTitleForDebugSection() {
-        XCTAssertEqual(viewModel?.titleForSection(atIndex: 4), "settings_section_debug_title".localized)
+        let sut = SettingsViewModelMock()
+        XCTAssertEqual(sut.titleForSection(atIndex: 4), "settings_section_debug_title".localized)
     }
     #endif
     
@@ -141,7 +143,8 @@ class SettingsViewModelTests: XCTestCase {
     #endif
     
     func getSettingsRow(forRow row: Int, section: Int) -> SettingsRow? {
+        let sut = SettingsViewModelMock()
         let indexPath = IndexPath(row: row, section: section)
-        return viewModel?.row(atIndexPath: indexPath)
+        return sut.row(atIndexPath: indexPath)
     }
 }
