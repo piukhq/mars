@@ -11,11 +11,7 @@ import XCTest
 
 class BrowseBrandsViewModelTests: XCTestCase {
     private var viewModel: BrowseBrandsViewModelMock!
-    private var plans: [MembershipPlanModel]! {
-        didSet {
-            viewModel = BrowseBrandsViewModelMock(membershipPlans: plans)
-        }
-    }
+    private var plans: [MembershipPlanModel]!
     
     override func setUp() {
         plans = [
@@ -25,72 +21,85 @@ class BrowseBrandsViewModelTests: XCTestCase {
     }
     
     func test_shouldShowNoResultsLabel_true() {
-        viewModel.filteredPlans = []
-        XCTAssertTrue(viewModel.shouldShowNoResultsLabel)
+        let sut = BrowseBrandsViewModelMock(membershipPlans: [])
+        XCTAssertTrue(sut.shouldShowNoResultsLabel)
     }
     
     func test_shouldShowNoResultsLabel_false() {
-        viewModel.filteredPlans = plans
-        XCTAssertFalse(viewModel.shouldShowNoResultsLabel)
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        sut.filteredPlans = plans
+        XCTAssertFalse(sut.shouldShowNoResultsLabel)
     }
     
     func test_filters_returnsMappedFiltersCorrectly() {
-        XCTAssertEqual(viewModel.filters, ["household", "food"])
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        XCTAssertEqual(sut.filters, ["household", "food"])
     }
     
     func test_getMembershipPlan_section_0() {
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
         var indexPath = IndexPath(row: 0, section: 0)
-        XCTAssertEqual(viewModel.getMembershipPlan(for: indexPath), plans.first)
+        XCTAssertEqual(sut.getMembershipPlan(for: indexPath), plans.first)
         indexPath = IndexPath(row: 0, section: 1)
-        XCTAssertEqual(viewModel.getMembershipPlan(for: indexPath), plans[1])
+        XCTAssertEqual(sut.getMembershipPlan(for: indexPath), plans[1])
     }
     
     func test_getSectionTitleText() {
-        XCTAssertEqual(viewModel.getSectionTitleText(section: 0), "Payment Linked Loyalty")
-        XCTAssertEqual(viewModel.getSectionTitleText(section: 1), "All")
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        XCTAssertEqual(sut.getSectionTitleText(section: 0), "Payment Linked Loyalty")
+        XCTAssertEqual(sut.getSectionTitleText(section: 1), "All")
     }
     
     func test_hasMembershipPlans_true() {
-        XCTAssertTrue(viewModel.hasMembershipPlans())
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        XCTAssertTrue(sut.hasMembershipPlans())
     }
     
     func test_hasMembershipPlans_false() {
-        plans = []
-        XCTAssertFalse(viewModel.hasMembershipPlans())
+        let sut = BrowseBrandsViewModelMock(membershipPlans: [])
+        XCTAssertFalse(sut.hasMembershipPlans())
     }
     
     func test_hasPlansForOneSection_true() {
         plans.removeLast()
-        XCTAssertTrue(viewModel.hasPlansForOneSection())
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        XCTAssertTrue(sut.hasPlansForOneSection())
     }
     
     func test_hasPlansForOneSection_false() {
-        XCTAssertFalse(viewModel.hasPlansForOneSection())
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        XCTAssertFalse(sut.hasPlansForOneSection())
     }
     
     func test_getPllMembershipPlans() {
-        XCTAssertEqual(viewModel.getPllMembershipPlans().count, 1)
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        XCTAssertEqual(sut.getPllMembershipPlans().count, 1)
     }
 
     func test_getNonPllMembershipPlans() {
-        XCTAssertEqual(viewModel.getNonPllMembershipPlans().count, 1)
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        XCTAssertEqual(sut.getNonPllMembershipPlans().count, 1)
     }
     
     func test_numberOfSections() {
-        XCTAssertEqual(viewModel.numberOfSections(), 2)
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        XCTAssertEqual(sut.numberOfSections(), 2)
     }
    
     func test_searchText() {
-        viewModel.searchText = "First"
-        viewModel.selectedFilters = ["household"]
-        XCTAssertEqual(viewModel.filteredPlans.count, 1)
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        sut.searchText = "First"
+        sut.selectedFilters = ["household"]
+        XCTAssertEqual(sut.filteredPlans.count, 1)
     }
     
     func test_getNumberOfRowsForSection_0() {
-        XCTAssertEqual(viewModel.getNumberOfRowsFor(section: 0), 1)
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        XCTAssertEqual(sut.getNumberOfRowsFor(section: 0), 1)
     }
     
     func test_getNumberOfRowsForSection_1() {
-        XCTAssertEqual(viewModel.getNumberOfRowsFor(section: 1), 1)
+        let sut = BrowseBrandsViewModelMock(membershipPlans: plans)
+        XCTAssertEqual(sut.getNumberOfRowsFor(section: 1), 1)
     }
 }
