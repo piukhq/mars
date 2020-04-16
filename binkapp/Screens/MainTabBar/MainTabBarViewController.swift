@@ -58,7 +58,7 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
         
         var rightInset: CGFloat = 0
         
-        switch UIDevice.current.screenWidth {
+        switch UIDevice.current.width {
             case .iPhone5Size:
                 rightInset = 9
             case .iPhone6Size:

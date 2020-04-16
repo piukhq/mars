@@ -30,7 +30,7 @@ extension UIDevice {
         case unknown
     }
     
-    var screenHeight: ScreenSize {
+    var height: ScreenSize {
         switch UIScreen.main.nativeBounds.height {
         case 1136:
             return .iPhone5Size
@@ -51,7 +51,7 @@ extension UIDevice {
         }
     }
     
-    var screenWidth: ScreenSize {
+    var width: ScreenSize {
         switch UIScreen.main.bounds.width {
         case 320:
             return .iPhone5Size
