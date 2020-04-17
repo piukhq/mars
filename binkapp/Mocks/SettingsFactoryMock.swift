@@ -1,20 +1,14 @@
 //
-//  SettingsFactory.swift
+//  SettingsFactoryMock.swift
 //  binkapp
 //
-//  Created by Max Woodhams on 11/10/2019.
-//  Copyright © 2019 Bink. All rights reserved.
+//  Created by Pop Dorin on 15/04/2020.
+//  Copyright © 2020 Bink. All rights reserved.
 //
 
 import UIKit
 
-struct SettingsFactory {
-    private let router: MainScreenRouter
-    
-    init(router: MainScreenRouter) {
-        self.router = router
-    }
-    
+class SettingsFactoryMock {
     func sectionData() -> [SettingsSection] {
         
         var sections = [SettingsSection]()
