@@ -83,11 +83,11 @@ final class APIClient {
 // MARK: - Request handling
 
 extension APIClient {
-    func performRequest<ResponseType: Codable, Parameters: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: Parameters? = nil, isUserDriven: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) {
+    func performRequest<ResponseType: Codable, Parameters: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: Parameters? = nil, isUserDriven: Bool, completion: @escaping (Result<ResponseType, NetworkingError>) -> Void) {
 
         if !networkIsReachable && isUserDriven {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
-            completion(.failure(NetworkingError.noInternetConnection))
+            completion(.failure(.noInternetConnection))
             return
         }
 
@@ -103,7 +103,7 @@ extension APIClient {
 //        }
 
         guard endpoint.allowedMethods.contains(method) else {
-            completion(.failure(NetworkingError.methodNotAllowed))
+            completion(.failure(.methodNotAllowed))
             return
         }
 
@@ -115,21 +115,21 @@ extension APIClient {
         }
     }
 
-//    func getImage(fromUrlString urlString: String, completion: @escaping (UIImage?, Error?) -> Void) {
-//        session.request(urlString).responseImage { response in
-//            if let error = response.error {
-//                completion(nil, error)
-//                return
-//            }
-//
-//            do {
-//                let image = try response.result.get()
-//                completion(image, nil)
-//            } catch let error {
-//                completion(nil, error)
-//            }
-//        }
-//    }
+    func getImage(fromUrlString urlString: String, completion: @escaping (Result<UIImage, NetworkingError>) -> Void) {
+        session.request(urlString).responseImage { response in
+            if let error = response.error {
+                completion(.failure(.customError(error.localizedDescription)))
+                return
+            }
+
+            do {
+                let image = try response.result.get()
+                completion(.success(image))
+            } catch let error {
+                completion(.failure(.customError(error.localizedDescription)))
+            }
+        }
+    }
 }
 
 // MARK: - Response handling
@@ -137,17 +137,22 @@ extension APIClient {
 struct Nothing: Codable {}
 
 private extension APIClient {
-    func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, isUserDriven: Bool, completion: @escaping (Result<ResponseType, Error>) -> Void) {
+    func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, isUserDriven: Bool, completion: @escaping (Result<ResponseType, NetworkingError>) -> Void) {
 
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
             // TODO: Pass error through as object?
             NotificationCenter.default.post(name: .didFailServerTrustEvaluation, object: nil)
-            completion(.failure(NetworkingError.sslPinningFailure))
+            completion(.failure(.sslPinningFailure))
+            return
+        }
+
+        if let error = response.error {
+            completion(.failure(.customError(error.localizedDescription)))
             return
         }
 
         guard let data = response.data else {
-            completion(.failure(NetworkingError.invalidResponse))
+            completion(.failure(.invalidResponse))
             return
         }
 
@@ -156,7 +161,7 @@ private extension APIClient {
 
         do {
             guard let statusCode = response.response?.statusCode else {
-                completion(.failure(NetworkingError.invalidResponse))
+                completion(.failure(.invalidResponse))
                 return
             }
 
@@ -175,24 +180,24 @@ private extension APIClient {
                     let decodedResponseErrors = try decoder.decode(ResponseErrors.self, from: data)
                     let otherErrors = try decoder.decode([String].self, from: data)
                     let errorMessage = decodedResponseErrors.nonFieldErrors?.first ?? otherErrors.first ?? "went_wrong".localized
-                    completion(.failure(NetworkingError.customError(errorMessage)))
+                    completion(.failure(.customError(errorMessage)))
                     return
                 }
-                completion(.failure(NetworkingError.clientError(statusCode)))
+                completion(.failure(.clientError(statusCode)))
                 return
             } else if serverErrorStatusRange.contains(statusCode) {
                 // Failed response, server error
 
                 // TODO: Can we remove this and just respond to the error sent back in completion by either showing the error message or not?
                 NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
-                completion(.failure(NetworkingError.serverError(statusCode)))
+                completion(.failure(.serverError(statusCode)))
                 return
             } else {
-                completion(.failure(NetworkingError.checkStatusCode(statusCode)))
+                completion(.failure(.checkStatusCode(statusCode)))
                 return
             }
         } catch {
-            completion(.failure(NetworkingError.decodingError))
+            completion(.failure(.decodingError))
         }
     }
 }
