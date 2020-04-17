@@ -9,18 +9,18 @@
 import Foundation
 
 class PreferencesRepository {
-    private let apiManager: ApiManager
+    private let apiClient: APIClient
     
-    init(apiManager: ApiManager) {
-        self.apiManager = apiManager
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
     
     var networkIsReachable: Bool {
-        return apiManager.networkIsReachable
+        return apiClient.networkIsReachable
     }
     
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (Error?) -> Void) {
-        apiManager.doRequest(url: .preferences, httpMethod: .get, isUserDriven: false, onSuccess: { (preferences: [PreferencesModel]) in
+        apiClient.doRequest(url: .preferences, httpMethod: .get, isUserDriven: false, onSuccess: { (preferences: [PreferencesModel]) in
             onSuccess(preferences)
         }) { (error) in
             onError(error)
@@ -28,7 +28,7 @@ class PreferencesRepository {
     }
     
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
-        apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: preferences, isUserDriven: true) { (bool, error) in
+        apiClient.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: preferences, isUserDriven: true) { (bool, error) in
             guard let safeError = error else {
                 onSuccess()
                 return

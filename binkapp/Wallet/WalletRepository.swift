@@ -10,7 +10,7 @@ import Foundation
 
 protocol WalletRepository: CoreDataRepositoryProtocol {
     typealias EmptyCompletionBlock = () -> Void
-    init(apiManager: ApiManager)
+    init(apiClient: APIClient)
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock?)
 }
 

@@ -40,7 +40,7 @@ struct UserMigrationController {
         }
 
         // TODO: Only call that injects headers. Work this out when moving over
-        Current.apiManager.doRequest(url: .renew, httpMethod: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiManager.apiVersion.rawValue)"], isUserDriven: false, onSuccess: { (response: RenewTokenResponse) in
+        Current.apiClient.doRequest(url: .renew, httpMethod: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiClient.apiVersion.rawValue)"], isUserDriven: false, onSuccess: { (response: RenewTokenResponse) in
             var email: String?
             do {
                 let jwt = try decode(jwt: token)
@@ -55,7 +55,7 @@ struct UserMigrationController {
             }
 
             Current.userManager.setNewUser(with: response)
-            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: renewEmail), isUserDriven: false) { (success, error) in
+            Current.apiClient.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: renewEmail), isUserDriven: false) { (success, error) in
                 // If there is an error, or the response is not successful, bail out
                 guard error == nil, success else {
                     Current.userManager.removeUser()

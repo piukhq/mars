@@ -31,7 +31,7 @@ enum APIEndpoint: Equatable {
         // TODO: Don't hardcode the headers
         var headers = [
             "Content-Type": "application/json",
-            "Accept": "application/json\(shouldVersionPin ? ";\(Current.apiManager.apiVersion.rawValue)" : "")"
+            "Accept": "application/json\(shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")"
         ]
 
         if authRequired {

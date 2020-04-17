@@ -17,7 +17,7 @@ protocol MainScreenRouterDelegate: NSObjectProtocol {
 class MainScreenRouter {
     var navController: PortraitNavigationController?
     weak var delegate: MainScreenRouterDelegate?
-    let apiManager = Current.apiManager
+    let apiClient = Current.apiClient
     
     init(delegate: MainScreenRouterDelegate) {
         self.delegate = delegate
@@ -66,7 +66,7 @@ class MainScreenRouter {
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {
-        let repository = LoyaltyWalletRepository(apiManager: apiManager)
+        let repository = LoyaltyWalletRepository(apiClient: apiClient)
         let viewModel = LoyaltyWalletViewModel(repository: repository, router: self)
         let viewController = LoyaltyWalletViewController(viewModel: viewModel)
         
@@ -74,7 +74,7 @@ class MainScreenRouter {
     }
     
     func getPaymentWalletViewController() -> UIViewController {
-        let viewModel = PaymentWalletViewModel(repository: PaymentWalletRepository(apiManager: apiManager), router: self)
+        let viewModel = PaymentWalletViewModel(repository: PaymentWalletRepository(apiClient: apiClient), router: self)
         let viewController = PaymentWalletViewController(viewModel: viewModel)
         
         return viewController
@@ -96,7 +96,7 @@ class MainScreenRouter {
     }
     
     func toBrowseBrandsViewController() {
-        let repository = BrowseBrandsRepository(apiManager: apiManager)
+        let repository = BrowseBrandsRepository(apiClient: apiClient)
         let viewModel = BrowseBrandsViewModel(repository: repository, router: self)
         let viewController = BrowseBrandsViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
@@ -105,7 +105,7 @@ class MainScreenRouter {
     func toAddPaymentViewController() {
         //TODO: Replace with information from scanner
         let card = PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
-        let repository = PaymentWalletRepository(apiManager: apiManager)
+        let repository = PaymentWalletRepository(apiClient: apiClient)
         let viewModel = AddPaymentCardViewModel(router: self, repository: repository, paymentCard: card)
         let viewController = AddPaymentCardViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
@@ -125,7 +125,7 @@ class MainScreenRouter {
     }
     
     func toLoyaltyFullDetailsScreen(membershipCard: CD_MembershipCard) {
-        let repository = LoyaltyCardFullDetailsRepository(apiManager: apiManager)
+        let repository = LoyaltyCardFullDetailsRepository(apiClient: apiClient)
         let factory = PaymentCardDetailInformationRowFactory()
         let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, repository: repository, router: self, informationRowFactory: factory)
         let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
@@ -134,7 +134,7 @@ class MainScreenRouter {
     }
 
     func toPaymentCardDetailViewController(paymentCard: CD_PaymentCard) {
-        let repository = PaymentCardDetailRepository(apiManager: apiManager)
+        let repository = PaymentCardDetailRepository(apiClient: apiClient)
         let factory = PaymentCardDetailInformationRowFactory()
         let viewModel = PaymentCardDetailViewModel(paymentCard: paymentCard, router: self, repository: repository, informationRowFactory: factory)
         let viewController = PaymentCardDetailViewController(viewModel: viewModel)
@@ -143,28 +143,28 @@ class MainScreenRouter {
     }
 
     func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil) {
-        let repository = AuthAndAddRepository(apiManager: apiManager)
+        let repository = AuthAndAddRepository(apiClient: apiClient)
         let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
     func toPatchGhostCard(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
-        let repository = AuthAndAddRepository(apiManager: apiManager)
+        let repository = AuthAndAddRepository(apiClient: apiClient)
         let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
     func toSignUp(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
-        let repository = AuthAndAddRepository(apiManager: apiManager)
+        let repository = AuthAndAddRepository(apiClient: apiClient)
         let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
     func toPllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney ) {
-        let repository = PLLScreenRepository(apiManager: apiManager)
+        let repository = PLLScreenRepository(apiClient: apiClient)
         let viewModel = PLLScreenViewModel(membershipCard: membershipCard, repository: repository, router: self, journey: journey)
         let viewController = PLLScreenViewController(viewModel: viewModel, journey: journey)
         navController?.pushViewController(viewController, animated: true)
@@ -226,7 +226,7 @@ class MainScreenRouter {
     }
     
     func toForgotPasswordViewController(navigationController: UINavigationController?) {
-        let repository = ForgotPasswordRepository(apiManager: apiManager)
+        let repository = ForgotPasswordRepository(apiClient: apiClient)
         let viewModel = ForgotPasswordViewModel(repository: repository)
         let viewController = ForgotPasswordViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)

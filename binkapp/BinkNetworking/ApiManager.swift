@@ -319,7 +319,7 @@ private extension ApiManager {
     private func getHeader(endpoint: RequestURL) -> [String: String] {
         var headers = [
             "Content-Type": "application/json",
-            "Accept": "application/json\(endpoint.shouldVersionPin ? ";\(Current.apiManager.apiVersion.rawValue)" : "")"
+            "Accept": "application/json\(endpoint.shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")"
         ]
 
         if endpoint.authRequired {

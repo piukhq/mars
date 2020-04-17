@@ -92,13 +92,13 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         
         continueButton.startLoading()
         
-        Current.apiManager.doRequest(url: .facebook, httpMethod: .post, parameters: request, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+        Current.apiClient.doRequest(url: .facebook, httpMethod: .post, parameters: request, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             guard let email = response.email else {
                 self?.handleAuthError()
                 return
             }
             Current.userManager.setNewUser(with: response)
-            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
+            Current.apiClient.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
                 // If there is an error, or the response is not successful, bail out
                 guard error == nil, success else {
                     self?.handleAuthError()
@@ -127,7 +127,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
          guard params.count > 0 else { return }
          
          // We don't worry about whether this was successful or not
-         Current.apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, isUserDriven: false, completion: nil)
+         Current.apiClient.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, isUserDriven: false, completion: nil)
      }
     
     private func showError() {

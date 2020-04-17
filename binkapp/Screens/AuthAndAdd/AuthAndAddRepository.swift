@@ -14,10 +14,10 @@ import Foundation
 //}
 
 class AuthAndAddRepository {
-    private let apiManager: ApiManager
+    private let apiClient: APIClient
     
-    init(apiManager: ApiManager) {
-        self.apiManager = apiManager
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
     
     func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (Error?) -> ()) {
@@ -32,7 +32,7 @@ class AuthAndAddRepository {
             method = .post
         }
         
-        apiManager.doRequest(url: url, httpMethod: method, headers: nil, parameters: request, isUserDriven: true, onSuccess: { (response: MembershipCardModel) in
+        apiClient.doRequest(url: url, httpMethod: method, headers: nil, parameters: request, isUserDriven: true, onSuccess: { (response: MembershipCardModel) in
             // Map to core data
             Current.database.performBackgroundTask { context in
                 let newObject = response.mapToCoreData(context, .update, overrideID: nil)
@@ -67,7 +67,7 @@ class AuthAndAddRepository {
             mutableParams.account?.registrationFields = nil
         }
 
-        apiManager.doRequest(url: url, httpMethod: method, parameters: mutableParams, isUserDriven: true, onSuccess: { (card: MembershipCardModel) in
+        apiClient.doRequest(url: url, httpMethod: method, parameters: mutableParams, isUserDriven: true, onSuccess: { (card: MembershipCardModel) in
             Current.database.performBackgroundTask { context in
                 let newObject = card.mapToCoreData(context, .update, overrideID: nil)
 

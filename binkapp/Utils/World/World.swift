@@ -15,7 +15,7 @@ class World {
     lazy var wallet = Wallet()
     lazy var userDefaults: BinkUserDefaults = UserDefaults.standard
     lazy var userManager = UserManager()
-    lazy var apiManager = ApiManager()
+    lazy var apiClient = APIClient()
 }
 
 protocol BinkUserDefaults {

@@ -9,15 +9,15 @@
 import Foundation
 
 class ForgotPasswordRepository {
-    private let apiManager: ApiManager
+    private let apiClient: APIClient
     
-    init(apiManager: ApiManager) {
-        self.apiManager = apiManager
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
     
     func continueButtonTapped(email: String, completion: @escaping () -> Void) {
         let model = ForgotPasswordPostModel(email: email)
-        apiManager.doRequest(url: .forgotPassword, httpMethod: .post, parameters: model, isUserDriven: true, onSuccess: { (response: Nothing) in
+        apiClient.doRequest(url: .forgotPassword, httpMethod: .post, parameters: model, isUserDriven: true, onSuccess: { (response: Nothing) in
             completion()
         }) { _ in
             completion()

@@ -10,10 +10,10 @@ import Foundation
 import CoreData
 
 struct LoyaltyWalletRepository: WalletRepository {
-    private let apiManager: ApiManager
+    private let apiClient: APIClient
 
-    init(apiManager: ApiManager) {
-        self.apiManager = apiManager
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
@@ -21,7 +21,7 @@ struct LoyaltyWalletRepository: WalletRepository {
         let url = RequestURL.membershipCard(cardId: card.id)
         let method = RequestHTTPMethod.delete
         
-        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: Nothing) in }, onError: { error in })
+        apiClient.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: Nothing) in }, onError: { error in })
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in

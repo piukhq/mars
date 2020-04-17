@@ -61,7 +61,7 @@ final class ImageService {
     }
 
     private func downloadImage(forPath path: String, withPolicy policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
-        Current.apiManager.getImage(fromUrlString: path) { (image, error) in
+        Current.apiClient.getImage(fromUrlString: path) { (image, error) in
             guard let downloadedImage = image else {
                 completion(nil)
                 return
@@ -155,7 +155,7 @@ final class StorageUtility {
 
     private static func purgeExpiredStoredObjects() {
         // We don't want to remove any stored object if we are offline
-        guard Current.apiManager.networkIsReachable else {
+        guard Current.apiClient.networkIsReachable else {
             return
         }
 

@@ -84,13 +84,13 @@ class LoginViewController: BaseFormViewController {
             password: fields["password"]
         )
         
-        Current.apiManager.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
+        Current.apiClient.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
             guard let email = response.email else {
                 self?.handleLoginError()
                 return
             }
             Current.userManager.setNewUser(with: response)
-            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
+            Current.apiClient.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
                 // If there is an error, or the response is not successful, bail out
                 guard error == nil, success else {
                     self?.handleLoginError()

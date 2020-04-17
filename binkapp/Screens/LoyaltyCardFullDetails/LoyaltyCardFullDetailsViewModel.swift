@@ -229,7 +229,7 @@ extension LoyaltyCardFullDetailsViewModel {
     func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }
-            guard Current.apiManager.networkIsReachable else {
+            guard Current.apiClient.networkIsReachable else {
                 self.router.presentNoConnectivityPopup()
                 noCompletion?()
                 return

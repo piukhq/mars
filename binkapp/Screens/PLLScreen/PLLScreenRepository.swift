@@ -9,10 +9,10 @@
 import UIKit
 
 class PLLScreenRepository {
-    let apiManager: ApiManager
+    let apiClient: APIClient
     
-    init(apiManager: ApiManager) {
-        self.apiManager = apiManager
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
     
     func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping () -> Void) {
@@ -67,7 +67,7 @@ private extension PLLScreenRepository {
         let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
         let method: RequestHTTPMethod = .patch
         
-        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
+        apiClient.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
             completion(response.id)
         }, onError: { error in
             completion(nil)
@@ -80,7 +80,7 @@ private extension PLLScreenRepository {
         let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
         let method: RequestHTTPMethod = .delete
         
-        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
+        apiClient.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
             completion(paymentCardId)
         }, onError: { error in
             completion(nil)
