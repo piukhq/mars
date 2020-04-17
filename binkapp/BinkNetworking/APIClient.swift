@@ -85,7 +85,7 @@ final class APIClient {
 // MARK: - Request handling
 
 extension APIClient {
-    func performRequest<ResponseType: Codable, Parameters: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: Parameters?, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
+    func performRequest<ResponseType: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
 
         if !networkIsReachable && isUserDriven {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
@@ -104,9 +104,34 @@ extension APIClient {
         }
 
         let requestHeaders = HTTPHeaders(endpoint.headers)
-        
+
+        session.request(requestUrl, method: method, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+            self?.handleResponse(response, endpoint: endpoint, expecting: responseType, isUserDriven: isUserDriven, completion: completion)
+        }
+    }
+
+    func performRequestWithParameters<ResponseType: Codable, Parameters: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: Parameters?, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
+
+        if !networkIsReachable && isUserDriven {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            completion?(.failure(.noInternetConnection))
+            return
+        }
+
+        guard let requestUrl = endpoint.urlString else {
+            completion?(.failure(.invalidUrl))
+            return
+        }
+
+        guard endpoint.allowedMethods.contains(method) else {
+            completion?(.failure(.methodNotAllowed))
+            return
+        }
+
+        let requestHeaders = HTTPHeaders(endpoint.headers)
+
         session.request(requestUrl, method: method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
-            self?.handleResponse(response, endpoint: endpoint, isUserDriven: isUserDriven, completion: completion)
+            self?.handleResponse(response, endpoint: endpoint, expecting: responseType, isUserDriven: isUserDriven, completion: completion)
         }
     }
 
@@ -132,7 +157,7 @@ extension APIClient {
 struct Nothing: Codable {}
 
 private extension APIClient {
-    func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
+    func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
 
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
             // TODO: Pass error through as object?
@@ -166,7 +191,7 @@ private extension APIClient {
                 return
             } else if successStatusRange.contains(statusCode) {
                 // Successful response
-                let decodedResponse = try decoder.decode(ResponseType.self, from: data)
+                let decodedResponse = try decoder.decode(responseType, from: data)
                 completion?(.success(decodedResponse))
                 return
             } else if clientErrorStatusRange.contains(statusCode) {
