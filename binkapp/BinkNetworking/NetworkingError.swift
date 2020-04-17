@@ -12,6 +12,7 @@ enum NetworkingError: BinkError {
     case unauthorized
     case noInternetConnection
     case methodNotAllowed
+    case invalidUrl
     case sslPinningFailure
     case invalidResponse
     case decodingError

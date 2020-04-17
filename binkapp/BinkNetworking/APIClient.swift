@@ -51,7 +51,7 @@ final class APIClient {
     }
 
     var isProduction: Bool {
-        return APIConstants.baseURLString == APIConstants.productionBaseURL
+        return APIConstants.baseURLString == EnvironmentType.production.rawValue
     }
 
     var apiVersion: APIVersion = .v1_1
@@ -91,16 +91,23 @@ extension APIClient {
             return
         }
 
-//        guard var urlComponents = URLComponents(string: APIConstants.baseURLString) else {
-//            completion(.failure(nil, NetworkError(reason: .invalidURL)), nil)
-//            return
-//        }
-//
-//        guard let urlString = urlComponents.url?.absoluteString.removingPercentEncoding,
-//            let url = URL(string: urlString) else {
-//                completion(.failure(nil, NetworkError(reason: .invalidURL)), nil)
-//                return
-//        }
+        var urlString: String?
+        if endpoint.usesComponents {
+            var components = URLComponents()
+            components.scheme = endpoint.scheme
+
+            // TODO: Get environment base url
+            components.host = "api.dev.gb.bink.com"
+            components.path = endpoint.path
+            urlString = components.url?.absoluteString.removingPercentEncoding
+        } else {
+            urlString = endpoint.path
+        }
+
+        guard let requestUrl = urlString else {
+            completion(.failure(.invalidUrl))
+            return
+        }
 
         guard endpoint.allowedMethods.contains(method) else {
             completion(.failure(.methodNotAllowed))
@@ -110,7 +117,7 @@ extension APIClient {
         let requestHeaders = HTTPHeaders(endpoint.headers)
 
         // TODO: Do we not want to cache repsonses?
-        session.request(endpoint.fullUrlString, method: method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+        session.request(requestUrl, method: method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
             self?.handleResponse(response, endpoint: endpoint, isUserDriven: isUserDriven, completion: completion)
         }
     }

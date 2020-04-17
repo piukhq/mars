@@ -154,7 +154,7 @@ class ApiManager {
     }
 
     var isProduction: Bool {
-        return APIConstants.baseURLString == APIConstants.productionBaseURL
+        return APIConstants.baseURLString == EnvironmentType.production.rawValue
     }
     
     var apiVersion: ApiVersion = .v1_1

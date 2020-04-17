@@ -10,6 +10,7 @@ import Foundation
 
 enum BinkErrorDomain: String {
     case networking
+    case configuration
 }
 
 protocol BinkError: Error {

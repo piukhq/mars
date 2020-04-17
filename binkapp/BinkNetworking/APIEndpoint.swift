@@ -31,8 +31,7 @@ enum APIEndpoint: Equatable {
         switch self {
         case .register, .login, .renew, .spreedly:
             return false
-        default:
-            return true
+        default: return true
         }
     }
 
@@ -55,8 +54,7 @@ enum APIEndpoint: Equatable {
         switch self {
         case .spreedly:
             return false
-        default:
-            return true
+        default: return true
         }
     }
 
@@ -65,20 +63,19 @@ enum APIEndpoint: Equatable {
         return [.get, .post, .put, .patch, .delete]
     }
 
-    var fullUrlString: String {
-        return "\(baseUrlString)\(value)"
-    }
-
-    private var baseUrlString: String {
+    var usesComponents: Bool {
         switch self {
         case .spreedly:
-            return ""
-        default:
-            return APIConstants.baseURLString
+            return false
+        default: return true
         }
     }
 
-    private var value: String {
+    var scheme: String {
+        return "https"
+    }
+
+    var path: String {
         switch self {
         case .service:
             return "/ubiquity/service"
