@@ -85,7 +85,7 @@ final class APIClient {
 // MARK: - Request handling
 
 extension APIClient {
-    func performRequest<ResponseType: Codable, Parameters: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: Parameters?, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>? = nil) {
+    func performRequest<ResponseType: Codable, Parameters: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: Parameters?, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
 
         if !networkIsReachable && isUserDriven {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
@@ -132,7 +132,7 @@ extension APIClient {
 struct Nothing: Codable {}
 
 private extension APIClient {
-    func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>? = nil) {
+    func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
 
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
             // TODO: Pass error through as object?
