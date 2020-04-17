@@ -91,20 +91,7 @@ extension APIClient {
             return
         }
 
-        var urlString: String?
-        if endpoint.usesComponents {
-            var components = URLComponents()
-            components.scheme = endpoint.scheme
-
-            // TODO: Get environment base url
-            components.host = "api.dev.gb.bink.com"
-            components.path = endpoint.path
-            urlString = components.url?.absoluteString.removingPercentEncoding
-        } else {
-            urlString = endpoint.path
-        }
-
-        guard let requestUrl = urlString else {
+        guard let requestUrl = endpoint.urlString else {
             completion(.failure(.invalidUrl))
             return
         }
@@ -115,8 +102,7 @@ extension APIClient {
         }
 
         let requestHeaders = HTTPHeaders(endpoint.headers)
-
-        // TODO: Do we not want to cache repsonses?
+        
         session.request(requestUrl, method: method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
             self?.handleResponse(response, endpoint: endpoint, isUserDriven: isUserDriven, completion: completion)
         }

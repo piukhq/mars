@@ -27,14 +27,6 @@ enum APIEndpoint: Equatable {
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
     case spreedly
 
-    var authRequired: Bool {
-        switch self {
-        case .register, .login, .renew, .spreedly:
-            return false
-        default: return true
-        }
-    }
-
     var headers: [String: String] {
         // TODO: Don't hardcode the headers
         var headers = [
@@ -50,20 +42,33 @@ enum APIEndpoint: Equatable {
         return headers
     }
 
-    var shouldVersionPin: Bool {
-        switch self {
-        case .spreedly:
-            return false
-        default: return true
-        }
-    }
-
     // TODO: Split per endpoints
     var allowedMethods: [HTTPMethod] {
         return [.get, .post, .put, .patch, .delete]
     }
 
-    var usesComponents: Bool {
+    var urlString: String? {
+        guard usesComponents else {
+            return path
+        }
+        var components = URLComponents()
+        components.scheme = scheme
+
+        // TODO: Get environment base url
+        components.host = "api.dev.gb.bink.com"
+        components.path = path
+        return components.url?.absoluteString.removingPercentEncoding
+    }
+
+    private var authRequired: Bool {
+        switch self {
+        case .register, .login, .renew, .spreedly:
+            return false
+        default: return true
+        }
+    }
+
+    private var shouldVersionPin: Bool {
         switch self {
         case .spreedly:
             return false
@@ -71,11 +76,19 @@ enum APIEndpoint: Equatable {
         }
     }
 
-    var scheme: String {
+    private var usesComponents: Bool {
+        switch self {
+        case .spreedly:
+            return false
+        default: return true
+        }
+    }
+
+    private var scheme: String {
         return "https"
     }
 
-    var path: String {
+    private var path: String {
         switch self {
         case .service:
             return "/ubiquity/service"
