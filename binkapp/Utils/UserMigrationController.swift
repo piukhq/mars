@@ -39,35 +39,37 @@ struct UserMigrationController {
             return
         }
 
-        // TODO: Only call that injects headers. Work this out when moving over
-        Current.apiClient.doRequest(url: .renew, httpMethod: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiClient.apiVersion.rawValue)"], isUserDriven: false, onSuccess: { (response: RenewTokenResponse) in
-            var email: String?
-            do {
-                let jwt = try decode(jwt: token)
-                email = jwt.body["user_id"] as? String
-            } catch {
-                completion(false)
-            }
-
-            guard let renewEmail = email else {
-                completion(false)
-                return
-            }
-
-            Current.userManager.setNewUser(with: response)
-            Current.apiClient.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: renewEmail), isUserDriven: false) { (success, error) in
-                // If there is an error, or the response is not successful, bail out
-                guard error == nil, success else {
-                    Current.userManager.removeUser()
+        Current.apiClient.performRequest(onEndpoint: .renew, using: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiClient.apiVersion.rawValue)"], expecting: RenewTokenResponse.self, isUserDriven: false) { result in
+            switch result {
+            case .success(let response):
+                var email: String?
+                do {
+                    let jwt = try decode(jwt: token)
+                    email = jwt.body["user_id"] as? String
+                } catch {
                     completion(false)
+                }
+
+                guard let renewEmail = email else {
+                    completion(false) // TODO: // Pass error back?
                     return
                 }
-                Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
-                completion(true)
+
+                Current.userManager.setNewUser(with: response)
+                Current.apiClient.performRequestWithParameters(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: renewEmail), expecting: Nothing.self, isUserDriven: false) { result in
+                    switch result {
+                    case .success:
+                        Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
+                        completion(true)
+                    case .failure:
+                        Current.userManager.removeUser()
+                        completion(false) // TODO: Pass error back?
+                    }
+                }
+            case .failure:
+                Current.userManager.removeUser()
+                completion(false) // TODO: Pass error back?
             }
-        }) { (error) in
-            Current.userManager.removeUser()
-            completion(false)
         }
     }
     

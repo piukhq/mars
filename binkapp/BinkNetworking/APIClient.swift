@@ -85,7 +85,7 @@ final class APIClient {
 // MARK: - Request handling
 
 extension APIClient {
-    func performRequest<ResponseType: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
+    func performRequest<ResponseType: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
 
         if !networkIsReachable && isUserDriven {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
@@ -103,14 +103,14 @@ extension APIClient {
             return
         }
 
-        let requestHeaders = HTTPHeaders(endpoint.headers)
+        let requestHeaders = HTTPHeaders(headers ?? endpoint.headers)
 
         session.request(requestUrl, method: method, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
             self?.handleResponse(response, endpoint: endpoint, expecting: responseType, isUserDriven: isUserDriven, completion: completion)
         }
     }
 
-    func performRequestWithParameters<ResponseType: Codable, P: Encodable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: P?, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
+    func performRequestWithParameters<ResponseType: Codable, P: Encodable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, parameters: P?, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
 
         if !networkIsReachable && isUserDriven {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
@@ -128,7 +128,7 @@ extension APIClient {
             return
         }
 
-        let requestHeaders = HTTPHeaders(endpoint.headers)
+        let requestHeaders = HTTPHeaders(headers ?? endpoint.headers)
 
         session.request(requestUrl, method: method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
             self?.handleResponse(response, endpoint: endpoint, expecting: responseType, isUserDriven: isUserDriven, completion: completion)

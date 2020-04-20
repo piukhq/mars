@@ -119,7 +119,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     func updatePreferences(checkboxes: [CheckboxView]) {
 
-        var params = [String: Any]()
+        var params = [String: String]()
 
         checkboxes.forEach {
             if let columnName = $0.columnName {
@@ -130,7 +130,6 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         guard params.count > 0 else { return }
 
         // We don't worry about whether this was successful or not
-        // TODO: Make params codable
         Current.apiClient.performRequestWithParameters(onEndpoint: .preferences, using: .put, parameters: params, expecting: Nothing.self, isUserDriven: false) { _ in }
     }
     
