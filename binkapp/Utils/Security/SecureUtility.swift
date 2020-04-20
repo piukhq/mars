@@ -41,11 +41,11 @@ final class SecureUtility {
     /// Get the correct secret for the environment
     /// Return a base 64 decoded copy of the secret
     private static func decodedSecret() -> String? {
-        if APIConstants.baseURLString == "https://api.dev.gb.bink.com" {
+        if APIConstants.baseURLString == EnvironmentType.dev.rawValue {
             return BinkappKeys().devPaymentCardHashingSecret1.base64Decoded()
-        } else if APIConstants.baseURLString == "https://api.staging.gb.bink.com" {
+        } else if APIConstants.baseURLString == EnvironmentType.staging.rawValue {
             return BinkappKeys().stagingPaymentCardHashingSecret1.base64Decoded()
-        } else if APIConstants.baseURLString == "https://api.gb.bink.com" {
+        } else if APIConstants.baseURLString == EnvironmentType.production.rawValue {
             return BinkappKeys().prodPaymentCardHashingSecret1.base64Decoded()
         } else {
             return nil
@@ -53,11 +53,11 @@ final class SecureUtility {
     }
 
     private static func publicKeyName() -> String? {
-        if APIConstants.baseURLString == "https://api.dev.gb.bink.com" {
+        if APIConstants.baseURLString == EnvironmentType.dev.rawValue {
             return "devPublicKey"
-        } else if APIConstants.baseURLString == "https://api.staging.gb.bink.com" {
+        } else if APIConstants.baseURLString == EnvironmentType.staging.rawValue {
             return "stagingPublicKey"
-        } else if APIConstants.baseURLString == "https://api.gb.bink.com" {
+        } else if APIConstants.baseURLString == EnvironmentType.production.rawValue {
             return "prodPublicKey"
         } else {
             return nil
