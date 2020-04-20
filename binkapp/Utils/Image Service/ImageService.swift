@@ -61,23 +61,23 @@ final class ImageService {
     }
 
     private func downloadImage(forPath path: String, withPolicy policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
-        Current.apiClient.getImage(fromUrlString: path) { (image, error) in
-            guard let downloadedImage = image else {
+        Current.apiClient.getImage(fromUrlString: path) { result in
+            switch result {
+            case .success(let image):
+                completion(image)
+
+                // Store the downloaded image to disk and fail silently
+                try? Disk.save(image, to: .caches, as: path)
+
+                // Store the downloaded image to local memory
+                Cache.sharedImageCache.setObject(image, forKey: path.toNSString())
+
+                // Add object to sharedStoredObjects, and save to disk
+                let storedObject = StorageUtility.StoredObject(objectPath: path, storedDate: Date(), policy: policy)
+                StorageUtility.addStoredObject(storedObject)
+            case .failure:
                 completion(nil)
-                return
             }
-
-            completion(downloadedImage)
-
-            // Store the downloaded image to disk and fail silently
-            try? Disk.save(downloadedImage, to: .caches, as: path)
-
-            // Store the downloaded image to local memory
-            Cache.sharedImageCache.setObject(downloadedImage, forKey: path.toNSString())
-
-            // Add object to sharedStoredObjects, and save to disk
-            let storedObject = StorageUtility.StoredObject(objectPath: path, storedDate: Date(), policy: policy)
-            StorageUtility.addStoredObject(storedObject)
         }
     }
     

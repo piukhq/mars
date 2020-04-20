@@ -65,25 +65,29 @@ class RegisterViewController: BaseFormViewController {
         let preferenceCheckboxes = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
                 
         continueButton.startLoading()
-        
-        Current.apiClient.doRequest(url: .register, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
-            guard let email = response.email else {
-                self?.handleRegistrationError()
-                return
-            }
-            Current.userManager.setNewUser(with: response)
-            Current.apiClient.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
-                // If there is an error, or the response is not successful, bail out
-                guard error == nil, success else {
+
+        Current.apiClient.performRequestWithParameters(onEndpoint: .register, using: .post, parameters: loginRequest, expecting: LoginRegisterResponse.self, isUserDriven: true) { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let email = response.email else {
                     self?.handleRegistrationError()
                     return
                 }
-                self?.router.didLogin()
-                self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                self?.continueButton.stopLoading()
+                Current.userManager.setNewUser(with: response)
+
+                Current.apiClient.performRequestWithParameters(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), expecting: Nothing.self, isUserDriven: false) { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.router.didLogin()
+                        self?.updatePreferences(checkboxes: preferenceCheckboxes)
+                        self?.continueButton.stopLoading()
+                    case .failure:
+                        self?.handleRegistrationError()
+                    }
+                }
+            case .failure:
+                self?.handleRegistrationError()
             }
-        }) { [weak self] _ in
-            self?.handleRegistrationError()
         }
     }
     
@@ -100,7 +104,7 @@ class RegisterViewController: BaseFormViewController {
         guard params.count > 0 else { return }
         
         // We don't worry about whether this was successful or not
-        Current.apiClient.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, isUserDriven: true, completion: nil)
+        Current.apiClient.performRequest(onEndpoint: .preferences, using: .put, expecting: Nothing.self, isUserDriven: true) { _ in }
     }
     
     private func showError() {

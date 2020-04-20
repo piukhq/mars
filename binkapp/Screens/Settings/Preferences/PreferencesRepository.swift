@@ -18,22 +18,28 @@ class PreferencesRepository {
     var networkIsReachable: Bool {
         return apiClient.networkIsReachable
     }
-    
+
+    // TODO: Fix completion handler
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (Error?) -> Void) {
-        apiClient.doRequest(url: .preferences, httpMethod: .get, isUserDriven: false, onSuccess: { (preferences: [PreferencesModel]) in
-            onSuccess(preferences)
-        }) { (error) in
-            onError(error)
+        apiClient.performRequest(onEndpoint: .preferences, using: .get, expecting: [PreferencesModel].self, isUserDriven: false) { result in
+            switch result {
+            case .success(let preferences):
+                onSuccess(preferences)
+            case .failure(let error):
+                onError(error)
+            }
         }
     }
     
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
-        apiClient.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: preferences, isUserDriven: true) { (bool, error) in
-            guard let safeError = error else {
+        // TODO: Fix completion handler
+        apiClient.performRequestWithParameters(onEndpoint: .preferences, using: .put, parameters: preferences, expecting: Nothing.self, isUserDriven: true) { result in
+            switch result {
+            case .success:
                 onSuccess()
-                return
+            case .failure(let error):
+                onError(error)
             }
-            onError(safeError)
         }
     }
 }

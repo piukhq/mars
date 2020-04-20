@@ -83,24 +83,27 @@ class LoginViewController: BaseFormViewController {
             email: fields["email"],
             password: fields["password"]
         )
-        
-        Current.apiClient.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
-            guard let email = response.email else {
-                self?.handleLoginError()
-                return
-            }
-            Current.userManager.setNewUser(with: response)
-            Current.apiClient.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
-                // If there is an error, or the response is not successful, bail out
-                guard error == nil, success else {
+
+        Current.apiClient.performRequestWithParameters(onEndpoint: .login, using: .post, parameters: loginRequest, expecting: LoginRegisterResponse.self, isUserDriven: true) { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let email = response.email else {
                     self?.handleLoginError()
                     return
                 }
-                self?.continueButton.stopLoading()
-                self?.router.didLogin()
+                Current.userManager.setNewUser(with: response)
+                Current.apiClient.performRequestWithParameters(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), expecting: Nothing.self, isUserDriven: false) { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.continueButton.stopLoading()
+                        self?.router.didLogin()
+                    case .failure:
+                        self?.handleLoginError()
+                    }
+                }
+            case .failure:
+                self?.handleLoginError()
             }
-        }) { [weak self] _ in
-            self?.handleLoginError()
         }
     }
     

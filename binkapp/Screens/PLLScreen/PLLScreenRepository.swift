@@ -64,27 +64,26 @@ class PLLScreenRepository {
 
 private extension PLLScreenRepository {
     func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, completion: @escaping (String?) -> Void) {
-        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
-        let method: RequestHTTPMethod = .patch
-        
-        apiClient.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
-            completion(response.id)
-        }, onError: { error in
-            completion(nil)
-        })
+        apiClient.performRequest(onEndpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), using: .patch, expecting: PaymentCardModel.self, isUserDriven: false) { result in
+            switch result {
+            case .success(let response):
+                completion(response.id)
+            case .failure:
+                completion(nil) // TODO: Should we pass back an error here, and either use it or ignore it?
+            }
+        }
     }
-    
+
+    // TODO: This should just pass in the id's
     func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
-        let paymentCardId: String = paymentCard.id
-        let membershipCardId: String = membershipCard.id
-        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
-        let method: RequestHTTPMethod = .delete
-        
-        apiClient.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
-            completion(paymentCardId)
-        }, onError: { error in
-            completion(nil)
-        })
+        apiClient.performRequest(onEndpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), using: .delete, expecting: PaymentCardModel.self, isUserDriven: false) { result in
+            switch result {
+            case .success(let response):
+                completion(response.id)
+            case .failure:
+                completion(nil) // TODO: Should we pass back an error here, and either use it or ignore it?
+            }
+        }
     }
     
     func saveChanges(toAdd: [String], toRemove: [String], membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {

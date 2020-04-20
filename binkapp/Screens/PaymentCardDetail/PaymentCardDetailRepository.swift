@@ -16,28 +16,28 @@ class PaymentCardDetailRepository: WalletRepository {
     }
 
     func getPaymentCard(forId id: String, completion: @escaping (CD_PaymentCard?) -> Void) {
-        let url = RequestURL.paymentCard(cardId: id)
-        let method = RequestHTTPMethod.get
+        apiClient.performRequest(onEndpoint: .paymentCard(cardId: id), using: .get, expecting: PaymentCardModel.self, isUserDriven: false) { result in
+            switch result {
+            case .success(let response):
+                Current.database.performBackgroundTask { backgroundContext in
+                    let newObject = response.mapToCoreData(backgroundContext, .update, overrideID: nil)
+                    guard let newObjectId = newObject.id else {
+                        fatalError("Failed to get the id from the new object.")
+                    }
 
-        apiClient.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
-            Current.database.performBackgroundTask { backgroundContext in
-                let newObject = response.mapToCoreData(backgroundContext, .update, overrideID: nil)
-                guard let newObjectId = newObject.id else {
-                    fatalError("Failed to get the id from the new object.")
-                }
+                    try? backgroundContext.save()
 
-                try? backgroundContext.save()
-
-                DispatchQueue.main.async {
-                    Current.database.performTask { context in
-                        let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
-                        completion(fetchedObject)
+                    DispatchQueue.main.async {
+                        Current.database.performTask { context in
+                            let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
+                            completion(fetchedObject)
+                        }
                     }
                 }
+            case .failure:
+                completion(nil) // TODO: Pass error back here
             }
-        }, onError: { _ in
-            completion(nil)
-        })
+        }
     }
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
@@ -59,60 +59,62 @@ class PaymentCardDetailRepository: WalletRepository {
     }
 
     func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, completion: @escaping (CD_PaymentCard?) -> Void) {
-        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
-        let method: RequestHTTPMethod = .patch
+        apiClient.performRequest(onEndpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), using: .patch, expecting: PaymentCardModel.self, isUserDriven: false) { result in
+            switch result {
+            case .success(let response):
+                Current.database.performBackgroundTask { backgroundContext in
+                    // TODO: Should we be using .none here? Only option that works...
+                    // It's functional but we're not sure why it doesn't work otherwise and that is concerning.
+                    let newObject = response.mapToCoreData(backgroundContext, .update, overrideID: nil)
 
-        apiClient.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
-            Current.database.performBackgroundTask { backgroundContext in
-                // TODO: Should we be using .none here? Only option that works...
-                // It's functional but we're not sure why it doesn't work otherwise and that is concerning.
-                let newObject = response.mapToCoreData(backgroundContext, .update, overrideID: nil)
-                
-                guard let newObjectId = newObject.id else {
-                    fatalError("Failed to get the id from the new object.")
-                }
-                
-                try? backgroundContext.save()
-                            
-                DispatchQueue.main.async {
-                    
-                    Current.database.performTask { context in
-                        let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
-                                                
-                        completion(fetchedObject)
+                    guard let newObjectId = newObject.id else {
+                        fatalError("Failed to get the id from the new object.")
+                    }
+
+                    try? backgroundContext.save()
+
+                    DispatchQueue.main.async {
+
+                        Current.database.performTask { context in
+                            let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
+
+                            completion(fetchedObject)
+                        }
                     }
                 }
+            case .failure:
+                completion(nil) // TODO: Pass error back here?
             }
-        }, onError: { _ in
-            completion(nil)
-        })
+        }
     }
 
+    // TODO: Just pass id's in here?
     func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?) -> Void) {
         let paymentCardId: String = paymentCard.id
         let membershipCardId: String = membershipCard.id
-        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
-        let method: RequestHTTPMethod = .delete
-        
-        apiClient.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
-            Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
-                
-                if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCardId) {
-                    safePaymentCard?.removeLinkedMembershipCardsObject(membershipCardToRemove)
-                }
-                                
-                try? context.save()
-                
-                DispatchQueue.main.async {
-                    Current.database.performTask { context in
-                        let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: paymentCardId)
 
-                        completion(fetchedObject)
+        apiClient.performRequest(onEndpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), using: .delete, expecting: PaymentCardModel.self, isUserDriven: false) { result in
+            switch result {
+            case .success:
+                Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
+
+                    if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCardId) {
+                        safePaymentCard?.removeLinkedMembershipCardsObject(membershipCardToRemove)
+                    }
+
+                    try? context.save()
+
+                    DispatchQueue.main.async {
+                        Current.database.performTask { context in
+                            let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: paymentCardId)
+
+                            completion(fetchedObject)
+                        }
                     }
                 }
+            case .failure:
+                completion(nil) // TODO: Return error here?
             }
-        }, onError: { _ in
-            completion(nil)
-        })
+        }
     }
 }

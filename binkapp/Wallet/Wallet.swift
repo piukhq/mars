@@ -150,24 +150,24 @@ class Wallet: CoreDataRepositoryProtocol {
             return
         }
 
-        let url = RequestURL.membershipPlans
-        let method = RequestHTTPMethod.get
-
-        Current.apiClient.doRequest(url: url, httpMethod: method, isUserDriven: isUserDriven, onSuccess: { [weak self] (response: [MembershipPlanModel]) in
-            self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
-                self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { plans in
-                    self?.membershipPlans = plans
-                    completion(true)
-                    StorageUtility.refreshPlanImages()
+        Current.apiClient.performRequest(onEndpoint: .membershipPlans, using: .get, expecting: [MembershipPlanModel].self, isUserDriven: isUserDriven) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
+                    self?.fetchCoreDataObjects(forObjectType: CD_MembershipPlan.self) { plans in
+                        self?.membershipPlans = plans
+                        completion(true)
+                        StorageUtility.refreshPlanImages()
+                    }
+                })
+            case .failure:
+                guard let localPlans = self?.membershipPlans, !localPlans.isEmpty else {
+                    completion(false)
+                    return
                 }
-            })
-        }, onError: { [weak self] _ in
-            guard let localPlans = self?.membershipPlans, !localPlans.isEmpty else {
-                completion(false)
-                return
+                completion(true) // TODO: Pass error
             }
-            completion(true)
-        })
+        }
     }
 
     private func getMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping (Bool) -> Void) {
@@ -179,19 +179,19 @@ class Wallet: CoreDataRepositoryProtocol {
             return
         }
 
-        let url = RequestURL.membershipCards
-        let method = RequestHTTPMethod.get
-
-        Current.apiClient.doRequest(url: url, httpMethod: method, isUserDriven: isUserDriven, onSuccess: { [weak self] (response: [MembershipCardModel]) in
-            self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
-                self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: { cards in
-                    self?.membershipCards = cards
-                    completion(true)
+        Current.apiClient.performRequest(onEndpoint: .membershipCards, using: .get, expecting: [MembershipCardModel].self, isUserDriven: isUserDriven) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
+                    self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: { cards in
+                        self?.membershipCards = cards
+                        completion(true)
+                    })
                 })
-            })
-        }, onError: {_ in
-            completion(false)
-        })
+            case .failure:
+                completion(false)
+            }
+        }
     }
 
     private func getPaymentWallet(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping (Bool) -> Void) {
@@ -203,18 +203,18 @@ class Wallet: CoreDataRepositoryProtocol {
             return
         }
 
-        let url = RequestURL.paymentCards
-        let method = RequestHTTPMethod.get
-
-        Current.apiClient.doRequest(url: url, httpMethod: method, isUserDriven: isUserDriven, onSuccess: { [weak self] (response: [PaymentCardModel]) in
-            self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
-                self?.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { cards in
-                    self?.paymentCards = cards
-                    completion(true)
-                }
-            })
-        }, onError: {_ in
-            completion(false)
-        })
+        Current.apiClient.performRequest(onEndpoint: .paymentCards, using: .get, expecting: [PaymentCardModel].self, isUserDriven: isUserDriven) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
+                    self?.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { cards in
+                        self?.paymentCards = cards
+                        completion(true)
+                    }
+                })
+            case .failure:
+                completion(false)
+            }
+        }
     }
 }

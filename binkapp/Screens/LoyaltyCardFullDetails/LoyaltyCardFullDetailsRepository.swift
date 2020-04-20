@@ -14,12 +14,15 @@ class LoyaltyCardFullDetailsRepository: WalletRepository {
         self.apiClient = apiClient
     }
     
-    func getPaymentCards(completion: @escaping ([PaymentCardModel]) -> Void) {
-        let url = RequestURL.paymentCards
-        let httpMethod = RequestHTTPMethod.get
-        apiClient.doRequest(url: url, httpMethod: httpMethod, isUserDriven: false, onSuccess: { (results: [PaymentCardModel]) in
-            completion(results)
-        }) { (error) in }
+    func getPaymentCards(completion: @escaping ([PaymentCardModel]?) -> Void) {
+        apiClient.performRequest(onEndpoint: .paymentCards, using: .get, expecting: [PaymentCardModel].self, isUserDriven: false) { result in
+            switch result {
+            case .success(let paymentCards):
+                completion(paymentCards)
+            case .failure:
+                completion(nil) // TODO: Pass back error here
+            }
+        }
     }
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {

@@ -105,12 +105,12 @@ extension APIClient {
 
         let requestHeaders = HTTPHeaders(endpoint.headers)
 
-        session.request(requestUrl, method: method, parameters: nil, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+        session.request(requestUrl, method: method, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
             self?.handleResponse(response, endpoint: endpoint, expecting: responseType, isUserDriven: isUserDriven, completion: completion)
         }
     }
 
-    func performRequestWithParameters<ResponseType: Codable, Parameters: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: Parameters?, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
+    func performRequestWithParameters<ResponseType: Codable, P: Encodable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, parameters: P?, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
 
         if !networkIsReachable && isUserDriven {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)

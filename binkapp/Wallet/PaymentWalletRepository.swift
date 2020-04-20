@@ -67,10 +67,14 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     private func requestSpreedlyToken(paymentCard: PaymentCardCreateModel, onSuccess: @escaping (SpreedlyResponse) -> Void, onError: @escaping (Error?) -> Void) {
         let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
-        apiClient.doRequest(url: .spreedly, httpMethod: .post, parameters: spreedlyRequest, isUserDriven: true, onSuccess: { (response: SpreedlyResponse) in
-            onSuccess(response)
-        }) { error in
-            onError(error)
+        // TODO: Fix completion handler
+        apiClient.performRequestWithParameters(onEndpoint: .spreedly, using: .post, parameters: spreedlyRequest, expecting: SpreedlyResponse.self, isUserDriven: true) { result in
+            switch result {
+            case .success(let response):
+                onSuccess(response)
+            case .failure(let error):
+                onError(error)
+            }
         }
     }
 
@@ -94,20 +98,23 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
             return
         }
 
-        apiClient.doRequest(url: .paymentCards, httpMethod: .post, parameters: request, isUserDriven: true, onSuccess: { (response: PaymentCardModel) in
-            Current.database.performBackgroundTask { context in
-                let newObject = response.mapToCoreData(context, .update, overrideID: nil)
+        apiClient.performRequestWithParameters(onEndpoint: .paymentCards, using: .post, parameters: request, expecting: PaymentCardModel.self, isUserDriven: true) { result in
+            switch result {
+            case .success(let response):
+                Current.database.performBackgroundTask { context in
+                    let newObject = response.mapToCoreData(context, .update, overrideID: nil)
 
-                try? context.save()
+                    try? context.save()
 
-                DispatchQueue.main.async {
-                    Current.database.performTask(with: newObject) { (context, safeObject) in
-                        onSuccess(safeObject)
+                    DispatchQueue.main.async {
+                        Current.database.performTask(with: newObject) { (context, safeObject) in
+                            onSuccess(safeObject)
+                        }
                     }
                 }
+            case .failure(let error):
+                onError(error)
             }
-        }, onError: { error in
-            onError(error)
-        })
+        }
     }
 }

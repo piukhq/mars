@@ -21,33 +21,33 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         return button
     }()
     //TODO: remove this if we don't need to display the old screen at all
-//    private lazy var message: UILabel = {
-//        let label = UILabel(frame: .zero)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.numberOfLines = 0
-//        label.attributedText = messageString
-//        return label
-//    }()
-//
-//    private lazy var messageString: NSAttributedString = {
-//        let attrString = NSMutableAttributedString(string: "preferences_prompt".localized, attributes: [.font : UIFont.bodyTextLarge])
-//        let base: NSString = NSString(string: attrString.string)
-//        let rewardsRange = base.range(of: "preferences_prompt_highlight_rewards".localized)
-//        let offersRange = base.range(of: "preferences_prompt_highlight_offers".localized)
-//        let updatesRange = base.range(of: "preferences_prompt_highlight_updates".localized)
-//
-//        let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont.subtitle]
-//
-//        attrString.addAttributes(attributes, range: rewardsRange)
-//        attrString.addAttributes(attributes, range: offersRange)
-//        attrString.addAttributes(attributes, range: updatesRange)
-//
-//        return attrString
-//    }()
+    //    private lazy var message: UILabel = {
+    //        let label = UILabel(frame: .zero)
+    //        label.translatesAutoresizingMaskIntoConstraints = false
+    //        label.numberOfLines = 0
+    //        label.attributedText = messageString
+    //        return label
+    //    }()
+    //
+    //    private lazy var messageString: NSAttributedString = {
+    //        let attrString = NSMutableAttributedString(string: "preferences_prompt".localized, attributes: [.font : UIFont.bodyTextLarge])
+    //        let base: NSString = NSString(string: attrString.string)
+    //        let rewardsRange = base.range(of: "preferences_prompt_highlight_rewards".localized)
+    //        let offersRange = base.range(of: "preferences_prompt_highlight_offers".localized)
+    //        let updatesRange = base.range(of: "preferences_prompt_highlight_updates".localized)
+    //
+    //        let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont.subtitle]
+    //
+    //        attrString.addAttributes(attributes, range: rewardsRange)
+    //        attrString.addAttributes(attributes, range: offersRange)
+    //        attrString.addAttributes(attributes, range: updatesRange)
+    //
+    //        return attrString
+    //    }()
     
     private let router: MainScreenRouter?
     private var request: FacebookRequest? // Variable so we can nil this object
-        
+
     init(router: MainScreenRouter?, request: FacebookRequest) {
         self.router = router
         self.request = request
@@ -61,7 +61,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+
         NSLayoutConstraint.activate([
             continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
             continueButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
@@ -70,12 +70,12 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         ])
         
         //TODO: remove this if we don't need to display the old screen at all
-//        let lastView = stackScrollView.arrangedSubviews.last
-//        stackScrollView.add(arrangedSubview: message)
-//
-//        if let lastView = lastView {
-//            stackScrollView.customPadding(18.0, after: lastView)
-//        }
+        //        let lastView = stackScrollView.arrangedSubviews.last
+        //        stackScrollView.add(arrangedSubview: message)
+        //
+        //        if let lastView = lastView {
+        //            stackScrollView.customPadding(18.0, after: lastView)
+        //        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -91,44 +91,48 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         let preferenceCheckboxes = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
         
         continueButton.startLoading()
-        
-        Current.apiClient.doRequest(url: .facebook, httpMethod: .post, parameters: request, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
-            guard let email = response.email else {
-                self?.handleAuthError()
-                return
-            }
-            Current.userManager.setNewUser(with: response)
-            Current.apiClient.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
-                // If there is an error, or the response is not successful, bail out
-                guard error == nil, success else {
+
+        Current.apiClient.performRequestWithParameters(onEndpoint: .facebook, using: .post, parameters: request, expecting: LoginRegisterResponse.self, isUserDriven: true) { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let email = response.email else {
                     self?.handleAuthError()
                     return
                 }
-                self?.router?.didLogin()
-                self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                self?.request = nil
-                self?.continueButton.stopLoading()
+                Current.userManager.setNewUser(with: response)
+                Current.apiClient.performRequestWithParameters(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), expecting: Nothing.self, isUserDriven: false) { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.router?.didLogin()
+                        self?.updatePreferences(checkboxes: preferenceCheckboxes)
+                        self?.request = nil
+                        self?.continueButton.stopLoading()
+                    case .failure:
+                        self?.handleAuthError()
+                    }
+                }
+            case .failure:
+                self?.handleAuthError()
             }
-        }) { [weak self] _ in
-            self?.handleAuthError()
         }
     }
     
     func updatePreferences(checkboxes: [CheckboxView]) {
-         
-         var params = [String: Any]()
-         
-         checkboxes.forEach {
-             if let columnName = $0.columnName {
-                 params[columnName] = $0.value
-             }
-         }
-         
-         guard params.count > 0 else { return }
-         
-         // We don't worry about whether this was successful or not
-         Current.apiClient.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, isUserDriven: false, completion: nil)
-     }
+
+        var params = [String: Any]()
+
+        checkboxes.forEach {
+            if let columnName = $0.columnName {
+                params[columnName] = $0.value
+            }
+        }
+
+        guard params.count > 0 else { return }
+
+        // We don't worry about whether this was successful or not
+        // TODO: Make params codable
+        Current.apiClient.performRequestWithParameters(onEndpoint: .preferences, using: .put, parameters: params, expecting: Nothing.self, isUserDriven: false) { _ in }
+    }
     
     private func showError() {
         let alert = UIAlertController(title: "error_title".localized, message: "social_tandcs_error".localized, preferredStyle: .alert)
