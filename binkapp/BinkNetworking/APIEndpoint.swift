@@ -55,9 +55,18 @@ enum APIEndpoint: Equatable {
         components.scheme = scheme
 
         // TODO: Get environment base url
-        components.host = "api.dev.gb.bink.com"
+        components.host = APIConstants.baseURLString
         components.path = path
         return components.url?.absoluteString.removingPercentEncoding
+    }
+
+    /// There are cases where an endpoint requires authorization, but shouldn't respond to a 401 response code such as .logout.
+    var shouldRespondToUnauthorizedStatus: Bool {
+        switch self {
+        case .logout:
+            return false
+        default: return true
+        }
     }
 
     private var authRequired: Bool {
