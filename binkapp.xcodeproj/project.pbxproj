@@ -3137,7 +3137,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = HC34M8YE55;
@@ -3249,7 +3249,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink α.app/Bink α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink β.app/Bink β";
 			};
 			name = Beta;
 		};
@@ -3424,7 +3424,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink α.app/Bink α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink MR.app/Bink MR";
 			};
 			name = "Merge Request";
 		};
@@ -3574,7 +3574,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink α.app/Bink α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink.app/Bink";
 			};
 			name = Nightly;
 		};
@@ -3716,7 +3716,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink α.app/Bink α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink.app/Bink";
 			};
 			name = "App Store";
 		};
@@ -3858,7 +3858,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink α.app/Bink α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink.app/Bink";
 			};
 			name = Gamma;
 		};
@@ -4000,7 +4000,7 @@
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink α.app/Bink α";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bink.app/Bink";
 			};
 			name = "App Store (Internal)";
 		};
