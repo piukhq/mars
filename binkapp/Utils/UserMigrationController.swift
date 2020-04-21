@@ -51,7 +51,7 @@ struct UserMigrationController {
                 }
 
                 guard let renewEmail = email else {
-                    completion(false) // TODO: // Pass error back?
+                    completion(false)
                     return
                 }
 
@@ -63,12 +63,12 @@ struct UserMigrationController {
                         completion(true)
                     case .failure:
                         Current.userManager.removeUser()
-                        completion(false) // TODO: Pass error back?
+                        completion(false)
                     }
                 }
             case .failure:
                 Current.userManager.removeUser()
-                completion(false) // TODO: Pass error back?
+                completion(false)
             }
         }
     }

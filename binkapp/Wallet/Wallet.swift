@@ -165,7 +165,7 @@ class Wallet: CoreDataRepositoryProtocol {
                     completion(false)
                     return
                 }
-                completion(true) // TODO: Pass error
+                completion(true)
             }
         }
     }

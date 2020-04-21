@@ -67,7 +67,6 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     private func requestSpreedlyToken(paymentCard: PaymentCardCreateModel, onSuccess: @escaping (SpreedlyResponse) -> Void, onError: @escaping (Error?) -> Void) {
         let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
-        // TODO: Fix completion handler
         apiClient.performRequestWithParameters(onEndpoint: .spreedly, using: .post, parameters: spreedlyRequest, expecting: SpreedlyResponse.self, isUserDriven: true) { result in
             switch result {
             case .success(let response):

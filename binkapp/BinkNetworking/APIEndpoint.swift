@@ -54,7 +54,6 @@ enum APIEndpoint: Equatable {
         var components = URLComponents()
         components.scheme = scheme
 
-        // TODO: Get environment base url
         components.host = APIConstants.baseURLString
         components.path = path
         return components.url?.absoluteString.removingPercentEncoding

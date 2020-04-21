@@ -68,9 +68,9 @@ final class APIClient {
     private let session: Session
 
     init() {
+        let url = EnvironmentType.production.rawValue
         let evaluators = [
-            // TODO: this shouldn't be hardcoded here
-            "api.gb.bink.com":
+            url:
                 PinnedCertificatesTrustEvaluator(certificates: [
                     Certificates.bink
                 ])
@@ -160,7 +160,6 @@ private extension APIClient {
     func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
 
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
-            // TODO: Pass error through as object?
             NotificationCenter.default.post(name: .didFailServerTrustEvaluation, object: nil)
             completion?(.failure(.sslPinningFailure))
             return

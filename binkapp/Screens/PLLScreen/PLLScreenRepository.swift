@@ -69,19 +69,18 @@ private extension PLLScreenRepository {
             case .success(let response):
                 completion(response.id)
             case .failure:
-                completion(nil) // TODO: Should we pass back an error here, and either use it or ignore it?
+                completion(nil)
             }
         }
     }
 
-    // TODO: This should just pass in the id's
     func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
         apiClient.performRequest(onEndpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), using: .delete, expecting: PaymentCardModel.self, isUserDriven: false) { result in
             switch result {
             case .success(let response):
                 completion(response.id)
             case .failure:
-                completion(nil) // TODO: Should we pass back an error here, and either use it or ignore it?
+                completion(nil)
             }
         }
     }

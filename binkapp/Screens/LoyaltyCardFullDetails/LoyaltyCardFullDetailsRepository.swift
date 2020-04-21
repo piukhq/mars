@@ -20,7 +20,7 @@ class LoyaltyCardFullDetailsRepository: WalletRepository {
             case .success(let paymentCards):
                 completion(paymentCards)
             case .failure:
-                completion(nil) // TODO: Pass back error here
+                completion(nil)
             }
         }
     }

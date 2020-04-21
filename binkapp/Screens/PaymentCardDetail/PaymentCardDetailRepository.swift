@@ -35,7 +35,7 @@ class PaymentCardDetailRepository: WalletRepository {
                     }
                 }
             case .failure:
-                completion(nil) // TODO: Pass error back here
+                completion(nil)
             }
         }
     }
@@ -83,12 +83,11 @@ class PaymentCardDetailRepository: WalletRepository {
                     }
                 }
             case .failure:
-                completion(nil) // TODO: Pass error back here?
+                completion(nil)
             }
         }
     }
 
-    // TODO: Just pass id's in here?
     func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?) -> Void) {
         let paymentCardId: String = paymentCard.id
         let membershipCardId: String = membershipCard.id
@@ -113,7 +112,7 @@ class PaymentCardDetailRepository: WalletRepository {
                     }
                 }
             case .failure:
-                completion(nil) // TODO: Return error here?
+                completion(nil)
             }
         }
     }
