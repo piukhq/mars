@@ -11,10 +11,9 @@ import Alamofire
 import AlamofireImage
 
 // MARK: - Config and init
+typealias APIClientCompletionHandler<ResponseType: Any> = (Result<ResponseType, NetworkingError>) -> Void
 
 final class APIClient {
-    typealias APIClientCompletionHandler<ResponseType: Any> = (Result<ResponseType, NetworkingError>) -> Void
-
     struct Certificates {
         static let bink = Certificates.certificate(filename: "bink")
 
