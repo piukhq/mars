@@ -59,9 +59,10 @@ final class APIClient {
     var apiVersion: APIVersion = .v1_1
 
     private let successStatusRange = 200...299
+    private let noResponseStatus = 204
     private let clientErrorStatusRange = 400...499
-    private let unauthorizedStatus = 401
     private let badRequestStatus = 400
+    private let unauthorizedStatus = 401
     private let serverErrorStatusRange = 500...599
 
     private let reachabilityManager = NetworkReachabilityManager()
@@ -86,7 +87,6 @@ final class APIClient {
 
 extension APIClient {
     func performRequest<ResponseType: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
-
         if !networkIsReachable && isUserDriven {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
             completion?(.failure(.noInternetConnection))
@@ -111,7 +111,6 @@ extension APIClient {
     }
 
     func performRequestWithParameters<ResponseType: Codable, P: Encodable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, parameters: P?, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
-
         if !networkIsReachable && isUserDriven {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
             completion?(.failure(.noInternetConnection))
@@ -135,6 +134,30 @@ extension APIClient {
         }
     }
 
+    func performRequestWithNoResponse(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, parameters: [String: Any]?, isUserDriven: Bool, completion: ((Bool, NetworkingError?) -> Void)?) {
+        if !networkIsReachable && isUserDriven {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            completion?(false, .noInternetConnection)
+            return
+        }
+
+        guard let requestUrl = endpoint.urlString else {
+            completion?(false, .invalidUrl)
+            return
+        }
+
+        guard endpoint.allowedMethods.contains(method) else {
+            completion?(false, .methodNotAllowed)
+            return
+        }
+
+        let requestHeaders = HTTPHeaders(headers ?? endpoint.headers)
+
+        session.request(requestUrl, method: method, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+            self?.noResponseHandler(response: response, endpoint: endpoint, isUserDriven: isUserDriven, completion: completion)
+        }
+    }
+
     func getImage(fromUrlString urlString: String, completion: APIClientCompletionHandler<UIImage>? = nil) {
         session.request(urlString).responseImage { response in
             if let error = response.error {
@@ -154,11 +177,8 @@ extension APIClient {
 
 // MARK: - Response handling
 
-struct Nothing: Codable {}
-
 private extension APIClient {
     func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
-
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
             NotificationCenter.default.post(name: .didFailServerTrustEvaluation, object: nil)
             completion?(.failure(.sslPinningFailure))
@@ -170,16 +190,16 @@ private extension APIClient {
             return
         }
 
-        guard let data = response.data else {
-            completion?(.failure(.invalidResponse))
-            return
-        }
-
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .useDefaultKeys
 
         do {
             guard let statusCode = response.response?.statusCode else {
+                completion?(.failure(.invalidResponse))
+                return
+            }
+
+            guard let data = response.data else {
                 completion?(.failure(.invalidResponse))
                 return
             }
@@ -206,7 +226,6 @@ private extension APIClient {
                 return
             } else if serverErrorStatusRange.contains(statusCode) {
                 // Failed response, server error
-
                 // TODO: Can we remove this and just respond to the error sent back in completion by either showing the error message or not?
                 NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
                 completion?(.failure(.serverError(statusCode)))
@@ -217,6 +236,43 @@ private extension APIClient {
             }
         } catch {
             completion?(.failure(.decodingError))
+        }
+    }
+
+    func noResponseHandler(response: AFDataResponse<Any>, endpoint: APIEndpoint, isUserDriven: Bool, completion: ((Bool, NetworkingError?) -> Void)?) {
+        if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
+            NotificationCenter.default.post(name: .didFailServerTrustEvaluation, object: nil)
+            completion?(false, .sslPinningFailure)
+            return
+        }
+
+        if let error = response.error {
+            completion?(false, .customError(error.localizedDescription))
+            return
+        }
+
+        guard let statusCode = response.response?.statusCode else {
+            completion?(false, .invalidResponse)
+            return
+        }
+
+        if statusCode == unauthorizedStatus && endpoint.shouldRespondToUnauthorizedStatus {
+            // Unauthorized response
+            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+            return
+        } else if successStatusRange.contains(statusCode) {
+            // Successful response
+            completion?(true, nil)
+            return
+        } else if serverErrorStatusRange.contains(statusCode) {
+            // Failed response, server error
+            // TODO: Can we remove this and just respond to the error sent back in completion by either showing the error message or not?
+            NotificationCenter.default.post(name: isUserDriven ? .outageError : .outageSilentFail, object: nil)
+            completion?(false, .serverError(statusCode))
+            return
+        } else {
+            completion?(false, .checkStatusCode(statusCode))
+            return
         }
     }
 }

@@ -18,7 +18,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
         // Process the backend delete, but fail silently
-        apiClient.performRequest(onEndpoint: .paymentCard(cardId: card.id), using: .delete, expecting: Nothing.self, isUserDriven: false, completion: nil)
+        apiClient.performRequestWithNoResponse(onEndpoint: .paymentCard(cardId: card.id), using: .delete, parameters: nil, isUserDriven: false, completion: nil)
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in

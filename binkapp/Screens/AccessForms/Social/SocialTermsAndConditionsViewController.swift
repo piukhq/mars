@@ -100,16 +100,27 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                     return
                 }
                 Current.userManager.setNewUser(with: response)
-                Current.apiClient.performRequestWithParameters(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), expecting: Nothing.self, isUserDriven: false) { [weak self] result in
-                    switch result {
-                    case .success:
-                        self?.router?.didLogin()
-                        self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                        self?.request = nil
-                        self?.continueButton.stopLoading()
-                    case .failure:
+
+                Current.apiClient.performRequestWithNoResponse(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
+                    guard success else {
                         self?.handleAuthError()
+                        return
                     }
+                    self?.router?.didLogin()
+                    self?.updatePreferences(checkboxes: preferenceCheckboxes)
+                    self?.request = nil
+                    self?.continueButton.stopLoading()
+                }
+
+                Current.apiClient.performRequestWithNoResponse(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
+                    guard success else {
+                        self?.handleAuthError()
+                        return
+                    }
+                    self?.router?.didLogin()
+                    self?.updatePreferences(checkboxes: preferenceCheckboxes)
+                    self?.request = nil
+                    self?.continueButton.stopLoading()
                 }
             case .failure:
                 self?.handleAuthError()
@@ -130,7 +141,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         guard params.count > 0 else { return }
 
         // We don't worry about whether this was successful or not
-        Current.apiClient.performRequestWithParameters(onEndpoint: .preferences, using: .put, parameters: params, expecting: Nothing.self, isUserDriven: false) { _ in }
+        Current.apiClient.performRequestWithNoResponse(onEndpoint: .preferences, using: .put, parameters: params, isUserDriven: false, completion: nil)
     }
     
     private func showError() {

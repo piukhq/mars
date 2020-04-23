@@ -56,15 +56,15 @@ struct UserMigrationController {
                 }
 
                 Current.userManager.setNewUser(with: response)
-                Current.apiClient.performRequestWithParameters(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: renewEmail), expecting: Nothing.self, isUserDriven: false) { result in
-                    switch result {
-                    case .success:
-                        Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
-                        completion(true)
-                    case .failure:
+
+                Current.apiClient.performRequestWithNoResponse(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: renewEmail), isUserDriven: false) { (success, error) in
+                    guard success else {
                         Current.userManager.removeUser()
                         completion(false)
+                        return
                     }
+                    Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
+                    completion(true)
                 }
             case .failure:
                 Current.userManager.removeUser()

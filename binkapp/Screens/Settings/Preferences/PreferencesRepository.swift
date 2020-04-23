@@ -31,13 +31,12 @@ class PreferencesRepository {
     }
     
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
-        apiClient.performRequestWithParameters(onEndpoint: .preferences, using: .put, parameters: preferences, expecting: Nothing.self, isUserDriven: true) { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
+        apiClient.performRequestWithNoResponse(onEndpoint: .preferences, using: .put, parameters: preferences, isUserDriven: true) { (success, error) in
+            if let error = error {
                 onError(error)
+                return
             }
+            onSuccess()
         }
     }
 }

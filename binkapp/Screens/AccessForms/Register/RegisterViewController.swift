@@ -75,15 +75,14 @@ class RegisterViewController: BaseFormViewController {
                 }
                 Current.userManager.setNewUser(with: response)
 
-                Current.apiClient.performRequestWithParameters(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), expecting: Nothing.self, isUserDriven: false) { [weak self] result in
-                    switch result {
-                    case .success:
-                        self?.router.didLogin()
-                        self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                        self?.continueButton.stopLoading()
-                    case .failure:
+                Current.apiClient.performRequestWithNoResponse(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
+                    guard success else {
                         self?.handleRegistrationError()
+                        return
                     }
+                    self?.router.didLogin()
+                    self?.updatePreferences(checkboxes: preferenceCheckboxes)
+                    self?.continueButton.stopLoading()
                 }
             case .failure:
                 self?.handleRegistrationError()
@@ -104,7 +103,7 @@ class RegisterViewController: BaseFormViewController {
         guard params.count > 0 else { return }
         
         // We don't worry about whether this was successful or not
-        Current.apiClient.performRequest(onEndpoint: .preferences, using: .put, expecting: Nothing.self, isUserDriven: true) { _ in }
+        Current.apiClient.performRequestWithNoResponse(onEndpoint: .preferences, using: .put, parameters: nil, isUserDriven: true, completion: nil)
     }
     
     private func showError() {

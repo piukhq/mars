@@ -92,14 +92,14 @@ class LoginViewController: BaseFormViewController {
                     return
                 }
                 Current.userManager.setNewUser(with: response)
-                Current.apiClient.performRequestWithParameters(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), expecting: Nothing.self, isUserDriven: false) { [weak self] result in
-                    switch result {
-                    case .success:
-                        self?.continueButton.stopLoading()
-                        self?.router.didLogin()
-                    case .failure:
+
+                Current.apiClient.performRequestWithNoResponse(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
+                    guard success else {
                         self?.handleLoginError()
+                        return
                     }
+                    self?.continueButton.stopLoading()
+                    self?.router.didLogin()
                 }
             case .failure:
                 self?.handleLoginError()
