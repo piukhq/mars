@@ -17,6 +17,7 @@ extension UIDevice {
     var iPhoneX: Bool { UIScreen.main.nativeBounds.height == 2436 }
     var iPhone: Bool { UIDevice.current.userInterfaceIdiom == .phone }
     var iPad: Bool { UIDevice().userInterfaceIdiom == .pad }
+    
     enum ScreenSize: String {
         case iPhone4Size = "iPhone 4 or iPhone 4S"
         case iPhone5Size = "iPhone 5, iPhone 5s, iPhone 5c or iPhone SE"
@@ -28,7 +29,8 @@ extension UIDevice {
         case iPhone11ProSize = "iPhone 11 Pro"
         case unknown
     }
-    var screenSize: ScreenSize {
+    
+    var height: ScreenSize {
         switch UIScreen.main.nativeBounds.height {
         case 1136:
             return .iPhone5Size
@@ -44,6 +46,19 @@ extension UIDevice {
             return .iPhoneXSize
         case 2688:
             return .iPhoneMaxSize
+        default:
+            return .unknown
+        }
+    }
+    
+    var width: ScreenSize {
+        switch UIScreen.main.bounds.width {
+        case 320:
+            return .iPhone5Size
+        case 375:
+            return .iPhone6Size
+        case 414:
+            return .iPhonePlusSize
         default:
             return .unknown
         }
