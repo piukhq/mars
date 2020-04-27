@@ -217,25 +217,34 @@ class Wallet: CoreDataRepositoryProtocol {
             completion(false)
         })
     }
-    
-    func getAllBrandBarcodeCredentials() {
-        // Perform a brand agnostic request for all CD_AddFields
-        
-        let input = "6332040095558429224"
-        
+
+    func identifyMembershipPlanForBarcode(_ barcode: String, completion: @escaping (CD_MembershipPlan?) -> Void) {
         let predicate = NSPredicate(format: "commonName == 'barcode'")
         fetchCoreDataObjects(forObjectType: CD_AddField.self, predicate: predicate) { fields in
-            fields?.forEach { field in
-                
+            guard let fields = fields else {
+                // We have no barcode add fields, there will be no match.
+                completion(nil)
+                return
+            }
+
+            var hasMatched = false
+
+            for field in fields {
                 if let validation = field.validation {
                     let predicate = NSPredicate(format: "SELF MATCHES %@", validation)
-                    
-                    if predicate.evaluate(with: input) {
-                         print("MATCH")
-                    } else {
-                        print("NO MATCH")
+                    if predicate.evaluate(with: barcode) {
+                        // We have a match. We should stop this entire function at this point
+                        completion(field.planAccount?.plan)
+                        hasMatched = true
+                        return
                     }
                 }
+            }
+
+            // We haven't had any matches
+            guard hasMatched else {
+                completion(nil)
+                return
             }
         }
     }

@@ -227,33 +227,27 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
         if let object = metadataObjects.first {
             guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
             guard let stringValue = readableObject.stringValue else { return }
-            print(stringValue)
-
-            // TODO: Check string value against local plans' barcode regex
-            // TODO: If plan found from regex, pop to adding options and push to add auth for plan id
-            // TODO: If no plan found, prompt widget error
-
-            guard let plans = Current.wallet.membershipPlans else { return }
-            let mockedPlanForBarcode = plans.filter { $0.account?.companyName == "Harvey Nichols" }.first
-            guard let membershipPlan = mockedPlanForBarcode else {
-                if !hasPresentedScanError {
-                    hasPresentedScanError = true
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        self.widgetView.unrecognizedBarcode()
-                    }
-                }
-                return
-            }
-
-            stopScanning()
-            HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
-
-            DispatchQueue.main.async { [weak self] in
+            Current.wallet.identifyMembershipPlanForBarcode(stringValue) { [weak self] plan in
                 guard let self = self else { return }
-                self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: membershipPlan, completion: {
-                    self.navigationController?.removeViewController(self)
-                })
+                guard let plan = plan else {
+                    if !self.hasPresentedScanError {
+                        self.hasPresentedScanError = true
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self = self else { return }
+                            self.widgetView.unrecognizedBarcode()
+                        }
+                    }
+                    return
+                }
+                self.stopScanning()
+                HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: {
+                        self.navigationController?.removeViewController(self)
+                    })
+                }
             }
         }
     }
