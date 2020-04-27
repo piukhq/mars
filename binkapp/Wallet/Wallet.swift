@@ -217,4 +217,26 @@ class Wallet: CoreDataRepositoryProtocol {
             completion(false)
         })
     }
+    
+    func getAllBrandBarcodeCredentials() {
+        // Perform a brand agnostic request for all CD_AddFields
+        
+        let input = "6332040095558429224"
+        
+        let predicate = NSPredicate(format: "commonName == 'barcode'")
+        fetchCoreDataObjects(forObjectType: CD_AddField.self, predicate: predicate) { fields in
+            fields?.forEach { field in
+                
+                if let validation = field.validation {
+                    let predicate = NSPredicate(format: "SELF MATCHES %@", validation)
+                    
+                    if predicate.evaluate(with: input) {
+                         print("MATCH")
+                    } else {
+                        print("NO MATCH")
+                    }
+                }
+            }
+        }
+    }
 }
