@@ -60,6 +60,11 @@ class AddPaymentCardViewController: BaseFormViewController {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .addPaymentCard)
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
     
     // MARK: - Layout
     

@@ -30,6 +30,14 @@ class BarcodeScannerViewController: UIViewController {
     private var timer: Timer?
     private var hasPresentedScanError = false
 
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "navbarIconsBack"), for: .normal)
+        button.addTarget(self, action: #selector(popViewController), for: .touchUpInside)
+        return button
+    }()
+
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
     }()
@@ -48,6 +56,7 @@ class BarcodeScannerViewController: UIViewController {
         return label
     }()
 
+    //navbarIconsBack
     private lazy var widgetView: LoyaltyScannerWidgetView = {
         let widget = LoyaltyScannerWidgetView()
         widget.addTarget(self, selector: #selector(enterManually))
@@ -111,6 +120,14 @@ class BarcodeScannerViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        view.addSubview(backButton)
+        NSLayoutConstraint.activate([
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            backButton.leftAnchor.constraint(equalTo: view.leftAnchor),
+            backButton.heightAnchor.constraint(equalToConstant: 44),
+            backButton.widthAnchor.constraint(equalToConstant: 44),
+        ])
+
         startScanning()
     }
 
@@ -217,6 +234,10 @@ class BarcodeScannerViewController: UIViewController {
             guard let self = self else { return }
             self.navigationController?.removeViewController(self)
         })
+    }
+
+    @objc private func popViewController() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
