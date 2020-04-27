@@ -97,6 +97,16 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
         viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
     }
     
+    private func presentPrivacyPolicyWebView() {
+        let webViewController = WebViewController(urlString: "https://bink.com/privacy-policy/")
+        present(webViewController, animated: true, completion: nil)
+    }
+    
+    private func presentTermsAndConditionsWebView() {
+        let webViewController = WebViewController(urlString: "https://bink.com/terms-and-conditions/")
+        present(webViewController, animated: true, completion: nil)
+    }
+    
     // MARK: - Action
     @objc func popViewController() {
         navigationController?.popViewController(animated: true)
@@ -183,6 +193,12 @@ extension SettingsViewController: UITableViewDelegate {
                     break
                 case .howItWorks:
                     toHowItWorksVC()
+                    break
+                case .privacyPolicy:
+                    presentPrivacyPolicyWebView()
+                    break
+                case .termsAndConditions:
+                    presentTermsAndConditionsWebView()
                     break
                 }
             case .logout:

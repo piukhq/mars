@@ -87,6 +87,7 @@
 		3CB6BF7723141D1F00B74882 /* AuthAndAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB6BF7623141D1F00B74882 /* AuthAndAddViewModel.swift */; };
 		3CB6BF7923141D3000B74882 /* AuthAndAddRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB6BF7823141D3000B74882 /* AuthAndAddRepository.swift */; };
 		3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB81C12231E74220075D3AC /* ImageTypeEnum.swift */; };
+		3CBA5EFF2456F175008252B6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CBA5EFE2456F175008252B6 /* WebViewController.swift */; };
 		3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CC267EF22F4276E00F0F9E3 /* Localizable.strings */; };
 		3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC267F122F428A400F0F9E3 /* String+Localization.swift */; };
 		3CCAB7522379B520001B566D /* RegistrationFieldPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCAB7512379B520001B566D /* RegistrationFieldPostModel.swift */; };
@@ -536,6 +537,7 @@
 		3CB6BF7623141D1F00B74882 /* AuthAndAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddViewModel.swift; sourceTree = "<group>"; };
 		3CB6BF7823141D3000B74882 /* AuthAndAddRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAndAddRepository.swift; sourceTree = "<group>"; };
 		3CB81C12231E74220075D3AC /* ImageTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTypeEnum.swift; sourceTree = "<group>"; };
+		3CBA5EFE2456F175008252B6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		3CC267EF22F4276E00F0F9E3 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		3CC267F122F428A400F0F9E3 /* String+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		3CCAB7512379B520001B566D /* RegistrationFieldPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFieldPostModel.swift; sourceTree = "<group>"; };
@@ -1316,6 +1318,7 @@
 				EFEB5BFE2382984B00E18743 /* HyperlinkButton.swift */,
 				EF94AF0923D9C24900AAA039 /* BinkTrackableViewController.swift */,
 				EF94AF0E23DF55EE00AAA039 /* BinkTrackableButton.swift */,
+				3CBA5EFE2456F175008252B6 /* WebViewController.swift */,
 			);
 			name = BinkUI;
 			path = Screens/BinkUI;
@@ -2732,6 +2735,7 @@
 				EF758E1023225F45000D26A9 /* UIApplication.swift in Sources */,
 				3CEABFCE2316AB74009B1122 /* MembershipCardAccountModel.swift in Sources */,
 				EFB7ED5C2379C70C00B72D06 /* PLRBaseCollectionViewCell.swift in Sources */,
+				3CBA5EFF2456F175008252B6 /* WebViewController.swift in Sources */,
 				B7385F54234780D2007B88DA /* BinkSwitch.swift in Sources */,
 				B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
