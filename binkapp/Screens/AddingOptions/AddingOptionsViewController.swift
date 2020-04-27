@@ -34,6 +34,11 @@ class AddingOptionsViewController: BinkTrackableViewController {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .addOptions)
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
     
     init(viewModel: AddingOptionsViewModel) {
         self.viewModel = viewModel
@@ -57,9 +62,9 @@ class AddingOptionsViewController: BinkTrackableViewController {
         addPaymentCardView.configure(addingOption: .payment)
 
         NSLayoutConstraint.activate([
-                      loyaltyCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
-                      browseBrandsView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
-                      addPaymentCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
+            loyaltyCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
+            browseBrandsView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
+            addPaymentCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
         ])
         
         addGesturesToViews()
