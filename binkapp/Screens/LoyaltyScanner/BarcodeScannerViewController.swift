@@ -28,7 +28,7 @@ class BarcodeScannerViewController: UIViewController {
     private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
     private var rectOfInterest = CGRect.zero
     private var timer: Timer?
-    private var hasPresentedScanError = false
+    private var canPresentedScanError = true
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
@@ -252,12 +252,15 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             Current.wallet.identifyMembershipPlanForBarcode(stringValue) { [weak self] plan in
                 guard let self = self else { return }
                 guard let plan = plan else {
-                    if !self.hasPresentedScanError {
-                        self.hasPresentedScanError = true
+                    if self.canPresentedScanError {
+                        self.canPresentedScanError = false
                         DispatchQueue.main.async { [weak self] in
                             guard let self = self else { return }
                             self.widgetView.unrecognizedBarcode()
                         }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [weak self] in
+                            self?.canPresentedScanError = true
+                        })
                     }
                     return
                 }
