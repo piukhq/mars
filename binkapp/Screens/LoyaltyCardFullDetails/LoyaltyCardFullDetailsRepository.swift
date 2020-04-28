@@ -13,17 +13,6 @@ class LoyaltyCardFullDetailsRepository: WalletRepository {
     required init(apiClient: APIClient) {
         self.apiClient = apiClient
     }
-    
-    func getPaymentCards(completion: @escaping ([PaymentCardModel]?) -> Void) {
-        apiClient.performRequest(onEndpoint: .paymentCards, using: .get, expecting: [PaymentCardModel].self, isUserDriven: false) { result in
-            switch result {
-            case .success(let paymentCards):
-                completion(paymentCards)
-            case .failure:
-                completion(nil)
-            }
-        }
-    }
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
         // Process the backend delete, but fail silently
