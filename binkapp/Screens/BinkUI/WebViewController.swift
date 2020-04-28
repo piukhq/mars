@@ -14,8 +14,9 @@ private struct Constants {
 }
 
 class WebViewController: UIViewController {
-    private var webView: WKWebView!
     private let url: URL?
+    private var webView: WKWebView!
+    private var activityIndicator: UIActivityIndicatorView!
     
     private var backButton: UIBarButtonItem!
     private var forwardButton: UIBarButtonItem!
@@ -47,6 +48,30 @@ class WebViewController: UIViewController {
         webView.load(request)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setActivityIndicator()
+    }
+    
+    private func setActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: webView.frame.width, height: webView.frame.height))
+        if #available(iOS 13.0, *) {
+            activityIndicator.style = .large
+        } else {
+            activityIndicator.style = .gray
+        }
+        activityIndicator.hidesWhenStopped = true
+        webView.addSubview(activityIndicator)
+    }
+    
+    private func showActivityIndicator(show: Bool) {
+        if show {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+    
     private func setTopToolbar() {
         let screenWidth = self.view.bounds.width
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -57,7 +82,6 @@ class WebViewController: UIViewController {
         toolBar.items = [flexibleSpace, closeButton]
         webView.addSubview(toolBar)
         
-        // Constraints
         NSLayoutConstraint.activate([
             toolBar.topAnchor.constraint(equalTo: webView.topAnchor, constant: 0),
             toolBar.leadingAnchor.constraint(equalTo: webView.leadingAnchor, constant: 0),
@@ -75,6 +99,10 @@ class WebViewController: UIViewController {
         
         backButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(goBack))
         forwardButton = UIBarButtonItem(image: forwardImage, style: .plain, target: self, action: #selector(goForward))
+        
+        backButton.isEnabled = false
+        forwardButton.isEnabled = false
+        
         let refreshButton = UIBarButtonItem(image: UIImage(named: "refresh"), style: .plain, target: self, action: #selector(refresh))
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth, height: Constants.toolbarHeight))
@@ -121,5 +149,21 @@ extension WebViewController: WKUIDelegate {}
 extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         checkToolbarItemsState()
+    }
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        showActivityIndicator(show: true)
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        showActivityIndicator(show: false)
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        showActivityIndicator(show: false)
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        showActivityIndicator(show: false)
     }
 }
