@@ -37,7 +37,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     init(viewModel: AddingOptionsViewModel) {
