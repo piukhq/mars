@@ -34,7 +34,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
     }
 
-    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
+    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
         if apiClient.isProduction {
             #if DEBUG
             fatalError("You are targetting production, but on a debug scheme. You should use a release scheme to test adding production payment cards.")
@@ -64,7 +64,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
     }
 
-    private func requestSpreedlyToken(paymentCard: PaymentCardCreateModel, onSuccess: @escaping (SpreedlyResponse) -> Void, onError: @escaping (Error?) -> Void) {
+    private func requestSpreedlyToken(paymentCard: PaymentCardCreateModel, onSuccess: @escaping (SpreedlyResponse) -> Void, onError: @escaping (BinkError?) -> Void) {
         let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
         apiClient.performRequestWithParameters(onEndpoint: .spreedly, using: .post, parameters: spreedlyRequest, expecting: SpreedlyResponse.self, isUserDriven: true) { result in
@@ -77,7 +77,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
     }
 
-    private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
+    private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
 
         guard let hash = SecureUtility.getPaymentCardHash(from: paymentCard) else {
             onError(nil)

@@ -19,7 +19,7 @@ class PreferencesRepository {
         return apiClient.networkIsReachable
     }
 
-    func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (Error?) -> Void) {
+    func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (BinkError?) -> Void) {
         apiClient.performRequest(onEndpoint: .preferences, using: .get, expecting: [PreferencesModel].self, isUserDriven: false) { result in
             switch result {
             case .success(let preferences):
@@ -30,7 +30,7 @@ class PreferencesRepository {
         }
     }
     
-    func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+    func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (BinkError) -> Void) {
         apiClient.performRequestWithNoResponse(onEndpoint: .preferences, using: .put, parameters: preferences, isUserDriven: true) { (success, error) in
             if let error = error {
                 onError(error)
