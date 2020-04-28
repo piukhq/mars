@@ -216,16 +216,12 @@ private extension APIClient {
             } else if clientErrorStatusRange.contains(statusCode) {
                 // Failed response, client error
                 if statusCode == badRequestStatus {
-                    do {
-                        let decodedResponseErrors = try decoder.decode(ResponseErrors.self, from: data)
-                        let otherErrors = try decoder.decode([String].self, from: data)
-                        let errorMessage = decodedResponseErrors.nonFieldErrors?.first ?? otherErrors.first ?? "went_wrong".localized
-                        completion?(.failure(.customError(errorMessage)))
-                        return
-                    } catch {
-                        completion?(.failure(.customError("went_wrong".localized)))
-                        return
-                    }
+                    let decodedResponseErrors = try? decoder.decode(ResponseErrors.self, from: data)
+                    let errorsArray = try? decoder.decode([String].self, from: data)
+                    let errorsDictionary = try? decoder.decode([String: String].self, from: data)
+                    let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? errorsDictionary?.values.first ?? errorsArray?.first
+                    completion?(.failure(.customError(errorMessage ?? "went_wrong".localized)))
+                    return
                 }
                 completion?(.failure(.clientError(statusCode)))
                 return
