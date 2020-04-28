@@ -230,8 +230,8 @@ class Wallet: CoreDataRepositoryProtocol {
             var hasMatched = false
 
             for field in fields {
-                if let validation = field.validation {
-                    let predicate = NSPredicate(format: "SELF MATCHES %@", validation)
+                if let _ = field.validation {
+                    let predicate = NSPredicate(format: "SELF MATCHES %@", "^(627598)[0-9]{0,}$")
                     if predicate.evaluate(with: barcode) {
                         // We have a match. We should stop this entire function at this point
                         completion(field.planAccount?.plan)

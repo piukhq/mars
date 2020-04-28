@@ -55,6 +55,14 @@ class BarcodeScannerViewController: UIViewController {
         return widget
     }()
 
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "navbarIconsBack"), for: .normal)
+        button.addTarget(self, action: #selector(popViewController), for: .touchUpInside)
+        return button
+    }()
+
     private let viewModel: BarcodeScannerViewModel
 
     init(viewModel: BarcodeScannerViewModel, delegate: BarcodeScannerViewControllerDelegate?) {
@@ -111,6 +119,7 @@ class BarcodeScannerViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         view.addSubview(backButton)
         NSLayoutConstraint.activate([
             backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -124,6 +133,7 @@ class BarcodeScannerViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
         stopScanning()
     }
 
@@ -225,6 +235,10 @@ class BarcodeScannerViewController: UIViewController {
             guard let self = self else { return }
             self.navigationController?.removeViewController(self)
         })
+    }
+
+    @objc private func popViewController() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

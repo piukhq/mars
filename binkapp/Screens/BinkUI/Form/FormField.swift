@@ -11,7 +11,7 @@ import UIKit
 enum FieldCommonName: String {
     case email
     case barcode
-    // TODO: Done as light-touch as possible for now. Add the rest of the cases later.
+    case cardNumber = "card_number"
 }
 
 struct FormPickerData: Equatable {
