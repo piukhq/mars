@@ -62,9 +62,9 @@ class AddingOptionsViewController: BinkTrackableViewController {
         addPaymentCardView.configure(addingOption: .payment)
 
         NSLayoutConstraint.activate([
-            loyaltyCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
-            browseBrandsView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
-            addPaymentCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
+                      loyaltyCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
+                      browseBrandsView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
+                      addPaymentCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
         ])
         
         addGesturesToViews()
