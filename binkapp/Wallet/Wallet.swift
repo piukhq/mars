@@ -150,7 +150,9 @@ class Wallet: CoreDataRepositoryProtocol {
             return
         }
 
-        Current.apiClient.performRequest(onEndpoint: .membershipPlans, using: .get, expecting: [MembershipPlanModel].self, isUserDriven: isUserDriven) { [weak self] result in
+        // TODO: Request should become a static let on Wallet Service in future ticket
+        let request = BinkNetworkRequest(endpoint: .membershipPlans, method: .get, headers: nil, isUserDriven: isUserDriven)
+        Current.apiClient.performRequest(request, expecting: [MembershipPlanModel].self) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
@@ -179,7 +181,9 @@ class Wallet: CoreDataRepositoryProtocol {
             return
         }
 
-        Current.apiClient.performRequest(onEndpoint: .membershipCards, using: .get, expecting: [MembershipCardModel].self, isUserDriven: isUserDriven) { [weak self] result in
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .membershipCards, method: .get, headers: nil, isUserDriven: isUserDriven)
+        Current.apiClient.performRequest(request, expecting: [MembershipCardModel].self) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
@@ -203,7 +207,9 @@ class Wallet: CoreDataRepositoryProtocol {
             return
         }
 
-        Current.apiClient.performRequest(onEndpoint: .paymentCards, using: .get, expecting: [PaymentCardModel].self, isUserDriven: isUserDriven) { [weak self] result in
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .paymentCards, method: .get, headers: nil, isUserDriven: isUserDriven)
+        Current.apiClient.performRequest(request, expecting: [PaymentCardModel].self) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {

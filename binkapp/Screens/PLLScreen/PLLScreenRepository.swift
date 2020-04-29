@@ -64,7 +64,9 @@ class PLLScreenRepository {
 
 private extension PLLScreenRepository {
     func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, completion: @escaping (String?) -> Void) {
-        apiClient.performRequest(onEndpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), using: .patch, expecting: PaymentCardModel.self, isUserDriven: false) { result in
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), method: .patch, headers: nil, isUserDriven: false)
+        apiClient.performRequest(request, expecting: PaymentCardModel.self) { result in
             switch result {
             case .success(let response):
                 completion(response.id)
@@ -75,7 +77,9 @@ private extension PLLScreenRepository {
     }
 
     func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
-        apiClient.performRequest(onEndpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), using: .delete, expecting: PaymentCardModel.self, isUserDriven: false) { result in
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), method: .delete, headers: nil, isUserDriven: false)
+        apiClient.performRequest(request, expecting: PaymentCardModel.self) { result in
             switch result {
             case .success:
                 completion(paymentCard.id)

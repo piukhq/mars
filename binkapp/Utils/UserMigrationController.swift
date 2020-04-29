@@ -39,7 +39,9 @@ struct UserMigrationController {
             return
         }
 
-        Current.apiClient.performRequest(onEndpoint: .renew, using: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiClient.apiVersion.rawValue)"], expecting: RenewTokenResponse.self, isUserDriven: false) { result in
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .renew, method: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiClient.apiVersion.rawValue)"], isUserDriven: false)
+        Current.apiClient.performRequest(request, expecting: RenewTokenResponse.self) { result in
             switch result {
             case .success(let response):
                 var email: String?

@@ -20,7 +20,8 @@ class PreferencesRepository {
     }
 
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (BinkError?) -> Void) {
-        apiClient.performRequest(onEndpoint: .preferences, using: .get, expecting: [PreferencesModel].self, isUserDriven: false) { result in
+        let request = BinkNetworkRequest(endpoint: .preferences, method: .get, headers: nil, isUserDriven: false)
+        apiClient.performRequest(request, expecting: [PreferencesModel].self) { result in
             switch result {
             case .success(let preferences):
                 onSuccess(preferences)

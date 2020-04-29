@@ -85,76 +85,45 @@ final class APIClient {
 
 // MARK: - Request handling
 
+struct ValidatedNetworkRequest {
+    var requestUrl: String
+    var headers: HTTPHeaders
+}
+
+struct BinkNetworkRequest {
+    var endpoint: APIEndpoint
+    var method: HTTPMethod
+    var headers: [String: String]?
+    var isUserDriven: Bool
+}
+
 extension APIClient {
-    func performRequest<ResponseType: Codable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
-        if !networkIsReachable && isUserDriven {
-            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
-            completion?(.failure(.noInternetConnection))
-            return
-        }
-
-        guard let requestUrl = endpoint.urlString else {
-            completion?(.failure(.invalidUrl))
-            return
-        }
-
-        guard endpoint.allowedMethods.contains(method) else {
-            completion?(.failure(.methodNotAllowed))
-            return
-        }
-
-        let requestHeaders = HTTPHeaders(headers ?? endpoint.headers)
-
-        session.request(requestUrl, method: method, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
-            self?.handleResponse(response, endpoint: endpoint, expecting: responseType, isUserDriven: isUserDriven, completion: completion)
+    func performRequest<ResponseType: Codable>(_ request: BinkNetworkRequest, expecting responseType: ResponseType.Type, completion: APIClientCompletionHandler<ResponseType>?) {
+        validateRequest(request) { [weak self] (validatedRequest, error) in
+            guard let validatedRequest = validatedRequest else { return }
+            session.request(validatedRequest.requestUrl, method: request.method, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+                self?.handleResponse(response, endpoint: request.endpoint, expecting: responseType, isUserDriven: request.isUserDriven, completion: completion)
+            }
         }
     }
 
     func performRequestWithParameters<ResponseType: Codable, P: Encodable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, parameters: P?, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
-        if !networkIsReachable && isUserDriven {
-            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
-            completion?(.failure(.noInternetConnection))
-            return
-        }
-
-        guard let requestUrl = endpoint.urlString else {
-            completion?(.failure(.invalidUrl))
-            return
-        }
-
-        guard endpoint.allowedMethods.contains(method) else {
-            completion?(.failure(.methodNotAllowed))
-            return
-        }
-
-        let requestHeaders = HTTPHeaders(headers ?? endpoint.headers)
-
-        session.request(requestUrl, method: method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
-            self?.handleResponse(response, endpoint: endpoint, expecting: responseType, isUserDriven: isUserDriven, completion: completion)
+        let request = BinkNetworkRequest(endpoint: endpoint, method: method, headers: headers, isUserDriven: isUserDriven)
+        validateRequest(request) { (validatedRequest, error) in
+            guard let validatedRequest = validatedRequest else { return }
+            session.request(validatedRequest.requestUrl, method: method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+                self?.handleResponse(response, endpoint: endpoint, expecting: responseType, isUserDriven: isUserDriven, completion: completion)
+            }
         }
     }
 
     func performRequestWithNoResponse(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, parameters: [String: Any]?, isUserDriven: Bool, completion: ((Bool, NetworkingError?) -> Void)?) {
-        if !networkIsReachable && isUserDriven {
-            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
-            completion?(false, .noInternetConnection)
-            return
-        }
-
-        guard let requestUrl = endpoint.urlString else {
-            completion?(false, .invalidUrl)
-            return
-        }
-
-        guard endpoint.allowedMethods.contains(method) else {
-            completion?(false, .methodNotAllowed)
-            return
-        }
-
-        let requestHeaders = HTTPHeaders(headers ?? endpoint.headers)
-
-        session.request(requestUrl, method: method, parameters: parameters, encoding: JSONEncoding.default, headers: requestHeaders).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
-            self?.noResponseHandler(response: response, endpoint: endpoint, isUserDriven: isUserDriven, completion: completion)
+        let request = BinkNetworkRequest(endpoint: endpoint, method: method, headers: headers, isUserDriven: isUserDriven)
+        validateRequest(request) { [weak self] (validatedRequest, error) in
+            guard let validatedRequest = validatedRequest else { return }
+            session.request(validatedRequest.requestUrl, method: method, parameters: parameters, encoding: JSONEncoding.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+                self?.noResponseHandler(response: response, endpoint: endpoint, isUserDriven: isUserDriven, completion: completion)
+            }
         }
     }
 
@@ -178,6 +147,24 @@ extension APIClient {
 // MARK: - Response handling
 
 private extension APIClient {
+    func validateRequest(_ request: BinkNetworkRequest, completion: (ValidatedNetworkRequest?, NetworkingError?) -> Void) {
+        if !networkIsReachable && request.isUserDriven {
+            NotificationCenter.default.post(name: .noInternetConnection, object: nil)
+            completion(nil, .noInternetConnection)
+        }
+        guard let requestUrl = request.endpoint.urlString else {
+            completion(nil, .invalidUrl)
+            return
+        }
+        guard request.endpoint.allowedMethods.contains(request.method) else {
+            completion(nil, .methodNotAllowed)
+            return
+        }
+
+        let requestHeaders = HTTPHeaders(request.headers ?? request.endpoint.headers)
+        completion(ValidatedNetworkRequest(requestUrl: requestUrl, headers: requestHeaders), nil)
+    }
+
     func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
             NotificationCenter.default.post(name: .didFailServerTrustEvaluation, object: nil)

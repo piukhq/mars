@@ -16,7 +16,9 @@ class PaymentCardDetailRepository: WalletRepository {
     }
 
     func getPaymentCard(forId id: String, completion: @escaping (CD_PaymentCard?) -> Void) {
-        apiClient.performRequest(onEndpoint: .paymentCard(cardId: id), using: .get, expecting: PaymentCardModel.self, isUserDriven: false) { result in
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: id), method: .get, headers: nil, isUserDriven: false)
+        apiClient.performRequest(request, expecting: PaymentCardModel.self) { result in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { backgroundContext in
@@ -59,7 +61,9 @@ class PaymentCardDetailRepository: WalletRepository {
     }
 
     func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, completion: @escaping (CD_PaymentCard?) -> Void) {
-        apiClient.performRequest(onEndpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), using: .patch, expecting: PaymentCardModel.self, isUserDriven: false) { result in
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), method: .patch, headers: nil, isUserDriven: false)
+        apiClient.performRequest(request, expecting: PaymentCardModel.self) { result in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { backgroundContext in
@@ -92,7 +96,9 @@ class PaymentCardDetailRepository: WalletRepository {
         let paymentCardId: String = paymentCard.id
         let membershipCardId: String = membershipCard.id
 
-        apiClient.performRequest(onEndpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), using: .delete, expecting: PaymentCardModel.self, isUserDriven: false) { result in
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), method: .delete, headers: nil, isUserDriven: false)
+        apiClient.performRequest(request, expecting: PaymentCardModel.self) { result in
             switch result {
             case .success:
                 Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
