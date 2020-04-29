@@ -100,7 +100,14 @@ struct BinkNetworkRequest {
 extension APIClient {
     func performRequest<ResponseType: Codable>(_ request: BinkNetworkRequest, expecting responseType: ResponseType.Type, completion: APIClientCompletionHandler<ResponseType>?) {
         validateRequest(request) { [weak self] (validatedRequest, error) in
-            guard let validatedRequest = validatedRequest else { return }
+            if let error = error {
+                completion?(.failure(error))
+                return
+            }
+            guard let validatedRequest = validatedRequest else {
+                completion?(.failure(.invalidRequest))
+                return
+            }
             session.request(validatedRequest.requestUrl, method: request.method, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
                 self?.handleResponse(response, endpoint: request.endpoint, expecting: responseType, isUserDriven: request.isUserDriven, completion: completion)
             }
@@ -110,7 +117,14 @@ extension APIClient {
     func performRequestWithParameters<ResponseType: Codable, P: Encodable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, parameters: P?, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
         let request = BinkNetworkRequest(endpoint: endpoint, method: method, headers: headers, isUserDriven: isUserDriven)
         validateRequest(request) { (validatedRequest, error) in
-            guard let validatedRequest = validatedRequest else { return }
+            if let error = error {
+                completion?(.failure(error))
+                return
+            }
+            guard let validatedRequest = validatedRequest else {
+                completion?(.failure(.invalidRequest))
+                return
+            }
             session.request(validatedRequest.requestUrl, method: method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
                 self?.handleResponse(response, endpoint: endpoint, expecting: responseType, isUserDriven: isUserDriven, completion: completion)
             }
@@ -120,7 +134,14 @@ extension APIClient {
     func performRequestWithNoResponse(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, parameters: [String: Any]?, isUserDriven: Bool, completion: ((Bool, NetworkingError?) -> Void)?) {
         let request = BinkNetworkRequest(endpoint: endpoint, method: method, headers: headers, isUserDriven: isUserDriven)
         validateRequest(request) { [weak self] (validatedRequest, error) in
-            guard let validatedRequest = validatedRequest else { return }
+            if let error = error {
+                completion?(false, error)
+                return
+            }
+            guard let validatedRequest = validatedRequest else {
+                completion?(false, .invalidRequest)
+                return
+            }
             session.request(validatedRequest.requestUrl, method: method, parameters: parameters, encoding: JSONEncoding.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
                 self?.noResponseHandler(response: response, endpoint: endpoint, isUserDriven: isUserDriven, completion: completion)
             }
