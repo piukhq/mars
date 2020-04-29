@@ -9,6 +9,10 @@
 import UIKit
 
 class LoyaltyScannerWidgetView: CustomView {
+    struct Constants {
+        static let cornerRadius: CGFloat = 4
+    }
+
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var explainerLabel: UILabel!
@@ -39,7 +43,7 @@ class LoyaltyScannerWidgetView: CustomView {
 
     private func configure() {
         clipsToBounds = true
-        layer.cornerRadius = 4
+        layer.cornerRadius = Constants.cornerRadius
 
         titleLabel.font = .subtitle
         explainerLabel.font = .bodyTextLarge
@@ -71,18 +75,18 @@ extension LoyaltyScannerWidgetView {
         var title: String {
             switch self {
             case .enterManually, .timeout:
-                return "Enter manually"
+                return "loyalty_scanner_widget_title_enter_manually_text".localized
             case .unrecognizedBarcode:
-                return "Unrecognised barcode"
+                return "loyalty_scanner_widget_title_unrecognized_barcode_text".localized
             }
         }
 
         var explainerText: String {
             switch self {
             case .enterManually, .timeout:
-                return "You can also type in the card details yourself."
+                return "loyalty_scanner_widget_explainer_enter_manually_text".localized
             case .unrecognizedBarcode:
-                return "Please try adding the card manually."
+                return "loyalty_scanner_widget_explainer_unrecognized_barcode_text".localized
             }
         }
 

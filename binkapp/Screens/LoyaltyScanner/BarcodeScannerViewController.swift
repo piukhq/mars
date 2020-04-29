@@ -19,11 +19,27 @@ protocol BarcodeScannerViewControllerDelegate: AnyObject {
 }
 
 class BarcodeScannerViewController: UIViewController {
+    struct Constants {
+        static let rectOfInterestInset: CGFloat = 25
+        static let viewFrameRatio: CGFloat = 12/18
+        static let maskedAreaY: CGFloat = 100
+        static let maskedAreaCornerRadius: CGFloat = 8
+        static let guideImageInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        static let explainerLabelPadding: CGFloat = 25
+        static let explainerLabelHeight: CGFloat = 22
+        static let widgetViewTopPadding: CGFloat = 30
+        static let widgetViewLeftRightPadding: CGFloat = 25
+        static let widgetViewHeight: CGFloat = 100
+        static let backButtonSize = CGSize(width: 44, height: 44)
+        static let timerInterval: TimeInterval = 5.0
+        static let scanErrorThreshold: TimeInterval = 1.0
+    }
+
     private weak var delegate: BarcodeScannerViewControllerDelegate?
 
     private var session = AVCaptureSession()
-    private var captureOutput: AVCaptureMetadataOutput!
-    private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+    private var captureOutput: AVCaptureMetadataOutput?
+    private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var previewView = UIView()
     private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
     private var rectOfInterest = CGRect.zero
@@ -42,7 +58,7 @@ class BarcodeScannerViewController: UIViewController {
 
     private lazy var explainerLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hold card here. It will scan automatically."
+        label.text = "loyalty_scanner_explainer_text".localized
         label.font = .bodyTextLarge
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -87,33 +103,33 @@ class BarcodeScannerViewController: UIViewController {
         maskLayer.frame = view.frame
         maskLayer.fillColor = UIColor.black.cgColor
         // Setup rect of interest
-        let inset: CGFloat = 25
+        let inset = Constants.rectOfInterestInset
         let width = view.frame.size.width - (inset * 2)
-        let viewFrameRatio: CGFloat = 12 / 18
+        let viewFrameRatio = Constants.viewFrameRatio
         let height: CGFloat = floor(viewFrameRatio * width)
-        let maskedAreaFrame = CGRect(x: inset, y: 100, width: width, height: height)
+        let maskedAreaFrame = CGRect(x: inset, y: Constants.maskedAreaY, width: width, height: height)
         rectOfInterest = maskedAreaFrame
-        let maskedPath = UIBezierPath(roundedRect: rectOfInterest, cornerRadius: 8)
+        let maskedPath = UIBezierPath(roundedRect: rectOfInterest, cornerRadius: Constants.maskedAreaCornerRadius)
         maskedPath.append(UIBezierPath(rect: view.bounds))
         maskLayer.fillRule = .evenOdd
         maskLayer.path = maskedPath.cgPath
         blurredView.layer.mask = maskLayer
         view.addSubview(blurredView)
 
-        guideImageView.frame = rectOfInterest.inset(by: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
+        guideImageView.frame = rectOfInterest.inset(by: Constants.guideImageInset)
         view.addSubview(guideImageView)
 
         view.addSubview(explainerLabel)
         view.addSubview(widgetView)
         NSLayoutConstraint.activate([
-            explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: 25),
-            explainerLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
-            explainerLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
-            explainerLabel.heightAnchor.constraint(equalToConstant: 22),
-            widgetView.topAnchor.constraint(equalTo: explainerLabel.bottomAnchor, constant: 30),
-            widgetView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
-            widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
-            widgetView.heightAnchor.constraint(equalToConstant: 100),
+            explainerLabel.topAnchor.constraint(equalTo: guideImageView.bottomAnchor, constant: Constants.explainerLabelPadding),
+            explainerLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.explainerLabelPadding),
+            explainerLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.explainerLabelPadding),
+            explainerLabel.heightAnchor.constraint(equalToConstant: Constants.explainerLabelHeight),
+            widgetView.topAnchor.constraint(equalTo: explainerLabel.bottomAnchor, constant: Constants.widgetViewTopPadding),
+            widgetView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.widgetViewLeftRightPadding),
+            widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.widgetViewLeftRightPadding),
+            widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight),
         ])
     }
 
@@ -124,8 +140,8 @@ class BarcodeScannerViewController: UIViewController {
         NSLayoutConstraint.activate([
             backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             backButton.leftAnchor.constraint(equalTo: view.leftAnchor),
-            backButton.heightAnchor.constraint(equalToConstant: 44),
-            backButton.widthAnchor.constraint(equalToConstant: 44),
+            backButton.heightAnchor.constraint(equalToConstant: Constants.backButtonSize.height),
+            backButton.widthAnchor.constraint(equalToConstant: Constants.backButtonSize.width),
         ])
 
         startScanning()
@@ -156,6 +172,8 @@ class BarcodeScannerViewController: UIViewController {
         previewView.layer.addSublayer(videoPreviewLayer)
         videoPreviewLayer.frame = view.frame
 
+        guard let captureOutput = captureOutput else { return }
+
         if session.outputs.count == 0 {
             if session.canAddOutput(captureOutput) {
                 session.addOutput(captureOutput)
@@ -179,7 +197,7 @@ class BarcodeScannerViewController: UIViewController {
 
         captureOutput.rectOfInterest = videoPreviewLayer.metadataOutputRectConverted(fromLayerRect: rectOfInterest)
 
-        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: false, block: { [weak self] _ in
             self?.widgetView.timeout()
         })
     }
@@ -258,7 +276,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                             guard let self = self else { return }
                             self.widgetView.unrecognizedBarcode()
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [weak self] in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: { [weak self] in
                             self?.canPresentedScanError = true
                         })
                     }
