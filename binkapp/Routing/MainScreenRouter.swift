@@ -171,7 +171,7 @@ class MainScreenRouter {
     }
 
     func toVoucherDetailViewController(voucher: CD_Voucher, plan: CD_MembershipPlan) {
-        let viewModel = PLRRewardDetailViewModel(voucher: voucher, plan: plan)
+        let viewModel = PLRRewardDetailViewModel(voucher: voucher, plan: plan, router: self)
         let viewController = PLRRewardDetailViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
@@ -332,6 +332,11 @@ class MainScreenRouter {
     
     func didLogin() {
         delegate?.router(self, didLogin: true)
+    }
+    
+    func openWebView(with urlString: String) {
+        let webView = WebViewController(urlString: urlString)
+        navController?.present(webView, animated: true)
     }
     
     class func openExternalURL(with urlString: String) {

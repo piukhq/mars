@@ -40,6 +40,8 @@ class WebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        webView.scrollView.setContentOffset(CGPoint(x: 0, y: -100), animated: true)
+        
         setTopToolbar()
         setBottomToolbar()
         
@@ -83,7 +85,7 @@ class WebViewController: UIViewController {
         webView.addSubview(toolBar)
         
         NSLayoutConstraint.activate([
-            toolBar.topAnchor.constraint(equalTo: webView.topAnchor, constant: 0),
+            toolBar.topAnchor.constraint(equalTo: webView.safeTopAnchor, constant: 0),
             toolBar.leadingAnchor.constraint(equalTo: webView.leadingAnchor, constant: 0),
             toolBar.trailingAnchor.constraint(equalTo: webView.trailingAnchor, constant: 0)
         ])
@@ -121,6 +123,14 @@ class WebViewController: UIViewController {
     private func checkToolbarItemsState() {
         backButton.isEnabled = webView.canGoBack
         forwardButton.isEnabled = webView.canGoForward
+    }
+    
+    private func showErrorAlert() {
+        let alert = UIAlertController(title: "error_title".localized, message: "loading_error".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default) { action in
+            self.dismissWebView()
+        })
+        self.present(alert, animated: true)
     }
     
     @objc private func goBack() {
@@ -161,9 +171,11 @@ extension WebViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         showActivityIndicator(show: false)
+        showErrorAlert()
     }
 
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         showActivityIndicator(show: false)
+        showErrorAlert()
     }
 }

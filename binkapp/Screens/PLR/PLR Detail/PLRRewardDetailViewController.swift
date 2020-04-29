@@ -227,7 +227,7 @@ private extension PLRRewardDetailViewController {
     }
 
     @objc func handleTermsAndConditionsButtonPress() {
-        viewModel.openTermsAndConditionsUrl()
+        viewModel.openTermsAndConditionsWebView()
     }
 }
 

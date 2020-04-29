@@ -10,6 +10,12 @@ import M13Checkbox
 
 protocol CheckboxViewDelegate: NSObjectProtocol {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind)
+    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL)
+}
+
+extension CheckboxViewDelegate {
+    func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {}
+    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {}
 }
 
 class CheckboxView: CustomView {
@@ -69,7 +75,8 @@ class CheckboxView: CustomView {
 
 extension CheckboxView: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        return true
+        delegate?.checkboxView(self, didTapOn: URL)
+        return false
     }
     
     var value: String {

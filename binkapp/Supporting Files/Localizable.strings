@@ -355,3 +355,6 @@
 "camera_permission_body" = "We need your camera to scan loyalty cards. It will not be used for other purposes.";
 "camera_permission_deny_option" = "Don't Allow";
 "camera_permission_allow_option" = "OK";
+
+// MARK: - WebView
+"loading_error" = "There was a problem loading the page, please try again later.";
