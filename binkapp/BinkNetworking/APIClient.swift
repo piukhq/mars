@@ -85,16 +85,15 @@ final class APIClient {
 
 // MARK: - Request handling
 
-struct ValidatedNetworkRequest {
-    var requestUrl: String
-    var headers: HTTPHeaders
-}
-
 struct BinkNetworkRequest {
     var endpoint: APIEndpoint
     var method: HTTPMethod
     var headers: [String: String]?
     var isUserDriven: Bool
+}
+struct ValidatedNetworkRequest {
+    var requestUrl: String
+    var headers: HTTPHeaders
 }
 
 extension APIClient {
