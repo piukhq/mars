@@ -105,7 +105,6 @@ class PLRRewardDetailViewModel {
 
     func openTermsAndConditionsWebView() {
         guard let url = termsAndConditionsButtonUrlString else { return }
-//        MainScreenRouter.openExternalURL(with: url)
         router.openWebView(with: url)
     }
 
