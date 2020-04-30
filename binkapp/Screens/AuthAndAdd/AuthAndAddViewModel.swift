@@ -21,9 +21,10 @@ enum InputType: Int {
     case checkbox
 }
 
-enum FormPurpose {
+enum FormPurpose: Equatable {
     case add
     case addFailed
+    case addFromScanner(barcode: String)
     case signUp
     case signUpFailed
     case ghostCard
@@ -31,7 +32,7 @@ enum FormPurpose {
     
     var planDocumentDisplayMatching: PlanDocumentDisplayModel {
         switch self {
-        case .add, .addFailed:
+        case .add, .addFailed, .addFromScanner:
             return .add
         case .signUp, .signUpFailed:
             return .enrol
@@ -55,7 +56,7 @@ class AuthAndAddViewModel {
     var title: String {
         switch formPurpose {
         case .signUp, .signUpFailed: return "sign_up_new_card_title".localized
-        case .add: return "credentials_title".localized
+        case .add, .addFromScanner: return "credentials_title".localized
         case .addFailed: return "log_in_title".localized
         case .ghostCard, .patchGhostCard: return "register_ghost_card_title".localized
         }
@@ -64,7 +65,7 @@ class AuthAndAddViewModel {
     var buttonTitle: String {
         switch formPurpose {
         case .signUp: return "sign_up_button_title".localized
-        case .add: return "pll_screen_add_title".localized
+        case .add, .addFromScanner: return "pll_screen_add_title".localized
         case .ghostCard: return "register_card_title".localized
         case .signUpFailed, .addFailed, .patchGhostCard: return "log_in_title".localized
         }
@@ -85,7 +86,7 @@ class AuthAndAddViewModel {
     
     func getDescription() -> String? {
         switch formPurpose {
-        case .add:
+        case .add, .addFromScanner:
             guard let companyName = membershipPlan.account?.companyName else { return nil }
             return String(format: "auth_screen_description".localized, companyName)
         case .signUp:

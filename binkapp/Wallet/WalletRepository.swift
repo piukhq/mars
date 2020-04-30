@@ -15,5 +15,5 @@ protocol WalletRepository: CoreDataRepositoryProtocol {
 }
 
 protocol PaymentWalletRepositoryProtocol: WalletRepository {
-    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void)
+    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void)
 }

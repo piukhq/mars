@@ -19,8 +19,9 @@ class PreferencesRepository {
         return apiClient.networkIsReachable
     }
 
-    func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (Error?) -> Void) {
-        apiClient.performRequest(onEndpoint: .preferences, using: .get, expecting: [PreferencesModel].self, isUserDriven: false) { result in
+    func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (BinkError?) -> Void) {
+        let request = BinkNetworkRequest(endpoint: .preferences, method: .get, headers: nil, isUserDriven: false)
+        apiClient.performRequest(request, expecting: [PreferencesModel].self) { result in
             switch result {
             case .success(let preferences):
                 onSuccess(preferences)
@@ -30,14 +31,14 @@ class PreferencesRepository {
         }
     }
     
-    func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
-        apiClient.performRequestWithParameters(onEndpoint: .preferences, using: .put, parameters: preferences, expecting: Nothing.self, isUserDriven: true) { result in
-            switch result {
-            case .success:
-                onSuccess()
-            case .failure(let error):
+    func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (BinkError) -> Void) {
+        let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: true)
+        apiClient.performRequestWithNoResponse(request, parameters: preferences) { (success, error) in
+            if let error = error {
                 onError(error)
+                return
             }
+            onSuccess()
         }
     }
 }

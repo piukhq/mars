@@ -16,8 +16,8 @@ class ForgotPasswordRepository {
     }
     
     func continueButtonTapped(email: String, completion: @escaping () -> Void) {
-        let model = ForgotPasswordPostModel(email: email)
-        apiClient.performRequestWithParameters(onEndpoint: .forgotPassword, using: .post, parameters: model, expecting: Nothing.self, isUserDriven: true) { _ in
+        let request = BinkNetworkRequest(endpoint: .forgotPassword, method: .post, headers: nil, isUserDriven: true)
+        apiClient.performRequestWithNoResponse(request, parameters: ["email": email]) { (_, _) in
             completion()
         }
     }

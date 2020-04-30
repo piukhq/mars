@@ -9,6 +9,7 @@
 import Foundation
 
 enum NetworkingError: BinkError {
+    case invalidRequest
     case unauthorized
     case noInternetConnection
     case methodNotAllowed

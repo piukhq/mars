@@ -42,7 +42,7 @@ class PreferencesViewModel {
         }
     }
     
-    func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+    func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (BinkError) -> Void) {
         repository.putPreferences(preferences: preferences, onSuccess: {
             onSuccess()
         }) { (error) in

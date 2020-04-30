@@ -7,7 +7,14 @@
 
 import UIKit
 
-class MainTabBarViewController: UITabBarController, BarBlurring {    
+extension LayoutHelper {
+    struct settingsButton {
+        static let widthRatio: CGFloat = 0.13
+        static let height: CGFloat = 24
+    }
+}
+
+class MainTabBarViewController: UITabBarController, BarBlurring {
     let viewModel: MainTabBarViewModel
     var selectedTabBarOption = Buttons.loyaltyItem.rawValue
     var items = [UITabBarItem]()
@@ -44,9 +51,29 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
     }
     
     func setNavigationBar() {
-        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .done, target: self, action: #selector(settingsButtonTapped))
-        navigationItem.rightBarButtonItem = settingsButton
-
+        let settingsButton = UIButton(type: .custom)
+        settingsButton.setImage(UIImage(named: "settings"), for: .normal)
+        settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
+        settingsButton.contentMode = .right
+        
+        var rightInset: CGFloat = 0
+        
+        switch UIDevice.current.width {
+            case .iPhone5Size:
+                rightInset = 9
+            case .iPhone6Size:
+                rightInset = 9
+            case .iPhonePlusSize:
+                rightInset = 6
+            default:
+                rightInset = 7
+        }
+        
+        settingsButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: rightInset)
+        
+        let barButton = UIBarButtonItem(customView: settingsButton)
+        navigationItem.rightBarButtonItem = barButton
+        
         navigationItem.setHidesBackButton(true, animated: true)
         self.title = ""
     }

@@ -92,7 +92,8 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         
         continueButton.startLoading()
 
-        Current.apiClient.performRequestWithParameters(onEndpoint: .facebook, using: .post, parameters: request, expecting: LoginRegisterResponse.self, isUserDriven: true) { [weak self] result in
+        let networtRequest = BinkNetworkRequest(endpoint: .facebook, method: .post, headers: nil, isUserDriven: true)
+        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] result in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -100,16 +101,17 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                     return
                 }
                 Current.userManager.setNewUser(with: response)
-                Current.apiClient.performRequestWithParameters(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), expecting: Nothing.self, isUserDriven: false) { [weak self] result in
-                    switch result {
-                    case .success:
-                        self?.router?.didLogin()
-                        self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                        self?.request = nil
-                        self?.continueButton.stopLoading()
-                    case .failure:
+
+                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
+                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                    guard success else {
                         self?.handleAuthError()
+                        return
                     }
+                    self?.router?.didLogin()
+                    self?.updatePreferences(checkboxes: preferenceCheckboxes)
+                    self?.request = nil
+                    self?.continueButton.stopLoading()
                 }
             case .failure:
                 self?.handleAuthError()
@@ -130,7 +132,8 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         guard params.count > 0 else { return }
 
         // We don't worry about whether this was successful or not
-        Current.apiClient.performRequestWithParameters(onEndpoint: .preferences, using: .put, parameters: params, expecting: Nothing.self, isUserDriven: false) { _ in }
+        let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: false)
+        Current.apiClient.performRequestWithNoResponse(request, parameters: params, completion: nil)
     }
     
     private func showError() {

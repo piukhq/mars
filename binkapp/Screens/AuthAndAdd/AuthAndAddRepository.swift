@@ -21,7 +21,7 @@ class AuthAndAddRepository {
         self.apiClient = apiClient
     }
     
-    func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (Error?) -> ()) {
+    func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (BinkError?) -> ()) {
         let endpoint: APIEndpoint
         let method: HTTPMethod
         
@@ -33,7 +33,8 @@ class AuthAndAddRepository {
             method = .post
         }
 
-        apiClient.performRequestWithParameters(onEndpoint: endpoint, using: method, parameters: request, expecting: MembershipCardModel.self, isUserDriven: true) { result in
+        let networkRequest = BinkNetworkRequest(endpoint: endpoint, method: method, headers: nil, isUserDriven: true)
+        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: MembershipCardModel.self) { result in
             switch result {
             case .success(let response):
                 // Map to core data
@@ -54,7 +55,7 @@ class AuthAndAddRepository {
         }
     }
     
-    func postGhostCard(parameters: MembershipCardPostModel, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (Error?) -> Void) {
+    func postGhostCard(parameters: MembershipCardPostModel, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (BinkError?) -> Void) {
 
         let endpoint: APIEndpoint
         let method: HTTPMethod
@@ -73,7 +74,8 @@ class AuthAndAddRepository {
             mutableParams.account?.registrationFields = nil
         }
 
-        apiClient.performRequestWithParameters(onEndpoint: endpoint, using: method, parameters: mutableParams, expecting: MembershipCardModel.self, isUserDriven: true) { result in
+        let request = BinkNetworkRequest(endpoint: endpoint, method: method, headers: nil, isUserDriven: true)
+        apiClient.performRequestWithParameters(request, parameters: mutableParams, expecting: MembershipCardModel.self) { result in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { context in

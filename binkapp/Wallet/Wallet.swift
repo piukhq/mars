@@ -150,7 +150,9 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             return
         }
 
-        getMembershipPlans(isUserDriven: isUserDriven) { [weak self] result in
+        // TODO: Request should become a static let on Wallet Service in future ticket
+        let request = BinkNetworkRequest(endpoint: .membershipPlans, method: .get, headers: nil, isUserDriven: isUserDriven)
+        Current.apiClient.performRequest(request, expecting: [MembershipPlanModel].self) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
@@ -179,7 +181,9 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             return
         }
 
-        getMembershipCards(isUserDriven: isUserDriven) { [weak self] result in
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .membershipCards, method: .get, headers: nil, isUserDriven: isUserDriven)
+        Current.apiClient.performRequest(request, expecting: [MembershipCardModel].self) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
@@ -203,7 +207,9 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             return
         }
 
-        getPaymentCards(isUserDriven: isUserDriven) { [weak self] result in
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .paymentCards, method: .get, headers: nil, isUserDriven: isUserDriven)
+        Current.apiClient.performRequest(request, expecting: [PaymentCardModel].self) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
@@ -214,6 +220,37 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                 })
             case .failure:
                 completion(false, .failedToGetPaymentCards)
+            }
+        }
+    }
+
+    func identifyMembershipPlanForBarcode(_ barcode: String, completion: @escaping (CD_MembershipPlan?) -> Void) {
+        let predicate = NSPredicate(format: "commonName == 'barcode'")
+        fetchCoreDataObjects(forObjectType: CD_AddField.self, predicate: predicate) { fields in
+            guard let fields = fields else {
+                // We have no barcode add fields, there will be no match.
+                completion(nil)
+                return
+            }
+
+            var hasMatched = false
+
+            for field in fields {
+                if let validation = field.validation {
+                    let predicate = NSPredicate(format: "SELF MATCHES %@", validation)
+                    if predicate.evaluate(with: barcode) {
+                        // We have a match. We should stop this entire function at this point
+                        completion(field.planAccount?.plan)
+                        hasMatched = true
+                        return
+                    }
+                }
+            }
+
+            // We haven't had any matches
+            guard hasMatched else {
+                completion(nil)
+                return
             }
         }
     }

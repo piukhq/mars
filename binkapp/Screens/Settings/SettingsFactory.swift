@@ -102,10 +102,10 @@ struct SettingsFactory {
         // MARK: - Debug
         
         #if DEBUG
-        let debugSection = SettingsSection(title: "Debug", rows: [
+        let debugSection = SettingsSection(title: "settings_section_debug_title".localized, rows: [
             SettingsRow(
-                title: "Debug",
-                subtitle: "Only accessible on debug builds",
+                title: "settings_section_debug_title".localized,
+                subtitle: "settings_section_debug_subtitle".localized,
                 action: .pushToViewController(viewController: DebugMenuTableViewController.self)
             )
         ])

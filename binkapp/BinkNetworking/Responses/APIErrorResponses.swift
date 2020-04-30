@@ -9,7 +9,7 @@
 import Foundation
 
 struct ResponseErrors: Decodable {
-    let nonFieldErrors: [String]?
+    var nonFieldErrors: [String]?
 
     enum CodingKeys: String, CodingKey {
         case nonFieldErrors = "non_field_errors"
