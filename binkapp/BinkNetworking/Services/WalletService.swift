@@ -42,19 +42,22 @@ protocol WalletServiceProtocol {
 
 extension WalletServiceProtocol {
     func getMembershipPlans(isUserDriven: Bool, completion: @escaping APIClientCompletionHandler<[MembershipPlanModel]>) {
-        Current.apiClient.performRequest(onEndpoint: .membershipPlans, using: .get, expecting: [MembershipPlanModel].self, isUserDriven: isUserDriven) { result in
+        let request = BinkNetworkRequest(endpoint: .membershipPlans, method: .get, headers: nil, isUserDriven: isUserDriven)
+        Current.apiClient.performRequest(request, expecting: [MembershipPlanModel].self) { result in
             completion(result)
         }
     }
 
     func getMembershipCards(isUserDriven: Bool, completion: @escaping APIClientCompletionHandler<[MembershipCardModel]>) {
-        Current.apiClient.performRequest(onEndpoint: .membershipCards, using: .get, expecting: [MembershipCardModel].self, isUserDriven: isUserDriven) { result in
+        let request = BinkNetworkRequest(endpoint: .membershipCards, method: .get, headers: nil, isUserDriven: isUserDriven)
+        Current.apiClient.performRequest(request, expecting: [MembershipCardModel].self) { result in
             completion(result)
         }
     }
 
     func getPaymentCards(isUserDriven: Bool, completion: @escaping APIClientCompletionHandler<[PaymentCardModel]>) {
-        Current.apiClient.performRequest(onEndpoint: .paymentCards, using: .get, expecting: [PaymentCardModel].self, isUserDriven: isUserDriven) { result in
+        let request = BinkNetworkRequest(endpoint: .paymentCards, method: .get, headers: nil, isUserDriven: isUserDriven)
+        Current.apiClient.performRequest(request, expecting: [PaymentCardModel].self) { result in
             completion(result)
         }
     }
