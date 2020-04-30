@@ -84,7 +84,8 @@ class LoginViewController: BaseFormViewController {
             password: fields["password"]
         )
 
-        Current.apiClient.performRequestWithParameters(onEndpoint: .login, using: .post, parameters: loginRequest, expecting: LoginRegisterResponse.self, isUserDriven: true) { [weak self] result in
+        let request = BinkNetworkRequest(endpoint: .login, method: .post, headers: nil, isUserDriven: true)
+        Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] result in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -93,7 +94,8 @@ class LoginViewController: BaseFormViewController {
                 }
                 Current.userManager.setNewUser(with: response)
 
-                Current.apiClient.performRequestWithNoResponse(onEndpoint: .service, using: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
+                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
+                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
                     guard success else {
                         self?.handleLoginError()
                         return

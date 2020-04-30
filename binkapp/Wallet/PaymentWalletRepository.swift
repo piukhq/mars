@@ -18,7 +18,8 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
         // Process the backend delete, but fail silently
-        apiClient.performRequestWithNoResponse(onEndpoint: .paymentCard(cardId: card.id), using: .delete, parameters: nil, isUserDriven: false, completion: nil)
+        let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
+        apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
@@ -67,7 +68,8 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     private func requestSpreedlyToken(paymentCard: PaymentCardCreateModel, onSuccess: @escaping (SpreedlyResponse) -> Void, onError: @escaping (BinkError?) -> Void) {
         let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
-        apiClient.performRequestWithParameters(onEndpoint: .spreedly, using: .post, parameters: spreedlyRequest, expecting: SpreedlyResponse.self, isUserDriven: true) { result in
+        let request = BinkNetworkRequest(endpoint: .spreedly, method: .post, headers: nil, isUserDriven: true)
+        apiClient.performRequestWithParameters(request, parameters: spreedlyRequest, expecting: SpreedlyResponse.self) { result in
             switch result {
             case .success(let response):
                 onSuccess(response)
@@ -97,7 +99,8 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
             return
         }
 
-        apiClient.performRequestWithParameters(onEndpoint: .paymentCards, using: .post, parameters: request, expecting: PaymentCardModel.self, isUserDriven: true) { result in
+        let networkRequest = BinkNetworkRequest(endpoint: .paymentCards, method: .post, headers: nil, isUserDriven: true)
+        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: PaymentCardModel.self) { result in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { context in

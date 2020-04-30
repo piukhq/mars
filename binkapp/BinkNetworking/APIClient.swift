@@ -113,8 +113,7 @@ extension APIClient {
         }
     }
 
-    func performRequestWithParameters<ResponseType: Codable, P: Encodable>(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, parameters: P?, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
-        let request = BinkNetworkRequest(endpoint: endpoint, method: method, headers: headers, isUserDriven: isUserDriven)
+    func performRequestWithParameters<ResponseType: Codable, P: Encodable>(_ request: BinkNetworkRequest, parameters: P?, expecting responseType: ResponseType.Type, completion: APIClientCompletionHandler<ResponseType>?) {
         validateRequest(request) { (validatedRequest, error) in
             if let error = error {
                 completion?(.failure(error))
@@ -124,14 +123,13 @@ extension APIClient {
                 completion?(.failure(.invalidRequest))
                 return
             }
-            session.request(validatedRequest.requestUrl, method: method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
-                self?.handleResponse(response, endpoint: endpoint, expecting: responseType, isUserDriven: isUserDriven, completion: completion)
+            session.request(validatedRequest.requestUrl, method: request.method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+                self?.handleResponse(response, endpoint: request.endpoint, expecting: responseType, isUserDriven: request.isUserDriven, completion: completion)
             }
         }
     }
 
-    func performRequestWithNoResponse(onEndpoint endpoint: APIEndpoint, using method: HTTPMethod, headers: [String: String]? = nil, parameters: [String: Any]?, isUserDriven: Bool, completion: ((Bool, NetworkingError?) -> Void)?) {
-        let request = BinkNetworkRequest(endpoint: endpoint, method: method, headers: headers, isUserDriven: isUserDriven)
+    func performRequestWithNoResponse(_ request: BinkNetworkRequest, parameters: [String: Any]?, completion: ((Bool, NetworkingError?) -> Void)?) {
         validateRequest(request) { [weak self] (validatedRequest, error) in
             if let error = error {
                 completion?(false, error)
@@ -141,8 +139,8 @@ extension APIClient {
                 completion?(false, .invalidRequest)
                 return
             }
-            session.request(validatedRequest.requestUrl, method: method, parameters: parameters, encoding: JSONEncoding.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
-                self?.noResponseHandler(response: response, endpoint: endpoint, isUserDriven: isUserDriven, completion: completion)
+            session.request(validatedRequest.requestUrl, method: request.method, parameters: parameters, encoding: JSONEncoding.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+                self?.noResponseHandler(response: response, endpoint: request.endpoint, isUserDriven: request.isUserDriven, completion: completion)
             }
         }
     }
@@ -162,12 +160,8 @@ extension APIClient {
             }
         }
     }
-}
 
-// MARK: - Response handling
-
-private extension APIClient {
-    func validateRequest(_ request: BinkNetworkRequest, completion: (ValidatedNetworkRequest?, NetworkingError?) -> Void) {
+    private func validateRequest(_ request: BinkNetworkRequest, completion: (ValidatedNetworkRequest?, NetworkingError?) -> Void) {
         if !networkIsReachable && request.isUserDriven {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
             completion(nil, .noInternetConnection)
@@ -184,7 +178,11 @@ private extension APIClient {
         let requestHeaders = HTTPHeaders(request.headers ?? request.endpoint.headers)
         completion(ValidatedNetworkRequest(requestUrl: requestUrl, headers: requestHeaders), nil)
     }
+}
 
+// MARK: - Response handling
+
+private extension APIClient {
     func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
             NotificationCenter.default.post(name: .didFailServerTrustEvaluation, object: nil)

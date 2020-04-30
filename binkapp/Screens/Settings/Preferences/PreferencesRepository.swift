@@ -32,7 +32,8 @@ class PreferencesRepository {
     }
     
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (BinkError) -> Void) {
-        apiClient.performRequestWithNoResponse(onEndpoint: .preferences, using: .put, parameters: preferences, isUserDriven: true) { (success, error) in
+        let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: true)
+        apiClient.performRequestWithNoResponse(request, parameters: preferences) { (success, error) in
             if let error = error {
                 onError(error)
                 return
