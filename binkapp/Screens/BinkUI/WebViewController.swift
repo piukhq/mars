@@ -9,10 +9,6 @@
 import UIKit
 import WebKit
 
-private struct Constants {
-    static let toolbarHeight: CGFloat = 44
-}
-
 class WebViewController: UIViewController {
     private let url: URL?
     private var webView: WKWebView!
@@ -30,20 +26,14 @@ class WebViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func loadView() {
-        webView = WKWebView()
-        webView.navigationDelegate = self
-        webView.uiDelegate = self
-        view = webView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        webView.scrollView.setContentOffset(CGPoint(x: 0, y: -100), animated: true)
-        
-        setTopToolbar()
+        setWebView()
         setBottomToolbar()
+        
+        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(dismissWebView))
+        navigationItem.setRightBarButton(closeButton, animated: true)
         
         guard let safeUrl = url else { return }
         let request = URLRequest(url: safeUrl)
@@ -53,6 +43,13 @@ class WebViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setActivityIndicator()
+    }
+    
+    private func setWebView() {
+        webView = WKWebView(frame: view.frame)
+        webView.navigationDelegate = self
+
+        view.addSubview(webView)
     }
     
     private func setActivityIndicator() {
@@ -74,26 +71,7 @@ class WebViewController: UIViewController {
         }
     }
     
-    private func setTopToolbar() {
-        let screenWidth = self.view.bounds.width
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(dismissWebView))
-        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth, height: Constants.toolbarHeight))
-        toolBar.isTranslucent = false
-        toolBar.translatesAutoresizingMaskIntoConstraints = false
-        toolBar.items = [flexibleSpace, closeButton]
-        webView.addSubview(toolBar)
-        
-        NSLayoutConstraint.activate([
-            toolBar.topAnchor.constraint(equalTo: webView.safeTopAnchor, constant: 0),
-            toolBar.leadingAnchor.constraint(equalTo: webView.leadingAnchor, constant: 0),
-            toolBar.trailingAnchor.constraint(equalTo: webView.trailingAnchor, constant: 0)
-        ])
-    }
-    
     private func setBottomToolbar() {
-        let screenWidth = self.view.bounds.width
-        
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
                 
         let backImage = UIImage(named: "forward")?.withHorizontallyFlippedOrientation()
@@ -107,17 +85,8 @@ class WebViewController: UIViewController {
         
         let refreshButton = UIBarButtonItem(image: UIImage(named: "refresh"), style: .plain, target: self, action: #selector(refresh))
         
-        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: screenWidth, height: Constants.toolbarHeight))
-        toolBar.isTranslucent = false
-        toolBar.translatesAutoresizingMaskIntoConstraints = false
-        toolBar.items = [refreshButton, flexibleSpace, flexibleSpace, flexibleSpace, flexibleSpace, backButton, flexibleSpace, forwardButton]
-        webView.addSubview(toolBar)
-        
-        NSLayoutConstraint.activate([
-            toolBar.bottomAnchor.constraint(equalTo: webView.bottomAnchor, constant: 0),
-            toolBar.leadingAnchor.constraint(equalTo: webView.leadingAnchor, constant: 0),
-            toolBar.trailingAnchor.constraint(equalTo: webView.trailingAnchor, constant: 0)
-        ])
+        navigationController?.setToolbarHidden(false, animated: true)
+        setToolbarItems([refreshButton, flexibleSpace, flexibleSpace, flexibleSpace, flexibleSpace, backButton, flexibleSpace, forwardButton], animated: true)
     }
     
     private func checkToolbarItemsState() {

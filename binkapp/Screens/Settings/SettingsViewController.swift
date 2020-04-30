@@ -98,12 +98,14 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     }
     
     private func presentPrivacyPolicyWebView() {
-        let webViewController = WebViewController(urlString: "https://bink.com/privacy-policy/")
+        let webViewController = PortraitNavigationController(rootViewController: WebViewController(urlString: "https://bink.com/privacy-policy/"))
+        webViewController.modalPresentationStyle = .fullScreen
         present(webViewController, animated: true, completion: nil)
     }
     
     private func presentTermsAndConditionsWebView() {
-        let webViewController = WebViewController(urlString: "https://bink.com/terms-and-conditions/")
+        let webViewController = PortraitNavigationController(rootViewController: WebViewController(urlString: "https://bink.com/terms-and-conditions/"))
+        webViewController.modalPresentationStyle = .fullScreen
         present(webViewController, animated: true, completion: nil)
     }
     
