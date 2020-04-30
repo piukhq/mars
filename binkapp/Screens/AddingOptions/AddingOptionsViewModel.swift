@@ -9,10 +9,18 @@
 import UIKit
 
 class AddingOptionsViewModel {
-    let router: MainScreenRouter
+    private let router: MainScreenRouter
     
     init(router: MainScreenRouter) {
         self.router = router
+    }
+
+    func toLoyaltyScanner(delegate: BarcodeScannerViewControllerDelegate?) {
+        router.toLoyaltyScanner(delegate: delegate)
+    }
+
+    func toAddAuth(membershipPlan: CD_MembershipPlan, barcode: String) {
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner(barcode: barcode))
     }
     
     func toBrowseBrandsScreen() {

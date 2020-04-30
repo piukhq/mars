@@ -13,6 +13,7 @@ import CoreData
 protocol CoreDataRepositoryProtocol {
     func mapCoreDataObjects<T: CoreDataMappable, E>(objectsToMap objects: [T], type: E.Type, completion: @escaping () -> Void) where E: CD_BaseObject
     func fetchCoreDataObjects<T: NSManagedObject>(forObjectType objectType: T.Type, completion: @escaping ([T]?) -> Void)
+    func fetchCoreDataObjects<T: NSManagedObject>(forObjectType objectType: T.Type, predicate: NSPredicate?, completion: @escaping ([T]?) -> Void)
     func trashLocalObjects<T: NSManagedObject>(forObjectType objectType: T.Type, completion: @escaping () -> Void)
 }
 
@@ -50,11 +51,15 @@ extension CoreDataRepositoryProtocol {
             }
         }
     }
-
+    
     func fetchCoreDataObjects<T: NSManagedObject>(forObjectType objectType: T.Type, completion: @escaping ([T]?) -> Void) {
+        fetchCoreDataObjects(forObjectType: objectType, predicate: nil, completion: completion)
+    }
+
+    func fetchCoreDataObjects<T: NSManagedObject>(forObjectType objectType: T.Type, predicate: NSPredicate?, completion: @escaping ([T]?) -> Void) {
         DispatchQueue.main.async {
             Current.database.performTask { context in
-                let objects = context.fetchAll(objectType, sorting: [NSSortDescriptor(key: "id", ascending: false)])
+                let objects = context.fetchAll(objectType, predicate: predicate, sorting: [NSSortDescriptor(key: "id", ascending: false)])
                 completion(objects)
             }
         }
