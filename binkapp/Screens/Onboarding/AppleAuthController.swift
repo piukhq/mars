@@ -10,13 +10,26 @@ import Foundation
 import AuthenticationServices
 
 @available(iOS 13.0, *)
-final class AppleAuthController: NSObject, ASAuthorizationControllerDelegate {
+final class AppleAuthController: NSObject, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+//    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+//        return self.view.window
+//    }
+
+    struct SignInWithAppleRequest: Codable {
+        let authorizationCode: String
+
+        enum CodingKeys: String, CodingKey {
+            case authorizationCode = "authorization_code"
+        }
+    }
+
     @objc func handleAppleIdRequest() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
+        request.requestedScopes = [.email]
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
     }
 
@@ -24,11 +37,9 @@ final class AppleAuthController: NSObject, ASAuthorizationControllerDelegate {
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
-        continueWithApple(appleIdCredential: appleIDCredential)
-//        let authCode: String = String(decoding: appleIDCredential.authorizationCode!, as: UTF8.self)
-//        let idToken: String = String(decoding: appleIDCredential.identityToken!, as: UTF8.self)
-//        print(authCode)
-//        print(idToken)
+        guard let authCodeData = appleIDCredential.authorizationCode else { return }
+        let authCodeString = String(decoding: authCodeData, as: UTF8.self)
+        signInWithApple(authCode: authCodeString)
     }
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
@@ -37,29 +48,8 @@ final class AppleAuthController: NSObject, ASAuthorizationControllerDelegate {
 
     // MARK: Networking
 
-    private func continueWithApple(appleIdCredential: ASAuthorizationAppleIDCredential) {
-//        let userIdentifier = appleIdCredential.user
-//        let fullName = appleIdCredential.fullName
-//        let firstName = fullName?.givenName ?? ""
-//        let lastName = fullName?.familyName ?? ""
-//        let email = appleIdCredential.email
-//
-//        let request = ContinueWithAppleRequest(firstName: firstName, lastName: lastName, appleId: email, appleUserIdentifier: userIdentifier)
-//
-//        delegate?.authenticationDidBegin()
-//
-//        API.client().post(.apple, posting: request, expecting: AuthenticatedUserResponse.self, completion: { [weak self] (successState, response) in
-//            switch successState {
-//            case .success:
-//                guard let response = response else {
-//                    self?.delegate?.authenticationDidFail()
-//                    ErrorManager.handleError(AuthenticationError.continueWithAppleFailed)
-//                    return
-//                }
-//                self?.delegate?.authenticationDidSucceed(response: response)
-//            case .failure(_, _):
-//                ErrorManager.handleError(AuthenticationError.continueWithAppleFailed)
-//            }
-//        })
+    private func signInWithApple(authCode: String) {
+        let request = SignInWithAppleRequest(authorizationCode: authCode)
+        
     }
 }
