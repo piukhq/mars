@@ -44,6 +44,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialise Zendesk
         ZendeskService.start()
 
+        // Get latest user profile data
+        // TODO: Move to UserService in future ticket
+        if Current.userManager.hasCurrentUser {
+            let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
+            Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
+                guard let response = try? result.get() else { return }
+                Current.userManager.setProfile(withResponse: response)
+            }
+        }
+
         // Root view
         self.window = UIWindow(frame: UIScreen.main.bounds)
 

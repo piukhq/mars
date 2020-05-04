@@ -14,16 +14,32 @@ private enum UserManagerError: Error {
     case missingData
 }
 
+struct UserProfileResponse: Codable {
+    var firstName: String?
+    var lastName: String?
+    var email: String?
+
+    enum CodingKeys: String, CodingKey {
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case email
+    }
+}
+
 class UserManager {
     private struct Constants {
         static let tokenKey = "token_key"
         static let emailKey = "email_key"
+        static let firstNameKey = "first_name_key"
+        static let lastNameKey = "last_name_key"
     }
     
     private let keychain = Keychain(service: APIConstants.bundleID)
     
     lazy var currentToken: String? = getKeychainValue(for: Constants.tokenKey)
     lazy var currentEmailAddress: String? = getKeychainValue(for: Constants.emailKey)
+    lazy var currentFirstName: String? = getKeychainValue(for: Constants.firstNameKey)
+    lazy var currentLastName: String? = getKeychainValue(for: Constants.lastNameKey)
 
     var hasCurrentUser: Bool {
         // We can safely assume that if we have no token, we have no user
@@ -54,6 +70,22 @@ class UserManager {
                 print(error)
             }
     }
+
+    func setProfile(withResponse response: UserProfileResponse)  {
+        // Store what we can, but don't bail if the values don't exist
+        if let email = response.email {
+            try? keychain.set(email, key: Constants.emailKey)
+            currentEmailAddress = email
+        }
+        if let firstName = response.firstName {
+            try? keychain.set(firstName, key: Constants.firstNameKey)
+            currentFirstName = firstName
+        }
+        if let lastName = response.lastName {
+            try? keychain.set(lastName, key: Constants.lastNameKey)
+            currentLastName = lastName
+        }
+    }
     
     private func setToken(with response: TokenResponseProtocol) throws {
         guard let token = response.apiKey else { throw UserManagerError.missingData }
@@ -71,10 +103,14 @@ class UserManager {
         // Tidy up keychain
         try? keychain.remove(Constants.tokenKey)
         try? keychain.remove(Constants.emailKey)
+        try? keychain.remove(Constants.firstNameKey)
+        try? keychain.remove(Constants.lastNameKey)
         
         // Remove local variables
         currentToken = nil
         currentEmailAddress = nil
+        currentFirstName = nil
+        currentLastName = nil
         
         // Logout of Facebook
         if AccessToken.current != nil {
