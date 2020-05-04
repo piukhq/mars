@@ -8,6 +8,8 @@
 
 import UIKit
 import MessageUI
+import ZendeskCoreSDK
+import SupportSDK
 
 class SettingsViewController: BinkTrackableViewController, BarBlurring {
     
@@ -148,12 +150,15 @@ extension SettingsViewController: UITableViewDelegate {
             case let .customAction(action):
                 action()
                 break
-            case .contactUsAction:
-                sendEmail()
-                break
-            case .notImplemented:
-                UIAlertController.presentFeatureNotImplementedAlert(on: self)
-                break
+            case let .launchSupport(service):
+                switch service {
+                case .faq:
+                    let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi()
+                    navigationController?.pushViewController(viewController, animated: true)
+                case .contactUs:
+                    let viewController = RequestUi.buildRequestList()
+                    navigationController?.pushViewController(viewController, animated: true)
+                }
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {
                 case is SettingsViewController.Type:

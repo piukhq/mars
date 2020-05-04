@@ -18,7 +18,6 @@ struct DebugMenuRow {
         case version
         case email
         case endpoint
-        case zendesk
     }
     
     enum CellType {

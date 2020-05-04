@@ -34,16 +34,12 @@ class SettingsFactoryMock {
             SettingsRow(
                 title: "settings_row_faqs_title".localized,
                 subtitle: "settings_row_faqs_subtitle".localized,
-                action: .customAction(action: {
-                    MainScreenRouter.openExternalURL(
-                        with: "https://help.bink.com"
-                    )
-                })
+                action: .launchSupport(service: .faq)
             ),
             SettingsRow(
                 title: "settings_row_contact_title".localized,
                 subtitle: "settings_row_contact_subtitle".localized,
-                action: .contactUsAction
+                action: .launchSupport(service: .contactUs)
             ),
             SettingsRow(
                 title: "settings_row_rateapp_title".localized,

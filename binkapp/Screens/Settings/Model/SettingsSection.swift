@@ -22,13 +22,17 @@ struct SettingsRow {
         case pushToReusable(screen: ReusableScreen)
         case logout
         case customAction(action: VoidClosure)
-        case contactUsAction
-        case notImplemented //TODO: REMOVE ME BEFORE RELEASE!
+        case launchSupport(service: SupportService)
     }
     
     enum ReusableScreen {
         case securityAndPrivacy
         case howItWorks
+    }
+
+    enum SupportService {
+        case faq
+        case contactUs
     }
     
     let title: String
