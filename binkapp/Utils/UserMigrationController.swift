@@ -59,6 +59,14 @@ struct UserMigrationController {
 
                 Current.userManager.setNewUser(with: response)
 
+                // Get latest user profile data in background and ignore any failure
+                // TODO: Move to UserService in future ticket
+                let profileRequest = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
+                Current.apiClient.performRequest(profileRequest, expecting: UserProfileResponse.self) { result in
+                    guard let response = try? result.get() else { return }
+                    Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                }
+
                 let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
                 Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: renewEmail)) { (success, error) in
                     guard success else {

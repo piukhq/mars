@@ -108,6 +108,15 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                         self?.handleAuthError()
                         return
                     }
+
+                    // Get latest user profile data in background and ignore any failure
+                    // TODO: Move to UserService in future ticket
+                    let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
+                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
+                        guard let response = try? result.get() else { return }
+                        Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                    }
+
                     self?.router?.didLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
                     self?.request = nil
