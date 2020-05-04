@@ -173,7 +173,7 @@ extension SettingsViewController: UITableViewDelegate {
                     navigationController?.pushViewController(debugMenuViewController, animated: true)
                     break
                 case is PreferencesViewController.Type:
-                    let repository = PreferencesRepository(apiManager: viewModel.router.apiManager)
+                    let repository = PreferencesRepository(apiClient: viewModel.router.apiClient)
                     let viewModel = PreferencesViewModel(repository: repository, router: self.viewModel.router)
                     let viewController = PreferencesViewController(viewModel: viewModel)
                     navigationController?.pushViewController(viewController, animated: true)

@@ -10,18 +10,16 @@ import Foundation
 import CoreData
 
 struct LoyaltyWalletRepository: WalletRepository {
-    private let apiManager: ApiManager
+    private let apiClient: APIClient
 
-    init(apiManager: ApiManager) {
-        self.apiManager = apiManager
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
         // Process the backend delete, but fail silently
-        let url = RequestURL.membershipCard(cardId: card.id)
-        let method = RequestHTTPMethod.delete
-        
-        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
+        let request = BinkNetworkRequest(endpoint: .membershipCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
+        apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in

@@ -38,35 +38,41 @@ struct UserMigrationController {
             completion(false)
             return
         }
-        
-        Current.apiManager.doRequest(url: .renew, httpMethod: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiManager.apiVersion.rawValue)"], isUserDriven: false, onSuccess: { (response: RenewTokenResponse) in
-            var email: String?
-            do {
-                let jwt = try decode(jwt: token)
-                email = jwt.body["user_id"] as? String
-            } catch {
-                completion(false)
-            }
 
-            guard let renewEmail = email else {
-                completion(false)
-                return
-            }
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .renew, method: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiClient.apiVersion.rawValue)"], isUserDriven: false)
+        Current.apiClient.performRequest(request, expecting: RenewTokenResponse.self) { result in
+            switch result {
+            case .success(let response):
+                var email: String?
+                do {
+                    let jwt = try decode(jwt: token)
+                    email = jwt.body["user_id"] as? String
+                } catch {
+                    completion(false)
+                }
 
-            Current.userManager.setNewUser(with: response)
-            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: renewEmail), isUserDriven: false) { (success, error) in
-                // If there is an error, or the response is not successful, bail out
-                guard error == nil, success else {
-                    Current.userManager.removeUser()
+                guard let renewEmail = email else {
                     completion(false)
                     return
                 }
-                Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
-                completion(true)
+
+                Current.userManager.setNewUser(with: response)
+
+                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
+                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: renewEmail)) { (success, error) in
+                    guard success else {
+                        Current.userManager.removeUser()
+                        completion(false)
+                        return
+                    }
+                    Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
+                    completion(true)
+                }
+            case .failure:
+                Current.userManager.removeUser()
+                completion(false)
             }
-        }) { (error) in
-            Current.userManager.removeUser()
-            completion(false)
         }
     }
     

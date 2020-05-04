@@ -169,7 +169,7 @@ extension PLLScreenViewController: LoyaltyButtonDelegate {
 
 extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        guard Current.apiManager.networkIsReachable else {
+        guard Current.apiClient.networkIsReachable else {
             viewModel.displayNoConnectivityPopup { [weak self] in
                 self?.viewModel.toFullDetailsCardScreen()
             }

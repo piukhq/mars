@@ -65,25 +65,30 @@ class RegisterViewController: BaseFormViewController {
         let preferenceCheckboxes = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
                 
         continueButton.startLoading()
-        
-        Current.apiManager.doRequest(url: .register, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
-            guard let email = response.email else {
-                self?.handleRegistrationError()
-                return
-            }
-            Current.userManager.setNewUser(with: response)
-            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
-                // If there is an error, or the response is not successful, bail out
-                guard error == nil, success else {
+
+        let request = BinkNetworkRequest(endpoint: .register, method: .post, headers: nil, isUserDriven: true)
+        Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let email = response.email else {
                     self?.handleRegistrationError()
                     return
                 }
-                self?.router.didLogin()
-                self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                self?.continueButton.stopLoading()
+                Current.userManager.setNewUser(with: response)
+
+                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
+                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                    guard success else {
+                        self?.handleRegistrationError()
+                        return
+                    }
+                    self?.router.didLogin()
+                    self?.updatePreferences(checkboxes: preferenceCheckboxes)
+                    self?.continueButton.stopLoading()
+                }
+            case .failure:
+                self?.handleRegistrationError()
             }
-        }) { [weak self] _ in
-            self?.handleRegistrationError()
         }
     }
     
@@ -100,7 +105,8 @@ class RegisterViewController: BaseFormViewController {
         guard params.count > 0 else { return }
         
         // We don't worry about whether this was successful or not
-        Current.apiManager.doRequestWithNoResponse(url: .preferences, httpMethod: .put, parameters: params, isUserDriven: true, completion: nil)
+        let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: true)
+        Current.apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
     }
     
     private func showError() {

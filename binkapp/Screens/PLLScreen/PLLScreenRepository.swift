@@ -9,10 +9,10 @@
 import UIKit
 
 class PLLScreenRepository {
-    let apiManager: ApiManager
+    let apiClient: APIClient
     
-    init(apiManager: ApiManager) {
-        self.apiManager = apiManager
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
     
     func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping () -> Void) {
@@ -64,27 +64,29 @@ class PLLScreenRepository {
 
 private extension PLLScreenRepository {
     func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, completion: @escaping (String?) -> Void) {
-        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
-        let method: RequestHTTPMethod = .patch
-        
-        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
-            completion(response.id)
-        }, onError: { error in
-            completion(nil)
-        })
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), method: .patch, headers: nil, isUserDriven: false)
+        apiClient.performRequest(request, expecting: PaymentCardModel.self) { result in
+            switch result {
+            case .success(let response):
+                completion(response.id)
+            case .failure:
+                completion(nil)
+            }
+        }
     }
-    
+
     func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
-        let paymentCardId: String = paymentCard.id
-        let membershipCardId: String = membershipCard.id
-        let url = RequestURL.linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId)
-        let method: RequestHTTPMethod = .delete
-        
-        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: PaymentCardModel) in
-            completion(paymentCardId)
-        }, onError: { error in
-            completion(nil)
-        })
+        // TODO: Request should become a static let in a service in future ticket
+        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), method: .delete, headers: nil, isUserDriven: false)
+        apiClient.performRequest(request, expecting: PaymentCardModel.self) { result in
+            switch result {
+            case .success:
+                completion(paymentCard.id)
+            case .failure:
+                completion(nil)
+            }
+        }
     }
     
     func saveChanges(toAdd: [String], toRemove: [String], membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
