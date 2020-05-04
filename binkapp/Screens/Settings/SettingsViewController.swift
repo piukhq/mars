@@ -157,7 +157,45 @@ extension SettingsViewController: UITableViewDelegate {
                     navigationController?.pushViewController(viewController, animated: true)
                 case .contactUs:
                     let viewController = RequestUi.buildRequestList()
-                    navigationController?.pushViewController(viewController, animated: true)
+                    if ZendeskService.shouldPromptForIdentity {
+                        print("ZENDESK: Prompting for identity")
+                        let alert = UIAlertController(title: "Enter name", message: "We need yo' name", preferredStyle: .alert)
+                        alert.addTextField { textField in
+                            textField.placeholder = "First name"
+                            textField.autocapitalizationType = .words
+                        }
+                        alert.addTextField { textField in
+                            textField.placeholder = "Last name"
+                            textField.autocapitalizationType = .words
+                        }
+                        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+                            let firstName = alert.textFields?[0].text
+                            let lastName = alert.textFields?[1].text
+                            // PUT users/me and save response to keychain
+                            // TODO: Move to UserService
+                            let request = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)
+                            let params = UserProfileUpdateRequest(firstName: firstName, lastName: lastName)
+                            print("ZENDESK: PUT request to profile. First name: \(firstName ?? ""), last name: \(lastName ?? "")")
+                            Current.apiClient.performRequestWithParameters(request, parameters: params, expecting: UserProfileResponse.self) { result in
+                                guard let response = try? result.get() else { return }
+                                print("ZENDESK: Profile updated successfully on API. First name: \(response.firstName ?? ""), last name: \(response.lastName ?? "")")
+                                // Don't update Zendesk identity, as we do this with the textField input values, and do not need to set it twice.
+                                Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: false)
+                            }
+
+                            // Use raw input to move forward with new zendesk identity
+                            // If either of these are nil, the identity will be passed as nil
+                            // If either of these are nil, the user will be prompted again the next time around
+                            ZendeskService.setIdentity(firstName: firstName, lastName: lastName)
+                            self?.navigationController?.pushViewController(viewController, animated: true)
+                        }
+                        alert.addAction(cancelAction)
+                        alert.addAction(okAction)
+                        present(alert, animated: true, completion: nil)
+                    } else {
+                        navigationController?.pushViewController(viewController, animated: true)
+                    }
                 }
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {

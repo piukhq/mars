@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
             Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
                 guard let response = try? result.get() else { return }
-                Current.userManager.setProfile(withResponse: response)
+                Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
             }
         }
 

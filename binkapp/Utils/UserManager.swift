@@ -26,6 +26,16 @@ struct UserProfileResponse: Codable {
     }
 }
 
+struct UserProfileUpdateRequest: Codable {
+    var firstName: String?
+    var lastName: String?
+
+    enum CodingKeys: String, CodingKey {
+        case firstName = "first_name"
+        case lastName = "last_name"
+    }
+}
+
 class UserManager {
     private struct Constants {
         static let tokenKey = "token_key"
@@ -71,7 +81,7 @@ class UserManager {
             }
     }
 
-    func setProfile(withResponse response: UserProfileResponse)  {
+    func setProfile(withResponse response: UserProfileResponse, updateZendeskIdentity: Bool)  {
         // Store what we can, but don't bail if the values don't exist
         if let email = response.email {
             try? keychain.set(email, key: Constants.emailKey)
@@ -84,6 +94,10 @@ class UserManager {
         if let lastName = response.lastName {
             try? keychain.set(lastName, key: Constants.lastNameKey)
             currentLastName = lastName
+        }
+
+        if updateZendeskIdentity {
+            ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
     }
     
