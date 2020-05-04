@@ -17,6 +17,7 @@ enum APIEndpoint: Equatable {
     case facebook
     case logout
     case renew
+    case me
     case preferences
     case forgotPassword
     case membershipPlans
@@ -110,6 +111,8 @@ enum APIEndpoint: Equatable {
             return "/users/me/logout"
         case .renew:
             return "/users/renew_token"
+        case .me:
+            return "/users/me"
         case .preferences:
             return "/users/me/settings"
         case .forgotPassword:
