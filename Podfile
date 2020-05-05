@@ -38,7 +38,13 @@ plugin 'cocoapods-keys', {
     "spreedlyEnvironmentKey",
     "devPaymentCardHashingSecret1",
     "stagingPaymentCardHashingSecret1",
-    "prodPaymentCardHashingSecret1"
+    "prodPaymentCardHashingSecret1",
+    "zendeskSandboxAppId",
+    "zendeskSandboxClientId",
+    "zendeskSandboxUrl",
+    "zendeskProductionAppId",
+    "zendeskProductionClientId",
+    "zendeskProductionUrl"
   ]
 }
 
