@@ -22,6 +22,10 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     }
     
     // MARK: - Properties
+
+    private var zendeskPromptFirstNameTextField: UITextField!
+    private var zendeskPromptLastNameTextField: UITextField!
+    private var zendeskPromptOKAction: UIAlertAction!
     
     private let viewModel: SettingsViewModel
     
@@ -156,45 +160,25 @@ extension SettingsViewController: UITableViewDelegate {
                     let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi()
                     navigationController?.pushViewController(viewController, animated: true)
                 case .contactUs:
-                    let viewController = RequestUi.buildRequestList()
-                    if ZendeskService.shouldPromptForIdentity {
-                        print("ZENDESK: Prompting for identity")
-                        let alert = UIAlertController(title: "Enter name", message: "We need yo' name", preferredStyle: .alert)
-                        alert.addTextField { textField in
-                            textField.placeholder = "First name"
-                            textField.autocapitalizationType = .words
-                        }
-                        alert.addTextField { textField in
-                            textField.placeholder = "Last name"
-                            textField.autocapitalizationType = .words
-                        }
-                        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-                            let firstName = alert.textFields?[0].text
-                            let lastName = alert.textFields?[1].text
-                            // PUT users/me and save response to keychain
-                            // TODO: Move to UserService
-                            let request = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)
-                            let params = UserProfileUpdateRequest(firstName: firstName, lastName: lastName)
-                            print("ZENDESK: PUT request to profile. First name: \(firstName ?? ""), last name: \(lastName ?? "")")
-                            Current.apiClient.performRequestWithParameters(request, parameters: params, expecting: UserProfileResponse.self) { result in
-                                guard let response = try? result.get() else { return }
-                                print("ZENDESK: Profile updated successfully on API. First name: \(response.firstName ?? ""), last name: \(response.lastName ?? "")")
-                                // Don't update Zendesk identity, as we do this with the textField input values, and do not need to set it twice.
-                                Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: false)
-                            }
+                    let launchContactUs = { [weak self] in
+                        let viewController = RequestUi.buildRequestList()
+                        self?.navigationController?.pushViewController(viewController, animated: true)
+                    }
 
-                            // Use raw input to move forward with new zendesk identity
-                            // If either of these are nil, the identity will be passed as nil
-                            // If either of these are nil, the user will be prompted again the next time around
-                            ZendeskService.setIdentity(firstName: firstName, lastName: lastName)
-                            self?.navigationController?.pushViewController(viewController, animated: true)
-                        }
-                        alert.addAction(cancelAction)
-                        alert.addAction(okAction)
+                    /// We are getting the textfields and action item back from the alert controller in closures so that we can reference them in the UITextFieldDelegate
+                    if ZendeskService.shouldPromptForIdentity {
+                        let alert = UIAlertController.makeZendeskIdentityAlertController(firstNameTextField: { [weak self] textField in
+                            self?.zendeskPromptFirstNameTextField = textField
+                        }, lastNameTextField: { [weak self] textField in
+                            self?.zendeskPromptLastNameTextField = textField
+                        }, okActionObject: { [weak self] actionObject in
+                            self?.zendeskPromptOKAction = actionObject
+                        }, okActionHandler: {
+                            launchContactUs()
+                        }, textFieldDelegate: self)
                         present(alert, animated: true, completion: nil)
                     } else {
-                        navigationController?.pushViewController(viewController, animated: true)
+                        launchContactUs()
                     }
                 }
             case let .pushToViewController(viewController: viewControllerType):
@@ -267,5 +251,81 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true)
+    }
+}
+
+extension SettingsViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        /// If both textfields are empty, disable ok action as at least one textfield will be empty after updating
+        let firstNameText = zendeskPromptFirstNameTextField.text ?? ""
+        let lastNameText = zendeskPromptLastNameTextField.text ?? ""
+        if firstNameText.isEmpty && lastNameText.isEmpty {
+            zendeskPromptOKAction.isEnabled = false
+        }
+        /// If both textfields are NOT empty, and the replacement string is NOT empty, we know that both textfields must have values after updating
+        if !firstNameText.isEmpty && !lastNameText.isEmpty && !string.isEmpty {
+            zendeskPromptOKAction.isEnabled = true
+        }
+
+        /// If the textfield being updated is firstName, and it has no current value, and the replacement string has a value, and lastName has a value then we know that both textfields will have values after updating
+        if textField == zendeskPromptFirstNameTextField && firstNameText.isEmpty && !string.isEmpty && !lastNameText.isEmpty {
+            zendeskPromptOKAction.isEnabled = true
+        }
+
+        /// If the textfield being updated is lastName, and it has no current value, and the replacement string has a value, and firstName has a value then we know that both textfields will have values after updating
+        if textField == zendeskPromptLastNameTextField && lastNameText.isEmpty && !string.isEmpty && !firstNameText.isEmpty {
+            zendeskPromptOKAction.isEnabled = true
+        }
+
+        /// If the textfield being updated is firstName, and it's current value is only one character, and the replacement string has no value then we know the textfield will have no value after updating
+        if textField == zendeskPromptFirstNameTextField && firstNameText.count == 1 && string.isEmpty {
+            zendeskPromptOKAction.isEnabled = false
+        }
+
+        /// If the textfield being updated is lastName, and it's current value is only one character, and the replacement string has no value then we know the textfield will have no value after updating
+        if textField == zendeskPromptLastNameTextField && lastNameText.count == 1 && string.isEmpty {
+            zendeskPromptOKAction.isEnabled = false
+        }
+
+        return true
+    }
+}
+
+extension UIAlertController {
+    static func makeZendeskIdentityAlertController(firstNameTextField: @escaping (UITextField) -> Void, lastNameTextField: @escaping (UITextField) -> Void, okActionObject: (UIAlertAction) -> Void, okActionHandler: @escaping () -> Void, textFieldDelegate: UITextFieldDelegate?) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: "Please enter your contact details", preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "First name"
+            textField.autocapitalizationType = .words
+            textField.delegate = textFieldDelegate
+            firstNameTextField(textField)
+        }
+        alert.addTextField { textField in
+            textField.placeholder = "Last name"
+            textField.autocapitalizationType = .words
+            textField.delegate = textFieldDelegate
+            lastNameTextField(textField)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+            let firstName = alert.textFields?[0].text
+            let lastName = alert.textFields?[1].text
+            // TODO: Move to UserService in future ticket
+            let request = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)
+            let params = UserProfileUpdateRequest(firstName: firstName, lastName: lastName)
+            Current.apiClient.performRequestWithParameters(request, parameters: params, expecting: UserProfileResponse.self) { result in
+                guard let response = try? result.get() else { return }
+                /// Don't update Zendesk identity, as we do this with the textField input values, and do not need to set it twice.
+                Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: false)
+            }
+
+            /// Use raw input to move forward with new zendesk identity
+            ZendeskService.setIdentity(firstName: firstName, lastName: lastName)
+            okActionHandler()
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        okActionObject(okAction)
+        return alert
     }
 }
