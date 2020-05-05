@@ -123,8 +123,6 @@ class WebViewController: UIViewController {
     }
 }
 
-extension WebViewController: WKUIDelegate {}
-
 extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         checkToolbarItemsState()

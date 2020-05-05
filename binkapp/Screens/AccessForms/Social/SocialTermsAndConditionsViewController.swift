@@ -143,9 +143,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     }
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        let webViewController = PortraitNavigationController(rootViewController: WebViewController(urlString: URL.absoluteString))
-        webViewController.modalPresentationStyle = .fullScreen
-        present(webViewController, animated: true)
+        router?.openWebView(with: URL.absoluteString)
     }
 }
 
