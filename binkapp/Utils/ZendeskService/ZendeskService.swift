@@ -50,7 +50,6 @@ final class ZendeskService {
     }
 
     private static func setIdentity(fullName: String?) {
-        print("ZENDESK: Setting identity for \(fullName ?? "")")
         let identity = Identity.createAnonymous(name: fullName, email: Current.userManager.currentEmailAddress)
         Zendesk.instance?.setIdentity(identity)
     }
