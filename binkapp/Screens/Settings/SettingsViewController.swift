@@ -157,7 +157,11 @@ extension SettingsViewController: UITableViewDelegate {
             case let .launchSupport(service):
                 switch service {
                 case .faq:
-                    let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi()
+                    let helpCenterConfig = HelpCenterUiConfiguration()
+                    helpCenterConfig.showContactOptions = false
+                    let articleConfig = ArticleUiConfiguration()
+                    articleConfig.showContactOptions = false
+                    let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
                     navigationController?.pushViewController(viewController, animated: true)
                 case .contactUs:
                     let launchContactUs = { [weak self] in
