@@ -11,6 +11,7 @@ import Foundation
 enum BinkErrorDomain: String {
     case networking
     case configuration
+    case walletService
 }
 
 protocol BinkError: Error {

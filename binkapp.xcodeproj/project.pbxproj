@@ -432,6 +432,7 @@
 		EFF59F21234CAE5600CF3992 /* CardDetailInformationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F20234CAE5600CF3992 /* CardDetailInformationRow.swift */; };
 		EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F22234DEE7500CF3992 /* DetailNavigationTitleView.swift */; };
 		EFF59F25234DEE8E00CF3992 /* DetailNavigationTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFF59F24234DEE8E00CF3992 /* DetailNavigationTitleView.xib */; };
+		EFF5CD61244F34A8009021A4 /* WalletService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF5CD60244F34A8009021A4 /* WalletService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -920,6 +921,7 @@
 		EFF59F20234CAE5600CF3992 /* CardDetailInformationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailInformationRow.swift; sourceTree = "<group>"; };
 		EFF59F22234DEE7500CF3992 /* DetailNavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailNavigationTitleView.swift; sourceTree = "<group>"; };
 		EFF59F24234DEE8E00CF3992 /* DetailNavigationTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailNavigationTitleView.xib; sourceTree = "<group>"; };
+		EFF5CD60244F34A8009021A4 /* WalletService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletService.swift; sourceTree = "<group>"; };
 		EFFF863E24224CB1007ABAB8 /* binkapp - Plan Feature Set Has Vouchers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - Plan Feature Set Has Vouchers.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1009,6 +1011,7 @@
 		3C25BE012301A0F600E931EE /* BinkNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				EFF5CD5F244F3493009021A4 /* Services */,
 				EF94AF0323D8879F00AAA039 /* Spreedly */,
 				3C3C604A2302DD0800D9EA25 /* Responses */,
 				EF59A12724473589001B60B8 /* APIClient.swift */,
@@ -2289,6 +2292,14 @@
 			path = CardDetailInformationRow;
 			sourceTree = "<group>";
 		};
+		EFF5CD5F244F3493009021A4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EFF5CD60244F34A8009021A4 /* WalletService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2825,6 +2836,7 @@
 				3CEABFD02316AB88009B1122 /* MembershipCardBalanceModel.swift in Sources */,
 				EFA5F7392379A7C70027AB80 /* _CD_MembershipCardImage.swift in Sources */,
 				3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */,
+				EFF5CD61244F34A8009021A4 /* WalletService.swift in Sources */,
 				EFA5F6C2237467CC0027AB80 /* NestedTableView.swift in Sources */,
 				EFA5F7362379A7C70027AB80 /* CD_EnrolField.swift in Sources */,
 				EF8BF1F1233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift in Sources */,
