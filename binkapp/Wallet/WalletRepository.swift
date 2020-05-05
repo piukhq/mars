@@ -10,10 +10,10 @@ import Foundation
 
 protocol WalletRepository: CoreDataRepositoryProtocol {
     typealias EmptyCompletionBlock = () -> Void
-    init(apiManager: ApiManager)
+    init(apiClient: APIClient)
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock?)
 }
 
 protocol PaymentWalletRepositoryProtocol: WalletRepository {
-    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void)
+    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void)
 }

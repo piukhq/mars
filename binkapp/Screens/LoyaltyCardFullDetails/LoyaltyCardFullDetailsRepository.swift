@@ -8,25 +8,16 @@
 import Foundation
 
 class LoyaltyCardFullDetailsRepository: WalletRepository {
-    private let apiManager: ApiManager
+    private let apiClient: APIClient
     
-    required init(apiManager: ApiManager) {
-        self.apiManager = apiManager
-    }
-    
-    func getPaymentCards(completion: @escaping ([PaymentCardModel]) -> Void) {
-        let url = RequestURL.paymentCards
-        let httpMethod = RequestHTTPMethod.get
-        apiManager.doRequest(url: url, httpMethod: httpMethod, isUserDriven: false, onSuccess: { (results: [PaymentCardModel]) in
-            completion(results)
-        }) { (error) in }
+    required init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
         // Process the backend delete, but fail silently
-        let url = RequestURL.membershipCard(cardId: card.id)
-        let method = RequestHTTPMethod.delete
-        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
+        let request = BinkNetworkRequest(endpoint: .membershipCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
+        apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in

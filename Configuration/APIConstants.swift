@@ -8,43 +8,56 @@
 
 import Foundation
 
-fileprivate var customURLString = "" {
+fileprivate var debugBaseURL = "" {
     didSet {
-        Current.userDefaults.set(customURLString, forDefaultsKey: .environmentBaseUrl)
+        Current.userDefaults.set(debugBaseURL, forDefaultsKey: .debugBaseURL)
     }
 }
 
 enum EnvironmentType: String {
     case dev = "api.dev.gb.bink.com"
     case staging = "api.staging.gb.bink.com"
-    case daedalus = "mcwallet.dev.gb.bink.com"
+    case production = "api.gb.bink.com"
 }
 
 enum Configuration {
-    enum Error: Swift.Error {
-        case missingKey, invalidValue
+    enum ConfigurationError: BinkError {
+        case missingKey
+        case invalidValue
+
+        var domain: BinkErrorDomain {
+            return .configuration
+        }
+
+        var errorCode: String? {
+            return nil
+        }
+
+        var message: String? {
+            return nil
+        }
     }
     
     static func value(for key: String) throws -> String {
-        guard let object = Bundle.main.object(forInfoDictionaryKey:key) else { throw Error.missingKey }
-        guard let string = object as? String, !string.isEmpty else { throw Error.invalidValue }
+        guard let object = Bundle.main.object(forInfoDictionaryKey:key) else { throw ConfigurationError.missingKey }
+        guard let string = object as? String, !string.isEmpty else { throw ConfigurationError.invalidValue }
         return string
     }
 }
 
 struct APIConstants {
-    static let productionBaseURL = "https://api.gb.bink.com"
-
     static var baseURLString: String {
         #if DEBUG
-        if let customBaseUrl = Current.userDefaults.value(forDefaultsKey: .environmentBaseUrl) as? String {
-            return "https://" + customBaseUrl
+        // If we have set the environment from the debug menu
+        if let debugBaseURLString = Current.userDefaults.value(forDefaultsKey: .debugBaseURL) as? String {
+            return debugBaseURLString
         }
         #endif
 
+
         do {
-            let configURL = try Configuration.value(for: "API_BASE_URL")
-            return "https://" + configURL
+            let configBaseURL = try Configuration.value(for: "API_BASE_URL")
+            return configBaseURL
         }
         catch {
             fatalError(error.localizedDescription)
@@ -52,11 +65,11 @@ struct APIConstants {
     }
     
     static func changeEnvironment(environment: EnvironmentType) {
-        customURLString = environment.rawValue
+        debugBaseURL = environment.rawValue
     }
     
     static func moveToCustomURL(url: String) {
-        customURLString = url
+        debugBaseURL = url
     }
     
     enum SecretKeyType: String {
@@ -87,4 +100,5 @@ struct APIConstants {
                 ]
         ]
     }
+
 }

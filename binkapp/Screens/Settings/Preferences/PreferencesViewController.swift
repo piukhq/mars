@@ -87,7 +87,7 @@ class PreferencesViewController: BinkTrackableViewController {
 
 extension PreferencesViewController: CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
-        guard Current.apiManager.networkIsReachable else {
+        guard Current.apiClient.networkIsReachable else {
             viewModel.presentNoConnectivityPopup()
             checkboxView.toggleState()
             return
