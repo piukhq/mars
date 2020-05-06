@@ -17,6 +17,8 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
         static let rowHeight: CGFloat = 88
         static let headerHeight: CGFloat = 50
         static let supportEmail = "support@bink.com"
+        static let privacyPolicyUrl = "https://bink.com/privacy-policy/"
+        static let termsAndConditionsUrl = "https://bink.com/terms-and-conditions/"
     }
     
     // MARK: - Properties
@@ -97,14 +99,8 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
         viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
     }
     
-    private func presentPrivacyPolicyWebView() {
-        let webViewController = PortraitNavigationController(rootViewController: WebViewController(urlString: "https://bink.com/privacy-policy/"))
-        webViewController.modalPresentationStyle = .fullScreen
-        present(webViewController, animated: true, completion: nil)
-    }
-    
-    private func presentTermsAndConditionsWebView() {
-        let webViewController = PortraitNavigationController(rootViewController: WebViewController(urlString: "https://bink.com/terms-and-conditions/"))
+    private func presentWebView(url: String) {
+        let webViewController = PortraitNavigationController(rootViewController: WebViewController(urlString: url))
         webViewController.modalPresentationStyle = .fullScreen
         present(webViewController, animated: true, completion: nil)
     }
@@ -197,10 +193,10 @@ extension SettingsViewController: UITableViewDelegate {
                     toHowItWorksVC()
                     break
                 case .privacyPolicy:
-                    presentPrivacyPolicyWebView()
+                    presentWebView(url: Constants.privacyPolicyUrl)
                     break
                 case .termsAndConditions:
-                    presentTermsAndConditionsWebView()
+                    presentWebView(url: Constants.termsAndConditionsUrl)
                     break
                 }
             case .logout:
