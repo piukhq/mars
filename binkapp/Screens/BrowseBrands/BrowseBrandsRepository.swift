@@ -8,9 +8,9 @@
 import Foundation
 
 class BrowseBrandsRepository {
-    let apiManager: ApiManager
+    let apiClient: APIClient
     
-    init(apiManager: ApiManager) {
-        self.apiManager = apiManager
+    init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
 }

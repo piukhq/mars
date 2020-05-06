@@ -106,14 +106,16 @@ class AddingOptionsViewController: BinkTrackableViewController {
         let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         switch status {
         case .authorized:
-            displayNoScreenPopup()
+            viewModel.toLoyaltyScanner(delegate: self)
         case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
-                    //Added a delay because was the quickest way to make sure the no screen popup will be dispplayed and didn't want to spend anymore time on this as it will be removed when scan screen is done.
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
-                        self?.displayNoScreenPopup()
+                        guard let self = self else { return }
+                        self.viewModel.toLoyaltyScanner(delegate: self)
                     })
+                } else {
+                    self.presentManuallyActionsPopup()
                 }
             }
         case .denied:
@@ -137,5 +139,17 @@ class AddingOptionsViewController: BinkTrackableViewController {
         alert.addAction(allowAction)
         alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        viewModel.toAddAuth(membershipPlan: membershipPlan, barcode: barcode)
+        completion?()
+    }
+
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        viewModel.toBrowseBrandsScreen()
+        completion?()
     }
 }

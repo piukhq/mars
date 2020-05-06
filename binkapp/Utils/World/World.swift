@@ -15,7 +15,7 @@ class World {
     lazy var wallet = Wallet()
     lazy var userDefaults: BinkUserDefaults = UserDefaults.standard
     lazy var userManager = UserManager()
-    lazy var apiManager = ApiManager()
+    lazy var apiClient = APIClient()
 }
 
 protocol BinkUserDefaults {
@@ -37,7 +37,7 @@ extension UserDefaults: BinkUserDefaults {
     enum Keys: String {
         case hasLaunchedWallet
         case userEmail
-        case environmentBaseUrl
+        case debugBaseURL
     }
 
     func set(_ value: Any?, forDefaultsKey defaultName: UserDefaults.Keys) {

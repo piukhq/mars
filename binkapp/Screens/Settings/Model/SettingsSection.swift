@@ -23,7 +23,6 @@ struct SettingsRow {
         case logout
         case customAction(action: VoidClosure)
         case contactUsAction
-        case notImplemented //TODO: REMOVE ME BEFORE RELEASE!
     }
     
     enum ReusableScreen {

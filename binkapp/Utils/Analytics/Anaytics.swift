@@ -66,7 +66,7 @@ struct BinkAnalytics {
 
     static func beginSessionTracking() {
         BinkAnalytics.setUserProperty(value: UIDevice.current.systemVersion, forKey: .osVersion)
-        BinkAnalytics.setUserProperty(value: Current.apiManager.networkStrength.rawValue, forKey: .networkStrength)
+        BinkAnalytics.setUserProperty(value: Current.apiClient.networkStrength.rawValue, forKey: .networkStrength)
 
         let standardZoom: Bool = UIScreen.main.nativeScale == UIScreen.main.scale
         BinkAnalytics.setUserProperty(value: "\(standardZoom ? "standard" : "zoomed")", forKey: .deviceZoom)

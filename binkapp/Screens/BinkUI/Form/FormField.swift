@@ -28,6 +28,7 @@ enum FieldCommonName: String {
     case phoneNumber = "phone"
     case dateOfBirth = "date_of_birth"
     case memorableDate = "memorable_date"
+    case barcode
     case cardNumber = "card_number"
 }
 
