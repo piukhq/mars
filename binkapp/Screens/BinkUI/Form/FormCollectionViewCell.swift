@@ -156,6 +156,13 @@ class FormCollectionViewCell: UICollectionViewCell {
             textField.inputView = FormMultipleChoiceInput(with: [data], delegate: self)
             pickerSelectedChoice = data.first?.title
             formField?.updateValue(pickerSelectedChoice)
+        } else if case .date = field.fieldType {
+            let datePicker = UIDatePicker()
+            datePicker.datePickerMode = .date
+            datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+            textField.inputView = datePicker
+            pickerSelectedChoice = datePicker.date.getFormattedString(format: DateFormat.dayShortMonthYearWithSlash.rawValue)
+            formField?.updateValue(pickerSelectedChoice)
         } else {
             textField.inputView = nil
         }
@@ -181,6 +188,13 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.resignFirstResponder()
         textFieldDidEndEditing(textField)
     }
+    
+    @objc private func datePickerValueChanged(_ sender: UIDatePicker) {
+        let selectedDate = sender.date.getFormattedString(format: DateFormat.dayShortMonthYearWithSlash.rawValue)
+        pickerSelectedChoice = selectedDate
+        formField?.updateValue(pickerSelectedChoice)
+        textField.text = selectedDate
+    }
 }
 
 extension FormCollectionViewCell: UITextFieldDelegate {
@@ -197,7 +211,7 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.inputView?.isKind(of: FormMultipleChoiceInput.self) ?? false {
+        if textField.inputView?.isKind(of: FormMultipleChoiceInput.self) ?? false || textField.inputView?.isKind(of: UIDatePicker.self) ?? false {
             textField.text = pickerSelectedChoice
         }
         

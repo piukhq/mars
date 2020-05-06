@@ -10,7 +10,25 @@ import UIKit
 
 enum FieldCommonName: String {
     case email
-    // TODO: Done as light-touch as possible for now. Add the rest of the cases later.
+    case userName = "user_name"
+    case password
+    case placeOfBirth = "place_of_birth"
+    case postcode
+    case title
+    case firstName = "first_name"
+    case lastName = "last_name"
+    case favoritePlace = "favorite_place"
+    case gender
+    case address1 = "address_1"
+    case address2 = "address_2"
+    case address3 = "address_3"
+    case townCity = "town_city"
+    case county
+    case country
+    case phoneNumber = "phone"
+    case dateOfBirth = "date_of_birth"
+    case memorableDate = "memorable_date"
+    case cardNumber = "card_number"
 }
 
 struct FormPickerData: Equatable {
@@ -36,15 +54,19 @@ class FormField {
         case cardNumber
         case confirmPassword
         case expiry(months: [FormPickerData], years: [FormPickerData])
+        case phone
+        case date
         
         func keyboardType() -> UIKeyboardType {
             switch self {
             case .cardNumber:
                 return .numberPad
             case .text, .sensitive, .confirmPassword:
-                return .alphabet
+                return .asciiCapable
             case .email:
                 return .emailAddress
+            case .phone:
+                return .phonePad
             default:
                 return .default
             }
@@ -78,6 +100,14 @@ class FormField {
                 switch commonName {
                 case .email:
                     return .email
+                case .userName, .placeOfBirth, .postcode, .title, .firstName, .lastName, .favoritePlace, .gender, .address1, .address2, .address3, .townCity, .county, .country, .password:
+                    return .text
+                case .phoneNumber:
+                    return .phone
+                case .dateOfBirth, .memorableDate:
+                    return .date
+                case .cardNumber:
+                    return .cardNumber
                 default:
                     return .text
                 }
