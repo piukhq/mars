@@ -10,6 +10,24 @@ import UIKit
 
 enum FieldCommonName: String {
     case email
+    case userName = "user_name"
+    case password
+    case placeOfBirth = "place_of_birth"
+    case postcode
+    case title
+    case firstName = "first_name"
+    case lastName = "last_name"
+    case favoritePlace = "favorite_place"
+    case gender
+    case address1 = "address_1"
+    case address2 = "address_2"
+    case address3 = "address_3"
+    case townCity = "town_city"
+    case county
+    case country
+    case phoneNumber = "phone"
+    case dateOfBirth = "date_of_birth"
+    case memorableDate = "memorable_date"
     case barcode
     case cardNumber = "card_number"
 }
@@ -37,15 +55,19 @@ class FormField {
         case cardNumber
         case confirmPassword
         case expiry(months: [FormPickerData], years: [FormPickerData])
+        case phone
+        case date
         
         func keyboardType() -> UIKeyboardType {
             switch self {
             case .cardNumber:
                 return .numberPad
             case .text, .sensitive, .confirmPassword:
-                return .alphabet
+                return .asciiCapable
             case .email:
                 return .emailAddress
+            case .phone:
+                return .phonePad
             default:
                 return .default
             }
@@ -79,6 +101,12 @@ class FormField {
                 switch commonName {
                 case .email:
                     return .email
+                case .phoneNumber:
+                    return .phone
+                case .dateOfBirth, .memorableDate:
+                    return .date
+                case .cardNumber:
+                    return .cardNumber
                 default:
                     return .text
                 }
