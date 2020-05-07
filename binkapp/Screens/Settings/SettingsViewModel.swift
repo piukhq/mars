@@ -51,6 +51,6 @@ class SettingsViewModel {
     }
     
     func openWebView(url: String) {
-        router.openWebView(with: url)
+        router.openWebView(withUrlString: url)
     }
 }

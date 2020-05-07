@@ -299,9 +299,9 @@ class AuthAndAddViewModel {
         router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
     }
     
-    func openWebView(with url: URL) {
+    func openWebView(withUrlString url: URL) {
         let urlString = url.absoluteString
-        router.openWebView(with: urlString)
+        router.openWebView(withUrlString: urlString)
     }
     
     func toReusableTemplate(title: String, description: String) {

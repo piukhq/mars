@@ -340,7 +340,7 @@ class MainScreenRouter {
         delegate?.router(self, didLogin: true)
     }
     
-    func openWebView(with urlString: String) {
+    func openWebView(withUrlString urlString: String) {
         let webViewController = PortraitNavigationController(rootViewController: WebViewController(urlString: urlString))
         webViewController.modalPresentationStyle = .fullScreen
         

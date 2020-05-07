@@ -105,7 +105,7 @@ class PLRRewardDetailViewModel {
 
     func openTermsAndConditionsWebView() {
         guard let url = termsAndConditionsButtonUrlString else { return }
-        router.openWebView(with: url)
+        router.openWebView(withUrlString: url)
     }
 
     // MARK: - View decisioning

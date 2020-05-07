@@ -116,7 +116,7 @@ class RegisterViewController: BaseFormViewController {
     }
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        router.openWebView(with: URL.absoluteString)
+        router.openWebView(withUrlString: URL.absoluteString)
     }
 }
 
