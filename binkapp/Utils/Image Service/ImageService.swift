@@ -56,7 +56,7 @@ final class ImageService {
         case .membershipPlanHero(let plan):
             guard let url = plan.image(of: .hero)?.url else { return nil }
             return url
-        case .membershipPlanTier(plan: let plan):
+        case .membershipPlanTier(let plan):
             guard let url = plan.image(of: .tier)?.url else { return nil }
             return url
         case .membershipPlanOfferTile(let url):
