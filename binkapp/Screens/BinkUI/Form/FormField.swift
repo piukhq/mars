@@ -101,8 +101,6 @@ class FormField {
                 switch commonName {
                 case .email:
                     return .email
-                case .userName, .placeOfBirth, .postcode, .title, .firstName, .lastName, .favoritePlace, .gender, .address1, .address2, .address3, .townCity, .county, .country, .password:
-                    return .text
                 case .phoneNumber:
                     return .phone
                 case .dateOfBirth, .memorableDate:

@@ -161,7 +161,7 @@ class FormCollectionViewCell: UICollectionViewCell {
             datePicker.datePickerMode = .date
             datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
             textField.inputView = datePicker
-            pickerSelectedChoice = datePicker.date.getFormattedString(format: DateFormat.dayShortMonthYearWithSlash.rawValue)
+            pickerSelectedChoice = datePicker.date.getFormattedString(format: .dayShortMonthYearWithSlash)
             formField?.updateValue(pickerSelectedChoice)
         } else {
             textField.inputView = nil
@@ -190,7 +190,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func datePickerValueChanged(_ sender: UIDatePicker) {
-        let selectedDate = sender.date.getFormattedString(format: DateFormat.dayShortMonthYearWithSlash.rawValue)
+        let selectedDate = sender.date.getFormattedString(format: .dayShortMonthYearWithSlash)
         pickerSelectedChoice = selectedDate
         formField?.updateValue(pickerSelectedChoice)
         textField.text = selectedDate

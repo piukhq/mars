@@ -50,9 +50,9 @@ extension Date {
         return nil
     }
 
-    func getFormattedString(format: String) -> String {
+    func getFormattedString(format: DateFormat) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
+        dateFormatter.dateFormat = format.rawValue
         return dateFormatter.string(from: self)
     }
 
