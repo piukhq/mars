@@ -81,7 +81,8 @@ class AddOrJoinViewModel {
         
         configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
             if let url = URL(string: planURL) {
-                UIApplication.shared.open(url)
+//                UIApplication.shared.open(url)
+                self.router.openWebView(with: url.absoluteString)
             }
         }, showCloseButton: true)
         

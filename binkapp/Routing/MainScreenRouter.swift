@@ -343,7 +343,12 @@ class MainScreenRouter {
     func openWebView(with urlString: String) {
         let webViewController = PortraitNavigationController(rootViewController: WebViewController(urlString: urlString))
         webViewController.modalPresentationStyle = .fullScreen
-        navController?.present(webViewController, animated: true)
+        
+        guard let presentedViewController = navController?.presentedViewController else {
+            navController?.present(webViewController, animated: true)
+            return
+        }
+        presentedViewController.present(webViewController, animated: true)
     }
     
     class func openExternalURL(with urlString: String) {

@@ -100,9 +100,7 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     }
     
     private func presentWebView(url: String) {
-        let webViewController = PortraitNavigationController(rootViewController: WebViewController(urlString: url))
-        webViewController.modalPresentationStyle = .fullScreen
-        present(webViewController, animated: true, completion: nil)
+        viewModel.openWebView(url: url)
     }
     
     // MARK: - Action
