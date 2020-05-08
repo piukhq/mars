@@ -17,7 +17,7 @@ final class ImageService {
     enum PathType {
         case membershipPlanIcon(plan: CD_MembershipPlan)
         case membershipPlanHero(plan: CD_MembershipPlan)
-        case membershipPlanTier(plan: CD_MembershipPlan)
+        case membershipPlanTier(card: CD_MembershipCard)
         case membershipPlanOfferTile(url: String)
     }
 
@@ -56,8 +56,8 @@ final class ImageService {
         case .membershipPlanHero(let plan):
             guard let url = plan.image(of: .hero)?.url else { return nil }
             return url
-        case .membershipPlanTier(let plan):
-            guard let url = plan.image(of: .tier)?.url else { return nil }
+        case .membershipPlanTier(let card):
+            guard let url = card.image(of: .tier)?.url else { return nil }
             return url
         case .membershipPlanOfferTile(let url):
             return url

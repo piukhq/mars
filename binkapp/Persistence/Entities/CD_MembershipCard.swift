@@ -7,6 +7,10 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
     }
 
 	// Custom logic goes here.
+    func image(of type: ImageType) -> CD_MembershipCardImage? {
+        return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(integerLiteral: type.rawValue))).first as? CD_MembershipCardImage
+    }
+    
     var formattedBalances: Set<CD_MembershipCardBalance>? {
         return balances as? Set<CD_MembershipCardBalance>
     }

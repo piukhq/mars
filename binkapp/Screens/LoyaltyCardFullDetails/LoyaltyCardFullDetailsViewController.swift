@@ -247,7 +247,7 @@ private extension LoyaltyCardFullDetailsViewController {
             brandHeader.backgroundColor = UIColor(patternImage: placeholder)
         }
         if viewModel.isMembershipCardAuthorised {
-            brandHeader.setImage(forPathType: .membershipPlanTier(plan: plan), animated: true)
+            brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
         } else {
             brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
         }
