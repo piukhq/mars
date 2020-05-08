@@ -96,9 +96,7 @@ class WebViewController: UIViewController {
     
     private func showErrorAlert() {
         let alert = UIAlertController(title: "error_title".localized, message: "loading_error".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .default) { action in
-            self.dismissWebView()
-        })
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         self.present(alert, animated: true)
     }
     
