@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             navAppearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
             UINavigationBar.appearance().standardAppearance = navAppearance
             UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
-                    
+                         
             let tabAppearance = UITabBarAppearance()
             tabAppearance.configureWithTransparentBackground()
             tabAppearance.shadowImage = UIImage()
