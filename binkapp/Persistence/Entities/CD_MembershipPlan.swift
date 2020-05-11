@@ -2,9 +2,8 @@ import Foundation
 
 @objc(CD_MembershipPlan)
 open class CD_MembershipPlan: _CD_MembershipPlan {
-	// Custom logic goes here.
     
-    func image(of type: ImageType) -> CD_MembershipPlanImage? {
+    func image(ofType type: ImageType) -> CD_MembershipPlanImage? {
         return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(integerLiteral: type.rawValue))).first as? CD_MembershipPlanImage
     }
     

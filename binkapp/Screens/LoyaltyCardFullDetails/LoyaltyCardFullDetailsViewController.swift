@@ -246,8 +246,11 @@ private extension LoyaltyCardFullDetailsViewController {
             let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeader.frame.size)
             brandHeader.backgroundColor = UIColor(patternImage: placeholder)
         }
-        
-        brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
+        if viewModel.isMembershipCardAuthorised {
+            brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
+        } else {
+            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
+        }
     }
 
     func configureLayout() {
