@@ -46,6 +46,10 @@ enum Configuration {
 }
 
 struct APIConstants {
+    static var isProduction: Bool {
+        return baseURLString == EnvironmentType.production.rawValue
+    }
+
     static var baseURLString: String {
         #if DEBUG
         // If we have set the environment from the debug menu

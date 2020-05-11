@@ -52,7 +52,7 @@ final class APIClient {
     }
 
     var isProduction: Bool {
-        return APIConstants.baseURLString == EnvironmentType.production.rawValue
+        return APIConstants.isProduction
     }
 
     var apiVersion: APIVersion = .v1_1

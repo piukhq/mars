@@ -22,7 +22,7 @@ struct SettingsRow {
         case pushToReusable(screen: ReusableScreen)
         case logout
         case customAction(action: VoidClosure)
-        case contactUsAction
+        case launchSupport(service: SupportService)
     }
     
     enum ReusableScreen {
@@ -30,6 +30,11 @@ struct SettingsRow {
         case howItWorks
         case privacyPolicy
         case termsAndConditions
+    }
+
+    enum SupportService {
+        case faq
+        case contactUs
     }
     
     let title: String

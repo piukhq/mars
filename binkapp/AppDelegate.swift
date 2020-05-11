@@ -13,8 +13,6 @@ import Crashlytics
 import Firebase
 import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
-import ZendeskCoreSDK
-import SupportSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -43,11 +41,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Device storage
         StorageUtility.start()
 
-        // Zendesk - sandbox
-        Zendesk.initialize(appId: "99f61aab44ade625ef0c3c98d72e2b3f00ae01beb8f54ddc", clientId: "mobile_sdk_client_bd8c22b8c88c29ff0667", zendeskUrl: "https://binkcx1573467900.zendesk.com")
-        Support.initialize(withZendesk: Zendesk.instance)
-        let ident = Identity.createAnonymous(name: nil, email: Current.userManager.currentEmailAddress)
-        Zendesk.instance?.setIdentity(ident)
+        // Initialise Zendesk
+        ZendeskService.start()
+
+        // Get latest user profile data
+        // TODO: Move to UserService in future ticket
+        if Current.userManager.hasCurrentUser {
+            let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
+            Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
+                guard let response = try? result.get() else { return }
+                Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+            }
+        }
 
         // Root view
         self.window = UIWindow(frame: UIScreen.main.bounds)
