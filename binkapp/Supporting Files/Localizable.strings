@@ -362,3 +362,9 @@
 "loyalty_scanner_widget_title_unrecognized_barcode_text" = "Unrecognised barcode";
 "loyalty_scanner_widget_explainer_enter_manually_text" = "You can also type in the card details yourself.";
 "loyalty_scanner_widget_explainer_unrecognized_barcode_text" = "Please try adding the card manually.";
+
+// MARK: - Zendesk
+
+"zendesk_identity_prompt_message" = "Please enter you contact details";
+"zendesk_identity_prompt_first_name" = "First name";
+"zendesk_identity_prompt_last_name" = "Last name";

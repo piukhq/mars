@@ -18,7 +18,6 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     private struct Constants {
         static let rowHeight: CGFloat = 88
         static let headerHeight: CGFloat = 50
-        static let supportEmail = "support@bink.com"
     }
     
     // MARK: - Properties
@@ -230,34 +229,6 @@ extension SettingsViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - Mail Compose
-
-extension SettingsViewController: MFMailComposeViewControllerDelegate {
-    private func sendEmail() {
-        if MFMailComposeViewController.canSendMail() {
-            let binkId = Current.userManager.currentEmailAddress ?? ""
-            let shortVersionNumber = Bundle.shortVersionNumber ?? ""
-            let buildNumber = Bundle.bundleVersion ?? ""
-            let appVersion = String(format: "support_mail_app_version".localized, shortVersionNumber, buildNumber)
-            let osVersion = UIDevice.current.systemVersion
-            let mailBody = String.init(format: "support_mail_body".localized, binkId, appVersion, osVersion)
-            let mailViewController = MFMailComposeViewController()
-            mailViewController.mailComposeDelegate = self
-            mailViewController.setToRecipients([Constants.supportEmail])
-            mailViewController.setSubject("support_mail_subject".localized)
-            mailViewController.setMessageBody(mailBody, isHTML: false)
-            
-            present(mailViewController, animated: true)
-        } else {
-            MainScreenRouter.openExternalURL(with: "mailto:\(Constants.supportEmail)")
-        }
-    }
-    
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true)
-    }
-}
-
 extension SettingsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         /// If both textfields are empty, disable ok action as at least one textfield will be empty after updating
@@ -297,21 +268,21 @@ extension SettingsViewController: UITextFieldDelegate {
 
 extension UIAlertController {
     static func makeZendeskIdentityAlertController(firstNameTextField: @escaping (UITextField) -> Void, lastNameTextField: @escaping (UITextField) -> Void, okActionObject: (UIAlertAction) -> Void, okActionHandler: @escaping () -> Void, textFieldDelegate: UITextFieldDelegate?) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: "Please enter your contact details", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "zendesk_identity_prompt_message".localized, preferredStyle: .alert)
         alert.addTextField { textField in
-            textField.placeholder = "First name"
+            textField.placeholder = "zendesk_identity_prompt_first_name".localized
             textField.autocapitalizationType = .words
             textField.delegate = textFieldDelegate
             firstNameTextField(textField)
         }
         alert.addTextField { textField in
-            textField.placeholder = "Last name"
+            textField.placeholder = "zendesk_identity_prompt_last_name".localized
             textField.autocapitalizationType = .words
             textField.delegate = textFieldDelegate
             lastNameTextField(textField)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "OK", style: .default) { action in
+        let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "ok".localized, style: .default) { action in
             let firstName = alert.textFields?[0].text
             let lastName = alert.textFields?[1].text
             // TODO: Move to UserService in future ticket
