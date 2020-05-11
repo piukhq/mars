@@ -17,6 +17,8 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
         static let rowHeight: CGFloat = 88
         static let headerHeight: CGFloat = 50
         static let supportEmail = "support@bink.com"
+        static let privacyPolicyUrl = "https://bink.com/privacy-policy/"
+        static let termsAndConditionsUrl = "https://bink.com/terms-and-conditions/"
     }
     
     // MARK: - Properties
@@ -95,6 +97,10 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description), tabBarBackButton: backButton)
         viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
+    }
+    
+    private func presentWebView(url: String) {
+        viewModel.openWebView(url: url)
     }
     
     // MARK: - Action
@@ -180,6 +186,12 @@ extension SettingsViewController: UITableViewDelegate {
                     break
                 case .howItWorks:
                     toHowItWorksVC()
+                    break
+                case .privacyPolicy:
+                    presentWebView(url: Constants.privacyPolicyUrl)
+                    break
+                case .termsAndConditions:
+                    presentWebView(url: Constants.termsAndConditionsUrl)
                     break
                 }
             case .logout:

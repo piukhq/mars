@@ -28,6 +28,8 @@ struct SettingsRow {
     enum ReusableScreen {
         case securityAndPrivacy
         case howItWorks
+        case privacyPolicy
+        case termsAndConditions
     }
     
     let title: String

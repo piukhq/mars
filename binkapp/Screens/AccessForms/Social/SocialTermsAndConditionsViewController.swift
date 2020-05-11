@@ -147,6 +147,10 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         continueButton.stopLoading()
         showError()
     }
+    
+    override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+        router?.openWebView(withUrlString: URL.absoluteString)
+    }
 }
 
 extension SocialTermsAndConditionsViewController: FormDataSourceDelegate {

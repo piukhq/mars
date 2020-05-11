@@ -294,6 +294,11 @@ class AuthAndAddViewModel {
         router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
     }
     
+    func openWebView(withUrlString url: URL) {
+        let urlString = url.absoluteString
+        router.openWebView(withUrlString: urlString)
+    }
+    
     func toReusableTemplate(title: String, description: String) {
         let attributedString = NSMutableAttributedString()
         let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
