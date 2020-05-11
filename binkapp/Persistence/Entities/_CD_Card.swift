@@ -13,6 +13,7 @@ public enum CD_CardAttributes: String {
 
 public enum CD_CardRelationships: String {
     case membershipCard = "membershipCard"
+    case membershipPlan = "membershipPlan"
 }
 
 open class _CD_Card: CD_BaseObject {
@@ -61,6 +62,9 @@ open class _CD_Card: CD_BaseObject {
 
     @NSManaged open
     var membershipCard: CD_MembershipCard?
+
+    @NSManaged open
+    var membershipPlan: CD_MembershipPlan?
 
 }
 

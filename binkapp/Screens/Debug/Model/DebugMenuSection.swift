@@ -18,6 +18,7 @@ struct DebugMenuRow {
         case version
         case email
         case endpoint
+        case secondaryColor
     }
     
     enum CellType {

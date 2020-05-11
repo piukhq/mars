@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DebugSecondaryPlanColorCell" customModule="binkapp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="562" height="164"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="562" height="164"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ioP-dj-ofT">
+                        <rect key="frame" x="0.0" y="0.0" width="562" height="164"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qia-BN-7Sa">
+                                <rect key="frame" x="140.5" y="0.0" width="421.5" height="164"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Harvey Nichols" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAE-dN-2F5">
+                                        <rect key="frame" x="298" y="8" width="115.5" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="1wv-tf-gBW"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="JAE-dN-2F5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qia-BN-7Sa" secondAttribute="leading" constant="8" id="A5a-F4-eLa"/>
+                                    <constraint firstItem="JAE-dN-2F5" firstAttribute="top" secondItem="qia-BN-7Sa" secondAttribute="top" constant="8" id="DgH-Du-X8G"/>
+                                    <constraint firstAttribute="trailing" secondItem="JAE-dN-2F5" secondAttribute="trailing" constant="8" id="qjr-Yh-DuD"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qia-BN-7Sa" secondAttribute="trailing" id="PNi-UG-L62"/>
+                            <constraint firstItem="qia-BN-7Sa" firstAttribute="width" secondItem="ioP-dj-ofT" secondAttribute="width" multiplier="0.75" id="Q6z-6s-lDR"/>
+                            <constraint firstItem="qia-BN-7Sa" firstAttribute="top" secondItem="ioP-dj-ofT" secondAttribute="top" id="S3J-7w-nbD"/>
+                            <constraint firstAttribute="bottom" secondItem="qia-BN-7Sa" secondAttribute="bottom" id="SWj-8Q-VFs"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ioP-dj-ofT" secondAttribute="trailing" id="0Hz-jf-1lH"/>
+                <constraint firstItem="ioP-dj-ofT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5q5-Q7-wTt"/>
+                <constraint firstItem="ioP-dj-ofT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="r3y-lK-br8"/>
+                <constraint firstAttribute="bottom" secondItem="ioP-dj-ofT" secondAttribute="bottom" id="v8t-ad-JSv"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="562" height="164"/>
+            <connections>
+                <outlet property="planLabel" destination="JAE-dN-2F5" id="9Sd-qz-elN"/>
+                <outlet property="primaryColorView" destination="qia-BN-7Sa" id="tOj-60-Nrl"/>
+                <outlet property="secondaryColorView" destination="ioP-dj-ofT" id="6nm-4j-xfi"/>
+            </connections>
+            <point key="canvasLocation" x="36.231884057971016" y="114.50892857142857"/>
+        </collectionViewCell>
+    </objects>
+</document>

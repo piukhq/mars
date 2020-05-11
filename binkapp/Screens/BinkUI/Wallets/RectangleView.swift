@@ -16,7 +16,11 @@ class RectangleView: UIView {
         }
     }
 
-    var secondColorHex: String = "#888888"
+    var secondColor: UIColor = .greyFifty {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
 
     override func draw(_ rect: CGRect) {
         /// General Declarations
@@ -24,7 +28,6 @@ class RectangleView: UIView {
 
         /// Color Declarations
         let firstColor = UIColor(hexString: firstColorHex)
-        let secondColor = UIColor(hexString: secondColorHex)
 
         /// Rectangle Drawing
         context.saveGState()
