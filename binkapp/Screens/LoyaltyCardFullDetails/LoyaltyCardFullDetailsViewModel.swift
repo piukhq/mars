@@ -27,6 +27,10 @@ class LoyaltyCardFullDetailsViewModel {
         }
     }
     
+    var isMembershipCardAuthorised: Bool {
+        return membershipCard.status?.status == .authorised
+    }
+    
     init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter, informationRowFactory: PaymentCardDetailInformationRowFactory) {
         self.router = router
         self.repository = repository

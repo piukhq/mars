@@ -110,6 +110,10 @@ class AuthAndAddViewController: BaseFormViewController {
     override func formValidityUpdated(fullFormIsValid: Bool) {
         floatingButtons.primaryButton.isEnabled = fullFormIsValid
     }
+    
+    override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+        viewModel.openWebView(withUrlString: URL)
+    }
 }
 
 extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {

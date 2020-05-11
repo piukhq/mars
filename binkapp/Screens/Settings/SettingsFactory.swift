@@ -81,15 +81,11 @@ struct SettingsFactory {
         let legalSection = SettingsSection(title: "settings_section_legal_title".localized, rows: [
             SettingsRow(
                 title: "settings_row_privacypolicy_title".localized,
-                action: .customAction(action: {
-                    MainScreenRouter.openExternalURL(with: "https://bink.com/privacy-policy/")
-                })
+                action: .pushToReusable(screen: .privacyPolicy)
             ),
             SettingsRow(
                 title: "settings_row_termsandconditions_title".localized,
-                action: .customAction(action: {
-                    MainScreenRouter.openExternalURL(with: "https://bink.com/terms-and-conditions/")
-                })
+                action: .pushToReusable(screen: .termsAndConditions)
             )
         ])
         

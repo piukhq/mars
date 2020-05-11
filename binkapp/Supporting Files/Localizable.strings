@@ -356,6 +356,9 @@
 "camera_permission_deny_option" = "Don't Allow";
 "camera_permission_allow_option" = "OK";
 
+// MARK: - WebView
+"loading_error" = "There was a problem loading the page, please try again later.";
+
 // MARK: - Loyalty Scanner
 "loyalty_scanner_explainer_text" = "Hold card here. It will scan automatically.";
 "loyalty_scanner_widget_title_enter_manually_text" = "Enter manually";
@@ -368,3 +371,4 @@
 "zendesk_identity_prompt_message" = "Please enter you contact details";
 "zendesk_identity_prompt_first_name" = "First name";
 "zendesk_identity_prompt_last_name" = "Last name";
+

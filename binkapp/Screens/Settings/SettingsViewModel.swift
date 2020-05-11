@@ -49,4 +49,8 @@ class SettingsViewModel {
         
         router.pushReusableModalTemplateVC(configurationModel: configurationModel, navigationController: navController)
     }
+    
+    func openWebView(url: String) {
+        router.openWebView(withUrlString: url)
+    }
 }

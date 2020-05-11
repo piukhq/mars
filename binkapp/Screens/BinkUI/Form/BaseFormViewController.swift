@@ -164,6 +164,7 @@ class BaseFormViewController: BinkTrackableViewController, Form {
     
     /// This method is designed to be overriden for updating UI elements in response to validity
     func formValidityUpdated(fullFormIsValid: Bool) {}
+    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {}
 }
 
 extension BaseFormViewController: UICollectionViewDelegate {

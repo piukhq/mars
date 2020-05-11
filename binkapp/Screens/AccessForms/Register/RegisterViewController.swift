@@ -129,6 +129,10 @@ class RegisterViewController: BaseFormViewController {
         continueButton.stopLoading()
         showError()
     }
+    
+    override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+        router.openWebView(withUrlString: URL.absoluteString)
+    }
 }
 
 extension RegisterViewController: FormDataSourceDelegate {
