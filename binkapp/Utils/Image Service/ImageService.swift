@@ -58,7 +58,7 @@ final class ImageService {
             return url
         case .membershipPlanTier(let card):
             /// If we have a tier image, return that
-            if let tierImageUrl = card.image(ofType: .hero)?.url {
+            if let tierImageUrl = card.image(ofType: .tier)?.url {
                 return tierImageUrl
                 /// Otherwise return the hero image url
             } else if let heroImageUrl = card.image(ofType: .hero)?.url {
