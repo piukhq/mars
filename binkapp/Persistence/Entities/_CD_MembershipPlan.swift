@@ -12,6 +12,7 @@ public enum CD_MembershipPlanAttributes: String {
 public enum CD_MembershipPlanRelationships: String {
     case account = "account"
     case balances = "balances"
+    case card = "card"
     case dynamicContent = "dynamicContent"
     case featureSet = "featureSet"
     case images = "images"
@@ -65,6 +66,9 @@ open class _CD_MembershipPlan: CD_BaseObject {
     open func balancesSet() -> NSMutableSet {
         return self.balances.mutableCopy() as! NSMutableSet
     }
+
+    @NSManaged open
+    var card: CD_Card?
 
     @NSManaged open
     var dynamicContent: NSSet

@@ -118,13 +118,17 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
         
         /// Brand colours
-        rectangleView.firstColorHex = viewModel.brandColorHex ?? ""
+        let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
+        rectangleView.firstColor = primaryBrandColor
+        rectangleView.secondColor = plan.generatedSecondaryBrandColor
 
         /// Brand name
         cardNameLabel.text = plan.account?.companyName
+        cardNameLabel.textColor = primaryBrandColor.isLight(threshold: 0.8) ? .black : .white
         
         /// Link Status
         cardLinkStatusLabel.text = viewModel.linkStatusText
+        cardLinkStatusLabel.textColor = cardNameLabel.textColor
         cardLinkStatusImage.image = UIImage(named: viewModel.linkStatusImageName)
         cardLinkStatusImage.isHidden = !viewModel.shouldShowLinkImage
         cardLinkStatusLabel.isHidden = !viewModel.shouldShowLinkStatus
@@ -137,6 +141,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         logInAlert.isHidden = true
 
         /// Card Value
+        cardValuePointsLabel.textColor = cardNameLabel.textColor
         cardValuePointsLabel.text = viewModel.pointsValueText
         cardValueSuffixLabel.text = viewModel.pointsValueSuffixText
         cardValuePointsLabel.isHidden = !viewModel.shouldShowPointsValueLabel

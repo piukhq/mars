@@ -291,6 +291,10 @@
 		EF59A12D244744D7001B60B8 /* BinkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF59A12C244744D7001B60B8 /* BinkError.swift */; };
 		EF59A12F24474572001B60B8 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF59A12E24474572001B60B8 /* NetworkingError.swift */; };
 		EF59A1312448B769001B60B8 /* APIErrorResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF59A1302448B769001B60B8 /* APIErrorResponses.swift */; };
+		EF6921722469A8A90049875B /* DebugSecondaryPlanColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6921702469A8A90049875B /* DebugSecondaryPlanColorViewController.swift */; };
+		EF6921732469A8A90049875B /* DebugSecondaryPlanColorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF6921712469A8A90049875B /* DebugSecondaryPlanColorViewController.xib */; };
+		EF6921762469A9290049875B /* DebugSecondaryPlanColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6921742469A9290049875B /* DebugSecondaryPlanColorCell.swift */; };
+		EF6921772469A9290049875B /* DebugSecondaryPlanColorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF6921752469A9290049875B /* DebugSecondaryPlanColorCell.xib */; };
 		EF758E0823225F35000D26A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0723225F35000D26A9 /* Database.swift */; };
 		EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */; };
 		EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF758E0C23225F45000D26A9 /* NSManagedObjectContext.swift */; };
@@ -571,7 +575,6 @@
 		3CD8027D239130EE00D26888 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		3CD8027F2391313D00D26888 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		3CD802812391314900D26888 /* ForgotPasswordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordRepository.swift; sourceTree = "<group>"; };
-		3CD802852391484600D26888 /* ForgotPasswordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordModel.swift; sourceTree = "<group>"; };
 		3CDDEFFC243C755A0009BD0B /* SettingsFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFactoryTests.swift; sourceTree = "<group>"; };
 		3CE24B282304014500B258C8 /* AddOrJoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewController.swift; sourceTree = "<group>"; };
 		3CE24B292304014500B258C8 /* AddOrJoinViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrJoinViewModel.swift; sourceTree = "<group>"; };
@@ -779,6 +782,11 @@
 		EF59A12C244744D7001B60B8 /* BinkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkError.swift; sourceTree = "<group>"; };
 		EF59A12E24474572001B60B8 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		EF59A1302448B769001B60B8 /* APIErrorResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorResponses.swift; sourceTree = "<group>"; };
+		EF6921702469A8A90049875B /* DebugSecondaryPlanColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSecondaryPlanColorViewController.swift; sourceTree = "<group>"; };
+		EF6921712469A8A90049875B /* DebugSecondaryPlanColorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugSecondaryPlanColorViewController.xib; sourceTree = "<group>"; };
+		EF6921742469A9290049875B /* DebugSecondaryPlanColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSecondaryPlanColorCell.swift; sourceTree = "<group>"; };
+		EF6921752469A9290049875B /* DebugSecondaryPlanColorCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugSecondaryPlanColorCell.xib; sourceTree = "<group>"; };
+		EF6921792469B4320049875B /* binkapp - 11-05-20 - Plan card.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 11-05-20 - Plan card.xcdatamodel"; sourceTree = "<group>"; };
 		EF758E0723225F35000D26A9 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		EF758E0923225F3B000D26A9 /* SwiftDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftDatabase.h; sourceTree = "<group>"; };
 		EF758E0B23225F45000D26A9 /* NSPersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersistentContainer.swift; sourceTree = "<group>"; };
@@ -1805,6 +1813,8 @@
 				EF48556B231D696800FC9E5F /* DebugMenuTableViewCell.swift */,
 				3C5C9E1123FD32FF004ABDC0 /* DebugMenuSegmentedTableViewCell.swift */,
 				3C5C9E1223FD32FF004ABDC0 /* DebugMenuSegmentedTableViewCell.xib */,
+				EF6921742469A9290049875B /* DebugSecondaryPlanColorCell.swift */,
+				EF6921752469A9290049875B /* DebugSecondaryPlanColorCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2281,6 +2291,8 @@
 				EF485565231D5E4E00FC9E5F /* DebugMenuTableViewController.swift */,
 				EF48556D231D6E4000FC9E5F /* DebugMenuFactory.swift */,
 				EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */,
+				EF6921702469A8A90049875B /* DebugSecondaryPlanColorViewController.swift */,
+				EF6921712469A8A90049875B /* DebugSecondaryPlanColorViewController.xib */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -2478,6 +2490,7 @@
 				EF46E28E235F642100BA2CAF /* BinkPrimarySecondaryButtonView.xib in Resources */,
 				EFF59F1A234B73C900CF3992 /* CardDetailInfoTableViewCell.xib in Resources */,
 				EF5229BA2423FC96004AC972 /* prodPublicKey.der in Resources */,
+				EF6921732469A8A90049875B /* DebugSecondaryPlanColorViewController.xib in Resources */,
 				EFD602E8243B8627003AC746 /* LoyaltyScannerWidgetView.xib in Resources */,
 				3CD3493222F99E1D000C1F4D /* NunitoSans-LightItalic.ttf in Resources */,
 				3C5C9E1423FD32FF004ABDC0 /* DebugMenuSegmentedTableViewCell.xib in Resources */,
@@ -2491,6 +2504,7 @@
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
 				B766599A2320F68D00B327BE /* HyperlinkAlertController.xib in Resources */,
 				BD9FB6B72338120700E5559A /* TransactionsViewController.xib in Resources */,
+				EF6921772469A9290049875B /* DebugSecondaryPlanColorCell.xib in Resources */,
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
 				EFA81016240405070000D21D /* JailbrokenViewController.xib in Resources */,
 				EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */,
@@ -2702,6 +2716,7 @@
 				B766599E23214A4600B327BE /* WalletLoyaltyCardCollectionViewCell.swift in Sources */,
 				BD9E4CC7236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift in Sources */,
 				EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */,
+				EF6921722469A8A90049875B /* DebugSecondaryPlanColorViewController.swift in Sources */,
 				BD25E6992388677E0027FF3E /* LoadingScreen.swift in Sources */,
 				3CD802802391313D00D26888 /* ForgotPasswordViewModel.swift in Sources */,
 				EFA5F73F2379A7C70027AB80 /* _CD_MembershipTransaction.swift in Sources */,
@@ -2861,6 +2876,7 @@
 				EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */,
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
+				EF6921762469A9290049875B /* DebugSecondaryPlanColorCell.swift in Sources */,
 				3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */,
 				EFD602EC243B9454003AC746 /* Animations.swift in Sources */,
 				BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */,
@@ -4249,13 +4265,14 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EF6921792469B4320049875B /* binkapp - 11-05-20 - Plan card.xcdatamodel */,
 				EFFF863E24224CB1007ABAB8 /* binkapp - Plan Feature Set Has Vouchers.xcdatamodel */,
 				EFA8101724055F570000D21D /* binkapp - Plan Dynamic Content.xcdatamodel */,
 				EFBC94F123A7CF4400574086 /* binkapp - Fields Common Name.xcdatamodel */,
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = EFFF863E24224CB1007ABAB8 /* binkapp - Plan Feature Set Has Vouchers.xcdatamodel */;
+			currentVersion = EF6921792469B4320049875B /* binkapp - 11-05-20 - Plan card.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

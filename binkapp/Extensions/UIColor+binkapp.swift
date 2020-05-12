@@ -94,4 +94,46 @@ extension UIColor {
     static let amexPaymentCardGradients: [CGColor] = [UIColor.amexGradientLeft.cgColor, UIColor.amexGradientRight.cgColor]
     static let unknownPaymentCardGradients: [CGColor] = [UIColor.unknownGradientLeft.cgColor, UIColor.unknownGradientRight.cgColor]
     static let binkSwitchGradients: [CGColor] = [UIColor.binkPurple.cgColor, UIColor.blueAccent.cgColor]
+
+    // MARK: - Loyalty card secondary color helpers
+
+    /// Determine whether a UIColor is light
+    ///
+    /// - Parameter threshold: The threshold between light and dark. The higher this figure, the less likely a color is to be determined as light. Defaults to 0.5.
+    /// - Returns: True or false for isLight
+    public func isLight(threshold: CGFloat = 0.5) -> Bool {
+        let originalCGColor = cgColor
+
+        // algorithm from: http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
+        let RGBCGColor = originalCGColor.converted(to: CGColorSpaceCreateDeviceRGB(), intent: .defaultIntent, options: nil)
+        guard let components = RGBCGColor?.components else {
+            return false
+        }
+        guard components.count >= 3 else {
+            return false
+        }
+        let brightness = CGFloat(((components[0] * 299) + (components[1] * 587) + (components[2] * 114)) / 1_000)
+        return brightness > threshold
+    }
+
+
+    func lighter(by percentage: CGFloat = 30.0) -> UIColor? {
+        return adjust(by: abs(percentage) )
+    }
+
+    func darker(by percentage: CGFloat = 30.0) -> UIColor? {
+        return adjust(by: -1 * abs(percentage) )
+    }
+
+    private func adjust(by percentage: CGFloat = 30.0) -> UIColor? {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        if getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
+            return UIColor(red: min(red + percentage/100, 1.0),
+                           green: min(green + percentage/100, 1.0),
+                           blue: min(blue + percentage/100, 1.0),
+                           alpha: alpha)
+        } else {
+            return nil
+        }
+    }
 }
