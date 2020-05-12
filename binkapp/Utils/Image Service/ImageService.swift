@@ -57,8 +57,15 @@ final class ImageService {
             guard let url = plan.image(ofType: .hero)?.url else { return nil }
             return url
         case .membershipPlanTier(let card):
-            guard let url = card.image(ofType: .tier)?.url else { return nil }
-            return url
+            /// If we have a tier image, return that
+            if let tierImageUrl = card.image(ofType: .hero)?.url {
+                return tierImageUrl
+                /// Otherwise return the hero image url
+            } else if let heroImageUrl = card.image(ofType: .hero)?.url {
+                return heroImageUrl
+            } else {
+                return nil
+            }
         case .membershipPlanOfferTile(let url):
             return url
         }
