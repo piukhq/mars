@@ -60,9 +60,7 @@ class FormField {
         
         func keyboardType() -> UIKeyboardType {
             switch self {
-            case .cardNumber:
-                return .numberPad
-            case .text, .sensitive, .confirmPassword:
+            case .cardNumber, .text, .sensitive, .confirmPassword:
                 return .asciiCapable
             case .email:
                 return .emailAddress
