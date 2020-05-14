@@ -176,7 +176,6 @@ if [[ "$CONFIGURATION" == "Alpha" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework"
   install_framework "${PODS_ROOT}/ZendeskCommonUISDK/CommonUISDK.framework"
   install_framework "${PODS_ROOT}/ZendeskCoreSDK/ZendeskCoreSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskMessagingAPISDK/MessagingAPI.framework"
@@ -184,7 +183,6 @@ if [[ "$CONFIGURATION" == "Alpha" ]]; then
   install_framework "${PODS_ROOT}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportProvidersSDK/SupportProvidersSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportSDK/SupportSDK.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/iOSDropDown/iOSDropDown.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
 if [[ "$CONFIGURATION" == "Beta" ]]; then
@@ -203,7 +201,6 @@ if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework"
   install_framework "${PODS_ROOT}/ZendeskCommonUISDK/CommonUISDK.framework"
   install_framework "${PODS_ROOT}/ZendeskCoreSDK/ZendeskCoreSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskMessagingAPISDK/MessagingAPI.framework"
@@ -211,7 +208,6 @@ if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_framework "${PODS_ROOT}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportProvidersSDK/SupportProvidersSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportSDK/SupportSDK.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/iOSDropDown/iOSDropDown.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
 if [[ "$CONFIGURATION" == "Merge Request" ]]; then
@@ -230,7 +226,6 @@ if [[ "$CONFIGURATION" == "Merge Request" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework"
   install_framework "${PODS_ROOT}/ZendeskCommonUISDK/CommonUISDK.framework"
   install_framework "${PODS_ROOT}/ZendeskCoreSDK/ZendeskCoreSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskMessagingAPISDK/MessagingAPI.framework"
@@ -238,7 +233,6 @@ if [[ "$CONFIGURATION" == "Merge Request" ]]; then
   install_framework "${PODS_ROOT}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportProvidersSDK/SupportProvidersSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportSDK/SupportSDK.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/iOSDropDown/iOSDropDown.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
 if [[ "$CONFIGURATION" == "Nightly" ]]; then
@@ -257,7 +251,6 @@ if [[ "$CONFIGURATION" == "Nightly" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework"
   install_framework "${PODS_ROOT}/ZendeskCommonUISDK/CommonUISDK.framework"
   install_framework "${PODS_ROOT}/ZendeskCoreSDK/ZendeskCoreSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskMessagingAPISDK/MessagingAPI.framework"
@@ -265,7 +258,6 @@ if [[ "$CONFIGURATION" == "Nightly" ]]; then
   install_framework "${PODS_ROOT}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportProvidersSDK/SupportProvidersSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportSDK/SupportSDK.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/iOSDropDown/iOSDropDown.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
 if [[ "$CONFIGURATION" == "App Store" ]]; then
@@ -284,7 +276,6 @@ if [[ "$CONFIGURATION" == "App Store" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework"
   install_framework "${PODS_ROOT}/ZendeskCommonUISDK/CommonUISDK.framework"
   install_framework "${PODS_ROOT}/ZendeskCoreSDK/ZendeskCoreSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskMessagingAPISDK/MessagingAPI.framework"
@@ -292,7 +283,6 @@ if [[ "$CONFIGURATION" == "App Store" ]]; then
   install_framework "${PODS_ROOT}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportProvidersSDK/SupportProvidersSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportSDK/SupportSDK.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/iOSDropDown/iOSDropDown.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
 if [[ "$CONFIGURATION" == "Gamma" ]]; then
@@ -311,7 +301,6 @@ if [[ "$CONFIGURATION" == "Gamma" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework"
   install_framework "${PODS_ROOT}/ZendeskCommonUISDK/CommonUISDK.framework"
   install_framework "${PODS_ROOT}/ZendeskCoreSDK/ZendeskCoreSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskMessagingAPISDK/MessagingAPI.framework"
@@ -319,7 +308,6 @@ if [[ "$CONFIGURATION" == "Gamma" ]]; then
   install_framework "${PODS_ROOT}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportProvidersSDK/SupportProvidersSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportSDK/SupportSDK.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/iOSDropDown/iOSDropDown.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
 if [[ "$CONFIGURATION" == "App Store (Internal)" ]]; then
@@ -338,7 +326,6 @@ if [[ "$CONFIGURATION" == "App Store (Internal)" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework"
   install_framework "${PODS_ROOT}/ZendeskCommonUISDK/CommonUISDK.framework"
   install_framework "${PODS_ROOT}/ZendeskCoreSDK/ZendeskCoreSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskMessagingAPISDK/MessagingAPI.framework"
@@ -346,7 +333,6 @@ if [[ "$CONFIGURATION" == "App Store (Internal)" ]]; then
   install_framework "${PODS_ROOT}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportProvidersSDK/SupportProvidersSDK.framework"
   install_framework "${PODS_ROOT}/ZendeskSupportSDK/SupportSDK.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/iOSDropDown/iOSDropDown.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

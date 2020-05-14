@@ -8,8 +8,6 @@
 
 import UIKit
 import CoreData
-import Fabric
-import Crashlytics
 import Firebase
 import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
@@ -25,9 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
         #endif
-
-        // Crashlytics
-        Fabric.with([Crashlytics.self])
 
         // Analytics
         #if RELEASE
