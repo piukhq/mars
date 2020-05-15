@@ -926,6 +926,7 @@
 		EFEB5BFC237E96F500E18743 /* CGFloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtension.swift; sourceTree = "<group>"; };
 		EFEB5BFE2382984B00E18743 /* HyperlinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkButton.swift; sourceTree = "<group>"; };
 		EFEB5C0023853B7900E18743 /* WalletRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRefreshManager.swift; sourceTree = "<group>"; };
+		EFEF54A5246EA96400A630F3 /* binkapp - 15-05-20 - Many to many card and images.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 15-05-20 - Many to many card and images.xcdatamodel"; sourceTree = "<group>"; };
 		EFF59F14234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardDetailLinkLoyaltyCardCell.xib; sourceTree = "<group>"; };
 		EFF59F17234B73C900CF3992 /* CardDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
 		EFF59F18234B73C900CF3992 /* CardDetailInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardDetailInfoTableViewCell.xib; sourceTree = "<group>"; };
@@ -4265,6 +4266,7 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EFEF54A5246EA96400A630F3 /* binkapp - 15-05-20 - Many to many card and images.xcdatamodel */,
 				EF6921792469B4320049875B /* binkapp - 11-05-20 - Plan card.xcdatamodel */,
 				EFFF863E24224CB1007ABAB8 /* binkapp - Plan Feature Set Has Vouchers.xcdatamodel */,
 				EFA8101724055F570000D21D /* binkapp - Plan Dynamic Content.xcdatamodel */,
@@ -4272,7 +4274,7 @@
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = EF6921792469B4320049875B /* binkapp - 11-05-20 - Plan card.xcdatamodel */;
+			currentVersion = EFEF54A5246EA96400A630F3 /* binkapp - 15-05-20 - Many to many card and images.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
