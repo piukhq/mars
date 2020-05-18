@@ -116,7 +116,6 @@ extension UIColor {
         return brightness > threshold
     }
 
-
     func lighter(by percentage: CGFloat = 30.0) -> UIColor? {
         return adjust(by: abs(percentage) )
     }
