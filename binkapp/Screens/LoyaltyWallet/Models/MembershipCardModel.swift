@@ -87,11 +87,13 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             guard let image = $0 as? CD_MembershipCardImage else { return }
             context.delete(image)
         }
-        
-        images?.forEach { image in
-            let cdImage = image.mapToCoreData(context, .update, overrideID: nil)
-            update(cdImage, \.card, with: cdObject, delta: delta)
-            cdObject.addImagesObject(cdImage)
+        if let images = images {
+            for (index, image) in images.enumerated() {
+                let indexID = MembershipCardImageModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                let cdImage = image.mapToCoreData(context, .update, overrideID: indexID)
+                cdImage.addMembershipCardsObject(cdObject)
+                cdObject.addImagesObject(cdImage)
+            }
         }
 
         if let account = account {
