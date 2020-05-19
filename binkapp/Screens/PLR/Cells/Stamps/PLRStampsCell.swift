@@ -22,8 +22,10 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
 
         self.viewModel = viewModel
         stampsCollectionView.register(PLRStampViewCell.self, asNib: true)
+        let layout = LeftAlignedCollectionViewFlowLayout()
+        stampsCollectionView.collectionViewLayout = layout
         stampsCollectionView.isScrollEnabled = false
-        if let layout = stampsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+        if let layout = stampsCollectionView.collectionViewLayout as? LeftAlignedCollectionViewFlowLayout {
             layout.minimumInteritemSpacing = Constants.interimSpacing
             stampsCollectionView.translatesAutoresizingMaskIntoConstraints = false
             stampsCollectionView.dataSource = self
@@ -37,7 +39,7 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
 
 extension PLRStampsCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.stampsAvailable
+        return 20
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

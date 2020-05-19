@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,7 +44,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sa-1W-oCR">
-                                <rect key="frame" x="20" y="68" width="330" height="34"/>
+                                <rect key="frame" x="20" y="68" width="0.0" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="VuS-bO-30T"/>
                                 </constraints>
@@ -97,19 +97,18 @@
                         <constraints>
                             <constraint firstItem="9sa-1W-oCR" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="3mp-Be-tLx"/>
                             <constraint firstItem="S5C-yw-UbQ" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="7kF-d6-edg"/>
+                            <constraint firstAttribute="trailing" secondItem="S5C-yw-UbQ" secondAttribute="trailing" constant="20" id="FMv-8q-YBF"/>
                             <constraint firstAttribute="bottom" secondItem="1HV-cm-aY3" secondAttribute="bottom" constant="20" id="FSe-wr-yX2"/>
                             <constraint firstItem="DPf-NE-gRU" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="HCH-rh-cth"/>
                             <constraint firstItem="1HV-cm-aY3" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="O3j-Ls-RTg"/>
                             <constraint firstItem="Vqm-8a-YmY" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="SCm-HW-ACY"/>
                             <constraint firstItem="1HV-cm-aY3" firstAttribute="top" secondItem="Vqm-8a-YmY" secondAttribute="bottom" id="TOA-fj-2dy"/>
-                            <constraint firstAttribute="trailing" secondItem="9sa-1W-oCR" secondAttribute="trailing" constant="20" id="eiE-cy-LKe"/>
                             <constraint firstItem="Vqm-8a-YmY" firstAttribute="top" secondItem="S5C-yw-UbQ" secondAttribute="bottom" constant="10" id="eyB-nd-y9c"/>
                             <constraint firstItem="DPf-NE-gRU" firstAttribute="top" secondItem="dx0-vf-5CV" secondAttribute="bottom" constant="-2" id="j4f-39-UdG"/>
                             <constraint firstItem="dx0-vf-5CV" firstAttribute="top" secondItem="uLh-js-JTM" secondAttribute="top" constant="18" id="kGr-E8-vz0"/>
                             <constraint firstItem="9sa-1W-oCR" firstAttribute="top" secondItem="DPf-NE-gRU" secondAttribute="bottom" constant="10" id="okd-x3-7DT"/>
                             <constraint firstItem="dx0-vf-5CV" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="pay-Vn-g7U"/>
                             <constraint firstItem="S5C-yw-UbQ" firstAttribute="top" secondItem="9sa-1W-oCR" secondAttribute="bottom" constant="8" id="uf1-Hb-Dtd"/>
-                            <constraint firstAttribute="trailing" secondItem="S5C-yw-UbQ" secondAttribute="trailing" constant="20" id="vMJ-bc-CWO"/>
                         </constraints>
                     </view>
                 </subviews>
