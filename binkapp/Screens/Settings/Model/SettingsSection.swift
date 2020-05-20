@@ -40,10 +40,12 @@ struct SettingsRow {
     let title: String
     let subtitle: String?
     let action: RowAction
+    let actionRequired: Bool
     
-    init(title: String, subtitle: String? = nil, action: RowAction) {
+    init(title: String, subtitle: String? = nil, action: RowAction, actionRequired: Bool = false) {
         self.title = title
         self.subtitle = subtitle
         self.action = action
+        self.actionRequired = actionRequired
     }
 }

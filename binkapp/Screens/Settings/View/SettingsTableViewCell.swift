@@ -46,6 +46,17 @@ class SettingsTableViewCell: UITableViewCell {
         return stack
     }()
     
+    private lazy var actionRequiredIndicator: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.widthAnchor.constraint(equalToConstant:10).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        view.backgroundColor = .systemRed
+        view.layer.cornerRadius = 5
+        contentView.addSubview(view)
+        return view
+    }()
+    
     private lazy var chevron: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "iconsChevronRight"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,6 +83,8 @@ class SettingsTableViewCell: UITableViewCell {
             separator.leftAnchor.constraint(equalTo: labelStack.leftAnchor),
             separator.rightAnchor.constraint(equalTo: labelStack.rightAnchor),
             separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            actionRequiredIndicator.rightAnchor.constraint(equalTo: chevron.leftAnchor, constant: -10),
+            actionRequiredIndicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             chevron.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             chevron.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.chevronRightPadding)
         ])
@@ -88,5 +101,6 @@ class SettingsTableViewCell: UITableViewCell {
         }
         
         separator.isHidden = !showSeparator
+        actionRequiredIndicator.isHidden = !rowData.actionRequired
     }
 }
