@@ -437,7 +437,6 @@
 		EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF59F22234DEE7500CF3992 /* DetailNavigationTitleView.swift */; };
 		EFF59F25234DEE8E00CF3992 /* DetailNavigationTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFF59F24234DEE8E00CF3992 /* DetailNavigationTitleView.xib */; };
 		EFF5CD61244F34A8009021A4 /* WalletService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF5CD60244F34A8009021A4 /* WalletService.swift */; };
-		EFF5CD63245AFDF0009021A4 /* AppleAuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF5CD62245AFDF0009021A4 /* AppleAuthController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -933,7 +932,6 @@
 		EFF59F22234DEE7500CF3992 /* DetailNavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailNavigationTitleView.swift; sourceTree = "<group>"; };
 		EFF59F24234DEE8E00CF3992 /* DetailNavigationTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailNavigationTitleView.xib; sourceTree = "<group>"; };
 		EFF5CD60244F34A8009021A4 /* WalletService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletService.swift; sourceTree = "<group>"; };
-		EFF5CD62245AFDF0009021A4 /* AppleAuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthController.swift; sourceTree = "<group>"; };
 		EFFF863E24224CB1007ABAB8 /* binkapp - Plan Feature Set Has Vouchers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - Plan Feature Set Has Vouchers.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2072,7 +2070,6 @@
 				EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */,
 				EF8B7019235DDC75006CE3DD /* OnboardingViewController.xib */,
 				EF46E285235E007300BA2CAF /* OnboardingViewModel.swift */,
-				EFF5CD62245AFDF0009021A4 /* AppleAuthController.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -2880,7 +2877,6 @@
 				EFBDB103237B1468002D7898 /* CALayerExtension.swift in Sources */,
 				EFA5F7212379A7C70027AB80 /* _CD_FieldChoice.swift in Sources */,
 				BDD9C83C233BE493003CD616 /* MembershipPlanImageModel.swift in Sources */,
-				EFF5CD63245AFDF0009021A4 /* AppleAuthController.swift in Sources */,
 				EF94AF0F23DF55EE00AAA039 /* BinkTrackableButton.swift in Sources */,
 				EFA5F7242379A7C70027AB80 /* _CD_RegistrationField.swift in Sources */,
 				EFA5F73C2379A7C70027AB80 /* CD_PaymentCardCard.swift in Sources */,

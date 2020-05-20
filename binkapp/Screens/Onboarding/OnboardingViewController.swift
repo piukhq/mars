@@ -166,7 +166,13 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
 
     @available(iOS 13.0, *)
     @objc private func handleAppleIdRequest() {
-        AppleAuthController(viewForPresentationAnchor: view).handleAppleIdRequest()
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.email]
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
 
     private func configureUI() {
@@ -299,5 +305,41 @@ extension LayoutHelper {
         static let pageControlSize: CGSize = CGSize(width: 40, height: 40)
         static let autoScrollTimeInterval: TimeInterval = 12
         static let learningViewTopPadding: CGFloat = 50
+    }
+}
+
+// MARK: - Sign in with Apple
+
+struct SignInWithAppleRequest: Codable {
+    let authorizationCode: String
+
+    enum CodingKeys: String, CodingKey {
+        case authorizationCode = "authorization_code"
+    }
+}
+
+@available(iOS 13.0, *)
+extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        guard let window = view.window else {
+            fatalError("View has no window")
+        }
+        return window
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
+        guard let authCodeData = appleIDCredential.authorizationCode else { return }
+        let authCodeString = String(decoding: authCodeData, as: UTF8.self)
+        signInWithApple(authCode: authCodeString)
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("")
+    }
+    
+    private func signInWithApple(authCode: String) {
+        let request = SignInWithAppleRequest(authorizationCode: authCode)
+        print(request)
     }
 }
