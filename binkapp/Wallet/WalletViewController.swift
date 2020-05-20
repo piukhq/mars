@@ -29,6 +29,7 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
     internal lazy var blurBackground = defaultBlurredBackground()
 
     let refreshControl = UIRefreshControl()
+    private var hasSupportUpdates = false
 
     let viewModel: T
 
@@ -43,8 +44,6 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configureNavigationItem()
         
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .didLoadLocalWallet, object: nil)
@@ -90,8 +89,9 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
     
-    private func configureNavigationItem() {
-        let settingsBarButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+    private func configureNavigationItem(hasSupportUpdates: Bool) {
+        self.hasSupportUpdates = hasSupportUpdates
+        let settingsBarButton = UIBarButtonItem(image: UIImage(named: hasSupportUpdates ? "refresh" : "settings"), style: .plain, target: self, action: #selector(settingsButtonTapped))
         tabBarController?.navigationItem.rightBarButtonItem = settingsBarButton
         
         var rightInset: CGFloat = 0
@@ -109,12 +109,12 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
     }
     
     @objc func settingsButtonTapped() {
-        print("viewmodel > router > settigs")
+        viewModel.toSettings(hasSupportUpdates: hasSupportUpdates)
     }
     
     private func checkForZendeskUpdates() {
         ZendeskService.getIdentityRequestUpdates { hasUpdates in
-            // Update settings icon
+            self.configureNavigationItem(hasSupportUpdates: hasUpdates)
         }
     }
 

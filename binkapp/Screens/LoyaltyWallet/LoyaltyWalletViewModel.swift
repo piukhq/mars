@@ -74,4 +74,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
             }
         }
     }
+    
+    func toSettings(hasSupportUpdates: Bool) {
+        router.toSettings(hasSupportUpdates: hasSupportUpdates)
+    }
 }

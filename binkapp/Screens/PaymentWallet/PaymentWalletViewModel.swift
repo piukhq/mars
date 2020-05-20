@@ -55,4 +55,8 @@ class PaymentWalletViewModel: WalletViewModel {
             }
         })
     }
+    
+    func toSettings(hasSupportUpdates: Bool) {
+        router.toSettings(hasSupportUpdates: hasSupportUpdates)
+    }
 }
