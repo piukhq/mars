@@ -44,6 +44,8 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureNavigationItem()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .didLoadLocalWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshPostClear), name: .shouldTrashLocalWallets, object: nil)
@@ -86,6 +88,28 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
 
         guard let bar = navigationController?.navigationBar else { return }
         prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
+    }
+    
+    private func configureNavigationItem() {
+        let settingsBarButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+        tabBarController?.navigationItem.rightBarButtonItem = settingsBarButton
+        
+        var rightInset: CGFloat = 0
+        switch UIDevice.current.width {
+            case .iPhone5Size:
+                rightInset = 9
+            case .iPhone6Size:
+                rightInset = 9
+            case .iPhonePlusSize:
+                rightInset = 6
+            default:
+                rightInset = 7
+        }
+        settingsBarButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: rightInset)
+    }
+    
+    @objc func settingsButtonTapped() {
+        print("viewmodel > router > settigs")
     }
     
     private func checkForZendeskUpdates() {
