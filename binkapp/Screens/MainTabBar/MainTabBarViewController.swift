@@ -79,7 +79,7 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
     }
     
     @objc func settingsButtonTapped() {
-        viewModel.toSettings()
+        viewModel.toSettings(hasSupportUpdates: true)
     }
     
     func populateTabBar() {

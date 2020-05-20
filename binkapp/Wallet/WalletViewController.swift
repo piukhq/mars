@@ -69,6 +69,8 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         
         Current.wallet.reloadWalletsIfNecessary()
         configureLoadingIndicator()
+        
+        checkForZendeskUpdates()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,6 +86,12 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
 
         guard let bar = navigationController?.navigationBar else { return }
         prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
+    }
+    
+    private func checkForZendeskUpdates() {
+        ZendeskService.getIdentityRequestUpdates { hasUpdates in
+            // Update settings icon
+        }
     }
 
     func configureCollectionView() {

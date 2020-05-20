@@ -10,9 +10,11 @@ import UIKit
 
 struct SettingsFactory {
     private let router: MainScreenRouter
+    private let hasSupportUpdates: Bool
     
-    init(router: MainScreenRouter) {
+    init(router: MainScreenRouter, hasSupportUpdates: Bool) {
         self.router = router
+        self.hasSupportUpdates = hasSupportUpdates
     }
     
     func sectionData() -> [SettingsSection] {

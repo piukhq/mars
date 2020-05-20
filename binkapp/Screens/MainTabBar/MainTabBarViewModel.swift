@@ -79,8 +79,8 @@ class MainTabBarViewModel {
         router.toAddingOptionsViewController()
     }
     
-    func toSettings() {
-        router.toSettings()
+    func toSettings(hasSupportUpdates: Bool) {
+        router.toSettings(hasSupportUpdates: hasSupportUpdates)
     }
 }
 

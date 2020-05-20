@@ -12,9 +12,9 @@ class SettingsViewModel {
     private let factory: SettingsFactory
     let router: MainScreenRouter
     
-    init(router: MainScreenRouter) {
+    init(router: MainScreenRouter, hasSupportUpdates: Bool) {
         self.router = router
-        factory = SettingsFactory(router: router)
+        factory = SettingsFactory(router: router, hasSupportUpdates: hasSupportUpdates)
     }
     
     var sections: [SettingsSection] {

@@ -32,6 +32,8 @@ final class ZendeskService {
     }
 
     static func start() {
+        CoreLogger.enabled = true
+        CoreLogger.logLevel = .debug
         Zendesk.initialize(appId: ZendeskService.appId, clientId: ZendeskService.clientId, zendeskUrl: ZendeskService.url)
         Support.initialize(withZendesk: Zendesk.instance)
 
@@ -47,6 +49,13 @@ final class ZendeskService {
             return
         }
         setIdentity(fullName: "\(firstName) \(lastName)")
+    }
+    
+    static func getIdentityRequestUpdates(completion: @escaping (Bool) -> Void) {
+        let provider = ZDKRequestProvider()
+        provider.getUpdatesForDevice { requestUpdates in
+            completion(requestUpdates?.hasUpdatedRequests() == true)
+        }
     }
 
     private static func setIdentity(fullName: String?) {
