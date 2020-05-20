@@ -45,7 +45,7 @@ struct SettingsFactory {
                 action: .launchSupport(service: .faq)
             ),
             SettingsRow(
-                title: "\("settings_row_contact_title".localized)\(hasSupportUpdates ? "hasupdates" : "")",
+                title: "settings_row_contact_title".localized,
                 subtitle: "settings_row_contact_subtitle".localized,
                 action: .launchSupport(service: .contactUs),
                 actionRequired: hasSupportUpdates
