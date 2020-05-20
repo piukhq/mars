@@ -338,8 +338,43 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
         print("")
     }
     
+    // TODO: // Move to user service in future ticket. All login type requests should reuse the same code where possible
     private func signInWithApple(authCode: String) {
-        let request = SignInWithAppleRequest(authorizationCode: authCode)
-        print(request)
+        let loginRequest = SignInWithAppleRequest(authorizationCode: authCode)
+        let request = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
+        Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let email = response.email else {
+                    self?.handleLoginError()
+                    return
+                }
+                Current.userManager.setNewUser(with: response)
+
+                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
+                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                    guard success else {
+                        self?.handleLoginError()
+                        return
+                    }
+
+                    // Get latest user profile data in background and ignore any failure
+                    // TODO: Move to UserService in future ticket
+                    let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
+                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
+                        guard let response = try? result.get() else { return }
+                        Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                    }
+                    self?.viewModel.router.didLogin()
+                }
+            case .failure:
+                self?.handleLoginError()
+            }
+        }
+    }
+    
+    private func handleLoginError() {
+        Current.userManager.removeUser()
+        viewModel.router.displaySimplePopup(title: "error_title".localized, message: "login_error".localized)
     }
 }
