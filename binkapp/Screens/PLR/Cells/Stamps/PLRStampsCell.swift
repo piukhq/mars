@@ -22,18 +22,16 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
 
         self.viewModel = viewModel
         stampsCollectionView.register(PLRStampViewCell.self, asNib: true)
+        
         let layout = LeftAlignedCollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = Constants.interimSpacing
         stampsCollectionView.collectionViewLayout = layout
+        stampsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        stampsCollectionView.dataSource = self
         stampsCollectionView.isScrollEnabled = false
-        if let layout = stampsCollectionView.collectionViewLayout as? LeftAlignedCollectionViewFlowLayout {
-            layout.minimumInteritemSpacing = Constants.interimSpacing
-            stampsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-            stampsCollectionView.dataSource = self
-            stampsCollectionView.isScrollEnabled = false
-            stampsCollectionView.delegate = self
-            stampsCollectionView.backgroundColor = .clear
-            stampsCollectionView.clipsToBounds = false
-        }
+        stampsCollectionView.delegate = self
+        stampsCollectionView.backgroundColor = .clear
+        stampsCollectionView.clipsToBounds = false
     }
 }
 

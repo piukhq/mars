@@ -140,6 +140,7 @@
 		5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047522CE579B001BA964 /* Assets.xcassets */; };
 		5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */; };
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
+		70872F8024751E3500195679 /* LeftAlignedCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70872F7F24751E3500195679 /* LeftAlignedCollectionViewLayout.swift */; };
 		92CE3430695A6558F2EC1793 /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */; };
 		9C26930409A757F7CD2C794E /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */; };
 		B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */; };
@@ -609,6 +610,7 @@
 		5ECE049022CE579B001BA964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6249B35DF4CA178120671E6A /* Pods-binkapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.release.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.release.xcconfig"; sourceTree = "<group>"; };
 		6F8E73B24E8A8009DF9E4266 /* Pods-binkappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.release.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.release.xcconfig"; sourceTree = "<group>"; };
+		70872F7F24751E3500195679 /* LeftAlignedCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewLayout.swift; sourceTree = "<group>"; };
 		73A4EB9236825CAA23208015 /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		747EE940A8617CF70F3CD693 /* Pods-binkappUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.debug.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7C1A952F8EB9E33671155804 /* Pods-binkappUITests.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.nightly.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.nightly.xcconfig"; sourceTree = "<group>"; };
@@ -1328,6 +1330,7 @@
 		3CF054D322FDABCA0069E98A /* BinkUI */ = {
 			isa = PBXGroup;
 			children = (
+				70872F7E24751E1500195679 /* LeftAlignedCollectionViewLayout */,
 				EFD602EA243B9446003AC746 /* Animations */,
 				EFA81012240404F00000D21D /* Jailbroken */,
 				EF2E8823233A6FB000F678F3 /* Wallets */,
@@ -1499,6 +1502,14 @@
 				BD458B37236B417D0029A538 /* LoginViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		70872F7E24751E1500195679 /* LeftAlignedCollectionViewLayout */ = {
+			isa = PBXGroup;
+			children = (
+				70872F7F24751E3500195679 /* LeftAlignedCollectionViewLayout.swift */,
+			);
+			path = LeftAlignedCollectionViewLayout;
 			sourceTree = "<group>";
 		};
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
@@ -2741,6 +2752,7 @@
 				BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */,
 				EFA5F72A2379A7C70027AB80 /* CD_Voucher.swift in Sources */,
 				DB4D8EAF24471FF00085595D /* SettingsFactoryMock.swift in Sources */,
+				70872F8024751E3500195679 /* LeftAlignedCollectionViewLayout.swift in Sources */,
 				EFA5F71A2379A7C70027AB80 /* CD_BaseObject.swift in Sources */,
 				BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */,
 				EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */,

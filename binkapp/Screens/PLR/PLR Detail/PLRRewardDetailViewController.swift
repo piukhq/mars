@@ -19,7 +19,7 @@ class PLRRewardDetailViewController: BinkTrackableViewController {
         stackView.distribution = .fill
         stackView.alignment = .leading
         stackView.clipsToBounds = false
-        stackView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 20, right: 0)
+        stackView.margin = UIEdgeInsets(top: 16, left: 25, bottom: 20, right: 25)
         view.addSubview(stackView)
         return stackView
     }()
@@ -108,37 +108,23 @@ private extension PLRRewardDetailViewController {
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
             NSLayoutConstraint.activate([
-                cell.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
-                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-                cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight),
+                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
             ])
         case (.redeemed, .accumulator), (.expired, .accumulator):
             let cell: PLRAccumulatorInactiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
             NSLayoutConstraint.activate([
-                cell.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
-                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-                cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.accumulatorInactiveCellHeight),
+                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
             ])
         case (.inProgress, .stamps), (.issued, .stamps):
             let cell: PLRStampsActiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
-            NSLayoutConstraint.activate([
-                cell.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
-                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-                cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.stampsActiveCellHeight),
-            ])
         case (.redeemed, .stamps), (.expired, .stamps):
             let cell: PLRStampsInactiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
-            NSLayoutConstraint.activate([
-                cell.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
-                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-                cell.heightAnchor.constraint(equalToConstant: LayoutHelper.PLRCollectionViewCell.stampsInactiveCellHeight),
-            ])
         default:
             break
         }
@@ -148,27 +134,18 @@ private extension PLRRewardDetailViewController {
             codeLabel.text = viewModel.codeString
             codeLabel.textColor = codeLabelColor(forState: viewModel.voucherState)
             stackScrollView.add(arrangedSubview: codeLabel)
-            NSLayoutConstraint.activate([
-                codeLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            ])
             stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.codeLabelTopPadding, before: codeLabel)
         }
 
         if viewModel.shouldShowHeader {
             headerLabel.text = viewModel.headerString
             stackScrollView.add(arrangedSubview: headerLabel)
-            NSLayoutConstraint.activate([
-                headerLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            ])
             stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.headerLabelTopPadding, before: headerLabel)
         }
 
         if viewModel.shouldShowSubtext {
             subtextLabel.text = viewModel.subtextString
             stackScrollView.add(arrangedSubview: subtextLabel)
-            NSLayoutConstraint.activate([
-                subtextLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            ])
             let topPadding = viewModel.shouldShowHeader ? LayoutHelper.PLRRewardDetail.subtextLabelUnderHeaderTopPadding : LayoutHelper.PLRRewardDetail.subtextLabelTopPadding
             stackScrollView.customPadding(topPadding, before: subtextLabel)
         }
@@ -176,27 +153,18 @@ private extension PLRRewardDetailViewController {
         if viewModel.shouldShowIssuedDate {
             issuedDateLabel.text = viewModel.issuedDateString
             stackScrollView.add(arrangedSubview: issuedDateLabel)
-            NSLayoutConstraint.activate([
-                issuedDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            ])
             stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.dateLabelsTopPadding, before: issuedDateLabel)
         }
 
         if viewModel.shouldShowRedeemedDate {
             redeemedDateLabel.text = viewModel.redeemedDateString
             stackScrollView.add(arrangedSubview: redeemedDateLabel)
-            NSLayoutConstraint.activate([
-                redeemedDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            ])
             stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.dateLabelsTopPadding, before: redeemedDateLabel)
         }
 
         if viewModel.shouldShowExpiredDate {
             expiryDateLabel.text = viewModel.expiredDateString
             stackScrollView.add(arrangedSubview: expiryDateLabel)
-            NSLayoutConstraint.activate([
-                expiryDateLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            ])
             stackScrollView.customPadding(LayoutHelper.PLRRewardDetail.dateLabelsTopPadding, before: expiryDateLabel)
         }
 
@@ -212,8 +180,8 @@ private extension PLRRewardDetailViewController {
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: LayoutHelper.PLRRewardDetail.stackViewPadding),
-            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -LayoutHelper.PLRRewardDetail.stackViewPadding),
+            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
     }
 

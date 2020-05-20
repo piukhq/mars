@@ -14,9 +14,9 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         stackView.distribution = .fill
-        stackView.alignment = .center
+        stackView.alignment = .leading
         stackView.clipsToBounds = false
-        stackView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 20, right: 0)
+        stackView.margin = UIEdgeInsets(top: 12, left: 0, bottom: 20, right: 0)
         view.addSubview(stackView)
         return stackView
     }()
@@ -38,6 +38,7 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
     private lazy var collectionView: NestedCollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 12
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
@@ -76,11 +77,9 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50),
-            titleLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50),
-            subtitleLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50),
+            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
+            collectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
         ])
     }
 
@@ -108,14 +107,6 @@ extension PLRRewardsHistoryViewController: UICollectionViewDataSource, UICollect
         } else {
             fatalError("Could not get voucher earn type")
         }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
-            fatalError("Could not get voucher for index path")
-        }
-        let height = voucher.earnType == .accumulator ? LayoutHelper.PLRCollectionViewCell.accumulatorInactiveCellHeight : LayoutHelper.PLRCollectionViewCell.stampsInactiveCellHeight
-        return CGSize(width: collectionView.frame.width, height: height)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
