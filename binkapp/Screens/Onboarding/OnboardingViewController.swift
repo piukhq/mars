@@ -166,7 +166,7 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
 
     @available(iOS 13.0, *)
     @objc private func handleAppleIdRequest() {
-        AppleAuthController().handleAppleIdRequest()
+        AppleAuthController(viewForPresentationAnchor: view).handleAppleIdRequest()
     }
 
     private func configureUI() {

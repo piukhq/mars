@@ -11,9 +11,18 @@ import AuthenticationServices
 
 @available(iOS 13.0, *)
 final class AppleAuthController: NSObject, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-//    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-//        return self.view.window
-//    }
+    
+    private let view: UIView
+    init(viewForPresentationAnchor: UIView) {
+        self.view = viewForPresentationAnchor
+    }
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        guard let window = view.window else {
+            fatalError("View has no window")
+        }
+        return window
+    }
 
     struct SignInWithAppleRequest: Codable {
         let authorizationCode: String
@@ -50,6 +59,6 @@ final class AppleAuthController: NSObject, ASAuthorizationControllerDelegate, AS
 
     private func signInWithApple(authCode: String) {
         let request = SignInWithAppleRequest(authorizationCode: authCode)
-        
+        print(request)
     }
 }
