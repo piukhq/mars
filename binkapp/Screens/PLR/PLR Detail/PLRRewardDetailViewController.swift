@@ -102,28 +102,23 @@ private extension PLRRewardDetailViewController {
         view.backgroundColor = .white
         title = viewModel.title
 
+        var cell = PLRBaseCollectionViewCell()
         switch (viewModel.voucherState, viewModel.voucherEarnType) {
         case (.inProgress, .accumulator), (.issued, .accumulator):
-            let cell: PLRAccumulatorActiveCell = .fromNib()
-            cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
-            stackScrollView.add(arrangedSubview: cell)
-            cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
+            cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorActiveCell.self)
         case (.redeemed, .accumulator), (.expired, .accumulator):
-            let cell: PLRAccumulatorInactiveCell = .fromNib()
-            cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
-            stackScrollView.add(arrangedSubview: cell)
-            cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
+            cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorInactiveCell.self)
         case (.inProgress, .stamps), (.issued, .stamps):
-            let cell: PLRStampsActiveCell = .fromNib()
-            cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
-            stackScrollView.add(arrangedSubview: cell)
+            cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsActiveCell.self)
         case (.redeemed, .stamps), (.expired, .stamps):
-            let cell: PLRStampsInactiveCell = .fromNib()
-            cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
-            stackScrollView.add(arrangedSubview: cell)
+            cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
         default:
             break
         }
+        
+        cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
+        stackScrollView.add(arrangedSubview: cell)
+        cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
 
         // View decisioning
         if viewModel.shouldShowCode {

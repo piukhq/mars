@@ -51,3 +51,10 @@ class PLRBaseCollectionViewCell: UICollectionViewCell {
         layer.rasterizationScale = UIScreen.main.scale
     }
 }
+
+extension PLRBaseCollectionViewCell {
+    static func nibForCellType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type) -> T {
+        let cell: T = .fromNib()
+        return cell
+    }
+}
