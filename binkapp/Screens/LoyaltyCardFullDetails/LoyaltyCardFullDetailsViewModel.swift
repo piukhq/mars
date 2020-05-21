@@ -194,6 +194,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     // MARK: PLR
+
     
     var shouldShouldPLR: Bool {
         return membershipCard.membershipPlan?.isPLR ?? false && membershipCard.vouchers.count != 0
@@ -203,8 +204,8 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.activeVouchers?.count ?? 0
     }
     
-    func voucherForIndexPath(_ indexPath: IndexPath) -> CD_Voucher? {
-        return membershipCard.activeVouchers?[indexPath.row]
+    var vouchers: [CD_Voucher]? {
+        return membershipCard.activeVouchers
     }
     
     func toVoucherDetailScreen(voucher: CD_Voucher) {

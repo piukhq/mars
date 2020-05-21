@@ -107,10 +107,12 @@ private extension PLRRewardDetailViewController {
             let cell: PLRAccumulatorActiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
+            cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
         case (.redeemed, .accumulator), (.expired, .accumulator):
             let cell: PLRAccumulatorInactiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
+            cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
         case (.inProgress, .stamps), (.issued, .stamps):
             let cell: PLRStampsActiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)

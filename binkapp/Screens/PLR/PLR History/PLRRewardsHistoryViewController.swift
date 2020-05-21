@@ -78,12 +78,14 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
                     let cellViewModel = PLRCellViewModel(voucher: voucher)
                     cell.configureWithViewModel(cellViewModel)
                     stackScrollView.add(arrangedSubview: cell)
+                    cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
                     stackScrollView.customPadding(12, after: cell)
                 case (.redeemed, .accumulator), (.expired, .accumulator):
                     let cell: PLRAccumulatorInactiveCell = .fromNib()
                     let cellViewModel = PLRCellViewModel(voucher: voucher)
                     cell.configureWithViewModel(cellViewModel)
                     stackScrollView.add(arrangedSubview: cell)
+                    cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
                     stackScrollView.customPadding(12, after: cell)
                 case (.inProgress, .stamps), (.issued, .stamps):
                     let cell: PLRStampsActiveCell = .fromNib()

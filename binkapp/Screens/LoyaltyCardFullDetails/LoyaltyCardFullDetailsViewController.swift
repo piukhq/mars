@@ -20,6 +20,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.alignment = .center
         stackView.delegate = self
         stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
+        stackView.margin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
         return stackView
     }()
 
@@ -191,7 +192,45 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
 
         if viewModel.shouldShouldPLR {
-            
+            // TODO: Tidy this up
+            // TODO: Add tap gesture to navigate to reward detail
+            // TODO: Only add padding if last in array
+            if let vouchers = viewModel.vouchers {
+                for voucher in vouchers {
+                    // TODO: Should be in viewModel
+                    let state = VoucherState(rawValue: voucher.state ?? "")
+                    switch (state, voucher.earnType) {
+                    case (.inProgress, .accumulator), (.issued, .accumulator):
+                        let cell: PLRAccumulatorActiveCell = .fromNib()
+                        let cellViewModel = PLRCellViewModel(voucher: voucher)
+                        cell.configureWithViewModel(cellViewModel)
+                        stackScrollView.add(arrangedSubview: cell)
+                        cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
+                        stackScrollView.customPadding(12, after: cell)
+                    case (.redeemed, .accumulator), (.expired, .accumulator):
+                        let cell: PLRAccumulatorInactiveCell = .fromNib()
+                        let cellViewModel = PLRCellViewModel(voucher: voucher)
+                        cell.configureWithViewModel(cellViewModel)
+                        stackScrollView.add(arrangedSubview: cell)
+                        cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
+                        stackScrollView.customPadding(12, after: cell)
+                    case (.inProgress, .stamps), (.issued, .stamps):
+                        let cell: PLRStampsActiveCell = .fromNib()
+                        let cellViewModel = PLRCellViewModel(voucher: voucher)
+                        cell.configureWithViewModel(cellViewModel)
+                        stackScrollView.add(arrangedSubview: cell)
+                        stackScrollView.customPadding(12, after: cell)
+                    case (.redeemed, .stamps), (.expired, .stamps):
+                        let cell: PLRStampsInactiveCell = .fromNib()
+                        let cellViewModel = PLRCellViewModel(voucher: voucher)
+                        cell.configureWithViewModel(cellViewModel)
+                        stackScrollView.add(arrangedSubview: cell)
+                        stackScrollView.customPadding(12, after: cell)
+                    default:
+                        break
+                    }
+                }
+            }
         }
 
         if viewModel.shouldShowOfferTiles {
