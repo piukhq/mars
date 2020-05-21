@@ -13,8 +13,8 @@ class PLRAccumulatorCell: PLRBaseCollectionViewCell {
     @IBOutlet private weak var outerProgressBar: UIView!
     @IBOutlet private weak var innerProgressBarWidthConstraint: NSLayoutConstraint!
 
-    override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
-        super.configureWithViewModel(viewModel)
+    override func configureWithViewModel(_ viewModel: PLRCellViewModel, tapAction: PLRBaseCollectionViewCell.CellTapAction?) {
+        super.configureWithViewModel(viewModel, tapAction: tapAction)
         setupUI()
 
         innerProgressBar.backgroundColor = progressBarColor(forState: viewModel.voucherState)

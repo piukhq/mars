@@ -14,8 +14,8 @@ class PLRAccumulatorActiveCell: PLRAccumulatorCell {
     @IBOutlet private weak var earnProgressValueLabel: UILabel!
     @IBOutlet private weak var earnTargetValueLabel: UILabel!
 
-    override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
-        super.configureWithViewModel(viewModel)
+    override func configureWithViewModel(_ viewModel: PLRCellViewModel, tapAction: PLRBaseCollectionViewCell.CellTapAction?) {
+        super.configureWithViewModel(viewModel, tapAction: tapAction)
 
         earnProgressLabel.text = viewModel.earnProgressString
         earnTargetLabel.text = viewModel.earnTargetString

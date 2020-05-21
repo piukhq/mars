@@ -16,9 +16,9 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
 
     @IBOutlet private weak var stampsCollectionView: NestedCollectionView!
     private var viewModel: PLRCellViewModel!
-
-    override func configureWithViewModel(_ viewModel: PLRCellViewModel) {
-        super.configureWithViewModel(viewModel)
+    
+    override func configureWithViewModel(_ viewModel: PLRCellViewModel, tapAction: PLRBaseCollectionViewCell.CellTapAction?) {
+        super.configureWithViewModel(viewModel, tapAction: tapAction)
 
         self.viewModel = viewModel
         stampsCollectionView.register(PLRStampViewCell.self, asNib: true)

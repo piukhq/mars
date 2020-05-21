@@ -76,27 +76,35 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
                 case (.inProgress, .accumulator), (.issued, .accumulator):
                     let cell: PLRAccumulatorActiveCell = .fromNib()
                     let cellViewModel = PLRCellViewModel(voucher: voucher)
-                    cell.configureWithViewModel(cellViewModel)
+                    cell.configureWithViewModel(cellViewModel) {
+                        self.viewModel.toVoucherDetailScreen(voucher: voucher)
+                    }
                     stackScrollView.add(arrangedSubview: cell)
                     cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
                     stackScrollView.customPadding(12, after: cell)
                 case (.redeemed, .accumulator), (.expired, .accumulator):
                     let cell: PLRAccumulatorInactiveCell = .fromNib()
                     let cellViewModel = PLRCellViewModel(voucher: voucher)
-                    cell.configureWithViewModel(cellViewModel)
+                    cell.configureWithViewModel(cellViewModel) {
+                        self.viewModel.toVoucherDetailScreen(voucher: voucher)
+                    }
                     stackScrollView.add(arrangedSubview: cell)
                     cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
                     stackScrollView.customPadding(12, after: cell)
                 case (.inProgress, .stamps), (.issued, .stamps):
                     let cell: PLRStampsActiveCell = .fromNib()
                     let cellViewModel = PLRCellViewModel(voucher: voucher)
-                    cell.configureWithViewModel(cellViewModel)
+                    cell.configureWithViewModel(cellViewModel) {
+                        self.viewModel.toVoucherDetailScreen(voucher: voucher)
+                    }
                     stackScrollView.add(arrangedSubview: cell)
                     stackScrollView.customPadding(12, after: cell)
                 case (.redeemed, .stamps), (.expired, .stamps):
                     let cell: PLRStampsInactiveCell = .fromNib()
                     let cellViewModel = PLRCellViewModel(voucher: voucher)
-                    cell.configureWithViewModel(cellViewModel)
+                    cell.configureWithViewModel(cellViewModel) {
+                        self.viewModel.toVoucherDetailScreen(voucher: voucher)
+                    }
                     stackScrollView.add(arrangedSubview: cell)
                     stackScrollView.customPadding(12, after: cell)
                 default:

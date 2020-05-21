@@ -105,21 +105,21 @@ private extension PLRRewardDetailViewController {
         switch (viewModel.voucherState, viewModel.voucherEarnType) {
         case (.inProgress, .accumulator), (.issued, .accumulator):
             let cell: PLRAccumulatorActiveCell = .fromNib()
-            cell.configureWithViewModel(viewModel.voucherCellViewModel)
+            cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
             stackScrollView.add(arrangedSubview: cell)
             cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
         case (.redeemed, .accumulator), (.expired, .accumulator):
             let cell: PLRAccumulatorInactiveCell = .fromNib()
-            cell.configureWithViewModel(viewModel.voucherCellViewModel)
+            cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
             stackScrollView.add(arrangedSubview: cell)
             cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
         case (.inProgress, .stamps), (.issued, .stamps):
             let cell: PLRStampsActiveCell = .fromNib()
-            cell.configureWithViewModel(viewModel.voucherCellViewModel)
+            cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
             stackScrollView.add(arrangedSubview: cell)
         case (.redeemed, .stamps), (.expired, .stamps):
             let cell: PLRStampsInactiveCell = .fromNib()
-            cell.configureWithViewModel(viewModel.voucherCellViewModel)
+            cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
             stackScrollView.add(arrangedSubview: cell)
         default:
             break
