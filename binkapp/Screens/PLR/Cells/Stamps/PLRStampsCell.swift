@@ -26,18 +26,29 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
         let layout = LeftAlignedCollectionViewFlowLayout()
         layout.minimumInteritemSpacing = Constants.interimSpacing
         stampsCollectionView.collectionViewLayout = layout
+        stampsCollectionView.invalidateIntrinsicContentSize()
+        stampsCollectionView.collectionViewLayout.invalidateLayout()
         stampsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         stampsCollectionView.dataSource = self
         stampsCollectionView.isScrollEnabled = false
         stampsCollectionView.delegate = self
         stampsCollectionView.backgroundColor = .clear
         stampsCollectionView.clipsToBounds = false
+        stampsCollectionView.isUserInteractionEnabled = false
+        
+        /// Do a layout pass of the cell and the stamps collection view to ensure everything is laid out correctly
+        /// Removing this can cause the number of stamps in the collection view to be incorrect
+        invalidateIntrinsicContentSize()
+        layoutIfNeeded()
+        stampsCollectionView.collectionViewLayout.invalidateLayout()
+        stampsCollectionView.invalidateIntrinsicContentSize()
+        stampsCollectionView.layoutIfNeeded()
     }
 }
 
 extension PLRStampsCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return 100
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

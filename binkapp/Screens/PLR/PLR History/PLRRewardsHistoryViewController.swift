@@ -16,7 +16,7 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         stackView.distribution = .fill
         stackView.alignment = .leading
         stackView.clipsToBounds = false
-        stackView.margin = UIEdgeInsets(top: 12, left: 0, bottom: 20, right: 0)
+        stackView.margin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
         view.addSubview(stackView)
         return stackView
     }()
@@ -48,6 +48,13 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         collectionView.clipsToBounds = false
         collectionView.register(PLRAccumulatorInactiveCell.self, asNib: true)
         collectionView.register(PLRStampsInactiveCell.self, asNib: true)
+        
+        view.invalidateIntrinsicContentSize()
+        view.layoutIfNeeded()
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.invalidateIntrinsicContentSize()
+        collectionView.layoutIfNeeded()
+        
         return collectionView
     }()
 
@@ -77,8 +84,7 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
-            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
+            stackScrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
             collectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
         ])
     }

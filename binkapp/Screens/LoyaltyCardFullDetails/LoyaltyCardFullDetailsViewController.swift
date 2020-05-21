@@ -63,7 +63,6 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
     private lazy var plrCollectionView: NestedCollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 12
-        layout.estimatedItemSize = CGSize(width: 10, height: 10)
         let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
@@ -211,6 +210,7 @@ private extension LoyaltyCardFullDetailsViewController {
             stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: plrCollectionView)
             NSLayoutConstraint.activate([
                 plrCollectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+                plrCollectionView.centerXAnchor.constraint(equalTo: stackScrollView.centerXAnchor)
             ])
         }
 
@@ -353,13 +353,13 @@ extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICo
         }
     }
 
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 //        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
 //            fatalError("Could not get voucher for index path")
 //        }
 //        let height = voucher.earnType == .accumulator ? LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight : LayoutHelper.PLRCollectionViewCell.stampsActiveCellHeight
-//        return CGSize(width: collectionView.frame.width - (LayoutHelper.LoyaltyCardDetail.contentPadding * 2), height: height)
-//    }
+        return CGSize(width: collectionView.frame.width - (LayoutHelper.LoyaltyCardDetail.contentPadding * 2), height: 400)
+    }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let voucher = viewModel.voucherForIndexPath(indexPath) else { return }

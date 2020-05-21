@@ -183,6 +183,8 @@ private extension PLRRewardDetailViewController {
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
+        
+        view.layoutIfNeeded()
     }
 
     func codeLabelColor(forState state: VoucherState?) -> UIColor {
