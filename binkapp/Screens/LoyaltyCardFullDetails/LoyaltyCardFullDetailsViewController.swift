@@ -60,21 +60,6 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         return BinkModuleView()
     }()
 
-    private lazy var plrCollectionView: NestedCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 12
-        let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        collectionView.isScrollEnabled = false
-        collectionView.delegate = self
-        collectionView.backgroundColor = .clear
-        collectionView.clipsToBounds = false
-        collectionView.register(PLRAccumulatorActiveCell.self, asNib: true)
-        collectionView.register(PLRStampsActiveCell.self, asNib: true)
-        return collectionView
-    }()
-
     private lazy var offerTilesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -206,12 +191,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
 
         if viewModel.shouldShouldPLR {
-            stackScrollView.add(arrangedSubview: plrCollectionView)
-            stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: plrCollectionView)
-            NSLayoutConstraint.activate([
-                plrCollectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-                plrCollectionView.centerXAnchor.constraint(equalTo: stackScrollView.centerXAnchor)
-            ])
+            
         }
 
         if viewModel.shouldShowOfferTiles {
@@ -323,47 +303,6 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 
         let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
         navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
-    }
-}
-
-// MARK: - PLR Collection View
-
-extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.activeVouchersCount
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
-            fatalError("Could not get voucher for index path")
-        }
-
-        if voucher.earnType == .accumulator {
-            let cell: PLRAccumulatorActiveCell = collectionView.dequeue(indexPath: indexPath)
-            let cellViewModel = PLRCellViewModel(voucher: voucher)
-            cell.configureWithViewModel(cellViewModel)
-            return cell
-        } else if voucher.earnType == .stamps {
-            let cell: PLRStampsActiveCell = collectionView.dequeue(indexPath: indexPath)
-            let cellViewModel = PLRCellViewModel(voucher: voucher)
-            cell.configureWithViewModel(cellViewModel)
-            return cell
-        } else {
-            fatalError("Could not get voucher earn type")
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
-//            fatalError("Could not get voucher for index path")
-//        }
-//        let height = voucher.earnType == .accumulator ? LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight : LayoutHelper.PLRCollectionViewCell.stampsActiveCellHeight
-        return CGSize(width: collectionView.frame.width - (LayoutHelper.LoyaltyCardDetail.contentPadding * 2), height: 400)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else { return }
-        viewModel.toVoucherDetailScreen(voucher: voucher)
     }
 }
 
