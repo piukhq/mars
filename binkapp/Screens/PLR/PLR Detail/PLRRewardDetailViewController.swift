@@ -107,16 +107,10 @@ private extension PLRRewardDetailViewController {
             let cell: PLRAccumulatorActiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
-            NSLayoutConstraint.activate([
-                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
-            ])
         case (.redeemed, .accumulator), (.expired, .accumulator):
             let cell: PLRAccumulatorInactiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
             stackScrollView.add(arrangedSubview: cell)
-            NSLayoutConstraint.activate([
-                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
-            ])
         case (.inProgress, .stamps), (.issued, .stamps):
             let cell: PLRStampsActiveCell = .fromNib()
             cell.configureWithViewModel(viewModel.voucherCellViewModel)
@@ -183,8 +177,6 @@ private extension PLRRewardDetailViewController {
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
-        
-        view.layoutIfNeeded()
     }
 
     func codeLabelColor(forState state: VoucherState?) -> UIColor {
