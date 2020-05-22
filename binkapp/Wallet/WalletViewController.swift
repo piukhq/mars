@@ -71,6 +71,8 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         Current.wallet.reloadWalletsIfNecessary()
         configureLoadingIndicator()
         
+        /// In case the Zendesk SDK is slow to return a state, we should configure the navigation item to a default state
+        configureNavigationItem(hasSupportUpdates: false)
         checkForZendeskUpdates()
     }
 
