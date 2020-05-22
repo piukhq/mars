@@ -108,7 +108,7 @@ class FormField {
                 default:
                     return .text
                 }
-            case .password:
+            case .sensitive:
                 return .sensitive
             case .checkbox:
                 return .checkbox
