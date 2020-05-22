@@ -48,7 +48,7 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
 
 extension PLRStampsCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+        return viewModel.stampsAvailable
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

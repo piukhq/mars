@@ -192,7 +192,6 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
 
         if viewModel.shouldShouldPLR {
-            // TODO: Only add padding if last in array
             if let vouchers = viewModel.vouchers {
                 for voucher in vouchers {
                     // TODO: Should be in viewModel
@@ -216,8 +215,8 @@ private extension LoyaltyCardFullDetailsViewController {
                         self.viewModel.toVoucherDetailScreen(voucher: voucher)
                     }
                     stackScrollView.add(arrangedSubview: cell)
-                    cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
-                    stackScrollView.customPadding(12, after: cell)
+                    cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
+                    stackScrollView.customPadding(20, after: cell)
                 }
             }
         }

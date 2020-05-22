@@ -66,7 +66,6 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         
         // MARK: - Add vouchers
     
-        // TODO: Only add padding if last in array
         if let vouchers = viewModel.vouchers {
             for voucher in vouchers {
                 let state = VoucherState(rawValue: voucher.state ?? "")
@@ -88,8 +87,8 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
                     self.viewModel.toVoucherDetailScreen(voucher: voucher)
                 }
                 stackScrollView.add(arrangedSubview: cell)
-                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
-                stackScrollView.customPadding(12, after: cell)
+                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
+                stackScrollView.customPadding(20, after: cell)
             }
         }
     }

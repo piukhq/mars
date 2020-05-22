@@ -118,7 +118,7 @@ private extension PLRRewardDetailViewController {
         
         cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
         stackScrollView.add(arrangedSubview: cell)
-        cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50).isActive = true
+        cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
 
         // View decisioning
         if viewModel.shouldShowCode {
