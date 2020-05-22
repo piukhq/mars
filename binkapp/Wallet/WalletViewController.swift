@@ -91,7 +91,8 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
     
     private func configureNavigationItem(hasSupportUpdates: Bool) {
         self.hasSupportUpdates = hasSupportUpdates
-        let settingsBarButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(settingsButtonTapped))
+        let settingsIcon = UIImage(named: hasSupportUpdates ? "settings-notified" : "settings")?.withRenderingMode(.alwaysOriginal)
+        let settingsBarButton = UIBarButtonItem(image: settingsIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
         tabBarController?.navigationItem.rightBarButtonItem = settingsBarButton
         
         var rightInset: CGFloat = 0
