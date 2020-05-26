@@ -8,6 +8,12 @@
 
 import UIKit
 
+struct WalletViewControllerConstants {
+    static let dotViewHeightWidth: CGFloat = 10
+    static let dotViewRightPadding: CGFloat = 18
+    static let dotViewTopPadding: CGFloat = 3
+}
+
 class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -30,6 +36,7 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
 
     let refreshControl = UIRefreshControl()
     private var hasSupportUpdates = false
+    private let dotView = UIView()
 
     let viewModel: T
 
@@ -93,7 +100,7 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
     
     private func configureNavigationItem(hasSupportUpdates: Bool) {
         self.hasSupportUpdates = hasSupportUpdates
-        let settingsIcon = UIImage(named: hasSupportUpdates ? "settings-notified" : "settings")?.withRenderingMode(.alwaysOriginal)
+        let settingsIcon = UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal)
         let settingsBarButton = UIBarButtonItem(image: settingsIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
         tabBarController?.navigationItem.rightBarButtonItem = settingsBarButton
         
@@ -109,6 +116,23 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
                 rightInset = 7
         }
         settingsBarButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: rightInset)
+        
+        guard hasSupportUpdates else {
+            dotView.removeFromSuperview()
+            return
+        }
+        if let navBar = navigationController?.navigationBar {
+            dotView.translatesAutoresizingMaskIntoConstraints = false
+            dotView.backgroundColor = .systemRed
+            dotView.layer.cornerRadius = 5
+            navBar.addSubview(dotView)
+            NSLayoutConstraint.activate([
+                dotView.widthAnchor.constraint(equalToConstant: WalletViewControllerConstants.dotViewHeightWidth),
+                dotView.heightAnchor.constraint(equalToConstant: WalletViewControllerConstants.dotViewHeightWidth),
+                dotView.rightAnchor.constraint(equalTo: navBar.rightAnchor, constant: -WalletViewControllerConstants.dotViewRightPadding),
+                dotView.topAnchor.constraint(equalTo: navBar.topAnchor, constant: WalletViewControllerConstants.dotViewTopPadding)
+            ])
+        }
     }
     
     @objc func settingsButtonTapped() {
