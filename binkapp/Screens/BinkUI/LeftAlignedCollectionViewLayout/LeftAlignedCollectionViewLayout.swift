@@ -8,8 +8,9 @@
 
 import UIKit
 
+// https://stackoverflow.com/a/36016798
+// Layout code snippet taken from widely used Stack Overflow answer linked above.
 class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
-
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         let attributes = super.layoutAttributesForElements(in: rect)
 
@@ -25,7 +26,6 @@ class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
             leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
             maxY = max(layoutAttribute.frame.maxY , maxY)
         }
-
         return attributes
     }
 }

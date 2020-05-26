@@ -9,6 +9,11 @@
 import UIKit
 
 class PLRRewardsHistoryViewController: BinkTrackableViewController {
+    struct Constants {
+        static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
+        static let postCellPadding: CGFloat = 20
+    }
+    
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -16,7 +21,7 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         stackView.distribution = .fill
         stackView.alignment = .leading
         stackView.clipsToBounds = false
-        stackView.margin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
+        stackView.margin = Constants.stackViewMargin
         view.addSubview(stackView)
         return stackView
     }()
@@ -88,7 +93,7 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
                 }
                 stackScrollView.add(arrangedSubview: cell)
                 cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
-                stackScrollView.customPadding(20, after: cell)
+                stackScrollView.customPadding(Constants.postCellPadding, after: cell)
             }
         }
     }

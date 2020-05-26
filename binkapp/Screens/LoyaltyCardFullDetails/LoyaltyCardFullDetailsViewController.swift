@@ -8,6 +8,12 @@
 import UIKit
 
 class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring {
+    struct Constants {
+        static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
+        static let stackViewSpacing: CGFloat = 12
+        static let postCellPadding: CGFloat = 20
+        static let cornerRadius: CGFloat = 12
+    }
 
     // MARK: - UI Lazy Variables
 
@@ -20,7 +26,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.alignment = .center
         stackView.delegate = self
         stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
-        stackView.margin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
+        stackView.margin = Constants.stackViewMargin
         return stackView
     }()
 
@@ -28,7 +34,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = true
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 12
+        imageView.layer.cornerRadius = Constants.cornerRadius
         imageView.contentMode = .scaleAspectFill
         imageView.layer.applyDefaultBinkShadow()
         return imageView
@@ -49,7 +55,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.axis = .horizontal
-        stackView.spacing = 12
+        stackView.spacing = Constants.stackViewSpacing
         return stackView
     }()
 
@@ -68,7 +74,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.axis = .vertical
-        stackView.spacing = 12
+        stackView.spacing = Constants.stackViewSpacing
         return stackView
     }()
 
@@ -216,7 +222,7 @@ private extension LoyaltyCardFullDetailsViewController {
                     }
                     stackScrollView.add(arrangedSubview: cell)
                     cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
-                    stackScrollView.customPadding(20, after: cell)
+                    stackScrollView.customPadding(Constants.postCellPadding, after: cell)
                 }
             }
         }
