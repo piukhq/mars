@@ -214,6 +214,10 @@ class LoyaltyCardFullDetailsViewModel {
         }
         router.toVoucherDetailViewController(voucher: voucher, plan: plan)
     }
+    
+    func state(forVoucher voucher: CD_Voucher) -> VoucherState? {
+        return VoucherState(rawValue: voucher.state ?? "")
+    }
 }
 
 // MARK: Information rows

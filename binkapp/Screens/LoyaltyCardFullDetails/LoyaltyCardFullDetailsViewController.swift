@@ -200,8 +200,7 @@ private extension LoyaltyCardFullDetailsViewController {
         if viewModel.shouldShouldPLR {
             if let vouchers = viewModel.vouchers {
                 for voucher in vouchers {
-                    // TODO: Should be in viewModel
-                    let state = VoucherState(rawValue: voucher.state ?? "")
+                    let state = viewModel.state(forVoucher: voucher)
                     var cell = PLRBaseCollectionViewCell()
                     switch (state, voucher.earnType) {
                     case (.inProgress, .accumulator), (.issued, .accumulator):
