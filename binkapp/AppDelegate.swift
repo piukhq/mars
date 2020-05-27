@@ -11,6 +11,8 @@ import CoreData
 import Firebase
 import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
+import CardScan
+import Keys
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +40,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Initialise Zendesk
         ZendeskService.start()
+        
+        // Configure payment card scanning
+        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
 
         // Get latest user profile data
         // TODO: Move to UserService in future ticket
