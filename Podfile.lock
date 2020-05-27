@@ -4,6 +4,9 @@ PODS:
     - Alamofire (~> 5.0.0-rc.3)
   - AlamofireNetworkActivityLogger (3.0.0):
     - Alamofire (~> 5.0.0-rc.2)
+  - CardScan (1.0.5032):
+    - CardScan/Core (= 1.0.5032)
+  - CardScan/Core (1.0.5032)
   - CryptoSwift (1.1.3)
   - DeepDiff (2.2.0)
   - Disk (0.6.4)
@@ -121,6 +124,7 @@ DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.3)
   - AlamofireImage (~> 4.0.0-beta.6)
   - AlamofireNetworkActivityLogger
+  - CardScan
   - CryptoSwift
   - DeepDiff
   - Disk
@@ -141,6 +145,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - AlamofireNetworkActivityLogger
+    - CardScan
     - CryptoSwift
     - DeepDiff
     - Disk
@@ -180,6 +185,7 @@ SPEC CHECKSUMS:
   Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
   AlamofireImage: edf3216fd178a89d63e681e609909d7ac98fa3c6
   AlamofireNetworkActivityLogger: 94e8a7d454a4a9800cef1d0c1d3699754493684b
+  CardScan: 0fa4a2f584afcfe8b2291b802fe37fb986f7cae8
   CryptoSwift: 6b6e488df0598b3e9fa49254ed1a65e8c1b1e10b
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   Disk: dcee5c2e98fb72f9a924cde8da8435b08244a80e
@@ -212,6 +218,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: e183d32abac888c448469e2005c4a5a8c3ed73f0
   ZendeskSupportSDK: e52f37fa8bcba91f024b81025869fe5a2860f741
 
-PODFILE CHECKSUM: 8c69d7f88d35e07635c1f735cd1242ea513d5852
+PODFILE CHECKSUM: 751fef4dcd496b31d25b43e0b901dc09a388fc05
 
 COCOAPODS: 1.9.1
