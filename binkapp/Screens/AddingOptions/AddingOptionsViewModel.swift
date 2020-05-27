@@ -18,6 +18,10 @@ class AddingOptionsViewModel {
     func toLoyaltyScanner(delegate: BarcodeScannerViewControllerDelegate?) {
         router.toLoyaltyScanner(delegate: delegate)
     }
+    
+    func toPaymentCardScanner() {
+        toAddPaymentCardScreen()
+    }
 
     func toAddAuth(membershipPlan: CD_MembershipPlan, barcode: String) {
         router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner(barcode: barcode))
