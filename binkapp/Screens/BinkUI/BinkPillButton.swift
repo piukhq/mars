@@ -46,6 +46,9 @@ class BinkPillButton: BinkTrackableButton {
         }
 
         layer.cornerRadius = halfOfButtonHeight
+        if #available(iOS 13.0, *) {
+            layer.cornerCurve = .continuous
+        }
 
         setupActivityIndicator()
     }
@@ -100,6 +103,7 @@ class BinkMiniPillButton: BinkPillButton {
 extension LayoutHelper {
     struct PillButton {
         static let height: CGFloat = 52
+        static let cornerRadius: CGFloat = PillButton.height / 2
         static let widthPercentage: CGFloat = 0.75
         static let verticalSpacing: CGFloat = 25
         static let bottomPadding: CGFloat = 50
