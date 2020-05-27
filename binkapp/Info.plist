@@ -57,9 +57,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>We need your camera to scan loyalty cards. It will not be used for other purposes.</string>
+	<string>We need your camera to scan loyalty and payment cards. It will not be used for other purposes.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need your camera to scan loyalty cards. It will not be used for other purposes.</string>
+	<string>We need your camera to scan loyalty and payment cards. It will not be used for other purposes.</string>
 	<key>SECRET</key>
 	<string>$(SECRET)</string>
 	<key>UIAppFonts</key>
