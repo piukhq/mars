@@ -10,8 +10,9 @@ import UIKit
 import CardScan
 
 class AddingOptionsViewModel {
-    private let router: MainScreenRouter
+    private let strings = PaymentCardScannerStrings()
     
+    private let router: MainScreenRouter
     init(router: MainScreenRouter) {
         self.router = router
     }
@@ -21,7 +22,7 @@ class AddingOptionsViewModel {
     }
     
     func toPaymentCardScanner(delegate: ScanDelegate?) {
-        router.toPaymentCardScanner(delegate: delegate)
+        router.toPaymentCardScanner(strings: strings, delegate: delegate)
     }
 
     func toAddAuth(membershipPlan: CD_MembershipPlan, barcode: String) {

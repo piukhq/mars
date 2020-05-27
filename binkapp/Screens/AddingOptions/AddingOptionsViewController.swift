@@ -188,3 +188,21 @@ extension AddingOptionsViewController: ScanDelegate {
         //
     }
 }
+
+class PaymentCardScannerStrings: ScanStringsDataSource {
+    func scanCard() -> String {
+        return " "
+    }
+    
+    func positionCard() -> String {
+        return "Position your payment card in the area above"
+    }
+    
+    func backButton() -> String {
+        return " "
+    }
+    
+    func skipButton() -> String {
+        "Enter manually"
+    }
+}

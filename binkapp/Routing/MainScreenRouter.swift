@@ -109,8 +109,12 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPaymentCardScanner(delegate: ScanDelegate?) {
+    func toPaymentCardScanner(strings: ScanStringsDataSource, delegate: ScanDelegate?) {
         if let viewController = ScanViewController.createViewController(withDelegate: delegate) {
+            viewController.allowSkip = true
+            viewController.cornerColor = .white
+            viewController.torchButtonImage = UIImage(named: "payment_scanner_torch")
+            viewController.stringDataSource = strings
             navController?.pushViewController(viewController, animated: true)
         }
     }
