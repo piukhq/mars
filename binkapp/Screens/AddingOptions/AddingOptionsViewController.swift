@@ -185,7 +185,8 @@ extension AddingOptionsViewController: ScanDelegate {
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
-        //
+        viewModel.toAddPaymentCardScreen()
+        navigationController?.removeViewController(scanViewController)
     }
 }
 
