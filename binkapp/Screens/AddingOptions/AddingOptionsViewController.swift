@@ -181,7 +181,8 @@ extension AddingOptionsViewController: ScanDelegate {
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        print(creditCard)
+        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: nil, year: nil)
+        viewModel.toAddPaymentCardScreen(model: model)
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {

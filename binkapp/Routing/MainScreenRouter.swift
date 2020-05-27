@@ -119,11 +119,9 @@ class MainScreenRouter {
         }
     }
 
-    func toAddPaymentViewController() {
-        //TODO: Replace with information from scanner
-        let card = PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
+    func toAddPaymentViewController(model: PaymentCardCreateModel? = nil) {
         let repository = PaymentWalletRepository(apiClient: apiClient)
-        let viewModel = AddPaymentCardViewModel(router: self, repository: repository, paymentCard: card)
+        let viewModel = AddPaymentCardViewModel(router: self, repository: repository, paymentCard: model)
         let viewController = AddPaymentCardViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }

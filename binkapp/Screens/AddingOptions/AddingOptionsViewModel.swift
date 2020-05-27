@@ -33,8 +33,8 @@ class AddingOptionsViewModel {
         router.toBrowseBrandsViewController()
     }
     
-    func toAddPaymentCardScreen() {
-        router.toAddPaymentViewController()
+    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
+        router.toAddPaymentViewController(model: model)
     }
 
     @objc func popViewController() {
