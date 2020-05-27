@@ -116,7 +116,8 @@ extension FormDataSource {
             fieldType: .cardNumber,
             updated: updatedBlock,
             shouldChange: shouldChangeBlock,
-            fieldExited: fieldExitedBlock
+            fieldExited: fieldExitedBlock,
+            forcedValue: model.fullPan
         )
         
         let monthData = Calendar.current.monthSymbols.enumerated().compactMap { index, _ in
@@ -136,7 +137,9 @@ extension FormDataSource {
             shouldChange: shouldChangeBlock,
             fieldExited: fieldExitedBlock,
             pickerSelected: pickerUpdatedBlock,
-            manualValidate: manualValidateBlock)
+            manualValidate: manualValidateBlock,
+            forcedValue: model.month == nil || model.year == nil ? nil : "\(model.month ?? 0)/\(model.year ?? 0)"
+        )
 
         let nameOnCardField = FormField(
             title: "Name on card",
