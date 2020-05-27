@@ -9,6 +9,7 @@ import Foundation
 import SafariServices
 import UIKit
 import MessageUI
+import CardScan
 
 protocol MainScreenRouterDelegate: NSObjectProtocol {
     func router(_ router: MainScreenRouter, didLogin: Bool)
@@ -106,6 +107,10 @@ class MainScreenRouter {
         let viewModel = BarcodeScannerViewModel()
         let viewController = BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
         navController?.pushViewController(viewController, animated: true)
+    }
+    
+    func toPaymentCardScanner() {
+        let viewController =
     }
 
     func toAddPaymentViewController() {
