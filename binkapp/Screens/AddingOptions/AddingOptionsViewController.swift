@@ -9,6 +9,7 @@
 import UIKit
 import AVKit
 import AVFoundation
+import CardScan
 
 class AddingOptionsViewController: BinkTrackableViewController {
     enum ScanType {
@@ -115,7 +116,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
             case .loyalty:
                 viewModel.toLoyaltyScanner(delegate: self)
             case .payment:
-                viewModel.toPaymentCardScanner()
+                viewModel.toPaymentCardScanner(delegate: self)
             }
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { granted in
@@ -126,7 +127,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
                         case .loyalty:
                             self.viewModel.toLoyaltyScanner(delegate: self)
                         case .payment:
-                            self.viewModel.toPaymentCardScanner()
+                            self.viewModel.toPaymentCardScanner(delegate: self)
                         }
                     })
                 } else {
@@ -171,5 +172,19 @@ extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
         viewModel.toBrowseBrandsScreen()
         completion?()
+    }
+}
+
+extension AddingOptionsViewController: ScanDelegate {
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        print(creditCard)
+    }
+    
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        //
     }
 }

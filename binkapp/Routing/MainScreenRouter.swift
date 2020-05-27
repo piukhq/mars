@@ -109,8 +109,10 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPaymentCardScanner() {
-        let viewController =
+    func toPaymentCardScanner(delegate: ScanDelegate?) {
+        if let viewController = ScanViewController.createViewController(withDelegate: delegate) {
+            navController?.pushViewController(viewController, animated: true)
+        }
     }
 
     func toAddPaymentViewController() {
