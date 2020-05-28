@@ -33,7 +33,7 @@ final class APIClient {
     }
 
     enum APIVersion: String {
-        case v1_1 = "v=1.1"
+        case v1_1 = "v=1.1" // TODO: Deprecate this when 1.3 lands
         case v1_2 = "v=1.2"
     }
 
@@ -55,7 +55,7 @@ final class APIClient {
         return APIConstants.isProduction
     }
 
-    var apiVersion: APIVersion = .v1_1
+    var apiVersion: APIVersion = .v1_2
 
     private let successStatusRange = 200...299
     private let noResponseStatus = 204

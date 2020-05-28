@@ -15,6 +15,7 @@ enum APIEndpoint: Equatable {
     case login
     case register
     case facebook
+    case apple
     case logout
     case renew
     case me
@@ -107,6 +108,8 @@ enum APIEndpoint: Equatable {
             return "/users/register"
         case .facebook:
             return "/users/auth/facebook"
+        case .apple:
+            return "/users/auth/apple"
         case .logout:
             return "/users/me/logout"
         case .renew:

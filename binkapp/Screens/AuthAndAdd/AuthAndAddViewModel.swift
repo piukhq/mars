@@ -16,7 +16,7 @@ enum FieldType {
 
 enum InputType: Int {
     case textfield = 0
-    case password
+    case sensitive
     case dropdown
     case checkbox
 }
@@ -211,38 +211,55 @@ class AuthAndAddViewModel {
     }
     
     func addFieldToCard(formField: FormField) {
+        let isSensitive = formField.fieldType == .sensitive
         switch formField.columnKind {
         case .add:
             let addFieldsArray = membershipCardPostModel?.account?.addFields
             if let existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
-                existingField.value = formField.value
+                if isSensitive {
+                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
+                } else {
+                    existingField.value = formField.value
+                }
             } else {
-                let model = PostModel(column: formField.title, value: formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .add)
             }
         case .auth:
             let authoriseFieldsArray = membershipCardPostModel?.account?.authoriseFields
             if let existingField = authoriseFieldsArray?.first(where: { $0.column == formField.title }) {
-                existingField.value = formField.value
+                if isSensitive {
+                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
+                } else {
+                    existingField.value = formField.value
+                }
             } else {
-                let model = PostModel(column: formField.title, value: formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .auth)
             }
         case .enrol:
             let enrolFieldsArray = membershipCardPostModel?.account?.enrolFields
             if let existingField = enrolFieldsArray?.first(where: { $0.column == formField.title }) {
-                existingField.value = formField.value
+                if isSensitive {
+                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
+                } else {
+                    existingField.value = formField.value
+                }
             } else {
-                let model = PostModel(column: formField.title, value: formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .enrol)
             }
             
         case .register:
             let registrationFieldsArray = membershipCardPostModel?.account?.registrationFields
             if let existingField = registrationFieldsArray?.first(where: { $0.column == formField.title }) {
-                existingField.value = formField.value
+                if isSensitive {
+                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
+                } else {
+                    existingField.value = formField.value
+                }
             } else {
-                let model = PostModel(column: formField.title, value: formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .registration)
             }
         default:
