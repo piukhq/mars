@@ -32,8 +32,6 @@ final class ZendeskService {
     }
 
     static func start() {
-        CoreLogger.enabled = true
-        CoreLogger.logLevel = .debug
         Zendesk.initialize(appId: ZendeskService.appId, clientId: ZendeskService.clientId, zendeskUrl: ZendeskService.url)
         Support.initialize(withZendesk: Zendesk.instance)
 
