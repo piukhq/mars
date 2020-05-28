@@ -147,6 +147,7 @@ class FormField {
     let shouldChange: TextFieldShouldChange
     let manualValidate: ManualValidateBlock?
     let forcedValue: String?
+    let isReadOnly: Bool
     private(set) var value: String?
     
     typealias ValueUpdatedBlock = (FormField, String?) -> ()
@@ -155,7 +156,7 @@ class FormField {
     typealias FieldExitedBlock = (FormField) -> ()
     typealias ManualValidateBlock = (FormField) -> (Bool)
         
-    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil) {
+    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil, isReadOnly: Bool = false) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation
@@ -170,6 +171,7 @@ class FormField {
         self.manualValidate = manualValidate
         self.forcedValue = forcedValue
         self.value = forcedValue // Initialise the field's value with any forced value. If there isn't a forced value, the value will default to nil as normal.
+        self.isReadOnly = isReadOnly
     }
     
     func isValid() -> Bool {

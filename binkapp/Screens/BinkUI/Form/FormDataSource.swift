@@ -138,7 +138,9 @@ extension FormDataSource {
             fieldExited: fieldExitedBlock,
             pickerSelected: pickerUpdatedBlock,
             manualValidate: manualValidateBlock,
-            forcedValue: model.month == nil || model.year == nil ? nil : "\(model.month ?? 0)/\(model.year ?? 0)"
+            /// It's fine to force unwrap here, as we are already guarding against the values being nil and we don't want to provide default values
+            /// We will never reach the force unwrapping if either value is nil
+            forcedValue: model.month == nil || model.year == nil ? nil : "\(String(format: "%02d", model.month!))/\(model.year!)"
         )
 
         let nameOnCardField = FormField(
@@ -203,7 +205,8 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .add,
-                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil
+                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
+                            isReadOnly: field.fieldCommonName == .barcode
                         )
                     )
                 }
@@ -254,7 +257,8 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .auth,
-                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil
+                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
+                            isReadOnly: field.fieldCommonName == .barcode
                         )
                     )
                 }
