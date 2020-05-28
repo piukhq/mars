@@ -17,12 +17,14 @@ class SettingsFactoryMock {
         
         let accountSection = SettingsSection(title: "settings_section_account_title".localized, rows: [
             SettingsRow(
-                title: "settings_row_preferences_title".localized,
-                action: .pushToViewController(viewController: PreferencesViewController.self)
+                type: .preferences,
+                action: .pushToViewController(viewController: PreferencesViewController.self),
+                actionRequired: false
             ),
             SettingsRow(
-                title: "settings_row_logout_title".localized,
-                action: .logout
+                type: .logout,
+                action: .logout,
+                actionRequired: false
             )
         ])
         
@@ -32,22 +34,25 @@ class SettingsFactoryMock {
         
         let supportSection = SettingsSection(title: "settings_section_support_title".localized, rows: [
             SettingsRow(
-                title: "settings_row_faqs_title".localized,
+                type: .faq,
                 subtitle: "settings_row_faqs_subtitle".localized,
-                action: .launchSupport(service: .faq)
+                action: .launchSupport(service: .faq),
+                actionRequired: false
             ),
             SettingsRow(
-                title: "settings_row_contact_title".localized,
+                type: .contactUs,
                 subtitle: "settings_row_contact_subtitle".localized,
-                action: .launchSupport(service: .contactUs)
+                action: .launchSupport(service: .contactUs),
+                actionRequired: false
             ),
             SettingsRow(
-                title: "settings_row_rateapp_title".localized,
+                type: .rateThisApp,
                 action: .customAction(action: {
                     MainScreenRouter.openExternalURL(
                         with: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931?action=write-review"
                     )
-                })
+                }),
+                actionRequired: false
             )
         ])
         
@@ -57,14 +62,16 @@ class SettingsFactoryMock {
         
         let aboutSection = SettingsSection(title: "settings_section_about_title".localized, rows: [
             SettingsRow(
-                title: "settings_row_security_title".localized,
+                type: .securityAndPrivacy,
                 subtitle: "settings_row_security_subtitle".localized,
-                action: .pushToReusable(screen: .securityAndPrivacy)
+                action: .pushToReusable(screen: .securityAndPrivacy),
+                actionRequired: false
             ),
             SettingsRow(
-                title: "settings_row_howitworks_title".localized,
+                type: .howItWorks,
                 subtitle: "settings_row_howitworks_subtitle".localized,
-                action: .pushToReusable(screen: .howItWorks)
+                action: .pushToReusable(screen: .howItWorks),
+                actionRequired: false
             )
         ])
         
@@ -74,16 +81,14 @@ class SettingsFactoryMock {
         
         let legalSection = SettingsSection(title: "settings_section_legal_title".localized, rows: [
             SettingsRow(
-                title: "settings_row_privacypolicy_title".localized,
-                action: .customAction(action: {
-                    MainScreenRouter.openExternalURL(with: "https://bink.com/privacy-policy/")
-                })
+                type: .privacyPolicy,
+                action: .pushToReusable(screen: .privacyPolicy),
+                actionRequired: false
             ),
             SettingsRow(
-                title: "settings_row_termsandconditions_title".localized,
-                action: .customAction(action: {
-                    MainScreenRouter.openExternalURL(with: "https://bink.com/terms-and-conditions/")
-                })
+                type: .termsAndConditions,
+                action: .pushToReusable(screen: .termsAndConditions),
+                actionRequired: false
             )
         ])
         
@@ -94,9 +99,10 @@ class SettingsFactoryMock {
         #if DEBUG
         let debugSection = SettingsSection(title: "settings_section_debug_title".localized, rows: [
             SettingsRow(
-                title: "settings_section_debug_title".localized,
+                type: .debug,
                 subtitle: "settings_section_debug_subtitle".localized,
-                action: .pushToViewController(viewController: DebugMenuTableViewController.self)
+                action: .pushToViewController(viewController: DebugMenuTableViewController.self),
+                actionRequired: false
             )
         ])
         

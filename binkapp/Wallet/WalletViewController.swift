@@ -136,7 +136,11 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
     }
     
     @objc func settingsButtonTapped() {
-        viewModel.toSettings(hasSupportUpdates: hasSupportUpdates)
+        var actionRequiredSettings: [SettingsRow.RowType] = []
+        if hasSupportUpdates {
+            actionRequiredSettings.append(.contactUs)
+        }
+        viewModel.toSettings(rowsWithActionRequired: actionRequiredSettings)
     }
     
     private func checkForZendeskUpdates() {

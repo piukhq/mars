@@ -56,7 +56,7 @@ class PaymentWalletViewModel: WalletViewModel {
         })
     }
     
-    func toSettings(hasSupportUpdates: Bool) {
-        router.toSettings(hasSupportUpdates: hasSupportUpdates)
+    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
+        router.toSettings(rowsWithActionRequired: rowsWithActionRequired)
     }
 }
