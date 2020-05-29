@@ -32,11 +32,16 @@ class PaymentCardCreateModel: Codable {
     }
     
     private func formattFullPanIfNecessary() {
+        /// If we have scanned a card, we will have a fullPan available
+        /// This pan should not contain any spaces, but guard against it anyway
         if fullPan?.contains(" ") == false {
+            /// Using the indexes given a card type, insert a whitespace character at each index in the array
             if var formattedFullPan = fullPan, let whitespaceIndexes = cardType?.lengthRange().whitespaceIndexes {
                 whitespaceIndexes.forEach { index in
                     formattedFullPan.insert(" ", at: formattedFullPan.index(formattedFullPan.startIndex, offsetBy: index))
                 }
+                
+                /// Set the full pan to our newly formatted pan which includes whitespace
                 fullPan = formattedFullPan
             }
         }
