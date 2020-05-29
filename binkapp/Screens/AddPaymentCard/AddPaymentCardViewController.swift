@@ -148,10 +148,6 @@ extension AddPaymentCardViewController: URLSessionDelegate {
 }
 
 extension AddPaymentCardViewController: FormDataSourceDelegate {
-    func formattedFullPan(inPaymentCard paymentCard: PaymentCardCreateModel) -> String {
-        return ""
-    }
-    
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         if let type = viewModel.paymentCardType,
             let newValue = newValue,

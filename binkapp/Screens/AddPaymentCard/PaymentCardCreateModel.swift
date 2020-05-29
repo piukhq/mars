@@ -21,10 +21,24 @@ class PaymentCardCreateModel: Codable {
         self.month = month
         self.year = year
         
-        if let fullPan = fullPan { setType(with: fullPan) }
+        if let fullPan = fullPan {
+            setType(with: fullPan)
+            formattFullPanIfNecessary()
+        }
     }
     
     func setType(with pan: String) {
         self.cardType = PaymentCardType.type(from: pan)
+    }
+    
+    private func formattFullPanIfNecessary() {
+        if fullPan?.contains(" ") == false {
+            if var formattedFullPan = fullPan, let whitespaceIndexes = cardType?.lengthRange().whitespaceIndexes {
+                whitespaceIndexes.forEach { index in
+                    formattedFullPan.insert(" ", at: formattedFullPan.index(formattedFullPan.startIndex, offsetBy: index))
+                }
+                fullPan = formattedFullPan
+            }
+        }
     }
 }
