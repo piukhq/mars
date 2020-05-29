@@ -39,9 +39,6 @@ platform :ios do
     match(type: "adhoc", app_identifier: "com.bink.wallet", readonly: true)
     match(type: "development", app_identifier: "com.bink.wallet.alpha", readonly: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.mr", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.nightly", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.gamma", readonly: true)
 
   end
 
@@ -69,13 +66,10 @@ platform :ios do
 
     # Bink
 
+    match(type: "development", app_identifier: "com.bink.wallet.alpha", readonly: false, force_for_new_devices: true)
     match(type: "appstore", app_identifier: "com.bink.wallet", readonly: false, force_for_new_devices: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet", readonly: false, force_for_new_devices: true)
-    match(type: "development", app_identifier: "com.bink.wallet.alpha", readonly: false, force_for_new_devices: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta", readonly: false, force_for_new_devices: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.mr", readonly: false, force_for_new_devices: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.nightly", readonly: false, force_for_new_devices: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.gamma", readonly: false, force_for_new_devices: true)
 
   end
 
