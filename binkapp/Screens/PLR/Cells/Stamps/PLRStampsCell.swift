@@ -23,9 +23,9 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
         self.viewModel = viewModel
         stampsCollectionView.register(PLRStampViewCell.self, asNib: true)
         
-        let layout = LeftAlignedCollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = Constants.interimSpacing
-        stampsCollectionView.collectionViewLayout = layout
+        if let layout = stampsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumInteritemSpacing = Constants.interimSpacing
+        }
         stampsCollectionView.invalidateIntrinsicContentSize()
         stampsCollectionView.collectionViewLayout.invalidateLayout()
         stampsCollectionView.translatesAutoresizingMaskIntoConstraints = false
