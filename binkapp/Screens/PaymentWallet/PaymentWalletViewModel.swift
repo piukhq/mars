@@ -55,4 +55,8 @@ class PaymentWalletViewModel: WalletViewModel {
             }
         })
     }
+    
+    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
+        router.toSettings(rowsWithActionRequired: rowsWithActionRequired)
+    }
 }

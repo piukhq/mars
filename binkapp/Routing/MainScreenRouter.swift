@@ -57,8 +57,8 @@ class MainScreenRouter {
         displaySimplePopup(title: "Oops", message: "This feature has not yet been implemented.")
     }
     
-    func toSettings() {
-        let viewModel = SettingsViewModel(router: self)
+    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
+        let viewModel = SettingsViewModel(router: self, rowsWithActionRequired: rowsWithActionRequired)
         let settingsVC = SettingsViewController(viewModel: viewModel)
         let settingsNav = PortraitNavigationController(rootViewController: settingsVC)
         settingsNav.modalPresentationStyle = .fullScreen

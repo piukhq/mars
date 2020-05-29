@@ -48,6 +48,13 @@ final class ZendeskService {
         }
         setIdentity(fullName: "\(firstName) \(lastName)")
     }
+    
+    static func getIdentityRequestUpdates(completion: @escaping (Bool) -> Void) {
+        let provider = ZDKRequestProvider()
+        provider.getUpdatesForDevice { requestUpdates in
+            completion(requestUpdates?.hasUpdatedRequests() == true)
+        }
+    }
 
     private static func setIdentity(fullName: String?) {
         let identity = Identity.createAnonymous(name: fullName, email: Current.userManager.currentEmailAddress)
