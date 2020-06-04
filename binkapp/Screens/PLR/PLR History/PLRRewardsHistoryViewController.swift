@@ -9,14 +9,19 @@
 import UIKit
 
 class PLRRewardsHistoryViewController: BinkTrackableViewController {
+    struct Constants {
+        static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
+        static let postCellPadding: CGFloat = 20
+    }
+    
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .clear
         stackView.distribution = .fill
-        stackView.alignment = .center
+        stackView.alignment = .leading
         stackView.clipsToBounds = false
-        stackView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 20, right: 0)
+        stackView.margin = Constants.stackViewMargin
         view.addSubview(stackView)
         return stackView
     }()
@@ -33,21 +38,6 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .bodyTextLarge
         return label
-    }()
-
-    private lazy var collectionView: NestedCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 12
-        let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        collectionView.isScrollEnabled = false
-        collectionView.delegate = self
-        collectionView.backgroundColor = .clear
-        collectionView.clipsToBounds = false
-        collectionView.register(PLRAccumulatorInactiveCell.self, asNib: true)
-        collectionView.register(PLRStampsInactiveCell.self, asNib: true)
-        return collectionView
     }()
 
     private let viewModel: PLRRewardsHistoryViewModel
@@ -70,56 +60,42 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         titleLabel.text = viewModel.titleText
         subtitleLabel.text = viewModel.subtitleText
 
-        stackScrollView.add(arrangedSubviews: [titleLabel, subtitleLabel, collectionView])
+        stackScrollView.add(arrangedSubviews: [titleLabel, subtitleLabel])
         stackScrollView.customPadding(25, after: subtitleLabel)
 
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50),
-            titleLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50),
-            subtitleLabel.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -50),
+            stackScrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
         ])
-    }
-
-}
-
-extension PLRRewardsHistoryViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.vouchersCount
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
-            fatalError("Could not get voucher for index path")
+        
+        // MARK: - Add vouchers
+    
+        if let vouchers = viewModel.vouchers {
+            for voucher in vouchers {
+                let state = VoucherState(rawValue: voucher.state ?? "")
+                var cell = PLRBaseCollectionViewCell()
+                switch (state, voucher.earnType) {
+                case (.inProgress, .accumulator), (.issued, .accumulator):
+                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorActiveCell.self)
+                case (.redeemed, .accumulator), (.expired, .accumulator):
+                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorInactiveCell.self)
+                case (.inProgress, .stamps), (.issued, .stamps):
+                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsActiveCell.self)
+                case (.redeemed, .stamps), (.expired, .stamps):
+                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
+                default:
+                    break
+                }
+                let cellViewModel = PLRCellViewModel(voucher: voucher)
+                cell.configureWithViewModel(cellViewModel) {
+                    self.viewModel.toVoucherDetailScreen(voucher: voucher)
+                }
+                stackScrollView.add(arrangedSubview: cell)
+                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
+                stackScrollView.customPadding(Constants.postCellPadding, after: cell)
+            }
         }
-
-        let cellViewModel = PLRCellViewModel(voucher: voucher)
-        if voucher.earnType == .accumulator {
-            let cell: PLRAccumulatorInactiveCell = collectionView.dequeue(indexPath: indexPath)
-            cell.configureWithViewModel(cellViewModel)
-            return cell
-        } else if voucher.earnType == .stamps {
-            let cell: PLRStampsInactiveCell = collectionView.dequeue(indexPath: indexPath)
-            cell.configureWithViewModel(cellViewModel)
-            return cell
-        } else {
-            fatalError("Could not get voucher earn type")
-        }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
-            fatalError("Could not get voucher for index path")
-        }
-        let height = voucher.earnType == .accumulator ? LayoutHelper.PLRCollectionViewCell.accumulatorInactiveCellHeight : LayoutHelper.PLRCollectionViewCell.stampsInactiveCellHeight
-        return CGSize(width: collectionView.frame.width, height: height)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else { return }
-        viewModel.toVoucherDetailScreen(voucher: voucher)
-    }
 }

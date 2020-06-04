@@ -194,6 +194,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     // MARK: PLR
+
     
     var shouldShouldPLR: Bool {
         return membershipCard.membershipPlan?.isPLR ?? false && membershipCard.vouchers.count != 0
@@ -203,8 +204,8 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.activeVouchers?.count ?? 0
     }
     
-    func voucherForIndexPath(_ indexPath: IndexPath) -> CD_Voucher? {
-        return membershipCard.activeVouchers?[indexPath.row]
+    var vouchers: [CD_Voucher]? {
+        return membershipCard.activeVouchers
     }
     
     func toVoucherDetailScreen(voucher: CD_Voucher) {
@@ -212,6 +213,10 @@ class LoyaltyCardFullDetailsViewModel {
             fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
         }
         router.toVoucherDetailViewController(voucher: voucher, plan: plan)
+    }
+    
+    func state(forVoucher voucher: CD_Voucher) -> VoucherState? {
+        return VoucherState(rawValue: voucher.state ?? "")
     }
 }
 

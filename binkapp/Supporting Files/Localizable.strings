@@ -368,7 +368,7 @@
 
 // MARK: - Zendesk
 
-"zendesk_identity_prompt_message" = "Please enter you contact details";
+"zendesk_identity_prompt_message" = "Please enter your contact details";
 "zendesk_identity_prompt_first_name" = "First name";
 "zendesk_identity_prompt_last_name" = "Last name";
 

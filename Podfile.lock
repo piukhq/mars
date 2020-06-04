@@ -137,7 +137,7 @@ DEPENDENCIES:
   - KeychainAccess (~> 4.1)
   - Keys (from `Pods/CocoaPodsKeys`)
   - M13Checkbox
-  - SwiftyRSA
+  - "SwiftyRSA (from `git@git.bink.com:Pantheon/iOS/SwiftyRSA.git`)"
   - ZendeskSupportSDK
 
 SPEC REPOS:
@@ -168,7 +168,6 @@ SPEC REPOS:
     - KeychainAccess
     - M13Checkbox
     - nanopb
-    - SwiftyRSA
     - ZendeskCommonUISDK
     - ZendeskCoreSDK
     - ZendeskMessagingAPISDK
@@ -180,6 +179,13 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Keys:
     :path: Pods/CocoaPodsKeys
+  SwiftyRSA:
+    :git: "git@git.bink.com:Pantheon/iOS/SwiftyRSA.git"
+
+CHECKOUT OPTIONS:
+  SwiftyRSA:
+    :commit: 856b75c249607ee4fbd8634aea62135dfb17fd83
+    :git: "git@git.bink.com:Pantheon/iOS/SwiftyRSA.git"
 
 SPEC CHECKSUMS:
   Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
@@ -209,7 +215,7 @@ SPEC CHECKSUMS:
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   M13Checkbox: 6f59404540ac98ba83a3d1afac335895a40c6a5d
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  SwiftyRSA: 6e528fb1b1a87d5111c48081083b141d6d65f1cf
+  SwiftyRSA: 56a08a690d181194d7c4babc0daaeaeb6b71bf27
   ZendeskCommonUISDK: afbee7c58c04cf88012a48c079599ec0d1590d16
   ZendeskCoreSDK: 86513e62c1ab68913416c9044463d9b687ca944f
   ZendeskMessagingAPISDK: c12dacdb94a89a957d911d5cff82a7cc9ee9666b
@@ -218,6 +224,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: e183d32abac888c448469e2005c4a5a8c3ed73f0
   ZendeskSupportSDK: e52f37fa8bcba91f024b81025869fe5a2860f741
 
-PODFILE CHECKSUM: aeba7d5e4fe995aa08737895afb9478fd7189cdf
+PODFILE CHECKSUM: 7efa6d3755d648888b5532141ef9cde017af97ef
 
 COCOAPODS: 1.9.1

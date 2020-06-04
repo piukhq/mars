@@ -13,6 +13,9 @@ class PLRBaseCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var voucherAmountLabel: UILabel!
     @IBOutlet private weak var headlineLabel: UILabel!
     @IBOutlet private weak var voucherDescriptionLabel: UILabel!
+    
+    typealias CellTapAction = () -> Void
+    private var tapAction: CellTapAction?
 
     override var bounds: CGRect {
         didSet {
@@ -20,12 +23,20 @@ class PLRBaseCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func configureWithViewModel(_ viewModel: PLRCellViewModel) {
+    func configureWithViewModel(_ viewModel: PLRCellViewModel, tapAction: CellTapAction?) {
+        self.tapAction = tapAction
         setupShadow()
 
         voucherAmountLabel.text = viewModel.voucherAmountText
         voucherDescriptionLabel.text = viewModel.voucherDescriptionText
         headlineLabel.text = viewModel.headlineText
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func handleTapGesture() {
+        tapAction?()
     }
 
     private func setupShadow() {
@@ -38,5 +49,12 @@ class PLRBaseCollectionViewCell: UICollectionViewCell {
         layer.applyDefaultBinkShadow()
         layer.shouldRasterize = true
         layer.rasterizationScale = UIScreen.main.scale
+    }
+}
+
+extension PLRBaseCollectionViewCell {
+    static func nibForCellType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type) -> T {
+        let cell: T = .fromNib()
+        return cell
     }
 }
