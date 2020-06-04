@@ -147,7 +147,7 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
     
     private func checkForZendeskUpdates() {
         ZendeskService.getIdentityRequestUpdates { hasUpdates in
-            self.configureNavigationItem(hasSupportUpdates: true)
+            self.configureNavigationItem(hasSupportUpdates: hasUpdates)
         }
     }
 
