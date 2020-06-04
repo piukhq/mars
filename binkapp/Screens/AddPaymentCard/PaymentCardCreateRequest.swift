@@ -99,7 +99,7 @@ struct PaymentCardCreateRequest: Codable {
     private static func fakeFingerprint(pan: String, expiryYear: String, expiryMonth: String) -> String {
         // Based a hash of the pan, it's the key identifier of the card
         let stringToHash = "\(pan)|\(expiryMonth)|\(expiryYear)"
-        return stringToHash.hmac(algorithm: .MD5, key: "com.bink.paymentCardCreateRequest.fakeFingerprint")
+        return stringToHash.md5
     }
     
     private static func fakeToken() -> String {
