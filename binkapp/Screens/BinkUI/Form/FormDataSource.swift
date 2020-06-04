@@ -116,7 +116,8 @@ extension FormDataSource {
             fieldType: .cardNumber,
             updated: updatedBlock,
             shouldChange: shouldChangeBlock,
-            fieldExited: fieldExitedBlock
+            fieldExited: fieldExitedBlock,
+            forcedValue: model.fullPan
         )
         
         let monthData = Calendar.current.monthSymbols.enumerated().compactMap { index, _ in
@@ -136,7 +137,11 @@ extension FormDataSource {
             shouldChange: shouldChangeBlock,
             fieldExited: fieldExitedBlock,
             pickerSelected: pickerUpdatedBlock,
-            manualValidate: manualValidateBlock)
+            manualValidate: manualValidateBlock,
+            /// It's fine to force unwrap here, as we are already guarding against the values being nil and we don't want to provide default values
+            /// We will never reach the force unwrapping if either value is nil
+            forcedValue: model.month == nil || model.year == nil ? nil : "\(String(format: "%02d", model.month!))/\(model.year!)"
+        )
 
         let nameOnCardField = FormField(
             title: "Name on card",
@@ -200,7 +205,8 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .add,
-                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil
+                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
+                            isReadOnly: field.fieldCommonName == .barcode
                         )
                     )
                 }
@@ -251,7 +257,8 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .auth,
-                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil
+                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
+                            isReadOnly: field.fieldCommonName == .barcode
                         )
                     )
                 }

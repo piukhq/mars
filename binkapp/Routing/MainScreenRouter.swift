@@ -9,6 +9,7 @@ import Foundation
 import SafariServices
 import UIKit
 import MessageUI
+import CardScan
 
 protocol MainScreenRouterDelegate: NSObjectProtocol {
     func router(_ router: MainScreenRouter, didLogin: Bool)
@@ -107,12 +108,20 @@ class MainScreenRouter {
         let viewController = BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
         navController?.pushViewController(viewController, animated: true)
     }
+    
+    func toPaymentCardScanner(strings: ScanStringsDataSource, delegate: ScanDelegate?) {
+        if let viewController = ScanViewController.createViewController(withDelegate: delegate) {
+            viewController.allowSkip = true
+            viewController.cornerColor = .white
+            viewController.torchButtonImage = UIImage(named: "payment_scanner_torch")
+            viewController.stringDataSource = strings
+            navController?.pushViewController(viewController, animated: true)
+        }
+    }
 
-    func toAddPaymentViewController() {
-        //TODO: Replace with information from scanner
-        let card = PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
+    func toAddPaymentViewController(model: PaymentCardCreateModel? = nil) {
         let repository = PaymentWalletRepository(apiClient: apiClient)
-        let viewModel = AddPaymentCardViewModel(router: self, repository: repository, paymentCard: card)
+        let viewModel = AddPaymentCardViewModel(router: self, repository: repository, paymentCard: model)
         let viewController = AddPaymentCardViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }

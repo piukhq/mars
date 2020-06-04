@@ -9,8 +9,14 @@
 import UIKit
 import AVKit
 import AVFoundation
+import CardScan
 
 class AddingOptionsViewController: BinkTrackableViewController {
+    enum ScanType {
+        case loyalty
+        case payment
+    }
+    
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var stackviewBottomConstraint: NSLayoutConstraint!
@@ -85,7 +91,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
     }
     
     @objc func toAddLoyaltyCard() {
-        proceedWithCameraAccess()
+        proceedWithCameraAccess(scanType: .loyalty)
     }
     
     @objc func toBrowseBrands() {
@@ -93,7 +99,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
     }
     
     @objc func toAddPaymentCard() {
-        viewModel.toAddPaymentCardScreen()
+        proceedWithCameraAccess(scanType: .payment)
     }
     
     func displayNoScreenPopup() {
@@ -102,30 +108,40 @@ class AddingOptionsViewController: BinkTrackableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func proceedWithCameraAccess() {
+    private func proceedWithCameraAccess(scanType: ScanType) {
         let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         switch status {
         case .authorized:
-            viewModel.toLoyaltyScanner(delegate: self)
+            switch scanType {
+            case .loyalty:
+                viewModel.toLoyaltyScanner(delegate: self)
+            case .payment:
+                viewModel.toPaymentCardScanner(delegate: self)
+            }
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 if granted {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
                         guard let self = self else { return }
-                        self.viewModel.toLoyaltyScanner(delegate: self)
+                        switch scanType {
+                        case .loyalty:
+                            self.viewModel.toLoyaltyScanner(delegate: self)
+                        case .payment:
+                            self.viewModel.toPaymentCardScanner(delegate: self)
+                        }
                     })
                 } else {
-                    self.presentManuallyActionsPopup()
+                    self.presentEnterManuallyAlert(scanType: scanType)
                 }
             }
         case .denied:
-            self.presentManuallyActionsPopup()
+            self.presentEnterManuallyAlert(scanType: scanType)
         default:
             return
         }
     }
     
-    private func presentManuallyActionsPopup() {
+    private func presentEnterManuallyAlert(scanType: ScanType) {
         guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
         
         let alert = UIAlertController(title: "camera_denied_title".localized, message: "camera_denied_body".localized, preferredStyle: .alert)
@@ -133,7 +149,12 @@ class AddingOptionsViewController: BinkTrackableViewController {
             UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
         })
         let manualAction = UIAlertAction(title: "camera_denied_manually_option".localized, style: .default) { [weak self] _ in
-            self?.toBrowseBrands()
+            switch scanType {
+            case .loyalty:
+                self?.toBrowseBrands()
+            case .payment:
+                self?.viewModel.toAddPaymentCardScreen()
+            }
         }
         alert.addAction(manualAction)
         alert.addAction(allowAction)
@@ -151,5 +172,42 @@ extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
         viewModel.toBrowseBrandsScreen()
         completion?()
+    }
+}
+
+extension AddingOptionsViewController: ScanDelegate {
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        let month = Int(creditCard.expiryMonth ?? "")
+        let year = Int(creditCard.expiryYear ?? "")
+        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
+        viewModel.toAddPaymentCardScreen(model: model)
+        navigationController?.removeViewController(scanViewController)
+    }
+    
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        viewModel.toAddPaymentCardScreen()
+        navigationController?.removeViewController(scanViewController)
+    }
+}
+
+class PaymentCardScannerStrings: ScanStringsDataSource {
+    func scanCard() -> String {
+        return " "
+    }
+    
+    func positionCard() -> String {
+        return "Position your payment card in the area above"
+    }
+    
+    func backButton() -> String {
+        return " "
+    }
+    
+    func skipButton() -> String {
+        "Enter manually"
     }
 }

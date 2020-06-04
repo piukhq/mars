@@ -136,7 +136,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     // MARK: - Public Methods
     
     func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
-        let isEnabled = field.forcedValue == nil
+        let isEnabled = !field.isReadOnly
         
         titleLabel.text = field.title
         titleLabel.textColor = isEnabled ? .black : .disabledTextGrey

@@ -1469,6 +1469,7 @@
 		5ECE049F22CE57F5001BA964 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				7051C7A7247E790C007B37EB /* PaymentScanner */,
 				EFD36688242CF22400C517CE /* LoyaltyScanner */,
 				EFA5F7562379B0EF0027AB80 /* PLR */,
 				BD458B45236ED1240029A538 /* AccessForms */,
@@ -1501,6 +1502,13 @@
 				BD458B37236B417D0029A538 /* LoginViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		7051C7A7247E790C007B37EB /* PaymentScanner */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PaymentScanner;
 			sourceTree = "<group>";
 		};
 		AF06D86448D661A8F4142F87 /* Persistence */ = {

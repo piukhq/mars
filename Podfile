@@ -21,6 +21,7 @@ pod 'DTTJailbreakDetection'
 pod 'JWTDecode', '~> 2.4'
 pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
 pod 'ZendeskSupportSDK'
+pod 'CardScan'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
@@ -40,7 +41,8 @@ plugin 'cocoapods-keys', {
     "zendeskSandboxUrl",
     "zendeskProductionAppId",
     "zendeskProductionClientId",
-    "zendeskProductionUrl"
+    "zendeskProductionUrl",
+    "bouncerPaymentCardScanningKeyDev"
   ]
 }
 
