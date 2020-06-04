@@ -10,7 +10,7 @@ import Foundation
 
 enum CryptoAlgorithm {
     case MD5, SHA1, SHA224, SHA256, SHA384, SHA512
-
+    
     var HMACAlgorithm: CCHmacAlgorithm {
         var result: Int = 0
         switch self {
@@ -23,7 +23,7 @@ enum CryptoAlgorithm {
         }
         return CCHmacAlgorithm(result)
     }
-
+    
     var digestLength: Int {
         var result: Int32 = 0
         switch self {
@@ -39,39 +39,41 @@ enum CryptoAlgorithm {
 }
 
 extension String {
-
+    
     var hexadecimal: Data? {
         var data = Data(capacity: self.count / 2)
-
+        
         let regex = try! NSRegularExpression(pattern: "[0-9a-f]{1,2}", options: .caseInsensitive)
         regex.enumerateMatches(in: self, range: NSRange(startIndex..., in: self)) { match, _, _ in
             let byteString = (self as NSString).substring(with: match!.range)
             let num = UInt8(byteString, radix: 16)!
             data.append(num)
         }
-
+        
         guard data.count > 0 else { return nil }
-
+        
         return data
     }
-
+    
     func hmac(algorithm: CryptoAlgorithm, key: String) -> String {
         let str = self.cString(using: String.Encoding.utf8)
         let strLen = Int(self.lengthOfBytes(using: String.Encoding.utf8))
         let digestLen = algorithm.digestLength
         let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen)
-        let keyStr = key.cString(using: String.Encoding.utf8)
+        guard let keyStr = key.cString(using: String.Encoding.utf8) else {
+            fatalError("Could not make key string")
+        }
         let keyLen = Int(key.lengthOfBytes(using: String.Encoding.utf8))
-
-        CCHmac(algorithm.HMACAlgorithm, keyStr!, keyLen, str!, strLen, result)
-
+        
+        CCHmac(algorithm.HMACAlgorithm, keyStr, keyLen, str!, strLen, result)
+        
         let digest = stringFromResult(result: result, length: digestLen)
-
+        
         result.deallocate()
-
+        
         return digest
     }
-
+    
     private func stringFromResult(result: UnsafeMutablePointer<CUnsignedChar>, length: Int) -> String {
         let hash = NSMutableString()
         for i in 0..<length {
@@ -79,5 +81,5 @@ extension String {
         }
         return String(hash).lowercased()
     }
-
+    
 }

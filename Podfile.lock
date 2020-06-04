@@ -7,7 +7,6 @@ PODS:
   - CardScan (1.0.5032):
     - CardScan/Core (= 1.0.5032)
   - CardScan/Core (1.0.5032)
-  - CryptoSwift (1.1.3)
   - DeepDiff (2.2.0)
   - Disk (0.6.4)
   - DTTJailbreakDetection (0.4.0)
@@ -125,7 +124,6 @@ DEPENDENCIES:
   - AlamofireImage (~> 4.0.0-beta.6)
   - AlamofireNetworkActivityLogger
   - CardScan
-  - CryptoSwift
   - DeepDiff
   - Disk
   - DTTJailbreakDetection
@@ -146,7 +144,6 @@ SPEC REPOS:
     - AlamofireImage
     - AlamofireNetworkActivityLogger
     - CardScan
-    - CryptoSwift
     - DeepDiff
     - Disk
     - DTTJailbreakDetection
@@ -192,7 +189,6 @@ SPEC CHECKSUMS:
   AlamofireImage: edf3216fd178a89d63e681e609909d7ac98fa3c6
   AlamofireNetworkActivityLogger: 94e8a7d454a4a9800cef1d0c1d3699754493684b
   CardScan: 0fa4a2f584afcfe8b2291b802fe37fb986f7cae8
-  CryptoSwift: 6b6e488df0598b3e9fa49254ed1a65e8c1b1e10b
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   Disk: dcee5c2e98fb72f9a924cde8da8435b08244a80e
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
@@ -224,6 +220,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: e183d32abac888c448469e2005c4a5a8c3ed73f0
   ZendeskSupportSDK: e52f37fa8bcba91f024b81025869fe5a2860f741
 
-PODFILE CHECKSUM: 7efa6d3755d648888b5532141ef9cde017af97ef
+PODFILE CHECKSUM: d5db25a0bc9eb9545e58ee7d05d3e299481466d6
 
 COCOAPODS: 1.9.1

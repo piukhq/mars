@@ -17,8 +17,8 @@ final class SecureUtility {
         guard let month = paymentCard.month else { return nil }
         guard let year = paymentCard.year else { return nil }
         guard let decodedSecret = decodedSecret() else { return nil }
-        let hash = "\(pan)\(month)\(year)\(decodedSecret)".sha512()
-        return hash
+        let stringToHash = "\(pan)\(month)\(year)\(decodedSecret)"
+        return stringToHash.hmac(algorithm: .SHA512, key: "com.bink.secureUtility.paymentCardHashKey")
     }
 
     static func encryptedSensitiveFieldValue(_ value: String?) -> String? {
