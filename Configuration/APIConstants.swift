@@ -17,6 +17,7 @@ fileprivate var debugBaseURL = "" {
 enum EnvironmentType: String {
     case dev = "api.dev.gb.bink.com"
     case staging = "api.staging.gb.bink.com"
+    case preprod = "api.preprod.gb.bink.com"
     case production = "api.gb.bink.com"
 }
 
