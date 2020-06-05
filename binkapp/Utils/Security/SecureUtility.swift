@@ -13,6 +13,9 @@ import SwiftyRSA
 final class SecureUtility {
 
     static func getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String? {
+        // If we are pinning to API v1.1, return nil
+        if Current.apiClient.apiVersion == .v1_1 { return nil }
+        
         guard let pan = paymentCard.fullPan?.replacingOccurrences(of: " ", with: "") else { return nil }
         guard let month = paymentCard.month else { return nil }
         guard let year = paymentCard.year else { return nil }
@@ -22,7 +25,7 @@ final class SecureUtility {
     }
 
     static func encryptedSensitiveFieldValue(_ value: String?) -> String? {
-        /// If we are pinning to API v1.1, just return the value without encryption
+        // If we are pinning to API v1.1, just return the value without encryption
         if Current.apiClient.apiVersion == .v1_1 { return value }
 
         guard let value = value else { return nil }
@@ -48,7 +51,8 @@ final class SecureUtility {
         } else if APIConstants.baseURLString == EnvironmentType.production.rawValue {
             return BinkappKeys().prodPaymentCardHashingSecret1.base64Decoded()
         } else {
-            return nil
+            // Currently only for pre-prod, but we want to explicitly fail when targetting 1.2 and attempting to hash.
+            fatalError("We don't store a secret for the current environment.")
         }
     }
 
