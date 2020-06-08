@@ -152,6 +152,9 @@ extension SettingsViewController: UITableViewDataSource {
 
 extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell: SettingsTableViewCell? = tableView.cellForRow(at: indexPath) as? SettingsTableViewCell
+        cell?.removeActionRequired()
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
         if let rowData = viewModel.row(atIndexPath: indexPath) {
