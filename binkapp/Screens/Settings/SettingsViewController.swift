@@ -146,6 +146,16 @@ extension SettingsViewController: UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if section == viewModel.sectionsCount - 1 {
+            let view = SettingsTableViewFooter()
+            NSLayoutConstraint.activate([
+                view.heightAnchor.constraint(equalToConstant: SettingsTableViewFooter.height)
+            ])
+            return view
+        } else { return nil }
+    }
 }
 
 // MARK: - TableView
