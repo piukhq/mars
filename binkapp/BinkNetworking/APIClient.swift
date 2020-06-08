@@ -54,6 +54,10 @@ final class APIClient {
     var isProduction: Bool {
         return APIConstants.isProduction
     }
+    
+    var isPreProduction: Bool {
+        return APIConstants.isPreProduction
+    }
 
     var apiVersion: APIVersion = .v1_2
 

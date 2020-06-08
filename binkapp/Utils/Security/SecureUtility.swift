@@ -48,10 +48,9 @@ final class SecureUtility {
             return BinkappKeys().devPaymentCardHashingSecret1.base64Decoded()
         } else if APIConstants.baseURLString == EnvironmentType.staging.rawValue {
             return BinkappKeys().stagingPaymentCardHashingSecret1.base64Decoded()
-        } else if APIConstants.baseURLString == EnvironmentType.production.rawValue {
+        } else if APIConstants.baseURLString == EnvironmentType.production.rawValue || APIConstants.baseURLString == EnvironmentType.preprod.rawValue {
             return BinkappKeys().prodPaymentCardHashingSecret1.base64Decoded()
         } else {
-            // Currently only for pre-prod, but we want to explicitly fail when targetting 1.2 and attempting to hash.
             fatalError("We don't store a secret for the current environment.")
         }
     }
@@ -61,7 +60,7 @@ final class SecureUtility {
             return "devPublicKey"
         } else if APIConstants.baseURLString == EnvironmentType.staging.rawValue {
             return "stagingPublicKey"
-        } else if APIConstants.baseURLString == EnvironmentType.production.rawValue {
+        } else if APIConstants.baseURLString == EnvironmentType.production.rawValue || APIConstants.baseURLString == EnvironmentType.preprod.rawValue {
             return "prodPublicKey"
         } else {
             return nil

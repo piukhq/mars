@@ -36,7 +36,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     }
 
     func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
-        if apiClient.isProduction {
+        if apiClient.isProduction || apiClient.isPreProduction {
             #if DEBUG
             fatalError("You are targetting production, but on a debug scheme. You should use a release scheme to test adding production payment cards.")
             #else
