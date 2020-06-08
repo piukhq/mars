@@ -22,6 +22,7 @@ pod 'JWTDecode', '~> 2.4'
 pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
 pod 'ZendeskSupportSDK'
 pod 'CardScan'
+pod 'Kanna', '~> 5.2.2'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",

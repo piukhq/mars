@@ -43,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Configure payment card scanning
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
+        
+        WebScrapingUtility.scrapeUrl("http://nycmetalscene.com")
 
         // Get latest user profile data
         // TODO: Move to UserService in future ticket
