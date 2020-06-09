@@ -44,8 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure payment card scanning
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
         
-        WebScrapingUtility.scrapeUrl("https://secure.tesco.com/account/en-GB/login?from=https://secure.tesco.com/Clubcard/MyAccount/home/Home")
-
         // Get latest user profile data
         // TODO: Move to UserService in future ticket
         if Current.userManager.hasCurrentUser {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 import ZendeskCoreSDK
 import SupportSDK
@@ -90,8 +91,41 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
         case .secondaryColor:
             let viewController = DebugSecondaryPlanColorViewController()
             navigationController?.pushViewController(viewController, animated: true)
+        case .webScraping:
+            let webView = WKWebView(frame: view.frame) // TODO: Zero the frame
+            view.addSubview(webView)
+            webView.navigationDelegate = self
+            webView.load(URLRequest(url: URL(string: "https://secure.tesco.com/account/en-GB/login?from=https://secure.tesco.com/Clubcard/MyAccount/home/Home")!))
         default:
             return
+        }
+    }
+}
+
+extension DebugMenuTableViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        // Locate JS file
+        guard let jsFile = Bundle.main.url(forResource: "TescoLogin", withExtension: "js") else {
+            return
+        }
+
+        do {
+            // Parse JS file as a string
+            let injectJS = try String(contentsOf: jsFile)
+
+            // Inject variables into JS file
+            let formatted = String(format: injectJS, "nickjf89@icloud.com", "f48-9Xc-mRh-Low")
+
+            // Run the JS
+            webView.evaluateJavaScript(formatted) { (value, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                print(value ?? "")
+            }
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }
