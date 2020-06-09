@@ -123,4 +123,10 @@ class SettingsTableViewCell: UITableViewCell {
         separator.isHidden = !showSeparator
         actionRequiredIndicator.isHidden = !rowData.actionRequired
     }
+    
+    
+    /// This will be called on didSelectRowAtIndexPath
+    func removeActionRequired() {
+        actionRequiredIndicator.removeFromSuperview()
+    }
 }
