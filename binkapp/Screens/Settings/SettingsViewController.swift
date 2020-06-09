@@ -86,6 +86,9 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
+        
+        let footerView = SettingsTableViewFooter(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: SettingsTableViewFooter.height))
+        tableView.tableFooterView = footerView
     }
     
     private func toSecurityAndPrivacyVC() {
