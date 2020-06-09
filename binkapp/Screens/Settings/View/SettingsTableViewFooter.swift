@@ -9,7 +9,7 @@
 import UIKit
 
 class SettingsTableViewFooter: UIView {
-    static let height: CGFloat = 80
+    static let height: CGFloat = 60
     
     lazy var labelsStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [emailLabel, versionLabel])
@@ -35,8 +35,8 @@ class SettingsTableViewFooter: UIView {
         return label
     }()
     
-    init() {
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configure()
     }
     
@@ -45,7 +45,6 @@ class SettingsTableViewFooter: UIView {
     }
     
     private func configure() {
-        backgroundColor = .white
         addSubview(labelsStackView)
         NSLayoutConstraint.activate([
             labelsStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
