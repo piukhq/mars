@@ -369,6 +369,17 @@ class MainScreenRouter {
     
     @objc func appWillResignActive() {
         guard let visibleVC = navController?.getVisibleViewController() else { return }
+        
+        // This should be a temporary workaround while we wait for a change in Bouncer's library.
+        // We are removing the scanner from the navigation stack when we move the app to the background
+        // This results in the user returning to the add options view.
+        if let navigationController = visibleVC as? UINavigationController {
+            for vc in navigationController.viewControllers {
+                if vc.isKind(of: CardScan.ScanViewController.self) {
+                    navigationController.removeViewController(vc)
+                }
+            }
+        }
         if visibleVC.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: MFMailComposeViewController.self) == true {
             //Dismiss alert controller and mail composer before presenting the Launch screen.
             visibleVC.dismiss(animated: false) {
