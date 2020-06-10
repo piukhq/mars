@@ -12,6 +12,8 @@ import WebKit
 import ZendeskCoreSDK
 import SupportSDK
 
+import Kanna
+
 class DebugMenuTableViewController: UITableViewController, ModalDismissable {
     
     private let viewModel: DebugMenuViewModel
@@ -95,7 +97,11 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             let webView = WKWebView(frame: view.frame) // TODO: Zero the frame
             view.addSubview(webView)
             webView.navigationDelegate = self
-            webView.load(URLRequest(url: URL(string: "https://secure.tesco.com/account/en-GB/login?from=https://secure.tesco.com/Clubcard/MyAccount/home/Home")!))
+            let cookies = HTTPCookieStorage.shared.cookies ?? []
+            for cookie in cookies {
+                webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+            }
+            webView.load(URLRequest(url: URL(string: "https://secure.tesco.com/Clubcard/MyAccount/home/Home")!))
         default:
             return
         }
@@ -105,14 +111,17 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
 extension DebugMenuTableViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // Locate JS file
-        guard let jsFile = Bundle.main.url(forResource: "TescoLogin", withExtension: "js") else {
+        guard let loginFile = Bundle.main.url(forResource: "TescoLogin", withExtension: "js") else {
+            return
+        }
+        
+        guard let scrapeFile = Bundle.main.url(forResource: "TescoPointsScrape", withExtension: "js") else {
             return
         }
 
         do {
             // Parse JS file as a string
-            let injectJS = try String(contentsOf: jsFile)
-
+            let injectJS = try String(contentsOf: loginFile)
             // Inject variables into JS file
             let formatted = String(format: injectJS, "nickjf89@icloud.com", "f48-9Xc-mRh-Low")
 
@@ -122,7 +131,35 @@ extension DebugMenuTableViewController: WKNavigationDelegate {
                     print(error.localizedDescription)
                     return
                 }
-                print(value ?? "")
+                
+                webView.evaluateJavaScript("document.documentElement.outerHTML.toString()") { (html, error) in
+                    if let html = html as? String {
+                        print(html) // We can see points value using this
+                        
+                        // This successfully pulls the points value back as a string
+//                        if let htmlDoc = try? Kanna.HTML(html: html, encoding: .utf8) {
+//                            for pointValue in htmlDoc.css("span[class='pointvalue']") {
+//                                print(pointValue.text ?? "")
+//                            }
+//                        }
+                        
+                        // This also grabs the point value - no need for a 3rd party library :)
+                        let scrapeJS = try! String(contentsOf: scrapeFile)
+                        webView.evaluateJavaScript(scrapeJS) { (pointValue, error) in
+                            if let pointValue = pointValue as? String {
+                                print(pointValue)
+                            }
+                        }
+                    }
+                }
+                
+                
+                
+                webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+                    for cookie in cookies {
+                        HTTPCookieStorage.shared.setCookie(cookie)
+                    }
+                }
             }
         } catch {
             print(error.localizedDescription)
