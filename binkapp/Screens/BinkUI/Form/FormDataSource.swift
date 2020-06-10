@@ -113,7 +113,7 @@ extension FormDataSource {
             title: "Card number",
             placeholder: "xxxx xxxx xxxx xxxx",
             validation: nil,
-            fieldType: .cardNumber,
+            fieldType: .paymentCardNumber,
             updated: updatedBlock,
             shouldChange: shouldChangeBlock,
             fieldExited: fieldExitedBlock,
