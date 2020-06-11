@@ -52,7 +52,7 @@ class FormField {
         case sensitive
         case choice(data: [FormPickerData])
         case checkbox
-        case cardNumber
+        case paymentCardNumber
         case confirmPassword
         case expiry(months: [FormPickerData], years: [FormPickerData])
         case phone
@@ -60,8 +60,10 @@ class FormField {
         
         func keyboardType() -> UIKeyboardType {
             switch self {
-            case .cardNumber, .text, .sensitive, .confirmPassword:
-                return .asciiCapable
+            case .text, .sensitive, .confirmPassword:
+                return .default
+            case .paymentCardNumber:
+                return .numberPad
             case .email:
                 return .emailAddress
             case .phone:
@@ -103,8 +105,6 @@ class FormField {
                     return .phone
                 case .dateOfBirth, .memorableDate:
                     return .date
-                case .cardNumber:
-                    return .cardNumber
                 default:
                     return .text
                 }
@@ -183,7 +183,7 @@ class FormField {
             return validateBlock(self)
         }
         
-        if fieldType == .cardNumber {
+        if fieldType == .paymentCardNumber {
             return PaymentCardType.validate(fullPan: value)
         } else {
             guard let validation = validation else { return !value.isEmpty }
