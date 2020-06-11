@@ -110,54 +110,53 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
 
 extension DebugMenuTableViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        // Locate JS file
+        // Locate JS files
         guard let loginFile = Bundle.main.url(forResource: "TescoLogin", withExtension: "js") else {
             return
         }
-        
         guard let scrapeFile = Bundle.main.url(forResource: "TescoPointsScrape", withExtension: "js") else {
             return
         }
 
         do {
-            // Parse JS file as a string
-            let injectJS = try String(contentsOf: loginFile)
-            // Inject variables into JS file
-            let formatted = String(format: injectJS, "nickjf89@icloud.com", "f48-9Xc-mRh-Low")
+            // Parse JS files as a strings
+            let loginJS = try String(contentsOf: loginFile)
+            let scrapeJS = try String(contentsOf: scrapeFile)
+            
+            // Inject variables into login file
+            let formattedJS = String(format: loginJS, "nickjf89@icloud.com", "f48-9Xc-mRh-Low")
 
-            // Run the JS
-            webView.evaluateJavaScript(formatted) { (value, error) in
+            // Run the formatted login script if we can
+            webView.evaluateJavaScript(formattedJS) { (value, error) in
+                // Persist all cookies regardless of success or fail
+                webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+                    for cookie in cookies {
+                        HTTPCookieStorage.shared.setCookie(cookie)
+                    }
+                }
+                
                 if let error = error {
                     print(error.localizedDescription)
                     return
                 }
                 
-                webView.evaluateJavaScript("document.documentElement.outerHTML.toString()") { (html, error) in
-                    if let html = html as? String {
-                        print(html) // We can see points value using this
-                        
-                        // This successfully pulls the points value back as a string
-//                        if let htmlDoc = try? Kanna.HTML(html: html, encoding: .utf8) {
-//                            for pointValue in htmlDoc.css("span[class='pointvalue']") {
-//                                print(pointValue.text ?? "")
-//                            }
-//                        }
-                        
-                        // This also grabs the point value - no need for a 3rd party library :)
-                        let scrapeJS = try! String(contentsOf: scrapeFile)
-                        webView.evaluateJavaScript(scrapeJS) { (pointValue, error) in
-                            if let pointValue = pointValue as? String {
-                                print(pointValue)
-                            }
+                // We have successfully logged in, or successfully bailed on login as there is no form (should mean that we were already logged in)
+                
+                // Pull out the point value using our scraping script
+                webView.evaluateJavaScript(scrapeJS) { (pointValue, error) in
+                    // Persist all cookies regardless of success or fail
+                    webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+                        for cookie in cookies {
+                            HTTPCookieStorage.shared.setCookie(cookie)
                         }
                     }
-                }
-                
-                
-                
-                webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
-                    for cookie in cookies {
-                        HTTPCookieStorage.shared.setCookie(cookie)
+                    
+                    if let pointValue = pointValue as? String {
+                        print(pointValue)
+                        let alert = UIAlertController(title: "Success!", message: "You have \(pointValue) points!", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alert.addAction(okAction)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
             }
