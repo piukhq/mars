@@ -89,6 +89,8 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
         }
+        // We don't want to see it on non-wallet view controllers
+        dotView.removeFromSuperview()
     }
 
     override func viewDidLayoutSubviews() {
