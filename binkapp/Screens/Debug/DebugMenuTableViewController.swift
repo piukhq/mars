@@ -126,14 +126,10 @@ extension DebugMenuTableViewController: WebScrapingUtilityDelegate {
         let alert = UIAlertController(title: "Login required", message: "Please enter your \(agent.loyaltySchemeName) credentials", preferredStyle: .alert)
         alert.addTextField { textField in
             textField.placeholder = "Username"
-            
-            textField.text = "nickjf89@icloud.com"
         }
         alert.addTextField { textField in
             textField.placeholder = "Password"
             textField.isSecureTextEntry = true
-            
-            textField.text = "f48-9Xc-mRh-Low"
         }
         let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "ok".localized, style: .default) { [weak self] action in

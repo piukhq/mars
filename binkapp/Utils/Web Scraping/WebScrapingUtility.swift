@@ -86,7 +86,7 @@ class WebScrapingUtility: NSObject {
     
     init(containerViewController: UIViewController, agent: WebScrapable, delegate: WebScrapingUtilityDelegate?) {
         self.containerViewController = containerViewController
-        webView = WKWebView(frame: .zero) // TODO: Zero the frame
+        webView = WKWebView(frame: .zero)
         self.agent = agent
         self.delegate = delegate
         super.init()
