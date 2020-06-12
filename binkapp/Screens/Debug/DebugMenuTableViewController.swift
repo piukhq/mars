@@ -97,11 +97,20 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             let webView = WKWebView(frame: view.frame) // TODO: Zero the frame
             view.addSubview(webView)
             webView.navigationDelegate = self
-            let cookies = HTTPCookieStorage.shared.cookies ?? []
-            for cookie in cookies {
-                webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+            
+            let request = URLRequest(url: URL(string: "https://secure.tesco.com/Clubcard/MyAccount/home/Home")!)
+            
+            let allCookies = HTTPCookieStorage.shared.cookies ?? []
+            var cookiesSet: Int = 0
+            // We have 27 cookies on launch, 48 on all subsequent calls, then back to 27 when relaunching... weird!
+            for cookie in allCookies {
+                webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie) {
+                    cookiesSet += 1
+                    if cookiesSet == allCookies.count {
+                        webView.load(request)
+                    }
+                }
             }
-            webView.load(URLRequest(url: URL(string: "https://secure.tesco.com/Clubcard/MyAccount/home/Home")!))
         default:
             return
         }
@@ -128,31 +137,28 @@ extension DebugMenuTableViewController: WKNavigationDelegate {
 
             // Run the formatted login script if we can
             webView.evaluateJavaScript(formattedJS) { (value, error) in
-                // Persist all cookies regardless of success or fail
-                webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
-                    for cookie in cookies {
-                        HTTPCookieStorage.shared.setCookie(cookie)
-                    }
-                }
-                
                 if let error = error {
                     print(error.localizedDescription)
                     return
                 }
                 
                 // We have successfully logged in, or successfully bailed on login as there is no form (should mean that we were already logged in)
+                webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+                    for cookie in cookies {
+                        HTTPCookieStorage.shared.setCookie(cookie)
+                    }
+                }
                 
                 // Pull out the point value using our scraping script
                 webView.evaluateJavaScript(scrapeJS) { (pointValue, error) in
-                    // Persist all cookies regardless of success or fail
-                    webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
-                        for cookie in cookies {
-                            HTTPCookieStorage.shared.setCookie(cookie)
-                        }
-                    }
-                    
                     if let pointValue = pointValue as? String {
-                        print(pointValue)
+                        
+                        webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+                            for cookie in cookies {
+                                HTTPCookieStorage.shared.setCookie(cookie)
+                            }
+                        }
+                        
                         let alert = UIAlertController(title: "Success!", message: "You have \(pointValue) points!", preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                         alert.addAction(okAction)
