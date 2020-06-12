@@ -143,6 +143,7 @@
 		706A2DAD248FD64600679436 /* TescoLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 706A2DAC248FD64600679436 /* TescoLogin.js */; };
 		706A2DAF2490F54200679436 /* TescoPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 706A2DAE2490F54200679436 /* TescoPointsScrape.js */; };
 		70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86779248E76C9001ED282 /* WebScrapingUtility.swift */; };
+		70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */; };
 		92CE3430695A6558F2EC1793 /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */; };
 		9C26930409A757F7CD2C794E /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */; };
 		B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */; };
@@ -616,6 +617,7 @@
 		706A2DAE2490F54200679436 /* TescoPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoPointsScrape.js; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
 		70E86779248E76C9001ED282 /* WebScrapingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtility.swift; sourceTree = "<group>"; };
+		70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewFooter.swift; sourceTree = "<group>"; };
 		73A4EB9236825CAA23208015 /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		747EE940A8617CF70F3CD693 /* Pods-binkappUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.debug.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7C1A952F8EB9E33671155804 /* Pods-binkappUITests.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.nightly.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.nightly.xcconfig"; sourceTree = "<group>"; };
@@ -1724,6 +1726,7 @@
 			children = (
 				BD99D2E12354945000823FC4 /* SettingsTableViewCell.swift */,
 				BDBAA1B9235E1BBB00087E12 /* SettingsTableViewHeader.swift */,
+				70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2782,6 +2785,7 @@
 				EF2E881323351A6000F678F3 /* CoreDataRepositoryProtocol.swift in Sources */,
 				EFA5F70F2379A7C70027AB80 /* CD_MembershipPlanImage.swift in Sources */,
 				EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */,
+				70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */,
 				EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */,
 				EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */,
 				EF94AF0523D887AE00AAA039 /* SpreedlyModels.swift in Sources */,

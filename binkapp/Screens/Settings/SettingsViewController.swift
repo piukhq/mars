@@ -86,6 +86,9 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
+        
+        let footerView = SettingsTableViewFooter(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: SettingsTableViewFooter.height))
+        tableView.tableFooterView = footerView
     }
     
     private func toSecurityAndPrivacyVC() {
@@ -152,6 +155,9 @@ extension SettingsViewController: UITableViewDataSource {
 
 extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell: SettingsTableViewCell? = tableView.cellForRow(at: indexPath) as? SettingsTableViewCell
+        cell?.removeActionRequired()
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
         if let rowData = viewModel.row(atIndexPath: indexPath) {

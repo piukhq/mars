@@ -152,7 +152,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
         if let type = viewModel.paymentCardType,
             let newValue = newValue,
             let text = textField.text,
-            field.fieldType == .cardNumber {
+            field.fieldType == .paymentCardNumber {
             
             /*
              Potentially "needlessly" complex, but the below will insert whitespace to format card numbers correctly according
@@ -199,7 +199,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
     }
     
     func formDataSource(_ dataSource: FormDataSource, changed value: String?, for field: FormField) {
-        if field.fieldType == .cardNumber {
+        if field.fieldType == .paymentCardNumber {
             let type = PaymentCardType.type(from: value)
             viewModel.setPaymentCardType(type)
             viewModel.setPaymentCardFullPan(value)
