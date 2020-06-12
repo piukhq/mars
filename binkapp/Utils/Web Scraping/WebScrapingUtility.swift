@@ -123,30 +123,19 @@ class WebScrapingUtility: NSObject {
             return
         }
         
-        // Inject variables into login file
-        let formattedLoginScript = String(format: loginScript, "nickjf89@icloud.com", "f48-9Xc-mRh-Low")
-        runScript(formattedLoginScript) { [weak self] (value, error) in
-            guard error == nil else {
-                completion(nil, .failedToExecuteLoginScript(message: error?.localizedDescription))
-                return
-            }
-            
-            // We either logged in successfully, or we already had a stored session
-            
-            self?.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
-                for cookie in cookies {
-                    HTTPCookieStorage.shared.setCookie(cookie)
-                }
-            }
+        // Are we at the intended url for scraping, or have we been redirected?
+        if canScrape {
+            // We can scrape
             
             // Pull out the point value using our scraping script
-            self?.runScript(scrapeScript) { (pointsValue, error) in
-                guard error == nil else {
-                    completion(nil, .failedToExecuteScrapingScript(message: error?.localizedDescription))
-                    return
-                }
+            runScript(scrapeScript) { [weak self] (pointsValue, error) in
+                // Do we care about javascript errors? Probably not, we just care if we got a value or not
+//                guard error == nil else {
+//                    completion(nil, .failedToExecuteScrapingScript(message: error?.localizedDescription))
+//                    return
+//                }
                 
-                guard let pointsValue = pointsValue as? String else {
+                guard let pointsValue = pointsValue as? String, !pointsValue.isEmpty else {
                     completion(nil, .failedToCastReturnValue)
                     return
                 }
@@ -159,11 +148,27 @@ class WebScrapingUtility: NSObject {
                 
                 completion(pointsValue, nil)
             }
+        } else {
+            // We need to login before we can scrape
+            
+            // Inject variables into login file
+            let formattedLoginScript = String(format: loginScript, "nickjf89@icloud.com", "f48-9Xc-mRh-Low")
+            runScript(formattedLoginScript) { (value, error) in
+                // Do we care about javascript errors?
+//                guard error == nil else {
+//                    completion(nil, .failedToExecuteLoginScript(message: error?.localizedDescription))
+//                    return
+//                }
+            }
         }
     }
     
     private func runScript(_ script: String, completion: @escaping (Any?, Error?) -> Void) {
         webView.evaluateJavaScript(script, completionHandler: completion)
+    }
+    
+    private var canScrape: Bool {
+        return webView.url?.absoluteString == agent.scrapableUrlString
     }
 }
 
