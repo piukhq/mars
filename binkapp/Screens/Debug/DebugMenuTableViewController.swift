@@ -7,12 +7,9 @@
 //
 
 import UIKit
-import WebKit
 
 import ZendeskCoreSDK
 import SupportSDK
-
-import Kanna
 
 class DebugMenuTableViewController: UITableViewController, ModalDismissable {
     private var webScrapingUtility: WebScrapingUtility?
