@@ -98,8 +98,11 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             webScrapingUtility = WebScrapingUtility(containerViewController: self, agent: TescoScrapingAgent(), delegate: self)
             do {
                 try webScrapingUtility?.start()
-            } catch {
-                print(error)
+            } catch let error {
+                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                let closeAction = UIAlertAction(title: "Close", style: .default, handler: nil)
+                alert.addAction(closeAction)
+                present(alert, animated: true, completion: nil)
             }
         default:
             return
@@ -109,7 +112,10 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
 
 extension DebugMenuTableViewController: WebScrapingUtilityDelegate {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String) {
-        print(value)
+        let alert = UIAlertController(title: "Success", message: "You have \(value) points", preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Close", style: .default, handler: nil)
+        alert.addAction(closeAction)
+        present(alert, animated: true, completion: nil)
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError) {
