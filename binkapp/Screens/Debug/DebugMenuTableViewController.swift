@@ -102,7 +102,7 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             
             let allCookies = HTTPCookieStorage.shared.cookies ?? []
             var cookiesSet: Int = 0
-            // We have 27 cookies on launch, 48 on all subsequent calls, then back to 27 when relaunching... weird!
+            // We have ~27 cookies on launch, ~48 on all subsequent calls, then back to ~27 when relaunching... weird!
             for cookie in allCookies {
                 webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie) {
                     cookiesSet += 1
