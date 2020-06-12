@@ -94,7 +94,6 @@ PODS:
   - GoogleUtilities/UserDefaults (6.3.1):
     - GoogleUtilities/Logger
   - JWTDecode (2.4.1)
-  - Kanna (5.2.2)
   - KeychainAccess (4.1.0)
   - Keys (1.0.1)
   - M13Checkbox (3.4.0)
@@ -135,7 +134,6 @@ DEPENDENCIES:
   - Firebase
   - Firebase/Analytics
   - JWTDecode (~> 2.4)
-  - Kanna (~> 5.2.2)
   - KeychainAccess (~> 4.1)
   - Keys (from `Pods/CocoaPodsKeys`)
   - M13Checkbox
@@ -167,7 +165,6 @@ SPEC REPOS:
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - JWTDecode
-    - Kanna
     - KeychainAccess
     - M13Checkbox
     - nanopb
@@ -214,7 +211,6 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   JWTDecode: 4bd4da0cdf0f8154fd467fa48499f34ec057fb88
-  Kanna: 2c4eddaaa4bfb9a1ed19e53c0b3d42ef02838046
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
   M13Checkbox: 6f59404540ac98ba83a3d1afac335895a40c6a5d
@@ -228,6 +224,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: e183d32abac888c448469e2005c4a5a8c3ed73f0
   ZendeskSupportSDK: e52f37fa8bcba91f024b81025869fe5a2860f741
 
-PODFILE CHECKSUM: 8a9a63722c22c1b340c72c59d779fdc3f4d75456
+PODFILE CHECKSUM: 72cd71327216782ee8bb8d473116b452701853fc
 
 COCOAPODS: 1.9.1
