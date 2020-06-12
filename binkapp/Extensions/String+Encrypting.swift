@@ -21,10 +21,10 @@ extension String {
 public struct HMAC {
     
     static func hash(inp: String, algo: HMACAlgo) -> String {
-        if let stringData = inp.data(using: String.Encoding.utf8, allowLossyConversion: false) {
-            return hexStringFromData(input: digest(input: stringData as NSData, algo: algo))
+        guard let stringData = inp.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+            fatalError("Failed to hash")
         }
-        return ""
+        return hexStringFromData(input: digest(input: stringData as NSData, algo: algo))
     }
     
     private static func digest(input : NSData, algo: HMACAlgo) -> NSData {
