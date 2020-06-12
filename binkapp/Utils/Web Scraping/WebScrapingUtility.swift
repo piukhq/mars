@@ -10,12 +10,27 @@ import UIKit
 import WebKit
 
 protocol WebScrapable {
+    var merchantName: String { get }
+    var loyaltySchemeName: String { get }
+    var loyaltySchemeBalanceIdentifier: String { get }
     var scrapableUrlString: String { get }
     var loginScriptFileName: String { get }
     var pointsScrapingScriptFileName: String { get }
 }
 
 struct TescoScrapingAgent: WebScrapable {
+    var merchantName: String {
+        return "Tesco"
+    }
+    
+    var loyaltySchemeName: String {
+        return "Tesco Clubcard"
+    }
+    
+    var loyaltySchemeBalanceIdentifier: String {
+        return "pts"
+    }
+    
     var scrapableUrlString: String {
         return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
     }
@@ -35,8 +50,8 @@ enum WebScrapingUtilityError: BinkError {
     case scapingScriptFileNotFound
     case agentProvidedInvalidLoginScript
     case agentProvidedInvalidScrapeScript
-    case failedToExecuteLoginScript(message: String?)
-    case failedToExecuteScrapingScript(message: String?)
+    case failedToExecuteLoginScript
+    case failedToExecuteScrapingScript
     case failedToCastReturnValue
     
     var domain: BinkErrorDomain {
@@ -55,6 +70,12 @@ enum WebScrapingUtilityError: BinkError {
 protocol WebScrapingUtilityDelegate: AnyObject {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String)
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError)
+    func webScrapingUtilityDidPromptForCredentials(_ utility: WebScrapingUtility, agent: WebScrapable)
+}
+
+struct WebScrapingCredentials {
+    let username: String
+    let password: String
 }
 
 class WebScrapingUtility: NSObject {
@@ -65,7 +86,7 @@ class WebScrapingUtility: NSObject {
     
     init(containerViewController: UIViewController, agent: WebScrapable, delegate: WebScrapingUtilityDelegate?) {
         self.containerViewController = containerViewController
-        webView = WKWebView(frame: containerViewController.view.frame) // TODO: Zero the frame
+        webView = WKWebView(frame: .zero) // TODO: Zero the frame
         self.agent = agent
         self.delegate = delegate
         super.init()
@@ -95,26 +116,40 @@ class WebScrapingUtility: NSObject {
         }
     }
     
-    func getScrapedValue(completion: @escaping (String?, WebScrapingUtilityError?) -> Void) {
-        // Locate JS files
+    func login(agent: WebScrapable, credentials: WebScrapingCredentials) throws {
         guard let loginFile = Bundle.main.url(forResource: agent.loginScriptFileName, withExtension: "js") else {
-            completion(nil, .loginScriptFileNotFound)
-            return
+            throw WebScrapingUtilityError.loginScriptFileNotFound
         }
+        
+        var loginScript: String
+        
+        do {
+            loginScript = try String(contentsOf: loginFile)
+        } catch {
+            throw WebScrapingUtilityError.agentProvidedInvalidLoginScript
+        }
+        
+        // Inject variables into login file
+        let formattedLoginScript = String(format: loginScript, credentials.username, credentials.password)
+        runScript(formattedLoginScript) { [weak self] (value, error) in
+            guard let self = self else {
+                return
+            }
+            guard error == nil else {
+                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript)
+                return
+            }
+        }
+    }
+    
+    // TODO: Convert to throwing
+    func getScrapedValue(completion: @escaping (String?, WebScrapingUtilityError?) -> Void) {
         guard let scrapeFile = Bundle.main.url(forResource: agent.pointsScrapingScriptFileName, withExtension: "js") else {
             completion(nil, .scapingScriptFileNotFound)
             return
         }
         
-        var loginScript: String
         var scrapeScript: String
-        
-        do {
-            loginScript = try String(contentsOf: loginFile)
-        } catch {
-            completion(nil, .agentProvidedInvalidLoginScript)
-            return
-        }
         
         do {
             scrapeScript = try String(contentsOf: scrapeFile)
@@ -123,43 +158,27 @@ class WebScrapingUtility: NSObject {
             return
         }
         
-        // Are we at the intended url for scraping, or have we been redirected?
-        if canScrape {
-            // We can scrape
-            
-            // Pull out the point value using our scraping script
-            runScript(scrapeScript) { [weak self] (pointsValue, error) in
-                // Do we care about javascript errors? Probably not, we just care if we got a value or not
-//                guard error == nil else {
-//                    completion(nil, .failedToExecuteScrapingScript(message: error?.localizedDescription))
-//                    return
-//                }
-                
-                guard let pointsValue = pointsValue as? String, !pointsValue.isEmpty else {
-                    completion(nil, .failedToCastReturnValue)
-                    return
-                }
-                
-                self?.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
-                    for cookie in cookies {
-                        HTTPCookieStorage.shared.setCookie(cookie)
-                    }
-                }
-                
-                completion(pointsValue, nil)
+        runScript(scrapeScript) { [weak self] (pointsValue, error) in
+            guard let self = self else {
+                return
             }
-        } else {
-            // We need to login before we can scrape
-            
-            // Inject variables into login file
-            let formattedLoginScript = String(format: loginScript, "nickjf89@icloud.com", "f48-9Xc-mRh-Low")
-            runScript(formattedLoginScript) { (value, error) in
-                // Do we care about javascript errors?
-//                guard error == nil else {
-//                    completion(nil, .failedToExecuteLoginScript(message: error?.localizedDescription))
-//                    return
-//                }
+            guard error == nil else {
+                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteScrapingScript)
+                return
             }
+            
+            guard let pointsValue = pointsValue as? String, !pointsValue.isEmpty else {
+                completion(nil, .failedToCastReturnValue)
+                return
+            }
+            
+            self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+                for cookie in cookies {
+                    HTTPCookieStorage.shared.setCookie(cookie)
+                }
+            }
+            
+            completion(pointsValue, nil)
         }
     }
     
@@ -174,20 +193,24 @@ class WebScrapingUtility: NSObject {
 
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        getScrapedValue { [weak self] (scrapedValue, error) in
-            guard let self = self else { return }
-
-            if let error = error {
-                // Often, this will throw as the page is loading, and succeed after a few runs of this method. So maybe we shouldn't throw here.
-                self.delegate?.webScrapingUtility(self, didCompleteWithError: error)
-                return
+        if canScrape {
+            getScrapedValue { [weak self] (scrapedValue, error) in
+                guard let self = self else { return }
+                
+                if let error = error {
+                    // Often, this will throw as the page is loading, and succeed after a few runs of this method. So maybe we shouldn't throw here.
+                    self.delegate?.webScrapingUtility(self, didCompleteWithError: error)
+                    return
+                }
+                
+                guard let scrapedValue = scrapedValue else {
+                    fatalError("Scraped value is nil, but we didn't pass an error.")
+                }
+                
+                self.delegate?.webScrapingUtility(self, didCompleteWithValue: scrapedValue)
             }
-
-            guard let scrapedValue = scrapedValue else {
-                fatalError("Scraped value is nil, but we didn't pass an error.")
-            }
-
-            self.delegate?.webScrapingUtility(self, didCompleteWithValue: scrapedValue)
+        } else {
+            delegate?.webScrapingUtilityDidPromptForCredentials(self, agent: agent)
         }
     }
 }
