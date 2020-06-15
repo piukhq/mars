@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CryptoSwift
 
 struct PaymentCardCreateRequest: Codable {
     struct Card: Codable {
@@ -99,7 +98,8 @@ struct PaymentCardCreateRequest: Codable {
     
     private static func fakeFingerprint(pan: String, expiryYear: String, expiryMonth: String) -> String {
         // Based a hash of the pan, it's the key identifier of the card
-        return "\(pan)|\(expiryMonth)|\(expiryYear)".md5()
+        let stringToHash = "\(pan)|\(expiryMonth)|\(expiryYear)"
+        return stringToHash.md5
     }
     
     private static func fakeToken() -> String {
