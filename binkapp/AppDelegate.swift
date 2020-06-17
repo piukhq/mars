@@ -24,12 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if DEBUG
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
+        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
         #endif
 
         // Analytics
         #if RELEASE
         FirebaseApp.configure()
         BinkAnalytics.beginSessionTracking()
+        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
         #endif
 
         // Facebook
@@ -41,9 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initialise Zendesk
         ZendeskService.start()
         
-        // Configure payment card scanning
-        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
-
         // Get latest user profile data
         // TODO: Move to UserService in future ticket
         if Current.userManager.hasCurrentUser {
