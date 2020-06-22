@@ -61,14 +61,15 @@ class PLRRewardDetailViewModel {
             return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.type ?? "")
         case (.accumulator, .issued):
             return String(format: "plr_voucher_detail_subtext_issued".localized, voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
+            
         case (.stamps, .inProgress):
-            return "Spend £5 or more to get a stamp. Collect 5 Stamps and get a FREE Whopper."
+            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsInProgressDetail)
         case (.stamps, .issued):
-            return "Use the code above to redeem your reward. You will get a FREE Whopper off your next purchase in one of our participating Burger King restaurants."
+            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsIssuedDetail)
         case (.stamps, .redeemed):
-            return "You have redeemed your FREE Whopper"
+            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsRedeemedDetail)
         case (.stamps, .expired):
-            return "Your FREE Whopper voucher has expired"
+            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsExpiredDetail)
         default:
             return nil
         }
