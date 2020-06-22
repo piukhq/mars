@@ -18,11 +18,14 @@ protocol AnalyticsTrackable {
 /// Events that can be tracked across the app
 enum BinkAnalyticsEvent {
     case callToAction(identifier: String)
+    case paymentScan(success: Bool)
 
     var name: String {
         switch self {
         case .callToAction:
             return "call_to_action_pressed"
+        case .paymentScan:
+            return "payment_scan"
         }
     }
 
@@ -30,6 +33,9 @@ enum BinkAnalyticsEvent {
         switch self {
         case .callToAction(let identifier):
             return ["identifier": identifier]
+        case .paymentScan(let success):
+            let value = NSNumber(value: success)
+            return ["success": value,  AnalyticsParameterValue: value]
         }
     }
 }
@@ -46,7 +52,7 @@ struct BinkAnalytics {
 
     static let keyPrefix = "com.bink.wallet.trackingSession."
 
-    static func track(_ event: BinkAnalyticsEvent, additionalTrackingData: [String: Any]?) {
+    static func track(_ event: BinkAnalyticsEvent, additionalTrackingData: [String: Any]? = nil) {
         #if RELEASE
         var trackingData: [String: Any] = [:]
 
