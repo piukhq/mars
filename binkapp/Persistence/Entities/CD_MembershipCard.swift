@@ -42,4 +42,8 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
         }
         return filteredVouchers
     }
+    
+    var vouchersEarnType: VoucherEarnType? {
+        return sortedVouchers?.first?.earnType
+    }
 }

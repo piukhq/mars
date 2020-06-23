@@ -139,7 +139,14 @@ struct WalletLoyaltyCardCellViewModel {
     var pointsValueSuffixText: String? {
         // PLR
         if membershipPlan?.isPLR == true && cardStatus == .authorised {
-            return "plr_loyalty_card_subtitle".localized
+            if let earnType = membershipCard.vouchersEarnType {
+                switch earnType {
+                case .accumulator:
+                    return "plr_loyalty_card_subtitle_accumulator".localized
+                case .stamps:
+                    return "plr_loyalty_card_subtitle_stamps".localized
+                }
+            }
         }
         return balance?.suffix
     }

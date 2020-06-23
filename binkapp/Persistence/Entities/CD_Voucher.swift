@@ -5,9 +5,17 @@ open class CD_Voucher: _CD_Voucher {
     var balanceString: String? {
         switch earnType {
         case .accumulator:
-            return "\(earn?.prefix ?? "")\(earn?.value?.twoDecimalPointString() ?? "")/\(earn?.prefix ?? "")\(earn?.targetValue?.twoDecimalPointString() ?? "") \(earn?.suffix ?? "")"
+            var suffix = ""
+            if let earnSuffix = earn?.suffix {
+                suffix = " \(earnSuffix)"
+            }
+            return "\(earn?.prefix ?? "")\(earn?.value?.twoDecimalPointString() ?? "")/\(earn?.targetValue?.twoDecimalPointString() ?? "")\(suffix)"
         case .stamps:
-            return "\(earn?.value ?? 0)/\(earn?.targetValue ?? 0) \(earn?.suffix ?? "")"
+            var suffix = ""
+            if let earnSuffix = earn?.suffix {
+                suffix = " \(earnSuffix)"
+            }
+            return "\(earn?.prefix ?? "")\(earn?.value ?? 0)/\(earn?.targetValue ?? 0)\(suffix)"
         default:
             return nil
         }
