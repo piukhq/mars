@@ -111,7 +111,7 @@ class PLRRewardDetailViewModel {
     // MARK: - View decisioning
 
     var shouldShowCode: Bool {
-        return voucherState != .inProgress
+        return voucherState == .issued
     }
 
     var shouldShowHeader: Bool {
