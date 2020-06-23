@@ -23,7 +23,7 @@ class AuthAndAddViewController: BaseFormViewController {
 
     private lazy var floatingButtons: BinkPrimarySecondaryButtonView = {
         let floatingButtons = BinkPrimarySecondaryButtonView()
-        floatingButtons.configure(primaryButtonTitle: viewModel.buttonTitle, secondaryButtonTitle: "no_account_button_title".localized)
+        floatingButtons.configure(primaryButtonTitle: viewModel.buttonTitle, secondaryButtonTitle: nil)
         floatingButtons.primaryButton.isEnabled = self.dataSource.fullFormIsValid
         floatingButtons.delegate = self
         floatingButtons.translatesAutoresizingMaskIntoConstraints = false
@@ -83,7 +83,6 @@ class AuthAndAddViewController: BaseFormViewController {
             floatingButtons.rightAnchor.constraint(equalTo: view.rightAnchor),
             floatingButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
         ])
-        floatingButtons.secondaryButton.isHidden = viewModel.accountButtonShouldHide
     }
     
     func configureUI() {
