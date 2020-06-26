@@ -21,15 +21,6 @@ class SettingsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.title, "settings_title".localized)
     }
     
-    func test_sectionsCount_returnsCorrectNumberOfSections() {
-        let sut = SettingsViewModelMock()
-        #if DEBUG
-        XCTAssertEqual(sut.sectionsCount, 5)
-        #else
-        XCTAssertEqual(sut.sectionsCount, 4)
-        #endif
-    }
-    
     func test_cellHeight_returnsCorrectHeight() {
         let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.cellHeight, 60)
