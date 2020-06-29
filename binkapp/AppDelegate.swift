@@ -27,9 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
         #endif
 
-        // Analytics
-        #if RELEASE
+        // Firebase
         FirebaseApp.configure()
+        #if RELEASE
         BinkAnalytics.beginSessionTracking()
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
         #endif
