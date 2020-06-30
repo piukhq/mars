@@ -19,4 +19,14 @@ open class CD_AddField: _CD_AddField {
         guard let rawType = commonName, let type = FieldCommonName(rawValue: rawType) else { return nil }
         return type
     }
+    
+    func alternative(matching commonName: FieldCommonName) -> CD_AddField? {
+        guard let alternatives = alternatives else { return nil }
+        
+        // Does this field's plan have an add field with the specified common name?
+        guard let matchingField = planAccount?.formattedAddFields()?.first(where: { $0.commonName == commonName.rawValue }), let matchingFieldColumn = matchingField.column else { return nil }
+        
+        // If so, does that field's column name appear in this fields alternatives?
+        return alternatives.contains(matchingFieldColumn) ? matchingField : nil
+    }
 }
