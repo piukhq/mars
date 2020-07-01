@@ -185,7 +185,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     private func configureTextFieldRightView(shouldDisplay: Bool) {
         // Could we inject a new FormCollectionViewCellTextFieldAccessory type of .camera rather than the common name? Would this be cleaner?
         if #available(iOS 13.0, *) {
-            if formField?.fieldCommonName == .cardNumber && shouldDisplay {
+            if formField?.fieldCommonName == .cardNumber && formField?.alternatives?.contains(.barcode) == true && shouldDisplay {
                 let cameraButton = UIButton(type: .custom)
                 cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
                 cameraButton.setImage(UIImage(named: "scan_icon"), for: .normal)

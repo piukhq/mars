@@ -207,7 +207,8 @@ extension FormDataSource {
                             columnKind: .add,
                             forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
                             isReadOnly: field.fieldCommonName == .barcode,
-                            fieldCommonName: field.fieldCommonName
+                            fieldCommonName: field.fieldCommonName,
+                            alternatives: field.alternativeCommonNames()
                         )
                     )
                 }
@@ -233,7 +234,8 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .add,
-                            fieldCommonName: field.fieldCommonName
+                            fieldCommonName: field.fieldCommonName,
+                            alternatives: field.alternativeCommonNames()
                         )
                     )
                 }
