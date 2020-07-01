@@ -36,7 +36,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         field.addTarget(self, action: .textFieldUpdated, for: .editingChanged)
         field.setContentCompressionResistancePriority(.required, for: .vertical)
         field.inputAccessoryView = inputAccessory
-        field.clearButtonMode = .whileEditing
         return field
     }()
     
@@ -148,6 +147,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.keyboardType = field.fieldType.keyboardType()
         textField.autocorrectionType = field.fieldType.autoCorrection()
         textField.autocapitalizationType = field.fieldType.capitalization()
+        textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
         formField = field
         configureTextFieldRightView(shouldDisplay: true)
         
@@ -216,6 +216,13 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     @objc func handleScanButtonTap() {
         print("Launch scanner for plan: ")
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        if formField?.fieldCommonName == .barcode {
+            formField?.dataSourceRefreshBlock?()
+        }
+        return true
     }
 }
 

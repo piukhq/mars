@@ -16,6 +16,7 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
+    func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
 }
 
 extension FormDataSourceDelegate {
@@ -27,6 +28,7 @@ extension FormDataSourceDelegate {
         return false
     }
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {}
+    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {}
 }
 
 enum AccessForm {
@@ -185,6 +187,11 @@ extension FormDataSource {
             guard let self = self else { return }
             self.delegate?.formDataSource(self, fieldDidExit: field)
         }
+        
+        let dataSourceRefreshBlock: FormField.DataSourceRefreshBlock = { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.formDataSourceShouldRefresh(self)
+        }
 
         if case .addFromScanner(let barcode) = formPurpose {
             model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
@@ -208,7 +215,8 @@ extension FormDataSource {
                             forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
                             isReadOnly: field.fieldCommonName == .barcode,
                             fieldCommonName: field.fieldCommonName,
-                            alternatives: field.alternativeCommonNames()
+                            alternatives: field.alternativeCommonNames(),
+                            dataSourceRefreshBlock: dataSourceRefreshBlock
                         )
                     )
                 }
@@ -235,7 +243,8 @@ extension FormDataSource {
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .add,
                             fieldCommonName: field.fieldCommonName,
-                            alternatives: field.alternativeCommonNames()
+                            alternatives: field.alternativeCommonNames(),
+                            dataSourceRefreshBlock: dataSourceRefreshBlock
                         )
                     )
                 }

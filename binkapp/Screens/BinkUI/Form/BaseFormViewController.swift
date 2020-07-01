@@ -183,11 +183,17 @@ extension BaseFormViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
     }
-    
+}
+
+extension BaseFormViewController {
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {
         collectionView.collectionViewLayout.invalidateLayout()
         formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
         stackScrollView.contentInset.bottom = Constants.bottomInset
+    }
+    
+    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {
+        print("refresh the current data source, swapping barcode to card number. we should never need to swap card number for barcode")
     }
 }
 
