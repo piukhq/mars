@@ -149,6 +149,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.autocorrectionType = field.fieldType.autoCorrection()
         textField.autocapitalizationType = field.fieldType.capitalization()
         formField = field
+        configureTextFieldRightView(shouldDisplay: true)
         
         if case let .expiry(months, years) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
@@ -178,6 +179,23 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     @objc func textFieldUpdated(_ textField: UITextField, text: String?, backingData: [Int]?) {
         formField?.updateValue(textField.text)
+        configureTextFieldRightView(shouldDisplay: textField.text == "")
+    }
+    
+    private func configureTextFieldRightView(shouldDisplay: Bool) {
+        // Could we inject a new FormCollectionViewCellTextFieldAccessory type of .camera rather than the common name? Would this be cleaner?
+        if #available(iOS 13.0, *) {
+            if formField?.fieldCommonName == .cardNumber && shouldDisplay {
+                let cameraButton = UIButton(type: .custom)
+                cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+                cameraButton.setImage(UIImage(named: "scan_icon"), for: .normal)
+                cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
+                textField.rightView = cameraButton
+                textField.rightViewMode = .always
+            } else {
+                textField.rightView = nil
+            }
+        }
     }
     
     @objc func accessoryDoneTouchUpInside() {
@@ -194,6 +212,10 @@ class FormCollectionViewCell: UICollectionViewCell {
         pickerSelectedChoice = selectedDate
         formField?.updateValue(pickerSelectedChoice)
         textField.text = selectedDate
+    }
+    
+    @objc func handleScanButtonTap() {
+        print("Launch scanner for plan: ")
     }
 }
 
@@ -240,4 +262,5 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
 fileprivate extension Selector {
     static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:text:backingData:))
     static let accessoryDoneTouchUpInside = #selector(FormCollectionViewCell.accessoryDoneTouchUpInside)
+    static let handleScanButtonTap = #selector(FormCollectionViewCell.handleScanButtonTap)
 }

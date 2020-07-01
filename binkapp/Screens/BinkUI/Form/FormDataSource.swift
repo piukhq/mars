@@ -206,7 +206,8 @@ extension FormDataSource {
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .add,
                             forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
-                            isReadOnly: field.fieldCommonName == .barcode
+                            isReadOnly: field.fieldCommonName == .barcode,
+                            fieldCommonName: field.fieldCommonName
                         )
                     )
                 }
@@ -231,7 +232,8 @@ extension FormDataSource {
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
-                            columnKind: .add
+                            columnKind: .add,
+                            fieldCommonName: field.fieldCommonName
                         )
                     )
                 }
@@ -258,7 +260,8 @@ extension FormDataSource {
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .auth,
                             forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
-                            isReadOnly: field.fieldCommonName == .barcode
+                            isReadOnly: field.fieldCommonName == .barcode,
+                            fieldCommonName: field.fieldCommonName
                         )
                     )
                 }
@@ -281,7 +284,8 @@ extension FormDataSource {
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
-                            columnKind: .auth
+                            columnKind: .auth,
+                            fieldCommonName: field.fieldCommonName
                         )
                     )
                 }
@@ -305,7 +309,8 @@ extension FormDataSource {
                             updated: updatedBlock,
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
-                            columnKind: .enrol
+                            columnKind: .enrol,
+                            fieldCommonName: field.fieldCommonName
                         )
                     )
                 }
@@ -329,7 +334,8 @@ extension FormDataSource {
                             updated: updatedBlock,
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
-                            columnKind: .register
+                            columnKind: .register,
+                            fieldCommonName: field.fieldCommonName
                             )
                     )
                 }
