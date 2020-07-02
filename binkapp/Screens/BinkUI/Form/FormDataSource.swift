@@ -17,6 +17,9 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
+    
+    // I don't particular like this being a data source delegate method, but do we have any other route from collection view cell to the view controller?
+    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan)
 }
 
 extension FormDataSourceDelegate {
@@ -29,6 +32,8 @@ extension FormDataSourceDelegate {
     }
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {}
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {}
+    
+    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan) {}
 }
 
 enum AccessForm {
@@ -46,6 +51,9 @@ class FormDataSource: NSObject {
     private struct Constants {
         static let expiryYearsInTheFuture = 50
     }
+    
+    /// We need the data source to hold a reference to the plan for some forms so that we can pass it through delegates to other objects
+    private(set) var membershipPlan: CD_MembershipPlan?
     
     private(set) var fields = [FormField]()
     private(set) var checkboxes = [CheckboxView]()
@@ -164,6 +172,7 @@ extension FormDataSource {
     convenience init(authAdd membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, delegate: MultiDelegate? = nil) {
         self.init()
         self.delegate = delegate
+        self.membershipPlan = membershipPlan
         setupFields(with: membershipPlan, formPurpose: formPurpose)
     }
     
@@ -554,5 +563,10 @@ extension FormDataSource: FormCollectionViewCellDelegate {
                 delegate?.formDataSourceShouldScrollToBottom(self)
             }
         }
+    }
+    
+    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {
+        guard let plan = membershipPlan else { return }
+        delegate?.formDataSource(self, shouldPresentLoyaltyScannerForPlan: plan)
     }
 }

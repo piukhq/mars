@@ -115,6 +115,16 @@ class AuthAndAddViewController: BaseFormViewController {
     }
 }
 
+extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        //
+    }
+    
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        //
+    }
+}
+
 extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         floatingButtons.primaryButton.startLoading()
@@ -146,6 +156,10 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
         let y = stackScrollView.contentSize.height - stackScrollView.bounds.size.height + stackScrollView.contentInset.bottom
         let offset = CGPoint(x: 0, y: y)
         stackScrollView.setContentOffset(offset, animated: true)
+    }
+    
+    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan) {
+        viewModel.toLoyaltyScanner(forPlan: plan, delegate: self)
     }
 }
 

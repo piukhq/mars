@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 struct BarcodeScannerViewModel {
-    
+    let plan: CD_MembershipPlan?
 }
 
 protocol BarcodeScannerViewControllerDelegate: AnyObject {
