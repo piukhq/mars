@@ -117,12 +117,10 @@ class AuthAndAddViewController: BaseFormViewController {
 
 extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
-        //
+        viewController.navigationController?.popViewController(animated: true)
     }
     
-    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
-        //
-    }
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {}
 }
 
 extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {

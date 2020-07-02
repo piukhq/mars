@@ -44,7 +44,7 @@ class BarcodeScannerViewController: UIViewController {
     private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
     private var rectOfInterest = CGRect.zero
     private var timer: Timer?
-    private var canPresentedScanError = true
+    private var canPresentScanError = true
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
@@ -270,26 +270,56 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             Current.wallet.identifyMembershipPlanForBarcode(stringValue) { [weak self] plan in
                 guard let self = self else { return }
                 guard let plan = plan else {
-                    if self.canPresentedScanError {
-                        self.canPresentedScanError = false
+                    if self.canPresentScanError {
+                        self.canPresentScanError = false
                         DispatchQueue.main.async { [weak self] in
                             guard let self = self else { return }
                             self.widgetView.unrecognizedBarcode()
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: { [weak self] in
-                            self?.canPresentedScanError = true
+                            self?.canPresentScanError = true
                         })
                     }
                     return
                 }
-                self.stopScanning()
-                HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
-
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: {
-                        self.navigationController?.removeViewController(self)
-                    })
+                
+                // We recognised the plan, but is this the plan we injected if any?
+                if let planFromForm = self.viewModel.plan {
+                    // We injected a plan from a form
+                    if plan != planFromForm {
+                        if self.canPresentScanError {
+                            self.canPresentScanError = false
+                            DispatchQueue.main.async {
+                                HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
+                                let alert = UIAlertController(title: "Error", message: "The card you scanned was not correct, please scan your \(planFromForm.account?.companyName ?? "") card", preferredStyle: .alert)
+                                let action = UIAlertAction(title: "OK", style: .cancel) { _ in
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
+                                        self.canPresentScanError = true
+                                    })
+                                }
+                                alert.addAction(action)
+                                self.present(alert, animated: true, completion: nil)
+                            }
+                        }
+                    } else {
+                        self.stopScanning()
+                        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+                        
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self = self else { return }
+                            self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: nil)
+                        }
+                    }
+                } else {
+                    self.stopScanning()
+                    HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: {
+                            self.navigationController?.removeViewController(self)
+                        })
+                    }
                 }
             }
         }
