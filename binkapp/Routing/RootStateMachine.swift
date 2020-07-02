@@ -79,6 +79,7 @@ class RootStateMachine: NSObject {
     
     private func clearLocalStorage(completion: @escaping () -> ()) {
         Current.database.performBackgroundTask { context in
+            context.deleteAll(CD_MembershipPlan.self)
             context.deleteAll(CD_MembershipCard.self)
             context.deleteAll(CD_PaymentCard.self)
             try? context.save()
