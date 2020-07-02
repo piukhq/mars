@@ -120,7 +120,9 @@ extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
         viewController.navigationController?.popViewController(animated: true)
     }
     
-    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {}
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        viewController.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
