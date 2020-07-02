@@ -106,7 +106,12 @@ class MainScreenRouter {
     func toLoyaltyScanner(forPlan plan: CD_MembershipPlan? = nil, delegate: BarcodeScannerViewControllerDelegate?) {
         let viewModel = BarcodeScannerViewModel(plan: plan)
         let viewController = BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
-        navController?.pushViewController(viewController, animated: true)
+        
+        if plan == nil {
+            navController?.pushViewController(viewController, animated: true)
+        } else {
+            navController?.present(viewController, animated: true, completion: nil)
+        }
     }
     
     func toPaymentCardScanner(strings: ScanStringsDataSource, delegate: ScanDelegate?) {

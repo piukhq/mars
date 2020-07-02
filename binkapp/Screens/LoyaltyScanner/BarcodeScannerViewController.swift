@@ -11,6 +11,10 @@ import AVFoundation
 
 struct BarcodeScannerViewModel {
     let plan: CD_MembershipPlan?
+    
+    var hasPlan: Bool {
+        return plan != nil
+    }
 }
 
 protocol BarcodeScannerViewControllerDelegate: AnyObject {
@@ -78,6 +82,14 @@ class BarcodeScannerViewController: UIViewController {
         button.addTarget(self, action: #selector(popViewController), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "close"), for: .normal)
+        button.addTarget(self, action: #selector(close), for: .touchUpInside)
+        return button
+    }()
 
     private let viewModel: BarcodeScannerViewModel
 
@@ -136,13 +148,24 @@ class BarcodeScannerViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        view.addSubview(backButton)
-        NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            backButton.leftAnchor.constraint(equalTo: view.leftAnchor),
-            backButton.heightAnchor.constraint(equalToConstant: Constants.backButtonSize.height),
-            backButton.widthAnchor.constraint(equalToConstant: Constants.backButtonSize.width),
-        ])
+        
+        if viewModel.hasPlan {
+            view.addSubview(cancelButton)
+            NSLayoutConstraint.activate([
+                cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor),
+                cancelButton.heightAnchor.constraint(equalToConstant: Constants.backButtonSize.height),
+                cancelButton.widthAnchor.constraint(equalToConstant: Constants.backButtonSize.width),
+            ])
+        } else {
+            view.addSubview(backButton)
+            NSLayoutConstraint.activate([
+                backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                backButton.leftAnchor.constraint(equalTo: view.leftAnchor),
+                backButton.heightAnchor.constraint(equalToConstant: Constants.backButtonSize.height),
+                backButton.widthAnchor.constraint(equalToConstant: Constants.backButtonSize.width),
+            ])
+        }
 
         startScanning()
     }
@@ -258,11 +281,17 @@ class BarcodeScannerViewController: UIViewController {
     @objc private func popViewController() {
         navigationController?.popViewController(animated: true)
     }
+    
+    @objc private func close() {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         timer?.invalidate()
+        
+        //TODO: Tidy this up by splitting to other functions
 
         if let object = metadataObjects.first {
             guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
