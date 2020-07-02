@@ -79,9 +79,9 @@ class RootStateMachine: NSObject {
     
     private func clearLocalStorage(completion: @escaping () -> ()) {
         Current.database.performBackgroundTask { context in
-            context.deleteAll(CD_MembershipPlan.self)
             context.deleteAll(CD_MembershipCard.self)
             context.deleteAll(CD_PaymentCard.self)
+            context.deleteAll(CD_BaseObject.self) // Cleanup any orphaned objects
             try? context.save()
             DispatchQueue.main.async {
                 completion()
