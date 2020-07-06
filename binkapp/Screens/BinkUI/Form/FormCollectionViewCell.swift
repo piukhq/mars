@@ -103,7 +103,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         return layoutAttributes
     }
     
-    weak private var formField: FormField?
+    private weak var formField: FormField?
     private var pickerSelectedChoice: String?
     var isValidationLabelHidden = true
     
@@ -145,7 +145,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         titleLabel.textColor = isEnabled ? .black : .disabledTextGrey
         textField.textColor = isEnabled ? .black : .disabledTextGrey
         textField.text = field.forcedValue
-        textField.isEnabled = isEnabled
         textField.placeholder = field.placeholder
         textField.isSecureTextEntry = field.fieldType.isSecureTextEntry
         textField.keyboardType = field.fieldType.keyboardType()
@@ -222,9 +221,16 @@ class FormCollectionViewCell: UICollectionViewCell {
         delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
     }
     
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // In order to allow a field to appear disabled, but allow the clear button to still be functional, we cannot make the textfield disabled
+        // So we must block the editing instead, which allows the clear button to still work
+        return formField?.isReadOnly == false
+    }
+    
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         if formField?.fieldCommonName == .barcode {
             formField?.dataSourceRefreshBlock?()
+            return false
         }
         return true
     }

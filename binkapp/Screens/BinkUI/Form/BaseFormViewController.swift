@@ -197,10 +197,6 @@ extension BaseFormViewController {
         formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)
         stackScrollView.contentInset.bottom = Constants.bottomInset
     }
-    
-    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {
-        print("refresh the current data source, swapping barcode to card number. we should never need to swap card number for barcode")
-    }
 }
 
 extension BaseFormViewController: CheckboxViewDelegate {

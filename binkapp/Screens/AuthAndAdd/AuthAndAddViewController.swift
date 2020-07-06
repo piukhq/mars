@@ -164,6 +164,12 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan) {
         viewModel.toLoyaltyScanner(forPlan: plan, delegate: self)
     }
+    
+    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {
+        // In this case, we want to revert to the datasource we started with in the initialiser
+        self.dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, delegate: self)
+        self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+    }
 }
 
 extension AuthAndAddViewController: LoyaltyButtonDelegate {
