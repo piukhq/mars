@@ -170,12 +170,11 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
     }
     
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {
-        // In this case, we want to revert to the datasource we started with in the initialiser unless we started as a scan journey
-        
         let prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
             FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
         }
-        self.dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, delegate: self, prefilledValues: prefilledValues)
+        
+        self.dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: .add, delegate: self, prefilledValues: prefilledValues)
         self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
     }
 }
