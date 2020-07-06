@@ -31,6 +31,29 @@ class FormCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
     
+    private lazy var textFieldStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [textField, textFieldRightView])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .fill
+        contentView.addSubview(stackView)
+        return stackView
+    }()
+    
+    lazy var textFieldRightView: UIView = {
+        let cameraButton = UIButton(type: .custom)
+        cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        cameraButton.setImage(UIImage(named: "scan_icon"), for: .normal)
+        cameraButton.imageView?.contentMode = .scaleAspectFill
+        cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
+        cameraButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            cameraButton.widthAnchor.constraint(equalToConstant: 30)
+        ])
+        return cameraButton
+    }()
+    
     lazy var textField: UITextField = {
         let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
@@ -74,13 +97,13 @@ class FormCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var fieldStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, textField, separator, validationLabel])
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, textFieldStack, separator, validationLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.alignment = .fill
         stackView.spacing = Constants.stackViewSpacing
-        stackView.setCustomSpacing(Constants.postTextFieldSpacing, after: textField)
+        stackView.setCustomSpacing(Constants.postTextFieldSpacing, after: textFieldStack)
         stackView.setCustomSpacing(Constants.postSeparatorSpacing, after: separator)
         contentView.addSubview(stackView)
         return stackView
@@ -187,18 +210,10 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureTextFieldRightView(shouldDisplay: Bool) {
-        // Could we inject a new FormCollectionViewCellTextFieldAccessory type of .camera rather than the common name? Would this be cleaner?
-        if #available(iOS 13.0, *) {
-            if formField?.fieldCommonName == .cardNumber && formField?.alternatives?.contains(.barcode) == true && shouldDisplay {
-                let cameraButton = UIButton(type: .custom)
-                cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-                cameraButton.setImage(UIImage(named: "scan_icon"), for: .normal)
-                cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
-                textField.rightView = cameraButton
-                textField.rightViewMode = .always
-            } else {
-                textField.rightView = nil
-            }
+        if formField?.fieldCommonName == .cardNumber && formField?.alternatives?.contains(.barcode) == true && shouldDisplay {
+            textFieldRightView.isHidden = false
+        } else {
+            textFieldRightView.isHidden = true
         }
     }
     
@@ -233,6 +248,7 @@ class FormCollectionViewCell: UICollectionViewCell {
             formField?.dataSourceRefreshBlock?()
             return false
         }
+        configureTextFieldRightView(shouldDisplay: true)
         return true
     }
 }
