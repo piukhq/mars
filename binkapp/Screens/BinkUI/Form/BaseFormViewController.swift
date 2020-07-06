@@ -84,7 +84,13 @@ class BaseFormViewController: BinkTrackableViewController, Form {
     var keyboardHeight: CGFloat = 0.0
     var selectedCellYOrigin: CGFloat = 0.0
     var selectedCellHeight: CGFloat = 0.0
-    let dataSource: FormDataSource
+    
+    var dataSource: FormDataSource {
+        didSet {
+            collectionView.dataSource = dataSource
+            collectionView.reloadData()
+        }
+    }
     
     // MARK: - Initialisation
     

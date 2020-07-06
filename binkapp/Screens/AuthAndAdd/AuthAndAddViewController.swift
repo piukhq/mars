@@ -118,7 +118,7 @@ class AuthAndAddViewController: BaseFormViewController {
 extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
         viewController.dismiss(animated: true) {
-            // TODO: Refresh data source with barcode string
+            self.dataSource = FormDataSource(authAdd: self.viewModel.getMembershipPlan(), formPurpose: .addFromScanner(barcode: barcode), delegate: self)
         }
     }
     
