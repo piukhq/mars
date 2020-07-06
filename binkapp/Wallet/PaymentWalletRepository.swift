@@ -36,7 +36,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     }
 
     func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
-        if apiClient.isProduction {
+        if apiClient.isProduction || apiClient.isPreProduction {
             #if DEBUG
             fatalError("You are targetting production, but on a debug scheme. You should use a release scheme to test adding production payment cards.")
             #else
@@ -81,10 +81,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
 
     private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
 
-        guard let hash = SecureUtility.getPaymentCardHash(from: paymentCard) else {
-            onError(nil)
-            return
-        }
+        let hash = SecureUtility.getPaymentCardHash(from: paymentCard)
 
         var paymentCreateRequest: PaymentCardCreateRequest?
 

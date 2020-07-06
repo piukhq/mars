@@ -24,12 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if DEBUG
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
+        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
         #endif
 
-        // Analytics
-        #if RELEASE
+        // Firebase
         FirebaseApp.configure()
+        #if RELEASE
         BinkAnalytics.beginSessionTracking()
+        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
         #endif
 
         // Facebook

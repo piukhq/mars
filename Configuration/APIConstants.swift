@@ -17,6 +17,7 @@ fileprivate var debugBaseURL = "" {
 enum EnvironmentType: String {
     case dev = "api.dev.gb.bink.com"
     case staging = "api.staging.gb.bink.com"
+    case preprod = "api.preprod.gb.bink.com"
     case production = "api.gb.bink.com"
 }
 
@@ -48,6 +49,10 @@ enum Configuration {
 struct APIConstants {
     static var isProduction: Bool {
         return baseURLString == EnvironmentType.production.rawValue
+    }
+    
+    static var isPreProduction: Bool {
+        return baseURLString == EnvironmentType.preprod.rawValue
     }
 
     static var baseURLString: String {

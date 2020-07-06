@@ -63,6 +63,10 @@ class DebugMenuFactory {
             APIConstants.changeEnvironment(environment: .staging)
             NotificationCenter.default.post(name: .shouldLogout, object: nil)
         }))
+        alert.addAction(UIAlertAction(title: "Pre-production", style: .default, handler: { _ in
+            APIConstants.changeEnvironment(environment: .preprod)
+            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+        }))
         alert.addAction(UIAlertAction(title: "Production", style: .default, handler: { _ in
             APIConstants.changeEnvironment(environment: .production)
             NotificationCenter.default.post(name: .shouldLogout, object: nil)

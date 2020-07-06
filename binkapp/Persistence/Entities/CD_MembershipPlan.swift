@@ -42,9 +42,9 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
     }
 
     enum DynamicContentColumn: String {
-        case voucherStampsExpiredDetail = "Voucher_Stamps_Expired_Detail"
-        case voucherStampsRedeemedDetail = "Voucher_Stamps_Redeemed_Detail"
-        case voucherStampsInProgressDetail = "Voucher_Stamps_Inprogress_Detail"
-        case voucherStampsIssuedDetail = "Voucher_Stamps_Issued_Detail"
+        case voucherStampsExpiredDetail = "Voucher_Expired_Detail"
+        case voucherStampsRedeemedDetail = "Voucher_Redeemed_Detail"
+        case voucherStampsInProgressDetail = "Voucher_Inprogress_Detail"
+        case voucherStampsIssuedDetail = "Voucher_Issued_Detail"
     }
 }
