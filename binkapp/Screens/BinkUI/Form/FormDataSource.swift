@@ -45,6 +45,10 @@ enum AccessForm {
 }
 
 class FormDataSource: NSObject {
+    struct PrefilledValue: Equatable {
+        var commonName: FieldCommonName?
+        var value: String?
+    }
     
     typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate & FormCollectionViewCellDelegate
     
@@ -169,14 +173,14 @@ extension FormDataSource {
 
 // MARK: - Add And Auth
 extension FormDataSource {
-    convenience init(authAdd membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, delegate: MultiDelegate? = nil) {
+    convenience init(authAdd membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, delegate: MultiDelegate? = nil, prefilledValues: [PrefilledValue]? = nil) {
         self.init()
         self.delegate = delegate
         self.membershipPlan = membershipPlan
-        setupFields(with: membershipPlan, formPurpose: formPurpose)
+        setupFields(with: membershipPlan, formPurpose: formPurpose, prefilledValues: prefilledValues)
     }
     
-    private func setupFields<T>(with model: T, formPurpose: FormPurpose) where T: CD_MembershipPlan {
+    private func setupFields<T>(with model: T, formPurpose: FormPurpose, prefilledValues: [PrefilledValue]?) where T: CD_MembershipPlan {
         let updatedBlock: FormField.ValueUpdatedBlock = { [weak self] field, newValue in
             guard let self = self else { return }
             self.delegate?.formDataSource(self, changed: newValue, for: field)
@@ -202,7 +206,7 @@ extension FormDataSource {
             self.delegate?.formDataSourceShouldRefresh(self)
         }
 
-        if case .addFromScanner(let barcode) = formPurpose {
+        if case .addFromScanner = formPurpose {
             model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
@@ -221,7 +225,7 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .add,
-                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             isReadOnly: field.fieldCommonName == .barcode,
                             fieldCommonName: field.fieldCommonName,
                             alternatives: field.alternativeCommonNames(),
@@ -251,6 +255,7 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .add,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName,
                             alternatives: field.alternativeCommonNames(),
                             dataSourceRefreshBlock: dataSourceRefreshBlock
@@ -260,7 +265,7 @@ extension FormDataSource {
             }
         }
 
-        if case .addFromScanner(let barcode) = formPurpose {
+        if case .addFromScanner = formPurpose {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
@@ -279,7 +284,7 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .auth,
-                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             isReadOnly: field.fieldCommonName == .barcode,
                             fieldCommonName: field.fieldCommonName
                         )
@@ -305,6 +310,7 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .auth,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName
                         )
                     )
@@ -330,6 +336,7 @@ extension FormDataSource {
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
                             columnKind: .enrol,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName
                         )
                     )
@@ -355,6 +362,7 @@ extension FormDataSource {
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
                             columnKind: .register,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: field.fieldCommonName
                             )
                     )

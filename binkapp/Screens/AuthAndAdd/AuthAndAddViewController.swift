@@ -34,7 +34,7 @@ class AuthAndAddViewController: BaseFormViewController {
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose)
+        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, prefilledValues: viewModel.prefilledFormValues)
         super.init(title: "login".localized, description: "", dataSource: datasource)
         dataSource.delegate = self
     }
@@ -118,7 +118,11 @@ class AuthAndAddViewController: BaseFormViewController {
 extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
         viewController.dismiss(animated: true) {
-            self.dataSource = FormDataSource(authAdd: self.viewModel.getMembershipPlan(), formPurpose: .addFromScanner(barcode: barcode), delegate: self)
+            var prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+                FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
+            }
+            prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
+            self.dataSource = FormDataSource(authAdd: self.viewModel.getMembershipPlan(), formPurpose: .addFromScanner, delegate: self, prefilledValues: prefilledValues)
             self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
         }
     }
@@ -166,8 +170,12 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
     }
     
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {
-        // In this case, we want to revert to the datasource we started with in the initialiser
-        self.dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, delegate: self)
+        // In this case, we want to revert to the datasource we started with in the initialiser unless we started as a scan journey
+        
+        let prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+            FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
+        }
+        self.dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, delegate: self, prefilledValues: prefilledValues)
         self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
     }
 }
