@@ -176,7 +176,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
         formField = field
         configureTextFieldRightView(shouldDisplay: true)
-        validationLabel.isHidden = true
+        validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
         
         if case let .expiry(months, years) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
