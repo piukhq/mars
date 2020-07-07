@@ -38,6 +38,7 @@ extension UserDefaults: BinkUserDefaults {
         case hasLaunchedWallet
         case userEmail
         case debugBaseURL
+        case httpCookies
     }
 
     func set(_ value: Any?, forDefaultsKey defaultName: UserDefaults.Keys) {
