@@ -11,6 +11,7 @@ import AVFoundation
 
 struct BarcodeScannerViewModel {
     let plan: CD_MembershipPlan?
+    var isScanning: Bool = false
     
     var hasPlan: Bool {
         return plan != nil
@@ -91,7 +92,7 @@ class BarcodeScannerViewController: UIViewController {
         return button
     }()
 
-    private let viewModel: BarcodeScannerViewModel
+    private var viewModel: BarcodeScannerViewModel
 
     init(viewModel: BarcodeScannerViewModel, delegate: BarcodeScannerViewControllerDelegate?) {
         self.viewModel = viewModel
@@ -167,16 +168,19 @@ class BarcodeScannerViewController: UIViewController {
             ])
         }
 
-        startScanning()
+        if !viewModel.isScanning {
+            startScanning()
+        }
     }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
         stopScanning()
     }
 
     private func startScanning() {
+        viewModel.isScanning = true
         session.sessionPreset = .high
         guard let backCamera = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
@@ -226,6 +230,7 @@ class BarcodeScannerViewController: UIViewController {
     }
 
     private func stopScanning() {
+        viewModel.isScanning = false
         schemeScanningQueue.async { [weak self] in
             self?.session.stopRunning()
             guard let outputs = self?.session.outputs else { return }
