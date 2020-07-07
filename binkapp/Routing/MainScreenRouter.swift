@@ -267,10 +267,10 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toPaymentCardNeededScreen() {
+    func toPaymentCardNeededScreen(strings: ScanStringsDataSource, scanDelegate: ScanDelegate?) {
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
-            self?.toAddPaymentViewController()
+            self?.toPaymentCardScanner(strings: strings, delegate: scanDelegate)
         }, tabBarBackButton: backButton)
         pushReusableModalTemplateVC(configurationModel: configuration, navigationController: navController, floatingButtons: false)
     }
