@@ -70,6 +70,7 @@ class MainScreenRouter {
         let repository = LoyaltyWalletRepository(apiClient: apiClient)
         let viewModel = LoyaltyWalletViewModel(repository: repository, router: self)
         let viewController = LoyaltyWalletViewController(viewModel: viewModel)
+        viewModel.paymentScanDelegate = viewController
         
         return viewController
     }
@@ -77,6 +78,7 @@ class MainScreenRouter {
     func getPaymentWalletViewController() -> UIViewController {
         let viewModel = PaymentWalletViewModel(repository: PaymentWalletRepository(apiClient: apiClient), router: self)
         let viewController = PaymentWalletViewController(viewModel: viewModel)
+        viewModel.paymentScanDelegate = viewController
         
         return viewController
     }
