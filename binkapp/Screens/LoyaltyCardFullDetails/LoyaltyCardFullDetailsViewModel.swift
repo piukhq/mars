@@ -67,6 +67,10 @@ class LoyaltyCardFullDetailsViewModel {
         return planImages.filter({ $0.type?.intValue == 2}).count != 0
     }
     
+    var brandHeaderAspectRatio: CGFloat {
+        return LayoutHelper.LoyaltyCardDetail.brandHeaderAspectRatio(forMembershipCard: membershipCard)
+    }
+    
     // MARK: - Public methods
     
     func toBarcodeModel() {
