@@ -71,13 +71,12 @@ class PreferencesViewController: BinkTrackableViewController {
     
     private func createCheckboxes(preferences: [PreferencesModel]) {
         preferences.forEach {
-            let checkboxView = CheckboxView()
+            let checked: Bool = $0.value == "1"
+            let checkboxView = CheckboxView(checked: checked)
             let attributedString = $0.slug == "marketing-bink" ?
                 NSMutableAttributedString(string: "preferences_marketing_checkbox".localized, attributes: [.font: UIFont.bodyTextSmall]) :
                 NSMutableAttributedString(string: $0.label ?? "", attributes: [.font: UIFont.bodyTextSmall])
             checkboxView.configure(title: attributedString, columnName: $0.slug ?? "", columnKind: .add, delegate: self)
-            
-            checkboxView.setValue(newValue: $0.value ?? "0")
             
             stackView.addArrangedSubview(checkboxView)
             checkboxes.append(checkboxView)
@@ -89,7 +88,7 @@ extension PreferencesViewController: CheckboxViewDelegate {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind) {
         guard Current.apiClient.networkIsReachable else {
             viewModel.presentNoConnectivityPopup()
-            checkboxView.toggleState()
+            checkboxView.reset()
             return
         }
         guard let columnName = checkboxView.columnName else { return }
@@ -100,7 +99,7 @@ extension PreferencesViewController: CheckboxViewDelegate {
         viewModel.putPreferences(preferences: dictionary, onSuccess: { [weak self] in
             self?.errorLabel.isHidden = true
         }) { [weak self] (error) in
-            checkboxView.toggleState()
+            checkboxView.reset()
             self?.errorLabel.text = "preferences_update_fail".localized
             self?.errorLabel.isHidden = false
         }
