@@ -34,7 +34,7 @@ class AuthAndAddViewController: BaseFormViewController {
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose)
+        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, prefilledValues: viewModel.prefilledFormValues)
         super.init(title: "login".localized, description: "", dataSource: datasource)
         dataSource.delegate = self
     }
@@ -115,6 +115,23 @@ class AuthAndAddViewController: BaseFormViewController {
     }
 }
 
+extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        viewController.dismiss(animated: true) {
+            var prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+                FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
+            }
+            prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
+            self.dataSource = FormDataSource(authAdd: self.viewModel.getMembershipPlan(), formPurpose: .addFromScanner, delegate: self, prefilledValues: prefilledValues)
+            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+        }
+    }
+    
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        viewController.dismiss(animated: true, completion: nil)
+    }
+}
+
 extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         floatingButtons.primaryButton.startLoading()
@@ -146,6 +163,19 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
         let y = stackScrollView.contentSize.height - stackScrollView.bounds.size.height + stackScrollView.contentInset.bottom
         let offset = CGPoint(x: 0, y: y)
         stackScrollView.setContentOffset(offset, animated: true)
+    }
+    
+    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan) {
+        viewModel.toLoyaltyScanner(forPlan: plan, delegate: self)
+    }
+    
+    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {
+        let prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+            FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
+        }
+        
+        self.dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: .add, delegate: self, prefilledValues: prefilledValues)
+        self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
     }
 }
 

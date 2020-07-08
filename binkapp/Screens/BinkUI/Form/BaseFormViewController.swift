@@ -84,7 +84,13 @@ class BaseFormViewController: BinkTrackableViewController, Form {
     var keyboardHeight: CGFloat = 0.0
     var selectedCellYOrigin: CGFloat = 0.0
     var selectedCellHeight: CGFloat = 0.0
-    let dataSource: FormDataSource
+    
+    var dataSource: FormDataSource {
+        didSet {
+            collectionView.dataSource = dataSource
+            collectionView.reloadData()
+        }
+    }
     
     // MARK: - Initialisation
     
@@ -183,7 +189,9 @@ extension BaseFormViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
     }
-    
+}
+
+extension BaseFormViewController {
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField) {
         collectionView.collectionViewLayout.invalidateLayout()
         formValidityUpdated(fullFormIsValid: dataSource.fullFormIsValid)

@@ -16,6 +16,10 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
+    func formDataSourceShouldRefresh(_ dataSource: FormDataSource)
+    
+    // I don't particular like this being a data source delegate method, but do we have any other route from collection view cell to the view controller?
+    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan)
 }
 
 extension FormDataSourceDelegate {
@@ -27,6 +31,9 @@ extension FormDataSourceDelegate {
         return false
     }
     func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {}
+    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {}
+    
+    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan) {}
 }
 
 enum AccessForm {
@@ -38,12 +45,19 @@ enum AccessForm {
 }
 
 class FormDataSource: NSObject {
+    struct PrefilledValue: Equatable {
+        var commonName: FieldCommonName?
+        var value: String?
+    }
     
     typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate & FormCollectionViewCellDelegate
     
     private struct Constants {
         static let expiryYearsInTheFuture = 50
     }
+    
+    /// We need the data source to hold a reference to the plan for some forms so that we can pass it through delegates to other objects
+    private(set) var membershipPlan: CD_MembershipPlan?
     
     private(set) var fields = [FormField]()
     private(set) var checkboxes = [CheckboxView]()
@@ -159,13 +173,14 @@ extension FormDataSource {
 
 // MARK: - Add And Auth
 extension FormDataSource {
-    convenience init(authAdd membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, delegate: MultiDelegate? = nil) {
+    convenience init(authAdd membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, delegate: MultiDelegate? = nil, prefilledValues: [PrefilledValue]? = nil) {
         self.init()
         self.delegate = delegate
-        setupFields(with: membershipPlan, formPurpose: formPurpose)
+        self.membershipPlan = membershipPlan
+        setupFields(with: membershipPlan, formPurpose: formPurpose, prefilledValues: prefilledValues)
     }
     
-    private func setupFields<T>(with model: T, formPurpose: FormPurpose) where T: CD_MembershipPlan {
+    private func setupFields<T>(with model: T, formPurpose: FormPurpose, prefilledValues: [PrefilledValue]?) where T: CD_MembershipPlan {
         let updatedBlock: FormField.ValueUpdatedBlock = { [weak self] field, newValue in
             guard let self = self else { return }
             self.delegate?.formDataSource(self, changed: newValue, for: field)
@@ -185,8 +200,13 @@ extension FormDataSource {
             guard let self = self else { return }
             self.delegate?.formDataSource(self, fieldDidExit: field)
         }
+        
+        let dataSourceRefreshBlock: FormField.DataSourceRefreshBlock = { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.formDataSourceShouldRefresh(self)
+        }
 
-        if case .addFromScanner(let barcode) = formPurpose {
+        if case .addFromScanner = formPurpose {
             model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(checked: false)
@@ -205,8 +225,11 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .add,
-                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
-                            isReadOnly: field.fieldCommonName == .barcode
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
+                            isReadOnly: field.fieldCommonName == .barcode,
+                            fieldCommonName: field.fieldCommonName,
+                            alternatives: field.alternativeCommonNames(),
+                            dataSourceRefreshBlock: dataSourceRefreshBlock
                         )
                     )
                 }
@@ -231,14 +254,18 @@ extension FormDataSource {
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
-                            columnKind: .add
+                            columnKind: .add,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
+                            fieldCommonName: field.fieldCommonName,
+                            alternatives: field.alternativeCommonNames(),
+                            dataSourceRefreshBlock: dataSourceRefreshBlock
                         )
                     )
                 }
             }
         }
 
-        if case .addFromScanner(let barcode) = formPurpose {
+        if case .addFromScanner = formPurpose {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(checked: false)
@@ -257,8 +284,9 @@ extension FormDataSource {
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
                             columnKind: .auth,
-                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
-                            isReadOnly: field.fieldCommonName == .barcode
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
+                            isReadOnly: field.fieldCommonName == .barcode,
+                            fieldCommonName: field.fieldCommonName
                         )
                     )
                 }
@@ -281,7 +309,9 @@ extension FormDataSource {
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
-                            columnKind: .auth
+                            columnKind: .auth,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
+                            fieldCommonName: field.fieldCommonName
                         )
                     )
                 }
@@ -305,7 +335,9 @@ extension FormDataSource {
                             updated: updatedBlock,
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
-                            columnKind: .enrol
+                            columnKind: .enrol,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
+                            fieldCommonName: field.fieldCommonName
                         )
                     )
                 }
@@ -329,7 +361,9 @@ extension FormDataSource {
                             updated: updatedBlock,
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
-                            columnKind: .register
+                            columnKind: .register,
+                            forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
+                            fieldCommonName: field.fieldCommonName
                             )
                     )
                 }
@@ -537,5 +571,10 @@ extension FormDataSource: FormCollectionViewCellDelegate {
                 delegate?.formDataSourceShouldScrollToBottom(self)
             }
         }
+    }
+    
+    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {
+        guard let plan = membershipPlan else { return }
+        delegate?.formDataSource(self, shouldPresentLoyaltyScannerForPlan: plan)
     }
 }

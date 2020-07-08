@@ -11,6 +11,10 @@ import UIKit
 protocol FormCollectionViewCellDelegate: class {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
+    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell)
+}
+extension FormCollectionViewCellDelegate {
+    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
 }
 
 class FormCollectionViewCell: UICollectionViewCell {
@@ -27,6 +31,29 @@ class FormCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
     
+    private lazy var textFieldStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [textField, textFieldRightView])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .fill
+        contentView.addSubview(stackView)
+        return stackView
+    }()
+    
+    lazy var textFieldRightView: UIView = {
+        let cameraButton = UIButton(type: .custom)
+        cameraButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        cameraButton.setImage(UIImage(named: "scan_icon"), for: .normal)
+        cameraButton.imageView?.contentMode = .scaleAspectFill
+        cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
+        cameraButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            cameraButton.widthAnchor.constraint(equalToConstant: 30)
+        ])
+        return cameraButton
+    }()
+    
     lazy var textField: UITextField = {
         let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +63,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         field.addTarget(self, action: .textFieldUpdated, for: .editingChanged)
         field.setContentCompressionResistancePriority(.required, for: .vertical)
         field.inputAccessoryView = inputAccessory
-        field.clearButtonMode = .whileEditing
         return field
     }()
     
@@ -71,13 +97,13 @@ class FormCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var fieldStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, textField, separator, validationLabel])
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, textFieldStack, separator, validationLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.alignment = .fill
         stackView.spacing = Constants.stackViewSpacing
-        stackView.setCustomSpacing(Constants.postTextFieldSpacing, after: textField)
+        stackView.setCustomSpacing(Constants.postTextFieldSpacing, after: textFieldStack)
         stackView.setCustomSpacing(Constants.postSeparatorSpacing, after: separator)
         contentView.addSubview(stackView)
         return stackView
@@ -100,7 +126,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         return layoutAttributes
     }
     
-    weak private var formField: FormField?
+    private weak var formField: FormField?
     private var pickerSelectedChoice: String?
     var isValidationLabelHidden = true
     
@@ -142,13 +168,15 @@ class FormCollectionViewCell: UICollectionViewCell {
         titleLabel.textColor = isEnabled ? .black : .disabledTextGrey
         textField.textColor = isEnabled ? .black : .disabledTextGrey
         textField.text = field.forcedValue
-        textField.isEnabled = isEnabled
         textField.placeholder = field.placeholder
         textField.isSecureTextEntry = field.fieldType.isSecureTextEntry
         textField.keyboardType = field.fieldType.keyboardType()
         textField.autocorrectionType = field.fieldType.autoCorrection()
         textField.autocapitalizationType = field.fieldType.capitalization()
+        textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
         formField = field
+        configureTextFieldRightView(shouldDisplay: true)
+        validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
         
         if case let .expiry(months, years) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
@@ -178,6 +206,15 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     @objc func textFieldUpdated(_ textField: UITextField, text: String?, backingData: [Int]?) {
         formField?.updateValue(textField.text)
+        configureTextFieldRightView(shouldDisplay: textField.text == "")
+    }
+    
+    private func configureTextFieldRightView(shouldDisplay: Bool) {
+        if formField?.fieldCommonName == .cardNumber && formField?.alternatives?.contains(.barcode) == true && shouldDisplay {
+            textFieldRightView.isHidden = false
+        } else {
+            textFieldRightView.isHidden = true
+        }
     }
     
     @objc func accessoryDoneTouchUpInside() {
@@ -194,6 +231,25 @@ class FormCollectionViewCell: UICollectionViewCell {
         pickerSelectedChoice = selectedDate
         formField?.updateValue(pickerSelectedChoice)
         textField.text = selectedDate
+    }
+    
+    @objc func handleScanButtonTap() {
+        delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // In order to allow a field to appear disabled, but allow the clear button to still be functional, we cannot make the textfield disabled
+        // So we must block the editing instead, which allows the clear button to still work
+        return formField?.isReadOnly == false
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        if formField?.fieldCommonName == .barcode {
+            formField?.dataSourceRefreshBlock?()
+            return false
+        }
+        configureTextFieldRightView(shouldDisplay: true)
+        return true
     }
 }
 
@@ -240,4 +296,5 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
 fileprivate extension Selector {
     static let textFieldUpdated = #selector(FormCollectionViewCell.textFieldUpdated(_:text:backingData:))
     static let accessoryDoneTouchUpInside = #selector(FormCollectionViewCell.accessoryDoneTouchUpInside)
+    static let handleScanButtonTap = #selector(FormCollectionViewCell.handleScanButtonTap)
 }

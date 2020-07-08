@@ -16,6 +16,10 @@ struct AddFieldModel: Codable {
     let type: Int?
     let choices: [FieldChoice]?
     let commonName: String?
+    
+    /// We set this type as transformable in the Core Data model, and manually change from AnyObject to [String] in the managed object class
+    /// If we regenerate our managed objects, we will get a compilation error until we change the type again
+    let alternatives: [String]?
 
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -25,6 +29,7 @@ struct AddFieldModel: Codable {
         case type
         case choices = "choice"
         case commonName = "common_name"
+        case alternatives
     }
 }
 
@@ -36,12 +41,12 @@ extension AddFieldModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.fieldDescription, with: fieldDescription, delta: delta)
         update(cdObject, \.type, with: NSNumber(value: type ?? 0), delta: delta)
         update(cdObject, \.commonName, with: commonName, delta: delta)
+        update(cdObject, \.alternatives, with: alternatives, delta: delta)
 
         cdObject.choices.forEach {
             guard let choice = $0 as? CD_FieldChoice else { return }
             context.delete(choice)
         }
-        
         if let choices = choices {
             for (index, choice) in choices.enumerated() {
                 let indexID = AddFieldModel.overrideId(forParentId: overrideID ?? id) + String(index)
