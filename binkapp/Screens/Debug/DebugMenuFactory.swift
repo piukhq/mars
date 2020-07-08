@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeWebScrapingRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -89,5 +89,12 @@ class DebugMenuFactory {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         return alert
+    }
+    
+    func makeWebScrapingRow() -> DebugMenuRow {
+        return DebugMenuRow(title: "Tesco web scraping", subtitle: nil, action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .webScraping)
+        }, cellType: .titleSubtitle)
     }
 }

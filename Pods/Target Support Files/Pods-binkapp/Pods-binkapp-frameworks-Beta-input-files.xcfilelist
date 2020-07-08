@@ -12,7 +12,6 @@ ${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework
 ${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework
 ${BUILT_PRODUCTS_DIR}/JWTDecode/JWTDecode.framework
 ${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework
-${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework
 ${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework
 ${PODS_ROOT}/ZendeskCommonUISDK/CommonUISDK.framework

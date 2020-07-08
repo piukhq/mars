@@ -274,7 +274,7 @@ private extension LoyaltyCardFullDetailsViewController {
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
             brandHeader.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             brandHeader.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
-            brandHeader.heightAnchor.constraint(equalTo: brandHeader.widthAnchor, multiplier: LayoutHelper.LoyaltyCardDetail.brandHeaderAspectRatio),
+            brandHeader.heightAnchor.constraint(equalTo: brandHeader.widthAnchor, multiplier: viewModel.brandHeaderAspectRatio),
             showBarcodeButton.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.barcodeButtonHeight),
             modulesStackView.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.modulesStackViewHeight),
             modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
@@ -343,9 +343,13 @@ extension LayoutHelper {
         static let navBarTitleViewScrollOffset: CGFloat = 100
         static let contentPadding: CGFloat = 25
         static let headerToBarcodeButtonPadding: CGFloat = 12
-        static let brandHeaderAspectRatio: CGFloat = 115/182
+        private static let brandHeaderAspectRatio: CGFloat = 115/182
+        private static let brandHeaderAspectRatioLink: CGFloat = 25/41
         static let modulesStackViewHeight: CGFloat = 128
         static let barcodeButtonHeight: CGFloat = 22
         static let informationTableSeparatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        static func brandHeaderAspectRatio(forMembershipCard card: CD_MembershipCard) -> CGFloat {
+            return card.membershipPlan?.featureSet?.planCardType == .link ? brandHeaderAspectRatioLink : brandHeaderAspectRatio
+        }
     }
 }
