@@ -54,14 +54,14 @@ class OnboardingViewModel {
         router.featureNotImplemented()
     }
     
-    func pushToSocialTermsAndConditions(request: FacebookRequest) {
-        let termsAndConditions = SocialTermsAndConditionsViewController(router: router, request: request)
+    func pushToSocialTermsAndConditions(requestType: SocialLoginRequestType) {
+        let termsAndConditions = SocialTermsAndConditionsViewController(router: router, requestType: requestType)
         navigationController?.pushViewController(termsAndConditions, animated: true)
     }
     
     func pushToAddEmail(request: FacebookRequest) {
         let addEmail = AddEmailViewController(router: router, request: request) { [weak self] request in
-            self?.pushToSocialTermsAndConditions(request: request)
+            self?.pushToSocialTermsAndConditions(requestType: .facebook(request))
         }
         
         navigationController?.pushViewController(addEmail, animated: true)
