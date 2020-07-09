@@ -354,9 +354,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                     
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else { return }
-                        self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: {
-                            self.navigationController?.removeViewController(self)
-                        })
+                        self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: nil)
                     }
                 }
             }
