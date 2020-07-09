@@ -200,7 +200,7 @@
 		BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */; };
 		BD9E4CC5236EE33900C6F098 /* FacebookLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC4236EE33900C6F098 /* FacebookLoginController.swift */; };
 		BD9E4CC7236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC6236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift */; };
-		BD9E4CC9236EF44900C6F098 /* FacebookRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC8236EF44900C6F098 /* FacebookRequest.swift */; };
+		BD9E4CC9236EF44900C6F098 /* SocialLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */; };
 		BD9E4CCB236F091B00C6F098 /* UserMigrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CCA236F091B00C6F098 /* UserMigrationController.swift */; };
 		BD9E4CCF236F8D6100C6F098 /* RenewTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CCE236F8D6000C6F098 /* RenewTokenResponse.swift */; };
 		BD9E4CD1237014D300C6F098 /* RootStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */; };
@@ -687,7 +687,7 @@
 		BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiffAware+Extension.swift"; sourceTree = "<group>"; };
 		BD9E4CC4236EE33900C6F098 /* FacebookLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginController.swift; sourceTree = "<group>"; };
 		BD9E4CC6236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialTermsAndConditionsViewController.swift; sourceTree = "<group>"; };
-		BD9E4CC8236EF44900C6F098 /* FacebookRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookRequest.swift; sourceTree = "<group>"; };
+		BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginRequest.swift; sourceTree = "<group>"; };
 		BD9E4CCA236F091B00C6F098 /* UserMigrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMigrationController.swift; sourceTree = "<group>"; };
 		BD9E4CCC236F095800C6F098 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		BD9E4CCE236F8D6000C6F098 /* RenewTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenewTokenResponse.swift; sourceTree = "<group>"; };
@@ -1646,7 +1646,7 @@
 				BD458B3B236B5B710029A538 /* LoginRegisterResponse.swift */,
 				BD458B3D236B5C0E0029A538 /* LoginRegisterRequest.swift */,
 				BD458B41236CA3910029A538 /* LogoutResponse.swift */,
-				BD9E4CC8236EF44900C6F098 /* FacebookRequest.swift */,
+				BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */,
 				BD9E4CCE236F8D6000C6F098 /* RenewTokenResponse.swift */,
 				BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */,
 				BD9E4CD723740A7500C6F098 /* PreferenceChangeResponse.swift */,
@@ -3067,7 +3067,7 @@
 				EFB7ED652379CA5900B72D06 /* PLRRewardDetailViewController.swift in Sources */,
 				EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */,
 				EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */,
-				BD9E4CC9236EF44900C6F098 /* FacebookRequest.swift in Sources */,
+				BD9E4CC9236EF44900C6F098 /* SocialLoginRequest.swift in Sources */,
 				3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */,
 				3CB6BF7923141D3000B74882 /* AuthAndAddRepository.swift in Sources */,
 			);
