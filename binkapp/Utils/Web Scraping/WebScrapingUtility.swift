@@ -18,32 +18,6 @@ protocol WebScrapable {
     var pointsScrapingScriptFileName: String { get }
 }
 
-struct TescoScrapingAgent: WebScrapable {
-    var merchantName: String {
-        return "Tesco"
-    }
-    
-    var loyaltySchemeName: String {
-        return "Tesco Clubcard"
-    }
-    
-    var loyaltySchemeBalanceIdentifier: String {
-        return "pts"
-    }
-    
-    var scrapableUrlString: String {
-        return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
-    }
-    
-    var loginScriptFileName: String {
-        return "TescoLogin"
-    }
-    
-    var pointsScrapingScriptFileName: String {
-        return "TescoPointsScrape"
-    }
-}
-
 enum WebScrapingUtilityError: BinkError {
     case agentProvidedInvalidUrl
     case loginScriptFileNotFound
@@ -141,11 +115,10 @@ class WebScrapingUtility: NSObject {
             }
         }
     }
-    
-    // TODO: Convert to throwing
-    func getScrapedValue(completion: @escaping (String?, WebScrapingUtilityError?) -> Void) {
+
+    func getScrapedValue(completion: @escaping (Result<String, WebScrapingUtilityError>) -> Void) {
         guard let scrapeFile = Bundle.main.url(forResource: agent.pointsScrapingScriptFileName, withExtension: "js") else {
-            completion(nil, .scapingScriptFileNotFound)
+            completion(.failure(.scapingScriptFileNotFound))
             return
         }
         
@@ -154,7 +127,7 @@ class WebScrapingUtility: NSObject {
         do {
             scrapeScript = try String(contentsOf: scrapeFile)
         } catch {
-            completion(nil, .agentProvidedInvalidScrapeScript)
+            completion(.failure(.agentProvidedInvalidScrapeScript))
             return
         }
         
@@ -168,7 +141,7 @@ class WebScrapingUtility: NSObject {
             }
             
             guard let pointsValue = pointsValue as? String, !pointsValue.isEmpty else {
-                completion(nil, .failedToCastReturnValue)
+                completion(.failure(.failedToCastReturnValue))
                 return
             }
             
@@ -178,7 +151,7 @@ class WebScrapingUtility: NSObject {
                 }
             }
             
-            completion(pointsValue, nil)
+            completion(.success(pointsValue))
         }
     }
     
@@ -194,20 +167,17 @@ class WebScrapingUtility: NSObject {
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if canScrape {
-            getScrapedValue { [weak self] (scrapedValue, error) in
+            getScrapedValue { [weak self] result in
                 guard let self = self else { return }
                 
-                if let error = error {
+                switch result {
+                case .failure(let error):
                     // Often, this will throw as the page is loading, and succeed after a few runs of this method. So maybe we shouldn't throw here.
                     self.delegate?.webScrapingUtility(self, didCompleteWithError: error)
                     return
+                case .success(let pointsValue):
+                    self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue)
                 }
-                
-                guard let scrapedValue = scrapedValue else {
-                    fatalError("Scraped value is nil, but we didn't pass an error.")
-                }
-                
-                self.delegate?.webScrapingUtility(self, didCompleteWithValue: scrapedValue)
             }
         } else {
             delegate?.webScrapingUtilityDidPromptForCredentials(self, agent: agent)
