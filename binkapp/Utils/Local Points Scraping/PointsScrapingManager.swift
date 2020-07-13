@@ -64,13 +64,21 @@ class PointsScrapingManager {
         Current.userDefaults.set(persistedBalances, forDefaultsKey: .scrapedBalances)
     }
     
+    func clearBalance(forMembershipCardId cardId: String) {
+        guard var balances = balances else { return }
+        if let indexToRemove = balances.firstIndex(where: { $0.membershipCardId == cardId }) {
+            balances.remove(at: indexToRemove)
+            Current.userDefaults.set(balances, forDefaultsKey: .scrapedBalances)
+        }
+    }
+    
     func scrapedBalanceValue(forMembershipCardId cardId: String) -> String? {
         return balances?.first(where: { $0.membershipCardId == cardId })?.pointsBalance
     }
     
     // MARK: - Credentials handling
     
-    func storeCredentials(_ credentials: WebScrapingCredentials, forMembershipCardId cardId: String) throws {
+    private func storeCredentials(_ credentials: WebScrapingCredentials, forMembershipCardId cardId: String) throws {
         do {
             try keychain.set(credentials.username, key: keychainKeyForCardId(cardId, credentialType: .username))
             try keychain.set(credentials.password, key: keychainKeyForCardId(cardId, credentialType: .password))
@@ -91,7 +99,7 @@ class PointsScrapingManager {
         }
     }
     
-    func removeCredentials(forMembershipCardId cardId: String) {
+    private func removeCredentials(forMembershipCardId cardId: String) {
         try? keychain.remove(keychainKeyForCardId(cardId, credentialType: .username))
         try? keychain.remove(keychainKeyForCardId(cardId, credentialType: .password))
     }
@@ -100,9 +108,25 @@ class PointsScrapingManager {
         return String(format: PointsScrapingManager.baseCredentialStoreKey, cardId, credentialType.rawValue)
     }
     
+    // MARK: - Add/Auth handling
+    
+    func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel) {
+        guard canEnableLocalPointsScrapingForCard(withRequest: request) else { return }
+    }
+    
+    func disableLocalPointsScraping(forMembershipCardId cardId: String) {
+        removeCredentials(forMembershipCardId: cardId)
+        clearBalance(forMembershipCardId: cardId)
+    }
+    
+    private func canEnableLocalPointsScrapingForCard(withRequest request: MembershipCardPostModel) -> Bool {
+        guard let planId = request.membershipPlan else { return false }
+        return hasAgent(forMembershipPlanId: planId)
+    }
+    
     // MARK: - Helpers
 
-    func hasAgent(forMembershipPlanId planId: String) -> Bool {
+    private func hasAgent(forMembershipPlanId planId: Int) -> Bool {
         return agents.contains(where: { $0.membershipPlanId == planId })
     }
 }

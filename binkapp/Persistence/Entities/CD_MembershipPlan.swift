@@ -40,10 +40,6 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
         }
         return secondaryColor ?? .darkGray
     }
-    
-    var localPointsScrapingIsEnabled: Bool {
-        return Current.pointsScrapingManager.hasAgent(forMembershipPlanId: id)
-    }
 
     enum DynamicContentColumn: String {
         case voucherStampsExpiredDetail = "Voucher_Expired_Detail"

@@ -49,6 +49,9 @@ class AuthAndAddRepository {
                         }
                     }
                 }
+                
+                Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: request)
+                
             case .failure(let error):
                 onError(error)
             }

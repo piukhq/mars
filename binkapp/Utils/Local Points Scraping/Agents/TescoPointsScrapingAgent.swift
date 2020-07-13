@@ -9,16 +9,16 @@
 import Foundation
 
 struct TescoScrapingAgent: WebScrapable {
-    var membershipPlanId: String {
+    var membershipPlanId: Int {
         switch APIConstants.currentEnvironment {
         case .dev:
-            return "207"
+            return 207
         case .staging:
-            return ""
+            return 207
         case .preprod:
-            return ""
+            return 207
         case .production:
-            return ""
+            return 207
         }
     }
     
