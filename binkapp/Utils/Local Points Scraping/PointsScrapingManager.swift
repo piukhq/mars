@@ -10,6 +10,9 @@ import Foundation
 import KeychainAccess
 
 class PointsScrapingManager {
+    
+    // MARK: - Objects
+    
     enum CredentialStoreType: String {
         case username
         case password
@@ -28,8 +31,44 @@ class PointsScrapingManager {
         }
     }
     
+    struct ScrapedBalance {
+        var membershipCardId: String
+        var pointsBalance: String
+    }
+    
+    // MARK: - Properties
+    
     private static let baseCredentialStoreKey = "com.bink.wallet.pointsScraping.credentials.cardId_%@.%@"
     private let keychain = Keychain(service: APIConstants.bundleID)
+    
+    private let agents: [WebScrapable] = [
+        TescoScrapingAgent()
+    ]
+    
+    private var balances: [ScrapedBalance]? {
+        return Current.userDefaults.value(forDefaultsKey: .scrapedBalances) as? [ScrapedBalance]
+    }
+    
+    // MARK: - Balance handling
+    
+    func persistBalance(_ balanceValue: String, forMembershipCardId cardId: String) {
+        let scrapedBalance = ScrapedBalance(membershipCardId: cardId, pointsBalance: balanceValue)
+        
+        var persistedBalances: [ScrapedBalance] = []
+        if var balances = balances {
+            balances.append(scrapedBalance)
+            persistedBalances = balances
+        } else {
+            persistedBalances = [scrapedBalance]
+        }
+        Current.userDefaults.set(persistedBalances, forDefaultsKey: .scrapedBalances)
+    }
+    
+    func scrapedBalanceValue(forMembershipCardId cardId: String) -> String? {
+        return balances?.first(where: { $0.membershipCardId == cardId })?.pointsBalance
+    }
+    
+    // MARK: - Credentials handling
     
     func storeCredentials(_ credentials: WebScrapingCredentials, forMembershipCardId cardId: String) throws {
         do {
@@ -59,5 +98,11 @@ class PointsScrapingManager {
     
     private func keychainKeyForCardId(_ cardId: String, credentialType: CredentialStoreType) -> String {
         return String(format: PointsScrapingManager.baseCredentialStoreKey, cardId, credentialType.rawValue)
+    }
+    
+    // MARK: - Helpers
+
+    func hasAgent(forMembershipPlanId planId: String) -> Bool {
+        return agents.contains(where: { $0.membershipPlanId == planId })
     }
 }

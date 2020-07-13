@@ -9,6 +9,19 @@
 import Foundation
 
 struct TescoScrapingAgent: WebScrapable {
+    var membershipPlanId: String {
+        switch APIConstants.currentEnvironment {
+        case .dev:
+            return "207"
+        case .staging:
+            return ""
+        case .preprod:
+            return ""
+        case .production:
+            return ""
+        }
+    }
+    
     var merchantName: String {
         return "Tesco"
     }

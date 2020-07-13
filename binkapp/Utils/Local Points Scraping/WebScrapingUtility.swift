@@ -10,6 +10,7 @@ import UIKit
 import WebKit
 
 protocol WebScrapable {
+    var membershipPlanId: String { get }
     var merchantName: String { get }
     var loyaltySchemeName: String { get }
     var loyaltySchemeBalanceIdentifier: String { get }
