@@ -16,6 +16,7 @@ class World {
     lazy var userDefaults: BinkUserDefaults = UserDefaults.standard
     lazy var userManager = UserManager()
     lazy var apiClient = APIClient()
+    lazy var pointsScrapingManager = PointsScrapingManager()
 }
 
 protocol BinkUserDefaults {

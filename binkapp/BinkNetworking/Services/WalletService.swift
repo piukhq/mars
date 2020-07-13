@@ -25,12 +25,8 @@ enum WalletServiceError: BinkError {
         return .walletService
     }
 
-    var errorCode: String? {
-        return nil
-    }
-
-    var message: String? {
-        return nil
+    var message: String {
+        return ""
     }
 }
 

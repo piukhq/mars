@@ -120,31 +120,42 @@ extension DebugMenuTableViewController: WebScrapingUtilityDelegate {
     }
     
     func webScrapingUtilityDidPromptForCredentials(_ utility: WebScrapingUtility, agent: WebScrapable) {
-        let alert = UIAlertController(title: "Login required", message: "Please enter your \(agent.loyaltySchemeName) credentials", preferredStyle: .alert)
-        alert.addTextField { textField in
-            textField.placeholder = "Username"
-        }
-        alert.addTextField { textField in
-            textField.placeholder = "Password"
-            textField.isSecureTextEntry = true
-        }
-        let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "ok".localized, style: .default) { [weak self] action in
-            let username = alert.textFields?[0].text
-            let password = alert.textFields?[1].text
-            let credentials = WebScrapingCredentials(username: username ?? "", password: password ?? "")
-            
-            do {
-                try self?.webScrapingUtility?.login(agent: agent, credentials: credentials)
-            } catch let error {
-                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                let closeAction = UIAlertAction(title: "Close", style: .default, handler: nil)
-                alert.addAction(closeAction)
-                self?.present(alert, animated: true, completion: nil)
-            }
-        }
-        alert.addAction(cancelAction)
-        alert.addAction(okAction)
-        present(alert, animated: true, completion: nil)
+//        guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMemebershipPlanId: 207) else {
+//            return
+//        }
+//        
+//        do {
+//            try webScrapingUtility?.login(agent: agent, credentials: credentials)
+//        } catch let error {
+//            // TODO: Handle error
+//            print(error)
+//        }
+        
+//        let alert = UIAlertController(title: "Login required", message: "Please enter your \(agent.loyaltySchemeName) credentials", preferredStyle: .alert)
+//        alert.addTextField { textField in
+//            textField.placeholder = "Username"
+//        }
+//        alert.addTextField { textField in
+//            textField.placeholder = "Password"
+//            textField.isSecureTextEntry = true
+//        }
+//        let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
+//        let okAction = UIAlertAction(title: "ok".localized, style: .default) { [weak self] action in
+//            let username = alert.textFields?[0].text
+//            let password = alert.textFields?[1].text
+//            let credentials = WebScrapingCredentials(username: username ?? "", password: password ?? "")
+//
+//            do {
+//                try self?.webScrapingUtility?.login(agent: agent, credentials: credentials)
+//            } catch let error {
+//                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+//                let closeAction = UIAlertAction(title: "Close", style: .default, handler: nil)
+//                alert.addAction(closeAction)
+//                self?.present(alert, animated: true, completion: nil)
+//            }
+//        }
+//        alert.addAction(cancelAction)
+//        alert.addAction(okAction)
+//        present(alert, animated: true, completion: nil)
     }
 }

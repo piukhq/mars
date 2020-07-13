@@ -30,12 +30,8 @@ enum Configuration {
             return .configuration
         }
 
-        var errorCode: String? {
-            return nil
-        }
-
-        var message: String? {
-            return nil
+        var message: String {
+            return ""
         }
     }
     

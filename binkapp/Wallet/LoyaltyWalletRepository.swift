@@ -20,6 +20,9 @@ struct LoyaltyWalletRepository: WalletRepository {
         // Process the backend delete, but fail silently
         let request = BinkNetworkRequest(endpoint: .membershipCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
         apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
+        
+        // Remove any stored credentials for points scraping
+        Current.pointsScrapingManager.removeCredentials(forMembershipCardId: card.id)
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in

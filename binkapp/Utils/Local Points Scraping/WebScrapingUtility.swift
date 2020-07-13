@@ -32,12 +32,8 @@ enum WebScrapingUtilityError: BinkError {
         return .webScrapingUtility
     }
     
-    var errorCode: String? {
-        return nil
-    }
-    
-    var message: String? {
-        return nil
+    var message: String {
+        return ""
     }
 }
 
