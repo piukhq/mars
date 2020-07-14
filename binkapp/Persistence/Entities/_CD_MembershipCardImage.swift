@@ -13,7 +13,6 @@ public enum CD_MembershipCardImageAttributes: String {
 
 public enum CD_MembershipCardImageRelationships: String {
     case membershipCards = "membershipCards"
-    case paymentCard = "paymentCard"
 }
 
 open class _CD_MembershipCardImage: CD_BaseObject {
@@ -66,9 +65,6 @@ open class _CD_MembershipCardImage: CD_BaseObject {
     open func membershipCardsSet() -> NSMutableSet {
         return self.membershipCards.mutableCopy() as! NSMutableSet
     }
-
-    @NSManaged open
-    var paymentCard: CD_PaymentCard?
 
 }
 
