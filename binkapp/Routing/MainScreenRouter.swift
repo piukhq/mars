@@ -108,7 +108,28 @@ class MainScreenRouter {
     func toLoyaltyScanner(delegate: BarcodeScannerViewControllerDelegate?) {
         let viewModel = BarcodeScannerViewModel()
         let viewController = BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
-        navController?.pushViewController(viewController, animated: true)
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
+            self?.toBrowseBrandsViewController()
+        }
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            navController?.pushViewController(viewController, animated: true)
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                navController?.present(alert, animated: true, completion: nil)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
+                if granted {
+                    self?.navController?.pushViewController(viewController, animated: true)
+                } else {
+                    if let alert = enterManuallyAlert {
+                        self?.navController?.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
     }
     
     func toPaymentCardScanner(strings: ScanStringsDataSource, delegate: ScanDelegate?) {

@@ -102,45 +102,12 @@ class AddingOptionsViewController: BinkTrackableViewController {
     }
     
     private func proceedWithCameraAccess(scanType: ScanType) {
-        if PermissionsUtility.videoCaptureIsAuthorized {
-            switch scanType {
-            case .loyalty:
-                viewModel.toLoyaltyScanner(delegate: self)
-            case .payment:
-                viewModel.toPaymentCardScanner(delegate: self)
-            }
-        } else if PermissionsUtility.videoCaptureIsDenied {
-            presentEnterManuallyAlert(scanType: scanType)
-        } else {
-            PermissionsUtility.requestVideoCaptureAuthorization { granted in
-                if granted {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
-                        guard let self = self else { return }
-                        switch scanType {
-                        case .loyalty:
-                            self.viewModel.toLoyaltyScanner(delegate: self)
-                        case .payment:
-                            self.viewModel.toPaymentCardScanner(delegate: self)
-                        }
-                    })
-                } else {
-                    self.presentEnterManuallyAlert(scanType: scanType)
-                }
-            }
+        switch scanType {
+        case .loyalty:
+            viewModel.toLoyaltyScanner(delegate: self)
+        case .payment:
+            viewModel.toPaymentCardScanner(delegate: self)
         }
-    }
-    
-    private func presentEnterManuallyAlert(scanType: ScanType) {
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
-            switch scanType {
-            case .loyalty:
-                self?.toBrowseBrands()
-            case .payment:
-                self?.viewModel.toAddPaymentCardScreen()
-            }
-        }
-        guard let alert = enterManuallyAlert else { return }
-        self.present(alert, animated: true, completion: nil)
     }
 }
 
