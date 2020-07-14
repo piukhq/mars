@@ -18,6 +18,24 @@ class PointsScrapingManager {
         case password
     }
     
+    enum ScrapedBalanceStatus {
+        case active
+        case failed
+    }
+    
+    struct ScrapedBalance {
+        var membershipCardId: String
+        var pointsBalance: String
+        var status: ScrapedBalanceStatus = .active
+        
+        mutating func setStatus(_ status: ScrapedBalanceStatus) {
+            self.status = status
+            // TODO: Update persisted balances
+        }
+    }
+    
+    // MARK: - Error handling
+    
     enum PointsScrapingManagerError: BinkError {
         case failedToStoreCredentials
         case failedToRetrieveCredentials
@@ -31,15 +49,11 @@ class PointsScrapingManager {
         }
     }
     
-    struct ScrapedBalance {
-        var membershipCardId: String
-        var pointsBalance: String
-    }
-    
     // MARK: - Properties
     
     private static let baseCredentialStoreKey = "com.bink.wallet.pointsScraping.credentials.cardId_%@.%@"
     private let keychain = Keychain(service: APIConstants.bundleID)
+    private var webScrapingUtility: WebScrapingUtility?
     
     private let agents: [WebScrapable] = [
         TescoScrapingAgent()
@@ -87,7 +101,7 @@ class PointsScrapingManager {
         }
     }
     
-    func retrieveCredentials(forMemebershipCardId cardId: String) throws -> WebScrapingCredentials {
+    func retrieveCredentials(forMembershipCardId cardId: String) throws -> WebScrapingCredentials {
         do {
             guard let username = try keychain.get(keychainKeyForCardId(cardId, credentialType: .username)),
                 let password = try keychain.get(keychainKeyForCardId(cardId, credentialType: .password)) else {
@@ -110,8 +124,15 @@ class PointsScrapingManager {
     
     // MARK: - Add/Auth handling
     
-    func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel) {
+    func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCardId: String) throws {
         guard canEnableLocalPointsScrapingForCard(withRequest: request) else { return }
+        guard let planId = request.membershipPlan else { return }
+        guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else { return }
+        
+        try? storeCredentials(credentials, forMembershipCardId: membershipCardId)
+        
+        webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: membershipCardId, delegate: self)
+        try? webScrapingUtility?.start()
     }
     
     func disableLocalPointsScraping(forMembershipCardId cardId: String) {
@@ -128,5 +149,24 @@ class PointsScrapingManager {
 
     private func hasAgent(forMembershipPlanId planId: Int) -> Bool {
         return agents.contains(where: { $0.membershipPlanId == planId })
+    }
+    
+    private func makeCredentials(fromRequest request: MembershipCardPostModel) -> WebScrapingCredentials? {
+        // TODO: These should be in the agent, as they wont all be the same column name, right?
+        if let username = request.account?.authoriseFields?.first(where: { $0.column == "Email" })?.value,
+            let password = request.account?.authoriseFields?.first(where: { $0.column == "Password" })?.value {
+            return WebScrapingCredentials(username: username, password: password)
+        }
+        return nil
+    }
+}
+
+extension PointsScrapingManager: WebScrapingUtilityDelegate {
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String) {
+        print(value)
+    }
+    
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError) {
+        print(error)
     }
 }

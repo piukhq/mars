@@ -92,15 +92,16 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             let viewController = DebugSecondaryPlanColorViewController()
             navigationController?.pushViewController(viewController, animated: true)
         case .webScraping:
-            webScrapingUtility = WebScrapingUtility(containerViewController: self, agent: TescoScrapingAgent(), delegate: self)
-            do {
-                try webScrapingUtility?.start()
-            } catch let error {
-                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                let closeAction = UIAlertAction(title: "Close", style: .default, handler: nil)
-                alert.addAction(closeAction)
-                present(alert, animated: true, completion: nil)
-            }
+            print("")
+//            webScrapingUtility = WebScrapingUtility(containerViewController: self, agent: TescoScrapingAgent(), delegate: self)
+//            do {
+//                try webScrapingUtility?.start()
+//            } catch let error {
+//                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+//                let closeAction = UIAlertAction(title: "Close", style: .default, handler: nil)
+//                alert.addAction(closeAction)
+//                present(alert, animated: true, completion: nil)
+//            }
         default:
             return
         }
@@ -123,7 +124,7 @@ extension DebugMenuTableViewController: WebScrapingUtilityDelegate {
 //        guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMemebershipPlanId: 207) else {
 //            return
 //        }
-//        
+//
 //        do {
 //            try webScrapingUtility?.login(agent: agent, credentials: credentials)
 //        } catch let error {

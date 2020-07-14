@@ -41,7 +41,6 @@ enum WebScrapingUtilityError: BinkError {
 protocol WebScrapingUtilityDelegate: AnyObject {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String)
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError)
-    func webScrapingUtilityDidPromptForCredentials(_ utility: WebScrapingUtility, agent: WebScrapable)
 }
 
 struct WebScrapingCredentials {
@@ -53,12 +52,14 @@ class WebScrapingUtility: NSObject {
     private weak var containerViewController: UIViewController?
     private let webView: WKWebView
     private let agent: WebScrapable
+    private let membershipCardId: String
     weak var delegate: WebScrapingUtilityDelegate?
     
-    init(containerViewController: UIViewController, agent: WebScrapable, delegate: WebScrapingUtilityDelegate?) {
+    init(containerViewController: UIViewController, agent: WebScrapable, membershipCardId: String, delegate: WebScrapingUtilityDelegate?) {
         self.containerViewController = containerViewController
         webView = WKWebView(frame: .zero)
         self.agent = agent
+        self.membershipCardId = membershipCardId
         self.delegate = delegate
         super.init()
         setupWebView()
@@ -75,7 +76,6 @@ class WebScrapingUtility: NSObject {
         let request = URLRequest(url: url)
         let allCookies = HTTPCookieStorage.shared.cookies ?? []
         var cookiesSet: Int = 0
-        // We have ~27 cookies on launch, ~48 on all subsequent calls, then back to ~27 when relaunching... weird!
         for cookie in allCookies {
             webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie) {
                 cookiesSet += 1
@@ -177,7 +177,9 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 }
             }
         } else {
-            delegate?.webScrapingUtilityDidPromptForCredentials(self, agent: agent)
+            if let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCardId) {
+                try? login(agent: agent, credentials: credentials)
+            }
         }
     }
 }

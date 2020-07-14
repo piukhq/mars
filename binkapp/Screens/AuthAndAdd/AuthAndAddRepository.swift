@@ -21,7 +21,7 @@ class AuthAndAddRepository {
         self.apiClient = apiClient
     }
     
-    func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (BinkError?) -> ()) {
+    func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, scrapingCredentials: WebScrapingCredentials? = nil, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (BinkError?) -> ()) {
         let endpoint: APIEndpoint
         let method: HTTPMethod
         
@@ -45,12 +45,13 @@ class AuthAndAddRepository {
 
                     DispatchQueue.main.async {
                         Current.database.performTask(with: newObject) { (context, safeObject) in
+                            if let cardId = safeObject?.id, let credentials = scrapingCredentials {
+                                try? Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: request, credentials: credentials, membershipCardId: cardId)
+                            }
                             onSuccess(safeObject)
                         }
                     }
                 }
-                
-                Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: request)
                 
             case .failure(let error):
                 onError(error)
