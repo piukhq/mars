@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import AVKit
-import AVFoundation
 import CardScan
 
 class AddingOptionsViewController: BinkTrackableViewController {
@@ -104,17 +102,17 @@ class AddingOptionsViewController: BinkTrackableViewController {
     }
     
     private func proceedWithCameraAccess(scanType: ScanType) {
-        let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
-        switch status {
-        case .authorized:
+        if PermissionsUtility.videoCaptureIsAuthorized {
             switch scanType {
             case .loyalty:
                 viewModel.toLoyaltyScanner(delegate: self)
             case .payment:
                 viewModel.toPaymentCardScanner(delegate: self)
             }
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { granted in
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            presentEnterManuallyAlert(scanType: scanType)
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
                 if granted {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
                         guard let self = self else { return }
@@ -129,10 +127,6 @@ class AddingOptionsViewController: BinkTrackableViewController {
                     self.presentEnterManuallyAlert(scanType: scanType)
                 }
             }
-        case .denied:
-            self.presentEnterManuallyAlert(scanType: scanType)
-        default:
-            return
         }
     }
     
