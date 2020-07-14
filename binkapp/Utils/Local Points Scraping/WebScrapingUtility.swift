@@ -13,7 +13,9 @@ protocol WebScrapable {
     var membershipPlanId: Int { get }
     var merchantName: String { get }
     var loyaltySchemeName: String { get }
-    var loyaltySchemeBalanceIdentifier: String { get }
+    var loyaltySchemeBalanceCurrency: String? { get }
+    var loyaltySchemeBalanceSuffix: String? { get }
+    var loyaltySchemeBalancePrefix: String? { get }
     var scrapableUrlString: String { get }
     var loginScriptFileName: String { get }
     var pointsScrapingScriptFileName: String { get }
@@ -39,7 +41,7 @@ enum WebScrapingUtilityError: BinkError {
 }
 
 protocol WebScrapingUtilityDelegate: AnyObject {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCardId cardId: String)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCardId cardId: String, withAgent agent: WebScrapable)
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError)
 }
 
@@ -173,7 +175,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                     self.delegate?.webScrapingUtility(self, didCompleteWithError: error)
                     return
                 case .success(let pointsValue):
-                    self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue, forMembershipCardId: self.membershipCardId)
+                    self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                 }
             }
         } else {

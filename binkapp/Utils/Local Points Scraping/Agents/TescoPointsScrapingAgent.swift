@@ -30,7 +30,15 @@ struct TescoScrapingAgent: WebScrapable {
         return "Tesco Clubcard"
     }
     
-    var loyaltySchemeBalanceIdentifier: String {
+    var loyaltySchemeBalanceCurrency: String? {
+        return nil
+    }
+
+    var loyaltySchemeBalancePrefix: String? {
+        return nil
+    }
+    
+    var loyaltySchemeBalanceSuffix: String? {
         return "pts"
     }
     
