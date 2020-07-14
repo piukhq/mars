@@ -112,12 +112,32 @@ class MainScreenRouter {
     }
     
     func toPaymentCardScanner(strings: ScanStringsDataSource, delegate: ScanDelegate?) {
-        if let viewController = ScanViewController.createViewController(withDelegate: delegate) {
-            viewController.allowSkip = true
-            viewController.cornerColor = .white
-            viewController.torchButtonImage = UIImage(named: "payment_scanner_torch")
-            viewController.stringDataSource = strings
-            navController?.pushViewController(viewController, animated: true)
+        guard let paymentCardScanner = ScanViewController.createViewController(withDelegate: delegate) else { return }
+        paymentCardScanner.allowSkip = true
+        paymentCardScanner.cornerColor = .white
+        paymentCardScanner.torchButtonImage = UIImage(named: "payment_scanner_torch")
+        paymentCardScanner.stringDataSource = strings
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
+            self?.toAddPaymentViewController()
+        }
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            navController?.pushViewController(paymentCardScanner, animated: true)
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                navController?.present(alert, animated: true, completion: nil)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
+                if granted {
+                    self?.navController?.pushViewController(paymentCardScanner, animated: true)
+                } else {
+                    if let alert = enterManuallyAlert {
+                        self?.navController?.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
         }
     }
 
