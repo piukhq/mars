@@ -15,16 +15,6 @@ class PermissionsUtility {
     
     // MARK: - Camera permissions
     
-    enum MediaType {
-        case video
-    }
-    
-    enum AuthorizationStatus {
-        case authorized
-        case denied
-        case notDetermined
-    }
-    
     static var videoCaptureIsAuthorized: Bool {
         return AVCaptureDevice.authorizationStatus(for: .video) == .authorized
     }
@@ -34,6 +24,6 @@ class PermissionsUtility {
     }
     
     static func requestVideoCaptureAuthorization(completion: @escaping (Bool) -> Void) {
-        
+        AVCaptureDevice.requestAccess(for: .video, completionHandler: completion)
     }
 }

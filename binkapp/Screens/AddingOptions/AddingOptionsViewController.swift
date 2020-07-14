@@ -131,13 +131,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
     }
     
     private func presentEnterManuallyAlert(scanType: ScanType) {
-        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
-        
-        let alert = UIAlertController(title: "camera_denied_title".localized, message: "camera_denied_body".localized, preferredStyle: .alert)
-        let allowAction = UIAlertAction(title: "camera_denied_allow_access".localized, style: .default, handler: { _ in
-            UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
-        })
-        let manualAction = UIAlertAction(title: "camera_denied_manually_option".localized, style: .default) { [weak self] _ in
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
             switch scanType {
             case .loyalty:
                 self?.toBrowseBrands()
@@ -145,9 +139,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
                 self?.viewModel.toAddPaymentCardScreen()
             }
         }
-        alert.addAction(manualAction)
-        alert.addAction(allowAction)
-        alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+        guard let alert = enterManuallyAlert else { return }
         self.present(alert, animated: true, completion: nil)
     }
 }
