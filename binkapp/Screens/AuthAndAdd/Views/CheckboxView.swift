@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import M13Checkbox
 
 protocol CheckboxViewDelegate: NSObjectProtocol {
     func checkboxView(_ checkboxView: CheckboxView, didCompleteWithColumn column: String, value: String, fieldType: FormField.ColumnKind)
@@ -20,10 +19,11 @@ extension CheckboxViewDelegate {
 
 class CheckboxView: CustomView {
     typealias TextAction = () -> ()
-    @IBOutlet private weak var checkboxView: M13Checkbox!
+    @IBOutlet private weak var checkboxButton: UIButton!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var textView: UITextView!
 
+    private var checkedState: Bool = false
     private(set) var hideCheckbox: Bool = false
     private(set) var optional: Bool = false
     private(set) var columnName: String?
@@ -35,24 +35,39 @@ class CheckboxView: CustomView {
         }
     }
     
+    var value: String {
+        return checkedState ? "1" : "0"
+    }
+    
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: .textSelected)
     
     weak var delegate: CheckboxViewDelegate?
     
+    init(checked: Bool) {
+        super.init(frame: .zero)
+        checkedState = checked
+        configureCheckboxButton(forState: checkedState, animated: false)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func configure(title: NSMutableAttributedString, columnName: String, columnKind: FormField.ColumnKind, url: URL? = nil, delegate: CheckboxViewDelegate? = nil, optional: Bool = false, textSelected: TextAction? = nil, hideCheckbox: Bool = false) {
-        checkboxView.boxType = .square
-        checkboxView.stateChangeAnimation = .flat(.fill)
+        checkboxButton.layer.cornerRadius = 4
+        if #available(iOS 13.0, *) {
+            checkboxButton.layer.cornerCurve = .continuous
+        }
+        
         self.columnName = columnName
         self.columnKind = columnKind
         self.delegate = delegate
         self.optional = optional
         self.textSelected = textSelected
         self.hideCheckbox = hideCheckbox
-        
-        checkboxView.addTarget(self, action: #selector(checkboxValueChanged(_:)), for: .valueChanged)
 
-        //We don't need a delegate if we don't have a checkbox, so we send a nil delegate to hide it
-        checkboxView.isHidden = hideCheckbox
+        // We don't need a delegate if we don't have a checkbox, so we send a nil delegate to hide it
+        checkboxButton.isHidden = hideCheckbox
 
         guard let safeUrl = url else {
             self.title = title
@@ -68,8 +83,37 @@ class CheckboxView: CustomView {
         textView.isUserInteractionEnabled = true
         textView.delegate = self
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
-        checkboxView.boxType = .square
-        checkboxView.stateChangeAnimation = .flat(.fill)
+    }
+    
+    @IBAction private func toggleCheckbox() {
+        checkedState.toggle()
+        configureCheckboxButton(forState: checkedState)
+        
+        guard let columnType = columnKind, let columnName = textView.text else { return }
+        delegate?.checkboxView(self, didCompleteWithColumn: columnName, value: String(checkedState), fieldType: columnType)
+    }
+    
+    private func configureCheckboxButton(forState checked: Bool, animated: Bool = true) {
+        let animationBlock = {
+            self.checkboxButton.backgroundColor = checked ? .black : .white
+            self.checkboxButton.setImage(checked ? UIImage(named: "checkmark") : nil, for: .normal)
+            self.checkboxButton.layer.borderColor = checked ? nil : UIColor.systemGray.cgColor
+            self.checkboxButton.layer.borderWidth = checked ? 0 : 2
+        }
+        
+        guard animated else {
+            animationBlock()
+            return
+        }
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .transitionFlipFromTop, animations: {
+            animationBlock()
+        }, completion: nil)
+    }
+    
+    /// Should only be used when the API call triggered by the delegate method fails, and we need to revert the state
+    func reset() {
+        checkedState.toggle()
+        configureCheckboxButton(forState: checkedState)
     }
 }
 
@@ -79,39 +123,8 @@ extension CheckboxView: UITextViewDelegate {
         return false
     }
     
-    var value: String {
-        return checkboxView.checkState == .checked ? "1" : "0"
-    }
-    
-    func setValue(newValue: String) {
-        switch newValue {
-        case "0":
-            checkboxView.checkState = .unchecked
-            break
-        case "1":
-            checkboxView.checkState = .checked
-            break
-        default:
-            checkboxView.checkState = .unchecked
-            break
-        }
-    }
-    
     @objc func textSelectedSelector() {
         textSelected?()
-    }
-    
-    func toggleState() {
-        switch checkboxView.checkState {
-        case .checked:
-            checkboxView.setCheckState(.unchecked, animated: true)
-            break
-        case .unchecked:
-            checkboxView.setCheckState(.checked, animated: true)
-            break
-        case .mixed:
-            break
-        }
     }
 }
 
@@ -120,14 +133,7 @@ extension CheckboxView: InputValidation {
         if hideCheckbox {
             return true
         }
-        return optional ? true : checkboxView.checkState == .checked
-    }
-    
-    @objc func checkboxValueChanged(_ sender: Any) {
-        let isChecked = checkboxView.checkState == .checked
-        
-        guard let columnType = columnKind, let columnName = textView.text else { return }
-        delegate?.checkboxView(self, didCompleteWithColumn: columnName, value: String(isChecked), fieldType: columnType)
+        return optional ? true : checkedState
     }
 }
 
