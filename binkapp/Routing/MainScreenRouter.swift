@@ -127,9 +127,9 @@ class MainScreenRouter {
             PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
                 if granted {
                     if plan == nil {
-                        navController?.pushViewController(viewController, animated: true)
+                        self?.navController?.pushViewController(viewController, animated: true)
                     } else {
-                        navController?.present(viewController, animated: true, completion: nil)
+                        self?.navController?.present(viewController, animated: true, completion: nil)
                     }
                 } else {
                     if let alert = enterManuallyAlert {
