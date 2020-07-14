@@ -161,9 +161,30 @@ class PointsScrapingManager {
     }
 }
 
+// MARK: - Core Data interaction
+extension PointsScrapingManager: CoreDataRepositoryProtocol {
+    func setBalanceValue(_ value: String, forMembershipCardId cardId: String) throws {
+        let predicate = NSPredicate(format: "id == \(cardId)")
+        fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, predicate: predicate) { objects in
+            if let persistedMembershipCard = objects?.first {
+                Current.database.performBackgroundTask(with: persistedMembershipCard) { (backgroundContext, safeObject) in
+                    guard let membershipCard = safeObject else { return }
+                    guard let pointsValue = Double(value) else { return }
+                    let balance = MembershipCardBalanceModel(apiId: nil, value: pointsValue, currency: nil, prefix: nil, suffix: "pts", updatedAt: nil)
+                    let cdBalance = balance.mapToCoreData(backgroundContext, .update, overrideID: nil)
+                    membershipCard.addBalancesObject(cdBalance)
+                    try? backgroundContext.save()
+                }
+            }
+        }
+    }
+}
+
+// MARK: - WebScrapingUtilityDelegate
+
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String) {
-        print(value)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCardId cardId: String) {
+        try? setBalanceValue(value, forMembershipCardId: cardId)
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError) {

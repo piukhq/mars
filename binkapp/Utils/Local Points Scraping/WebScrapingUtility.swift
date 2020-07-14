@@ -39,7 +39,7 @@ enum WebScrapingUtilityError: BinkError {
 }
 
 protocol WebScrapingUtilityDelegate: AnyObject {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCardId cardId: String)
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError)
 }
 
@@ -173,7 +173,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                     self.delegate?.webScrapingUtility(self, didCompleteWithError: error)
                     return
                 case .success(let pointsValue):
-                    self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue)
+                    self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue, forMembershipCardId: self.membershipCardId)
                 }
             }
         } else {
