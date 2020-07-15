@@ -18,23 +18,6 @@ class PointsScrapingManager {
         case password
     }
     
-    enum ScrapedBalanceStatus {
-        case authorized
-        case pending
-        case failed
-    }
-    
-    struct ScrapedBalance {
-        var membershipCardId: String
-        var pointsBalance: String
-        var status: ScrapedBalanceStatus = .pending
-        
-        mutating func setStatus(_ status: ScrapedBalanceStatus) {
-            self.status = status
-            // TODO: Update persisted balances
-        }
-    }
-    
     // MARK: - Error handling
     
     enum PointsScrapingManagerError: BinkError {
@@ -59,37 +42,6 @@ class PointsScrapingManager {
     private let agents: [PointsScrapingAgent] = [
         TescoScrapingAgent()
     ]
-    
-    private var balances: [ScrapedBalance]? {
-        return Current.userDefaults.value(forDefaultsKey: .scrapedBalances) as? [ScrapedBalance]
-    }
-    
-    // MARK: - Balance handling
-    
-    func persistBalance(_ balanceValue: String, forMembershipCardId cardId: String) {
-        let scrapedBalance = ScrapedBalance(membershipCardId: cardId, pointsBalance: balanceValue)
-        
-        var persistedBalances: [ScrapedBalance] = []
-        if var balances = balances {
-            balances.append(scrapedBalance)
-            persistedBalances = balances
-        } else {
-            persistedBalances = [scrapedBalance]
-        }
-        Current.userDefaults.set(persistedBalances, forDefaultsKey: .scrapedBalances)
-    }
-    
-    func clearBalance(forMembershipCardId cardId: String) {
-        guard var balances = balances else { return }
-        if let indexToRemove = balances.firstIndex(where: { $0.membershipCardId == cardId }) {
-            balances.remove(at: indexToRemove)
-            Current.userDefaults.set(balances, forDefaultsKey: .scrapedBalances)
-        }
-    }
-    
-    func scrapedBalanceValue(forMembershipCardId cardId: String) -> String? {
-        return balances?.first(where: { $0.membershipCardId == cardId })?.pointsBalance
-    }
     
     // MARK: - Credentials handling
     
@@ -140,7 +92,6 @@ class PointsScrapingManager {
     
     func disableLocalPointsScraping(forMembershipCardId cardId: String) {
         removeCredentials(forMembershipCardId: cardId)
-        clearBalance(forMembershipCardId: cardId)
     }
     
     private func canEnableLocalPointsScrapingForCard(withRequest request: MembershipCardPostModel) -> Bool {
