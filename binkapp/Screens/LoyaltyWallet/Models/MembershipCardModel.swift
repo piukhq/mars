@@ -66,12 +66,15 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             }
         }
 
-        if let status = status {
-            let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
-            update(cdStatus, \.card, with: cdObject, delta: delta)
-            update(cdObject, \.status, with: cdStatus, delta: delta)
-        } else {
-            update(cdObject, \.status, with: nil, delta: false)
+        /// If this card will get it's balance from web scraping, we should always ignore this path as we locally create these objects
+        if let planId = membershipPlan, !Current.pointsScrapingManager.hasAgent(forMembershipPlanId: planId) {
+            if let status = status {
+                let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
+                update(cdStatus, \.card, with: cdObject, delta: delta)
+                update(cdObject, \.status, with: cdStatus, delta: delta)
+            } else {
+                update(cdObject, \.status, with: nil, delta: false)
+            }
         }
 
         if let card = card {
@@ -114,18 +117,21 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
                 cdPaymentCard.addLinkedMembershipCardsObject(cdObject)
             }
         }
-
-        cdObject.balances.forEach {
-            guard let balance = $0 as? CD_MembershipCardBalance else { return }
-            context.delete(balance)
-        }
         
-        if let balances = balances {
-            for (index, balance) in balances.enumerated() {
-                let indexID = MembershipCardBalanceModel.overrideId(forParentId: overrideID ?? id) + String(index)
-                let cdBalance = balance.mapToCoreData(context, .update, overrideID: indexID)
-                update(cdBalance, \.card, with: cdObject, delta: false)
-                cdObject.addBalancesObject(cdBalance)
+        /// If this card will get it's balance from web scraping, we should always ignore this path as we locally create these objects
+        if let planId = membershipPlan, !Current.pointsScrapingManager.hasAgent(forMembershipPlanId: planId) {
+            cdObject.balances.forEach {
+                guard let balance = $0 as? CD_MembershipCardBalance else { return }
+                context.delete(balance)
+            }
+            
+            if let balances = balances {
+                for (index, balance) in balances.enumerated() {
+                    let indexID = MembershipCardBalanceModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                    let cdBalance = balance.mapToCoreData(context, .update, overrideID: indexID)
+                    update(cdBalance, \.card, with: cdObject, delta: false)
+                    cdObject.addBalancesObject(cdBalance)
+                }
             }
         }
 
