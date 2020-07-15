@@ -8,7 +8,24 @@
 
 import Foundation
 
-struct TescoScrapingAgent: WebScrapable {
+protocol PointsScrapingAgent: WebScrapable {
+    var membershipCardIds: [Int]? { get set }
+    mutating func addMembershipCardId(_ id: Int)
+}
+
+extension PointsScrapingAgent {
+    mutating func addMembershipCardId(_ id: Int) {
+        guard var ids = membershipCardIds else {
+            membershipCardIds = [id]
+            return
+        }
+        ids.append(id)
+    }
+}
+
+struct TescoScrapingAgent: PointsScrapingAgent {
+    var membershipCardIds: [Int]?
+    
     var membershipPlanId: Int {
         switch APIConstants.currentEnvironment {
         case .dev:
@@ -21,15 +38,7 @@ struct TescoScrapingAgent: WebScrapable {
             return 207
         }
     }
-    
-    var merchantName: String {
-        return "Tesco"
-    }
-    
-    var loyaltySchemeName: String {
-        return "Tesco Clubcard"
-    }
-    
+
     var loyaltySchemeBalanceCurrency: String? {
         return nil
     }
@@ -37,19 +46,19 @@ struct TescoScrapingAgent: WebScrapable {
     var loyaltySchemeBalancePrefix: String? {
         return nil
     }
-    
+
     var loyaltySchemeBalanceSuffix: String? {
         return "pts"
     }
-    
+
     var scrapableUrlString: String {
         return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
     }
-    
+
     var loginScriptFileName: String {
         return "TescoLogin"
     }
-    
+
     var pointsScrapingScriptFileName: String {
         return "TescoPointsScrape"
     }

@@ -19,14 +19,15 @@ class PointsScrapingManager {
     }
     
     enum ScrapedBalanceStatus {
-        case active
+        case authorized
+        case pending
         case failed
     }
     
     struct ScrapedBalance {
         var membershipCardId: String
         var pointsBalance: String
-        var status: ScrapedBalanceStatus = .active
+        var status: ScrapedBalanceStatus = .pending
         
         mutating func setStatus(_ status: ScrapedBalanceStatus) {
             self.status = status
@@ -55,7 +56,7 @@ class PointsScrapingManager {
     private let keychain = Keychain(service: APIConstants.bundleID)
     private var webScrapingUtility: WebScrapingUtility?
     
-    private let agents: [WebScrapable] = [
+    private let agents: [PointsScrapingAgent] = [
         TescoScrapingAgent()
     ]
     
@@ -127,7 +128,9 @@ class PointsScrapingManager {
     func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCardId: String) throws {
         guard canEnableLocalPointsScrapingForCard(withRequest: request) else { return }
         guard let planId = request.membershipPlan else { return }
-        guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else { return }
+        guard var agent = agents.first(where: { $0.membershipPlanId == planId }) else { return }
+        guard let membershipCardIdInt = Int(membershipCardId) else { return }
+        agent.addMembershipCardId(membershipCardIdInt)
         
         try? storeCredentials(credentials, forMembershipCardId: membershipCardId)
         
@@ -170,9 +173,18 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 Current.database.performBackgroundTask(with: persistedMembershipCard) { (backgroundContext, safeObject) in
                     guard let membershipCard = safeObject else { return }
                     guard let pointsValue = Double(value) else { return }
-                    let balance = MembershipCardBalanceModel(apiId: nil, value: pointsValue, currency: agent.loyaltySchemeBalanceCurrency, prefix: agent.loyaltySchemeBalancePrefix, suffix: agent.loyaltySchemeBalanceSuffix, updatedAt: nil)
+                    
+                    // Set new balance object
+                    let balance = MembershipCardBalanceModel(apiId: nil, value: pointsValue, currency: agent.loyaltySchemeBalanceCurrency, prefix: agent.loyaltySchemeBalancePrefix, suffix: agent.loyaltySchemeBalanceSuffix, updatedAt: Date().timeIntervalSince1970)
+                    // TODO: Set override id
                     let cdBalance = balance.mapToCoreData(backgroundContext, .update, overrideID: nil)
                     membershipCard.addBalancesObject(cdBalance)
+                    
+                    // Set card status to authorized
+                    let status = MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil)
+                    let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: nil)
+                    membershipCard.status = cdStatus
+                    
                     try? backgroundContext.save()
                 }
             }
