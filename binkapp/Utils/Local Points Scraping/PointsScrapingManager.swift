@@ -176,13 +176,12 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     
                     // Set new balance object
                     let balance = MembershipCardBalanceModel(apiId: nil, value: pointsValue, currency: agent.loyaltySchemeBalanceCurrency, prefix: agent.loyaltySchemeBalancePrefix, suffix: agent.loyaltySchemeBalanceSuffix, updatedAt: Date().timeIntervalSince1970)
-                    // TODO: Set override id
-                    let cdBalance = balance.mapToCoreData(backgroundContext, .update, overrideID: nil)
+                    let cdBalance = balance.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardBalanceModel.overrideId(forParentId: membershipCard.id))
                     membershipCard.addBalancesObject(cdBalance)
                     
                     // Set card status to authorized
                     let status = MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil)
-                    let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: nil)
+                    let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
                     membershipCard.status = cdStatus
                     
                     try? backgroundContext.save()
@@ -200,6 +199,7 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError) {
+        // TODO: Set balances to nil? And status to failed
         print(error)
     }
 }
