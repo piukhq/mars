@@ -67,7 +67,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         }
 
         /// If this card will get it's balance from web scraping, we should always ignore this path as we locally create these objects
-        if let planId = membershipPlan, !Current.pointsScrapingManager.hasAgent(forMembershipPlanId: planId) {
+        if let planId = membershipPlan, !Current.pointsScrapingManager.planIdIsWebScrapable(planId) {
             if let status = status {
                 let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
                 update(cdStatus, \.card, with: cdObject, delta: delta)
@@ -128,7 +128,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         }
         
         /// If this card will get it's balance from web scraping, we should always ignore this path as we locally create these objects
-        if let planId = membershipPlan, !Current.pointsScrapingManager.hasAgent(forMembershipPlanId: planId) {
+        if let planId = membershipPlan, !Current.pointsScrapingManager.planIdIsWebScrapable(planId) {
             cdObject.balances.forEach {
                 guard let balance = $0 as? CD_MembershipCardBalance else { return }
                 context.delete(balance)

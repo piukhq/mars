@@ -106,7 +106,7 @@ class PointsScrapingManager {
         return hasAgent(forMembershipPlanId: id)
     }
 
-    func hasAgent(forMembershipPlanId planId: Int) -> Bool {
+    private func hasAgent(forMembershipPlanId planId: Int) -> Bool {
         return agents.contains(where: { $0.membershipPlanId == planId })
     }
     
