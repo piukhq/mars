@@ -17,7 +17,14 @@ open class CD_MembershipCardStatus: _CD_MembershipCardStatus {
         return MembershipCardStatus(rawValue: state)
     }
     
-    var formattedReasonCodes: Set<CD_ReasonCode>? {
-        return reasonCodes as? Set<CD_ReasonCode>
+    var formattedReasonCodes: [ReasonCode]? {
+        guard let formattedReasonCodes = reasonCodes as? Set<CD_ReasonCode> else { return nil }
+        var reasonCodes: [ReasonCode]? = []
+        formattedReasonCodes.forEach {
+            if let value = $0.value, let reasonCode = ReasonCode(rawValue: value) {
+                reasonCodes?.append(reasonCode)
+            }
+        }
+        return reasonCodes
     }
 }

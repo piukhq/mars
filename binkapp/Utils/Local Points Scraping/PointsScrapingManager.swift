@@ -100,6 +100,11 @@ class PointsScrapingManager {
     }
     
     // MARK: - Helpers
+    
+    func planIdIsWebScrapable(_ planId: Int?) -> Bool {
+        guard let id = planId else { return false }
+        return hasAgent(forMembershipPlanId: id)
+    }
 
     func hasAgent(forMembershipPlanId planId: Int) -> Bool {
         return agents.contains(where: { $0.membershipPlanId == planId })
@@ -133,7 +138,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     cdBalance.card = membershipCard
                     
                     // Set card status to authorized
-                    let status = MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil)
+                    let status = MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: [.pointsScrapingSuccessful])
                     let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
                     membershipCard.status = cdStatus
                     cdStatus.card = membershipCard
@@ -166,7 +171,7 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
                     guard let membershipCard = safeObject else { return }
                     
                     // Set card status to failed
-                    let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: nil)
+                    let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
                     let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
                     membershipCard.status = cdStatus
                     
