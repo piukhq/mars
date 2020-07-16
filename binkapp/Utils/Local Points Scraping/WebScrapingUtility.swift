@@ -28,6 +28,7 @@ enum WebScrapingUtilityError: BinkError {
     case failedToExecuteLoginScript
     case failedToExecuteScrapingScript
     case failedToCastReturnValue
+    case loginFailed
     
     var domain: BinkErrorDomain {
         return .webScrapingUtility
@@ -55,6 +56,8 @@ class WebScrapingUtility: NSObject {
     private let membershipCardId: String
     weak var delegate: WebScrapingUtilityDelegate?
     
+    private(set) var isRunning = false
+    
     init(containerViewController: UIViewController, agent: WebScrapable, membershipCardId: String, delegate: WebScrapingUtilityDelegate?) {
         self.containerViewController = containerViewController
         webView = WKWebView(frame: .zero)
@@ -73,6 +76,7 @@ class WebScrapingUtility: NSObject {
         guard let url = URL(string: agent.scrapableUrlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
+        isRunning = true
         let request = URLRequest(url: url)
         let allCookies = HTTPCookieStorage.shared.cookies ?? []
         var cookiesSet: Int = 0
@@ -87,8 +91,13 @@ class WebScrapingUtility: NSObject {
         }
     }
     
+    private func stop() {
+        isRunning = false
+    }
+    
     func login(agent: WebScrapable, credentials: WebScrapingCredentials) throws {
         guard let loginFile = Bundle.main.url(forResource: agent.loginScriptFileName, withExtension: "js") else {
+            self.stop()
             throw WebScrapingUtilityError.loginScriptFileNotFound
         }
         
@@ -97,6 +106,7 @@ class WebScrapingUtility: NSObject {
         do {
             loginScript = try String(contentsOf: loginFile)
         } catch {
+            self.stop()
             throw WebScrapingUtilityError.agentProvidedInvalidLoginScript
         }
         
@@ -107,6 +117,7 @@ class WebScrapingUtility: NSObject {
                 return
             }
             guard error == nil else {
+                self.stop()
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript)
                 return
             }
@@ -133,6 +144,7 @@ class WebScrapingUtility: NSObject {
                 return
             }
             guard error == nil else {
+                self.stop()
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteScrapingScript)
                 return
             }
@@ -169,16 +181,27 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 
                 switch result {
                 case .failure(let error):
-                    // Often, this will throw as the page is loading, and succeed after a few runs of this method. So maybe we shouldn't throw here.
+                    self.stop()
                     self.delegate?.webScrapingUtility(self, didCompleteWithError: error)
                     return
                 case .success(let pointsValue):
+                    self.stop()
                     self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                 }
             }
         } else {
             if let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCardId) {
-                try? login(agent: agent, credentials: credentials)
+                do {
+                    try login(agent: agent, credentials: credentials)
+                } catch {
+                    self.stop()
+                    
+                    if let webScrapingError = error as? WebScrapingUtilityError {
+                        self.delegate?.webScrapingUtility(self, didCompleteWithError: webScrapingError)
+                    } else {
+                        self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed)
+                    }
+                }
             }
         }
     }
