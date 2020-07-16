@@ -14,6 +14,7 @@ protocol WebScrapable {
     var loyaltySchemeBalanceCurrency: String? { get }
     var loyaltySchemeBalanceSuffix: String? { get }
     var loyaltySchemeBalancePrefix: String? { get }
+    var loginUrlString: String { get }
     var scrapableUrlString: String { get }
     var loginScriptFileName: String { get }
     var pointsScrapingScriptFileName: String { get }
@@ -41,7 +42,7 @@ enum WebScrapingUtilityError: BinkError {
 
 protocol WebScrapingUtilityDelegate: AnyObject {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCardId cardId: String, withAgent agent: WebScrapable)
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCardId cardId: String, withAgent agent: WebScrapable)
 }
 
 struct WebScrapingCredentials {
@@ -54,9 +55,8 @@ class WebScrapingUtility: NSObject {
     private let webView: WKWebView
     private let agent: WebScrapable
     private let membershipCardId: String
+    private var hasAttemptedLogin = false
     weak var delegate: WebScrapingUtilityDelegate?
-    
-    private(set) var isRunning = false
     
     init(containerViewController: UIViewController, agent: WebScrapable, membershipCardId: String, delegate: WebScrapingUtilityDelegate?) {
         self.containerViewController = containerViewController
@@ -76,7 +76,6 @@ class WebScrapingUtility: NSObject {
         guard let url = URL(string: agent.scrapableUrlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
-        isRunning = true
         let request = URLRequest(url: url)
         let allCookies = HTTPCookieStorage.shared.cookies ?? []
         var cookiesSet: Int = 0
@@ -91,13 +90,8 @@ class WebScrapingUtility: NSObject {
         }
     }
     
-    private func stop() {
-        isRunning = false
-    }
-    
-    func login(agent: WebScrapable, credentials: WebScrapingCredentials) throws {
+    func login(credentials: WebScrapingCredentials) throws {
         guard let loginFile = Bundle.main.url(forResource: agent.loginScriptFileName, withExtension: "js") else {
-            self.stop()
             throw WebScrapingUtilityError.loginScriptFileNotFound
         }
         
@@ -106,7 +100,6 @@ class WebScrapingUtility: NSObject {
         do {
             loginScript = try String(contentsOf: loginFile)
         } catch {
-            self.stop()
             throw WebScrapingUtilityError.agentProvidedInvalidLoginScript
         }
         
@@ -117,8 +110,7 @@ class WebScrapingUtility: NSObject {
                 return
             }
             guard error == nil else {
-                self.stop()
-                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript)
+                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                 return
             }
         }
@@ -144,8 +136,7 @@ class WebScrapingUtility: NSObject {
                 return
             }
             guard error == nil else {
-                self.stop()
-                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteScrapingScript)
+                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteScrapingScript, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                 return
             }
             
@@ -168,38 +159,53 @@ class WebScrapingUtility: NSObject {
         webView.evaluateJavaScript(script, completionHandler: completion)
     }
     
-    private var canScrape: Bool {
+    private var shouldScrape: Bool {
         return webView.url?.absoluteString == agent.scrapableUrlString
+    }
+    
+    private var shouldAttemptLogin: Bool {
+        return webView.url?.absoluteString == agent.loginUrlString && !hasAttemptedLogin
+    }
+    
+    private var isRedirecting: Bool {
+        return webView.url?.absoluteString != agent.loginUrlString && webView.url?.absoluteString != agent.scrapableUrlString
     }
 }
 
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        if canScrape {
+        // We only care about the webview navigation to our agent's login url or scrapable url
+        guard !isRedirecting else {
+            return
+        }
+        
+        if shouldScrape {
             getScrapedValue { [weak self] result in
                 guard let self = self else { return }
                 
                 switch result {
                 case .failure(let error):
-                    self.stop()
-                    self.delegate?.webScrapingUtility(self, didCompleteWithError: error)
+                    self.delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                     return
                 case .success(let pointsValue):
-                    self.stop()
                     self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                 }
             }
         } else {
             if let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCardId) {
                 do {
-                    try login(agent: agent, credentials: credentials)
-                } catch {
-                    self.stop()
-                    
-                    if let webScrapingError = error as? WebScrapingUtilityError {
-                        self.delegate?.webScrapingUtility(self, didCompleteWithError: webScrapingError)
+                    if shouldAttemptLogin {
+                        hasAttemptedLogin = true
+                        try login(credentials: credentials)
                     } else {
-                        self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed)
+                        // We should only fall into here if we know we are at the login url, but we've already attempted a login
+                        self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                    }
+                } catch {
+                    if let webScrapingError = error as? WebScrapingUtilityError {
+                        self.delegate?.webScrapingUtility(self, didCompleteWithError: webScrapingError, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                    } else {
+                        self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                     }
                 }
             }

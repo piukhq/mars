@@ -75,6 +75,15 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             } else {
                 update(cdObject, \.status, with: nil, delta: false)
             }
+        } else {
+            // If we are adding a new card, the object's status will be nil at this point. Manually set it to pending.
+            // Otherwise, leave the status alone - it will be updated elsewhere based on local points scraping results.
+            if cdObject.status == nil {
+                let status = MembershipCardStatusModel(apiId: nil, state: .pending, reasonCodes: [.attemptingToScrapePointsValue])
+                let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
+                update(cdStatus, \.card, with: cdObject, delta: delta)
+                update(cdObject, \.status, with: cdStatus, delta: delta)
+            }
         }
 
         if let card = card {

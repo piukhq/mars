@@ -118,6 +118,7 @@ class PointsScrapingManager {
 // MARK: - Core Data interaction
 extension PointsScrapingManager: CoreDataRepositoryProtocol {
     func setBalanceValue(_ value: String, forMembershipCardId cardId: String, withAgent agent: WebScrapable) throws {
+        // TODO: This should be reusable
         let predicate = NSPredicate(format: "id == \(cardId)")
         fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, predicate: predicate) { objects in
             if let persistedMembershipCard = objects?.first {
@@ -129,11 +130,13 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     let balance = MembershipCardBalanceModel(apiId: nil, value: pointsValue, currency: agent.loyaltySchemeBalanceCurrency, prefix: agent.loyaltySchemeBalancePrefix, suffix: agent.loyaltySchemeBalanceSuffix, updatedAt: Date().timeIntervalSince1970)
                     let cdBalance = balance.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardBalanceModel.overrideId(forParentId: membershipCard.id))
                     membershipCard.addBalancesObject(cdBalance)
+                    cdBalance.card = membershipCard
                     
                     // Set card status to authorized
                     let status = MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: nil)
                     let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
                     membershipCard.status = cdStatus
+                    cdStatus.card = membershipCard
                     
                     try? backgroundContext.save()
                 }
@@ -146,11 +149,30 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCardId cardId: String, withAgent agent: WebScrapable) {
+        // Set web scraping utilty to nil, as delegate methods are only called upon completion
+        webScrapingUtility = nil
         try? setBalanceValue(value, forMembershipCardId: cardId, withAgent: agent)
     }
     
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError) {
-        // TODO: Set balances to nil? And status to failed
-        print(error)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCardId cardId: String, withAgent agent: WebScrapable) {
+        // Set web scraping utilty to nil, as delegate methods are only called upon completion
+        webScrapingUtility = nil
+        
+        // TODO: This should be reusable
+        let predicate = NSPredicate(format: "id == \(cardId)")
+        fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, predicate: predicate) { objects in
+            if let persistedMembershipCard = objects?.first {
+                Current.database.performBackgroundTask(with: persistedMembershipCard) { (backgroundContext, safeObject) in
+                    guard let membershipCard = safeObject else { return }
+                    
+                    // Set card status to failed
+                    let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: nil)
+                    let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
+                    membershipCard.status = cdStatus
+                    
+                    try? backgroundContext.save()
+                }
+            }
+        }
     }
 }
