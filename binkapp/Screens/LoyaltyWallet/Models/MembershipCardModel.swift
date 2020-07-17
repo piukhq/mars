@@ -76,10 +76,10 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
                 update(cdObject, \.status, with: nil, delta: false)
             }
         } else {
-            // If we are adding a new card, the object's status will be nil at this point. Manually set it to pending.
-            // Otherwise, leave the status alone - it will be updated elsewhere based on local points scraping results.
+            // We pass through here when mapping all other objects during add/auth.
+            // We can safely set it to failed here if the status is nil, as we know that add/auth handles setting a pending state once this mapping is complete
             if cdObject.status == nil {
-                let status = MembershipCardStatusModel(apiId: nil, state: .pending, reasonCodes: [.attemptingToScrapePointsValue])
+                let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
                 let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
                 update(cdStatus, \.card, with: cdObject, delta: delta)
                 update(cdObject, \.status, with: cdStatus, delta: delta)
