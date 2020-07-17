@@ -104,6 +104,9 @@ class PointsScrapingManager {
             refreshableCards.forEach { [weak self] in
                 // TODO: Implement operation queues for multiple scraped cards
                 guard let self = self else { return }
+                
+                // The utility gets set to nil when it completes, so if it's not nil it's still hard at work
+                guard self.webScrapingUtility == nil else { return }
                 guard let planId = $0.membershipPlan?.id else { return }
                 guard let agent = self.agents.first(where: { $0.membershipPlanId == Int(planId) }) else { return }
                 self.webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: $0.id, delegate: self)
