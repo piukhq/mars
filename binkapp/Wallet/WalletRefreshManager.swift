@@ -11,7 +11,7 @@ import Foundation
 class WalletRefreshManager {
     private static let oneHour: TimeInterval = 3600
     private static let twoMinutes: TimeInterval = 120
-    private static let twoHours: TimeInterval = 10
+    private static let twoHours: TimeInterval = 7200
 
     private var accountsRefreshTimer: Timer!
     private var plansRefreshTimer: Timer!
