@@ -14,4 +14,18 @@ extension UINavigationController {
             viewControllers.remove(at: index)
         }
     }
+    
+    func removeViewControllerBehind<T: UIViewController>(_ viewController: UIViewController, ifViewControllerBehindIsOfType type: T.Type? = nil) {
+        if let currentIndex = viewControllers.firstIndex(of: viewController), currentIndex > 0 {
+            let indexToRemove = currentIndex - 1
+            guard let type = type else {
+                viewControllers.remove(at: indexToRemove)
+                return
+            }
+            
+            if viewControllers[indexToRemove].isKind(of: type) {
+                viewControllers.remove(at: indexToRemove)
+            }
+        }
+    }
 }
