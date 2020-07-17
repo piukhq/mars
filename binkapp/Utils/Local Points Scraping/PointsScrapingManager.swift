@@ -144,6 +144,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     cdStatus.card = membershipCard
                     
                     try? backgroundContext.save()
+                    
+                    NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
                 }
             }
         }
@@ -176,6 +178,8 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
                     membershipCard.status = cdStatus
                     
                     try? backgroundContext.save()
+                    
+                    NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
                 }
             }
         }
