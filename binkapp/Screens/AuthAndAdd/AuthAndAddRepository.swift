@@ -37,18 +37,15 @@ class AuthAndAddRepository {
         apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: MembershipCardModel.self) { result in
             switch result {
             case .success(let response):
-                // We know that if the plan is scrapable, we handle everything locally. We also know that if we have an existing card, it is a retry
-                let isRetryingAuthForLocalScrapingCard = Current.pointsScrapingManager.planIdIsWebScrapable(request.membershipPlan) && existingMembershipCard != nil
-                
                 // Map to core data
                 Current.database.performBackgroundTask { context in
                     let newObject = response.mapToCoreData(context, .update, overrideID: nil)
                     
-                    if isRetryingAuthForLocalScrapingCard {
-                        // If we are retrying, we need to force the state back to pending
+                    if Current.pointsScrapingManager.planIdIsWebScrapable(request.membershipPlan) {
                         let pendingStatus = MembershipCardStatusModel(apiId: nil, state: .pending, reasonCodes: [.attemptingToScrapePointsValue])
                         let cdStatus = pendingStatus.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: newObject.id))
                         newObject.status = cdStatus
+                        cdStatus.card = newObject
                     }
                     
                     try? context.save()
