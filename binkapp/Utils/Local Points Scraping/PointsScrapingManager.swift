@@ -39,7 +39,7 @@ class PointsScrapingManager {
     private let keychain = Keychain(service: APIConstants.bundleID)
     private var webScrapingUtility: WebScrapingUtility?
     
-    private let agents: [PointsScrapingAgent] = [
+    private let agents: [WebScrapable] = [
         TescoScrapingAgent()
     ]
     
@@ -80,9 +80,7 @@ class PointsScrapingManager {
     func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCardId: String) throws {
         guard canEnableLocalPointsScrapingForCard(withRequest: request) else { return }
         guard let planId = request.membershipPlan else { return }
-        guard var agent = agents.first(where: { $0.membershipPlanId == planId }) else { return }
-        guard let membershipCardIdInt = Int(membershipCardId) else { return }
-        agent.addMembershipCardId(membershipCardIdInt)
+        guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else { return }
         
         try? storeCredentials(credentials, forMembershipCardId: membershipCardId)
         
@@ -101,16 +99,29 @@ class PointsScrapingManager {
     
     // MARK: - Balance refreshing
     
-    func refreshableMembershipCardIds() -> [String] {
-        var refreshableIds: [String] = []
+    func refreshBalancesIfNecessary() {
+        getRefreshableMembershipCards { refreshableCards in
+            refreshableCards.forEach { [weak self] in
+                // TODO: Implement operation queues for multiple scraped cards
+                guard let self = self else { return }
+                guard let planId = $0.membershipPlan?.id else { return }
+                guard let agent = self.agents.first(where: { $0.membershipPlanId == Int(planId) }) else { return }
+                self.webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: $0.id, delegate: self)
+                try? self.webScrapingUtility?.start()
+            }
+        }
+    }
+    
+    private func getRefreshableMembershipCards(completion: @escaping ([CD_MembershipCard]) -> Void) {
+        var refreshableCards: [CD_MembershipCard] = []
         fetchPointsScrapableMembershipCards { cards in
             cards?.forEach {
                 if WalletRefreshManager.canRefreshScrapedValueForMembershipCard($0) {
-                    refreshableIds.append($0.id)
+                    refreshableCards.append($0)
                 }
             }
+            completion(refreshableCards)
         }
-        return refreshableIds
     }
     
     // MARK: - Helpers

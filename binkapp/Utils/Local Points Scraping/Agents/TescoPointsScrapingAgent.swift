@@ -8,24 +8,7 @@
 
 import Foundation
 
-protocol PointsScrapingAgent: WebScrapable {
-    var membershipCardIds: [Int]? { get set }
-    mutating func addMembershipCardId(_ id: Int)
-}
-
-extension PointsScrapingAgent {
-    mutating func addMembershipCardId(_ id: Int) {
-        guard var ids = membershipCardIds else {
-            membershipCardIds = [id]
-            return
-        }
-        ids.append(id)
-    }
-}
-
-struct TescoScrapingAgent: PointsScrapingAgent {
-    var membershipCardIds: [Int]?
-    
+struct TescoScrapingAgent: WebScrapable {
     var membershipPlanId: Int {
         switch APIConstants.currentEnvironment {
         case .dev:

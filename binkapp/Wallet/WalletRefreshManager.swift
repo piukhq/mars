@@ -11,7 +11,7 @@ import Foundation
 class WalletRefreshManager {
     private static let oneHour: TimeInterval = 3600
     private static let twoMinutes: TimeInterval = 120
-    private static let twoHours: TimeInterval = 7200
+    private static let twoHours: TimeInterval = 10
 
     private var accountsRefreshTimer: Timer!
     private var plansRefreshTimer: Timer!
@@ -23,7 +23,6 @@ class WalletRefreshManager {
     func start() {
         resetAll()
         isActive = true
-        print(Current.pointsScrapingManager.refreshableMembershipCardIds())
     }
 
     /// This should only be called after a pull to refresh
@@ -65,7 +64,6 @@ extension WalletRefreshManager {
     static func canRefreshScrapedValueForMembershipCard(_ card: CD_MembershipCard) -> Bool {
         if let balanceLastUpdatedTimeStamp = card.formattedBalances?.first?.updatedAt?.doubleValue {
             let balanceLastUpdatedDate = Date(timeIntervalSince1970: balanceLastUpdatedTimeStamp)
-            // Cast to Int to get number of seconds
             let elapsed = Int(Date().timeIntervalSince(balanceLastUpdatedDate))
             return elapsed >= Int(WalletRefreshManager.twoHours)
         }
