@@ -99,6 +99,20 @@ class PointsScrapingManager {
         return hasAgent(forMembershipPlanId: planId)
     }
     
+    // MARK: - Balance refreshing
+    
+    func refreshableMembershipCardIds() -> [String] {
+        var refreshableIds: [String] = []
+        fetchPointsScrapableMembershipCards { cards in
+            cards?.forEach {
+                if WalletRefreshManager.canRefreshScrapedValueForMembershipCard($0) {
+                    refreshableIds.append($0.id)
+                }
+            }
+        }
+        return refreshableIds
+    }
+    
     // MARK: - Helpers
     
     func planIdIsWebScrapable(_ planId: Int?) -> Bool {
@@ -148,6 +162,16 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
                 }
             }
+        }
+    }
+    
+    private func fetchPointsScrapableMembershipCards(completion: @escaping ([CD_MembershipCard]?) -> Void) {
+        fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { objects in
+            let scrapableCards = objects?.filter {
+                guard let planIdString = $0.membershipPlan?.id, let planId = Int(planIdString) else { return false }
+                return self.hasAgent(forMembershipPlanId: planId)
+            }
+            completion(scrapableCards)
         }
     }
 }

@@ -42,4 +42,8 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
     var vouchersEarnType: VoucherEarnType? {
         return sortedVouchers?.first?.earnType
     }
+    
+    var formattedBalances: [CD_MembershipCardBalance]? {
+        return balances.allObjects as? [CD_MembershipCardBalance]
+    }
 }
