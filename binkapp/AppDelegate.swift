@@ -14,7 +14,7 @@ import AlamofireNetworkActivityLogger
 import CardScan
 import Keys
 
-@UIApplicationMain
+@UIApplicationMain 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var stateMachine: RootStateMachine?
