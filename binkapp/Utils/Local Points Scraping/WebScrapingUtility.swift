@@ -192,21 +192,20 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 }
             }
         } else {
-            if let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCardId) {
-                do {
-                    if shouldAttemptLogin {
-                        hasAttemptedLogin = true
-                        try login(credentials: credentials)
-                    } else {
-                        // We should only fall into here if we know we are at the login url, but we've already attempted a login
-                        self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
-                    }
-                } catch {
-                    if let webScrapingError = error as? WebScrapingUtilityError {
-                        self.delegate?.webScrapingUtility(self, didCompleteWithError: webScrapingError, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
-                    } else {
-                        self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
-                    }
+            do {
+                let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCardId)
+                if shouldAttemptLogin {
+                    hasAttemptedLogin = true
+                    try login(credentials: credentials)
+                } else {
+                    // We should only fall into here if we know we are at the login url, but we've already attempted a login
+                    self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                }
+            } catch {
+                if let webScrapingError = error as? WebScrapingUtilityError {
+                    self.delegate?.webScrapingUtility(self, didCompleteWithError: webScrapingError, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                } else {
+                    self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                 }
             }
         }

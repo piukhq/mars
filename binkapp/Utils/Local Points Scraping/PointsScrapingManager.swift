@@ -81,11 +81,14 @@ class PointsScrapingManager {
         guard canEnableLocalPointsScrapingForCard(withRequest: request) else { return }
         guard let planId = request.membershipPlan else { return }
         guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else { return }
-        
-        try? storeCredentials(credentials, forMembershipCardId: membershipCardId)
-        
+                
         webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: membershipCardId, delegate: self)
-        try? webScrapingUtility?.start()
+        do {
+            try storeCredentials(credentials, forMembershipCardId: membershipCardId)
+            try webScrapingUtility?.start()
+        } catch {
+            self.transitionToFailed(membershipCardId: membershipCardId)
+        }
     }
     
     func disableLocalPointsScraping(forMembershipCardId cardId: String) {
@@ -114,7 +117,7 @@ class PointsScrapingManager {
                 do {
                     try self.webScrapingUtility?.start()
                 } catch {
-                    
+                    self.transitionToFailed(membershipCardId: $0.id)
                 }
             }
         }
@@ -154,6 +157,7 @@ class PointsScrapingManager {
 }
 
 // MARK: - Core Data interaction
+
 extension PointsScrapingManager: CoreDataRepositoryProtocol {
     private func fetchPointsScrapableMembershipCards(completion: @escaping ([CD_MembershipCard]?) -> Void) {
         fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { objects in
@@ -174,6 +178,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     private func transitionToAuthorized(pointsValue: String, membershipCardId: String, agent: WebScrapable) {
+        webScrapingUtility = nil
+        
         fetchMembershipCard(forId: membershipCardId) { membershipCard in
             guard let membershipCard = membershipCard else { return }
             Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
@@ -205,6 +211,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     private func transitionToFailed(membershipCardId: String) {
+        webScrapingUtility = nil
+        
         fetchMembershipCard(forId: membershipCardId) { membershipCard in
             guard let membershipCard = membershipCard else { return }
             Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
@@ -229,14 +237,10 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCardId cardId: String, withAgent agent: WebScrapable) {
-        // Set web scraping utilty to nil, as delegate methods are only called upon completion
-        webScrapingUtility = nil
         transitionToAuthorized(pointsValue: value, membershipCardId: cardId, agent: agent)
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCardId cardId: String, withAgent agent: WebScrapable) {
-        // Set web scraping utilty to nil, as delegate methods are only called upon completion
-        webScrapingUtility = nil
         transitionToFailed(membershipCardId: cardId)
     }
 }
