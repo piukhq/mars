@@ -110,7 +110,12 @@ class PointsScrapingManager {
                 guard let planId = $0.membershipPlan?.id else { return }
                 guard let agent = self.agents.first(where: { $0.membershipPlanId == Int(planId) }) else { return }
                 self.webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: $0.id, delegate: self)
-                try? self.webScrapingUtility?.start()
+                
+                do {
+                    try self.webScrapingUtility?.start()
+                } catch {
+                    
+                }
             }
         }
     }
@@ -150,35 +155,6 @@ class PointsScrapingManager {
 
 // MARK: - Core Data interaction
 extension PointsScrapingManager: CoreDataRepositoryProtocol {
-    func setBalanceValue(_ value: String, forMembershipCardId cardId: String, withAgent agent: WebScrapable) throws {
-        // TODO: This should be reusable
-        let predicate = NSPredicate(format: "id == \(cardId)")
-        fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, predicate: predicate) { objects in
-            if let persistedMembershipCard = objects?.first {
-                Current.database.performBackgroundTask(with: persistedMembershipCard) { (backgroundContext, safeObject) in
-                    guard let membershipCard = safeObject else { return }
-                    guard let pointsValue = Double(value) else { return }
-                    
-                    // Set new balance object
-                    let balance = MembershipCardBalanceModel(apiId: nil, value: pointsValue, currency: agent.loyaltySchemeBalanceCurrency, prefix: agent.loyaltySchemeBalancePrefix, suffix: agent.loyaltySchemeBalanceSuffix, updatedAt: Date().timeIntervalSince1970)
-                    let cdBalance = balance.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardBalanceModel.overrideId(forParentId: membershipCard.id))
-                    membershipCard.addBalancesObject(cdBalance)
-                    cdBalance.card = membershipCard
-                    
-                    // Set card status to authorized
-                    let status = MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: [.pointsScrapingSuccessful])
-                    let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
-                    membershipCard.status = cdStatus
-                    cdStatus.card = membershipCard
-                    
-                    try? backgroundContext.save()
-                    
-                    NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
-                }
-            }
-        }
-    }
-    
     private func fetchPointsScrapableMembershipCards(completion: @escaping ([CD_MembershipCard]?) -> Void) {
         fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { objects in
             let scrapableCards = objects?.filter {
@@ -186,6 +162,65 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 return self.hasAgent(forMembershipPlanId: planId)
             }
             completion(scrapableCards)
+        }
+    }
+    
+    private func fetchMembershipCard(forId cardId: String, completion: @escaping (CD_MembershipCard?) -> Void) {
+        // TODO: this could be in core data repository as a generic function
+        let predicate = NSPredicate(format: "id == \(cardId)")
+        fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, predicate: predicate) { objects in
+            completion(objects?.first)
+        }
+    }
+    
+    private func transitionToAuthorized(pointsValue: String, membershipCardId: String, agent: WebScrapable) {
+        fetchMembershipCard(forId: membershipCardId) { membershipCard in
+            guard let membershipCard = membershipCard else { return }
+            Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
+                guard let membershipCard = safeObject else { return }
+                
+                guard let pointsValue = Double(pointsValue) else { return }
+                
+                // Set new balance object
+                let balance = MembershipCardBalanceModel(apiId: nil, value: pointsValue, currency: agent.loyaltySchemeBalanceCurrency, prefix: agent.loyaltySchemeBalancePrefix, suffix: agent.loyaltySchemeBalanceSuffix, updatedAt: Date().timeIntervalSince1970)
+                let cdBalance = balance.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardBalanceModel.overrideId(forParentId: membershipCard.id))
+                membershipCard.addBalancesObject(cdBalance)
+                cdBalance.card = membershipCard
+                
+                // Set card status to authorized
+                let status = MembershipCardStatusModel(apiId: nil, state: .authorised, reasonCodes: [.pointsScrapingSuccessful])
+                let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
+                membershipCard.status = cdStatus
+                cdStatus.card = membershipCard
+                
+                do {
+                    try backgroundContext.save()
+                } catch {
+                    self.transitionToFailed(membershipCardId: membershipCardId)
+                }
+                
+                NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
+            }
+        }
+    }
+    
+    private func transitionToFailed(membershipCardId: String) {
+        fetchMembershipCard(forId: membershipCardId) { membershipCard in
+            guard let membershipCard = membershipCard else { return }
+            Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
+                guard let membershipCard = safeObject else { return }
+                
+                // Set card status to failed
+                let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
+                let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
+                membershipCard.status = cdStatus
+                cdStatus.card = membershipCard
+                
+                // If this try fails, the card will be stuck in pending until deleted and readded
+                try? backgroundContext.save()
+                
+                NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
+            }
         }
     }
 }
@@ -196,30 +231,12 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCardId cardId: String, withAgent agent: WebScrapable) {
         // Set web scraping utilty to nil, as delegate methods are only called upon completion
         webScrapingUtility = nil
-        try? setBalanceValue(value, forMembershipCardId: cardId, withAgent: agent)
+        transitionToAuthorized(pointsValue: value, membershipCardId: cardId, agent: agent)
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCardId cardId: String, withAgent agent: WebScrapable) {
         // Set web scraping utilty to nil, as delegate methods are only called upon completion
         webScrapingUtility = nil
-        
-        // TODO: This should be reusable
-        let predicate = NSPredicate(format: "id == \(cardId)")
-        fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, predicate: predicate) { objects in
-            if let persistedMembershipCard = objects?.first {
-                Current.database.performBackgroundTask(with: persistedMembershipCard) { (backgroundContext, safeObject) in
-                    guard let membershipCard = safeObject else { return }
-                    
-                    // Set card status to failed
-                    let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
-                    let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
-                    membershipCard.status = cdStatus
-                    
-                    try? backgroundContext.save()
-                    
-                    NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
-                }
-            }
-        }
+        transitionToFailed(membershipCardId: cardId)
     }
 }
