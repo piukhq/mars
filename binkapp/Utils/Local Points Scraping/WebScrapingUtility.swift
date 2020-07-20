@@ -77,16 +77,22 @@ class WebScrapingUtility: NSObject {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         let request = URLRequest(url: url)
-        let allCookies = HTTPCookieStorage.shared.cookies ?? []
-        var cookiesSet: Int = 0
-        for cookie in allCookies {
-            webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie) {
-                cookiesSet += 1
-                if cookiesSet == allCookies.count {
-                    self.webView.navigationDelegate = self
-                    self.webView.load(request)
+        if let cookiesDictionary = Current.userDefaults.value(forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCardId)) as? [String: Any] {
+            var cookiesSet: Int = 0
+            for (_, cookieProperties) in cookiesDictionary {
+                if let properties = cookieProperties as? [HTTPCookiePropertyKey: Any], let cookie = HTTPCookie(properties: properties) {
+                    webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie) {
+                        cookiesSet += 1
+                        if cookiesSet == cookiesDictionary.count {
+                            self.webView.navigationDelegate = self
+                            self.webView.load(request)
+                        }
+                    }
                 }
             }
+        } else {
+            self.webView.navigationDelegate = self
+            self.webView.load(request)
         }
     }
     
@@ -146,9 +152,11 @@ class WebScrapingUtility: NSObject {
             }
             
             self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+                var cookiesDictionary: [String: Any] = [:]
                 for cookie in cookies {
-                    HTTPCookieStorage.shared.setCookie(cookie)
+                    cookiesDictionary[cookie.name] = cookie.properties
                 }
+                Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCardId))
             }
             
             completion(.success(pointsValue))

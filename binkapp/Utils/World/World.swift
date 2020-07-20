@@ -35,26 +35,39 @@ protocol BinkUserDefaults {
 
 extension UserDefaults: BinkUserDefaults {
 
-    enum Keys: String {
+    enum Keys {
         case hasLaunchedWallet
         case userEmail
         case debugBaseURL
-        case scrapedBalances
+        case webScrapingCookies(membershipCardId: String)
+        
+        var keyValue: String {
+            switch self {
+            case .hasLaunchedWallet:
+                return "hasLaunchedWallet"
+            case .userEmail:
+                return "userEmail"
+            case .debugBaseURL:
+                return "debugBaseURL"
+            case .webScrapingCookies(let membershipCardId):
+                return "webScrapingCookies_cardId_\(membershipCardId)"
+            }
+        }
     }
 
     func set(_ value: Any?, forDefaultsKey defaultName: UserDefaults.Keys) {
-        set(value, forKey: defaultName.rawValue)
+        set(value, forKey: defaultName.keyValue)
     }
 
     func string(forDefaultsKey defaultName: UserDefaults.Keys) -> String? {
-        return string(forKey: defaultName.rawValue)
+        return string(forKey: defaultName.keyValue)
     }
 
     func bool(forDefaultsKey defaultName: UserDefaults.Keys) -> Bool {
-        return bool(forKey: defaultName.rawValue)
+        return bool(forKey: defaultName.keyValue)
     }
 
     func value(forDefaultsKey defaultName: UserDefaults.Keys) -> Any? {
-        return value(forKey: defaultName.rawValue)
+        return value(forKey: defaultName.keyValue)
     }
 }
