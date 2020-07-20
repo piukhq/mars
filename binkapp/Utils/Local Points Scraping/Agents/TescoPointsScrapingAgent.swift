@@ -16,9 +16,9 @@ struct TescoScrapingAgent: WebScrapable {
         case .staging:
             return 230
         case .preprod:
-            return 207
+            return 230
         case .production:
-            return 207
+            return 203
         }
     }
 
