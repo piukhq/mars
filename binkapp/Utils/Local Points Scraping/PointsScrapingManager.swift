@@ -102,23 +102,44 @@ class PointsScrapingManager {
     
     // MARK: - Balance refreshing
     
+    private var balanceRefreshQueue: [CD_MembershipCard] = []
+    
     func refreshBalancesIfNecessary() {
-        getRefreshableMembershipCards { refreshableCards in
-            refreshableCards.forEach { [weak self] in
-                // TODO: Implement operation queues for multiple scraped cards
-                guard let self = self else { return }
-                
-                // The utility gets set to nil when it completes, so if it's not nil it's still hard at work
-                guard self.webScrapingUtility == nil else { return }
-                guard let planId = $0.membershipPlan?.id else { return }
-                guard let agent = self.agents.first(where: { $0.membershipPlanId == Int(planId) }) else { return }
-                self.webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: $0.id, delegate: self)
-                
-                do {
-                    try self.webScrapingUtility?.start()
-                } catch {
-                    self.transitionToFailed(membershipCardId: $0.id)
-                }
+        getRefreshableMembershipCards { [weak self] refreshableCards in
+            guard let self = self else { return }
+            self.balanceRefreshQueue = refreshableCards
+            self.continueBalanceRefresh()
+        }
+    }
+    
+    private func continueBalanceRefresh() {
+        if let newFirstObject = balanceRefreshQueue.first {
+            refreshBalance(membershipCard: newFirstObject)
+        }
+    }
+    
+    private func refreshNextBalanceIfNecessary() {
+        // Remove object from the top
+        if let firstObject = balanceRefreshQueue.first, let index = balanceRefreshQueue.firstIndex(of: firstObject) {
+            balanceRefreshQueue.remove(at: index)
+        }
+        
+        // Get the new first object if there is one and refresh it's balance
+        continueBalanceRefresh()
+    }
+    
+    private func refreshBalance(membershipCard: CD_MembershipCard) {
+        guard membershipCard.status?.status == .authorised else { return}
+        guard let planId = membershipCard.membershipPlan?.id else { return }
+        guard let agent = self.agents.first(where: { $0.membershipPlanId == Int(planId) }) else { return }
+        
+        DispatchQueue.main.async {
+            self.webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: membershipCard.id, delegate: self)
+            
+            do {
+                try self.webScrapingUtility?.start()
+            } catch {
+                self.transitionToFailed(membershipCardId: membershipCard.id)
             }
         }
     }
@@ -154,6 +175,12 @@ class PointsScrapingManager {
         }
         return nil
     }
+    
+    private func pointsScrapingDidComplete() {
+        webScrapingUtility = nil
+        NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
+        refreshNextBalanceIfNecessary()
+    }
 }
 
 // MARK: - Core Data interaction
@@ -178,8 +205,6 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     private func transitionToAuthorized(pointsValue: String, membershipCardId: String, agent: WebScrapable) {
-        webScrapingUtility = nil
-        
         fetchMembershipCard(forId: membershipCardId) { membershipCard in
             guard let membershipCard = membershipCard else { return }
             Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
@@ -204,15 +229,13 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 } catch {
                     self.transitionToFailed(membershipCardId: membershipCardId)
                 }
-                
-                NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
+            
+                self.pointsScrapingDidComplete()
             }
         }
     }
     
     private func transitionToFailed(membershipCardId: String) {
-        webScrapingUtility = nil
-        
         fetchMembershipCard(forId: membershipCardId) { membershipCard in
             guard let membershipCard = membershipCard else { return }
             Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
@@ -227,7 +250,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 // If this try fails, the card will be stuck in pending until deleted and readded
                 try? backgroundContext.save()
                 
-                NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
+                self.pointsScrapingDidComplete()
             }
         }
     }
