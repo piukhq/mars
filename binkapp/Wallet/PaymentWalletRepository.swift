@@ -95,8 +95,9 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
             onError(nil)
             return
         }
-
-        let networkRequest = BinkNetworkRequest(endpoint: .paymentCards, method: .post, headers: nil, isUserDriven: true)
+        
+        let params = ["autoLink": "true"]
+        let networkRequest = BinkNetworkRequest(endpoint: .paymentCards, method: .post, queryParameters: params, headers: nil, isUserDriven: true)
         apiClient.performRequestWithBody(networkRequest, body: request, expecting: PaymentCardModel.self) { result in
             switch result {
             case .success(let response):

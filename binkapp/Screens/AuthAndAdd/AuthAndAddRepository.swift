@@ -33,7 +33,8 @@ class AuthAndAddRepository {
             method = .post
         }
 
-        let networkRequest = BinkNetworkRequest(endpoint: endpoint, method: method, headers: nil, isUserDriven: true)
+        let params = ["autoLink": "true"]
+        let networkRequest = BinkNetworkRequest(endpoint: endpoint, method: method, queryParameters: params, headers: nil, isUserDriven: true)
         apiClient.performRequestWithBody(networkRequest, body: request, expecting: MembershipCardModel.self) { result in
             switch result {
             case .success(let response):
