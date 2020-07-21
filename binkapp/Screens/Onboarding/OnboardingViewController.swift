@@ -342,7 +342,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
     private func signInWithApple(authCode: String) {
         let loginRequest = SignInWithAppleRequest(authorizationCode: authCode)
         let request = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] result in
+        Current.apiClient.performRequestWithBody(request, body: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] result in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -352,7 +352,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
                 Current.userManager.setNewUser(with: response)
 
                 let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                Current.apiClient.performRequestWithNoResponse(request, body: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
                     guard success else {
                         self?.handleLoginError()
                         return

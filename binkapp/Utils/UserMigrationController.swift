@@ -68,7 +68,7 @@ struct UserMigrationController {
                 }
 
                 let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: renewEmail)) { (success, error) in
+                Current.apiClient.performRequestWithNoResponse(request, body: APIConstants.makeServicePostRequest(email: renewEmail)) { (success, error) in
                     guard success else {
                         Current.userManager.removeUser()
                         completion(false)

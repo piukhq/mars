@@ -19,7 +19,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
         // Process the backend delete, but fail silently
         let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
-        apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
+        apiClient.performRequestWithNoResponse(request, body: nil, completion: nil)
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
@@ -69,7 +69,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
         let request = BinkNetworkRequest(endpoint: .spreedly, method: .post, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(request, parameters: spreedlyRequest, expecting: SpreedlyResponse.self) { result in
+        apiClient.performRequestWithBody(request, body: spreedlyRequest, expecting: SpreedlyResponse.self) { result in
             switch result {
             case .success(let response):
                 onSuccess(response)
@@ -97,7 +97,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
 
         let networkRequest = BinkNetworkRequest(endpoint: .paymentCards, method: .post, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: PaymentCardModel.self) { result in
+        apiClient.performRequestWithBody(networkRequest, body: request, expecting: PaymentCardModel.self) { result in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { context in
