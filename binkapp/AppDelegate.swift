@@ -91,6 +91,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
+        
+        // BARCLAYS TESTING SUPPORT TOOL - IF YOU SEE THIS CODE IN ANY OTHER BRANCH DELETE IT!
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let documentsDirectory = paths[0]
+        let fileName = "\(Date()).log"
+        let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
+        if let filePath = logFilePath.cString(using: String.Encoding.ascii) {
+            freopen(filePath, "a+", stderr)
+        }
     
         return true
     }
