@@ -33,7 +33,8 @@ struct SettingsFactory {
                 type: .logout,
                 action: .logout,
                 actionRequired: rowsWithActionRequired?.contains(.logout) ?? false
-            )
+            ),
+            SettingsRow(type: .deleteService, action: .deleteService, actionRequired: false)
         ])
         
         sections.append(accountSection)

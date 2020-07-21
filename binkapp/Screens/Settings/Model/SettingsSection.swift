@@ -28,6 +28,7 @@ struct SettingsRow {
         case privacyPolicy = "settings_row_privacypolicy_title"
         case termsAndConditions = "settings_row_termsandconditions_title"
         case debug = "settings_section_debug_title"
+        case deleteService = "Delete Service"
     }
     
     enum RowAction {
@@ -36,6 +37,7 @@ struct SettingsRow {
         case logout
         case customAction(action: VoidClosure)
         case launchSupport(service: SupportService)
+        case deleteService
     }
     
     enum ReusableScreen {

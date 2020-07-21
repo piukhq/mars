@@ -242,6 +242,22 @@ extension SettingsViewController: UITableViewDelegate {
                 )
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
                 present(alert, animated: true)
+                
+            case .deleteService:
+                let alert = UIAlertController(title: "Delete Service", message: "Are you sure you want to delete the Service?", preferredStyle: .alert)
+                alert.addAction(
+                    UIAlertAction(title: "Delete", style: .default, handler: { _ in
+                        let request = BinkNetworkRequest(endpoint: .service, method: .delete, headers: nil, isUserDriven: false)
+                        Current.apiClient.performRequestWithNoResponse(request, body: nil) { (success, error) in
+                            guard success else {
+                                return
+                            }
+                            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+                        }
+                    })
+                )
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                present(alert, animated: true)
             }
         }
     }
