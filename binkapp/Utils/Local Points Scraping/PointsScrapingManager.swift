@@ -168,18 +168,26 @@ class PointsScrapingManager {
         guard let id = planId else { return false }
         return hasAgent(forMembershipPlanId: id)
     }
+    
+    private func agent(forPlanId planId: Int) -> WebScrapable? {
+        return agents.first(where: { $0.membershipPlanId == planId })
+    }
 
     private func hasAgent(forMembershipPlanId planId: Int) -> Bool {
         return agents.contains(where: { $0.membershipPlanId == planId })
     }
     
-    private func makeCredentials(fromRequest request: MembershipCardPostModel) -> WebScrapingCredentials? {
-        // TODO: These should be in the agent, as they wont all be the same column name, right?
-        if let username = request.account?.authoriseFields?.first(where: { $0.column == "Email" })?.value,
-            let password = request.account?.authoriseFields?.first(where: { $0.column == "Password" })?.value {
-            return WebScrapingCredentials(username: username, password: password)
-        }
-        return nil
+    func makeCredentials(fromFormFields fields: [FormField], membershipPlanId: String) -> WebScrapingCredentials? {
+        guard let planId = Int(membershipPlanId) else { return nil }
+        guard let agent = agent(forPlanId: planId) else { return nil }
+        let authFields = fields.filter { $0.columnKind == .auth }
+        let usernameField = authFields.first(where: { $0.title == agent.usernameFieldTitle })
+        let passwordField = authFields.first(where: { $0.title == agent.passwordFieldTitle })
+        
+        guard let usernameValue = usernameField?.value else { return nil }
+        guard let passwordValue = passwordField?.value else { return nil }
+        
+        return WebScrapingCredentials(username: usernameValue, password: passwordValue)
     }
     
     private func pointsScrapingDidComplete() {

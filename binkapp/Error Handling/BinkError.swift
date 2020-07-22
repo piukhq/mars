@@ -9,7 +9,7 @@
 import Foundation
 
 enum BinkErrorDomain: Int {
-    case networking = 1
+    case networking
     case configuration
     case walletService
     case webScrapingUtility
