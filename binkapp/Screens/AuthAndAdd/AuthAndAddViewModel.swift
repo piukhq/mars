@@ -16,14 +16,15 @@ enum FieldType {
 
 enum InputType: Int {
     case textfield = 0
-    case password
+    case sensitive
     case dropdown
     case checkbox
 }
 
-enum FormPurpose {
+enum FormPurpose: Equatable {
     case add
     case addFailed
+    case addFromScanner(barcode: String)
     case signUp
     case signUpFailed
     case ghostCard
@@ -31,7 +32,7 @@ enum FormPurpose {
     
     var planDocumentDisplayMatching: PlanDocumentDisplayModel {
         switch self {
-        case .add, .addFailed:
+        case .add, .addFailed, .addFromScanner:
             return .add
         case .signUp, .signUpFailed:
             return .enrol
@@ -55,7 +56,7 @@ class AuthAndAddViewModel {
     var title: String {
         switch formPurpose {
         case .signUp, .signUpFailed: return "sign_up_new_card_title".localized
-        case .add: return "credentials_title".localized
+        case .add, .addFromScanner: return "credentials_title".localized
         case .addFailed: return "log_in_title".localized
         case .ghostCard, .patchGhostCard: return "register_ghost_card_title".localized
         }
@@ -64,7 +65,7 @@ class AuthAndAddViewModel {
     var buttonTitle: String {
         switch formPurpose {
         case .signUp: return "sign_up_button_title".localized
-        case .add: return "pll_screen_add_title".localized
+        case .add, .addFromScanner: return "pll_screen_add_title".localized
         case .ghostCard: return "register_card_title".localized
         case .signUpFailed, .addFailed, .patchGhostCard: return "log_in_title".localized
         }
@@ -85,12 +86,16 @@ class AuthAndAddViewModel {
     
     func getDescription() -> String? {
         switch formPurpose {
-        case .add:
+        case .add, .addFromScanner:
             guard let companyName = membershipPlan.account?.companyName else { return nil }
             return String(format: "auth_screen_description".localized, companyName)
         case .signUp:
-            guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
-            return String(format: "sign_up_new_card_description".localized, planNameCard)
+            if let planSummary = membershipPlan.account?.planSummary {
+                return planSummary
+            } else if let planNameCard = membershipPlan.account?.planNameCard {
+                return String(format: "sign_up_new_card_description".localized, planNameCard)
+            }
+            return nil
         case .ghostCard, .patchGhostCard:
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "register_ghost_card_description".localized, planNameCard)
@@ -146,12 +151,7 @@ class AuthAndAddViewModel {
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
             }
             }, onError: { [weak self] error in
-                guard let customError = error as? CustomError else {
-                    self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
-                    completion()
-                    return
-                }
-                self?.displaySimplePopup(title: "error_title".localized, message: customError.localizedDescription)
+                self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
                 completion()
         })
     }
@@ -211,38 +211,55 @@ class AuthAndAddViewModel {
     }
     
     func addFieldToCard(formField: FormField) {
+        let isSensitive = formField.fieldType == .sensitive
         switch formField.columnKind {
         case .add:
             let addFieldsArray = membershipCardPostModel?.account?.addFields
             if let existingField = addFieldsArray?.first(where: { $0.column == formField.title }) {
-                existingField.value = formField.value
+                if isSensitive {
+                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
+                } else {
+                    existingField.value = formField.value
+                }
             } else {
-                let model = PostModel(column: formField.title, value: formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .add)
             }
         case .auth:
             let authoriseFieldsArray = membershipCardPostModel?.account?.authoriseFields
             if let existingField = authoriseFieldsArray?.first(where: { $0.column == formField.title }) {
-                existingField.value = formField.value
+                if isSensitive {
+                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
+                } else {
+                    existingField.value = formField.value
+                }
             } else {
-                let model = PostModel(column: formField.title, value: formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .auth)
             }
         case .enrol:
             let enrolFieldsArray = membershipCardPostModel?.account?.enrolFields
             if let existingField = enrolFieldsArray?.first(where: { $0.column == formField.title }) {
-                existingField.value = formField.value
+                if isSensitive {
+                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
+                } else {
+                    existingField.value = formField.value
+                }
             } else {
-                let model = PostModel(column: formField.title, value: formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .enrol)
             }
             
         case .register:
             let registrationFieldsArray = membershipCardPostModel?.account?.registrationFields
             if let existingField = registrationFieldsArray?.first(where: { $0.column == formField.title }) {
-                existingField.value = formField.value
+                if isSensitive {
+                    existingField.value = SecureUtility.encryptedSensitiveFieldValue(formField.value)
+                } else {
+                    existingField.value = formField.value
+                }
             } else {
-                let model = PostModel(column: formField.title, value: formField.value)
+                let model = PostModel(column: formField.title, value: isSensitive ? SecureUtility.encryptedSensitiveFieldValue(formField.value) : formField.value)
                 membershipCardPostModel?.account?.addField(model, to: .registration)
             }
         default:
@@ -292,6 +309,11 @@ class AuthAndAddViewModel {
     func reloadWithGhostCardFields() {
         let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .patchGhostCard : .ghostCard
         router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
+    }
+    
+    func openWebView(withUrlString url: URL) {
+        let urlString = url.absoluteString
+        router.openWebView(withUrlString: urlString)
     }
     
     func toReusableTemplate(title: String, description: String) {

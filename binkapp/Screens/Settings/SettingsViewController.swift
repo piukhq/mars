@@ -8,6 +8,8 @@
 
 import UIKit
 import MessageUI
+import ZendeskCoreSDK
+import SupportSDK
 
 class SettingsViewController: BinkTrackableViewController, BarBlurring {
     
@@ -16,10 +18,15 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     private struct Constants {
         static let rowHeight: CGFloat = 88
         static let headerHeight: CGFloat = 50
-        static let supportEmail = "support@bink.com"
+        static let privacyPolicyUrl = "https://bink.com/privacy-policy/"
+        static let termsAndConditionsUrl = "https://bink.com/terms-and-conditions/"
     }
     
     // MARK: - Properties
+
+    private var zendeskPromptFirstNameTextField: UITextField!
+    private var zendeskPromptLastNameTextField: UITextField!
+    private var zendeskPromptOKAction: UIAlertAction!
     
     private let viewModel: SettingsViewModel
     
@@ -79,6 +86,9 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
+        
+        let footerView = SettingsTableViewFooter(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: SettingsTableViewFooter.height))
+        tableView.tableFooterView = footerView
     }
     
     private func toSecurityAndPrivacyVC() {
@@ -95,6 +105,10 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description), tabBarBackButton: backButton)
         viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
+    }
+    
+    private func presentWebView(url: String) {
+        viewModel.openWebView(url: url)
     }
     
     // MARK: - Action
@@ -141,6 +155,9 @@ extension SettingsViewController: UITableViewDataSource {
 
 extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell: SettingsTableViewCell? = tableView.cellForRow(at: indexPath) as? SettingsTableViewCell
+        cell?.removeActionRequired()
+        
         tableView.deselectRow(at: indexPath, animated: true)
         
         if let rowData = viewModel.row(atIndexPath: indexPath) {
@@ -148,12 +165,37 @@ extension SettingsViewController: UITableViewDelegate {
             case let .customAction(action):
                 action()
                 break
-            case .contactUsAction:
-                sendEmail()
-                break
-            case .notImplemented:
-                UIAlertController.presentFeatureNotImplementedAlert(on: self)
-                break
+            case let .launchSupport(service):
+                switch service {
+                case .faq:
+                    let helpCenterConfig = HelpCenterUiConfiguration()
+                    helpCenterConfig.showContactOptions = false
+                    let articleConfig = ArticleUiConfiguration()
+                    articleConfig.showContactOptions = false
+                    let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
+                    navigationController?.pushViewController(viewController, animated: true)
+                case .contactUs:
+                    let launchContactUs = { [weak self] in
+                        let viewController = RequestUi.buildRequestList()
+                        self?.navigationController?.pushViewController(viewController, animated: true)
+                    }
+
+                    /// We are getting the textfields and action item back from the alert controller in closures so that we can reference them in the UITextFieldDelegate
+                    if ZendeskService.shouldPromptForIdentity {
+                        let alert = UIAlertController.makeZendeskIdentityAlertController(firstNameTextField: { [weak self] textField in
+                            self?.zendeskPromptFirstNameTextField = textField
+                        }, lastNameTextField: { [weak self] textField in
+                            self?.zendeskPromptLastNameTextField = textField
+                        }, okActionObject: { [weak self] actionObject in
+                            self?.zendeskPromptOKAction = actionObject
+                        }, okActionHandler: {
+                            launchContactUs()
+                        }, textFieldDelegate: self)
+                        present(alert, animated: true, completion: nil)
+                    } else {
+                        launchContactUs()
+                    }
+                }
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {
                 case is SettingsViewController.Type:
@@ -168,7 +210,7 @@ extension SettingsViewController: UITableViewDelegate {
                     navigationController?.pushViewController(debugMenuViewController, animated: true)
                     break
                 case is PreferencesViewController.Type:
-                    let repository = PreferencesRepository(apiManager: viewModel.router.apiManager)
+                    let repository = PreferencesRepository(apiClient: viewModel.router.apiClient)
                     let viewModel = PreferencesViewModel(repository: repository, router: self.viewModel.router)
                     let viewController = PreferencesViewController(viewModel: viewModel)
                     navigationController?.pushViewController(viewController, animated: true)
@@ -183,6 +225,12 @@ extension SettingsViewController: UITableViewDelegate {
                     break
                 case .howItWorks:
                     toHowItWorksVC()
+                    break
+                case .privacyPolicy:
+                    presentWebView(url: Constants.privacyPolicyUrl)
+                    break
+                case .termsAndConditions:
+                    presentWebView(url: Constants.termsAndConditionsUrl)
                     break
                 }
             case .logout:
@@ -199,30 +247,78 @@ extension SettingsViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - Mail Compose
-
-extension SettingsViewController: MFMailComposeViewControllerDelegate {
-    private func sendEmail() {
-        if MFMailComposeViewController.canSendMail() {
-            let binkId = Current.userManager.currentEmailAddress ?? ""
-            let shortVersionNumber = Bundle.shortVersionNumber ?? ""
-            let buildNumber = Bundle.bundleVersion ?? ""
-            let appVersion = String(format: "support_mail_app_version".localized, shortVersionNumber, buildNumber)
-            let osVersion = UIDevice.current.systemVersion
-            let mailBody = String.init(format: "support_mail_body".localized, binkId, appVersion, osVersion)
-            let mailViewController = MFMailComposeViewController()
-            mailViewController.mailComposeDelegate = self
-            mailViewController.setToRecipients([Constants.supportEmail])
-            mailViewController.setSubject("support_mail_subject".localized)
-            mailViewController.setMessageBody(mailBody, isHTML: false)
-            
-            present(mailViewController, animated: true)
-        } else {
-            MainScreenRouter.openExternalURL(with: "mailto:\(Constants.supportEmail)")
+extension SettingsViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        /// If both textfields are empty, disable ok action as at least one textfield will be empty after updating
+        let firstNameText = zendeskPromptFirstNameTextField.text ?? ""
+        let lastNameText = zendeskPromptLastNameTextField.text ?? ""
+        if firstNameText.isEmpty && lastNameText.isEmpty {
+            zendeskPromptOKAction.isEnabled = false
         }
+        /// If both textfields are NOT empty, and the replacement string is NOT empty, we know that both textfields must have values after updating
+        if !firstNameText.isEmpty && !lastNameText.isEmpty && !string.isEmpty {
+            zendeskPromptOKAction.isEnabled = true
+        }
+
+        /// If the textfield being updated is firstName, and it has no current value, and the replacement string has a value, and lastName has a value then we know that both textfields will have values after updating
+        if textField == zendeskPromptFirstNameTextField && firstNameText.isEmpty && !string.isEmpty && !lastNameText.isEmpty {
+            zendeskPromptOKAction.isEnabled = true
+        }
+
+        /// If the textfield being updated is lastName, and it has no current value, and the replacement string has a value, and firstName has a value then we know that both textfields will have values after updating
+        if textField == zendeskPromptLastNameTextField && lastNameText.isEmpty && !string.isEmpty && !firstNameText.isEmpty {
+            zendeskPromptOKAction.isEnabled = true
+        }
+
+        /// If the textfield being updated is firstName, and it's current value is only one character, and the replacement string has no value then we know the textfield will have no value after updating
+        if textField == zendeskPromptFirstNameTextField && firstNameText.count == 1 && string.isEmpty {
+            zendeskPromptOKAction.isEnabled = false
+        }
+
+        /// If the textfield being updated is lastName, and it's current value is only one character, and the replacement string has no value then we know the textfield will have no value after updating
+        if textField == zendeskPromptLastNameTextField && lastNameText.count == 1 && string.isEmpty {
+            zendeskPromptOKAction.isEnabled = false
+        }
+
+        return true
     }
-    
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true)
+}
+
+extension UIAlertController {
+    static func makeZendeskIdentityAlertController(firstNameTextField: @escaping (UITextField) -> Void, lastNameTextField: @escaping (UITextField) -> Void, okActionObject: (UIAlertAction) -> Void, okActionHandler: @escaping () -> Void, textFieldDelegate: UITextFieldDelegate?) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: "zendesk_identity_prompt_message".localized, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "zendesk_identity_prompt_first_name".localized
+            textField.autocapitalizationType = .words
+            textField.delegate = textFieldDelegate
+            firstNameTextField(textField)
+        }
+        alert.addTextField { textField in
+            textField.placeholder = "zendesk_identity_prompt_last_name".localized
+            textField.autocapitalizationType = .words
+            textField.delegate = textFieldDelegate
+            lastNameTextField(textField)
+        }
+        let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "ok".localized, style: .default) { action in
+            let firstName = alert.textFields?[0].text
+            let lastName = alert.textFields?[1].text
+            // TODO: Move to UserService in future ticket
+            let request = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)
+            let params = UserProfileUpdateRequest(firstName: firstName, lastName: lastName)
+            Current.apiClient.performRequestWithParameters(request, parameters: params, expecting: UserProfileResponse.self) { result in
+                guard let response = try? result.get() else { return }
+                /// Don't update Zendesk identity, as we do this with the textField input values, and do not need to set it twice.
+                Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: false)
+            }
+
+            /// Use raw input to move forward with new zendesk identity
+            ZendeskService.setIdentity(firstName: firstName, lastName: lastName)
+            okActionHandler()
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        okActionObject(okAction)
+        return alert
     }
 }

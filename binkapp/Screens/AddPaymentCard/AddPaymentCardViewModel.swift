@@ -17,10 +17,10 @@ class AddPaymentCardViewModel {
         return true
     }
     
-    init(router: MainScreenRouter, repository: PaymentWalletRepositoryProtocol, paymentCard: PaymentCardCreateModel) {
+    init(router: MainScreenRouter, repository: PaymentWalletRepositoryProtocol, paymentCard: PaymentCardCreateModel? = nil) {
         self.router = router
         self.repository = repository
-        self.paymentCard = paymentCard
+        self.paymentCard = paymentCard ?? PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
     }
 
     var formDataSource: FormDataSource {

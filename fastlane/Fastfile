@@ -39,9 +39,6 @@ platform :ios do
     match(type: "adhoc", app_identifier: "com.bink.wallet", readonly: true)
     match(type: "development", app_identifier: "com.bink.wallet.alpha", readonly: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.mr", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.nightly", readonly: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.gamma", readonly: true)
 
   end
 
@@ -69,13 +66,10 @@ platform :ios do
 
     # Bink
 
+    match(type: "development", app_identifier: "com.bink.wallet.alpha", readonly: false, force_for_new_devices: true)
     match(type: "appstore", app_identifier: "com.bink.wallet", readonly: false, force_for_new_devices: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet", readonly: false, force_for_new_devices: true)
-    match(type: "development", app_identifier: "com.bink.wallet.alpha", readonly: false, force_for_new_devices: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta", readonly: false, force_for_new_devices: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.mr", readonly: false, force_for_new_devices: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.nightly", readonly: false, force_for_new_devices: true)
-    match(type: "adhoc", app_identifier: "com.bink.wallet.gamma", readonly: false, force_for_new_devices: true)
 
   end
 
@@ -83,7 +77,6 @@ platform :ios do
   lane :beta do |parameters|
     build_app(scheme: "binkapp app store")
     upload_to_testflight(skip_waiting_for_build_processing: true)
-    upload_symbols_to_crashlytics(dsym_path: "./Bink.app.dSYM.zip")
   end
 
 end

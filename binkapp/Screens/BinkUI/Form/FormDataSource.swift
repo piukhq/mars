@@ -15,6 +15,7 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     func formDataSource(_ dataSource: FormDataSource, fieldDidExit: FormField)
     func formDataSource(_ dataSource: FormDataSource, checkboxUpdated: CheckboxView)
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool
+    func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource)
 }
 
 extension FormDataSourceDelegate {
@@ -25,6 +26,7 @@ extension FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
         return false
     }
+    func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {}
 }
 
 enum AccessForm {
@@ -45,6 +47,8 @@ class FormDataSource: NSObject {
     
     private(set) var fields = [FormField]()
     private(set) var checkboxes = [CheckboxView]()
+    private var cellTextFields = [Int: UITextField]()
+    private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
     
     var fullFormIsValid: Bool {
@@ -109,10 +113,11 @@ extension FormDataSource {
             title: "Card number",
             placeholder: "xxxx xxxx xxxx xxxx",
             validation: nil,
-            fieldType: .cardNumber,
+            fieldType: .paymentCardNumber,
             updated: updatedBlock,
             shouldChange: shouldChangeBlock,
-            fieldExited: fieldExitedBlock
+            fieldExited: fieldExitedBlock,
+            forcedValue: model.fullPan
         )
         
         let monthData = Calendar.current.monthSymbols.enumerated().compactMap { index, _ in
@@ -132,7 +137,11 @@ extension FormDataSource {
             shouldChange: shouldChangeBlock,
             fieldExited: fieldExitedBlock,
             pickerSelected: pickerUpdatedBlock,
-            manualValidate: manualValidateBlock)
+            manualValidate: manualValidateBlock,
+            /// It's fine to force unwrap here, as we are already guarding against the values being nil and we don't want to provide default values
+            /// We will never reach the force unwrapping if either value is nil
+            forcedValue: model.month == nil || model.year == nil ? nil : "\(String(format: "%02d", model.month!))/\(model.year!)"
+        )
 
         let nameOnCardField = FormField(
             title: "Name on card",
@@ -176,9 +185,36 @@ extension FormDataSource {
             guard let self = self else { return }
             self.delegate?.formDataSource(self, fieldDidExit: field)
         }
+
+        if case .addFromScanner(let barcode) = formPurpose {
+            model.account?.formattedAddFields(omitting: [.cardNumber])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
+                if field.fieldInputType == .checkbox {
+                    let checkbox = CheckboxView(frame: .zero)
+                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
+                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .add, delegate: self)
+                    checkboxes.append(checkbox)
+                } else {
+                    fields.append(
+                        FormField(
+                            title: field.column ?? "",
+                            placeholder: field.fieldDescription ?? "",
+                            validation: field.validation,
+                            fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, commonName: FieldCommonName(rawValue: field.commonName ?? ""), choices: field.choicesArray),
+                            updated: updatedBlock,
+                            shouldChange: shouldChangeBlock,
+                            fieldExited: fieldExitedBlock,
+                            pickerSelected: pickerUpdatedBlock,
+                            columnKind: .add,
+                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
+                            isReadOnly: field.fieldCommonName == .barcode
+                        )
+                    )
+                }
+            }
+        }
         
         if formPurpose == .add || formPurpose == .addFailed || formPurpose == .ghostCard {
-            model.account?.formattedAddFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
+            model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
                     let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
@@ -201,8 +237,33 @@ extension FormDataSource {
                 }
             }
         }
-        
-        if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .patchGhostCard {
+
+        if case .addFromScanner(let barcode) = formPurpose {
+            model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
+                if field.fieldInputType == .checkbox {
+                    let checkbox = CheckboxView(frame: .zero)
+                    let attributedString = NSMutableAttributedString(string: field.fieldDescription ?? "", attributes: [.font: UIFont.bodyTextSmall])
+                    checkbox.configure(title: attributedString, columnName: field.column ?? "", columnKind: .auth, delegate: self)
+                    checkboxes.append(checkbox)
+                } else {
+                    fields.append(
+                        FormField(
+                            title: field.column ?? "",
+                            placeholder: field.fieldDescription ?? "",
+                            validation: field.validation,
+                            fieldType: FormField.FieldInputType.fieldInputType(for: field.fieldInputType, commonName: field.fieldCommonName, choices: field.choicesArray),
+                            updated: updatedBlock,
+                            shouldChange: shouldChangeBlock,
+                            fieldExited: fieldExitedBlock,
+                            pickerSelected: pickerUpdatedBlock,
+                            columnKind: .auth,
+                            forcedValue: field.fieldCommonName == .barcode ? barcode : nil,
+                            isReadOnly: field.fieldCommonName == .barcode
+                        )
+                    )
+                }
+            }
+        } else if formPurpose != .signUp && formPurpose != .signUpFailed && formPurpose != .ghostCard && formPurpose != .patchGhostCard {
             model.account?.formattedAuthFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(frame: .zero)
@@ -226,7 +287,6 @@ extension FormDataSource {
                 }
             }
         }
-        
         
         if formPurpose == .signUp || formPurpose == .signUpFailed {
             model.account?.formattedEnrolFields?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
@@ -431,6 +491,10 @@ extension FormDataSource: CheckboxViewDelegate {
         delegate?.checkboxView(checkboxView, didCompleteWithColumn: column, value: value, fieldType: fieldType)
         delegate?.formDataSource(self, checkboxUpdated: checkboxView)
     }
+    
+    func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+        delegate?.checkboxView(checkboxView, didTapOn: URL)
+    }
 }
 
 extension FormDataSource: UICollectionViewDataSource {
@@ -441,7 +505,10 @@ extension FormDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: FormCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
         
-        if let field = fields[safe: indexPath.item] { cell.configure(with: field, delegate: self) }
+        if let field = fields[safe: indexPath.item] {
+            cell.configure(with: field, delegate: self)
+            cellTextFields[indexPath.row] = cell.textField
+        }
         
         return cell
     }
@@ -450,5 +517,25 @@ extension FormDataSource: UICollectionViewDataSource {
 extension FormDataSource: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {
         delegate?.formCollectionViewCell(cell, didSelectField: didSelectField)
+
+        if cellTextFields.first(where: { $0.value == didSelectField })?.key == cellTextFields.count - 1 {
+            didSelectField.returnKeyType = .done
+        } else {
+            didSelectField.returnKeyType = .next
+            selectedCheckboxIndex = 0
+        }
+    }
+    
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {
+        guard let key = cellTextFields.first(where: { $0.value == textField })?.key else { return }
+        
+        if let nextTextField = cellTextFields[key + 1] {
+            nextTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+            if !checkboxes.isEmpty {
+                delegate?.formDataSourceShouldScrollToBottom(self)
+            }
+        }
     }
 }

@@ -10,9 +10,11 @@ import UIKit
 
 struct SettingsFactory {
     private let router: MainScreenRouter
+    private let rowsWithActionRequired: [SettingsRow.RowType]?
     
-    init(router: MainScreenRouter) {
+    init(router: MainScreenRouter, rowsWithActionRequired: [SettingsRow.RowType]?) {
         self.router = router
+        self.rowsWithActionRequired = rowsWithActionRequired
     }
     
     func sectionData() -> [SettingsSection] {
@@ -23,12 +25,14 @@ struct SettingsFactory {
         
         let accountSection = SettingsSection(title: "settings_section_account_title".localized, rows: [
             SettingsRow(
-                title: "settings_row_preferences_title".localized,
-                action: .pushToViewController(viewController: PreferencesViewController.self)
+                type: .preferences,
+                action: .pushToViewController(viewController: PreferencesViewController.self),
+                actionRequired: rowsWithActionRequired?.contains(.preferences) ?? false
             ),
             SettingsRow(
-                title: "settings_row_logout_title".localized,
-                action: .logout
+                type: .logout,
+                action: .logout,
+                actionRequired: rowsWithActionRequired?.contains(.logout) ?? false
             )
         ])
         
@@ -38,26 +42,25 @@ struct SettingsFactory {
         
         let supportSection = SettingsSection(title: "settings_section_support_title".localized, rows: [
             SettingsRow(
-                title: "settings_row_faqs_title".localized,
+                type: .faq,
                 subtitle: "settings_row_faqs_subtitle".localized,
-                action: .customAction(action: {
-                    MainScreenRouter.openExternalURL(
-                        with: "https://help.bink.com"
-                    )
-                })
+                action: .launchSupport(service: .faq),
+                actionRequired: rowsWithActionRequired?.contains(.faq) ?? false
             ),
             SettingsRow(
-                title: "settings_row_contact_title".localized,
+                type: .contactUs,
                 subtitle: "settings_row_contact_subtitle".localized,
-                action: .contactUsAction
+                action: .launchSupport(service: .contactUs),
+                actionRequired: rowsWithActionRequired?.contains(.contactUs) ?? false
             ),
             SettingsRow(
-                title: "settings_row_rateapp_title".localized,
+                type: .rateThisApp,
                 action: .customAction(action: {
                     MainScreenRouter.openExternalURL(
                         with: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931?action=write-review"
                     )
-                })
+                }),
+                actionRequired: rowsWithActionRequired?.contains(.rateThisApp) ?? false
             )
         ])
         
@@ -67,14 +70,16 @@ struct SettingsFactory {
         
         let aboutSection = SettingsSection(title: "settings_section_about_title".localized, rows: [
             SettingsRow(
-                title: "settings_row_security_title".localized,
+                type: .securityAndPrivacy,
                 subtitle: "settings_row_security_subtitle".localized,
-                action: .pushToReusable(screen: .securityAndPrivacy)
+                action: .pushToReusable(screen: .securityAndPrivacy),
+                actionRequired: rowsWithActionRequired?.contains(.securityAndPrivacy) ?? false
             ),
             SettingsRow(
-                title: "settings_row_howitworks_title".localized,
+                type: .howItWorks,
                 subtitle: "settings_row_howitworks_subtitle".localized,
-                action: .pushToReusable(screen: .howItWorks)
+                action: .pushToReusable(screen: .howItWorks),
+                actionRequired: rowsWithActionRequired?.contains(.howItWorks) ?? false
             )
         ])
         
@@ -84,16 +89,14 @@ struct SettingsFactory {
         
         let legalSection = SettingsSection(title: "settings_section_legal_title".localized, rows: [
             SettingsRow(
-                title: "settings_row_privacypolicy_title".localized,
-                action: .customAction(action: {
-                    MainScreenRouter.openExternalURL(with: "https://bink.com/privacy-policy/")
-                })
+                type: .privacyPolicy,
+                action: .pushToReusable(screen: .privacyPolicy),
+                actionRequired: rowsWithActionRequired?.contains(.privacyPolicy) ?? false
             ),
             SettingsRow(
-                title: "settings_row_termsandconditions_title".localized,
-                action: .customAction(action: {
-                    MainScreenRouter.openExternalURL(with: "https://bink.com/terms-and-conditions/")
-                })
+                type: .termsAndConditions,
+                action: .pushToReusable(screen: .termsAndConditions),
+                actionRequired: rowsWithActionRequired?.contains(.termsAndConditions) ?? false
             )
         ])
         
@@ -102,11 +105,12 @@ struct SettingsFactory {
         // MARK: - Debug
         
         #if DEBUG
-        let debugSection = SettingsSection(title: "Debug", rows: [
+        let debugSection = SettingsSection(title: "settings_section_debug_title".localized, rows: [
             SettingsRow(
-                title: "Debug",
-                subtitle: "Only accessible on debug builds",
-                action: .pushToViewController(viewController: DebugMenuTableViewController.self)
+                type: .debug,
+                subtitle: "settings_section_debug_subtitle".localized,
+                action: .pushToViewController(viewController: DebugMenuTableViewController.self),
+                actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
             )
         ])
         

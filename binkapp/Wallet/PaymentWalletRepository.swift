@@ -10,17 +10,16 @@ import Foundation
 import CoreData
 
 class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
-    private let apiManager: ApiManager
+    private let apiClient: APIClient
 
-    required init(apiManager: ApiManager) {
-        self.apiManager = apiManager
+    required init(apiClient: APIClient) {
+        self.apiClient = apiClient
     }
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
         // Process the backend delete, but fail silently
-        let url = RequestURL.paymentCard(cardId: card.id)
-        let method = RequestHTTPMethod.delete
-        apiManager.doRequest(url: url, httpMethod: method, isUserDriven: false, onSuccess: { (response: EmptyResponse) in }, onError: { error in })
+        let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
+        apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
@@ -36,8 +35,8 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
     }
 
-    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
-        if apiManager.isProduction {
+    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
+        if apiClient.isProduction || apiClient.isPreProduction {
             #if DEBUG
             fatalError("You are targetting production, but on a debug scheme. You should use a release scheme to test adding production payment cards.")
             #else
@@ -66,22 +65,23 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
     }
 
-    private func requestSpreedlyToken(paymentCard: PaymentCardCreateModel, onSuccess: @escaping (SpreedlyResponse) -> Void, onError: @escaping (Error?) -> Void) {
+    private func requestSpreedlyToken(paymentCard: PaymentCardCreateModel, onSuccess: @escaping (SpreedlyResponse) -> Void, onError: @escaping (BinkError?) -> Void) {
         let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
-        apiManager.doRequest(url: .spreedly, httpMethod: .post, parameters: spreedlyRequest, isUserDriven: true, onSuccess: { (response: SpreedlyResponse) in
-            onSuccess(response)
-        }) { error in
-            onError(error)
+        let request = BinkNetworkRequest(endpoint: .spreedly, method: .post, headers: nil, isUserDriven: true)
+        apiClient.performRequestWithParameters(request, parameters: spreedlyRequest, expecting: SpreedlyResponse.self) { result in
+            switch result {
+            case .success(let response):
+                onSuccess(response)
+            case .failure(let error):
+                onError(error)
+            }
         }
     }
 
-    private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(Error?) -> Void) {
+    private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
 
-        guard let hash = SecureUtility.getPaymentCardHash(from: paymentCard) else {
-            onError(nil)
-            return
-        }
+        let hash = SecureUtility.getPaymentCardHash(from: paymentCard)
 
         var paymentCreateRequest: PaymentCardCreateRequest?
 
@@ -96,20 +96,24 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
             return
         }
 
-        apiManager.doRequest(url: .paymentCards, httpMethod: .post, parameters: request, isUserDriven: true, onSuccess: { (response: PaymentCardModel) in
-            Current.database.performBackgroundTask { context in
-                let newObject = response.mapToCoreData(context, .update, overrideID: nil)
+        let networkRequest = BinkNetworkRequest(endpoint: .paymentCards, method: .post, headers: nil, isUserDriven: true)
+        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: PaymentCardModel.self) { result in
+            switch result {
+            case .success(let response):
+                Current.database.performBackgroundTask { context in
+                    let newObject = response.mapToCoreData(context, .update, overrideID: nil)
 
-                try? context.save()
+                    try? context.save()
 
-                DispatchQueue.main.async {
-                    Current.database.performTask(with: newObject) { (context, safeObject) in
-                        onSuccess(safeObject)
+                    DispatchQueue.main.async {
+                        Current.database.performTask(with: newObject) { (context, safeObject) in
+                            onSuccess(safeObject)
+                        }
                     }
                 }
+            case .failure(let error):
+                onError(error)
             }
-        }, onError: { error in
-            onError(error)
-        })
+        }
     }
 }

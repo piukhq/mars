@@ -8,6 +8,7 @@
 
 import UIKit
 import FBSDKLoginKit
+import AuthenticationServices
 
 class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegate {
     @IBOutlet private weak var facebookPillButton: BinkPillButton!
@@ -53,6 +54,15 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
         ]
     }()
 
+    @available(iOS 13.0, *)
+    lazy var signInWithAppleButton: ASAuthorizationAppleIDButton = {
+        let button = ASAuthorizationAppleIDButton(type: .continue, style: .black)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.cornerRadius = 27.5
+        return button
+    }()
+
+
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
         learningContainer.addSubview(scrollView)
@@ -75,6 +85,8 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
         learningContainer.addSubview(pageControl)
         return pageControl
     }()
+
+    private var signInWithAppleEnabled = false
 
     init(viewModel: OnboardingViewModel) {
         self.viewModel = viewModel
@@ -116,6 +128,10 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
     }
 
     private func setLayout() {
+        if #available(iOS 13.0, *) {
+            signInWithAppleEnabled = true
+        }
+        
         let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.learningContainerHeight)
         learningContainerHeightConstraint.priority = .init(999)
 
@@ -134,16 +150,46 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
             facebookPillButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
             facebookPillButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             facebookPillButton.bottomAnchor.constraint(equalTo: floatingButtonsView.topAnchor, constant: -LayoutHelper.PillButton.verticalSpacing),
-            facebookPillButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25),
 
             pageControl.topAnchor.constraint(equalTo: learningContainer.bottomAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.height),
             pageControl.widthAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.width),
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor),
         ])
+
+        if !signInWithAppleEnabled {
+            NSLayoutConstraint.activate([
+                facebookPillButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25),
+            ])
+        }
+    }
+
+    @available(iOS 13.0, *)
+    @objc private func handleAppleIdRequest() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.email]
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
 
     private func configureUI() {
+        if #available(iOS 13.0, *) {
+            view.addSubview(signInWithAppleButton)
+            signInWithAppleButton.layer.applyDefaultBinkShadow()
+            NSLayoutConstraint.activate([
+                signInWithAppleButton.heightAnchor.constraint(equalToConstant: 55),
+                signInWithAppleButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
+                signInWithAppleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                signInWithAppleButton.bottomAnchor.constraint(equalTo: facebookPillButton.topAnchor, constant: -LayoutHelper.PillButton.verticalSpacing),
+                signInWithAppleButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25),
+            ])
+
+            signInWithAppleButton.addTarget(self, action: #selector(handleAppleIdRequest), for: .touchUpInside)
+        }
+
         facebookPillButton.translatesAutoresizingMaskIntoConstraints = false
         floatingButtonsView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -172,7 +218,7 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
     // MARK: Button handlers
 
     @objc private func handleFacebookButtonPressed() {
-        guard Current.apiManager.networkIsReachable else {
+        guard Current.apiClient.networkIsReachable else {
             viewModel.router.presentNoConnectivityPopup()
             return
         }
@@ -183,7 +229,7 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
                 return
             }
             
-            self?.viewModel.pushToSocialTermsAndConditions(request: facebookRequest)
+            self?.viewModel.pushToSocialTermsAndConditions(requestType: .facebook(facebookRequest))
         }) { [weak self] isCancelled in
             self?.showError(isCancelled)
         }
@@ -259,5 +305,39 @@ extension LayoutHelper {
         static let pageControlSize: CGSize = CGSize(width: 40, height: 40)
         static let autoScrollTimeInterval: TimeInterval = 12
         static let learningViewTopPadding: CGFloat = 50
+    }
+}
+
+// MARK: - Sign in with Apple
+
+@available(iOS 13.0, *)
+extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        guard let window = view.window else {
+            fatalError("View has no window")
+        }
+        return window
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
+        guard let authCodeData = appleIDCredential.authorizationCode else { return }
+        let authCodeString = String(decoding: authCodeData, as: UTF8.self)
+        signInWithApple(authCode: authCodeString)
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("")
+    }
+    
+    // TODO: // Move to user service in future ticket. All login type requests should reuse the same code where possible
+    private func signInWithApple(authCode: String) {
+        let loginRequest = SignInWithAppleRequest(authorizationCode: authCode)
+        viewModel.pushToSocialTermsAndConditions(requestType: .apple(loginRequest))
+    }
+    
+    private func handleLoginError() {
+        Current.userManager.removeUser()
+        viewModel.router.displaySimplePopup(title: "error_title".localized, message: "login_error".localized)
     }
 }

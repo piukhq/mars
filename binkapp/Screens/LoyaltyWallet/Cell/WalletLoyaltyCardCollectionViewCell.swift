@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 enum SwipeMode {
     case unset // centered
@@ -119,7 +118,9 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
         
         /// Brand colours
-        rectangleView.firstColorHex = viewModel.brandColorHex ?? ""
+        let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
+        rectangleView.firstColor = primaryBrandColor
+        rectangleView.secondColor = plan.generatedSecondaryBrandColor
 
         /// Brand name
         cardNameLabel.text = plan.account?.companyName
@@ -142,6 +143,10 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         cardValueSuffixLabel.text = viewModel.pointsValueSuffixText
         cardValuePointsLabel.isHidden = !viewModel.shouldShowPointsValueLabel
         cardValueSuffixLabel.isHidden = !viewModel.shouldShowPointsSuffixLabel
+
+        [cardNameLabel, cardValuePointsLabel, cardLinkStatusLabel, cardValueSuffixLabel].forEach {
+            $0.textColor = primaryBrandColor.isLight(threshold: 0.8) ? .black : .white
+        }
 
         containerView.backgroundColor = .clear
     }

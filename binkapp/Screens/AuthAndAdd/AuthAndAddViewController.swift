@@ -24,7 +24,7 @@ class AuthAndAddViewController: BaseFormViewController {
     private lazy var floatingButtons: BinkPrimarySecondaryButtonView = {
         let floatingButtons = BinkPrimarySecondaryButtonView()
         floatingButtons.configure(primaryButtonTitle: viewModel.buttonTitle, secondaryButtonTitle: "no_account_button_title".localized)
-        floatingButtons.primaryButton.isEnabled = false
+        floatingButtons.primaryButton.isEnabled = self.dataSource.fullFormIsValid
         floatingButtons.delegate = self
         floatingButtons.translatesAutoresizingMaskIntoConstraints = false
         return floatingButtons
@@ -57,9 +57,9 @@ class AuthAndAddViewController: BaseFormViewController {
         super.viewDidAppear(animated)
         initialContentOffset = stackScrollView.contentOffset
         switch viewModel.formPurpose {
-            case .add, .addFailed: setScreenName(trackedScreen: .addAuthForm)
-            case .signUp, .signUpFailed: setScreenName(trackedScreen: .enrolForm)
-            case .ghostCard, .patchGhostCard: setScreenName(trackedScreen: .registrationForm)
+        case .add, .addFailed, .addFromScanner: setScreenName(trackedScreen: .addAuthForm)
+        case .signUp, .signUpFailed: setScreenName(trackedScreen: .enrolForm)
+        case .ghostCard, .patchGhostCard: setScreenName(trackedScreen: .registrationForm)
         }
     }
     
@@ -110,6 +110,10 @@ class AuthAndAddViewController: BaseFormViewController {
     override func formValidityUpdated(fullFormIsValid: Bool) {
         floatingButtons.primaryButton.isEnabled = fullFormIsValid
     }
+    
+    override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
+        viewModel.openWebView(withUrlString: URL)
+    }
 }
 
 extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
@@ -138,6 +142,12 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
         return true
     }
+    
+    func formDataSourceShouldScrollToBottom(_ dataSource: FormDataSource) {
+        let y = stackScrollView.contentSize.height - stackScrollView.bounds.size.height + stackScrollView.contentInset.bottom
+        let offset = CGPoint(x: 0, y: y)
+        stackScrollView.setContentOffset(offset, animated: true)
+    }
 }
 
 extension AuthAndAddViewController: LoyaltyButtonDelegate {
@@ -152,4 +162,6 @@ extension AuthAndAddViewController: FormCollectionViewCellDelegate {
         self.selectedCellYOrigin = cellOrigin.y
         selectedCellHeight = cell.isValidationLabelHidden ? cell.frame.size.height + Constants.cellErrorLabelSafeSpacing : cell.frame.size.height
     }
+    
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
 }

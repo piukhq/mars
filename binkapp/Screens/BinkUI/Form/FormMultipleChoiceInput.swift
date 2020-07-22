@@ -14,6 +14,8 @@ protocol FormMultipleChoiceInputDelegate: NSObjectProtocol {
 }
 
 class FormMultipleChoiceInput: UIInputView {
+    var fullContentString = ""
+    var backingData: [Int]?
     
     // MARK: - Properties
     
@@ -34,9 +36,8 @@ class FormMultipleChoiceInput: UIInputView {
     private let sections: [[FormPickerData]]
     private var selectedContent = [Int : FormPickerData]() {
         didSet {
-            var fullContentString = ""
             var lastString: String?
-            var backingData: [Int]?
+            fullContentString = ""
             
             selectedContent.sorted(by: { $0.key < $1.key }).forEach { key, value in
                 if let separator = delegate?.multipleChoiceSeparatorForMultiValues(), lastString != nil {
@@ -70,6 +71,8 @@ class FormMultipleChoiceInput: UIInputView {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 250), inputViewStyle: .keyboard)
         allowsSelfSizing = true
         configureAutolayout()
+        
+        fullContentString = sections.first?.first?.title ?? ""
     }
     
     required init?(coder aDecoder: NSCoder) {

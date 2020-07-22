@@ -11,6 +11,7 @@ import Foundation
 enum DateFormat: String {
     case dayMonthYear = "dd MMMM YYYY"
     case dayShortMonthYear = "dd MMM YYYY"
+    case dayShortMonthYearWithSlash = "dd/MM/YYYY"
     case dayShortMonthYear24HourSecond = "dd MMM yyyy HH:mm:ss"
 }
 
@@ -49,9 +50,9 @@ extension Date {
         return nil
     }
 
-    func getFormattedString(format: String) -> String {
+    func getFormattedString(format: DateFormat) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
+        dateFormatter.dateFormat = format.rawValue
         return dateFormatter.string(from: self)
     }
 

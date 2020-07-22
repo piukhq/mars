@@ -17,6 +17,7 @@ struct MembershipPlanModel: Codable {
     let balances: [BalanceModel]?
     let dynamicContent: [DynamicContentField]?
     let hasVouchers: Bool?
+    let card: CardModel?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -27,6 +28,13 @@ struct MembershipPlanModel: Codable {
         case balances
         case dynamicContent = "content"
         case hasVouchers = "has_vouchers"
+        case card
+    }
+}
+
+extension MembershipPlanModel: Equatable {
+    static func == (lhs: MembershipPlanModel, rhs: MembershipPlanModel) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 
@@ -88,6 +96,14 @@ extension MembershipPlanModel: CoreDataMappable, CoreDataIDMappable {
                 update(cdContentObject, \.plan, with: cdObject, delta: delta)
                 cdObject.addDynamicContentObject(cdContentObject)
             }
+        }
+
+        if let card = card {
+            let cdCard = card.mapToCoreData(context, .update, overrideID: CardModel.overrideId(forParentId: overrideID ?? id))
+            update(cdCard, \.membershipPlan, with: cdObject, delta: delta)
+            update(cdObject, \.card, with: cdCard, delta: delta)
+        } else {
+            update(cdObject, \.card, with: nil, delta: false)
         }
 
         return cdObject

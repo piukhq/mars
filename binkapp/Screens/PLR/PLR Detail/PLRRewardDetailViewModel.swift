@@ -11,10 +11,12 @@ import Foundation
 class PLRRewardDetailViewModel {
     private let voucher: CD_Voucher
     private let membershipPlan: CD_MembershipPlan
+    private let router: MainScreenRouter
 
-    init(voucher: CD_Voucher, plan: CD_MembershipPlan) {
+    init(voucher: CD_Voucher, plan: CD_MembershipPlan, router: MainScreenRouter) {
         self.voucher = voucher
         self.membershipPlan = plan
+        self.router = router
     }
 
     var voucherCellViewModel: PLRCellViewModel {
@@ -101,9 +103,9 @@ class PLRRewardDetailViewModel {
         return document.url
     }
 
-    func openTermsAndConditionsUrl() {
+    func openTermsAndConditionsWebView() {
         guard let url = termsAndConditionsButtonUrlString else { return }
-        MainScreenRouter.openExternalURL(with: url)
+        router.openWebView(withUrlString: url)
     }
 
     // MARK: - View decisioning
@@ -170,11 +172,11 @@ class PLRRewardDetailViewModel {
 
     private var voucherPlanDocument: CD_PlanDocument? {
         guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return nil }
-        // Currently we assume the only plan document for PLR will be terms and conditions
-        // Change this when this is no longer the case
-        guard let voucherDocument = planDocuments.first else { return nil }
-        guard let display = voucherDocument.formattedDisplay.first else { return nil }
-        guard display.value == PlanDocumentDisplayModel.voucher.rawValue else { return nil }
-        return voucherDocument
+        for document in planDocuments {
+            if let _ = document.formattedDisplay.first(where: { $0.value == PlanDocumentDisplayModel.voucher.rawValue }) {
+                return document
+            }
+        }
+        return nil
     }
 }

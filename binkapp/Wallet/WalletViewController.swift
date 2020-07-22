@@ -8,6 +8,12 @@
 
 import UIKit
 
+struct WalletViewControllerConstants {
+    static let dotViewHeightWidth: CGFloat = 10
+    static let dotViewRightPadding: CGFloat = 18
+    static let dotViewTopPadding: CGFloat = 3
+}
+
 class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -29,6 +35,8 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
     internal lazy var blurBackground = defaultBlurredBackground()
 
     let refreshControl = UIRefreshControl()
+    private var hasSupportUpdates = false
+    private let dotView = UIView()
 
     let viewModel: T
 
@@ -43,7 +51,7 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .didLoadLocalWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshPostClear), name: .shouldTrashLocalWallets, object: nil)
@@ -69,6 +77,10 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         
         Current.wallet.reloadWalletsIfNecessary()
         configureLoadingIndicator()
+        
+        /// In case the Zendesk SDK is slow to return a state, we should configure the navigation item to a default state
+        configureNavigationItem(hasSupportUpdates: false)
+        checkForZendeskUpdates()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -77,6 +89,8 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
         }
+        // We don't want to see it on non-wallet view controllers
+        dotView.removeFromSuperview()
     }
 
     override func viewDidLayoutSubviews() {
@@ -84,6 +98,57 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
 
         guard let bar = navigationController?.navigationBar else { return }
         prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
+    }
+    
+    private func configureNavigationItem(hasSupportUpdates: Bool) {
+        self.hasSupportUpdates = hasSupportUpdates
+        let settingsIcon = UIImage(named: "settings")?.withRenderingMode(.alwaysOriginal)
+        let settingsBarButton = UIBarButtonItem(image: settingsIcon, style: .plain, target: self, action: #selector(settingsButtonTapped))
+        tabBarController?.navigationItem.rightBarButtonItem = settingsBarButton
+        
+        var rightInset: CGFloat = 0
+        switch UIDevice.current.width {
+            case .iPhone5Size:
+                rightInset = 9
+            case .iPhone6Size:
+                rightInset = 9
+            case .iPhonePlusSize:
+                rightInset = 6
+            default:
+                rightInset = 7
+        }
+        settingsBarButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: rightInset)
+        
+        guard hasSupportUpdates else {
+            dotView.removeFromSuperview()
+            return
+        }
+        if let navBar = navigationController?.navigationBar {
+            dotView.translatesAutoresizingMaskIntoConstraints = false
+            dotView.backgroundColor = .systemRed
+            dotView.layer.cornerRadius = 5
+            navBar.addSubview(dotView)
+            NSLayoutConstraint.activate([
+                dotView.widthAnchor.constraint(equalToConstant: WalletViewControllerConstants.dotViewHeightWidth),
+                dotView.heightAnchor.constraint(equalToConstant: WalletViewControllerConstants.dotViewHeightWidth),
+                dotView.rightAnchor.constraint(equalTo: navBar.rightAnchor, constant: -WalletViewControllerConstants.dotViewRightPadding),
+                dotView.topAnchor.constraint(equalTo: navBar.topAnchor, constant: WalletViewControllerConstants.dotViewTopPadding)
+            ])
+        }
+    }
+    
+    @objc func settingsButtonTapped() {
+        var actionRequiredSettings: [SettingsRow.RowType] = []
+        if hasSupportUpdates {
+            actionRequiredSettings.append(.contactUs)
+        }
+        viewModel.toSettings(rowsWithActionRequired: actionRequiredSettings)
+    }
+    
+    private func checkForZendeskUpdates() {
+        ZendeskService.getIdentityRequestUpdates { hasUpdates in
+            self.configureNavigationItem(hasSupportUpdates: hasUpdates)
+        }
     }
 
     func configureCollectionView() {

@@ -83,24 +83,38 @@ class LoginViewController: BaseFormViewController {
             email: fields["email"],
             password: fields["password"]
         )
-        
-        Current.apiManager.doRequest(url: .login, httpMethod: .post, parameters: loginRequest, isUserDriven: true, onSuccess: { [weak self] (response: LoginRegisterResponse) in
-            guard let email = response.email else {
-                self?.handleLoginError()
-                return
-            }
-            Current.userManager.setNewUser(with: response)
-            Current.apiManager.doRequestWithNoResponse(url: .service, httpMethod: .post, parameters: APIConstants.makeServicePostRequest(email: email), isUserDriven: false) { [weak self] (success, error) in
-                // If there is an error, or the response is not successful, bail out
-                guard error == nil, success else {
+
+        let request = BinkNetworkRequest(endpoint: .login, method: .post, headers: nil, isUserDriven: true)
+        Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let email = response.email else {
                     self?.handleLoginError()
                     return
                 }
-                self?.continueButton.stopLoading()
-                self?.router.didLogin()
+                Current.userManager.setNewUser(with: response)
+
+                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
+                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                    guard success else {
+                        self?.handleLoginError()
+                        return
+                    }
+
+                    // Get latest user profile data in background and ignore any failure
+                    // TODO: Move to UserService in future ticket
+                    let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
+                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
+                        guard let response = try? result.get() else { return }
+                        Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                    }
+
+                    self?.continueButton.stopLoading()
+                    self?.router.didLogin()
+                }
+            case .failure:
+                self?.handleLoginError()
             }
-        }) { [weak self] _ in
-            self?.handleLoginError()
         }
     }
     
@@ -132,6 +146,7 @@ extension LoginViewController: FormDataSourceDelegate {
 
 extension LoginViewController: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
 }
 
 private extension Selector {

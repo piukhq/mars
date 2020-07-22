@@ -8,6 +8,12 @@
 import UIKit
 
 class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring {
+    struct Constants {
+        static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
+        static let stackViewSpacing: CGFloat = 12
+        static let postCellPadding: CGFloat = 20
+        static let cornerRadius: CGFloat = 12
+    }
 
     // MARK: - UI Lazy Variables
 
@@ -20,6 +26,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.alignment = .center
         stackView.delegate = self
         stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
+        stackView.margin = Constants.stackViewMargin
         return stackView
     }()
 
@@ -27,7 +34,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = true
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 12
+        imageView.layer.cornerRadius = Constants.cornerRadius
         imageView.contentMode = .scaleAspectFill
         imageView.layer.applyDefaultBinkShadow()
         return imageView
@@ -48,7 +55,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.axis = .horizontal
-        stackView.spacing = 12
+        stackView.spacing = Constants.stackViewSpacing
         return stackView
     }()
 
@@ -60,21 +67,6 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         return BinkModuleView()
     }()
 
-    private lazy var plrCollectionView: NestedCollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 12
-        let collectionView = NestedCollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        collectionView.isScrollEnabled = false
-        collectionView.delegate = self
-        collectionView.backgroundColor = .clear
-        collectionView.clipsToBounds = false
-        collectionView.register(PLRAccumulatorActiveCell.self, asNib: true)
-        collectionView.register(PLRStampsActiveCell.self, asNib: true)
-        return collectionView
-    }()
-
     private lazy var offerTilesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +74,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.axis = .vertical
-        stackView.spacing = 12
+        stackView.spacing = Constants.stackViewSpacing
         return stackView
     }()
 
@@ -127,6 +119,10 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureModules()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
     }
     
@@ -202,11 +198,32 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
 
         if viewModel.shouldShouldPLR {
-            stackScrollView.add(arrangedSubview: plrCollectionView)
-            stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: plrCollectionView)
-            NSLayoutConstraint.activate([
-                plrCollectionView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            ])
+            if let vouchers = viewModel.vouchers {
+                for voucher in vouchers {
+                    let state = viewModel.state(forVoucher: voucher)
+                    var cell = PLRBaseCollectionViewCell()
+                    switch (state, voucher.earnType) {
+                    case (.inProgress, .accumulator), (.issued, .accumulator):
+                        cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorActiveCell.self)
+                    case (.redeemed, .accumulator), (.expired, .accumulator):
+                        cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorInactiveCell.self)
+                    case (.inProgress, .stamps), (.issued, .stamps):
+                        cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsActiveCell.self)
+                    case (.redeemed, .stamps), (.expired, .stamps):
+                        cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
+                    default:
+                        break
+                    }
+                    
+                    let cellViewModel = PLRCellViewModel(voucher: voucher)
+                    cell.configureWithViewModel(cellViewModel) {
+                        self.viewModel.toVoucherDetailScreen(voucher: voucher)
+                    }
+                    stackScrollView.add(arrangedSubview: cell)
+                    cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
+                    stackScrollView.customPadding(Constants.postCellPadding, after: cell)
+                }
+            }
         }
 
         if viewModel.shouldShowOfferTiles {
@@ -242,8 +259,11 @@ private extension LoyaltyCardFullDetailsViewController {
             let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeader.frame.size)
             brandHeader.backgroundColor = UIColor(patternImage: placeholder)
         }
-        
-        brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
+        if viewModel.isMembershipCardAuthorised {
+            brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
+        } else {
+            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
+        }
     }
 
     func configureLayout() {
@@ -315,47 +335,6 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 
         let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
         navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
-    }
-}
-
-// MARK: - PLR Collection View
-
-extension LoyaltyCardFullDetailsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.activeVouchersCount
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
-            fatalError("Could not get voucher for index path")
-        }
-
-        if voucher.earnType == .accumulator {
-            let cell: PLRAccumulatorActiveCell = collectionView.dequeue(indexPath: indexPath)
-            let cellViewModel = PLRCellViewModel(voucher: voucher)
-            cell.configureWithViewModel(cellViewModel)
-            return cell
-        } else if voucher.earnType == .stamps {
-            let cell: PLRStampsActiveCell = collectionView.dequeue(indexPath: indexPath)
-            let cellViewModel = PLRCellViewModel(voucher: voucher)
-            cell.configureWithViewModel(cellViewModel)
-            return cell
-        } else {
-            fatalError("Could not get voucher earn type")
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else {
-            fatalError("Could not get voucher for index path")
-        }
-        let height = voucher.earnType == .accumulator ? LayoutHelper.PLRCollectionViewCell.accumulatorActiveCellHeight : LayoutHelper.PLRCollectionViewCell.stampsActiveCellHeight
-        return CGSize(width: collectionView.frame.width - (LayoutHelper.LoyaltyCardDetail.contentPadding * 2), height: height)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let voucher = viewModel.voucherForIndexPath(indexPath) else { return }
-        viewModel.toVoucherDetailScreen(voucher: voucher)
     }
 }
 

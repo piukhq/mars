@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CryptoSwift
 
 struct PaymentCardCreateRequest: Codable {
     struct Card: Codable {
@@ -48,7 +47,7 @@ struct PaymentCardCreateRequest: Codable {
     let account: Account
     
     /// This should only be used for creating test payment cards as it naturally bypasses the Spreedly path
-    init?(model: PaymentCardCreateModel, hash: String) {
+    init?(model: PaymentCardCreateModel, hash: String?) {
         guard let pan = model.fullPan?.replacingOccurrences(of: " ", with: ""),
             let year = model.year,
             let month = model.month
@@ -80,7 +79,7 @@ struct PaymentCardCreateRequest: Codable {
     }
 
     /// This should only be used for creating genuine payment cards using Spreedly path in a production environment
-    init?(spreedlyResponse: SpreedlyResponse, hash: String) {
+    init?(spreedlyResponse: SpreedlyResponse, hash: String?) {
         let paymentMethodResponse = spreedlyResponse.transaction?.paymentMethod
         card = Card(
             token: paymentMethodResponse?.token ?? "",
@@ -99,7 +98,8 @@ struct PaymentCardCreateRequest: Codable {
     
     private static func fakeFingerprint(pan: String, expiryYear: String, expiryMonth: String) -> String {
         // Based a hash of the pan, it's the key identifier of the card
-        return "\(pan)|\(expiryMonth)|\(expiryYear)".md5()
+        let stringToHash = "\(pan)|\(expiryMonth)|\(expiryYear)"
+        return stringToHash.md5
     }
     
     private static func fakeToken() -> String {

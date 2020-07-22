@@ -10,7 +10,26 @@ import UIKit
 
 enum FieldCommonName: String {
     case email
-    // TODO: Done as light-touch as possible for now. Add the rest of the cases later.
+    case userName = "user_name"
+    case password
+    case placeOfBirth = "place_of_birth"
+    case postcode
+    case title
+    case firstName = "first_name"
+    case lastName = "last_name"
+    case favoritePlace = "favorite_place"
+    case gender
+    case address1 = "address_1"
+    case address2 = "address_2"
+    case address3 = "address_3"
+    case townCity = "town_city"
+    case county
+    case country
+    case phoneNumber = "phone"
+    case dateOfBirth = "date_of_birth"
+    case memorableDate = "memorable_date"
+    case barcode
+    case cardNumber = "card_number"
 }
 
 struct FormPickerData: Equatable {
@@ -33,18 +52,22 @@ class FormField {
         case sensitive
         case choice(data: [FormPickerData])
         case checkbox
-        case cardNumber
+        case paymentCardNumber
         case confirmPassword
         case expiry(months: [FormPickerData], years: [FormPickerData])
+        case phone
+        case date
         
         func keyboardType() -> UIKeyboardType {
             switch self {
-            case .cardNumber:
-                return .numberPad
             case .text, .sensitive, .confirmPassword:
-                return .alphabet
+                return .default
+            case .paymentCardNumber:
+                return .numberPad
             case .email:
                 return .emailAddress
+            case .phone:
+                return .phonePad
             default:
                 return .default
             }
@@ -78,10 +101,14 @@ class FormField {
                 switch commonName {
                 case .email:
                     return .email
+                case .phoneNumber:
+                    return .phone
+                case .dateOfBirth, .memorableDate:
+                    return .date
                 default:
                     return .text
                 }
-            case .password:
+            case .sensitive:
                 return .sensitive
             case .checkbox:
                 return .checkbox
@@ -120,6 +147,7 @@ class FormField {
     let shouldChange: TextFieldShouldChange
     let manualValidate: ManualValidateBlock?
     let forcedValue: String?
+    let isReadOnly: Bool
     private(set) var value: String?
     
     typealias ValueUpdatedBlock = (FormField, String?) -> ()
@@ -128,7 +156,7 @@ class FormField {
     typealias FieldExitedBlock = (FormField) -> ()
     typealias ManualValidateBlock = (FormField) -> (Bool)
         
-    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil) {
+    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil, isReadOnly: Bool = false) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation
@@ -143,6 +171,7 @@ class FormField {
         self.manualValidate = manualValidate
         self.forcedValue = forcedValue
         self.value = forcedValue // Initialise the field's value with any forced value. If there isn't a forced value, the value will default to nil as normal.
+        self.isReadOnly = isReadOnly
     }
     
     func isValid() -> Bool {
@@ -154,7 +183,7 @@ class FormField {
             return validateBlock(self)
         }
         
-        if fieldType == .cardNumber {
+        if fieldType == .paymentCardNumber {
             return PaymentCardType.validate(fullPan: value)
         } else {
             guard let validation = validation else { return !value.isEmpty }

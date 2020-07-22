@@ -10,21 +10,21 @@ import UIKit
 
 class RectangleView: UIView {
 
-    var firstColorHex: String = "#D3D3D3" {
+    var firstColor: UIColor = .black {
         didSet {
             setNeedsDisplay()
         }
     }
 
-    var secondColorHex: String = "#888888"
+    var secondColor: UIColor = .greyFifty {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
 
     override func draw(_ rect: CGRect) {
         /// General Declarations
         let context = UIGraphicsGetCurrentContext()!
-
-        /// Color Declarations
-        let firstColor = UIColor(hexString: firstColorHex)
-        let secondColor = UIColor(hexString: secondColorHex)
 
         /// Rectangle Drawing
         context.saveGState()

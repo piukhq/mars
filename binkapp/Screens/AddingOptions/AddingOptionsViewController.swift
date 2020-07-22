@@ -7,15 +7,23 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
+import CardScan
 
 class AddingOptionsViewController: BinkTrackableViewController {
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var stackviewBottomConstraint: NSLayoutConstraint!
+    enum ScanType {
+        case loyalty
+        case payment
+    }
+    
+    @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var cancelButton: UIButton!
+    @IBOutlet private weak var stackviewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var stackviewTopConstraint: NSLayoutConstraint!
     
     let viewModel: AddingOptionsViewModel
-    // Not needed for MVP
-    //let loyaltyCardView = AddingOptionView()
+    let loyaltyCardView = AddingOptionView()
     let browseBrandsView = AddingOptionView()
     let addPaymentCardView = AddingOptionView()
     
@@ -54,19 +62,19 @@ class AddingOptionsViewController: BinkTrackableViewController {
     
     func configureUI() {
         self.title = ""
-        // Not needed for MVP
-        //loyaltyCardView.configure(addingOption: .loyalty)
+        let maximumHeight: CGFloat = 185
+        loyaltyCardView.configure(addingOption: .loyalty)
         browseBrandsView.configure(addingOption: .browse)
         addPaymentCardView.configure(addingOption: .payment)
 
         NSLayoutConstraint.activate([
-            browseBrandsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 150),
-            addPaymentCardView.heightAnchor.constraint(greaterThanOrEqualToConstant: 150)
+                      loyaltyCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
+                      browseBrandsView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
+                      addPaymentCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
         ])
         
         addGesturesToViews()
-        // Not needed for MVP
-        //stackView.addArrangedSubview(loyaltyCardView)
+        stackView.addArrangedSubview(loyaltyCardView)
         stackView.addArrangedSubview(browseBrandsView)
         stackView.addArrangedSubview(addPaymentCardView)
 
@@ -77,14 +85,13 @@ class AddingOptionsViewController: BinkTrackableViewController {
     }
     
     func addGesturesToViews() {
-        // Not needed for MVP
-        //loyaltyCardView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.toAddLoyaltyCard)))
+        loyaltyCardView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.toAddLoyaltyCard)))
         browseBrandsView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.toBrowseBrands)))
         addPaymentCardView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.toAddPaymentCard)))
     }
     
     @objc func toAddLoyaltyCard() {
-        displayNoScreenPopup()
+        proceedWithCameraAccess(scanType: .loyalty)
     }
     
     @objc func toBrowseBrands() {
@@ -92,12 +99,117 @@ class AddingOptionsViewController: BinkTrackableViewController {
     }
     
     @objc func toAddPaymentCard() {
-        viewModel.toAddPaymentCardScreen()
+        proceedWithCameraAccess(scanType: .payment)
     }
     
     func displayNoScreenPopup() {
-         let alert = UIAlertController(title: nil, message: "Screen was not implemented yet", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "Screen was not implemented yet", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func proceedWithCameraAccess(scanType: ScanType) {
+        let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
+        switch status {
+        case .authorized:
+            switch scanType {
+            case .loyalty:
+                viewModel.toLoyaltyScanner(delegate: self)
+            case .payment:
+                viewModel.toPaymentCardScanner(delegate: self)
+            }
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+                        guard let self = self else { return }
+                        switch scanType {
+                        case .loyalty:
+                            self.viewModel.toLoyaltyScanner(delegate: self)
+                        case .payment:
+                            self.viewModel.toPaymentCardScanner(delegate: self)
+                        }
+                    })
+                } else {
+                    self.presentEnterManuallyAlert(scanType: scanType)
+                }
+            }
+        case .denied:
+            self.presentEnterManuallyAlert(scanType: scanType)
+        default:
+            return
+        }
+    }
+    
+    private func presentEnterManuallyAlert(scanType: ScanType) {
+        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+        
+        let alert = UIAlertController(title: "camera_denied_title".localized, message: "camera_denied_body".localized, preferredStyle: .alert)
+        let allowAction = UIAlertAction(title: "camera_denied_allow_access".localized, style: .default, handler: { _ in
+            UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+        })
+        let manualAction = UIAlertAction(title: "camera_denied_manually_option".localized, style: .default) { [weak self] _ in
+            switch scanType {
+            case .loyalty:
+                self?.toBrowseBrands()
+            case .payment:
+                self?.viewModel.toAddPaymentCardScreen()
+            }
+        }
+        alert.addAction(manualAction)
+        alert.addAction(allowAction)
+        alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        viewModel.toAddAuth(membershipPlan: membershipPlan, barcode: barcode)
+        completion?()
+    }
+
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        viewModel.toBrowseBrandsScreen()
+        completion?()
+    }
+}
+
+extension AddingOptionsViewController: ScanDelegate {
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        // Record Bouncer usage
+        BinkAnalytics.track(.paymentScan(success: true))
+        let month = Int(creditCard.expiryMonth ?? "")
+        let year = Int(creditCard.expiryYear ?? "")
+        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
+        viewModel.toAddPaymentCardScreen(model: model)
+        navigationController?.removeViewController(scanViewController)
+    }
+    
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        viewModel.toAddPaymentCardScreen()
+        navigationController?.removeViewController(scanViewController)
+    }
+}
+
+class PaymentCardScannerStrings: ScanStringsDataSource {
+    func scanCard() -> String {
+        return " "
+    }
+    
+    func positionCard() -> String {
+        return "Position your payment card in the area above"
+    }
+    
+    func backButton() -> String {
+        return " "
+    }
+    
+    func skipButton() -> String {
+        "Enter manually"
     }
 }

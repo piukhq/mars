@@ -27,6 +27,7 @@ class TransactionsViewController: BinkTrackableViewController {
         description.translatesAutoresizingMaskIntoConstraints = false
         description.font = UIFont.bodyTextLarge
         description.text = viewModel.description
+        description.numberOfLines = 0
         return description
     }()
     

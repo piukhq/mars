@@ -27,6 +27,10 @@ class LoyaltyCardFullDetailsViewModel {
         }
     }
     
+    var isMembershipCardAuthorised: Bool {
+        return membershipCard.status?.status == .authorised
+    }
+    
     init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter, informationRowFactory: PaymentCardDetailInformationRowFactory) {
         self.router = router
         self.repository = repository
@@ -190,6 +194,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     // MARK: PLR
+
     
     var shouldShouldPLR: Bool {
         return membershipCard.membershipPlan?.isPLR ?? false && membershipCard.vouchers.count != 0
@@ -199,8 +204,8 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.activeVouchers?.count ?? 0
     }
     
-    func voucherForIndexPath(_ indexPath: IndexPath) -> CD_Voucher? {
-        return membershipCard.activeVouchers?[indexPath.row]
+    var vouchers: [CD_Voucher]? {
+        return membershipCard.activeVouchers
     }
     
     func toVoucherDetailScreen(voucher: CD_Voucher) {
@@ -208,6 +213,10 @@ class LoyaltyCardFullDetailsViewModel {
             fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
         }
         router.toVoucherDetailViewController(voucher: voucher, plan: plan)
+    }
+    
+    func state(forVoucher voucher: CD_Voucher) -> VoucherState? {
+        return VoucherState(rawValue: voucher.state ?? "")
     }
 }
 
@@ -229,7 +238,7 @@ extension LoyaltyCardFullDetailsViewModel {
     func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
             guard let self = self else { return }
-            guard Current.apiManager.networkIsReachable else {
+            guard Current.apiClient.networkIsReachable else {
                 self.router.presentNoConnectivityPopup()
                 noCompletion?()
                 return

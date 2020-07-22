@@ -8,11 +8,11 @@
 
 import UIKit
 import CoreData
-import Fabric
-import Crashlytics
 import Firebase
 import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
+import CardScan
+import Keys
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,15 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if DEBUG
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
+        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
         #endif
 
-        // Crashlytics
-        Fabric.with([Crashlytics.self])
-
-        // Analytics
-        #if RELEASE
+        // Firebase
         FirebaseApp.configure()
+        #if RELEASE
         BinkAnalytics.beginSessionTracking()
+        ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
         #endif
 
         // Facebook
@@ -41,6 +40,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Device storage
         StorageUtility.start()
 
+        // Initialise Zendesk
+        ZendeskService.start()
+        
+        // Get latest user profile data
+        // TODO: Move to UserService in future ticket
+        if Current.userManager.hasCurrentUser {
+            let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
+            Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
+                guard let response = try? result.get() else { return }
+                Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+            }
+        }
+
+        // Root view
         self.window = UIWindow(frame: UIScreen.main.bounds)
 
         if let mainWindow = self.window {
@@ -61,7 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             navAppearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
             UINavigationBar.appearance().standardAppearance = navAppearance
             UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
-            
             let tabAppearance = UITabBarAppearance()
             tabAppearance.configureWithTransparentBackground()
             tabAppearance.shadowImage = UIImage()

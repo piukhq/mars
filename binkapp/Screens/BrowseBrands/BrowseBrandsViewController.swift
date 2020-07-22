@@ -87,7 +87,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setScreenName(trackedScreen: .browseBrands)
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         
@@ -95,11 +94,17 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         navigationItem.leftBarButtonItem = backButton
         
         filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTapped))
-        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.black], for: .disabled)
+        filtersButton?.setTitleTextAttributes([.foregroundColor : UIColor.systemGray, .font : UIFont.linkTextButtonNormal], for: .highlighted)
+        filtersButton?.setTitleTextAttributes([.foregroundColor : UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
+
         navigationItem.rightBarButtonItem = filtersButton
-        navigationItem.rightBarButtonItem?.tintColor = .blue
         
         self.title = "browse_brands_title".localized
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setScreenName(trackedScreen: .browseBrands)
     }
     
     private func configureCollectionView() {
@@ -175,7 +180,8 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     private func hideFilters(with contentOffsetY: CGFloat) {
         filtersButton?.isEnabled = false
-        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.blue], for: .normal)
+        filtersButton?.setTitleTextAttributes([.foregroundColor : UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
+
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = 0.0
         }
@@ -187,6 +193,8 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         }) { [weak self] _ in
             self?.tableView.contentInset.top = 0.0
             self?.filtersButton?.isEnabled = true
+            self?.filtersButton?.setTitleTextAttributes([.foregroundColor : UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
+
         }
     }
     
@@ -195,7 +203,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
         filtersButton?.isEnabled = false
-        filtersButton?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.black], for: .normal)
+        filtersButton?.setTitleTextAttributes([.foregroundColor : UIColor.black, .font : UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: self.view.frame.width - (Constants.marginPadding * 2), height: self.filterViewHeight)
@@ -207,6 +215,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         }) { [weak self] _ in
                 self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
             self?.filtersButton?.isEnabled = true
+            self?.filtersButton?.setTitleTextAttributes([.foregroundColor : UIColor.black, .font : UIFont.linkTextButtonNormal], for: .normal)
         }
     }
     
@@ -235,16 +244,16 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         
         let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
         
-        if let brandName = membershipPlan.account?.companyName {
+        if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
             switch indexPath.section {
             case 0:
-                cell.configure(plan: membershipPlan, brandName: brandName)
+                cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
                 if indexPath.row == viewModel.getPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }
                 break
             case 1:
-                cell.configure(plan: membershipPlan, brandName: brandName)
+                cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
                 if indexPath.row == viewModel.getNonPllMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }

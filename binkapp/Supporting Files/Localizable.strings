@@ -42,7 +42,7 @@
 "add_payment_card_title" = "Add payment card";
 "add_payment_error_title" = "Error Adding Card";
 "add_payment_error_message" = "There was a problem adding your payment card. Please try again.";
-"scan_and_link_description" = "Fill in your card details and link your payment card";
+"scan_and_link_description" = "Scan and link your payment card";
 "card_linked_status" = "Linked";
 "card_link_now_status" = "Link now";
 "card_linking_status" = "Linking";
@@ -174,7 +174,7 @@
 "link_module_to_number_of_payment_card_message" = "To %d of %d card";
 
 "terms_and_conditions_title" = "Terms and conditions";
-"terms_and_conditions_description" = "I authorise MasterCard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction for MasterCard, Visa and American Express to share such transaction details with Loyalty Angels Limited to enable my card-linked offer(s) and target offers that may be of interest to me. For information about Loyalty Angels Limited privacy practices, please see our Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.";
+"terms_and_conditions_description" = "I authorise Mastercard, Visa and American Express to monitor activity on my payment card to determine when I have made a qualifying transaction, and for Mastercard, Visa and American Express to share such transaction details with Bink to enable my card-linked offer(s) and target offers that may be of interest to me. \n\nFor information about Bink’s privacy practices please see Bink’s Privacy Policy. You may opt-out of transaction monitoring on the payment card(s) you entered at any time by deleting your payment card from your Bink wallet.";
 "privacy_policy" = "Privacy Policy";
 
 "native_join_unavailable_title" = "Sign up not supported";
@@ -213,6 +213,9 @@
 "settings_section_legal_title" = "Legal";
 "settings_row_privacypolicy_title" = "Privacy policy";
 "settings_row_termsandconditions_title" = "Terms and conditions";
+
+"settings_section_debug_title" = "Debug";
+"settings_section_debug_subtitle" = "Only accessible on debug builds";
 
 // MARK: - Support mail
 
@@ -341,3 +344,31 @@
 // MARK: - Wallet prompts
 "wallet_prompt_loyalty" = "Link this card to your payment cards to automatically collect rewards.";
 "wallet_prompt_payment" = "Collect rewards automatically for select loyalty cards by linking them to your payment cards.";
+
+// MARK: - Camera access
+"camera_denied_title" = "Please allow camera access";
+"camera_denied_body" = "To scan your cards, you’ll need to allow Bink access to your device’s camera.";
+"camera_denied_manually_option" = "Enter Manually";
+"camera_denied_allow_access" = "Allow Access";
+
+"camera_permission_title" = "Bink needs camera access";
+"camera_permission_body" = "We need your camera to scan loyalty cards. It will not be used for other purposes.";
+"camera_permission_deny_option" = "Don't Allow";
+"camera_permission_allow_option" = "OK";
+
+// MARK: - WebView
+"loading_error" = "There was a problem loading the page, please try again later.";
+
+// MARK: - Loyalty Scanner
+"loyalty_scanner_explainer_text" = "Hold card here. It will scan automatically.";
+"loyalty_scanner_widget_title_enter_manually_text" = "Enter manually";
+"loyalty_scanner_widget_title_unrecognized_barcode_text" = "Unrecognised barcode";
+"loyalty_scanner_widget_explainer_enter_manually_text" = "You can also type in the card details yourself.";
+"loyalty_scanner_widget_explainer_unrecognized_barcode_text" = "Please try adding the card manually.";
+
+// MARK: - Zendesk
+
+"zendesk_identity_prompt_message" = "Please enter your contact details";
+"zendesk_identity_prompt_first_name" = "First name";
+"zendesk_identity_prompt_last_name" = "Last name";
+

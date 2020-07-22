@@ -24,9 +24,9 @@ class TransactionView: CustomView {
         let timestamp = transaction.timestamp?.doubleValue ?? 0.0
         let timestampDate = Date(timeIntervalSince1970: timestamp)
         if let transactionDescription = transaction.transactionDescription {
-            descriptionLabel.text = timestampDate.getFormattedString(format: DateFormat.dayMonthYear.rawValue) + ", " + transactionDescription
+            descriptionLabel.text = timestampDate.getFormattedString(format: .dayMonthYear) + ", " + transactionDescription
         } else {
-            descriptionLabel.text = timestampDate.getFormattedString(format: DateFormat.dayMonthYear.rawValue)
+            descriptionLabel.text = timestampDate.getFormattedString(format: .dayMonthYear)
         }
       
         guard let prefix = transaction.formattedAmounts?.first?.prefix else {

@@ -7,7 +7,14 @@
 
 import UIKit
 
-class MainTabBarViewController: UITabBarController, BarBlurring {    
+extension LayoutHelper {
+    struct settingsButton {
+        static let widthRatio: CGFloat = 0.13
+        static let height: CGFloat = 24
+    }
+}
+
+class MainTabBarViewController: UITabBarController, BarBlurring {
     let viewModel: MainTabBarViewModel
     var selectedTabBarOption = Buttons.loyaltyItem.rawValue
     var items = [UITabBarItem]()
@@ -31,7 +38,6 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
         setupNotifications()
         
         self.title = ""
-        setNavigationBar()
         populateTabBar()
     }
 
@@ -41,18 +47,6 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
         super.viewDidLayoutSubviews()
         
         prepareBarWithBlur(bar: tabBar, blurBackground: blurBackground)
-    }
-    
-    func setNavigationBar() {
-        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .done, target: self, action: #selector(settingsButtonTapped))
-        navigationItem.rightBarButtonItem = settingsButton
-
-        navigationItem.setHidesBackButton(true, animated: true)
-        self.title = ""
-    }
-    
-    @objc func settingsButtonTapped() {
-        viewModel.toSettings()
     }
     
     func populateTabBar() {

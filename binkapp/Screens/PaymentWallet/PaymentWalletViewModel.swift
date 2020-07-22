@@ -43,7 +43,7 @@ class PaymentWalletViewModel: WalletViewModel {
 
     func showDeleteConfirmationAlert(card: CD_PaymentCard, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
         router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
-            guard Current.apiManager.networkIsReachable else {
+            guard Current.apiClient.networkIsReachable else {
                 self?.router.presentNoConnectivityPopup()
                 noCompletion()
                 return
@@ -54,5 +54,9 @@ class PaymentWalletViewModel: WalletViewModel {
                 noCompletion()
             }
         })
+    }
+    
+    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
+        router.toSettings(rowsWithActionRequired: rowsWithActionRequired)
     }
 }

@@ -13,17 +13,20 @@ import SwiftyRSA
 final class SecureUtility {
 
     static func getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String? {
+        // If we are pinning to API v1.1, return nil
+        if Current.apiClient.apiVersion == .v1_1 { return nil }
+        
         guard let pan = paymentCard.fullPan?.replacingOccurrences(of: " ", with: "") else { return nil }
         guard let month = paymentCard.month else { return nil }
         guard let year = paymentCard.year else { return nil }
         guard let decodedSecret = decodedSecret() else { return nil }
-        let hash = "\(pan)\(month)\(year)\(decodedSecret)".sha512()
-        return hash
+        let stringToHash = "\(pan)\(month)\(year)\(decodedSecret)"
+        return stringToHash.sha512
     }
 
     static func encryptedSensitiveFieldValue(_ value: String?) -> String? {
-        /// If we are pinning to API v1.1, just return the value without encryption
-        if Current.apiManager.apiVersion == .v1_1 { return value }
+        // If we are pinning to API v1.1, just return the value without encryption
+        if Current.apiClient.apiVersion == .v1_1 { return value }
 
         guard let value = value else { return nil }
         guard let publicKeyName = publicKeyName() else { return nil }
@@ -41,23 +44,23 @@ final class SecureUtility {
     /// Get the correct secret for the environment
     /// Return a base 64 decoded copy of the secret
     private static func decodedSecret() -> String? {
-        if APIConstants.baseURLString == "https://api.dev.gb.bink.com" {
+        if APIConstants.baseURLString == EnvironmentType.dev.rawValue {
             return BinkappKeys().devPaymentCardHashingSecret1.base64Decoded()
-        } else if APIConstants.baseURLString == "https://api.staging.gb.bink.com" {
+        } else if APIConstants.baseURLString == EnvironmentType.staging.rawValue {
             return BinkappKeys().stagingPaymentCardHashingSecret1.base64Decoded()
-        } else if APIConstants.baseURLString == "https://api.gb.bink.com" {
+        } else if APIConstants.baseURLString == EnvironmentType.production.rawValue || APIConstants.baseURLString == EnvironmentType.preprod.rawValue {
             return BinkappKeys().prodPaymentCardHashingSecret1.base64Decoded()
         } else {
-            return nil
+            fatalError("We don't store a secret for the current environment.")
         }
     }
 
     private static func publicKeyName() -> String? {
-        if APIConstants.baseURLString == "https://api.dev.gb.bink.com" {
+        if APIConstants.baseURLString == EnvironmentType.dev.rawValue {
             return "devPublicKey"
-        } else if APIConstants.baseURLString == "https://api.staging.gb.bink.com" {
+        } else if APIConstants.baseURLString == EnvironmentType.staging.rawValue {
             return "stagingPublicKey"
-        } else if APIConstants.baseURLString == "https://api.gb.bink.com" {
+        } else if APIConstants.baseURLString == EnvironmentType.production.rawValue || APIConstants.baseURLString == EnvironmentType.preprod.rawValue {
             return "prodPublicKey"
         } else {
             return nil

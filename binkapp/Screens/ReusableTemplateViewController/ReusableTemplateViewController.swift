@@ -41,11 +41,6 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
         floatingButtonsContainer.delegate = self
         textView.delegate = self
         configureUI()
-
-        Analytics.setScreenName("\(String(describing: Self.self)):\(viewModel.title.capitalized.replacingOccurrences(of: " ", with: ""))", screenClass: nil)
-
-        /// Disabling in favour of Firebase's out-of-the-box screen name tracking
-//        screenName = "\(String(describing: Self.self)):\(viewModel.title.capitalized.replacingOccurrences(of: " ", with: ""))"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,7 +66,7 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
         textView.attributedText = viewModel.text
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
         
-        floatingButtonsContainer.configure(primaryButtonTitle: primary, secondaryButtonTitle: secondary, floating: floatingButtons)
+        floatingButtonsContainer.configure(primaryButtonTitle: primary, secondaryButtonTitle: secondary, hasGradient: floatingButtons)
 
         floatingButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
         textView.translatesAutoresizingMaskIntoConstraints = false

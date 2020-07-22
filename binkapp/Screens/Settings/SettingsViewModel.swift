@@ -12,9 +12,9 @@ class SettingsViewModel {
     private let factory: SettingsFactory
     let router: MainScreenRouter
     
-    init(router: MainScreenRouter) {
+    init(router: MainScreenRouter, rowsWithActionRequired: [SettingsRow.RowType]?) {
         self.router = router
-        factory = SettingsFactory(router: router)
+        factory = SettingsFactory(router: router, rowsWithActionRequired: rowsWithActionRequired)
     }
     
     var sections: [SettingsSection] {
@@ -48,5 +48,9 @@ class SettingsViewModel {
     func pushReusableModal(configurationModel: ReusableModalConfiguration, navController: UINavigationController?) {
         
         router.pushReusableModalTemplateVC(configurationModel: configurationModel, navigationController: navController)
+    }
+    
+    func openWebView(url: String) {
+        router.openWebView(withUrlString: url)
     }
 }

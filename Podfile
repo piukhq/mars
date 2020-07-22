@@ -7,23 +7,21 @@ def common_pods
 
 pod 'Firebase'
 pod 'Firebase/Analytics'
+pod 'Firebase/Crashlytics'
 pod 'Alamofire', '~> 5.0.0-rc.3'
-pod 'SwipeCellKit'
-pod 'Fabric'
-pod 'Crashlytics'
 pod 'AlamofireImage', '~> 4.0.0-beta.6'
-pod 'iOSDropDown'
 pod 'M13Checkbox'
 pod 'AlamofireNetworkActivityLogger'
 pod 'DeepDiff'
-pod 'CryptoSwift'
 pod 'KeychainAccess', '~> 4.1'
 pod 'FacebookSDK', '~> 6.0.0'
 pod 'FBSDKLoginKit', '~> 6.0.0'
 pod 'Disk'
 pod 'DTTJailbreakDetection'
 pod 'JWTDecode', '~> 2.4'
-pod 'SwiftyRSA'
+pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
+pod 'ZendeskSupportSDK'
+pod 'CardScan'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
@@ -37,7 +35,15 @@ plugin 'cocoapods-keys', {
     "spreedlyEnvironmentKey",
     "devPaymentCardHashingSecret1",
     "stagingPaymentCardHashingSecret1",
-    "prodPaymentCardHashingSecret1"
+    "prodPaymentCardHashingSecret1",
+    "zendeskSandboxAppId",
+    "zendeskSandboxClientId",
+    "zendeskSandboxUrl",
+    "zendeskProductionAppId",
+    "zendeskProductionClientId",
+    "zendeskProductionUrl",
+    "bouncerPaymentCardScanningKeyDev",
+    "bouncerPaymentCardScanningKeyProduction"
   ]
 }
 
@@ -62,4 +68,12 @@ target 'binkapp' do
     common_pods
   end
 
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['DEBUG_INFORMATION_FORMAT'] = 'dwarf'
+    end
+  end
 end

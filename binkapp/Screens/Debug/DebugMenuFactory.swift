@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -39,11 +39,18 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "Environment Base URL", subtitle: APIConstants.baseURLString, action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .endpoint)
-        }, cellType: .titleSubtitle)
+            }, cellType: .titleSubtitle)
     }
     
     private func makeApiVersionRow() -> DebugMenuRow {
         return DebugMenuRow(cellType: .segmentedControl)
+    }
+
+    private func makeSecondaryColorRow() -> DebugMenuRow {
+        return DebugMenuRow(title: "Loyalty card secondary colour swatches", subtitle: nil, action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .secondaryColor)
+        }, cellType: .titleSubtitle)
     }
     
     func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {
@@ -56,8 +63,12 @@ class DebugMenuFactory {
             APIConstants.changeEnvironment(environment: .staging)
             NotificationCenter.default.post(name: .shouldLogout, object: nil)
         }))
-        alert.addAction(UIAlertAction(title: "Daedalus", style: .default, handler: { _ in
-            APIConstants.changeEnvironment(environment: .daedalus)
+        alert.addAction(UIAlertAction(title: "Pre-production", style: .default, handler: { _ in
+            APIConstants.changeEnvironment(environment: .preprod)
+            NotificationCenter.default.post(name: .shouldLogout, object: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Production", style: .default, handler: { _ in
+            APIConstants.changeEnvironment(environment: .production)
             NotificationCenter.default.post(name: .shouldLogout, object: nil)
         }))
         alert.addAction(UIAlertAction(title: "Custom", style: .destructive, handler: { _ in

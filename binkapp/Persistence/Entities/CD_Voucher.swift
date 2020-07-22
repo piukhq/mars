@@ -7,7 +7,7 @@ open class CD_Voucher: _CD_Voucher {
         case .accumulator:
             return "\(earn?.prefix ?? "")\(earn?.value?.twoDecimalPointString() ?? "")/\(earn?.prefix ?? "")\(earn?.targetValue?.twoDecimalPointString() ?? "") \(earn?.suffix ?? "")"
         case .stamps:
-            return "\(earn?.value ?? 0)/\(earn?.targetValue ?? 0) \(earn?.suffix?.capitalized ?? "")"
+            return "\(earn?.value ?? 0)/\(earn?.targetValue ?? 0) \(earn?.suffix ?? "")"
         default:
             return nil
         }

@@ -10,6 +10,7 @@ import UIKit
 
 protocol FormCollectionViewCellDelegate: class {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
+    func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
 }
 
 class FormCollectionViewCell: UICollectionViewCell {
@@ -26,16 +27,7 @@ class FormCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
     
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.textFieldLabel
-        label.heightAnchor.constraint(equalToConstant: Constants.titleLabelHeight).isActive = true
-        label.setContentCompressionResistancePriority(.required, for: .vertical)
-        return label
-    }()
-    
-    private lazy var textField: UITextField = {
+    lazy var textField: UITextField = {
         let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
         field.font = UIFont.textFieldInput
@@ -46,6 +38,15 @@ class FormCollectionViewCell: UICollectionViewCell {
         field.inputAccessoryView = inputAccessory
         field.clearButtonMode = .whileEditing
         return field
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.textFieldLabel
+        label.heightAnchor.constraint(equalToConstant: Constants.titleLabelHeight).isActive = true
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        return label
     }()
     
     private lazy var inputAccessory: UIToolbar = {
@@ -100,6 +101,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     weak private var formField: FormField?
+    private var pickerSelectedChoice: String?
     var isValidationLabelHidden = true
     
     // MARK: - Initialisation
@@ -134,8 +136,8 @@ class FormCollectionViewCell: UICollectionViewCell {
     // MARK: - Public Methods
     
     func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
-        let isEnabled = field.forcedValue == nil
-
+        let isEnabled = !field.isReadOnly
+        
         titleLabel.text = field.title
         titleLabel.textColor = isEnabled ? .black : .disabledTextGrey
         textField.textColor = isEnabled ? .black : .disabledTextGrey
@@ -152,6 +154,15 @@ class FormCollectionViewCell: UICollectionViewCell {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
         }  else if case let .choice(data) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [data], delegate: self)
+            pickerSelectedChoice = data.first?.title
+            formField?.updateValue(pickerSelectedChoice)
+        } else if case .date = field.fieldType {
+            let datePicker = UIDatePicker()
+            datePicker.datePickerMode = .date
+            datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+            textField.inputView = datePicker
+            pickerSelectedChoice = datePicker.date.getFormattedString(format: .dayShortMonthYearWithSlash)
+            formField?.updateValue(pickerSelectedChoice)
         } else {
             textField.inputView = nil
         }
@@ -170,8 +181,19 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func accessoryDoneTouchUpInside() {
+        if let multipleChoiceInput = textField.inputView as? FormMultipleChoiceInput {
+            multipleChoiceInputDidUpdate(newValue: multipleChoiceInput.fullContentString, backingData: multipleChoiceInput.backingData)
+        }
+        
         textField.resignFirstResponder()
         textFieldDidEndEditing(textField)
+    }
+    
+    @objc private func datePickerValueChanged(_ sender: UIDatePicker) {
+        let selectedDate = sender.date.getFormattedString(format: .dayShortMonthYearWithSlash)
+        pickerSelectedChoice = selectedDate
+        formField?.updateValue(pickerSelectedChoice)
+        textField.text = selectedDate
     }
 }
 
@@ -189,7 +211,16 @@ extension FormCollectionViewCell: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField.inputView?.isKind(of: FormMultipleChoiceInput.self) ?? false || textField.inputView?.isKind(of: UIDatePicker.self) ?? false {
+            textField.text = pickerSelectedChoice
+        }
+        
         self.delegate?.formCollectionViewCell(self, didSelectField: textField)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.delegate?.formCollectionViewCell(self, shouldResignTextField: textField)
+        return true
     }
 }
 
@@ -199,6 +230,7 @@ extension FormCollectionViewCell: FormMultipleChoiceInputDelegate {
     }
     
     func multipleChoiceInputDidUpdate(newValue: String?, backingData: [Int]?) {
+        pickerSelectedChoice = newValue
         formField?.updateValue(newValue)
         textField.text = newValue
         if let options = backingData { formField?.pickerDidSelect(options) }

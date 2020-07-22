@@ -28,6 +28,12 @@ class AddOrJoinViewModel {
     }
     
     func toAuthAndAddScreen() {
+        // PLR
+        if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
+            toPaymentCardNeededScreen()
+            return
+        }
+        
         guard let existingCard = membershipCard else {
             router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
             return
@@ -75,7 +81,7 @@ class AddOrJoinViewModel {
         
         configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
             if let url = URL(string: planURL) {
-                UIApplication.shared.open(url)
+                self.router.openWebView(withUrlString: url.absoluteString)
             }
         }, showCloseButton: true)
         

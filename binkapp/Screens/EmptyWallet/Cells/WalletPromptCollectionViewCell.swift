@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
     @IBOutlet private weak var brandIconImageView: UIImageView!
