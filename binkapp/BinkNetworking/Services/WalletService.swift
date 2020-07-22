@@ -19,7 +19,7 @@ enum WalletServiceError: BinkError {
     case failedToGetMembershipCards
     case failedToGetPaymentCards
     case failedToGetLoyaltyWallet
-    case customError(String?)
+    case customError(String)
 
     var domain: BinkErrorDomain {
         return .walletService

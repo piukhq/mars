@@ -39,6 +39,9 @@ platform :ios do
     match(type: "adhoc", app_identifier: "com.bink.wallet", readonly: true)
     match(type: "development", app_identifier: "com.bink.wallet.alpha", readonly: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta", readonly: true)
+    match(type: "appstore", app_identifier: "com.bink.mybank.poc", readonly: true)
+    match(type: "adhoc", app_identifier: "com.bink.mybank.poc", readonly: true)
+    match(type: "development", app_identifier: "com.bink.mybank.poc", readonly: true)
 
   end
 
@@ -70,6 +73,9 @@ platform :ios do
     match(type: "appstore", app_identifier: "com.bink.wallet", readonly: false, force_for_new_devices: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet", readonly: false, force_for_new_devices: true)
     match(type: "adhoc", app_identifier: "com.bink.wallet.beta", readonly: false, force_for_new_devices: true)
+    match(type: "adhoc", app_identifier: "com.bink.mybank.poc", readonly: false, force_for_new_devices: true)
+    match(type: "appstore", app_identifier: "com.bink.mybank.poc", readonly: false, force_for_new_devices: true)
+    match(type: "development", app_identifier: "com.bink.mybank.poc", readonly: false, force_for_new_devices: true)
 
   end
 

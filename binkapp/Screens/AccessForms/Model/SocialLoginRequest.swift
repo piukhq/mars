@@ -1,5 +1,5 @@
 //
-//  FacebookRequest.swift
+//  SocialLoginRequest.swift
 //  binkapp
 //
 //  Created by Max Woodhams on 03/11/2019.
@@ -17,5 +17,13 @@ struct FacebookRequest: Codable {
         case accessToken = "access_token"
         case email
         case userId = "user_id"
+    }
+}
+
+struct SignInWithAppleRequest: Codable {
+    let authorizationCode: String
+    
+    enum CodingKeys: String, CodingKey {
+        case authorizationCode = "authorization_code"
     }
 }

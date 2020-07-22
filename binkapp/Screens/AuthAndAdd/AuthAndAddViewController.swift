@@ -51,6 +51,11 @@ class AuthAndAddViewController: BaseFormViewController {
         configureLayout()
         stackScrollView.insert(arrangedSubview: brandHeaderView, atIndex: 0, customSpacing: Constants.cardPadding)
         collectionView.delegate = self
+        
+        // If we enter this view controller from the scanner, we should safely remove the barcode scanner from the stack
+        if viewModel.shouldRemoveScannerFromStack {
+            navigationController?.removeViewControllerBehind(self, ifViewControllerBehindIsOfType: BarcodeScannerViewController.self)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

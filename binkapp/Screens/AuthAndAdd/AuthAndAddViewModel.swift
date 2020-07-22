@@ -106,6 +106,10 @@ class AuthAndAddViewModel {
         }
     }
     
+    var shouldRemoveScannerFromStack: Bool {
+        return formPurpose == .addFromScanner
+    }
+    
     private func getDescriptionForOtherLogin() -> String {
         guard let planNameCard = membershipPlan.account?.planNameCard else { return "" }
         
