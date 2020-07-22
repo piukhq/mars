@@ -211,7 +211,6 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     private func fetchMembershipCard(forId cardId: String, completion: @escaping (CD_MembershipCard?) -> Void) {
-        // TODO: this could be in core data repository as a generic function
         let predicate = NSPredicate(format: "id == \(cardId)")
         fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, predicate: predicate) { objects in
             completion(objects?.first)
