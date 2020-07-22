@@ -34,8 +34,13 @@ enum Configuration {
             return nil
         }
 
-        var message: String? {
-            return nil
+        var message: String {
+            switch self {
+            case .missingKey:
+                return "Missing key"
+            case .invalidValue:
+                return "Invalid value"
+            }
         }
     }
     
