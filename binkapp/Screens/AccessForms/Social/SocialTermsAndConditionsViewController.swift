@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum SocialLoginRequestType {
+    case facebook(FacebookRequest)
+    case apple(SignInWithAppleRequest)
+}
+
 class SocialTermsAndConditionsViewController: BaseFormViewController {
 
     private lazy var continueButton: BinkGradientButton = {
@@ -46,11 +51,11 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     //    }()
     
     private let router: MainScreenRouter?
-    private var request: FacebookRequest? // Variable so we can nil this object
-
-    init(router: MainScreenRouter?, request: FacebookRequest) {
+    private let requestType: SocialLoginRequestType
+    
+    init(router: MainScreenRouter?, requestType: SocialLoginRequestType) {
         self.router = router
-        self.request = request
+        self.requestType = requestType
         super.init(title: "social_tandcs_title".localized, description: "social_tandcs_subtitle".localized, dataSource: FormDataSource(accessForm: .socialTermsAndConditions))
         dataSource.delegate = self
     }
@@ -89,9 +94,19 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     @objc func continueButtonTapped() {
         let preferenceCheckboxes = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
-        
         continueButton.startLoading()
-
+        
+        switch requestType {
+        case .facebook(let request):
+            loginWithFacebook(request: request, preferenceCheckboxes: preferenceCheckboxes)
+        case .apple(let request):
+            loginWithApple(request: request, preferenceCheckboxes: preferenceCheckboxes)
+        }        
+    }
+    
+    // FIXME: To avoid the code duplicate below, in future we need to build the Facebook and Apple request objects from a common object type
+    
+    private func loginWithFacebook(request: FacebookRequest, preferenceCheckboxes: [CheckboxView]) {
         let networtRequest = BinkNetworkRequest(endpoint: .facebook, method: .post, headers: nil, isUserDriven: true)
         Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { [weak self] result in
             switch result {
@@ -101,14 +116,14 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                     return
                 }
                 Current.userManager.setNewUser(with: response)
-
+                
                 let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
                 Current.apiClient.performRequestWithNoResponse(request, body: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
                     guard success else {
                         self?.handleAuthError()
                         return
                     }
-
+                    
                     // Get latest user profile data in background and ignore any failure
                     // TODO: Move to UserService in future ticket
                     let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
@@ -116,10 +131,45 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                         guard let response = try? result.get() else { return }
                         Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
                     }
-
+                    
                     self?.router?.didLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                    self?.request = nil
+                    self?.continueButton.stopLoading()
+                }
+            case .failure:
+                self?.handleAuthError()
+            }
+        }
+    }
+    
+    private func loginWithApple(request: SignInWithAppleRequest, preferenceCheckboxes: [CheckboxView]) {
+        let networtRequest = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
+        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard let email = response.email else {
+                    self?.handleAuthError()
+                    return
+                }
+                Current.userManager.setNewUser(with: response)
+                
+                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
+                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                    guard success else {
+                        self?.handleAuthError()
+                        return
+                    }
+                    
+                    // Get latest user profile data in background and ignore any failure
+                    // TODO: Move to UserService in future ticket
+                    let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
+                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
+                        guard let response = try? result.get() else { return }
+                        Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                    }
+                    
+                    self?.router?.didLogin()
+                    self?.updatePreferences(checkboxes: preferenceCheckboxes)
                     self?.continueButton.stopLoading()
                 }
             case .failure:

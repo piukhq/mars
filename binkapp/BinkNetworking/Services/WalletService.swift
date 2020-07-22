@@ -19,7 +19,7 @@ enum WalletServiceError: BinkError {
     case failedToGetMembershipCards
     case failedToGetPaymentCards
     case failedToGetLoyaltyWallet
-    case customError(String?)
+    case customError(String)
 
     var domain: BinkErrorDomain {
         return .walletService
@@ -29,8 +29,19 @@ enum WalletServiceError: BinkError {
         return nil
     }
 
-    var message: String? {
-        return nil
+    var message: String {
+        switch self {
+        case .failedToGetMembershipPlans:
+            return "Failed to get membership plans"
+        case .failedToGetMembershipCards:
+            return "Failed to get membership cards"
+        case .failedToGetPaymentCards:
+            return "Failed to get payment cards"
+        case .failedToGetLoyaltyWallet:
+            return "Failed to get loyalty wallet"
+        case .customError(let message):
+            return message
+        }
     }
 }
 
