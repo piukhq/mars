@@ -26,7 +26,18 @@ enum WalletServiceError: BinkError {
     }
 
     var message: String {
-        return ""
+        switch self {
+        case .failedToGetMembershipPlans:
+            return "Failed to get membership plans"
+        case .failedToGetMembershipCards:
+            return "Failed to get membership cards"
+        case .failedToGetPaymentCards:
+            return "Failed to get payment cards"
+        case .failedToGetLoyaltyWallet:
+            return "Failed to get loyalty wallet"
+        case .customError(let message):
+            return message
+        }
     }
 }
 

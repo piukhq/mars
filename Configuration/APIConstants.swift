@@ -31,7 +31,12 @@ enum Configuration {
         }
 
         var message: String {
-            return ""
+            switch self {
+            case .missingKey:
+                return "Missing key"
+            case .invalidValue:
+                return "Invalid value"
+            }
         }
     }
     

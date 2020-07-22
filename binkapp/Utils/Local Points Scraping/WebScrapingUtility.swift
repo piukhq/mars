@@ -36,7 +36,26 @@ enum WebScrapingUtilityError: BinkError {
     }
     
     var message: String {
-        return ""
+        switch self {
+        case .agentProvidedInvalidUrl:
+            return "Agent provided invalid URL"
+        case .loginScriptFileNotFound:
+            return "Login script file not found"
+        case .scapingScriptFileNotFound:
+            return "Scraping script file not found"
+        case .agentProvidedInvalidLoginScript:
+            return "Agent provided invalid login script"
+        case .agentProvidedInvalidScrapeScript:
+            return "Agent provided invalid scrape script"
+        case .failedToExecuteLoginScript:
+            return "Failed to execute login script"
+        case .failedToExecuteScrapingScript:
+            return "Failed to execute scraping script"
+        case .failedToCastReturnValue:
+            return "Failed to cast return value"
+        case .loginFailed:
+            return "Login failed"
+        }
     }
 }
 

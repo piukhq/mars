@@ -29,7 +29,12 @@ class PointsScrapingManager {
         }
         
         var message: String {
-            return "An error occurred when retrieving your points balance."
+            switch self {
+            case .failedToStoreCredentials:
+                return "Failed to store credentials"
+            case .failedToRetrieveCredentials:
+                return "Failed to retrieve credentials"
+            }
         }
     }
     
