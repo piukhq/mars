@@ -322,7 +322,37 @@ extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryD
 
 extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
     func binkModuleViewWasTapped(moduleView: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
-        viewModel.goToScreenForAction(action: action)
+        if action == .transactions {
+            // show card transactions
+            let request = BinkNetworkRequest(endpoint: .membershipCardTransactions(cardId: viewModel.membershipCard.id), method: .get, queryParameters: nil, headers: nil, isUserDriven: false)
+            Current.apiClient.performRequest(request, expecting: [MembershipTransaction].self) { [weak self] result in
+                switch result {
+                case .success(let transactions):
+                    guard let self = self else { return }
+                    
+                    // As a POC for Barclays only, remove the transactions returned in the membership card response
+                    // Then map the transactions from the membership transactions response to the card instead
+                    Current.database.performTask(with: self.viewModel.membershipCard) { (context, safeObject) in
+                        guard let safeObject = safeObject else { return }
+                        safeObject.removeTransactions(safeObject.transactions)
+                        var index = 0
+                        for transaction in transactions {
+                            let cdTransaction = transaction.mapToCoreData(context, .update, overrideID: MembershipTransaction.overrideId(forParentId: safeObject.id) + String(index))
+                            index += 1
+                            safeObject.addTransactionsObject(cdTransaction)
+                            cdTransaction.card = safeObject
+                        }
+                        
+                        try? context.save()
+                        self.viewModel.goToScreenForAction(action: action)
+                    }
+                case .failure:
+                    print("Failed")
+                }
+            }
+        } else {
+            viewModel.goToScreenForAction(action: action)
+        }
     }
 }
 

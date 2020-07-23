@@ -144,7 +144,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     private func loginWithApple(request: SignInWithAppleRequest, preferenceCheckboxes: [CheckboxView]) {
         let networtRequest = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] result in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { [weak self] result in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -154,7 +154,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                 Current.userManager.setNewUser(with: response)
                 
                 let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                Current.apiClient.performRequestWithNoResponse(request, body: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
                     guard success else {
                         self?.handleAuthError()
                         return

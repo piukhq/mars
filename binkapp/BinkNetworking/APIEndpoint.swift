@@ -24,6 +24,7 @@ enum APIEndpoint: Equatable {
     case membershipPlans
     case membershipCards
     case membershipCard(cardId: String)
+    case membershipCardTransactions(cardId: String)
     case paymentCards
     case paymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
@@ -139,6 +140,8 @@ enum APIEndpoint: Equatable {
             return "/ubiquity/membership_cards"
         case .membershipCard(let cardId):
             return "/ubiquity/membership_card/\(cardId)"
+        case .membershipCardTransactions(let cardId):
+            return "/ubiquity/membership_card/\(cardId)/membership_transactions"
         case .paymentCards:
             return "/ubiquity/payment_cards"
         case .paymentCard(let cardId):
