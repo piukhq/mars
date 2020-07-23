@@ -82,6 +82,7 @@ final class APIClient {
 
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10.0
+        configuration.headers.add(.userAgent("MyBank Test App/\(Bundle.bundleVersion ?? "")/\(UIDevice.current.systemVersion)"))
         session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
     }
 }
@@ -227,7 +228,7 @@ private extension APIClient {
             } else {
                 let view = StatusCodeAlertView(statusCode: statusCode, window: window)
                 window.addSubview(view)
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     view.show()
                 }
             }
