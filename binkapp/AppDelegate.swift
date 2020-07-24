@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Firebase
+import FirebaseCrashlytics
 import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
 import CardScan
@@ -29,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Firebase
         FirebaseApp.configure()
+        Crashlytics.crashlytics()
         #if RELEASE
         BinkAnalytics.beginSessionTracking()
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
