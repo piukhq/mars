@@ -6,10 +6,8 @@
 //
 
 import UIKit
-import FirebaseCrashlytics
 
 class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring {
-    var crashString: String?
     struct Constants {
         static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
         static let stackViewSpacing: CGFloat = 12
@@ -116,8 +114,6 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
 
         setCloseButton()
         configureUI()
-        
-        print(crashString!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
