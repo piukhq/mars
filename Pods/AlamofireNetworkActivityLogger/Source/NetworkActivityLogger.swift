@@ -122,19 +122,19 @@ public class NetworkActivityLogger {
             case .debug:
                 self.logDivider()
                 
-                print("\(httpMethod) '\(requestURL.absoluteString)':")
+                NSLog("\(httpMethod) '\(requestURL.absoluteString)':")
                 
                 if let httpHeadersFields = request.allHTTPHeaderFields {
                     self.logHeaders(headers: httpHeadersFields)
                 }
                 
                 if let httpBody = request.httpBody, let httpBodyString = String(data: httpBody, encoding: .utf8) {
-                    print(httpBodyString)
+                    NSLog(httpBodyString)
                 }
             case .info:
                 self.logDivider()
                 
-                print("\(httpMethod) '\(requestURL.absoluteString)'")
+                NSLog("\(httpMethod) '\(requestURL.absoluteString)'")
             default:
                 break
             }
@@ -164,7 +164,7 @@ public class NetworkActivityLogger {
                 case .debug, .info, .warn, .error:
                     self.logDivider()
                     
-                    print("[Error] \(httpMethod) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]:")
+                    NSLog("[Error] \(httpMethod) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]:")
                     print(error)
                 default:
                     break
@@ -178,7 +178,7 @@ public class NetworkActivityLogger {
                 case .debug:
                     self.logDivider()
                     
-                    print("\(String(response.statusCode)) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]:")
+                    NSLog("\(String(response.statusCode)) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]:")
                     
                     self.logHeaders(headers: response.allHeaderFields)
                     
@@ -189,7 +189,7 @@ public class NetworkActivityLogger {
                         let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted)
                         
                         if let prettyString = String(data: prettyData, encoding: .utf8) {
-                            print(prettyString)
+                            NSLog(prettyString)
                         }
                     } catch {
                         if let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
@@ -199,7 +199,7 @@ public class NetworkActivityLogger {
                 case .info:
                     self.logDivider()
                     
-                    print("\(String(response.statusCode)) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]")
+                    NSLog("\(String(response.statusCode)) '\(requestURL.absoluteString)' [\(String(format: "%.04f", elapsedTime)) s]")
                 default:
                     break
                 }
@@ -211,14 +211,14 @@ public class NetworkActivityLogger {
 
 private extension NetworkActivityLogger {
     func logDivider() {
-        print("---------------------")
+        NSLog("---------------------")
     }
     
     func logHeaders(headers: [AnyHashable : Any]) {
-        print("Headers: [")
+        NSLog("Headers: [")
         for (key, value) in headers {
-            print("  \(key) : \(value)")
+            NSLog("  \(key) : \(value)")
         }
-        print("]")
+        NSLog("]")
     }
 }
