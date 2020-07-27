@@ -24,6 +24,10 @@ class PermissionsUtility {
     }
     
     static func requestVideoCaptureAuthorization(completion: @escaping (Bool) -> Void) {
-        AVCaptureDevice.requestAccess(for: .video, completionHandler: completion)
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            DispatchQueue.main.async {
+                completion(granted)
+            }
+        }
     }
 }
