@@ -11,7 +11,6 @@ public enum CD_PaymentCardAttributes: String {
 public enum CD_PaymentCardRelationships: String {
     case account = "account"
     case card = "card"
-    case images = "images"
     case linkedMembershipCards = "linkedMembershipCards"
 }
 
@@ -57,45 +56,10 @@ open class _CD_PaymentCard: CD_BaseObject {
     var card: CD_PaymentCardCard?
 
     @NSManaged open
-    var images: NSSet
-
-    open func imagesSet() -> NSMutableSet {
-        return self.images.mutableCopy() as! NSMutableSet
-    }
-
-    @NSManaged open
     var linkedMembershipCards: NSSet
 
     open func linkedMembershipCardsSet() -> NSMutableSet {
         return self.linkedMembershipCards.mutableCopy() as! NSMutableSet
-    }
-
-}
-
-extension _CD_PaymentCard {
-
-    open func addImages(_ objects: NSSet) {
-        let mutable = self.images.mutableCopy() as! NSMutableSet
-        mutable.union(objects as Set<NSObject>)
-        self.images = mutable.copy() as! NSSet
-    }
-
-    open func removeImages(_ objects: NSSet) {
-        let mutable = self.images.mutableCopy() as! NSMutableSet
-        mutable.minus(objects as Set<NSObject>)
-        self.images = mutable.copy() as! NSSet
-    }
-
-    open func addImagesObject(_ value: CD_MembershipCardImage) {
-        let mutable = self.images.mutableCopy() as! NSMutableSet
-        mutable.add(value)
-        self.images = mutable.copy() as! NSSet
-    }
-
-    open func removeImagesObject(_ value: CD_MembershipCardImage) {
-        let mutable = self.images.mutableCopy() as! NSMutableSet
-        mutable.remove(value)
-        self.images = mutable.copy() as! NSSet
     }
 
 }

@@ -14,7 +14,6 @@ struct PaymentCardModel: Codable {
     var membershipCards: [LinkedCardResponse]?
     var status: String?
     var card: PaymentCardCardResponse?
-    var images: [MembershipCardImageModel]?
     var account: PaymentCardAccountResponse?
 
     enum CodingKeys: String, CodingKey {
@@ -22,7 +21,6 @@ struct PaymentCardModel: Codable {
         case membershipCards = "membership_cards"
         case status
         case card
-        case images
         case account
     }
 }
@@ -46,17 +44,6 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
             update(cdObject, \.account, with: cdAccount, delta: delta)
         } else {
             update(cdObject, \.account, with: nil, delta: false)
-        }
-
-        cdObject.images.forEach {
-            guard let image = $0 as? CD_MembershipPlanImage else { return }
-            context.delete(image)
-        }
-        
-        images?.forEach { image in
-            let cdImage = image.mapToCoreData(context, .update, overrideID: nil)
-            update(cdImage, \.paymentCard, with: cdObject, delta: delta)
-            cdObject.addImagesObject(cdImage)
         }
         
         cdObject.linkedMembershipCards.forEach {
