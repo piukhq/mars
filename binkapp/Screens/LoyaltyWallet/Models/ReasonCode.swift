@@ -30,7 +30,7 @@ enum ReasonCode: String, Codable, CaseIterable {
     case addFieldsBeingValidated = "X100"
     case accountDoesNotExist = "X101"
     case addDataRejectedByMerchant = "X102"
-    case noAuthorizationProvided = "X103"
+    case NoAuthorizationProvided = "X103"
     case updateFailed = "X104"
     case accountNotRegistered = "X105"
     case enrolmentInProgress = "X200"
@@ -63,7 +63,7 @@ enum ReasonCode: String, Codable, CaseIterable {
             return "Account does not exist"
         case .addDataRejectedByMerchant:
             return "Add data rejected by merchant"
-        case .noAuthorizationProvided:
+        case .NoAuthorizationProvided:
             return "No authorization provided"
         case .updateFailed:
             return "Update failed. Delete and re-add card"

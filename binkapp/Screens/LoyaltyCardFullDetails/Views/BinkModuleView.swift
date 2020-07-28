@@ -141,7 +141,7 @@ private extension BinkModuleView {
                     // Points module 1.12
                     configure(imageName: imageName, titleText: "points_module_account_exists_status".localized, subtitleText: "points_module_log_in".localized, touchAction: .loginChanges)
                     break
-                case .accountDoesNotExist, .addDataRejectedByMerchant, .noAuthorizationProvided, .updateFailed, .noAuthorizationRequired, .authorizationDataRejectedByMerchant, .authorizationExpired, .pointsScrapingLoginFailed:
+                case .accountDoesNotExist, .addDataRejectedByMerchant, .NoAuthorizationProvided, .updateFailed, .noAuthorizationRequired, .authorizationDataRejectedByMerchant, .authorizationExpired, .pointsScrapingLoginFailed:
                     // Points module 1.6
                     configure(imageName: imageName, titleText: "points_module_retry_log_in_status".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
                     break
