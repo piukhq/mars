@@ -22,6 +22,8 @@ class BarcodeViewController: BinkTrackableViewController {
     @IBOutlet private weak var numberLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     
+    private var previousBrightness: CGFloat?
+    
     private let viewModel: BarcodeViewModel
     var hasDrawnBarcode = false
     
@@ -44,6 +46,17 @@ class BarcodeViewController: BinkTrackableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popViewController))
         
         configureUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        previousBrightness = UIScreen.main.brightness
+        UIScreen.main.brightness = 1.0
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIScreen.main.brightness = previousBrightness ?? 0.5
     }
     
     func configureUI() {
