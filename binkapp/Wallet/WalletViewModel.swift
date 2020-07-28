@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CardScan
 
 protocol WalletViewModel {
     associatedtype T
@@ -24,6 +25,7 @@ protocol WalletViewModel {
     func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?)
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt)
     func showDeleteConfirmationAlert(card: T, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void)
+    func toAddPaymentCardScreen(model: PaymentCardCreateModel?)
 }
 
 extension WalletViewModel {

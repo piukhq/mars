@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import DeepDiff
 import CoreData
+import CardScan
 
 class LoyaltyWalletViewModel: WalletViewModel {
     
@@ -17,14 +18,16 @@ class LoyaltyWalletViewModel: WalletViewModel {
 
     private let repository: R
     private let router: MainScreenRouter
-
+    weak var paymentScanDelegate: ScanDelegate?
+    private let paymentScanStrings = PaymentCardScannerStrings()
+    
     required init(repository: R, router: MainScreenRouter) {
         self.repository = repository
         self.router = router
     }
 
     var walletPrompts: [WalletPrompt]? {
-        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
+        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty, paymentScanDelegate: paymentScanDelegate)
     }
     
     var cards: [CD_MembershipCard]? {
@@ -42,13 +45,17 @@ class LoyaltyWalletViewModel: WalletViewModel {
     func toCardDetail(for card: CD_MembershipCard) {
         router.toLoyaltyFullDetailsScreen(membershipCard: card)
     }
+    
+    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
+        router.toAddPaymentViewController(model: model)
+    }
 
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .loyaltyJoin(let membershipPlan):
             router.toAddOrJoinViewController(membershipPlan: membershipPlan)
-        case .addPaymentCards:
-            router.toAddPaymentViewController()
+        case .addPaymentCards(let scanDelegate):
+            router.toPaymentCardScanner(strings: paymentScanStrings, delegate: scanDelegate)
         }
     }
 

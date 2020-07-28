@@ -9,17 +9,20 @@
 import Foundation
 import KeychainAccess
 import FBSDKLoginKit
+import FirebaseCrashlytics
 
 private enum UserManagerError: Error {
     case missingData
 }
 
 struct UserProfileResponse: Codable {
+    var uid: String?
     var firstName: String?
     var lastName: String?
     var email: String?
 
     enum CodingKeys: String, CodingKey {
+        case uid
         case firstName = "first_name"
         case lastName = "last_name"
         case email
@@ -99,6 +102,10 @@ class UserManager {
         if updateZendeskIdentity {
             ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
+        
+        // Set user id for Crashlytics
+        guard let userId = response.uid else { return }
+        Crashlytics.crashlytics().setUserID(userId)
     }
     
     private func setToken(with response: TokenResponseProtocol) throws {
