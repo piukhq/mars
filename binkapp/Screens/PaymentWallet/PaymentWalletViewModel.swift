@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CardScan
 
 class PaymentWalletViewModel: WalletViewModel {
     typealias T = CD_PaymentCard
@@ -14,6 +15,8 @@ class PaymentWalletViewModel: WalletViewModel {
 
     private let repository: R
     let router: MainScreenRouter
+    weak var paymentScanDelegate: ScanDelegate?
+    private let paymentScanStrings = PaymentCardScannerStrings()
 
     required init(repository: R, router: MainScreenRouter) {
         self.repository = repository
@@ -21,7 +24,7 @@ class PaymentWalletViewModel: WalletViewModel {
     }
 
     var walletPrompts: [WalletPrompt]? {
-        return WalletPromptFactory.makeWalletPrompts(forWallet: .payment)
+        return WalletPromptFactory.makeWalletPrompts(forWallet: .payment, paymentScanDelegate: paymentScanDelegate)
     }
 
     var cards: [CD_PaymentCard]? {
@@ -31,11 +34,15 @@ class PaymentWalletViewModel: WalletViewModel {
     func toCardDetail(for card: CD_PaymentCard) {
         router.toPaymentCardDetailViewController(paymentCard: card)
     }
+    
+    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
+        router.toAddPaymentViewController(model: model)
+    }
 
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
-        case .addPaymentCards:
-            router.toAddPaymentViewController()
+        case .addPaymentCards(let scanDelegate):
+            router.toPaymentCardScanner(strings: paymentScanStrings, delegate: scanDelegate)
         default:
             return
         }

@@ -141,6 +141,7 @@
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
 		706A2DAD248FD64600679436 /* TescoLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 706A2DAC248FD64600679436 /* TescoLogin.js */; };
 		706A2DAF2490F54200679436 /* TescoPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 706A2DAE2490F54200679436 /* TescoPointsScrape.js */; };
+		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
 		70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E867742489303F001ED282 /* SecureUtilityTests.swift */; };
 		70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */; };
 		70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86779248E76C9001ED282 /* WebScrapingUtility.swift */; };
@@ -202,7 +203,7 @@
 		BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */; };
 		BD9E4CC5236EE33900C6F098 /* FacebookLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC4236EE33900C6F098 /* FacebookLoginController.swift */; };
 		BD9E4CC7236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC6236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift */; };
-		BD9E4CC9236EF44900C6F098 /* FacebookRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC8236EF44900C6F098 /* FacebookRequest.swift */; };
+		BD9E4CC9236EF44900C6F098 /* SocialLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */; };
 		BD9E4CCB236F091B00C6F098 /* UserMigrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CCA236F091B00C6F098 /* UserMigrationController.swift */; };
 		BD9E4CCF236F8D6100C6F098 /* RenewTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CCE236F8D6000C6F098 /* RenewTokenResponse.swift */; };
 		BD9E4CD1237014D300C6F098 /* RootStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */; };
@@ -616,6 +617,7 @@
 		706A2DAC248FD64600679436 /* TescoLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoLogin.js; sourceTree = "<group>"; };
 		706A2DAE2490F54200679436 /* TescoPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoPointsScrape.js; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
+		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
 		70E867742489303F001ED282 /* SecureUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtilityTests.swift; sourceTree = "<group>"; };
 		70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewFooter.swift; sourceTree = "<group>"; };
@@ -693,7 +695,7 @@
 		BD9BAAD8232AF4AB00D2E1C4 /* DiffAware+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiffAware+Extension.swift"; sourceTree = "<group>"; };
 		BD9E4CC4236EE33900C6F098 /* FacebookLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginController.swift; sourceTree = "<group>"; };
 		BD9E4CC6236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialTermsAndConditionsViewController.swift; sourceTree = "<group>"; };
-		BD9E4CC8236EF44900C6F098 /* FacebookRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookRequest.swift; sourceTree = "<group>"; };
+		BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginRequest.swift; sourceTree = "<group>"; };
 		BD9E4CCA236F091B00C6F098 /* UserMigrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMigrationController.swift; sourceTree = "<group>"; };
 		BD9E4CCC236F095800C6F098 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		BD9E4CCE236F8D6000C6F098 /* RenewTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenewTokenResponse.swift; sourceTree = "<group>"; };
@@ -1315,6 +1317,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				70A4EE7624BDBA1F00FA33B1 /* Permissions */,
 				70E86778248E76B9001ED282 /* Web Scraping */,
 				EF4C477F246017B30056CE17 /* ZendeskService */,
 				EFDEBDF52408277F00CB755E /* Security */,
@@ -1523,6 +1526,14 @@
 			path = PaymentScanner;
 			sourceTree = "<group>";
 		};
+		70A4EE7624BDBA1F00FA33B1 /* Permissions */ = {
+			isa = PBXGroup;
+			children = (
+				70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */,
+			);
+			path = Permissions;
+			sourceTree = "<group>";
+		};
 		70E86778248E76B9001ED282 /* Web Scraping */ = {
 			isa = PBXGroup;
 			children = (
@@ -1662,7 +1673,7 @@
 				BD458B3B236B5B710029A538 /* LoginRegisterResponse.swift */,
 				BD458B3D236B5C0E0029A538 /* LoginRegisterRequest.swift */,
 				BD458B41236CA3910029A538 /* LogoutResponse.swift */,
-				BD9E4CC8236EF44900C6F098 /* FacebookRequest.swift */,
+				BD9E4CC8236EF44900C6F098 /* SocialLoginRequest.swift */,
 				BD9E4CCE236F8D6000C6F098 /* RenewTokenResponse.swift */,
 				BD9E4CD523738B4700C6F098 /* PreferenceResponse.swift */,
 				BD9E4CD723740A7500C6F098 /* PreferenceChangeResponse.swift */,
@@ -2960,6 +2971,7 @@
 				EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */,
 				3CCAB7522379B520001B566D /* RegistrationFieldPostModel.swift in Sources */,
 				EFA5F6C0237429D30027AB80 /* UITableViewCellExtension.swift in Sources */,
+				70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */,
 				EF1110542354D4BE009A4438 /* WalletCardCollectionViewCell.swift in Sources */,
 				BDFAA07B23E243EF00949271 /* LCDPlaceholderGenerator.swift in Sources */,
 				EFA5F7232379A7C70027AB80 /* CD_MembershipCardAccount.swift in Sources */,
@@ -3086,7 +3098,7 @@
 				EFB7ED652379CA5900B72D06 /* PLRRewardDetailViewController.swift in Sources */,
 				EFE949472331424E00E29AA4 /* LinkingSupportModel.swift in Sources */,
 				EF758E0E23225F45000D26A9 /* NSPersistentContainer.swift in Sources */,
-				BD9E4CC9236EF44900C6F098 /* FacebookRequest.swift in Sources */,
+				BD9E4CC9236EF44900C6F098 /* SocialLoginRequest.swift in Sources */,
 				3CCC46C922FC6EB8008476E3 /* UIColor+binkapp.swift in Sources */,
 				3CB6BF7923141D3000B74882 /* AuthAndAddRepository.swift in Sources */,
 			);
@@ -3289,7 +3301,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3301,7 +3313,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink α";
@@ -3322,7 +3334,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3342,7 +3354,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -3524,7 +3536,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3536,7 +3548,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;
@@ -3667,7 +3679,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3679,7 +3691,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;

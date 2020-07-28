@@ -62,8 +62,8 @@ enum WebScrapingUtilityError: BinkError {
         return nil
     }
     
-    var message: String? {
-        return nil
+    var message: String {
+        return ""
     }
 }
 

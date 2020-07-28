@@ -143,4 +143,26 @@ extension WebViewController: WKNavigationDelegate {
         showActivityIndicator(show: false)
         showErrorAlert()
     }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated {
+            // Pull email url from the navigation request if we can
+            guard let emailUrl = navigationAction.request.url, emailUrl.isEmailAddressLink else {
+                // Either we can't parse the url correctly, or it is not an email address link. Either way, continue navigation if we can.
+                decisionHandler(.allow)
+                return
+            }
+            // Open the mail app with the email address link, and stop any webview navigation
+            UIApplication.shared.open(emailUrl, options: [:], completionHandler: nil)
+            decisionHandler(.cancel)
+            return
+        }
+        decisionHandler(.allow)
+    }
+}
+
+extension URL {
+    var isEmailAddressLink: Bool {
+        return absoluteString.starts(with: "mailto")
+    }
 }

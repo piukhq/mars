@@ -20,7 +20,7 @@ enum NetworkingError: BinkError {
     case clientError(Int?)
     case serverError(Int?)
     case checkStatusCode(Int)
-    case customError(String?)
+    case customError(String)
 
     var domain: BinkErrorDomain {
         return .networking
@@ -30,11 +30,12 @@ enum NetworkingError: BinkError {
         return nil
     }
 
-    var message: String? {
+    var message: String {
         switch self {
         case .customError(let message):
             return message
-        default: return nil
+        default:
+            return "Networking error"
         }
     }
 }

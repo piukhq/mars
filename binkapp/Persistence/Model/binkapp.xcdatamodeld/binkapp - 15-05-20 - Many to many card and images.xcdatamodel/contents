@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18G4032" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="CD_AddField" representedClassName="CD_AddField" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="column" optional="YES" attributeType="String"/>
         <attribute name="commonName" optional="YES" attributeType="String"/>
@@ -109,7 +109,7 @@
         <attribute name="imageDescription" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="url" optional="YES" attributeType="String"/>
-        <relationship name="membershipCards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="images" inverseEntity="CD_MembershipCard"/>
+        <relationship name="membershipCards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="images" inverseEntity="CD_MembershipCard" elementID="card"/>
         <relationship name="paymentCard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_PaymentCard" inverseName="images" inverseEntity="CD_PaymentCard"/>
     </entity>
     <entity name="CD_MembershipCardStatus" representedClassName="CD_MembershipCardStatus" parentEntity="CD_BaseObject" syncable="YES">

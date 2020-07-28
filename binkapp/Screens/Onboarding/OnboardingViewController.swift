@@ -229,7 +229,7 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
                 return
             }
             
-            self?.viewModel.pushToSocialTermsAndConditions(request: facebookRequest)
+            self?.viewModel.pushToSocialTermsAndConditions(requestType: .facebook(facebookRequest))
         }) { [weak self] isCancelled in
             self?.showError(isCancelled)
         }
@@ -310,14 +310,6 @@ extension LayoutHelper {
 
 // MARK: - Sign in with Apple
 
-struct SignInWithAppleRequest: Codable {
-    let authorizationCode: String
-
-    enum CodingKeys: String, CodingKey {
-        case authorizationCode = "authorization_code"
-    }
-}
-
 @available(iOS 13.0, *)
 extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
@@ -341,36 +333,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
     // TODO: // Move to user service in future ticket. All login type requests should reuse the same code where possible
     private func signInWithApple(authCode: String) {
         let loginRequest = SignInWithAppleRequest(authorizationCode: authCode)
-        let request = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] result in
-            switch result {
-            case .success(let response):
-                guard let email = response.email else {
-                    self?.handleLoginError()
-                    return
-                }
-                Current.userManager.setNewUser(with: response)
-
-                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
-                    guard success else {
-                        self?.handleLoginError()
-                        return
-                    }
-
-                    // Get latest user profile data in background and ignore any failure
-                    // TODO: Move to UserService in future ticket
-                    let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
-                        guard let response = try? result.get() else { return }
-                        Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
-                    }
-                    self?.viewModel.router.didLogin()
-                }
-            case .failure:
-                self?.handleLoginError()
-            }
-        }
+        viewModel.pushToSocialTermsAndConditions(requestType: .apple(loginRequest))
     }
     
     private func handleLoginError() {

@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import CardScan
 
 class PLLScreenViewModel {
     private var membershipCard: CD_MembershipCard
     private let repository: PLLScreenRepository
     private let router: MainScreenRouter
+    
+    private let paymentScannerStrings = PaymentCardScannerStrings()
+    
     let journey: PllScreenJourney
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
@@ -120,7 +124,11 @@ class PLLScreenViewModel {
         router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
     }
     
-    func toAddPaymentCardScreen() {
-        router.toAddPaymentViewController()
+    func toPaymentScanner(scanDelegate: ScanDelegate?) {
+        router.toPaymentCardScanner(strings: paymentScannerStrings, delegate: scanDelegate)
+    }
+    
+    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
+        router.toAddPaymentViewController(model: model)
     }
 }
