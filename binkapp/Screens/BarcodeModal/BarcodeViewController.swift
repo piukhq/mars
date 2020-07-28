@@ -79,7 +79,7 @@ class BarcodeViewController: BinkTrackableViewController {
         descriptionLabel.textColor = .black
         descriptionLabel.textAlignment = .justified
         
-        switch viewModel.barcodeType {
+        switch viewModel.barcodeUse {
         case .loyaltyCard:
             if viewModel.isBarcodeAvailable {
                 descriptionLabel.text = "barcode_card_description".localized
