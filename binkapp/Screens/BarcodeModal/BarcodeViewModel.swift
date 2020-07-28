@@ -85,15 +85,16 @@ class BarcodeViewModel {
         self.membershipCard = membershipCard
     }
     
-    func generateBarcodeImage(for imageView: UIImageView) {
-        guard let barcodeString = membershipCard.card?.barcode else { return }
+    func barcodeImage(withSize size: CGSize) -> UIImage? {
+        guard let barcodeString = membershipCard.card?.barcode else {
+            fatalError("Card has no barcode. We should never get here.")
+        }
+        
         let writer = ZXMultiFormatWriter()
-        let imageViewSize = imageView.frame.size
         let encodeHints = ZXEncodeHints()
         encodeHints.margin = 0
-        let result = try? writer.encode(barcodeString, format: barcodeType.zxingType, width: Int32(imageViewSize.width), height: Int32(imageViewSize.height), hints: encodeHints)
-        guard let cgImage = ZXImage(matrix: result).cgimage else { return }
-        let image = UIImage(cgImage: cgImage)
-        imageView.image = image
+        let result = try? writer.encode(barcodeString, format: barcodeType.zxingType, width: Int32(size.width), height: Int32(size.height), hints: encodeHints)
+        guard let cgImage = ZXImage(matrix: result).cgimage else { return nil }
+        return UIImage(cgImage: cgImage)
     }
 }
