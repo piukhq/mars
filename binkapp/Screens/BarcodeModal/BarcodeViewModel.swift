@@ -93,8 +93,16 @@ class BarcodeViewModel {
         let writer = ZXMultiFormatWriter()
         let encodeHints = ZXEncodeHints()
         encodeHints.margin = 0
-        let result = try? writer.encode(barcodeString, format: barcodeType.zxingType, width: Int32(size.width), height: Int32(size.height), hints: encodeHints)
-        guard let cgImage = ZXImage(matrix: result).cgimage else { return nil }
-        return UIImage(cgImage: cgImage)
+        
+        var image: UIImage?
+        
+        let exception = tryBlock { [weak self] in
+            guard let self = self else { return }
+            let result = try? writer.encode(barcodeString, format: self.barcodeType.zxingType, width: Int32(size.width), height: Int32(size.height), hints: encodeHints)
+            guard let cgImage = ZXImage(matrix: result).cgimage else { return }
+            image = UIImage(cgImage: cgImage)
+        }
+        
+        return exception == nil ? image : nil
     }
 }

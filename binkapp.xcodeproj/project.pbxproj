@@ -615,6 +615,7 @@
 		706A2DAC248FD64600679436 /* TescoLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoLogin.js; sourceTree = "<group>"; };
 		706A2DAE2490F54200679436 /* TescoPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoPointsScrape.js; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
+		7097489D24D088FE008D0E29 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
 		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
 		70E867742489303F001ED282 /* SecureUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtilityTests.swift; sourceTree = "<group>"; };
 		70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewFooter.swift; sourceTree = "<group>"; };
@@ -1310,6 +1311,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				7097489C24D088E3008D0E29 /* Objective-C */,
 				70A4EE7624BDBA1F00FA33B1 /* Permissions */,
 				70E86778248E76B9001ED282 /* Web Scraping */,
 				EF4C477F246017B30056CE17 /* ZendeskService */,
@@ -1517,6 +1519,14 @@
 			children = (
 			);
 			path = PaymentScanner;
+			sourceTree = "<group>";
+		};
+		7097489C24D088E3008D0E29 /* Objective-C */ = {
+			isa = PBXGroup;
+			children = (
+				7097489D24D088FE008D0E29 /* ExceptionHandler.h */,
+			);
+			path = "Objective-C";
 			sourceTree = "<group>";
 		};
 		70A4EE7624BDBA1F00FA33B1 /* Permissions */ = {
