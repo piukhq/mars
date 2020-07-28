@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CardScan
 
 final class WalletPromptFactory {
     enum WalletType {
@@ -14,7 +15,7 @@ final class WalletPromptFactory {
         case payment
     }
 
-    static func makeWalletPrompts(forWallet walletType: WalletType) -> [WalletPrompt] {
+    static func makeWalletPrompts(forWallet walletType: WalletType, paymentScanDelegate: ScanDelegate?) -> [WalletPrompt] {
         var walletPrompts: [WalletPrompt] = []
 
         guard Current.wallet.shouldDisplayWalletPrompts == true else {
@@ -39,7 +40,7 @@ final class WalletPromptFactory {
 
         // add payment cards prompt
         if shouldShowAddPaymentCard() {
-            walletPrompts.append(WalletPrompt(type: .addPaymentCards))
+            walletPrompts.append(WalletPrompt(type: .addPaymentCards(scanDelegate: paymentScanDelegate)))
         }
 
         return walletPrompts
@@ -62,6 +63,7 @@ final class WalletPromptFactory {
     }
 
     static private func shouldShowAddPaymentCard() -> Bool {
-        return !Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards)) && !Current.wallet.hasPaymentCards
+        // We pass nil as the scan delegate as the receiver doesn't care about the delegate in order to return the key
+        return !Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards(scanDelegate: nil))) && !Current.wallet.hasPaymentCards
     }
 }
