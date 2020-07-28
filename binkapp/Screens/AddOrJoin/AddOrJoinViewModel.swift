@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import CardScan
 
 class AddOrJoinViewModel {
     private let membershipPlan: CD_MembershipPlan
     private let membershipCard: CD_MembershipCard?
     private let router: MainScreenRouter
+    
+    private let paymentScannerStrings = PaymentCardScannerStrings()
     
     init(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil, router: MainScreenRouter) {
         self.membershipPlan = membershipPlan
@@ -27,10 +30,14 @@ class AddOrJoinViewModel {
         return membershipPlan
     }
     
-    func toAuthAndAddScreen() {
+    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
+        router.toAddPaymentViewController(model: model)
+    }
+    
+    func toAuthAndAddScreen(paymentScanDelegate: ScanDelegate?) {
         // PLR
         if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
-            toPaymentCardNeededScreen()
+            toPaymentCardNeededScreen(scanDelegate: paymentScanDelegate)
             return
         }
         
@@ -41,10 +48,10 @@ class AddOrJoinViewModel {
         router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: existingCard)
     }
     
-    func didSelectAddNewCard() {
+    func didSelectAddNewCard(paymentScanDelegate: ScanDelegate?) {
         // PLR
         if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
-            toPaymentCardNeededScreen()
+            toPaymentCardNeededScreen(scanDelegate: paymentScanDelegate)
             return
         }
 
@@ -118,7 +125,7 @@ class AddOrJoinViewModel {
         router.popToRootViewController()
     }
 
-    private func toPaymentCardNeededScreen() {
-        router.toPaymentCardNeededScreen()
+    private func toPaymentCardNeededScreen(scanDelegate: ScanDelegate?) {
+        router.toPaymentCardNeededScreen(strings: paymentScannerStrings, scanDelegate: scanDelegate)
     }
 }
