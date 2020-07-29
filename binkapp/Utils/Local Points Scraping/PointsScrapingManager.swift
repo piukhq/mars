@@ -23,6 +23,9 @@ class PointsScrapingManager {
     enum PointsScrapingManagerError: BinkError {
         case failedToStoreCredentials
         case failedToRetrieveCredentials
+        case failedToEnableMembershipCardForPointsScraping
+        case failedToGetMembershipPlanFromRequest
+        case failedToGetAgentForMembershipPlan
         
         var domain: BinkErrorDomain {
             return .pointsScrapingManager
@@ -34,6 +37,12 @@ class PointsScrapingManager {
                 return "Failed to store credentials"
             case .failedToRetrieveCredentials:
                 return "Failed to retrieve credentials"
+            case .failedToEnableMembershipCardForPointsScraping:
+                return "Failed to enable membership card for points scraping"
+            case .failedToGetMembershipPlanFromRequest:
+                return "Failed to get membership plan from request"
+            case .failedToGetAgentForMembershipPlan:
+                return "Failed to get agent for membership plan"
             }
         }
     }
@@ -83,9 +92,15 @@ class PointsScrapingManager {
     // MARK: - Add/Auth handling
     
     func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCardId: String) throws {
-        guard canEnableLocalPointsScrapingForCard(withRequest: request) else { return }
-        guard let planId = request.membershipPlan else { return }
-        guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else { return }
+        guard canEnableLocalPointsScrapingForCard(withRequest: request) else {
+            throw PointsScrapingManagerError.failedToEnableMembershipCardForPointsScraping
+        }
+        guard let planId = request.membershipPlan else {
+            throw PointsScrapingManagerError.failedToGetMembershipPlanFromRequest
+        }
+        guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else {
+            throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
+        }
                 
         webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: membershipCardId, delegate: self)
         do {
@@ -135,7 +150,8 @@ class PointsScrapingManager {
     }
     
     private func refreshBalance(membershipCard: CD_MembershipCard) {
-        guard membershipCard.status?.status == .authorised else { return}
+        // TODO: Should we force to retry if any of these conditions fail? Otherwise, we will always have an outdated points balance
+        guard membershipCard.status?.status == .authorised else { return }
         guard let planId = membershipCard.membershipPlan?.id else { return }
         guard let agent = self.agents.first(where: { $0.membershipPlanId == Int(planId) }) else { return }
         
@@ -219,11 +235,18 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     
     private func transitionToAuthorized(pointsValue: String, membershipCardId: String, agent: WebScrapable) {
         fetchMembershipCard(forId: membershipCardId) { membershipCard in
-            guard let membershipCard = membershipCard else { return }
+            guard let membershipCard = membershipCard else {
+                fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
+            }
             Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
-                guard let membershipCard = safeObject else { return }
+                guard let membershipCard = safeObject else {
+                    fatalError("We should never get here. Core data didn't return us an object, why not?")
+                }
                 
-                guard let pointsValue = Double(pointsValue) else { return }
+                guard let pointsValue = Double(pointsValue) else {
+                    fatalError("We should never get here. If we have got this far, we should always be able to parse the points value correctly. Perhaps the merchant data has changed.")
+//                    self.transitionToFailed(membershipCardId: membershipCard.id)
+                }
                 
                 // Set new balance object
                 let balance = MembershipCardBalanceModel(apiId: nil, value: pointsValue, currency: agent.loyaltySchemeBalanceCurrency, prefix: agent.loyaltySchemeBalancePrefix, suffix: agent.loyaltySchemeBalanceSuffix, updatedAt: Date().timeIntervalSince1970)
@@ -248,11 +271,15 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
         }
     }
     
-    private func transitionToFailed(membershipCardId: String) {
+    func transitionToFailed(membershipCardId: String) {
         fetchMembershipCard(forId: membershipCardId) { membershipCard in
-            guard let membershipCard = membershipCard else { return }
+            guard let membershipCard = membershipCard else {
+                fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
+            }
             Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
-                guard let membershipCard = safeObject else { return }
+                guard let membershipCard = safeObject else {
+                    fatalError("We should never get here. Core data didn't return us an object, why not?")
+                }
                 
                 // Set card status to failed
                 let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])

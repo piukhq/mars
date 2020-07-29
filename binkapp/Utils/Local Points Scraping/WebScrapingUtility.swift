@@ -133,9 +133,7 @@ class WebScrapingUtility: NSObject {
         // Inject variables into login file
         let formattedLoginScript = String(format: loginScript, credentials.username, credentials.password)
         runScript(formattedLoginScript) { [weak self] (value, error) in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             guard error == nil else {
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                 return
@@ -159,9 +157,7 @@ class WebScrapingUtility: NSObject {
         }
         
         runScript(scrapeScript) { [weak self] (pointsValue, error) in
-            guard let self = self else {
-                return
-            }
+            guard let self = self else { return }
             guard error == nil else {
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteScrapingScript, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                 return
@@ -204,9 +200,7 @@ class WebScrapingUtility: NSObject {
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // We only care about the webview navigation to our agent's login url or scrapable url
-        guard !isRedirecting else {
-            return
-        }
+        guard !isRedirecting else { return }
         
         if shouldScrape {
             getScrapedValue { [weak self] result in
@@ -215,7 +209,6 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 switch result {
                 case .failure(let error):
                     self.delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
-                    return
                 case .success(let pointsValue):
                     self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
                 }
