@@ -53,11 +53,28 @@ class PointsScrapingManager {
     private let keychain = Keychain(service: APIConstants.bundleID)
     private var webScrapingUtility: WebScrapingUtility?
     
+    private var isMasterEnabled: Bool {
+        return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionMasterEnabled)
+    }
+    
     private let agents: [WebScrapable] = [
         TescoScrapingAgent()
     ]
     
     // MARK: - Credentials handling
+    
+    func makeCredentials(fromFormFields fields: [FormField], membershipPlanId: String) -> WebScrapingCredentials? {
+        guard let planId = Int(membershipPlanId) else { return nil }
+        guard let agent = agent(forPlanId: planId) else { return nil }
+        let authFields = fields.filter { $0.columnKind == .auth }
+        let usernameField = authFields.first(where: { $0.title == agent.usernameFieldTitle })
+        let passwordField = authFields.first(where: { $0.title == agent.passwordFieldTitle })
+        
+        guard let usernameValue = usernameField?.value else { return nil }
+        guard let passwordValue = passwordField?.value else { return nil }
+        
+        return WebScrapingCredentials(username: usernameValue, password: passwordValue)
+    }
     
     private func storeCredentials(_ credentials: WebScrapingCredentials, forMembershipCardId cardId: String) throws {
         do {
@@ -126,10 +143,13 @@ class PointsScrapingManager {
     private var balanceRefreshQueue: [CD_MembershipCard] = []
     
     func refreshBalancesIfNecessary() {
-        getRefreshableMembershipCards { [weak self] refreshableCards in
+        Current.remoteConfig.fetch { [weak self] in
             guard let self = self else { return }
-            self.balanceRefreshQueue = refreshableCards
-            self.continueBalanceRefresh()
+            guard self.isMasterEnabled else { return }
+            self.getRefreshableMembershipCards { refreshableCards in
+                self.balanceRefreshQueue = refreshableCards
+                self.continueBalanceRefresh()
+            }
         }
     }
     
@@ -154,6 +174,7 @@ class PointsScrapingManager {
         guard membershipCard.status?.status == .authorised else { return }
         guard let planId = membershipCard.membershipPlan?.id else { return }
         guard let agent = self.agents.first(where: { $0.membershipPlanId == Int(planId) }) else { return }
+        guard agentEnabled(agent) else { return }
         
         DispatchQueue.main.async {
             self.webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: membershipCard.id, delegate: self)
@@ -164,6 +185,10 @@ class PointsScrapingManager {
                 self.transitionToFailed(membershipCardId: membershipCard.id)
             }
         }
+    }
+    
+    private func agentEnabled(_ agent: WebScrapable) -> Bool {
+        return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionAgentEnabled(agent))
     }
     
     private func getRefreshableMembershipCards(completion: @escaping ([CD_MembershipCard]) -> Void) {
@@ -191,19 +216,6 @@ class PointsScrapingManager {
 
     private func hasAgent(forMembershipPlanId planId: Int) -> Bool {
         return agents.contains(where: { $0.membershipPlanId == planId })
-    }
-    
-    func makeCredentials(fromFormFields fields: [FormField], membershipPlanId: String) -> WebScrapingCredentials? {
-        guard let planId = Int(membershipPlanId) else { return nil }
-        guard let agent = agent(forPlanId: planId) else { return nil }
-        let authFields = fields.filter { $0.columnKind == .auth }
-        let usernameField = authFields.first(where: { $0.title == agent.usernameFieldTitle })
-        let passwordField = authFields.first(where: { $0.title == agent.passwordFieldTitle })
-        
-        guard let usernameValue = usernameField?.value else { return nil }
-        guard let passwordValue = passwordField?.value else { return nil }
-        
-        return WebScrapingCredentials(username: usernameValue, password: passwordValue)
     }
     
     private func pointsScrapingDidComplete() {

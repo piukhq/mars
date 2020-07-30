@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct TescoScrapingAgent: WebScrapable {
+struct TescoScrapingAgent: WebScrapable {    
+    var merchant: WebScrapableMerchant {
+        return .tesco
+    }
+    
     var membershipPlanId: Int {
         switch APIConstants.currentEnvironment {
         case .dev:

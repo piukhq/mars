@@ -9,7 +9,12 @@
 import UIKit
 import WebKit
 
+enum WebScrapableMerchant: String {
+    case tesco
+}
+
 protocol WebScrapable {
+    var merchant: WebScrapableMerchant { get }
     var membershipPlanId: Int { get }
     var usernameFieldTitle: String { get }
     var passwordFieldTitle: String { get }

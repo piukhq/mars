@@ -17,6 +17,7 @@ class World {
     lazy var userManager = UserManager()
     lazy var apiClient = APIClient()
     lazy var pointsScrapingManager = PointsScrapingManager()
+    lazy var remoteConfig = RemoteConfigUtil()
 }
 
 protocol BinkUserDefaults {
