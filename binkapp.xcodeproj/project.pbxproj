@@ -214,8 +214,6 @@
 		BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B32338120700E5559A /* TransactionsViewController.swift */; };
 		BD9FB6B72338120700E5559A /* TransactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD9FB6B42338120700E5559A /* TransactionsViewController.xib */; };
 		BD9FB6B82338120700E5559A /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9FB6B52338120700E5559A /* TransactionsViewModel.swift */; };
-		BDA4EE982320508400A99CB1 /* BarcodeGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; };
-		BDA4EE992320508400A99CB1 /* BarcodeGenerator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BDE778A523204F8E0014567A /* BarcodeGenerator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB01868232D949A00BFFA18 /* AddPaymentCardViewController.swift */; };
 		BDB0186C232D96EB00BFFA18 /* BaseFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186B232D96EB00BFFA18 /* BaseFormViewController.swift */; };
 		BDB0186E232D98C000BFFA18 /* FormDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB0186D232D98C000BFFA18 /* FormDataSource.swift */; };
@@ -468,7 +466,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BDA4EE992320508400A99CB1 /* BarcodeGenerator.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -720,7 +717,6 @@
 		BDD9C83B233BE493003CD616 /* MembershipPlanImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipPlanImageModel.swift; sourceTree = "<group>"; };
 		BDD9C8A4233C0476003CD616 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDD9C8A6233D07D1003CD616 /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
-		BDE778A523204F8E0014567A /* BarcodeGenerator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BarcodeGenerator.framework; sourceTree = "<group>"; };
 		BDFAA07A23E243EF00949271 /* LCDPlaceholderGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCDPlaceholderGenerator.swift; sourceTree = "<group>"; };
 		BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		C5D1F95CBE07939CA29E03E5 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
@@ -953,7 +949,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B03E4ACD9F0FF1C979C752E /* Pods_binkapp.framework in Frameworks */,
-				BDA4EE982320508400A99CB1 /* BarcodeGenerator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1363,7 +1358,6 @@
 		492DA371EDF911EDB1A625BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BDE778A523204F8E0014567A /* BarcodeGenerator.framework */,
 				1A9D6E03CDA71B9A8B0AD179 /* Pods_binkapp.framework */,
 				882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */,
 				4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */,

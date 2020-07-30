@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import BarcodeGenerator
 import ZXingObjC
 
 enum BarcodeUse {
