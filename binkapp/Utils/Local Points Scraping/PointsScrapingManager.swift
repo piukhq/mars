@@ -57,7 +57,7 @@ class PointsScrapingManager {
         return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionMasterEnabled)
     }
     
-    private let agents: [WebScrapable] = [
+    let agents: [WebScrapable] = [
         TescoScrapingAgent()
     ]
     
@@ -109,6 +109,8 @@ class PointsScrapingManager {
     // MARK: - Add/Auth handling
     
     func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCardId: String) throws {
+        guard planIdIsWebScrapable(request.membershipPlan) else { return }
+        
         guard canEnableLocalPointsScrapingForCard(withRequest: request) else {
             throw PointsScrapingManagerError.failedToEnableMembershipCardForPointsScraping
         }
@@ -206,8 +208,10 @@ class PointsScrapingManager {
     // MARK: - Helpers
     
     func planIdIsWebScrapable(_ planId: Int?) -> Bool {
+        guard isMasterEnabled else { return false }
         guard let id = planId else { return false }
-        return hasAgent(forMembershipPlanId: id)
+        guard let agent = agent(forPlanId: id) else { return false }
+        return agentEnabled(agent)
     }
     
     private func agent(forPlanId planId: Int) -> WebScrapable? {

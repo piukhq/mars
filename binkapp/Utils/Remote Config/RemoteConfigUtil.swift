@@ -26,7 +26,7 @@ class RemoteConfigUtil {
     
     private let remoteConfig = RemoteConfig.remoteConfig()
     
-    init() {
+    func configure() {
         setupRemoteConfig()
     }
     
@@ -34,7 +34,12 @@ class RemoteConfigUtil {
         let settings = RemoteConfigSettings()
         settings.minimumFetchInterval = 0
         remoteConfig.configSettings = settings
-//        remoteConfig.setDefaults([RemoteConfigKey.localPointsCollectionMasterEnabled.formattedKey: NSNumber(value: true)])
+        remoteConfig.setDefaults([RemoteConfigKey.localPointsCollectionMasterEnabled.formattedKey: NSNumber(value: false)])
+        
+        Current.pointsScrapingManager.agents.forEach {
+            remoteConfig.setDefaults([RemoteConfigKey.localPointsCollectionAgentEnabled($0).formattedKey: NSNumber(value: false)])
+        }
+        
         fetch()
     }
     

@@ -78,7 +78,7 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         } else {
             // We pass through here when mapping all other objects during add/auth.
             // We can safely set it to failed here if the status is nil, as we know that add/auth handles setting a pending state once this mapping is complete
-            if cdObject.status == nil {
+            if cdObject.status == nil || cdObject.status?.status == .pending {
                 let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
                 let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
                 update(cdStatus, \.card, with: cdObject, delta: delta)
