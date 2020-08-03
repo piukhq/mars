@@ -68,10 +68,12 @@ class OnboardingViewModel {
     }
     
     func pushToRegister() {
+        BinkAnalytics.track(OnboardingAnalyticsEvent.start(journey: .register))
         navigationController?.pushViewController(RegisterViewController(router: router), animated: true)
     }
     
     func pushToLogin() {
+        BinkAnalytics.track(OnboardingAnalyticsEvent.start(journey: .login))
         navigationController?.pushViewController(LoginViewController(router: router), animated: true)
     }
     

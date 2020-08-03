@@ -15,6 +15,7 @@ protocol BinkAnalyticsEvent {
 }
 
 // MARK: - Generic events
+
 enum GenericAnalyticsEvent: BinkAnalyticsEvent {
     case callToAction(identifier: String)
     case paymentScan(success: Bool)
@@ -42,10 +43,17 @@ enum GenericAnalyticsEvent: BinkAnalyticsEvent {
 // MARK: - Onboarding events
 
 enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
-    case start
+    case start(journey: Journey)
     case userComplete
     case serviceComplete
-    case end
+    case end(didSucceed: Bool)
+    
+    enum Journey: String {
+        case login = "LOGIN"
+        case register = "REGISTER"
+        case apple = "APPLE"
+        case facebook = "FACEBOOK"
+    }
     
     var name: String {
         switch self {
@@ -61,6 +69,23 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
     }
     
     var data: [String : Any] {
-        return ["": ""]
+        switch self {
+        case .start(let journey):
+            Current.onboardingTrackingId = UUID().uuidString
+            guard let onboardingId = Current.onboardingTrackingId else {
+                fatalError("Onboarding tracking id not found.")
+            }
+            return ["onboarding-id": onboardingId, "onboarding-journey": journey.rawValue]
+        case .end(let didSucceed):
+            guard let onboardingId = Current.onboardingTrackingId else {
+                fatalError("Onboarding tracking id not found.")
+            }
+            return ["onboarding-id": onboardingId, "onboarding-succeess": didSucceed ? "true" : "false"]
+        default:
+            guard let onboardingId = Current.onboardingTrackingId else {
+                fatalError("Onboarding tracking id not found.")
+            }
+            return ["onboarding-id": onboardingId]
+        }
     }
 }

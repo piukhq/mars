@@ -87,15 +87,23 @@ class RegisterViewController: BaseFormViewController {
                     // TODO: Move to UserService in future ticket
                     let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
                     Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
-                        guard let response = try? result.get() else { return }
+                        guard let response = try? result.get() else {
+                            BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
+                            return
+                        }
                         Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                        BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                     }
                     
                     self?.router.didLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
                     self?.continueButton.stopLoading()
+                    
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
                 }
             case .failure:
+                BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                 self?.handleRegistrationError()
             }
         }

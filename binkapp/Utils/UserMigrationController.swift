@@ -63,21 +63,29 @@ struct UserMigrationController {
                 // TODO: Move to UserService in future ticket
                 let profileRequest = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
                 Current.apiClient.performRequest(profileRequest, expecting: UserProfileResponse.self) { result in
-                    guard let response = try? result.get() else { return }
+                    guard let response = try? result.get() else {
+                        BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
+                        return
+                    }
                     Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                 }
 
                 let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
                 Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: renewEmail)) { (success, error) in
                     guard success else {
+                        BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                         Current.userManager.removeUser()
                         completion(false)
                         return
                     }
                     Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
                     completion(true)
                 }
             case .failure:
+                BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                 Current.userManager.removeUser()
                 completion(false)
             }
