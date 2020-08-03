@@ -130,7 +130,7 @@ extension AddingOptionsViewController: ScanDelegate {
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
         // Record Bouncer usage
-        BinkAnalytics.track(.paymentScan(success: true))
+        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = Int(creditCard.expiryMonth ?? "")
         let year = Int(creditCard.expiryYear ?? "")
         let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)

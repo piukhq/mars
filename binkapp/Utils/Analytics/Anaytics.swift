@@ -15,31 +15,6 @@ protocol AnalyticsTrackable {
     var additionalTrackingData: [String: Any]? { get }
 }
 
-/// Events that can be tracked across the app
-enum BinkAnalyticsEvent {
-    case callToAction(identifier: String)
-    case paymentScan(success: Bool)
-
-    var name: String {
-        switch self {
-        case .callToAction:
-            return "call_to_action_pressed"
-        case .paymentScan:
-            return "payment_scan"
-        }
-    }
-
-    var data: [String: Any] {
-        switch self {
-        case .callToAction(let identifier):
-            return ["identifier": identifier]
-        case .paymentScan(let success):
-            let value = NSNumber(value: success)
-            return ["success": value,  AnalyticsParameterValue: value]
-        }
-    }
-}
-
 /// Convenience class wrapping access to the app's current tracking tool.
 /// Classes that conform to AnalyticsTrackable should call this method passing their trackableEvent and additionalTrackingData properties
 struct BinkAnalytics {
