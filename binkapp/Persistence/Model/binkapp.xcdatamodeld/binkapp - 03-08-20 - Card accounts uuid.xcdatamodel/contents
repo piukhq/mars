@@ -78,7 +78,7 @@
         <attribute name="value" optional="YES" attributeType="String"/>
         <relationship name="featureSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_FeatureSet" inverseName="linkingSupport" inverseEntity="CD_FeatureSet"/>
     </entity>
-    <entity name="CD_MembershipCard" representedClassName="CD_MembershipCard" parentEntity="CD_BaseObject" syncable="YES">
+    <entity name="CD_MembershipCard" representedClassName="CD_MembershipCard" parentEntity="CD_CardAccount" syncable="YES">
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_MembershipCardAccount" inverseName="card" inverseEntity="CD_MembershipCardAccount"/>
         <relationship name="balances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardBalance" inverseName="card" inverseEntity="CD_MembershipCardBalance"/>
         <relationship name="card" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_Card" inverseName="membershipCard" inverseEntity="CD_Card"/>
@@ -89,7 +89,7 @@
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipTransaction" inverseName="card" inverseEntity="CD_MembershipTransaction"/>
         <relationship name="vouchers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Voucher" inverseName="membershipCard" inverseEntity="CD_Voucher"/>
     </entity>
-    <entity name="CD_MembershipCardAccount" representedClassName="CD_MembershipCardAccount" parentEntity="CD_CardAccount" syncable="YES">
+    <entity name="CD_MembershipCardAccount" representedClassName="CD_MembershipCardAccount" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="tier" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <relationship name="card" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="account" inverseEntity="CD_MembershipCard"/>
     </entity>
@@ -166,13 +166,13 @@
         <relationship name="amounts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCardAmount" inverseName="transaction" inverseEntity="CD_MembershipCardAmount"/>
         <relationship name="card" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="transactions" inverseEntity="CD_MembershipCard"/>
     </entity>
-    <entity name="CD_PaymentCard" representedClassName="CD_PaymentCard" parentEntity="CD_BaseObject" syncable="YES">
+    <entity name="CD_PaymentCard" representedClassName="CD_PaymentCard" parentEntity="CD_CardAccount" syncable="YES">
         <attribute name="status" optional="YES" attributeType="String"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_PaymentCardAccount" inverseName="paymentCard" inverseEntity="CD_PaymentCardAccount"/>
         <relationship name="card" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_PaymentCardCard" inverseName="paymentCard" inverseEntity="CD_PaymentCardCard"/>
         <relationship name="linkedMembershipCards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="linkedPaymentCards" inverseEntity="CD_MembershipCard"/>
     </entity>
-    <entity name="CD_PaymentCardAccount" representedClassName="CD_PaymentCardAccount" parentEntity="CD_CardAccount" syncable="YES">
+    <entity name="CD_PaymentCardAccount" representedClassName="CD_PaymentCardAccount" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="verificationInProgress" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
         <relationship name="consents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_PaymentCardAccountConsents" inverseName="account" inverseEntity="CD_PaymentCardAccountConsents"/>

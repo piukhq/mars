@@ -38,6 +38,10 @@ struct MembershipCardModel: Codable {
 extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCard, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCard {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
+        
+        // UUID - Use the object's existing uuid or generate a new one at this point
+        let uuid = cdObject.uuid ?? UUID().uuidString
+        update(cdObject, \.uuid, with: uuid, delta: delta)
 
         // Retrieve Membership Plan
         

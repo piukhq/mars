@@ -29,6 +29,10 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_PaymentCard, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_PaymentCard {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.status, with: status, delta: delta)
+        
+        // UUID - Use the object's existing uuid or generate a new one at this point
+        let uuid = cdObject.uuid ?? UUID().uuidString
+        update(cdObject, \.uuid, with: uuid, delta: delta)
 
         if let card = card {
             let cdCard = card.mapToCoreData(context, .update, overrideID: PaymentCardCardResponse.overrideId(forParentId: overrideID ?? id))

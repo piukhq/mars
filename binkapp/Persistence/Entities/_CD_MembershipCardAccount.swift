@@ -12,7 +12,7 @@ public enum CD_MembershipCardAccountRelationships: String {
     case card = "card"
 }
 
-open class _CD_MembershipCardAccount: CD_CardAccount {
+open class _CD_MembershipCardAccount: CD_BaseObject {
 
     // MARK: - Class methods
 
