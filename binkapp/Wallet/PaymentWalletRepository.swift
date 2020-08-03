@@ -102,6 +102,9 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
             case .success(let response):
                 Current.database.performBackgroundTask { context in
                     let newObject = response.mapToCoreData(context, .update, overrideID: nil)
+                    
+                    // The uuid will have already been set in the mapToCoreData call, but thats fine we can set it to the desired value here from the initial post request
+                    newObject.uuid = paymentCard.uuid
 
                     try? context.save()
 
