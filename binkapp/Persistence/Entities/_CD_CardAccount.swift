@@ -1,23 +1,19 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to CD_MembershipCardAccount.swift instead.
+// Make changes to CD_CardAccount.swift instead.
 
 import Foundation
 import CoreData
 
-public enum CD_MembershipCardAccountAttributes: String {
-    case tier = "tier"
+public enum CD_CardAccountAttributes: String {
+    case uuid = "uuid"
 }
 
-public enum CD_MembershipCardAccountRelationships: String {
-    case card = "card"
-}
-
-open class _CD_MembershipCardAccount: CD_CardAccount {
+open class _CD_CardAccount: CD_BaseObject {
 
     // MARK: - Class methods
 
     override open class func entityName () -> String {
-        return "CD_MembershipCardAccount"
+        return "CD_CardAccount"
     }
 
     override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
@@ -25,7 +21,7 @@ open class _CD_MembershipCardAccount: CD_CardAccount {
     }
 
     @nonobjc
-    open class func fetchRequest() -> NSFetchRequest<CD_MembershipCardAccount> {
+    open class func fetchRequest() -> NSFetchRequest<CD_CardAccount> {
         return NSFetchRequest(entityName: self.entityName())
     }
 
@@ -36,19 +32,16 @@ open class _CD_MembershipCardAccount: CD_CardAccount {
     }
 
     public convenience init?(managedObjectContext: NSManagedObjectContext) {
-        guard let entity = _CD_MembershipCardAccount.entity(managedObjectContext: managedObjectContext) else { return nil }
+        guard let entity = _CD_CardAccount.entity(managedObjectContext: managedObjectContext) else { return nil }
         self.init(entity: entity, insertInto: managedObjectContext)
     }
 
     // MARK: - Properties
 
     @NSManaged open
-    var tier: NSNumber?
+    var uuid: String?
 
     // MARK: - Relationships
-
-    @NSManaged open
-    var card: CD_MembershipCard?
 
 }
 

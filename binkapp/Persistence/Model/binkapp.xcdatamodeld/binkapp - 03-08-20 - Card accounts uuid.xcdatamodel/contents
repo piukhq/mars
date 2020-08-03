@@ -44,6 +44,9 @@
         <relationship name="membershipCard" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="card" inverseEntity="CD_MembershipCard"/>
         <relationship name="membershipPlan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipPlan" inverseName="card" inverseEntity="CD_MembershipPlan"/>
     </entity>
+    <entity name="CD_CardAccount" representedClassName="CD_CardAccount" parentEntity="CD_BaseObject" syncable="YES">
+        <attribute name="uuid" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="CD_EnrolField" representedClassName="CD_EnrolField" parentEntity="CD_BaseObject" syncable="YES">
         <attribute name="column" optional="YES" attributeType="String"/>
         <attribute name="commonName" optional="YES" attributeType="String"/>
@@ -86,7 +89,7 @@
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipTransaction" inverseName="card" inverseEntity="CD_MembershipTransaction"/>
         <relationship name="vouchers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_Voucher" inverseName="membershipCard" inverseEntity="CD_Voucher"/>
     </entity>
-    <entity name="CD_MembershipCardAccount" representedClassName="CD_MembershipCardAccount" parentEntity="CD_BaseObject" syncable="YES">
+    <entity name="CD_MembershipCardAccount" representedClassName="CD_MembershipCardAccount" parentEntity="CD_CardAccount" syncable="YES">
         <attribute name="tier" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <relationship name="card" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="account" inverseEntity="CD_MembershipCard"/>
     </entity>
@@ -169,7 +172,7 @@
         <relationship name="card" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_PaymentCardCard" inverseName="paymentCard" inverseEntity="CD_PaymentCardCard"/>
         <relationship name="linkedMembershipCards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_MembershipCard" inverseName="linkedPaymentCards" inverseEntity="CD_MembershipCard"/>
     </entity>
-    <entity name="CD_PaymentCardAccount" representedClassName="CD_PaymentCardAccount" parentEntity="CD_BaseObject" syncable="YES">
+    <entity name="CD_PaymentCardAccount" representedClassName="CD_PaymentCardAccount" parentEntity="CD_CardAccount" syncable="YES">
         <attribute name="status" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO"/>
         <attribute name="verificationInProgress" optional="YES" attributeType="Boolean" usesScalarValueType="NO"/>
         <relationship name="consents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CD_PaymentCardAccountConsents" inverseName="account" inverseEntity="CD_PaymentCardAccountConsents"/>
@@ -293,5 +296,6 @@
         <element name="CD_Voucher" positionX="-279" positionY="36" width="128" height="223"/>
         <element name="CD_VoucherBurn" positionX="-261" positionY="54" width="128" height="133"/>
         <element name="CD_VoucherEarn" positionX="-270" positionY="45" width="128" height="148"/>
+        <element name="CD_CardAccount" positionX="-270" positionY="45" width="128" height="58"/>
     </elements>
 </model>
