@@ -143,8 +143,9 @@
 		706A2DAF2490F54200679436 /* TescoPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 706A2DAE2490F54200679436 /* TescoPointsScrape.js */; };
 		706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */; };
 		706D203A24D851BA004BCCF3 /* CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203824D851BA004BCCF3 /* CD_CardAccount.swift */; };
-		706D203C24D85B76004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203B24D85B76004BCCF3 /* AnalyticsEvent.swift */; };
+		706D203C24D85B76004BCCF3 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		706D203E24D96D35004BCCF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 706D203D24D96D34004BCCF3 /* GoogleService-Info.plist */; };
+		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
 		70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E867742489303F001ED282 /* SecureUtilityTests.swift */; };
 		70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */; };
@@ -624,6 +625,7 @@
 		706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_CardAccount.swift; sourceTree = "<group>"; };
 		706D203824D851BA004BCCF3 /* CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_CardAccount.swift; sourceTree = "<group>"; };
 		706D203D24D96D34004BCCF3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		706D204124D97104004BCCF3 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
 		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
@@ -2161,8 +2163,8 @@
 		EF94AF0623D9B88600AAA039 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
+				706D204124D97104004BCCF3 /* AnalyticsEvent.swift */,
 				EF94AF0723D9B89B00AAA039 /* Anaytics.swift */,
-				706D203B24D85B76004BCCF3 /* AnalyticsEvent.swift */,
 			);
 			path = Analytics;
 			sourceTree = "<group>";
@@ -2815,6 +2817,7 @@
 				3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */,
 				BD458B44236EC4060029A538 /* RegisterViewController.swift in Sources */,
 				BD458B40236C987F0029A538 /* UserManager.swift in Sources */,
+				706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */,
 				BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */,
 				EFA5F73B2379A7C70027AB80 /* CD_App.swift in Sources */,
 				BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */,
@@ -2978,7 +2981,7 @@
 				B713662D232A63AA008A0ED7 /* BinkModuleView.swift in Sources */,
 				EFA5F7142379A7C70027AB80 /* _CD_AuthoriseField.swift in Sources */,
 				70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */,
-				706D203C24D85B76004BCCF3 /* AnalyticsEvent.swift in Sources */,
+				706D203C24D85B76004BCCF3 /* (null) in Sources */,
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
 				EFEB5BF9237E062500E18743 /* PLRStampsCell.swift in Sources */,
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
