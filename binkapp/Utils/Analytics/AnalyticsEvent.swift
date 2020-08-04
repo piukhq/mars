@@ -94,6 +94,8 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
 
 enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     case addLoyaltyCardRequest(request: MembershipCardPostModel, formPurpose: FormPurpose)
+    case addLoyaltyCardResponseSuccess(loyaltyCard: CD_MembershipCard, formPurpose: FormPurpose, statusCode: Int)
+    case addLoyaltyCardResponseFail
     
     enum LoyaltyCardAccountJourney: String {
         case add = "ADD"
@@ -116,6 +118,10 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
         switch self {
         case .addLoyaltyCardRequest:
             return "add-loyalty-card-request"
+        case .addLoyaltyCardResponseSuccess:
+            return "add-loyalty-card-response-success"
+        case .addLoyaltyCardResponseFail:
+            return "add-loyalty-card-response-fail"
         }
     }
     
@@ -129,6 +135,26 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
                 "loyalty-plan": planId,
                 "scanned-card": formPurpose == .addFromScanner ? "true" : "false"
             ]
+            
+        case .addLoyaltyCardResponseSuccess(let card, let formPurpose, let statusCode):
+            guard let uuid = card.uuid else { fatalError("No card uuid") }
+            guard let cardStatus = card.status?.status?.rawValue else { fatalError("No card status") }
+            guard let reasonCode = card.status?.formattedReasonCodes?.first?.value else { fatalError("No reason code") }
+            guard let planIdString = card.membershipPlan?.id, let planId = Int(planIdString) else { fatalError("No plan id") }
+            return [
+                "loyalty-card-journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
+                "client-account-id": uuid,
+                "account-is-new": statusCode == 201 ? "true" : "false",
+                "loyalty-status": cardStatus,
+                "loyalty-reason-code": reasonCode,
+                "loyalty-plan": planId
+            ]
+            
+        case .addLoyaltyCardResponseFail:
+//            loyalty-card-journey: JOURNEY_STRING
+//            client-account-id: LOCAL_LC_UUID
+//            loyalty-plan: MEMBERSHIP_PLAN_ID
+            return ["": ""]
         }
     }
 }
