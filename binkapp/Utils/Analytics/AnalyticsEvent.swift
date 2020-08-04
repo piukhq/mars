@@ -89,3 +89,46 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
 }
+
+// MARK: - Card account events
+
+enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
+    case addLoyaltyCardRequest(request: MembershipCardPostModel, formPurpose: FormPurpose, scanned: Bool)
+    
+    enum LoyaltyCardAccountJourney: String {
+        case add = "ADD"
+        case enrol = "ENROL"
+        case register = "REGISTER"
+        
+        static func journey(for formPurpose: FormPurpose) -> LoyaltyCardAccountJourney {
+            switch formPurpose {
+            case .add, .addFailed, .addFromScanner:
+                return .add
+            case .signUp, .signUpFailed:
+                return .enrol
+            case .ghostCard, .patchGhostCard:
+                return .register
+            }
+        }
+    }
+    
+    var name: String {
+        switch self {
+        case .addLoyaltyCardRequest:
+            return "add-loyalty-card-request"
+        }
+    }
+    
+    var data: [String : Any] {
+        switch self {
+        case .addLoyaltyCardRequest(let request, let formPurpose, let scanned):
+            guard let planId = request.membershipPlan else { fatalError("No plan id") }
+            return [
+                "loyalty-card-journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
+                "client-account-id": request.uuid,
+                "loyalty-plan": planId,
+                "scanned-card": scanned ? "true" : "false"
+            ]
+        }
+    }
+}

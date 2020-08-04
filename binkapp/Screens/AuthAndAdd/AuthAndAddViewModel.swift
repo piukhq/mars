@@ -143,7 +143,10 @@ class AuthAndAddViewModel {
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
 
         guard let model = membershipCardPostModel else { return }
-                
+        
+        let isScanned = formFields.contains(where: { $0.fieldCommonName == .barcode })
+        BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose, scanned: isScanned))
+        
         repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, onSuccess: { [weak self] card in
             guard let self = self else {return}
             if let card = card {
