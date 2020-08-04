@@ -93,7 +93,7 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
 // MARK: - Card account events
 
 enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
-    case addLoyaltyCardRequest(request: MembershipCardPostModel, formPurpose: FormPurpose, scanned: Bool)
+    case addLoyaltyCardRequest(request: MembershipCardPostModel, formPurpose: FormPurpose)
     
     enum LoyaltyCardAccountJourney: String {
         case add = "ADD"
@@ -121,13 +121,13 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     
     var data: [String : Any] {
         switch self {
-        case .addLoyaltyCardRequest(let request, let formPurpose, let scanned):
+        case .addLoyaltyCardRequest(let request, let formPurpose):
             guard let planId = request.membershipPlan else { fatalError("No plan id") }
             return [
                 "loyalty-card-journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
                 "client-account-id": request.uuid,
                 "loyalty-plan": planId,
-                "scanned-card": scanned ? "true" : "false"
+                "scanned-card": formPurpose == .addFromScanner ? "true" : "false"
             ]
         }
     }

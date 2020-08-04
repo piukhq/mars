@@ -144,8 +144,7 @@ class AuthAndAddViewModel {
 
         guard let model = membershipCardPostModel else { return }
         
-        let isScanned = formFields.contains(where: { $0.fieldCommonName == .barcode })
-        BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose, scanned: isScanned))
+        BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
         
         repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, onSuccess: { [weak self] card in
             guard let self = self else {return}
