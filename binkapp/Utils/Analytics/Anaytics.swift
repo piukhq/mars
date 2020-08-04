@@ -26,13 +26,19 @@ struct BinkAnalytics {
     }
 
     static let keyPrefix = "com.bink.wallet.trackingSession."
+    static let failedWithNoDataEventName = "failed-event-no-data"
+    static let attemptedEventName = "attempted-event"
 
     static func track(_ event: BinkAnalyticsEvent, additionalTrackingData: [String: Any]? = nil) {
         #if RELEASE
         var trackingData: [String: Any] = [:]
 
         defer {
-            Analytics.logEvent(event.name, parameters: trackingData)
+            if trackingData == nil {
+                Analytics.logEvent(BinkAnalytics.failedWithNoDataEventName, parameters: [BinkAnalytics.attemptedEventName: event.name])
+            } else {
+                Analytics.logEvent(event.name, parameters: trackingData)
+            }
         }
 
         guard var data = additionalTrackingData else {

@@ -11,7 +11,7 @@ import FirebaseAnalytics
 
 protocol BinkAnalyticsEvent {
     var name: String { get }
-    var data: [String: Any] { get }
+    var data: [String: Any]? { get }
 }
 
 // MARK: - Generic events
@@ -29,7 +29,7 @@ enum GenericAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String: Any] {
+    var data: [String: Any]? {
         switch self {
         case .callToAction(let identifier):
             return ["identifier": identifier]
@@ -68,7 +68,7 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String : Any] {
+    var data: [String : Any]? {
         switch self {
         case .start(let journey):
             Current.onboardingTrackingId = UUID().uuidString
@@ -135,10 +135,10 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String : Any] {
+    var data: [String : Any]? {
         switch self {
         case .addLoyaltyCardRequest(let request, let formPurpose):
-            guard let planId = request.membershipPlan else { fatalError("No plan id") }
+            guard let planId = request.membershipPlan else { return nil }
             return [
                 "loyalty-card-journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
                 "client-account-id": request.uuid,
@@ -147,10 +147,10 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             ]
             
         case .addLoyaltyCardResponseSuccess(let card, let formPurpose, let statusCode):
-            guard let uuid = card.uuid else { fatalError("No card uuid") }
-            guard let cardStatus = card.status?.status?.rawValue else { fatalError("No card status") }
-            guard let reasonCode = card.status?.formattedReasonCodes?.first?.value else { fatalError("No reason code") }
-            guard let planIdString = card.membershipPlan?.id, let planId = Int(planIdString) else { fatalError("No plan id") }
+            guard let uuid = card.uuid else { return nil }
+            guard let cardStatus = card.status?.status?.rawValue else { return nil }
+            guard let reasonCode = card.status?.formattedReasonCodes?.first?.value else { return nil }
+            guard let planIdString = card.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
             return [
                 "loyalty-card-journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
                 "client-account-id": uuid,
@@ -161,7 +161,7 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             ]
             
         case .addLoyaltyCardResponseFail(let request, let formPurpose):
-            guard let planId = request.membershipPlan else { fatalError("No plan id") }
+            guard let planId = request.membershipPlan else { return nil }
             return [
                 "loyalty-card-journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
                 "client-account-id": request.uuid,
@@ -169,15 +169,15 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             ]
             
         case .addPaymentCardRequest(let request):
-            guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { fatalError("Failed to get payment scheme") }
+            guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { return nil }
             return [
                 "payment-scheme": paymentScheme,
                 "client-account-id": request.uuid
             ]
             
         case .addPaymentCardResponseSuccess(let request, let card, let statusCode):
-            guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { fatalError("Failed to get payment scheme") }
-            guard let status = card.status else { fatalError("Failed to get payment status") }
+            guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { return nil }
+            guard let status = card.status else { return nil }
             return [
                 "payment-scheme": paymentScheme,
                 "client-account-id": request.uuid,
@@ -186,7 +186,7 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             ]
             
         case .addPaymentCardResponseFail(let request):
-            guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { fatalError("Failed to get payment scheme") }
+            guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { return nil }
             return [
                 "payment-scheme": paymentScheme,
                 "client-account-id": request.uuid
