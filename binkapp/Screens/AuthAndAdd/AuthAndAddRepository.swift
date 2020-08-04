@@ -57,6 +57,7 @@ class AuthAndAddRepository {
                     }
                 }
             case .failure(let error):
+                BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardResponseFail(request: request, formPurpose: formPurpose))
                 onError(error)
             }
         }

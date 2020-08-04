@@ -95,7 +95,7 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
 enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     case addLoyaltyCardRequest(request: MembershipCardPostModel, formPurpose: FormPurpose)
     case addLoyaltyCardResponseSuccess(loyaltyCard: CD_MembershipCard, formPurpose: FormPurpose, statusCode: Int)
-    case addLoyaltyCardResponseFail
+    case addLoyaltyCardResponseFail(request: MembershipCardPostModel, formPurpose: FormPurpose)
     
     enum LoyaltyCardAccountJourney: String {
         case add = "ADD"
@@ -150,11 +150,13 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
                 "loyalty-plan": planId
             ]
             
-        case .addLoyaltyCardResponseFail:
-//            loyalty-card-journey: JOURNEY_STRING
-//            client-account-id: LOCAL_LC_UUID
-//            loyalty-plan: MEMBERSHIP_PLAN_ID
-            return ["": ""]
+        case .addLoyaltyCardResponseFail(let request, let formPurpose):
+            guard let planId = request.membershipPlan else { fatalError("No plan id") }
+            return [
+                "loyalty-card-journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
+                "client-account-id": request.uuid,
+                "loyalty-plan": planId
+            ]
         }
     }
 }
