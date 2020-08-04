@@ -69,7 +69,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
         let request = BinkNetworkRequest(endpoint: .spreedly, method: .post, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(request, parameters: spreedlyRequest, expecting: SpreedlyResponse.self) { result in
+        apiClient.performRequestWithParameters(request, parameters: spreedlyRequest, expecting: SpreedlyResponse.self) { (result, _) in
             switch result {
             case .success(let response):
                 onSuccess(response)
@@ -97,7 +97,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
 
         let networkRequest = BinkNetworkRequest(endpoint: .paymentCards, method: .post, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: PaymentCardModel.self) { result in
+        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: PaymentCardModel.self) { (result, _) in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { context in

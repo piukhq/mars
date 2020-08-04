@@ -67,7 +67,7 @@ class RegisterViewController: BaseFormViewController {
         continueButton.startLoading()
 
         let request = BinkNetworkRequest(endpoint: .register, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] result in
+        Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] (result, _) in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -86,7 +86,7 @@ class RegisterViewController: BaseFormViewController {
                     // Get latest user profile data in background and ignore any failure
                     // TODO: Move to UserService in future ticket
                     let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
+                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
                         guard let response = try? result.get() else {
                             BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                             return

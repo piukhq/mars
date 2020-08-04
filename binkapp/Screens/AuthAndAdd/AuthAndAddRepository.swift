@@ -34,7 +34,7 @@ class AuthAndAddRepository {
         }
 
         let networkRequest = BinkNetworkRequest(endpoint: endpoint, method: method, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: MembershipCardModel.self) { result in
+        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: MembershipCardModel.self) { (result, _) in
             switch result {
             case .success(let response):
                 // Map to core data
@@ -78,7 +78,7 @@ class AuthAndAddRepository {
         }
 
         let request = BinkNetworkRequest(endpoint: endpoint, method: method, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(request, parameters: mutableParams, expecting: MembershipCardModel.self) { result in
+        apiClient.performRequestWithParameters(request, parameters: mutableParams, expecting: MembershipCardModel.self) { (result, _) in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { context in
