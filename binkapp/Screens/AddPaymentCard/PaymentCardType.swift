@@ -39,6 +39,17 @@ enum PaymentCardType: String, Codable {
         }
     }
     
+    var paymentSchemeIdentifier: Int {
+        switch self {
+        case .amex:
+            return 2
+        case .mastercard:
+            return 1
+        case .visa:
+            return 0
+        }
+    }
+    
     static let allValues: [PaymentCardType] = [.amex, .mastercard, .visa]
     
     private var formatValues: FormatValues {

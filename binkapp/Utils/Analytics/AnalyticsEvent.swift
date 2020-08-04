@@ -97,6 +97,10 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     case addLoyaltyCardResponseSuccess(loyaltyCard: CD_MembershipCard, formPurpose: FormPurpose, statusCode: Int)
     case addLoyaltyCardResponseFail(request: MembershipCardPostModel, formPurpose: FormPurpose)
     
+    case addPaymentCardRequest(request: PaymentCardCreateModel)
+    case addPaymentCardResponseSuccess(request: PaymentCardCreateModel, paymentCard: CD_PaymentCard, statusCode: Int)
+    case addPaymentCardResponseFail(request: PaymentCardCreateModel)
+    
     enum LoyaltyCardAccountJourney: String {
         case add = "ADD"
         case enrol = "ENROL"
@@ -122,6 +126,12 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             return "add-loyalty-card-response-success"
         case .addLoyaltyCardResponseFail:
             return "add-loyalty-card-response-fail"
+        case .addPaymentCardRequest:
+            return "add-payment-card-request"
+        case .addPaymentCardResponseSuccess:
+            return "add-payment-card-response-success"
+        case .addPaymentCardResponseFail:
+            return "add-payment-card-response-fail"
         }
     }
     
@@ -156,6 +166,30 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
                 "loyalty-card-journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
                 "client-account-id": request.uuid,
                 "loyalty-plan": planId
+            ]
+            
+        case .addPaymentCardRequest(let request):
+            guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { fatalError("Failed to get payment scheme") }
+            return [
+                "payment-scheme": paymentScheme,
+                "client-account-id": request.uuid
+            ]
+            
+        case .addPaymentCardResponseSuccess(let request, let card, let statusCode):
+            guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { fatalError("Failed to get payment scheme") }
+            guard let status = card.status else { fatalError("Failed to get payment status") }
+            return [
+                "payment-scheme": paymentScheme,
+                "client-account-id": request.uuid,
+                "account-is-new": statusCode == 201 ? "true" : "false",
+                "payment-status": status
+            ]
+            
+        case .addPaymentCardResponseFail(let request):
+            guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { fatalError("Failed to get payment scheme") }
+            return [
+                "payment-scheme": paymentScheme,
+                "client-account-id": request.uuid
             ]
         }
     }

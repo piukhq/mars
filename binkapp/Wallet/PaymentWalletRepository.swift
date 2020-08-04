@@ -95,9 +95,11 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
             onError(nil)
             return
         }
+        
+        BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardRequest(request: paymentCard))
 
         let networkRequest = BinkNetworkRequest(endpoint: .paymentCards, method: .post, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: PaymentCardModel.self) { (result, _) in
+        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: PaymentCardModel.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { context in
@@ -105,6 +107,10 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
                     
                     // The uuid will have already been set in the mapToCoreData call, but thats fine we can set it to the desired value here from the initial post request
                     newObject.uuid = paymentCard.uuid
+                    
+                    if let statusCode = rawResponse?.statusCode {
+                        BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseSuccess(request: paymentCard, paymentCard: newObject, statusCode: statusCode))
+                    }
 
                     try? context.save()
 
@@ -115,6 +121,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
                     }
                 }
             case .failure(let error):
+                BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseFail(request: paymentCard))
                 onError(error)
             }
         }
