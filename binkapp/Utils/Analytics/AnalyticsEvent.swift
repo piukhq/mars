@@ -109,6 +109,8 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     case deletePaymentCardResponseSuccess(card: TrackableWalletCard?)
     case deletePaymentCardResponseFail(card: TrackableWalletCard?)
     
+    case loyaltyCardStatus(loyaltyCard: CD_MembershipCard)
+    
     enum LoyaltyCardAccountJourney: String {
         case add = "ADD"
         case enrol = "ENROL"
@@ -152,6 +154,8 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             return "delete-payment-card-response-success"
         case .deletePaymentCardResponseFail:
             return "delete-payment-card-response-fail"
+        case .loyaltyCardStatus:
+            return "loyalty-card-status"
         }
     }
     
@@ -260,6 +264,16 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             return [
                 "payment-scheme": paymentScheme,
                 "client-account-id": uuid
+            ]
+            
+        case .loyaltyCardStatus(let card):
+            guard let uuid = card.uuid else { return nil }
+            guard let status = card.status?.status?.rawValue else { return nil }
+            guard let planIdString = card.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
+            return [
+                "client-account-id": uuid,
+                "status": status,
+                "loyalty-card-plan": planId
             ]
         }
     }

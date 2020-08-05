@@ -71,6 +71,10 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         }
 
         if let status = status {
+            if let existingStatus = cdObject.status?.status, status.state != existingStatus {
+                BinkAnalytics.track(CardAccountAnalyticsEvent.loyaltyCardStatus(loyaltyCard: cdObject))
+            }
+            
             let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
             update(cdStatus, \.card, with: cdObject, delta: delta)
             update(cdObject, \.status, with: cdStatus, delta: delta)
