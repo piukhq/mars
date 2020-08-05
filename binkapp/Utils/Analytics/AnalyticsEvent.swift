@@ -101,6 +101,14 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     case addPaymentCardResponseSuccess(request: PaymentCardCreateModel, paymentCard: CD_PaymentCard, statusCode: Int)
     case addPaymentCardResponseFail(request: PaymentCardCreateModel)
     
+    case deleteLoyaltyCard(card: WalletCard)
+    case deleteLoyaltyCardResponseSuccess(card: TrackableWalletCard?)
+    case deleteLoyaltyCardResponseFail(card: TrackableWalletCard?)
+    
+    case deletePaymentCard(card: WalletCard)
+    case deletePaymentCardResponseSuccess(card: TrackableWalletCard?)
+    case deletePaymentCardResponseFail(card: TrackableWalletCard?)
+    
     enum LoyaltyCardAccountJourney: String {
         case add = "ADD"
         case enrol = "ENROL"
@@ -132,6 +140,18 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             return "add-payment-card-response-success"
         case .addPaymentCardResponseFail:
             return "add-payment-card-response-fail"
+        case .deleteLoyaltyCard:
+            return "delete-loyalty-card"
+        case .deleteLoyaltyCardResponseSuccess:
+            return "delete-loyalty-card-response-success"
+        case .deleteLoyaltyCardResponseFail:
+            return "delete-loyalty-card-response-fail"
+        case .deletePaymentCard:
+            return "delete-payment-card-response"
+        case .deletePaymentCardResponseSuccess:
+            return "delete-payment-card-response-success"
+        case .deletePaymentCardResponseFail:
+            return "delete-payment-card-response-fail"
         }
     }
     
@@ -190,6 +210,56 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             return [
                 "payment-scheme": paymentScheme,
                 "client-account-id": request.uuid
+            ]
+            
+        case .deleteLoyaltyCard(let card):
+            guard let loyaltyCard = card as? CD_MembershipCard else { return nil }
+            guard let planIdString = loyaltyCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
+            guard let uuid = loyaltyCard.uuid else { return nil }
+            return [
+                "loyalty-plan": planId,
+                "client-account-id": uuid
+            ]
+            
+        case .deleteLoyaltyCardResponseSuccess(let card):
+            guard let planIdString = card?.loyaltyPlan, let planId = Int(planIdString) else { return nil }
+            guard let uuid = card?.uuid else { return nil }
+            return [
+                "loyalty-plan": planId,
+                "client-account-id": uuid
+            ]
+            
+        case .deleteLoyaltyCardResponseFail(let card):
+            guard let planIdString = card?.loyaltyPlan, let planId = Int(planIdString) else { return nil }
+            guard let uuid = card?.uuid else { return nil }
+            return [
+                "loyalty-plan": planId,
+                "client-account-id": uuid
+            ]
+            
+        case .deletePaymentCard(let card):
+            guard let paymentCard = card as? CD_PaymentCard else { return nil }
+            guard let paymentScheme = paymentCard.card?.paymentSchemeIdentifier else { return nil }
+            guard let uuid = paymentCard.uuid else { return nil }
+            return [
+                "payment-scheme": paymentScheme,
+                "client-account-id": uuid
+            ]
+            
+        case .deletePaymentCardResponseSuccess(let card):
+            guard let paymentScheme = card?.paymentScheme else { return nil }
+            guard let uuid = card?.uuid else { return nil }
+            return [
+                "payment-scheme": paymentScheme,
+                "client-account-id": uuid
+            ]
+            
+        case .deletePaymentCardResponseFail(let card):
+            guard let paymentScheme = card?.paymentScheme else { return nil }
+            guard let uuid = card?.uuid else { return nil }
+            return [
+                "payment-scheme": paymentScheme,
+                "client-account-id": uuid
             ]
         }
     }

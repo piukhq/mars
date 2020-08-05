@@ -20,3 +20,9 @@ protocol WalletCardProtocol {
     var id: String! { get }
     var type: WalletCardType { get }
 }
+
+struct TrackableWalletCard {
+    var uuid: String?
+    var loyaltyPlan: String?
+    var paymentScheme: Int?
+}
