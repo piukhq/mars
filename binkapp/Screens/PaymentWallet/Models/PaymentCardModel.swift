@@ -28,6 +28,10 @@ struct PaymentCardModel: Codable {
 extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_PaymentCard, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_PaymentCard {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
+        
+        if let existingStatus = cdObject.status, status != existingStatus {
+            BinkAnalytics.track(CardAccountAnalyticsEvent.paymentCardStatus(paymentCard: cdObject, newStatus: status))
+        }
         update(cdObject, \.status, with: status, delta: delta)
         
         // UUID - Use the object's existing uuid or generate a new one at this point
