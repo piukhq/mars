@@ -297,6 +297,7 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
 enum PLLAnalyticsEvent: BinkAnalyticsEvent {
     case pllPatch(loyaltyCard: CD_MembershipCard, paymentCard: CD_PaymentCard, response: PaymentCardModel?)
     case pllDelete(loyaltyCard: CD_MembershipCard, paymentCard: CD_PaymentCard)
+    case pllActive(loyaltyCard: CD_MembershipCard, paymentCard: CD_PaymentCard)
     
     enum PLLState: String {
         case active = "ACTIVE"
@@ -310,6 +311,8 @@ enum PLLAnalyticsEvent: BinkAnalyticsEvent {
             return "pll_patch"
         case .pllDelete:
             return "pll_delete"
+        case .pllActive:
+            return "pll_active"
         }
     }
     
@@ -325,6 +328,15 @@ enum PLLAnalyticsEvent: BinkAnalyticsEvent {
                 "state": pllState(response: response, loyaltyCard: loyaltyCard).rawValue
             ]
         case .pllDelete(let loyaltyCard, let paymentCard):
+            guard let paymentId = paymentCard.uuid else { return nil }
+            guard let loyaltyId = loyaltyCard.uuid else { return nil }
+            return [
+                "payment_id": paymentId,
+                "loyalty_id": loyaltyId,
+                "link_id": "\(loyaltyId)/\(paymentId)"
+            ]
+            
+        case .pllActive(let loyaltyCard, paymentCard: let paymentCard):
             guard let paymentId = paymentCard.uuid else { return nil }
             guard let loyaltyId = loyaltyCard.uuid else { return nil }
             return [
