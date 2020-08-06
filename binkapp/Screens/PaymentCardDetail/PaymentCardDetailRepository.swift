@@ -61,12 +61,14 @@ class PaymentCardDetailRepository: WalletRepository {
         }
     }
 
-    func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, completion: @escaping (CD_PaymentCard?) -> Void) {
+    func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?) -> Void) {
         // TODO: Request should become a static let in a service in future ticket
-        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), method: .patch, headers: nil, isUserDriven: false)
+        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), method: .patch, headers: nil, isUserDriven: false)
         apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
             switch result {
             case .success(let response):
+                BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: response))
+                
                 Current.database.performBackgroundTask { backgroundContext in
                     // TODO: Should we be using .none here? Only option that works...
                     // It's functional but we're not sure why it doesn't work otherwise and that is concerning.
@@ -88,6 +90,7 @@ class PaymentCardDetailRepository: WalletRepository {
                     }
                 }
             case .failure:
+                BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
                 completion(nil)
             }
         }
@@ -102,6 +105,8 @@ class PaymentCardDetailRepository: WalletRepository {
         apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
             switch result {
             case .success:
+                BinkAnalytics.track(PLLAnalyticsEvent.pllDelete(loyaltyCard: membershipCard, paymentCard: paymentCard))
+                
                 Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
 
                     if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCardId) {

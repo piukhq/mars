@@ -34,7 +34,7 @@ class PLLScreenRepository {
                     group.leave()
                 }
             } else {
-                linkMembershipCard(withId: membershipCard.id, toPaymentCardWithId: paymentCard.id) { id in
+                linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { id in
                     if let id = id {
                         idsToAdd.append(id)
                     } else {
@@ -63,14 +63,16 @@ class PLLScreenRepository {
 // MARK: - Private methods
 
 private extension PLLScreenRepository {
-    func linkMembershipCard(withId membershipCardId: String, toPaymentCardWithId paymentCardId: String, completion: @escaping (String?) -> Void) {
+    func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
         // TODO: Request should become a static let in a service in future ticket
-        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), method: .patch, headers: nil, isUserDriven: false)
+        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), method: .patch, headers: nil, isUserDriven: false)
         apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
             switch result {
             case .success(let response):
+                BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: response))
                 completion(response.id)
             case .failure:
+                BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
                 completion(nil)
             }
         }
@@ -82,6 +84,7 @@ private extension PLLScreenRepository {
         apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
             switch result {
             case .success:
+                BinkAnalytics.track(PLLAnalyticsEvent.pllDelete(loyaltyCard: membershipCard, paymentCard: paymentCard))
                 completion(paymentCard.id)
             case .failure:
                 completion(nil)

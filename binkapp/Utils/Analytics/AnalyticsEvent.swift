@@ -293,3 +293,56 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
 }
+
+enum PLLAnalyticsEvent: BinkAnalyticsEvent {
+    case pllPatch(loyaltyCard: CD_MembershipCard, paymentCard: CD_PaymentCard, response: PaymentCardModel?)
+    case pllDelete(loyaltyCard: CD_MembershipCard, paymentCard: CD_PaymentCard)
+    
+    enum PLLState: String {
+        case active = "ACTIVE"
+        case failed = "FAILED"
+        case softLink = "SOFT-LINK"
+    }
+    
+    var name: String {
+        switch self {
+        case .pllPatch:
+            return "pll_patch"
+        case .pllDelete:
+            return "pll_delete"
+        }
+    }
+    
+    var data: [String : Any]? {
+        switch self {
+        case .pllPatch(let loyaltyCard, let paymentCard, let response):
+            guard let paymentId = paymentCard.uuid else { return nil }
+            guard let loyaltyId = loyaltyCard.uuid else { return nil }
+            return [
+                "payment_id": paymentId,
+                "loyalty_id": loyaltyId,
+                "link_id": "\(loyaltyId)/\(paymentId)",
+                "state": pllState(response: response, loyaltyCard: loyaltyCard).rawValue
+            ]
+        case .pllDelete(let loyaltyCard, let paymentCard):
+            guard let paymentId = paymentCard.uuid else { return nil }
+            guard let loyaltyId = loyaltyCard.uuid else { return nil }
+            return [
+                "payment_id": paymentId,
+                "loyalty_id": loyaltyId,
+                "link_id": "\(loyaltyId)/\(paymentId)"
+            ]
+        }
+    }
+    
+    private func pllState(response: PaymentCardModel?, loyaltyCard: CD_MembershipCard) -> PLLState {
+        // If we have a response, we know the API call returned a 200 so the state must be active or soft-link
+        guard let response = response else { return .failed }
+        
+        // If the response contains a linked membership card with the id we attempted to patch, the state is active
+        if let loyaltyId = Int(loyaltyCard.id), response.membershipCards?.contains(where: { $0.id == loyaltyId }) == true {
+            return .active
+        }
+        return .softLink
+    }
+}
