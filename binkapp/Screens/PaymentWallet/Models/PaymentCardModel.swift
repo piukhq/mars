@@ -31,6 +31,21 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
         
         if let existingStatus = cdObject.status, status != existingStatus {
             BinkAnalytics.track(CardAccountAnalyticsEvent.paymentCardStatus(paymentCard: cdObject, newStatus: status))
+            
+            // Get all membership card managed objects and all active link id's
+            if let persistedMembershipCards = Current.wallet.membershipCards, let linkedMembershipCardIds = membershipCards?.filter({ $0.activeLink == true }).map({ $0.id }) {
+                // For each membership card we have stored, check it's id against this payment card's active link id's
+                persistedMembershipCards.forEach {
+                    // Cast the id to int so we can compare
+                    if let persistedCardId = Int($0.id) {
+                        // Check if the membership card's id is present in the payment card's active link id
+                        if linkedMembershipCardIds.contains(where: { $0 == persistedCardId }) {
+                            // This payment card and membership card have an active link, track the state change
+                            BinkAnalytics.track(PLLAnalyticsEvent.pllActive(loyaltyCard: $0, paymentCard: cdObject))
+                        }
+                    }
+                }
+            }
         }
         update(cdObject, \.status, with: status, delta: delta)
         
