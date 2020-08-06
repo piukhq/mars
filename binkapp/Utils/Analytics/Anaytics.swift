@@ -31,7 +31,7 @@ struct BinkAnalytics {
 
     static func track(_ event: BinkAnalyticsEvent, additionalTrackingData: [String: Any]? = nil) {
         #if RELEASE
-        var trackingData: [String: Any] = [:]
+        var trackingData: [String: Any]?
 
         defer {
             if trackingData == nil {
@@ -41,12 +41,20 @@ struct BinkAnalytics {
             }
         }
 
+        // Do we have additional tracking data?
         guard var data = additionalTrackingData else {
+            // No, just use the event data
             trackingData = event.data
             return
         }
 
-        data.merge(dict: event.data)
+        // We have additional tracking data. If we have event data, merge the 2
+        if let eventData = event.data {
+            data.merge(dict: eventData)
+            trackingData = data
+        }
+        
+        // Otherwise just track the additional data
         trackingData = data
         #endif
     }
