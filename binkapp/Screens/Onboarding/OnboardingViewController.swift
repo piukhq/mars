@@ -166,6 +166,8 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
 
     @available(iOS 13.0, *)
     @objc private func handleAppleIdRequest() {
+        BinkAnalytics.track(OnboardingAnalyticsEvent.start(journey: .apple))
+        
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.email]
@@ -222,6 +224,9 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
             viewModel.router.presentNoConnectivityPopup()
             return
         }
+    
+        BinkAnalytics.track(OnboardingAnalyticsEvent.start(journey: .facebook))
+        
         FacebookLoginController.login(with: self, onSuccess: { [weak self] facebookRequest in
             // If we have no email address, push them onto the add email screen
             guard facebookRequest.email != nil else {

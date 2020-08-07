@@ -141,6 +141,11 @@
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
 		706A2DAD248FD64600679436 /* TescoLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 706A2DAC248FD64600679436 /* TescoLogin.js */; };
 		706A2DAF2490F54200679436 /* TescoPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 706A2DAE2490F54200679436 /* TescoPointsScrape.js */; };
+		706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */; };
+		706D203A24D851BA004BCCF3 /* CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203824D851BA004BCCF3 /* CD_CardAccount.swift */; };
+		706D203C24D85B76004BCCF3 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */ = {isa = PBXBuildFile; fileRef = 706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */; };
+		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
 		70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E867742489303F001ED282 /* SecureUtilityTests.swift */; };
 		70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */; };
@@ -616,6 +621,11 @@
 		7049B63C24AB52AA00661128 /* binkapp - 30-06-20 - Add field alternatives.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 30-06-20 - Add field alternatives.xcdatamodel"; sourceTree = "<group>"; };
 		706A2DAC248FD64600679436 /* TescoLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoLogin.js; sourceTree = "<group>"; };
 		706A2DAE2490F54200679436 /* TescoPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoPointsScrape.js; sourceTree = "<group>"; };
+		706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 03-08-20 - Card accounts uuid.xcdatamodel"; sourceTree = "<group>"; };
+		706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_CardAccount.swift; sourceTree = "<group>"; };
+		706D203824D851BA004BCCF3 /* CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_CardAccount.swift; sourceTree = "<group>"; };
+		706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-BETA.plist"; sourceTree = "<group>"; };
+		706D204124D97104004BCCF3 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
 		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
@@ -1415,6 +1425,7 @@
 			children = (
 				706A2DAC248FD64600679436 /* TescoLogin.js */,
 				706A2DAE2490F54200679436 /* TescoPointsScrape.js */,
+				706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */,
 				EF7F6E6423E47BFA00352DCF /* GoogleService-Info.plist */,
 				5ECE046A22CE5798001BA964 /* binkapp */,
 				5ECE048222CE579B001BA964 /* binkappTests */,
@@ -2009,6 +2020,8 @@
 		EF758E1823229972000D26A9 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */,
+				706D203824D851BA004BCCF3 /* CD_CardAccount.swift */,
 				EFA81022240565750000D21D /* _CD_PlanDynamicContent.swift */,
 				EFA81023240565750000D21D /* CD_PlanDynamicContent.swift */,
 				EFA5F6F42379A7C60027AB80 /* _CD_AddField.swift */,
@@ -2150,6 +2163,7 @@
 		EF94AF0623D9B88600AAA039 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
+				706D204124D97104004BCCF3 /* AnalyticsEvent.swift */,
 				EF94AF0723D9B89B00AAA039 /* Anaytics.swift */,
 			);
 			path = Analytics;
@@ -2561,6 +2575,7 @@
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
 				EFA81016240405070000D21D /* JailbrokenViewController.xib in Resources */,
 				EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */,
+				706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */,
 				3C7067F0232FD52D00AB88A5 /* SimpleInfoViewController.xib in Resources */,
 				BD25E6972388610B0027FF3E /* LoadingScreen.xib in Resources */,
 				3CD3493D22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf in Resources */,
@@ -2802,6 +2817,7 @@
 				3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */,
 				BD458B44236EC4060029A538 /* RegisterViewController.swift in Sources */,
 				BD458B40236C987F0029A538 /* UserManager.swift in Sources */,
+				706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */,
 				BD9FB6B0233761C400E5559A /* UILayoutPriority+Extension.swift in Sources */,
 				EFA5F73B2379A7C70027AB80 /* CD_App.swift in Sources */,
 				BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */,
@@ -2876,6 +2892,7 @@
 				EFA5F72E2379A7C70027AB80 /* _CD_AddField.swift in Sources */,
 				B72633432305899200951037 /* AddFieldModel.swift in Sources */,
 				3CEABFD22316ABA9009B1122 /* MembershipCardAmount.swift in Sources */,
+				706D203A24D851BA004BCCF3 /* CD_CardAccount.swift in Sources */,
 				EFA5F7522379AAB20027AB80 /* CD_VoucherBurn.swift in Sources */,
 				3C17FC2F22F2C69200E423A2 /* MembershipCardModel.swift in Sources */,
 				EFA5F7662379BD690027AB80 /* PLRStampsActiveCell.swift in Sources */,
@@ -2964,6 +2981,7 @@
 				B713662D232A63AA008A0ED7 /* BinkModuleView.swift in Sources */,
 				EFA5F7142379A7C70027AB80 /* _CD_AuthoriseField.swift in Sources */,
 				70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */,
+				706D203C24D85B76004BCCF3 /* (null) in Sources */,
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
 				EFEB5BF9237E062500E18743 /* PLRStampsCell.swift in Sources */,
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
@@ -3002,6 +3020,7 @@
 				EFA5F72C2379A7C70027AB80 /* CD_MembershipTransaction.swift in Sources */,
 				EFA5F7102379A7C70027AB80 /* _CD_MembershipCard.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
+				706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */,
 				3CEE169D2440ABBC00933859 /* BrowseBrandsViewModelMock.swift in Sources */,
 				EFA5F70D2379A7C70027AB80 /* _CD_PaymentCardAccount.swift in Sources */,
 				EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */,
@@ -3848,6 +3867,7 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */,
 				70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */,
 				7049B63C24AB52AA00661128 /* binkapp - 30-06-20 - Add field alternatives.xcdatamodel */,
 				EFEF54A5246EA96400A630F3 /* binkapp - 15-05-20 - Many to many card and images.xcdatamodel */,
@@ -3858,7 +3878,7 @@
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = 70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */;
+			currentVersion = 706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -11,7 +11,7 @@ import UIKit
 class BinkTrackableButton: UIButton, AnalyticsTrackable {
     var trackableEvent: BinkAnalyticsEvent? {
         guard let identifier = identifier else { return nil }
-        return .callToAction(identifier: identifier)
+        return GenericAnalyticsEvent.callToAction(identifier: identifier)
     }
 
     var additionalTrackingData: [String : Any]?

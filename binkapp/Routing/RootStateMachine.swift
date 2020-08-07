@@ -73,7 +73,7 @@ class RootStateMachine: NSObject {
 
             // TODO: Request should become a static let in a service in future ticket
             let request = BinkNetworkRequest(endpoint: .logout, method: .post, headers: nil, isUserDriven: false)
-            Current.apiClient.performRequest(request, expecting: LogoutResponse.self) { _ in }
+            Current.apiClient.performRequest(request, expecting: LogoutResponse.self) { (_, _) in }
         }
     }
     

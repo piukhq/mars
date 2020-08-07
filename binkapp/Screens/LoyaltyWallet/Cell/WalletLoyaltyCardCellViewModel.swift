@@ -20,7 +20,7 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     // Tech debt
-    var cardStatus: CD_MembershipCardStatus.MembershipCardStatus? {
+    var cardStatus: MembershipCardStatus? {
         return membershipCard.status?.status
     }
 

@@ -15,31 +15,6 @@ protocol AnalyticsTrackable {
     var additionalTrackingData: [String: Any]? { get }
 }
 
-/// Events that can be tracked across the app
-enum BinkAnalyticsEvent {
-    case callToAction(identifier: String)
-    case paymentScan(success: Bool)
-
-    var name: String {
-        switch self {
-        case .callToAction:
-            return "call_to_action_pressed"
-        case .paymentScan:
-            return "payment_scan"
-        }
-    }
-
-    var data: [String: Any] {
-        switch self {
-        case .callToAction(let identifier):
-            return ["identifier": identifier]
-        case .paymentScan(let success):
-            let value = NSNumber(value: success)
-            return ["success": value,  AnalyticsParameterValue: value]
-        }
-    }
-}
-
 /// Convenience class wrapping access to the app's current tracking tool.
 /// Classes that conform to AnalyticsTrackable should call this method passing their trackableEvent and additionalTrackingData properties
 struct BinkAnalytics {
@@ -51,21 +26,35 @@ struct BinkAnalytics {
     }
 
     static let keyPrefix = "com.bink.wallet.trackingSession."
+    static let failedWithNoDataEventName = "failed_event_no_data"
+    static let attemptedEventName = "attempted_event"
 
     static func track(_ event: BinkAnalyticsEvent, additionalTrackingData: [String: Any]? = nil) {
         #if RELEASE
-        var trackingData: [String: Any] = [:]
+        var trackingData: [String: Any]?
 
         defer {
-            Analytics.logEvent(event.name, parameters: trackingData)
+            if trackingData == nil {
+                Analytics.logEvent(BinkAnalytics.failedWithNoDataEventName, parameters: [BinkAnalytics.attemptedEventName: event.name])
+            } else {
+                Analytics.logEvent(event.name, parameters: trackingData)
+            }
         }
 
+        // Do we have additional tracking data?
         guard var data = additionalTrackingData else {
+            // No, just use the event data
             trackingData = event.data
             return
         }
 
-        data.merge(dict: event.data)
+        // We have additional tracking data. If we have event data, merge the 2
+        if let eventData = event.data {
+            data.merge(dict: eventData)
+            trackingData = data
+        }
+        
+        // Otherwise just track the additional data
         trackingData = data
         #endif
     }
