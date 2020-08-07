@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>532636841265-vujr00tk92b3fohgng9ier67j801sfjj.apps.googleusercontent.com</string>
+	<string>532636841265-sbqg4rmi0parhludps183lgfcdkm8d9g.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.532636841265-vujr00tk92b3fohgng9ier67j801sfjj</string>
+	<string>com.googleusercontent.apps.532636841265-sbqg4rmi0parhludps183lgfcdkm8d9g</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA3hfbcFFwjotwewHuHCjAU4ASFhB8Wyjw</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.bink.wallet.beta</string>
+	<string>com.bink.wallet</string>
 	<key>PROJECT_ID</key>
 	<string>bink-ac226</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:532636841265:ios:d187a7ec083f05a972ec10</string>
+	<string>1:532636841265:ios:b725c51913efbcf372ec10</string>
 	<key>DATABASE_URL</key>
 	<string>https://bink-ac226.firebaseio.com</string>
 </dict>
