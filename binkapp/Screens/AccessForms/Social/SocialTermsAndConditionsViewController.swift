@@ -107,6 +107,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     // FIXME: To avoid the code duplicate below, in future we need to build the Facebook and Apple request objects from a common object type
     
     private func loginWithFacebook(request: FacebookRequest, preferenceCheckboxes: [CheckboxView]) {
+        // TODO: Move to UserService
         let networtRequest = BinkNetworkRequest(endpoint: .facebook, method: .post, headers: nil, isUserDriven: true)
         Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] (result, _) in
             switch result {
@@ -118,6 +119,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                 Current.userManager.setNewUser(with: response)
                 
                 let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
+                // TODO: Move to UserService
                 Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
                     guard success else {
                         self?.handleAuthError()
@@ -125,7 +127,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                     }
                     
                     // Get latest user profile data in background and ignore any failure
-                    // TODO: Move to UserService in future ticket
+                    // TODO: Move to UserService
                     let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
                     Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
                         guard let response = try? result.get() else {
@@ -152,6 +154,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     private func loginWithApple(request: SignInWithAppleRequest, preferenceCheckboxes: [CheckboxView]) {
         let networtRequest = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
+        // TODO: Move to UserService
         Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] (result, _) in
             switch result {
             case .success(let response):
@@ -162,6 +165,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                 Current.userManager.setNewUser(with: response)
                 
                 let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
+                // TODO: Move to UserService
                 Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
                     guard success else {
                         self?.handleAuthError()
@@ -169,7 +173,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                     }
                     
                     // Get latest user profile data in background and ignore any failure
-                    // TODO: Move to UserService in future ticket
+                    // TODO: Move to UserService
                     let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
                     Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
                         guard let response = try? result.get() else {
@@ -208,6 +212,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
 
         // We don't worry about whether this was successful or not
         let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: false)
+        // TODO: Move to UserService
         Current.apiClient.performRequestWithNoResponse(request, parameters: params, completion: nil)
     }
     

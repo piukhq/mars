@@ -21,6 +21,7 @@ class PreferencesRepository {
 
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (BinkError?) -> Void) {
         let request = BinkNetworkRequest(endpoint: .preferences, method: .get, headers: nil, isUserDriven: false)
+        // TODO: Move to UserService
         apiClient.performRequest(request, expecting: [PreferencesModel].self) { (result, _) in
             switch result {
             case .success(let preferences):
@@ -33,6 +34,7 @@ class PreferencesRepository {
     
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (BinkError) -> Void) {
         let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: true)
+        // TODO: Move to UserService
         apiClient.performRequestWithNoResponse(request, parameters: preferences) { (success, error) in
             if let error = error {
                 onError(error)

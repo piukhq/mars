@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol WalletRepository: CoreDataRepositoryProtocol {
-    typealias EmptyCompletionBlock = () -> Void
-    init(apiClient: APIClient)
-    func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock?)
-}
-
-protocol PaymentWalletRepositoryProtocol: WalletRepository {
-    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void)
-}
+//protocol WalletRepository: CoreDataRepositoryProtocol {
+//    typealias EmptyCompletionBlock = () -> Void
+//    init(apiClient: APIClient)
+//    func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock?)
+//}
+//
+//protocol PaymentWalletRepositoryProtocol: WalletRepository {
+//    func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void)
+//}

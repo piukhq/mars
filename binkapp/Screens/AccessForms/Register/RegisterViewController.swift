@@ -67,6 +67,7 @@ class RegisterViewController: BaseFormViewController {
         continueButton.startLoading()
 
         let request = BinkNetworkRequest(endpoint: .register, method: .post, headers: nil, isUserDriven: true)
+        // TODO: Move to UserService
         Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] (result, _) in
             switch result {
             case .success(let response):
@@ -77,6 +78,7 @@ class RegisterViewController: BaseFormViewController {
                 Current.userManager.setNewUser(with: response)
 
                 let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
+                // TODO: Move to UserService
                 Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
                     guard success else {
                         self?.handleRegistrationError()
@@ -84,7 +86,7 @@ class RegisterViewController: BaseFormViewController {
                     }
 
                     // Get latest user profile data in background and ignore any failure
-                    // TODO: Move to UserService in future ticket
+                    // TODO: Move to UserService
                     let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
                     Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
                         guard let response = try? result.get() else {
@@ -123,6 +125,7 @@ class RegisterViewController: BaseFormViewController {
         
         // We don't worry about whether this was successful or not
         let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: true)
+        // TODO: Move to UserService
         Current.apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
     }
     

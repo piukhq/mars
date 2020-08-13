@@ -72,6 +72,7 @@ class RootStateMachine: NSObject {
             // On success or error, we will defer to clearing local storage and clearing the user's token.
 
             // TODO: Request should become a static let in a service in future ticket
+            // TODO: Move to UserService
             let request = BinkNetworkRequest(endpoint: .logout, method: .post, headers: nil, isUserDriven: false)
             Current.apiClient.performRequest(request, expecting: LogoutResponse.self) { (_, _) in }
         }

@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ZendeskService.start()
         
         // Get latest user profile data
-        // TODO: Move to UserService in future ticket
+        // TODO: Move to UserService
         if Current.userManager.hasCurrentUser {
             let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
             Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in

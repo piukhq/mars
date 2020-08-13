@@ -8,13 +8,7 @@
 
 import UIKit
 
-class PLLScreenRepository {
-    let apiClient: APIClient
-    
-    init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
-    
+class PLLScreenRepository: WalletServiceProtocol {
     func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping () -> Void) {
         
         var idsToRemove = [String]()
@@ -63,10 +57,9 @@ class PLLScreenRepository {
 // MARK: - Private methods
 
 private extension PLLScreenRepository {
+    // TODO: These two methods could be one
     func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
-        // TODO: Request should become a static let in a service in future ticket
-        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), method: .patch, headers: nil, isUserDriven: false)
-        apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
+        toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: true) { result in
             switch result {
             case .success(let response):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: response))
@@ -79,14 +72,13 @@ private extension PLLScreenRepository {
     }
 
     func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
-        // TODO: Request should become a static let in a service in future ticket
-        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), method: .delete, headers: nil, isUserDriven: false)
-        apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
+        toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: false) { result in
             switch result {
-            case .success:
-                BinkAnalytics.track(PLLAnalyticsEvent.pllDelete(loyaltyCard: membershipCard, paymentCard: paymentCard))
-                completion(paymentCard.id)
+            case .success(let response):
+                BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: response))
+                completion(response.id)
             case .failure:
+                BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
                 completion(nil)
             }
         }
