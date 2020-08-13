@@ -41,7 +41,7 @@ struct UserMigrationController {
 
         // TODO: Request should become a static let in a service in future ticket
         let request = BinkNetworkRequest(endpoint: .renew, method: .post, headers: ["Authorization" : "Token " + token, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiClient.apiVersion.rawValue)"], isUserDriven: false)
-        Current.apiClient.performRequest(request, expecting: RenewTokenResponse.self) { result in
+        Current.apiClient.performRequest(request, expecting: RenewTokenResponse.self) { (result, _) in
             switch result {
             case .success(let response):
                 var email: String?
@@ -62,22 +62,30 @@ struct UserMigrationController {
                 // Get latest user profile data in background and ignore any failure
                 // TODO: Move to UserService in future ticket
                 let profileRequest = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-                Current.apiClient.performRequest(profileRequest, expecting: UserProfileResponse.self) { result in
-                    guard let response = try? result.get() else { return }
+                Current.apiClient.performRequest(profileRequest, expecting: UserProfileResponse.self) { (result, _) in
+                    guard let response = try? result.get() else {
+                        BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
+                        return
+                    }
                     Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                 }
 
                 let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
                 Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: renewEmail)) { (success, error) in
                     guard success else {
+                        BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                         Current.userManager.removeUser()
                         completion(false)
                         return
                     }
                     Current.userDefaults.set(true, forKey: Constants.hasMigratedFromBinkLegacyKey)
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
                     completion(true)
                 }
             case .failure:
+                BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                 Current.userManager.removeUser()
                 completion(false)
             }

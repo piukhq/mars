@@ -10,6 +10,7 @@ import Foundation
 import KeychainAccess
 import FBSDKLoginKit
 import FirebaseCrashlytics
+import Firebase
 
 private enum UserManagerError: Error {
     case missingData
@@ -106,6 +107,7 @@ class UserManager {
         // Set user id for Crashlytics
         guard let userId = response.uid else { return }
         Crashlytics.crashlytics().setUserID(userId)
+        Analytics.setUserID(userId)
     }
     
     private func setToken(with response: TokenResponseProtocol) throws {

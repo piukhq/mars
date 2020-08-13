@@ -38,6 +38,10 @@ struct MembershipCardModel: Codable {
 extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipCard, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipCard {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
+        
+        // UUID - Use the object's existing uuid or generate a new one at this point
+        let uuid = cdObject.uuid ?? UUID().uuidString
+        update(cdObject, \.uuid, with: uuid, delta: delta)
 
         // Retrieve Membership Plan
         
@@ -69,6 +73,25 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
         /// If this card will get it's balance from web scraping, we should always ignore this path as we locally create these objects
         if let planId = membershipPlan, !Current.pointsScrapingManager.planIdIsWebScrapable(planId) {
             if let status = status {
+                if let existingStatus = cdObject.status?.status, status.state != existingStatus {
+                    BinkAnalytics.track(CardAccountAnalyticsEvent.loyaltyCardStatus(loyaltyCard: cdObject, newStatus: status.state))
+                    
+                    // Get all payment card managed objects and all active link id's
+                    if let persistedPaymentCards = Current.wallet.paymentCards, let linkedPaymentCardIds = paymentCards?.filter({ $0.activeLink == true }).map({ $0.id }) {
+                        // For each payment card we have stored, check it's id against this membership card's active link id's
+                        persistedPaymentCards.forEach {
+                            // Cast the id to int so we can compare
+                            if let persistedCardId = Int($0.id) {
+                                // Check if the payment card's id is present in the membership card's active link id
+                                if linkedPaymentCardIds.contains(where: { $0 == persistedCardId }) {
+                                    // This membership card and payment card have an active link, track the state change
+                                    BinkAnalytics.track(PLLAnalyticsEvent.pllActive(loyaltyCard: cdObject, paymentCard: $0))
+                                }
+                            }
+                        }
+                    }
+                }
+                
                 let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
                 update(cdStatus, \.card, with: cdObject, delta: delta)
                 update(cdObject, \.status, with: cdStatus, delta: delta)

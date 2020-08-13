@@ -18,6 +18,7 @@ class World {
     lazy var apiClient = APIClient()
     lazy var pointsScrapingManager = PointsScrapingManager()
     lazy var remoteConfig = RemoteConfigUtil()
+    var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
 }
 
 protocol BinkUserDefaults {

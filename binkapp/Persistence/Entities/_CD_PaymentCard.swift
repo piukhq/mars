@@ -14,7 +14,7 @@ public enum CD_PaymentCardRelationships: String {
     case linkedMembershipCards = "linkedMembershipCards"
 }
 
-open class _CD_PaymentCard: CD_BaseObject {
+open class _CD_PaymentCard: CD_CardAccount {
 
     // MARK: - Class methods
 

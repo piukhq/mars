@@ -8,17 +8,17 @@
 import Foundation
 import CoreData
 
+enum MembershipCardStatus: String, Codable {
+    case authorised
+    case unauthorised
+    case pending
+    case failed
+}
+
 struct MembershipCardStatusModel: Codable {
     let apiId: Int?
     let state: MembershipCardStatus?
     let reasonCodes: [ReasonCode]?
-    
-    enum MembershipCardStatus: String, Codable {
-        case authorised
-        case unauthorised
-        case pending
-        case failed 
-    }
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"

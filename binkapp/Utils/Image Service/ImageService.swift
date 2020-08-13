@@ -72,7 +72,7 @@ final class ImageService {
     }
 
     private func downloadImage(forPath path: String, withPolicy policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
-        Current.apiClient.getImage(fromUrlString: path) { result in
+        Current.apiClient.getImage(fromUrlString: path) { (result, _) in
             switch result {
             case .success(let image):
                 completion(image)

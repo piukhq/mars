@@ -34,12 +34,20 @@ class AuthAndAddRepository {
         }
 
         let networkRequest = BinkNetworkRequest(endpoint: endpoint, method: method, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: MembershipCardModel.self) { result in
+        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: MembershipCardModel.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 // Map to core data
                 Current.database.performBackgroundTask { context in
                     let newObject = response.mapToCoreData(context, .update, overrideID: nil)
+                    
+                    // The uuid will have already been set in the mapToCoreData call, but thats fine we can set it to the desired value here from the initial post request
+                    newObject.uuid = request.uuid
+                    
+                    if let statusCode = rawResponse?.statusCode {
+                        BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardResponseSuccess(loyaltyCard: newObject, formPurpose: formPurpose, statusCode: statusCode))
+                    }
+
                     
                     if Current.pointsScrapingManager.planIdIsWebScrapable(request.membershipPlan) {
                         let pendingStatus = MembershipCardStatusModel(apiId: nil, state: .pending, reasonCodes: [.attemptingToScrapePointsValue])
@@ -66,6 +74,7 @@ class AuthAndAddRepository {
                 }
                 
             case .failure(let error):
+                BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardResponseFail(request: request, formPurpose: formPurpose))
                 onError(error)
             }
         }
@@ -91,7 +100,7 @@ class AuthAndAddRepository {
         }
 
         let request = BinkNetworkRequest(endpoint: endpoint, method: method, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(request, parameters: mutableParams, expecting: MembershipCardModel.self) { result in
+        apiClient.performRequestWithParameters(request, parameters: mutableParams, expecting: MembershipCardModel.self) { (result, _) in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { context in
