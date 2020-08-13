@@ -303,7 +303,7 @@ extension UIAlertController {
         let okAction = UIAlertAction(title: "ok".localized, style: .default) { action in
             let firstName = alert.textFields?[0].text
             let lastName = alert.textFields?[1].text
-            // TODO: Move to UserService
+            // TODO: Move to UserService - this one's a bit more tricky!
             let request = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)
             let params = UserProfileUpdateRequest(firstName: firstName, lastName: lastName)
             Current.apiClient.performRequestWithParameters(request, parameters: params, expecting: UserProfileResponse.self) { (result, _) in

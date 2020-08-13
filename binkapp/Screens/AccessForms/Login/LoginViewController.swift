@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: BaseFormViewController {
+class LoginViewController: BaseFormViewController, UserServiceProtocol {
     
     private struct Constants {
         static let hyperlinkHeight: CGFloat = 54.0
@@ -84,9 +84,7 @@ class LoginViewController: BaseFormViewController {
             password: fields["password"]
         )
 
-        let request = BinkNetworkRequest(endpoint: .login, method: .post, headers: nil, isUserDriven: true)
-        // TODO: Move to UserService
-        Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] (result, _) in
+        login(request: loginRequest) { [weak self] result in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -94,32 +92,27 @@ class LoginViewController: BaseFormViewController {
                     return
                 }
                 Current.userManager.setNewUser(with: response)
-
-                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-                // TODO: Move to UserService
-                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                
+                self?.createService(params: APIConstants.makeServicePostRequest(email: email), completion: { (success, _) in
                     guard success else {
                         self?.handleLoginError()
                         return
                     }
-
-                    // Get latest user profile data in background and ignore any failure
-                    // TODO: Move to UserService
-                    let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
+                    
+                    self?.getUserProfile(completion: { result in
                         guard let response = try? result.get() else {
                             BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                             return
                         }
                         Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
                         BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
-                    }
-
+                    })
+                    
                     self?.continueButton.stopLoading()
                     self?.router.didLogin()
                     BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
-                }
+                })
             case .failure:
                 BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                 self?.handleLoginError()
