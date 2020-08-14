@@ -11,6 +11,17 @@ import Alamofire
 
 enum UserServiceError: BinkError {
     case failedToGetUserProfile
+    case failedToUpdateUserProfile
+    case failedToLogout
+    case failedToSubmitForgotPasswordRequest
+    case failedToRegisterUser
+    case failedToLogin
+    case failedToAuthWithFacebook
+    case failedToAuthWithApple
+    case failedToCreateService
+    case failedToGetPreferences
+    case failedToSetPreferences
+    case failedToRenewToken
     case customError(String)
     
     var domain: BinkErrorDomain {
@@ -23,9 +34,32 @@ enum UserServiceError: BinkError {
     
     var message: String {
         switch self {
+        case .failedToGetUserProfile:
+            return "Failed to get user profile"
+        case .failedToUpdateUserProfile:
+            return "Failed to update user profile"
+        case .failedToLogout:
+            return "Failed to logout"
+        case .failedToSubmitForgotPasswordRequest:
+            return "Failed to submit forgot password request"
+        case .failedToRegisterUser:
+            return "Failed to register user"
+        case .failedToLogin:
+            return "Failed to login"
+        case .failedToAuthWithFacebook:
+            return "Failed to auth with facebook"
+        case .failedToAuthWithApple:
+            return "Failed to auth with apple"
+        case .failedToCreateService:
+            return "Failed to create service"
+        case .failedToGetPreferences:
+            return "Failed to get preferences"
+        case .failedToSetPreferences:
+            return "Failed to set preferences"
+        case .failedToRenewToken:
+            return "Failed to renew token"
         case .customError(let message):
             return message
-        default: return ""
         }
     }
 }
@@ -52,7 +86,7 @@ extension UserServiceProtocol {
             case .success(let response):
                 completion?(.success(response))
             case .failure:
-                completion?(.failure(.failedToGetUserProfile))
+                completion?(.failure(.failedToUpdateUserProfile))
             }
         }
     }
@@ -64,7 +98,7 @@ extension UserServiceProtocol {
             case .success(let response):
                 completion?(.success(response))
             case .failure:
-                completion?(.failure(.failedToGetUserProfile))
+                completion?(.failure(.failedToLogout))
             }
         }
     }
@@ -73,7 +107,7 @@ extension UserServiceProtocol {
         let request = BinkNetworkRequest(endpoint: .forgotPassword, method: .post, headers: nil, isUserDriven: true)
         Current.apiClient.performRequestWithNoResponse(request, parameters: ["email": email]) { (success, _) in
             guard success else {
-                completion?(false, .failedToGetUserProfile)
+                completion?(false, .failedToSubmitForgotPasswordRequest)
                 return
             }
             completion?(true, nil)
@@ -87,7 +121,7 @@ extension UserServiceProtocol {
             case .success(let response):
                 completion?(.success(response))
             case .failure:
-                completion?(.failure(.failedToGetUserProfile))
+                completion?(.failure(.failedToRegisterUser))
             }
         }
     }
@@ -99,7 +133,7 @@ extension UserServiceProtocol {
             case .success(let response):
                 completion?(.success(response))
             case .failure:
-                completion?(.failure(.failedToGetUserProfile))
+                completion?(.failure(.failedToLogin))
             }
         }
     }
@@ -111,7 +145,7 @@ extension UserServiceProtocol {
             case .success(let response):
                 completion?(.success(response))
             case .failure:
-                completion?(.failure(.failedToGetUserProfile))
+                completion?(.failure(.failedToAuthWithFacebook))
             }
         }
     }
@@ -123,7 +157,7 @@ extension UserServiceProtocol {
             case .success(let response):
                 completion?(.success(response))
             case .failure:
-                completion?(.failure(.failedToGetUserProfile))
+                completion?(.failure(.failedToAuthWithApple))
             }
         }
     }
@@ -132,7 +166,7 @@ extension UserServiceProtocol {
         let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
         Current.apiClient.performRequestWithNoResponse(request, parameters: params) { (success, _) in
             guard success else {
-                completion?(false, .failedToGetUserProfile)
+                completion?(false, .failedToCreateService)
                 return
             }
             completion?(true, nil)
@@ -146,7 +180,7 @@ extension UserServiceProtocol {
             case .success(let response):
                 completion?(.success(response))
             case .failure:
-                completion?(.failure(.failedToGetUserProfile))
+                completion?(.failure(.failedToGetPreferences))
             }
         }
     }
@@ -155,10 +189,22 @@ extension UserServiceProtocol {
         let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: false)
         Current.apiClient.performRequestWithNoResponse(request, parameters: params) { (success, _) in
             guard success else {
-                completion?(false, .failedToGetUserProfile)
+                completion?(false, .failedToSetPreferences)
                 return
             }
             completion?(true, nil)
+        }
+    }
+    
+    func renewToken(_ currentToken: String, completion: ServiceCompletionResultHandler<RenewTokenResponse, UserServiceError>? = nil) {
+        let request = BinkNetworkRequest(endpoint: .renew, method: .post, headers: ["Authorization" : "Token " + currentToken, "Content-Type" : "application/json", "Accept": "application/json;\(Current.apiClient.apiVersion.rawValue)"], isUserDriven: false)
+        Current.apiClient.performRequest(request, expecting: RenewTokenResponse.self) { (result, _) in
+            switch result {
+            case .success(let response):
+                completion?(.success(response))
+            case .failure:
+                completion?(.failure(.failedToRenewToken))
+            }
         }
     }
 }
