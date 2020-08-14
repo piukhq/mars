@@ -43,18 +43,31 @@ class PaymentCardDetailRepository: WalletRepository {
     }
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
+        var trackableCard = TrackableWalletCard()
+        if let paymentCard = card as? CD_PaymentCard {
+            trackableCard = TrackableWalletCard(uuid: paymentCard.uuid, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
+        }
+        
+        BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: card))
+        
         // Process the backend delete, but fail silently
         let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
-        apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
-
+        apiClient.performRequestWithNoResponse(request, parameters: nil) { (success, _) in
+            guard success else {
+                BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard))
+                return
+            }
+            BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseSuccess(card: trackableCard))
+        }
+        
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
             if let cardToDelete = cardToDelete {
                 context.delete(cardToDelete)
             }
-
+            
             try? context.save()
-
+            
             DispatchQueue.main.async {
                 completion?()
             }
