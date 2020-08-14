@@ -20,7 +20,7 @@ class MainScreenRouter {
     weak var delegate: MainScreenRouterDelegate?
     let apiClient = Current.apiClient
     
-    init(delegate: MainScreenRouterDelegate) {
+    init(delegate: MainScreenRouterDelegate?) {
         self.delegate = delegate
 
         NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
