@@ -109,7 +109,6 @@ PODS:
   - JWTDecode (2.4.1)
   - KeychainAccess (4.1.0)
   - Keys (1.0.1)
-  - M13Checkbox (3.4.0)
   - nanopb (1.30905.0):
     - nanopb/decode (= 1.30905.0)
     - nanopb/encode (= 1.30905.0)
@@ -150,7 +149,6 @@ DEPENDENCIES:
   - JWTDecode (~> 2.4)
   - KeychainAccess (~> 4.1)
   - Keys (from `Pods/CocoaPodsKeys`)
-  - M13Checkbox
   - "SwiftyRSA (from `git@git.bink.com:Pantheon/iOS/SwiftyRSA.git`)"
   - ZendeskSupportSDK
 
@@ -181,7 +179,6 @@ SPEC REPOS:
     - GoogleUtilities
     - JWTDecode
     - KeychainAccess
-    - M13Checkbox
     - nanopb
     - PromisesObjC
     - ZendeskCommonUISDK
@@ -230,7 +227,6 @@ SPEC CHECKSUMS:
   JWTDecode: 4bd4da0cdf0f8154fd467fa48499f34ec057fb88
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   Keys: a576f4c9c1c641ca913a959a9c62ed3f215a8de9
-  M13Checkbox: 6f59404540ac98ba83a3d1afac335895a40c6a5d
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   SwiftyRSA: 56a08a690d181194d7c4babc0daaeaeb6b71bf27
@@ -242,6 +238,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: e183d32abac888c448469e2005c4a5a8c3ed73f0
   ZendeskSupportSDK: e52f37fa8bcba91f024b81025869fe5a2860f741
 
-PODFILE CHECKSUM: 16f04fd373105a94ed042daf1105ccd3b8260dbf
+PODFILE CHECKSUM: 4d8d6403815bd774ccdef35a16d9775a22d86ec3
 
 COCOAPODS: 1.9.1

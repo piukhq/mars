@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import AVKit
-import AVFoundation
 import CardScan
 
 class AddingOptionsViewController: BinkTrackableViewController {
@@ -39,11 +37,6 @@ class AddingOptionsViewController: BinkTrackableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .addOptions)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     init(viewModel: AddingOptionsViewModel) {
@@ -109,57 +102,12 @@ class AddingOptionsViewController: BinkTrackableViewController {
     }
     
     private func proceedWithCameraAccess(scanType: ScanType) {
-        let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
-        switch status {
-        case .authorized:
-            switch scanType {
-            case .loyalty:
-                viewModel.toLoyaltyScanner(delegate: self)
-            case .payment:
-                viewModel.toPaymentCardScanner(delegate: self)
-            }
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { granted in
-                if granted {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
-                        guard let self = self else { return }
-                        switch scanType {
-                        case .loyalty:
-                            self.viewModel.toLoyaltyScanner(delegate: self)
-                        case .payment:
-                            self.viewModel.toPaymentCardScanner(delegate: self)
-                        }
-                    })
-                } else {
-                    self.presentEnterManuallyAlert(scanType: scanType)
-                }
-            }
-        case .denied:
-            self.presentEnterManuallyAlert(scanType: scanType)
-        default:
-            return
+        switch scanType {
+        case .loyalty:
+            viewModel.toLoyaltyScanner(delegate: self)
+        case .payment:
+            viewModel.toPaymentCardScanner(delegate: self)
         }
-    }
-    
-    private func presentEnterManuallyAlert(scanType: ScanType) {
-        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
-        
-        let alert = UIAlertController(title: "camera_denied_title".localized, message: "camera_denied_body".localized, preferredStyle: .alert)
-        let allowAction = UIAlertAction(title: "camera_denied_allow_access".localized, style: .default, handler: { _ in
-            UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
-        })
-        let manualAction = UIAlertAction(title: "camera_denied_manually_option".localized, style: .default) { [weak self] _ in
-            switch scanType {
-            case .loyalty:
-                self?.toBrowseBrands()
-            case .payment:
-                self?.viewModel.toAddPaymentCardScreen()
-            }
-        }
-        alert.addAction(manualAction)
-        alert.addAction(allowAction)
-        alert.addAction(UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -182,7 +130,7 @@ extension AddingOptionsViewController: ScanDelegate {
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
         // Record Bouncer usage
-        BinkAnalytics.track(.paymentScan(success: true))
+        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = Int(creditCard.expiryMonth ?? "")
         let year = Int(creditCard.expiryYear ?? "")
         let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)

@@ -14,6 +14,7 @@ class PaymentCardCreateModel: Codable {
     var month: Int?
     var year: Int?
     var cardType: PaymentCardType?
+    let uuid = UUID().uuidString
     
     init(fullPan: String?, nameOnCard: String?, month: Int?, year: Int?) {
         self.fullPan = fullPan

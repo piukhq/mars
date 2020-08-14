@@ -66,6 +66,7 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
         
         // We are doing this because the loading indicator is getting stuck when quickly switching between tabs
         // May need to change the approach

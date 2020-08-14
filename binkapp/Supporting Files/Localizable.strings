@@ -312,7 +312,7 @@
 
 "plr_stamp_voucher_detail_expired_header" = "Your voucher has expired";
 "plr_stamp_voucher_detail_redeemed_header" = "Your voucher was redeemed";
-"plr_stamp_voucher_detail_issued_header" = "Your voucher is ready!";
+"plr_stamp_voucher_detail_issued_header" = "Your %@ voucher is ready!";
 "plr_stamp_voucher_detail_inprogress_header" = "About this voucher";
 
 "plr_voucher_detail_issued_date_prefix" = "Added ";
@@ -333,7 +333,8 @@
 "plr_history_subtitle" = "Your past rewards";
 "plr_payment_card_needed_title" = "Payment card needed";
 "plr_payment_card_needed_body" = "You currently don’t have any linked payment cards.\nYou can only earn rewards by shopping with a linked payment card.\nPlease add a card so you can start earning rewards.";
-"plr_loyalty_card_subtitle" = "Until next reward";
+"plr_loyalty_card_subtitle_stamps" = "earned";
+"plr_loyalty_card_subtitle_accumulator" = "spent";
 
 "ssl_pinning_failure_title" = "Error";
 "ssl_pinning_failure_text" = "Connection error. Please try again.";

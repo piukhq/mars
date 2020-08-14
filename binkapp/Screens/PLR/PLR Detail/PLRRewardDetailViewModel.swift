@@ -45,7 +45,17 @@ class PLRRewardDetailViewModel {
         case (.stamps, .inProgress):
             return "plr_stamp_voucher_detail_inprogress_header".localized
         case (.stamps, .issued):
-            return "plr_stamp_voucher_detail_issued_header".localized
+            var formattedText = ""
+            formattedText.append(voucher.burn?.prefix ?? "")
+            
+            // We store burn value as 0 by default if the API returns nothing
+            // We can safely assume that no burn value will ever be 0, so we can guard against it here
+            if let burnValue = voucher.burn?.value, burnValue != 0 {
+                formattedText.append(String(describing: burnValue))
+            }
+            formattedText.append(" ")
+            formattedText.append(voucher.burn?.suffix ?? "")
+            return String(format: "plr_stamp_voucher_detail_issued_header".localized, formattedText)
         case (.stamps, .redeemed):
             return "plr_stamp_voucher_detail_redeemed_header".localized
         case (.stamps, .expired):
@@ -61,14 +71,15 @@ class PLRRewardDetailViewModel {
             return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.type ?? "")
         case (.accumulator, .issued):
             return String(format: "plr_voucher_detail_subtext_issued".localized, voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
+            
         case (.stamps, .inProgress):
-            return "Spend £5 or more to get a stamp. Collect 5 Stamps and get a FREE Whopper."
+            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsInProgressDetail)
         case (.stamps, .issued):
-            return "Use the code above to redeem your reward. You will get a FREE Whopper off your next purchase in one of our participating Burger King restaurants."
+            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsIssuedDetail)
         case (.stamps, .redeemed):
-            return "You have redeemed your FREE Whopper"
+            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsRedeemedDetail)
         case (.stamps, .expired):
-            return "Your FREE Whopper voucher has expired"
+            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsExpiredDetail)
         default:
             return nil
         }
@@ -111,7 +122,7 @@ class PLRRewardDetailViewModel {
     // MARK: - View decisioning
 
     var shouldShowCode: Bool {
-        return voucherState != .inProgress
+        return voucherState == .issued
     }
 
     var shouldShowHeader: Bool {

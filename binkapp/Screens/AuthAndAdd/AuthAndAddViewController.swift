@@ -23,7 +23,7 @@ class AuthAndAddViewController: BaseFormViewController {
 
     private lazy var floatingButtons: BinkPrimarySecondaryButtonView = {
         let floatingButtons = BinkPrimarySecondaryButtonView()
-        floatingButtons.configure(primaryButtonTitle: viewModel.buttonTitle, secondaryButtonTitle: "no_account_button_title".localized)
+        floatingButtons.configure(primaryButtonTitle: viewModel.buttonTitle, secondaryButtonTitle: nil)
         floatingButtons.primaryButton.isEnabled = self.dataSource.fullFormIsValid
         floatingButtons.delegate = self
         floatingButtons.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +34,7 @@ class AuthAndAddViewController: BaseFormViewController {
     
     init(viewModel: AuthAndAddViewModel) {
         self.viewModel = viewModel
-        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose)
+        let datasource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: viewModel.formPurpose, prefilledValues: viewModel.prefilledFormValues)
         super.init(title: "login".localized, description: "", dataSource: datasource)
         dataSource.delegate = self
     }
@@ -51,6 +51,11 @@ class AuthAndAddViewController: BaseFormViewController {
         configureLayout()
         stackScrollView.insert(arrangedSubview: brandHeaderView, atIndex: 0, customSpacing: Constants.cardPadding)
         collectionView.delegate = self
+        
+        // If we enter this view controller from the scanner, we should safely remove the barcode scanner from the stack
+        if viewModel.shouldRemoveScannerFromStack {
+            navigationController?.removeViewControllerBehind(self, ifViewControllerBehindIsOfType: BarcodeScannerViewController.self)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,7 +88,6 @@ class AuthAndAddViewController: BaseFormViewController {
             floatingButtons.rightAnchor.constraint(equalTo: view.rightAnchor),
             floatingButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
         ])
-        floatingButtons.secondaryButton.isHidden = viewModel.accountButtonShouldHide
     }
     
     func configureUI() {
@@ -113,6 +117,24 @@ class AuthAndAddViewController: BaseFormViewController {
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
         viewModel.openWebView(withUrlString: URL)
+    }
+}
+
+extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        viewController.dismiss(animated: true) {
+            var prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+                FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
+            }
+            prefilledValues.append(FormDataSource.PrefilledValue(commonName: .barcode, value: barcode))
+            self.dataSource = FormDataSource(authAdd: self.viewModel.getMembershipPlan(), formPurpose: .addFromScanner, delegate: self, prefilledValues: prefilledValues)
+            self.viewModel.formPurpose = .addFromScanner
+            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+        }
+    }
+    
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        viewController.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -147,6 +169,20 @@ extension AuthAndAddViewController: FormDataSourceDelegate {
         let y = stackScrollView.contentSize.height - stackScrollView.bounds.size.height + stackScrollView.contentInset.bottom
         let offset = CGPoint(x: 0, y: y)
         stackScrollView.setContentOffset(offset, animated: true)
+    }
+    
+    func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan) {
+        viewModel.toLoyaltyScanner(forPlan: plan, delegate: self)
+    }
+    
+    func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {
+        let prefilledValues = self.dataSource.fields.filter { $0.fieldCommonName != .barcode && $0.fieldCommonName != .cardNumber }.map {
+            FormDataSource.PrefilledValue(commonName: $0.fieldCommonName, value: $0.value)
+        }
+        
+        self.dataSource = FormDataSource(authAdd: viewModel.getMembershipPlan(), formPurpose: .add, delegate: self, prefilledValues: prefilledValues)
+        viewModel.formPurpose = .add
+        formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
     }
 }
 

@@ -16,6 +16,7 @@ class World {
     lazy var userDefaults: BinkUserDefaults = UserDefaults.standard
     lazy var userManager = UserManager()
     lazy var apiClient = APIClient()
+    var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
 }
 
 protocol BinkUserDefaults {
@@ -38,6 +39,7 @@ extension UserDefaults: BinkUserDefaults {
         case hasLaunchedWallet
         case userEmail
         case debugBaseURL
+        case httpCookies
     }
 
     func set(_ value: Any?, forDefaultsKey defaultName: UserDefaults.Keys) {

@@ -70,6 +70,7 @@ class MainScreenRouter {
         let repository = LoyaltyWalletRepository(apiClient: apiClient)
         let viewModel = LoyaltyWalletViewModel(repository: repository, router: self)
         let viewController = LoyaltyWalletViewController(viewModel: viewModel)
+        viewModel.paymentScanDelegate = viewController
         
         return viewController
     }
@@ -77,6 +78,7 @@ class MainScreenRouter {
     func getPaymentWalletViewController() -> UIViewController {
         let viewModel = PaymentWalletViewModel(repository: PaymentWalletRepository(apiClient: apiClient), router: self)
         let viewController = PaymentWalletViewController(viewModel: viewModel)
+        viewModel.paymentScanDelegate = viewController
         
         return viewController
     }
@@ -103,19 +105,68 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toLoyaltyScanner(delegate: BarcodeScannerViewControllerDelegate?) {
-        let viewModel = BarcodeScannerViewModel()
+    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan? = nil, delegate: BarcodeScannerViewControllerDelegate?) {
+        let viewModel = BarcodeScannerViewModel(plan: plan)
         let viewController = BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
-        navController?.pushViewController(viewController, animated: true)
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
+            self?.toBrowseBrandsViewController()
+        }
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            if plan == nil {
+                navController?.pushViewController(viewController, animated: true)
+            } else {
+                navController?.present(viewController, animated: true, completion: nil)
+            }
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                navController?.present(alert, animated: true, completion: nil)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
+                if granted {
+                    if plan == nil {
+                        self?.navController?.pushViewController(viewController, animated: true)
+                    } else {
+                        self?.navController?.present(viewController, animated: true, completion: nil)
+                    }
+                } else {
+                    if let alert = enterManuallyAlert {
+                        self?.navController?.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
     }
     
     func toPaymentCardScanner(strings: ScanStringsDataSource, delegate: ScanDelegate?) {
-        if let viewController = ScanViewController.createViewController(withDelegate: delegate) {
-            viewController.allowSkip = true
-            viewController.cornerColor = .white
-            viewController.torchButtonImage = UIImage(named: "payment_scanner_torch")
-            viewController.stringDataSource = strings
-            navController?.pushViewController(viewController, animated: true)
+        guard let paymentCardScanner = ScanViewController.createViewController(withDelegate: delegate) else { return }
+        paymentCardScanner.allowSkip = true
+        paymentCardScanner.cornerColor = .white
+        paymentCardScanner.torchButtonImage = UIImage(named: "payment_scanner_torch")
+        paymentCardScanner.stringDataSource = strings
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
+            self?.toAddPaymentViewController()
+        }
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            navController?.pushViewController(paymentCardScanner, animated: true)
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                navController?.present(alert, animated: true, completion: nil)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
+                if granted {
+                    self?.navController?.pushViewController(paymentCardScanner, animated: true)
+                } else {
+                    if let alert = enterManuallyAlert {
+                        self?.navController?.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
         }
     }
 
@@ -157,9 +208,9 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil) {
+    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
         let repository = AuthAndAddRepository(apiClient: apiClient)
-        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard)
+        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
@@ -265,10 +316,10 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
 
-    func toPaymentCardNeededScreen() {
+    func toPaymentCardNeededScreen(strings: ScanStringsDataSource, scanDelegate: ScanDelegate?) {
         let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
-            self?.toAddPaymentViewController()
+            self?.toPaymentCardScanner(strings: strings, delegate: scanDelegate)
         }, tabBarBackButton: backButton)
         pushReusableModalTemplateVC(configurationModel: configuration, navigationController: navController, floatingButtons: false)
     }

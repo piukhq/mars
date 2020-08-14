@@ -17,9 +17,22 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     }
 
     func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
+        var trackableCard = TrackableWalletCard()
+        if let paymentCard = card as? CD_PaymentCard {
+            trackableCard = TrackableWalletCard(uuid: paymentCard.uuid, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
+        }
+        
+        BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: card))
+        
         // Process the backend delete, but fail silently
         let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
-        apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
+        apiClient.performRequestWithNoResponse(request, parameters: nil) { (success, _) in
+            guard success else {
+                BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard))
+                return
+            }
+            BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseSuccess(card: trackableCard))
+        }
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
@@ -69,7 +82,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
         let request = BinkNetworkRequest(endpoint: .spreedly, method: .post, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(request, parameters: spreedlyRequest, expecting: SpreedlyResponse.self) { result in
+        apiClient.performRequestWithParameters(request, parameters: spreedlyRequest, expecting: SpreedlyResponse.self) { (result, _) in
             switch result {
             case .success(let response):
                 onSuccess(response)
@@ -95,13 +108,22 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
             onError(nil)
             return
         }
+        
+        BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardRequest(request: paymentCard))
 
         let networkRequest = BinkNetworkRequest(endpoint: .paymentCards, method: .post, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: PaymentCardModel.self) { result in
+        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: PaymentCardModel.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { context in
                     let newObject = response.mapToCoreData(context, .update, overrideID: nil)
+                    
+                    // The uuid will have already been set in the mapToCoreData call, but thats fine we can set it to the desired value here from the initial post request
+                    newObject.uuid = paymentCard.uuid
+                    
+                    if let statusCode = rawResponse?.statusCode {
+                        BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseSuccess(request: paymentCard, paymentCard: newObject, statusCode: statusCode))
+                    }
 
                     try? context.save()
 
@@ -112,6 +134,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
                     }
                 }
             case .failure(let error):
+                BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseFail(request: paymentCard))
                 onError(error)
             }
         }

@@ -5,6 +5,7 @@ import Foundation
 import CoreData
 
 public enum CD_AddFieldAttributes: String {
+    case alternatives = "alternatives"
     case column = "column"
     case commonName = "commonName"
     case fieldDescription = "fieldDescription"
@@ -47,6 +48,9 @@ open class _CD_AddField: CD_BaseObject {
     }
 
     // MARK: - Properties
+
+    @NSManaged open
+    var alternatives: [String]?
 
     @NSManaged open
     var column: String?

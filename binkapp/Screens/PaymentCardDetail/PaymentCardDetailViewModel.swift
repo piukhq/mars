@@ -201,7 +201,7 @@ class PaymentCardDetailViewModel {
         if membershipCardIsLinked(membershipCard) {
             removeLinkToMembershipCard(membershipCard, completion: completion)
         } else {
-            linkMembershipCard(withId: membershipCard.id, completion: completion)
+            linkMembershipCard(membershipCard, completion: completion)
         }
     }
 
@@ -217,14 +217,14 @@ class PaymentCardDetailViewModel {
         }
     }
 
-    private func linkMembershipCard(withId membershipCardId: String, completion: @escaping () -> Void) {
-        repository.linkMembershipCard(withId: membershipCardId, toPaymentCardWithId: paymentCard.id) { [weak self] paymentCard in
+    private func linkMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
+        repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard in
             // If we don't get a payment card back, we'll fail silently by firing the same completion handler anyway.
             // The completion will always be to reload the views, so we will just see the local data.
             if let paymentCard = paymentCard {
                 self?.paymentCard = paymentCard
             }
-
+            
             completion()
         }
     }

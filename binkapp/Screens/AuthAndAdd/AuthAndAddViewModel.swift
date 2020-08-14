@@ -24,7 +24,7 @@ enum InputType: Int {
 enum FormPurpose: Equatable {
     case add
     case addFailed
-    case addFromScanner(barcode: String)
+    case addFromScanner
     case signUp
     case signUpFailed
     case ghostCard
@@ -46,6 +46,7 @@ class AuthAndAddViewModel {
     private let repository: AuthAndAddRepository
     private let router: MainScreenRouter
     private let membershipPlan: CD_MembershipPlan
+    let prefilledFormValues: [FormDataSource.PrefilledValue]?
     
     private var fieldsViews: [InputValidation] = []
     private var membershipCardPostModel: MembershipCardPostModel?
@@ -75,13 +76,14 @@ class AuthAndAddViewModel {
         return formPurpose != .add || formPurpose == .ghostCard
     }
     
-    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil) {
+    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
         self.repository = repository
         self.router = router
         self.membershipPlan = membershipPlan
         self.membershipCardPostModel = MembershipCardPostModel(account: AccountPostModel(), membershipPlan: Int(membershipPlan.id))
         self.existingMembershipCard = existingMembershipCard
         self.formPurpose = formPurpose
+        self.prefilledFormValues = prefilledFormValues
     }
     
     func getDescription() -> String? {
@@ -102,6 +104,10 @@ class AuthAndAddViewModel {
         case .addFailed, .signUpFailed:
             return getDescriptionForOtherLogin()
         }
+    }
+    
+    var shouldRemoveScannerFromStack: Bool {
+        return formPurpose == .addFromScanner
     }
     
     private func getDescriptionForOtherLogin() -> String {
@@ -137,7 +143,9 @@ class AuthAndAddViewModel {
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
 
         guard let model = membershipCardPostModel else { return }
-                
+        
+        BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
+        
         repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, onSuccess: { [weak self] card in
             guard let self = self else {return}
             if let card = card {
@@ -344,5 +352,9 @@ class AuthAndAddViewModel {
     
     func popToRootViewController() {
         router.popToRootViewController()
+    }
+    
+    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
+        router.toLoyaltyScanner(forPlan: plan, delegate: delegate)
     }
 }

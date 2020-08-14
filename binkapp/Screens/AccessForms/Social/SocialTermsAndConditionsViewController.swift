@@ -108,7 +108,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     private func loginWithFacebook(request: FacebookRequest, preferenceCheckboxes: [CheckboxView]) {
         let networtRequest = BinkNetworkRequest(endpoint: .facebook, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] result in
+        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] (result, _) in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -127,16 +127,24 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                     // Get latest user profile data in background and ignore any failure
                     // TODO: Move to UserService in future ticket
                     let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
-                        guard let response = try? result.get() else { return }
+                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
+                        guard let response = try? result.get() else {
+                            BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
+                            return
+                        }
                         Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                        BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                     }
                     
                     self?.router?.didLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
                     self?.continueButton.stopLoading()
+                    
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
                 }
             case .failure:
+                BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                 self?.handleAuthError()
             }
         }
@@ -144,7 +152,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     
     private func loginWithApple(request: SignInWithAppleRequest, preferenceCheckboxes: [CheckboxView]) {
         let networtRequest = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] result in
+        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] (result, _) in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -163,16 +171,24 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                     // Get latest user profile data in background and ignore any failure
                     // TODO: Move to UserService in future ticket
                     let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { result in
-                        guard let response = try? result.get() else { return }
+                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
+                        guard let response = try? result.get() else {
+                            BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
+                            return
+                        }
                         Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
+                        BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                     }
                     
                     self?.router?.didLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
                     self?.continueButton.stopLoading()
+                    
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
+                    BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
                 }
             case .failure:
+                BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                 self?.handleAuthError()
             }
         }

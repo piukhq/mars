@@ -26,7 +26,8 @@ class AddingOptionsViewModel {
     }
 
     func toAddAuth(membershipPlan: CD_MembershipPlan, barcode: String) {
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner(barcode: barcode))
+        let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
     }
     
     func toBrowseBrandsScreen() {

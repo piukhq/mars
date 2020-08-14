@@ -10,7 +10,12 @@ import UIKit
 import AVFoundation
 
 struct BarcodeScannerViewModel {
+    let plan: CD_MembershipPlan?
+    var isScanning: Bool = false
     
+    var hasPlan: Bool {
+        return plan != nil
+    }
 }
 
 protocol BarcodeScannerViewControllerDelegate: AnyObject {
@@ -44,7 +49,7 @@ class BarcodeScannerViewController: UIViewController {
     private let schemeScanningQueue = DispatchQueue(label: "com.bink.wallet.scanning.loyalty.scheme.queue")
     private var rectOfInterest = CGRect.zero
     private var timer: Timer?
-    private var canPresentedScanError = true
+    private var canPresentScanError = true
 
     private lazy var blurredView: UIVisualEffectView = {
         return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
@@ -78,8 +83,16 @@ class BarcodeScannerViewController: UIViewController {
         button.addTarget(self, action: #selector(popViewController), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "close"), for: .normal)
+        button.addTarget(self, action: #selector(close), for: .touchUpInside)
+        return button
+    }()
 
-    private let viewModel: BarcodeScannerViewModel
+    private var viewModel: BarcodeScannerViewModel
 
     init(viewModel: BarcodeScannerViewModel, delegate: BarcodeScannerViewControllerDelegate?) {
         self.viewModel = viewModel
@@ -136,24 +149,42 @@ class BarcodeScannerViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        view.addSubview(backButton)
-        NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            backButton.leftAnchor.constraint(equalTo: view.leftAnchor),
-            backButton.heightAnchor.constraint(equalToConstant: Constants.backButtonSize.height),
-            backButton.widthAnchor.constraint(equalToConstant: Constants.backButtonSize.width),
-        ])
+        
+        if viewModel.hasPlan {
+            view.addSubview(cancelButton)
+            NSLayoutConstraint.activate([
+                cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor),
+                cancelButton.heightAnchor.constraint(equalToConstant: Constants.backButtonSize.height),
+                cancelButton.widthAnchor.constraint(equalToConstant: Constants.backButtonSize.width),
+            ])
+        } else {
+            view.addSubview(backButton)
+            NSLayoutConstraint.activate([
+                backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                backButton.leftAnchor.constraint(equalTo: view.leftAnchor),
+                backButton.heightAnchor.constraint(equalToConstant: Constants.backButtonSize.height),
+                backButton.widthAnchor.constraint(equalToConstant: Constants.backButtonSize.width),
+            ])
+        }
 
-        startScanning()
+        if !viewModel.isScanning {
+            startScanning()
+        }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         stopScanning()
     }
 
     private func startScanning() {
+        viewModel.isScanning = true
         session.sessionPreset = .high
         guard let backCamera = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: backCamera) else { return }
@@ -203,6 +234,7 @@ class BarcodeScannerViewController: UIViewController {
     }
 
     private func stopScanning() {
+        viewModel.isScanning = false
         schemeScanningQueue.async { [weak self] in
             self?.session.stopRunning()
             guard let outputs = self?.session.outputs else { return }
@@ -258,11 +290,17 @@ class BarcodeScannerViewController: UIViewController {
     @objc private func popViewController() {
         navigationController?.popViewController(animated: true)
     }
+    
+    @objc private func close() {
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         timer?.invalidate()
+        
+        //TODO: Tidy this up by splitting to other functions
 
         if let object = metadataObjects.first {
             guard let readableObject = object as? AVMetadataMachineReadableCodeObject else { return }
@@ -270,26 +308,54 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             Current.wallet.identifyMembershipPlanForBarcode(stringValue) { [weak self] plan in
                 guard let self = self else { return }
                 guard let plan = plan else {
-                    if self.canPresentedScanError {
-                        self.canPresentedScanError = false
+                    if self.canPresentScanError {
+                        self.canPresentScanError = false
                         DispatchQueue.main.async { [weak self] in
                             guard let self = self else { return }
                             self.widgetView.unrecognizedBarcode()
                         }
                         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: { [weak self] in
-                            self?.canPresentedScanError = true
+                            self?.canPresentScanError = true
                         })
                     }
                     return
                 }
-                self.stopScanning()
-                HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
-
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: {
-                        self.navigationController?.removeViewController(self)
-                    })
+                
+                // We recognised the plan, but is this the plan we injected if any?
+                if let planFromForm = self.viewModel.plan {
+                    // We injected a plan from a form
+                    if plan != planFromForm {
+                        if self.canPresentScanError {
+                            self.canPresentScanError = false
+                            DispatchQueue.main.async {
+                                HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
+                                let alert = UIAlertController(title: "Error", message: "The card you scanned was not correct, please scan your \(planFromForm.account?.companyName ?? "") card", preferredStyle: .alert)
+                                let action = UIAlertAction(title: "OK", style: .cancel) { _ in
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
+                                        self.canPresentScanError = true
+                                    })
+                                }
+                                alert.addAction(action)
+                                self.present(alert, animated: true, completion: nil)
+                            }
+                        }
+                    } else {
+                        self.stopScanning()
+                        HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+                        
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self = self else { return }
+                            self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: nil)
+                        }
+                    }
+                } else {
+                    self.stopScanning()
+                    HapticFeedbackUtil.giveFeedback(forType: .notification(type: .success))
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.delegate?.barcodeScannerViewController(self, didScanBarcode: stringValue, forMembershipPlan: plan, completion: nil)
+                    }
                 }
             }
         }

@@ -12,6 +12,7 @@ enum BinkErrorDomain: String {
     case networking
     case configuration
     case walletService
+    case webScrapingUtility
 }
 
 protocol BinkError: Error {

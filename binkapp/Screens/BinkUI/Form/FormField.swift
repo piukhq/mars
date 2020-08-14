@@ -148,6 +148,9 @@ class FormField {
     let manualValidate: ManualValidateBlock?
     let forcedValue: String?
     let isReadOnly: Bool
+    let fieldCommonName: FieldCommonName?
+    let alternatives: [FieldCommonName]?
+    let dataSourceRefreshBlock: DataSourceRefreshBlock?
     private(set) var value: String?
     
     typealias ValueUpdatedBlock = (FormField, String?) -> ()
@@ -155,8 +158,10 @@ class FormField {
     typealias TextFieldShouldChange = (FormField, UITextField, NSRange, String?) -> (Bool)
     typealias FieldExitedBlock = (FormField) -> ()
     typealias ManualValidateBlock = (FormField) -> (Bool)
+    
+    typealias DataSourceRefreshBlock = () -> ()
         
-    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil, isReadOnly: Bool = false) {
+    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil, isReadOnly: Bool = false, fieldCommonName: FieldCommonName? = nil, alternatives: [FieldCommonName]? = nil, dataSourceRefreshBlock: DataSourceRefreshBlock? = nil) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation
@@ -172,6 +177,9 @@ class FormField {
         self.forcedValue = forcedValue
         self.value = forcedValue // Initialise the field's value with any forced value. If there isn't a forced value, the value will default to nil as normal.
         self.isReadOnly = isReadOnly
+        self.fieldCommonName = fieldCommonName
+        self.alternatives = alternatives
+        self.dataSourceRefreshBlock = dataSourceRefreshBlock
     }
     
     func isValid() -> Bool {

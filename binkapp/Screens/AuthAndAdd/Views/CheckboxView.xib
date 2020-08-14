@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckboxView" customModule="binkapp" customModuleProvider="target">
             <connections>
-                <outlet property="checkboxView" destination="Lme-6v-KTv" id="hZe-Se-Vlp"/>
+                <outlet property="checkboxButton" destination="veI-DD-gXH" id="lX5-ns-HRc"/>
                 <outlet property="textView" destination="ycF-ZM-e6G" id="ko8-Iq-eRn"/>
             </connections>
         </placeholder>
@@ -19,19 +19,6 @@
             <rect key="frame" x="0.0" y="0.0" width="449" height="383"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lme-6v-KTv" customClass="M13Checkbox" customModule="M13Checkbox">
-                    <rect key="frame" x="0.0" y="15" width="22" height="22"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="AIv-ae-bG4"/>
-                        <constraint firstAttribute="width" constant="22" id="qtk-rH-7rD"/>
-                    </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="boxLineWidth">
-                            <real key="value" value="2"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Dummy text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ycF-ZM-e6G">
                     <rect key="frame" x="30" y="8" width="419" height="360"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -39,19 +26,36 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="veI-DD-gXH">
+                    <rect key="frame" x="0.0" y="15" width="22" height="22"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="22" id="7nt-k8-Q1M"/>
+                        <constraint firstAttribute="height" constant="22" id="tGB-tX-Ix4"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                    <state key="normal" image="checkmark"/>
+                    <connections>
+                        <action selector="toggleCheckbox" destination="-1" eventType="touchUpInside" id="RV3-Pn-WlF"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="veI-DD-gXH" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="8HM-nt-nmx"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ycF-ZM-e6G" secondAttribute="bottom" constant="15" id="DOg-kp-AeY"/>
-                <constraint firstItem="Lme-6v-KTv" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="HfU-HC-6jj"/>
-                <constraint firstItem="ycF-ZM-e6G" firstAttribute="leading" secondItem="Lme-6v-KTv" secondAttribute="trailing" constant="8" id="InU-fb-0ER"/>
-                <constraint firstItem="Lme-6v-KTv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="NSh-k6-HPU"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ycF-ZM-e6G" secondAttribute="trailing" id="Ttx-Ld-GH1"/>
                 <constraint firstItem="ycF-ZM-e6G" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="cah-Pu-MxN"/>
+                <constraint firstItem="veI-DD-gXH" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="mb8-zA-XHt"/>
+                <constraint firstItem="ycF-ZM-e6G" firstAttribute="leading" secondItem="veI-DD-gXH" secondAttribute="trailing" constant="8" id="tn4-0L-tGf"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="159.19999999999999" y="-104.7976011994003"/>
         </view>
     </objects>
+    <resources>
+        <image name="checkmark" width="100" height="100"/>
+    </resources>
 </document>

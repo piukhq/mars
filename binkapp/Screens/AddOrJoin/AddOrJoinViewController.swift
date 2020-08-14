@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CardScan
 
 class AddOrJoinViewController: BinkTrackableViewController {
     @IBOutlet private weak var brandHeaderView: BrandHeaderView!
@@ -15,11 +16,11 @@ class AddOrJoinViewController: BinkTrackableViewController {
     private let viewModel: AddOrJoinViewModel
     
     @IBAction func addCardButtonAction(_ sender: Any) {
-        viewModel.toAuthAndAddScreen()
+        viewModel.toAuthAndAddScreen(paymentScanDelegate: self)
     }
     
     @IBAction func newCardButtonAction(_ sender: Any) {
-        viewModel.didSelectAddNewCard()
+        viewModel.didSelectAddNewCard(paymentScanDelegate: self)
     }
     
     init(viewModel: AddOrJoinViewModel) {
@@ -105,5 +106,28 @@ class AddOrJoinViewController: BinkTrackableViewController {
 extension AddOrJoinViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.brandHeaderWasTapped()
+    }
+}
+
+// MARK: Payment Scanner Delegate
+
+extension AddOrJoinViewController: ScanDelegate {
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        // Record Bouncer usage
+        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
+        let month = Int(creditCard.expiryMonth ?? "")
+        let year = Int(creditCard.expiryYear ?? "")
+        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
+        viewModel.toAddPaymentCardScreen(model: model)
+        navigationController?.removeViewController(scanViewController)
+    }
+    
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        viewModel.toAddPaymentCardScreen()
+        navigationController?.removeViewController(scanViewController)
     }
 }

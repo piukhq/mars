@@ -10,6 +10,7 @@ import Foundation
 struct MembershipCardPostModel: Codable {
     var account: AccountPostModel?
     var membershipPlan: Int?
+    let uuid = UUID().uuidString
     
     enum CodingKeys: String, CodingKey {
         case account = "account"
