@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RegisterViewController: BaseFormViewController {
+class RegisterViewController: BaseFormViewController, UserServiceProtocol {
 
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
@@ -66,9 +66,7 @@ class RegisterViewController: BaseFormViewController {
                 
         continueButton.startLoading()
 
-        let request = BinkNetworkRequest(endpoint: .register, method: .post, headers: nil, isUserDriven: true)
-        // TODO: Move to UserService
-        Current.apiClient.performRequestWithParameters(request, parameters: loginRequest, expecting: LoginRegisterResponse.self) { [weak self] (result, _) in
+        registerUser(request: loginRequest) { [weak self] result in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -76,26 +74,21 @@ class RegisterViewController: BaseFormViewController {
                     return
                 }
                 Current.userManager.setNewUser(with: response)
-
-                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-                // TODO: Move to UserService
-                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                
+                self?.createService(params: APIConstants.makeServicePostRequest(email: email), completion: { (success, _) in
                     guard success else {
                         self?.handleRegistrationError()
                         return
                     }
-
-                    // Get latest user profile data in background and ignore any failure
-                    // TODO: Move to UserService
-                    let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
+                    
+                    self?.getUserProfile(completion: { result in
                         guard let response = try? result.get() else {
                             BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                             return
                         }
                         Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
                         BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
-                    }
+                    })
                     
                     self?.router.didLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
@@ -103,7 +96,7 @@ class RegisterViewController: BaseFormViewController {
                     
                     BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
-                }
+                })
             case .failure:
                 BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                 self?.handleRegistrationError()
@@ -112,8 +105,7 @@ class RegisterViewController: BaseFormViewController {
     }
     
     func updatePreferences(checkboxes: [CheckboxView]) {
-        
-        var params = [String: Any]()
+        var params = [String: String]()
         
         checkboxes.forEach {
             if let columnName = $0.columnName {
@@ -123,10 +115,7 @@ class RegisterViewController: BaseFormViewController {
         
         guard params.count > 0 else { return }
         
-        // We don't worry about whether this was successful or not
-        let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: true)
-        // TODO: Move to UserService
-        Current.apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
+        setPreferences(params: params)
     }
     
     private func showError() {
