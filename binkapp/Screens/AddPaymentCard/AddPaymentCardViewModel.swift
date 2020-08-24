@@ -10,16 +10,15 @@ import UIKit
 
 class AddPaymentCardViewModel {
     private let router: MainScreenRouter
-    private let repository: PaymentWalletRepositoryProtocol
+    private let repository = PaymentWalletRepository()
     let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
     var shouldDisplayTermsAndConditions: Bool {
         return true
     }
     
-    init(router: MainScreenRouter, repository: PaymentWalletRepositoryProtocol, paymentCard: PaymentCardCreateModel? = nil) {
+    init(router: MainScreenRouter, paymentCard: PaymentCardCreateModel? = nil) {
         self.router = router
-        self.repository = repository
         self.paymentCard = paymentCard ?? PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
     }
 

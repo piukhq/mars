@@ -16,7 +16,7 @@ import CardScan
 import Keys
 
 @UIApplicationMain 
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     var window: UIWindow?
     var stateMachine: RootStateMachine?
 
@@ -46,10 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ZendeskService.start()
         
         // Get latest user profile data
-        // TODO: Move to UserService in future ticket
         if Current.userManager.hasCurrentUser {
-            let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-            Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
+            getUserProfile { result in
                 guard let response = try? result.get() else { return }
                 Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
             }

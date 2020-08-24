@@ -14,15 +14,13 @@ import CardScan
 class LoyaltyWalletViewModel: WalletViewModel {
     
     typealias T = CD_MembershipCard
-    typealias R = LoyaltyWalletRepository
 
-    private let repository: R
+    private let repository = LoyaltyWalletRepository()
     private let router: MainScreenRouter
     weak var paymentScanDelegate: ScanDelegate?
     private let paymentScanStrings = PaymentCardScannerStrings()
     
-    required init(repository: R, router: MainScreenRouter) {
-        self.repository = repository
+    required init(router: MainScreenRouter) {
         self.router = router
     }
 

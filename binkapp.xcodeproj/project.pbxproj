@@ -147,6 +147,8 @@
 		706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */ = {isa = PBXBuildFile; fileRef = 706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */; };
 		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
+		70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8024E56B3B005A30D2 /* UserService.swift */; };
+		70E31A8324E56B4D005A30D2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8224E56B4D005A30D2 /* APIService.swift */; };
 		70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E867742489303F001ED282 /* SecureUtilityTests.swift */; };
 		70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */; };
 		70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86779248E76C9001ED282 /* WebScrapingUtility.swift */; };
@@ -255,7 +257,6 @@
 		EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */; };
 		EF3BC90D234750F900FE52ED /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC90C234750F900FE52ED /* Wallet.swift */; };
 		EF3BC90F234770E000FE52ED /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC90E234770E000FE52ED /* WalletViewModel.swift */; };
-		EF3BC911234771AA00FE52ED /* WalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC910234771AA00FE52ED /* WalletRepository.swift */; };
 		EF3BC913234779AE00FE52ED /* LoyaltyWalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC912234779AE00FE52ED /* LoyaltyWalletRepository.swift */; };
 		EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC914234779C900FE52ED /* PaymentWalletRepository.swift */; };
 		EF46E286235E007300BA2CAF /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF46E285235E007300BA2CAF /* OnboardingViewModel.swift */; };
@@ -625,6 +626,8 @@
 		7097489D24D088FE008D0E29 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
 		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
+		70E31A8024E56B3B005A30D2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		70E31A8224E56B4D005A30D2 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		70E867742489303F001ED282 /* SecureUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtilityTests.swift; sourceTree = "<group>"; };
 		70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewFooter.swift; sourceTree = "<group>"; };
 		70E86779248E76C9001ED282 /* WebScrapingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtility.swift; sourceTree = "<group>"; };
@@ -756,7 +759,6 @@
 		EF39C1DE231E9F2900A0BBC0 /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		EF3BC90C234750F900FE52ED /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		EF3BC90E234770E000FE52ED /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
-		EF3BC910234771AA00FE52ED /* WalletRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRepository.swift; sourceTree = "<group>"; };
 		EF3BC912234779AE00FE52ED /* LoyaltyWalletRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletRepository.swift; sourceTree = "<group>"; };
 		EF3BC914234779C900FE52ED /* PaymentWalletRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletRepository.swift; sourceTree = "<group>"; };
 		EF46E285235E007300BA2CAF /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
@@ -1836,7 +1838,6 @@
 				EF480C1D235754A00060B7C1 /* Join Cards */,
 				EF3BC90C234750F900FE52ED /* Wallet.swift */,
 				EF3BC90E234770E000FE52ED /* WalletViewModel.swift */,
-				EF3BC910234771AA00FE52ED /* WalletRepository.swift */,
 				EF3BC912234779AE00FE52ED /* LoyaltyWalletRepository.swift */,
 				EF3BC914234779C900FE52ED /* PaymentWalletRepository.swift */,
 				EF335C882350D2C600D49223 /* WalletCard.swift */,
@@ -2386,6 +2387,8 @@
 			isa = PBXGroup;
 			children = (
 				EFF5CD60244F34A8009021A4 /* WalletService.swift */,
+				70E31A8024E56B3B005A30D2 /* UserService.swift */,
+				70E31A8224E56B4D005A30D2 /* APIService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2804,6 +2807,7 @@
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
 				EFCAF9212371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift in Sources */,
 				BD9E4CC5236EE33900C6F098 /* FacebookLoginController.swift in Sources */,
+				70E31A8324E56B4D005A30D2 /* APIService.swift in Sources */,
 				DBE54851240D514B00EDEE90 /* FilterBrandsCollectionViewCell.swift in Sources */,
 				3C2C90FB23191CF700D112E3 /* AuthoriseFieldPostModel.swift in Sources */,
 				B7263347230589EE00951037 /* BalanceModel.swift in Sources */,
@@ -2954,9 +2958,9 @@
 				EFA5F7372379A7C70027AB80 /* CD_FieldChoice.swift in Sources */,
 				3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */,
 				3CD802822391314900D26888 /* ForgotPasswordRepository.swift in Sources */,
+				70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */,
 				EF59A12824473589001B60B8 /* APIClient.swift in Sources */,
 				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
-				EF3BC911234771AA00FE52ED /* WalletRepository.swift in Sources */,
 				EF8F0481238D582300BD708B /* _CD_PlanDocument.swift in Sources */,
 				EF2E8811233385A400F678F3 /* World.swift in Sources */,
 				EF94AF0D23D9F04700AAA039 /* DictionaryExtension.swift in Sources */,
