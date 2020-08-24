@@ -1,6 +1,0 @@
-framework module BarcodeGenerator {
-  umbrella header "BarcodeGenerator.h"
-
-  export *
-  module * { export * }
-}

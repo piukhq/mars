@@ -41,16 +41,26 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
     }
 
     func delete(_ paymentCard: CD_PaymentCard, completion: EmptyCompletionBlock? = nil) {
-        deletePaymentCard(paymentCard, completion: nil)
+        let trackableCard = TrackableWalletCard(uuid: paymentCard.uuid, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
+        
+        BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: paymentCard))
+        
+        deletePaymentCard(paymentCard) { (success, _) in
+            guard success else {
+                BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard))
+                return
+            }
+            BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseSuccess(card: trackableCard))
+        }
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: paymentCard) { (context, cardToDelete) in
             if let cardToDelete = cardToDelete {
                 context.delete(cardToDelete)
             }
-
+            
             try? context.save()
-
+            
             DispatchQueue.main.async {
                 completion?()
             }
