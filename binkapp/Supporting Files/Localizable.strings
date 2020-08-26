@@ -322,6 +322,7 @@
 "plr_voucher_detail_subtext_inprogress" = "Spend %@%@ with us and you'll get a %@%@ %@.";
 "plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
 "plr_lcd_points_module_title" = "Collecting";
+"plr_lcd_points_module_auth_title" = "Earning";
 "plr_lcd_points_module_description" = "Towards rewards";
 "plr_voucher_accumulator_burn_description" = "for spending %@%@";
 "plr_voucher_stamp_burn_description" = "for collecting %@%@ %@";

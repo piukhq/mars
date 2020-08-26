@@ -91,7 +91,12 @@ private extension BinkModuleView {
         case .authorised:
             // PLR
             if membershipCard.membershipPlan?.isPLR == true {
-                configure(imageName: "lcdModuleIconsPointsActive", titleText: "plr_lcd_points_module_title".localized, subtitleText: "plr_lcd_points_module_description".localized, touchAction: .aboutMembership)
+                if membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue == true {
+                    configure(imageName: "lcdModuleIconsPointsActive", titleText: "plr_lcd_points_module_auth_title".localized, subtitleText: "points_module_view_history_message".localized, touchAction: .transactions)
+                } else {
+                    configure(imageName: "lcdModuleIconsPointsActive", titleText: "plr_lcd_points_module_title".localized, subtitleText: "plr_lcd_points_module_description".localized, touchAction: .aboutMembership)
+                }
+                
                 break
             }
 
