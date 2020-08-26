@@ -16,6 +16,7 @@ class BarcodeViewController: BinkTrackableViewController {
     
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var barcodeImageView: UIImageView!
+    @IBOutlet private weak var noBarcodeLabel: UILabel!
     @IBOutlet private weak var barcodeLabel: UILabel!
     @IBOutlet private weak var barcodeNumberLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -62,6 +63,7 @@ class BarcodeViewController: BinkTrackableViewController {
     func configureUI() {
         guard !hasDrawnBarcode else { return }
         
+        noBarcodeLabel.isHidden = viewModel.isBarcodeAvailable
         barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
         [numberLabel, titleLabel].forEach {
             $0?.isHidden = viewModel.cardNumber == nil
