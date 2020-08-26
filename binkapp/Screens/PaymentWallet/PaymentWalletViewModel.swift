@@ -11,15 +11,13 @@ import CardScan
 
 class PaymentWalletViewModel: WalletViewModel {
     typealias T = CD_PaymentCard
-    typealias R = PaymentWalletRepository
 
-    private let repository: R
+    private let repository = PaymentWalletRepository()
     let router: MainScreenRouter
     weak var paymentScanDelegate: ScanDelegate?
     private let paymentScanStrings = PaymentCardScannerStrings()
 
-    required init(repository: R, router: MainScreenRouter) {
-        self.repository = repository
+    required init(router: MainScreenRouter) {
         self.router = router
     }
 

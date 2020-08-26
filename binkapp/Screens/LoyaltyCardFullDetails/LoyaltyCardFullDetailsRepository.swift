@@ -7,26 +7,31 @@
 
 import Foundation
 
-class LoyaltyCardFullDetailsRepository: WalletRepository {
-    private let apiClient: APIClient
-    
-    required init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
+typealias EmptyCompletionBlock = () -> Void
 
-    func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
-        // Process the backend delete, but fail silently
-        let request = BinkNetworkRequest(endpoint: .membershipCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
-        apiClient.performRequestWithNoResponse(request, parameters: nil, completion: nil)
-
+// TODO: This should be reusable code whether in LCD or wallet
+class LoyaltyCardFullDetailsRepository: WalletServiceProtocol {
+    func delete(_ membershipCard: CD_MembershipCard, completion: EmptyCompletionBlock? = nil) {
+        let trackableCard = TrackableWalletCard(uuid: membershipCard.uuid, loyaltyPlan: membershipCard.membershipPlan?.id, paymentScheme: nil)
+        
+        BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCard(card: membershipCard))
+        
+        deleteMembershipCard(membershipCard) { (success, _) in
+            guard success else {
+                BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseFail(card: trackableCard))
+                return
+            }
+            BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseSuccess(card: trackableCard))
+        }
+        
         // Process core data deletion
-        Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
+        Current.database.performBackgroundTask(with: membershipCard) { (context, cardToDelete) in
             if let cardToDelete = cardToDelete {
                 context.delete(cardToDelete)
             }
-
+            
             try? context.save()
-
+            
             DispatchQueue.main.async {
                 completion?()
             }

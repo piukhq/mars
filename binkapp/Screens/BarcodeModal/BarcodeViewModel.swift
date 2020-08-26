@@ -7,11 +7,43 @@
 
 import Foundation
 import UIKit
-import BarcodeGenerator
+import ZXingObjC
 
-enum BarcodeType {
+enum BarcodeUse {
     case loyaltyCard
     case coupon
+}
+
+enum BarcodeType: Int {
+    case code128
+    case qr
+    case aztec
+    case pdf417
+    case ean13
+    case dataMatrix
+    case itf
+    case code39
+    
+    var zxingType: ZXBarcodeFormat {
+        switch self {
+        case .code128:
+            return kBarcodeFormatCode128
+        case .qr:
+            return kBarcodeFormatQRCode
+        case .aztec:
+            return kBarcodeFormatAztec
+        case .pdf417:
+            return kBarcodeFormatPDF417
+        case .ean13:
+            return kBarcodeFormatEan13
+        case .dataMatrix:
+            return kBarcodeFormatDataMatrix
+        case .itf:
+            return kBarcodeFormatITF
+        case .code39:
+            return kBarcodeFormatCode39
+        }
+    }
 }
 
 class BarcodeViewModel {
@@ -37,41 +69,39 @@ class BarcodeViewModel {
         return membershipCard.card?.barcode ?? ""
     }
     
-    var barcodeType: BarcodeType {
+    var barcodeUse: BarcodeUse {
         return .loyaltyCard
+    }
+    
+    var barcodeType: BarcodeType {
+        guard let barcodeType = membershipCard.card?.barcodeType?.intValue else {
+            return .code128
+        }
+        return BarcodeType(rawValue: barcodeType) ?? .code128
     }
 
     init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
     }
     
-    private func getBarcodeType() -> BINKBarcodeType {
-        switch membershipCard.card?.barcodeType {
-        case 0: return BINKBarcodeType.code128
-        case 1: return BINKBarcodeType.QR
-        case 2: return BINKBarcodeType.aztec
-        case 3: return BINKBarcodeType.PDF417
-        case 4: return BINKBarcodeType.EAN13
-        case 5: return BINKBarcodeType.dataMatrix
-        case 6: return BINKBarcodeType.ITF
-        case 7: return BINKBarcodeType.code39
-        default: return .code128
-        }
-    }
-    
-    func generateBarcodeImage(for imageView: UIImageView) {
-        guard let barcodeString = membershipCard.card?.barcode else { return }
-        let imageViewSize = imageView.bounds.size
-        
-        if let image = BINKBarcodeGenerator.generateBarcode(
-            withContents: barcodeString,
-            of: getBarcodeType(),
-            in: CGSize(width: imageViewSize.width, height: imageViewSize.height))
-        {
-            imageView.image = image
-        } else {
-            imageView.isHidden = true
+    func barcodeImage(withSize size: CGSize) -> UIImage? {
+        guard let barcodeString = membershipCard.card?.barcode else {
+            fatalError("Card has no barcode. We should never get here.")
         }
         
+        let writer = ZXMultiFormatWriter()
+        let encodeHints = ZXEncodeHints()
+        encodeHints.margin = 0
+        
+        var image: UIImage?
+        
+        let exception = tryBlock { [weak self] in
+            guard let self = self else { return }
+            let result = try? writer.encode(barcodeString, format: self.barcodeType.zxingType, width: Int32(size.width), height: Int32(size.height), hints: encodeHints)
+            guard let cgImage = ZXImage(matrix: result).cgimage else { return }
+            image = UIImage(cgImage: cgImage)
+        }
+        
+        return exception == nil ? image : nil
     }
 }

@@ -153,7 +153,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             return
         }
 
-        getMembershipPlans(isUserDriven: isUserDriven) { [weak self] (result, _) in
+        getMembershipPlans(isUserDriven: isUserDriven) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipPlan.self, completion: {
@@ -163,9 +163,9 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                         StorageUtility.refreshPlanImages()
                     }
                 })
-            case .failure:
+            case .failure(let error):
                 guard let localPlans = self?.membershipPlans, !localPlans.isEmpty else {
-                    completion(false, .failedToGetMembershipPlans)
+                    completion(false, error)
                     return
                 }
                 completion(true, nil)
@@ -181,7 +181,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             }
             return
         }
-        getMembershipCards(isUserDriven: isUserDriven) { [weak self] (result, _) in
+        getMembershipCards(isUserDriven: isUserDriven) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
@@ -190,8 +190,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                         completion(true, nil)
                     })
                 })
-            case .failure:
-                completion(false, .failedToGetMembershipCards)
+            case .failure(let error):
+                completion(false, error)
             }
         }
     }
@@ -205,7 +205,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             return
         }
 
-        getPaymentCards(isUserDriven: isUserDriven) { [weak self] (result, _) in
+        getPaymentCards(isUserDriven: isUserDriven) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
@@ -214,8 +214,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                         completion(true, nil)
                     }
                 })
-            case .failure:
-                completion(false, .failedToGetPaymentCards)
+            case .failure(let error):
+                completion(false, error)
             }
         }
     }

@@ -9,24 +9,14 @@
 import Foundation
 import CoreData
 
-class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
-    private let apiClient: APIClient
-
-    required init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
-
-    func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
+class PaymentWalletRepository: WalletServiceProtocol {
+    func delete(_ paymentCard: CD_PaymentCard, completion: EmptyCompletionBlock? = nil) {
         var trackableCard = TrackableWalletCard()
-        if let paymentCard = card as? CD_PaymentCard {
-            trackableCard = TrackableWalletCard(uuid: paymentCard.uuid, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
-        }
+        trackableCard = TrackableWalletCard(uuid: paymentCard.uuid, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
         
-        BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: card))
+        BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: paymentCard))
         
-        // Process the backend delete, but fail silently
-        let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
-        apiClient.performRequestWithNoResponse(request, parameters: nil) { (success, _) in
+        deletePaymentCard(paymentCard) { (success, _) in
             guard success else {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard))
                 return
@@ -35,7 +25,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         }
 
         // Process core data deletion
-        Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
+        Current.database.performBackgroundTask(with: paymentCard) { (context, cardToDelete) in
             if let cardToDelete = cardToDelete {
                 context.delete(cardToDelete)
             }
@@ -49,7 +39,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     }
 
     func addPaymentCard(_ paymentCard: PaymentCardCreateModel, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
-        if apiClient.isProduction || apiClient.isPreProduction {
+        if Current.apiClient.isProduction || Current.apiClient.isPreProduction {
             #if DEBUG
             fatalError("You are targetting production, but on a debug scheme. You should use a release scheme to test adding production payment cards.")
             #else
@@ -81,8 +71,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
     private func requestSpreedlyToken(paymentCard: PaymentCardCreateModel, onSuccess: @escaping (SpreedlyResponse) -> Void, onError: @escaping (BinkError?) -> Void) {
         let spreedlyRequest = SpreedlyRequest(fullName: paymentCard.nameOnCard, number: paymentCard.fullPan, month: paymentCard.month, year: paymentCard.year)
 
-        let request = BinkNetworkRequest(endpoint: .spreedly, method: .post, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(request, parameters: spreedlyRequest, expecting: SpreedlyResponse.self) { (result, _) in
+        getSpreedlyToken(withRequest: spreedlyRequest) { result in
             switch result {
             case .success(let response):
                 onSuccess(response)
@@ -111,8 +100,7 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
         
         BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardRequest(request: paymentCard))
 
-        let networkRequest = BinkNetworkRequest(endpoint: .paymentCards, method: .post, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: PaymentCardModel.self) { (result, rawResponse) in
+        addPaymentCard(withRequestModel: request) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { context in
@@ -124,9 +112,9 @@ class PaymentWalletRepository: PaymentWalletRepositoryProtocol {
                     if let statusCode = rawResponse?.statusCode {
                         BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseSuccess(request: paymentCard, paymentCard: newObject, statusCode: statusCode))
                     }
-
+                    
                     try? context.save()
-
+                    
                     DispatchQueue.main.async {
                         Current.database.performTask(with: newObject) { (context, safeObject) in
                             onSuccess(safeObject)
