@@ -16,7 +16,7 @@ class BarcodeViewController: BinkTrackableViewController {
     
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var barcodeImageView: UIImageView!
-    @IBOutlet private weak var noBarcodeLabel: UILabel!
+    @IBOutlet private weak var barcodeErrorLabel: UILabel!
     @IBOutlet private weak var barcodeLabel: UILabel!
     @IBOutlet private weak var barcodeNumberLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -62,8 +62,6 @@ class BarcodeViewController: BinkTrackableViewController {
     
     func configureUI() {
         guard !hasDrawnBarcode else { return }
-        
-        noBarcodeLabel.isHidden = viewModel.isBarcodeAvailable
         barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
         [numberLabel, titleLabel].forEach {
             $0?.isHidden = viewModel.cardNumber == nil
@@ -74,7 +72,14 @@ class BarcodeViewController: BinkTrackableViewController {
         stackView.setCustomSpacing(Constants.smallSpace, after: titleLabel)
         stackView.setCustomSpacing(Constants.largeSpace, after: numberLabel.isHidden ? barcodeNumberLabel : numberLabel)
         
-        barcodeImageView.image = viewModel.barcodeImage(withSize: barcodeImageView.frame.size)
+        if let barcodeImage = viewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
+            barcodeImageView.isHidden = false
+            barcodeErrorLabel.isHidden = true
+            barcodeImageView.image = barcodeImage
+        } else {
+            barcodeImageView.isHidden = true
+            barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
+        }
         
         barcodeLabel.font = UIFont.headline
         barcodeLabel.textColor = .black

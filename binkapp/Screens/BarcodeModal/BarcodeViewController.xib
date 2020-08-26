@@ -10,11 +10,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BarcodeViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
+                <outlet property="barcodeErrorLabel" destination="uTg-VR-lQ4" id="6U4-Vl-5Mk"/>
                 <outlet property="barcodeImageView" destination="W07-ft-Vcs" id="NfA-cN-Htd"/>
                 <outlet property="barcodeLabel" destination="rDB-WQ-Xw9" id="Dnr-LY-WbC"/>
                 <outlet property="barcodeNumberLabel" destination="xaV-ek-2XU" id="APx-Iu-QXX"/>
                 <outlet property="descriptionLabel" destination="aBF-M2-M8O" id="DD7-BP-Wgg"/>
-                <outlet property="noBarcodeLabel" destination="uTg-VR-lQ4" id="4xg-8r-a8c"/>
                 <outlet property="numberLabel" destination="pql-nN-4DC" id="y00-tr-R3u"/>
                 <outlet property="stackView" destination="bEh-RB-7fs" id="7k5-zz-gsj"/>
                 <outlet property="titleLabel" destination="uM9-25-u1E" id="oJJ-fa-Sjl"/>
