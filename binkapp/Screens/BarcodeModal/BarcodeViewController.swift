@@ -76,7 +76,7 @@ class BarcodeViewController: BinkTrackableViewController {
         
         barcodeLabel.font = UIFont.headline
         barcodeLabel.textColor = .black
-        barcodeLabel.text = "barcode_title".localized
+        barcodeLabel.text = viewModel.isBarcodeAvailable ? "barcode_title".localized : nil
         
         barcodeNumberLabel.font = UIFont.subtitle
         barcodeNumberLabel.textColor = .black

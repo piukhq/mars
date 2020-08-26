@@ -85,9 +85,7 @@ class BarcodeViewModel {
     }
     
     func barcodeImage(withSize size: CGSize) -> UIImage? {
-        guard let barcodeString = membershipCard.card?.barcode else {
-            fatalError("Card has no barcode. We should never get here.")
-        }
+        guard let barcodeString = membershipCard.card?.barcode else { return nil }
         
         let writer = ZXMultiFormatWriter()
         let encodeHints = ZXEncodeHints()
