@@ -78,6 +78,8 @@ class BarcodeViewController: BinkTrackableViewController {
             barcodeImageView.image = barcodeImage
         } else {
             barcodeImageView.isHidden = true
+            barcodeErrorLabel.text = "barcode_error".localized
+            barcodeErrorLabel.font = UIFont.bodyTextLarge
             barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
         }
         
