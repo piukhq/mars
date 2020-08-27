@@ -41,6 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
 
         // Device storage
         StorageUtility.start()
+        
+        // Remote config
+        Current.remoteConfig.configure()
 
         // Initialise Zendesk
         ZendeskService.start()

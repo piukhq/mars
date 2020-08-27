@@ -70,31 +70,43 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
             }
         }
 
-        if let status = status {
-            if let existingStatus = cdObject.status?.status, status.state != existingStatus {
-                BinkAnalytics.track(CardAccountAnalyticsEvent.loyaltyCardStatus(loyaltyCard: cdObject, newStatus: status.state))
-                
-                // Get all payment card managed objects and all active link id's
-                if let persistedPaymentCards = Current.wallet.paymentCards, let linkedPaymentCardIds = paymentCards?.filter({ $0.activeLink == true }).map({ $0.id }) {
-                    // For each payment card we have stored, check it's id against this membership card's active link id's
-                    persistedPaymentCards.forEach {
-                        // Cast the id to int so we can compare
-                        if let persistedCardId = Int($0.id) {
-                            // Check if the payment card's id is present in the membership card's active link id
-                            if linkedPaymentCardIds.contains(where: { $0 == persistedCardId }) {
-                                // This membership card and payment card have an active link, track the state change
-                                BinkAnalytics.track(PLLAnalyticsEvent.pllActive(loyaltyCard: cdObject, paymentCard: $0))
+        /// If this card will get it's balance from web scraping, we should always ignore this path as we locally create these objects
+        if let planId = membershipPlan, !Current.pointsScrapingManager.planIdIsWebScrapable(planId) {
+            if let status = status {
+                if let existingStatus = cdObject.status?.status, status.state != existingStatus {
+                    BinkAnalytics.track(CardAccountAnalyticsEvent.loyaltyCardStatus(loyaltyCard: cdObject, newStatus: status.state))
+                    
+                    // Get all payment card managed objects and all active link id's
+                    if let persistedPaymentCards = Current.wallet.paymentCards, let linkedPaymentCardIds = paymentCards?.filter({ $0.activeLink == true }).map({ $0.id }) {
+                        // For each payment card we have stored, check it's id against this membership card's active link id's
+                        persistedPaymentCards.forEach {
+                            // Cast the id to int so we can compare
+                            if let persistedCardId = Int($0.id) {
+                                // Check if the payment card's id is present in the membership card's active link id
+                                if linkedPaymentCardIds.contains(where: { $0 == persistedCardId }) {
+                                    // This membership card and payment card have an active link, track the state change
+                                    BinkAnalytics.track(PLLAnalyticsEvent.pllActive(loyaltyCard: cdObject, paymentCard: $0))
+                                }
                             }
                         }
                     }
                 }
+                
+                let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
+                update(cdStatus, \.card, with: cdObject, delta: delta)
+                update(cdObject, \.status, with: cdStatus, delta: delta)
+            } else {
+                update(cdObject, \.status, with: nil, delta: false)
             }
-            
-            let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
-            update(cdStatus, \.card, with: cdObject, delta: delta)
-            update(cdObject, \.status, with: cdStatus, delta: delta)
         } else {
-            update(cdObject, \.status, with: nil, delta: false)
+            // We pass through here when mapping all other objects during add/auth.
+            // We can safely set it to failed here if the status is nil, as we know that add/auth handles setting a pending state once this mapping is complete
+            if cdObject.status == nil || cdObject.status?.status == .pending {
+                let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
+                let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
+                update(cdStatus, \.card, with: cdObject, delta: delta)
+                update(cdObject, \.status, with: cdStatus, delta: delta)
+            }
         }
 
         if let card = card {
@@ -137,18 +149,21 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
                 cdPaymentCard.addLinkedMembershipCardsObject(cdObject)
             }
         }
-
-        cdObject.balances.forEach {
-            guard let balance = $0 as? CD_MembershipCardBalance else { return }
-            context.delete(balance)
-        }
         
-        if let balances = balances {
-            for (index, balance) in balances.enumerated() {
-                let indexID = MembershipCardBalanceModel.overrideId(forParentId: overrideID ?? id) + String(index)
-                let cdBalance = balance.mapToCoreData(context, .update, overrideID: indexID)
-                update(cdBalance, \.card, with: cdObject, delta: false)
-                cdObject.addBalancesObject(cdBalance)
+        /// If this card will get it's balance from web scraping, we should always ignore this path as we locally create these objects
+        if let planId = membershipPlan, !Current.pointsScrapingManager.planIdIsWebScrapable(planId) {
+            cdObject.balances.forEach {
+                guard let balance = $0 as? CD_MembershipCardBalance else { return }
+                context.delete(balance)
+            }
+            
+            if let balances = balances {
+                for (index, balance) in balances.enumerated() {
+                    let indexID = MembershipCardBalanceModel.overrideId(forParentId: overrideID ?? id) + String(index)
+                    let cdBalance = balance.mapToCoreData(context, .update, overrideID: indexID)
+                    update(cdBalance, \.card, with: cdObject, delta: false)
+                    cdObject.addBalancesObject(cdBalance)
+                }
             }
         }
 

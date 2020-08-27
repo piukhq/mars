@@ -11,6 +11,7 @@ import Foundation
 class WalletRefreshManager {
     private static let oneHour: TimeInterval = 3600
     private static let twoMinutes: TimeInterval = 120
+    private static let twoHours: TimeInterval = 7200
 
     private var accountsRefreshTimer: Timer!
     private var plansRefreshTimer: Timer!
@@ -54,5 +55,18 @@ class WalletRefreshManager {
 
     @objc private func handlePlansRefreshTimerTrigger() {
         canRefreshPlans = true
+    }
+}
+
+// MARK: - Local Points Scraping
+
+extension WalletRefreshManager {
+    static func canRefreshScrapedValueForMembershipCard(_ card: CD_MembershipCard) -> Bool {
+        if let balanceLastUpdatedTimeStamp = card.formattedBalances?.first?.updatedAt?.doubleValue {
+            let balanceLastUpdatedDate = Date(timeIntervalSince1970: balanceLastUpdatedTimeStamp)
+            let elapsed = Int(Date().timeIntervalSince(balanceLastUpdatedDate))
+            return elapsed >= Int(WalletRefreshManager.twoHours)
+        }
+        return false
     }
 }

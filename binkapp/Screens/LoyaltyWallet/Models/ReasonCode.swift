@@ -42,6 +42,11 @@ enum ReasonCode: String, Codable, CaseIterable {
     case noAuthorizationRequired = "X302"
     case authorizationDataRejectedByMerchant = "X303"
     case authorizationExpired = "X304"
+    
+    // Local points scraping
+    case attemptingToScrapePointsValue = "M100"
+    case pointsScrapingSuccessful = "M300"
+    case pointsScrapingLoginFailed = "M102"
 
     var code: Int {
         let codeString = String(rawValue.suffix(3))
@@ -82,6 +87,12 @@ enum ReasonCode: String, Codable, CaseIterable {
             return "Authorization data rejected merchant"
         case .authorizationExpired:
             return "Authorization expired"
+        case .attemptingToScrapePointsValue:
+            return "Attemping to scrape points value"
+        case .pointsScrapingSuccessful:
+            return "Points scraping successful"
+        case .pointsScrapingLoginFailed:
+            return "Points scraping login failed"
         }
     }
 

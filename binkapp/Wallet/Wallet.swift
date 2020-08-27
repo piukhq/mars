@@ -36,6 +36,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         loadWallets(forType: .localLaunch, reloadPlans: false, isUserDriven: false) { [weak self] (success, error) in
             self?.loadWallets(forType: .reload, reloadPlans: true, isUserDriven: false) { (success, error) in
                 self?.refreshManager.start()
+                Current.pointsScrapingManager.refreshBalancesIfNecessary()
             }
         }
     }
@@ -47,6 +48,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         loadWallets(forType: .reload, reloadPlans: true, isUserDriven: true) { [weak self] (success, error) in
             if success {
                 self?.refreshManager.resetAll()
+                Current.pointsScrapingManager.refreshBalancesIfNecessary()
             }
         }
     }
@@ -58,6 +60,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             loadWallets(forType: .reload, reloadPlans: false, isUserDriven: false) { [weak self] (success, error) in
                 if success {
                     self?.refreshManager.resetAccountsTimer()
+                    Current.pointsScrapingManager.refreshBalancesIfNecessary()
                 }
             }
         }

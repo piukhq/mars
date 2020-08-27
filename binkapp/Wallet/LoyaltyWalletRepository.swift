@@ -23,6 +23,9 @@ struct LoyaltyWalletRepository: WalletServiceProtocol {
             }
             BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseSuccess(card: trackableCard))
         }
+        
+        // Remove any stored credentials for points scraping
+        Current.pointsScrapingManager.disableLocalPointsScraping(forMembershipCardId: membershipCard.id)
 
         // Process core data deletion
         Current.database.performBackgroundTask(with: membershipCard) { (context, cardToDelete) in

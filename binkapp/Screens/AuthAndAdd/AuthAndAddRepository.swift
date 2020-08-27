@@ -8,7 +8,7 @@
 import Foundation
 
 class AuthAndAddRepository: WalletServiceProtocol {
-    func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (BinkError?) -> ()) {
+    func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, scrapingCredentials: WebScrapingCredentials? = nil, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (BinkError?) -> ()) {
         addMembershipCard(withRequestModel: request, existingMembershipCard: existingMembershipCard) { (result, rawResponse) in
             switch result {
             case .success(let response):
@@ -22,15 +22,33 @@ class AuthAndAddRepository: WalletServiceProtocol {
                     if let statusCode = rawResponse?.statusCode {
                         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardResponseSuccess(loyaltyCard: newObject, formPurpose: formPurpose, statusCode: statusCode))
                     }
+
+                    
+                    if Current.pointsScrapingManager.planIdIsWebScrapable(request.membershipPlan) {
+                        let pendingStatus = MembershipCardStatusModel(apiId: nil, state: .pending, reasonCodes: [.attemptingToScrapePointsValue])
+                        let cdStatus = pendingStatus.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: newObject.id))
+                        newObject.status = cdStatus
+                        cdStatus.card = newObject
+                        BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: newObject))
+                    }
                     
                     try? context.save()
                     
                     DispatchQueue.main.async {
                         Current.database.performTask(with: newObject) { (context, safeObject) in
+                            if let card = safeObject, let credentials = scrapingCredentials {
+                                // TODO: Catch this try, and force to failed
+                                do {
+                                    try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: request, credentials: credentials, membershipCard: card)
+                                } catch {
+                                    Current.pointsScrapingManager.transitionToFailed(membershipCard: card)
+                                }
+                            }
                             onSuccess(safeObject)
                         }
                     }
                 }
+                
             case .failure(let error):
                 BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardResponseFail(request: request, formPurpose: formPurpose))
                 onError(error)

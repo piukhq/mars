@@ -132,21 +132,21 @@ private extension BinkModuleView {
             break
         case .failed, .unauthorised:
             let imageName = "lcdModuleIconsPointsLogin"
-            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.code {
+            if let reasonCode = membershipCard.status?.formattedReasonCodes?.first {
                 switch reasonCode {
-                case .X201:
+                case .enrolmentDataRejectedByMerchant:
                     // Points module 1.8
                     configure(imageName: imageName, titleText: "sign_up_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .signUp)
                     break
-                case .X105:
+                case .accountNotRegistered:
                      // Points module 1.x (to be defined)
                      configure(imageName: imageName, titleText: "register_gc_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .patchGhostCard)
                     break
-                case .X202:
+                case .accountAlreadyExists:
                     // Points module 1.12
                     configure(imageName: imageName, titleText: "points_module_account_exists_status".localized, subtitleText: "points_module_log_in".localized, touchAction: .loginChanges)
                     break
-                case .X101, .X102, .X103, .X104, .X302, .X303, .X304:
+                case .accountDoesNotExist, .addDataRejectedByMerchant, .NoAuthorizationProvided, .updateFailed, .noAuthorizationRequired, .authorizationDataRejectedByMerchant, .authorizationExpired, .pointsScrapingLoginFailed:
                     // Points module 1.6
                     configure(imageName: imageName, titleText: "points_module_retry_log_in_status".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .loginChanges)
                     break
@@ -209,11 +209,11 @@ private extension BinkModuleView {
             break
         case .failed:
             
-            if let reasonCode = (membershipCard.status?.reasonCodes.allObjects.first as? CD_ReasonCode)?.code {
+            if let reasonCode = membershipCard.status?.formattedReasonCodes?.first {
                 switch reasonCode {
-                case .X201:
+                case .enrolmentDataRejectedByMerchant:
                     configure(imageName: "lcdModuleIconsPointsLogin", titleText: "sign_up_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .signUp)
-                case .X105:
+                case .accountNotRegistered:
                     configure(imageName: "lcdModuleIconsPointsLogin", titleText: "register_gc_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .patchGhostCard)
                 default:
                     configure(imageName: "lcdModuleIconsPointsLogin", titleText: "log_in_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .loginChanges)

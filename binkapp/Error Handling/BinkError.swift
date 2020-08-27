@@ -8,23 +8,22 @@
 
 import Foundation
 
-enum BinkErrorDomain: String {
+enum BinkErrorDomain: Int {
     case networking
     case configuration
     case walletService
     case userService
     case webScrapingUtility
+    case pointsScrapingManager
 }
 
 protocol BinkError: Error {
     var domain: BinkErrorDomain { get }
-    var errorCode: String? { get }
     var message: String { get }
 }
 
 extension BinkError {
     var localizedDescription: String {
-        let errorCodeString = errorCode ?? ""
-        return "\(message)\(errorCodeString.isEmpty ? "" : " Error code: \(errorCodeString)")"
+        return message
     }
 }

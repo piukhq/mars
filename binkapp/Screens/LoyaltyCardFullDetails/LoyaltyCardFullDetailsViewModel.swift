@@ -141,7 +141,7 @@ class LoyaltyCardFullDetailsViewModel {
             
             var description = state + "\n"
             membershipCard.status?.formattedReasonCodes?.forEach {
-                description += $0.value ?? ""
+                description += $0.description
             }
             
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: "error_title".localized, description: description))
