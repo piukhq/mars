@@ -67,8 +67,8 @@ enum WebScrapingUtilityError: BinkError {
 }
 
 protocol WebScrapingUtilityDelegate: AnyObject {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCardId cardId: String, withAgent agent: WebScrapable)
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCardId cardId: String, withAgent agent: WebScrapable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
 }
 
 struct WebScrapingCredentials {
@@ -80,15 +80,15 @@ class WebScrapingUtility: NSObject {
     private weak var containerViewController: UIViewController?
     private let webView: WKWebView
     private let agent: WebScrapable
-    private let membershipCardId: String
+    private let membershipCard: CD_MembershipCard
     private var hasAttemptedLogin = false
     private weak var delegate: WebScrapingUtilityDelegate?
     
-    init(containerViewController: UIViewController, agent: WebScrapable, membershipCardId: String, delegate: WebScrapingUtilityDelegate?) {
+    init(containerViewController: UIViewController, agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
         self.containerViewController = containerViewController
         webView = WKWebView(frame: .zero)
         self.agent = agent
-        self.membershipCardId = membershipCardId
+        self.membershipCard = membershipCard
         self.delegate = delegate
         super.init()
         setupWebView()
@@ -103,7 +103,7 @@ class WebScrapingUtility: NSObject {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         let request = URLRequest(url: url)
-        if let cookiesDictionary = Current.userDefaults.value(forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCardId)) as? [String: Any] {
+        if let cookiesDictionary = Current.userDefaults.value(forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id)) as? [String: Any] {
             var cookiesSet: Int = 0
             for (_, cookieProperties) in cookiesDictionary {
                 if let properties = cookieProperties as? [HTTPCookiePropertyKey: Any], let cookie = HTTPCookie(properties: properties) {
@@ -140,7 +140,7 @@ class WebScrapingUtility: NSObject {
         runScript(formattedLoginScript) { [weak self] (value, error) in
             guard let self = self else { return }
             guard error == nil else {
-                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 return
             }
         }
@@ -164,7 +164,7 @@ class WebScrapingUtility: NSObject {
         runScript(scrapeScript) { [weak self] (pointsValue, error) in
             guard let self = self else { return }
             guard error == nil else {
-                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteScrapingScript, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteScrapingScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 return
             }
             
@@ -178,7 +178,7 @@ class WebScrapingUtility: NSObject {
                 for cookie in cookies {
                     cookiesDictionary[cookie.name] = cookie.properties
                 }
-                Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCardId))
+                Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
             }
             
             completion(.success(pointsValue))
@@ -213,26 +213,26 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 
                 switch result {
                 case .failure(let error):
-                    self.delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                    self.delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 case .success(let pointsValue):
-                    self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                    self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 }
             }
         } else {
             do {
-                let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCardId)
+                let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCard.id)
                 if shouldAttemptLogin {
                     hasAttemptedLogin = true
                     try login(credentials: credentials)
                 } else {
                     // We should only fall into here if we know we are at the login url, but we've already attempted a login
-                    self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                    self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 }
             } catch {
                 if let webScrapingError = error as? WebScrapingUtilityError {
-                    self.delegate?.webScrapingUtility(self, didCompleteWithError: webScrapingError, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                    self.delegate?.webScrapingUtility(self, didCompleteWithError: webScrapingError, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 } else {
-                    self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCardId: self.membershipCardId, withAgent: self.agent)
+                    self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 }
             }
         }

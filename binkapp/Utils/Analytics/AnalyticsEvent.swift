@@ -358,3 +358,54 @@ enum PLLAnalyticsEvent: BinkAnalyticsEvent {
         return .softLink
     }
 }
+
+enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
+    case localPointsCollectionSuccess(membershipCard: CD_MembershipCard)
+    case localPointsCollectionStatus(membershipCard: CD_MembershipCard)
+    case localPointsCollectionInternalFailure(membershipCard: CD_MembershipCard, error: PointsScrapingManager.PointsScrapingManagerError)
+    case localPointsCollectionCredentialFailure(membershipCard: CD_MembershipCard, error: PointsScrapingManager.PointsScrapingManagerError)
+    
+    var name: String {
+        switch self {
+        case .localPointsCollectionSuccess:
+            return "local_points_collection_balance_success"
+        case .localPointsCollectionStatus:
+            return "local_points_collection_status"
+        case .localPointsCollectionInternalFailure:
+            return "local_points_collection_internal_failure"
+        case .localPointsCollectionCredentialFailure:
+            return "local_points_collection_credential_failure"
+        }
+    }
+    
+    var data: [String : Any]? {
+        switch self {
+        case .localPointsCollectionSuccess(let membershipCard):
+            guard let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
+            guard let uuid = membershipCard.uuid else { return nil }
+            return [
+                "loyalty_plan": planId,
+                "client_account_id": uuid
+            ]
+        case .localPointsCollectionStatus(let membershipCard):
+            guard let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
+            guard let uuid = membershipCard.uuid else { return nil }
+            return [
+                "loyalty_plan": planId,
+                "client_account_id": uuid
+            ]
+        case .localPointsCollectionInternalFailure(let membershipCard, let error):
+            guard let uuid = membershipCard.uuid else { return nil }
+            return [
+                "client_account_id": uuid,
+                "error_string": error.message
+            ]
+        case .localPointsCollectionCredentialFailure(let membershipCard, let error):
+            guard let uuid = membershipCard.uuid else { return nil }
+            return [
+                "client_account_id": uuid,
+                "error_string": error.message
+            ]
+        }
+    }
+}

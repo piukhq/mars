@@ -108,7 +108,7 @@ class PointsScrapingManager {
     
     // MARK: - Add/Auth handling
     
-    func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCardId: String) throws {
+    func enableLocalPointsScrapingForCardIfPossible(withRequest request: MembershipCardPostModel, credentials: WebScrapingCredentials, membershipCard: CD_MembershipCard) throws {
         guard planIdIsWebScrapable(request.membershipPlan) else { return }
         
         guard canEnableLocalPointsScrapingForCard(withRequest: request) else {
@@ -121,12 +121,12 @@ class PointsScrapingManager {
             throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
         }
                 
-        webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: membershipCardId, delegate: self)
+        webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCard: membershipCard, delegate: self)
         do {
-            try storeCredentials(credentials, forMembershipCardId: membershipCardId)
+            try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
             try webScrapingUtility?.start()
         } catch {
-            self.transitionToFailed(membershipCardId: membershipCardId)
+            self.transitionToFailed(membershipCard: membershipCard)
         }
     }
     
@@ -179,12 +179,12 @@ class PointsScrapingManager {
         guard agentEnabled(agent) else { return }
         
         DispatchQueue.main.async {
-            self.webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCardId: membershipCard.id, delegate: self)
+            self.webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCard: membershipCard, delegate: self)
             
             do {
                 try self.webScrapingUtility?.start()
             } catch {
-                self.transitionToFailed(membershipCardId: membershipCard.id)
+                self.transitionToFailed(membershipCard: membershipCard)
             }
         }
     }
@@ -249,8 +249,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
         }
     }
     
-    private func transitionToAuthorized(pointsValue: String, membershipCardId: String, agent: WebScrapable) {
-        fetchMembershipCard(forId: membershipCardId) { membershipCard in
+    private func transitionToAuthorized(pointsValue: String, membershipCard: CD_MembershipCard, agent: WebScrapable) {
+        fetchMembershipCard(forId: membershipCard.id) { membershipCard in
             guard let membershipCard = membershipCard else {
                 fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
             }
@@ -279,7 +279,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 do {
                     try backgroundContext.save()
                 } catch {
-                    self.transitionToFailed(membershipCardId: membershipCardId)
+                    self.transitionToFailed(membershipCard: membershipCard)
                 }
             
                 self.pointsScrapingDidComplete()
@@ -287,8 +287,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
         }
     }
     
-    func transitionToFailed(membershipCardId: String) {
-        fetchMembershipCard(forId: membershipCardId) { membershipCard in
+    func transitionToFailed(membershipCard: CD_MembershipCard) {
+        fetchMembershipCard(forId: membershipCard.id) { membershipCard in
             guard let membershipCard = membershipCard else {
                 fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
             }
@@ -315,11 +315,11 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 // MARK: - WebScrapingUtilityDelegate
 
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCardId cardId: String, withAgent agent: WebScrapable) {
-        transitionToAuthorized(pointsValue: value, membershipCardId: cardId, agent: agent)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
+        transitionToAuthorized(pointsValue: value, membershipCard: card, agent: agent)
     }
     
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCardId cardId: String, withAgent agent: WebScrapable) {
-        transitionToFailed(membershipCardId: cardId)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
+        transitionToFailed(membershipCard: card)
     }
 }
