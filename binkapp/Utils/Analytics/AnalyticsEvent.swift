@@ -362,8 +362,8 @@ enum PLLAnalyticsEvent: BinkAnalyticsEvent {
 enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
     case localPointsCollectionSuccess(membershipCard: CD_MembershipCard)
     case localPointsCollectionStatus(membershipCard: CD_MembershipCard)
-    case localPointsCollectionInternalFailure(membershipCard: CD_MembershipCard, error: PointsScrapingManager.PointsScrapingManagerError)
-    case localPointsCollectionCredentialFailure(membershipCard: CD_MembershipCard, error: PointsScrapingManager.PointsScrapingManagerError)
+    case localPointsCollectionInternalFailure(membershipCard: CD_MembershipCard, error: WebScrapingUtilityError)
+    case localPointsCollectionCredentialFailure(membershipCard: CD_MembershipCard, error: WebScrapingUtilityError)
     
     var name: String {
         switch self {
@@ -390,8 +390,10 @@ enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
         case .localPointsCollectionStatus(let membershipCard):
             guard let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
             guard let uuid = membershipCard.uuid else { return nil }
+            guard let status = membershipCard.status?.status?.rawValue else { return nil }
             return [
                 "loyalty_plan": planId,
+                "status": status,
                 "client_account_id": uuid
             ]
         case .localPointsCollectionInternalFailure(let membershipCard, let error):

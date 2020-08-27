@@ -29,6 +29,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
                         let cdStatus = pendingStatus.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: newObject.id))
                         newObject.status = cdStatus
                         cdStatus.card = newObject
+                        BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: newObject))
                     }
                     
                     try? context.save()

@@ -283,6 +283,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 }
             
                 self.pointsScrapingDidComplete()
+                BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
+                BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }
     }
@@ -307,6 +309,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 try? backgroundContext.save()
                 
                 self.pointsScrapingDidComplete()
+                BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))
             }
         }
     }
@@ -320,6 +323,12 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
+        switch error {
+        case .loginFailed:
+            BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: card, error: error))
+        default:
+            BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: card, error: error))
+        }
         transitionToFailed(membershipCard: card)
     }
 }
