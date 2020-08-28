@@ -146,13 +146,13 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
         case .addPaymentCardResponseFail:
             return "add_payment_card_response_fail"
         case .deleteLoyaltyCard:
-            return "delete_loyalty_card"
+            return "delete_loyalty_card_request"
         case .deleteLoyaltyCardResponseSuccess:
             return "delete_loyalty_card_response_success"
         case .deleteLoyaltyCardResponseFail:
             return "delete_loyalty_card_response_fail"
         case .deletePaymentCard:
-            return "delete_payment_card_response"
+            return "delete_payment_card_request"
         case .deletePaymentCardResponseSuccess:
             return "delete_payment_card_response_success"
         case .deletePaymentCardResponseFail:
