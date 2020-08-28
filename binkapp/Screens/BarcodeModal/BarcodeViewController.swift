@@ -16,6 +16,7 @@ class BarcodeViewController: BinkTrackableViewController {
     
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var barcodeImageView: UIImageView!
+    @IBOutlet private weak var barcodeErrorLabel: UILabel!
     @IBOutlet private weak var barcodeLabel: UILabel!
     @IBOutlet private weak var barcodeNumberLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -61,7 +62,6 @@ class BarcodeViewController: BinkTrackableViewController {
     
     func configureUI() {
         guard !hasDrawnBarcode else { return }
-        
         barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
         [numberLabel, titleLabel].forEach {
             $0?.isHidden = viewModel.cardNumber == nil
@@ -72,11 +72,20 @@ class BarcodeViewController: BinkTrackableViewController {
         stackView.setCustomSpacing(Constants.smallSpace, after: titleLabel)
         stackView.setCustomSpacing(Constants.largeSpace, after: numberLabel.isHidden ? barcodeNumberLabel : numberLabel)
         
-        barcodeImageView.image = viewModel.barcodeImage(withSize: barcodeImageView.frame.size)
+        if let barcodeImage = viewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
+            barcodeImageView.isHidden = false
+            barcodeErrorLabel.isHidden = true
+            barcodeImageView.image = barcodeImage
+        } else {
+            barcodeImageView.isHidden = true
+            barcodeErrorLabel.text = "barcode_error".localized
+            barcodeErrorLabel.font = UIFont.bodyTextLarge
+            barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
+        }
         
         barcodeLabel.font = UIFont.headline
         barcodeLabel.textColor = .black
-        barcodeLabel.text = "barcode_title".localized
+        barcodeLabel.text = viewModel.isBarcodeAvailable ? "barcode_title".localized : nil
         
         barcodeNumberLabel.font = UIFont.subtitle
         barcodeNumberLabel.textColor = .black
