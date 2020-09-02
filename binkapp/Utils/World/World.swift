@@ -16,6 +16,7 @@ class World {
     lazy var userDefaults: BinkUserDefaults = UserDefaults.standard
     lazy var userManager = UserManager()
     lazy var apiClient = APIClient()
+    lazy var navigate = Navigate()
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
 }
 

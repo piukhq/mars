@@ -11,7 +11,7 @@ import MessageUI
 import ZendeskCoreSDK
 import SupportSDK
 
-class SettingsViewController: BinkTrackableViewController, BarBlurring, Router {
+class SettingsViewController: BinkTrackableViewController, BarBlurring {
     
     // MARK: - Helpers
     
