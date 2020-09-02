@@ -26,6 +26,7 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     let embedInNavigationController: Bool
     let completion: (() -> Void)?
     let animated: Bool
+    // Add logic for if we don't want the modal to be dragged to dismiss
     init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, completion: (() -> Void)? = nil, animated: Bool = true) {
         self.logicHandler = .modal
         self.viewController = viewController
@@ -79,49 +80,14 @@ class BaseNavigationHandler {
         switch navigationRequest {
         case let navigationRequest as ModalNavigationRequest:
             let viewController = navigationRequest.embedInNavigationController ? PortraitNavigationController(rootViewController: navigationRequest.viewController) : navigationRequest.viewController
+            
+            // Otherwise will default to iOS 13 style modal
+            if navigationRequest.fullScreen {
+                viewController.modalPresentationStyle = .fullScreen
+            }
             navigationController?.present(viewController, animated: navigationRequest.animated, completion: navigationRequest.completion)
         default:
             fatalError("Navigation route not implemented")
         }
     }
 }
-
-
-
-
-//enum NavigationTransition {
-//    case push
-//    case modal
-//}
-//
-//protocol Navigate {
-//    func navigate(to destination: UIViewController, withTransition transition: NavigationTransition)
-//}
-//
-//extension Navigate where Self: UIViewController {
-//    func navigate(to destination: UIViewController, withTransition transition: NavigationTransition) {
-//        switch transition {
-//        case .push:
-//            navigationController?.pushViewController(destination, animated: true)
-//        case .modal:
-//            present(destination, animated: true, completion: nil)
-//        }
-//    }
-//}
-//
-//protocol Router: Navigate {}
-//
-//extension Router where Self: SettingsViewController {
-//    func toPreferences() {
-//        // repositories dont need api client injection
-//        // view models don't need router injection
-//        let viewController = PreferencesViewController(viewModel: PreferencesViewModel(repository: PreferencesRepository(apiClient: Current.apiClient), router: MainScreenRouter(delegate: nil)))
-//        navigate(to: viewController, withTransition: .push)
-//    }
-//}
-//
-//extension Router where Self: BrowseBrandsViewController {
-//    func toSomethingElse() {
-//
-//    }
-//}

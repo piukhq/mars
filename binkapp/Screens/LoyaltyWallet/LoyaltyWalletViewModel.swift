@@ -86,7 +86,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
 //        router.toSettings(rowsWithActionRequired: rowsWithActionRequired)
         let viewModel = SettingsViewModel(router: MainScreenRouter(delegate: nil), rowsWithActionRequired: rowsWithActionRequired)
         let viewController = SettingsViewController(viewModel: viewModel)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, fullScreen: true)
         Current.navigate.to(navigationRequest)
     }
 }
