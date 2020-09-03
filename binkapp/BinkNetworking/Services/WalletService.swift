@@ -101,7 +101,7 @@ extension WalletServiceProtocol {
         }
         
         let request = BinkNetworkRequest(endpoint: endpoint, method: method, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(request, parameters: model, expecting: MembershipCardModel.self) { (result, rawResponse) in
+        Current.apiClient.performRequestWithBody(request, body: model, expecting: MembershipCardModel.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 completion(.success(response), rawResponse)
@@ -113,7 +113,7 @@ extension WalletServiceProtocol {
     
     func addGhostCard(withRequestModel model: MembershipCardPostModel, completion: @escaping ServiceCompletionResultHandler<MembershipCardModel, WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .membershipCards, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(request, parameters: model, expecting: MembershipCardModel.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(request, body: model, expecting: MembershipCardModel.self) { (result, _) in
             switch result {
             case .success(let response):
                 completion(.success(response))
@@ -125,7 +125,7 @@ extension WalletServiceProtocol {
     
     func patchGhostCard(withRequestModel model: MembershipCardPostModel, existingMembershipCard: CD_MembershipCard, completion: @escaping ServiceCompletionResultHandler<MembershipCardModel, WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .membershipCard(cardId: existingMembershipCard.id), method: .patch, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(request, parameters: model, expecting: MembershipCardModel.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(request, body: model, expecting: MembershipCardModel.self) { (result, _) in
             switch result {
             case .success(let response):
                 completion(.success(response))
@@ -137,7 +137,7 @@ extension WalletServiceProtocol {
     
     func deleteMembershipCard(_ membershipCard: CD_MembershipCard, completion: ServiceCompletionSuccessHandler<WalletServiceError>?) {
         let request = BinkNetworkRequest(endpoint: .membershipCard(cardId: membershipCard.id), method: .delete, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithNoResponse(request, parameters: nil) { (success, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: nil) { (success, _) in
             guard success else {
                 completion?(false, .failedToDeleteMembershipCard)
                 return
@@ -172,7 +172,7 @@ extension WalletServiceProtocol {
     
     func getSpreedlyToken(withRequest model: SpreedlyRequest, completion: @escaping ServiceCompletionResultHandler<SpreedlyResponse, WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .spreedly, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(request, parameters: model, expecting: SpreedlyResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(request, body: model, expecting: SpreedlyResponse.self) { (result, _) in
             switch result {
             case .success(let response):
                 completion(.success(response))
@@ -184,7 +184,7 @@ extension WalletServiceProtocol {
     
     func addPaymentCard(withRequestModel model: PaymentCardCreateRequest, completion: @escaping ServiceCompletionResultRawResponseHandler<PaymentCardModel, WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .paymentCards, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(request, parameters: model, expecting: PaymentCardModel.self) { (result, rawResponse) in
+        Current.apiClient.performRequestWithBody(request, body: model, expecting: PaymentCardModel.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 completion(.success(response), rawResponse)
@@ -196,7 +196,7 @@ extension WalletServiceProtocol {
     
     func deletePaymentCard(_ paymentCard: CD_PaymentCard, completion: ServiceCompletionSuccessHandler<WalletServiceError>?) {
         let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: paymentCard.id), method: .delete, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithNoResponse(request, parameters: nil) { (success, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: nil) { (success, _) in
             guard success else {
                 completion?(false, .failedToDeletePaymentCard)
                 return
