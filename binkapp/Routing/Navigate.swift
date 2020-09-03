@@ -18,6 +18,19 @@ protocol BaseNavigationRequest {
     var logicHandler: NavigationLogicHandler { get }
 }
 
+struct PushNavigationRequest: BaseNavigationRequest {
+    let logicHandler: NavigationLogicHandler
+    let viewController: UIViewController
+    let completion: (() -> Void)?
+    let animated: Bool
+    init(viewController: UIViewController, completion: (() -> Void)? = nil, animated: Bool = true) {
+        self.logicHandler = .modal
+        self.viewController = viewController
+        self.completion = completion
+        self.animated = animated
+    }
+}
+
 struct ModalNavigationRequest: BaseNavigationRequest {
     let logicHandler: NavigationLogicHandler
     let viewController: UIViewController
@@ -85,6 +98,7 @@ class BaseNavigationHandler {
     }
     
     // Each tab should have their own navigation controller, with a rootViewController, which should be the respective wallet view controllers
+    // TODO: This currently only works for the wallet navigation controllers. When we present Settings for example, if we want to present modally from there, this should return Settings' navigation controller.
     var navigationController: PortraitNavigationController? {
         let selectedIndex = tabBarController.selectedIndex
         return tabBarController.viewControllers?[safe: selectedIndex]?.navigationController as? PortraitNavigationController
@@ -92,6 +106,8 @@ class BaseNavigationHandler {
     
     func to(_ navigationRequest: BaseNavigationRequest) {
         switch navigationRequest {
+        case let navigationRequest as PushNavigationRequest:
+            navigationController?.pushViewController(navigationRequest.viewController, animated: navigationRequest.animated)
         case let navigationRequest as ModalNavigationRequest:
             let viewController = navigationRequest.embedInNavigationController ? PortraitNavigationController(rootViewController: navigationRequest.viewController) : navigationRequest.viewController
             
