@@ -183,7 +183,8 @@ extension WalletServiceProtocol {
     }
     
     func addPaymentCard(withRequestModel model: PaymentCardCreateRequest, completion: @escaping ServiceCompletionResultRawResponseHandler<PaymentCardModel, WalletServiceError>) {
-        let request = BinkNetworkRequest(endpoint: .paymentCards, method: .post, headers: nil, isUserDriven: true)
+        let params = ["autoLink": "true"]
+        let request = BinkNetworkRequest(endpoint: .paymentCards, method: .post, queryParameters: params, headers: nil, isUserDriven: true)
         Current.apiClient.performRequestWithBody(request, body: model, expecting: PaymentCardModel.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
