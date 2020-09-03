@@ -16,7 +16,6 @@ enum NavigationLogicHandler {
 
 protocol BaseNavigationRequest {
     var logicHandler: NavigationLogicHandler { get }
-    var viewController: UIViewController { get }
 }
 
 struct ModalNavigationRequest: BaseNavigationRequest {
@@ -34,6 +33,17 @@ struct ModalNavigationRequest: BaseNavigationRequest {
         self.embedInNavigationController = embedInNavigationController
         self.completion = completion
         self.animated = animated
+    }
+}
+
+struct CloseModalNavigationRequest: BaseNavigationRequest {
+    let logicHandler: NavigationLogicHandler
+    let animated: Bool
+    let completion: (() -> Void)?
+    init(animated: Bool = true, completion: (() -> Void)? = nil) {
+        self.animated = animated
+        self.completion = completion
+        self.logicHandler = .modal
     }
 }
 
@@ -61,6 +71,10 @@ class Navigate {
         lastLogicHandler = navigationRequest.logicHandler
         navigationHandler.to(navigationRequest)
     }
+    
+    func close() {
+        to(CloseModalNavigationRequest())
+    }
 }
 
 class BaseNavigationHandler {
@@ -86,6 +100,9 @@ class BaseNavigationHandler {
                 viewController.modalPresentationStyle = .fullScreen
             }
             navigationController?.present(viewController, animated: navigationRequest.animated, completion: navigationRequest.completion)
+        case let navigationRequest as CloseModalNavigationRequest:
+            // The navigation controller should always be the same one that presented the view modally
+            navigationController?.dismiss(animated: navigationRequest.animated, completion: navigationRequest.completion)
         default:
             fatalError("Navigation route not implemented")
         }

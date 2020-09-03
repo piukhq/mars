@@ -117,7 +117,8 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     }
     
     @objc func close() {
-        dismiss(animated: true)
+//        dismiss(animated: true)
+        Current.navigate.close()
     }
 }
 
