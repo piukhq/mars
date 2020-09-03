@@ -11,7 +11,7 @@ class LoyaltyCardFullDetailsViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
     private let router: MainScreenRouter
-    private let repository: LoyaltyCardFullDetailsRepository
+    private let repository = LoyaltyCardFullDetailsRepository()
     private let informationRowFactory: PaymentCardDetailInformationRowFactory
     
     var paymentCards: [CD_PaymentCard]? {
@@ -31,9 +31,8 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.status?.status == .authorised
     }
     
-    init(membershipCard: CD_MembershipCard, repository: LoyaltyCardFullDetailsRepository, router: MainScreenRouter, informationRowFactory: PaymentCardDetailInformationRowFactory) {
+    init(membershipCard: CD_MembershipCard, router: MainScreenRouter, informationRowFactory: PaymentCardDetailInformationRowFactory) {
         self.router = router
-        self.repository = repository
         self.membershipCard = membershipCard
         self.informationRowFactory = informationRowFactory
     }  
@@ -142,7 +141,7 @@ class LoyaltyCardFullDetailsViewModel {
             
             var description = state + "\n"
             membershipCard.status?.formattedReasonCodes?.forEach {
-                description += $0.value ?? ""
+                description += $0.description
             }
             
             router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: "error_title".localized, description: description))

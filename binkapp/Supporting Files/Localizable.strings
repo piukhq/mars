@@ -60,6 +60,7 @@
 "no_matches" = "No matches";
 
 "barcode_title" = "Barcode:";
+"barcode_error" = "This barcode cannot be displayed";
 "card_number_title" = "Card number:";
 "barcode_card_description" = "Scan this barcode at the store, just like you would a physical loyalty card. Bear in mind that some store scanners cannot read from screens.";
 "barcode_card_number_description" = "Show this card number in-store just like you would a physical loyalty card.";
@@ -322,6 +323,7 @@
 "plr_voucher_detail_subtext_inprogress" = "Spend %@%@ with us and you'll get a %@%@ %@.";
 "plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
 "plr_lcd_points_module_title" = "Collecting";
+"plr_lcd_points_module_auth_title" = "Earning";
 "plr_lcd_points_module_description" = "Towards rewards";
 "plr_voucher_accumulator_burn_description" = "for spending %@%@";
 "plr_voucher_stamp_burn_description" = "for collecting %@%@ %@";

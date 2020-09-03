@@ -11,9 +11,8 @@ import CardScan
 
 protocol WalletViewModel {
     associatedtype T
-    associatedtype R
 
-    init(repository: R, router: MainScreenRouter)
+    init(router: MainScreenRouter)
     var cards: [T]? { get }
     var cardCount: Int { get }
     var walletPromptsCount: Int { get }

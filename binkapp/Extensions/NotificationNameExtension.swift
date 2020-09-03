@@ -23,8 +23,11 @@ extension Notification.Name {
     // MARK: - SSL Pinning
     static let didFailServerTrustEvaluation = Notification.Name("did_fail_server_trust_evaluation")
     
-    //MARK: - Server Errors
+    // MARK: - Server Errors
     static let outageError = Notification.Name("outage_error")
     static let outageSilentFail = Notification.Name("outage_silent_fail")
     static let logoutOutage = Notification.Name("logout_outage")
+    
+    // MARK: - Local points scraping
+    static let webScrapingUtilityDidComplete = Notification.Name("web_scraping_utility_did_complete")
 }

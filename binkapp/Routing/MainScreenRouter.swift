@@ -67,8 +67,7 @@ class MainScreenRouter {
     }
     
     func getLoyaltyWalletViewController() -> UIViewController {
-        let repository = LoyaltyWalletRepository(apiClient: apiClient)
-        let viewModel = LoyaltyWalletViewModel(repository: repository, router: self)
+        let viewModel = LoyaltyWalletViewModel(router: self)
         let viewController = LoyaltyWalletViewController(viewModel: viewModel)
         viewModel.paymentScanDelegate = viewController
         
@@ -76,7 +75,7 @@ class MainScreenRouter {
     }
     
     func getPaymentWalletViewController() -> UIViewController {
-        let viewModel = PaymentWalletViewModel(repository: PaymentWalletRepository(apiClient: apiClient), router: self)
+        let viewModel = PaymentWalletViewModel(router: self)
         let viewController = PaymentWalletViewController(viewModel: viewModel)
         viewModel.paymentScanDelegate = viewController
         
@@ -171,8 +170,7 @@ class MainScreenRouter {
     }
 
     func toAddPaymentViewController(model: PaymentCardCreateModel? = nil) {
-        let repository = PaymentWalletRepository(apiClient: apiClient)
-        let viewModel = AddPaymentCardViewModel(router: self, repository: repository, paymentCard: model)
+        let viewModel = AddPaymentCardViewModel(router: self, paymentCard: model)
         let viewController = AddPaymentCardViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
@@ -180,7 +178,6 @@ class MainScreenRouter {
     func toBarcodeViewController(membershipCard: CD_MembershipCard, completion: @escaping () -> ()) {
         let viewModel = BarcodeViewModel(membershipCard: membershipCard)
         let navigationController = PortraitNavigationController(rootViewController: BarcodeViewController(viewModel: viewModel))
-        navigationController.modalPresentationStyle = .fullScreen
         navController?.present(navigationController,  animated: true, completion: completion)
     }
     
@@ -191,9 +188,8 @@ class MainScreenRouter {
     }
     
     func toLoyaltyFullDetailsScreen(membershipCard: CD_MembershipCard) {
-        let repository = LoyaltyCardFullDetailsRepository(apiClient: apiClient)
         let factory = PaymentCardDetailInformationRowFactory()
-        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, repository: repository, router: self, informationRowFactory: factory)
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, router: self, informationRowFactory: factory)
         let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
         factory.delegate = viewController
         navController?.pushViewController(viewController, animated: true)
@@ -209,29 +205,25 @@ class MainScreenRouter {
     }
 
     func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
-        let repository = AuthAndAddRepository(apiClient: apiClient)
-        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)
+        let viewModel = AuthAndAddViewModel(router: self, membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
     func toPatchGhostCard(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
-        let repository = AuthAndAddRepository(apiClient: apiClient)
-        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
+        let viewModel = AuthAndAddViewModel(router: self, membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
     func toSignUp(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
-        let repository = AuthAndAddRepository(apiClient: apiClient)
-        let viewModel = AuthAndAddViewModel(repository: repository, router: self, membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
+        let viewModel = AuthAndAddViewModel(router: self, membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
     func toPllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney ) {
-        let repository = PLLScreenRepository(apiClient: apiClient)
-        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, repository: repository, router: self, journey: journey)
+        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, router: self, journey: journey)
         let viewController = PLLScreenViewController(viewModel: viewModel, journey: journey)
         navController?.pushViewController(viewController, animated: true)
     }

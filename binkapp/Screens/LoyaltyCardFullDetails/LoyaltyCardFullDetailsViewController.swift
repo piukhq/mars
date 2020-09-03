@@ -114,6 +114,14 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
 
         setCloseButton()
         configureUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
+    }
+    
+    @objc private func handlePointsScrapingUpdate() {
+        DispatchQueue.main.async {
+            self.configureModules()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

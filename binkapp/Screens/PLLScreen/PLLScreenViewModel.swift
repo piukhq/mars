@@ -10,7 +10,7 @@ import CardScan
 
 class PLLScreenViewModel {
     private var membershipCard: CD_MembershipCard
-    private let repository: PLLScreenRepository
+    private let repository = PLLScreenRepository()
     private let router: MainScreenRouter
     
     private let paymentScannerStrings = PaymentCardScannerStrings()
@@ -49,9 +49,8 @@ class PLLScreenViewModel {
         return "pll_screen_secondary_message".localized
     }
         
-    init(membershipCard: CD_MembershipCard, repository: PLLScreenRepository, router: MainScreenRouter, journey: PllScreenJourney) {
+    init(membershipCard: CD_MembershipCard, router: MainScreenRouter, journey: PllScreenJourney) {
         self.membershipCard = membershipCard
-        self.repository = repository
         self.router = router
         self.journey = journey
     }

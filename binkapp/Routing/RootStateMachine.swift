@@ -9,7 +9,7 @@
 import UIKit
 import DTTJailbreakDetection
 
-class RootStateMachine: NSObject {
+class RootStateMachine: NSObject, UserServiceProtocol {
     
     private let window: UIWindow
     private var router: MainScreenRouter?
@@ -70,10 +70,7 @@ class RootStateMachine: NSObject {
         if Current.apiClient.networkIsReachable {
             // Call the logout endpoint, but we don't care about the response.
             // On success or error, we will defer to clearing local storage and clearing the user's token.
-
-            // TODO: Request should become a static let in a service in future ticket
-            let request = BinkNetworkRequest(endpoint: .logout, method: .post, headers: nil, isUserDriven: false)
-            Current.apiClient.performRequest(request, expecting: LogoutResponse.self) { (_, _) in }
+            logout()
         }
     }
     
