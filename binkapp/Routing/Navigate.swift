@@ -99,9 +99,9 @@ class BaseNavigationHandler {
     
     // Each tab should have their own navigation controller, with a rootViewController, which should be the respective wallet view controllers
     // TODO: This currently only works for the wallet navigation controllers. When we present Settings for example, if we want to present modally from there, this should return Settings' navigation controller.
-    var navigationController: PortraitNavigationController? {
-        let selectedIndex = tabBarController.selectedIndex
-        return tabBarController.viewControllers?[safe: selectedIndex]?.navigationController as? PortraitNavigationController
+    var navigationController: UINavigationController? {
+        // We should only ever be attempting navigation on the top most view controller, and only where it is a navigation controller
+        return UIViewController.topMostViewController() as? UINavigationController
     }
     
     func to(_ navigationRequest: BaseNavigationRequest) {
@@ -117,8 +117,9 @@ class BaseNavigationHandler {
             }
             navigationController?.present(viewController, animated: navigationRequest.animated, completion: navigationRequest.completion)
         case let navigationRequest as CloseModalNavigationRequest:
-            // The navigation controller should always be the same one that presented the view modally
-            navigationController?.dismiss(animated: navigationRequest.animated, completion: navigationRequest.completion)
+            if let visibleViewController = UIViewController.topMostViewController() {
+                visibleViewController.dismiss(animated: navigationRequest.animated, completion: navigationRequest.completion)
+            }
         default:
             fatalError("Navigation route not implemented")
         }
