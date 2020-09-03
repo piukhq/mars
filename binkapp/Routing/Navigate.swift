@@ -8,23 +8,26 @@
 
 import UIKit
 
-enum NavigationLogicHandler {
-    case loyaltyWallet
-    case paymentWallet
+// USE CASES TO COVER:
+// Removing/inserting view controllers from the navigation stack after pushing
+// View controllers should know how they were presented and display close or back buttons accordingly
+
+enum NavigationType {
+    case push
     case modal
+    case close
 }
 
 protocol BaseNavigationRequest {
-    var logicHandler: NavigationLogicHandler { get }
+    var navigationType: NavigationType { get }
 }
 
 struct PushNavigationRequest: BaseNavigationRequest {
-    let logicHandler: NavigationLogicHandler
+    let navigationType: NavigationType = .push
     let viewController: UIViewController
     let completion: (() -> Void)?
     let animated: Bool
     init(viewController: UIViewController, completion: (() -> Void)? = nil, animated: Bool = true) {
-        self.logicHandler = .modal
         self.viewController = viewController
         self.completion = completion
         self.animated = animated
@@ -32,7 +35,7 @@ struct PushNavigationRequest: BaseNavigationRequest {
 }
 
 struct ModalNavigationRequest: BaseNavigationRequest {
-    let logicHandler: NavigationLogicHandler
+    let navigationType: NavigationType = .modal
     let viewController: UIViewController
     let fullScreen: Bool
     let embedInNavigationController: Bool
@@ -40,7 +43,6 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     let animated: Bool
     // Add logic for if we don't want the modal to be dragged to dismiss
     init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, completion: (() -> Void)? = nil, animated: Bool = true) {
-        self.logicHandler = .modal
         self.viewController = viewController
         self.fullScreen = fullScreen
         self.embedInNavigationController = embedInNavigationController
@@ -50,18 +52,20 @@ struct ModalNavigationRequest: BaseNavigationRequest {
 }
 
 struct CloseModalNavigationRequest: BaseNavigationRequest {
-    let logicHandler: NavigationLogicHandler
+    let navigationType: NavigationType = .close
     let animated: Bool
     let completion: (() -> Void)?
     init(animated: Bool = true, completion: (() -> Void)? = nil) {
         self.animated = animated
         self.completion = completion
-        self.logicHandler = .modal
     }
 }
 
 class Navigate {
-    private var lastLogicHandler: NavigationLogicHandler = .loyaltyWallet
+    /// Maintain a reference to the last navigation type used.
+    /// This is so we know how to configure any view controller to be dismissed by Navigate
+    private var lastNavigationType: NavigationType?
+    
     private lazy var tabBarController: MainTabBarViewController? = {
         // For some reason, the root view controller is a navigation controller, with an embedded tab bar controller. This is backwards.
         // We should fix this when we implement the navigation refactor, then remove this logic and make it much nicer to access the tab bar controller via UIApplication
@@ -81,7 +85,7 @@ class Navigate {
     private lazy var navigationHandler = BaseNavigationHandler(tabBarController: tabBarController!)
     
     func to(_ navigationRequest: BaseNavigationRequest) {
-        lastLogicHandler = navigationRequest.logicHandler
+        lastNavigationType = navigationRequest.navigationType
         navigationHandler.to(navigationRequest)
     }
     

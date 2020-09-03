@@ -49,8 +49,8 @@ class SettingsViewModel {
 //        router.pushReusableModalTemplateVC(configurationModel: configurationModel, navigationController: navController)
         let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: MainScreenRouter(delegate: nil))
         let viewController = ReusableTemplateViewController(viewModel: viewModel, floatingButtons: true)
-        Current.navigate.to(PushNavigationRequest(viewController: viewController))
-//        Current.navigate.to(ModalNavigationRequest(viewController: viewController))
+//        Current.navigate.to(PushNavigationRequest(viewController: viewController))
+        Current.navigate.to(ModalNavigationRequest(viewController: viewController))
     }
     
     func openWebView(url: String) {
