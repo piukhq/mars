@@ -139,6 +139,9 @@
 		5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047522CE579B001BA964 /* Assets.xcassets */; };
 		5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */; };
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
+		70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */; };
+		70661B8B250795DF006DB009 /* BootsPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70661B89250795DF006DB009 /* BootsPointsScrape.js */; };
+		70661B8C250795DF006DB009 /* BootsLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70661B8A250795DF006DB009 /* BootsLogin.js */; };
 		706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */; };
 		706D203A24D851BA004BCCF3 /* CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203824D851BA004BCCF3 /* CD_CardAccount.swift */; };
 		706D203C24D85B76004BCCF3 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -618,15 +621,18 @@
 		6249B35DF4CA178120671E6A /* Pods-binkapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.release.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.release.xcconfig"; sourceTree = "<group>"; };
 		6F8E73B24E8A8009DF9E4266 /* Pods-binkappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.release.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.release.xcconfig"; sourceTree = "<group>"; };
 		7049B63C24AB52AA00661128 /* binkapp - 30-06-20 - Add field alternatives.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 30-06-20 - Add field alternatives.xcdatamodel"; sourceTree = "<group>"; };
+		70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootsPointsScrapingAgent.swift; sourceTree = "<group>"; };
+		70661B89250795DF006DB009 /* BootsPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BootsPointsScrape.js; sourceTree = "<group>"; };
+		70661B8A250795DF006DB009 /* BootsLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BootsLogin.js; sourceTree = "<group>"; };
 		706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 03-08-20 - Card accounts uuid.xcdatamodel"; sourceTree = "<group>"; };
 		706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _CD_CardAccount.swift; sourceTree = "<group>"; };
 		706D203824D851BA004BCCF3 /* CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_CardAccount.swift; sourceTree = "<group>"; };
 		706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-BETA.plist"; sourceTree = "<group>"; };
 		706D204124D97104004BCCF3 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
+		7097489D24D088FE008D0E29 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
 		7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigUtil.swift; sourceTree = "<group>"; };
 		70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsScrapingManager.swift; sourceTree = "<group>"; };
-		7097489D24D088FE008D0E29 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
 		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
 		70B316E224E5A47000D86DE5 /* TescoLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoLogin.js; sourceTree = "<group>"; };
 		70B316E324E5A47000D86DE5 /* TescoPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoPointsScrape.js; sourceTree = "<group>"; };
@@ -1534,12 +1540,24 @@
 			path = PaymentScanner;
 			sourceTree = "<group>";
 		};
-		7097489E24D32A42008D0E29 /* Remote Config */ = {
+		70661B85250792B6006DB009 /* Tesco */ = {
 			isa = PBXGroup;
 			children = (
-				7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */,
+				70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */,
+				70B316E324E5A47000D86DE5 /* TescoPointsScrape.js */,
+				70B316E224E5A47000D86DE5 /* TescoLogin.js */,
 			);
-			path = "Remote Config";
+			path = Tesco;
+			sourceTree = "<group>";
+		};
+		70661B86250792C0006DB009 /* Boots */ = {
+			isa = PBXGroup;
+			children = (
+				70661B8A250795DF006DB009 /* BootsLogin.js */,
+				70661B89250795DF006DB009 /* BootsPointsScrape.js */,
+				70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */,
+			);
+			path = Boots;
 			sourceTree = "<group>";
 		};
 		7097489C24D088E3008D0E29 /* Objective-C */ = {
@@ -1548,6 +1566,14 @@
 				7097489D24D088FE008D0E29 /* ExceptionHandler.h */,
 			);
 			path = "Objective-C";
+			sourceTree = "<group>";
+		};
+		7097489E24D32A42008D0E29 /* Remote Config */ = {
+			isa = PBXGroup;
+			children = (
+				7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */,
+			);
+			path = "Remote Config";
 			sourceTree = "<group>";
 		};
 		70A4EE7624BDBA1F00FA33B1 /* Permissions */ = {
@@ -1561,9 +1587,8 @@
 		70BD4BD024B774EB006E4E3D /* Agents */ = {
 			isa = PBXGroup;
 			children = (
-				70B316E224E5A47000D86DE5 /* TescoLogin.js */,
-				70B316E324E5A47000D86DE5 /* TescoPointsScrape.js */,
-				70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */,
+				70661B86250792C0006DB009 /* Boots */,
+				70661B85250792B6006DB009 /* Tesco */,
 			);
 			path = Agents;
 			sourceTree = "<group>";
@@ -2553,6 +2578,7 @@
 				3CF029F322F45AEC009A0E61 /* AddingOptionsViewController.xib in Resources */,
 				3CD3493322F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf in Resources */,
 				3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */,
+				70661B8B250795DF006DB009 /* BootsPointsScrape.js in Resources */,
 				3CE24B2D2304014600B258C8 /* AddOrJoinViewController.xib in Resources */,
 				EFCAF9222371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib in Resources */,
 				EF8B701B235DDC75006CE3DD /* OnboardingViewController.xib in Resources */,
@@ -2601,6 +2627,7 @@
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
 				EFA81016240405070000D21D /* JailbrokenViewController.xib in Resources */,
 				EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */,
+				70661B8C250795DF006DB009 /* BootsLogin.js in Resources */,
 				706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */,
 				3C7067F0232FD52D00AB88A5 /* SimpleInfoViewController.xib in Resources */,
 				BD25E6972388610B0027FF3E /* LoadingScreen.xib in Resources */,
@@ -2867,6 +2894,7 @@
 				EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */,
 				EF94AF0523D887AE00AAA039 /* SpreedlyModels.swift in Sources */,
 				DB4D8EB1244722130085595D /* SettingsViewModelMock.swift in Sources */,
+				70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */,
 				EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */,
 				EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */,
 				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,
