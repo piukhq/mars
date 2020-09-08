@@ -85,4 +85,13 @@ platform :ios do
     upload_to_testflight(skip_waiting_for_build_processing: true)
   end
 
+  desc "Submit dysm to Sentry for Firebase App Distribution"
+  lane :beta_dsym do
+    upload_symbols_to_sentry(
+      auth_token: ENV["SENTRY_AUTH_TOKEN"],
+      org_slug: 'bink',
+      project_slug: 'mars',
+      api_host: 'http://sentry.uksouth.bink.sh'
+    )
+  end  
 end
