@@ -36,6 +36,11 @@ Retrieve and force update all the certificates for all targets and configures yo
 fastlane ios beta
 ```
 Submit branch to TestFlight
+### ios beta_dsym
+```
+fastlane ios beta_dsym
+```
+Submit dysm to Sentry for Firebase App Distribution
 
 ----
 
