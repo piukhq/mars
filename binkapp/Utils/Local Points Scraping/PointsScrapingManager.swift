@@ -58,7 +58,8 @@ class PointsScrapingManager {
     }
     
     let agents: [WebScrapable] = [
-        TescoScrapingAgent()
+        TescoScrapingAgent(),
+        BootsScrapingAgent()
     ]
     
     // MARK: - Credentials handling
