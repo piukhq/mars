@@ -31,11 +31,7 @@ final class SentryService {
             return false
         }
         
-        if bundleIdentifier == prodBundleIdentifier {
-            return true
-        } else {
-            return false
-        }
+        return bundleIdentifier == prodBundleIdentifier
     }
 
     private static var isDebug: Bool {
