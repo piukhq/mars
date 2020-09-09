@@ -157,6 +157,7 @@
 		70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86779248E76C9001ED282 /* WebScrapingUtility.swift */; };
 		92CE3430695A6558F2EC1793 /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */; };
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
+		96F22E022508B6060009951B /* SentryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F22E012508B6060009951B /* SentryService.swift */; };
 		9C26930409A757F7CD2C794E /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */; };
 		B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */; };
 		B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7136628232690F7008A0ED7 /* PLLScreenViewModel.swift */; };
@@ -647,6 +648,7 @@
 		882B02A158ADAE64BDA0A4D9 /* Pods_binkappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_binkappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B3AFA03254020143F921E89 /* Pods-binkappTests.gamma.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.gamma.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.gamma.xcconfig"; sourceTree = "<group>"; };
 		8C693B19B5628C75E50BD6CF /* Pods-binkapp.alpha.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.alpha.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.alpha.xcconfig"; sourceTree = "<group>"; };
+		96F22E012508B6060009951B /* SentryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryService.swift; sourceTree = "<group>"; };
 		9AB9FBE38BA00B9339ECF93E /* Pods-binkapp.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.nightly.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.nightly.xcconfig"; sourceTree = "<group>"; };
 		AE0DB4F03CE314B533DEA419 /* Pods-binkappUITests.merge request.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.merge request.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.merge request.xcconfig"; sourceTree = "<group>"; };
 		B713662423268FEB008A0ED7 /* PLLScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewController.swift; sourceTree = "<group>"; };
@@ -1432,7 +1434,6 @@
 				BD3CB94223285716005C37AE /* Configuration */,
 				492DA371EDF911EDB1A625BF /* Frameworks */,
 				55D2E5494D854AAC5EFAFFC7 /* Pods */,
-				5ECE046922CE5798001BA964 /* Products */,
 				B766599D2321461D00B327BE /* Recovered References */,
 			);
 			sourceTree = "<group>";
@@ -1604,6 +1605,7 @@
 		B766599D2321461D00B327BE /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
+				5ECE046922CE5798001BA964 /* Products */,
 				B72E82C22313F3F90045607E /* MembershipCardAmount.swift */,
 				B73F7108230D7F1300D82566 /* MembershipCardBalanceModel.swift */,
 			);
@@ -2416,6 +2418,7 @@
 				EFF5CD60244F34A8009021A4 /* WalletService.swift */,
 				70E31A8024E56B3B005A30D2 /* UserService.swift */,
 				70E31A8224E56B4D005A30D2 /* APIService.swift */,
+				96F22E012508B6060009951B /* SentryService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2967,6 +2970,7 @@
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
 				EFA5F7542379AAB20027AB80 /* CD_VoucherEarn.swift in Sources */,
 				70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */,
+				96F22E022508B6060009951B /* SentryService.swift in Sources */,
 				EFA5F7202379A7C70027AB80 /* CD_MembershipCardStatus.swift in Sources */,
 				EFEB5BF3237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift in Sources */,
 				EFA5F7532379AAB20027AB80 /* _CD_VoucherEarn.swift in Sources */,

@@ -14,7 +14,6 @@ import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
 import CardScan
 import Keys
-import Sentry
 
 @UIApplicationMain 
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
@@ -32,12 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         // Firebase
         FirebaseApp.configure()
        
-        SentrySDK.start(options: [
-           "dsn": "https://de94701e62374e53bef78de0317b8089@sentry.uksouth.bink.sh/20",
-           "debug": true, // Enabled debug when first installing is always helpful
-            "environment": "beta",// beta, testflight or live
-            "release": Bundle.shortVersionNumber ?? ""
-        ])
+        SentryService.start()
     
         #if RELEASE
         BinkAnalytics.beginSessionTracking()
