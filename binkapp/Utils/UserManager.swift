@@ -9,7 +9,7 @@
 import Foundation
 import KeychainAccess
 import FBSDKLoginKit
-import FirebaseCrashlytics
+import Sentry
 import Firebase
 
 private enum UserManagerError: Error {
@@ -107,6 +107,9 @@ class UserManager {
         // Set user id for Crashlytics
         guard let userId = response.uid else { return }
         Crashlytics.crashlytics().setUserID(userId)
+        
+        let sentryUser = Sentry.User(userId: userId)
+        SentrySDK.setUser(sentryUser)
         Analytics.setUserID(userId)
     }
     
