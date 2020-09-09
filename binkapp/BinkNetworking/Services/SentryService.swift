@@ -15,11 +15,8 @@ final class SentryService {
     
     private static var environment: String {
         let envString: String
-        
-        // We do not assume TF will always be a production build
-        if isTestFlight {
-            envString = "testflight"
-        } else if isReleaseTypeBuild && APIConstants.isProduction && !isDebug {
+
+        if isReleaseTypeBuild && APIConstants.isProduction && !isDebug {
             envString = "live"
         } else {
             envString = "beta"
@@ -50,13 +47,6 @@ final class SentryService {
         #endif
         
         return isDebug
-    }
-    
-    private static var isTestFlight: Bool {
-        guard let path = Bundle.main.appStoreReceiptURL?.path else {
-            return false
-        }
-        return path.contains("sandboxReceipt")
     }
     
     static func start() {
