@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import Firebase
-import FirebaseCrashlytics
 import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
 import CardScan
@@ -31,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         // Firebase
         FirebaseApp.configure()
        
+        // Sentry Crash Reporting
         SentryService.start()
     
         #if RELEASE
