@@ -19,6 +19,7 @@ struct DebugMenuRow {
         case email
         case endpoint
         case secondaryColor
+        case lpcWebView
     }
     
     enum CellType {

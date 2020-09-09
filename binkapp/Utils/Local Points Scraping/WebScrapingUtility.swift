@@ -102,6 +102,14 @@ class WebScrapingUtility: NSObject {
         guard let url = URL(string: agent.scrapableUrlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
+        
+        if Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView) {
+            let webViewController = UIViewController()
+            webView.frame = webViewController.view.frame
+            webViewController.view.addSubview(webView)
+            containerViewController?.present(webViewController, animated: true, completion: nil)
+        }
+        
         let request = URLRequest(url: url)
         if let cookiesDictionary = Current.userDefaults.value(forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id)) as? [String: Any] {
             var cookiesSet: Int = 0

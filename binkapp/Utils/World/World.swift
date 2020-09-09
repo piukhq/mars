@@ -42,6 +42,7 @@ extension UserDefaults: BinkUserDefaults {
         case userEmail
         case debugBaseURL
         case webScrapingCookies(membershipCardId: String)
+        case lpcDebugWebView
         
         var keyValue: String {
             switch self {
@@ -53,6 +54,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "debugBaseURL"
             case .webScrapingCookies(let membershipCardId):
                 return "webScrapingCookies_cardId_\(membershipCardId)"
+            case .lpcDebugWebView:
+                return "lpcDebugWebView"
             }
         }
     }
