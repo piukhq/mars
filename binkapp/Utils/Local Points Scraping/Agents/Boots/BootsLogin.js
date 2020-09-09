@@ -9,15 +9,16 @@ setTimeout(function() {
 }, timeoutSeconds * 1000);
 
 function checkLoginFields() {
-    var usernameInput = document.getElementById('username');
-    var passwordInput = document.getElementById('password');
-    var buttons = document.getElementsByClassName('gigya-input-submit');
-    var signInButton = buttons[0];
+    var usernameInput = document.getElementById('gigya-loginID-126189670420823710');
+    var passwordInput = document.getElementById('gigya-password-21094567555302330');
     usernameInput.value = username;
     passwordInput.value = password;
-    if (signInButton == null) {
-        return;
+    var buttons = document.getElementsByClassName('gigya-input-submit');
+    
+    for (i = 0; i < buttons.length; i++) {
+        if (buttons[i].value == "Log in") {
+            buttons[i].click();
+            clearInterval(checkLogin);
+        }
     }
-    signInButton.click();
-    clearInterval(checkLogin);
 }

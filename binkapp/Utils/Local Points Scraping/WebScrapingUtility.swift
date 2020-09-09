@@ -152,6 +152,7 @@ class WebScrapingUtility: NSObject {
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 return
             }
+            // TODO: If we get here, but then there is no further navigation then the card will remain in pending
         }
     }
 
@@ -199,15 +200,23 @@ class WebScrapingUtility: NSObject {
     }
     
     private var shouldScrape: Bool {
-        return webView.url?.absoluteString == agent.scrapableUrlString
+        return isLikelyAtScrapableScreen
     }
     
     private var shouldAttemptLogin: Bool {
-        return webView.url?.absoluteString == agent.loginUrlString && !hasAttemptedLogin
+        return isLikelyAtLoginScreen && !hasAttemptedLogin
     }
     
     private var isRedirecting: Bool {
-        return webView.url?.absoluteString != agent.loginUrlString && webView.url?.absoluteString != agent.scrapableUrlString
+        return !isLikelyAtLoginScreen && !isLikelyAtScrapableScreen
+    }
+    
+    private var isLikelyAtLoginScreen: Bool {
+        return webView.url?.absoluteString.starts(with: agent.loginUrlString) == true
+    }
+    
+    private var isLikelyAtScrapableScreen: Bool {
+        return webView.url?.absoluteString.starts(with: agent.scrapableUrlString) == true
     }
 }
 
