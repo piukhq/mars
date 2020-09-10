@@ -290,6 +290,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     func transitionToFailed(membershipCard: CD_MembershipCard) {
+        Current.userDefaults.set(nil, forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id))
+        
         fetchMembershipCard(forId: membershipCard.id) { membershipCard in
             guard let membershipCard = membershipCard else {
                 fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
