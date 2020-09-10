@@ -17,7 +17,7 @@ final class SentryService {
         let envString: String
 
         if isReleaseTypeBuild && APIConstants.isProduction && !isDebug {
-            envString = "live"
+            envString = "prod"
         } else {
             envString = "beta"
         }
@@ -49,7 +49,7 @@ final class SentryService {
         SentrySDK.start(options: [
             "dsn": "https://de94701e62374e53bef78de0317b8089@sentry.uksouth.bink.sh/20",
             "debug": isDebug, // Enabled debug when first installing is always helpful
-            "environment": environment, // beta, testflight or live
+            "environment": environment, // beta, or prod
             "release": Bundle.shortVersionNumber ?? ""
         ])
     }
