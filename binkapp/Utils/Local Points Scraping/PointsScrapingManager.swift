@@ -122,7 +122,7 @@ class PointsScrapingManager {
             throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
         }
                 
-        webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController().getVisibleViewController()!, agent: agent, membershipCard: membershipCard, delegate: self)
+        webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController().getVisibleViewController() ?? UIViewController(), agent: agent, membershipCard: membershipCard, delegate: self)
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
             try webScrapingUtility?.start()
