@@ -9,7 +9,7 @@
 import Foundation
 import KeychainAccess
 import FBSDKLoginKit
-import FirebaseCrashlytics
+import Sentry
 import Firebase
 
 private enum UserManagerError: Error {
@@ -104,9 +104,11 @@ class UserManager {
             ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
         
-        // Set user id for Crashlytics
+        // Set user id for analytics and crash reporting
         guard let userId = response.uid else { return }
-        Crashlytics.crashlytics().setUserID(userId)
+        
+        let sentryUser = Sentry.User(userId: userId)
+        SentrySDK.setUser(sentryUser)
         Analytics.setUserID(userId)
     }
     
