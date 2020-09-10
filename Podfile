@@ -7,7 +7,6 @@ def common_pods
 
 pod 'Firebase'
 pod 'Firebase/Analytics'
-pod 'Firebase/Crashlytics'
 pod 'Firebase/RemoteConfig'
 pod 'Alamofire', '~> 5.0.0-rc.3'
 pod 'AlamofireImage', '~> 4.0.0-beta.6'

@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeForceCrashRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -58,6 +58,12 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "LPC debug web view", subtitle: shouldShow ? "On" : "Off", action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcWebView)
+        }, cellType: .titleSubtitle)
+    }
+    
+    private func makeForceCrashRow() -> DebugMenuRow {
+        return DebugMenuRow(title: "Force Crash", subtitle: "This will immediately crash the application", action: {
+            SentryService.forceCrash()
         }, cellType: .titleSubtitle)
     }
     

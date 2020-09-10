@@ -39,9 +39,6 @@ PODS:
     - FirebaseAnalytics (= 6.5.0)
   - Firebase/CoreOnly (6.24.0):
     - FirebaseCore (= 6.7.0)
-  - Firebase/Crashlytics (6.24.0):
-    - Firebase/CoreOnly
-    - FirebaseCrashlytics (~> 4.1.0)
   - Firebase/RemoteConfig (6.24.0):
     - Firebase/CoreOnly
     - FirebaseRemoteConfig (~> 4.4.10)
@@ -71,14 +68,6 @@ PODS:
     - GoogleUtilities/Logger (~> 6.5)
     - nanopb (~> 1.30905.0)
   - FirebaseCoreDiagnosticsInterop (1.2.0)
-  - FirebaseCrashlytics (4.1.1):
-    - FirebaseAnalyticsInterop (~> 1.2)
-    - FirebaseCore (~> 6.6)
-    - FirebaseInstallations (~> 1.1)
-    - GoogleDataTransport (~> 6.1)
-    - GoogleDataTransportCCTSupport (~> 3.1)
-    - nanopb (~> 1.30905.0)
-    - PromisesObjC (~> 1.2)
   - FirebaseInstallations (1.2.0):
     - FirebaseCore (~> 6.6)
     - GoogleUtilities/Environment (~> 6.6)
@@ -164,7 +153,6 @@ DEPENDENCIES:
   - FBSDKLoginKit (~> 6.0.0)
   - Firebase
   - Firebase/Analytics
-  - Firebase/Crashlytics
   - Firebase/RemoteConfig
   - JWTDecode (~> 2.4)
   - KeychainAccess (~> 4.1)
@@ -193,7 +181,6 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreDiagnosticsInterop
-    - FirebaseCrashlytics
     - FirebaseInstallations
     - FirebaseRemoteConfig
     - GoogleAppMeasurement
@@ -244,7 +231,6 @@ SPEC CHECKSUMS:
   FirebaseCore: e610482f64097b0e9f056cd97bc6b33dfabcbb6a
   FirebaseCoreDiagnostics: 4a773a47bd83bbd5a9b1ccf1ce7caa8b2d535e67
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
-  FirebaseCrashlytics: a87cce5746d3335995bd18b1b60d073cd05a6920
   FirebaseInstallations: 2119fb3e46b0a88bfdbf12562f855ee3252462fa
   FirebaseRemoteConfig: 3d189cf0c3c5abc0c924ef1cce60c4add8d3262c
   GoogleAppMeasurement: 4c644d86835d827bab30ab6aabb9ecaf1f500735
@@ -267,6 +253,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: e52f37fa8bcba91f024b81025869fe5a2860f741
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 20ace1563bffd10f3fe8a255c97a8c0ca5ae257f
+PODFILE CHECKSUM: 327b068d9599304a6e80b6a25f96b2b61c6a22d6
 
 COCOAPODS: 1.9.1

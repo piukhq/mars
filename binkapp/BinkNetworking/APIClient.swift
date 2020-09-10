@@ -91,6 +91,7 @@ final class APIClient {
 struct BinkNetworkRequest {
     var endpoint: APIEndpoint
     var method: HTTPMethod
+    var queryParameters: [String: String]?
     var headers: [String: String]?
     var isUserDriven: Bool
 }
@@ -116,7 +117,7 @@ extension APIClient {
         }
     }
 
-    func performRequestWithParameters<ResponseType: Codable, P: Encodable>(_ request: BinkNetworkRequest, parameters: P?, expecting responseType: ResponseType.Type, completion: APIClientCompletionHandler<ResponseType>?) {
+    func performRequestWithBody<ResponseType: Codable, P: Encodable>(_ request: BinkNetworkRequest, body: P?, expecting responseType: ResponseType.Type, completion: APIClientCompletionHandler<ResponseType>?) {
         validateRequest(request) { (validatedRequest, error) in
             if let error = error {
                 completion?(.failure(error), nil)
@@ -126,13 +127,13 @@ extension APIClient {
                 completion?(.failure(.invalidRequest), nil)
                 return
             }
-            session.request(validatedRequest.requestUrl, method: request.method, parameters: parameters, encoder: JSONParameterEncoder.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+            session.request(validatedRequest.requestUrl, method: request.method, parameters: body, encoder: JSONParameterEncoder.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
                 self?.handleResponse(response, endpoint: request.endpoint, expecting: responseType, isUserDriven: request.isUserDriven, completion: completion)
             }
         }
     }
 
-    func performRequestWithNoResponse(_ request: BinkNetworkRequest, parameters: [String: Any]?, completion: ((Bool, NetworkingError?) -> Void)?) {
+    func performRequestWithNoResponse(_ request: BinkNetworkRequest, body: [String: Any]?, completion: ((Bool, NetworkingError?) -> Void)?) {
         validateRequest(request) { [weak self] (validatedRequest, error) in
             if let error = error {
                 completion?(false, error)
@@ -142,7 +143,7 @@ extension APIClient {
                 completion?(false, .invalidRequest)
                 return
             }
-            session.request(validatedRequest.requestUrl, method: request.method, parameters: parameters, encoding: JSONEncoding.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
+            session.request(validatedRequest.requestUrl, method: request.method, parameters: body, encoding: JSONEncoding.default, headers: validatedRequest.headers).cacheResponse(using: ResponseCacher.doNotCache).responseJSON { [weak self] response in
                 self?.noResponseHandler(response: response, endpoint: request.endpoint, isUserDriven: request.isUserDriven, completion: completion)
             }
         }
@@ -169,17 +170,25 @@ extension APIClient {
             NotificationCenter.default.post(name: .noInternetConnection, object: nil)
             completion(nil, .noInternetConnection)
         }
-        guard let requestUrl = request.endpoint.urlString else {
+        
+        var requestUrl: String?
+        if let params = request.queryParameters {
+            requestUrl = request.endpoint.urlString(withQueryParameters: params)
+        } else {
+            requestUrl = request.endpoint.urlString
+        }
+        guard let url = requestUrl else {
             completion(nil, .invalidUrl)
             return
         }
+        
         guard request.endpoint.allowedMethods.contains(request.method) else {
             completion(nil, .methodNotAllowed)
             return
         }
 
         let requestHeaders = HTTPHeaders(request.headers ?? request.endpoint.headers)
-        completion(ValidatedNetworkRequest(requestUrl: requestUrl, headers: requestHeaders), nil)
+        completion(ValidatedNetworkRequest(requestUrl: url, headers: requestHeaders), nil)
     }
 }
 
