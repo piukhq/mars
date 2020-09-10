@@ -16,13 +16,13 @@ struct MorrisonsScrapingAgent: WebScrapable {
     var membershipPlanId: Int {
         switch APIConstants.currentEnvironment {
         case .dev:
-            return 4
+            return 12
         case .staging:
-            return 4
+            return 12
         case .preprod:
-            return 4
+            return 12
         case .production:
-            return 4
+            return 12
         }
     }
     
@@ -47,11 +47,11 @@ struct MorrisonsScrapingAgent: WebScrapable {
     }
     
     var loginUrlString: String {
-        return "https://www.boots.com/webapp/wcs/stores/servlet/BootsLogonForm"
+        return "https://my.morrisons.com/more/#/login"
     }
     
     var scrapableUrlString: String {
-        return "https://www.boots.com/webapp/wcs/stores/servlet/AjaxLogonForm"
+        return "https://my.morrisons.com/more/#/mypoints"
     }
     
     var loginScriptFileName: String {
