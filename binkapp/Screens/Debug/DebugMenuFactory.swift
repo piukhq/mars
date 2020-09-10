@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Sentry
 
 protocol DebugMenuFactoryDelegate: AnyObject {
     func debugMenuFactory(_ debugMenuFactory: DebugMenuFactory, shouldPerformActionForType type: DebugMenuRow.RowType)
@@ -56,7 +55,7 @@ class DebugMenuFactory {
     
     private func makeForceCrashRow() -> DebugMenuRow {
         return DebugMenuRow(title: "Force Crash", subtitle: "This will immediately crash the application", action: {
-            SentrySDK.crash()
+            SentryService.forceCrash()
         }, cellType: .titleSubtitle)
     }
     

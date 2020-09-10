@@ -53,4 +53,8 @@ final class SentryService {
             "release": Bundle.shortVersionNumber ?? ""
         ])
     }
+    
+    static func forceCrash() {
+        SentrySDK.crash()
+    }
 }
