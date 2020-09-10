@@ -12,6 +12,7 @@ import WebKit
 enum WebScrapableMerchant: String {
     case tesco
     case boots
+    case morrisons
 }
 
 protocol WebScrapable {
