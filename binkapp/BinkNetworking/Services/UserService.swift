@@ -81,7 +81,7 @@ extension UserServiceProtocol {
     
     func updateUserProfile(request: UserProfileUpdateRequest, completion: ServiceCompletionResultHandler<UserProfileResponse, UserServiceError>? = nil) {
         let networkRequest = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithParameters(networkRequest, parameters: request, expecting: UserProfileResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networkRequest, body: request, expecting: UserProfileResponse.self) { (result, _) in
             switch result {
             case .success(let response):
                 completion?(.success(response))
@@ -105,7 +105,7 @@ extension UserServiceProtocol {
     
     func submitForgotPasswordRequest(forEmailAddress email: String, completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .forgotPassword, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithNoResponse(request, parameters: ["email": email]) { (success, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: ["email": email]) { (success, _) in
             guard success else {
                 completion?(false, .failedToSubmitForgotPasswordRequest)
                 return
@@ -116,7 +116,7 @@ extension UserServiceProtocol {
     
     func registerUser(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .register, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, _) in
             switch result {
             case .success(let response):
                 completion?(.success(response))
@@ -128,7 +128,7 @@ extension UserServiceProtocol {
     
     func login(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .login, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, _) in
             switch result {
             case .success(let response):
                 completion?(.success(response))
@@ -140,7 +140,7 @@ extension UserServiceProtocol {
     
     func authWithFacebook(request: FacebookRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .facebook, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, _) in
             switch result {
             case .success(let response):
                 completion?(.success(response))
@@ -152,7 +152,7 @@ extension UserServiceProtocol {
     
     func authWithApple(request: SignInWithAppleRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, _) in
             switch result {
             case .success(let response):
                 completion?(.success(response))
@@ -164,7 +164,7 @@ extension UserServiceProtocol {
     
     func createService(params: [String: Any], completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithNoResponse(request, parameters: params) { (success, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _) in
             guard success else {
                 completion?(false, .failedToCreateService)
                 return
@@ -187,7 +187,7 @@ extension UserServiceProtocol {
     
     func setPreferences(params: [String: String], completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithNoResponse(request, parameters: params) { (success, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _) in
             guard success else {
                 completion?(false, .failedToSetPreferences)
                 return
