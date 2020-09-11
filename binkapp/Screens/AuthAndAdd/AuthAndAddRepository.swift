@@ -42,6 +42,8 @@ class AuthAndAddRepository: WalletServiceProtocol {
                                 } catch {
                                     Current.pointsScrapingManager.transitionToFailed(membershipCard: card)
                                 }
+                            } else {
+                                // TODO: If credentials are nil, force to failed
                             }
                             onSuccess(safeObject)
                         }

@@ -9,15 +9,14 @@ setTimeout(function() {
 }, timeoutSeconds * 1000);
 
 function checkLoginFields() {
-    var usernameInput = document.getElementById('username');
-    var passwordInput = document.getElementById('password');
-    var buttons = document.getElementsByClassName('ui-component__button');
-    var signInButton = buttons[0];
-    usernameInput.value = username;
-    passwordInput.value = password;
-    if (signInButton == null) {
-        return;
+    document.getElementById("email").value = username;
+    document.getElementById("password").value = password;
+    
+    var buttons = document.getElementsByClassName("btn btn-secondary btn-disable");
+    for (i = 0; i < buttons.length; i++) {
+        if (buttons[i].value == "Log in") {
+            buttons[i].click();
+            clearInterval(checkLogin);
+        }
     }
-    signInButton.click();
-    clearInterval(checkLogin);
 }

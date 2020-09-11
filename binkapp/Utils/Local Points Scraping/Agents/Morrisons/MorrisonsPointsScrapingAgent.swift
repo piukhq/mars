@@ -27,7 +27,7 @@ struct MorrisonsScrapingAgent: WebScrapable {
     }
     
     var usernameFieldTitle: String {
-        return "Email"
+        return "Email address"
     }
     
     var passwordFieldTitle: String {

@@ -376,6 +376,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 if shouldAttemptLogin {
                     hasAttemptedLogin = true
                     try login(credentials: credentials)
+                    // TODO: what if login failed, but the webview doesnt trigger navigation? We just sit here
                 } else {
                     // We should only fall into here if we know we are at the login url, but we've already attempted a login
                     self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCard: self.membershipCard, withAgent: self.agent)
