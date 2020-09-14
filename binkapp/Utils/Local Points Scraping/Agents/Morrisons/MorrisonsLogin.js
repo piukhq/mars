@@ -11,12 +11,4 @@ setTimeout(function() {
 function checkLoginFields() {
     document.getElementById("email").value = username;
     document.getElementById("password").value = password;
-    
-    var buttons = document.getElementsByClassName("btn btn-secondary btn-disable");
-    for (i = 0; i < buttons.length; i++) {
-        if (buttons[i].value == "Log in") {
-            buttons[i].click();
-            clearInterval(checkLogin);
-        }
-    }
 }

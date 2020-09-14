@@ -69,4 +69,8 @@ struct TescoScrapingAgent: WebScrapable {
     var incorrectCredentialsTextIdentiferClass: String? {
         return nil
     }
+    
+    var hasCaptcha: Bool {
+        return false
+    }
 }

@@ -69,4 +69,8 @@ struct BootsScrapingAgent: WebScrapable {
     var incorrectCredentialsTextIdentiferClass: String? {
         return "gigya-error-msg gigya-form-error-msg gigya-error-msg-active gigya-error-code-403042"
     }
+    
+    var hasCaptcha: Bool {
+        return false
+    }
 }

@@ -61,4 +61,8 @@ struct MorrisonsScrapingAgent: WebScrapable {
     var pointsScrapingScriptFileName: String {
         return "MorrisonsPointsScrape"
     }
+    
+    var hasCaptcha: Bool {
+        return true
+    }
 }

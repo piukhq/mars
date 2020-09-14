@@ -1,1 +1,1 @@
-document.getElementsByClassName('pointvalue')[0].innerHTML
+document.getElementsByClassName('quantity')[0].innerHTML
