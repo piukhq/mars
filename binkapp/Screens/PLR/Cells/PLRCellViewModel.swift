@@ -25,8 +25,8 @@ class PLRCellViewModel {
             return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
         case .stamps:
             var valueString = ""
-            if let burnValue = voucher.burn?.value {
-                valueString = burnValue.stringValue
+            if let burnValueString = voucher.burn?.value?.twoDecimalPointString() {
+                valueString = burnValueString
             }
             return "\(voucher.burn?.prefix ?? "")\(valueString) \(voucher.burn?.suffix ?? "")"
         default:
