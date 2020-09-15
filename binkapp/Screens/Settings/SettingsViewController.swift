@@ -306,7 +306,7 @@ extension UIAlertController {
             let lastName = alert.textFields?[1].text
             let request = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)
             let params = UserProfileUpdateRequest(firstName: firstName, lastName: lastName)
-            Current.apiClient.performRequestWithParameters(request, parameters: params, expecting: UserProfileResponse.self) { (result, _) in
+            Current.apiClient.performRequestWithBody(request, body: params, expecting: UserProfileResponse.self) { (result, _) in
                 guard let response = try? result.get() else { return }
                 /// Don't update Zendesk identity, as we do this with the textField input values, and do not need to set it twice.
                 Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: false)

@@ -19,14 +19,19 @@ protocol CoreDataRepositoryProtocol {
 
 extension CoreDataRepositoryProtocol {
     func mapCoreDataObjects<T: CoreDataMappable, E>(objectsToMap objects: [T], type: E.Type, completion: @escaping () -> Void) where E: CD_BaseObject {
-        
         Current.database.performTask { context in
             var recordsToDelete = context.fetchAll(type) // Get all our records of this type
             
             // Get apiIds of remote wallet
             let ids = objects.compactMap { $0.id }
             
-            recordsToDelete.removeAll(where: { ids.contains($0.id) })
+            ids.forEach { apiId in
+                // For each id we get from the api, check if we have the id stored locally
+                // If we do, remove the first instance of it (leaving any possible duplicates of that id) from the recordsToDelete array, therefore keeping the object
+                if let index = recordsToDelete.firstIndex(where: { $0.id == apiId }) {
+                    recordsToDelete.remove(at: index)
+                }
+            }
             
             Current.database.performBackgroundTask { backgroundContext in
                 objects.forEach {

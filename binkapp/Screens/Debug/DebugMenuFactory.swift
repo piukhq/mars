@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeForceCrashRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -50,6 +50,12 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "Loyalty card secondary colour swatches", subtitle: nil, action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .secondaryColor)
+        }, cellType: .titleSubtitle)
+    }
+    
+    private func makeForceCrashRow() -> DebugMenuRow {
+        return DebugMenuRow(title: "Force Crash", subtitle: "This will immediately crash the application", action: {
+            SentryService.forceCrash()
         }, cellType: .titleSubtitle)
     }
     
