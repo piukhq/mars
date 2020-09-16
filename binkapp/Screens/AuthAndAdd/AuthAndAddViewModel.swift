@@ -151,9 +151,6 @@ class AuthAndAddViewModel {
                 if card.membershipPlan?.featureSet?.planCardType == .link {
                     self.router.toPllViewController(membershipCard: card, journey: .newCard)
                 } else {
-                    // TODO: Make this even more amazing by having navigation request enum cases that you can inject the card into, then get:
-                    // Current.navigate.to(.loyaltyCardDetail(card))
-                    // But we need to factory in push vs modal in a nice way too
                     let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card))
                     Current.navigate.to(navigationRequest)
                 }
