@@ -41,10 +41,8 @@ class PLRRewardDetailViewModel {
             return String(format: "plr_voucher_detail_redeemed_header".localized, voucherAmountText)
         case (.accumulator, .expired):
             return String(format: "plr_voucher_detail_expired_header".localized, voucherAmountText)
-
         case (.stamps, .inProgress):
-//            return "plr_stamp_voucher_detail_inprogress_header".localized
-            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
+            return "plr_stamp_voucher_detail_inprogress_header".localized
         case (.stamps, .issued):
             var formattedText = ""
             formattedText.append(voucher.burn?.prefix ?? "")
