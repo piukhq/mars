@@ -66,23 +66,16 @@ class Navigate {
     /// This is so we know how to configure any view controller to be dismissed by Navigate
     private var lastNavigationType: NavigationType?
     
-    private lazy var tabBarController: MainTabBarViewController? = {
-        // For some reason, the root view controller is a navigation controller, with an embedded tab bar controller. This is backwards.
-        // We should fix this when we implement the navigation refactor, then remove this logic and make it much nicer to access the tab bar controller via UIApplication
-        var tabBarController: MainTabBarViewController?
-        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PortraitNavigationController {
-            for viewController in rootViewController.viewControllers {
-                if let tbc = viewController as? MainTabBarViewController {
-                    tabBarController = tbc
-                }
-                if tabBarController != nil { break }
-            }
+    // TODO: Handle when refactoring onboarding, as there is no tab bar
+    private lazy var tabBarController: MainTabBarViewController = {
+        guard let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarViewController else {
+            fatalError("Could not get the tab bar controller. Either we are in onboarding, or something is broken.")
         }
         return tabBarController
     }()
     
     // Obviously remove force unwrapping
-    private lazy var navigationHandler = BaseNavigationHandler(tabBarController: tabBarController!)
+    private lazy var navigationHandler = BaseNavigationHandler(tabBarController: tabBarController)
     
     func to(_ navigationRequest: BaseNavigationRequest) {
         lastNavigationType = navigationRequest.navigationType
@@ -101,11 +94,16 @@ class BaseNavigationHandler {
         self.tabBarController = tabBarController
     }
     
-    // Each tab should have their own navigation controller, with a rootViewController, which should be the respective wallet view controllers
-    // TODO: This currently only works for the wallet navigation controllers. When we present Settings for example, if we want to present modally from there, this should return Settings' navigation controller.
     var navigationController: UINavigationController? {
-        // We should only ever be attempting navigation on the top most view controller, and only where it is a navigation controller
-        return UIViewController.topMostViewController() as? UINavigationController
+        // Top view controller should always be a navigation controller, unless it is a tab bar controller
+        // If a tab bar controller, the selected view controller should generally be a navigation controller
+        // If it's not, we can only present modally
+        guard let topViewController = UIViewController.topMostViewController() else { return nil }
+        if let navigationController = topViewController as? UINavigationController { return navigationController }
+        if let tabBarController = topViewController as? UITabBarController, let selectedNavigationController = tabBarController.selectedViewController as? UINavigationController {
+            return selectedNavigationController
+        }
+        return nil
     }
     
     func to(_ navigationRequest: BaseNavigationRequest) {
@@ -119,11 +117,11 @@ class BaseNavigationHandler {
             if navigationRequest.fullScreen {
                 viewController.modalPresentationStyle = .fullScreen
             }
-            navigationController?.present(viewController, animated: navigationRequest.animated, completion: navigationRequest.completion)
+            
+            // We don't need to depend on a navigation controller to present modally, so simply present from the top view controller if possible
+            UIViewController.topMostViewController()?.present(viewController, animated: navigationRequest.animated, completion: navigationRequest.completion)
         case let navigationRequest as CloseModalNavigationRequest:
-            if let visibleViewController = UIViewController.topMostViewController() {
-                visibleViewController.dismiss(animated: navigationRequest.animated, completion: navigationRequest.completion)
-            }
+            UIViewController.topMostViewController()?.dismiss(animated: navigationRequest.animated, completion: navigationRequest.completion)
         default:
             fatalError("Navigation route not implemented")
         }

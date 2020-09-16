@@ -82,11 +82,4 @@ class LoyaltyWalletViewModel: WalletViewModel {
 //            }
 //        }
     }
-    
-    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
-//        let viewModel = SettingsViewModel(router: MainScreenRouter(delegate: nil), rowsWithActionRequired: rowsWithActionRequired)
-//        let viewController = SettingsViewController(viewModel: viewModel)
-//        let navigationRequest = ModalNavigationRequest(viewController: viewController, fullScreen: true)
-//        Current.navigate.to(navigationRequest)
-    }
 }
