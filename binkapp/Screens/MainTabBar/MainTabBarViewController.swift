@@ -37,7 +37,7 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
 
         setupNotifications()
         
-        self.title = ""
+        self.title = "" // TODO: Why? Remove.
         populateTabBar()
     }
 
@@ -50,7 +50,7 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
     }
     
     func populateTabBar() {
-        viewControllers = viewModel.childViewControllers
+        viewControllers = viewModel.viewControllers
     }
 }
 

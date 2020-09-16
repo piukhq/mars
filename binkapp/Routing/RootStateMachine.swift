@@ -30,7 +30,8 @@ class RootStateMachine: NSObject, UserServiceProtocol {
         } else if Current.userManager.currentToken == nil {
             handleUnauthenticated()
         } else {
-            moveTo(router?.wallet())
+            let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
+            moveTo(tabBarController)
         }
         
         window.tintColor = .black
@@ -45,7 +46,8 @@ class RootStateMachine: NSObject, UserServiceProtocol {
             migrationController.renewTokenFromLegacyAppIfPossible { success in
                 DispatchQueue.main.async { [weak self] in
                     if success {
-                        self?.moveTo(self?.router?.wallet())
+                        let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
+                        self?.moveTo(tabBarController)
                     } else {
                         self?.moveTo(self?.router?.getOnboardingViewController())
                     }
@@ -101,7 +103,8 @@ class RootStateMachine: NSObject, UserServiceProtocol {
 extension RootStateMachine: MainScreenRouterDelegate {
     func router(_ router: MainScreenRouter, didLogin: Bool) {
         if didLogin {
-            moveTo(router.wallet())
+            let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
+            moveTo(tabBarController)
         }
     }
 }

@@ -38,7 +38,7 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
                 return cell
             }
 
-            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard, router: viewModel.router)
+            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
             cell.configureWithViewModel(cellViewModel, delegate: self)
 
             return cell

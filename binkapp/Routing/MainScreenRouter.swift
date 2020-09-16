@@ -34,14 +34,6 @@ class MainScreenRouter {
         //Outage error - Server 500-599 status code
         NotificationCenter.default.addObserver(self, selector: #selector(displayOutageError), name: .outageError, object: nil)
     }
-    
-    func wallet() -> UIViewController {
-        let viewModel = MainTabBarViewModel(router: self)
-        let viewController = MainTabBarViewController(viewModel: viewModel)
-        let nav = PortraitNavigationController(rootViewController: viewController)
-        navController = nav
-        return nav
-    }
 
     func jailbroken() -> UIViewController {
         return JailbrokenViewController()
@@ -64,30 +56,6 @@ class MainScreenRouter {
         let settingsNav = PortraitNavigationController(rootViewController: settingsVC)
         settingsNav.modalPresentationStyle = .fullScreen
         navController?.present(settingsNav, animated: true, completion: nil)
-    }
-    
-    func getLoyaltyWalletViewController() -> UIViewController {
-        let viewModel = LoyaltyWalletViewModel(router: self)
-        let viewController = LoyaltyWalletViewController(viewModel: viewModel)
-        viewModel.paymentScanDelegate = viewController
-        
-        return viewController
-    }
-    
-    func getPaymentWalletViewController() -> UIViewController {
-        let viewModel = PaymentWalletViewModel(router: self)
-        let viewController = PaymentWalletViewController(viewModel: viewModel)
-        viewModel.paymentScanDelegate = viewController
-        
-        return viewController
-    }
-    
-    func getDummyViewControllerForAction() -> UIViewController {
-        return AddingOptionsTabBarViewController()
-    }
-    
-    func toLoyaltyWalletViewController() {
-        navController?.pushViewController(getLoyaltyWalletViewController(), animated: true)
     }
     
     func toAddingOptionsViewController() {

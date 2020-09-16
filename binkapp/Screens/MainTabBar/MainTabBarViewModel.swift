@@ -17,29 +17,35 @@ class MainTabBarViewModel {
         static let centerInsets: CGFloat = 8.0
     }
 
-    let router: MainScreenRouter
-    
-    var childViewControllers = [UIViewController]()
-    
-    init(router: MainScreenRouter) {
-        self.router = router
-        
-        // Tabs
-        let loyaltyWallet = router.getLoyaltyWalletViewController()
-        loyaltyWallet.tabBarItem = getTabBarLoyaltyButton()
-        
-        let add = router.getDummyViewControllerForAction()
-        add.tabBarItem = getTabBarAddButton()
-        
-        let paymentWallet = router.getPaymentWalletViewController()
-        paymentWallet.tabBarItem = getTabBarPaymentButton()
-        
-        childViewControllers.append(loyaltyWallet)
-        childViewControllers.append(add)
-        childViewControllers.append(paymentWallet)
+    init() {
+        configure()
     }
     
-    func getTabBarLoyaltyButton() -> UITabBarItem {
+    var viewControllers: [UIViewController] = []
+    
+    private func configure() {
+        // LOYALTY WALLET
+        let loyaltyWalletViewModel = LoyaltyWalletViewModel()
+        let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: loyaltyWalletViewModel)
+        loyaltyWalletViewModel.paymentScanDelegate = loyaltyWalletViewController
+        let loyaltyWalletNavigationController = PortraitNavigationController(rootViewController: loyaltyWalletViewController)
+        loyaltyWalletNavigationController.tabBarItem = getTabBarLoyaltyButton()
+        
+        // ADD OPTIONS
+        let addOptionsViewController = AddingOptionsTabBarViewController()
+        addOptionsViewController.tabBarItem = getTabBarAddButton()
+        
+        // PAYMENT WALLET
+        let paymentWalletViewModel = PaymentWalletViewModel()
+        let paymentWalletViewController = PaymentWalletViewController(viewModel: paymentWalletViewModel)
+        paymentWalletViewModel.paymentScanDelegate = paymentWalletViewController
+        let paymentWalletNavigationController = PortraitNavigationController(rootViewController: paymentWalletViewController)
+        paymentWalletNavigationController.tabBarItem = getTabBarPaymentButton()
+        
+        viewControllers = [loyaltyWalletNavigationController, addOptionsViewController, paymentWalletNavigationController]
+    }
+    
+    private func getTabBarLoyaltyButton() -> UITabBarItem {
         let item = UITabBarItem(title: nil, image: UIImage(named: "loyaltyInactive"), tag: Buttons.loyaltyItem.rawValue)
         item.selectedImage = UIImage(named: "loyaltyActive")
         item.title = "Loyalty"
@@ -51,7 +57,7 @@ class MainTabBarViewModel {
         return item
     }
     
-    func getTabBarAddButton() -> UITabBarItem {
+    private func getTabBarAddButton() -> UITabBarItem {
         let item = UITabBarItem(title: nil, image: UIImage(named: "add"), tag: Buttons.addItem.rawValue)
         
         if #available(iOS 13, *) {
@@ -63,7 +69,7 @@ class MainTabBarViewModel {
         return item
     }
     
-    func getTabBarPaymentButton() -> UITabBarItem {
+    private func getTabBarPaymentButton() -> UITabBarItem {
         let item = UITabBarItem(title: nil, image: UIImage(named: "paymentInactive"), tag: Buttons.paymentItem.rawValue)
         item.selectedImage = UIImage(named: "paymentActive")
         item.title = "Payment"
@@ -76,7 +82,7 @@ class MainTabBarViewModel {
     }
     
     func toAddingOptionsScreen() {
-        router.toAddingOptionsViewController()
+        
     }
 }
 
