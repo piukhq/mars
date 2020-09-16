@@ -37,8 +37,15 @@ extension VoucherBurnModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.currency, with: currency, delta: delta)
         update(cdObject, \.prefix, with: prefix, delta: delta)
         update(cdObject, \.suffix, with: suffix, delta: delta)
-        update(cdObject, \.value, with: NSNumber(value: value ?? 0.0), delta: delta)
         update(cdObject, \.type, with: type?.rawValue, delta: delta)
+        
+        // Value is optional, and we need it to be nil where there is no response from the API
+        if let value = value {
+            update(cdObject, \.value, with: NSNumber(value: value), delta: delta)
+        } else {
+            // Clear the value in case it used to have one, but doesn't now
+            update(cdObject, \.value, with: nil, delta: delta)
+        }
 
         return cdObject
     }
