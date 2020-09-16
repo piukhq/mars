@@ -141,11 +141,7 @@ class PaymentCardDetailViewModel {
     // MARK: Routing
 
     func toCardDetail(forMembershipCard membershipCard: CD_MembershipCard) {
-        let factory = WalletCardDetailInformationRowFactory()
-        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, informationRowFactory: factory)
-        let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
-        factory.delegate = viewController
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard))
         Current.navigate.to(navigationRequest)
     }
 

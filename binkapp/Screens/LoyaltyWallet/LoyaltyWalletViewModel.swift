@@ -37,11 +37,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
 
     func toCardDetail(for card: CD_MembershipCard) {
-        let factory = WalletCardDetailInformationRowFactory()
-        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: card, informationRowFactory: factory)
-        let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
-        factory.delegate = viewController
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card))
         Current.navigate.to(navigationRequest)
     }
     

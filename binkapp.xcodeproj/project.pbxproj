@@ -150,6 +150,7 @@
 		70B316E424E5A47000D86DE5 /* TescoLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70B316E224E5A47000D86DE5 /* TescoLogin.js */; };
 		70B316E524E5A47000D86DE5 /* TescoPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70B316E324E5A47000D86DE5 /* TescoPointsScrape.js */; };
 		70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B316E624E6AF2800D86DE5 /* Navigate.swift */; };
+		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
 		70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8024E56B3B005A30D2 /* UserService.swift */; };
 		70E31A8324E56B4D005A30D2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8224E56B4D005A30D2 /* APIService.swift */; };
@@ -634,6 +635,7 @@
 		70B316E224E5A47000D86DE5 /* TescoLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoLogin.js; sourceTree = "<group>"; };
 		70B316E324E5A47000D86DE5 /* TescoPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoPointsScrape.js; sourceTree = "<group>"; };
 		70B316E624E6AF2800D86DE5 /* Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigate.swift; sourceTree = "<group>"; };
+		70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
 		70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TescoPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70E31A8024E56B3B005A30D2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -1332,6 +1334,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				70B61D50251251D4006A98C8 /* View controller factory */,
 				7097489E24D32A42008D0E29 /* Remote Config */,
 				7097489C24D088E3008D0E29 /* Objective-C */,
 				70A4EE7624BDBA1F00FA33B1 /* Permissions */,
@@ -1562,6 +1565,14 @@
 				70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */,
 			);
 			path = Permissions;
+			sourceTree = "<group>";
+		};
+		70B61D50251251D4006A98C8 /* View controller factory */ = {
+			isa = PBXGroup;
+			children = (
+				70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */,
+			);
+			path = "View controller factory";
 			sourceTree = "<group>";
 		};
 		70BD4BD024B774EB006E4E3D /* Agents */ = {
@@ -3000,6 +3011,7 @@
 				EF94AF0F23DF55EE00AAA039 /* BinkTrackableButton.swift in Sources */,
 				EFA5F7242379A7C70027AB80 /* _CD_RegistrationField.swift in Sources */,
 				EFA5F73C2379A7C70027AB80 /* CD_PaymentCardCard.swift in Sources */,
+				70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */,
 				EFA5F71F2379A7C70027AB80 /* _CD_MembershipCardBalance.swift in Sources */,
 				B713662D232A63AA008A0ED7 /* BinkModuleView.swift in Sources */,
 				EFA5F7142379A7C70027AB80 /* _CD_AuthoriseField.swift in Sources */,
