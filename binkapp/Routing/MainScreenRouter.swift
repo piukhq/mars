@@ -154,18 +154,10 @@ class MainScreenRouter {
         let viewController = AddOrJoinViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
-    
-    func toLoyaltyFullDetailsScreen(membershipCard: CD_MembershipCard) {
-        let factory = PaymentCardDetailInformationRowFactory()
-        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, router: self, informationRowFactory: factory)
-        let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
-        factory.delegate = viewController
-        navController?.pushViewController(viewController, animated: true)
-    }
 
     func toPaymentCardDetailViewController(paymentCard: CD_PaymentCard) {
         let repository = PaymentCardDetailRepository(apiClient: apiClient)
-        let factory = PaymentCardDetailInformationRowFactory()
+        let factory = WalletCardDetailInformationRowFactory()
         let viewModel = PaymentCardDetailViewModel(paymentCard: paymentCard, router: self, repository: repository, informationRowFactory: factory)
         let viewController = PaymentCardDetailViewController(viewModel: viewModel)
         factory.delegate = viewController

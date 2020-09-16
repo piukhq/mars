@@ -37,12 +37,12 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
 
     func toCardDetail(for card: CD_MembershipCard) {
-//        let factory = PaymentCardDetailInformationRowFactory()
-//        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: card, router: MainScreenRouter(delegate: nil), informationRowFactory: factory)
-//        let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
-//        factory.delegate = viewController
-//        let navigationRequest = PushNavigationRequest(viewController: viewController)
-//        Current.navigate.to(navigationRequest)
+        let factory = WalletCardDetailInformationRowFactory()
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: card, informationRowFactory: factory)
+        let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
+        factory.delegate = viewController
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {

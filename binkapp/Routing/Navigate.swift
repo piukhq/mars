@@ -41,7 +41,7 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     let embedInNavigationController: Bool
     let completion: (() -> Void)?
     let animated: Bool
-    // Add logic for if we don't want the modal to be dragged to dismiss
+    // TODO: Add logic for if we don't want the modal to be dragged to dismiss
     init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, completion: (() -> Void)? = nil, animated: Bool = true) {
         self.viewController = viewController
         self.fullScreen = fullScreen

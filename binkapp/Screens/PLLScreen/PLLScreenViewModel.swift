@@ -120,7 +120,12 @@ class PLLScreenViewModel {
     }
     
     func toFullDetailsCardScreen() {
-        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
+        let factory = WalletCardDetailInformationRowFactory()
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, informationRowFactory: factory)
+        let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
+        factory.delegate = viewController
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toPaymentScanner(scanDelegate: ScanDelegate?) {

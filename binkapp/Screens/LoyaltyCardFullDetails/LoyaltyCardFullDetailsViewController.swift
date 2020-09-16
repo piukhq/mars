@@ -310,7 +310,7 @@ private extension LoyaltyCardFullDetailsViewController {
 // MARK: - CardDetailInformationRowFactoryDelegate
 
 extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryDelegate {
-    func cardDetailInformationRowFactory(_ factory: PaymentCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
+    func cardDetailInformationRowFactory(_ factory: WalletCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
         switch informationRowType {
         case .about:
             viewModel.toAboutMembershipPlanScreen()

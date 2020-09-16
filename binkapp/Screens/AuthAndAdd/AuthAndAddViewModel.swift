@@ -151,7 +151,12 @@ class AuthAndAddViewModel {
                 if card.membershipPlan?.featureSet?.planCardType == .link {
                     self.router.toPllViewController(membershipCard: card, journey: .newCard)
                 } else {
-                    self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+                    let factory = WalletCardDetailInformationRowFactory()
+                    let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: card, informationRowFactory: factory)
+                    let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
+                    factory.delegate = viewController
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
                 }
                 completion()
                 Current.wallet.refreshLocal()
@@ -187,7 +192,12 @@ class AuthAndAddViewModel {
             if card.membershipPlan?.featureSet?.cardType == 2 {
                 self?.router.toPllViewController(membershipCard: card, journey: .newCard)
             } else {
-                self?.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+                let factory = WalletCardDetailInformationRowFactory()
+                let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: card, informationRowFactory: factory)
+                let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
+                factory.delegate = viewController
+                let navigationRequest = PushNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
             }
         }) { (error) in
             self.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)

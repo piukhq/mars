@@ -14,9 +14,9 @@ class PaymentCardDetailViewModel {
     private var paymentCard: CD_PaymentCard
     private(set) var router: MainScreenRouter
     private let repository: PaymentCardDetailRepository
-    private let informationRowFactory: PaymentCardDetailInformationRowFactory
+    private let informationRowFactory: WalletCardDetailInformationRowFactory
 
-    init(paymentCard: CD_PaymentCard, router: MainScreenRouter, repository: PaymentCardDetailRepository, informationRowFactory: PaymentCardDetailInformationRowFactory) {
+    init(paymentCard: CD_PaymentCard, router: MainScreenRouter, repository: PaymentCardDetailRepository, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.paymentCard = paymentCard
         self.router = router
         self.repository = repository
@@ -141,7 +141,12 @@ class PaymentCardDetailViewModel {
     // MARK: Routing
 
     func toCardDetail(forMembershipCard membershipCard: CD_MembershipCard) {
-        router.toLoyaltyFullDetailsScreen(membershipCard: membershipCard)
+        let factory = WalletCardDetailInformationRowFactory()
+        let viewModel = LoyaltyCardFullDetailsViewModel(membershipCard: membershipCard, informationRowFactory: factory)
+        let viewController = LoyaltyCardFullDetailsViewController(viewModel: viewModel)
+        factory.delegate = viewController
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 
     func toAddOrJoin(forMembershipPlan membershipPlan: CD_MembershipPlan) {

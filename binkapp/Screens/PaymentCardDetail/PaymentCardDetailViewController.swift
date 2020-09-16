@@ -334,7 +334,7 @@ extension PaymentCardDetailViewController: PaymentCardDetailLinkLoyaltyCardCellD
 // MARK: - CardDetailInformationRowFactoryDelegate
 
 extension PaymentCardDetailViewController: CardDetailInformationRowFactoryDelegate {
-    func cardDetailInformationRowFactory(_ factory: PaymentCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
+    func cardDetailInformationRowFactory(_ factory: WalletCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
         switch informationRowType {
         case .securityAndPrivacy:
             viewModel.toSecurityAndPrivacyScreen()
