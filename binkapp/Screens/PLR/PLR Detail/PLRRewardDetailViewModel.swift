@@ -43,7 +43,8 @@ class PLRRewardDetailViewModel {
             return String(format: "plr_voucher_detail_expired_header".localized, voucherAmountText)
 
         case (.stamps, .inProgress):
-            return "plr_stamp_voucher_detail_inprogress_header".localized
+//            return "plr_stamp_voucher_detail_inprogress_header".localized
+            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
         case (.stamps, .issued):
             var formattedText = ""
             formattedText.append(voucher.burn?.prefix ?? "")
@@ -178,7 +179,22 @@ class PLRRewardDetailViewModel {
     }
 
     var voucherAmountText: String {
-        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+        var string = ""
+        if let prefix = voucher.burn?.prefix {
+            string.append(prefix)
+        }
+        if let value = voucher.burn?.value?.twoDecimalPointString() {
+            string.append(value)
+        }
+        if let suffix = voucher.burn?.suffix {
+            string.append(" ")
+            string.append(suffix)
+        }
+        if let type = voucher.burn?.type {
+            string.append(" ")
+            string.append(type)
+        }
+        return string
     }
 
     private var voucherPlanDocument: CD_PlanDocument? {
