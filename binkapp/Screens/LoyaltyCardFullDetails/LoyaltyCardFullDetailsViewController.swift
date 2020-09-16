@@ -112,7 +112,6 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        setCloseButton()
         configureUI()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
@@ -177,12 +176,6 @@ extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableView
 // MARK: - Private methods
 
 private extension LoyaltyCardFullDetailsViewController {
-    func setCloseButton() {
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popToRootController
-            ))
-        self.navigationItem.setLeftBarButton(closeButton, animated: true)
-    }
-
     func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
