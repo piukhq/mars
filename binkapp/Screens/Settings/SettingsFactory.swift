@@ -9,11 +9,9 @@
 import UIKit
 
 struct SettingsFactory {
-    private let router: MainScreenRouter
     private let rowsWithActionRequired: [SettingsRow.RowType]?
     
-    init(router: MainScreenRouter, rowsWithActionRequired: [SettingsRow.RowType]?) {
-        self.router = router
+    init(rowsWithActionRequired: [SettingsRow.RowType]?) {
         self.rowsWithActionRequired = rowsWithActionRequired
     }
     

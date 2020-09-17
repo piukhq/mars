@@ -51,7 +51,7 @@ class MainScreenRouter {
     }
     
     func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
-        let viewModel = SettingsViewModel(router: self, rowsWithActionRequired: rowsWithActionRequired)
+        let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
         let settingsVC = SettingsViewController(viewModel: viewModel)
         let settingsNav = PortraitNavigationController(rootViewController: settingsVC)
         settingsNav.modalPresentationStyle = .fullScreen
@@ -193,12 +193,6 @@ class MainScreenRouter {
         let viewController = PLRRewardDetailViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
-
-    func toRewardsHistoryViewController(membershipCard: CD_MembershipCard) {
-        let viewModel = PLRRewardsHistoryViewModel(membershipCard: membershipCard, router: self)
-        let viewController = PLRRewardsHistoryViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
-    }
     
     func toTransactionsViewController(membershipCard: CD_MembershipCard) {
         let viewModel = TransactionsViewModel(membershipCard: membershipCard, router: self)
@@ -207,7 +201,7 @@ class MainScreenRouter {
     }
     
     func toPaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: ReusableTemplateViewControllerDelegate?) {
-        let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel, router: self)
+        let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel)
         let viewController = ReusableTemplateViewController(viewModel: viewModel, delegate: delegate)
         let navigationController = PortraitNavigationController(rootViewController: viewController)
         
@@ -251,13 +245,13 @@ class MainScreenRouter {
     }
     
     func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration, floatingButtons: Bool = true) {
-        let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
+        let viewModel = ReusableModalViewModel(configurationModel: configurationModel)
         let viewController = ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
         navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
     }
     
     func pushReusableModalTemplateVC(configurationModel: ReusableModalConfiguration, navigationController: UINavigationController?, floatingButtons: Bool = true) {
-        let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: self)
+        let viewModel = ReusableModalViewModel(configurationModel: configurationModel)
         let viewController = ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
         navigationController?.pushViewController(viewController, animated: true)
     }

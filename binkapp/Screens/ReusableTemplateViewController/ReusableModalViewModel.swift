@@ -42,7 +42,6 @@ public struct ReusableModalConfiguration {
 
 open class ReusableModalViewModel {
     private let configurationModel: ReusableModalConfiguration
-    let router: MainScreenRouter
     
     var title: String {
         return configurationModel.title
@@ -80,9 +79,8 @@ open class ReusableModalViewModel {
         return configurationModel.showCloseButton
     }
     
-    init(configurationModel: ReusableModalConfiguration, router: MainScreenRouter) {
+    init(configurationModel: ReusableModalConfiguration) {
         self.configurationModel = configurationModel
-        self.router = router
     }
     
     func mainButtonWasTapped(completion: (() -> Void)? = nil) {
@@ -91,13 +89,5 @@ open class ReusableModalViewModel {
     
     func secondaryButtonWasTapped() {
         secondaryButtonCompletion()
-    }
-    
-    func popViewController() {
-        router.popViewController()
-    }
-    
-    func toRootViewController()  {
-        router.popToRootViewController()
     }
 }

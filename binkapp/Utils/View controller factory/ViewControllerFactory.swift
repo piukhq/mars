@@ -19,4 +19,14 @@ final class ViewControllerFactory {
         factory.delegate = viewController
         return viewController
     }
+    
+    static func makeRewardsHistoryViewController(membershipCard: CD_MembershipCard) -> PLRRewardsHistoryViewController {
+        let viewModel = PLRRewardsHistoryViewModel(membershipCard: membershipCard)
+        return PLRRewardsHistoryViewController(viewModel: viewModel)
+    }
+    
+    static func makeAboutMembershipPlanViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
+        let viewModel = ReusableModalViewModel(configurationModel: configuration)
+        return ReusableTemplateViewController(viewModel: viewModel)
+    }
 }

@@ -10,11 +10,9 @@ import UIKit
 
 class SettingsViewModel {
     private let factory: SettingsFactory
-    let router: MainScreenRouter
     
-    init(router: MainScreenRouter, rowsWithActionRequired: [SettingsRow.RowType]?) {
-        self.router = router
-        factory = SettingsFactory(router: router, rowsWithActionRequired: rowsWithActionRequired)
+    init(rowsWithActionRequired: [SettingsRow.RowType]?) {
+        factory = SettingsFactory(rowsWithActionRequired: rowsWithActionRequired)
     }
     
     var sections: [SettingsSection] {
@@ -45,15 +43,13 @@ class SettingsViewModel {
         return sections[safe: indexPath.section]?.rows[safe: indexPath.row]
     }
     
-    func pushReusableModal(configurationModel: ReusableModalConfiguration, navController: UINavigationController?) {
-//        router.pushReusableModalTemplateVC(configurationModel: configurationModel, navigationController: navController)
-        let viewModel = ReusableModalViewModel(configurationModel: configurationModel, router: MainScreenRouter(delegate: nil))
+    func pushReusableModal(configurationModel: ReusableModalConfiguration) {
+        let viewModel = ReusableModalViewModel(configurationModel: configurationModel)
         let viewController = ReusableTemplateViewController(viewModel: viewModel, floatingButtons: true)
-//        Current.navigate.to(PushNavigationRequest(viewController: viewController))
-        Current.navigate.to(ModalNavigationRequest(viewController: viewController))
+        Current.navigate.to(PushNavigationRequest(viewController: viewController))
     }
     
     func openWebView(url: String) {
-        router.openWebView(withUrlString: url)
+//        router.openWebView(withUrlString: url)
     }
 }

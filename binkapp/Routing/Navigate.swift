@@ -51,6 +51,14 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     }
 }
 
+struct AlertNavigationRequest: BaseNavigationRequest {
+    var navigationType: NavigationType = .modal
+    let alertController: UIAlertController
+    init(alertController: UIAlertController) {
+        self.alertController = alertController
+    }
+}
+
 struct CloseModalNavigationRequest: BaseNavigationRequest {
     let navigationType: NavigationType = .close
     let animated: Bool
@@ -122,6 +130,8 @@ class BaseNavigationHandler {
             UIViewController.topMostViewController()?.present(viewController, animated: navigationRequest.animated, completion: navigationRequest.completion)
         case let navigationRequest as CloseModalNavigationRequest:
             UIViewController.topMostViewController()?.dismiss(animated: navigationRequest.animated, completion: navigationRequest.completion)
+        case let navigationRequest as AlertNavigationRequest:
+            UIViewController.topMostViewController()?.present(navigationRequest.alertController, animated: true, completion: nil)
         default:
             fatalError("Navigation route not implemented")
         }

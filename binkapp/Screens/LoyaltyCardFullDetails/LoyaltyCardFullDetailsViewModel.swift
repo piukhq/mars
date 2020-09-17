@@ -152,6 +152,7 @@ class LoyaltyCardFullDetailsViewModel {
 //        }
     }
     
+    // TODO: We should improve the way reusable views work. They're so basic, but feel complicated
     func getBasicReusableConfiguration(title: String, description: String) -> ReusableModalConfiguration {
         let attributedString = NSMutableAttributedString()
         let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
@@ -168,12 +169,16 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toRewardsHistoryScreen() {
-//        router.toRewardsHistoryViewController(membershipCard: membershipCard)
+        let viewController = ViewControllerFactory.makeRewardsHistoryViewController(membershipCard: membershipCard)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toAboutMembershipPlanScreen() {
-//        let config = getBasicReusableConfiguration(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
-//        router.toReusableModalTemplateViewController(configurationModel: config)
+        let config = getBasicReusableConfiguration(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(configuration: config)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toSecurityAndPrivacyScreen() {
