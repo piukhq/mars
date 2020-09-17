@@ -8,22 +8,9 @@
 
 import UIKit
 
-// USE CASES TO COVER:
-// Removing/inserting view controllers from the navigation stack after pushing
-// View controllers should know how they were presented and display close or back buttons accordingly
-
-enum NavigationType {
-    case push
-    case modal
-    case close
-}
-
-protocol BaseNavigationRequest {
-    var navigationType: NavigationType { get }
-}
+protocol BaseNavigationRequest {}
 
 struct PushNavigationRequest: BaseNavigationRequest {
-    let navigationType: NavigationType = .push
     let viewController: UIViewController
     let completion: (() -> Void)?
     let animated: Bool
@@ -34,8 +21,16 @@ struct PushNavigationRequest: BaseNavigationRequest {
     }
 }
 
+struct PopNavigationRequest: BaseNavigationRequest {
+    let toRoot: Bool
+    let animated: Bool
+    init(toRoot: Bool = false, animated: Bool = true) {
+        self.toRoot = toRoot
+        self.animated = animated
+    }
+}
+
 struct ModalNavigationRequest: BaseNavigationRequest {
-    let navigationType: NavigationType = .modal
     let viewController: UIViewController
     let fullScreen: Bool
     let embedInNavigationController: Bool
@@ -52,7 +47,6 @@ struct ModalNavigationRequest: BaseNavigationRequest {
 }
 
 struct AlertNavigationRequest: BaseNavigationRequest {
-    var navigationType: NavigationType = .modal
     let alertController: UIAlertController
     init(alertController: UIAlertController) {
         self.alertController = alertController
@@ -60,7 +54,6 @@ struct AlertNavigationRequest: BaseNavigationRequest {
 }
 
 struct CloseModalNavigationRequest: BaseNavigationRequest {
-    let navigationType: NavigationType = .close
     let animated: Bool
     let completion: (() -> Void)?
     init(animated: Bool = true, completion: (() -> Void)? = nil) {
@@ -70,10 +63,6 @@ struct CloseModalNavigationRequest: BaseNavigationRequest {
 }
 
 class Navigate {
-    /// Maintain a reference to the last navigation type used.
-    /// This is so we know how to configure any view controller to be dismissed by Navigate
-    private var lastNavigationType: NavigationType?
-    
     // TODO: Handle when refactoring onboarding, as there is no tab bar
     private lazy var tabBarController: MainTabBarViewController = {
         guard let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarViewController else {
@@ -86,8 +75,11 @@ class Navigate {
     private lazy var navigationHandler = BaseNavigationHandler(tabBarController: tabBarController)
     
     func to(_ navigationRequest: BaseNavigationRequest) {
-        lastNavigationType = navigationRequest.navigationType
         navigationHandler.to(navigationRequest)
+    }
+    
+    func back(toRoot: Bool = false, animated: Bool = true) {
+        to(PopNavigationRequest(toRoot: toRoot, animated: animated))
     }
     
     func close() {
@@ -118,6 +110,12 @@ class BaseNavigationHandler {
         switch navigationRequest {
         case let navigationRequest as PushNavigationRequest:
             navigationController?.pushViewController(navigationRequest.viewController, animated: navigationRequest.animated)
+        case let navigationRequest as PopNavigationRequest:
+            if navigationRequest.toRoot {
+                navigationController?.popToRootViewController(animated: navigationRequest.animated)
+            } else {
+                navigationController?.popViewController(animated: navigationRequest.animated)
+            }
         case let navigationRequest as ModalNavigationRequest:
             let viewController = navigationRequest.embedInNavigationController ? PortraitNavigationController(rootViewController: navigationRequest.viewController, isModallyPresented: true) : navigationRequest.viewController
             

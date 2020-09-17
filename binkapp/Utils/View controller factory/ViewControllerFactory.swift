@@ -6,7 +6,7 @@
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 final class ViewControllerFactory {
     
@@ -26,7 +26,36 @@ final class ViewControllerFactory {
     }
     
     static func makeAboutMembershipPlanViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
+        return makeReusableTemplateViewController(configuration: configuration, floatingButtons: floatingButtons)
+    }
+    
+    static func makeSecurityAndPrivacyViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
+        return makeReusableTemplateViewController(configuration: configuration, floatingButtons: floatingButtons)
+    }
+    
+    // MARK: - Reusable
+    
+    private static func makeReusableTemplateViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
         let viewModel = ReusableModalViewModel(configurationModel: configuration)
-        return ReusableTemplateViewController(viewModel: viewModel)
+        return ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
+    }
+    
+    static func makeDeleteConfirmationAlertController(message: String, deleteAction: @escaping EmptyCompletionBlock) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "yes".localized, style: .destructive, handler: { _ in
+            deleteAction()
+        }))
+        return alert
+    }
+    
+    static func makeNoConnectivityAlertController(completion: EmptyCompletionBlock? = nil) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
+            if let completion = completion {
+                completion()
+            }
+        }))
+        return alert
     }
 }

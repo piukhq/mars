@@ -221,7 +221,9 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
 
     @objc private func handleFacebookButtonPressed() {
         guard Current.apiClient.networkIsReachable else {
-            viewModel.router.presentNoConnectivityPopup()
+            let alert = ViewControllerFactory.makeNoConnectivityAlertController()
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
             return
         }
     

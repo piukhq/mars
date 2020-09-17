@@ -290,10 +290,6 @@ private extension LoyaltyCardFullDetailsViewController {
         pointsModule.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
         linkModule.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards, delegate: self)
     }
-    
-    @objc func popToRootController() {
-        viewModel.popToRootController()
-    }
 
     @objc func showBarcodeButtonPressed() {
         viewModel.toBarcodeModel()

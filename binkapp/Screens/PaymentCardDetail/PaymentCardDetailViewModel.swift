@@ -164,7 +164,7 @@ class PaymentCardDetailViewModel {
     }
 
     func toSecurityAndPrivacyScreen() {
-        router.toPrivacyAndSecurityViewController()
+//        router.toPrivacyAndSecurityViewController()
     }
 
     func popToRootViewController(){
@@ -172,30 +172,32 @@ class PaymentCardDetailViewModel {
     }
     
     func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
-        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
-            guard let self = self else { return }
-            guard Current.apiClient.networkIsReachable else {
-                self.router.presentNoConnectivityPopup()
-                noCompletion?()
-                return
-            }
-            self.repository.delete(self.paymentCard) {
-                Current.wallet.refreshLocal()
-                self.router.popToRootViewController()
-                yesCompletion?()
-            }
-        }, noCompletion: {
-            DispatchQueue.main.async {
-                noCompletion?()
-            }
-        })
+//        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
+//            guard let self = self else { return }
+//            guard Current.apiClient.networkIsReachable else {
+//                self.router.presentNoConnectivityPopup()
+//                noCompletion?()
+//                return
+//            }
+//            self.repository.delete(self.paymentCard) {
+//                Current.wallet.refreshLocal()
+//                self.router.popToRootViewController()
+//                yesCompletion?()
+//            }
+//        }, noCompletion: {
+//            DispatchQueue.main.async {
+//                noCompletion?()
+//            }
+//        })
     }
 
     // MARK: - Repository
 
     func toggleLinkForMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
         guard Current.apiClient.networkIsReachable else {
-            router.presentNoConnectivityPopup()
+            let alert = ViewControllerFactory.makeNoConnectivityAlertController()
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
             completion()
             return
         }

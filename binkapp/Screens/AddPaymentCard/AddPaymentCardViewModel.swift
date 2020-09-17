@@ -71,7 +71,7 @@ class AddPaymentCardViewModel {
     }
     
     func toPrivacyAndSecurity() {
-        router.toPrivacyAndSecurityViewController()
+//        router.toPrivacyAndSecurityViewController()
     }
 
     func addPaymentCard(onError: @escaping () -> Void) {

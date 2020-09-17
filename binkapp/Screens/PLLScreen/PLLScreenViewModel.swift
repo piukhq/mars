@@ -113,10 +113,10 @@ class PLLScreenViewModel {
         router.displaySimplePopup(title: title, message: message)
     }
     
-    func displayNoConnectivityPopup(completion: @escaping () -> Void){
-        router.displayNoConnectivityPopup {
-            completion()
-        }
+    func displayNoConnectivityPopup(completion: @escaping () -> Void) {
+        let alert = ViewControllerFactory.makeNoConnectivityAlertController(completion: completion)
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
     
     func toFullDetailsCardScreen() {

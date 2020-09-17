@@ -23,7 +23,7 @@ class MainScreenRouter {
     init(delegate: MainScreenRouterDelegate?) {
         self.delegate = delegate
 
-        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
@@ -214,29 +214,6 @@ class MainScreenRouter {
         navController?.present(navigationController, animated: true, completion: nil)
     }
     
-    func toPrivacyAndSecurityViewController() {
-        let title = "security_and_privacy_title".localized
-        let body = "security_and_privacy_description".localized
-        let screenText = title + "\n" + body
-        
-        let attributedText = NSMutableAttributedString(string: screenText)
-
-        attributedText.addAttribute(
-            NSAttributedString.Key.font,
-            value: UIFont.headline,
-            range: NSRange(location: 0, length: title.count)
-        )
-
-        attributedText.addAttribute(
-            NSAttributedString.Key.font,
-            value: UIFont.bodyTextLarge,
-            range: NSRange(location: title.count, length: body.count)
-        )
-            
-        let configurationModel = ReusableModalConfiguration(title: title, text: attributedText, primaryButtonTitle: nil, secondaryButtonTitle: nil, tabBarBackButton: nil, showCloseButton: true)
-        toReusableModalTemplateViewController(configurationModel: configurationModel)
-    }
-    
     func toForgotPasswordViewController(navigationController: UINavigationController?) {
         let repository = ForgotPasswordRepository(apiClient: apiClient)
         let viewModel = ForgotPasswordViewModel(repository: repository)
@@ -270,17 +247,6 @@ class MainScreenRouter {
         pushReusableModalTemplateVC(configurationModel: configuration, navigationController: navController, floatingButtons: false)
     }
     
-    func showDeleteConfirmationAlert(withMessage message: String, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in
-            noCompletion()
-        }))
-        alert.addAction(UIAlertAction(title: "yes".localized, style: .destructive, handler: { _ in
-            yesCompletion()
-        }))
-        navController?.present(alert, animated: true, completion: nil)
-    }
-    
     func showNoBarcodeAlert(completion: @escaping () -> Void) {
         let alert = UIAlertController(title: "No Barcode", message: "No barcode or card number to display. Please check the status of this card.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: { _ in
@@ -299,25 +265,6 @@ class MainScreenRouter {
         let alert = UIAlertController(title: "error_title".localized, message: "communication_error".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
-    }
-    
-    @objc func presentNoConnectivityPopup() {
-        displayNoConnectivityPopup(completion: nil)
-    }
-    
-    func displayNoConnectivityPopup(completion: (() -> Void)? = nil) {
-        guard let visibleVC = navController?.getVisibleViewController() else { return }
-        let alert = UIAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
-            if let completion = completion {
-                completion()
-            }
-        }))
-        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal {
-            modalNavigationController.present(alert, animated: false, completion: nil)
-        } else {
-            navController?.present(alert, animated: false, completion: nil)
-        }
     }
 
     @objc func presentSSLPinningFailurePopup() {

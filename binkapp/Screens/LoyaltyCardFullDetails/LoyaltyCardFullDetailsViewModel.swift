@@ -152,22 +152,6 @@ class LoyaltyCardFullDetailsViewModel {
 //        }
     }
     
-    // TODO: We should improve the way reusable views work. They're so basic, but feel complicated
-    func getBasicReusableConfiguration(title: String, description: String) -> ReusableModalConfiguration {
-        let attributedString = NSMutableAttributedString()
-        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
-        attributedString.append(attributedTitle)
-        attributedString.append(attributedBody)
-        
-        return ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-    }
-    
-    func toReusableModalTemplate(title: String, description: NSMutableAttributedString) {
-//        let configurationModel = ReusableModalConfiguration(title: "", text: description, showCloseButton: true)
-//        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
-    }
-    
     func toRewardsHistoryScreen() {
         let viewController = ViewControllerFactory.makeRewardsHistoryViewController(membershipCard: membershipCard)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
@@ -175,18 +159,20 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toAboutMembershipPlanScreen() {
-        let config = getBasicReusableConfiguration(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
-        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(configuration: config)
+        let attributedString = ReusableModalConfiguration.makeAttributedString(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
+        let configuration = ReusableModalConfiguration(text: attributedString)
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(configuration: configuration)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
     
     func toSecurityAndPrivacyScreen() {
-//        router.toPrivacyAndSecurityViewController()
-    }
-    
-    func popToRootController() {
-//        router.popToRootViewController()
+        let title: String = "security_and_privacy_title".localized
+        let description: String = "security_and_privacy_description".localized
+        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
+        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func getOfferTileImageUrls() -> [String]? {
@@ -236,23 +222,21 @@ extension LoyaltyCardFullDetailsViewModel {
         informationRows[indexPath.row].action()
     }
     
-    func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
-//        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
-//            guard let self = self else { return }
-//            guard Current.apiClient.networkIsReachable else {
-//                self.router.presentNoConnectivityPopup()
-//                noCompletion?()
-//                return
-//            }
-//            self.repository.delete(self.membershipCard) {
-//                Current.wallet.refreshLocal()
-//                self.router.popToRootViewController()
-//                yesCompletion?()
-//            }
-//        }, noCompletion: {
-//            DispatchQueue.main.async {
-//                noCompletion?()
-//            }
-//        })
+    func showDeleteConfirmationAlert() {
+        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized) { [weak self] in
+            guard let self = self else { return }
+            guard Current.apiClient.networkIsReachable else {
+                let alert = ViewControllerFactory.makeNoConnectivityAlertController()
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+                return
+            }
+            self.repository.delete(self.membershipCard) {
+                Current.wallet.refreshLocal()
+                Current.navigate.back()
+            }
+        }
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
 }
