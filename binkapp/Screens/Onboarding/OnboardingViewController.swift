@@ -53,6 +53,10 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
             onboardingView3
         ]
     }()
+    
+    private lazy var signInWithAppleEnabled: Bool = {
+        return APIConstants.isProduction && Current.isReleaseTypeBuild
+    }()
 
     @available(iOS 13.0, *)
     lazy var signInWithAppleButton: ASAuthorizationAppleIDButton = {
@@ -85,8 +89,6 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
         learningContainer.addSubview(pageControl)
         return pageControl
     }()
-
-    private var signInWithAppleEnabled = false
 
     init(viewModel: OnboardingViewModel) {
         self.viewModel = viewModel
@@ -128,9 +130,6 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
     }
 
     private func setLayout() {
-        if #available(iOS 13.0, *) {
-            signInWithAppleEnabled = true
-        }
         
         let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.learningContainerHeight)
         learningContainerHeightConstraint.priority = .init(999)
@@ -156,12 +155,6 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
             pageControl.widthAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.width),
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor),
         ])
-
-        if !signInWithAppleEnabled {
-            NSLayoutConstraint.activate([
-                facebookPillButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25),
-            ])
-        }
     }
 
     @available(iOS 13.0, *)
@@ -178,7 +171,7 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
     }
 
     private func configureUI() {
-        if #available(iOS 13.0, *) {
+        if #available(iOS 13.0, *), signInWithAppleEnabled {
             view.addSubview(signInWithAppleButton)
             signInWithAppleButton.layer.applyDefaultBinkShadow()
             NSLayoutConstraint.activate([
@@ -190,6 +183,10 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
             ])
 
             signInWithAppleButton.addTarget(self, action: #selector(handleAppleIdRequest), for: .touchUpInside)
+        } else {
+            NSLayoutConstraint.activate([
+                facebookPillButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25),
+            ])
         }
 
         facebookPillButton.translatesAutoresizingMaskIntoConstraints = false

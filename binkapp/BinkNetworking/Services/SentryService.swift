@@ -10,28 +10,17 @@ import Foundation
 import Sentry
 
 final class SentryService {
-    
-    private static let prodBundleIdentifier = "com.bink.wallet"
-    
+        
     private static var environment: String {
         let envString: String
 
-        if isReleaseTypeBuild && APIConstants.isProduction && !isDebug {
+        if Current.isReleaseTypeBuild && APIConstants.isProduction && !isDebug {
             envString = "prod"
         } else {
             envString = "beta"
         }
         
         return envString
-    }
-    
-    private static var isReleaseTypeBuild: Bool {
-        guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
-            // I can't imagine a scenario where this would be not set?
-            return false
-        }
-        
-        return bundleIdentifier == prodBundleIdentifier
     }
 
     private static var isDebug: Bool {
