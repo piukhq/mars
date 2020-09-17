@@ -119,7 +119,7 @@ class BaseNavigationHandler {
         case let navigationRequest as PushNavigationRequest:
             navigationController?.pushViewController(navigationRequest.viewController, animated: navigationRequest.animated)
         case let navigationRequest as ModalNavigationRequest:
-            let viewController = navigationRequest.embedInNavigationController ? PortraitNavigationController(rootViewController: navigationRequest.viewController) : navigationRequest.viewController
+            let viewController = navigationRequest.embedInNavigationController ? PortraitNavigationController(rootViewController: navigationRequest.viewController, isModallyPresented: true) : navigationRequest.viewController
             
             // Otherwise will default to iOS 13 style modal
             if navigationRequest.fullScreen {
