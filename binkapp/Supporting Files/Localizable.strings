@@ -267,7 +267,8 @@
 "add_email_subtitle" = "Please add your email address below.";
 "social_tandcs_title" = "Terms and conditions";
 "social_tandcs_subtitle" = "One last step...";
-"social_tandcs_error" = "Continue with Facebook failed.";
+"social_tandcs_facebook_error" = "Continue with Facebook failed.";
+"social_tandcs_siwa_error" = "Sign in with Apple failed.";
 
 "preferences_prompt" = "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.";
 "preferences_prompt_highlight_rewards" = "rewards";

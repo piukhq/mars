@@ -91,6 +91,12 @@ class BinkPillButton: BinkTrackableButton {
             return "continue_with_facebook_button".localized
         }
     }
+    
+    override func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
+        if !activityIndicator.isAnimating {
+            super.sendAction(action, to: target, for: event)
+        }
+    }
 }
 
 class BinkMiniPillButton: BinkPillButton {
