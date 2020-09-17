@@ -41,8 +41,8 @@ class PaymentWalletViewModel: WalletViewModel {
             return
         }
     }
-
-    func showDeleteConfirmationAlert(card: CD_PaymentCard, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
+    
+    func showDeleteConfirmationAlert(card: CD_MembershipCard, onCancel: @escaping () -> Void) {
 //        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
 //            guard Current.apiClient.networkIsReachable else {
 //                self?.router.presentNoConnectivityPopup()
@@ -50,10 +50,10 @@ class PaymentWalletViewModel: WalletViewModel {
 //                return
 //            }
 //            self?.repository.delete(card, completion: yesCompletion)
-//        }, noCompletion: {
-//            DispatchQueue.main.async {
-//                noCompletion()
-//            }
+//            }, noCompletion: {
+//                DispatchQueue.main.async {
+//                    noCompletion()
+//                }
 //        })
     }
 }

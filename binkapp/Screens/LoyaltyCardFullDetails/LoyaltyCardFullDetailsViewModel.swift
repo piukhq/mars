@@ -227,7 +227,7 @@ extension LoyaltyCardFullDetailsViewModel {
     }
     
     func showDeleteConfirmationAlert() {
-        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized) { [weak self] in
+        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
             guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {
                 let alert = ViewControllerFactory.makeNoConnectivityAlertController()
@@ -239,7 +239,7 @@ extension LoyaltyCardFullDetailsViewModel {
                 Current.wallet.refreshLocal()
                 Current.navigate.back()
             }
-        }
+        })
         let navigationRequest = AlertNavigationRequest(alertController: alert)
         Current.navigate.to(navigationRequest)
     }

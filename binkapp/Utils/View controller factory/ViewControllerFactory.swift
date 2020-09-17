@@ -50,9 +50,11 @@ final class ViewControllerFactory {
         return ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
     }
     
-    static func makeDeleteConfirmationAlertController(message: String, deleteAction: @escaping EmptyCompletionBlock) -> UIAlertController {
+    static func makeDeleteConfirmationAlertController(message: String, deleteAction: @escaping EmptyCompletionBlock, onCancel: EmptyCompletionBlock? = nil) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in
+            onCancel?()
+        }))
         alert.addAction(UIAlertAction(title: "yes".localized, style: .destructive, handler: { _ in
             deleteAction()
         }))
