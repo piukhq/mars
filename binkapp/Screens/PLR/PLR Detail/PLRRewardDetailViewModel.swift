@@ -44,17 +44,7 @@ class PLRRewardDetailViewModel {
         case (.stamps, .inProgress):
             return "plr_stamp_voucher_detail_inprogress_header".localized
         case (.stamps, .issued):
-            var formattedText = ""
-            formattedText.append(voucher.burn?.prefix ?? "")
-            
-            // We store burn value as 0 by default if the API returns nothing
-            // We can safely assume that no burn value will ever be 0, so we can guard against it here
-            if let burnValue = voucher.burn?.value, burnValue != 0 {
-                formattedText.append(String(describing: burnValue))
-            }
-            formattedText.append(" ")
-            formattedText.append(voucher.burn?.suffix ?? "")
-            return String(format: "plr_stamp_voucher_detail_issued_header".localized, formattedText)
+            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
         case (.stamps, .redeemed):
             return "plr_stamp_voucher_detail_redeemed_header".localized
         case (.stamps, .expired):
