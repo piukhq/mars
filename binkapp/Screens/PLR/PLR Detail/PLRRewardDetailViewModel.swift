@@ -11,12 +11,10 @@ import Foundation
 class PLRRewardDetailViewModel {
     private let voucher: CD_Voucher
     private let membershipPlan: CD_MembershipPlan
-    private let router: MainScreenRouter
 
-    init(voucher: CD_Voucher, plan: CD_MembershipPlan, router: MainScreenRouter) {
+    init(voucher: CD_Voucher, plan: CD_MembershipPlan) {
         self.voucher = voucher
         self.membershipPlan = plan
-        self.router = router
     }
 
     var voucherCellViewModel: PLRCellViewModel {
@@ -115,8 +113,8 @@ class PLRRewardDetailViewModel {
     }
 
     func openTermsAndConditionsWebView() {
-        guard let url = termsAndConditionsButtonUrlString else { return }
-        router.openWebView(withUrlString: url)
+//        guard let url = termsAndConditionsButtonUrlString else { return }
+//        router.openWebView(withUrlString: url)
     }
 
     // MARK: - View decisioning

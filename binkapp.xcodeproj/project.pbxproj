@@ -279,7 +279,6 @@
 		EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48556D231D6E4000FC9E5F /* DebugMenuFactory.swift */; };
 		EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485571231D728A00FC9E5F /* DebugMenuSection.swift */; };
 		EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */; };
-		EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485576231D72E700FC9E5F /* ModalDismissable.swift */; };
 		EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */; };
 		EF4B465E2343B5FF009A3651 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465D2343B5FF009A3651 /* RectangleView.swift */; };
 		EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */; };
@@ -787,7 +786,6 @@
 		EF48556D231D6E4000FC9E5F /* DebugMenuFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuFactory.swift; sourceTree = "<group>"; };
 		EF485571231D728A00FC9E5F /* DebugMenuSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuSection.swift; sourceTree = "<group>"; };
 		EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModel.swift; sourceTree = "<group>"; };
-		EF485576231D72E700FC9E5F /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
 		EF4B465D2343B5FF009A3651 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
 		EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModel.swift; sourceTree = "<group>"; };
@@ -1924,7 +1922,6 @@
 		EF485575231D72DA00FC9E5F /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				EF485576231D72E700FC9E5F /* ModalDismissable.swift */,
 				EF2E881223351A6000F678F3 /* CoreDataRepositoryProtocol.swift */,
 				BDB01875232E125C00BFFA18 /* ReusableView.swift */,
 			);
@@ -3092,7 +3089,6 @@
 				EFA5F7282379A7C70027AB80 /* _CD_Card.swift in Sources */,
 				EFA5F70C2379A7C70027AB80 /* _CD_Voucher.swift in Sources */,
 				B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */,
-				EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */,
 				EFA5F70E2379A7C70027AB80 /* CD_ReasonCode.swift in Sources */,
 				EF335C892350D2C600D49223 /* WalletCard.swift in Sources */,
 				3CD2CBBF2346059100862A5A /* EnrolFieldPostModel.swift in Sources */,

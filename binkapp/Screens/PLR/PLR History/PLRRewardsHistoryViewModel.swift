@@ -40,9 +40,11 @@ class PLRRewardsHistoryViewModel {
     }
 
     func toVoucherDetailScreen(voucher: CD_Voucher) {
-//        guard let plan = membershipCard.membershipPlan else {
-//            fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
-//        }
-//        router.toVoucherDetailViewController(voucher: voucher, plan: plan)
+        guard let plan = membershipCard.membershipPlan else {
+            fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
+        }
+        let viewController = ViewControllerFactory.makeVoucherDetailViewController(voucher: voucher, plan: plan)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }

@@ -20,6 +20,16 @@ final class ViewControllerFactory {
         return viewController
     }
     
+    static func makeBarcodeViewController(membershipCard: CD_MembershipCard) -> BarcodeViewController {
+        let viewModel = BarcodeViewModel(membershipCard: membershipCard)
+        return BarcodeViewController(viewModel: viewModel)
+    }
+    
+    static func makeVoucherDetailViewController(voucher: CD_Voucher, plan: CD_MembershipPlan) -> PLRRewardDetailViewController {
+        let viewModel = PLRRewardDetailViewModel(voucher: voucher, plan: plan)
+        return PLRRewardDetailViewController(viewModel: viewModel)
+    }
+    
     static func makeRewardsHistoryViewController(membershipCard: CD_MembershipCard) -> PLRRewardsHistoryViewController {
         let viewModel = PLRRewardsHistoryViewModel(membershipCard: membershipCard)
         return PLRRewardsHistoryViewController(viewModel: viewModel)

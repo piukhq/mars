@@ -71,7 +71,9 @@ class LoyaltyCardFullDetailsViewModel {
     // MARK: - Public methods
     
     func toBarcodeModel() {
-//        router.toBarcodeViewController(membershipCard: membershipCard) { }
+        let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func goToScreenForAction(action: BinkModuleView.BinkModuleAction) {
@@ -196,10 +198,12 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toVoucherDetailScreen(voucher: CD_Voucher) {
-//        guard let plan = membershipCard.membershipPlan else {
-//            fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
-//        }
-//        router.toVoucherDetailViewController(voucher: voucher, plan: plan)
+        guard let plan = membershipCard.membershipPlan else {
+            fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
+        }
+        let viewController = ViewControllerFactory.makeVoucherDetailViewController(voucher: voucher, plan: plan)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func state(forVoucher voucher: CD_Voucher) -> VoucherState? {

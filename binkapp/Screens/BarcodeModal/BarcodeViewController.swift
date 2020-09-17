@@ -28,7 +28,7 @@ class BarcodeViewController: BinkTrackableViewController {
     private let viewModel: BarcodeViewModel
     var hasDrawnBarcode = false
     
-    init(viewModel: BarcodeViewModel, showFullSize: Bool = false) {
+    init(viewModel: BarcodeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "BarcodeViewController", bundle: Bundle(for: BarcodeViewController.self))
     }

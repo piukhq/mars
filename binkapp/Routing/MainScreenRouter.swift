@@ -142,12 +142,6 @@ class MainScreenRouter {
         let viewController = AddPaymentCardViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
-
-    func toBarcodeViewController(membershipCard: CD_MembershipCard, completion: @escaping () -> ()) {
-        let viewModel = BarcodeViewModel(membershipCard: membershipCard)
-        let navigationController = PortraitNavigationController(rootViewController: BarcodeViewController(viewModel: viewModel))
-        navController?.present(navigationController,  animated: true, completion: completion)
-    }
     
     func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) {
         let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard, router: self)
@@ -185,12 +179,6 @@ class MainScreenRouter {
     func toPllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney ) {
         let viewModel = PLLScreenViewModel(membershipCard: membershipCard, router: self, journey: journey)
         let viewController = PLLScreenViewController(viewModel: viewModel, journey: journey)
-        navController?.pushViewController(viewController, animated: true)
-    }
-
-    func toVoucherDetailViewController(voucher: CD_Voucher, plan: CD_MembershipPlan) {
-        let viewModel = PLRRewardDetailViewModel(voucher: voucher, plan: plan, router: self)
-        let viewController = PLRRewardDetailViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
