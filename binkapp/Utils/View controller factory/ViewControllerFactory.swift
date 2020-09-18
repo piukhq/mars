@@ -10,6 +10,12 @@ import UIKit
 
 final class ViewControllerFactory {
     
+    // MARK: - Adding Options
+    
+    static func makeAddingOptionsViewController() -> AddingOptionsViewController {
+        return AddingOptionsViewController(viewModel: AddingOptionsViewModel())
+    }
+    
     // MARK: - Loyalty Card Detail
     
     static func makeLoyaltyCardDetailViewController(membershipCard: CD_MembershipCard) -> LoyaltyCardFullDetailsViewController {

@@ -95,7 +95,7 @@ class Navigate {
         to(PopNavigationRequest(toRoot: toRoot, animated: animated, completion: completion))
     }
     
-    func close(animated: Bool = false, completion: EmptyCompletionBlock? = nil) {
+    func close(animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
         to(CloseModalNavigationRequest(animated: animated, completion: completion))
     }
 }

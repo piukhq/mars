@@ -11,34 +11,29 @@ import CardScan
 
 class AddingOptionsViewModel {
     private let strings = PaymentCardScannerStrings()
-    
-    private let router: MainScreenRouter
-    init(router: MainScreenRouter) {
-        self.router = router
-    }
 
     func toLoyaltyScanner(delegate: BarcodeScannerViewControllerDelegate?) {
-        router.toLoyaltyScanner(delegate: delegate)
+//        router.toLoyaltyScanner(delegate: delegate)
     }
     
     func toPaymentCardScanner(delegate: ScanDelegate?) {
-        router.toPaymentCardScanner(strings: strings, delegate: delegate)
+//        router.toPaymentCardScanner(strings: strings, delegate: delegate)
     }
 
     func toAddAuth(membershipPlan: CD_MembershipPlan, barcode: String) {
-        let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
+//        let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+//        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
     }
     
     func toBrowseBrandsScreen() {
-        router.toBrowseBrandsViewController()
+//        router.toBrowseBrandsViewController()
     }
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        router.toAddPaymentViewController(model: model)
+//        router.toAddPaymentViewController(model: model)
     }
 
-    @objc func popViewController() {
-        router.popViewController()
+    @objc func close() {
+        Current.navigate.close()
     }
 }

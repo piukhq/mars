@@ -58,13 +58,6 @@ class MainScreenRouter {
         navController?.present(settingsNav, animated: true, completion: nil)
     }
     
-    func toAddingOptionsViewController() {
-        let viewModel = AddingOptionsViewModel(router: self)
-        let viewController = AddingOptionsViewController(viewModel: viewModel)
-        
-        navController?.pushViewController(viewController, animated: true)
-    }
-    
     func toBrowseBrandsViewController() {
         let repository = BrowseBrandsRepository(apiClient: apiClient)
         let viewModel = BrowseBrandsViewModel(repository: repository, router: self)

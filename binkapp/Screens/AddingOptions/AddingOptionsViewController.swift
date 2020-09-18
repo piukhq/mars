@@ -26,7 +26,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
     let addPaymentCardView = AddingOptionView()
     
     @IBAction func cancelButtonAction(_ sender: Any) {
-        viewModel.popViewController()
+        viewModel.close()
     }
     
     override func viewDidLoad() {
