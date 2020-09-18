@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeForceCrashRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -59,6 +59,14 @@ class DebugMenuFactory {
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcWebView)
         }, cellType: .titleSubtitle)
+    }
+    
+    private func makeLPCUseCookiesRow() -> DebugMenuRow {
+        let shouldUseCookies = Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies)
+        return DebugMenuRow(title: "LPC use cookies", subtitle: shouldUseCookies ? "Yes" : "No", action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcCookies)
+            }, cellType: .titleSubtitle)
     }
     
     private func makeForceCrashRow() -> DebugMenuRow {
