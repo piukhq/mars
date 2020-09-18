@@ -12,14 +12,11 @@ class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
     private var paymentCard: CD_PaymentCard
-    private(set) var router: MainScreenRouter
-    private let repository: PaymentCardDetailRepository
+    private let repository = PaymentCardDetailRepository()
     private let informationRowFactory: WalletCardDetailInformationRowFactory
 
-    init(paymentCard: CD_PaymentCard, router: MainScreenRouter, repository: PaymentCardDetailRepository, informationRowFactory: WalletCardDetailInformationRowFactory) {
+    init(paymentCard: CD_PaymentCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.paymentCard = paymentCard
-        self.router = router
-        self.repository = repository
         self.informationRowFactory = informationRowFactory
     }
 
@@ -146,7 +143,7 @@ class PaymentCardDetailViewModel {
     }
 
     func toAddOrJoin(forMembershipPlan membershipPlan: CD_MembershipPlan) {
-        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+//        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
     }
 
     // MARK: Information rows
@@ -165,10 +162,6 @@ class PaymentCardDetailViewModel {
 
     func toSecurityAndPrivacyScreen() {
 //        router.toPrivacyAndSecurityViewController()
-    }
-
-    func popToRootViewController(){
-        router.popToRootViewController()
     }
     
     func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {

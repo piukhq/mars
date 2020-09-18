@@ -43,6 +43,16 @@ final class ViewControllerFactory {
         return makeReusableTemplateViewController(configuration: configuration, floatingButtons: floatingButtons)
     }
     
+    // MARK: - Payment Card Detail
+    
+    static func makePaymentCardDetailViewController(paymentCard: CD_PaymentCard) -> PaymentCardDetailViewController {
+        let factory = WalletCardDetailInformationRowFactory()
+        let viewModel = PaymentCardDetailViewModel(paymentCard: paymentCard, informationRowFactory: factory)
+        let viewController = PaymentCardDetailViewController(viewModel: viewModel)
+        factory.delegate = viewController
+        return viewController
+    }
+    
     // MARK: - Reusable
     
     private static func makeReusableTemplateViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {

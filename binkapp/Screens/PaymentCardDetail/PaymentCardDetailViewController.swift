@@ -100,9 +100,6 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popToRoot))
-        self.navigationItem.leftBarButtonItem = backButton
-        
         configureUI()
         setupTables()
 
@@ -212,7 +209,7 @@ private extension PaymentCardDetailViewController {
     }
     
     @objc func popToRoot() {
-        viewModel.popToRootViewController()
+//        viewModel.popToRootViewController()
     }
 }
 
@@ -275,7 +272,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
                 return cell
             }
 
-            let cellViewModel = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: plan, router: viewModel.router)
+            let cellViewModel = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: plan)
 
             cell.configureWithViewModel(cellViewModel)
 

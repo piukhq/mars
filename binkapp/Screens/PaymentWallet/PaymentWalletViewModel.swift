@@ -25,7 +25,9 @@ class PaymentWalletViewModel: WalletViewModel {
     }
 
     func toCardDetail(for card: CD_PaymentCard) {
-//        router.toPaymentCardDetailViewController(paymentCard: card)
+        let viewController = ViewControllerFactory.makePaymentCardDetailViewController(paymentCard: card)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
