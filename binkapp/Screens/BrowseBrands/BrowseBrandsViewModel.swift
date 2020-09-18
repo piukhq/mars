@@ -151,6 +151,8 @@ class BrowseBrandsViewModel {
     }
     
     func toAddOrJoinScreen(membershipPlan: CD_MembershipPlan) {
-//        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+        let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }

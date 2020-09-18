@@ -40,6 +40,11 @@ final class ViewControllerFactory {
         return AddPaymentCardViewController(viewModel: viewModel)
     }
     
+    static func makeAddOrJoinViewController(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) -> AddOrJoinViewController {
+        let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard)
+        return AddOrJoinViewController(viewModel: viewModel)
+    }
+    
     // MARK: - Loyalty Card Detail
     
     static func makeLoyaltyCardDetailViewController(membershipCard: CD_MembershipCard) -> LoyaltyCardFullDetailsViewController {

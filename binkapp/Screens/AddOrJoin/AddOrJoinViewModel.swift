@@ -11,14 +11,12 @@ import CardScan
 class AddOrJoinViewModel {
     private let membershipPlan: CD_MembershipPlan
     private let membershipCard: CD_MembershipCard?
-    private let router: MainScreenRouter
     
     private let paymentScannerStrings = PaymentCardScannerStrings()
     
-    init(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil, router: MainScreenRouter) {
+    init(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) {
         self.membershipPlan = membershipPlan
         self.membershipCard = membershipCard
-        self.router = router
     }
 
     var shouldShowAddCardButton: Bool {
@@ -41,11 +39,11 @@ class AddOrJoinViewModel {
             return
         }
         
-        guard let existingCard = membershipCard else {
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
-            return
-        }
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: existingCard)
+//        guard let existingCard = membershipCard else {
+//            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
+//            return
+//        }
+//        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: existingCard)
     }
     
     func didSelectAddNewCard(paymentScanDelegate: ScanDelegate?) {
@@ -61,11 +59,11 @@ class AddOrJoinViewModel {
             return
         }
         
-        guard let existingCard = membershipCard else {
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
-            return
-        }
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUpFailed, existingMembershipCard: existingCard)
+//        guard let existingCard = membershipCard else {
+//            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
+//            return
+//        }
+//        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUpFailed, existingMembershipCard: existingCard)
     }
     
     func toNativeJoinUnavailable() {
@@ -78,21 +76,21 @@ class AddOrJoinViewModel {
         attributedText.addAttribute(NSAttributedString.Key.font, value: UIFont.bodyTextLarge, range: NSRange(location: ("native_join_unavailable_title".localized).count, length: descriptionText.count)
         )
         
-        var configurationModel: ReusableModalConfiguration
+//        var configurationModel: ReusableModalConfiguration
         
-        guard let planURL = membershipPlan.account?.planURL else {
-            configurationModel = ReusableModalConfiguration(title: "", text: attributedText, showCloseButton: true)
-            router.toReusableModalTemplateViewController(configurationModel: configurationModel)
-            return
-        }
+//        guard let planURL = membershipPlan.account?.planURL else {
+//            configurationModel = ReusableModalConfiguration(title: "", text: attributedText, showCloseButton: true)
+//            router.toReusableModalTemplateViewController(configurationModel: configurationModel)
+//            return
+//        }
         
-        configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
-            if let url = URL(string: planURL) {
-                self.router.openWebView(withUrlString: url.absoluteString)
-            }
-        }, showCloseButton: true)
-        
-        router.toReusableModalTemplateViewController(configurationModel: configurationModel, floatingButtons: false)
+//        configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
+//            if let url = URL(string: planURL) {
+//                self.router.openWebView(withUrlString: url.absoluteString)
+//            }
+//        }, showCloseButton: true)
+//
+//        router.toReusableModalTemplateViewController(configurationModel: configurationModel, floatingButtons: false)
     }
     
     func brandHeaderWasTapped() {
@@ -105,27 +103,15 @@ class AddOrJoinViewModel {
         attributedString.append(attributedTitle)
         attributedString.append(attributedBody)
         
-        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-        router.toReusableModalTemplateViewController(configurationModel: configuration)
+//        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
+//        router.toReusableModalTemplateViewController(configurationModel: configuration)
     }
     
     func displaySimplePopup(title: String?, message: String?) {
-        router.displaySimplePopup(title: title, message: message)
-    }
-    
-    @objc func popViewController() {
-        router.popViewController()
-    }
-    
-    @objc func dismissViewController() {
-        router.dismissViewController()
-    }
-    
-    func popToRootViewController() {
-        router.popToRootViewController()
+//        router.displaySimplePopup(title: title, message: message)
     }
 
     private func toPaymentCardNeededScreen(scanDelegate: ScanDelegate?) {
-        router.toPaymentCardNeededScreen(strings: paymentScannerStrings, scanDelegate: scanDelegate)
+//        router.toPaymentCardNeededScreen(strings: paymentScannerStrings, scanDelegate: scanDelegate)
     }
 }

@@ -122,12 +122,6 @@ class MainScreenRouter {
 //            }
 //        }
 //    }
-    
-    func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) {
-        let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard, router: self)
-        let viewController = AddOrJoinViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
-    }
 
     func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
         let viewModel = AuthAndAddViewModel(router: self, membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)

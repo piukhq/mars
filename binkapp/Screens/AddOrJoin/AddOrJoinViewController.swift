@@ -46,13 +46,6 @@ class AddOrJoinViewController: BinkTrackableViewController {
     
     func setNavigationBar() {
         navigationController?.setNavigationBarHidden(false, animated: true)
-        
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popToRootScreen))
-        self.navigationItem.setRightBarButton(closeButton, animated: true)
-        
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        self.navigationItem.leftBarButtonItem = backButton
-        
         navigationItem.setHidesBackButton(false, animated: true)
         self.title = ""
     }
@@ -92,14 +85,6 @@ class AddOrJoinViewController: BinkTrackableViewController {
         plansStackView.addArrangedSubview(linkView)
 
         addCardButton.isHidden = !viewModel.shouldShowAddCardButton
-    }
-    
-    @objc func popViewController() {
-        viewModel.popViewController()
-    }
-    
-    @objc func popToRootScreen() {
-        viewModel.popToRootViewController()
     }
 }
 
