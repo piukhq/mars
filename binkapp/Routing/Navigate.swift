@@ -18,10 +18,12 @@ enum NavigationOwner: Int {
 struct PushNavigationRequest: BaseNavigationRequest {
     let viewController: UIViewController
     let animated: Bool
+    let hidesBackButton: Bool
     let completion: EmptyCompletionBlock?
-    init(viewController: UIViewController, animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
+    init(viewController: UIViewController, animated: Bool = true, hidesBackButton: Bool = false, completion: EmptyCompletionBlock? = nil) {
         self.viewController = viewController
         self.animated = animated
+        self.hidesBackButton = hidesBackButton
         self.completion = completion
     }
 }
@@ -122,7 +124,7 @@ class BaseNavigationHandler {
     func to(_ navigationRequest: BaseNavigationRequest) {
         switch navigationRequest {
         case let navigationRequest as PushNavigationRequest:
-            navigationController?.pushViewController(navigationRequest.viewController, animated: navigationRequest.animated, completion: navigationRequest.completion)
+            navigationController?.pushViewController(navigationRequest.viewController, animated: navigationRequest.animated, hidesBackButton: navigationRequest.hidesBackButton, completion: navigationRequest.completion)
         case let navigationRequest as PopNavigationRequest:
             if navigationRequest.toRoot {
                 navigationController?.popToRootViewController(animated: navigationRequest.animated, completion: navigationRequest.completion)

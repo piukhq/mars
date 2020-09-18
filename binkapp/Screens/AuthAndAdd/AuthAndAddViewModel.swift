@@ -147,7 +147,7 @@ class AuthAndAddViewModel {
             if let card = card {
                 if card.membershipPlan?.featureSet?.planCardType == .link {
                     let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
-                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
                     Current.navigate.to(navigationRequest)
                 } else {
                     // TODO: Push to LCD behind
@@ -186,7 +186,7 @@ class AuthAndAddViewModel {
 
             if card.membershipPlan?.featureSet?.cardType == 2 {
                 let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
-                let navigationRequest = PushNavigationRequest(viewController: viewController)
+                let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
                 Current.navigate.to(navigationRequest)
             } else {
                 // TODO: Push to LCD behind
