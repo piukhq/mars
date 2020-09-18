@@ -175,7 +175,7 @@ class PaymentCardDetailViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
+    func showDeleteConfirmationAlert() {
         let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
             guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {

@@ -44,18 +44,23 @@ class PaymentWalletViewModel: WalletViewModel {
         }
     }
     
-    func showDeleteConfirmationAlert(card: CD_MembershipCard, onCancel: @escaping () -> Void) {
-//        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
-//            guard Current.apiClient.networkIsReachable else {
-//                self?.router.presentNoConnectivityPopup()
-//                noCompletion()
-//                return
-//            }
-//            self?.repository.delete(card, completion: yesCompletion)
-//            }, noCompletion: {
-//                DispatchQueue.main.async {
-//                    noCompletion()
-//                }
-//        })
+    // TODO: Make this reusable
+    func showDeleteConfirmationAlert(card: CD_PaymentCard, onCancel: @escaping () -> Void) {
+        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
+            guard let self = self else { return }
+            guard Current.apiClient.networkIsReachable else {
+                let alert = ViewControllerFactory.makeNoConnectivityAlertController()
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+                onCancel()
+                return
+            }
+            self.repository.delete(card) {
+                Current.wallet.refreshLocal()
+            }
+            }, onCancel: onCancel)
+        
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
 }

@@ -62,13 +62,10 @@ extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelega
     }
 
     func promptForDelete(with index: IndexPath, cell: PaymentCardCollectionViewCell) {
-//        guard let card = viewModel.cards?[index.row] else { return }
-//
-//        viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
-//            self?.viewModel.refreshLocalWallet()
-//        }, noCompletion: {
-//            cell.set(to: .closed)
-//        })
+        guard let card = viewModel.cards?[index.row] else { return }
+        viewModel.showDeleteConfirmationAlert(card: card) {
+            cell.set(to: .closed)
+        }
     }
 
     func cellDidFullySwipe(action: SwipeMode?, cell: PaymentCardCollectionViewCell) {
