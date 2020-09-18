@@ -138,8 +138,13 @@ class PaymentCardDetailViewModel {
     // MARK: Routing
 
     func toCardDetail(forMembershipCard membershipCard: CD_MembershipCard) {
-        let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard))
-        Current.navigate.to(navigationRequest)
+        Current.navigate.back(toRoot: true) {
+            Current.navigate.to(.loyalty) {
+                let viewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard)
+                let pushNavigationRequest = PushNavigationRequest(viewController: viewController)
+                Current.navigate.to(pushNavigationRequest)
+            }
+        }
     }
 
     func toAddOrJoin(forMembershipPlan membershipPlan: CD_MembershipPlan) {

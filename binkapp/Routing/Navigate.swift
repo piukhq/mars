@@ -10,23 +10,30 @@ import UIKit
 
 protocol BaseNavigationRequest {}
 
+enum NavigationOwner: Int {
+    case loyalty = 0
+    case payment = 2
+}
+
 struct PushNavigationRequest: BaseNavigationRequest {
     let viewController: UIViewController
-    let completion: (() -> Void)?
     let animated: Bool
-    init(viewController: UIViewController, completion: (() -> Void)? = nil, animated: Bool = true) {
+    let completion: EmptyCompletionBlock?
+    init(viewController: UIViewController, animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
         self.viewController = viewController
-        self.completion = completion
         self.animated = animated
+        self.completion = completion
     }
 }
 
 struct PopNavigationRequest: BaseNavigationRequest {
     let toRoot: Bool
     let animated: Bool
-    init(toRoot: Bool = false, animated: Bool = true) {
+    let completion: EmptyCompletionBlock?
+    init(toRoot: Bool = false, animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
         self.toRoot = toRoot
         self.animated = animated
+        self.completion = completion
     }
 }
 
@@ -34,10 +41,10 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     let viewController: UIViewController
     let fullScreen: Bool
     let embedInNavigationController: Bool
-    let completion: (() -> Void)?
+    let completion: EmptyCompletionBlock?
     let animated: Bool
     // TODO: Add logic for if we don't want the modal to be dragged to dismiss
-    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, completion: (() -> Void)? = nil, animated: Bool = true) {
+    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
         self.viewController = viewController
         self.fullScreen = fullScreen
         self.embedInNavigationController = embedInNavigationController
@@ -55,8 +62,8 @@ struct AlertNavigationRequest: BaseNavigationRequest {
 
 struct CloseModalNavigationRequest: BaseNavigationRequest {
     let animated: Bool
-    let completion: (() -> Void)?
-    init(animated: Bool = true, completion: (() -> Void)? = nil) {
+    let completion: EmptyCompletionBlock?
+    init(animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
         self.animated = animated
         self.completion = completion
     }
@@ -71,19 +78,25 @@ class Navigate {
         return tabBarController
     }()
     
-    // Obviously remove force unwrapping
     private lazy var navigationHandler = BaseNavigationHandler(tabBarController: tabBarController)
     
     func to(_ navigationRequest: BaseNavigationRequest) {
         navigationHandler.to(navigationRequest)
     }
     
-    func back(toRoot: Bool = false, animated: Bool = true) {
-        to(PopNavigationRequest(toRoot: toRoot, animated: animated))
+    func to(_ tab: NavigationOwner, completion: EmptyCompletionBlock? = nil) {
+        tabBarController.selectedIndex = tab.rawValue
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            completion?()
+        }
     }
     
-    func close() {
-        to(CloseModalNavigationRequest())
+    func back(toRoot: Bool = false, animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
+        to(PopNavigationRequest(toRoot: toRoot, animated: animated, completion: completion))
+    }
+    
+    func close(animated: Bool = false, completion: EmptyCompletionBlock? = nil) {
+        to(CloseModalNavigationRequest(animated: animated, completion: completion))
     }
 }
 
@@ -94,13 +107,13 @@ class BaseNavigationHandler {
         self.tabBarController = tabBarController
     }
     
-    var navigationController: UINavigationController? {
+    var navigationController: PortraitNavigationController? {
         // Top view controller should always be a navigation controller, unless it is a tab bar controller
         // If a tab bar controller, the selected view controller should generally be a navigation controller
         // If it's not, we can only present modally
         guard let topViewController = UIViewController.topMostViewController() else { return nil }
-        if let navigationController = topViewController as? UINavigationController { return navigationController }
-        if let tabBarController = topViewController as? UITabBarController, let selectedNavigationController = tabBarController.selectedViewController as? UINavigationController {
+        if let navigationController = topViewController as? PortraitNavigationController { return navigationController }
+        if let tabBarController = topViewController as? UITabBarController, let selectedNavigationController = tabBarController.selectedViewController as? PortraitNavigationController {
             return selectedNavigationController
         }
         return nil
@@ -109,12 +122,12 @@ class BaseNavigationHandler {
     func to(_ navigationRequest: BaseNavigationRequest) {
         switch navigationRequest {
         case let navigationRequest as PushNavigationRequest:
-            navigationController?.pushViewController(navigationRequest.viewController, animated: navigationRequest.animated)
+            navigationController?.pushViewController(navigationRequest.viewController, animated: navigationRequest.animated, completion: navigationRequest.completion)
         case let navigationRequest as PopNavigationRequest:
             if navigationRequest.toRoot {
-                navigationController?.popToRootViewController(animated: navigationRequest.animated)
+                navigationController?.popToRootViewController(animated: navigationRequest.animated, completion: navigationRequest.completion)
             } else {
-                navigationController?.popViewController(animated: navigationRequest.animated)
+                navigationController?.popViewController(animated: navigationRequest.animated, completion: navigationRequest.completion)
             }
         case let navigationRequest as ModalNavigationRequest:
             let viewController = navigationRequest.embedInNavigationController ? PortraitNavigationController(rootViewController: navigationRequest.viewController, isModallyPresented: true) : navigationRequest.viewController
