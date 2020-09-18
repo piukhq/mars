@@ -125,10 +125,10 @@ class PLLScreenViewModel {
     }
     
     func toPaymentScanner(scanDelegate: ScanDelegate?) {
-        router.toPaymentCardScanner(strings: paymentScannerStrings, delegate: scanDelegate)
+//        router.toPaymentCardScanner(strings: paymentScannerStrings, delegate: scanDelegate)
     }
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        router.toAddPaymentViewController(model: model)
+//        router.toAddPaymentViewController(model: model)
     }
 }

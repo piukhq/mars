@@ -93,41 +93,35 @@ class MainScreenRouter {
 //        }
 //    }
     
-    func toPaymentCardScanner(strings: ScanStringsDataSource, delegate: ScanDelegate?) {
-        guard let paymentCardScanner = ScanViewController.createViewController(withDelegate: delegate) else { return }
-        paymentCardScanner.allowSkip = true
-        paymentCardScanner.cornerColor = .white
-        paymentCardScanner.torchButtonImage = UIImage(named: "payment_scanner_torch")
-        paymentCardScanner.stringDataSource = strings
-        
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
-            self?.toAddPaymentViewController()
-        }
-        
-        if PermissionsUtility.videoCaptureIsAuthorized {
-            navController?.pushViewController(paymentCardScanner, animated: true)
-        } else if PermissionsUtility.videoCaptureIsDenied {
-            if let alert = enterManuallyAlert {
-                navController?.present(alert, animated: true, completion: nil)
-            }
-        } else {
-            PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
-                if granted {
-                    self?.navController?.pushViewController(paymentCardScanner, animated: true)
-                } else {
-                    if let alert = enterManuallyAlert {
-                        self?.navController?.present(alert, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
-    }
-
-    func toAddPaymentViewController(model: PaymentCardCreateModel? = nil) {
-        let viewModel = AddPaymentCardViewModel(router: self, paymentCard: model)
-        let viewController = AddPaymentCardViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
-    }
+//    func toPaymentCardScanner(strings: ScanStringsDataSource, delegate: ScanDelegate?) {
+//        guard let paymentCardScanner = ScanViewController.createViewController(withDelegate: delegate) else { return }
+//        paymentCardScanner.allowSkip = true
+//        paymentCardScanner.cornerColor = .white
+//        paymentCardScanner.torchButtonImage = UIImage(named: "payment_scanner_torch")
+//        paymentCardScanner.stringDataSource = strings
+//        
+//        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
+//            self?.toAddPaymentViewController()
+//        }
+//        
+//        if PermissionsUtility.videoCaptureIsAuthorized {
+//            navController?.pushViewController(paymentCardScanner, animated: true)
+//        } else if PermissionsUtility.videoCaptureIsDenied {
+//            if let alert = enterManuallyAlert {
+//                navController?.present(alert, animated: true, completion: nil)
+//            }
+//        } else {
+//            PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
+//                if granted {
+//                    self?.navController?.pushViewController(paymentCardScanner, animated: true)
+//                } else {
+//                    if let alert = enterManuallyAlert {
+//                        self?.navController?.present(alert, animated: true, completion: nil)
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     func toAddOrJoinViewController(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) {
         let viewModel = AddOrJoinViewModel(membershipPlan: membershipPlan, membershipCard: membershipCard, router: self)
@@ -205,11 +199,11 @@ class MainScreenRouter {
     }
 
     func toPaymentCardNeededScreen(strings: ScanStringsDataSource, scanDelegate: ScanDelegate?) {
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
-            self?.toPaymentCardScanner(strings: strings, delegate: scanDelegate)
-        }, tabBarBackButton: backButton)
-        pushReusableModalTemplateVC(configurationModel: configuration, navigationController: navController, floatingButtons: false)
+//        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
+//        let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
+//            self?.toPaymentCardScanner(strings: strings, delegate: scanDelegate)
+//        }, tabBarBackButton: backButton)
+//        pushReusableModalTemplateVC(configurationModel: configuration, navigationController: navController, floatingButtons: false)
     }
     
     func showNoBarcodeAlert(completion: @escaping () -> Void) {

@@ -94,7 +94,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         filtersButton?.setTitleTextAttributes([.foregroundColor : UIColor.systemGray, .font : UIFont.linkTextButtonNormal], for: .highlighted)
         filtersButton?.setTitleTextAttributes([.foregroundColor : UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
 
-        navigationItem.rightBarButtonItem = filtersButton
+        navigationItem.leftBarButtonItem = filtersButton
         
         self.title = "browse_brands_title".localized
     }

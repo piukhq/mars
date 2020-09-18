@@ -125,7 +125,7 @@ extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
 
 extension AddingOptionsViewController: ScanDelegate {
     func userDidCancel(_ scanViewController: ScanViewController) {
-        navigationController?.popViewController(animated: true)
+        Current.navigate.close()
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
@@ -140,6 +140,7 @@ extension AddingOptionsViewController: ScanDelegate {
     
     func userDidSkip(_ scanViewController: ScanViewController) {
         viewModel.toAddPaymentCardScreen()
+        // TODO: Handle within Navigate
         navigationController?.removeViewController(scanViewController)
     }
 }

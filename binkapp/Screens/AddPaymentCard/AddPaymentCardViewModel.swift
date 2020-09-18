@@ -9,7 +9,6 @@
 import UIKit
 
 class AddPaymentCardViewModel {
-    private let router: MainScreenRouter
     private let repository = PaymentWalletRepository()
     let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
@@ -17,8 +16,7 @@ class AddPaymentCardViewModel {
         return true
     }
     
-    init(router: MainScreenRouter, paymentCard: PaymentCardCreateModel? = nil) {
-        self.router = router
+    init(paymentCard: PaymentCardCreateModel? = nil) {
         self.paymentCard = paymentCard ?? PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
     }
 
@@ -65,9 +63,9 @@ class AddPaymentCardViewModel {
         attributedText.append(titleAttributedString)
         attributedText.append(descriptionAttributedString)
         
-        let configurationModel = ReusableModalConfiguration(title: "terms_and_conditions_title".localized, text: attributedText, tabBarBackButton: nil)
+//        let configurationModel = ReusableModalConfiguration(title: "terms_and_conditions_title".localized, text: attributedText, tabBarBackButton: nil)
         
-        router.toPaymentTermsAndConditionsViewController(configurationModel: configurationModel, delegate: delegate)
+//        router.toPaymentTermsAndConditionsViewController(configurationModel: configurationModel, delegate: delegate)
     }
     
     func toPrivacyAndSecurity() {
@@ -88,10 +86,10 @@ class AddPaymentCardViewModel {
     }
 
     func popToRootViewController() {
-        router.popToRootViewController()
+//        router.popToRootViewController()
     }
 
     func displayError() {        
-        router.displaySimplePopup(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
+//        router.displaySimplePopup(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
     }
 }

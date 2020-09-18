@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CardScan
 
 final class ViewControllerFactory {
     
@@ -23,6 +24,20 @@ final class ViewControllerFactory {
     
     static func makeBrowseBrandsViewController() -> BrowseBrandsViewController {
         return BrowseBrandsViewController(viewModel: BrowseBrandsViewModel())
+    }
+    
+    static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, delegate: ScanDelegate?) -> ScanViewController? {
+        guard let viewController = ScanViewController.createViewController(withDelegate: delegate) else { return nil }
+        viewController.allowSkip = true
+        viewController.cornerColor = .white
+        viewController.torchButtonImage = UIImage(named: "payment_scanner_torch")
+        viewController.stringDataSource = strings
+        return viewController
+    }
+    
+    static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil) -> AddPaymentCardViewController {
+        let viewModel = AddPaymentCardViewModel(paymentCard: model)
+        return AddPaymentCardViewController(viewModel: viewModel)
     }
     
     // MARK: - Loyalty Card Detail

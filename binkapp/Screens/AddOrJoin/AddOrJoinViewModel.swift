@@ -31,7 +31,7 @@ class AddOrJoinViewModel {
     }
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        router.toAddPaymentViewController(model: model)
+//        router.toAddPaymentViewController(model: model)
     }
     
     func toAuthAndAddScreen(paymentScanDelegate: ScanDelegate?) {
