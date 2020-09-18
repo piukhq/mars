@@ -165,7 +165,6 @@ class PaymentCardDetailViewModel {
         informationRows[indexPath.row].action()
     }
 
-    // TODO: This and delete could be extensions on the wallet view model protocol as they are the same in loyalty and payment
     func toSecurityAndPrivacyScreen() {
         let title: String = "security_and_privacy_title".localized
         let description: String = "security_and_privacy_description".localized

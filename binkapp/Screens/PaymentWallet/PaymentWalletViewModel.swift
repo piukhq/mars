@@ -44,7 +44,6 @@ class PaymentWalletViewModel: WalletViewModel {
         }
     }
     
-    // TODO: Make this reusable
     func showDeleteConfirmationAlert(card: CD_PaymentCard, onCancel: @escaping () -> Void) {
         let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
             guard let self = self else { return }
