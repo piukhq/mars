@@ -122,21 +122,15 @@ class MainScreenRouter {
 //            }
 //        }
 //    }
-
-    func toAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
-        let viewModel = AuthAndAddViewModel(router: self, membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)
-        let viewController = AuthAndAddViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
-    }
     
     func toPatchGhostCard(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
-        let viewModel = AuthAndAddViewModel(router: self, membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
+        let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
     
     func toSignUp(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
-        let viewModel = AuthAndAddViewModel(router: self, membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
+        let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
         let viewController = AuthAndAddViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
     }
@@ -190,14 +184,6 @@ class MainScreenRouter {
         let viewModel = SimpleInfoViewModel(router: self, pendingType: pendingType)
         let viewController = SimpleInfoViewController(viewModel: viewModel)
         navController?.pushViewController(viewController, animated: true)
-    }
-
-    func toPaymentCardNeededScreen(strings: ScanStringsDataSource, scanDelegate: ScanDelegate?) {
-//        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-//        let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
-//            self?.toPaymentCardScanner(strings: strings, delegate: scanDelegate)
-//        }, tabBarBackButton: backButton)
-//        pushReusableModalTemplateVC(configurationModel: configuration, navigationController: navController, floatingButtons: false)
     }
     
     func showNoBarcodeAlert(completion: @escaping () -> Void) {

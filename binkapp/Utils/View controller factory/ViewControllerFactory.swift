@@ -45,6 +45,11 @@ final class ViewControllerFactory {
         return AddOrJoinViewController(viewModel: viewModel)
     }
     
+    static func makeAuthAndAddViewController(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) -> AuthAndAddViewController {
+        let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, prefilledFormValues: prefilledFormValues)
+        return AuthAndAddViewController(viewModel: viewModel)
+    }
+    
     // MARK: - Loyalty Card Detail
     
     static func makeLoyaltyCardDetailViewController(membershipCard: CD_MembershipCard) -> LoyaltyCardFullDetailsViewController {
@@ -90,7 +95,7 @@ final class ViewControllerFactory {
     
     // MARK: - Reusable
     
-    private static func makeReusableTemplateViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
+    static func makeReusableTemplateViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
         let viewModel = ReusableModalViewModel(configurationModel: configuration)
         return ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
     }

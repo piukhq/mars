@@ -105,7 +105,7 @@ class PLLScreenViewModel {
         attributedString.append(attributedTitle)
         attributedString.append(attributedBody)
         
-        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
+        let configuration = ReusableModalConfiguration(title: title, text: attributedString)
         router.toReusableModalTemplateViewController(configurationModel: configuration)
     }
     

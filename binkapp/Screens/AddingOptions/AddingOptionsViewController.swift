@@ -125,7 +125,7 @@ extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
 
 extension AddingOptionsViewController: ScanDelegate {
     func userDidCancel(_ scanViewController: ScanViewController) {
-        Current.navigate.close()
+//        Current.navigate.close()
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
@@ -135,13 +135,13 @@ extension AddingOptionsViewController: ScanDelegate {
         let year = Int(creditCard.expiryYear ?? "")
         let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
         viewModel.toAddPaymentCardScreen(model: model)
-        navigationController?.removeViewController(scanViewController)
+//        navigationController?.removeViewController(scanViewController)
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
         viewModel.toAddPaymentCardScreen()
         // TODO: Handle within Navigate
-        navigationController?.removeViewController(scanViewController)
+//        navigationController?.removeViewController(scanViewController)
     }
 }
 

@@ -98,7 +98,7 @@ extension AddOrJoinViewController: LoyaltyButtonDelegate {
 
 extension AddOrJoinViewController: ScanDelegate {
     func userDidCancel(_ scanViewController: ScanViewController) {
-        navigationController?.popViewController(animated: true)
+//        navigationController?.popViewController(animated: true)
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
@@ -108,11 +108,11 @@ extension AddOrJoinViewController: ScanDelegate {
         let year = Int(creditCard.expiryYear ?? "")
         let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
         viewModel.toAddPaymentCardScreen(model: model)
-        navigationController?.removeViewController(scanViewController)
+//        navigationController?.removeViewController(scanViewController)
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
         viewModel.toAddPaymentCardScreen()
-        navigationController?.removeViewController(scanViewController)
+//        navigationController?.removeViewController(scanViewController)
     }
 }
