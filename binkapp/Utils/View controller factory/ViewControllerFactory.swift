@@ -16,6 +16,15 @@ final class ViewControllerFactory {
         return AddingOptionsViewController(viewModel: AddingOptionsViewModel())
     }
     
+    static func makeLoyaltyScannerViewController(forPlan plan: CD_MembershipPlan? = nil, delegate: BarcodeScannerViewControllerDelegate?) -> BarcodeScannerViewController {
+        let viewModel = BarcodeScannerViewModel(plan: plan)
+        return BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
+    }
+    
+    static func makeBrowseBrandsViewController() -> BrowseBrandsViewController {
+        return BrowseBrandsViewController(viewModel: BrowseBrandsViewModel())
+    }
+    
     // MARK: - Loyalty Card Detail
     
     static func makeLoyaltyCardDetailViewController(membershipCard: CD_MembershipCard) -> LoyaltyCardFullDetailsViewController {

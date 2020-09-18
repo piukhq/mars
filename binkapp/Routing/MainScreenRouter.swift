@@ -57,48 +57,41 @@ class MainScreenRouter {
         settingsNav.modalPresentationStyle = .fullScreen
         navController?.present(settingsNav, animated: true, completion: nil)
     }
-    
-    func toBrowseBrandsViewController() {
-        let repository = BrowseBrandsRepository(apiClient: apiClient)
-        let viewModel = BrowseBrandsViewModel(repository: repository, router: self)
-        let viewController = BrowseBrandsViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
-    }
 
-    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan? = nil, delegate: BarcodeScannerViewControllerDelegate?) {
-        let viewModel = BarcodeScannerViewModel(plan: plan)
-        let viewController = BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
-        
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
-            self?.toBrowseBrandsViewController()
-        }
-        
-        if PermissionsUtility.videoCaptureIsAuthorized {
-            if plan == nil {
-                navController?.pushViewController(viewController, animated: true)
-            } else {
-                navController?.present(viewController, animated: true, completion: nil)
-            }
-        } else if PermissionsUtility.videoCaptureIsDenied {
-            if let alert = enterManuallyAlert {
-                navController?.present(alert, animated: true, completion: nil)
-            }
-        } else {
-            PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
-                if granted {
-                    if plan == nil {
-                        self?.navController?.pushViewController(viewController, animated: true)
-                    } else {
-                        self?.navController?.present(viewController, animated: true, completion: nil)
-                    }
-                } else {
-                    if let alert = enterManuallyAlert {
-                        self?.navController?.present(alert, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
-    }
+//    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan? = nil, delegate: BarcodeScannerViewControllerDelegate?) {
+//        let viewModel = BarcodeScannerViewModel(plan: plan)
+//        let viewController = BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
+//        
+//        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
+//            self?.toBrowseBrandsViewController()
+//        }
+//        
+//        if PermissionsUtility.videoCaptureIsAuthorized {
+//            if plan == nil {
+//                navController?.pushViewController(viewController, animated: true)
+//            } else {
+//                navController?.present(viewController, animated: true, completion: nil)
+//            }
+//        } else if PermissionsUtility.videoCaptureIsDenied {
+//            if let alert = enterManuallyAlert {
+//                navController?.present(alert, animated: true, completion: nil)
+//            }
+//        } else {
+//            PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
+//                if granted {
+//                    if plan == nil {
+//                        self?.navController?.pushViewController(viewController, animated: true)
+//                    } else {
+//                        self?.navController?.present(viewController, animated: true, completion: nil)
+//                    }
+//                } else {
+//                    if let alert = enterManuallyAlert {
+//                        self?.navController?.present(alert, animated: true, completion: nil)
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     func toPaymentCardScanner(strings: ScanStringsDataSource, delegate: ScanDelegate?) {
         guard let paymentCardScanner = ScanViewController.createViewController(withDelegate: delegate) else { return }

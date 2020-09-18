@@ -356,6 +356,6 @@ class AuthAndAddViewModel {
     }
     
     func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
-        router.toLoyaltyScanner(forPlan: plan, delegate: delegate)
+//        router.toLoyaltyScanner(forPlan: plan, delegate: delegate)
     }
 }

@@ -12,8 +12,6 @@ protocol BrowseBrandsViewModelDelegate: class {
 }
 
 class BrowseBrandsViewModel {
-    private let repository: BrowseBrandsRepository
-    private let router: MainScreenRouter
     private var membershipPlans = [CD_MembershipPlan]()
     
     weak var delegate: BrowseBrandsViewModelDelegate?
@@ -40,10 +38,7 @@ class BrowseBrandsViewModel {
         return Current.wallet.membershipCards?.map { ($0.membershipPlan?.id ?? "")}
     }
         
-    init(repository: BrowseBrandsRepository, router: MainScreenRouter) {
-        self.repository = repository
-        self.router = router
-
+    init() {
         Current.database.performTask { context in
             let plans = context.fetchAll(CD_MembershipPlan.self)
             self.membershipPlans = plans.sorted(by: { (firstPlan, secondPlan) -> Bool in
@@ -156,10 +151,6 @@ class BrowseBrandsViewModel {
     }
     
     func toAddOrJoinScreen(membershipPlan: CD_MembershipPlan) {
-        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
-    }
-    
-    func popViewController() {
-        router.popViewController()
+//        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
     }
 }
