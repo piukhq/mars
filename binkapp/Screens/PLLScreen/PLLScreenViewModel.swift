@@ -11,7 +11,6 @@ import CardScan
 class PLLScreenViewModel {
     private var membershipCard: CD_MembershipCard
     private let repository = PLLScreenRepository()
-    private let router: MainScreenRouter
     
     private let paymentScannerStrings = PaymentCardScannerStrings()
     
@@ -49,17 +48,12 @@ class PLLScreenViewModel {
         return "pll_screen_secondary_message".localized
     }
         
-    init(membershipCard: CD_MembershipCard, router: MainScreenRouter, journey: PllScreenJourney) {
+    init(membershipCard: CD_MembershipCard, journey: PllScreenJourney) {
         self.membershipCard = membershipCard
-        self.router = router
         self.journey = journey
     }
     
     // MARK:  - Public methods
-    
-    func popViewController() {
-        router.popViewController()
-    }
     
     func addCardToChangedCardsArray(card: CD_PaymentCard) {
         if !(changedLinkCards.contains(card)) {
@@ -106,11 +100,13 @@ class PLLScreenViewModel {
         attributedString.append(attributedBody)
         
         let configuration = ReusableModalConfiguration(title: title, text: attributedString)
-        router.toReusableModalTemplateViewController(configurationModel: configuration)
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func displaySimplePopup(title: String, message: String) {
-        router.displaySimplePopup(title: title, message: message)
+//        router.displaySimplePopup(title: title, message: message)
     }
     
     func displayNoConnectivityPopup(completion: @escaping () -> Void) {
@@ -119,16 +115,20 @@ class PLLScreenViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func toFullDetailsCardScreen() {
-        let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard))
-        Current.navigate.to(navigationRequest)
+    func toLoyaltyCardDetail() {
+        Current.navigate.close()
+        // TODO: Navigate to LCD behind
     }
     
     func toPaymentScanner(scanDelegate: ScanDelegate?) {
-//        router.toPaymentCardScanner(strings: paymentScannerStrings, delegate: scanDelegate)
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: scanDelegate) else { return }
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-//        router.toAddPaymentViewController(model: model)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }

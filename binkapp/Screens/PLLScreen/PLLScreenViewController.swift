@@ -111,14 +111,6 @@ class PLLScreenViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if viewModel.shouldShowBackButton {
-            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-            navigationItem.leftBarButtonItem = backButton
-        } else {
-            // Catch the default back button
-            navigationItem.setHidesBackButton(true, animated: false)
-        }
 
         view.backgroundColor = .white
         
@@ -172,7 +164,7 @@ extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         guard Current.apiClient.networkIsReachable else {
             viewModel.displayNoConnectivityPopup { [weak self] in
-                self?.viewModel.toFullDetailsCardScreen()
+                self?.viewModel.toLoyaltyCardDetail()
             }
             return
         }
@@ -185,7 +177,7 @@ extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
             self.reloadContent()
             self.view.isUserInteractionEnabled = true
             floatingButtons.primaryButton.stopLoading()
-            self.navigateToLCDScreen()
+            self.handlePrimaryButtonPress()
         }
     }
     
@@ -229,10 +221,6 @@ extension PLLScreenViewController: UITableViewDataSource {
 // MARK: - Private methods
 
 private extension PLLScreenViewController {
-    @objc func popViewController() {
-        viewModel.popViewController()
-    }
-    
     func reloadContent() {
         viewModel.reloadPaymentCards()
         paymentCardsTableView.reloadData()
@@ -258,13 +246,13 @@ private extension PLLScreenViewController {
         }
     }
     
-    func navigateToLCDScreen() {
+    func handlePrimaryButtonPress() {
         switch journey {
         case .newCard:
-            viewModel.toFullDetailsCardScreen()
+            viewModel.toLoyaltyCardDetail()
             break
         case .existingCard:
-            viewModel.isEmptyPll ? viewModel.toPaymentScanner(scanDelegate: self) : viewModel.toFullDetailsCardScreen()
+            viewModel.isEmptyPll ? viewModel.toPaymentScanner(scanDelegate: self) : viewModel.toLoyaltyCardDetail()
             break
         }
     }

@@ -135,12 +135,6 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney ) {
-        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, router: self, journey: journey)
-        let viewController = PLLScreenViewController(viewModel: viewModel, journey: journey)
-        navController?.pushViewController(viewController, animated: true)
-    }
-    
     func toTransactionsViewController(membershipCard: CD_MembershipCard) {
         let viewModel = TransactionsViewModel(membershipCard: membershipCard, router: self)
         let viewController = TransactionsViewController(viewModel: viewModel)

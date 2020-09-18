@@ -141,25 +141,26 @@ class AuthAndAddViewModel {
 
         guard let model = membershipCardPostModel else { return }
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
-//        let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
-//        
-//        repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { [weak self] card in
-//            guard let self = self else {return}
-//            if let card = card {
-//                if card.membershipPlan?.featureSet?.planCardType == .link {
-//                    self.router.toPllViewController(membershipCard: card, journey: .newCard)
-//                } else {
-//                    let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card))
-//                    Current.navigate.to(navigationRequest)
-//                }
-//                completion()
-//                Current.wallet.refreshLocal()
-//                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
-//            }
-//            }, onError: { [weak self] error in
-//                self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
-//                completion()
-//        })
+        let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
+        
+        repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { card in
+            if let card = card {
+                if card.membershipPlan?.featureSet?.planCardType == .link {
+                    let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                } else {
+                    // TODO: Push to LCD behind
+                    Current.navigate.close()
+                }
+                completion()
+                Current.wallet.refreshLocal()
+                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+            }
+            }, onError: { [weak self] error in
+                self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
+                completion()
+        })
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {
@@ -176,22 +177,24 @@ class AuthAndAddViewModel {
             model.membershipPlan = nil
         }
         
-//        repository.postGhostCard(parameters: model, existingMembershipCard: existingMembershipCard, onSuccess: { [weak self] (response) in
-//            guard let card = response else {
-//                Current.wallet.refreshLocal()
-//                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
-//                return
-//            }
-//
-//            if card.membershipPlan?.featureSet?.cardType == 2 {
-//                self?.router.toPllViewController(membershipCard: card, journey: .newCard)
-//            } else {
-//                let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card))
-//                Current.navigate.to(navigationRequest)
-//            }
-//        }) { (error) in
-//            self.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
-//        }
+        repository.postGhostCard(parameters: model, existingMembershipCard: existingMembershipCard, onSuccess: { (response) in
+            guard let card = response else {
+                Current.wallet.refreshLocal()
+                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+                return
+            }
+
+            if card.membershipPlan?.featureSet?.cardType == 2 {
+                let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
+                let navigationRequest = PushNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            } else {
+                // TODO: Push to LCD behind
+                Current.navigate.close()
+            }
+        }) { (error) in
+            self.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
+        }
     }
     
     private func populateCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, columnKind: FormField.ColumnKind) {

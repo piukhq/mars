@@ -50,6 +50,13 @@ final class ViewControllerFactory {
         return AuthAndAddViewController(viewModel: viewModel)
     }
     
+    // MARK: - Auth and add
+    
+    static func makePllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney) -> PLLScreenViewController {
+        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, journey: journey)
+        return PLLScreenViewController(viewModel: viewModel, journey: journey)
+    }
+    
     // MARK: - Loyalty Card Detail
     
     static func makeLoyaltyCardDetailViewController(membershipCard: CD_MembershipCard) -> LoyaltyCardFullDetailsViewController {
