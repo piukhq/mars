@@ -128,13 +128,40 @@ class AddOrJoinViewModel {
     private func toPaymentCardNeededScreen(scanDelegate: ScanDelegate?) {
         let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
             guard let self = self else { return }
-            if let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: self.paymentScannerStrings, delegate: scanDelegate) {
-                let navigationRequest = PushNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            }
+            self.toPaymentCardScanner(delegate: scanDelegate)
         })
         let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration, floatingButtons: false)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
+    }
+    
+    private func toPaymentCardScanner(delegate: ScanDelegate?) {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: delegate) else { return }
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
+            self?.toAddPaymentCardScreen()
+        }
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            let navigationRequest = ModalNavigationRequest(viewController: viewController, embedInNavigationController: false)
+            Current.navigate.to(navigationRequest)
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
+                if granted {
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController, embedInNavigationController: false)
+                    Current.navigate.to(navigationRequest)
+                } else {
+                    if let alert = enterManuallyAlert {
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    }
+                }
+            }
+        }
     }
 }

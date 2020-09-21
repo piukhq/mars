@@ -106,7 +106,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
         case .loyalty:
             viewModel.toLoyaltyScanner()
         case .payment:
-            viewModel.toPaymentCardScanner(delegate: self)
+            viewModel.toPaymentCardScanner()
         }
     }
 }

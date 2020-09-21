@@ -149,18 +149,18 @@ class AuthAndAddViewModel {
                 // Navigate to LCD for the new card behind the modal
                 let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
                 let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
-                Current.navigate.to(.loyalty, nestedPushNavigationRequest: lcdNavigationRequest)
-                
-                if card.membershipPlan?.featureSet?.planCardType == .link {
-                    let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
-                    let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
-                    Current.navigate.to(navigationRequest)
-                } else {
-                    Current.navigate.close()
-                }
-                completion()
-                Current.wallet.refreshLocal()
-                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+                Current.navigate.to(.loyalty, nestedPushNavigationRequest: lcdNavigationRequest, completion: {
+                    if card.membershipPlan?.featureSet?.planCardType == .link {
+                        let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
+                        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+                        Current.navigate.to(navigationRequest)
+                    } else {
+                        Current.navigate.close()
+                    }
+                    completion()
+                    Current.wallet.refreshLocal()
+                    NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+                })
             }
             }, onError: { [weak self] error in
                 self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
@@ -362,8 +362,36 @@ class AuthAndAddViewModel {
     }
     
     func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
-        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: plan, delegate: delegate)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: Current.navigate.loyaltyCardScannerDelegate)
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
+            Current.navigate.close()
+        }
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            Current.navigate.close {
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
+                if granted {
+                    Current.navigate.close {
+                        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                        Current.navigate.to(navigationRequest)
+                    }
+                } else {
+                    if let alert = enterManuallyAlert {
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    }
+                }
+            }
+        }
     }
 }

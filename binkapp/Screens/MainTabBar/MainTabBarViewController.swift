@@ -101,7 +101,7 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
     }
     
     func userDidCancel(_ scanViewController: ScanViewController) {
-        print("")
+        Current.navigate.close()
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
@@ -109,6 +109,8 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
-        print("")
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController()
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
     }
 }

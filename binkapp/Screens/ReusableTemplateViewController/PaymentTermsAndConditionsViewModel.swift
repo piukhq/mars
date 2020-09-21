@@ -19,10 +19,10 @@ class PaymentTermsAndConditionsViewModel: ReusableModalViewModel {
     }
         
     override func mainButtonWasTapped(completion: (() -> Void)? = nil) {
-//        router.dismissViewController(completion: completion)
+        Current.navigate.close(completion: completion)
     }
     
     override func secondaryButtonWasTapped() {
-//        router.dismissViewController()
+        Current.navigate.close()
     }
 }

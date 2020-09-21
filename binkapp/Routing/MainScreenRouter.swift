@@ -141,20 +141,6 @@ class MainScreenRouter {
         navController?.pushViewController(viewController, animated: true)
     }
     
-    func toPaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: ReusableTemplateViewControllerDelegate?) {
-        let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel)
-        let viewController = ReusableTemplateViewController(viewModel: viewModel, delegate: delegate)
-        let navigationController = PortraitNavigationController(rootViewController: viewController)
-        
-        // This is to stop dismissal of the card style presentation
-        if #available(iOS 13, *) {
-            navigationController.isModalInPresentation = true
-        }
-        
-        viewController.delegate = delegate
-        navController?.present(navigationController, animated: true, completion: nil)
-    }
-    
     func toForgotPasswordViewController(navigationController: UINavigationController?) {
         let repository = ForgotPasswordRepository(apiClient: apiClient)
         let viewModel = ForgotPasswordViewModel(repository: repository)

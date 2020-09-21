@@ -50,6 +50,13 @@ final class ViewControllerFactory {
         return AuthAndAddViewController(viewModel: viewModel)
     }
     
+    static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: ReusableTemplateViewControllerDelegate?) -> ReusableTemplateViewController {
+        let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel, delegate: delegate)
+        viewController.delegate = delegate
+        return viewController
+    }
+    
     // MARK: - Auth and add
     
     static func makePllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney) -> PLLScreenViewController {

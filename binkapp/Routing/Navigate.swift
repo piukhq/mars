@@ -44,15 +44,16 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     let viewController: UIViewController
     let fullScreen: Bool
     let embedInNavigationController: Bool
-    let completion: EmptyCompletionBlock?
     let animated: Bool
-    // TODO: Add logic for if we don't want the modal to be dragged to dismiss
-    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
+    let allowDismiss: Bool
+    let completion: EmptyCompletionBlock?
+    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, allowDismiss: Bool = true, completion: EmptyCompletionBlock? = nil) {
         self.viewController = viewController
         self.fullScreen = fullScreen
         self.embedInNavigationController = embedInNavigationController
-        self.completion = completion
         self.animated = animated
+        self.allowDismiss = allowDismiss
+        self.completion = completion
     }
 }
 
@@ -152,6 +153,12 @@ class BaseNavigationHandler {
             // Otherwise will default to iOS 13 style modal
             if navigationRequest.fullScreen {
                 viewController.modalPresentationStyle = .fullScreen
+            }
+            
+            if !navigationRequest.allowDismiss {
+                if #available(iOS 13.0, *) {
+                    viewController.isModalInPresentation = true
+                }
             }
             
             // We don't need to depend on a navigation controller to present modally, so simply present from the top view controller if possible

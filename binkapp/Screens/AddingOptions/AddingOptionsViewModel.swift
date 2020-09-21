@@ -46,8 +46,8 @@ class AddingOptionsViewModel {
         }
     }
     
-    func toPaymentCardScanner(delegate: ScanDelegate?) {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: delegate) else { return }
+    func toPaymentCardScanner() {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
         
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
             self?.toAddPaymentCardScreen()
@@ -55,7 +55,7 @@ class AddingOptionsViewModel {
         
         if PermissionsUtility.videoCaptureIsAuthorized {
             Current.navigate.close {
-                let navigationRequest = ModalNavigationRequest(viewController: viewController, embedInNavigationController: false)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)
             }
         } else if PermissionsUtility.videoCaptureIsDenied {
@@ -67,7 +67,7 @@ class AddingOptionsViewModel {
             PermissionsUtility.requestVideoCaptureAuthorization { granted in
                 if granted {
                     Current.navigate.close {
-                        let navigationRequest = ModalNavigationRequest(viewController: viewController, embedInNavigationController: false)
+                        let navigationRequest = ModalNavigationRequest(viewController: viewController)
                         Current.navigate.to(navigationRequest)
                     }
                 } else {
