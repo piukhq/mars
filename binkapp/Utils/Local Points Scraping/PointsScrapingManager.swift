@@ -121,7 +121,7 @@ class PointsScrapingManager {
             throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
         }
                 
-        webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCard: membershipCard, delegate: self)
+        webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController().getVisibleViewController()!, agent: agent, membershipCard: membershipCard, delegate: self)
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
             try webScrapingUtility?.start()
@@ -290,6 +290,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     func transitionToFailed(membershipCard: CD_MembershipCard) {
+        Current.userDefaults.set(nil, forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id))
+        
         fetchMembershipCard(forId: membershipCard.id) { membershipCard in
             guard let membershipCard = membershipCard else {
                 fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
