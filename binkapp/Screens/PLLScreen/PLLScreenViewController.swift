@@ -164,7 +164,7 @@ extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         guard Current.apiClient.networkIsReachable else {
             viewModel.displayNoConnectivityPopup { [weak self] in
-                self?.viewModel.toLoyaltyCardDetail()
+                self?.viewModel.close()
             }
             return
         }
@@ -249,10 +249,10 @@ private extension PLLScreenViewController {
     func handlePrimaryButtonPress() {
         switch journey {
         case .newCard:
-            viewModel.toLoyaltyCardDetail()
+            viewModel.close()
             break
         case .existingCard:
-            viewModel.isEmptyPll ? viewModel.toPaymentScanner(scanDelegate: self) : viewModel.toLoyaltyCardDetail()
+            viewModel.isEmptyPll ? viewModel.toPaymentScanner(scanDelegate: self) : viewModel.close()
             break
         }
     }

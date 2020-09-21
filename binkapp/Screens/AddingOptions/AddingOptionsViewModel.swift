@@ -12,8 +12,8 @@ import CardScan
 class AddingOptionsViewModel {
     private let strings = PaymentCardScannerStrings()
 
-    func toLoyaltyScanner(delegate: BarcodeScannerViewControllerDelegate?) {
-        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: delegate)
+    func toLoyaltyScanner() {
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: Current.navigate.loyaltyCardScannerDelegate)
         
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
             self?.toBrowseBrandsScreen()
@@ -21,7 +21,7 @@ class AddingOptionsViewModel {
 
         if PermissionsUtility.videoCaptureIsAuthorized {
             Current.navigate.close {
-                let navigationRequest = ModalNavigationRequest(viewController: viewController, embedInNavigationController: false)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)
             }
         } else if PermissionsUtility.videoCaptureIsDenied {
@@ -33,7 +33,7 @@ class AddingOptionsViewModel {
             PermissionsUtility.requestVideoCaptureAuthorization { granted in
                 if granted {
                     Current.navigate.close {
-                        let navigationRequest = ModalNavigationRequest(viewController: viewController, embedInNavigationController: false)
+                        let navigationRequest = ModalNavigationRequest(viewController: viewController)
                         Current.navigate.to(navigationRequest)
                     }
                 } else {
@@ -78,11 +78,6 @@ class AddingOptionsViewModel {
                 }
             }
         }
-    }
-
-    func toAddAuth(membershipPlan: CD_MembershipPlan, barcode: String) {
-//        let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
-//        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
     }
     
     func toBrowseBrandsScreen() {

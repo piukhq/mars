@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CardScan
 
 protocol BaseNavigationRequest {}
 
@@ -81,6 +82,14 @@ class Navigate {
     }()
     
     private lazy var navigationHandler = BaseNavigationHandler(tabBarController: tabBarController)
+    
+    var loyaltyCardScannerDelegate: BarcodeScannerViewControllerDelegate {
+        return tabBarController
+    }
+    
+    var paymentCardScannerDelegate: ScanDelegate {
+        return tabBarController
+    }
     
     func to(_ navigationRequest: BaseNavigationRequest) {
         navigationHandler.to(navigationRequest)

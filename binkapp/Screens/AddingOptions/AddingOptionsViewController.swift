@@ -104,22 +104,10 @@ class AddingOptionsViewController: BinkTrackableViewController {
     private func proceedWithCameraAccess(scanType: ScanType) {
         switch scanType {
         case .loyalty:
-            viewModel.toLoyaltyScanner(delegate: self)
+            viewModel.toLoyaltyScanner()
         case .payment:
             viewModel.toPaymentCardScanner(delegate: self)
         }
-    }
-}
-
-extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
-    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
-        viewModel.toAddAuth(membershipPlan: membershipPlan, barcode: barcode)
-        completion?()
-    }
-
-    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
-        viewModel.toBrowseBrandsScreen()
-        completion?()
     }
 }
 

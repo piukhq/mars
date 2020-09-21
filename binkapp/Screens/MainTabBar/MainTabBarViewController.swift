@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CardScan
 
 extension LayoutHelper {
     struct settingsButton {
@@ -79,5 +80,34 @@ extension MainTabBarViewController {
 
     @objc private func handleDidAddMembershipCard() {
         selectedIndex = 0
+    }
+}
+
+extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDelegate {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+        let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        Current.navigate.close {
+            let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
+    }
+    
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        print("")
+    }
+    
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        print("")
+    }
+    
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        print("")
     }
 }

@@ -115,9 +115,8 @@ class PLLScreenViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func toLoyaltyCardDetail() {
+    func close() {
         Current.navigate.close()
-        // TODO: Navigate to LCD behind
     }
     
     func toPaymentScanner(scanDelegate: ScanDelegate?) {
@@ -128,7 +127,7 @@ class PLLScreenViewModel {
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
 }

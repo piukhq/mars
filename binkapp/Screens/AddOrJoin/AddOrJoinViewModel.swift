@@ -30,7 +30,7 @@ class AddOrJoinViewModel {
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
     
