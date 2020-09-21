@@ -188,6 +188,11 @@ class AuthAndAddViewModel {
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
                 return
             }
+            
+            // Navigate to LCD for the new card behind the modal
+            let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
+            let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
+            Current.navigate.to(.loyalty, nestedPushNavigationRequest: lcdNavigationRequest)
 
             if card.membershipPlan?.featureSet?.cardType == 2 {
                 let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
