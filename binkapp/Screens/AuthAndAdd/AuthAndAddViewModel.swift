@@ -145,12 +145,17 @@ class AuthAndAddViewModel {
         
         repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { card in
             if let card = card {
+                
+                // Navigate to LCD for the new card behind the modal
+                let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
+                let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
+                Current.navigate.to(.loyalty, nestedPushNavigationRequest: lcdNavigationRequest)
+                
                 if card.membershipPlan?.featureSet?.planCardType == .link {
                     let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
                     let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
                     Current.navigate.to(navigationRequest)
                 } else {
-                    // TODO: Push to LCD behind
                     Current.navigate.close()
                 }
                 completion()

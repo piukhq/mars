@@ -86,8 +86,14 @@ class Navigate {
         navigationHandler.to(navigationRequest)
     }
     
-    func to(_ tab: NavigationOwner, completion: EmptyCompletionBlock? = nil) {
+    func to(_ tab: NavigationOwner, nestedPushNavigationRequest: PushNavigationRequest? = nil, completion: EmptyCompletionBlock? = nil) {
         tabBarController.selectedIndex = tab.rawValue
+        if let nestedNavigationRequest = nestedPushNavigationRequest {
+            // We cannot execute the nested navigation request on the navigation handler, as that will use the top most navigation controller, which if we are using this method should not be from the tab bar.
+            if let navigationController = tabBarController.selectedViewController as? PortraitNavigationController {
+                navigationController.pushViewController(nestedNavigationRequest.viewController, animated: nestedNavigationRequest.animated, hidesBackButton: nestedNavigationRequest.hidesBackButton, completion: nestedNavigationRequest.completion)
+            }
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             completion?()
         }
