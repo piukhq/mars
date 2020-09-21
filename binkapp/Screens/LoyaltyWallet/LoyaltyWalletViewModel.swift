@@ -16,11 +16,10 @@ class LoyaltyWalletViewModel: WalletViewModel {
     typealias T = CD_MembershipCard
 
     private let repository = LoyaltyWalletRepository()
-    weak var paymentScanDelegate: ScanDelegate?
     private let paymentScanStrings = PaymentCardScannerStrings()
 
     var walletPrompts: [WalletPrompt]? {
-        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty, paymentScanDelegate: paymentScanDelegate)
+        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
     }
     
     var cards: [CD_MembershipCard]? {
@@ -50,8 +49,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
         case .loyaltyJoin(let membershipPlan):
             print(membershipPlan)
 //            router.toAddOrJoinViewController(membershipPlan: membershipPlan)
-        case .addPaymentCards(let scanDelegate):
-            print(scanDelegate!)
+        case .addPaymentCards:
+            print("")
 //            router.toPaymentCardScanner(strings: paymentScanStrings, delegate: scanDelegate)
         }
     }

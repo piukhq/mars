@@ -34,10 +34,10 @@ class AddOrJoinViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func toAuthAndAddScreen(paymentScanDelegate: ScanDelegate?) {
+    func toAuthAndAddScreen() {
         // PLR
         if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
-            toPaymentCardNeededScreen(scanDelegate: paymentScanDelegate)
+            toPaymentCardNeededScreen()
             return
         }
         
@@ -52,10 +52,10 @@ class AddOrJoinViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func didSelectAddNewCard(paymentScanDelegate: ScanDelegate?) {
+    func didSelectAddNewCard() {
         // PLR
         if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
-            toPaymentCardNeededScreen(scanDelegate: paymentScanDelegate)
+            toPaymentCardNeededScreen()
             return
         }
 
@@ -125,25 +125,27 @@ class AddOrJoinViewModel {
         Current.navigate.to(navigationRequest)
     }
 
-    private func toPaymentCardNeededScreen(scanDelegate: ScanDelegate?) {
+    private func toPaymentCardNeededScreen() {
         let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
             guard let self = self else { return }
-            self.toPaymentCardScanner(delegate: scanDelegate)
+            Current.navigate.close {
+                self.toPaymentCardScanner()
+            }
         })
         let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration, floatingButtons: false)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
     
-    private func toPaymentCardScanner(delegate: ScanDelegate?) {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: delegate) else { return }
+    private func toPaymentCardScanner() {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
         
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
             self?.toAddPaymentCardScreen()
         }
         
         if PermissionsUtility.videoCaptureIsAuthorized {
-            let navigationRequest = ModalNavigationRequest(viewController: viewController, embedInNavigationController: false)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         } else if PermissionsUtility.videoCaptureIsDenied {
             if let alert = enterManuallyAlert {
@@ -153,7 +155,7 @@ class AddOrJoinViewModel {
         } else {
             PermissionsUtility.requestVideoCaptureAuthorization { granted in
                 if granted {
-                    let navigationRequest = ModalNavigationRequest(viewController: viewController, embedInNavigationController: false)
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 } else {
                     if let alert = enterManuallyAlert {

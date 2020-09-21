@@ -27,7 +27,6 @@ class MainTabBarViewModel {
         // LOYALTY WALLET
         let loyaltyWalletViewModel = LoyaltyWalletViewModel()
         let loyaltyWalletViewController = LoyaltyWalletViewController(viewModel: loyaltyWalletViewModel)
-        loyaltyWalletViewModel.paymentScanDelegate = loyaltyWalletViewController
         let loyaltyWalletNavigationController = PortraitNavigationController(rootViewController: loyaltyWalletViewController)
         loyaltyWalletNavigationController.tabBarItem = getTabBarLoyaltyButton()
         
@@ -38,7 +37,6 @@ class MainTabBarViewModel {
         // PAYMENT WALLET
         let paymentWalletViewModel = PaymentWalletViewModel()
         let paymentWalletViewController = PaymentWalletViewController(viewModel: paymentWalletViewModel)
-        paymentWalletViewModel.paymentScanDelegate = paymentWalletViewController
         let paymentWalletNavigationController = PortraitNavigationController(rootViewController: paymentWalletViewController)
         paymentWalletNavigationController.tabBarItem = getTabBarPaymentButton()
         

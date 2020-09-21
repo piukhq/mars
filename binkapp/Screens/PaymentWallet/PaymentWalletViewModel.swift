@@ -13,11 +13,10 @@ class PaymentWalletViewModel: WalletViewModel {
     typealias T = CD_PaymentCard
 
     private let repository = PaymentWalletRepository()
-    weak var paymentScanDelegate: ScanDelegate?
     private let paymentScanStrings = PaymentCardScannerStrings()
 
     var walletPrompts: [WalletPrompt]? {
-        return WalletPromptFactory.makeWalletPrompts(forWallet: .payment, paymentScanDelegate: paymentScanDelegate)
+        return WalletPromptFactory.makeWalletPrompts(forWallet: .payment)
     }
 
     var cards: [CD_PaymentCard]? {
@@ -36,8 +35,8 @@ class PaymentWalletViewModel: WalletViewModel {
 
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
-        case .addPaymentCards(let scanDelegate):
-            print(scanDelegate!)
+        case .addPaymentCards:
+            print("")
 //            router.toPaymentCardScanner(strings: paymentScanStrings, delegate: scanDelegate)
         default:
             return

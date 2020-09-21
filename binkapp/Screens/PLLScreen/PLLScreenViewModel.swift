@@ -119,16 +119,21 @@ class PLLScreenViewModel {
         Current.navigate.close()
     }
     
-    func toPaymentScanner(scanDelegate: ScanDelegate?) {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: scanDelegate) else { return }
+    func toPaymentScanner() {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
         
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
             self?.toAddPaymentCardScreen()
         }
         
         if PermissionsUtility.videoCaptureIsAuthorized {
-            let navigationRequest = ModalNavigationRequest(viewController: viewController, embedInNavigationController: false)
-            Current.navigate.to(navigationRequest)
+            Current.navigate.close {
+                let popNavigationRequest = PopNavigationRequest(toRoot: true) {
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                }
+                Current.navigate.to(popNavigationRequest)
+            }
         } else if PermissionsUtility.videoCaptureIsDenied {
             if let alert = enterManuallyAlert {
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
@@ -137,8 +142,13 @@ class PLLScreenViewModel {
         } else {
             PermissionsUtility.requestVideoCaptureAuthorization { granted in
                 if granted {
-                    let navigationRequest = ModalNavigationRequest(viewController: viewController, embedInNavigationController: false)
-                    Current.navigate.to(navigationRequest)
+                    Current.navigate.close {
+                        let popNavigationRequest = PopNavigationRequest(toRoot: true) {
+                            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                            Current.navigate.to(navigationRequest)
+                        }
+                        Current.navigate.to(popNavigationRequest)
+                    }
                 } else {
                     if let alert = enterManuallyAlert {
                         let navigationRequest = AlertNavigationRequest(alertController: alert)
