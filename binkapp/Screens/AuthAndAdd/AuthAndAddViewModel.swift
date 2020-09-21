@@ -327,6 +327,7 @@ class AuthAndAddViewModel {
     }
     
     func reloadWithGhostCardFields() {
+        // TODO: Not implemented with navigation refactor
 //        let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .patchGhostCard : .ghostCard
 //        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
     }
@@ -343,8 +344,10 @@ class AuthAndAddViewModel {
         attributedString.append(attributedTitle)
         attributedString.append(attributedBody)
         
-//        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-//        router.toReusableModalTemplateViewController(configurationModel: configuration)
+        let configuration = ReusableModalConfiguration(title: title, text: attributedString)
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func brandHeaderWasTapped() {
@@ -359,6 +362,8 @@ class AuthAndAddViewModel {
     }
     
     func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
-//        router.toLoyaltyScanner(forPlan: plan, delegate: delegate)
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(forPlan: plan, delegate: delegate)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }

@@ -69,6 +69,7 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
 // MARK: - Notifications and Handlers
 
 extension MainTabBarViewController {
+    // TODO: Can we remove these now?
     private func setupNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddPaymentCard), name: .didAddPaymentCard, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddMembershipCard), name: .didAddMembershipCard, object: nil)

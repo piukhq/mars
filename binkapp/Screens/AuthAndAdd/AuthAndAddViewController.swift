@@ -119,7 +119,7 @@ extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
     }
     
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
-        viewController.dismiss(animated: true, completion: nil)
+        Current.navigate.close()
     }
 }
 
