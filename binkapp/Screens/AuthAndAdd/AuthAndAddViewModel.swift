@@ -149,7 +149,7 @@ class AuthAndAddViewModel {
                 // Navigate to LCD for the new card behind the modal
                 let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
                 let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
-                Current.navigate.to(.loyalty, nestedPushNavigationRequest: lcdNavigationRequest, completion: {
+                Current.navigate.to(.loyalty, popToRoot: true, nestedPushNavigationRequest: lcdNavigationRequest, completion: {
                     if card.membershipPlan?.featureSet?.planCardType == .link {
                         let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
                         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
