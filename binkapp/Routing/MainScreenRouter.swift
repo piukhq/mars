@@ -123,24 +123,6 @@ class MainScreenRouter {
 //        }
 //    }
     
-    func toPatchGhostCard(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
-        let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
-        let viewController = AuthAndAddViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
-    }
-    
-    func toSignUp(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) {
-        let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
-        let viewController = AuthAndAddViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
-    }
-    
-    func toTransactionsViewController(membershipCard: CD_MembershipCard) {
-        let viewModel = TransactionsViewModel(membershipCard: membershipCard, router: self)
-        let viewController = TransactionsViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
-    }
-    
     func toForgotPasswordViewController(navigationController: UINavigationController?) {
         let repository = ForgotPasswordRepository(apiClient: apiClient)
         let viewModel = ForgotPasswordViewModel(repository: repository)

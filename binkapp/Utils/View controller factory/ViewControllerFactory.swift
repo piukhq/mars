@@ -64,6 +64,16 @@ final class ViewControllerFactory {
         return PLLScreenViewController(viewModel: viewModel, journey: journey)
     }
     
+    static func makePatchGhostCardViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> AuthAndAddViewController {
+        let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
+        return AuthAndAddViewController(viewModel: viewModel)
+    }
+    
+    static func makeSignUpViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> AuthAndAddViewController {
+        let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
+        return AuthAndAddViewController(viewModel: viewModel)
+    }
+    
     // MARK: - Loyalty Card Detail
     
     static func makeLoyaltyCardDetailViewController(membershipCard: CD_MembershipCard) -> LoyaltyCardFullDetailsViewController {
@@ -95,6 +105,11 @@ final class ViewControllerFactory {
     
     static func makeSecurityAndPrivacyViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
         return makeReusableTemplateViewController(configuration: configuration, floatingButtons: floatingButtons)
+    }
+    
+    static func makeTransactionsViewController(membershipCard: CD_MembershipCard) -> TransactionsViewController {
+        let viewModel = TransactionsViewModel(membershipCard: membershipCard)
+        return TransactionsViewController(viewModel: viewModel)
     }
     
     // MARK: - Payment Card Detail
