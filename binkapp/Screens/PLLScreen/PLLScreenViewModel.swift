@@ -119,21 +119,16 @@ class PLLScreenViewModel {
         Current.navigate.close()
     }
     
-    func toPaymentScanner() {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+    func toPaymentScanner(delegate: ScanDelegate?) {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: delegate) else { return }
         
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
             self?.toAddPaymentCardScreen()
         }
         
         if PermissionsUtility.videoCaptureIsAuthorized {
-            Current.navigate.close {
-                let popNavigationRequest = PopNavigationRequest(toRoot: true) {
-                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
-                }
-                Current.navigate.to(popNavigationRequest)
-            }
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         } else if PermissionsUtility.videoCaptureIsDenied {
             if let alert = enterManuallyAlert {
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
@@ -142,13 +137,8 @@ class PLLScreenViewModel {
         } else {
             PermissionsUtility.requestVideoCaptureAuthorization { granted in
                 if granted {
-                    Current.navigate.close {
-                        let popNavigationRequest = PopNavigationRequest(toRoot: true) {
-                            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                            Current.navigate.to(navigationRequest)
-                        }
-                        Current.navigate.to(popNavigationRequest)
-                    }
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
                 } else {
                     if let alert = enterManuallyAlert {
                         let navigationRequest = AlertNavigationRequest(alertController: alert)
@@ -160,7 +150,7 @@ class PLLScreenViewModel {
     }
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }

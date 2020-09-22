@@ -35,8 +35,8 @@ final class ViewControllerFactory {
         return viewController
     }
     
-    static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil) -> AddPaymentCardViewController {
-        let viewModel = AddPaymentCardViewModel(paymentCard: model)
+    static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) -> AddPaymentCardViewController {
+        let viewModel = AddPaymentCardViewModel(paymentCard: model, journey: journey)
         return AddPaymentCardViewController(viewModel: viewModel)
     }
     

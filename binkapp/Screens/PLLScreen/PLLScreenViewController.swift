@@ -182,7 +182,7 @@ extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        viewModel.toPaymentScanner()
+        viewModel.toPaymentScanner(delegate: self)
     }
 }
 
@@ -252,7 +252,7 @@ private extension PLLScreenViewController {
             viewModel.close()
             break
         case .existingCard:
-            viewModel.isEmptyPll ? viewModel.toPaymentScanner() : viewModel.close()
+            viewModel.isEmptyPll ? viewModel.toPaymentScanner(delegate: self) : viewModel.close()
             break
         }
     }
@@ -265,5 +265,27 @@ extension PLLScreenViewController: PaymentCardCellDelegate {
         if let paymentCards = viewModel.paymentCards {
             viewModel.addCardToChangedCardsArray(card: paymentCards[cardIndex])
         }
+    }
+}
+
+extension PLLScreenViewController: ScanDelegate {
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        Current.navigate.close()
+    }
+    
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
+        let month = Int(creditCard.expiryMonth ?? "")
+        let year = Int(creditCard.expiryYear ?? "")
+        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .pll)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
     }
 }

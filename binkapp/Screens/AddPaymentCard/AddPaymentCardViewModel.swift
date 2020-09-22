@@ -8,16 +8,23 @@
 
 import UIKit
 
+enum AddPaymentCardJourney {
+    case wallet
+    case pll
+}
+
 class AddPaymentCardViewModel {
     private let repository = PaymentWalletRepository()
+    private let journey: AddPaymentCardJourney
     let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
     var shouldDisplayTermsAndConditions: Bool {
         return true
     }
     
-    init(paymentCard: PaymentCardCreateModel? = nil) {
+    init(paymentCard: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) {
         self.paymentCard = paymentCard ?? PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
+        self.journey = journey
     }
 
     var formDataSource: FormDataSource {
@@ -79,16 +86,22 @@ class AddPaymentCardViewModel {
     }
 
     func addPaymentCard(onError: @escaping () -> Void) {
-        repository.addPaymentCard(paymentCard, onSuccess: { paymentCard in
+        repository.addPaymentCard(paymentCard, onSuccess: { [weak self] paymentCard in
+            guard let self = self else { return }
             guard let paymentCard = paymentCard else { return }
             Current.wallet.refreshLocal()
             // We post the notification so that we can switch tabs if necessary
+            // TODO: Implement a listen in PLL screen
             NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
             
-            // Navigate to PCD for the new card behind the modal
-            let viewController = ViewControllerFactory.makePaymentCardDetailViewController(paymentCard: paymentCard)
-            let navigationRequest = PushNavigationRequest(viewController: viewController)
-            Current.navigate.to(.payment, nestedPushNavigationRequest: navigationRequest) {
+            switch self.journey {
+            case .wallet:
+                let viewController = ViewControllerFactory.makePaymentCardDetailViewController(paymentCard: paymentCard)
+                let navigationRequest = PushNavigationRequest(viewController: viewController)
+                Current.navigate.to(.payment, nestedPushNavigationRequest: navigationRequest) {
+                    Current.navigate.close()
+                }
+            case .pll:
                 Current.navigate.close()
             }
         }) { error in

@@ -89,7 +89,7 @@ class AddingOptionsViewModel {
     }
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }

@@ -109,13 +109,13 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
         let month = Int(creditCard.expiryMonth ?? "")
         let year = Int(creditCard.expiryYear ?? "")
         let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController()
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }
