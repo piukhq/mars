@@ -32,9 +32,6 @@ class WebViewController: UIViewController {
         setWebView()
         setBottomToolbar()
         
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(dismissWebView))
-        navigationItem.setRightBarButton(closeButton, animated: true)
-        
         guard let safeUrl = url else { return }
         let request = URLRequest(url: safeUrl)
         webView.load(request)
@@ -113,10 +110,6 @@ class WebViewController: UIViewController {
     
     @objc private func refresh() {
         webView.reload()
-    }
-
-    @objc private func dismissWebView() {
-        self.dismiss(animated: true, completion: nil)
     }
 }
 
