@@ -90,9 +90,6 @@ class AddPaymentCardViewModel {
             guard let self = self else { return }
             guard let paymentCard = paymentCard else { return }
             Current.wallet.refreshLocal()
-            // We post the notification so that we can switch tabs if necessary
-            // TODO: Implement a listen in PLL screen
-            NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
             
             switch self.journey {
             case .wallet:

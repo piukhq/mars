@@ -9,6 +9,7 @@ import UIKit
 import CardScan
 
 class PLLScreenViewModel {
+    // TODO: After successfully adding a payment card, we need to refresh this payment card with the latest copy of itself, as it will contain linked payment cards
     private var membershipCard: CD_MembershipCard
     private let repository = PLLScreenRepository()
     
@@ -63,10 +64,6 @@ class PLLScreenViewModel {
                 changedLinkCards.remove(at: index)
             }
         }
-    }
-    
-    func reloadPaymentCards(){
-        Current.wallet.refreshLocal()
     }
     
     func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
@@ -153,5 +150,23 @@ class PLLScreenViewModel {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
+    }
+}
+
+extension PLLScreenViewModel: CoreDataRepositoryProtocol {
+    // We need to call this method after adding a new payment card via the PLL screen
+    // Refreshing the local membership card object will present the linkages correctly
+    func refreshMembershipCard(completion: EmptyCompletionBlock? = nil) {
+        guard let cardId = membershipCard.id else {
+            completion?()
+            return
+        }
+        let predicate = NSPredicate(format: "id == \(cardId)")
+        fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, predicate: predicate) { objects in
+            if let updatedMembershipCard = objects?.first {
+                self.membershipCard = updatedMembershipCard
+            }
+            completion?()
+        }
     }
 }

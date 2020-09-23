@@ -35,8 +35,6 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
         super.viewDidLoad()
 
         Current.wallet.launch()
-
-        setupNotifications()
         
         self.title = "" // TODO: Why? Remove.
         populateTabBar()
@@ -63,24 +61,6 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
         }
         
         return true
-    }
-}
-
-// MARK: - Notifications and Handlers
-
-extension MainTabBarViewController {
-    // TODO: Can we remove these now?
-    private func setupNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddPaymentCard), name: .didAddPaymentCard, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddMembershipCard), name: .didAddMembershipCard, object: nil)
-    }
-
-    @objc private func handleDidAddPaymentCard() {
-        selectedIndex = 2
-    }
-
-    @objc private func handleDidAddMembershipCard() {
-        selectedIndex = 0
     }
 }
 

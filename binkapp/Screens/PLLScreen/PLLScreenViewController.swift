@@ -119,6 +119,9 @@ class PLLScreenViewController: BinkTrackableViewController {
         configureLayout()
         paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
         floatingButtonsView.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadWallet, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadLocalWallet, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -147,6 +150,13 @@ class PLLScreenViewController: BinkTrackableViewController {
                 LayoutHelper.PrimarySecondaryButtonView.oneButtonHeight :
                 LayoutHelper.PrimarySecondaryButtonView.twoButtonsHeight)
         ])
+    }
+    
+    @objc private func handleWalletReload() {
+        viewModel.refreshMembershipCard {
+            self.paymentCardsTableView.reloadData()
+            self.configureUI()
+        }
     }
 }
 
@@ -222,8 +232,9 @@ extension PLLScreenViewController: UITableViewDataSource {
 
 private extension PLLScreenViewController {
     func reloadContent() {
-        viewModel.reloadPaymentCards()
-        paymentCardsTableView.reloadData()
+        Current.wallet.refreshLocal {
+            self.paymentCardsTableView.reloadData()
+        }
     }
     
     func configureBrandHeader() {
