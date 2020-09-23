@@ -45,115 +45,12 @@ class MainScreenRouter {
         navController = nav
         return nav
     }
-
-    func featureNotImplemented() {
-        displaySimplePopup(title: "Oops", message: "This feature has not yet been implemented.")
-    }
-    
-    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
-        let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
-        let settingsVC = SettingsViewController(viewModel: viewModel)
-        let settingsNav = PortraitNavigationController(rootViewController: settingsVC)
-        settingsNav.modalPresentationStyle = .fullScreen
-        navController?.present(settingsNav, animated: true, completion: nil)
-    }
-
-//    func toLoyaltyScanner(forPlan plan: CD_MembershipPlan? = nil, delegate: BarcodeScannerViewControllerDelegate?) {
-//        let viewModel = BarcodeScannerViewModel(plan: plan)
-//        let viewController = BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
-//        
-//        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
-//            self?.toBrowseBrandsViewController()
-//        }
-//        
-//        if PermissionsUtility.videoCaptureIsAuthorized {
-//            if plan == nil {
-//                navController?.pushViewController(viewController, animated: true)
-//            } else {
-//                navController?.present(viewController, animated: true, completion: nil)
-//            }
-//        } else if PermissionsUtility.videoCaptureIsDenied {
-//            if let alert = enterManuallyAlert {
-//                navController?.present(alert, animated: true, completion: nil)
-//            }
-//        } else {
-//            PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
-//                if granted {
-//                    if plan == nil {
-//                        self?.navController?.pushViewController(viewController, animated: true)
-//                    } else {
-//                        self?.navController?.present(viewController, animated: true, completion: nil)
-//                    }
-//                } else {
-//                    if let alert = enterManuallyAlert {
-//                        self?.navController?.present(alert, animated: true, completion: nil)
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
-//    func toPaymentCardScanner(strings: ScanStringsDataSource, delegate: ScanDelegate?) {
-//        guard let paymentCardScanner = ScanViewController.createViewController(withDelegate: delegate) else { return }
-//        paymentCardScanner.allowSkip = true
-//        paymentCardScanner.cornerColor = .white
-//        paymentCardScanner.torchButtonImage = UIImage(named: "payment_scanner_torch")
-//        paymentCardScanner.stringDataSource = strings
-//        
-//        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
-//            self?.toAddPaymentViewController()
-//        }
-//        
-//        if PermissionsUtility.videoCaptureIsAuthorized {
-//            navController?.pushViewController(paymentCardScanner, animated: true)
-//        } else if PermissionsUtility.videoCaptureIsDenied {
-//            if let alert = enterManuallyAlert {
-//                navController?.present(alert, animated: true, completion: nil)
-//            }
-//        } else {
-//            PermissionsUtility.requestVideoCaptureAuthorization { [weak self] granted in
-//                if granted {
-//                    self?.navController?.pushViewController(paymentCardScanner, animated: true)
-//                } else {
-//                    if let alert = enterManuallyAlert {
-//                        self?.navController?.present(alert, animated: true, completion: nil)
-//                    }
-//                }
-//            }
-//        }
-//    }
     
     func toForgotPasswordViewController(navigationController: UINavigationController?) {
         let repository = ForgotPasswordRepository(apiClient: apiClient)
         let viewModel = ForgotPasswordViewModel(repository: repository)
         let viewController = ForgotPasswordViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    func toReusableModalTemplateViewController(configurationModel: ReusableModalConfiguration, floatingButtons: Bool = true) {
-        let viewModel = ReusableModalViewModel(configurationModel: configurationModel)
-        let viewController = ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
-        navController?.present(PortraitNavigationController(rootViewController: viewController), animated: true, completion: nil)
-    }
-    
-    func pushReusableModalTemplateVC(configurationModel: ReusableModalConfiguration, navigationController: UINavigationController?, floatingButtons: Bool = true) {
-        let viewModel = ReusableModalViewModel(configurationModel: configurationModel)
-        let viewController = ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    func showNoBarcodeAlert(completion: @escaping () -> Void) {
-        let alert = UIAlertController(title: "No Barcode", message: "No barcode or card number to display. Please check the status of this card.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: { _ in
-            completion()
-        }))
-        navController?.present(alert, animated: true, completion: nil)
-    }
-    
-    func displaySimplePopup(title: String?, message: String?) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
-        navController?.present(alert, animated: true, completion: nil)
     }
     
     @objc func displayOutageError() {
@@ -166,22 +63,6 @@ class MainScreenRouter {
         let alert = UIAlertController(title: "ssl_pinning_failure_title".localized, message: "ssl_pinning_failure_text".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
-    }
-    
-    @objc func popViewController() {
-        navController?.popViewController(animated: true)
-    }
-    
-    func dismissViewController(completion: (() -> Void)? = nil) {
-        navController?.dismiss(animated: true, completion: completion)
-    }
-    
-    func popToRootViewController() {
-        if let tabBarVC = navController?.viewControllers.first(where: { $0 is MainTabBarViewController }) {
-            navController?.popToViewController(tabBarVC, animated: true)
-        } else {
-            navController?.popToRootViewController(animated: true)
-        }
     }
     
     func didLogin() {
