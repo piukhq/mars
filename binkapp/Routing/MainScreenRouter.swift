@@ -142,12 +142,6 @@ class MainScreenRouter {
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func toSimpleInfoViewController(pendingType: PendingType) {
-        let viewModel = SimpleInfoViewModel(router: self, pendingType: pendingType)
-        let viewController = SimpleInfoViewController(viewModel: viewModel)
-        navController?.pushViewController(viewController, animated: true)
-    }
-    
     func showNoBarcodeAlert(completion: @escaping () -> Void) {
         let alert = UIAlertController(title: "No Barcode", message: "No barcode or card number to display. Please check the status of this card.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: { _ in

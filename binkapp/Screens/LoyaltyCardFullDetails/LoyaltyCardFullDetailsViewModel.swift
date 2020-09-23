@@ -124,8 +124,8 @@ class LoyaltyCardFullDetailsViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .registerGhostCard:
-            print("")
-//            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            Current.navigate.to(AlertNavigationRequest(alertController: alert))
         case .patchGhostCard:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
             let viewController = ViewControllerFactory.makePatchGhostCardViewController(membershipPlan: membershipPlan, existingMembershipCard: membershipCard)

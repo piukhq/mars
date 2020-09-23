@@ -103,7 +103,8 @@ class PLLScreenViewModel {
     }
     
     func displaySimplePopup(title: String, message: String) {
-//        router.displaySimplePopup(title: title, message: message)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
     func displayNoConnectivityPopup(completion: @escaping () -> Void) {

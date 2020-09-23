@@ -150,6 +150,10 @@ final class ViewControllerFactory {
         return alert
     }
     
+    static func makeOkAlertViewController(title: String?, message: String?) -> UIAlertController {
+        return UIAlertController(title: title, message: message, preferredStyle: .alert)
+    }
+    
     static func makeWebViewController(urlString: String) -> WebViewController {
         return WebViewController(urlString: urlString)
     }
