@@ -194,17 +194,6 @@ class MainScreenRouter {
         delegate?.router(self, didLogin: true)
     }
     
-    func openWebView(withUrlString urlString: String) {
-        let webViewController = PortraitNavigationController(rootViewController: WebViewController(urlString: urlString))
-        webViewController.modalPresentationStyle = .fullScreen
-        
-        guard let presentedViewController = navController?.presentedViewController else {
-            navController?.present(webViewController, animated: true)
-            return
-        }
-        presentedViewController.present(webViewController, animated: true)
-    }
-    
     class func openExternalURL(with urlString: String) {
         guard let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)

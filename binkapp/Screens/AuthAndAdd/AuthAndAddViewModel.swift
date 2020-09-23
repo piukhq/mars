@@ -333,8 +333,10 @@ class AuthAndAddViewModel {
     }
     
     func openWebView(withUrlString url: URL) {
-//        let urlString = url.absoluteString
-//        router.openWebView(withUrlString: urlString)
+        let urlString = url.absoluteString
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: urlString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toReusableTemplate(title: String, description: String) {

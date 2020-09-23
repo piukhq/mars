@@ -213,7 +213,9 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     }
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        router?.openWebView(withUrlString: URL.absoluteString)
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: URL.absoluteString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }
 

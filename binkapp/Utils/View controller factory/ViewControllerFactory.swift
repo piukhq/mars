@@ -149,4 +149,8 @@ final class ViewControllerFactory {
         }))
         return alert
     }
+    
+    static func makeWebViewController(urlString: String) -> WebViewController {
+        return WebViewController(urlString: urlString)
+    }
 }

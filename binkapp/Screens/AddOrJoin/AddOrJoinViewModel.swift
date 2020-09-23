@@ -98,9 +98,9 @@ class AddOrJoinViewModel {
         
         configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
             if let url = URL(string: planURL) {
-                print(url)
-                // TODO:
-//                self.router.openWebView(withUrlString: url.absoluteString)
+                let viewController = ViewControllerFactory.makeWebViewController(urlString: url.absoluteString)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
             }
         })
 

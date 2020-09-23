@@ -50,6 +50,8 @@ class SettingsViewModel {
     }
     
     func openWebView(url: String) {
-//        router.openWebView(withUrlString: url)
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }
