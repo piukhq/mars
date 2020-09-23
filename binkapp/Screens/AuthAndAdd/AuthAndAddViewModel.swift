@@ -367,9 +367,8 @@ class AuthAndAddViewModel {
     func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
         let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: Current.navigate.loyaltyCardScannerDelegate)
         
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
-            Current.navigate.close()
-        }
+        // TODO: Move this to view controller factory and make this entire function more reusable
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {}
         
         if PermissionsUtility.videoCaptureIsAuthorized {
             Current.navigate.close {

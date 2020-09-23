@@ -26,7 +26,6 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.alignment = .center
         stackView.delegate = self
         stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
-        stackView.margin = Constants.stackViewMargin
         return stackView
     }()
 

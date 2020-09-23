@@ -28,12 +28,6 @@ class AddOrJoinViewModel {
         return membershipPlan
     }
     
-    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
-    }
-    
     func toAuthAndAddScreen() {
         // PLR
         if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
@@ -140,8 +134,10 @@ class AddOrJoinViewModel {
     private func toPaymentCardScanner() {
         guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
         
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
-            self?.toAddPaymentCardScreen()
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
+            let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
         
         if PermissionsUtility.videoCaptureIsAuthorized {

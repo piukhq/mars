@@ -149,7 +149,7 @@ class PLLScreenViewModel {
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
 }

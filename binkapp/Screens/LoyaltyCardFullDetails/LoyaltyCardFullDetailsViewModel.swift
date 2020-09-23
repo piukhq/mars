@@ -100,7 +100,7 @@ class LoyaltyCardFullDetailsViewModel {
                 return
             }
             let viewController = ViewControllerFactory.makeTransactionsViewController(membershipCard: membershipCard)
-            let navigationRequest = PushNavigationRequest(viewController: viewController)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .pending:
             let title = "generic_pending_module_title".localized
@@ -133,7 +133,7 @@ class LoyaltyCardFullDetailsViewModel {
             Current.navigate.to(navigationRequest)
         case .pll, .pllEmpty:
             let viewController = ViewControllerFactory.makePllViewController(membershipCard: membershipCard, journey: .existingCard)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController, allowDismiss: false)
             Current.navigate.to(navigationRequest)
         case .unLinkable:
             let title = "unlinkable_pll_title".localized
