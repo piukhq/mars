@@ -194,11 +194,6 @@ class MainScreenRouter {
         delegate?.router(self, didLogin: true)
     }
     
-    class func openExternalURL(with urlString: String) {
-        guard let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) else { return }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-    }
-    
     //MARK: - App in background
     
     @objc func appWillResignActive() {

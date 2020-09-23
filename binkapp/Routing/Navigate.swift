@@ -73,6 +73,10 @@ struct CloseModalNavigationRequest: BaseNavigationRequest {
     }
 }
 
+struct ExternalUrlNavigationRequest: BaseNavigationRequest {
+    let url: String
+}
+
 class Navigate {
     // TODO: Handle when refactoring onboarding, as there is no tab bar
     private lazy var tabBarController: MainTabBarViewController = {
@@ -170,6 +174,9 @@ class BaseNavigationHandler {
             UIViewController.topMostViewController()?.dismiss(animated: navigationRequest.animated, completion: navigationRequest.completion)
         case let navigationRequest as AlertNavigationRequest:
             UIViewController.topMostViewController()?.present(navigationRequest.alertController, animated: true, completion: nil)
+        case let navigationRequest as ExternalUrlNavigationRequest:
+            guard let url = URL(string: navigationRequest.url), UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         default:
             fatalError("Navigation route not implemented")
         }
