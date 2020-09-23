@@ -81,7 +81,7 @@ class MainTabBarViewModel {
     
     func toAddingOptionsScreen() {
         let viewController = ViewControllerFactory.makeAddingOptionsViewController()
-        let navigationRequest = ModalNavigationRequest(viewController: viewController, fullScreen: true, embedInNavigationController: false)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, fullScreen: true, embedInNavigationController: false, transition: .crossDissolve)
         Current.navigate.to(navigationRequest)
     }
 }

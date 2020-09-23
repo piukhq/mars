@@ -371,10 +371,8 @@ class AuthAndAddViewModel {
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {}
         
         if PermissionsUtility.videoCaptureIsAuthorized {
-            Current.navigate.close {
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            }
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         } else if PermissionsUtility.videoCaptureIsDenied {
             if let alert = enterManuallyAlert {
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
@@ -383,10 +381,8 @@ class AuthAndAddViewModel {
         } else {
             PermissionsUtility.requestVideoCaptureAuthorization { granted in
                 if granted {
-                    Current.navigate.close {
-                        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                        Current.navigate.to(navigationRequest)
-                    }
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
                 } else {
                     if let alert = enterManuallyAlert {
                         let navigationRequest = AlertNavigationRequest(alertController: alert)

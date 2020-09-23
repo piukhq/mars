@@ -45,13 +45,15 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     let fullScreen: Bool
     let embedInNavigationController: Bool
     let animated: Bool
+    let transition: UIModalTransitionStyle
     let allowDismiss: Bool
     let completion: EmptyCompletionBlock?
-    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, allowDismiss: Bool = true, completion: EmptyCompletionBlock? = nil) {
+    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, transition: UIModalTransitionStyle = .coverVertical, allowDismiss: Bool = true, completion: EmptyCompletionBlock? = nil) {
         self.viewController = viewController
         self.fullScreen = fullScreen
         self.embedInNavigationController = embedInNavigationController
         self.animated = animated
+        self.transition = transition
         self.allowDismiss = allowDismiss
         self.completion = completion
     }
@@ -161,6 +163,8 @@ class BaseNavigationHandler {
             if navigationRequest.fullScreen {
                 viewController.modalPresentationStyle = .fullScreen
             }
+            
+            viewController.modalTransitionStyle = navigationRequest.transition
             
             if !navigationRequest.allowDismiss {
                 if #available(iOS 13.0, *) {
