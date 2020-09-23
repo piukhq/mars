@@ -151,7 +151,9 @@ final class ViewControllerFactory {
     }
     
     static func makeOkAlertViewController(title: String?, message: String?) -> UIAlertController {
-        return UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
+        return alert
     }
     
     static func makeWebViewController(urlString: String) -> WebViewController {

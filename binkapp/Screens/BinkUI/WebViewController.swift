@@ -95,9 +95,8 @@ class WebViewController: UIViewController {
     }
     
     private func showErrorAlert() {
-        let alert = UIAlertController(title: "error_title".localized, message: "loading_error".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
-        self.present(alert, animated: true)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "loading_error".localized)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
     @objc private func goBack() {
