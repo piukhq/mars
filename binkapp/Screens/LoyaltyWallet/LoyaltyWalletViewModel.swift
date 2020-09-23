@@ -47,11 +47,13 @@ class LoyaltyWalletViewModel: WalletViewModel {
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .loyaltyJoin(let membershipPlan):
-            print(membershipPlan)
-//            router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         case .addPaymentCards:
-            print("")
-//            router.toPaymentCardScanner(strings: paymentScanStrings, delegate: scanDelegate)
+            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScanStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
     }
 
