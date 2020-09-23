@@ -327,7 +327,7 @@ class AuthAndAddViewModel {
     }
     
     func reloadWithGhostCardFields() {
-        // TODO: Not implemented with navigation refactor
+        // TODO: Not implemented with navigation refactor. Was already commented out.
 //        let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .patchGhostCard : .ghostCard
 //        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
     }
