@@ -44,14 +44,13 @@ class SettingsViewModel {
     }
     
     func pushReusableModal(configurationModel: ReusableModalConfiguration) {
-        let viewModel = ReusableModalViewModel(configurationModel: configurationModel)
-        let viewController = ReusableTemplateViewController(viewModel: viewModel, floatingButtons: true)
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel, floatingButtons: true)
         Current.navigate.to(PushNavigationRequest(viewController: viewController))
     }
     
     func openWebView(url: String) {
         let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
 }

@@ -122,6 +122,13 @@ final class ViewControllerFactory {
         return viewController
     }
     
+    // MARK: - Wallets
+    
+    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?) -> SettingsViewController {
+        let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
+        return SettingsViewController(viewModel: viewModel)
+    }
+    
     // MARK: - Reusable
     
     static func makeReusableTemplateViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
