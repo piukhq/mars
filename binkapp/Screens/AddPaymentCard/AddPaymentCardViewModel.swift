@@ -8,18 +8,23 @@
 
 import UIKit
 
+enum AddPaymentCardJourney {
+    case wallet
+    case pll
+}
+
 class AddPaymentCardViewModel {
-    private let router: MainScreenRouter
     private let repository = PaymentWalletRepository()
+    private let journey: AddPaymentCardJourney
     let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
     var shouldDisplayTermsAndConditions: Bool {
         return true
     }
     
-    init(router: MainScreenRouter, paymentCard: PaymentCardCreateModel? = nil) {
-        self.router = router
+    init(paymentCard: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) {
         self.paymentCard = paymentCard ?? PaymentCardCreateModel(fullPan: nil, nameOnCard: nil, month: nil, year: nil)
+        self.journey = journey
     }
 
     var formDataSource: FormDataSource {
@@ -65,33 +70,45 @@ class AddPaymentCardViewModel {
         attributedText.append(titleAttributedString)
         attributedText.append(descriptionAttributedString)
         
-        let configurationModel = ReusableModalConfiguration(title: "terms_and_conditions_title".localized, text: attributedText, tabBarBackButton: nil)
-        
-        router.toPaymentTermsAndConditionsViewController(configurationModel: configurationModel, delegate: delegate)
+        let configurationModel = ReusableModalConfiguration(title: "terms_and_conditions_title".localized, text: attributedText)
+        let viewController = ViewControllerFactory.makePaymentTermsAndConditionsViewController(configurationModel: configurationModel, delegate: delegate)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, allowDismiss: false)
+        Current.navigate.to(navigationRequest)
     }
     
     func toPrivacyAndSecurity() {
-//        router.toPrivacyAndSecurityViewController()
+        let title: String = "security_and_privacy_title".localized
+        let description: String = "security_and_privacy_description".localized
+        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
+        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 
     func addPaymentCard(onError: @escaping () -> Void) {
         repository.addPaymentCard(paymentCard, onSuccess: { [weak self] paymentCard in
-            guard let paymentCard = paymentCard, let self = self  else {return}
+            guard let self = self else { return }
+            guard let paymentCard = paymentCard else { return }
             Current.wallet.refreshLocal()
-            // We post the notification so that we can switch tabs if necessary
-            NotificationCenter.default.post(name: .didAddPaymentCard, object: nil)
-            self.router.toPaymentCardDetailViewController(paymentCard: paymentCard)
+            
+            switch self.journey {
+            case .wallet:
+                let viewController = ViewControllerFactory.makePaymentCardDetailViewController(paymentCard: paymentCard)
+                let navigationRequest = PushNavigationRequest(viewController: viewController)
+                Current.navigate.to(.payment, nestedPushNavigationRequest: navigationRequest) {
+                    Current.navigate.close()
+                }
+            case .pll:
+                Current.navigate.close()
+            }
         }) { error in
             onError()
             self.displayError()
         }
     }
 
-    func popToRootViewController() {
-        router.popToRootViewController()
-    }
-
-    func displayError() {        
-        router.displaySimplePopup(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
+    func displayError() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
 }

@@ -9,9 +9,9 @@ import UIKit
 import CardScan
 
 class PLLScreenViewModel {
+    // TODO: After successfully adding a payment card, we need to refresh this payment card with the latest copy of itself, as it will contain linked payment cards
     private var membershipCard: CD_MembershipCard
     private let repository = PLLScreenRepository()
-    private let router: MainScreenRouter
     
     private let paymentScannerStrings = PaymentCardScannerStrings()
     
@@ -49,17 +49,12 @@ class PLLScreenViewModel {
         return "pll_screen_secondary_message".localized
     }
         
-    init(membershipCard: CD_MembershipCard, router: MainScreenRouter, journey: PllScreenJourney) {
+    init(membershipCard: CD_MembershipCard, journey: PllScreenJourney) {
         self.membershipCard = membershipCard
-        self.router = router
         self.journey = journey
     }
     
     // MARK:  - Public methods
-    
-    func popViewController() {
-        router.popViewController()
-    }
     
     func addCardToChangedCardsArray(card: CD_PaymentCard) {
         if !(changedLinkCards.contains(card)) {
@@ -69,10 +64,6 @@ class PLLScreenViewModel {
                 changedLinkCards.remove(at: index)
             }
         }
-    }
-    
-    func reloadPaymentCards(){
-        Current.wallet.refreshLocal()
     }
     
     func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
@@ -105,12 +96,15 @@ class PLLScreenViewModel {
         attributedString.append(attributedTitle)
         attributedString.append(attributedBody)
         
-        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-        router.toReusableModalTemplateViewController(configurationModel: configuration)
+        let configuration = ReusableModalConfiguration(title: title, text: attributedString)
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func displaySimplePopup(title: String, message: String) {
-        router.displaySimplePopup(title: title, message: message)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
     func displayNoConnectivityPopup(completion: @escaping () -> Void) {
@@ -119,16 +113,61 @@ class PLLScreenViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func toFullDetailsCardScreen() {
-        let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard))
-        Current.navigate.to(navigationRequest)
+    func close() {
+        Current.navigate.close()
     }
     
-    func toPaymentScanner(scanDelegate: ScanDelegate?) {
-        router.toPaymentCardScanner(strings: paymentScannerStrings, delegate: scanDelegate)
+    func toPaymentScanner(delegate: ScanDelegate?) {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: delegate) else { return }
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
+            self?.toAddPaymentCardScreen()
+        }
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
+                if granted {
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                } else {
+                    if let alert = enterManuallyAlert {
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    }
+                }
+            }
+        }
     }
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        router.toAddPaymentViewController(model: model)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+}
+
+extension PLLScreenViewModel: CoreDataRepositoryProtocol {
+    // We need to call this method after adding a new payment card via the PLL screen
+    // Refreshing the local membership card object will present the linkages correctly
+    func refreshMembershipCard(completion: EmptyCompletionBlock? = nil) {
+        guard let cardId = membershipCard.id else {
+            completion?()
+            return
+        }
+        let predicate = NSPredicate(format: "id == \(cardId)")
+        fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, predicate: predicate) { objects in
+            if let updatedMembershipCard = objects?.first {
+                self.membershipCard = updatedMembershipCard
+            }
+            completion?()
+        }
     }
 }

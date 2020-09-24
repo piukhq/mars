@@ -25,7 +25,7 @@ class PreferencesViewModel {
     
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping () -> Void) {
         guard repository.networkIsReachable else {
-//            router.presentNoConnectivityPopup()
+            presentNoConnectivityPopup()
             return
         }
         repository.getPreferences(onSuccess: { (preferences) in
@@ -46,6 +46,8 @@ class PreferencesViewModel {
     }
     
     func presentNoConnectivityPopup() {
-//        router.presentNoConnectivityPopup()
+        let alert = ViewControllerFactory.makeNoConnectivityAlertController()
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
 }

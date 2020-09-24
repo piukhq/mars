@@ -37,11 +37,41 @@ class PortraitNavigationController: UINavigationController {
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         super.pushViewController(viewController, animated: animated)
-        
         viewController.navigationItem.backBarButtonItem = backButton
         if isModallyPresented {
             viewController.navigationItem.rightBarButtonItem = closeButton
         }
+    }
+    
+    func pushViewController(_ viewController: UIViewController, animated: Bool = false, hidesBackButton: Bool = false, completion: EmptyCompletionBlock? = nil) {
+        viewController.navigationItem.setHidesBackButton(hidesBackButton, animated: true)
+        pushViewController(viewController, animated: animated)
+        
+        guard animated, let coordinator = transitionCoordinator else {
+            DispatchQueue.main.async { completion?() }
+            return
+        }
+        coordinator.animate(alongsideTransition: nil) { _ in completion?() }
+    }
+    
+    func popViewController(animated: Bool = false, completion: EmptyCompletionBlock? = nil) {
+        popViewController(animated: animated)
+        
+        guard animated, let coordinator = transitionCoordinator else {
+            DispatchQueue.main.async { completion?() }
+            return
+        }
+        coordinator.animate(alongsideTransition: nil) { _ in completion?() }
+    }
+    
+    func popToRootViewController(animated: Bool = false, completion: EmptyCompletionBlock? = nil) {
+        popToRootViewController(animated: animated)
+        
+        guard animated, let coordinator = transitionCoordinator else {
+            DispatchQueue.main.async { completion?() }
+            return
+        }
+        coordinator.animate(alongsideTransition: nil) { _ in completion?() }
     }
     
     @objc private func close() {

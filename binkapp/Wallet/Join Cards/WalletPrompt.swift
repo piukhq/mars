@@ -11,7 +11,7 @@ import CardScan
 
 enum WalletPromptType {
     case loyaltyJoin(membershipPlan: CD_MembershipPlan)
-    case addPaymentCards(scanDelegate: ScanDelegate?)
+    case addPaymentCards
 
     var title: String {
         switch self {

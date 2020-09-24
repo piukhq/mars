@@ -32,9 +32,6 @@ class WebViewController: UIViewController {
         setWebView()
         setBottomToolbar()
         
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(dismissWebView))
-        navigationItem.setRightBarButton(closeButton, animated: true)
-        
         guard let safeUrl = url else { return }
         let request = URLRequest(url: safeUrl)
         webView.load(request)
@@ -95,9 +92,8 @@ class WebViewController: UIViewController {
     }
     
     private func showErrorAlert() {
-        let alert = UIAlertController(title: "error_title".localized, message: "loading_error".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
-        self.present(alert, animated: true)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "loading_error".localized)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
     @objc private func goBack() {
@@ -114,10 +110,6 @@ class WebViewController: UIViewController {
     
     @objc private func refresh() {
         webView.reload()
-    }
-
-    @objc private func dismissWebView() {
-        self.dismiss(animated: true, completion: nil)
     }
 }
 

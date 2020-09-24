@@ -111,14 +111,6 @@ class PLLScreenViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if viewModel.shouldShowBackButton {
-            let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-            navigationItem.leftBarButtonItem = backButton
-        } else {
-            // Catch the default back button
-            navigationItem.setHidesBackButton(true, animated: false)
-        }
 
         view.backgroundColor = .white
         
@@ -127,6 +119,9 @@ class PLLScreenViewController: BinkTrackableViewController {
         configureLayout()
         paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
         floatingButtonsView.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadWallet, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadLocalWallet, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -156,6 +151,13 @@ class PLLScreenViewController: BinkTrackableViewController {
                 LayoutHelper.PrimarySecondaryButtonView.twoButtonsHeight)
         ])
     }
+    
+    @objc private func handleWalletReload() {
+        viewModel.refreshMembershipCard {
+            self.paymentCardsTableView.reloadData()
+            self.configureUI()
+        }
+    }
 }
 
 // MARK: - Loyalty button delegate
@@ -172,7 +174,7 @@ extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         guard Current.apiClient.networkIsReachable else {
             viewModel.displayNoConnectivityPopup { [weak self] in
-                self?.viewModel.toFullDetailsCardScreen()
+                self?.viewModel.close()
             }
             return
         }
@@ -185,12 +187,12 @@ extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
             self.reloadContent()
             self.view.isUserInteractionEnabled = true
             floatingButtons.primaryButton.stopLoading()
-            self.navigateToLCDScreen()
+            self.handlePrimaryButtonPress()
         }
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        viewModel.toPaymentScanner(scanDelegate: self)
+        viewModel.toPaymentScanner(delegate: self)
     }
 }
 
@@ -229,13 +231,10 @@ extension PLLScreenViewController: UITableViewDataSource {
 // MARK: - Private methods
 
 private extension PLLScreenViewController {
-    @objc func popViewController() {
-        viewModel.popViewController()
-    }
-    
     func reloadContent() {
-        viewModel.reloadPaymentCards()
-        paymentCardsTableView.reloadData()
+        Current.wallet.refreshLocal {
+            self.paymentCardsTableView.reloadData()
+        }
     }
     
     func configureBrandHeader() {
@@ -258,13 +257,13 @@ private extension PLLScreenViewController {
         }
     }
     
-    func navigateToLCDScreen() {
+    func handlePrimaryButtonPress() {
         switch journey {
         case .newCard:
-            viewModel.toFullDetailsCardScreen()
+            viewModel.close()
             break
         case .existingCard:
-            viewModel.isEmptyPll ? viewModel.toPaymentScanner(scanDelegate: self) : viewModel.toFullDetailsCardScreen()
+            viewModel.isEmptyPll ? viewModel.toPaymentScanner(delegate: self) : viewModel.close()
             break
         }
     }
@@ -282,21 +281,22 @@ extension PLLScreenViewController: PaymentCardCellDelegate {
 
 extension PLLScreenViewController: ScanDelegate {
     func userDidCancel(_ scanViewController: ScanViewController) {
-        navigationController?.popViewController(animated: true)
+        Current.navigate.close()
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        // Record Bouncer usage
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = Int(creditCard.expiryMonth ?? "")
         let year = Int(creditCard.expiryYear ?? "")
         let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
-        viewModel.toAddPaymentCardScreen(model: model)
-        navigationController?.removeViewController(scanViewController)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
-        viewModel.toAddPaymentCardScreen()
-        navigationController?.removeViewController(scanViewController)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .pll)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
     }
 }

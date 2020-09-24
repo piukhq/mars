@@ -12,14 +12,11 @@ class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
     private var paymentCard: CD_PaymentCard
-    private(set) var router: MainScreenRouter
-    private let repository: PaymentCardDetailRepository
+    private let repository = PaymentCardDetailRepository()
     private let informationRowFactory: WalletCardDetailInformationRowFactory
 
-    init(paymentCard: CD_PaymentCard, router: MainScreenRouter, repository: PaymentCardDetailRepository, informationRowFactory: WalletCardDetailInformationRowFactory) {
+    init(paymentCard: CD_PaymentCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.paymentCard = paymentCard
-        self.router = router
-        self.repository = repository
         self.informationRowFactory = informationRowFactory
     }
 
@@ -141,12 +138,21 @@ class PaymentCardDetailViewModel {
     // MARK: Routing
 
     func toCardDetail(forMembershipCard membershipCard: CD_MembershipCard) {
-        let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard))
-        Current.navigate.to(navigationRequest)
+        Current.navigate.back(toRoot: true) {
+            Current.navigate.to(.loyalty) {
+                let viewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard)
+                let pushNavigationRequest = PushNavigationRequest(viewController: viewController)
+                Current.navigate.to(pushNavigationRequest)
+            }
+        }
     }
 
     func toAddOrJoin(forMembershipPlan membershipPlan: CD_MembershipPlan) {
-        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+        Current.navigate.back(toRoot: true) {
+            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
     }
 
     // MARK: Information rows
@@ -164,31 +170,30 @@ class PaymentCardDetailViewModel {
     }
 
     func toSecurityAndPrivacyScreen() {
-//        router.toPrivacyAndSecurityViewController()
-    }
-
-    func popToRootViewController(){
-        router.popToRootViewController()
+        let title: String = "security_and_privacy_title".localized
+        let description: String = "security_and_privacy_description".localized
+        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
+        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
-    func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
-//        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
-//            guard let self = self else { return }
-//            guard Current.apiClient.networkIsReachable else {
-//                self.router.presentNoConnectivityPopup()
-//                noCompletion?()
-//                return
-//            }
-//            self.repository.delete(self.paymentCard) {
-//                Current.wallet.refreshLocal()
-//                self.router.popToRootViewController()
-//                yesCompletion?()
-//            }
-//        }, noCompletion: {
-//            DispatchQueue.main.async {
-//                noCompletion?()
-//            }
-//        })
+    func showDeleteConfirmationAlert() {
+        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
+            guard let self = self else { return }
+            guard Current.apiClient.networkIsReachable else {
+                let alert = ViewControllerFactory.makeNoConnectivityAlertController()
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+                return
+            }
+            self.repository.delete(self.paymentCard) {
+                Current.wallet.refreshLocal()
+                Current.navigate.back()
+            }
+        })
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
 
     // MARK: - Repository

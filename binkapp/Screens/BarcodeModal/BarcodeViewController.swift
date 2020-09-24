@@ -44,8 +44,6 @@ class BarcodeViewController: BinkTrackableViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.barTintColor = .white
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popViewController))
-        
         configureUI()
     }
     
@@ -116,9 +114,5 @@ class BarcodeViewController: BinkTrackableViewController {
 
         hasDrawnBarcode = true
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    @objc private func popViewController() {
-        dismiss(animated: true, completion: nil)
     }
 }
