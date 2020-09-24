@@ -113,8 +113,10 @@ class PLRRewardDetailViewModel {
     }
 
     func openTermsAndConditionsWebView() {
-//        guard let url = termsAndConditionsButtonUrlString else { return }
-//        router.openWebView(withUrlString: url)
+        guard let url = termsAndConditionsButtonUrlString else { return }
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 
     // MARK: - View decisioning

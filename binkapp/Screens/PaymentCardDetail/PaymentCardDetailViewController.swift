@@ -207,10 +207,6 @@ private extension PaymentCardDetailViewController {
         self.otherCardsTableView.reloadData()
         Current.wallet.refreshLocal()
     }
-    
-    @objc func popToRoot() {
-//        viewModel.popToRootViewController()
-    }
 }
 
 // MARK: Table view delegate & datasource

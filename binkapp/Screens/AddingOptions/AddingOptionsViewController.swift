@@ -95,12 +95,6 @@ class AddingOptionsViewController: BinkTrackableViewController {
         proceedWithCameraAccess(scanType: .payment)
     }
     
-    func displayNoScreenPopup() {
-        let alert = UIAlertController(title: nil, message: "Screen was not implemented yet", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-    
     private func proceedWithCameraAccess(scanType: ScanType) {
         switch scanType {
         case .loyalty:

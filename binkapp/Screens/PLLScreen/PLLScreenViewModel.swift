@@ -103,7 +103,8 @@ class PLLScreenViewModel {
     }
     
     func displaySimplePopup(title: String, message: String) {
-//        router.displaySimplePopup(title: title, message: message)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
     func displayNoConnectivityPopup(completion: @escaping () -> Void) {
@@ -148,7 +149,7 @@ class PLLScreenViewModel {
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
 }

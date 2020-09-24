@@ -107,7 +107,8 @@ class AddPaymentCardViewModel {
         }
     }
 
-    func displayError() {        
-//        router.displaySimplePopup(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
+    func displayError() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
 }

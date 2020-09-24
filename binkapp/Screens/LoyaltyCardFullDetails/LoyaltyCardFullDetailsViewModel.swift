@@ -100,7 +100,7 @@ class LoyaltyCardFullDetailsViewModel {
                 return
             }
             let viewController = ViewControllerFactory.makeTransactionsViewController(membershipCard: membershipCard)
-            let navigationRequest = PushNavigationRequest(viewController: viewController)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .pending:
             let title = "generic_pending_module_title".localized
@@ -124,8 +124,8 @@ class LoyaltyCardFullDetailsViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .registerGhostCard:
-            print("")
-//            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            Current.navigate.to(AlertNavigationRequest(alertController: alert))
         case .patchGhostCard:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
             let viewController = ViewControllerFactory.makePatchGhostCardViewController(membershipPlan: membershipPlan, existingMembershipCard: membershipCard)
@@ -133,7 +133,7 @@ class LoyaltyCardFullDetailsViewModel {
             Current.navigate.to(navigationRequest)
         case .pll, .pllEmpty:
             let viewController = ViewControllerFactory.makePllViewController(membershipCard: membershipCard, journey: .existingCard)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController, allowDismiss: false)
             Current.navigate.to(navigationRequest)
         case .unLinkable:
             let title = "unlinkable_pll_title".localized

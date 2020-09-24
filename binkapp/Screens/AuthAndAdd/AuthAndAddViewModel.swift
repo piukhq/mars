@@ -327,14 +327,16 @@ class AuthAndAddViewModel {
     }
     
     func reloadWithGhostCardFields() {
-        // TODO: Not implemented with navigation refactor
+        // TODO: Not implemented with navigation refactor. Was already commented out.
 //        let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .patchGhostCard : .ghostCard
 //        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
     }
     
     func openWebView(withUrlString url: URL) {
-//        let urlString = url.absoluteString
-//        router.openWebView(withUrlString: urlString)
+        let urlString = url.absoluteString
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: urlString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toReusableTemplate(title: String, description: String) {
@@ -358,21 +360,19 @@ class AuthAndAddViewModel {
     }
     
     func displaySimplePopup(title: String?, message: String?) {
-//        router.displaySimplePopup(title: title, message: message)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
     func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
-        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: Current.navigate.loyaltyCardScannerDelegate)
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: delegate)
         
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
-            Current.navigate.close()
-        }
+        // TODO: Move this to view controller factory and make this entire function more reusable
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {}
         
         if PermissionsUtility.videoCaptureIsAuthorized {
-            Current.navigate.close {
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            }
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         } else if PermissionsUtility.videoCaptureIsDenied {
             if let alert = enterManuallyAlert {
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
@@ -381,10 +381,8 @@ class AuthAndAddViewModel {
         } else {
             PermissionsUtility.requestVideoCaptureAuthorization { granted in
                 if granted {
-                    Current.navigate.close {
-                        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                        Current.navigate.to(navigationRequest)
-                    }
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
                 } else {
                     if let alert = enterManuallyAlert {
                         let navigationRequest = AlertNavigationRequest(alertController: alert)

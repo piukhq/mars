@@ -122,6 +122,13 @@ final class ViewControllerFactory {
         return viewController
     }
     
+    // MARK: - Wallets
+    
+    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?) -> SettingsViewController {
+        let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
+        return SettingsViewController(viewModel: viewModel)
+    }
+    
     // MARK: - Reusable
     
     static func makeReusableTemplateViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
@@ -148,5 +155,15 @@ final class ViewControllerFactory {
             }
         }))
         return alert
+    }
+    
+    static func makeOkAlertViewController(title: String?, message: String?) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
+        return alert
+    }
+    
+    static func makeWebViewController(urlString: String) -> WebViewController {
+        return WebViewController(urlString: urlString)
     }
 }
