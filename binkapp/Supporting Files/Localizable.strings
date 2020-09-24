@@ -250,8 +250,14 @@
 
 // MARK: - PCD
 
-"pcd_added_card_title" = "Linked cards";
-"pcd_added_card_description" = "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points.";
+"pcd_active_card_title" = "Linked cards";
+"pcd_pending_card_title" = "Payment card pending";
+"pcd_failed_card_title" = "Payment card inactive";
+
+"pcd_active_card_description" = "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points.";
+"pcd_pending_card_description" = "You cannot link any loyalty cards to start earning rewards.\nPlease wait for the card to be authorised. If the problem persists please read our FAQs or you can get in touch with Bink using the Contact us form in Settings.\nCard added: %@";
+"pcd_failed_card_description" = "Your payment card is not authorised and you cannot link any loyalty cards to start earning rewards.\nYour card has failed the authorisation process or has expired. Please use the “Delete this card” function below to remove it from your wallet and re-add if required.\nIf you have any concerns, please read the FAQs or you can get in touch with Bink using the Contact us form in Settings";
+
 "pcd_other_card_title_cards_added" = "Other cards you can add";
 "pcd_other_card_title_no_cards_added" = "No linked cards";
 "pcd_other_card_description_cards_added" = "You can also add the cards below and link them to your payment cards.";

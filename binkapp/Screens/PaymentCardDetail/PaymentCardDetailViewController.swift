@@ -37,6 +37,7 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         title.font = .headline
         title.textAlignment = .left
         title.translatesAutoresizingMaskIntoConstraints = false
+        title.numberOfLines = 0
         return title
     }()
 

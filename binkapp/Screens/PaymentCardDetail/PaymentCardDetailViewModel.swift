@@ -38,11 +38,26 @@ class PaymentCardDetailViewModel {
     }
 
     var addedCardsTitle: String {
-        return "pcd_added_card_title".localized
+        switch paymentCard.paymentCardStatus {
+        case .active:
+            return "pcd_active_card_title".localized
+        case .pending:
+            return "pcd_pending_card_title".localized
+        case .failed:
+            return "pcd_failed_card_title".localized
+        }
     }
 
     var addedCardsDescription: String {
-        return "pcd_added_card_description".localized
+        switch paymentCard.paymentCardStatus {
+        case .active:
+            return "pcd_active_card_description".localized
+        case .pending:
+            // TODO: inject timestamp
+            return String(format: "pcd_pending_card_description".localized, "timestamp here")
+        case .failed:
+            return "pcd_failed_card_description".localized
+        }
     }
 
     var otherCardsTitle: String {
