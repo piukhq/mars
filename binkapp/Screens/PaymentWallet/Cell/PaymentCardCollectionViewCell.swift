@@ -18,8 +18,8 @@ protocol WalletPaymentCardCollectionViewCellDelegate: NSObject {
 class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureRecognizerDelegate {
     @IBOutlet private weak var nameOnCardLabel: UILabel!
     @IBOutlet private weak var cardNumberLabel: UILabel!
-    @IBOutlet private weak var pllStatusLabel: UILabel!
-    @IBOutlet private weak var linkedStatusImageView: UIImageView!
+    @IBOutlet private weak var statusLabel: UILabel!
+    @IBOutlet private weak var statusImageView: UIImageView!
     @IBOutlet private weak var providerLogoImageView: UIImageView!
     @IBOutlet private weak var providerWatermarkImageView: UIImageView!
     @IBOutlet private weak var alertView: CardAlertView!
@@ -79,8 +79,8 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         set(to: .closed, animated: false)
         deleteButton.isHidden = true
         alertView.isHidden = true
-        pllStatusLabel.isHidden = false
-        linkedStatusImageView.isHidden = false
+        statusLabel.isHidden = false
+        statusImageView.isHidden = false
 
         processGradient(UIColor.deleteSwipeGradientLeft, UIColor.deleteSwipeGradientRight)
         processGradient(type: viewModel.paymentCardType)
@@ -111,7 +111,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         configureForProvider(cardType: viewModel.cardType)
         
         setLabelStyling()
-        pllStatusLabel.isHidden = true
+        statusLabel.isHidden = true
         setupShadow()
     }
     
@@ -172,9 +172,9 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     
     private func setLabelStyling() {
         nameOnCardLabel.font = .subtitle
-        pllStatusLabel.font = .statusLabel
+        statusLabel.font = .statusLabel
         
-        [nameOnCardLabel, cardNumberLabel, pllStatusLabel].forEach {
+        [nameOnCardLabel, cardNumberLabel, statusLabel].forEach {
             $0?.textColor = .white
         }
     }
@@ -197,13 +197,14 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
                 self?.viewModel.expiredAction()
             }
             alertView.isHidden = false
-            pllStatusLabel.isHidden = true
-            linkedStatusImageView.isHidden = true
+            statusLabel.isHidden = true
+            statusImageView.isHidden = true
             return
         }
         
-        pllStatusLabel.text = viewModel.linkedText
-        linkedStatusImageView.image = imageForLinkedStatus()
+        statusLabel.text = viewModel.statusText
+        statusImageView.isHidden = !viewModel.paymentCardIsActive
+        statusImageView.image = imageForLinkedStatus()
     }
     
     private func imageForLinkedStatus() -> UIImage? {

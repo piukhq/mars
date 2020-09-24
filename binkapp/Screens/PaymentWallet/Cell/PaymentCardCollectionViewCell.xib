@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -125,11 +123,11 @@
                 <outlet property="cardNumberLabel" destination="LQa-TU-DPB" id="cbA-D8-Uan"/>
                 <outlet property="containerView" destination="5ti-Yy-XeC" id="hNF-Bk-Kzh"/>
                 <outlet property="deleteButton" destination="Ulb-bk-PeF" id="o80-1j-NFg"/>
-                <outlet property="linkedStatusImageView" destination="Gpr-Cg-2C1" id="vZ5-Ff-E54"/>
                 <outlet property="nameOnCardLabel" destination="x78-gd-0FT" id="WuN-XY-iIX"/>
-                <outlet property="pllStatusLabel" destination="2nB-iq-pM6" id="84j-0s-av8"/>
                 <outlet property="providerLogoImageView" destination="Z3L-XY-Mka" id="ldP-o8-xLC"/>
                 <outlet property="providerWatermarkImageView" destination="xMi-zC-Mus" id="rbk-vS-eaR"/>
+                <outlet property="statusImageView" destination="Gpr-Cg-2C1" id="vZ5-Ff-E54"/>
+                <outlet property="statusLabel" destination="2nB-iq-pM6" id="84j-0s-av8"/>
             </connections>
             <point key="canvasLocation" x="487.68115942028987" y="105.13392857142857"/>
         </collectionViewCell>

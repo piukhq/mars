@@ -28,8 +28,20 @@ struct PaymentCardCellViewModel {
     var paymentCardType: PaymentCardType? {
         return PaymentCardType.type(from: paymentCard.card?.firstSix)
     }
+    
+    var paymentCardIsActive: Bool {
+        return paymentCardStatus == .active
+    }
 
-    var linkedText: String {
+    var statusText: String? {
+        guard let status = paymentCardStatus else {
+            return nil
+        }
+        
+        if status == .pending {
+            return status.rawValue.capitalized
+        }
+        
         if paymentCardIsLinkedToMembershipCards {
             return "Linked to \(linkedMembershipCardsCount) loyalty card\(linkedMembershipCardsCount > 1 ? "s" : "")"
         } else {
@@ -43,6 +55,10 @@ struct PaymentCardCellViewModel {
 
     var paymentCardIsExpired: Bool {
         return paymentCard.isExpired()
+    }
+    
+    private var paymentCardStatus: PaymentCardStatus? {
+        return paymentCard.paymentCardStatus
     }
 
     private func cardNumberAttributedString() -> NSAttributedString? {

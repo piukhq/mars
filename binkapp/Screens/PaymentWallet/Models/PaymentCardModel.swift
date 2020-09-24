@@ -9,6 +9,11 @@
 import Foundation
 import CoreData
 
+enum PaymentCardStatus: String {
+    case active
+    case pending
+}
+
 struct PaymentCardModel: Codable {
     var apiId: Int?
     var membershipCards: [LinkedCardResponse]?

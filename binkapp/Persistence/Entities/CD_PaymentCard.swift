@@ -7,6 +7,10 @@ open class CD_PaymentCard: _CD_PaymentCard, WalletCardProtocol {
     var type: WalletCardType {
         return .payment
     }
+    
+    var paymentCardStatus: PaymentCardStatus? {
+        return PaymentCardStatus(rawValue: status ?? "")
+    }
 
     func isExpired() -> Bool {
         guard let card = card,
