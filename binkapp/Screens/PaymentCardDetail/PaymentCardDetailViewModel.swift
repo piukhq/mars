@@ -23,6 +23,14 @@ class PaymentCardDetailViewModel {
         self.informationRowFactory = informationRowFactory
     }
 
+    var paymentCardStatus: PaymentCardStatus {
+        return paymentCard.paymentCardStatus
+    }
+    
+    var pendingRefreshInterval: TimeInterval {
+        return 30
+    }
+    
     // MARK: - Header views
 
     var paymentCardCellViewModel: PaymentCardCellViewModel {
@@ -210,6 +218,15 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: - Repository
+    
+    func refreshPaymentCard(completion: @escaping EmptyCompletionBlock) {
+        repository.getPaymentCard(forId: paymentCard.id) { paymentCard in
+            if let paymentCard = paymentCard {
+                self.paymentCard = paymentCard
+            }
+            completion()
+        }
+    }
 
     func toggleLinkForMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
         guard Current.apiClient.networkIsReachable else {

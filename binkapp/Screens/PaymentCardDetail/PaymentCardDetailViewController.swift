@@ -11,6 +11,8 @@ import UIKit
 class PaymentCardDetailViewController: BinkTrackableViewController {
     private var viewModel: PaymentCardDetailViewModel
     private var hasSetupCell = false
+    
+    private var refreshTimer: Timer?
 
     // MARK: - UI lazy vars
 
@@ -108,6 +110,13 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         setupTables()
 
         getLinkedCards()
+        
+        if viewModel.paymentCardStatus == .pending {
+            refreshTimer = Timer.scheduledTimer(withTimeInterval: viewModel.pendingRefreshInterval, repeats: false, block: { timer in
+                self.refresh()
+                timer.invalidate()
+            })
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -133,11 +142,23 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
 // MARK - Private methods
 
 private extension PaymentCardDetailViewController {
+    func refresh() {
+        viewModel.refreshPaymentCard {
+            self.configureUI()
+            self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
+            Current.wallet.refreshLocal()
+        }
+    }
+    
     func configureUI() {
         addedCardsTitleLabel.text = viewModel.addedCardsTitle
         addedCardsDescriptionLabel.text = viewModel.addedCardsDescription
         otherCardsTitleLabel.text = viewModel.otherCardsTitle
         otherCardsDescriptionLabel.text = viewModel.otherCardsDescription
+        
+        [addedCardsTableView, otherCardsTableView, otherCardsTitleLabel, otherCardsDescriptionLabel].forEach {
+            $0.isHidden = viewModel.paymentCardStatus != .active
+        }
 
         stackScrollView.delegate = self
         configureLayout()
