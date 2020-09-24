@@ -53,11 +53,15 @@ class PaymentCardDetailViewModel {
         case .active:
             return "pcd_active_card_description".localized
         case .pending:
-            // TODO: inject timestamp
-            return String(format: "pcd_pending_card_description".localized, "timestamp here")
+            return String(format: "pcd_pending_card_description".localized, cardAddedDateString ?? "")
         case .failed:
             return "pcd_failed_card_description".localized
         }
+    }
+    
+    private var cardAddedDateString: String? {
+        guard let timestamp = paymentCard.account?.formattedConsents?.first?.timestamp?.doubleValue else { return nil }
+        return String.fromTimestamp(timestamp, withFormat: .dayMonthYear)
     }
 
     var otherCardsTitle: String {
