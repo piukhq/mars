@@ -8,8 +8,8 @@ open class CD_PaymentCard: _CD_PaymentCard, WalletCardProtocol {
         return .payment
     }
     
-    var paymentCardStatus: PaymentCardStatus? {
-        return PaymentCardStatus(rawValue: status ?? "")
+    var paymentCardStatus: PaymentCardStatus {
+        return PaymentCardStatus(rawValue: status ?? "") ?? .pending
     }
 
     func isExpired() -> Bool {
