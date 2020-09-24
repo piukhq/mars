@@ -28,12 +28,6 @@ class AddOrJoinViewModel {
         return membershipPlan
     }
     
-    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model)
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
-    }
-    
     func toAuthAndAddScreen() {
         // PLR
         if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
@@ -98,9 +92,9 @@ class AddOrJoinViewModel {
         
         configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
             if let url = URL(string: planURL) {
-                print(url)
-                // TODO:
-//                self.router.openWebView(withUrlString: url.absoluteString)
+                let viewController = ViewControllerFactory.makeWebViewController(urlString: url.absoluteString)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
             }
         })
 
@@ -140,8 +134,10 @@ class AddOrJoinViewModel {
     private func toPaymentCardScanner() {
         guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
         
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
-            self?.toAddPaymentCardScreen()
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
+            let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
         
         if PermissionsUtility.videoCaptureIsAuthorized {

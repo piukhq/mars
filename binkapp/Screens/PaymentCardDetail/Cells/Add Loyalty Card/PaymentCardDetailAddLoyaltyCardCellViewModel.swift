@@ -24,6 +24,10 @@ struct PaymentCardDetailAddLoyaltyCardCellViewModel: PaymentCardDetailCellViewMo
     }
 
     func toAddOrJoin() {
-//        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+        Current.navigate.back(toRoot: true) {
+            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: self.membershipPlan)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
     }
 }

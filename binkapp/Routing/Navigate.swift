@@ -45,13 +45,15 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     let fullScreen: Bool
     let embedInNavigationController: Bool
     let animated: Bool
+    let transition: UIModalTransitionStyle
     let allowDismiss: Bool
     let completion: EmptyCompletionBlock?
-    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, allowDismiss: Bool = true, completion: EmptyCompletionBlock? = nil) {
+    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, transition: UIModalTransitionStyle = .coverVertical, allowDismiss: Bool = true, completion: EmptyCompletionBlock? = nil) {
         self.viewController = viewController
         self.fullScreen = fullScreen
         self.embedInNavigationController = embedInNavigationController
         self.animated = animated
+        self.transition = transition
         self.allowDismiss = allowDismiss
         self.completion = completion
     }
@@ -71,6 +73,10 @@ struct CloseModalNavigationRequest: BaseNavigationRequest {
         self.animated = animated
         self.completion = completion
     }
+}
+
+struct ExternalUrlNavigationRequest: BaseNavigationRequest {
+    let url: String
 }
 
 class Navigate {
@@ -96,11 +102,14 @@ class Navigate {
         navigationHandler.to(navigationRequest)
     }
     
-    func to(_ tab: NavigationOwner, nestedPushNavigationRequest: PushNavigationRequest? = nil, completion: EmptyCompletionBlock? = nil) {
+    func to(_ tab: NavigationOwner, popToRoot: Bool = false, nestedPushNavigationRequest: PushNavigationRequest? = nil, completion: EmptyCompletionBlock? = nil) {
         tabBarController.selectedIndex = tab.rawValue
         if let nestedNavigationRequest = nestedPushNavigationRequest {
             // We cannot execute the nested navigation request on the navigation handler, as that will use the top most navigation controller, which if we are using this method should not be from the tab bar.
             if let navigationController = tabBarController.selectedViewController as? PortraitNavigationController {
+                if popToRoot {
+                    navigationController.popToRootViewController()
+                }
                 navigationController.pushViewController(nestedNavigationRequest.viewController, animated: nestedNavigationRequest.animated, hidesBackButton: nestedNavigationRequest.hidesBackButton, completion: nestedNavigationRequest.completion)
             }
         }
@@ -155,6 +164,8 @@ class BaseNavigationHandler {
                 viewController.modalPresentationStyle = .fullScreen
             }
             
+            viewController.modalTransitionStyle = navigationRequest.transition
+            
             if !navigationRequest.allowDismiss {
                 if #available(iOS 13.0, *) {
                     viewController.isModalInPresentation = true
@@ -167,6 +178,9 @@ class BaseNavigationHandler {
             UIViewController.topMostViewController()?.dismiss(animated: navigationRequest.animated, completion: navigationRequest.completion)
         case let navigationRequest as AlertNavigationRequest:
             UIViewController.topMostViewController()?.present(navigationRequest.alertController, animated: true, completion: nil)
+        case let navigationRequest as ExternalUrlNavigationRequest:
+            guard let url = URL(string: navigationRequest.url), UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         default:
             fatalError("Navigation route not implemented")
         }

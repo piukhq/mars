@@ -35,8 +35,8 @@ final class ViewControllerFactory {
         return viewController
     }
     
-    static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil) -> AddPaymentCardViewController {
-        let viewModel = AddPaymentCardViewModel(paymentCard: model)
+    static func makeAddPaymentCardViewController(model: PaymentCardCreateModel? = nil, journey: AddPaymentCardJourney) -> AddPaymentCardViewController {
+        let viewModel = AddPaymentCardViewModel(paymentCard: model, journey: journey)
         return AddPaymentCardViewController(viewModel: viewModel)
     }
     
@@ -62,6 +62,16 @@ final class ViewControllerFactory {
     static func makePllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney) -> PLLScreenViewController {
         let viewModel = PLLScreenViewModel(membershipCard: membershipCard, journey: journey)
         return PLLScreenViewController(viewModel: viewModel, journey: journey)
+    }
+    
+    static func makePatchGhostCardViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> AuthAndAddViewController {
+        let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .patchGhostCard, existingMembershipCard: existingMembershipCard)
+        return AuthAndAddViewController(viewModel: viewModel)
+    }
+    
+    static func makeSignUpViewController(membershipPlan: CD_MembershipPlan, existingMembershipCard: CD_MembershipCard? = nil) -> AuthAndAddViewController {
+        let viewModel = AuthAndAddViewModel(membershipPlan: membershipPlan, formPurpose: .signUp, existingMembershipCard: existingMembershipCard)
+        return AuthAndAddViewController(viewModel: viewModel)
     }
     
     // MARK: - Loyalty Card Detail
@@ -97,6 +107,11 @@ final class ViewControllerFactory {
         return makeReusableTemplateViewController(configuration: configuration, floatingButtons: floatingButtons)
     }
     
+    static func makeTransactionsViewController(membershipCard: CD_MembershipCard) -> TransactionsViewController {
+        let viewModel = TransactionsViewModel(membershipCard: membershipCard)
+        return TransactionsViewController(viewModel: viewModel)
+    }
+    
     // MARK: - Payment Card Detail
     
     static func makePaymentCardDetailViewController(paymentCard: CD_PaymentCard) -> PaymentCardDetailViewController {
@@ -105,6 +120,13 @@ final class ViewControllerFactory {
         let viewController = PaymentCardDetailViewController(viewModel: viewModel)
         factory.delegate = viewController
         return viewController
+    }
+    
+    // MARK: - Wallets
+    
+    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?) -> SettingsViewController {
+        let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
+        return SettingsViewController(viewModel: viewModel)
     }
     
     // MARK: - Reusable
@@ -133,5 +155,15 @@ final class ViewControllerFactory {
             }
         }))
         return alert
+    }
+    
+    static func makeOkAlertViewController(title: String?, message: String?) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
+        return alert
+    }
+    
+    static func makeWebViewController(urlString: String) -> WebViewController {
+        return WebViewController(urlString: urlString)
     }
 }

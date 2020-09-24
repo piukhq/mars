@@ -345,6 +345,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
     
     private func handleLoginError() {
         Current.userManager.removeUser()
-        viewModel.router.displaySimplePopup(title: "error_title".localized, message: "login_error".localized)
+        let navigationRequest = AlertNavigationRequest(alertController: ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "login_error".localized))
+        Current.navigate.to(navigationRequest)
     }
 }

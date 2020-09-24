@@ -55,9 +55,6 @@
 		3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61FCDD230AF0BB004721A3 /* AppsModel.swift */; };
 		3C63ABC822F9D47E00BE143B /* AddingOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63ABC722F9D47E00BE143B /* AddingOptionsViewModel.swift */; };
 		3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */; };
-		3C7067EF232FD52D00AB88A5 /* SimpleInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7067ED232FD52D00AB88A5 /* SimpleInfoViewController.swift */; };
-		3C7067F0232FD52D00AB88A5 /* SimpleInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C7067EE232FD52D00AB88A5 /* SimpleInfoViewController.xib */; };
-		3C7067F2232FD74500AB88A5 /* SimpleInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7067F1232FD74500AB88A5 /* SimpleInfoViewModel.swift */; };
 		3C71683524069F370058701E /* bink.der in Resources */ = {isa = PBXBuildFile; fileRef = 3C71683424069F370058701E /* bink.der */; };
 		3C794D8C23018C25000A31FD /* BrowseBrandsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C794D8A23018C25000A31FD /* BrowseBrandsViewController.swift */; };
 		3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */; };
@@ -526,9 +523,6 @@
 		3C61FCDD230AF0BB004721A3 /* AppsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsModel.swift; sourceTree = "<group>"; };
 		3C63ABC722F9D47E00BE143B /* AddingOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingOptionsViewModel.swift; sourceTree = "<group>"; };
 		3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+binkapp.swift"; sourceTree = "<group>"; };
-		3C7067ED232FD52D00AB88A5 /* SimpleInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInfoViewController.swift; sourceTree = "<group>"; };
-		3C7067EE232FD52D00AB88A5 /* SimpleInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleInfoViewController.xib; sourceTree = "<group>"; };
-		3C7067F1232FD74500AB88A5 /* SimpleInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInfoViewModel.swift; sourceTree = "<group>"; };
 		3C71683424069F370058701E /* bink.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = bink.der; sourceTree = "<group>"; };
 		3C794D8A23018C25000A31FD /* BrowseBrandsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewController.swift; sourceTree = "<group>"; };
 		3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowseBrandsViewController.xib; sourceTree = "<group>"; };
@@ -1117,16 +1111,6 @@
 			path = Transactions;
 			sourceTree = "<group>";
 		};
-		3C7067EC232FD50800AB88A5 /* SimpleInfo */ = {
-			isa = PBXGroup;
-			children = (
-				3C7067F1232FD74500AB88A5 /* SimpleInfoViewModel.swift */,
-				3C7067ED232FD52D00AB88A5 /* SimpleInfoViewController.swift */,
-				3C7067EE232FD52D00AB88A5 /* SimpleInfoViewController.xib */,
-			);
-			path = SimpleInfo;
-			sourceTree = "<group>";
-		};
 		3C794D9223019B68000A31FD /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1517,7 +1501,6 @@
 				B76749112331232D0002047A /* ReusableTemplateViewController */,
 				3C873FD422F073CE00FA3031 /* PaymentWallet */,
 				B713662323268FB9008A0ED7 /* PLLScreen */,
-				3C7067EC232FD50800AB88A5 /* SimpleInfo */,
 				3C48E7DE232A4B0300ADE410 /* Transactions */,
 			);
 			path = Screens;
@@ -2620,7 +2603,6 @@
 				EFA81016240405070000D21D /* JailbrokenViewController.xib in Resources */,
 				EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */,
 				706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */,
-				3C7067F0232FD52D00AB88A5 /* SimpleInfoViewController.xib in Resources */,
 				BD25E6972388610B0027FF3E /* LoadingScreen.xib in Resources */,
 				3CD3493D22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf in Resources */,
 				3CADDEB1231566E5006C3D9C /* LoginTextFieldView.xib in Resources */,
@@ -2828,7 +2810,6 @@
 				EFA81024240565750000D21D /* _CD_PlanDynamicContent.swift in Sources */,
 				EFA5F7222379A7C70027AB80 /* _CD_EnrolField.swift in Sources */,
 				3C3853D52407DAF5004D6C2A /* TransactionView.swift in Sources */,
-				3C7067EF232FD52D00AB88A5 /* SimpleInfoViewController.swift in Sources */,
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
 				EFCAF9212371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift in Sources */,
 				BD9E4CC5236EE33900C6F098 /* FacebookLoginController.swift in Sources */,
@@ -3065,7 +3046,6 @@
 				EFA5F72B2379A7C70027AB80 /* _CD_MembershipCardAmount.swift in Sources */,
 				EFA5F7192379A7C70027AB80 /* CD_AddField.swift in Sources */,
 				3C2C90F923191CED00D112E3 /* AddFieldPostModel.swift in Sources */,
-				3C7067F2232FD74500AB88A5 /* SimpleInfoViewModel.swift in Sources */,
 				EFF59F21234CAE5600CF3992 /* CardDetailInformationRow.swift in Sources */,
 				BD99D2DC235091AA00823FC4 /* SettingsFactory.swift in Sources */,
 				3C453CB42338E84500287B56 /* PaymentWalletViewController.swift in Sources */,

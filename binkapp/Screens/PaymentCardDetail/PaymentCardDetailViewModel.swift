@@ -148,7 +148,11 @@ class PaymentCardDetailViewModel {
     }
 
     func toAddOrJoin(forMembershipPlan membershipPlan: CD_MembershipPlan) {
-//        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+        Current.navigate.back(toRoot: true) {
+            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
     }
 
     // MARK: Information rows

@@ -15,7 +15,6 @@ extension Notification.Name {
     // MARK: - Wallet
     static let didLoadWallet = Notification.Name("did_download_wallets")
     static let didLoadLocalWallet = Notification.Name("did_load_local_wallets")
-    static let didAddPaymentCard = Notification.Name("did_add_payment_card")
     static let didDeleteMemebershipCard = Notification.Name("did_delete_membership_card")
     static let didAddMembershipCard = Notification.Name("did_add_membership_card")
     static let shouldTrashLocalWallets = Notification.Name("should_trash_local_wallets")

@@ -36,7 +36,8 @@ struct PaymentCardCellViewModel {
     }
 
     func expiredAction() {
-//        router?.displaySimplePopup(title: "Expired Payment Card", message: "This payment card has expired.")
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "This payment card has expired.", message: "This payment card has expired.")
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
 
     var paymentCardIsExpired: Bool {

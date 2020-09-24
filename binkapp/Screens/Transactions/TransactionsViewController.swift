@@ -66,7 +66,6 @@ class TransactionsViewController: BinkTrackableViewController {
     }
     
     private func configureUI() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -86,10 +85,6 @@ class TransactionsViewController: BinkTrackableViewController {
             return
         }
         lastTransactionView.hideSeparatorView()
-    }
-    
-    @objc private func popViewController() {
-        viewModel.popViewController()
     }
 }
 

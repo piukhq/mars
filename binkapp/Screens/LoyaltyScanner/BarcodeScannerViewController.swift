@@ -268,13 +268,9 @@ class BarcodeScannerViewController: UIViewController {
             self.navigationController?.removeViewController(self)
         })
     }
-
-    @objc private func popViewController() {
-        navigationController?.popViewController(animated: true)
-    }
     
     @objc private func close() {
-        dismiss(animated: true, completion: nil)
+        Current.navigate.close()
     }
 }
 

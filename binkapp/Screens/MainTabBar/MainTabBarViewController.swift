@@ -35,8 +35,6 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
         super.viewDidLoad()
 
         Current.wallet.launch()
-
-        setupNotifications()
         
         self.title = "" // TODO: Why? Remove.
         populateTabBar()
@@ -66,24 +64,6 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
     }
 }
 
-// MARK: - Notifications and Handlers
-
-extension MainTabBarViewController {
-    // TODO: Can we remove these now?
-    private func setupNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddPaymentCard), name: .didAddPaymentCard, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddMembershipCard), name: .didAddMembershipCard, object: nil)
-    }
-
-    @objc private func handleDidAddPaymentCard() {
-        selectedIndex = 2
-    }
-
-    @objc private func handleDidAddMembershipCard() {
-        selectedIndex = 0
-    }
-}
-
 extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDelegate {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
         let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
@@ -109,13 +89,13 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
         let month = Int(creditCard.expiryMonth ?? "")
         let year = Int(creditCard.expiryYear ?? "")
         let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }
     
     func userDidSkip(_ scanViewController: ScanViewController) {
-        let viewController = ViewControllerFactory.makeAddPaymentCardViewController()
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }

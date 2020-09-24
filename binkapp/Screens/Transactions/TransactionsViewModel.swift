@@ -10,7 +10,6 @@ import UIKit
 struct TransactionsViewModel {
     let membershipCard: CD_MembershipCard
     var transactions: [CD_MembershipTransaction] = []
-    private let router: MainScreenRouter
     
     var title: String {
         if transactions.isEmpty {
@@ -26,9 +25,8 @@ struct TransactionsViewModel {
         return "recent_transaction_history_subtitle".localized
     }
     
-    init(membershipCard: CD_MembershipCard, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
-        self.router = router
         
         guard let transactions = membershipCard.formattedTransactions else { return }
         self.transactions = Array(transactions).sorted(by: {
@@ -51,10 +49,8 @@ struct TransactionsViewModel {
         attributedString.append(attributedBody)
         
         let configuration = ReusableModalConfiguration(title: title, text: attributedString)
-        router.toReusableModalTemplateViewController(configurationModel: configuration)
-    }
-    
-    func popViewController() {
-        router.popViewController()
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }

@@ -48,9 +48,8 @@ extension WalletViewModel {
     }
     
     func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
-        let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
-        let viewController = SettingsViewController(viewModel: viewModel)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController, fullScreen: true)
+        let viewController = ViewControllerFactory.makeSettingsViewController(rowsWithActionRequired: rowsWithActionRequired)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
 }

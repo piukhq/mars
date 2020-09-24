@@ -119,6 +119,9 @@ class PLLScreenViewController: BinkTrackableViewController {
         configureLayout()
         paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
         floatingButtonsView.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadWallet, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadLocalWallet, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -147,6 +150,13 @@ class PLLScreenViewController: BinkTrackableViewController {
                 LayoutHelper.PrimarySecondaryButtonView.oneButtonHeight :
                 LayoutHelper.PrimarySecondaryButtonView.twoButtonsHeight)
         ])
+    }
+    
+    @objc private func handleWalletReload() {
+        viewModel.refreshMembershipCard {
+            self.paymentCardsTableView.reloadData()
+            self.configureUI()
+        }
     }
 }
 
@@ -182,7 +192,7 @@ extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
     }
     
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        viewModel.toPaymentScanner()
+        viewModel.toPaymentScanner(delegate: self)
     }
 }
 
@@ -222,8 +232,9 @@ extension PLLScreenViewController: UITableViewDataSource {
 
 private extension PLLScreenViewController {
     func reloadContent() {
-        viewModel.reloadPaymentCards()
-        paymentCardsTableView.reloadData()
+        Current.wallet.refreshLocal {
+            self.paymentCardsTableView.reloadData()
+        }
     }
     
     func configureBrandHeader() {
@@ -252,7 +263,7 @@ private extension PLLScreenViewController {
             viewModel.close()
             break
         case .existingCard:
-            viewModel.isEmptyPll ? viewModel.toPaymentScanner() : viewModel.close()
+            viewModel.isEmptyPll ? viewModel.toPaymentScanner(delegate: self) : viewModel.close()
             break
         }
     }
@@ -265,5 +276,27 @@ extension PLLScreenViewController: PaymentCardCellDelegate {
         if let paymentCards = viewModel.paymentCards {
             viewModel.addCardToChangedCardsArray(card: paymentCards[cardIndex])
         }
+    }
+}
+
+extension PLLScreenViewController: ScanDelegate {
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        Current.navigate.close()
+    }
+    
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
+        let month = Int(creditCard.expiryMonth ?? "")
+        let year = Int(creditCard.expiryYear ?? "")
+        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .pll)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
     }
 }
