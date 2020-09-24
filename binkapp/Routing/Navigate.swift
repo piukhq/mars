@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CardScan
 
 protocol BaseNavigationRequest {}
 
@@ -18,10 +19,12 @@ enum NavigationOwner: Int {
 struct PushNavigationRequest: BaseNavigationRequest {
     let viewController: UIViewController
     let animated: Bool
+    let hidesBackButton: Bool
     let completion: EmptyCompletionBlock?
-    init(viewController: UIViewController, animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
+    init(viewController: UIViewController, animated: Bool = true, hidesBackButton: Bool = false, completion: EmptyCompletionBlock? = nil) {
         self.viewController = viewController
         self.animated = animated
+        self.hidesBackButton = hidesBackButton
         self.completion = completion
     }
 }
@@ -41,15 +44,18 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     let viewController: UIViewController
     let fullScreen: Bool
     let embedInNavigationController: Bool
-    let completion: EmptyCompletionBlock?
     let animated: Bool
-    // TODO: Add logic for if we don't want the modal to be dragged to dismiss
-    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
+    let transition: UIModalTransitionStyle
+    let allowDismiss: Bool
+    let completion: EmptyCompletionBlock?
+    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, transition: UIModalTransitionStyle = .coverVertical, allowDismiss: Bool = true, completion: EmptyCompletionBlock? = nil) {
         self.viewController = viewController
         self.fullScreen = fullScreen
         self.embedInNavigationController = embedInNavigationController
-        self.completion = completion
         self.animated = animated
+        self.transition = transition
+        self.allowDismiss = allowDismiss
+        self.completion = completion
     }
 }
 
@@ -69,6 +75,10 @@ struct CloseModalNavigationRequest: BaseNavigationRequest {
     }
 }
 
+struct ExternalUrlNavigationRequest: BaseNavigationRequest {
+    let url: String
+}
+
 class Navigate {
     // TODO: Handle when refactoring onboarding, as there is no tab bar
     private lazy var tabBarController: MainTabBarViewController = {
@@ -80,12 +90,29 @@ class Navigate {
     
     private lazy var navigationHandler = BaseNavigationHandler(tabBarController: tabBarController)
     
+    var loyaltyCardScannerDelegate: BarcodeScannerViewControllerDelegate {
+        return tabBarController
+    }
+    
+    var paymentCardScannerDelegate: ScanDelegate {
+        return tabBarController
+    }
+    
     func to(_ navigationRequest: BaseNavigationRequest) {
         navigationHandler.to(navigationRequest)
     }
     
-    func to(_ tab: NavigationOwner, completion: EmptyCompletionBlock? = nil) {
+    func to(_ tab: NavigationOwner, popToRoot: Bool = false, nestedPushNavigationRequest: PushNavigationRequest? = nil, completion: EmptyCompletionBlock? = nil) {
         tabBarController.selectedIndex = tab.rawValue
+        if let nestedNavigationRequest = nestedPushNavigationRequest {
+            // We cannot execute the nested navigation request on the navigation handler, as that will use the top most navigation controller, which if we are using this method should not be from the tab bar.
+            if let navigationController = tabBarController.selectedViewController as? PortraitNavigationController {
+                if popToRoot {
+                    navigationController.popToRootViewController()
+                }
+                navigationController.pushViewController(nestedNavigationRequest.viewController, animated: nestedNavigationRequest.animated, hidesBackButton: nestedNavigationRequest.hidesBackButton, completion: nestedNavigationRequest.completion)
+            }
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             completion?()
         }
@@ -95,7 +122,7 @@ class Navigate {
         to(PopNavigationRequest(toRoot: toRoot, animated: animated, completion: completion))
     }
     
-    func close(animated: Bool = false, completion: EmptyCompletionBlock? = nil) {
+    func close(animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
         to(CloseModalNavigationRequest(animated: animated, completion: completion))
     }
 }
@@ -122,7 +149,7 @@ class BaseNavigationHandler {
     func to(_ navigationRequest: BaseNavigationRequest) {
         switch navigationRequest {
         case let navigationRequest as PushNavigationRequest:
-            navigationController?.pushViewController(navigationRequest.viewController, animated: navigationRequest.animated, completion: navigationRequest.completion)
+            navigationController?.pushViewController(navigationRequest.viewController, animated: navigationRequest.animated, hidesBackButton: navigationRequest.hidesBackButton, completion: navigationRequest.completion)
         case let navigationRequest as PopNavigationRequest:
             if navigationRequest.toRoot {
                 navigationController?.popToRootViewController(animated: navigationRequest.animated, completion: navigationRequest.completion)
@@ -137,12 +164,23 @@ class BaseNavigationHandler {
                 viewController.modalPresentationStyle = .fullScreen
             }
             
+            viewController.modalTransitionStyle = navigationRequest.transition
+            
+            if !navigationRequest.allowDismiss {
+                if #available(iOS 13.0, *) {
+                    viewController.isModalInPresentation = true
+                }
+            }
+            
             // We don't need to depend on a navigation controller to present modally, so simply present from the top view controller if possible
             UIViewController.topMostViewController()?.present(viewController, animated: navigationRequest.animated, completion: navigationRequest.completion)
         case let navigationRequest as CloseModalNavigationRequest:
             UIViewController.topMostViewController()?.dismiss(animated: navigationRequest.animated, completion: navigationRequest.completion)
         case let navigationRequest as AlertNavigationRequest:
             UIViewController.topMostViewController()?.present(navigationRequest.alertController, animated: true, completion: nil)
+        case let navigationRequest as ExternalUrlNavigationRequest:
+            guard let url = URL(string: navigationRequest.url), UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         default:
             fatalError("Navigation route not implemented")
         }

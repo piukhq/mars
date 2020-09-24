@@ -26,7 +26,7 @@ class AddingOptionsViewController: BinkTrackableViewController {
     let addPaymentCardView = AddingOptionView()
     
     @IBAction func cancelButtonAction(_ sender: Any) {
-        viewModel.popViewController()
+        viewModel.close()
     }
     
     override func viewDidLoad() {
@@ -95,52 +95,13 @@ class AddingOptionsViewController: BinkTrackableViewController {
         proceedWithCameraAccess(scanType: .payment)
     }
     
-    func displayNoScreenPopup() {
-        let alert = UIAlertController(title: nil, message: "Screen was not implemented yet", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-    
     private func proceedWithCameraAccess(scanType: ScanType) {
         switch scanType {
         case .loyalty:
-            viewModel.toLoyaltyScanner(delegate: self)
+            viewModel.toLoyaltyScanner()
         case .payment:
-            viewModel.toPaymentCardScanner(delegate: self)
+            viewModel.toPaymentCardScanner()
         }
-    }
-}
-
-extension AddingOptionsViewController: BarcodeScannerViewControllerDelegate {
-    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
-        viewModel.toAddAuth(membershipPlan: membershipPlan, barcode: barcode)
-        completion?()
-    }
-
-    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
-        viewModel.toBrowseBrandsScreen()
-        completion?()
-    }
-}
-
-extension AddingOptionsViewController: ScanDelegate {
-    func userDidCancel(_ scanViewController: ScanViewController) {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        // Record Bouncer usage
-        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
-        let month = Int(creditCard.expiryMonth ?? "")
-        let year = Int(creditCard.expiryYear ?? "")
-        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
-        viewModel.toAddPaymentCardScreen(model: model)
-        navigationController?.removeViewController(scanViewController)
-    }
-    
-    func userDidSkip(_ scanViewController: ScanViewController) {
-        viewModel.toAddPaymentCardScreen()
-        navigationController?.removeViewController(scanViewController)
     }
 }
 

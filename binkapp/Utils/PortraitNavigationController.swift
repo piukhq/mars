@@ -43,7 +43,8 @@ class PortraitNavigationController: UINavigationController {
         }
     }
     
-    func pushViewController(_ viewController: UIViewController, animated: Bool = false, completion: EmptyCompletionBlock? = nil) {
+    func pushViewController(_ viewController: UIViewController, animated: Bool = false, hidesBackButton: Bool = false, completion: EmptyCompletionBlock? = nil) {
+        viewController.navigationItem.setHidesBackButton(hidesBackButton, animated: true)
         pushViewController(viewController, animated: animated)
         
         guard animated, let coordinator = transitionCoordinator else {

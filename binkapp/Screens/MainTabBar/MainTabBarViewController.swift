@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CardScan
 
 extension LayoutHelper {
     struct settingsButton {
@@ -34,8 +35,6 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
         super.viewDidLoad()
 
         Current.wallet.launch()
-
-        setupNotifications()
         
         self.title = "" // TODO: Why? Remove.
         populateTabBar()
@@ -65,19 +64,39 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
     }
 }
 
-// MARK: - Notifications and Handlers
-
-extension MainTabBarViewController {
-    private func setupNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddPaymentCard), name: .didAddPaymentCard, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDidAddMembershipCard), name: .didAddMembershipCard, object: nil)
+extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDelegate {
+    func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
+        let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
+        let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
     }
-
-    @objc private func handleDidAddPaymentCard() {
-        selectedIndex = 2
+    
+    func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
+        Current.navigate.close {
+            let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
     }
-
-    @objc private func handleDidAddMembershipCard() {
-        selectedIndex = 0
+    
+    func userDidCancel(_ scanViewController: ScanViewController) {
+        Current.navigate.close()
+    }
+    
+    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
+        let month = Int(creditCard.expiryMonth ?? "")
+        let year = Int(creditCard.expiryYear ?? "")
+        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
+        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+        Current.navigate.to(navigationRequest)
     }
 }

@@ -35,7 +35,7 @@ class BarcodeScannerViewController: UIViewController {
         static let widgetViewTopPadding: CGFloat = 30
         static let widgetViewLeftRightPadding: CGFloat = 25
         static let widgetViewHeight: CGFloat = 100
-        static let backButtonSize = CGSize(width: 44, height: 44)
+        static let closeButtonSize = CGSize(width: 44, height: 44)
         static let timerInterval: TimeInterval = 5.0
         static let scanErrorThreshold: TimeInterval = 1.0
     }
@@ -74,14 +74,6 @@ class BarcodeScannerViewController: UIViewController {
         widget.addTarget(self, selector: #selector(enterManually))
         widget.translatesAutoresizingMaskIntoConstraints = false
         return widget
-    }()
-
-    private lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "navbarIconsBack"), for: .normal)
-        button.addTarget(self, action: #selector(popViewController), for: .touchUpInside)
-        return button
     }()
     
     private lazy var cancelButton: UIButton = {
@@ -150,23 +142,13 @@ class BarcodeScannerViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         
-        if viewModel.hasPlan {
-            view.addSubview(cancelButton)
-            NSLayoutConstraint.activate([
-                cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor),
-                cancelButton.heightAnchor.constraint(equalToConstant: Constants.backButtonSize.height),
-                cancelButton.widthAnchor.constraint(equalToConstant: Constants.backButtonSize.width),
-            ])
-        } else {
-            view.addSubview(backButton)
-            NSLayoutConstraint.activate([
-                backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                backButton.leftAnchor.constraint(equalTo: view.leftAnchor),
-                backButton.heightAnchor.constraint(equalToConstant: Constants.backButtonSize.height),
-                backButton.widthAnchor.constraint(equalToConstant: Constants.backButtonSize.width),
-            ])
-        }
+        view.addSubview(cancelButton)
+        NSLayoutConstraint.activate([
+            cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
+            cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
+            cancelButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize.height),
+            cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width),
+        ])
 
         if !viewModel.isScanning {
             startScanning()
@@ -286,13 +268,9 @@ class BarcodeScannerViewController: UIViewController {
             self.navigationController?.removeViewController(self)
         })
     }
-
-    @objc private func popViewController() {
-        navigationController?.popViewController(animated: true)
-    }
     
     @objc private func close() {
-        dismiss(animated: true, completion: nil)
+        Current.navigate.close()
     }
 }
 

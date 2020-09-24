@@ -48,9 +48,8 @@ class SettingsFactoryMock {
             SettingsRow(
                 type: .rateThisApp,
                 action: .customAction(action: {
-                    MainScreenRouter.openExternalURL(
-                        with: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931?action=write-review"
-                    )
+                    let navigationRequest = ExternalUrlNavigationRequest(url: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931?action=write-review")
+                    Current.navigate.to(navigationRequest)
                 }),
                 actionRequired: false
             )

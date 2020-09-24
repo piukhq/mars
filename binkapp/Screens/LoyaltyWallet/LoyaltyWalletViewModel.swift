@@ -16,11 +16,10 @@ class LoyaltyWalletViewModel: WalletViewModel {
     typealias T = CD_MembershipCard
 
     private let repository = LoyaltyWalletRepository()
-    weak var paymentScanDelegate: ScanDelegate?
     private let paymentScanStrings = PaymentCardScannerStrings()
 
     var walletPrompts: [WalletPrompt]? {
-        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty, paymentScanDelegate: paymentScanDelegate)
+        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
     }
     
     var cards: [CD_MembershipCard]? {
@@ -48,11 +47,13 @@ class LoyaltyWalletViewModel: WalletViewModel {
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .loyaltyJoin(let membershipPlan):
-            print(membershipPlan)
-//            router.toAddOrJoinViewController(membershipPlan: membershipPlan)
-        case .addPaymentCards(let scanDelegate):
-            print(scanDelegate!)
-//            router.toPaymentCardScanner(strings: paymentScanStrings, delegate: scanDelegate)
+            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        case .addPaymentCards:
+            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScanStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
     }
 
@@ -76,10 +77,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     func showNoBarcodeAlert(completion: @escaping () -> Void) {
-//        router.showNoBarcodeAlert {
-//            DispatchQueue.main.async {
-//                completion()
-//            }
-//        }
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "No Barcode", message: "No barcode or card number to display. Please check the status of this card.")
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
 }
