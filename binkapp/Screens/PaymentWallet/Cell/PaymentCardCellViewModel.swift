@@ -38,14 +38,15 @@ struct PaymentCardCellViewModel {
             return nil
         }
         
-        if status == .pending {
+        switch status {
+        case .pending, .failed:
             return status.rawValue.capitalized
-        }
-        
-        if paymentCardIsLinkedToMembershipCards {
-            return "Linked to \(linkedMembershipCardsCount) loyalty card\(linkedMembershipCardsCount > 1 ? "s" : "")"
-        } else {
-            return "Not linked"
+        case .active:
+            if paymentCardIsLinkedToMembershipCards {
+                return "Linked to \(linkedMembershipCardsCount) loyalty card\(linkedMembershipCardsCount > 1 ? "s" : "")"
+            } else {
+                return "Not linked"
+            }
         }
     }
 
