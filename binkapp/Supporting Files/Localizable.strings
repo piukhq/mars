@@ -124,6 +124,9 @@
 "delete_card_plan_title" = "Delete %@";
 "delete_card_message" = "Remove this card from Bink";
 
+"payment_card_expired_alert_title" = "This payment card has expired";
+"payment_card_expired_alert_message" = "This payment card has expired";
+
 // MARK: - Transactions
 
 "transaction_history_unavailable_title" = "Points history";

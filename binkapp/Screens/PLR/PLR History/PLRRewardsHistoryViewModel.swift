@@ -10,11 +10,9 @@ import Foundation
 
 class PLRRewardsHistoryViewModel {
     private let membershipCard: CD_MembershipCard
-    private let router: MainScreenRouter
 
-    init(membershipCard: CD_MembershipCard, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
-        self.router = router
     }
 
     var navigationTitle: String? {
@@ -45,6 +43,8 @@ class PLRRewardsHistoryViewModel {
         guard let plan = membershipCard.membershipPlan else {
             fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
         }
-        router.toVoucherDetailViewController(voucher: voucher, plan: plan)
+        let viewController = ViewControllerFactory.makeVoucherDetailViewController(voucher: voucher, plan: plan)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }

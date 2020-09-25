@@ -90,14 +90,11 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: true)
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        navigationItem.leftBarButtonItem = backButton
-        
         filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTapped))
         filtersButton?.setTitleTextAttributes([.foregroundColor : UIColor.systemGray, .font : UIFont.linkTextButtonNormal], for: .highlighted)
         filtersButton?.setTitleTextAttributes([.foregroundColor : UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
 
-        navigationItem.rightBarButtonItem = filtersButton
+        navigationItem.leftBarButtonItem = filtersButton
         
         self.title = "browse_brands_title".localized
     }
@@ -223,10 +220,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         tableView.isHidden = viewModel.shouldShowNoResultsLabel
         noMatchesLabelTopConstraint.constant = filtersVisible ? filterViewHeight : 0.0
         noMatchesLabel.isHidden = !viewModel.shouldShowNoResultsLabel
-    }
-    
-    @objc private func popViewController() {
-        viewModel.popViewController()
     }
 }
 

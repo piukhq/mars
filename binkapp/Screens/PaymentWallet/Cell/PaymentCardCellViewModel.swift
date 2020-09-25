@@ -10,11 +10,9 @@ import UIKit
 
 struct PaymentCardCellViewModel {
     private let paymentCard: CD_PaymentCard
-    private let router: MainScreenRouter?
 
-    init(paymentCard: CD_PaymentCard, router: MainScreenRouter? = nil) {
+    init(paymentCard: CD_PaymentCard) {
         self.paymentCard = paymentCard
-        self.router = router
     }
 
     var nameOnCardText: String? {
@@ -51,7 +49,8 @@ struct PaymentCardCellViewModel {
     }
 
     func expiredAction() {
-        router?.displaySimplePopup(title: "Expired Payment Card", message: "This payment card has expired.")
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "payment_card_expired_alert_title".localized, message: "payment_card_expired_alert_message".localized)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
 
     var paymentCardIsExpired: Bool {

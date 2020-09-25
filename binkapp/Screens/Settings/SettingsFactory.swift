@@ -9,11 +9,9 @@
 import UIKit
 
 struct SettingsFactory {
-    private let router: MainScreenRouter
     private let rowsWithActionRequired: [SettingsRow.RowType]?
     
-    init(router: MainScreenRouter, rowsWithActionRequired: [SettingsRow.RowType]?) {
-        self.router = router
+    init(rowsWithActionRequired: [SettingsRow.RowType]?) {
         self.rowsWithActionRequired = rowsWithActionRequired
     }
     
@@ -56,9 +54,8 @@ struct SettingsFactory {
             SettingsRow(
                 type: .rateThisApp,
                 action: .customAction(action: {
-                    MainScreenRouter.openExternalURL(
-                        with: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931?action=write-review"
-                    )
+                    let navigationRequest = ExternalUrlNavigationRequest(urlString: "https://apps.apple.com/gb/app/bink-loyalty-rewards-wallet/id1142153931?action=write-review")
+                    Current.navigate.to(navigationRequest)
                 }),
                 actionRequired: rowsWithActionRequired?.contains(.rateThisApp) ?? false
             )
