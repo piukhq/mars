@@ -23,6 +23,14 @@ class PaymentCardDetailViewModel {
         self.informationRowFactory = informationRowFactory
     }
 
+    var paymentCardStatus: PaymentCardStatus {
+        return paymentCard.paymentCardStatus
+    }
+    
+    var pendingRefreshInterval: TimeInterval {
+        return 30
+    }
+    
     // MARK: - Header views
 
     var paymentCardCellViewModel: PaymentCardCellViewModel {
@@ -38,11 +46,31 @@ class PaymentCardDetailViewModel {
     }
 
     var addedCardsTitle: String {
-        return "pcd_added_card_title".localized
+        switch paymentCard.paymentCardStatus {
+        case .active:
+            return "pcd_active_card_title".localized
+        case .pending:
+            return "pcd_pending_card_title".localized
+        case .failed:
+            return "pcd_failed_card_title".localized
+        }
     }
 
     var addedCardsDescription: String {
-        return "pcd_added_card_description".localized
+        switch paymentCard.paymentCardStatus {
+        case .active:
+            return "pcd_active_card_description".localized
+        case .pending:
+            return String(format: "pcd_pending_card_description".localized, cardAddedDateString ?? "")
+        case .failed:
+            return "pcd_failed_card_description".localized
+        }
+    }
+    
+    var cardAddedDateString: String? {
+        guard let timestamp = paymentCard.account?.formattedConsents?.first?.timestamp?.doubleValue else { return nil }
+        guard let timestampString = String.fromTimestamp(timestamp, withFormat: .dayMonthYear) else { return nil }
+        return String(format: "pcd_pending_card_added".localized, timestampString)
     }
 
     var otherCardsTitle: String {
@@ -191,6 +219,15 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: - Repository
+    
+    func refreshPaymentCard(completion: @escaping EmptyCompletionBlock) {
+        repository.getPaymentCard(forId: paymentCard.id) { paymentCard in
+            if let paymentCard = paymentCard {
+                self.paymentCard = paymentCard
+            }
+            completion()
+        }
+    }
 
     func toggleLinkForMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
         guard Current.apiClient.networkIsReachable else {

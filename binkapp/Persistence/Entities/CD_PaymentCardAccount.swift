@@ -2,5 +2,7 @@ import Foundation
 
 @objc(CD_PaymentCardAccount)
 open class CD_PaymentCardAccount: _CD_PaymentCardAccount {
-	// Custom logic goes here.
+    var formattedConsents: [CD_PaymentCardAccountConsents]? {
+        return consents.allObjects as? [CD_PaymentCardAccountConsents]
+    }
 }
