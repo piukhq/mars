@@ -11,6 +11,8 @@ import UIKit
 class PaymentCardDetailViewController: BinkTrackableViewController {
     private var viewModel: PaymentCardDetailViewModel
     private var hasSetupCell = false
+    
+    private var refreshTimer: Timer?
 
     // MARK: - UI lazy vars
 
@@ -37,6 +39,7 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         title.font = .headline
         title.textAlignment = .left
         title.translatesAutoresizingMaskIntoConstraints = false
+        title.numberOfLines = 0
         return title
     }()
 
@@ -65,6 +68,15 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         description.translatesAutoresizingMaskIntoConstraints = false
         return description
     }()
+    
+    private lazy var cardAddedLabel: UILabel = {
+        let description = UILabel()
+        description.font = .bodyTextSmall
+        description.numberOfLines = 0
+        description.textAlignment = .left
+        description.translatesAutoresizingMaskIntoConstraints = false
+        return description
+    }()
 
     private lazy var addedCardsTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
@@ -83,6 +95,13 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
+    lazy var separator: UIView = {
+        let separator = UIView()
+        separator.backgroundColor = .lightGray
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        return separator
+    }()
 
     // MARK: - Init
 
@@ -99,11 +118,19 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        configureLayout()
         configureUI()
         setupTables()
 
         getLinkedCards()
+        
+        if viewModel.paymentCardStatus == .pending {
+            refreshTimer = Timer.scheduledTimer(withTimeInterval: viewModel.pendingRefreshInterval, repeats: false, block: { timer in
+                self.refresh()
+                timer.invalidate()
+            })
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -129,26 +156,46 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
 // MARK - Private methods
 
 private extension PaymentCardDetailViewController {
+    func refresh() {
+        viewModel.refreshPaymentCard {
+            self.configureUI()
+            self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
+            Current.wallet.refreshLocal()
+        }
+    }
+    
     func configureUI() {
         addedCardsTitleLabel.text = viewModel.addedCardsTitle
         addedCardsDescriptionLabel.text = viewModel.addedCardsDescription
         otherCardsTitleLabel.text = viewModel.otherCardsTitle
         otherCardsDescriptionLabel.text = viewModel.otherCardsDescription
-
+        cardAddedLabel.text = viewModel.cardAddedDateString
+        
+        [addedCardsTableView, otherCardsTableView, otherCardsTitleLabel, otherCardsDescriptionLabel].forEach {
+            $0.isHidden = viewModel.paymentCardStatus != .active
+        }
+        
+        cardAddedLabel.isHidden = viewModel.paymentCardStatus != .pending
+        separator.isHidden = viewModel.paymentCardStatus == .active
+        
+        stackScrollView.customPadding(viewModel.paymentCardStatus == .pending ? 20 : 0, after: cardAddedLabel)
+        stackScrollView.customPadding(viewModel.paymentCardStatus != .active ? 20 : 0, after: addedCardsDescriptionLabel)
+    
         stackScrollView.delegate = self
-        configureLayout()
     }
 
     func configureLayout() {
         stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: LayoutHelper.PaymentCardDetail.stackScrollViewTopPadding)
 
         if viewModel.shouldShowAddedLoyaltyCardTableView {
-            stackScrollView.add(arrangedSubviews: [addedCardsTitleLabel, addedCardsDescriptionLabel, addedCardsTableView])
+            stackScrollView.add(arrangedSubviews: [addedCardsTitleLabel, addedCardsDescriptionLabel, cardAddedLabel, addedCardsTableView])
             NSLayoutConstraint.activate([
                 addedCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
                 addedCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
                 addedCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
                 addedCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                cardAddedLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+                cardAddedLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
                 addedCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             ])
         }
@@ -167,7 +214,7 @@ private extension PaymentCardDetailViewController {
             ])
         }
 
-        stackScrollView.add(arrangedSubviews: [informationTableView])
+        stackScrollView.add(arrangedSubviews: [separator, informationTableView])
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -176,6 +223,8 @@ private extension PaymentCardDetailViewController {
             card.heightAnchor.constraint(equalToConstant: LayoutHelper.WalletDimensions.cardSize.height),
             card.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -LayoutHelper.PaymentCardDetail.cardViewPadding),
             informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            separator.heightAnchor.constraint(equalToConstant: CGFloat.onePointScaled()),
+            separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
         ])
     }
 
