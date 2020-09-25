@@ -11,8 +11,8 @@ import CoreData
 
 enum PaymentCardStatus: String {
     case active
-    case pending = "failed"
-    case failed = "pending"
+    case pending
+    case failed
 }
 
 struct PaymentCardModel: Codable {
