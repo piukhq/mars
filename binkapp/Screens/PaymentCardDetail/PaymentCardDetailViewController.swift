@@ -178,12 +178,11 @@ private extension PaymentCardDetailViewController {
             $0.isHidden = viewModel.paymentCardStatus != .active
         }
         
-        cardAddedLabel.isHidden = viewModel.paymentCardStatus == .active
+        cardAddedLabel.isHidden = viewModel.paymentCardStatus != .pending
         separator.isHidden = viewModel.paymentCardStatus == .active
         
-        let padding: CGFloat = viewModel.paymentCardStatus == .pending ? 20 : 0
-        stackScrollView.customPadding(padding, after: cardAddedLabel)
-        stackScrollView.customPadding(padding, after: addedCardsDescriptionLabel)
+        stackScrollView.customPadding(viewModel.paymentCardStatus == .pending ? 20 : 0, after: cardAddedLabel)
+        stackScrollView.customPadding(viewModel.paymentCardStatus != .active ? 20 : 0, after: addedCardsDescriptionLabel)
     
         stackScrollView.delegate = self
     }
