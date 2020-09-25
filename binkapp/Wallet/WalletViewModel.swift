@@ -23,7 +23,6 @@ protocol WalletViewModel {
     func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?)
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt)
     func showDeleteConfirmationAlert(card: T, onCancel: @escaping () -> Void)
-    func toAddPaymentCardScreen(model: PaymentCardCreateModel?)
 }
 
 extension WalletViewModel {

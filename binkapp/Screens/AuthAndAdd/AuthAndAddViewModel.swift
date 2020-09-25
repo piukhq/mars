@@ -199,7 +199,6 @@ class AuthAndAddViewModel {
                 let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
                 Current.navigate.to(navigationRequest)
             } else {
-                // TODO: Push to LCD behind
                 Current.navigate.close()
             }
         }) { (error) in
@@ -327,9 +326,10 @@ class AuthAndAddViewModel {
     }
     
     func reloadWithGhostCardFields() {
-        // TODO: Not implemented with navigation refactor. Was already commented out.
-//        let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .patchGhostCard : .ghostCard
-//        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
+        let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .patchGhostCard : .ghostCard
+        let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func openWebView(withUrlString url: URL) {

@@ -76,7 +76,7 @@ struct CloseModalNavigationRequest: BaseNavigationRequest {
 }
 
 struct ExternalUrlNavigationRequest: BaseNavigationRequest {
-    let url: String
+    let urlString: String
 }
 
 class Navigate {
@@ -181,7 +181,7 @@ class BaseNavigationHandler {
         case let navigationRequest as AlertNavigationRequest:
             UIViewController.topMostViewController()?.present(navigationRequest.alertController, animated: true, completion: nil)
         case let navigationRequest as ExternalUrlNavigationRequest:
-            guard let url = URL(string: navigationRequest.url), UIApplication.shared.canOpenURL(url) else { return }
+            guard let url = URL(string: navigationRequest.urlString), UIApplication.shared.canOpenURL(url) else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         default:
             fatalError("Navigation route not implemented")

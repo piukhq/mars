@@ -39,10 +39,6 @@ class LoyaltyWalletViewModel: WalletViewModel {
         let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card))
         Current.navigate.to(navigationRequest)
     }
-    
-    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        
-    }
 
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {

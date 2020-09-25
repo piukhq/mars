@@ -9,7 +9,6 @@ import UIKit
 import CardScan
 
 class PLLScreenViewModel {
-    // TODO: After successfully adding a payment card, we need to refresh this payment card with the latest copy of itself, as it will contain linked payment cards
     private var membershipCard: CD_MembershipCard
     private let repository = PLLScreenRepository()
     

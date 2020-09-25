@@ -28,10 +28,6 @@ class PaymentWalletViewModel: WalletViewModel {
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
-    
-    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-//        router.toAddPaymentViewController(model: model)
-    }
 
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
