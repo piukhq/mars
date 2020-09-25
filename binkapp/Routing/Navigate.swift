@@ -80,6 +80,8 @@ struct ExternalUrlNavigationRequest: BaseNavigationRequest {
 }
 
 class Navigate {
+    static let transitionDuration: TimeInterval = 0.3
+    
     // TODO: Handle when refactoring onboarding, as there is no tab bar
     private lazy var tabBarController: MainTabBarViewController = {
         guard let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarViewController else {
@@ -113,7 +115,7 @@ class Navigate {
                 navigationController.pushViewController(nestedNavigationRequest.viewController, animated: nestedNavigationRequest.animated, hidesBackButton: nestedNavigationRequest.hidesBackButton, completion: nestedNavigationRequest.completion)
             }
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Navigate.transitionDuration) {
             completion?()
         }
     }
