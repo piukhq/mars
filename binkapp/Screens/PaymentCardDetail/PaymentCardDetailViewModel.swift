@@ -67,9 +67,10 @@ class PaymentCardDetailViewModel {
         }
     }
     
-    private var cardAddedDateString: String? {
+    var cardAddedDateString: String? {
         guard let timestamp = paymentCard.account?.formattedConsents?.first?.timestamp?.doubleValue else { return nil }
-        return String.fromTimestamp(timestamp, withFormat: .dayMonthYear)
+        guard let timestampString = String.fromTimestamp(timestamp, withFormat: .dayMonthYear) else { return nil }
+        return String(format: "pcd_pending_card_added".localized, timestampString)
     }
 
     var otherCardsTitle: String {
