@@ -63,10 +63,10 @@ protocol CardDetailInformationRowFactory {
 }
 
 protocol CardDetailInformationRowFactoryDelegate: AnyObject {
-    func cardDetailInformationRowFactory(_ factory: PaymentCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType)
+    func cardDetailInformationRowFactory(_ factory: WalletCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType)
 }
 
-class PaymentCardDetailInformationRowFactory: CardDetailInformationRowFactory {
+class WalletCardDetailInformationRowFactory: CardDetailInformationRowFactory {
     weak var delegate: CardDetailInformationRowFactoryDelegate?
 
     func makeLoyaltyInformationRows(membershipCard: CD_MembershipCard) -> [CardDetailInformationRow] {

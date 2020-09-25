@@ -26,7 +26,6 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.alignment = .center
         stackView.delegate = self
         stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
-        stackView.margin = Constants.stackViewMargin
         return stackView
     }()
 
@@ -112,7 +111,6 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        setCloseButton()
         configureUI()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
@@ -177,12 +175,6 @@ extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableView
 // MARK: - Private methods
 
 private extension LoyaltyCardFullDetailsViewController {
-    func setCloseButton() {
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popToRootController
-            ))
-        self.navigationItem.setLeftBarButton(closeButton, animated: true)
-    }
-
     func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
@@ -297,10 +289,6 @@ private extension LoyaltyCardFullDetailsViewController {
         pointsModule.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
         linkModule.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards, delegate: self)
     }
-    
-    @objc func popToRootController() {
-        viewModel.popToRootController()
-    }
 
     @objc func showBarcodeButtonPressed() {
         viewModel.toBarcodeModel()
@@ -310,7 +298,7 @@ private extension LoyaltyCardFullDetailsViewController {
 // MARK: - CardDetailInformationRowFactoryDelegate
 
 extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryDelegate {
-    func cardDetailInformationRowFactory(_ factory: PaymentCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
+    func cardDetailInformationRowFactory(_ factory: WalletCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
         switch informationRowType {
         case .about:
             viewModel.toAboutMembershipPlanScreen()

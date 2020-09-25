@@ -10,9 +10,8 @@ import UIKit
 class LoyaltyCardFullDetailsViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
-    private let router: MainScreenRouter
     private let repository = LoyaltyCardFullDetailsRepository()
-    private let informationRowFactory: PaymentCardDetailInformationRowFactory
+    private let informationRowFactory: WalletCardDetailInformationRowFactory
     
     var paymentCards: [CD_PaymentCard]? {
         return Current.wallet.paymentCards
@@ -31,8 +30,7 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.status?.status == .authorised
     }
     
-    init(membershipCard: CD_MembershipCard, router: MainScreenRouter, informationRowFactory: PaymentCardDetailInformationRowFactory) {
-        self.router = router
+    init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.membershipCard = membershipCard
         self.informationRowFactory = informationRowFactory
     }  
@@ -73,21 +71,18 @@ class LoyaltyCardFullDetailsViewModel {
     // MARK: - Public methods
     
     func toBarcodeModel() {
-        router.toBarcodeViewController(membershipCard: membershipCard) { }
+        let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: membershipCard)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func goToScreenForAction(action: BinkModuleView.BinkModuleAction) {
         switch action {
-        case .login:
-            //TODO: change to login screen after is implemented
+        case .login, .loginChanges:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
-            break
-        case .loginChanges:
-            //TODO: change to login changes screen after is implemented
-            guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
-            break
+            let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: membershipCard)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         case .transactions:
             guard membershipCard.membershipPlan?.featureSet?.transactionsAvailable?.boolValue ?? false else {
                 let title = "transaction_history_not_supported_title".localized
@@ -97,98 +92,101 @@ class LoyaltyCardFullDetailsViewModel {
                 let attributedString = NSMutableAttributedString()
                 attributedString.append(attributedTitle)
                 attributedString.append(attributedDescription)
-                let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-                router.toReusableModalTemplateViewController(configurationModel: configuration)
+                
+                let configuration = ReusableModalConfiguration(title: title, text: attributedString)
+                let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
                 return
             }
-            router.toTransactionsViewController(membershipCard: membershipCard)
-            break
+            let viewController = ViewControllerFactory.makeTransactionsViewController(membershipCard: membershipCard)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         case .pending:
             let title = "generic_pending_module_title".localized
             let description = "generic_pending_module_description".localized
-            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
-            break
+            let attributedString = ReusableModalConfiguration.makeAttributedString(title: title, description: description)
+            let configuration = ReusableModalConfiguration(text: attributedString)
+            let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         case .loginUnavailable:
             let title = "transaction_history_not_supported_title".localized
             let description = String(format: "transaction_history_not_supported_description".localized, membershipCard.membershipPlan?.account?.planName ?? "")
-
-            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
-            break
+            let attributedString = ReusableModalConfiguration.makeAttributedString(title: title, description: description)
+            let configuration = ReusableModalConfiguration(text: attributedString)
+            let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         case .signUp:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toSignUp(membershipPlan: membershipPlan, existingMembershipCard: membershipCard)
-            break
+            let viewController = ViewControllerFactory.makeSignUpViewController(membershipPlan: membershipPlan, existingMembershipCard: membershipCard)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         case .registerGhostCard:
-            router.displaySimplePopup(title: "error_title".localized, message: "to_be_implemented_message".localized)
-            break
+            let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "to_be_implemented_message".localized)
+            Current.navigate.to(AlertNavigationRequest(alertController: alert))
         case .patchGhostCard:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toPatchGhostCard(membershipPlan: membershipPlan, existingMembershipCard: membershipCard)
-            break
-        case .pllEmpty:
-            router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)
-            break
-        case .pll:
-            router.toPllViewController(membershipCard: membershipCard, journey: .existingCard)
-            break
+            let viewController = ViewControllerFactory.makePatchGhostCardViewController(membershipPlan: membershipPlan, existingMembershipCard: membershipCard)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        case .pll, .pllEmpty:
+            let viewController = ViewControllerFactory.makePllViewController(membershipCard: membershipCard, journey: .existingCard)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController, allowDismiss: false)
+            Current.navigate.to(navigationRequest)
         case .unLinkable:
             let title = "unlinkable_pll_title".localized
             let description = "unlinkable_pll_description".localized
-            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: title, description: description))
-            break
+            let attributedString = ReusableModalConfiguration.makeAttributedString(title: title, description: description)
+            let configuration = ReusableModalConfiguration(text: attributedString)
+            let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         case .genericError:
             let state = membershipCard.status?.status?.rawValue ?? ""
-            
+
             var description = state + "\n"
             membershipCard.status?.formattedReasonCodes?.forEach {
                 description += $0.description
             }
-            
-            router.toReusableModalTemplateViewController(configurationModel: getBasicReusableConfiguration(title: "error_title".localized, description: description))
-            break
+
+            let attributedString = ReusableModalConfiguration.makeAttributedString(title: "error_title".localized, description: description)
+            let configuration = ReusableModalConfiguration(text: attributedString)
+            let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         case .aboutMembership:
             toAboutMembershipPlanScreen()
         case .noReasonCode:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
-            router.toAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
+            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan, membershipCard: membershipCard)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
     }
     
-    func getBasicReusableConfiguration(title: String, description: String) -> ReusableModalConfiguration {
-        let attributedString = NSMutableAttributedString()
-        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
-        attributedString.append(attributedTitle)
-        attributedString.append(attributedBody)
-        
-        return ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-    }
-    
-    func toReusableModalTemplate(title: String, description: NSMutableAttributedString) {
-        let configurationModel = ReusableModalConfiguration(title: "", text: description, showCloseButton: true)
-        
-        router.toReusableModalTemplateViewController(configurationModel: configurationModel)
-    }
-    
     func toRewardsHistoryScreen() {
-        router.toRewardsHistoryViewController(membershipCard: membershipCard)
+        let viewController = ViewControllerFactory.makeRewardsHistoryViewController(membershipCard: membershipCard)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toAboutMembershipPlanScreen() {
-        let config = getBasicReusableConfiguration(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
-        router.toReusableModalTemplateViewController(configurationModel: config)
+        let attributedString = ReusableModalConfiguration.makeAttributedString(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
+        let configuration = ReusableModalConfiguration(text: attributedString)
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toSecurityAndPrivacyScreen() {
-        router.toPrivacyAndSecurityViewController()
-    }
-    
-    func popToRootController() {
-        router.popToRootViewController()
-    }
-    
-    @objc func popViewController() {
-        router.popViewController()
+        let title: String = "security_and_privacy_title".localized
+        let description: String = "security_and_privacy_description".localized
+        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
+        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func getOfferTileImageUrls() -> [String]? {
@@ -215,7 +213,9 @@ class LoyaltyCardFullDetailsViewModel {
         guard let plan = membershipCard.membershipPlan else {
             fatalError("Membership card has no membership plan attributed to it. This should never be the case.")
         }
-        router.toVoucherDetailViewController(voucher: voucher, plan: plan)
+        let viewController = ViewControllerFactory.makeVoucherDetailViewController(voucher: voucher, plan: plan)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func state(forVoucher voucher: CD_Voucher) -> VoucherState? {
@@ -238,23 +238,21 @@ extension LoyaltyCardFullDetailsViewModel {
         informationRows[indexPath.row].action()
     }
     
-    func showDeleteConfirmationAlert(yesCompletion: EmptyCompletionBlock? = nil, noCompletion: EmptyCompletionBlock? = nil) {
-        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
+    func showDeleteConfirmationAlert() {
+        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
             guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {
-                self.router.presentNoConnectivityPopup()
-                noCompletion?()
+                let alert = ViewControllerFactory.makeNoConnectivityAlertController()
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
                 return
             }
             self.repository.delete(self.membershipCard) {
                 Current.wallet.refreshLocal()
-                self.router.popToRootViewController()
-                yesCompletion?()
-            }
-        }, noCompletion: {
-            DispatchQueue.main.async {
-                noCompletion?()
+                Current.navigate.back()
             }
         })
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
 }

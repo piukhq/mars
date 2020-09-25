@@ -13,8 +13,7 @@ protocol PreferencesDelegate: class {
 }
 
 class PreferencesViewModel {
-    private let repository: PreferencesRepository
-    private let router: MainScreenRouter
+    private let repository = PreferencesRepository()
     
     weak var delegate: PreferencesDelegate?
     
@@ -24,14 +23,9 @@ class PreferencesViewModel {
         }
     }
     
-    init(repository: PreferencesRepository, router: MainScreenRouter) {
-        self.repository = repository
-        self.router = router
-    }
-    
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping () -> Void) {
         guard repository.networkIsReachable else {
-            router.presentNoConnectivityPopup()
+            presentNoConnectivityPopup()
             return
         }
         repository.getPreferences(onSuccess: { (preferences) in
@@ -52,6 +46,8 @@ class PreferencesViewModel {
     }
     
     func presentNoConnectivityPopup() {
-        router.presentNoConnectivityPopup()
+        let alert = ViewControllerFactory.makeNoConnectivityAlertController()
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
 }

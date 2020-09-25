@@ -49,10 +49,6 @@ class OnboardingViewModel {
     var facebookLoginOK: String {
         return "ok".localized
     }
-
-    func notImplemented() {
-        router.featureNotImplemented()
-    }
     
     func pushToSocialTermsAndConditions(requestType: SocialLoginRequestType) {
         let termsAndConditions = SocialTermsAndConditionsViewController(router: router, requestType: requestType)

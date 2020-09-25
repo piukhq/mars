@@ -38,4 +38,15 @@ extension UIViewController {
         }
         return nil
     }
+    
+    static func topMostViewController() -> UIViewController? {
+        let keyWindow = UIApplication.shared.keyWindow
+        if var topController = keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            return topController
+        }
+        return nil
+    }
 }

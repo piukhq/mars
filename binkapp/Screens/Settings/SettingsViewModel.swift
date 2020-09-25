@@ -10,11 +10,9 @@ import UIKit
 
 class SettingsViewModel {
     private let factory: SettingsFactory
-    let router: MainScreenRouter
     
-    init(router: MainScreenRouter, rowsWithActionRequired: [SettingsRow.RowType]?) {
-        self.router = router
-        factory = SettingsFactory(router: router, rowsWithActionRequired: rowsWithActionRequired)
+    init(rowsWithActionRequired: [SettingsRow.RowType]?) {
+        factory = SettingsFactory(rowsWithActionRequired: rowsWithActionRequired)
     }
     
     var sections: [SettingsSection] {
@@ -45,12 +43,14 @@ class SettingsViewModel {
         return sections[safe: indexPath.section]?.rows[safe: indexPath.row]
     }
     
-    func pushReusableModal(configurationModel: ReusableModalConfiguration, navController: UINavigationController?) {
-        
-        router.pushReusableModalTemplateVC(configurationModel: configurationModel, navigationController: navController)
+    func pushReusableModal(configurationModel: ReusableModalConfiguration) {
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel, floatingButtons: true)
+        Current.navigate.to(PushNavigationRequest(viewController: viewController))
     }
     
     func openWebView(url: String) {
-        router.openWebView(withUrlString: url)
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }

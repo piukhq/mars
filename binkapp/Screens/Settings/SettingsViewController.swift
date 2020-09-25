@@ -61,8 +61,6 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
         
         configureLayout()
         title = viewModel.title
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(close))
-        navigationItem.rightBarButtonItem = closeButton
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -94,30 +92,19 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     private func toSecurityAndPrivacyVC() {
         let title: String = "settings_row_security_title".localized
         let description: String = "security_and_privacy_description".localized
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description), tabBarBackButton: backButton)
-        viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
+        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
+        viewModel.pushReusableModal(configurationModel: configuration)
     }
     
     private func toHowItWorksVC() {
         let title: String = "how_it_works_title".localized
         let description: String = "how_it_works_description".localized
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description), tabBarBackButton: backButton)
-        viewModel.pushReusableModal(configurationModel: configuration, navController: navigationController)
+        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
+        viewModel.pushReusableModal(configurationModel: configuration)
     }
     
     private func presentWebView(url: String) {
         viewModel.openWebView(url: url)
-    }
-    
-    // MARK: - Action
-    @objc func popViewController() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc func close() {
-        dismiss(animated: true)
     }
 }
 
@@ -173,11 +160,14 @@ extension SettingsViewController: UITableViewDelegate {
                     let articleConfig = ArticleUiConfiguration()
                     articleConfig.showContactOptions = false
                     let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
-                    navigationController?.pushViewController(viewController, animated: true)
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
                 case .contactUs:
-                    let launchContactUs = { [weak self] in
+                    let launchContactUs = {
+                        // TODO: Move all to viewmodel
                         let viewController = RequestUi.buildRequestList()
-                        self?.navigationController?.pushViewController(viewController, animated: true)
+                        let navigationRequest = PushNavigationRequest(viewController: viewController)
+                        Current.navigate.to(navigationRequest)
                     }
 
                     /// We are getting the textfields and action item back from the alert controller in closures so that we can reference them in the UITextFieldDelegate
@@ -191,7 +181,8 @@ extension SettingsViewController: UITableViewDelegate {
                         }, okActionHandler: {
                             launchContactUs()
                         }, textFieldDelegate: self)
-                        present(alert, animated: true, completion: nil)
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
                     } else {
                         launchContactUs()
                     }
@@ -207,13 +198,13 @@ extension SettingsViewController: UITableViewDelegate {
                     let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
                     let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
                     debugMenuFactory.delegate = debugMenuViewController
-                    navigationController?.pushViewController(debugMenuViewController, animated: true)
+                    let navigationRequest = PushNavigationRequest(viewController: debugMenuViewController)
+                    Current.navigate.to(navigationRequest)
                     break
                 case is PreferencesViewController.Type:
-                    let repository = PreferencesRepository(apiClient: viewModel.router.apiClient)
-                    let viewModel = PreferencesViewModel(repository: repository, router: self.viewModel.router)
-                    let viewController = PreferencesViewController(viewModel: viewModel)
-                    navigationController?.pushViewController(viewController, animated: true)
+                    let viewController = PreferencesViewController(viewModel: PreferencesViewModel())
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
                 default:
                     print("Unsupported VC for presentation")
                     break
@@ -241,7 +232,8 @@ extension SettingsViewController: UITableViewDelegate {
                     })
                 )
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                present(alert, animated: true)
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
             }
         }
     }

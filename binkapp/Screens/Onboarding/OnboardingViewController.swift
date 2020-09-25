@@ -218,7 +218,9 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
 
     @objc private func handleFacebookButtonPressed() {
         guard Current.apiClient.networkIsReachable else {
-            viewModel.router.presentNoConnectivityPopup()
+            let alert = ViewControllerFactory.makeNoConnectivityAlertController()
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
             return
         }
     
@@ -340,6 +342,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
     
     private func handleLoginError() {
         Current.userManager.removeUser()
-        viewModel.router.displaySimplePopup(title: "error_title".localized, message: "login_error".localized)
+        let navigationRequest = AlertNavigationRequest(alertController: ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "login_error".localized))
+        Current.navigate.to(navigationRequest)
     }
 }

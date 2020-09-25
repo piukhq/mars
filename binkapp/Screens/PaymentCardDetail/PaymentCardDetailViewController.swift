@@ -100,9 +100,6 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popToRoot))
-        self.navigationItem.leftBarButtonItem = backButton
-        
         configureUI()
         setupTables()
 
@@ -210,10 +207,6 @@ private extension PaymentCardDetailViewController {
         self.otherCardsTableView.reloadData()
         Current.wallet.refreshLocal()
     }
-    
-    @objc func popToRoot() {
-        viewModel.popToRootViewController()
-    }
 }
 
 // MARK: Table view delegate & datasource
@@ -275,7 +268,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
                 return cell
             }
 
-            let cellViewModel = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: plan, router: viewModel.router)
+            let cellViewModel = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: plan)
 
             cell.configureWithViewModel(cellViewModel)
 
@@ -334,7 +327,7 @@ extension PaymentCardDetailViewController: PaymentCardDetailLinkLoyaltyCardCellD
 // MARK: - CardDetailInformationRowFactoryDelegate
 
 extension PaymentCardDetailViewController: CardDetailInformationRowFactoryDelegate {
-    func cardDetailInformationRowFactory(_ factory: PaymentCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
+    func cardDetailInformationRowFactory(_ factory: WalletCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
         switch informationRowType {
         case .securityAndPrivacy:
             viewModel.toSecurityAndPrivacyScreen()

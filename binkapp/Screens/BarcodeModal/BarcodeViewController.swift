@@ -28,7 +28,7 @@ class BarcodeViewController: BinkTrackableViewController {
     private let viewModel: BarcodeViewModel
     var hasDrawnBarcode = false
     
-    init(viewModel: BarcodeViewModel, showFullSize: Bool = false) {
+    init(viewModel: BarcodeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "BarcodeViewController", bundle: Bundle(for: BarcodeViewController.self))
     }
@@ -43,8 +43,6 @@ class BarcodeViewController: BinkTrackableViewController {
         title = viewModel.title
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.barTintColor = .white
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popViewController))
         
         configureUI()
     }
@@ -116,9 +114,5 @@ class BarcodeViewController: BinkTrackableViewController {
 
         hasDrawnBarcode = true
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    @objc private func popViewController() {
-        dismiss(animated: true, completion: nil)
     }
 }
