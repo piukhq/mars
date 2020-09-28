@@ -96,6 +96,9 @@ class AuthAndAddViewModel {
             }
             return nil
         case .ghostCard, .patchGhostCard:
+            if membershipPlan.isPLL, let description = membershipPlan.account?.planRegisterInfo {
+                return description
+            }
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "register_ghost_card_description".localized, planNameCard)
         case .addFailed, .signUpFailed:
