@@ -146,7 +146,7 @@
 "only_points_log_in_description" = "You can log in to your %@ account to see your points balance. This is optional.";
 "points_and_transactions_log_in_description" = "You can log in to your %@ account to see your points balance and transaction history. This is optional.";
 "sign_up_new_card_description" = "Fill out the form below to get a new %@ and start collecting rewards";
-"sign_up_new_card_title" = "Sign up for a new card";
+"sign_up_new_card_title" = "Sign up for %@";
 "sign_up_button_title" = "Sign up";
 
 "log_in_pending_title" = "Log in pending";
