@@ -14,6 +14,10 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
     var imagesSet: Set<CD_MembershipPlanImage>? {
         return images as? Set<CD_MembershipPlanImage>
     }
+    
+    var isPLL: Bool {
+        return featureSet?.planCardType == .link
+    }
 
     var isPLR: Bool {
         return featureSet?.hasVouchers?.boolValue ?? false || hasVouchers?.boolValue ?? false
