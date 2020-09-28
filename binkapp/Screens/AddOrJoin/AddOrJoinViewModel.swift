@@ -104,17 +104,7 @@ class AddOrJoinViewModel {
     }
     
     func brandHeaderWasTapped() {
-        let title: String = membershipPlan.account?.planName ?? ""
-        let description: String = membershipPlan.account?.planDescription ?? ""
-        
-        let attributedString = NSMutableAttributedString()
-        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
-        attributedString.append(attributedTitle)
-        attributedString.append(attributedBody)
-        
-        let configuration = ReusableModalConfiguration(title: title, text: attributedString)
-        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }

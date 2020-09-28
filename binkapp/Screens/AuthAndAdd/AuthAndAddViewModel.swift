@@ -353,10 +353,9 @@ class AuthAndAddViewModel {
     }
     
     func brandHeaderWasTapped() {
-        let title = membershipPlan.account?.planName ?? ""
-        let description = membershipPlan.account?.planDescription ?? ""
-        
-        toReusableTemplate(title: title, description: description)
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func displaySimplePopup(title: String?, message: String?) {

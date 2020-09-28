@@ -86,17 +86,8 @@ class PLLScreenViewModel {
     }
     
     func brandHeaderWasTapped() {
-        let title = membershipCard.membershipPlan?.account?.planName ?? ""
-        let description = membershipCard.membershipPlan?.account?.planDescription ?? ""
-        
-        let attributedString = NSMutableAttributedString()
-        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
-        attributedString.append(attributedTitle)
-        attributedString.append(attributedBody)
-        
-        let configuration = ReusableModalConfiguration(title: title, text: attributedString)
-        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+        guard let plan = membershipCard.membershipPlan else { return }
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: plan)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
