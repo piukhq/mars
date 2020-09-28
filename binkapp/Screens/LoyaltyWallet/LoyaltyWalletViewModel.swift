@@ -74,6 +74,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     
     func showNoBarcodeAlert(completion: @escaping () -> Void) {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: "No Barcode", message: "No barcode or card number to display. Please check the status of this card.")
-        Current.navigate.to(AlertNavigationRequest(alertController: alert))
+        let navigationRequest = AlertNavigationRequest(alertController: alert, completion: completion)
+        Current.navigate.to(navigationRequest)
     }
 }

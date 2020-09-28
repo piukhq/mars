@@ -9,7 +9,9 @@
 import UIKit
 import CardScan
 
-protocol BaseNavigationRequest {}
+protocol BaseNavigationRequest {
+    var completion: EmptyCompletionBlock? { get }
+}
 
 enum NavigationOwner: Int {
     case loyalty = 0
@@ -61,8 +63,10 @@ struct ModalNavigationRequest: BaseNavigationRequest {
 
 struct AlertNavigationRequest: BaseNavigationRequest {
     let alertController: UIAlertController
-    init(alertController: UIAlertController) {
+    let completion: EmptyCompletionBlock?
+    init(alertController: UIAlertController, completion: EmptyCompletionBlock? = nil) {
         self.alertController = alertController
+        self.completion = completion
     }
 }
 
@@ -77,6 +81,11 @@ struct CloseModalNavigationRequest: BaseNavigationRequest {
 
 struct ExternalUrlNavigationRequest: BaseNavigationRequest {
     let urlString: String
+    let completion: EmptyCompletionBlock?
+    init(urlString: String, completion: EmptyCompletionBlock? = nil) {
+        self.urlString = urlString
+        self.completion = completion
+    }
 }
 
 class Navigate {
@@ -179,7 +188,7 @@ class BaseNavigationHandler {
         case let navigationRequest as CloseModalNavigationRequest:
             UIViewController.topMostViewController()?.dismiss(animated: navigationRequest.animated, completion: navigationRequest.completion)
         case let navigationRequest as AlertNavigationRequest:
-            UIViewController.topMostViewController()?.present(navigationRequest.alertController, animated: true, completion: nil)
+            UIViewController.topMostViewController()?.present(navigationRequest.alertController, animated: true, completion: navigationRequest.completion)
         case let navigationRequest as ExternalUrlNavigationRequest:
             guard let url = URL(string: navigationRequest.urlString), UIApplication.shared.canOpenURL(url) else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
