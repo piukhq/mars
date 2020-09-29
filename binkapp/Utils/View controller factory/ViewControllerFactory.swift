@@ -99,8 +99,26 @@ final class ViewControllerFactory {
         return PLRRewardsHistoryViewController(viewModel: viewModel)
     }
     
-    static func makeAboutMembershipPlanViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
-        return makeReusableTemplateViewController(configuration: configuration, floatingButtons: floatingButtons)
+    static func makeAboutMembershipPlanViewController(membershipPlan: CD_MembershipPlan) -> ReusableTemplateViewController {
+        var titleString = ""
+        if let planName = membershipPlan.account?.planName {
+            titleString = String(format: "about_membership_plan_title".localized, planName)
+        } else {
+            titleString = "about_membership_title".localized
+        }
+        
+        var descriptionString = ""
+        if let planSummary = membershipPlan.account?.planSummary {
+            descriptionString.append(planSummary)
+            descriptionString.append("\n\n")
+        }
+        if let planDescription = membershipPlan.account?.planDescription {
+            descriptionString.append(planDescription)
+        }
+        
+        let attributedString = ReusableModalConfiguration.makeAttributedString(title: titleString, description: descriptionString)
+        let configuration = ReusableModalConfiguration(text: attributedString)
+        return makeReusableTemplateViewController(configuration: configuration, floatingButtons: false)
     }
     
     static func makeSecurityAndPrivacyViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
