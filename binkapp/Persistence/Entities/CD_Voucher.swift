@@ -9,9 +9,9 @@ open class CD_Voucher: _CD_Voucher {
         }
         switch earnType {
         case .accumulator:
-            return "\(earn?.prefix ?? "")\(earn?.value?.twoDecimalPointString() ?? "")/\(earn?.targetValue?.twoDecimalPointString() ?? "")\(suffix)"
+            return "\(earn?.prefix ?? "")\(earn?.value?.twoDecimalPointString() ?? "")/\(earn?.prefix ?? "")\(earn?.targetValue?.twoDecimalPointString() ?? "")\(suffix)"
         case .stamps:
-            return "\(earn?.prefix ?? "")\(earn?.value ?? 0)/\(earn?.targetValue ?? 0)\(suffix)"
+            return "\(earn?.prefix ?? "")\(earn?.value ?? 0)/\(earn?.prefix ?? "")\(earn?.targetValue ?? 0)\(suffix)"
         default:
             return nil
         }
