@@ -55,7 +55,7 @@ class AuthAndAddViewModel {
     
     var title: String {
         switch formPurpose {
-        case .signUp, .signUpFailed: return "sign_up_new_card_title".localized
+        case .signUp, .signUpFailed: return String(format: "sign_up_new_card_title".localized, membershipPlan.account?.planName ?? "a new card")
         case .add, .addFromScanner: return "credentials_title".localized
         case .addFailed: return "log_in_title".localized
         case .ghostCard, .patchGhostCard: return "register_ghost_card_title".localized

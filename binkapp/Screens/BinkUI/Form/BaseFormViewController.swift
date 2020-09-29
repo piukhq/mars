@@ -54,6 +54,7 @@ class BaseFormViewController: BinkTrackableViewController, Form {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.font = UIFont.headline
+        title.numberOfLines = 0
         return title
     }()
     
