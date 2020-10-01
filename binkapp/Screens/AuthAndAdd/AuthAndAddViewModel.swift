@@ -149,7 +149,7 @@ class AuthAndAddViewModel {
                 // Navigate to LCD for the new card behind the modal
                 let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
                 let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
-                Current.navigate.to(.loyalty, popToRoot: true, nestedPushNavigationRequest: lcdNavigationRequest, completion: {
+                let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest) {
                     if card.membershipPlan?.featureSet?.planCardType == .link {
                         let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
                         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
@@ -160,7 +160,8 @@ class AuthAndAddViewModel {
                     completion()
                     Current.wallet.refreshLocal()
                     NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
-                })
+                }
+                Current.navigate.to(tabNavigationRequest)
             }
             }, onError: { [weak self] error in
                 self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
@@ -192,7 +193,8 @@ class AuthAndAddViewModel {
             // Navigate to LCD for the new card behind the modal
             let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
             let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
-            Current.navigate.to(.loyalty, nestedPushNavigationRequest: lcdNavigationRequest)
+            let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest)
+            Current.navigate.to(tabNavigationRequest)
 
             if card.membershipPlan?.featureSet?.cardType == 2 {
                 let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)

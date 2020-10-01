@@ -93,11 +93,12 @@ class AddPaymentCardViewModel {
             
             switch self.journey {
             case .wallet:
-                let viewController = ViewControllerFactory.makePaymentCardDetailViewController(paymentCard: paymentCard)
-                let navigationRequest = PushNavigationRequest(viewController: viewController)
-                Current.navigate.to(.payment, nestedPushNavigationRequest: navigationRequest) {
+                let pcdViewController = ViewControllerFactory.makePaymentCardDetailViewController(paymentCard: paymentCard)
+                let pcdNavigationRequest = PushNavigationRequest(viewController: pcdViewController)
+                let tabNavigationRequest = TabBarNavigationRequest(tab: .payment, popToRoot: true, backgroundPushNavigationRequest: pcdNavigationRequest) {
                     Current.navigate.close()
                 }
+                Current.navigate.to(tabNavigationRequest)
             case .pll:
                 Current.navigate.close()
             }
