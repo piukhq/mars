@@ -12,6 +12,7 @@ import CardScan
 class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> {
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.titleView = UIImageView(image: UIImage(named: "bink_top_logo"))
     }
     
     override func viewDidAppear(_ animated: Bool) {
