@@ -55,14 +55,10 @@
 		3C61FCDE230AF0BB004721A3 /* AppsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61FCDD230AF0BB004721A3 /* AppsModel.swift */; };
 		3C63ABC822F9D47E00BE143B /* AddingOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63ABC722F9D47E00BE143B /* AddingOptionsViewModel.swift */; };
 		3C63ABCA22F9D52F00BE143B /* UIFont+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */; };
-		3C7067EF232FD52D00AB88A5 /* SimpleInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7067ED232FD52D00AB88A5 /* SimpleInfoViewController.swift */; };
-		3C7067F0232FD52D00AB88A5 /* SimpleInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C7067EE232FD52D00AB88A5 /* SimpleInfoViewController.xib */; };
-		3C7067F2232FD74500AB88A5 /* SimpleInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7067F1232FD74500AB88A5 /* SimpleInfoViewModel.swift */; };
 		3C71683524069F370058701E /* bink.der in Resources */ = {isa = PBXBuildFile; fileRef = 3C71683424069F370058701E /* bink.der */; };
 		3C794D8C23018C25000A31FD /* BrowseBrandsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C794D8A23018C25000A31FD /* BrowseBrandsViewController.swift */; };
 		3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */; };
 		3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C794D8E23018DBA000A31FD /* BrowseBrandsViewModel.swift */; };
-		3C794D9123018E67000A31FD /* BrowseBrandsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C794D9023018E67000A31FD /* BrowseBrandsRepository.swift */; };
 		3C7AF52B23757FB0005964E0 /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7AF52A23757FB0005964E0 /* FloatExtension.swift */; };
 		3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FD222F073B500FA3031 /* MainScreenRouter.swift */; };
 		3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FDF22F073CE00FA3031 /* MainTabBarViewModel.swift */; };
@@ -152,6 +148,8 @@
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
 		70B316E424E5A47000D86DE5 /* TescoLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70B316E224E5A47000D86DE5 /* TescoLogin.js */; };
 		70B316E524E5A47000D86DE5 /* TescoPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70B316E324E5A47000D86DE5 /* TescoPointsScrape.js */; };
+		70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B316E624E6AF2800D86DE5 /* Navigate.swift */; };
+		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
 		70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8024E56B3B005A30D2 /* UserService.swift */; };
 		70E31A8324E56B4D005A30D2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8224E56B4D005A30D2 /* APIService.swift */; };
@@ -280,7 +278,6 @@
 		EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48556D231D6E4000FC9E5F /* DebugMenuFactory.swift */; };
 		EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485571231D728A00FC9E5F /* DebugMenuSection.swift */; };
 		EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */; };
-		EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485576231D72E700FC9E5F /* ModalDismissable.swift */; };
 		EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */; };
 		EF4B465E2343B5FF009A3651 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465D2343B5FF009A3651 /* RectangleView.swift */; };
 		EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */; };
@@ -529,14 +526,10 @@
 		3C61FCDD230AF0BB004721A3 /* AppsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsModel.swift; sourceTree = "<group>"; };
 		3C63ABC722F9D47E00BE143B /* AddingOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingOptionsViewModel.swift; sourceTree = "<group>"; };
 		3C63ABC922F9D52F00BE143B /* UIFont+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+binkapp.swift"; sourceTree = "<group>"; };
-		3C7067ED232FD52D00AB88A5 /* SimpleInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInfoViewController.swift; sourceTree = "<group>"; };
-		3C7067EE232FD52D00AB88A5 /* SimpleInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleInfoViewController.xib; sourceTree = "<group>"; };
-		3C7067F1232FD74500AB88A5 /* SimpleInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInfoViewModel.swift; sourceTree = "<group>"; };
 		3C71683424069F370058701E /* bink.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = bink.der; sourceTree = "<group>"; };
 		3C794D8A23018C25000A31FD /* BrowseBrandsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewController.swift; sourceTree = "<group>"; };
 		3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowseBrandsViewController.xib; sourceTree = "<group>"; };
 		3C794D8E23018DBA000A31FD /* BrowseBrandsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewModel.swift; sourceTree = "<group>"; };
-		3C794D9023018E67000A31FD /* BrowseBrandsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsRepository.swift; sourceTree = "<group>"; };
 		3C7AF52A23757FB0005964E0 /* FloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtension.swift; sourceTree = "<group>"; };
 		3C873FD222F073B500FA3031 /* MainScreenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreenRouter.swift; sourceTree = "<group>"; };
 		3C873FDF22F073CE00FA3031 /* MainTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModel.swift; sourceTree = "<group>"; };
@@ -638,6 +631,8 @@
 		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
 		70B316E224E5A47000D86DE5 /* TescoLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoLogin.js; sourceTree = "<group>"; };
 		70B316E324E5A47000D86DE5 /* TescoPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoPointsScrape.js; sourceTree = "<group>"; };
+		70B316E624E6AF2800D86DE5 /* Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigate.swift; sourceTree = "<group>"; };
+		70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
 		70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TescoPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70E31A8024E56B3B005A30D2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -789,7 +784,6 @@
 		EF48556D231D6E4000FC9E5F /* DebugMenuFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuFactory.swift; sourceTree = "<group>"; };
 		EF485571231D728A00FC9E5F /* DebugMenuSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuSection.swift; sourceTree = "<group>"; };
 		EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModel.swift; sourceTree = "<group>"; };
-		EF485576231D72E700FC9E5F /* ModalDismissable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDismissable.swift; sourceTree = "<group>"; };
 		EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
 		EF4B465D2343B5FF009A3651 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
 		EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModel.swift; sourceTree = "<group>"; };
@@ -1123,16 +1117,6 @@
 			path = Transactions;
 			sourceTree = "<group>";
 		};
-		3C7067EC232FD50800AB88A5 /* SimpleInfo */ = {
-			isa = PBXGroup;
-			children = (
-				3C7067F1232FD74500AB88A5 /* SimpleInfoViewModel.swift */,
-				3C7067ED232FD52D00AB88A5 /* SimpleInfoViewController.swift */,
-				3C7067EE232FD52D00AB88A5 /* SimpleInfoViewController.xib */,
-			);
-			path = SimpleInfo;
-			sourceTree = "<group>";
-		};
 		3C794D9223019B68000A31FD /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1149,6 +1133,7 @@
 			children = (
 				3C873FD222F073B500FA3031 /* MainScreenRouter.swift */,
 				BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */,
+				70B316E624E6AF2800D86DE5 /* Navigate.swift */,
 			);
 			path = Routing;
 			sourceTree = "<group>";
@@ -1199,7 +1184,6 @@
 			children = (
 				3C3C604D2302E64E00D9EA25 /* Models */,
 				3C794D9223019B68000A31FD /* Cell */,
-				3C794D9023018E67000A31FD /* BrowseBrandsRepository.swift */,
 				3C794D8E23018DBA000A31FD /* BrowseBrandsViewModel.swift */,
 				3C794D8A23018C25000A31FD /* BrowseBrandsViewController.swift */,
 				3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */,
@@ -1335,6 +1319,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				70B61D50251251D4006A98C8 /* View controller factory */,
 				7097489E24D32A42008D0E29 /* Remote Config */,
 				7097489C24D088E3008D0E29 /* Objective-C */,
 				70A4EE7624BDBA1F00FA33B1 /* Permissions */,
@@ -1522,7 +1507,6 @@
 				B76749112331232D0002047A /* ReusableTemplateViewController */,
 				3C873FD422F073CE00FA3031 /* PaymentWallet */,
 				B713662323268FB9008A0ED7 /* PLLScreen */,
-				3C7067EC232FD50800AB88A5 /* SimpleInfo */,
 				3C48E7DE232A4B0300ADE410 /* Transactions */,
 			);
 			path = Screens;
@@ -1601,6 +1585,14 @@
 				70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */,
 			);
 			path = Permissions;
+			sourceTree = "<group>";
+		};
+		70B61D50251251D4006A98C8 /* View controller factory */ = {
+			isa = PBXGroup;
+			children = (
+				70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */,
+			);
+			path = "View controller factory";
 			sourceTree = "<group>";
 		};
 		70BD4BD024B774EB006E4E3D /* Agents */ = {
@@ -1951,7 +1943,6 @@
 		EF485575231D72DA00FC9E5F /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				EF485576231D72E700FC9E5F /* ModalDismissable.swift */,
 				EF2E881223351A6000F678F3 /* CoreDataRepositoryProtocol.swift */,
 				BDB01875232E125C00BFFA18 /* ReusableView.swift */,
 			);
@@ -2655,7 +2646,6 @@
 				EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */,
 				70661B8C250795DF006DB009 /* BootsLogin.js in Resources */,
 				706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */,
-				3C7067F0232FD52D00AB88A5 /* SimpleInfoViewController.xib in Resources */,
 				BD25E6972388610B0027FF3E /* LoadingScreen.xib in Resources */,
 				3CD3493D22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf in Resources */,
 				3CADDEB1231566E5006C3D9C /* LoginTextFieldView.xib in Resources */,
@@ -2848,6 +2838,7 @@
 				BD9E4CC7236EE67900C6F098 /* SocialTermsAndConditionsViewController.swift in Sources */,
 				EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */,
 				EF6921722469A8A90049875B /* DebugSecondaryPlanColorViewController.swift in Sources */,
+				70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */,
 				BD25E6992388677E0027FF3E /* LoadingScreen.swift in Sources */,
 				3CD802802391313D00D26888 /* ForgotPasswordViewModel.swift in Sources */,
 				EFA5F73F2379A7C70027AB80 /* _CD_MembershipTransaction.swift in Sources */,
@@ -2862,7 +2853,6 @@
 				EFA81024240565750000D21D /* _CD_PlanDynamicContent.swift in Sources */,
 				EFA5F7222379A7C70027AB80 /* _CD_EnrolField.swift in Sources */,
 				3C3853D52407DAF5004D6C2A /* TransactionView.swift in Sources */,
-				3C7067EF232FD52D00AB88A5 /* SimpleInfoViewController.swift in Sources */,
 				3CD39616231E8E7100CD5C31 /* LayoutHelper.swift in Sources */,
 				EFCAF9212371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.swift in Sources */,
 				BD9E4CC5236EE33900C6F098 /* FacebookLoginController.swift in Sources */,
@@ -2998,7 +2988,6 @@
 				EFEB5BF3237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift in Sources */,
 				EFA5F7532379AAB20027AB80 /* _CD_VoucherEarn.swift in Sources */,
 				3C2C90FD23193F0000D112E3 /* MembershipCardPostModel.swift in Sources */,
-				3C794D9123018E67000A31FD /* BrowseBrandsRepository.swift in Sources */,
 				EF59A12A2447406B001B60B8 /* APIEndpoint.swift in Sources */,
 				3C25BDFF23019BC100E931EE /* BrandTableViewCell.swift in Sources */,
 				3CEABFD02316AB88009B1122 /* MembershipCardBalanceModel.swift in Sources */,
@@ -3040,6 +3029,7 @@
 				EF94AF0F23DF55EE00AAA039 /* BinkTrackableButton.swift in Sources */,
 				EFA5F7242379A7C70027AB80 /* _CD_RegistrationField.swift in Sources */,
 				EFA5F73C2379A7C70027AB80 /* CD_PaymentCardCard.swift in Sources */,
+				70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */,
 				EFA5F71F2379A7C70027AB80 /* _CD_MembershipCardBalance.swift in Sources */,
 				B713662D232A63AA008A0ED7 /* BinkModuleView.swift in Sources */,
 				EFA5F7142379A7C70027AB80 /* _CD_AuthoriseField.swift in Sources */,
@@ -3100,7 +3090,6 @@
 				EFA5F72B2379A7C70027AB80 /* _CD_MembershipCardAmount.swift in Sources */,
 				EFA5F7192379A7C70027AB80 /* CD_AddField.swift in Sources */,
 				3C2C90F923191CED00D112E3 /* AddFieldPostModel.swift in Sources */,
-				3C7067F2232FD74500AB88A5 /* SimpleInfoViewModel.swift in Sources */,
 				EFF59F21234CAE5600CF3992 /* CardDetailInformationRow.swift in Sources */,
 				BD99D2DC235091AA00823FC4 /* SettingsFactory.swift in Sources */,
 				3C453CB42338E84500287B56 /* PaymentWalletViewController.swift in Sources */,
@@ -3120,7 +3109,6 @@
 				EFA5F7282379A7C70027AB80 /* _CD_Card.swift in Sources */,
 				EFA5F70C2379A7C70027AB80 /* _CD_Voucher.swift in Sources */,
 				B7263345230589C300951037 /* AuthoriseFieldModel.swift in Sources */,
-				EF485577231D72E700FC9E5F /* ModalDismissable.swift in Sources */,
 				EFA5F70E2379A7C70027AB80 /* CD_ReasonCode.swift in Sources */,
 				EF335C892350D2C600D49223 /* WalletCard.swift in Sources */,
 				3CD2CBBF2346059100862A5A /* EnrolFieldPostModel.swift in Sources */,
@@ -3383,7 +3371,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3395,7 +3383,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink α";
@@ -3416,7 +3404,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3436,7 +3424,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -3618,7 +3606,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3630,7 +3618,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;
@@ -3761,7 +3749,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3773,7 +3761,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;

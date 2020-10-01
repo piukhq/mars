@@ -16,9 +16,21 @@ class World {
     lazy var userDefaults: BinkUserDefaults = UserDefaults.standard
     lazy var userManager = UserManager()
     lazy var apiClient = APIClient()
+    lazy var navigate = Navigate()
     lazy var pointsScrapingManager = PointsScrapingManager()
     lazy var remoteConfig = RemoteConfigUtil()
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
+    
+    private let prodBundleIdentifier = "com.bink.wallet"
+
+    var isReleaseTypeBuild: Bool {
+        guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
+            // I can't imagine a scenario where this would be not set?
+            return false
+        }
+        
+        return bundleIdentifier == prodBundleIdentifier
+    }
 }
 
 protocol BinkUserDefaults {
@@ -43,6 +55,7 @@ extension UserDefaults: BinkUserDefaults {
         case debugBaseURL
         case webScrapingCookies(membershipCardId: String)
         case lpcDebugWebView
+        case lpcUseCookies
         
         var keyValue: String {
             switch self {
@@ -56,6 +69,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "webScrapingCookies_cardId_\(membershipCardId)"
             case .lpcDebugWebView:
                 return "lpcDebugWebView"
+            case .lpcUseCookies:
+                return "lpcUseCookies"
             }
         }
     }

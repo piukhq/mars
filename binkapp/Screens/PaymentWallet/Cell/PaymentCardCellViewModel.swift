@@ -10,11 +10,9 @@ import UIKit
 
 struct PaymentCardCellViewModel {
     private let paymentCard: CD_PaymentCard
-    private let router: MainScreenRouter?
 
-    init(paymentCard: CD_PaymentCard, router: MainScreenRouter? = nil) {
+    init(paymentCard: CD_PaymentCard) {
         self.paymentCard = paymentCard
-        self.router = router
     }
 
     var nameOnCardText: String? {
@@ -28,21 +26,39 @@ struct PaymentCardCellViewModel {
     var paymentCardType: PaymentCardType? {
         return PaymentCardType.type(from: paymentCard.card?.firstSix)
     }
+    
+    var paymentCardIsActive: Bool {
+        return paymentCardStatus == .active
+    }
 
-    var linkedText: String {
-        if paymentCardIsLinkedToMembershipCards {
-            return "Linked to \(linkedMembershipCardsCount) loyalty card\(linkedMembershipCardsCount > 1 ? "s" : "")"
-        } else {
-            return "Not linked"
+    var statusText: String? {
+        guard let status = paymentCardStatus else {
+            return nil
+        }
+        
+        switch status {
+        case .pending, .failed:
+            return status.rawValue.capitalized
+        case .active:
+            if paymentCardIsLinkedToMembershipCards {
+                return "Linked to \(linkedMembershipCardsCount) loyalty card\(linkedMembershipCardsCount > 1 ? "s" : "")"
+            } else {
+                return "Not linked"
+            }
         }
     }
 
     func expiredAction() {
-        router?.displaySimplePopup(title: "Expired Payment Card", message: "This payment card has expired.")
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "payment_card_expired_alert_title".localized, message: "payment_card_expired_alert_message".localized)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
 
     var paymentCardIsExpired: Bool {
         return paymentCard.isExpired()
+    }
+    
+    private var paymentCardStatus: PaymentCardStatus? {
+        return paymentCard.paymentCardStatus
     }
 
     private func cardNumberAttributedString() -> NSAttributedString? {

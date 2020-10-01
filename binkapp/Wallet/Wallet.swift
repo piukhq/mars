@@ -80,8 +80,13 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 
     /// Refresh from our local data
     /// Useful for calling after card deletions
-    func refreshLocal() {
-        loadWallets(forType: .localReactive, reloadPlans: false, isUserDriven: false)
+    func refreshLocal(completion: EmptyCompletionBlock? = nil) {
+        loadWallets(forType: .localReactive, reloadPlans: false, isUserDriven: false, completion: { (success, _) in
+            guard success else {
+                return
+            }
+            completion?()
+        })
     }
 
     var hasPaymentCards: Bool {

@@ -86,6 +86,10 @@ struct APIConstants {
     }
     
     static func moveToCustomURL(url: String) {
+        if url == "" {
+            changeEnvironment(environment: .dev)
+            return
+        }
         debugBaseURL = url
     }
     
@@ -117,5 +121,4 @@ struct APIConstants {
                 ]
         ]
     }
-
 }

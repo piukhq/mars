@@ -10,7 +10,6 @@ import UIKit
 struct TransactionsViewModel {
     let membershipCard: CD_MembershipCard
     var transactions: [CD_MembershipTransaction] = []
-    private let router: MainScreenRouter
     
     var title: String {
         if transactions.isEmpty {
@@ -26,9 +25,8 @@ struct TransactionsViewModel {
         return "recent_transaction_history_subtitle".localized
     }
     
-    init(membershipCard: CD_MembershipCard, router: MainScreenRouter) {
+    init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
-        self.router = router
         
         guard let transactions = membershipCard.formattedTransactions else { return }
         self.transactions = Array(transactions).sorted(by: {
@@ -41,20 +39,9 @@ struct TransactionsViewModel {
     }
     
     func brandHeaderWasTapped() {
-        let title = membershipCard.membershipPlan?.account?.planName ?? ""
-        let description = membershipCard.membershipPlan?.account?.planDescription ?? ""
-        
-        let attributedString = NSMutableAttributedString()
-        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
-        attributedString.append(attributedTitle)
-        attributedString.append(attributedBody)
-        
-        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-        router.toReusableModalTemplateViewController(configurationModel: configuration)
-    }
-    
-    func popViewController() {
-        router.popViewController()
+        guard let plan = membershipCard.membershipPlan else { return }
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: plan)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }

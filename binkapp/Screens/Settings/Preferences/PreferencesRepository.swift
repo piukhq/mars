@@ -9,14 +9,8 @@
 import Foundation
 
 class PreferencesRepository: UserServiceProtocol {
-    private let apiClient: APIClient
-    
-    init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
-    
     var networkIsReachable: Bool {
-        return apiClient.networkIsReachable
+        return Current.apiClient.networkIsReachable
     }
 
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (BinkError?) -> Void) {

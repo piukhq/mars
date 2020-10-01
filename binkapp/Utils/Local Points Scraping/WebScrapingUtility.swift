@@ -112,6 +112,13 @@ class WebScrapingUtility: NSObject {
         }
         
         let request = URLRequest(url: url)
+        
+        guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else {
+            self.webView.navigationDelegate = self
+            self.webView.load(request)
+            return
+        }
+        
         if let cookiesDictionary = Current.userDefaults.value(forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id)) as? [String: Any] {
             var cookiesSet: Int = 0
             for (_, cookieProperties) in cookiesDictionary {
@@ -184,6 +191,7 @@ class WebScrapingUtility: NSObject {
             }
             
             self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+                guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else { return }
                 var cookiesDictionary: [String: Any] = [:]
                 for cookie in cookies {
                     cookiesDictionary[cookie.name] = cookie.properties

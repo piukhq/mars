@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeForceCrashRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -61,6 +61,14 @@ class DebugMenuFactory {
         }, cellType: .titleSubtitle)
     }
     
+    private func makeLPCUseCookiesRow() -> DebugMenuRow {
+        let shouldUseCookies = Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies)
+        return DebugMenuRow(title: "LPC use cookies", subtitle: shouldUseCookies ? "Yes" : "No", action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcCookies)
+            }, cellType: .titleSubtitle)
+    }
+    
     private func makeForceCrashRow() -> DebugMenuRow {
         return DebugMenuRow(title: "Force Crash", subtitle: "This will immediately crash the application", action: {
             SentryService.forceCrash()
@@ -86,7 +94,7 @@ class DebugMenuFactory {
             NotificationCenter.default.post(name: .shouldLogout, object: nil)
         }))
         alert.addAction(UIAlertAction(title: "Custom", style: .destructive, handler: { _ in
-            let customAlert = UIAlertController(title: "Base URL", message: "Please insert a valid URL.", preferredStyle: .alert)
+            let customAlert = UIAlertController(title: "Base URL", message: "Please insert a valid URL, removing https:// or http://", preferredStyle: .alert)
             customAlert.addTextField { textField in
                 textField.placeholder = "api.dev.gb.com"
             }

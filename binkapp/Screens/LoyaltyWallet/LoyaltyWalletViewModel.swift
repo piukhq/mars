@@ -16,16 +16,10 @@ class LoyaltyWalletViewModel: WalletViewModel {
     typealias T = CD_MembershipCard
 
     private let repository = LoyaltyWalletRepository()
-    private let router: MainScreenRouter
-    weak var paymentScanDelegate: ScanDelegate?
     private let paymentScanStrings = PaymentCardScannerStrings()
-    
-    required init(router: MainScreenRouter) {
-        self.router = router
-    }
 
     var walletPrompts: [WalletPrompt]? {
-        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty, paymentScanDelegate: paymentScanDelegate)
+        return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
     }
     
     var cards: [CD_MembershipCard]? {
@@ -36,51 +30,51 @@ class LoyaltyWalletViewModel: WalletViewModel {
         guard let card = cards?[indexPath.row] else {
             return
         }
-        
-        router.toBarcodeViewController(membershipCard: card, completion: completion)
+        let viewController = ViewControllerFactory.makeBarcodeViewController(membershipCard: card)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, completion: completion)
+        Current.navigate.to(navigationRequest)
     }
 
     func toCardDetail(for card: CD_MembershipCard) {
-        router.toLoyaltyFullDetailsScreen(membershipCard: card)
-    }
-    
-    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        router.toAddPaymentViewController(model: model)
+        let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card))
+        Current.navigate.to(navigationRequest)
     }
 
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .loyaltyJoin(let membershipPlan):
-            router.toAddOrJoinViewController(membershipPlan: membershipPlan)
-        case .addPaymentCards(let scanDelegate):
-            router.toPaymentCardScanner(strings: paymentScanStrings, delegate: scanDelegate)
+            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        case .addPaymentCards:
+            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScanStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
         }
     }
 
-    func showDeleteConfirmationAlert(card: CD_MembershipCard, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void) {
-        router.showDeleteConfirmationAlert(withMessage: "delete_card_confirmation".localized, yesCompletion: { [weak self] in
+    func showDeleteConfirmationAlert(card: CD_MembershipCard, onCancel: @escaping () -> Void) {
+        let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
+            guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {
-                self?.router.presentNoConnectivityPopup()
-                noCompletion()
+                let alert = ViewControllerFactory.makeNoConnectivityAlertController()
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+                onCancel()
                 return
             }
-            self?.repository.delete(card, completion: yesCompletion)
-        }, noCompletion: {
-            DispatchQueue.main.async {
-                noCompletion()
+            self.repository.delete(card) {
+                Current.wallet.refreshLocal()
             }
-        })
+        }, onCancel: onCancel)
+        
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
     }
     
     func showNoBarcodeAlert(completion: @escaping () -> Void) {
-        router.showNoBarcodeAlert {
-            DispatchQueue.main.async {
-                completion()
-            }
-        }
-    }
-    
-    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
-        router.toSettings(rowsWithActionRequired: rowsWithActionRequired)
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "No Barcode", message: "No barcode or card number to display. Please check the status of this card.")
+        let navigationRequest = AlertNavigationRequest(alertController: alert, completion: completion)
+        Current.navigate.to(navigationRequest)
     }
 }

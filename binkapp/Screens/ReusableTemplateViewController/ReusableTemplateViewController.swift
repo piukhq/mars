@@ -58,7 +58,6 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
     }
     
     private func configureUI() {
-        setCloseButton()
         let primary = viewModel.primaryButtonTitle
         let secondary = viewModel.secondaryButtonTitle
         let showingButtons = viewModel.primaryButtonTitle != nil || viewModel.secondaryButtonTitle != nil
@@ -80,27 +79,6 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
             textView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
             textView.bottomAnchor.constraint(equalTo: floatingButtonsContainer.bottomAnchor),
         ])
-    }
-}
-
-// MARK: - Private methods
-
-private extension ReusableTemplateViewController {
-    func setCloseButton() {
-        if viewModel.showCloseButton {
-                    let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(dismissViewController))
-            navigationItem.setRightBarButton(closeButton, animated: false)
-        } else {
-            self.navigationItem.setLeftBarButton(viewModel.tabBarBackButton, animated: true)
-        }
-    }
-    
-    @objc func popViewController() {
-        viewModel.popViewController()
-    }
-    
-    @objc func dismissViewController() {
-        dismiss(animated: true, completion: nil)
     }
 }
 

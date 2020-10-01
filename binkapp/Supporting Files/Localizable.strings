@@ -124,6 +124,9 @@
 "delete_card_plan_title" = "Delete %@";
 "delete_card_message" = "Remove this card from Bink";
 
+"payment_card_expired_alert_title" = "This payment card has expired";
+"payment_card_expired_alert_message" = "This payment card has expired";
+
 // MARK: - Transactions
 
 "transaction_history_unavailable_title" = "Points history";
@@ -143,7 +146,7 @@
 "only_points_log_in_description" = "You can log in to your %@ account to see your points balance. This is optional.";
 "points_and_transactions_log_in_description" = "You can log in to your %@ account to see your points balance and transaction history. This is optional.";
 "sign_up_new_card_description" = "Fill out the form below to get a new %@ and start collecting rewards";
-"sign_up_new_card_title" = "Sign up for a new card";
+"sign_up_new_card_title" = "Sign up for %@";
 "sign_up_button_title" = "Sign up";
 
 "log_in_pending_title" = "Log in pending";
@@ -250,8 +253,15 @@
 
 // MARK: - PCD
 
-"pcd_added_card_title" = "Linked cards";
-"pcd_added_card_description" = "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points.";
+"pcd_active_card_title" = "Linked cards";
+"pcd_pending_card_title" = "Payment card pending";
+"pcd_failed_card_title" = "Payment card inactive";
+
+"pcd_active_card_description" = "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points.";
+"pcd_pending_card_description" = "You cannot link any loyalty cards to start earning rewards.\n\nPlease wait for the card to be authorised. If the problem persists please read our FAQs or you can get in touch with Bink using the Contact us form in Settings.";
+"pcd_pending_card_added" = "Card added: %@";
+"pcd_failed_card_description" = "Your payment card is not authorised and you cannot link any loyalty cards to start earning rewards.\n\nYour card has failed the authorisation process or has expired. Please use the “Delete this card” action below to remove it from your wallet and re-add if required.\n\nIf you have any concerns, please read the FAQs or you can get in touch with Bink using the Contact us form in Settings";
+
 "pcd_other_card_title_cards_added" = "Other cards you can add";
 "pcd_other_card_title_no_cards_added" = "No linked cards";
 "pcd_other_card_description_cards_added" = "You can also add the cards below and link them to your payment cards.";
@@ -267,7 +277,8 @@
 "add_email_subtitle" = "Please add your email address below.";
 "social_tandcs_title" = "Terms and conditions";
 "social_tandcs_subtitle" = "One last step...";
-"social_tandcs_error" = "Continue with Facebook failed.";
+"social_tandcs_facebook_error" = "Continue with Facebook failed.";
+"social_tandcs_siwa_error" = "Sign in with Apple failed.";
 
 "preferences_prompt" = "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.";
 "preferences_prompt_highlight_rewards" = "rewards";
@@ -313,7 +324,6 @@
 
 "plr_stamp_voucher_detail_expired_header" = "Your voucher has expired";
 "plr_stamp_voucher_detail_redeemed_header" = "Your voucher was redeemed";
-"plr_stamp_voucher_detail_issued_header" = "Your %@ voucher is ready!";
 "plr_stamp_voucher_detail_inprogress_header" = "About this voucher";
 
 "plr_voucher_detail_issued_date_prefix" = "Added ";

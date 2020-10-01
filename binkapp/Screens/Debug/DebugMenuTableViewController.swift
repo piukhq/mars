@@ -11,9 +11,7 @@ import UIKit
 import ZendeskCoreSDK
 import SupportSDK
 
-class DebugMenuTableViewController: UITableViewController, ModalDismissable {
-    private var webScrapingUtility: WebScrapingUtility?
-    
+class DebugMenuTableViewController: UITableViewController {
     private let viewModel: DebugMenuViewModel
     
     init(viewModel: DebugMenuViewModel) {
@@ -29,8 +27,6 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
         super.viewDidLoad()
         
         title = viewModel.title
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(close))
         
         tableView.register(DebugMenuTableViewCell.self, asNib: true)
         tableView.register(DebugMenuSegmentedTableViewCell.self, asNib: true)
@@ -73,12 +69,6 @@ class DebugMenuTableViewController: UITableViewController, ModalDismissable {
         row.action?()
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    // MARK: - ModalDismissable
-    
-    @objc func close() {
-        dismiss(animated: true, completion: nil)
-    }
 }
 
 extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
@@ -94,6 +84,10 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
         case .lpcWebView:
             let shouldShow = Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView)
             Current.userDefaults.set(!shouldShow, forDefaultsKey: .lpcDebugWebView)
+            tableView.reloadData()
+        case .lpcCookies:
+            let shouldUseCookies = Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies)
+            Current.userDefaults.set(!shouldUseCookies, forDefaultsKey: .lpcUseCookies)
             tableView.reloadData()
         default:
             return

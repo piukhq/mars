@@ -201,7 +201,16 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     }
     
     private func showError() {
-        let alert = UIAlertController(title: "error_title".localized, message: "social_tandcs_error".localized, preferredStyle: .alert)
+        let message: String
+        
+        switch requestType {
+        case .apple(_):
+            message = "social_tandcs_siwa_error".localized
+        case .facebook(_):
+            message = "social_tandcs_facebook_error".localized
+        }
+        
+        let alert = UIAlertController(title: "error_title".localized, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         present(alert, animated: true)
     }
@@ -213,7 +222,9 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     }
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        router?.openWebView(withUrlString: URL.absoluteString)
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: URL.absoluteString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }
 

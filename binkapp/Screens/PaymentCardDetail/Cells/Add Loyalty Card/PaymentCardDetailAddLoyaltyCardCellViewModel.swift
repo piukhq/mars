@@ -9,13 +9,10 @@
 import Foundation
 
 struct PaymentCardDetailAddLoyaltyCardCellViewModel: PaymentCardDetailCellViewModelProtocol {
-
-    private let router: MainScreenRouter
     let membershipPlan: CD_MembershipPlan
 
-    init(membershipPlan: CD_MembershipPlan, router: MainScreenRouter) {
+    init(membershipPlan: CD_MembershipPlan) {
         self.membershipPlan = membershipPlan
-        self.router = router
     }
 
     var headerText: String? {
@@ -27,6 +24,10 @@ struct PaymentCardDetailAddLoyaltyCardCellViewModel: PaymentCardDetailCellViewMo
     }
 
     func toAddOrJoin() {
-        router.toAddOrJoinViewController(membershipPlan: membershipPlan)
+        Current.navigate.back(toRoot: true) {
+            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: self.membershipPlan)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
     }
 }

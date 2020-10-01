@@ -11,14 +11,12 @@ import CardScan
 class AddOrJoinViewModel {
     private let membershipPlan: CD_MembershipPlan
     private let membershipCard: CD_MembershipCard?
-    private let router: MainScreenRouter
     
     private let paymentScannerStrings = PaymentCardScannerStrings()
     
-    init(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil, router: MainScreenRouter) {
+    init(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) {
         self.membershipPlan = membershipPlan
         self.membershipCard = membershipCard
-        self.router = router
     }
 
     var shouldShowAddCardButton: Bool {
@@ -30,28 +28,28 @@ class AddOrJoinViewModel {
         return membershipPlan
     }
     
-    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        router.toAddPaymentViewController(model: model)
-    }
-    
-    func toAuthAndAddScreen(paymentScanDelegate: ScanDelegate?) {
+    func toAuthAndAddScreen() {
         // PLR
         if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
-            toPaymentCardNeededScreen(scanDelegate: paymentScanDelegate)
+            toPaymentCardNeededScreen()
             return
         }
         
         guard let existingCard = membershipCard else {
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
+            let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .add)
+            let navigationRequest = PushNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
             return
         }
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: existingCard)
+        let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFailed, existingMembershipCard: existingCard)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
-    func didSelectAddNewCard(paymentScanDelegate: ScanDelegate?) {
+    func didSelectAddNewCard() {
         // PLR
         if membershipPlan.isPLR == true && !Current.wallet.hasValidPaymentCards {
-            toPaymentCardNeededScreen(scanDelegate: paymentScanDelegate)
+            toPaymentCardNeededScreen()
             return
         }
 
@@ -60,12 +58,16 @@ class AddOrJoinViewModel {
             toNativeJoinUnavailable()
             return
         }
-        
+    
         guard let existingCard = membershipCard else {
-            router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
+            let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUp)
+            let navigationRequest = PushNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
             return
         }
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUpFailed, existingMembershipCard: existingCard)
+        let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .signUpFailed, existingMembershipCard: existingCard)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toNativeJoinUnavailable() {
@@ -81,51 +83,73 @@ class AddOrJoinViewModel {
         var configurationModel: ReusableModalConfiguration
         
         guard let planURL = membershipPlan.account?.planURL else {
-            configurationModel = ReusableModalConfiguration(title: "", text: attributedText, showCloseButton: true)
-            router.toReusableModalTemplateViewController(configurationModel: configurationModel)
+            configurationModel = ReusableModalConfiguration(title: "", text: attributedText)
+            let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
             return
         }
         
         configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
             if let url = URL(string: planURL) {
-                self.router.openWebView(withUrlString: url.absoluteString)
+                let viewController = ViewControllerFactory.makeWebViewController(urlString: url.absoluteString)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
             }
-        }, showCloseButton: true)
-        
-        router.toReusableModalTemplateViewController(configurationModel: configurationModel, floatingButtons: false)
+        })
+
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configurationModel)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func brandHeaderWasTapped() {
-        let title: String = membershipPlan.account?.planName ?? ""
-        let description: String = membershipPlan.account?.planDescription ?? ""
-        
-        let attributedString = NSMutableAttributedString()
-        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
-        attributedString.append(attributedTitle)
-        attributedString.append(attributedBody)
-        
-        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-        router.toReusableModalTemplateViewController(configurationModel: configuration)
-    }
-    
-    func displaySimplePopup(title: String?, message: String?) {
-        router.displaySimplePopup(title: title, message: message)
-    }
-    
-    @objc func popViewController() {
-        router.popViewController()
-    }
-    
-    @objc func dismissViewController() {
-        router.dismissViewController()
-    }
-    
-    func popToRootViewController() {
-        router.popToRootViewController()
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 
-    private func toPaymentCardNeededScreen(scanDelegate: ScanDelegate?) {
-        router.toPaymentCardNeededScreen(strings: paymentScannerStrings, scanDelegate: scanDelegate)
+    private func toPaymentCardNeededScreen() {
+        let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
+            guard let self = self else { return }
+            Current.navigate.close {
+                self.toPaymentCardScanner()
+            }
+        })
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration, floatingButtons: false)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    private func toPaymentCardScanner() {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
+            let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
+                if granted {
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                } else {
+                    if let alert = enterManuallyAlert {
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    }
+                }
+            }
+        }
     }
 }

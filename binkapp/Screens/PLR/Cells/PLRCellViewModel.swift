@@ -24,8 +24,11 @@ class PLRCellViewModel {
         case .accumulator:
             return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
         case .stamps:
-            // We need to be able to return the value in between, but when we don't get it back we map by default to 0 which isn't good
-            return "\(voucher.burn?.prefix ?? "") \(voucher.burn?.suffix ?? "")"
+            var valueString = ""
+            if let burnValueString = voucher.burn?.value?.twoDecimalPointString() {
+                valueString = burnValueString
+            }
+            return "\(voucher.burn?.prefix ?? "")\(valueString) \(voucher.burn?.suffix ?? "")"
         default:
             return ""
         }

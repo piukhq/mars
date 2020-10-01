@@ -69,13 +69,6 @@ class AuthAndAddViewController: BaseFormViewController {
     }
     
     func setNavigationBar() {
-        let closeButton = UIBarButtonItem(title: "cancel".localized, style: .plain, target: self, action: #selector(popToRootScreen))
-        closeButton.tintColor = .black
-        self.navigationItem.setRightBarButton(closeButton, animated: true)
-        
-        let backButton = UIBarButtonItem(image: UIImage(named: "navbarIconsBack"), style: .plain, target: self, action: #selector(popViewController))
-        self.navigationItem.leftBarButtonItem = backButton
-        
         navigationItem.setHidesBackButton(false, animated: true)
     }
     
@@ -103,14 +96,6 @@ class AuthAndAddViewController: BaseFormViewController {
         descriptionLabel.isHidden = viewModel.getDescription() == nil
     }
     
-    @objc func popViewController() {
-        viewModel.popViewController()
-    }
-    
-    @objc func popToRootScreen() {
-        viewModel.popToRootViewController()
-    }
-    
     override func formValidityUpdated(fullFormIsValid: Bool) {
         floatingButtons.primaryButton.isEnabled = fullFormIsValid
     }
@@ -134,7 +119,7 @@ extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
     }
     
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?) {
-        viewController.dismiss(animated: true, completion: nil)
+        Current.navigate.close()
     }
 }
 

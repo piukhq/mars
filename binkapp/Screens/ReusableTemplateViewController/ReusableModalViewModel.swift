@@ -15,18 +15,14 @@ public struct ReusableModalConfiguration {
     var mainButtonCompletion: () -> Void?
     var secondaryButtonTitle: String?
     var secondaryButtonCompletion: () -> Void?
-    var tabBarBackButton: UIBarButtonItem?
-    let showCloseButton: Bool
     
-    init(title: String = "", text: NSMutableAttributedString, primaryButtonTitle: String? = nil, mainButtonCompletion: @escaping (() -> Void) = { }, secondaryButtonTitle: String? = nil, secondaryButtonCompletion: @escaping (() -> Void) = { }, tabBarBackButton: UIBarButtonItem? = nil, showCloseButton: Bool = false) {
+    init(title: String = "", text: NSMutableAttributedString, primaryButtonTitle: String? = nil, mainButtonCompletion: @escaping (() -> Void) = { }, secondaryButtonTitle: String? = nil, secondaryButtonCompletion: @escaping (() -> Void) = { }) {
         self.title = title
         self.text = text
         self.primaryButtonTitle = primaryButtonTitle
         self.mainButtonCompletion = mainButtonCompletion
         self.secondaryButtonTitle = secondaryButtonTitle
         self.secondaryButtonCompletion = secondaryButtonCompletion
-        self.tabBarBackButton = tabBarBackButton
-        self.showCloseButton = showCloseButton
     }
 
     static func makeAttributedString(title: String, description: String) -> NSMutableAttributedString {
@@ -42,7 +38,6 @@ public struct ReusableModalConfiguration {
 
 open class ReusableModalViewModel {
     private let configurationModel: ReusableModalConfiguration
-    let router: MainScreenRouter
     
     var title: String {
         return configurationModel.title
@@ -72,17 +67,8 @@ open class ReusableModalViewModel {
         return primaryButtonTitle == nil && secondaryButtonTitle == nil
     }
     
-    var tabBarBackButton: UIBarButtonItem? {
-        return configurationModel.tabBarBackButton
-    }
-    
-    var showCloseButton: Bool {
-        return configurationModel.showCloseButton
-    }
-    
-    init(configurationModel: ReusableModalConfiguration, router: MainScreenRouter) {
+    init(configurationModel: ReusableModalConfiguration) {
         self.configurationModel = configurationModel
-        self.router = router
     }
     
     func mainButtonWasTapped(completion: (() -> Void)? = nil) {
@@ -91,13 +77,5 @@ open class ReusableModalViewModel {
     
     func secondaryButtonWasTapped() {
         secondaryButtonCompletion()
-    }
-    
-    func popViewController() {
-        router.popViewController()
-    }
-    
-    func toRootViewController()  {
-        router.popToRootViewController()
     }
 }

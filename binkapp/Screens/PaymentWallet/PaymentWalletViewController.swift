@@ -38,7 +38,7 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
                 return cell
             }
 
-            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard, router: viewModel.router)
+            let cellViewModel = PaymentCardCellViewModel(paymentCard: paymentCard)
             cell.configureWithViewModel(cellViewModel, delegate: self)
 
             return cell
@@ -63,12 +63,9 @@ extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelega
 
     func promptForDelete(with index: IndexPath, cell: PaymentCardCollectionViewCell) {
         guard let card = viewModel.cards?[index.row] else { return }
-
-        viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
-            self?.viewModel.refreshLocalWallet()
-        }, noCompletion: {
+        viewModel.showDeleteConfirmationAlert(card: card) {
             cell.set(to: .closed)
-        })
+        }
     }
 
     func cellDidFullySwipe(action: SwipeMode?, cell: PaymentCardCollectionViewCell) {
@@ -83,28 +80,5 @@ extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelega
         let cells = collectionView.visibleCells.filter { $0 != cell }
         guard let walletCells = cells as? [PaymentCardCollectionViewCell] else { return }
         walletCells.forEach { $0.set(to: .closed) }
-    }
-}
-
-// MARK: Payment Scanner Delegate
-
-extension PaymentWalletViewController: ScanDelegate {
-    func userDidCancel(_ scanViewController: ScanViewController) {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        // Record Bouncer usage
-        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
-        let month = Int(creditCard.expiryMonth ?? "")
-        let year = Int(creditCard.expiryYear ?? "")
-        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
-        viewModel.toAddPaymentCardScreen(model: model)
-        navigationController?.removeViewController(scanViewController)
-    }
-    
-    func userDidSkip(_ scanViewController: ScanViewController) {
-        viewModel.toAddPaymentCardScreen()
-        navigationController?.removeViewController(scanViewController)
     }
 }

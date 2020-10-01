@@ -9,12 +9,6 @@
 import Foundation
 
 class PaymentCardDetailRepository: WalletServiceProtocol {
-    private let apiClient: APIClient
-
-    required init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
-
     func getPaymentCard(forId id: String, completion: @escaping (CD_PaymentCard?) -> Void) {
         getPaymentCard(withId: id) { result in
             switch result {

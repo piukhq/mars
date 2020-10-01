@@ -44,7 +44,6 @@ enum FormPurpose: Equatable {
 
 class AuthAndAddViewModel {
     private let repository = AuthAndAddRepository()
-    private let router: MainScreenRouter
     private let membershipPlan: CD_MembershipPlan
     let prefilledFormValues: [FormDataSource.PrefilledValue]?
     
@@ -56,7 +55,7 @@ class AuthAndAddViewModel {
     
     var title: String {
         switch formPurpose {
-        case .signUp, .signUpFailed: return "sign_up_new_card_title".localized
+        case .signUp, .signUpFailed: return String(format: "sign_up_new_card_title".localized, membershipPlan.account?.planName ?? "a new card")
         case .add, .addFromScanner: return "credentials_title".localized
         case .addFailed: return "log_in_title".localized
         case .ghostCard, .patchGhostCard: return "register_ghost_card_title".localized
@@ -76,8 +75,7 @@ class AuthAndAddViewModel {
         return formPurpose != .add || formPurpose == .ghostCard
     }
     
-    init(router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
-        self.router = router
+    init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
         self.membershipPlan = membershipPlan
         self.membershipCardPostModel = MembershipCardPostModel(account: AccountPostModel(), membershipPlan: Int(membershipPlan.id))
         self.existingMembershipCard = existingMembershipCard
@@ -98,6 +96,9 @@ class AuthAndAddViewModel {
             }
             return nil
         case .ghostCard, .patchGhostCard:
+            if membershipPlan.isPLL, let description = membershipPlan.account?.planRegisterInfo {
+                return description
+            }
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "register_ghost_card_description".localized, planNameCard)
         case .addFailed, .signUpFailed:
@@ -145,17 +146,24 @@ class AuthAndAddViewModel {
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
         let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
         
-        repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { [weak self] card in
-            guard let self = self else {return}
+        repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { card in
             if let card = card {
-                if card.membershipPlan?.featureSet?.planCardType == .link {
-                    self.router.toPllViewController(membershipCard: card, journey: .newCard)
-                } else {
-                    self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
-                }
-                completion()
-                Current.wallet.refreshLocal()
-                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+                
+                // Navigate to LCD for the new card behind the modal
+                let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
+                let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
+                Current.navigate.to(.loyalty, popToRoot: true, nestedPushNavigationRequest: lcdNavigationRequest, completion: {
+                    if card.membershipPlan?.featureSet?.planCardType == .link {
+                        let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
+                        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+                        Current.navigate.to(navigationRequest)
+                    } else {
+                        Current.navigate.close()
+                    }
+                    completion()
+                    Current.wallet.refreshLocal()
+                    NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+                })
             }
             }, onError: { [weak self] error in
                 self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
@@ -177,17 +185,24 @@ class AuthAndAddViewModel {
             model.membershipPlan = nil
         }
         
-        repository.postGhostCard(parameters: model, existingMembershipCard: existingMembershipCard, onSuccess: { [weak self] (response) in
+        repository.postGhostCard(parameters: model, existingMembershipCard: existingMembershipCard, onSuccess: { (response) in
             guard let card = response else {
                 Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
                 return
             }
             
+            // Navigate to LCD for the new card behind the modal
+            let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
+            let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
+            Current.navigate.to(.loyalty, nestedPushNavigationRequest: lcdNavigationRequest)
+
             if card.membershipPlan?.featureSet?.cardType == 2 {
-                self?.router.toPllViewController(membershipCard: card, journey: .newCard)
+                let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
+                let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+                Current.navigate.to(navigationRequest)
             } else {
-                self?.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+                Current.navigate.close()
             }
         }) { (error) in
             self.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
@@ -315,12 +330,16 @@ class AuthAndAddViewModel {
     
     func reloadWithGhostCardFields() {
         let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .patchGhostCard : .ghostCard
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
+        let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func openWebView(withUrlString url: URL) {
         let urlString = url.absoluteString
-        router.openWebView(withUrlString: urlString)
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: urlString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toReusableTemplate(title: String, description: String) {
@@ -330,30 +349,49 @@ class AuthAndAddViewModel {
         attributedString.append(attributedTitle)
         attributedString.append(attributedBody)
         
-        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-        router.toReusableModalTemplateViewController(configurationModel: configuration)
+        let configuration = ReusableModalConfiguration(title: title, text: attributedString)
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func brandHeaderWasTapped() {
-        let title = membershipPlan.account?.planName ?? ""
-        let description = membershipPlan.account?.planDescription ?? ""
-        
-        toReusableTemplate(title: title, description: description)
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func displaySimplePopup(title: String?, message: String?) {
-        router.displaySimplePopup(title: title, message: message)
-    }
-
-    func popViewController() {
-        router.popViewController()
-    }
-    
-    func popToRootViewController() {
-        router.popToRootViewController()
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
     func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
-        router.toLoyaltyScanner(forPlan: plan, delegate: delegate)
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: delegate)
+        
+        // TODO: Move this to view controller factory and make this entire function more reusable
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {}
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
+                if granted {
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                } else {
+                    if let alert = enterManuallyAlert {
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    }
+                }
+            }
+        }
     }
 }
