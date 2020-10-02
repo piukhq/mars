@@ -110,7 +110,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         collectionView.dataSource = self
         var collectionFrameY: CGFloat
         
-        if navigationController?.modalPresentationStyle == .fullScreen {
+        if navigationController?.modalPresentationStyle == .fullScreen  || navigationController?.isBeingPresented == false {
             let notchDeviceCollectionFrameY = topStackView.frame.maxY + LayoutHelper.heightForNavigationBar(navigationController?.navigationBar)
             let nonNotchDeviceCollectionFrameY = topStackView.frame.maxY + LayoutHelper.statusBarHeight
             collectionFrameY = UIDevice.current.hasNotch ? notchDeviceCollectionFrameY : nonNotchDeviceCollectionFrameY
