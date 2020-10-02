@@ -20,7 +20,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
-        navigationItem.titleView = UIImageView(image: UIImage(named: "bink_top_logo"))
     }
     
     override func viewDidAppear(_ animated: Bool) {
