@@ -60,6 +60,8 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         NotificationCenter.default.addObserver(self, selector: #selector(stopRefreshing), name: .outageSilentFail, object: nil)
 
         refreshControl.addTarget(self, action: #selector(reloadWallet), for: .valueChanged)
+        
+        navigationItem.titleView = UIImageView(image: UIImage(named: "bink_top_logo"))
 
         configureCollectionView()
     }
