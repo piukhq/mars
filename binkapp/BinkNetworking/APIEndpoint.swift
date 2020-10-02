@@ -55,7 +55,6 @@ enum APIEndpoint: Equatable {
         }
         var components = URLComponents()
         components.scheme = scheme
-
         components.host = APIConstants.baseURLString
         components.path = path
         return components.url?.absoluteString.removingPercentEncoding
@@ -108,6 +107,9 @@ enum APIEndpoint: Equatable {
     }
 
     private var scheme: String {
+        guard APIConstants.baseURLString.contains("gb.bink.com") else {
+            return "http"
+        }
         return "https"
     }
 
