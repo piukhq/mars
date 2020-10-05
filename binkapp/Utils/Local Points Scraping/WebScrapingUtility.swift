@@ -32,8 +32,10 @@ enum WebScrapingUtilityError: BinkError {
     case agentProvidedInvalidUrl
     case loginScriptFileNotFound
     case scapingScriptFileNotFound
+    case detectReCaptchaScriptFileNotFound
     case agentProvidedInvalidLoginScript
     case agentProvidedInvalidScrapeScript
+    case invalidDetectReCaptchaScript
     case failedToExecuteLoginScript
     case failedToExecuteScrapingScript
     case failedToCastReturnValue
@@ -63,6 +65,10 @@ enum WebScrapingUtilityError: BinkError {
             return "Failed to cast return value"
         case .loginFailed:
             return "Login failed"
+        case .detectReCaptchaScriptFileNotFound:
+            return "Detect reCaptcha script file not found"
+        case .invalidDetectReCaptchaScript:
+            return "Invalid detect reCaptcha script"
         }
     }
 }
@@ -83,6 +89,7 @@ class WebScrapingUtility: NSObject {
     private let agent: WebScrapable
     private let membershipCard: CD_MembershipCard
     private var hasAttemptedLogin = false
+    private var shouldDetectReCaptcha = true
     private weak var delegate: WebScrapingUtilityDelegate?
     
     init(containerViewController: UIViewController, agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
@@ -92,11 +99,6 @@ class WebScrapingUtility: NSObject {
         self.membershipCard = membershipCard
         self.delegate = delegate
         super.init()
-        setupWebView()
-    }
-    
-    private func setupWebView() {
-        containerViewController?.view.addSubview(webView)
     }
     
     func start() throws {
@@ -142,7 +144,7 @@ class WebScrapingUtility: NSObject {
         }
     }
     
-    func login(credentials: WebScrapingCredentials) throws {
+    private func login(credentials: WebScrapingCredentials) throws {
         guard let loginFile = Bundle.main.url(forResource: agent.loginScriptFileName, withExtension: "js") else {
             throw WebScrapingUtilityError.loginScriptFileNotFound
         }
@@ -163,11 +165,17 @@ class WebScrapingUtility: NSObject {
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 return
             }
-            // TODO: If we get here, but then there is no further navigation then the card will remain in pending
+            // For Boots, after attempting to login the user will be presented with an error message and prompted to complete reCaptcha.
+            // This doesn't result in the webview loading a new page, so we cannot detect this happening through delegate hooks.
+            // So essentially, we will remain in this part of this method and the card will remain pending until a pull-to-refresh is performed.
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                try? self.detectReCaptcha()
+            }
         }
     }
 
-    func getScrapedValue(completion: @escaping (Result<String, WebScrapingUtilityError>) -> Void) {
+    private func getScrapedValue(completion: @escaping (Result<String, WebScrapingUtilityError>) -> Void) {
         guard let scrapeFile = Bundle.main.url(forResource: agent.pointsScrapingScriptFileName, withExtension: "js") else {
             completion(.failure(.scapingScriptFileNotFound))
             return
@@ -207,6 +215,24 @@ class WebScrapingUtility: NSObject {
         }
     }
     
+    private func detectReCaptcha() throws {
+        guard let detectReCaptchaFile = Bundle.main.url(forResource: "detectReCaptcha", withExtension: "js") else {
+            throw WebScrapingUtilityError.detectReCaptchaScriptFileNotFound
+        }
+        
+        var detectReCaptchaScript: String
+        
+        do {
+            detectReCaptchaScript = try String(contentsOf: detectReCaptchaFile)
+        } catch {
+            throw WebScrapingUtilityError.invalidDetectReCaptchaScript
+        }
+        
+        runScript(detectReCaptchaScript) { (value, error) in
+            print(value ?? "")
+        }
+    }
+    
     private func runScript(_ script: String, completion: @escaping (Any?, Error?) -> Void) {
         webView.evaluateJavaScript(script, completionHandler: completion)
     }
@@ -234,6 +260,7 @@ class WebScrapingUtility: NSObject {
 
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("Web scraping: web view did navigate")
         // We only care about the webview navigation to our agent's login url or scrapable url
         guard !isRedirecting else { return }
         
