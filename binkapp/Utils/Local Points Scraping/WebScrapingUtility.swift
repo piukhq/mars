@@ -105,10 +105,14 @@ class WebScrapingUtility: NSObject {
         }
         
         if Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView) {
-            let webViewController = UIViewController()
-            webView.frame = webViewController.view.frame
-            webViewController.view.addSubview(webView)
-            containerViewController?.present(webViewController, animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let webViewController = UIViewController()
+                self.webView.frame = webViewController.view.frame
+                webViewController.view.addSubview(self.webView)
+                self.containerViewController?.present(webViewController, animated: true, completion: nil)
+                let navigationRequest = ModalNavigationRequest(viewController: webViewController)
+                Current.navigate.to(navigationRequest)
+            }
         }
         
         let request = URLRequest(url: url)

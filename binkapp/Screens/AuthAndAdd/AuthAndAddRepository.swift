@@ -37,7 +37,6 @@ class AuthAndAddRepository: WalletServiceProtocol {
                     DispatchQueue.main.async {
                         Current.database.performTask(with: newObject) { (context, safeObject) in
                             if let card = safeObject, let credentials = scrapingCredentials {
-                                // TODO: Catch this try, and force to failed
                                 do {
                                     try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: request, credentials: credentials, membershipCard: card)
                                 } catch {
