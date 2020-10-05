@@ -26,6 +26,9 @@ protocol WebScrapable {
     var scrapableUrlString: String { get }
     var loginScriptFileName: String { get }
     var pointsScrapingScriptFileName: String { get }
+    var hasReCaptcha: Bool { get }
+    var detectReCaptchaScriptFileName: String? { get }
+    var reCaptchaMessage: String? { get }
 }
 
 enum WebScrapingUtilityError: BinkError {
@@ -38,6 +41,7 @@ enum WebScrapingUtilityError: BinkError {
     case invalidDetectReCaptchaScript
     case failedToExecuteLoginScript
     case failedToExecuteScrapingScript
+    case failedToExecuteDetectReCaptchaScript
     case failedToCastReturnValue
     case loginFailed
     
@@ -69,6 +73,8 @@ enum WebScrapingUtilityError: BinkError {
             return "Detect reCaptcha script file not found"
         case .invalidDetectReCaptchaScript:
             return "Invalid detect reCaptcha script"
+        case .failedToExecuteDetectReCaptchaScript:
+            return "Failed to execute detect reCaptcha script"
         }
     }
 }
@@ -107,14 +113,7 @@ class WebScrapingUtility: NSObject {
         }
         
         if Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                let webViewController = UIViewController()
-                self.webView.frame = webViewController.view.frame
-                webViewController.view.addSubview(self.webView)
-                self.containerViewController?.present(webViewController, animated: true, completion: nil)
-                let navigationRequest = ModalNavigationRequest(viewController: webViewController)
-                Current.navigate.to(navigationRequest)
-            }
+            presentWebView()
         }
         
         let request = URLRequest(url: url)
@@ -141,6 +140,17 @@ class WebScrapingUtility: NSObject {
         } else {
             self.webView.navigationDelegate = self
             self.webView.load(request)
+        }
+    }
+    
+    private func presentWebView() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let webViewController = UIViewController()
+            self.webView.frame = webViewController.view.frame
+            webViewController.view.addSubview(self.webView)
+            self.containerViewController?.present(webViewController, animated: true, completion: nil)
+            let navigationRequest = ModalNavigationRequest(viewController: webViewController)
+            Current.navigate.to(navigationRequest)
         }
     }
     
@@ -216,7 +226,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func detectReCaptcha() throws {
-        guard let detectReCaptchaFile = Bundle.main.url(forResource: "detectReCaptcha", withExtension: "js") else {
+        guard agent.hasReCaptcha else { return }
+        guard let detectReCaptchaFile = Bundle.main.url(forResource: agent.detectReCaptchaScriptFileName, withExtension: "js") else {
             throw WebScrapingUtilityError.detectReCaptchaScriptFileNotFound
         }
         
@@ -228,8 +239,22 @@ class WebScrapingUtility: NSObject {
             throw WebScrapingUtilityError.invalidDetectReCaptchaScript
         }
         
-        runScript(detectReCaptchaScript) { (value, error) in
-            print(value ?? "")
+        runScript(detectReCaptchaScript) { [weak self] (value, error) in
+            guard let self = self else { return }
+            guard error == nil else {
+                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteDetectReCaptchaScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
+                return
+            }
+            guard let stringValue = value as? String else {
+                // HANDLE
+                return
+            }
+            guard stringValue == self.agent.reCaptchaMessage else {
+                // HANDLE
+                return
+            }
+            // Present reCaptcha to the user
+            self.presentWebView()
         }
     }
     

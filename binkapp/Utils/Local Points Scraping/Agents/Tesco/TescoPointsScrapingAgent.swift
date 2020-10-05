@@ -61,4 +61,16 @@ struct TescoScrapingAgent: WebScrapable {
     var pointsScrapingScriptFileName: String {
         return "TescoPointsScrape"
     }
+    
+    var hasReCaptcha: Bool {
+        return false
+    }
+    
+    var detectReCaptchaScriptFileName: String? {
+        return nil
+    }
+    
+    var reCaptchaMessage: String? {
+        return nil
+    }
 }

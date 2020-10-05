@@ -135,7 +135,7 @@
 		5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047522CE579B001BA964 /* Assets.xcassets */; };
 		5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */; };
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
-		70450DD4252B658F00F36566 /* detectReCaptcha.js in Resources */ = {isa = PBXBuildFile; fileRef = 70450DD3252B658F00F36566 /* detectReCaptcha.js */; };
+		70450DD4252B658F00F36566 /* BootsDetectReCaptcha.js in Resources */ = {isa = PBXBuildFile; fileRef = 70450DD3252B658F00F36566 /* BootsDetectReCaptcha.js */; };
 		70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */; };
 		70661B8B250795DF006DB009 /* BootsPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70661B89250795DF006DB009 /* BootsPointsScrape.js */; };
 		70661B8C250795DF006DB009 /* BootsLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70661B8A250795DF006DB009 /* BootsLogin.js */; };
@@ -616,7 +616,7 @@
 		5ECE049022CE579B001BA964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6249B35DF4CA178120671E6A /* Pods-binkapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.release.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.release.xcconfig"; sourceTree = "<group>"; };
 		6F8E73B24E8A8009DF9E4266 /* Pods-binkappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.release.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.release.xcconfig"; sourceTree = "<group>"; };
-		70450DD3252B658F00F36566 /* detectReCaptcha.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = detectReCaptcha.js; sourceTree = "<group>"; };
+		70450DD3252B658F00F36566 /* BootsDetectReCaptcha.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BootsDetectReCaptcha.js; sourceTree = "<group>"; };
 		7049B63C24AB52AA00661128 /* binkapp - 30-06-20 - Add field alternatives.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 30-06-20 - Add field alternatives.xcdatamodel"; sourceTree = "<group>"; };
 		70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootsPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70661B89250795DF006DB009 /* BootsPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BootsPointsScrape.js; sourceTree = "<group>"; };
@@ -1544,6 +1544,7 @@
 			children = (
 				70661B8A250795DF006DB009 /* BootsLogin.js */,
 				70661B89250795DF006DB009 /* BootsPointsScrape.js */,
+				70450DD3252B658F00F36566 /* BootsDetectReCaptcha.js */,
 				70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */,
 			);
 			path = Boots;
@@ -1593,7 +1594,6 @@
 		70E86778248E76B9001ED282 /* Local Points Scraping */ = {
 			isa = PBXGroup;
 			children = (
-				70450DD3252B658F00F36566 /* detectReCaptcha.js */,
 				70BD4BD024B774EB006E4E3D /* Agents */,
 				70E86779248E76C9001ED282 /* WebScrapingUtility.swift */,
 				70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */,
@@ -2613,7 +2613,7 @@
 				EF46E28E235F642100BA2CAF /* BinkPrimarySecondaryButtonView.xib in Resources */,
 				EFF59F1A234B73C900CF3992 /* CardDetailInfoTableViewCell.xib in Resources */,
 				EF5229BA2423FC96004AC972 /* prodPublicKey.der in Resources */,
-				70450DD4252B658F00F36566 /* detectReCaptcha.js in Resources */,
+				70450DD4252B658F00F36566 /* BootsDetectReCaptcha.js in Resources */,
 				EF6921732469A8A90049875B /* DebugSecondaryPlanColorViewController.xib in Resources */,
 				EFD602E8243B8627003AC746 /* LoyaltyScannerWidgetView.xib in Resources */,
 				3CD3493222F99E1D000C1F4D /* NunitoSans-LightItalic.ttf in Resources */,

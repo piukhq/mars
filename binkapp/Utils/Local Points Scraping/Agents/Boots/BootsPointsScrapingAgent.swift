@@ -61,4 +61,16 @@ struct BootsScrapingAgent: WebScrapable {
     var pointsScrapingScriptFileName: String {
         return "BootsPointsScrape"
     }
+    
+    var hasReCaptcha: Bool {
+        return true
+    }
+    
+    var detectReCaptchaScriptFileName: String? {
+        return "BootsDetectReCaptcha"
+    }
+    
+    var reCaptchaMessage: String? {
+        return "To login, confirm you are not a robot"
+    }
 }
