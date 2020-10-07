@@ -103,16 +103,19 @@ struct WebScrapingCredentials {
 }
 
 class WebScrapingUtility: NSObject {
-    private weak var containerViewController: UIViewController?
     private let webView: WKWebView
     private let agent: WebScrapable
     private let membershipCard: CD_MembershipCard
     private var hasAttemptedLogin = false
     private var canAttemptToDetectReCaptcha = false
+    private var isPresentingWebView: Bool {
+        guard let navigationViewController = UIViewController.topMostViewController() as? UINavigationController else { return false }
+        guard let topViewController = navigationViewController.viewControllers.first else { return false }
+        return topViewController.view.subviews.contains(webView)
+    }
     private weak var delegate: WebScrapingUtilityDelegate?
     
-    init(containerViewController: UIViewController, agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
-        self.containerViewController = containerViewController
+    init(agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
         webView = WKWebView(frame: .zero)
         self.agent = agent
         self.membershipCard = membershipCard
@@ -157,11 +160,11 @@ class WebScrapingUtility: NSObject {
     }
     
     private func presentWebView() {
+        guard !isPresentingWebView else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             let webViewController = UIViewController()
             self.webView.frame = webViewController.view.frame
             webViewController.view.addSubview(self.webView)
-            self.containerViewController?.present(webViewController, animated: true, completion: nil)
             let navigationRequest = ModalNavigationRequest(viewController: webViewController)
             Current.navigate.to(navigationRequest)
         }
@@ -262,6 +265,7 @@ class WebScrapingUtility: NSObject {
             }
             print("RECAPTCHA ELEMENT DETECTED")
             // Present reCaptcha to user
+            self.presentWebView()
         }
     }
     
