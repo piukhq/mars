@@ -77,6 +77,10 @@ struct SettingsFactory {
                 subtitle: "settings_row_howitworks_subtitle".localized,
                 action: .pushToReusable(screen: .howItWorks),
                 actionRequired: rowsWithActionRequired?.contains(.howItWorks) ?? false
+            ), SettingsRow(
+                type: .whoWeAre,
+                action: .pushToViewController(viewController: DebugMenuTableViewController.self),
+                actionRequired: rowsWithActionRequired?.contains(.whoWeAre) ?? false
             )
         ])
         

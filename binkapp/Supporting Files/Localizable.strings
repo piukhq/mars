@@ -213,6 +213,7 @@
 "settings_row_security_subtitle" = "How we protect your data";
 "settings_row_howitworks_title" = "How it works";
 "settings_row_howitworks_subtitle" = "Find out more about Bink";
+"settings_who_we_are_title" = "Who we are";
 
 "settings_section_legal_title" = "Legal";
 "settings_row_privacypolicy_title" = "Privacy policy";
