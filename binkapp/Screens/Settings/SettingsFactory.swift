@@ -79,7 +79,7 @@ struct SettingsFactory {
                 actionRequired: rowsWithActionRequired?.contains(.howItWorks) ?? false
             ), SettingsRow(
                 type: .whoWeAre,
-                action: .pushToViewController(viewController: DebugMenuTableViewController.self),
+                action: .pushToViewController(viewController: WhoWeAreViewController.self),
                 actionRequired: rowsWithActionRequired?.contains(.whoWeAre) ?? false
             )
         ])
