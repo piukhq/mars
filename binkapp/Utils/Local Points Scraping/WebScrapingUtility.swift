@@ -57,6 +57,7 @@ enum WebScrapingUtilityError: BinkError {
     case failedToExecuteDetectReCaptchaScript
     case failedToCastReturnValue
     case loginFailed
+    case userDismissedWebView
     
     var domain: BinkErrorDomain {
         return .webScrapingUtility
@@ -88,6 +89,8 @@ enum WebScrapingUtilityError: BinkError {
             return "Invalid detect reCaptcha script"
         case .failedToExecuteDetectReCaptchaScript:
             return "Failed to execute detect reCaptcha script"
+        case .userDismissedWebView:
+            return "User dismissed webview"
         }
     }
 }
@@ -107,6 +110,7 @@ class WebScrapingUtility: NSObject {
     private let agent: WebScrapable
     private let membershipCard: CD_MembershipCard
     private var hasAttemptedLogin = false
+    private var hasCompletedLogin = false
     private var canAttemptToDetectReCaptcha = false
     private var isPresentingWebView: Bool {
         guard let navigationViewController = UIViewController.topMostViewController() as? UINavigationController else { return false }
@@ -299,6 +303,9 @@ extension WebScrapingUtility: WKNavigationDelegate {
         guard !isRedirecting else { return }
         
         if shouldScrape {
+            // If we should scrape, we know we've successfully logged in.
+            hasCompletedLogin = true
+            
             // At this point, we should close the webView if we have displayed it for reCaptcha
             if isPresentingWebView {
                 Current.navigate.close()
@@ -350,7 +357,9 @@ extension WebScrapingUtility: WKNavigationDelegate {
 
 extension WebScrapingUtility: WebScrapingViewControllerDelegate {
     func webScrapingViewControllerDidDismiss(_ viewController: WebScrapingViewController) {
-        print("")
+        if !hasCompletedLogin {
+            delegate?.webScrapingUtility(self, didCompleteWithError: .userDismissedWebView, forMembershipCard: membershipCard, withAgent: agent)
+        }
     }
 }
 
