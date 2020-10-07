@@ -26,9 +26,22 @@ protocol WebScrapable {
     var scrapableUrlString: String { get }
     var loginScriptFileName: String { get }
     var pointsScrapingScriptFileName: String { get }
-    var hasReCaptcha: Bool { get }
-    var detectReCaptchaScriptFileName: String? { get }
+    var detectReCaptchaScriptFileName: String { get }
     var reCaptchaMessage: String? { get }
+}
+
+extension WebScrapable {
+    var loginScriptFileName: String {
+        return "\(merchant.rawValue.capitalized)Login"
+    }
+    
+    var pointsScrapingScriptFileName: String {
+        return "\(merchant.rawValue.capitalized)PointsScrape"
+    }
+    
+    var detectReCaptchaScriptFileName: String {
+        return "\(merchant.rawValue.capitalized)DetectReCaptcha"
+    }
 }
 
 enum WebScrapingUtilityError: BinkError {
@@ -95,7 +108,7 @@ class WebScrapingUtility: NSObject {
     private let agent: WebScrapable
     private let membershipCard: CD_MembershipCard
     private var hasAttemptedLogin = false
-    private var shouldDetectReCaptcha = true
+    private var canAttemptToDetectReCaptcha = false
     private weak var delegate: WebScrapingUtilityDelegate?
     
     init(containerViewController: UIViewController, agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
@@ -175,13 +188,6 @@ class WebScrapingUtility: NSObject {
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 return
             }
-            // For Boots, after attempting to login the user will be presented with an error message and prompted to complete reCaptcha.
-            // This doesn't result in the webview loading a new page, so we cannot detect this happening through delegate hooks.
-            // So essentially, we will remain in this part of this method and the card will remain pending until a pull-to-refresh is performed.
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                try? self.detectReCaptcha()
-            }
         }
     }
 
@@ -226,7 +232,8 @@ class WebScrapingUtility: NSObject {
     }
     
     private func detectReCaptcha() throws {
-        guard agent.hasReCaptcha else { return }
+        print("ATTEMPTING TO DETECT RECAPTCHA")
+        canAttemptToDetectReCaptcha = false
         guard let detectReCaptchaFile = Bundle.main.url(forResource: agent.detectReCaptchaScriptFileName, withExtension: "js") else {
             throw WebScrapingUtilityError.detectReCaptchaScriptFileNotFound
         }
@@ -241,20 +248,20 @@ class WebScrapingUtility: NSObject {
         
         runScript(detectReCaptchaScript) { [weak self] (value, error) in
             guard let self = self else { return }
-            guard error == nil else {
-                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteDetectReCaptchaScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
+//            guard error == nil else {
+//                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteDetectReCaptchaScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
+//                return
+//            }
+            guard let valueString = value as? String else {
+                self.canAttemptToDetectReCaptcha = true
                 return
             }
-            guard let stringValue = value as? String else {
-                // HANDLE
+            guard valueString == self.agent.reCaptchaMessage else {
+                self.canAttemptToDetectReCaptcha = true
                 return
             }
-            guard stringValue == self.agent.reCaptchaMessage else {
-                // HANDLE
-                return
-            }
-            // Present reCaptcha to the user
-            self.presentWebView()
+            print("RECAPTCHA ELEMENT DETECTED")
+            // Present reCaptcha to user
         }
     }
     
@@ -285,7 +292,7 @@ class WebScrapingUtility: NSObject {
 
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("Web scraping: web view did navigate")
+        canAttemptToDetectReCaptcha = true
         // We only care about the webview navigation to our agent's login url or scrapable url
         guard !isRedirecting else { return }
         
@@ -318,5 +325,21 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 }
             }
         }
+    }
+    
+    @available(iOS 13.0, *)
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
+
+        // Detect reCaptcha here within time limits
+        if canAttemptToDetectReCaptcha {
+            do {
+                try detectReCaptcha()
+            } catch let error {
+                canAttemptToDetectReCaptcha = true
+                print(error.localizedDescription)
+            }
+        }
+
+        decisionHandler(.allow, preferences)
     }
 }

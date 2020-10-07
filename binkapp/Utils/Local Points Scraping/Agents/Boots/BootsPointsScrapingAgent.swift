@@ -54,22 +54,6 @@ struct BootsScrapingAgent: WebScrapable {
         return "https://www.boots.com/webapp/wcs/stores/servlet/AjaxLogonForm"
     }
     
-    var loginScriptFileName: String {
-        return "BootsLogin"
-    }
-    
-    var pointsScrapingScriptFileName: String {
-        return "BootsPointsScrape"
-    }
-    
-    var hasReCaptcha: Bool {
-        return true
-    }
-    
-    var detectReCaptchaScriptFileName: String? {
-        return "BootsDetectReCaptcha"
-    }
-    
     var reCaptchaMessage: String? {
         return "To login, confirm you are not a robot"
     }

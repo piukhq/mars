@@ -53,22 +53,6 @@ struct TescoScrapingAgent: WebScrapable {
     var scrapableUrlString: String {
         return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
     }
-
-    var loginScriptFileName: String {
-        return "TescoLogin"
-    }
-
-    var pointsScrapingScriptFileName: String {
-        return "TescoPointsScrape"
-    }
-    
-    var hasReCaptcha: Bool {
-        return false
-    }
-    
-    var detectReCaptchaScriptFileName: String? {
-        return nil
-    }
     
     var reCaptchaMessage: String? {
         return nil
