@@ -17,11 +17,31 @@ class WhoWeAreViewController: UIViewController, UIScrollViewDelegate {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .white
-        stackView.margin = LayoutHelper.PaymentCardDetail.stackScrollViewMargins
+        stackView.margin = LayoutHelper.WhoWeAre.stackScrollViewMargins
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.delegate = self
+        stackView.contentInset = LayoutHelper.WhoWeAre.stackScrollViewContentInsets
+        return stackView
+    }()
+    
+    private lazy var binkLogo: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(named: "bink-icon-logo")
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 20
+        return imageView
+    }()
+    
+    private lazy var textStackView: StackScrollView = {
+        let stackView = StackScrollView(axis: .vertical)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fill
         stackView.alignment = .leading
-        stackView.delegate = self
-        stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
+        stackView.contentInset = LayoutHelper.WhoWeAre.textStackScrollViewContentInsets
+        stackView.isScrollEnabled = false
         return stackView
     }()
     
@@ -44,22 +64,21 @@ class WhoWeAreViewController: UIViewController, UIScrollViewDelegate {
         return label
     }()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureUI()
     }
-    
 }
 
 private extension WhoWeAreViewController {
     func configureUI() {
         
         view.addSubview(stackScrollView)
-        stackScrollView.add(arrangedSubview: titleLabel)
-        stackScrollView.add(arrangedSubview: descriptionText)
+        stackScrollView.add(arrangedSubview: binkLogo)
+        textStackView.add(arrangedSubview: titleLabel)
+        textStackView.add(arrangedSubview: descriptionText)
+        stackScrollView.add(arrangedSubview: textStackView)
         
         configureLayout()
     }
@@ -71,8 +90,19 @@ private extension WhoWeAreViewController {
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-
+            binkLogo.heightAnchor.constraint(equalToConstant: 142),
+            binkLogo.widthAnchor.constraint(equalToConstant: 142),
+            textStackView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
     
+}
+
+extension LayoutHelper {
+    struct WhoWeAre {
+        static let stackScrollViewMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 25)
+        static let stackScrollViewContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        static let textStackScrollViewContentInsets = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
+
+    }
 }
