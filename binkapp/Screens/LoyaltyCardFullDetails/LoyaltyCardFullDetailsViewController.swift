@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol LoyaltyCardFullDetailsModalDelegate {
+   func modalWillDismiss()
+}
+
 class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring {
     struct Constants {
         static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
@@ -320,7 +324,7 @@ extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryD
 
 extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
     func binkModuleViewWasTapped(moduleView: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
-        viewModel.goToScreenForAction(action: action)
+        viewModel.goToScreenForAction(action: action, delegate: self)
     }
 }
 
@@ -333,6 +337,14 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 
         let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
         navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
+    }
+}
+
+// MARK: - Modal Delegate
+
+extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDelegate {
+    func modalWillDismiss() {
+        configureModules()
     }
 }
 

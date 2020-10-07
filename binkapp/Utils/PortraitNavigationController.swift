@@ -21,10 +21,10 @@ class PortraitNavigationController: UINavigationController {
     
     // TODO: When we kill off iOS 12 support, remove the init overrides and just use a custom init
     
-    convenience init(rootViewController: UIViewController, isModallyPresented: Bool = false) {
+    convenience init(rootViewController: UIViewController, isModallyPresented: Bool = false, shouldShowCloseButton: Bool = true) {
         self.init(rootViewController: rootViewController)
         self.isModallyPresented = isModallyPresented
-        if isModallyPresented {
+        if isModallyPresented && shouldShowCloseButton {
             rootViewController.navigationItem.rightBarButtonItem = closeButton
         }
     }

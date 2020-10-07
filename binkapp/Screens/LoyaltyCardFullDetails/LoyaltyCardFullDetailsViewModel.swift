@@ -76,7 +76,7 @@ class LoyaltyCardFullDetailsViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func goToScreenForAction(action: BinkModuleView.BinkModuleAction) {
+    func goToScreenForAction(action: BinkModuleView.BinkModuleAction, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
         switch action {
         case .login, .loginChanges:
             guard let membershipPlan = membershipCard.membershipPlan else { return }
@@ -132,7 +132,7 @@ class LoyaltyCardFullDetailsViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .pll, .pllEmpty:
-            let viewController = ViewControllerFactory.makePllViewController(membershipCard: membershipCard, journey: .existingCard)
+            let viewController = ViewControllerFactory.makePllViewController(membershipCard: membershipCard, journey: .existingCard, delegate: delegate)
             let navigationRequest = ModalNavigationRequest(viewController: viewController, allowDismiss: false)
             Current.navigate.to(navigationRequest)
         case .unLinkable:
