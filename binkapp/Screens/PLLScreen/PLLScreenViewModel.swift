@@ -11,6 +11,7 @@ import CardScan
 class PLLScreenViewModel {
     private var membershipCard: CD_MembershipCard
     private let repository = PLLScreenRepository()
+    private let delegate: LoyaltyCardFullDetailsModalDelegate?
     
     private let paymentScannerStrings = PaymentCardScannerStrings()
     
@@ -48,9 +49,10 @@ class PLLScreenViewModel {
         return "pll_screen_secondary_message".localized
     }
         
-    init(membershipCard: CD_MembershipCard, journey: PllScreenJourney) {
+    init(membershipCard: CD_MembershipCard, journey: PllScreenJourney, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
         self.membershipCard = membershipCard
         self.journey = journey
+        self.delegate = delegate
     }
     
     // MARK:  - Public methods
@@ -113,6 +115,7 @@ class PLLScreenViewModel {
     }
     
     func close() {
+        delegate?.modalWillDismiss()
         Current.navigate.close()
     }
     
