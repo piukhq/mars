@@ -386,3 +386,9 @@
 "zendesk_identity_prompt_first_name" = "First name";
 "zendesk_identity_prompt_last_name" = "Last name";
 
+// MARK: - Who We Are
+
+"who_we_are_title" = "Who we are";
+"who_we_are_body" = "Below are a list of people that have been instrumental in developing the app you now hold in your hands.";
+
+
