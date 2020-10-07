@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WhoWeAreViewController: UIViewController, UIScrollViewDelegate {
+class WhoWeAreViewController: UIViewController {
 
     
     // MARK: - UI Lazy Variables
@@ -63,6 +63,31 @@ class WhoWeAreViewController: UIViewController, UIScrollViewDelegate {
         label.numberOfLines = 0
         return label
     }()
+
+    private lazy var binkPeopleTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.separatorColor = .lightGray
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(BinkPersonTableViewCell.self, asNib: true)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorInset = LayoutHelper.WhoWeAre.tableViewSeperatorInsets
+        tableView.rowHeight = 80
+        tableView.isScrollEnabled = false
+        return tableView
+    }()
+    
+    private let viewModel: WhoWeAreViewModel
+    
+    init(viewModel: WhoWeAreViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +95,32 @@ class WhoWeAreViewController: UIViewController, UIScrollViewDelegate {
         configureUI()
     }
 }
+
+// MARK: - Tableview Delegates
+
+extension WhoWeAreViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.teamMembers.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: BinkPersonTableViewCell = binkPeopleTableView.dequeue(indexPath: indexPath)
+        cell.titleLabel.text = viewModel.teamMembers[indexPath.row]
+        
+        return cell
+    }
+    
+ 
+}
+
+
+// MARK: - Private Methods
 
 private extension WhoWeAreViewController {
     func configureUI() {
@@ -79,8 +130,9 @@ private extension WhoWeAreViewController {
         textStackView.add(arrangedSubview: titleLabel)
         textStackView.add(arrangedSubview: descriptionText)
         stackScrollView.add(arrangedSubview: textStackView)
-        
+        stackScrollView.add(arrangedSubview: binkPeopleTableView)
         configureLayout()
+
     }
     
     
@@ -92,7 +144,9 @@ private extension WhoWeAreViewController {
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
             binkLogo.heightAnchor.constraint(equalToConstant: 142),
             binkLogo.widthAnchor.constraint(equalToConstant: 142),
-            textStackView.heightAnchor.constraint(equalToConstant: 200)
+            textStackView.heightAnchor.constraint(equalToConstant: 200),
+            binkPeopleTableView.heightAnchor.constraint(equalToConstant: 400),
+            binkPeopleTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
         ])
     }
     
@@ -103,6 +157,7 @@ extension LayoutHelper {
         static let stackScrollViewMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 25)
         static let stackScrollViewContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         static let textStackScrollViewContentInsets = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
+        static let tableViewSeperatorInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
 
     }
 }
