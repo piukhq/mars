@@ -57,4 +57,16 @@ struct BootsScrapingAgent: WebScrapable {
     var reCaptchaMessage: String? {
         return "To login, confirm you are not a robot"
     }
+    
+    var reCaptchaTextIdentiferClass: String? {
+        return "gigya-error-msg gigya-form-error-msg gigya-error-code-401020 gigya-error-msg-active"
+    }
+    
+    var incorrectCredentialsMessage: String? {
+        return "If you're seeing this message you've either made a mistake in typing in your password, or it's time to change it"
+    }
+    
+    var incorrectCredentialsTextIdentiferClass: String? {
+        return "gigya-error-msg gigya-form-error-msg gigya-error-msg-active gigya-error-code-403042"
+    }
 }

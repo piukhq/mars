@@ -57,4 +57,16 @@ struct TescoScrapingAgent: WebScrapable {
     var reCaptchaMessage: String? {
         return nil
     }
+    
+    var reCaptchaTextIdentiferClass: String? {
+        return nil
+    }
+    
+    var incorrectCredentialsMessage: String? {
+        return nil
+    }
+    
+    var incorrectCredentialsTextIdentiferClass: String? {
+        return nil
+    }
 }

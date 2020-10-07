@@ -26,8 +26,11 @@ protocol WebScrapable {
     var scrapableUrlString: String { get }
     var loginScriptFileName: String { get }
     var pointsScrapingScriptFileName: String { get }
-    var detectReCaptchaScriptFileName: String { get }
+    var detectTextScriptFileName: String { get }
+    var reCaptchaTextIdentiferClass: String? { get }
     var reCaptchaMessage: String? { get }
+    var incorrectCredentialsMessage: String? { get }
+    var incorrectCredentialsTextIdentiferClass: String? { get }
 }
 
 extension WebScrapable {
@@ -39,8 +42,8 @@ extension WebScrapable {
         return "\(merchant.rawValue.capitalized)PointsScrape"
     }
     
-    var detectReCaptchaScriptFileName: String {
-        return "\(merchant.rawValue.capitalized)DetectReCaptcha"
+    var detectTextScriptFileName: String {
+        return "\(merchant.rawValue.capitalized)DetectText"
     }
 }
 
@@ -48,13 +51,13 @@ enum WebScrapingUtilityError: BinkError {
     case agentProvidedInvalidUrl
     case loginScriptFileNotFound
     case scapingScriptFileNotFound
-    case detectReCaptchaScriptFileNotFound
+    case detectTextScriptFileNotFound
     case agentProvidedInvalidLoginScript
     case agentProvidedInvalidScrapeScript
-    case invalidDetectReCaptchaScript
+    case invalidDetectTextScript
     case failedToExecuteLoginScript
     case failedToExecuteScrapingScript
-    case failedToExecuteDetectReCaptchaScript
+    case failedToExecuteDetectTextScript
     case failedToCastReturnValue
     case loginFailed
     case userDismissedWebView
@@ -83,12 +86,12 @@ enum WebScrapingUtilityError: BinkError {
             return "Failed to cast return value"
         case .loginFailed:
             return "Login failed"
-        case .detectReCaptchaScriptFileNotFound:
-            return "Detect reCaptcha script file not found"
-        case .invalidDetectReCaptchaScript:
-            return "Invalid detect reCaptcha script"
-        case .failedToExecuteDetectReCaptchaScript:
-            return "Failed to execute detect reCaptcha script"
+        case .detectTextScriptFileNotFound:
+            return "Detect text script file not found"
+        case .invalidDetectTextScript:
+            return "Invalid detect text script"
+        case .failedToExecuteDetectTextScript:
+            return "Failed to execute detect text script"
         case .userDismissedWebView:
             return "User dismissed webview"
         }
@@ -112,6 +115,7 @@ class WebScrapingUtility: NSObject {
     private var hasAttemptedLogin = false
     private var hasCompletedLogin = false
     private var canAttemptToDetectReCaptcha = false
+    private var canAttemptToDetectIncorrectCredentials = false
     private var isPresentingWebView: Bool {
         guard let navigationViewController = UIViewController.topMostViewController() as? UINavigationController else { return false }
         guard let topViewController = navigationViewController.viewControllers.first else { return false }
@@ -236,38 +240,69 @@ class WebScrapingUtility: NSObject {
         }
     }
     
-    private func detectReCaptcha() throws {
-        print("ATTEMPTING TO DETECT RECAPTCHA")
-        canAttemptToDetectReCaptcha = false
-        guard let detectReCaptchaFile = Bundle.main.url(forResource: agent.detectReCaptchaScriptFileName, withExtension: "js") else {
-            throw WebScrapingUtilityError.detectReCaptchaScriptFileNotFound
+    enum DetectTextType {
+        case reCaptchaMessaging
+        case incorrectCredentialsMessaging
+    }
+    
+    private func detectText(_ type: DetectTextType) throws {
+        switch type {
+        case .reCaptchaMessaging:
+            self.canAttemptToDetectReCaptcha = false
+        case .incorrectCredentialsMessaging:
+            self.canAttemptToDetectIncorrectCredentials = false
         }
         
-        var detectReCaptchaScript: String
+        guard let detectTextScriptFile = Bundle.main.url(forResource: agent.detectTextScriptFileName, withExtension: "js") else {
+            throw WebScrapingUtilityError.detectTextScriptFileNotFound
+        }
         
+        var detectTextScript: String
         do {
-            detectReCaptchaScript = try String(contentsOf: detectReCaptchaFile)
+            detectTextScript = try String(contentsOf: detectTextScriptFile)
         } catch {
-            throw WebScrapingUtilityError.invalidDetectReCaptchaScript
+            throw WebScrapingUtilityError.invalidDetectTextScript
+        }
+        var formattedScript: String
+        switch type {
+        case .reCaptchaMessaging:
+            formattedScript = String(format: detectTextScript, agent.reCaptchaTextIdentiferClass ?? "")
+        case .incorrectCredentialsMessaging:
+            formattedScript = String(format: detectTextScript, agent.incorrectCredentialsTextIdentiferClass ?? "")
         }
         
-        runScript(detectReCaptchaScript) { [weak self] (value, error) in
-            guard let self = self else { return }
-//            guard error == nil else {
-//                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteDetectReCaptchaScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
-//                return
-//            }
+        runScript(formattedScript) { (value, _) in
             guard let valueString = value as? String else {
-                self.canAttemptToDetectReCaptcha = true
+                switch type {
+                case .reCaptchaMessaging:
+                    self.canAttemptToDetectReCaptcha = true
+                case .incorrectCredentialsMessaging:
+                    self.canAttemptToDetectIncorrectCredentials = true
+                }
                 return
             }
-            guard valueString == self.agent.reCaptchaMessage else {
-                self.canAttemptToDetectReCaptcha = true
-                return
+            
+            switch type {
+            case .reCaptchaMessaging:
+                guard valueString == self.agent.reCaptchaMessage else {
+                    self.canAttemptToDetectReCaptcha = true
+                    return
+                }
+            case .incorrectCredentialsMessaging:
+                guard valueString == self.agent.incorrectCredentialsMessage else {
+                    self.canAttemptToDetectIncorrectCredentials = true
+                    return
+                }
             }
-            print("RECAPTCHA ELEMENT DETECTED")
-            // Present reCaptcha to user
-            self.presentWebView()
+            
+            switch type {
+            case .reCaptchaMessaging:
+                print("RECAPTCHA ELEMENT DETECTED")
+                // Present reCaptcha to user
+                self.presentWebView()
+            case .incorrectCredentialsMessaging:
+                print("INCORRECT CREDENTIALS ELEMENT DETECTED")
+            }
         }
     }
     
@@ -345,7 +380,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
         if canAttemptToDetectReCaptcha {
             do {
-                try detectReCaptcha()
+                try detectText(.reCaptchaMessaging)
             } catch let error {
                 canAttemptToDetectReCaptcha = true
                 print(error.localizedDescription)
