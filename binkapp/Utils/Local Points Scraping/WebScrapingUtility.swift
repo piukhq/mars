@@ -162,10 +162,8 @@ class WebScrapingUtility: NSObject {
     private func presentWebView() {
         guard !isPresentingWebView else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let webViewController = UIViewController()
-            self.webView.frame = webViewController.view.frame
-            webViewController.view.addSubview(self.webView)
-            let navigationRequest = ModalNavigationRequest(viewController: webViewController)
+            let viewController = WebScrapingViewController(webView: self.webView, delegate: self)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }
     }
@@ -301,6 +299,11 @@ extension WebScrapingUtility: WKNavigationDelegate {
         guard !isRedirecting else { return }
         
         if shouldScrape {
+            // At this point, we should close the webView if we have displayed it for reCaptcha
+            if isPresentingWebView {
+                Current.navigate.close()
+            }
+            
             getScrapedValue { [weak self] result in
                 guard let self = self else { return }
                 
@@ -333,8 +336,6 @@ extension WebScrapingUtility: WKNavigationDelegate {
     
     @available(iOS 13.0, *)
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
-
-        // Detect reCaptcha here within time limits
         if canAttemptToDetectReCaptcha {
             do {
                 try detectReCaptcha()
@@ -343,7 +344,42 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 print(error.localizedDescription)
             }
         }
-
         decisionHandler(.allow, preferences)
+    }
+}
+
+extension WebScrapingUtility: WebScrapingViewControllerDelegate {
+    func webScrapingViewControllerDidDismiss(_ viewController: WebScrapingViewController) {
+        print("")
+    }
+}
+
+protocol WebScrapingViewControllerDelegate: AnyObject {
+    func webScrapingViewControllerDidDismiss(_ viewController: WebScrapingViewController)
+}
+
+class WebScrapingViewController: UIViewController {
+    private let webView: WKWebView
+    private weak var delegate: WebScrapingViewControllerDelegate?
+    
+    init(webView: WKWebView, delegate: WebScrapingViewControllerDelegate?) {
+        self.webView = webView
+        self.delegate = delegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        webView.frame = view.frame
+        view.addSubview(webView)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.webScrapingViewControllerDidDismiss(self)
     }
 }
