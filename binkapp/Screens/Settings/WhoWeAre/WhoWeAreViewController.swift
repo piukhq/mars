@@ -145,8 +145,8 @@ private extension WhoWeAreViewController {
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            binkLogo.heightAnchor.constraint(equalToConstant: LayoutHelper.WhoWeAre.logoDimnesion),
-            binkLogo.widthAnchor.constraint(equalToConstant: LayoutHelper.WhoWeAre.logoDimnesion),
+            binkLogo.heightAnchor.constraint(equalToConstant: LayoutHelper.WhoWeAre.logoDimension),
+            binkLogo.widthAnchor.constraint(equalToConstant: LayoutHelper.WhoWeAre.logoDimension),
             textStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.WhoWeAre.textStackViewPadding),
             textStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.WhoWeAre.textStackViewPadding),
             binkPeopleTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
@@ -161,9 +161,9 @@ extension LayoutHelper {
     struct WhoWeAre {
         static let stackScrollMargin = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         static let tableViewSeperatorInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
-        static let logoDimnesion: CGFloat = 142
+        static let logoDimension: CGFloat = 142
         static let textStackViewPadding: CGFloat = 25
         static let stackScrollViewTopPadding: CGFloat = 40
-        static let stackScrollViewBottomPadding: CGFloat = 10 
+        static let stackScrollViewBottomPadding: CGFloat = 10
     }
 }
