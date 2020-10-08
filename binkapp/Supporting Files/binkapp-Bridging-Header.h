@@ -9,5 +9,6 @@
 #define binkapp_Bridging_Header_h
 
 #import <CommonCrypto/CommonHMAC.h>
+#import "ExceptionHandler.h"
 
 #endif /* binkapp_Bridging_Header_h */

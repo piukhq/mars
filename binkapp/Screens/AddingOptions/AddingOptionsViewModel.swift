@@ -11,34 +11,93 @@ import CardScan
 
 class AddingOptionsViewModel {
     private let strings = PaymentCardScannerStrings()
-    
-    private let router: MainScreenRouter
-    init(router: MainScreenRouter) {
-        self.router = router
-    }
 
-    func toLoyaltyScanner(delegate: BarcodeScannerViewControllerDelegate?) {
-        router.toLoyaltyScanner(delegate: delegate)
+    func toLoyaltyScanner() {
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: Current.navigate.loyaltyCardScannerDelegate)
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
+            self?.toBrowseBrandsScreen()
+        }
+
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            Current.navigate.close {
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
+                if granted {
+                    Current.navigate.close {
+                        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                        Current.navigate.to(navigationRequest)
+                    }
+                } else {
+                    if let alert = enterManuallyAlert {
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    }
+                }
+            }
+        }
     }
     
-    func toPaymentCardScanner(delegate: ScanDelegate?) {
-        router.toPaymentCardScanner(strings: strings, delegate: delegate)
-    }
-
-    func toAddAuth(membershipPlan: CD_MembershipPlan, barcode: String) {
-        let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
+    func toPaymentCardScanner() {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
+            self?.toAddPaymentCardScreen()
+        }
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            Current.navigate.close {
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
+                if granted {
+                    Current.navigate.close {
+                        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                        Current.navigate.to(navigationRequest)
+                    }
+                } else {
+                    if let alert = enterManuallyAlert {
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    }
+                }
+            }
+        }
     }
     
     func toBrowseBrandsScreen() {
-        router.toBrowseBrandsViewController()
+        Current.navigate.close {
+            let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
     }
     
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-        router.toAddPaymentViewController(model: model)
+        Current.navigate.close {
+            let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
+        
     }
 
-    @objc func popViewController() {
-        router.popViewController()
+    @objc func close() {
+        Current.navigate.close()
     }
 }

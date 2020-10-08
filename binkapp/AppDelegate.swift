@@ -9,14 +9,13 @@
 import UIKit
 import CoreData
 import Firebase
-import FirebaseCrashlytics
 import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
 import CardScan
 import Keys
 
 @UIApplicationMain 
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     var window: UIWindow?
     var stateMachine: RootStateMachine?
 
@@ -30,7 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Firebase
         FirebaseApp.configure()
-        Crashlytics.crashlytics()
+       
+        // Sentry Crash Reporting
+        SentryService.start()
+    
         #if RELEASE
         BinkAnalytics.beginSessionTracking()
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyProduction)
@@ -41,15 +43,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Device storage
         StorageUtility.start()
+        
+        // Remote config
+        Current.remoteConfig.configure()
 
         // Initialise Zendesk
         ZendeskService.start()
         
         // Get latest user profile data
-        // TODO: Move to UserService in future ticket
         if Current.userManager.hasCurrentUser {
-            let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-            Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
+            getUserProfile { result in
                 guard let response = try? result.get() else { return }
                 Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
             }

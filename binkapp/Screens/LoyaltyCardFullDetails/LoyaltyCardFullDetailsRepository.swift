@@ -7,24 +7,16 @@
 
 import Foundation
 
-class LoyaltyCardFullDetailsRepository: WalletRepository {
-    private let apiClient: APIClient
-    
-    required init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
+typealias EmptyCompletionBlock = () -> Void
 
-    func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
-        var trackableCard = TrackableWalletCard()
-        if let loyaltyCard = card as? CD_MembershipCard {
-            trackableCard = TrackableWalletCard(uuid: loyaltyCard.uuid, loyaltyPlan: loyaltyCard.membershipPlan?.id, paymentScheme: nil)
-        }
+// TODO: This should be reusable code whether in LCD or wallet
+class LoyaltyCardFullDetailsRepository: WalletServiceProtocol {
+    func delete(_ membershipCard: CD_MembershipCard, completion: EmptyCompletionBlock? = nil) {
+        let trackableCard = TrackableWalletCard(uuid: membershipCard.uuid, loyaltyPlan: membershipCard.membershipPlan?.id, paymentScheme: nil)
         
-        BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCard(card: card))
+        BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCard(card: membershipCard))
         
-        // Process the backend delete, but fail silently
-        let request = BinkNetworkRequest(endpoint: .membershipCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
-        apiClient.performRequestWithNoResponse(request, parameters: nil) { (success, _) in
+        deleteMembershipCard(membershipCard) { (success, _) in
             guard success else {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseFail(card: trackableCard))
                 return
@@ -33,7 +25,7 @@ class LoyaltyCardFullDetailsRepository: WalletRepository {
         }
         
         // Process core data deletion
-        Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
+        Current.database.performBackgroundTask(with: membershipCard) { (context, cardToDelete) in
             if let cardToDelete = cardToDelete {
                 context.delete(cardToDelete)
             }

@@ -60,6 +60,7 @@
 "no_matches" = "No matches";
 
 "barcode_title" = "Barcode:";
+"barcode_error" = "This barcode cannot be displayed";
 "card_number_title" = "Card number:";
 "barcode_card_description" = "Scan this barcode at the store, just like you would a physical loyalty card. Bear in mind that some store scanners cannot read from screens.";
 "barcode_card_number_description" = "Show this card number in-store just like you would a physical loyalty card.";
@@ -122,6 +123,9 @@
 "delete_card_title" = "Delete this card";
 "delete_card_plan_title" = "Delete %@";
 "delete_card_message" = "Remove this card from Bink";
+
+"payment_card_expired_alert_title" = "This payment card has expired";
+"payment_card_expired_alert_message" = "This payment card has expired";
 
 // MARK: - Transactions
 
@@ -249,8 +253,15 @@
 
 // MARK: - PCD
 
-"pcd_added_card_title" = "Linked cards";
-"pcd_added_card_description" = "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points.";
+"pcd_active_card_title" = "Linked cards";
+"pcd_pending_card_title" = "Payment card pending";
+"pcd_failed_card_title" = "Payment card inactive";
+
+"pcd_active_card_description" = "The active loyalty cards below are linked to this payment card. Simply pay as usual to collect points.";
+"pcd_pending_card_description" = "You cannot link any loyalty cards to start earning rewards.\n\nPlease wait for the card to be authorised. If the problem persists please read our FAQs or you can get in touch with Bink using the Contact us form in Settings.";
+"pcd_pending_card_added" = "Card added: %@";
+"pcd_failed_card_description" = "Your payment card is not authorised and you cannot link any loyalty cards to start earning rewards.\n\nYour card has failed the authorisation process or has expired. Please use the “Delete this card” action below to remove it from your wallet and re-add if required.\n\nIf you have any concerns, please read the FAQs or you can get in touch with Bink using the Contact us form in Settings";
+
 "pcd_other_card_title_cards_added" = "Other cards you can add";
 "pcd_other_card_title_no_cards_added" = "No linked cards";
 "pcd_other_card_description_cards_added" = "You can also add the cards below and link them to your payment cards.";
@@ -266,7 +277,8 @@
 "add_email_subtitle" = "Please add your email address below.";
 "social_tandcs_title" = "Terms and conditions";
 "social_tandcs_subtitle" = "One last step...";
-"social_tandcs_error" = "Continue with Facebook failed.";
+"social_tandcs_facebook_error" = "Continue with Facebook failed.";
+"social_tandcs_siwa_error" = "Sign in with Apple failed.";
 
 "preferences_prompt" = "Make sure you’re the first to know about available rewards, offers and updates!\nYou can opt out at any time.";
 "preferences_prompt_highlight_rewards" = "rewards";
@@ -312,7 +324,6 @@
 
 "plr_stamp_voucher_detail_expired_header" = "Your voucher has expired";
 "plr_stamp_voucher_detail_redeemed_header" = "Your voucher was redeemed";
-"plr_stamp_voucher_detail_issued_header" = "Your %@ voucher is ready!";
 "plr_stamp_voucher_detail_inprogress_header" = "About this voucher";
 
 "plr_voucher_detail_issued_date_prefix" = "Added ";
@@ -322,6 +333,7 @@
 "plr_voucher_detail_subtext_inprogress" = "Spend %@%@ with us and you'll get a %@%@ %@.";
 "plr_voucher_detail_subtext_issued" = "Use the code above to redeem your reward. You will get %@%@%@ off your purchase.";
 "plr_lcd_points_module_title" = "Collecting";
+"plr_lcd_points_module_auth_title" = "Earning";
 "plr_lcd_points_module_description" = "Towards rewards";
 "plr_voucher_accumulator_burn_description" = "for spending %@%@";
 "plr_voucher_stamp_burn_description" = "for collecting %@%@ %@";

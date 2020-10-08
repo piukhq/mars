@@ -178,7 +178,7 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
         case .addLoyaltyCardResponseSuccess(let card, let formPurpose, let statusCode):
             guard let uuid = card.uuid else { return nil }
             guard let cardStatus = card.status?.status?.rawValue else { return nil }
-            guard let reasonCode = card.status?.formattedReasonCodes?.first?.value else { return nil }
+            guard let reasonCode = card.status?.formattedReasonCodes?.first?.rawValue else { return nil }
             guard let planIdString = card.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
             return [
                 "loyalty_card_journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
@@ -356,5 +356,58 @@ enum PLLAnalyticsEvent: BinkAnalyticsEvent {
             return .active
         }
         return .softLink
+    }
+}
+
+enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
+    case localPointsCollectionSuccess(membershipCard: CD_MembershipCard)
+    case localPointsCollectionStatus(membershipCard: CD_MembershipCard)
+    case localPointsCollectionInternalFailure(membershipCard: CD_MembershipCard, error: WebScrapingUtilityError)
+    case localPointsCollectionCredentialFailure(membershipCard: CD_MembershipCard, error: WebScrapingUtilityError)
+    
+    var name: String {
+        switch self {
+        case .localPointsCollectionSuccess:
+            return "local_points_collection_balance_success"
+        case .localPointsCollectionStatus:
+            return "local_points_collection_status"
+        case .localPointsCollectionInternalFailure:
+            return "local_points_collection_internal_failure"
+        case .localPointsCollectionCredentialFailure:
+            return "local_points_collection_credential_failure"
+        }
+    }
+    
+    var data: [String : Any]? {
+        switch self {
+        case .localPointsCollectionSuccess(let membershipCard):
+            guard let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
+            guard let uuid = membershipCard.uuid else { return nil }
+            return [
+                "loyalty_plan": planId,
+                "client_account_id": uuid
+            ]
+        case .localPointsCollectionStatus(let membershipCard):
+            guard let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
+            guard let uuid = membershipCard.uuid else { return nil }
+            guard let status = membershipCard.status?.status?.rawValue else { return nil }
+            return [
+                "loyalty_plan": planId,
+                "status": status,
+                "client_account_id": uuid
+            ]
+        case .localPointsCollectionInternalFailure(let membershipCard, let error):
+            guard let uuid = membershipCard.uuid else { return nil }
+            return [
+                "client_account_id": uuid,
+                "error_string": error.message
+            ]
+        case .localPointsCollectionCredentialFailure(let membershipCard, let error):
+            guard let uuid = membershipCard.uuid else { return nil }
+            return [
+                "client_account_id": uuid,
+                "error_string": error.message
+            ]
+        }
     }
 }

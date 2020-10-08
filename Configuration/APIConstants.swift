@@ -30,10 +30,6 @@ enum Configuration {
             return .configuration
         }
 
-        var errorCode: String? {
-            return nil
-        }
-
         var message: String {
             switch self {
             case .missingKey:
@@ -52,6 +48,13 @@ enum Configuration {
 }
 
 struct APIConstants {
+    static var currentEnvironment: EnvironmentType {
+        guard let environmment = EnvironmentType(rawValue: baseURLString) else {
+            fatalError("Could not identify environment")
+        }
+        return environmment
+    }
+    
     static var isProduction: Bool {
         return baseURLString == EnvironmentType.production.rawValue
     }

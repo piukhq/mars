@@ -43,8 +43,7 @@ enum FormPurpose: Equatable {
 }
 
 class AuthAndAddViewModel {
-    private let repository: AuthAndAddRepository
-    private let router: MainScreenRouter
+    private let repository = AuthAndAddRepository()
     private let membershipPlan: CD_MembershipPlan
     let prefilledFormValues: [FormDataSource.PrefilledValue]?
     
@@ -76,9 +75,7 @@ class AuthAndAddViewModel {
         return formPurpose != .add || formPurpose == .ghostCard
     }
     
-    init(repository: AuthAndAddRepository, router: MainScreenRouter, membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
-        self.repository = repository
-        self.router = router
+    init(membershipPlan: CD_MembershipPlan, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard? = nil, prefilledFormValues: [FormDataSource.PrefilledValue]? = nil) {
         self.membershipPlan = membershipPlan
         self.membershipCardPostModel = MembershipCardPostModel(account: AccountPostModel(), membershipPlan: Int(membershipPlan.id))
         self.existingMembershipCard = existingMembershipCard
@@ -143,20 +140,28 @@ class AuthAndAddViewModel {
         checkboxes?.forEach { addCheckboxToCard(checkbox: $0) }
 
         guard let model = membershipCardPostModel else { return }
-        
         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardRequest(request: model, formPurpose: formPurpose))
+        let scrapingCredentials = Current.pointsScrapingManager.makeCredentials(fromFormFields: formFields, membershipPlanId: membershipPlan.id)
         
-        repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, onSuccess: { [weak self] card in
-            guard let self = self else {return}
+        repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { card in
             if let card = card {
-                if card.membershipPlan?.featureSet?.planCardType == .link {
-                    self.router.toPllViewController(membershipCard: card, journey: .newCard)
-                } else {
-                    self.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+                
+                // Navigate to LCD for the new card behind the modal
+                let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
+                let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
+                let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest) {
+                    if card.membershipPlan?.featureSet?.planCardType == .link {
+                        let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
+                        let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+                        Current.navigate.to(navigationRequest)
+                    } else {
+                        Current.navigate.close()
+                    }
+                    completion()
+                    Current.wallet.refreshLocal()
+                    NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
                 }
-                completion()
-                Current.wallet.refreshLocal()
-                NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
+                Current.navigate.to(tabNavigationRequest)
             }
             }, onError: { [weak self] error in
                 self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
@@ -178,17 +183,25 @@ class AuthAndAddViewModel {
             model.membershipPlan = nil
         }
         
-        repository.postGhostCard(parameters: model, existingMembershipCard: existingMembershipCard, onSuccess: { [weak self] (response) in
+        repository.postGhostCard(parameters: model, existingMembershipCard: existingMembershipCard, onSuccess: { (response) in
             guard let card = response else {
                 Current.wallet.refreshLocal()
                 NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
                 return
             }
             
+            // Navigate to LCD for the new card behind the modal
+            let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
+            let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
+            let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest)
+            Current.navigate.to(tabNavigationRequest)
+
             if card.membershipPlan?.featureSet?.cardType == 2 {
-                self?.router.toPllViewController(membershipCard: card, journey: .newCard)
+                let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
+                let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
+                Current.navigate.to(navigationRequest)
             } else {
-                self?.router.toLoyaltyFullDetailsScreen(membershipCard: card)
+                Current.navigate.close()
             }
         }) { (error) in
             self.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
@@ -316,12 +329,16 @@ class AuthAndAddViewModel {
     
     func reloadWithGhostCardFields() {
         let newFormPurpose: FormPurpose = formPurpose == .addFailed ? .patchGhostCard : .ghostCard
-        router.toAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
+        let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: newFormPurpose, existingMembershipCard: existingMembershipCard)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func openWebView(withUrlString url: URL) {
         let urlString = url.absoluteString
-        router.openWebView(withUrlString: urlString)
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: urlString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func toReusableTemplate(title: String, description: String) {
@@ -331,8 +348,10 @@ class AuthAndAddViewModel {
         attributedString.append(attributedTitle)
         attributedString.append(attributedBody)
         
-        let configuration = ReusableModalConfiguration(title: title, text: attributedString, showCloseButton: true)
-        router.toReusableModalTemplateViewController(configurationModel: configuration)
+        let configuration = ReusableModalConfiguration(title: title, text: attributedString)
+        let viewController = ViewControllerFactory.makeReusableTemplateViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func brandHeaderWasTapped() {
@@ -343,18 +362,36 @@ class AuthAndAddViewModel {
     }
     
     func displaySimplePopup(title: String?, message: String?) {
-        router.displaySimplePopup(title: title, message: message)
-    }
-
-    func popViewController() {
-        router.popViewController()
-    }
-    
-    func popToRootViewController() {
-        router.popToRootViewController()
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
+        Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
     func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
-        router.toLoyaltyScanner(forPlan: plan, delegate: delegate)
+        let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: delegate)
+        
+        // TODO: Move this to view controller factory and make this entire function more reusable
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {}
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
+                if granted {
+                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
+                } else {
+                    if let alert = enterManuallyAlert {
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    }
+                }
+            }
+        }
     }
 }

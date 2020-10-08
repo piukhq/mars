@@ -9,33 +9,26 @@
 import Foundation
 import CoreData
 
-struct LoyaltyWalletRepository: WalletRepository {
-    private let apiClient: APIClient
-
-    init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
-
-    func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
+struct LoyaltyWalletRepository: WalletServiceProtocol {
+    func delete(_ membershipCard: CD_MembershipCard, completion: EmptyCompletionBlock? = nil) {
         var trackableCard = TrackableWalletCard()
-        if let loyaltyCard = card as? CD_MembershipCard {
-            trackableCard = TrackableWalletCard(uuid: loyaltyCard.uuid, loyaltyPlan: loyaltyCard.membershipPlan?.id, paymentScheme: nil)
-        }
+        trackableCard = TrackableWalletCard(uuid: membershipCard.uuid, loyaltyPlan: membershipCard.membershipPlan?.id, paymentScheme: nil)
         
-        BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCard(card: card))
+        BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCard(card: membershipCard))
         
-        // Process the backend delete, but fail silently
-        let request = BinkNetworkRequest(endpoint: .membershipCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
-        apiClient.performRequestWithNoResponse(request, parameters: nil) { (success, _) in
+        deleteMembershipCard(membershipCard) { (success, _) in
             guard success else {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseFail(card: trackableCard))
                 return
             }
             BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseSuccess(card: trackableCard))
         }
+        
+        // Remove any stored credentials for points scraping
+        Current.pointsScrapingManager.disableLocalPointsScraping(forMembershipCardId: membershipCard.id)
 
         // Process core data deletion
-        Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
+        Current.database.performBackgroundTask(with: membershipCard) { (context, cardToDelete) in
             if let cardToDelete = cardToDelete {
                 context.delete(cardToDelete)
             }

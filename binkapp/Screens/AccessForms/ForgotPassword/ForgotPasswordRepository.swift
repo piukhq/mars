@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ForgotPasswordRepository {
+class ForgotPasswordRepository: UserServiceProtocol {
     private let apiClient: APIClient
     
     init(apiClient: APIClient) {
@@ -16,8 +16,7 @@ class ForgotPasswordRepository {
     }
     
     func continueButtonTapped(email: String, completion: @escaping () -> Void) {
-        let request = BinkNetworkRequest(endpoint: .forgotPassword, method: .post, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithNoResponse(request, parameters: ["email": email]) { (_, _) in
+        submitForgotPasswordRequest(forEmailAddress: email) { (_, _) in
             completion()
         }
     }

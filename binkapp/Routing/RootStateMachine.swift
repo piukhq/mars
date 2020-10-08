@@ -9,7 +9,7 @@
 import UIKit
 import DTTJailbreakDetection
 
-class RootStateMachine: NSObject {
+class RootStateMachine: NSObject, UserServiceProtocol {
     
     private let window: UIWindow
     private var router: MainScreenRouter?
@@ -30,7 +30,8 @@ class RootStateMachine: NSObject {
         } else if Current.userManager.currentToken == nil {
             handleUnauthenticated()
         } else {
-            moveTo(router?.wallet())
+            let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
+            moveTo(tabBarController)
         }
         
         window.tintColor = .black
@@ -45,7 +46,8 @@ class RootStateMachine: NSObject {
             migrationController.renewTokenFromLegacyAppIfPossible { success in
                 DispatchQueue.main.async { [weak self] in
                     if success {
-                        self?.moveTo(self?.router?.wallet())
+                        let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
+                        self?.moveTo(tabBarController)
                     } else {
                         self?.moveTo(self?.router?.getOnboardingViewController())
                     }
@@ -70,10 +72,7 @@ class RootStateMachine: NSObject {
         if Current.apiClient.networkIsReachable {
             // Call the logout endpoint, but we don't care about the response.
             // On success or error, we will defer to clearing local storage and clearing the user's token.
-
-            // TODO: Request should become a static let in a service in future ticket
-            let request = BinkNetworkRequest(endpoint: .logout, method: .post, headers: nil, isUserDriven: false)
-            Current.apiClient.performRequest(request, expecting: LogoutResponse.self) { (_, _) in }
+            logout()
         }
     }
     
@@ -98,13 +97,15 @@ class RootStateMachine: NSObject {
     
     func moveTo(_ viewController: UIViewController?) {
         window.rootViewController = viewController
+        Current.navigate.setRootViewController(viewController)
     }
 }
 
 extension RootStateMachine: MainScreenRouterDelegate {
     func router(_ router: MainScreenRouter, didLogin: Bool) {
         if didLogin {
-            moveTo(router.wallet())
+            let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
+            moveTo(tabBarController)
         }
     }
 }

@@ -11,12 +11,10 @@ import Foundation
 class PLRRewardDetailViewModel {
     private let voucher: CD_Voucher
     private let membershipPlan: CD_MembershipPlan
-    private let router: MainScreenRouter
 
-    init(voucher: CD_Voucher, plan: CD_MembershipPlan, router: MainScreenRouter) {
+    init(voucher: CD_Voucher, plan: CD_MembershipPlan) {
         self.voucher = voucher
         self.membershipPlan = plan
-        self.router = router
     }
 
     var voucherCellViewModel: PLRCellViewModel {
@@ -41,21 +39,10 @@ class PLRRewardDetailViewModel {
             return String(format: "plr_voucher_detail_redeemed_header".localized, voucherAmountText)
         case (.accumulator, .expired):
             return String(format: "plr_voucher_detail_expired_header".localized, voucherAmountText)
-
         case (.stamps, .inProgress):
             return "plr_stamp_voucher_detail_inprogress_header".localized
         case (.stamps, .issued):
-            var formattedText = ""
-            formattedText.append(voucher.burn?.prefix ?? "")
-            
-            // We store burn value as 0 by default if the API returns nothing
-            // We can safely assume that no burn value will ever be 0, so we can guard against it here
-            if let burnValue = voucher.burn?.value, burnValue != 0 {
-                formattedText.append(String(describing: burnValue))
-            }
-            formattedText.append(" ")
-            formattedText.append(voucher.burn?.suffix ?? "")
-            return String(format: "plr_stamp_voucher_detail_issued_header".localized, formattedText)
+            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
         case (.stamps, .redeemed):
             return "plr_stamp_voucher_detail_redeemed_header".localized
         case (.stamps, .expired):
@@ -116,7 +103,9 @@ class PLRRewardDetailViewModel {
 
     func openTermsAndConditionsWebView() {
         guard let url = termsAndConditionsButtonUrlString else { return }
-        router.openWebView(withUrlString: url)
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 
     // MARK: - View decisioning
@@ -178,7 +167,22 @@ class PLRRewardDetailViewModel {
     }
 
     var voucherAmountText: String {
-        return "\(voucher.burn?.prefix ?? "")\(voucher.burn?.value?.twoDecimalPointString() ?? "")\(voucher.burn?.suffix ?? "") \(voucher.burn?.type ?? "")"
+        var string = ""
+        if let prefix = voucher.burn?.prefix {
+            string.append(prefix)
+        }
+        if let value = voucher.burn?.value?.twoDecimalPointString() {
+            string.append(value)
+        }
+        if let suffix = voucher.burn?.suffix {
+            string.append(" ")
+            string.append(suffix)
+        }
+        if let type = voucher.burn?.type {
+            string.append(" ")
+            string.append(type)
+        }
+        return string
     }
 
     private var voucherPlanDocument: CD_PlanDocument? {

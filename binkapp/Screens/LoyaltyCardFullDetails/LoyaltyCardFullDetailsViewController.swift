@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol LoyaltyCardFullDetailsModalDelegate {
+   func modalWillDismiss()
+}
+
 class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring {
     struct Constants {
         static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
@@ -26,7 +30,6 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.alignment = .center
         stackView.delegate = self
         stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
-        stackView.margin = Constants.stackViewMargin
         return stackView
     }()
 
@@ -112,8 +115,15 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        setCloseButton()
         configureUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
+    }
+    
+    @objc private func handlePointsScrapingUpdate() {
+        DispatchQueue.main.async {
+            self.configureModules()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -169,12 +179,6 @@ extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableView
 // MARK: - Private methods
 
 private extension LoyaltyCardFullDetailsViewController {
-    func setCloseButton() {
-        let closeButton = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popToRootController
-            ))
-        self.navigationItem.setLeftBarButton(closeButton, animated: true)
-    }
-
     func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
@@ -201,27 +205,18 @@ private extension LoyaltyCardFullDetailsViewController {
             if let vouchers = viewModel.vouchers {
                 for voucher in vouchers {
                     let state = viewModel.state(forVoucher: voucher)
-                    var cell = PLRBaseCollectionViewCell()
                     switch (state, voucher.earnType) {
                     case (.inProgress, .accumulator), (.issued, .accumulator):
-                        cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorActiveCell.self)
+                        setupCellForType(PLRAccumulatorActiveCell.self, voucher: voucher)
                     case (.redeemed, .accumulator), (.expired, .accumulator):
-                        cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorInactiveCell.self)
+                        setupCellForType(PLRAccumulatorInactiveCell.self, voucher: voucher)
                     case (.inProgress, .stamps), (.issued, .stamps):
-                        cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsActiveCell.self)
+                        setupCellForType(PLRStampsActiveCell.self, voucher: voucher)
                     case (.redeemed, .stamps), (.expired, .stamps):
-                        cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
+                        setupCellForType(PLRStampsInactiveCell.self, voucher: voucher)
                     default:
                         break
                     }
-                    
-                    let cellViewModel = PLRCellViewModel(voucher: voucher)
-                    cell.configureWithViewModel(cellViewModel) {
-                        self.viewModel.toVoucherDetailScreen(voucher: voucher)
-                    }
-                    stackScrollView.add(arrangedSubview: cell)
-                    cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
-                    stackScrollView.customPadding(Constants.postCellPadding, after: cell)
                 }
             }
         }
@@ -265,6 +260,17 @@ private extension LoyaltyCardFullDetailsViewController {
             brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
         }
     }
+    
+    private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
+        let cell = PLRBaseCollectionViewCell.nibForCellType(cellType)
+        let cellViewModel = PLRCellViewModel(voucher: voucher)
+        cell.configureWithViewModel(cellViewModel) {
+            self.viewModel.toVoucherDetailScreen(voucher: voucher)
+        }
+        stackScrollView.add(arrangedSubview: cell)
+        cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
+        stackScrollView.customPadding(Constants.postCellPadding, after: cell)
+    }
 
     func configureLayout() {
         NSLayoutConstraint.activate([
@@ -289,10 +295,6 @@ private extension LoyaltyCardFullDetailsViewController {
         pointsModule.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
         linkModule.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards, delegate: self)
     }
-    
-    @objc func popToRootController() {
-        viewModel.popToRootController()
-    }
 
     @objc func showBarcodeButtonPressed() {
         viewModel.toBarcodeModel()
@@ -302,7 +304,7 @@ private extension LoyaltyCardFullDetailsViewController {
 // MARK: - CardDetailInformationRowFactoryDelegate
 
 extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryDelegate {
-    func cardDetailInformationRowFactory(_ factory: PaymentCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
+    func cardDetailInformationRowFactory(_ factory: WalletCardDetailInformationRowFactory, shouldPerformActionForRowType informationRowType: CardDetailInformationRow.RowType) {
         switch informationRowType {
         case .about:
             viewModel.toAboutMembershipPlanScreen()
@@ -322,7 +324,7 @@ extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryD
 
 extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
     func binkModuleViewWasTapped(moduleView: BinkModuleView, withAction action: BinkModuleView.BinkModuleAction) {
-        viewModel.goToScreenForAction(action: action)
+        viewModel.goToScreenForAction(action: action, delegate: self)
     }
 }
 
@@ -335,6 +337,14 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 
         let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
         navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
+    }
+}
+
+// MARK: - Modal Delegate
+
+extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDelegate {
+    func modalWillDismiss() {
+        configureModules()
     }
 }
 

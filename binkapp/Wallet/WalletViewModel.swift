@@ -11,9 +11,7 @@ import CardScan
 
 protocol WalletViewModel {
     associatedtype T
-    associatedtype R
-
-    init(repository: R, router: MainScreenRouter)
+    
     var cards: [T]? { get }
     var cardCount: Int { get }
     var walletPromptsCount: Int { get }
@@ -24,8 +22,7 @@ protocol WalletViewModel {
     func toCardDetail(for card: T)
     func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?)
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt)
-    func showDeleteConfirmationAlert(card: T, yesCompletion: @escaping () -> Void, noCompletion: @escaping () -> Void)
-    func toAddPaymentCardScreen(model: PaymentCardCreateModel?)
+    func showDeleteConfirmationAlert(card: T, onCancel: @escaping () -> Void)
 }
 
 extension WalletViewModel {
@@ -47,5 +44,11 @@ extension WalletViewModel {
 
     func refreshLocalWallet() {
         Current.wallet.refreshLocal()
+    }
+    
+    func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?) {
+        let viewController = ViewControllerFactory.makeSettingsViewController(rowsWithActionRequired: rowsWithActionRequired)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }

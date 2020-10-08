@@ -8,22 +8,27 @@
 import UIKit
 
 class BarcodeViewController: BinkTrackableViewController {
+    
+    struct Constants {
+        static let largeSpace: CGFloat = 20
+        static let smallSpace: CGFloat = -5
+    }
+    
+    @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var barcodeImageView: UIImageView!
-    @IBOutlet private weak var barcodeContainerView: UIView!
-    @IBOutlet private weak var cardNumberContainerView: UIView!
+    @IBOutlet private weak var barcodeErrorLabel: UILabel!
     @IBOutlet private weak var barcodeLabel: UILabel!
     @IBOutlet private weak var barcodeNumberLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var numberLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var maximiseButton: BinkGradientButton!
-    @IBOutlet private weak var titleLabelBarcodeConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var titleLabelNoBarcodeConstraint: NSLayoutConstraint!
+    
+    private var previousBrightness: CGFloat?
     
     private let viewModel: BarcodeViewModel
     var hasDrawnBarcode = false
     
-    init(viewModel: BarcodeViewModel, showFullSize: Bool = false) {
+    init(viewModel: BarcodeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "BarcodeViewController", bundle: Bundle(for: BarcodeViewController.self))
     }
@@ -39,29 +44,46 @@ class BarcodeViewController: BinkTrackableViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.barTintColor = .white
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(popViewController))
-        
         configureUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        previousBrightness = UIScreen.main.brightness
+        UIScreen.main.brightness = 1.0
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIScreen.main.brightness = previousBrightness ?? 0.5
     }
     
     func configureUI() {
         guard !hasDrawnBarcode else { return }
         barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
-        numberLabel.isHidden = viewModel.cardNumber == nil
-        barcodeContainerView.isHidden = !viewModel.isBarcodeAvailable
-        cardNumberContainerView.isHidden = !viewModel.isCardNumberAvailable
+        [numberLabel, titleLabel].forEach {
+            $0?.isHidden = viewModel.cardNumber == nil
+        }
         
-        viewModel.generateBarcodeImage(for: barcodeImageView)
+        stackView.setCustomSpacing(Constants.largeSpace, after: barcodeImageView)
+        stackView.setCustomSpacing(Constants.smallSpace, after: barcodeLabel)
+        stackView.setCustomSpacing(Constants.smallSpace, after: titleLabel)
+        stackView.setCustomSpacing(Constants.largeSpace, after: numberLabel.isHidden ? barcodeNumberLabel : numberLabel)
         
-        // MaximiseButton hidden by PT on 17.03.20 due to the change which won't allow the user to maximise the barcode anymore
-        maximiseButton.isHidden = true
-//        maximiseButton.isHidden = !viewModel.isBarcodeAvailable
-        
-        barcodeImageView.contentMode = .scaleAspectFill
+        if let barcodeImage = viewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
+            barcodeImageView.isHidden = false
+            barcodeErrorLabel.isHidden = true
+            barcodeImageView.image = barcodeImage
+        } else {
+            barcodeImageView.isHidden = true
+            barcodeErrorLabel.text = "barcode_error".localized
+            barcodeErrorLabel.font = UIFont.bodyTextLarge
+            barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
+        }
         
         barcodeLabel.font = UIFont.headline
         barcodeLabel.textColor = .black
-        barcodeLabel.text = "barcode_title".localized
+        barcodeLabel.text = viewModel.isBarcodeAvailable ? "barcode_title".localized : nil
         
         barcodeNumberLabel.font = UIFont.subtitle
         barcodeNumberLabel.textColor = .black
@@ -79,7 +101,7 @@ class BarcodeViewController: BinkTrackableViewController {
         descriptionLabel.textColor = .black
         descriptionLabel.textAlignment = .justified
         
-        switch viewModel.barcodeType {
+        switch viewModel.barcodeUse {
         case .loyaltyCard:
             if viewModel.isBarcodeAvailable {
                 descriptionLabel.text = "barcode_card_description".localized
@@ -90,36 +112,7 @@ class BarcodeViewController: BinkTrackableViewController {
             descriptionLabel.text = "barcode_coupon_description".localized
         }
 
-        maximiseButton.setTitleColor(.white, for: .normal)
-        maximiseButton.titleLabel?.font = UIFont.subtitle
-        maximiseButton.setTitle("barcode_maximise_button".localized, for: .normal)
-        maximiseButton.addTarget(self, action: #selector(maximizeButtonPressed), for: .touchUpInside)
-
         hasDrawnBarcode = true
-
-        maximiseButton.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        // TODO: uncomment these when we want to maximise barcode again
-//        titleLabelBarcodeConstraint.priority = viewModel.isBarcodeAvailable ? .required : .defaultLow
-//        titleLabelNoBarcodeConstraint.priority = viewModel.isBarcodeAvailable ? .defaultLow : .required
-
-        NSLayoutConstraint.activate([
-            maximiseButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
-            maximiseButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            maximiseButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
-            maximiseButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
-    }
-    
-    @objc private func popViewController() {
-        dismiss(animated: true, completion: nil)
-    }
-
-    @objc private func maximizeButtonPressed() {
-        let vc = BarcodeMaximizedViewController(barcodeImage: barcodeImageView.image, planName: viewModel.title, cardNumber: viewModel.cardNumber)
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        present(vc, animated: true, completion: nil)
     }
 }

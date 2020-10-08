@@ -8,20 +8,13 @@
 
 import Foundation
 
-class PreferencesRepository {
-    private let apiClient: APIClient
-    
-    init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
-    
+class PreferencesRepository: UserServiceProtocol {
     var networkIsReachable: Bool {
-        return apiClient.networkIsReachable
+        return Current.apiClient.networkIsReachable
     }
 
     func getPreferences(onSuccess: @escaping ([PreferencesModel]) -> Void, onError: @escaping (BinkError?) -> Void) {
-        let request = BinkNetworkRequest(endpoint: .preferences, method: .get, headers: nil, isUserDriven: false)
-        apiClient.performRequest(request, expecting: [PreferencesModel].self) { (result, _) in
+        getPreferences { result in
             switch result {
             case .success(let preferences):
                 onSuccess(preferences)
@@ -32,8 +25,7 @@ class PreferencesRepository {
     }
     
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (BinkError) -> Void) {
-        let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: true)
-        apiClient.performRequestWithNoResponse(request, parameters: preferences) { (success, error) in
+        setPreferences(params: preferences) { (success, error) in
             if let error = error {
                 onError(error)
                 return

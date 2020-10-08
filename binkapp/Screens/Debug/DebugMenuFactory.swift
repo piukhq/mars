@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeWebScrapingRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -50,6 +50,28 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "Loyalty card secondary colour swatches", subtitle: nil, action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .secondaryColor)
+        }, cellType: .titleSubtitle)
+    }
+    
+    private func makeLPCWebViewRow() -> DebugMenuRow {
+        let shouldShow = Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView)
+        return DebugMenuRow(title: "LPC debug web view", subtitle: shouldShow ? "On" : "Off", action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcWebView)
+        }, cellType: .titleSubtitle)
+    }
+    
+    private func makeLPCUseCookiesRow() -> DebugMenuRow {
+        let shouldUseCookies = Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies)
+        return DebugMenuRow(title: "LPC use cookies", subtitle: shouldUseCookies ? "Yes" : "No", action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcCookies)
+            }, cellType: .titleSubtitle)
+    }
+    
+    private func makeForceCrashRow() -> DebugMenuRow {
+        return DebugMenuRow(title: "Force Crash", subtitle: "This will immediately crash the application", action: {
+            SentryService.forceCrash()
         }, cellType: .titleSubtitle)
     }
     
@@ -89,12 +111,5 @@ class DebugMenuFactory {
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         return alert
-    }
-    
-    func makeWebScrapingRow() -> DebugMenuRow {
-        return DebugMenuRow(title: "Tesco web scraping", subtitle: nil, action: { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .webScraping)
-        }, cellType: .titleSubtitle)
     }
 }

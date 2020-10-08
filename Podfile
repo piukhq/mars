@@ -7,7 +7,7 @@ def common_pods
 
 pod 'Firebase'
 pod 'Firebase/Analytics'
-pod 'Firebase/Crashlytics'
+pod 'Firebase/RemoteConfig'
 pod 'Alamofire', '~> 5.0.0-rc.3'
 pod 'AlamofireImage', '~> 4.0.0-beta.6'
 pod 'AlamofireNetworkActivityLogger'
@@ -21,6 +21,7 @@ pod 'JWTDecode', '~> 2.4'
 pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
 pod 'ZendeskSupportSDK'
 pod 'CardScan'
+pod 'ZXingObjC', '~> 3.6.5'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",

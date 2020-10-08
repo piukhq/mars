@@ -8,17 +8,9 @@
 
 import Foundation
 
-class PaymentCardDetailRepository: WalletRepository {
-    private let apiClient: APIClient
-
-    required init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
-
+class PaymentCardDetailRepository: WalletServiceProtocol {
     func getPaymentCard(forId id: String, completion: @escaping (CD_PaymentCard?) -> Void) {
-        // TODO: Request should become a static let in a service in future ticket
-        let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: id), method: .get, headers: nil, isUserDriven: false)
-        apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
+        getPaymentCard(withId: id) { result in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { backgroundContext in
@@ -26,9 +18,9 @@ class PaymentCardDetailRepository: WalletRepository {
                     guard let newObjectId = newObject.id else {
                         fatalError("Failed to get the id from the new object.")
                     }
-
+                    
                     try? backgroundContext.save()
-
+                    
                     DispatchQueue.main.async {
                         Current.database.performTask { context in
                             let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
@@ -42,26 +34,21 @@ class PaymentCardDetailRepository: WalletRepository {
         }
     }
 
-    func delete<T: WalletCard>(_ card: T, completion: EmptyCompletionBlock? = nil) {
-        var trackableCard = TrackableWalletCard()
-        if let paymentCard = card as? CD_PaymentCard {
-            trackableCard = TrackableWalletCard(uuid: paymentCard.uuid, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
-        }
+    func delete(_ paymentCard: CD_PaymentCard, completion: EmptyCompletionBlock? = nil) {
+        let trackableCard = TrackableWalletCard(uuid: paymentCard.uuid, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
         
-        BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: card))
+        BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: paymentCard))
         
-        // Process the backend delete, but fail silently
-        let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: card.id), method: .delete, headers: nil, isUserDriven: false)
-        apiClient.performRequestWithNoResponse(request, parameters: nil) { (success, _) in
+        deletePaymentCard(paymentCard) { (success, _) in
             guard success else {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard))
                 return
             }
             BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseSuccess(card: trackableCard))
         }
-        
+
         // Process core data deletion
-        Current.database.performBackgroundTask(with: card) { (context, cardToDelete) in
+        Current.database.performBackgroundTask(with: paymentCard) { (context, cardToDelete) in
             if let cardToDelete = cardToDelete {
                 context.delete(cardToDelete)
             }
@@ -75,29 +62,25 @@ class PaymentCardDetailRepository: WalletRepository {
     }
 
     func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?) -> Void) {
-        // TODO: Request should become a static let in a service in future ticket
-        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), method: .patch, headers: nil, isUserDriven: false)
-        apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
+        toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: true) { result in
             switch result {
             case .success(let response):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: response))
                 
                 Current.database.performBackgroundTask { backgroundContext in
-                    // TODO: Should we be using .none here? Only option that works...
-                    // It's functional but we're not sure why it doesn't work otherwise and that is concerning.
                     let newObject = response.mapToCoreData(backgroundContext, .update, overrideID: nil)
-
+                    
                     guard let newObjectId = newObject.id else {
                         fatalError("Failed to get the id from the new object.")
                     }
-
+                    
                     try? backgroundContext.save()
-
+                    
                     DispatchQueue.main.async {
-
+                        
                         Current.database.performTask { context in
                             let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
-
+                            
                             completion(fetchedObject)
                         }
                     }
@@ -110,28 +93,23 @@ class PaymentCardDetailRepository: WalletRepository {
     }
 
     func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?) -> Void) {
-        let paymentCardId: String = paymentCard.id
-        let membershipCardId: String = membershipCard.id
-
-        // TODO: Request should become a static let in a service in future ticket
-        let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCardId, paymentCardId: paymentCardId), method: .delete, headers: nil, isUserDriven: false)
-        apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
+        toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: false) { result in
             switch result {
             case .success:
                 BinkAnalytics.track(PLLAnalyticsEvent.pllDelete(loyaltyCard: membershipCard, paymentCard: paymentCard))
                 
                 Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
-
-                    if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCardId) {
+                    
+                    if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCard.id) {
                         safePaymentCard?.removeLinkedMembershipCardsObject(membershipCardToRemove)
                     }
-
+                    
                     try? context.save()
-
+                    
                     DispatchQueue.main.async {
                         Current.database.performTask { context in
-                            let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: paymentCardId)
-
+                            let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: paymentCard.id)
+                            
                             completion(fetchedObject)
                         }
                     }

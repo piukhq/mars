@@ -18,11 +18,19 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyWallet)
+    }
+    
+    @objc private func handlePointsScrapingUpdate() {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -93,11 +101,9 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
     func promptForDelete(with index: IndexPath, cell: WalletLoyaltyCardCollectionViewCell) {
         guard let card = viewModel.cards?[index.row] else { return }
                 
-        viewModel.showDeleteConfirmationAlert(card: card, yesCompletion: { [weak self] in
-            self?.viewModel.refreshLocalWallet()
-        }, noCompletion: {
+        viewModel.showDeleteConfirmationAlert(card: card) {
             cell.set(to: .closed)
-        })
+        }
     }
     
     func cellDidFullySwipe(action: SwipeMode?, cell: WalletLoyaltyCardCollectionViewCell) {
@@ -114,28 +120,5 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
         let cells = collectionView.visibleCells.filter { $0 != cell }
         guard let walletCells = cells as? [WalletLoyaltyCardCollectionViewCell] else { return }
         walletCells.forEach { $0.set(to: .closed) }
-    }
-}
-
-// MARK: Payment Scanner Delegate
-
-extension LoyaltyWalletViewController: ScanDelegate {
-    func userDidCancel(_ scanViewController: ScanViewController) {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
-        // Record Bouncer usage
-        BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
-        let month = Int(creditCard.expiryMonth ?? "")
-        let year = Int(creditCard.expiryYear ?? "")
-        let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
-        viewModel.toAddPaymentCardScreen(model: model)
-        navigationController?.removeViewController(scanViewController)
-    }
-    
-    func userDidSkip(_ scanViewController: ScanViewController) {
-        viewModel.toAddPaymentCardScreen()
-        navigationController?.removeViewController(scanViewController)
     }
 }

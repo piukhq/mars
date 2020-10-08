@@ -13,7 +13,7 @@ enum SocialLoginRequestType {
     case apple(SignInWithAppleRequest)
 }
 
-class SocialTermsAndConditionsViewController: BaseFormViewController {
+class SocialTermsAndConditionsViewController: BaseFormViewController, UserServiceProtocol {
 
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
@@ -107,8 +107,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     // FIXME: To avoid the code duplicate below, in future we need to build the Facebook and Apple request objects from a common object type
     
     private func loginWithFacebook(request: FacebookRequest, preferenceCheckboxes: [CheckboxView]) {
-        let networtRequest = BinkNetworkRequest(endpoint: .facebook, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] (result, _) in
+        authWithFacebook(request: request) { [weak self] result in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -117,24 +116,20 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                 }
                 Current.userManager.setNewUser(with: response)
                 
-                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                self?.createService(params: APIConstants.makeServicePostRequest(email: email)) { (success, _) in
                     guard success else {
                         self?.handleAuthError()
                         return
                     }
                     
-                    // Get latest user profile data in background and ignore any failure
-                    // TODO: Move to UserService in future ticket
-                    let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
+                    self?.getUserProfile(completion: { result in
                         guard let response = try? result.get() else {
                             BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                             return
                         }
                         Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
                         BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
-                    }
+                    })
                     
                     self?.router?.didLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
@@ -151,8 +146,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     }
     
     private func loginWithApple(request: SignInWithAppleRequest, preferenceCheckboxes: [CheckboxView]) {
-        let networtRequest = BinkNetworkRequest(endpoint: .apple, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithParameters(networtRequest, parameters: request, expecting: LoginRegisterResponse.self) { [weak self] (result, _) in
+        authWithApple(request: request) { [weak self] result in
             switch result {
             case .success(let response):
                 guard let email = response.email else {
@@ -161,24 +155,20 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                 }
                 Current.userManager.setNewUser(with: response)
                 
-                let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-                Current.apiClient.performRequestWithNoResponse(request, parameters: APIConstants.makeServicePostRequest(email: email)) { [weak self] (success, error) in
+                self?.createService(params: APIConstants.makeServicePostRequest(email: email), completion: { (success, _) in
                     guard success else {
                         self?.handleAuthError()
                         return
                     }
                     
-                    // Get latest user profile data in background and ignore any failure
-                    // TODO: Move to UserService in future ticket
-                    let request = BinkNetworkRequest(endpoint: .me, method: .get, headers: nil, isUserDriven: false)
-                    Current.apiClient.performRequest(request, expecting: UserProfileResponse.self) { (result, _) in
+                    self?.getUserProfile(completion: { result in
                         guard let response = try? result.get() else {
                             BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                             return
                         }
                         Current.userManager.setProfile(withResponse: response, updateZendeskIdentity: true)
                         BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
-                    }
+                    })
                     
                     self?.router?.didLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
@@ -186,7 +176,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
                     
                     BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
-                }
+                })
             case .failure:
                 BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: false))
                 self?.handleAuthError()
@@ -207,12 +197,20 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
         guard params.count > 0 else { return }
 
         // We don't worry about whether this was successful or not
-        let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithNoResponse(request, parameters: params, completion: nil)
+        setPreferences(params: params)
     }
     
     private func showError() {
-        let alert = UIAlertController(title: "error_title".localized, message: "social_tandcs_error".localized, preferredStyle: .alert)
+        let message: String
+        
+        switch requestType {
+        case .apple(_):
+            message = "social_tandcs_siwa_error".localized
+        case .facebook(_):
+            message = "social_tandcs_facebook_error".localized
+        }
+        
+        let alert = UIAlertController(title: "error_title".localized, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         present(alert, animated: true)
     }
@@ -224,7 +222,9 @@ class SocialTermsAndConditionsViewController: BaseFormViewController {
     }
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
-        router?.openWebView(withUrlString: URL.absoluteString)
+        let viewController = ViewControllerFactory.makeWebViewController(urlString: URL.absoluteString)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }
 
