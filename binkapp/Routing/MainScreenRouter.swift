@@ -72,33 +72,26 @@ class MainScreenRouter {
     //MARK: - App in background
     
     @objc func appWillResignActive() {
-        guard let visibleVC = navController?.getVisibleViewController() else { return }
+        guard let topViewController = UIViewController.topMostViewController() else { return }
         
         // This should be a temporary workaround while we wait for a change in Bouncer's library.
-        // We are removing the scanner from the navigation stack when we move the app to the background
-        // This results in the user returning to the add options view.
-        if let navigationController = visibleVC as? UINavigationController {
-            for vc in navigationController.viewControllers {
-                if vc.isKind(of: CardScan.ScanViewController.self) {
-                    navigationController.removeViewController(vc)
-                }
+        if let navigationController = topViewController as? PortraitNavigationController, let presentingViewController = topViewController.presentingViewController {
+            if navigationController.visibleViewController?.isKind(of: CardScan.ScanViewController.self) == true {
+                navigationController.visibleViewController?.dismiss(animated: false, completion: {
+                    self.displayLaunchScreen(visibleViewController: presentingViewController)
+                    return
+                })
             }
-        }
-        if visibleVC.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: UIAlertController.self) == true || visibleVC.presentedViewController?.isKind(of: MFMailComposeViewController.self) == true {
-            //Dismiss alert controller and mail composer before presenting the Launch screen.
-            visibleVC.dismiss(animated: false) {
-                self.displayLaunchScreen(visibleViewController: visibleVC)
-            }
-            return
         }
         
-        if visibleVC.isModal {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.displayLaunchScreen(visibleViewController: visibleVC)
+        if topViewController.isKind(of: UIAlertController.self), let presentingViewController = topViewController.presentingViewController {
+            topViewController.dismiss(animated: false) {
+                self.displayLaunchScreen(visibleViewController: presentingViewController)
+                return
             }
-        } else {
-            displayLaunchScreen(visibleViewController: visibleVC)
         }
+        
+        displayLaunchScreen(visibleViewController: topViewController)
     }
     
     private func displayLaunchScreen(visibleViewController: UIViewController) {
@@ -110,19 +103,20 @@ class MainScreenRouter {
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
         if let modalNavigationController = visibleViewController.navigationController, visibleViewController.isModal {
             modalNavigationController.present(vc, animated: false, completion: nil)
         } else {
-            navController?.present(vc, animated: false, completion: nil)
+            visibleViewController.present(vc, animated: false, completion: nil)
         }
     }
     
     @objc func appDidBecomeActive() {
-        let visibleVC = navController?.getVisibleViewController()
-        if let modalNavigationController = visibleVC?.navigationController, visibleVC?.isModal == true {
-           modalNavigationController.dismiss(animated: false, completion: nil)
-        } else if visibleVC?.isKind(of: SFSafariViewController.self) == false {
-            visibleVC?.dismiss(animated: false, completion: nil)
+        guard let visibleVC = UIViewController.topMostViewController() else { return }
+        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal == true {
+           modalNavigationController.dismiss(animated: true, completion: nil)
+        } else if visibleVC.isKind(of: SFSafariViewController.self) == false {
+            visibleVC.dismiss(animated: true, completion: nil)
         }
     }
     

@@ -59,8 +59,8 @@ final class ViewControllerFactory {
     
     // MARK: - Auth and add
     
-    static func makePllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney) -> PLLScreenViewController {
-        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, journey: journey)
+    static func makePllViewController(membershipCard: CD_MembershipCard, journey: PllScreenJourney, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) -> PLLScreenViewController {
+        let viewModel = PLLScreenViewModel(membershipCard: membershipCard, journey: journey, delegate: delegate)
         return PLLScreenViewController(viewModel: viewModel, journey: journey)
     }
     
