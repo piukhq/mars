@@ -97,6 +97,7 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     
     func moveTo(_ viewController: UIViewController?) {
         window.rootViewController = viewController
+        Current.navigate.setRootViewController(viewController)
     }
 }
 

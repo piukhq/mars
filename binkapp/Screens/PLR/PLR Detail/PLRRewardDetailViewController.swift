@@ -102,23 +102,18 @@ private extension PLRRewardDetailViewController {
         view.backgroundColor = .white
         title = viewModel.title
 
-        var cell = PLRBaseCollectionViewCell()
         switch (viewModel.voucherState, viewModel.voucherEarnType) {
         case (.inProgress, .accumulator), (.issued, .accumulator):
-            cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorActiveCell.self)
+            setupCellForType(PLRAccumulatorActiveCell.self)
         case (.redeemed, .accumulator), (.expired, .accumulator):
-            cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorInactiveCell.self)
+            setupCellForType(PLRAccumulatorInactiveCell.self)
         case (.inProgress, .stamps), (.issued, .stamps):
-            cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsActiveCell.self)
+            setupCellForType(PLRStampsActiveCell.self)
         case (.redeemed, .stamps), (.expired, .stamps):
-            cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
+            setupCellForType(PLRStampsInactiveCell.self)
         default:
             break
         }
-        
-        cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
-        stackScrollView.add(arrangedSubview: cell)
-        cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
 
         // View decisioning
         if viewModel.shouldShowCode {
@@ -165,6 +160,13 @@ private extension PLRRewardDetailViewController {
         }
 
         setupLayout()
+    }
+    
+    private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type) {
+        let cell = PLRBaseCollectionViewCell.nibForCellType(cellType)
+        cell.configureWithViewModel(viewModel.voucherCellViewModel, tapAction: nil)
+        stackScrollView.add(arrangedSubview: cell)
+        cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
     }
 
     func setupLayout() {
