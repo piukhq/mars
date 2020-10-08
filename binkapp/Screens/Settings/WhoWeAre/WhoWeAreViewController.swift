@@ -22,11 +22,10 @@ class WhoWeAreViewController: UIViewController {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = .white
-        stackView.margin = LayoutHelper.WhoWeAre.stackScrollViewMargins
         stackView.distribution = .fill
         stackView.alignment = .center
+        stackView.margin = LayoutHelper.WhoWeAre.stackScrollMargin
         stackView.delegate = self
-        stackView.contentInset = LayoutHelper.WhoWeAre.stackScrollViewContentInsets
         return stackView
     }()
     
@@ -40,13 +39,12 @@ class WhoWeAreViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var textStackView: StackScrollView = {
-        let stackView = StackScrollView(axis: .vertical)
+    private lazy var textStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionText])
+        stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fill
         stackView.alignment = .leading
-        stackView.contentInset = LayoutHelper.WhoWeAre.textStackScrollViewContentInsets
-        stackView.isScrollEnabled = false
         return stackView
     }()
     
@@ -136,8 +134,6 @@ private extension WhoWeAreViewController {
     func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: binkLogo)
-        textStackView.add(arrangedSubview: titleLabel)
-        textStackView.add(arrangedSubview: descriptionText)
         stackScrollView.add(arrangedSubview: textStackView)
         stackScrollView.add(arrangedSubview: binkPeopleTableView)
         configureLayout()
@@ -151,17 +147,19 @@ private extension WhoWeAreViewController {
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
             binkLogo.heightAnchor.constraint(equalToConstant: 142),
             binkLogo.widthAnchor.constraint(equalToConstant: 142),
-            textStackView.heightAnchor.constraint(equalToConstant: 175),
+            textStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
+            textStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
             binkPeopleTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
         ])
+        
+        stackScrollView.customPadding(10, before: binkPeopleTableView)
+        stackScrollView.customPadding(40, before: textStackView)
     }
 }
 
 extension LayoutHelper {
     struct WhoWeAre {
-        static let stackScrollViewMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        static let stackScrollViewContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        static let textStackScrollViewContentInsets = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
+        static let stackScrollMargin = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         static let tableViewSeperatorInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,15 +18,15 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBZ-2H-PdF">
-                        <rect key="frame" x="23" y="39.5" width="303" height="21"/>
+                        <rect key="frame" x="25" y="39.5" width="299" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="SBZ-2H-PdF" secondAttribute="trailing" constant="23" id="mxD-M9-dMB"/>
-                    <constraint firstItem="SBZ-2H-PdF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="23" id="uV7-DY-4Zz"/>
+                    <constraint firstAttribute="trailing" secondItem="SBZ-2H-PdF" secondAttribute="trailing" constant="25" id="mxD-M9-dMB"/>
+                    <constraint firstItem="SBZ-2H-PdF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="uV7-DY-4Zz"/>
                     <constraint firstItem="SBZ-2H-PdF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="yPZ-Xn-RaH"/>
                 </constraints>
             </tableViewCellContentView>
