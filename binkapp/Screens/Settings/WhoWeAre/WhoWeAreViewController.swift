@@ -164,6 +164,6 @@ extension LayoutHelper {
         static let logoDimnesion: CGFloat = 142
         static let textStackViewPadding: CGFloat = 25
         static let stackScrollViewTopPadding: CGFloat = 40
-        static let stackScrollViewBottomPadding: CGFloat = 10
+        static let stackScrollViewBottomPadding: CGFloat = 10 
     }
 }
