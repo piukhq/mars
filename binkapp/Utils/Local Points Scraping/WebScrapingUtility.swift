@@ -284,12 +284,12 @@ class WebScrapingUtility: NSObject {
             
             switch type {
             case .reCaptchaMessaging:
-                guard valueString == self.agent.reCaptchaMessage else {
+                guard let message = self.agent.reCaptchaMessage, valueString.contains(message) else {
                     self.canAttemptToDetectReCaptcha = true
                     return
                 }
             case .incorrectCredentialsMessaging:
-                guard valueString == self.agent.incorrectCredentialsMessage else {
+                guard let message = self.agent.incorrectCredentialsMessage, valueString.contains(message) else {
                     self.canAttemptToDetectIncorrectCredentials = true
                     return
                 }
@@ -297,11 +297,15 @@ class WebScrapingUtility: NSObject {
             
             switch type {
             case .reCaptchaMessaging:
-                print("RECAPTCHA ELEMENT DETECTED")
-                // Present reCaptcha to user
                 self.presentWebView()
+                self.canAttemptToDetectReCaptcha = false
             case .incorrectCredentialsMessaging:
-                print("INCORRECT CREDENTIALS ELEMENT DETECTED")
+                self.canAttemptToDetectIncorrectCredentials = false
+                self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCard: self.membershipCard, withAgent: self.agent)
+                // At this point, we should close the webView if we have displayed it for reCaptcha
+                if self.isPresentingWebView {
+                    Current.navigate.close()
+                }
             }
         }
     }
@@ -334,6 +338,8 @@ class WebScrapingUtility: NSObject {
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         canAttemptToDetectReCaptcha = true
+        canAttemptToDetectIncorrectCredentials = true
+        
         // We only care about the webview navigation to our agent's login url or scrapable url
         guard !isRedirecting else { return }
         
@@ -381,11 +387,19 @@ extension WebScrapingUtility: WKNavigationDelegate {
         if canAttemptToDetectReCaptcha {
             do {
                 try detectText(.reCaptchaMessaging)
-            } catch let error {
+            } catch {
                 canAttemptToDetectReCaptcha = true
-                print(error.localizedDescription)
             }
         }
+        
+        if canAttemptToDetectIncorrectCredentials {
+            do {
+                try detectText(.incorrectCredentialsMessaging)
+            } catch {
+                canAttemptToDetectIncorrectCredentials = true
+            }
+        }
+        
         decisionHandler(.allow, preferences)
     }
 }
