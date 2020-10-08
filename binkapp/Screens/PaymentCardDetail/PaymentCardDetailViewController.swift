@@ -171,12 +171,16 @@ private extension PaymentCardDetailViewController {
         otherCardsDescriptionLabel.text = viewModel.otherCardsDescription
         cardAddedLabel.text = viewModel.cardAddedDateString
         
-        [addedCardsTableView, otherCardsTableView, otherCardsTitleLabel, otherCardsDescriptionLabel].forEach {
-            $0.isHidden = viewModel.paymentCardStatus != .active
-        }
-        
-        cardAddedLabel.isHidden = viewModel.paymentCardStatus != .pending
-        separator.isHidden = viewModel.paymentCardStatus == .active
+        card.isHidden = !viewModel.shouldShowPaymentCardCell
+        addedCardsTitleLabel.isHidden = !viewModel.shouldShowAddedCardsTitleLabel
+        addedCardsDescriptionLabel.isHidden = !viewModel.shouldShowAddedCardsDescriptionLabel
+        otherCardsTitleLabel.isHidden = !viewModel.shouldShowOtherCardsTitleLabel
+        otherCardsDescriptionLabel.isHidden = !viewModel.shouldShowOtherCardsDescriptionLabel
+        cardAddedLabel.isHidden = !viewModel.shouldShowCardAddedLabel
+        addedCardsTableView.isHidden = !viewModel.shouldShowAddedLoyaltyCardTableView
+        otherCardsTableView.isHidden = !viewModel.shouldShowOtherCardsTableView
+        informationTableView.isHidden = !viewModel.shouldShowInformationTableView
+        separator.isHidden = !viewModel.shouldShowSeparator
         
         stackScrollView.customPadding(viewModel.paymentCardStatus == .pending ? 20 : 0, after: cardAddedLabel)
         stackScrollView.customPadding(viewModel.paymentCardStatus != .active ? 20 : 0, after: addedCardsDescriptionLabel)
@@ -233,6 +237,7 @@ private extension PaymentCardDetailViewController {
         viewModel.getLinkedMembershipCards { [weak self] in
             self?.addedCardsTableView.reloadData()
             self?.otherCardsTableView.reloadData()
+            self?.configureUI()
         }
     }
 

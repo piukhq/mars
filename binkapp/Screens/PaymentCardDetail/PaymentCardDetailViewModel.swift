@@ -65,8 +65,14 @@ class PaymentCardDetailViewModel {
     }
     
     var cardAddedDateString: String? {
-        guard let timestamp = paymentCard.account?.formattedConsents?.first?.timestamp?.doubleValue else { return nil }
-        guard let timestampString = String.fromTimestamp(timestamp, withFormat: .dayMonthYear) else { return nil }
+        guard let timestamp = paymentCard.account?.formattedConsents?.first?.timestamp?.doubleValue else {
+            print("Cannot get consent timestamp")
+            return nil
+        }
+        guard let timestampString = String.fromTimestamp(timestamp, withFormat: .dayMonthYear) else {
+            print("Cannot make string from timestamp")
+            return nil
+        }
         return String(format: "pcd_pending_card_added".localized, timestampString)
     }
 
@@ -79,13 +85,45 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: - View configuration decisioning
+    
+    var shouldShowPaymentCardCell: Bool {
+        return true
+    }
+    
+    var shouldShowAddedCardsTitleLabel: Bool {
+        return true
+    }
+    
+    var shouldShowAddedCardsDescriptionLabel: Bool {
+        return true
+    }
+    
+    var shouldShowOtherCardsTitleLabel: Bool {
+        return paymentCardStatus == .active
+    }
+    
+    var shouldShowOtherCardsDescriptionLabel: Bool {
+        return paymentCardStatus == .active
+    }
+    
+    var shouldShowCardAddedLabel: Bool {
+        return paymentCardStatus == .pending
+    }
 
     var shouldShowAddedLoyaltyCardTableView: Bool {
-        return pllMembershipCardsCount != 0
+        return paymentCardStatus == .active && pllMembershipCardsCount != 0
     }
 
     var shouldShowOtherCardsTableView: Bool {
-        return pllPlansNotAddedToWallet?.count != 0
+        return paymentCardStatus == .active && pllPlansNotAddedToWallet?.count != 0
+    }
+    
+    var shouldShowInformationTableView: Bool {
+        return true
+    }
+    
+    var shouldShowSeparator: Bool {
+        return paymentCardStatus != .active
     }
 
     // MARK: PLL membership plans
