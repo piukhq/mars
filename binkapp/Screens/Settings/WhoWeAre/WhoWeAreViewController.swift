@@ -8,6 +8,11 @@
 
 import UIKit
 
+
+struct BinkTeamMember {
+    let name: String
+}
+
 class WhoWeAreViewController: UIViewController {
 
     
@@ -73,23 +78,26 @@ class WhoWeAreViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorInset = LayoutHelper.WhoWeAre.tableViewSeperatorInsets
         tableView.isScrollEnabled = false
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+//        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         return tableView
     }()
     
-    private let viewModel: WhoWeAreViewModel
+    let teamMembers: [BinkTeamMember] = [
+        BinkTeamMember(name: "Paul Batty"),
+        BinkTeamMember(name: "Nick Farrant"),
+        BinkTeamMember(name: "Susanne King"),
+        BinkTeamMember(name: "Srikalyani Kotha"),
+        BinkTeamMember(name: "Marius Lobontiu"),
+        BinkTeamMember(name: "Carmen Muntean"),
+        BinkTeamMember(name: "Dorin Pop"),
+        BinkTeamMember(name: "Karl Sigiscar"),
+        BinkTeamMember(name: "Paul Tiritieu"),
+        BinkTeamMember(name: "Sean Williams"),
+        BinkTeamMember(name: "Max Woodhams"),
+    ]
     
     
     // MARK: - View Lifecycle
-
-    init(viewModel: WhoWeAreViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,17 +110,22 @@ class WhoWeAreViewController: UIViewController {
 extension WhoWeAreViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.teamMembers.count
+        return teamMembers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: BinkPersonTableViewCell = binkPeopleTableView.dequeue(indexPath: indexPath)
-        cell.configure(with: viewModel.teamMembers[indexPath.row])
+        cell.configure(with: teamMembers[indexPath.row])
+        
+        if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+            cell.hideSeparator()
+        }
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return viewModel.cellHeight
+        return 80
     }
 }
 

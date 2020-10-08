@@ -206,7 +206,7 @@ extension SettingsViewController: UITableViewDelegate {
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 case is WhoWeAreViewController.Type:
-                    let viewController = WhoWeAreViewController(viewModel: WhoWeAreViewModel())
+                    let viewController = WhoWeAreViewController()
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 default:

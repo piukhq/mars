@@ -10,10 +10,10 @@ import UIKit
 
 class BinkPersonTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
     
-    func configure(with teamMember: String) {
-        titleLabel.text = teamMember
+    func configure(with teamMember: BinkTeamMember) {
+        titleLabel.text = teamMember.name
         titleLabel.font = UIFont.bodyTextLarge
     }    
 }
