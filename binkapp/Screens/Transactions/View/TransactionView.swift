@@ -50,6 +50,7 @@ class TransactionView: CustomView {
         } else {
             valueLabel.text = String(format: text, addDecimals ? Float(transactionValue) : transactionValue)
             valueLabel.textColor = .amberPending
+            imageView.image = UIImage(named: "neutral_arrow")
         }
     }
     
