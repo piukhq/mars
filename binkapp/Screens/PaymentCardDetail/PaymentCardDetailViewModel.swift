@@ -65,14 +65,8 @@ class PaymentCardDetailViewModel {
     }
     
     var cardAddedDateString: String? {
-        guard let timestamp = paymentCard.account?.formattedConsents?.first?.timestamp?.doubleValue else {
-            print("Cannot get consent timestamp")
-            return nil
-        }
-        guard let timestampString = String.fromTimestamp(timestamp, withFormat: .dayMonthYear) else {
-            print("Cannot make string from timestamp")
-            return nil
-        }
+        guard let timestamp = paymentCard.account?.formattedConsents?.first?.timestamp?.doubleValue else { return nil }
+        guard let timestampString = String.fromTimestamp(timestamp, withFormat: .dayMonthYear) else { return nil }
         return String(format: "pcd_pending_card_added".localized, timestampString)
     }
 
