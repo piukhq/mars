@@ -43,7 +43,7 @@ extension WebScrapable {
     }
     
     var detectTextScriptFileName: String {
-        return "\(merchant.rawValue.capitalized)DetectText"
+        return "DetectText"
     }
 }
 
@@ -120,6 +120,10 @@ class WebScrapingUtility: NSObject {
         guard let navigationViewController = UIViewController.topMostViewController() as? UINavigationController else { return false }
         guard let topViewController = navigationViewController.viewControllers.first else { return false }
         return topViewController.view.subviews.contains(webView)
+    }
+    private var isBalanceRefresh: Bool {
+        guard let balances = membershipCard.formattedBalances, balances.count > 0 else { return false }
+        return true
     }
     private weak var delegate: WebScrapingUtilityDelegate?
     
@@ -246,6 +250,9 @@ class WebScrapingUtility: NSObject {
     }
     
     private func detectText(_ type: DetectTextType) throws {
+        // Disable reCaptcha detection on balance refresh
+        if type == .reCaptchaMessaging, isBalanceRefresh { return }
+        
         switch type {
         case .reCaptchaMessaging:
             self.canAttemptToDetectReCaptcha = false
