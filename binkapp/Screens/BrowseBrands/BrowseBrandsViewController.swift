@@ -108,9 +108,13 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         collectionView.register(FilterBrandsCollectionViewCell.self, asNib: true)
         collectionView.delegate = self
         collectionView.dataSource = self
-        let notchDeviceCollectionFrameY = topStackView.frame.maxY + LayoutHelper.heightForNavigationBar(navigationController?.navigationBar)
-        let nonNotchDeviceCollectionFrameY = topStackView.frame.maxY + LayoutHelper.statusBarHeight
-        let collectionFrameY = UIDevice.current.hasNotch ? notchDeviceCollectionFrameY : nonNotchDeviceCollectionFrameY
+        
+        var collectionFrameY = topStackView.frame.maxY
+        if navigationController?.modalPresentationStyle == .fullScreen || navigationController?.isBeingPresented == false {
+            let notchDeviceCollectionFrameY = topStackView.frame.maxY + LayoutHelper.heightForNavigationBar(navigationController?.navigationBar)
+            let nonNotchDeviceCollectionFrameY = topStackView.frame.maxY + LayoutHelper.statusBarHeight
+            collectionFrameY = UIDevice.current.hasNotch ? notchDeviceCollectionFrameY : nonNotchDeviceCollectionFrameY
+        }
         collectionView.frame = CGRect(x: Constants.marginPadding, y: collectionFrameY, width: view.frame.width - (Constants.marginPadding * 2), height: 0.0)
         view.addSubview(collectionView)
     }
