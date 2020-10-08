@@ -78,7 +78,6 @@ class WhoWeAreViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorInset = LayoutHelper.WhoWeAre.tableViewSeperatorInsets
         tableView.isScrollEnabled = false
-//        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         return tableView
     }()
     
@@ -160,7 +159,7 @@ private extension WhoWeAreViewController {
 
 extension LayoutHelper {
     struct WhoWeAre {
-        static let stackScrollViewMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 25)
+        static let stackScrollViewMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         static let stackScrollViewContentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         static let textStackScrollViewContentInsets = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
         static let tableViewSeperatorInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
