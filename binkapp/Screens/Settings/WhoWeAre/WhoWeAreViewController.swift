@@ -145,15 +145,15 @@ private extension WhoWeAreViewController {
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            binkLogo.heightAnchor.constraint(equalToConstant: 142),
-            binkLogo.widthAnchor.constraint(equalToConstant: 142),
-            textStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: 25),
-            textStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -25),
+            binkLogo.heightAnchor.constraint(equalToConstant: LayoutHelper.WhoWeAre.logoDimnesion),
+            binkLogo.widthAnchor.constraint(equalToConstant: LayoutHelper.WhoWeAre.logoDimnesion),
+            textStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.WhoWeAre.textStackViewPadding),
+            textStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.WhoWeAre.textStackViewPadding),
             binkPeopleTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
         ])
         
-        stackScrollView.customPadding(10, before: binkPeopleTableView)
-        stackScrollView.customPadding(40, before: textStackView)
+        stackScrollView.customPadding(LayoutHelper.WhoWeAre.stackScrollViewBottomPadding, before: binkPeopleTableView)
+        stackScrollView.customPadding(LayoutHelper.WhoWeAre.stackScrollViewTopPadding, before: textStackView)
     }
 }
 
@@ -161,5 +161,9 @@ extension LayoutHelper {
     struct WhoWeAre {
         static let stackScrollMargin = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         static let tableViewSeperatorInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        static let logoDimnesion: CGFloat = 142
+        static let textStackViewPadding: CGFloat = 25
+        static let stackScrollViewTopPadding: CGFloat = 40
+        static let stackScrollViewBottomPadding: CGFloat = 10
     }
 }
