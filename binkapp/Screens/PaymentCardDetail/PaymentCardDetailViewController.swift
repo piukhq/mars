@@ -237,7 +237,6 @@ private extension PaymentCardDetailViewController {
         viewModel.getLinkedMembershipCards { [weak self] in
             self?.addedCardsTableView.reloadData()
             self?.otherCardsTableView.reloadData()
-            self?.configureUI()
         }
     }
 
