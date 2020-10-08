@@ -7,13 +7,20 @@
 //
 
 import Foundation
+import UIKit
 
 class WhoWeAreViewModel {
     
     var teamMembers: [String] {
         return BinkTeam.members
     }
+    
+    var cellHeight: CGFloat {
+        return 80
+    }
 }
+
+
 
 struct BinkTeam {
     static let members = [
