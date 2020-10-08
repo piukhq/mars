@@ -111,7 +111,11 @@ extension WhoWeAreViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: BinkPersonTableViewCell = binkPeopleTableView.dequeue(indexPath: indexPath)
-        cell.titleLabel.text = viewModel.teamMembers[indexPath.row]
+        cell.configure(with: viewModel.teamMembers[indexPath.row])
+        
+        if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+            cell.hideSeparator()
+        }
         
         return cell
     }
@@ -144,8 +148,8 @@ private extension WhoWeAreViewController {
             stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
             binkLogo.heightAnchor.constraint(equalToConstant: 142),
             binkLogo.widthAnchor.constraint(equalToConstant: 142),
-            textStackView.heightAnchor.constraint(equalToConstant: 200),
-            binkPeopleTableView.heightAnchor.constraint(equalToConstant: 400),
+            textStackView.heightAnchor.constraint(equalToConstant: 175),
+            binkPeopleTableView.heightAnchor.constraint(equalToConstant: 1000),
             binkPeopleTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
         ])
     }

@@ -12,16 +12,8 @@ class BinkPersonTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
+    func configure(with teamMember: String) {
+        titleLabel.text = teamMember
+        titleLabel.font = UIFont.bodyTextLarge
+    }    
 }
