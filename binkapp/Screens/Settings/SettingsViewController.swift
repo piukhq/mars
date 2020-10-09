@@ -205,6 +205,10 @@ extension SettingsViewController: UITableViewDelegate {
                     let viewController = PreferencesViewController(viewModel: PreferencesViewModel())
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
+                case is WhoWeAreViewController.Type:
+                    let viewController = WhoWeAreViewController()
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
                 default:
                     print("Unsupported VC for presentation")
                     break

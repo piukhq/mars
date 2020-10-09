@@ -167,11 +167,12 @@ class PaymentCardDetailViewModel {
 
     func toCardDetail(forMembershipCard membershipCard: CD_MembershipCard) {
         Current.navigate.back(toRoot: true) {
-            Current.navigate.to(.loyalty) {
+            let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true) {
                 let viewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard)
                 let pushNavigationRequest = PushNavigationRequest(viewController: viewController)
                 Current.navigate.to(pushNavigationRequest)
             }
+            Current.navigate.to(tabNavigationRequest)
         }
     }
 

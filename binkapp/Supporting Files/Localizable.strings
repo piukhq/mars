@@ -213,6 +213,7 @@
 "settings_row_security_subtitle" = "How we protect your data";
 "settings_row_howitworks_title" = "How it works";
 "settings_row_howitworks_subtitle" = "Find out more about Bink";
+"settings_who_we_are_title" = "Who we are";
 
 "settings_section_legal_title" = "Legal";
 "settings_row_privacypolicy_title" = "Privacy policy";
@@ -384,4 +385,10 @@
 "zendesk_identity_prompt_message" = "Please enter your contact details";
 "zendesk_identity_prompt_first_name" = "First name";
 "zendesk_identity_prompt_last_name" = "Last name";
+
+// MARK: - Who We Are
+
+"who_we_are_title" = "Who we are";
+"who_we_are_body" = "Below are a list of people that have been instrumental in developing the app you now hold in your hands.";
+
 
