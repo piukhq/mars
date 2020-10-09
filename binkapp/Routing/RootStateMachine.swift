@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import DTTJailbreakDetection
 
 class RootStateMachine: NSObject, UserServiceProtocol {
     
@@ -25,9 +24,7 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     }
     
     private func launch() {
-        if DTTJailbreakDetection.isJailbroken() {
-            moveTo(router?.jailbroken())
-        } else if Current.userManager.currentToken == nil {
+        if Current.userManager.currentToken == nil {
             handleUnauthenticated()
         } else {
             let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
