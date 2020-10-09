@@ -54,15 +54,19 @@ struct MorrisonsScrapingAgent: WebScrapable {
         return "https://my.morrisons.com/more/#/mypoints"
     }
     
-    var loginScriptFileName: String {
-        return "MorrisonsLogin"
+    var reCaptchaMessage: String? {
+        return nil
     }
     
-    var pointsScrapingScriptFileName: String {
-        return "MorrisonsPointsScrape"
+    var reCaptchaTextIdentiferClass: String? {
+        return nil
     }
     
-    var hasCaptcha: Bool {
-        return true
+    var incorrectCredentialsMessage: String? {
+        return nil
+    }
+    
+    var incorrectCredentialsTextIdentiferClass: String? {
+        return nil
     }
 }
