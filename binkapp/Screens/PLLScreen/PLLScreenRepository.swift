@@ -74,11 +74,21 @@ private extension PLLScreenRepository {
     func removeLinkToMembershipCard(_ membershipCard: CD_MembershipCard, forPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
         toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: false) { result in
             switch result {
-            case .success(let response):
-                BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: response))
-                completion(response.id)
+            case .success:
+                BinkAnalytics.track(PLLAnalyticsEvent.pllDelete(loyaltyCard: membershipCard, paymentCard: paymentCard))
+                Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
+                    
+                    if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCard.id) {
+                        safePaymentCard?.removeLinkedMembershipCardsObject(membershipCardToRemove)
+                    }
+                    
+                    try? context.save()
+                    
+                    DispatchQueue.main.async {
+                        completion(paymentCard.id)
+                    }
+                }
             case .failure:
-                BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
                 completion(nil)
             }
         }

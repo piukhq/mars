@@ -9,7 +9,7 @@
 import UIKit
 
 class PortraitNavigationController: UINavigationController {
-    private let isModallyPresented: Bool
+    private var isModallyPresented: Bool = false
     
     private lazy var backButton: UIBarButtonItem = {
         return UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -19,12 +19,22 @@ class PortraitNavigationController: UINavigationController {
         return UIBarButtonItem(image: UIImage(named: "close"), style: .plain, target: self, action: #selector(close))
     }()
     
-    init(rootViewController: UIViewController, isModallyPresented: Bool = false) {
+    // TODO: When we kill off iOS 12 support, remove the init overrides and just use a custom init
+    
+    convenience init(rootViewController: UIViewController, isModallyPresented: Bool = false, shouldShowCloseButton: Bool = true) {
+        self.init(rootViewController: rootViewController)
         self.isModallyPresented = isModallyPresented
-        super.init(rootViewController: rootViewController)
-        if isModallyPresented {
+        if isModallyPresented && shouldShowCloseButton {
             rootViewController.navigationItem.rightBarButtonItem = closeButton
         }
+    }
+    
+    override init(rootViewController: UIViewController) {
+        super.init(rootViewController: rootViewController)
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     required init?(coder aDecoder: NSCoder) {
