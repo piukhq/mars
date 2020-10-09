@@ -190,6 +190,9 @@ class PointsScrapingManager {
     }
     
     private func agentEnabled(_ agent: WebScrapable) -> Bool {
+        if agent.merchant == .tesco {
+            return true
+        }
         return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionAgentEnabled(agent))
     }
     
