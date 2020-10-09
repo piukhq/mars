@@ -85,19 +85,27 @@ class PaymentCardDetailViewModel {
     }
     
     var shouldShowAddedCardsTitleLabel: Bool {
-        return true
+        switch paymentCardStatus {
+        case .active:
+            return shouldShowAddedLoyaltyCardTableView
+        default: return true
+        }
     }
     
     var shouldShowAddedCardsDescriptionLabel: Bool {
-        return true
+        return shouldShowAddedCardsTitleLabel
     }
     
     var shouldShowOtherCardsTitleLabel: Bool {
-        return paymentCardStatus == .active
+        switch paymentCardStatus {
+        case .active:
+            return shouldShowOtherCardsTableView
+        default: return false
+        }
     }
     
     var shouldShowOtherCardsDescriptionLabel: Bool {
-        return paymentCardStatus == .active
+        shouldShowOtherCardsTitleLabel
     }
     
     var shouldShowCardAddedLabel: Bool {
