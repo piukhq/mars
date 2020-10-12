@@ -69,6 +69,8 @@ class PLRRewardDetailViewModel {
             return membershipPlan.dynamicContentValue(forColumn: .voucherStampsRedeemedDetail)
         case (.stamps, .expired):
             return membershipPlan.dynamicContentValue(forColumn: .voucherStampsExpiredDetail)
+        case (.stamps, .cancelled), (.accumulator, .cancelled):
+            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsCancelledDetail)
         default:
             return nil
         }
