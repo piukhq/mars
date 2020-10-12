@@ -54,6 +54,14 @@ struct MorrisonsScrapingAgent: WebScrapable {
         return "https://my.morrisons.com/more/#/mypoints"
     }
     
+    var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType {
+        return .persistent
+    }
+    
+    var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency {
+        return .always
+    }
+    
     var reCaptchaMessage: String? {
         return nil
     }

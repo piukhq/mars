@@ -28,6 +28,8 @@ protocol WebScrapable {
     var loginScriptFileName: String { get }
     var pointsScrapingScriptFileName: String { get }
     var detectTextScriptFileName: String { get }
+    var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType { get }
+    var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency { get }
     var reCaptchaTextIdentiferClass: String? { get }
     var reCaptchaMessage: String? { get }
     var incorrectCredentialsMessage: String? { get }
@@ -110,6 +112,18 @@ struct WebScrapingCredentials {
 }
 
 class WebScrapingUtility: NSObject {
+    enum ReCaptchaPresentationType {
+        case persistent // reCaptcha is presented as soon as the login screen is loaded
+        case reactive // reCaptcha is presented once a login has been attempted
+        case none // reCaptcha is never presented to the user
+    }
+    
+    enum ReCaptchaPresentationFrequency {
+        case always // reCaptcha is presented every time
+        case sometimes // reCaptcha is presented sometimes
+        case never // reCaptcha is never presented to the user
+    }
+    
     private let webView: WKWebView
     private let agent: WebScrapable
     private let membershipCard: CD_MembershipCard

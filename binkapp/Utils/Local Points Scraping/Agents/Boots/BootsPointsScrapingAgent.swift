@@ -54,6 +54,14 @@ struct BootsScrapingAgent: WebScrapable {
         return "https://www.boots.com/webapp/wcs/stores/servlet/AjaxLogonForm"
     }
     
+    var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType {
+        return .reactive
+    }
+    
+    var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency {
+        return .sometimes
+    }
+    
     var reCaptchaMessage: String? {
         return "To login, confirm you are not a robot"
     }
