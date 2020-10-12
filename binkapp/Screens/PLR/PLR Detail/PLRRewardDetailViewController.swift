@@ -112,6 +112,10 @@ private extension PLRRewardDetailViewController {
             cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsActiveCell.self)
         case (.redeemed, .stamps), (.expired, .stamps):
             cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
+        case (.cancelled, .stamps):
+            cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
+        case (.cancelled, .accumulator):
+            cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorInactiveCell.self)
         default:
             break
         }
