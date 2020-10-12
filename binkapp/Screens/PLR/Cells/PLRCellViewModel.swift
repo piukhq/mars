@@ -126,15 +126,12 @@ class PLRCellViewModel {
 
     var dateText: String? {
         switch voucherState {
-        case .expired:
+        case .expired, .cancelled:
             guard voucher.expiryDate != 0 else { return nil }
             return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear, prefix: "plr_voucher_date_prefix".localized)
         case .redeemed:
             guard voucher.dateRedeemed != 0 else { return nil }
             return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear, prefix: "plr_voucher_date_prefix".localized)
-        case .cancelled:
-            guard voucher.expiryDate != 0 else { return nil }
-            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear, prefix: "plr_voucher_date_prefix".localized)
         default:
             return nil
         }
