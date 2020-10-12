@@ -84,9 +84,15 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
                     cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsActiveCell.self)
                 case (.redeemed, .stamps), (.expired, .stamps):
                     cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
+                case (.cancelled, .stamps):
+                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
+                case (.cancelled, .accumulator):
+                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorInactiveCell.self)
                 default:
                     break
                 }
+                
+                
                 let cellViewModel = PLRCellViewModel(voucher: voucher)
                 cell.configureWithViewModel(cellViewModel) {
                     self.viewModel.toVoucherDetailScreen(voucher: voucher)
