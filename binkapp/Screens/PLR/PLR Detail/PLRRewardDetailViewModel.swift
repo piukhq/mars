@@ -47,6 +47,8 @@ class PLRRewardDetailViewModel {
             return "plr_stamp_voucher_detail_redeemed_header".localized
         case (.stamps, .expired):
             return "plr_stamp_voucher_detail_expired_header".localized
+        case (.stamps, .cancelled), (.accumulator, .cancelled):
+            return "plr_stamp_voucher_detail_cancelled_header".localized
         default:
             return nil
         }
