@@ -86,7 +86,7 @@ class PLRRewardDetailViewModel {
 
     var expiredDateString: String? {
         switch voucherState {
-        case .expired:
+        case .expired, .cancelled:
             return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
         case .issued:
             return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
@@ -129,7 +129,7 @@ class PLRRewardDetailViewModel {
     var shouldShowIssuedDate: Bool {
         guard voucher.dateIssued != 0 else { return false }
         switch (voucherEarnType, voucherState) {
-        case (_, .issued), (_, .expired), (.stamps, .redeemed):
+        case (_, .issued), (_, .expired), (.stamps, .redeemed), (_, .cancelled):
             return true
         default:
             return false
@@ -143,7 +143,7 @@ class PLRRewardDetailViewModel {
 
     var shouldShowExpiredDate: Bool {
         guard voucher.expiryDate != 0 else { return false }
-        return voucherState == .expired || voucherState == .issued
+        return voucherState == .expired || voucherState == .issued || voucherState == .cancelled
     }
 
     var shouldShowTermsAndConditionsButton: Bool {
