@@ -79,13 +79,53 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: - View configuration decisioning
+    
+    var shouldShowPaymentCardCell: Bool {
+        return true
+    }
+    
+    var shouldShowAddedCardsTitleLabel: Bool {
+        switch paymentCardStatus {
+        case .active:
+            return shouldShowAddedLoyaltyCardTableView
+        default: return true
+        }
+    }
+    
+    var shouldShowAddedCardsDescriptionLabel: Bool {
+        return shouldShowAddedCardsTitleLabel
+    }
+    
+    var shouldShowOtherCardsTitleLabel: Bool {
+        switch paymentCardStatus {
+        case .active:
+            return shouldShowOtherCardsTableView
+        default: return false
+        }
+    }
+    
+    var shouldShowOtherCardsDescriptionLabel: Bool {
+        shouldShowOtherCardsTitleLabel
+    }
+    
+    var shouldShowCardAddedLabel: Bool {
+        return paymentCardStatus == .pending
+    }
 
     var shouldShowAddedLoyaltyCardTableView: Bool {
-        return pllMembershipCardsCount != 0
+        return paymentCardStatus == .active && pllMembershipCardsCount != 0
     }
 
     var shouldShowOtherCardsTableView: Bool {
-        return pllPlansNotAddedToWallet?.count != 0
+        return paymentCardStatus == .active && pllPlansNotAddedToWallet?.count != 0
+    }
+    
+    var shouldShowInformationTableView: Bool {
+        return true
+    }
+    
+    var shouldShowSeparator: Bool {
+        return paymentCardStatus != .active
     }
 
     // MARK: PLL membership plans
@@ -167,11 +207,12 @@ class PaymentCardDetailViewModel {
 
     func toCardDetail(forMembershipCard membershipCard: CD_MembershipCard) {
         Current.navigate.back(toRoot: true) {
-            Current.navigate.to(.loyalty) {
+            let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true) {
                 let viewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: membershipCard)
                 let pushNavigationRequest = PushNavigationRequest(viewController: viewController)
                 Current.navigate.to(pushNavigationRequest)
             }
+            Current.navigate.to(tabNavigationRequest)
         }
     }
 

@@ -74,34 +74,30 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         if let vouchers = viewModel.vouchers {
             for voucher in vouchers {
                 let state = VoucherState(rawValue: voucher.state ?? "")
-                var cell = PLRBaseCollectionViewCell()
                 switch (state, voucher.earnType) {
                 case (.inProgress, .accumulator), (.issued, .accumulator):
-                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorActiveCell.self)
+                    setupCellForType(PLRAccumulatorActiveCell.self, voucher: voucher)
                 case (.redeemed, .accumulator), (.expired, .accumulator):
-                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorInactiveCell.self)
+                    setupCellForType(PLRAccumulatorInactiveCell.self, voucher: voucher)
                 case (.inProgress, .stamps), (.issued, .stamps):
-                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsActiveCell.self)
+                    setupCellForType(PLRStampsActiveCell.self, voucher: voucher)
                 case (.redeemed, .stamps), (.expired, .stamps):
-                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
-                case (.cancelled, .stamps):
-                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRStampsInactiveCell.self)
-                case (.cancelled, .accumulator):
-                    cell = PLRBaseCollectionViewCell.nibForCellType(PLRAccumulatorInactiveCell.self)
+                    setupCellForType(PLRStampsInactiveCell.self, voucher: voucher)
                 default:
                     break
                 }
-                
-                
-                let cellViewModel = PLRCellViewModel(voucher: voucher)
-                cell.configureWithViewModel(cellViewModel) {
-                    self.viewModel.toVoucherDetailScreen(voucher: voucher)
-                }
-                stackScrollView.add(arrangedSubview: cell)
-                cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
-                stackScrollView.customPadding(Constants.postCellPadding, after: cell)
             }
         }
     }
 
+    private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
+        let cell = PLRBaseCollectionViewCell.nibForCellType(cellType)
+        let cellViewModel = PLRCellViewModel(voucher: voucher)
+        cell.configureWithViewModel(cellViewModel) {
+            self.viewModel.toVoucherDetailScreen(voucher: voucher)
+        }
+        stackScrollView.add(arrangedSubview: cell)
+        cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
+        stackScrollView.customPadding(Constants.postCellPadding, after: cell)
+    }
 }

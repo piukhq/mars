@@ -171,51 +171,41 @@ private extension PaymentCardDetailViewController {
         otherCardsDescriptionLabel.text = viewModel.otherCardsDescription
         cardAddedLabel.text = viewModel.cardAddedDateString
         
-        [addedCardsTableView, otherCardsTableView, otherCardsTitleLabel, otherCardsDescriptionLabel].forEach {
-            $0.isHidden = viewModel.paymentCardStatus != .active
-        }
-        
-        cardAddedLabel.isHidden = viewModel.paymentCardStatus != .pending
-        separator.isHidden = viewModel.paymentCardStatus == .active
+        card.isHidden = !viewModel.shouldShowPaymentCardCell
+        addedCardsTitleLabel.isHidden = !viewModel.shouldShowAddedCardsTitleLabel
+        addedCardsDescriptionLabel.isHidden = !viewModel.shouldShowAddedCardsDescriptionLabel
+        otherCardsTitleLabel.isHidden = !viewModel.shouldShowOtherCardsTitleLabel
+        otherCardsDescriptionLabel.isHidden = !viewModel.shouldShowOtherCardsDescriptionLabel
+        cardAddedLabel.isHidden = !viewModel.shouldShowCardAddedLabel
+        addedCardsTableView.isHidden = !viewModel.shouldShowAddedLoyaltyCardTableView
+        otherCardsTableView.isHidden = !viewModel.shouldShowOtherCardsTableView
+        informationTableView.isHidden = !viewModel.shouldShowInformationTableView
+        separator.isHidden = !viewModel.shouldShowSeparator
         
         stackScrollView.customPadding(viewModel.paymentCardStatus == .pending ? 20 : 0, after: cardAddedLabel)
         stackScrollView.customPadding(viewModel.paymentCardStatus != .active ? 20 : 0, after: addedCardsDescriptionLabel)
+        stackScrollView.customPadding(viewModel.shouldShowAddedLoyaltyCardTableView ? LayoutHelper.PaymentCardDetail.headerViewsPadding : 0, after: addedCardsTableView)
     
         stackScrollView.delegate = self
     }
 
     func configureLayout() {
         stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: LayoutHelper.PaymentCardDetail.stackScrollViewTopPadding)
-
-        if viewModel.shouldShowAddedLoyaltyCardTableView {
-            stackScrollView.add(arrangedSubviews: [addedCardsTitleLabel, addedCardsDescriptionLabel, cardAddedLabel, addedCardsTableView])
-            NSLayoutConstraint.activate([
-                addedCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
-                addedCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
-                addedCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
-                addedCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
-                cardAddedLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
-                cardAddedLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
-                addedCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            ])
-        }
-        if viewModel.shouldShowOtherCardsTableView {
-            if viewModel.shouldShowAddedLoyaltyCardTableView {
-                stackScrollView.customPadding(LayoutHelper.PaymentCardDetail.headerViewsPadding, after: addedCardsTableView)
-            }
-
-            stackScrollView.add(arrangedSubviews: [otherCardsTitleLabel, otherCardsDescriptionLabel, otherCardsTableView])
-            NSLayoutConstraint.activate([
-                otherCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
-                otherCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
-                otherCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
-                otherCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
-                otherCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            ])
-        }
-
-        stackScrollView.add(arrangedSubviews: [separator, informationTableView])
+        
+        stackScrollView.add(arrangedSubviews: [addedCardsTitleLabel, addedCardsDescriptionLabel, cardAddedLabel, addedCardsTableView, otherCardsTitleLabel, otherCardsDescriptionLabel, otherCardsTableView, separator, informationTableView])
         NSLayoutConstraint.activate([
+            addedCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+            addedCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+            addedCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+            addedCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+            cardAddedLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+            cardAddedLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+            addedCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            otherCardsTitleLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+            otherCardsTitleLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+            otherCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.PaymentCardDetail.headerViewsPadding),
+            otherCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.PaymentCardDetail.headerViewsPadding),
+            otherCardsTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
