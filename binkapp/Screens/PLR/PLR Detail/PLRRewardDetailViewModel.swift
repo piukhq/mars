@@ -143,7 +143,12 @@ class PLRRewardDetailViewModel {
 
     var shouldShowExpiredDate: Bool {
         guard voucher.expiryDate != 0 else { return false }
-        return voucherState == .expired || voucherState == .issued || voucherState == .cancelled
+        switch voucherState {
+        case .expired, .issued, .cancelled:
+            return true
+        default:
+            return false
+        }
     }
 
     var shouldShowTermsAndConditionsButton: Bool {
