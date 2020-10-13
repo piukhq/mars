@@ -132,7 +132,7 @@ class BarcodeViewController: BinkTrackableViewController {
             menu.arrowDirection = .up
             
             let width = recognizerView.intrinsicContentSize.width / 2
-            let height = recognizerView == barcodeImageView ? recognizerView.frame.maxY - 10 : recognizerView.center.y + 4
+            let height = recognizerView == barcodeImageView ? recognizerView.frame.maxY - 5 : recognizerView.center.y + 4
             let rect = CGRect(x: width, y: height, width: 0.0, height: 0.0)
 
             if !menu.isMenuVisible {
