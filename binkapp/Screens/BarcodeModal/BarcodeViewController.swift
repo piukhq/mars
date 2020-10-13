@@ -81,6 +81,9 @@ class BarcodeViewController: BinkTrackableViewController {
             barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
         }
         
+        let imageViewGesture = UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController))
+        barcodeImageView.addGestureRecognizer(imageViewGesture)
+        
         barcodeLabel.font = UIFont.headline
         barcodeLabel.textColor = .black
         barcodeLabel.text = viewModel.isBarcodeAvailable ? "barcode_title".localized : nil
@@ -88,6 +91,9 @@ class BarcodeViewController: BinkTrackableViewController {
         barcodeNumberLabel.font = UIFont.subtitle
         barcodeNumberLabel.textColor = .black
         barcodeNumberLabel.text = viewModel.barcodeNumber
+        let barcodeNumberLabelGesture = UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController))
+        barcodeNumberLabel.addGestureRecognizer(barcodeNumberLabelGesture)
+
         
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black
@@ -96,9 +102,8 @@ class BarcodeViewController: BinkTrackableViewController {
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = .blueAccent
         numberLabel.text = viewModel.cardNumber
-        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController))
-        numberLabel.addGestureRecognizer(gesture)
-        numberLabel.isUserInteractionEnabled = true
+        let numberLabelGesture = UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController))
+        numberLabel.addGestureRecognizer(numberLabelGesture)
         
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textColor = .black
@@ -125,20 +130,30 @@ class BarcodeViewController: BinkTrackableViewController {
         if let recognizerView = recognizer.view, let recognizerSuperView = recognizerView.superview {
             recognizerView.becomeFirstResponder()
             let menu = UIMenuController.shared
-            let copyItem = UIMenuItem(title: "Copy", action: #selector(copyToClipboard))
-            menu.menuItems = [copyItem]
+            
+            let width = recognizerView.intrinsicContentSize.width / 2
+            let rect = CGRect(x: width, y: recognizerView.center.y - 4, width: 0.0, height: 0.0)
             
             if !menu.isMenuVisible {
-                menu.setTargetRect(recognizerView.frame, in: recognizerSuperView)
+                menu.setTargetRect(rect, in: recognizerSuperView)
                 menu.setMenuVisible(true, animated: true)
                 
             }
-        } 
+        }
     }
     
-    @objc private func copyToClipboard() {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+          return action == #selector(UIResponderStandardEditActions.copy)
+      }
+    
+    override func copy(_ sender: Any?) {
+
         UIPasteboard.general.string = numberLabel.text
     }
+    
+//    @objc private func copyToClipboard() {
+//        UIPasteboard.general.string = numberLabel.text
+//    }
     
     override var canBecomeFirstResponder: Bool {
         return true
