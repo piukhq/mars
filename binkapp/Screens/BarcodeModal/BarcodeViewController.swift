@@ -24,7 +24,8 @@ class BarcodeViewController: BinkTrackableViewController {
     @IBOutlet private weak var descriptionLabel: UILabel!
     
     private var previousBrightness: CGFloat?
-    
+    private var viewToCopy: UIView!
+
     private let viewModel: BarcodeViewModel
     var hasDrawnBarcode = false
     
@@ -129,11 +130,13 @@ class BarcodeViewController: BinkTrackableViewController {
 
         if let recognizerView = recognizer.view, let recognizerSuperView = recognizerView.superview {
             recognizerView.becomeFirstResponder()
+            viewToCopy = recognizerView
+            
             let menu = UIMenuController.shared
-            
+            menu.arrowDirection = .up
             let width = recognizerView.intrinsicContentSize.width / 2
-            let rect = CGRect(x: width, y: recognizerView.center.y - 4, width: 0.0, height: 0.0)
-            
+            let rect = CGRect(x: width, y: recognizerView.center.y + 4, width: 0.0, height: 0.0)
+
             if !menu.isMenuVisible {
                 menu.setTargetRect(rect, in: recognizerSuperView)
                 menu.setMenuVisible(true, animated: true)
@@ -147,16 +150,10 @@ class BarcodeViewController: BinkTrackableViewController {
       }
     
     override func copy(_ sender: Any?) {
-
-        UIPasteboard.general.string = numberLabel.text
+        UIPasteboard.general.string = viewToCopy == numberLabel ? numberLabel.text : barcodeNumberLabel.text
     }
-    
-//    @objc private func copyToClipboard() {
-//        UIPasteboard.general.string = numberLabel.text
-//    }
     
     override var canBecomeFirstResponder: Bool {
         return true
     }
-
 }
