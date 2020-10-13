@@ -82,8 +82,7 @@ class BarcodeViewController: BinkTrackableViewController {
             barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
         }
         
-        let imageViewGesture = UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController))
-        barcodeImageView.addGestureRecognizer(imageViewGesture)
+        barcodeImageView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController)))
         
         barcodeLabel.font = UIFont.headline
         barcodeLabel.textColor = .black
@@ -92,8 +91,7 @@ class BarcodeViewController: BinkTrackableViewController {
         barcodeNumberLabel.font = UIFont.subtitle
         barcodeNumberLabel.textColor = .black
         barcodeNumberLabel.text = viewModel.barcodeNumber
-        let barcodeNumberLabelGesture = UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController))
-        barcodeNumberLabel.addGestureRecognizer(barcodeNumberLabelGesture)
+        barcodeNumberLabel.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController)))
 
         
         titleLabel.font = UIFont.headline
@@ -103,8 +101,7 @@ class BarcodeViewController: BinkTrackableViewController {
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = .blueAccent
         numberLabel.text = viewModel.cardNumber
-        let numberLabelGesture = UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController))
-        numberLabel.addGestureRecognizer(numberLabelGesture)
+        numberLabel.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController)))
         
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textColor = .black
@@ -131,16 +128,16 @@ class BarcodeViewController: BinkTrackableViewController {
         if let recognizerView = recognizer.view, let recognizerSuperView = recognizerView.superview {
             recognizerView.becomeFirstResponder()
             viewToCopy = recognizerView
-            
             let menu = UIMenuController.shared
             menu.arrowDirection = .up
+            
             let width = recognizerView.intrinsicContentSize.width / 2
-            let rect = CGRect(x: width, y: recognizerView.center.y + 4, width: 0.0, height: 0.0)
+            let height = recognizerView == barcodeImageView ? recognizerView.frame.maxY - 10 : recognizerView.center.y + 4
+            let rect = CGRect(x: width, y: height, width: 0.0, height: 0.0)
 
             if !menu.isMenuVisible {
                 menu.setTargetRect(rect, in: recognizerSuperView)
                 menu.setMenuVisible(true, animated: true)
-                
             }
         }
     }
