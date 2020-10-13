@@ -96,6 +96,9 @@ class BarcodeViewController: BinkTrackableViewController {
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = .blueAccent
         numberLabel.text = viewModel.cardNumber
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController))
+        numberLabel.addGestureRecognizer(gesture)
+        numberLabel.isUserInteractionEnabled = true
         
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textColor = .black
@@ -115,4 +118,30 @@ class BarcodeViewController: BinkTrackableViewController {
         hasDrawnBarcode = true
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
     }
+    
+    @objc private func presentMenuController(_ recognizer: UIGestureRecognizer) {
+        guard recognizer.state == .recognized else { return }
+
+        if let recognizerView = recognizer.view, let recognizerSuperView = recognizerView.superview {
+            recognizerView.becomeFirstResponder()
+            let menu = UIMenuController.shared
+            let copyItem = UIMenuItem(title: "Copy", action: #selector(copyToClipboard))
+            menu.menuItems = [copyItem]
+            
+            if !menu.isMenuVisible {
+                menu.setTargetRect(recognizerView.frame, in: recognizerSuperView)
+                menu.setMenuVisible(true, animated: true)
+                
+            }
+        } 
+    }
+    
+    @objc private func copyToClipboard() {
+        UIPasteboard.general.string = numberLabel.text
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
 }
