@@ -216,6 +216,11 @@ class WebScrapingUtility: NSObject {
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 return
             }
+            
+            if self.agent.reCaptchaPresentationType == .persistent && self.agent.reCaptchaPresentationFrequency == .always {
+                // At this point we know that the user will be presented with a reCaptcha, and we'll have already filled their credentials so we should present the webview
+                self.presentWebView()
+            }
         }
     }
 
@@ -264,6 +269,7 @@ class WebScrapingUtility: NSObject {
         case incorrectCredentialsMessaging
     }
     
+    // TODO: Make this more scalable. Callsite should handle the completion logic
     private func detectText(_ type: DetectTextType) throws {
         // Disable reCaptcha detection on balance refresh
         if type == .reCaptchaMessaging, isBalanceRefresh { return }
