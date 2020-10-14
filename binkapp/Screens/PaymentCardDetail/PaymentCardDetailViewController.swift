@@ -358,7 +358,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 extension PaymentCardDetailViewController: PaymentCardDetailLinkLoyaltyCardCellDelegate {
     func linkedLoyaltyCardCell(_ cell: PaymentCardDetailLinkLoyaltyCardCell, shouldToggleLinkedStateForMembershipCard membershipCard: CD_MembershipCard) {
         viewModel.toggleLinkForMembershipCard(membershipCard) { [weak self] in
-            print("In Completion")
+
             self?.refreshViews()
         }
     }
