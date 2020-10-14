@@ -9,13 +9,14 @@
 import UIKit
 
 class PLLScreenRepository: WalletServiceProtocol {
-    func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping () -> Void) {
+    func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping (String?) -> Void) {
         
         // NEED TO PASS ERROR KEY BACK HERE TO CHECK IF WE HAVE MULTIPLE CARDS
         
         var idsToRemove = [String]()
         var idsToAdd = [String]()
         var fullSuccess = true // assume true
+        var walletError: WalletServiceError?
         
         let group = DispatchGroup()
         for paymentCard in changedLinkCards {
@@ -30,11 +31,14 @@ class PLLScreenRepository: WalletServiceProtocol {
                     group.leave()
                 }
             } else {
-                linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { id in
+                linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { id, error in
                     if let id = id {
                         idsToAdd.append(id)
                     } else {
                         fullSuccess = false
+                        if let error = error {
+                            walletError = error
+                        }
                     }
                     group.leave()
                 }
@@ -49,7 +53,20 @@ class PLLScreenRepository: WalletServiceProtocol {
                     if fullSuccess {
                         onSuccess()
                     } else {
-                        onError()
+                        if changedLinkCards.count > 1 {
+                            // Mulptiple cards message
+                        } else {
+                            // Single card message
+                            if let key = walletError?.message, let error = APIClient.APIError.errorForKey(key) {
+                                let userFacingMessage = error.userFacingErrorMessage
+                                if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+                                    let planDetails = planName + " " + planNameCard
+                                    let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
+                                    onError(alertMessage)
+                                    return
+                                }
+                            }
+                        }
                     }
             }
         }
@@ -60,17 +77,15 @@ class PLLScreenRepository: WalletServiceProtocol {
 
 private extension PLLScreenRepository {
     // TODO: These two methods could be one
-    func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?) -> Void) {
+    func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?, WalletServiceError?) -> Void) {
         toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: true) { result in
             switch result {
             case .success(let response):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: response))
-                completion(response.id)
+                completion(response.id, nil)
             case .failure(let walletError):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
-                print(walletError)
-                
-                completion(nil)
+                completion(nil, walletError)
             }
         }
     }
