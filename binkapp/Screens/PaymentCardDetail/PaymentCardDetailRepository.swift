@@ -88,6 +88,8 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
             case .failure:
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
                 completion(nil)
+                
+                
             }
         }
     }

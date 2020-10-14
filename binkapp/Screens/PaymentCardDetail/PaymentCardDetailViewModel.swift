@@ -310,7 +310,13 @@ class PaymentCardDetailViewModel {
             if let paymentCard = paymentCard {
                 self?.paymentCard = paymentCard
             }
-            
+//            if let apiError = APIClient.APIError.errorForKey("PLAN_ALREADY_LINKED") {
+//
+//            }
+            let message = "This payment card is already linked to a different PLAN_NAME. Please unlink the other PLAN_NAME before proceeding, but be aware this may only be possible from another application."
+            let planDetails = "\(membershipCard.membershipPlan!)"
+            let alertMessage = message.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
+            print(alertMessage)
             completion()
         }
     }

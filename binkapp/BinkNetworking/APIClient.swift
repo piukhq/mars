@@ -36,6 +36,21 @@ final class APIClient {
         case v1_1 = "v=1.1" // TODO: Deprecate this when 1.3 lands
         case v1_2 = "v=1.2"
     }
+    
+    enum APIError: String {
+        case planAlreadyLinked = "PLAN_ALREADY_LINKED"
+        
+        var userFacingErrorMessage: String {
+            switch self {
+            case .planAlreadyLinked:
+                return "This payment card is already linked to a different PLAN_NAME. Please unlink the other PLAN_NAME before proceeding, but be aware this may only be possible from another application."
+            }
+        }
+        
+        static func errorForKey(_ errorKey: String) -> APIError? {
+            return APIError(rawValue: errorKey)
+        }
+    }
 
     var networkIsReachable: Bool {
         return reachabilityManager?.isReachable ?? false
@@ -201,7 +216,7 @@ private extension APIClient {
             completion?(.failure(.sslPinningFailure), response.response)
             return
         }
-
+        
         if let error = response.error {
             completion?(.failure(.customError(error.localizedDescription)), response.response)
             return
@@ -237,8 +252,19 @@ private extension APIClient {
                     let errorsArray = try? decoder.decode([String].self, from: data)
                     let errorsDictionary = try? decoder.decode([String: String].self, from: data)
                     let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? errorsDictionary?.values.first ?? errorsArray?.first
-                    completion?(.failure(.customError(errorMessage ?? "went_wrong".localized)), response.response)
-                    return
+                    
+                    if let errorKey = errorsDictionary?.keys.first {
+                        if let apiError = APIError.errorForKey(errorKey) {
+                            print(apiError.userFacingErrorMessage)
+                            completion?(.failure(.customError(apiError.userFacingErrorMessage)), response.response)
+                            return
+                        } else {
+                            completion?(.failure(.customError(errorMessage ?? "went_wrong".localized)), response.response)
+                            return
+                        }
+                    }
+
+
                 }
                 completion?(.failure(.clientError(statusCode)), response.response)
                 return
