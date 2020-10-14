@@ -21,6 +21,8 @@ enum NetworkingError: BinkError {
     case serverError(Int)
     case checkStatusCode(Int)
     case customError(String)
+    case apiErrorKey(String)
+
 
     var domain: BinkErrorDomain {
         return .networking
@@ -52,6 +54,8 @@ enum NetworkingError: BinkError {
             return "Error with status code \(String(status))"
         case .customError(let message):
             return message
+        case .apiErrorKey(let key):
+            return key
         }
     }
 }

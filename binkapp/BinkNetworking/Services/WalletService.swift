@@ -212,11 +212,20 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 completion(.success(response))
-            case .failure(let apiError):
-                completion(.failure(.customError(apiError.message)))
-//                print("TOGGLE membership card link: \(apiError.message)")
-//                completion(.failure(.failedToLinkMembershipCardToPaymentCard))
-
+            case .failure(let networkError):
+                
+                // if network error is error key we build the custom message, otherwise pass back WalletServiceError
+                if let error = APIClient.APIError.errorForKey(networkError.message) {
+                    let userFacingMessage = error.userFacingErrorMessage
+                    
+                    if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+                        let planDetails = planName + " " + planNameCard
+                        let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
+                        completion(.failure(.customError(alertMessage)))
+                        return
+                    }
+                }
+                completion(.failure(.failedToLinkMembershipCardToPaymentCard))
             }
         }
     }
