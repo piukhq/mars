@@ -38,6 +38,8 @@ open class CD_Voucher: _CD_Voucher {
             return String(format: displayValue > 1 ? "plr_stamp_voucher_headline_plural".localized : "plr_stamp_voucher_headline".localized, prefix, displayValueString)
         case (.accumulator, .inProgress):
             return String(format: "plr_accumulator_voucher_headline".localized, prefix, displayValueString, suffix)
+        case (_, .issued):
+            return "plr_issued_headline".localized
         default:
             return voucherState?.rawValue.capitalized
         }

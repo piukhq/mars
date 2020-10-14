@@ -351,6 +351,7 @@
 "plr_stamp_voucher_headline" = "%@%@ stamp to go!";
 "plr_stamp_voucher_headline_plural" = "%@%@ stamps to go!";
 "plr_accumulator_voucher_headline" = "%@%@%@ left to go!";
+"plr_issued_headline" = "Earned";
 
 "ssl_pinning_failure_title" = "Error";
 "ssl_pinning_failure_text" = "Connection error. Please try again.";
