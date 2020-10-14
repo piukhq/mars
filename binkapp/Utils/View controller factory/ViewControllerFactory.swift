@@ -181,6 +181,16 @@ final class ViewControllerFactory {
         return alert
     }
     
+    static func makeOkAlertViewController(title: String?, message: String?, completion: EmptyCompletionBlock? = nil) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
+            if let completion = completion {
+                completion()
+            }
+        }))
+        return alert
+    }
+    
     static func makeWebViewController(urlString: String) -> WebViewController {
         return WebViewController(urlString: urlString)
     }

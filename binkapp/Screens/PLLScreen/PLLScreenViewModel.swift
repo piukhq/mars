@@ -67,18 +67,15 @@ class PLLScreenViewModel {
         }
     }
     
-    func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
+    func toggleLinkForMembershipCards(completion: @escaping (Bool) -> Void) {
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
-            completion()
+            completion(true)
         }) { [weak self] errorMessage in
-            
-            
-            self?.displaySimplePopup(
-                title: "pll_error_title".localized,
-                message: "pll_error_message".localized
-            )
-            completion()
-
+            if let errorMessage = errorMessage {
+                self?.displaySimplePopup(title: "pll_error_title".localized, message: errorMessage) {
+                    completion(false)
+                }
+            }
         }
     }
     
@@ -97,8 +94,8 @@ class PLLScreenViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func displaySimplePopup(title: String, message: String) {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
+    func displaySimplePopup(title: String, message: String, completion: @escaping () -> Void) {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message, completion: completion)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
