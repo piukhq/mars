@@ -310,12 +310,14 @@ class PaymentCardDetailViewModel {
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
                 Current.navigate.to(navigationRequest)
                 completion()
-            } else {
-                if let paymentCard = paymentCard {
-                    self?.paymentCard = paymentCard
-                }
-                completion()
+                return
             }
+            
+            if let paymentCard = paymentCard {
+                self?.paymentCard = paymentCard
+            }
+            completion()
+            
         }
     }
 
