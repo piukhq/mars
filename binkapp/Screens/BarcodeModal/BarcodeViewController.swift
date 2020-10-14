@@ -18,13 +18,12 @@ class BarcodeViewController: BinkTrackableViewController {
     @IBOutlet private weak var barcodeImageView: UIImageView!
     @IBOutlet private weak var barcodeErrorLabel: UILabel!
     @IBOutlet private weak var barcodeLabel: UILabel!
-    @IBOutlet private weak var barcodeNumberLabel: UILabel!
+    @IBOutlet private weak var barcodeNumberLabel: BinkCopyableLabel!
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var numberLabel: UILabel!
+    @IBOutlet private weak var numberLabel: BinkCopyableLabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     
     private var previousBrightness: CGFloat?
-    private var viewToCopy: UIView!
 
     private let viewModel: BarcodeViewModel
     var hasDrawnBarcode = false
@@ -81,9 +80,7 @@ class BarcodeViewController: BinkTrackableViewController {
             barcodeErrorLabel.font = UIFont.bodyTextLarge
             barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
         }
-        
-        barcodeImageView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController)))
-        
+                
         barcodeLabel.font = UIFont.headline
         barcodeLabel.textColor = .black
         barcodeLabel.text = viewModel.isBarcodeAvailable ? "barcode_title".localized : nil
@@ -91,8 +88,6 @@ class BarcodeViewController: BinkTrackableViewController {
         barcodeNumberLabel.font = UIFont.subtitle
         barcodeNumberLabel.textColor = .black
         barcodeNumberLabel.text = viewModel.barcodeNumber
-        barcodeNumberLabel.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController)))
-
         
         titleLabel.font = UIFont.headline
         titleLabel.textColor = .black
@@ -101,7 +96,6 @@ class BarcodeViewController: BinkTrackableViewController {
         numberLabel.font = UIFont.subtitle
         numberLabel.textColor = .blueAccent
         numberLabel.text = viewModel.cardNumber
-        numberLabel.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(presentMenuController)))
         
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.textColor = .black
@@ -121,36 +115,67 @@ class BarcodeViewController: BinkTrackableViewController {
         hasDrawnBarcode = true
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
     }
+}
+
+class BinkCopyableLabel: UILabel {
     
-    @objc private func presentMenuController(_ recognizer: UIGestureRecognizer) {
-        guard recognizer.state == .recognized else { return }
-
-        if let recognizerView = recognizer.view, let recognizerSuperView = recognizerView.superview {
-            recognizerView.becomeFirstResponder()
-            viewToCopy = recognizerView
-            let menu = UIMenuController.shared
-            menu.arrowDirection = .up
-            
-            let width = recognizerView.intrinsicContentSize.width / 2
-            let height = recognizerView == barcodeImageView ? recognizerView.frame.maxY - 5 : recognizerView.center.y + 4
-            let rect = CGRect(x: width, y: height, width: 0.0, height: 0.0)
-
-            if !menu.isMenuVisible {
-                menu.setTargetRect(rect, in: recognizerSuperView)
-                menu.setMenuVisible(true, animated: true)
-            }
-        }
+    private var viewToCopy: UIView!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        sharedInit()
     }
     
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-          return action == #selector(UIResponderStandardEditActions.copy)
-      }
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        sharedInit()
+    }
     
-    override func copy(_ sender: Any?) {
-        UIPasteboard.general.string = viewToCopy == numberLabel ? numberLabel.text : barcodeNumberLabel.text
+    func sharedInit() {
+        isUserInteractionEnabled = true
+        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(showMenu)))
     }
     
     override var canBecomeFirstResponder: Bool {
         return true
+    }
+    
+    override func copy(_ sender: Any?) {
+        let board = UIPasteboard.general
+        board.string = text
+        let menu = UIMenuController.shared
+        menu.setMenuVisible(false, animated: true)
+        
+//        board.string = viewToCopy == numberLabel ? numberLabel.text : barcodeNumberLabel.text
+    }
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == #selector(UIResponderStandardEditActions.copy)
+      }
+
+    @objc private func showMenu(_ sender: Any) {
+//        guard recognizer.state == .recognized else { return }
+        becomeFirstResponder()
+        let menu = UIMenuController.shared
+        if !menu.isMenuVisible {
+            menu.setTargetRect(bounds, in: self)
+            menu.setMenuVisible(true, animated: true)
+        }
+
+//        if let recognizerView = recognizer.view, let recognizerSuperView = recognizerView.superview {
+////            recognizerView.becomeFirstResponder()
+//            viewToCopy = recognizerView
+//            let menu = UIMenuController.shared
+//            menu.arrowDirection = .up
+//
+//            let width = recognizerView.intrinsicContentSize.width / 2
+//            let height = recognizerView == barcodeImageView ? recognizerView.frame.maxY - 5 : recognizerView.center.y + 4
+//            let rect = CGRect(x: width, y: height, width: 0.0, height: 0.0)
+//
+//            if !menu.isMenuVisible {
+//                menu.setTargetRect(rect, in: recognizerSuperView)
+//                menu.setMenuVisible(true, animated: true)
+//            }
+//        }
     }
 }
