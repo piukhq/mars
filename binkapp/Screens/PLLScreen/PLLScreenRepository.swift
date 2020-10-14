@@ -11,6 +11,8 @@ import UIKit
 class PLLScreenRepository: WalletServiceProtocol {
     func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping () -> Void) {
         
+        // NEED TO PASS ERROR KEY BACK HERE TO CHECK IF WE HAVE MULTIPLE CARDS
+        
         var idsToRemove = [String]()
         var idsToAdd = [String]()
         var fullSuccess = true // assume true
@@ -64,8 +66,10 @@ private extension PLLScreenRepository {
             case .success(let response):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: response))
                 completion(response.id)
-            case .failure:
+            case .failure(let walletError):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
+                print(walletError)
+                
                 completion(nil)
             }
         }

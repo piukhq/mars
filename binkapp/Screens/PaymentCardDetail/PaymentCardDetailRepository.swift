@@ -61,7 +61,7 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
         }
     }
 
-    func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?, WalletServiceError?) -> Void) {
+    func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?, String?) -> Void) {
         toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: true) { result in
             switch result {
             case .success(let response):
@@ -88,13 +88,24 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
             case .failure(let walletError):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
                 
-                 // if custom error, pass back error, if not, pass back nil
-                let message = WalletServiceError.customError(walletError.message)
-                if case .customError(_) = message {
-                    completion(nil, walletError)
-                } else {
-                    completion(nil, nil)
+                if let error = APIClient.APIError.errorForKey(walletError.message) {
+                    let userFacingMessage = error.userFacingErrorMessage
+                    if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+                        let planDetails = planName + " " + planNameCard
+                        let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
+                        completion(nil, alertMessage)
+                        return
+                    }
                 }
+                completion(nil, nil)
+                
+//                if custom error, pass back error, if not, pass back nil
+//                let message = WalletServiceError.customError(walletError.message)
+//                if case .customError(_) = message {
+//                    completion(nil, walletError)
+//                } else {
+//                    completion(nil, nil)
+//                }
             }
         }
     }

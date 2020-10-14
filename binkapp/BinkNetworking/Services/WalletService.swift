@@ -213,19 +213,26 @@ extension WalletServiceProtocol {
             case .success(let response):
                 completion(.success(response))
             case .failure(let networkError):
+                if case .apiErrorKey(_) = networkError {
+                    completion(.failure(.customError(networkError.message)))
+                } else {
+                    completion(.failure(.failedToLinkMembershipCardToPaymentCard))
+                }
+                
+                
                 
                 // if network error is error key we build the custom message, otherwise pass back WalletServiceError
-                if let error = APIClient.APIError.errorForKey(networkError.message) {
-                    let userFacingMessage = error.userFacingErrorMessage
-                    
-                    if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-                        let planDetails = planName + " " + planNameCard
-                        let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
-                        completion(.failure(.customError(alertMessage)))
-                        return
-                    }
-                }
-                completion(.failure(.failedToLinkMembershipCardToPaymentCard))
+//                if let error = APIClient.APIError.errorForKey(networkError.message) {
+//                    let userFacingMessage = error.userFacingErrorMessage
+//
+//                    if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+//                        let planDetails = planName + " " + planNameCard
+//                        let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
+//                        completion(.failure(.customError(alertMessage)))
+//                        return
+//                    }
+//                }
+//                completion(.failure(.failedToLinkMembershipCardToPaymentCard))
             }
         }
     }

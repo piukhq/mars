@@ -306,7 +306,7 @@ class PaymentCardDetailViewModel {
     private func linkMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
         repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard, error in
             if let error = error {
-                let alert = ViewControllerFactory.makeOkAlertViewController(title: "Already Linked", message: error.message)
+                let alert = ViewControllerFactory.makeOkAlertViewController(title: "Already Linked", message: error)
                 let navigationRequest = AlertNavigationRequest(alertController: alert)
                 Current.navigate.to(navigationRequest)
                 completion()
@@ -317,7 +317,6 @@ class PaymentCardDetailViewModel {
                 self?.paymentCard = paymentCard
             }
             completion()
-            
         }
     }
 
