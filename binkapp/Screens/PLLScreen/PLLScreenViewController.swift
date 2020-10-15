@@ -92,7 +92,7 @@ class PLLScreenViewController: BinkTrackableViewController {
         if journey == .newCard {
             let card = viewModel.getMembershipCard()
             
-            viewModel.paymentCards?.forEach {
+            viewModel.activePaymentCards?.forEach {
                 /*
                  Filter out cards already associated with this account.
                  This means that we don't try to re-add any cards that we have already linked to this account.
@@ -204,7 +204,7 @@ extension PLLScreenViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let paymentCards = viewModel.paymentCards {
+        if let paymentCards = viewModel.activePaymentCards {
             return paymentCards.count
         }
         return 0
@@ -212,7 +212,7 @@ extension PLLScreenViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PaymentCardCell = tableView.dequeue(indexPath: indexPath)
-        if let paymentCards = viewModel.paymentCards {
+        if let paymentCards = viewModel.activePaymentCards {
             let paymentCard = paymentCards[indexPath.row]
             let isLastCell = indexPath.row == paymentCards.count - 1
             cell.configureUI(
@@ -273,7 +273,7 @@ private extension PLLScreenViewController {
 
 extension PLLScreenViewController: PaymentCardCellDelegate {
     func paymentCardCellDidToggleSwitch(_ paymentCell: PaymentCardCell, cardIndex: Int) {
-        if let paymentCards = viewModel.paymentCards {
+        if let paymentCards = viewModel.activePaymentCards {
             viewModel.addCardToChangedCardsArray(card: paymentCards[cardIndex])
         }
     }

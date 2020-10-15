@@ -16,16 +16,23 @@ class PLLScreenViewModel {
     private let paymentScannerStrings = PaymentCardScannerStrings()
     
     let journey: PllScreenJourney
-    var paymentCards: [CD_PaymentCard]? {
-        return Current.wallet.paymentCards
+    
+    var activePaymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .active }
     }
+    
+    var pendingPaymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .pending }
+    }
+    
     var hasPaymentCards: Bool {
         return Current.wallet.hasPaymentCards
     }
+    
     private(set) var changedLinkCards = [CD_PaymentCard]()
     
     var isEmptyPll: Bool {
-        return paymentCards == nil ? true : paymentCards?.count == 0
+        return activePaymentCards == nil ? true : activePaymentCards?.count == 0
     }
     
     var shouldShowBackButton: Bool {
