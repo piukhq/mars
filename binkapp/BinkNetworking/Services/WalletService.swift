@@ -224,7 +224,7 @@ extension WalletServiceProtocol {
     }
     
     func getUserErrorMessage(singleCard: Bool, walletError: WalletServiceError?, membershipCard: CD_MembershipCard) -> String? {
-        if let key = walletError?.message, let error = APIClient.APIError.errorForKey(key) {
+        if let key = walletError?.message, let error = APIError.errorForKey(key) {
             let userFacingMessage = singleCard ? error.userErrorMessage : error.userErrorMessageMultiple
             if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
                 let planDetails = planName + " " + planNameCard

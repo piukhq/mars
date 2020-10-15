@@ -36,28 +36,6 @@ final class APIClient {
         case v1_1 = "v=1.1" // TODO: Deprecate this when 1.3 lands
         case v1_2 = "v=1.2"
     }
-    
-    enum APIError: String {
-        case planAlreadyLinked = "PLAN_ALREADY_LINKED"
-        
-        var userErrorMessage: String {
-            switch self {
-            case .planAlreadyLinked:
-                return "This payment card is already linked to a different PLAN_NAME. Please unlink the other PLAN_NAME before proceeding, but be aware this may only be possible from another application."
-            }
-        }
-        
-        var userErrorMessageMultiple: String {
-            switch self {
-            case .planAlreadyLinked:
-                return "One of these payment cards are already linked to a different PLAN_NAME. Please unlink the other PLAN_NAME before proceeding, but be aware this may only be possible from another application"
-            }
-        }
-        
-        static func errorForKey(_ errorKey: String) -> APIError? {
-            return APIError(rawValue: errorKey)
-        }
-    }
 
     var networkIsReachable: Bool {
         return reachabilityManager?.isReachable ?? false
