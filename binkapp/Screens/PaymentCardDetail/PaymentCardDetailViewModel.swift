@@ -21,7 +21,8 @@ class PaymentCardDetailViewModel {
     }
 
     var paymentCardStatus: PaymentCardStatus {
-        return paymentCard.paymentCardStatus
+        return .pending
+//        return paymentCard.paymentCardStatus
     }
     
     var pendingRefreshInterval: TimeInterval {
@@ -241,6 +242,15 @@ class PaymentCardDetailViewModel {
     func toSecurityAndPrivacyScreen() {
         let title: String = "security_and_privacy_title".localized
         let description: String = "security_and_privacy_description".localized
+        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
+        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func toFAQsScreen() {
+        let title: String = "faqs_title".localized
+        let description: String = "faqs_description".localized
         let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
         let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
