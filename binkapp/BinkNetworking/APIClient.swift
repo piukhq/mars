@@ -237,7 +237,7 @@ private extension APIClient {
                     let errorsArray = try? decoder.decode([String].self, from: data)
                     let errorsDictionary = try? decoder.decode([String: String].self, from: data)
                     let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? errorsDictionary?.values.first ?? errorsArray?.first
-                    if let errorKey = errorsDictionary?.keys.first, let apiError = APIError.errorForKey(errorKey) {
+                    if let errorKey = errorsDictionary?.keys.first, let apiError = UserFacingNetworkingError.errorForKey(errorKey) {
                         completion?(.failure(.apiErrorKey(apiError.rawValue)), response.response)
                         return
                     } else {
