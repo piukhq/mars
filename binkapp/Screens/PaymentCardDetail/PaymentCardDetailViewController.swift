@@ -226,7 +226,7 @@ private extension PaymentCardDetailViewController {
         }
 
         addedCardsTableView.register(PaymentCardDetailLinkLoyaltyCardCell.self, asNib: true)
-        addedCardsTableView.register(PaymentCardDetailLoyaltyCardStatusCell.self, asNib: true)
+        addedCardsTableView.register(CardDetailCardStatusCell.self, asNib: true)
         otherCardsTableView.register(PaymentCardDetailAddLoyaltyCardCell.self, asNib: true)
         informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
 
@@ -279,7 +279,7 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
             if cardStatus.status == .authorised {
                 let cell: PaymentCardDetailLinkLoyaltyCardCell = tableView.dequeue(indexPath: indexPath)
                 let isLinked = viewModel.membershipCardIsLinked(membershipCard)
-                let cellViewModel = PaymentCardDetailLinkLoyaltyCardCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
+                let cellViewModel = CardDetailLinkCardCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
 
                 cell.configureWithViewModel(cellViewModel, delegate: self)
 
@@ -289,8 +289,8 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
                 return cell
             } else {
-                let cell: PaymentCardDetailLoyaltyCardStatusCell = tableView.dequeue(indexPath: indexPath)
-                let cellViewModel = PaymentCardDetailLoyaltyCardStatusCellViewModel(membershipCard: membershipCard)
+                let cell: CardDetailCardStatusCell = tableView.dequeue(indexPath: indexPath)
+                let cellViewModel = CardDetailCardStatusCellViewModel(membershipCard: membershipCard)
 
                 cell.configureWithViewModel(cellViewModel)
 

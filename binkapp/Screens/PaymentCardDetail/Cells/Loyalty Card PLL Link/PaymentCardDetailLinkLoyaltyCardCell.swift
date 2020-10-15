@@ -15,10 +15,10 @@ protocol PaymentCardDetailLinkLoyaltyCardCellDelegate: AnyObject {
 class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
     @IBOutlet private weak var linkToggle: BinkSwitch!
 
-    private var viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel!
+    private var viewModel: CardDetailLinkCardCellViewModel!
     private weak var delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?
 
-    func configureWithViewModel(_ viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel, delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?) {
+    func configureWithViewModel(_ viewModel: CardDetailLinkCardCellViewModel, delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?) {
         self.viewModel = viewModel
         self.delegate = delegate
 
