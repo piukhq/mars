@@ -88,24 +88,8 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
             case .failure(let walletError):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
                 
-                if let error = APIClient.APIError.errorForKey(walletError.message) {
-                    let userFacingMessage = error.userErrorMessage
-                    if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-                        let planDetails = planName + " " + planNameCard
-                        let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
-                        completion(nil, alertMessage)
-                        return
-                    }
-                }
-                completion(nil, nil)
-                
-//                if custom error, pass back error, if not, pass back nil
-//                let message = WalletServiceError.customError(walletError.message)
-//                if case .customError(_) = message {
-//                    completion(nil, walletError)
-//                } else {
-//                    completion(nil, nil)
-//                }
+                let alertMessage = self.getUserErrorMessage(singleCard: true, walletError: walletError, membershipCard: membershipCard)
+                completion(nil, alertMessage)
             }
         }
     }

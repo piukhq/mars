@@ -70,17 +70,6 @@ class PLLScreenRepository: WalletServiceProtocol {
 
 private extension PLLScreenRepository {
     
-    func getUserErrorMessage(singleCard: Bool, walletError: WalletServiceError?, membershipCard: CD_MembershipCard) -> String? {
-        if let key = walletError?.message, let error = APIClient.APIError.errorForKey(key) {
-            let userFacingMessage = singleCard ? error.userErrorMessage : error.userErrorMessageMultiple
-            if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-                let planDetails = planName + " " + planNameCard
-                return userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
-            }
-        }
-        return nil
-    }
-    
     // TODO: These two methods could be one
     func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?, WalletServiceError?) -> Void) {
         toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: true) { result in
