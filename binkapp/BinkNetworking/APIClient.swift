@@ -40,10 +40,17 @@ final class APIClient {
     enum APIError: String {
         case planAlreadyLinked = "PLAN_ALREADY_LINKED"
         
-        var userFacingErrorMessage: String {
+        var userErrorMessage: String {
             switch self {
             case .planAlreadyLinked:
                 return "This payment card is already linked to a different PLAN_NAME. Please unlink the other PLAN_NAME before proceeding, but be aware this may only be possible from another application."
+            }
+        }
+        
+        var userErrorMessageMultiple: String {
+            switch self {
+            case .planAlreadyLinked:
+                return "One of these payment cards are already linked to a different PLAN_NAME. Please unlink the other PLAN_NAME before proceeding, but be aware this may only be possible from another application"
             }
         }
         

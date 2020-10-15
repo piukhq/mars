@@ -55,10 +55,20 @@ class PLLScreenRepository: WalletServiceProtocol {
                     } else {
                         if changedLinkCards.count > 1 {
                             // Mulptiple cards message
+                            if let key = walletError?.message, let error = APIClient.APIError.errorForKey(key) {
+                                let userFacingMessage = error.userErrorMessageMultiple
+                                if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+                                    let planDetails = planName + " " + planNameCard
+                                    let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
+                                    onError(alertMessage)
+                                    return
+                                }
+                            }
+                            
                         } else {
                             // Single card message
                             if let key = walletError?.message, let error = APIClient.APIError.errorForKey(key) {
-                                let userFacingMessage = error.userFacingErrorMessage
+                                let userFacingMessage = error.userErrorMessage
                                 if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
                                     let planDetails = planName + " " + planNameCard
                                     let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)

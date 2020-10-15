@@ -87,9 +87,9 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
                 }
             case .failure(let walletError):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
-
+                
                 if let error = APIClient.APIError.errorForKey(walletError.message) {
-                    let userFacingMessage = error.userFacingErrorMessage
+                    let userFacingMessage = error.userErrorMessage
                     if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
                         let planDetails = planName + " " + planNameCard
                         let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
