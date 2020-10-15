@@ -259,11 +259,8 @@ private extension APIClient {
                     let errorsArray = try? decoder.decode([String].self, from: data)
                     let errorsDictionary = try? decoder.decode([String: String].self, from: data)
                     let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? errorsDictionary?.values.first ?? errorsArray?.first
-//                    completion?(.failure(.customError(errorMessage ?? "went_wrong".localized)), response.response)
-//                    return
-                    
                     if let errorKey = errorsDictionary?.keys.first {
-                        // if we successfully parse the error key, we pass back the key, if not we pass back the api error message
+                        // if we successfully parse the error key we have a user facing message so we pass back the key, if not we pass back the api error message
                         if let apiError = APIError.errorForKey(errorKey) {
                             completion?(.failure(.apiErrorKey(apiError.rawValue)), response.response)
                             return
@@ -272,8 +269,6 @@ private extension APIClient {
                             return
                         }
                     }
-
-
                 }
                 completion?(.failure(.clientError(statusCode)), response.response)
                 return

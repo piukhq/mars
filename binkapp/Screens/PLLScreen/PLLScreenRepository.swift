@@ -11,8 +11,6 @@ import UIKit
 class PLLScreenRepository: WalletServiceProtocol {
     func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping (String?) -> Void) {
         
-        // NEED TO PASS ERROR KEY BACK HERE TO CHECK IF WE HAVE MULTIPLE CARDS
-        
         var idsToRemove = [String]()
         var idsToAdd = [String]()
         var fullSuccess = true // assume true
@@ -54,28 +52,13 @@ class PLLScreenRepository: WalletServiceProtocol {
                         onSuccess()
                     } else {
                         if changedLinkCards.count > 1 {
-                            // Mulptiple cards message
-                            if let key = walletError?.message, let error = APIClient.APIError.errorForKey(key) {
-                                let userFacingMessage = error.userErrorMessageMultiple
-                                if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-                                    let planDetails = planName + " " + planNameCard
-                                    let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
-                                    onError(alertMessage)
-                                    return
-                                }
-                            }
-                            
+                            let alertMessage = self?.getUserErrorMessage(singleCard: false, walletError: walletError, membershipCard: membershipCard)
+                            onError(alertMessage)
+                            return
                         } else {
-                            // Single card message
-                            if let key = walletError?.message, let error = APIClient.APIError.errorForKey(key) {
-                                let userFacingMessage = error.userErrorMessage
-                                if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-                                    let planDetails = planName + " " + planNameCard
-                                    let alertMessage = userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
-                                    onError(alertMessage)
-                                    return
-                                }
-                            }
+                            let alertMessage = self?.getUserErrorMessage(singleCard: true, walletError: walletError, membershipCard: membershipCard)
+                            onError(alertMessage)
+                            return
                         }
                     }
             }
@@ -86,6 +69,18 @@ class PLLScreenRepository: WalletServiceProtocol {
 // MARK: - Private methods
 
 private extension PLLScreenRepository {
+    
+    func getUserErrorMessage(singleCard: Bool, walletError: WalletServiceError?, membershipCard: CD_MembershipCard) -> String? {
+        if let key = walletError?.message, let error = APIClient.APIError.errorForKey(key) {
+            let userFacingMessage = singleCard ? error.userErrorMessage : error.userErrorMessageMultiple
+            if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+                let planDetails = planName + " " + planNameCard
+                return userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
+            }
+        }
+        return nil
+    }
+    
     // TODO: These two methods could be one
     func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (String?, WalletServiceError?) -> Void) {
         toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: true) { result in
