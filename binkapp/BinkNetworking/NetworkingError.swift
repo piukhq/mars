@@ -21,7 +21,7 @@ enum NetworkingError: BinkError {
     case serverError(Int)
     case checkStatusCode(Int)
     case customError(String)
-    case apiErrorKey(String)
+    case userFacingError(UserFacingNetworkingError)
 
 
     var domain: BinkErrorDomain {
@@ -54,8 +54,8 @@ enum NetworkingError: BinkError {
             return "Error with status code \(String(status))"
         case .customError(let message):
             return message
-        case .apiErrorKey(let key):
-            return key
+        case .userFacingError(let error):
+            return error.message
         }
     }
 }
@@ -63,7 +63,29 @@ enum NetworkingError: BinkError {
 enum UserFacingNetworkingError: String {
     case planAlreadyLinked = "PLAN_ALREADY_LINKED"
     
-    var userErrorMessage: String {
+    var message: String {
+        switch self {
+        case .planAlreadyLinked:
+            return "This payment card is already linked to a different %@. Please unlink the other %@ before proceeding, but be aware this may only be possible from another application."
+        }
+    }
+    
+    var userErrorMessageMultiple: String {
+        switch self {
+        case .planAlreadyLinked:
+            return "One of these payment cards are already linked to a different %@. Please unlink the other %@ before proceeding, but be aware this may only be possible from another application"
+        }
+    }
+    
+    static func errorForKey(_ errorKey: String) -> UserFacingNetworkingError? {
+        return UserFacingNetworkingError(rawValue: errorKey)
+    }
+}
+
+enum UserFacingNetworkingErrorForMultiplePaymentCards: String {
+    case planAlreadyLinked = "PLAN_ALREADY_LINKED"
+    
+    var message: String {
         switch self {
         case .planAlreadyLinked:
             return "This payment card is already linked to a different PLAN_NAME. Please unlink the other PLAN_NAME before proceeding, but be aware this may only be possible from another application."

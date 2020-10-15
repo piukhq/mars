@@ -52,11 +52,11 @@ class PLLScreenRepository: WalletServiceProtocol {
                         onSuccess()
                     } else {
                         if changedLinkCards.count > 1 {
-                            let alertMessage = self?.getUserErrorMessage(singleCard: false, walletError: walletError, membershipCard: membershipCard)
+                            let alertMessage = self?.userFacingErrorMessage(singleCard: false, walletError: walletError, membershipCard: membershipCard)
                             onError(alertMessage)
                             return
                         } else {
-                            let alertMessage = self?.getUserErrorMessage(singleCard: true, walletError: walletError, membershipCard: membershipCard)
+                            let alertMessage = self?.userFacingErrorMessage(singleCard: true, walletError: walletError, membershipCard: membershipCard)
                             onError(alertMessage)
                             return
                         }

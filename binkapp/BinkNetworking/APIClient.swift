@@ -237,8 +237,8 @@ private extension APIClient {
                     let errorsArray = try? decoder.decode([String].self, from: data)
                     let errorsDictionary = try? decoder.decode([String: String].self, from: data)
                     let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? errorsDictionary?.values.first ?? errorsArray?.first
-                    if let errorKey = errorsDictionary?.keys.first, let apiError = UserFacingNetworkingError.errorForKey(errorKey) {
-                        completion?(.failure(.apiErrorKey(apiError.rawValue)), response.response)
+                    if let errorKey = errorsDictionary?.keys.first, let userFacingNetworkingError = UserFacingNetworkingError.errorForKey(errorKey) {
+                        completion?(.failure(.userFacingError(userFacingNetworkingError)), response.response)
                         return
                     } else {
                         completion?(.failure(.customError(errorMessage ?? "went_wrong".localized)), response.response)

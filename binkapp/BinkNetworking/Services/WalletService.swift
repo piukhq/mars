@@ -23,6 +23,7 @@ enum WalletServiceError: BinkError {
     case failedToDeletePaymentCard
     case failedToLinkMembershipCardToPaymentCard
     case customError(String)
+    case userFacingError(NetworkingError)
 
     var domain: BinkErrorDomain {
         return .walletService
@@ -56,6 +57,8 @@ enum WalletServiceError: BinkError {
             return "Failed to link membership card to payment card"
         case .customError(let message):
             return message
+        case .userFacingError(let error):
+            return error.message
         }
     }
 }
@@ -214,8 +217,9 @@ extension WalletServiceProtocol {
                 completion(.success(response))
             case .failure(let networkError):
                 // If networking error is apiErrorKey pass api error key back, otherwise pass standard wallet service error
-                if case .apiErrorKey(_) = networkError {
-                    completion(.failure(.customError(networkError.message)))
+
+                if case .userFacingError(_) = networkError {
+                    completion(.failure(.userFacingError(networkError)))
                 } else {
                     completion(.failure(.failedToLinkMembershipCardToPaymentCard))
                 }
@@ -223,9 +227,9 @@ extension WalletServiceProtocol {
         }
     }
     
-    func getUserErrorMessage(singleCard: Bool, walletError: WalletServiceError?, membershipCard: CD_MembershipCard) -> String? {
+    func userFacingErrorMessage(singleCard: Bool, walletError: WalletServiceError?, membershipCard: CD_MembershipCard) -> String? {
         if let key = walletError?.message, let error = UserFacingNetworkingError.errorForKey(key) {
-            let userFacingMessage = singleCard ? error.userErrorMessage : error.userErrorMessageMultiple
+            let userFacingMessage = singleCard ? error.message : error.userErrorMessageMultiple
             if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
                 let planDetails = planName + " " + planNameCard
                 return userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)

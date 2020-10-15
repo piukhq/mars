@@ -306,11 +306,17 @@ class PaymentCardDetailViewModel {
     private func linkMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
         repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard, error in
             if let error = error {
-                let alert = ViewControllerFactory.makeOkAlertViewController(title: "pll_error_title".localized, message: error)
-                let navigationRequest = AlertNavigationRequest(alertController: alert)
-                Current.navigate.to(navigationRequest)
-                completion()
-                return
+                if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+                    let planDetails = planName + " " + planNameCard
+                    let formattedString = String(format: error.message, planDetails, planDetails)
+                    let alert = ViewControllerFactory.makeOkAlertViewController(title: "pll_error_title".localized, message: formattedString)
+                    let navigationRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(navigationRequest)
+                    completion()
+                    return
+                }
+                
+
             }
             
             if let paymentCard = paymentCard {
