@@ -64,7 +64,7 @@ struct CardDetailInformationRow {
 
 protocol CardDetailInformationRowFactory {
     func makeLoyaltyInformationRows(membershipCard: CD_MembershipCard) -> [CardDetailInformationRow]
-    func makePaymentInformationRows() -> [CardDetailInformationRow]
+    func makePaymentInformationRows(for status: PaymentCardStatus) -> [CardDetailInformationRow]
 }
 
 protocol CardDetailInformationRowFactoryDelegate: AnyObject {
@@ -84,8 +84,13 @@ class WalletCardDetailInformationRowFactory: CardDetailInformationRowFactory {
         return [makeAboutPlanRow(membershipCard: membershipCard), makeSecurityAndPrivacyRow(), makeDeleteMembershipCardRow(membershipCard: membershipCard)]
     }
 
-    func makePaymentInformationRows() -> [CardDetailInformationRow] {
-        return [makeSecurityAndPrivacyRow(), makeDeletePaymentCardRow(), makeFAQsRow()]
+    func makePaymentInformationRows(for status: PaymentCardStatus) -> [CardDetailInformationRow] {
+        switch status {
+        case .active:
+            return [makeSecurityAndPrivacyRow(), makeDeletePaymentCardRow()]
+        case .failed, .pending:
+            return [makeSecurityAndPrivacyRow(), makeDeletePaymentCardRow(), makeFAQsRow()]
+        }
     }
 
     private func makeRewardsHistoryRow() -> CardDetailInformationRow {

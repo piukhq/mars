@@ -21,7 +21,7 @@ class PaymentCardDetailViewModel {
     }
 
     var paymentCardStatus: PaymentCardStatus {
-        return .pending
+        return .failed
 //        return paymentCard.paymentCardStatus
     }
     
@@ -228,7 +228,7 @@ class PaymentCardDetailViewModel {
     // MARK: Information rows
 
     var informationRows: [CardDetailInformationRow] {
-        return informationRowFactory.makePaymentInformationRows()
+        return informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
     }
 
     func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
