@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SupportSDK
+//import ZendeskCoreSDK
 
 class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
@@ -21,7 +23,7 @@ class PaymentCardDetailViewModel {
     }
 
     var paymentCardStatus: PaymentCardStatus {
-        return .failed
+        return .pending
 //        return paymentCard.paymentCardStatus
     }
     
@@ -43,8 +45,10 @@ class PaymentCardDetailViewModel {
         return "•••• \(paymentCard.card?.lastFour ?? "")"
     }
 
+    // CHANGE BACK TO PAYMENTCARD.PAYMENTCARDSTATUS
     var addedCardsTitle: String {
-        switch paymentCard.paymentCardStatus {
+//        switch paymentCard.paymentCardStatus {
+        switch paymentCardStatus {
         case .active:
             return "pcd_active_card_title".localized
         case .pending:
@@ -54,8 +58,10 @@ class PaymentCardDetailViewModel {
         }
     }
 
+    // CHANGE BACK TO PAYMENTCARD.PAYMENTCARDSTATUS
     var addedCardsDescription: String {
-        switch paymentCard.paymentCardStatus {
+//        switch paymentCard.paymentCardStatus {
+        switch paymentCardStatus {
         case .active:
             return "pcd_active_card_description".localized
         case .pending:
@@ -249,11 +255,18 @@ class PaymentCardDetailViewModel {
     }
     
     func toFAQsScreen() {
-        let title: String = "faqs_title".localized
-        let description: String = "faqs_description".localized
-        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
-        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        let helpCenterConfig = HelpCenterUiConfiguration()
+        helpCenterConfig.showContactOptions = false
+        helpCenterConfig.groupType = .category
+        helpCenterConfig.groupIds = [360016688220, 360000676019, 360016721639, 360000836439]
+        
+        let articleConfig = ArticleUiConfiguration()
+        articleConfig.showContactOptions = false
+        
+//        let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: "360016688220", andConfigs: [helpCenterConfig, articleConfig])
+        let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
+
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
     
