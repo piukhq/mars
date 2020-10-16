@@ -55,7 +55,7 @@ enum NetworkingError: BinkError {
         case .customError(let message):
             return message
         case .userFacingError(let error):
-            return error.message
+            return error.rawValue
         }
     }
 }
@@ -81,11 +81,11 @@ enum UserFacingNetworkingErrorForMultiplePaymentCards: String {
     var message: String {
         switch self {
         case .planAlreadyLinked:
-            return "One of these payment cards are already linked to a different %@. Please unlink the other %@ before proceeding, but be aware this may only be possible from another application"
+            return "cards_already_linked_message"
         }
     }
     
-    static func errorForKey(_ errorKey: String) -> UserFacingNetworkingError? {
-        return UserFacingNetworkingError(rawValue: errorKey)
+    static func errorForKey(_ errorKey: String) -> UserFacingNetworkingErrorForMultiplePaymentCards? {
+        return UserFacingNetworkingErrorForMultiplePaymentCards(rawValue: errorKey)
     }
 }

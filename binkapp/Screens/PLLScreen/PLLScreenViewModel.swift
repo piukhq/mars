@@ -75,10 +75,14 @@ class PLLScreenViewModel {
                 if let planName = self?.membershipCard.membershipPlan?.account?.planName, let planNameCard = self?.membershipCard.membershipPlan?.account?.planNameCard {
                     let planDetails = planName + " " + planNameCard
                     if self?.changedLinkCards.count ?? 0 > 1 {
-                        
-                        
+                        let userFacingError = UserFacingNetworkingErrorForMultiplePaymentCards.errorForKey(error.message)
+                        let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
+                        self?.displaySimplePopup(title: "card_already_linked_title".localized, message: formattedString) {
+                            completion(false)
+                        }
                     } else {
-                        let formattedString = String(format: error.message.localized, planDetails, planDetails)
+                        let userFacingError = UserFacingNetworkingError.errorForKey(error.message)
+                        let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
                         self?.displaySimplePopup(title: "card_already_linked_title".localized, message: formattedString) {
                             completion(false)
                         }
