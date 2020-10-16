@@ -98,6 +98,7 @@ class PLLScreenViewController: BinkTrackableViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = 100.0
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.separatorStyle = .none
         return tableView
     }()
@@ -232,33 +233,22 @@ extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
 
 // MARK: - UITableViewDataSource
 
-extension PLLScreenViewController: UITableViewDataSource {
+extension PLLScreenViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let paymentCards = viewModel.activePaymentCards {
-            return paymentCards.count
-        }
+        if tableView == activePaymentCardsTableView { return viewModel.activePaymentCards?.count ?? 0 }
+        if tableView == pendingPaymentCardsTableView { return viewModel.pendingPaymentCards?.count ?? 0 }
         return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == activePaymentCardsTableView {
             let cell: PaymentCardCell = tableView.dequeue(indexPath: indexPath)
-            if let paymentCards = viewModel.activePaymentCards {
-                let paymentCard = paymentCards[indexPath.row]
-                let isLastCell = indexPath.row == paymentCards.count - 1
-                cell.configureUI(
-                    paymentCard: paymentCard,
-                    cardIndex: indexPath.row,
-                    delegate: self,
-                    journey: journey,
-                    isLastCell: isLastCell,
-                    showAsLinked: viewModel.linkedPaymentCards?.contains(paymentCard) == true
-                )
-            }
+            guard let paymentCard = viewModel.activePaymentCards?[indexPath.row] else { return cell }
+            cell.configureUI(paymentCard: paymentCard, cardIndex: indexPath.row, delegate: self, journey: journey, showAsLinked: viewModel.linkedPaymentCards?.contains(paymentCard) == true)
             return cell
         }
         
@@ -270,6 +260,13 @@ extension PLLScreenViewController: UITableViewDataSource {
         }
         
         fatalError("Invalid table view")
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == pendingPaymentCardsTableView {
+            // TODO: Navigate to FAQ
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

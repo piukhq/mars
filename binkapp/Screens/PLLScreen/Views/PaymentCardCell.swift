@@ -21,7 +21,7 @@ class PaymentCardCell: UITableViewCell {
     private var cardIndex = 0
     private var firstUse = true
     
-    func configureUI(paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, journey: PllScreenJourney, isLastCell: Bool, showAsLinked: Bool) {
+    func configureUI(paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, journey: PllScreenJourney, showAsLinked: Bool) {
         self.delegate = delegate
         self.cardIndex = cardIndex
 
