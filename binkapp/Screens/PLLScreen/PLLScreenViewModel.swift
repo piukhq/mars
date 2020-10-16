@@ -77,13 +77,13 @@ class PLLScreenViewModel {
                     if self?.changedLinkCards.count ?? 0 > 1 {
                         let userFacingError = UserFacingNetworkingErrorForMultiplePaymentCards.errorForKey(error.message)
                         let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
-                        self?.displaySimplePopup(title: "card_already_linked_title".localized, message: formattedString) {
+                        self?.displaySimplePopup(title: userFacingError?.title.localized, message: formattedString) {
                             completion(false)
                         }
                     } else {
                         let userFacingError = UserFacingNetworkingError.errorForKey(error.message)
                         let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
-                        self?.displaySimplePopup(title: "card_already_linked_title".localized, message: formattedString) {
+                        self?.displaySimplePopup(title: userFacingError?.title.localized, message: formattedString) {
                             completion(false)
                         }
                     }
@@ -108,7 +108,7 @@ class PLLScreenViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func displaySimplePopup(title: String, message: String, completion: @escaping () -> Void) {
+    func displaySimplePopup(title: String?, message: String?, completion: @escaping () -> Void) {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message, completion: completion)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }

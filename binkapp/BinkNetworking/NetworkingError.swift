@@ -63,6 +63,13 @@ enum NetworkingError: BinkError {
 enum UserFacingNetworkingError: String {
     case planAlreadyLinked = "PLAN_ALREADY_LINKED"
     
+    var title: String {
+        switch self {
+        case .planAlreadyLinked:
+            return "card_already_linked_title"
+        }
+    }
+    
     var message: String {
         switch self {
         case .planAlreadyLinked:
@@ -77,6 +84,13 @@ enum UserFacingNetworkingError: String {
 
 enum UserFacingNetworkingErrorForMultiplePaymentCards: String {
     case planAlreadyLinked = "PLAN_ALREADY_LINKED"
+    
+    var title: String {
+        switch self {
+        case .planAlreadyLinked:
+            return "card_already_linked_title"
+        }
+    }
     
     var message: String {
         switch self {

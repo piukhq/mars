@@ -310,7 +310,7 @@ class PaymentCardDetailViewModel {
                     let planDetails = planName + " " + planNameCard
                     let userFacingError = UserFacingNetworkingError.errorForKey(error.message)
                     let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
-                    let alert = ViewControllerFactory.makeOkAlertViewController(title: "card_already_linked_title".localized, message: formattedString)
+                    let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError?.title.localized, message: formattedString)
                     let navigationRequest = AlertNavigationRequest(alertController: alert)
                     Current.navigate.to(navigationRequest)
                     completion()
