@@ -47,6 +47,8 @@ class PLRRewardDetailViewModel {
             return "plr_stamp_voucher_detail_redeemed_header".localized
         case (.stamps, .expired):
             return "plr_stamp_voucher_detail_expired_header".localized
+        case (.stamps, .cancelled), (.accumulator, .cancelled):
+            return "plr_stamp_voucher_detail_cancelled_header".localized
         default:
             return nil
         }
@@ -67,6 +69,8 @@ class PLRRewardDetailViewModel {
             return membershipPlan.dynamicContentValue(forColumn: .voucherStampsRedeemedDetail)
         case (.stamps, .expired):
             return membershipPlan.dynamicContentValue(forColumn: .voucherStampsExpiredDetail)
+        case (.stamps, .cancelled), (.accumulator, .cancelled):
+            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsCancelledDetail)
         default:
             return nil
         }
@@ -82,7 +86,7 @@ class PLRRewardDetailViewModel {
 
     var expiredDateString: String? {
         switch voucherState {
-        case .expired:
+        case .expired, .cancelled:
             return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
         case .issued:
             return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
@@ -125,7 +129,7 @@ class PLRRewardDetailViewModel {
     var shouldShowIssuedDate: Bool {
         guard voucher.dateIssued != 0 else { return false }
         switch (voucherEarnType, voucherState) {
-        case (_, .issued), (_, .expired), (.stamps, .redeemed):
+        case (_, .issued), (_, .expired), (.stamps, .redeemed), (_, .cancelled):
             return true
         default:
             return false
@@ -139,7 +143,12 @@ class PLRRewardDetailViewModel {
 
     var shouldShowExpiredDate: Bool {
         guard voucher.expiryDate != 0 else { return false }
-        return voucherState == .expired || voucherState == .issued
+        switch voucherState {
+        case .expired, .issued, .cancelled:
+            return true
+        default:
+            return false
+        }
     }
 
     var shouldShowTermsAndConditionsButton: Bool {

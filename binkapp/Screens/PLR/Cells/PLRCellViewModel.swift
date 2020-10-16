@@ -50,7 +50,7 @@ class PLRCellViewModel {
     }
 
     var headlineText: String? {
-        return voucher.headline
+        return voucher.state == "cancelled" ? "Cancelled" : voucher.headline
     }
 
     var amountAccumulated: Double {
@@ -126,7 +126,7 @@ class PLRCellViewModel {
 
     var dateText: String? {
         switch voucherState {
-        case .expired:
+        case .expired, .cancelled:
             guard voucher.expiryDate != 0 else { return nil }
             return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear, prefix: "plr_voucher_date_prefix".localized)
         case .redeemed:
