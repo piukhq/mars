@@ -20,5 +20,4 @@ extension UITableViewCell {
     func setSeparatorDefaultWidth() {
         separatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
     }
-    
 }

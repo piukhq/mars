@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PaymentCardDetailAddLoyaltyCardCellViewModel: CardDetailCardCellViewModelProtocol {
+struct PaymentCardDetailAddLoyaltyCardCellViewModel: PaymentCardDetailCellViewModelProtocol {
     let membershipPlan: CD_MembershipPlan
 
     init(membershipPlan: CD_MembershipPlan) {

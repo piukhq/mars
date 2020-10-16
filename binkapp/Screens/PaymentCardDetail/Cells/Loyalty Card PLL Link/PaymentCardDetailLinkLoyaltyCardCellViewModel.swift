@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol CardDetailCardCellViewModelProtocol {
+protocol PaymentCardDetailCellViewModelProtocol {
     var headerText: String? { get }
     var detailText: String? { get }
 }
 
-struct CardDetailLinkCardCellViewModel: CardDetailCardCellViewModelProtocol {
+struct PaymentCardDetailLinkLoyaltyCardCellViewModel: PaymentCardDetailCellViewModelProtocol {
     private(set) var membershipCard: CD_MembershipCard
     let isLinked: Bool
 

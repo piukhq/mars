@@ -8,23 +8,23 @@
 
 import UIKit
 
-class CardDetailCardStatusCell: PaymentCardDetailTableViewCell {
+class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
     @IBOutlet private weak var statusLabel: UILabel!
 
-    private var viewModel: CardDetailCardStatusCellViewModel!
+    private var viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel!
 
-    func configureWithViewModel(_ viewModel: CardDetailCardStatusCellViewModel) {
+    func configureWithViewModel(_ viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel) {
         headerLabel.text = viewModel.headerText
         detailLabel.text = viewModel.detailText
         statusLabel.text = viewModel.statusText
-        statusLabel.textColor = textColor(forStatus: viewModel.membershipCardStatus)
+        statusLabel.textColor = textColor(forStatus: viewModel.status)
         
-        guard let membershipPlan = viewModel.membershipCard?.membershipPlan else { return }
+        guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
         iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
     }
 
-    private func textColor(forStatus status: MembershipCardStatus?) -> UIColor {
-        switch status {
+    private func textColor(forStatus status: CD_MembershipCardStatus?) -> UIColor {
+        switch status?.status {
         case .pending:
             return .amberPending
         default:

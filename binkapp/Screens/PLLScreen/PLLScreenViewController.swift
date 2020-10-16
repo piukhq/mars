@@ -23,7 +23,7 @@ class PLLScreenViewController: BinkTrackableViewController {
     private lazy var stackScroll: StackScrollView = {
         let stackScroll = StackScrollView(
             axis: .vertical,
-            arrangedSubviews: [brandHeaderView, titleLabel, primaryMessageLabel, secondaryMessageLabel, activePaymentCardsTableView, pendingCardsTitleLabel, pendingCardsDescriptionLabel, pendingPaymentCardsTableView],
+            arrangedSubviews: [brandHeaderView, titleLabel, primaryMessageLabel, secondaryMessageLabel, paymentCardsTableView],
             adjustForKeyboard: false
         )
         stackScroll.translatesAutoresizingMaskIntoConstraints = false
@@ -65,40 +65,11 @@ class PLLScreenViewController: BinkTrackableViewController {
         return label
     }()
     
-    private lazy var activePaymentCardsTableView: NestedTableView = {
+    private lazy var paymentCardsTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = 100.0
         tableView.dataSource = self
-        tableView.separatorStyle = .none
-        return tableView
-    }()
-    
-    // MARK: - Pending payment cards
-    
-    private lazy var pendingCardsTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.headline
-        label.textAlignment = .left
-        return label
-    }()
-    
-    private lazy var pendingCardsDescriptionLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.bodyTextLarge
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private lazy var pendingPaymentCardsTableView: NestedTableView = {
-        let tableView = NestedTableView(frame: .zero)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.rowHeight = 100.0
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.separatorStyle = .none
         return tableView
     }()
@@ -146,8 +117,7 @@ class PLLScreenViewController: BinkTrackableViewController {
         configureBrandHeader()
         configureUI()
         configureLayout()
-        activePaymentCardsTableView.register(PaymentCardCell.self, asNib: true)
-        pendingPaymentCardsTableView.register(CardDetailCardStatusCell.self, asNib: true)
+        paymentCardsTableView.register(PaymentCardCell.self, asNib: true)
         floatingButtonsView.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadWallet, object: nil)
@@ -165,18 +135,13 @@ class PLLScreenViewController: BinkTrackableViewController {
             stackScroll.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScroll.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScroll.rightAnchor.constraint(equalTo: view.rightAnchor),
-            activePaymentCardsTableView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -50.0),
+            paymentCardsTableView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -50.0),
             titleLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
             titleLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
             primaryMessageLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
             primaryMessageLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
             secondaryMessageLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
             secondaryMessageLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
-            pendingPaymentCardsTableView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -50.0),
-            pendingCardsTitleLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
-            pendingCardsTitleLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
-            pendingCardsDescriptionLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
-            pendingCardsDescriptionLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
             brandHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor),
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -189,7 +154,7 @@ class PLLScreenViewController: BinkTrackableViewController {
     
     @objc private func handleWalletReload() {
         viewModel.refreshMembershipCard {
-            self.activePaymentCardsTableView.reloadData()
+            self.paymentCardsTableView.reloadData()
             self.configureUI()
         }
     }
@@ -233,43 +198,33 @@ extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
 
 // MARK: - UITableViewDataSource
 
-extension PLLScreenViewController: UITableViewDataSource, UITableViewDelegate {
+extension PLLScreenViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == activePaymentCardsTableView {
-            return viewModel.activePaymentCards?.count ?? 0
-        } else if tableView == pendingPaymentCardsTableView {
-            return viewModel.pendingPaymentCards?.count ?? 0
+        if let paymentCards = viewModel.activePaymentCards {
+            return paymentCards.count
         }
         return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == activePaymentCardsTableView {
-            let cell: PaymentCardCell = tableView.dequeue(indexPath: indexPath)
-            if let paymentCards = viewModel.activePaymentCards {
-                let paymentCard = paymentCards[indexPath.row]
-                let isLastCell = indexPath.row == paymentCards.count - 1
-                cell.configureUI(
-                    paymentCard: paymentCard,
-                    cardIndex: indexPath.row,
-                    delegate: self,
-                    journey: journey,
-                    isLastCell: isLastCell,
-                    showAsLinked: viewModel.linkedPaymentCards?.contains(paymentCard) == true
-                )
-            }
-            return cell
-        } else if tableView == pendingPaymentCardsTableView {
-            let cell: CardDetailCardStatusCell = tableView.dequeue(indexPath: indexPath)
-            guard let paymentCard = viewModel.pendingPaymentCards?[indexPath.row] else { return cell }
-            cell.configureWithViewModel(CardDetailCardStatusCellViewModel(paymentCard: paymentCard))
-            return cell
+        let cell: PaymentCardCell = tableView.dequeue(indexPath: indexPath)
+        if let paymentCards = viewModel.activePaymentCards {
+            let paymentCard = paymentCards[indexPath.row]
+            let isLastCell = indexPath.row == paymentCards.count - 1
+            cell.configureUI(
+                paymentCard: paymentCard,
+                cardIndex: indexPath.row,
+                delegate: self,
+                journey: journey,
+                isLastCell: isLastCell,
+                showAsLinked: viewModel.linkedPaymentCards?.contains(paymentCard) == true
+            )
         }
-        fatalError("tableView not recognised")
+        return cell 
     }
 }
 
@@ -278,7 +233,7 @@ extension PLLScreenViewController: UITableViewDataSource, UITableViewDelegate {
 private extension PLLScreenViewController {
     func reloadContent() {
         Current.wallet.refreshLocal {
-            self.activePaymentCardsTableView.reloadData()
+            self.paymentCardsTableView.reloadData()
         }
     }
     
@@ -292,12 +247,7 @@ private extension PLLScreenViewController {
         primaryMessageLabel.text = viewModel.primaryMessageText
         secondaryMessageLabel.text = viewModel.secondaryMessageText
         secondaryMessageLabel.isHidden = !viewModel.isEmptyPll
-        activePaymentCardsTableView.isHidden = viewModel.isEmptyPll
-        
-        pendingCardsTitleLabel.text = "Pending payment cards"
-        pendingCardsDescriptionLabel.text = "Description"
-        pendingPaymentCardsTableView.isHidden = false
-        
+        paymentCardsTableView.isHidden = viewModel.isEmptyPll
         stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
         switch journey {
         case .newCard:
