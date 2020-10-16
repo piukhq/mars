@@ -286,13 +286,21 @@ private extension PLLScreenViewController {
     
     func configureUI() {
         titleLabel.text = viewModel.titleText
+        titleLabel.isHidden = !viewModel.shouldShowActivePaymentCards && viewModel.shouldShowPendingPaymentCards
+        
         primaryMessageLabel.text = viewModel.primaryMessageText
+        primaryMessageLabel.isHidden = titleLabel.isHidden
+        
         secondaryMessageLabel.text = viewModel.secondaryMessageText
-        secondaryMessageLabel.isHidden = !viewModel.isEmptyPll
-        activePaymentCardsTableView.isHidden = viewModel.isEmptyPll
+        secondaryMessageLabel.isHidden = viewModel.shouldShowActivePaymentCards || viewModel.shouldShowPendingPaymentCards
+        
+        activePaymentCardsTableView.isHidden = !viewModel.shouldShowActivePaymentCards
         
         pendingCardsTitleLabel.text = "Pending payment cards"
         pendingCardsDetailLabel.text = "The payment cards below are pending authorisation. You will be able to link them to you loyalty card once they've been approved."
+        pendingCardsTitleLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
+        pendingCardsDetailLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
+        pendingPaymentCardsTableView.isHidden = !viewModel.shouldShowPendingPaymentCards
         
         stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
         switch journey {

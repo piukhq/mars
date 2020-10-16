@@ -31,8 +31,16 @@ class PLLScreenViewModel {
     
     private(set) var changedLinkCards = [CD_PaymentCard]()
     
+    var shouldShowActivePaymentCards: Bool {
+        return activePaymentCards != nil && activePaymentCards?.count != 0
+    }
+    
+    var shouldShowPendingPaymentCards: Bool {
+        return pendingPaymentCards != nil && pendingPaymentCards?.count != 0
+    }
+    
     var isEmptyPll: Bool {
-        return activePaymentCards == nil ? true : activePaymentCards?.count == 0
+        return !shouldShowActivePaymentCards
     }
     
     var shouldShowBackButton: Bool {
