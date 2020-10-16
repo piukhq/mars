@@ -70,10 +70,20 @@ class PLLScreenViewModel {
     func toggleLinkForMembershipCards(completion: @escaping (Bool) -> Void) {
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion(true)
-        }) { [weak self] errorMessage in
-            if let errorMessage = errorMessage {
-                self?.displaySimplePopup(title: "pll_error_title".localized, message: errorMessage) {
-                    completion(false)
+        }) { [weak self] error in
+            if let error = error {
+                if let planName = self?.membershipCard.membershipPlan?.account?.planName, let planNameCard = self?.membershipCard.membershipPlan?.account?.planNameCard {
+                    let planDetails = planName + " " + planNameCard
+                    if self?.changedLinkCards.count ?? 0 > 1 {
+                        
+                        
+                    } else {
+                        let formattedString = String(format: error.message.localized, planDetails, planDetails)
+                        self?.displaySimplePopup(title: "card_already_linked_title".localized, message: formattedString) {
+                            completion(false)
+                        }
+                    }
+
                 }
             }
         }

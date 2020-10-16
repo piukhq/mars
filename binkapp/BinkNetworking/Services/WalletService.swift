@@ -227,14 +227,14 @@ extension WalletServiceProtocol {
         }
     }
     
-    func userFacingErrorMessage(singleCard: Bool, walletError: WalletServiceError?, membershipCard: CD_MembershipCard) -> String? {
-        if let key = walletError?.message, let error = UserFacingNetworkingError.errorForKey(key) {
-            let userFacingMessage = singleCard ? error.message : error.userErrorMessageMultiple
-            if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-                let planDetails = planName + " " + planNameCard
-                return userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
-            }
-        }
-        return nil
-    }
+//    func userFacingErrorMessage(singleCard: Bool, walletError: WalletServiceError?, membershipCard: CD_MembershipCard) -> String? {
+//        if let key = walletError?.message, let error = UserFacingNetworkingError.errorForKey(key) {
+//            let userFacingMessage = singleCard ? error.message : error.userErrorMessageMultiple
+//            if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+//                let planDetails = planName + " " + planNameCard
+//                return userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
+//            }
+//        }
+//        return nil
+//    }
 }

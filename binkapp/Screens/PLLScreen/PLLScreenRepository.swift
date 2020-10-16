@@ -9,7 +9,7 @@
 import UIKit
 
 class PLLScreenRepository: WalletServiceProtocol {
-    func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping (String?) -> Void) {
+    func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping (WalletServiceError?) -> Void) {
         
         var idsToRemove = [String]()
         var idsToAdd = [String]()
@@ -34,9 +34,7 @@ class PLLScreenRepository: WalletServiceProtocol {
                         idsToAdd.append(id)
                     } else {
                         fullSuccess = false
-                        if let error = error {
-                            walletError = error
-                        }
+                        walletError = error
                     }
                     group.leave()
                 }
@@ -51,15 +49,7 @@ class PLLScreenRepository: WalletServiceProtocol {
                     if fullSuccess {
                         onSuccess()
                     } else {
-                        if changedLinkCards.count > 1 {
-                            let alertMessage = self?.userFacingErrorMessage(singleCard: false, walletError: walletError, membershipCard: membershipCard)
-                            onError(alertMessage)
-                            return
-                        } else {
-                            let alertMessage = self?.userFacingErrorMessage(singleCard: true, walletError: walletError, membershipCard: membershipCard)
-                            onError(alertMessage)
-                            return
-                        }
+                        onError(walletError)
                     }
             }
         }

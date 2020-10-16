@@ -87,9 +87,9 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
                 }
             case .failure(let walletError):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
-                    
-//                let alertMessage = self.userFacingErrorMessage(singleCard: true, walletError: walletError, membershipCard: membershipCard)
                 completion(nil, walletError)
+
+//                let alertMessage = self.userFacingErrorMessage(singleCard: true, walletError: walletError, membershipCard: membershipCard)
             }
         }
     }

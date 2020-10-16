@@ -228,7 +228,7 @@
 "support_mail_body" = "\n\n\n\nThe below information will help us with with your query, please don’t change it.\nBink ID: %@\nVersion: %@\niOS Version: %@";
 "support_mail_app_version" = "%@ build %@";
 
-"pll_error_title" = "Already Linked";
+"pll_error_title" = "Error";
 "pll_error_message" = "Unfortunately some of your cards failed to link, please try again later.";
 
 // MARK: - Preferences
@@ -354,6 +354,9 @@
 
 // MARK: - Errors
 "communication_error" = "There was a problem communicating with the server. Please try again later.";
+"card_already_linked_title" = "Already Linked";
+"card_already_linked_message" = "This payment card is already linked to a different %@. Please unlink the other %@ before proceeding, but be aware this may only be possible from another application.";
+"cards_already_linked_message" = "One of these payment cards are already linked to a different %@. Please unlink the other %@ before proceeding, but be aware this may only be possible from another application";
 
 // MARK: - Wallet prompts
 "wallet_prompt_loyalty" = "Link this card to your payment cards to automatically collect rewards.";
@@ -387,7 +390,6 @@
 "zendesk_identity_prompt_last_name" = "Last name";
 
 // MARK: - Who We Are
-
 "who_we_are_title" = "Who we are";
 "who_we_are_body" = "Below are a list of people that have been instrumental in developing the app you now hold in your hands.";
 
