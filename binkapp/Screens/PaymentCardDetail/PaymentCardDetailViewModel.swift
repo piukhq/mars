@@ -59,17 +59,22 @@ class PaymentCardDetailViewModel {
     }
 
     // CHANGE BACK TO PAYMENTCARD.PAYMENTCARDSTATUS
-    var addedCardsDescription: String {
+    var addedCardsDescription: NSMutableAttributedString {
 //        switch paymentCard.paymentCardStatus {
         switch paymentCardStatus {
         case .active:
-            return "pcd_active_card_description".localized
+            return NSMutableAttributedString(string: "pcd_active_card_description".localized)
         case .pending:
-            return String(format: "pcd_pending_card_description".localized, cardAddedDateString ?? "")
+            let description = String(format: "pcd_pending_card_description".localized, cardAddedDateString ?? "")
+            let attributedString = NSMutableAttributedString(string: description)
+            let contactUsRange = (description as NSString).range(of: "Contact us")
+            attributedString.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: contactUsRange)
+            return attributedString
         case .failed:
-            return "pcd_failed_card_description".localized
+            return NSMutableAttributedString(string: "pcd_failed_card_description".localized)
         }
     }
+    
     
     var cardAddedDateString: String? {
         guard let timestamp = paymentCard.account?.formattedConsents?.first?.timestamp?.doubleValue else { return nil }
@@ -257,14 +262,14 @@ class PaymentCardDetailViewModel {
     func toFAQsScreen() {
         let helpCenterConfig = HelpCenterUiConfiguration()
         helpCenterConfig.showContactOptions = false
-        helpCenterConfig.groupType = .category
-        helpCenterConfig.groupIds = [360016688220, 360000676019, 360016721639, 360000836439]
+//        helpCenterConfig.groupType = .default
+//        helpCenterConfig.groupIds = [360000836439]
         
         let articleConfig = ArticleUiConfiguration()
         articleConfig.showContactOptions = false
         
-//        let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: "360016688220", andConfigs: [helpCenterConfig, articleConfig])
-        let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
+        let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: "360000836439", andConfigs: [helpCenterConfig, articleConfig])
+//        let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
 
         let navigationRequest = PushNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
