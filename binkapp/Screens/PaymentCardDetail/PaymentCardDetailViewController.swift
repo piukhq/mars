@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SupportSDK
 
 class PaymentCardDetailViewController: BinkTrackableViewController {
     private var viewModel: PaymentCardDetailViewModel
@@ -251,13 +252,21 @@ private extension PaymentCardDetailViewController {
     
     @objc func tapLabel(gesture: UITapGestureRecognizer) {
         let contactUsRange = (viewModel.addedCardsDescription.string as NSString).range(of: "Contact us")
-
-       if gesture.didTapAttributedTextInLabel(label: addedCardsDescriptionLabel, inRange: contactUsRange) {
-           print("Tapped contact us")
-
-       } else {
-           print("Tapped none")
-       }
+        
+        let launchContactUs = {
+            let viewController = RequestUi.buildRequestList()
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
+        
+        // Get first name and last name for Zendesk
+        
+        if gesture.didTapAttributedTextInLabel(label: addedCardsDescriptionLabel, inRange: contactUsRange) {
+            print("Tapped contact us")
+            launchContactUs()
+        } else {
+            print("Tapped none")
+        }
     }
 }
 
