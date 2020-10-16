@@ -17,7 +17,6 @@ class PaymentCardCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var switchButton: BinkSwitch!
-    @IBOutlet private weak var separatorView: UIView!
     private weak var delegate: PaymentCardCellDelegate?
     private var cardIndex = 0
     private var firstUse = true
@@ -39,7 +38,6 @@ class PaymentCardCell: UITableViewCell {
         default:
             break
         }
-        separatorView.isHidden = isLastCell
         titleLabel.text = paymentCard.card?.nameOnCard
         subtitleLabel.text = String(format: "pll_screen_card_ending".localized, paymentCard.card?.lastFour ?? "")
         switchButton.isOn = journey == .newCard ? true : showAsLinked

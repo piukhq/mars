@@ -164,7 +164,7 @@ class PLLScreenViewController: BinkTrackableViewController {
             stackScroll.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScroll.leftAnchor.constraint(equalTo: view.leftAnchor),
             stackScroll.rightAnchor.constraint(equalTo: view.rightAnchor),
-            activePaymentCardsTableView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -50.0),
+            activePaymentCardsTableView.widthAnchor.constraint(equalTo: view.widthAnchor),
             titleLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
             titleLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
             primaryMessageLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
