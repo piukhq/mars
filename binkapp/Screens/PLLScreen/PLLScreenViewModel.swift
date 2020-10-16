@@ -71,23 +71,20 @@ class PLLScreenViewModel {
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion(true)
         }) { [weak self] error in
-            if let error = error {
-                if let planName = self?.membershipCard.membershipPlan?.account?.planName, let planNameCard = self?.membershipCard.membershipPlan?.account?.planNameCard {
-                    let planDetails = planName + " " + planNameCard
-                    if self?.changedLinkCards.count ?? 0 > 1 {
-                        let userFacingError = UserFacingNetworkingErrorForMultiplePaymentCards.errorForKey(error.message)
-                        let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
-                        self?.displaySimplePopup(title: userFacingError?.title.localized, message: formattedString) {
-                            completion(false)
-                        }
-                    } else {
-                        let userFacingError = UserFacingNetworkingError.errorForKey(error.message)
-                        let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
-                        self?.displaySimplePopup(title: userFacingError?.title.localized, message: formattedString) {
-                            completion(false)
-                        }
+            if case .userFacingError = error, let error = error, let planName = self?.membershipCard.membershipPlan?.account?.planName, let planNameCard = self?.membershipCard.membershipPlan?.account?.planNameCard {
+                let planDetails = planName + " " + planNameCard
+                if self?.changedLinkCards.count ?? 0 > 1 {
+                    let userFacingError = UserFacingNetworkingErrorForMultiplePaymentCards.errorForKey(error.message)
+                    let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
+                    self?.displaySimplePopup(title: userFacingError?.title.localized, message: formattedString) {
+                        completion(false)
                     }
-
+                } else {
+                    let userFacingError = UserFacingNetworkingError.errorForKey(error.message)
+                    let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
+                    self?.displaySimplePopup(title: userFacingError?.title.localized, message: formattedString) {
+                        completion(false)
+                    }
                 }
             }
         }

@@ -216,8 +216,6 @@ extension WalletServiceProtocol {
             case .success(let response):
                 completion(.success(response))
             case .failure(let networkError):
-                // If networking error is apiErrorKey pass api error key back, otherwise pass standard wallet service error
-
                 if case .userFacingError(_) = networkError {
                     completion(.failure(.userFacingError(networkError)))
                 } else {
@@ -226,15 +224,4 @@ extension WalletServiceProtocol {
             }
         }
     }
-    
-//    func userFacingErrorMessage(singleCard: Bool, walletError: WalletServiceError?, membershipCard: CD_MembershipCard) -> String? {
-//        if let key = walletError?.message, let error = UserFacingNetworkingError.errorForKey(key) {
-//            let userFacingMessage = singleCard ? error.message : error.userErrorMessageMultiple
-//            if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-//                let planDetails = planName + " " + planNameCard
-//                return userFacingMessage.replacingOccurrences(of: "PLAN_NAME", with: planDetails)
-//            }
-//        }
-//        return nil
-//    }
 }

@@ -305,19 +305,16 @@ class PaymentCardDetailViewModel {
 
     private func linkMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
         repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard, error in
-            if let error = error {
-                if let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-                    let planDetails = planName + " " + planNameCard
-                    let userFacingError = UserFacingNetworkingError.errorForKey(error.message)
-                    let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
-                    let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError?.title.localized, message: formattedString)
-                    let navigationRequest = AlertNavigationRequest(alertController: alert)
-                    Current.navigate.to(navigationRequest)
-                    completion()
-                    return
-                }
-                
-
+            
+            if case .userFacingError(_) = error, let error = error, let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
+                let planDetails = planName + " " + planNameCard
+                let userFacingError = UserFacingNetworkingError.errorForKey(error.message)
+                let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
+                let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError?.title.localized, message: formattedString)
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+                completion()
+                return
             }
             
             if let paymentCard = paymentCard {
