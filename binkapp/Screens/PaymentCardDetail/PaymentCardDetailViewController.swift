@@ -50,6 +50,7 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         description.textAlignment = .left
         description.translatesAutoresizingMaskIntoConstraints = false
         description.isUserInteractionEnabled = true
+        description.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapLabel)))
         return description
     }()
 
@@ -247,6 +248,17 @@ private extension PaymentCardDetailViewController {
         self.otherCardsTableView.reloadData()
         Current.wallet.refreshLocal()
     }
+    
+    @objc func tapLabel(gesture: UITapGestureRecognizer) {
+        let contactUsRange = (viewModel.addedCardsDescription.string as NSString).range(of: "Contact us")
+
+       if gesture.didTapAttributedTextInLabel(label: addedCardsDescriptionLabel, inRange: contactUsRange) {
+           print("Tapped contact us")
+
+       } else {
+           print("Tapped none")
+       }
+    }
 }
 
 // MARK: Table view delegate & datasource
@@ -412,4 +424,31 @@ extension LayoutHelper {
         static let pllCellRowHeight: CGFloat = 100
         static let informationRowCellHeight: CGFloat = 88
     }
+}
+
+
+extension UITapGestureRecognizer {
+
+    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: CGSize.zero)
+        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+
+        textContainer.lineFragmentPadding = 0.0
+        textContainer.lineBreakMode = label.lineBreakMode
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        let labelSize = label.bounds.size
+        textContainer.size = labelSize
+
+        let locationOfTouchInLabel = self.location(in: label)
+        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y + 20)
+        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
+        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        return NSLocationInRange(indexOfCharacter, targetRange)
+    }
+
 }

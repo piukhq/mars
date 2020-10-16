@@ -65,7 +65,7 @@ class PaymentCardDetailViewModel {
         case .active:
             return NSMutableAttributedString(string: "pcd_active_card_description".localized)
         case .pending:
-            let description = String(format: "pcd_pending_card_description".localized, cardAddedDateString ?? "")
+            let description = "pcd_pending_card_description".localized
             let attributedString = NSMutableAttributedString(string: description)
             let contactUsRange = (description as NSString).range(of: "Contact us")
             attributedString.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: contactUsRange)
