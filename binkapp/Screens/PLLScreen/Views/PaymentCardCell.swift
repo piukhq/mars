@@ -41,7 +41,7 @@ class PaymentCardCell: UITableViewCell {
         }
         separatorView.isHidden = isLastCell
         titleLabel.text = paymentCard.card?.nameOnCard
-        subtitleLabel.text = "pll_screen_card_ending".localized + (paymentCard.card?.lastFour ?? "")
+        subtitleLabel.text = String(format: "pll_screen_card_ending".localized, paymentCard.card?.lastFour ?? "")
         switchButton.isOn = journey == .newCard ? true : showAsLinked
         
         selectionStyle = .none
