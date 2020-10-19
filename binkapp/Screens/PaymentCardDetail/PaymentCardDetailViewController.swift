@@ -51,21 +51,8 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         description.textAlignment = .left
         description.translatesAutoresizingMaskIntoConstraints = false
         description.tapDelegate = self
-//        description.isUserInteractionEnabled = true
-//        description.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapLabel)))
         return description
     }()
-//
-//    private lazy var addedCardsDescriptionLabel: UILabel = {
-//        let description = UILabel()
-//        description.font = .bodyTextLarge
-//        description.numberOfLines = 0
-//        description.textAlignment = .left
-//        description.translatesAutoresizingMaskIntoConstraints = false
-//        description.isUserInteractionEnabled = true
-//        description.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapLabel)))
-//        return description
-//    }()
 
     private lazy var otherCardsTitleLabel: UILabel = {
         let title = UILabel()
@@ -181,12 +168,7 @@ private extension PaymentCardDetailViewController {
     
     func configureUI() {
         addedCardsTitleLabel.text = viewModel.addedCardsTitle
-        
-        if viewModel.paymentCardStatus == .active {
-            addedCardsDescriptionLabel.text = viewModel.addedCardsDescription
-        } else {
-            addedCardsDescriptionLabel.configure(viewModel.addedCardsDescription, withHyperlink: "Contact us")
-        }
+        viewModel.paymentCardStatus == .active ? addedCardsDescriptionLabel.text = viewModel.addedCardsDescription : addedCardsDescriptionLabel.configure(viewModel.addedCardsDescription, withHyperlink: "Contact us")
         otherCardsTitleLabel.text = viewModel.otherCardsTitle
         otherCardsDescriptionLabel.text = viewModel.otherCardsDescription
         cardAddedLabel.text = viewModel.cardAddedDateString
@@ -266,25 +248,6 @@ private extension PaymentCardDetailViewController {
         self.otherCardsTableView.reloadData()
         Current.wallet.refreshLocal()
     }
-    
-//    @objc func tapLabel(gesture: UITapGestureRecognizer) {
-//        let contactUsRange = (viewModel.addedCardsDescription.string as NSString).range(of: "Contact us")
-//
-//        let launchContactUs = {
-//            let viewController = RequestUi.buildRequestList()
-//            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-//            Current.navigate.to(navigationRequest)
-//        }
-//
-//        // Get first name and last name for Zendesk
-//
-//        if gesture.didTapAttributedTextInLabel(label: addedCardsDescriptionLabel, inRange: contactUsRange) {
-//            print("Tapped contact us")
-//            launchContactUs()
-//        } else {
-//            print("Tapped none")
-//        }
-//    }
 }
 
 // MARK: Table view delegate & datasource
@@ -459,7 +422,9 @@ extension PaymentCardDetailViewController: HyperlinkTapDelegate {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }
-        
+    
+        // Get first name and last name for Zendesk
+
         launchContactUs()
     }
 }

@@ -259,16 +259,11 @@ class PaymentCardDetailViewModel {
     func toFAQsScreen() {
         DispatchQueue.main.async {
             let helpCenterConfig = HelpCenterUiConfiguration()
-            helpCenterConfig.showContactOptions = false
-    //        helpCenterConfig.groupType = .default
-    //        helpCenterConfig.groupIds = [360000836439]
-            
+            helpCenterConfig.showContactOptions = false            
             let articleConfig = ArticleUiConfiguration()
             articleConfig.showContactOptions = false
             
-            let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: "360016721639", andConfigs: [helpCenterConfig, articleConfig])
-    //        let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
-
+            let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: ZendeskService.pendingPaymentCardsArticleID, andConfigs: [helpCenterConfig, articleConfig])
             let navigationRequest = PushNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }
