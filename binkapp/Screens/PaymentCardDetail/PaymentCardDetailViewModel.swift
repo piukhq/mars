@@ -23,8 +23,7 @@ class PaymentCardDetailViewModel {
     }
 
     var paymentCardStatus: PaymentCardStatus {
-        return .failed
-//        return paymentCard.paymentCardStatus
+        return paymentCard.paymentCardStatus
     }
     
     var pendingRefreshInterval: TimeInterval {
@@ -45,10 +44,8 @@ class PaymentCardDetailViewModel {
         return "•••• \(paymentCard.card?.lastFour ?? "")"
     }
 
-    // CHANGE BACK TO PAYMENTCARD.PAYMENTCARDSTATUS
     var addedCardsTitle: String {
-//        switch paymentCard.paymentCardStatus {
-        switch paymentCardStatus {
+        switch paymentCard.paymentCardStatus {
         case .active:
             return "pcd_active_card_title".localized
         case .pending:
@@ -58,14 +55,11 @@ class PaymentCardDetailViewModel {
         }
     }
 
-    // CHANGE BACK TO PAYMENTCARD.PAYMENTCARDSTATUS
     var addedCardsDescription: String {
-//        switch paymentCard.paymentCardStatus {
-        switch paymentCardStatus {
+        switch paymentCard.paymentCardStatus {
         case .active:
             return "pcd_active_card_description".localized
         case .pending:
-            
             return "pcd_pending_card_description".localized
         case .failed:
             return "pcd_failed_card_description".localized
@@ -262,12 +256,10 @@ class PaymentCardDetailViewModel {
             helpCenterConfig.showContactOptions = false            
             let articleConfig = ArticleUiConfiguration()
             articleConfig.showContactOptions = false
-            
             let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: ZendeskService.pendingPaymentCardsArticleID, andConfigs: [helpCenterConfig, articleConfig])
             let navigationRequest = PushNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }
-
     }
     
     func showDeleteConfirmationAlert() {
