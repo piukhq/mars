@@ -9,18 +9,16 @@
 import UIKit
 
 protocol HyperlinkLabelDelegate: AnyObject {
-    func hyperlinkLabelWasTapped(_ hyperlinkLabel: HyperLinkLabel)
+    func hyperlinkLabelWasTapped(_ hyperlinkLabel: HyperlinkLabel)
 }
 
 class HyperlinkLabel: UILabel {
-    
-    private var tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
+    private let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
     private var range: NSRange!
-    weak var tapDelegate: HyperlinkTapDelegate?
+    weak var tapDelegate: HyperlinkLabelDelegate?
     
     func configure(_ text: String, withHyperlink hyperlink: String) {
         isUserInteractionEnabled = true
-        tapGesture = UITapGestureRecognizer()
         tapGesture.addTarget(self, action: #selector(tapLabel(gesture:)))
         addGestureRecognizer(tapGesture)
         
@@ -32,7 +30,7 @@ class HyperlinkLabel: UILabel {
     
     @objc func tapLabel(gesture: UITapGestureRecognizer) {
         if gesture.didTapAttributedTextInLabel(label: self, inRange: range) {
-            tapDelegate?.hyperlinkWasTapped()
+            tapDelegate?.hyperlinkLabelWasTapped(self)
         } 
     }
 }

@@ -418,8 +418,8 @@ extension LayoutHelper {
     }
 }
 
-extension PaymentCardDetailViewController: HyperlinkTapDelegate {
-    func hyperlinkWasTapped() {
+extension PaymentCardDetailViewController: HyperlinkLabelDelegate {
+    func hyperlinkLabelWasTapped(_ hyperlinkLabel: HyperlinkLabel) {
         let launchContactUs = {
             let viewController = RequestUi.buildRequestList()
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
