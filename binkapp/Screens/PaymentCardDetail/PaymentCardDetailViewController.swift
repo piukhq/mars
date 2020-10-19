@@ -181,7 +181,12 @@ private extension PaymentCardDetailViewController {
     
     func configureUI() {
         addedCardsTitleLabel.text = viewModel.addedCardsTitle
-        addedCardsDescriptionLabel.configureWithHyperlink(for: viewModel.addedCardsDescription, inRangeOfText: "Contact us")
+        
+        if viewModel.paymentCardStatus == .active {
+            addedCardsDescriptionLabel.text = viewModel.addedCardsDescription
+        } else {
+            addedCardsDescriptionLabel.configure(viewModel.addedCardsDescription, withHyperlink: "Contact us")
+        }
         otherCardsTitleLabel.text = viewModel.otherCardsTitle
         otherCardsDescriptionLabel.text = viewModel.otherCardsDescription
         cardAddedLabel.text = viewModel.cardAddedDateString
@@ -448,7 +453,7 @@ extension LayoutHelper {
 }
 
 extension PaymentCardDetailViewController: HyperlinkTapDelegate {
-    func hyerlinkWasTapped() {
+    func hyperlinkWasTapped() {
         let launchContactUs = {
             let viewController = RequestUi.buildRequestList()
             let navigationRequest = ModalNavigationRequest(viewController: viewController)

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol HyperlinkTapDelegate: class {
-    func hyerlinkWasTapped()
+    func hyperlinkWasTapped()
 }
 
 class HyperlinkLabel: UILabel {
@@ -18,14 +18,14 @@ class HyperlinkLabel: UILabel {
     private var range: NSRange?
     weak var tapDelegate: HyperlinkTapDelegate?
     
-    func configureWithHyperlink(for text: String, inRangeOfText textRange: String) {
+    func configure(_ text: String, withHyperlink hyperlink: String) {
         isUserInteractionEnabled = true
         tapGesture = UITapGestureRecognizer()
         tapGesture.addTarget(self, action: #selector(tapLabel(gesture:)))
         addGestureRecognizer(tapGesture)
         
         let attributedString = NSMutableAttributedString(string: text)
-        range = (text as NSString).range(of: textRange)
+        range = (text as NSString).range(of: hyperlink)
         attributedString.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: range!)
         attributedText = attributedString
     }
@@ -34,7 +34,7 @@ class HyperlinkLabel: UILabel {
         // sort !!
         if gesture.didTapAttributedTextInLabel(label: self, inRange: range!) {
             print("Tapped contact us")
-            tapDelegate?.hyerlinkWasTapped()
+            tapDelegate?.hyperlinkWasTapped()
         } else {
             print("Tapped none")
         }

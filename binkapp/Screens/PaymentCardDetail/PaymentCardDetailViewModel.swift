@@ -23,7 +23,7 @@ class PaymentCardDetailViewModel {
     }
 
     var paymentCardStatus: PaymentCardStatus {
-        return .pending
+        return .failed
 //        return paymentCard.paymentCardStatus
     }
     
@@ -65,6 +65,7 @@ class PaymentCardDetailViewModel {
         case .active:
             return "pcd_active_card_description".localized
         case .pending:
+            
             return "pcd_pending_card_description".localized
         case .failed:
             return "pcd_failed_card_description".localized
