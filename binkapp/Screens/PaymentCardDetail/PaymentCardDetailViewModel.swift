@@ -59,19 +59,15 @@ class PaymentCardDetailViewModel {
     }
 
     // CHANGE BACK TO PAYMENTCARD.PAYMENTCARDSTATUS
-    var addedCardsDescription: NSMutableAttributedString {
+    var addedCardsDescription: String {
 //        switch paymentCard.paymentCardStatus {
         switch paymentCardStatus {
         case .active:
-            return NSMutableAttributedString(string: "pcd_active_card_description".localized)
+            return "pcd_active_card_description".localized
         case .pending:
-            let description = "pcd_pending_card_description".localized
-            let attributedString = NSMutableAttributedString(string: description)
-            let contactUsRange = (description as NSString).range(of: "Contact us")
-            attributedString.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: contactUsRange)
-            return attributedString
+            return "pcd_pending_card_description".localized
         case .failed:
-            return NSMutableAttributedString(string: "pcd_failed_card_description".localized)
+            return "pcd_failed_card_description".localized
         }
     }
     
@@ -260,19 +256,22 @@ class PaymentCardDetailViewModel {
     }
     
     func toFAQsScreen() {
-        let helpCenterConfig = HelpCenterUiConfiguration()
-        helpCenterConfig.showContactOptions = false
-//        helpCenterConfig.groupType = .default
-//        helpCenterConfig.groupIds = [360000836439]
-        
-        let articleConfig = ArticleUiConfiguration()
-        articleConfig.showContactOptions = false
-        
-        let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: "360000836439", andConfigs: [helpCenterConfig, articleConfig])
-//        let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
+        DispatchQueue.main.async {
+            let helpCenterConfig = HelpCenterUiConfiguration()
+            helpCenterConfig.showContactOptions = false
+    //        helpCenterConfig.groupType = .default
+    //        helpCenterConfig.groupIds = [360000836439]
+            
+            let articleConfig = ArticleUiConfiguration()
+            articleConfig.showContactOptions = false
+            
+            let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: "360016721639", andConfigs: [helpCenterConfig, articleConfig])
+    //        let viewController = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [helpCenterConfig, articleConfig])
 
-        let navigationRequest = PushNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
+            let navigationRequest = PushNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
+
     }
     
     func showDeleteConfirmationAlert() {

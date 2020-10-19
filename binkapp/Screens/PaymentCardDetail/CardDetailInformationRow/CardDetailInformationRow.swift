@@ -131,7 +131,10 @@ class WalletCardDetailInformationRowFactory: CardDetailInformationRowFactory {
     private func makeFAQsRow() -> CardDetailInformationRow {
         return CardDetailInformationRow(type: .faqs) { [weak self] in
             guard let self = self else { return }
-            self.delegate?.cardDetailInformationRowFactory(self, shouldPerformActionForRowType: .faqs)
+            DispatchQueue.main.async {
+                self.delegate?.cardDetailInformationRowFactory(self, shouldPerformActionForRowType: .faqs)
+
+            }
         }
     }
 }

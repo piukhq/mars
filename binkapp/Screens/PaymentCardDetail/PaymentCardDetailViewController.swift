@@ -50,10 +50,22 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         description.numberOfLines = 0
         description.textAlignment = .left
         description.translatesAutoresizingMaskIntoConstraints = false
-        description.isUserInteractionEnabled = true
-        description.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapLabel)))
+        description.tapDelegate = self
+//        description.isUserInteractionEnabled = true
+//        description.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapLabel)))
         return description
     }()
+//
+//    private lazy var addedCardsDescriptionLabel: UILabel = {
+//        let description = UILabel()
+//        description.font = .bodyTextLarge
+//        description.numberOfLines = 0
+//        description.textAlignment = .left
+//        description.translatesAutoresizingMaskIntoConstraints = false
+//        description.isUserInteractionEnabled = true
+//        description.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapLabel)))
+//        return description
+//    }()
 
     private lazy var otherCardsTitleLabel: UILabel = {
         let title = UILabel()
@@ -169,7 +181,7 @@ private extension PaymentCardDetailViewController {
     
     func configureUI() {
         addedCardsTitleLabel.text = viewModel.addedCardsTitle
-        addedCardsDescriptionLabel.attributedText = viewModel.addedCardsDescription
+        addedCardsDescriptionLabel.configureWithHyperlink(for: viewModel.addedCardsDescription, inRangeOfText: "Contact us")
         otherCardsTitleLabel.text = viewModel.otherCardsTitle
         otherCardsDescriptionLabel.text = viewModel.otherCardsDescription
         cardAddedLabel.text = viewModel.cardAddedDateString
@@ -250,24 +262,24 @@ private extension PaymentCardDetailViewController {
         Current.wallet.refreshLocal()
     }
     
-    @objc func tapLabel(gesture: UITapGestureRecognizer) {
-        let contactUsRange = (viewModel.addedCardsDescription.string as NSString).range(of: "Contact us")
-        
-        let launchContactUs = {
-            let viewController = RequestUi.buildRequestList()
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        }
-        
-        // Get first name and last name for Zendesk
-        
-        if gesture.didTapAttributedTextInLabel(label: addedCardsDescriptionLabel, inRange: contactUsRange) {
-            print("Tapped contact us")
-            launchContactUs()
-        } else {
-            print("Tapped none")
-        }
-    }
+//    @objc func tapLabel(gesture: UITapGestureRecognizer) {
+//        let contactUsRange = (viewModel.addedCardsDescription.string as NSString).range(of: "Contact us")
+//
+//        let launchContactUs = {
+//            let viewController = RequestUi.buildRequestList()
+//            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+//            Current.navigate.to(navigationRequest)
+//        }
+//
+//        // Get first name and last name for Zendesk
+//
+//        if gesture.didTapAttributedTextInLabel(label: addedCardsDescriptionLabel, inRange: contactUsRange) {
+//            print("Tapped contact us")
+//            launchContactUs()
+//        } else {
+//            print("Tapped none")
+//        }
+//    }
 }
 
 // MARK: Table view delegate & datasource
@@ -435,36 +447,15 @@ extension LayoutHelper {
     }
 }
 
-
-extension UITapGestureRecognizer {
-
-    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
-        let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: CGSize.zero)
+extension PaymentCardDetailViewController: HyperlinkTapDelegate {
+    func hyerlinkWasTapped() {
+        let launchContactUs = {
+            let viewController = RequestUi.buildRequestList()
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
         
-        let mutableAttribString = NSMutableAttributedString(attributedString: label.attributedText!)
-            // Add font so the correct range is returned for multi-line labels
-//        let contactUsRange = (description as NSString).range(of: "Contact us")
-        mutableAttribString.addAttributes([.font: UIFont.bodyTextLarge], range: NSRange(location: 0, length: label.attributedText!.length))
-//        mutableAttribString.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: contactUsRange)
-
-        let textStorage = NSTextStorage(attributedString: mutableAttribString)
-
-        layoutManager.addTextContainer(textContainer)
-        textStorage.addLayoutManager(layoutManager)
-
-        textContainer.lineFragmentPadding = 0.0
-        textContainer.lineBreakMode = label.lineBreakMode
-        textContainer.maximumNumberOfLines = label.numberOfLines
-        let labelSize = label.bounds.size
-        textContainer.size = labelSize
-
-        let locationOfTouchInLabel = self.location(in: label)
-        let textBoundingBox = layoutManager.usedRect(for: textContainer)
-        let textContainerOffset = CGPoint(x: (labelSize.width - textBoundingBox.size.width) * 0.5 - textBoundingBox.origin.x, y: (labelSize.height - textBoundingBox.size.height) * 0.5 - textBoundingBox.origin.y)
-        let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
-        let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        return NSLocationInRange(indexOfCharacter, targetRange)
+        launchContactUs()
     }
-
 }
+
