@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol HyperlinkTapDelegate: class {
+protocol HyperlinkLabelDelegate: AnyObject {
     func hyperlinkWasTapped()
 }
 
