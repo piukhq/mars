@@ -25,14 +25,14 @@ class PLLScreenViewModel {
         return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .pending }
     }
     
-    var hasPaymentCards: Bool {
-        return Current.wallet.hasPaymentCards
+    var hasActivePaymentCards: Bool {
+        return activePaymentCards != nil && activePaymentCards?.count != 0
     }
     
     private(set) var changedLinkCards = [CD_PaymentCard]()
     
     var shouldShowActivePaymentCards: Bool {
-        return activePaymentCards != nil && activePaymentCards?.count != 0
+        return hasActivePaymentCards
     }
     
     var shouldShowPendingPaymentCards: Bool {
