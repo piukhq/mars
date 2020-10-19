@@ -75,14 +75,14 @@ class PLLScreenViewModel {
                 let planDetails = planName + " " + planNameCard
                 if self?.changedLinkCards.count ?? 0 > 1 {
                     let userFacingError = UserFacingNetworkingErrorForMultiplePaymentCards.errorForKey(error.message)
-                    let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
-                    self?.displaySimplePopup(title: userFacingError?.title.localized, message: formattedString) {
+                    let formattedString = String(format: userFacingError?.message ?? "", planDetails, planDetails)
+                    self?.displaySimplePopup(title: userFacingError?.title, message: formattedString) {
                         completion(false)
                     }
                 } else {
                     let userFacingError = UserFacingNetworkingError.errorForKey(error.message)
-                    let formattedString = String(format: userFacingError?.message.localized ?? "", planDetails, planDetails)
-                    self?.displaySimplePopup(title: userFacingError?.title.localized, message: formattedString) {
+                    let formattedString = String(format: userFacingError?.message ?? "", planDetails, planDetails)
+                    self?.displaySimplePopup(title: userFacingError?.title, message: formattedString) {
                         completion(false)
                     }
                 }
