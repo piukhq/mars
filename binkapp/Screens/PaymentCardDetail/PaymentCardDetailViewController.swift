@@ -53,7 +53,6 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         description.numberOfLines = 0
         description.textAlignment = .left
         description.translatesAutoresizingMaskIntoConstraints = false
-        description.tapDelegate = self
         return description
     }()
 
@@ -171,7 +170,7 @@ private extension PaymentCardDetailViewController {
     
     func configureUI() {
         addedCardsTitleLabel.text = viewModel.addedCardsTitle
-        viewModel.paymentCardStatus == .active ? addedCardsDescriptionLabel.text = viewModel.addedCardsDescription : addedCardsDescriptionLabel.configure(viewModel.addedCardsDescription, withHyperlink: "Contact us")
+        viewModel.paymentCardStatus == .active ? addedCardsDescriptionLabel.text = viewModel.addedCardsDescription : addedCardsDescriptionLabel.configure(viewModel.addedCardsDescription, withHyperlink: "Contact us", delegate: self)
         otherCardsTitleLabel.text = viewModel.otherCardsTitle
         otherCardsDescriptionLabel.text = viewModel.otherCardsDescription
         cardAddedLabel.text = viewModel.cardAddedDateString

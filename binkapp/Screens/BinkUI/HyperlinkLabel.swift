@@ -15,13 +15,13 @@ protocol HyperlinkLabelDelegate: AnyObject {
 class HyperlinkLabel: UILabel {
     private let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
     private var range: NSRange!
-    weak var tapDelegate: HyperlinkLabelDelegate?
+    private weak var delegate: HyperlinkLabelDelegate?
     
-    func configure(_ text: String, withHyperlink hyperlink: String) {
+    func configure(_ text: String, withHyperlink hyperlink: String, delegate: HyperlinkLabelDelegate?) {
         isUserInteractionEnabled = true
         tapGesture.addTarget(self, action: #selector(tapLabel(gesture:)))
         addGestureRecognizer(tapGesture)
-        
+        self.delegate = delegate
         let attributedString = NSMutableAttributedString(string: text)
         range = (text as NSString).range(of: hyperlink)
         attributedString.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: range)
@@ -30,7 +30,7 @@ class HyperlinkLabel: UILabel {
     
     @objc func tapLabel(gesture: UITapGestureRecognizer) {
         if gesture.didTapAttributedTextInLabel(label: self, inRange: range) {
-            tapDelegate?.hyperlinkLabelWasTapped(self)
+            delegate?.hyperlinkLabelWasTapped(self)
         } 
     }
 }
