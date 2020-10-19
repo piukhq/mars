@@ -46,10 +46,11 @@ enum BarcodeType: Int {
     }
     
     /// Code 39 barcodes draw at a fixed width [in the ZXing library](https://github.com/zxing/zxing/blob/723b65fe3dc65b88d26efa4c65e4217234a06ef0/core/src/main/java/com/google/zxing/oned/Code39Writer.java#L59).
-    /// We should draw this at x2 scale to ensure it will be "wide" enough.
-    func preferredWidth(for length: Int) -> CGFloat {
+    func preferredWidth(for length: Int, targetWidth: CGFloat) -> CGFloat {
         if self == .code39 {
-            return CGFloat((24 + 1 + (13 * length)) * 2)
+            let baseWidth = CGFloat(24 + 1 + (13 * length))
+            let codeWidth = baseWidth * ceil(targetWidth / baseWidth)
+            return codeWidth
         } else {
             return 1
         }
@@ -102,7 +103,7 @@ class BarcodeViewModel {
         encodeHints.margin = 0
         
         
-        let width = self.barcodeType == .code39 ? self.barcodeType.preferredWidth(for: barcodeString.count) : size.width
+        let width = self.barcodeType == .code39 ? self.barcodeType.preferredWidth(for: barcodeString.count, targetWidth: size.width) : size.width
         let height = size.height
         var image: UIImage?
         
@@ -118,7 +119,8 @@ class BarcodeViewModel {
             )
             
             guard let cgImage = ZXImage(matrix: result).cgimage else { return }
-                        
+            
+            // If the resulting image is larger than the destination, draw the CGImage in a fixed container
             if CGFloat(cgImage.width) > size.width {
                 
                 let renderer = UIGraphicsImageRenderer(size: size)
