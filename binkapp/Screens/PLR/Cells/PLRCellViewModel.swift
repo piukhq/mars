@@ -16,7 +16,7 @@ class PLRCellViewModel {
     }
 
     var voucherState: VoucherState? {
-        return VoucherState(rawValue: voucher.state ?? "")
+        return voucher.voucherState
     }
 
     var voucherAmountText: String? {
@@ -50,7 +50,7 @@ class PLRCellViewModel {
     }
 
     var headlineText: String? {
-        return voucher.state == "cancelled" ? "Cancelled" : voucher.headline
+        return voucher.formattedHeadline
     }
 
     var amountAccumulated: Double {
