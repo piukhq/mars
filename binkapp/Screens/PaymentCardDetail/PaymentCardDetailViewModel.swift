@@ -23,8 +23,8 @@ class PaymentCardDetailViewModel {
     }
 
     var paymentCardStatus: PaymentCardStatus {
-//        return .failed
-        return paymentCard.paymentCardStatus
+        return .failed
+//        return paymentCard.paymentCardStatus
     }
     
     var pendingRefreshInterval: TimeInterval {
