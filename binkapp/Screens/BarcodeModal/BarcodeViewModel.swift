@@ -44,6 +44,16 @@ enum BarcodeType: Int {
             return kBarcodeFormatCode39
         }
     }
+    
+    /// Code 39 barcodes draw at a fixed width [in the ZXing library](https://github.com/zxing/zxing/blob/723b65fe3dc65b88d26efa4c65e4217234a06ef0/core/src/main/java/com/google/zxing/oned/Code39Writer.java#L59).
+    /// We should draw this at x2 scale to ensure it will be "wide" enough.
+    func preferredWidth(for length: Int) -> CGFloat {
+        if self == .code39 {
+            return CGFloat((24 + 1 + (13 * length)) * 2)
+        } else {
+            return 1
+        }
+    }
 }
 
 class BarcodeViewModel {
@@ -91,13 +101,36 @@ class BarcodeViewModel {
         let encodeHints = ZXEncodeHints()
         encodeHints.margin = 0
         
+        
+        let width = self.barcodeType == .code39 ? self.barcodeType.preferredWidth(for: barcodeString.count) : size.width
+        let height = size.height
         var image: UIImage?
         
         let exception = tryBlock { [weak self] in
             guard let self = self else { return }
-            let result = try? writer.encode(barcodeString, format: self.barcodeType.zxingType, width: Int32(size.width), height: Int32(size.height), hints: encodeHints)
+            
+            let result = try? writer.encode(
+                barcodeString, 
+                format: self.barcodeType.zxingType,
+                width: Int32(width),
+                height: Int32(height),
+                hints: encodeHints
+            )
+            
             guard let cgImage = ZXImage(matrix: result).cgimage else { return }
-            image = UIImage(cgImage: cgImage)
+                        
+            if CGFloat(cgImage.width) > size.width {
+                
+                let renderer = UIGraphicsImageRenderer(size: size)
+
+                let img = renderer.image { ctx in
+                    ctx.cgContext.draw(cgImage, in: CGRect(origin: .zero, size: size))
+                }
+
+                image = img
+            } else {
+                image = UIImage(cgImage: cgImage)
+            }
         }
         
         return exception == nil ? image : nil
