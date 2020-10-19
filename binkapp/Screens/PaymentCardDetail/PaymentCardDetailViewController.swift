@@ -14,6 +14,9 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
     private var hasSetupCell = false
     
     private var refreshTimer: Timer?
+    private var zendeskPromptFirstNameTextField: UITextField!
+    private var zendeskPromptLastNameTextField: UITextField!
+    private var zendeskPromptOKAction: UIAlertAction!
 
     // MARK: - UI lazy vars
 
@@ -423,9 +426,21 @@ extension PaymentCardDetailViewController: HyperlinkTapDelegate {
             Current.navigate.to(navigationRequest)
         }
     
-        // Get first name and last name for Zendesk
-
-        launchContactUs()
+        if ZendeskService.shouldPromptForIdentity {
+            let alert = UIAlertController.makeZendeskIdentityAlertController(firstNameTextField: { [weak self] textField in
+                self?.zendeskPromptFirstNameTextField = textField
+            }, lastNameTextField: { [weak self] textField in
+                self?.zendeskPromptLastNameTextField = textField
+            }, okActionObject: { [weak self] actionObject in
+                self?.zendeskPromptOKAction = actionObject
+            }, okActionHandler: {
+                launchContactUs()
+            }, textFieldDelegate: self)
+            let navigationRequest = AlertNavigationRequest(alertController: alert)
+            Current.navigate.to(navigationRequest)
+        } else {
+            launchContactUs()
+        }
     }
 }
 
