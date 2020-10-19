@@ -28,7 +28,7 @@ class HyperlinkLabel: UILabel {
         attributedText = attributedString
     }
     
-    @objc func tapLabel(gesture: UITapGestureRecognizer) {
+    @objc private func tapLabel(gesture: UITapGestureRecognizer) {
         if gesture.didTapAttributedTextInLabel(label: self, inRange: range) {
             delegate?.hyperlinkLabelWasTapped(self)
         } 
@@ -37,7 +37,6 @@ class HyperlinkLabel: UILabel {
 
 
 extension UITapGestureRecognizer {
-
     func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
         guard let attributedText = label.attributedText else { return false }
         let layoutManager = NSLayoutManager()

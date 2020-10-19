@@ -133,7 +133,6 @@ class WalletCardDetailInformationRowFactory: CardDetailInformationRowFactory {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.delegate?.cardDetailInformationRowFactory(self, shouldPerformActionForRowType: .faqs)
-
             }
         }
     }
