@@ -9,7 +9,7 @@
 import UIKit
 
 protocol HyperlinkLabelDelegate: AnyObject {
-    func hyperlinkWasTapped()
+    func hyperlinkLabelWasTapped(_ hyperlinkLabel: HyperLinkLabel)
 }
 
 class HyperlinkLabel: UILabel {
