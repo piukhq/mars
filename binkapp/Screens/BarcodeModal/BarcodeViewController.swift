@@ -18,13 +18,13 @@ class BarcodeViewController: BinkTrackableViewController {
     @IBOutlet private weak var barcodeImageView: UIImageView!
     @IBOutlet private weak var barcodeErrorLabel: UILabel!
     @IBOutlet private weak var barcodeLabel: UILabel!
-    @IBOutlet private weak var barcodeNumberLabel: UILabel!
+    @IBOutlet private weak var barcodeNumberLabel: BinkCopyableLabel!
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var numberLabel: UILabel!
+    @IBOutlet private weak var numberLabel: BinkCopyableLabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     
     private var previousBrightness: CGFloat?
-    
+
     private let viewModel: BarcodeViewModel
     var hasDrawnBarcode = false
     
@@ -80,7 +80,7 @@ class BarcodeViewController: BinkTrackableViewController {
             barcodeErrorLabel.font = UIFont.bodyTextLarge
             barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
         }
-        
+                
         barcodeLabel.font = UIFont.headline
         barcodeLabel.textColor = .black
         barcodeLabel.text = viewModel.isBarcodeAvailable ? "barcode_title".localized : nil
