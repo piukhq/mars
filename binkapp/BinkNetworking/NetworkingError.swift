@@ -66,14 +66,14 @@ enum UserFacingNetworkingError: String {
     var title: String {
         switch self {
         case .planAlreadyLinked:
-            return "card_already_linked_title"
+            return "card_already_linked_title".localized
         }
     }
     
     var message: String {
         switch self {
         case .planAlreadyLinked:
-            return "card_already_linked_message"
+            return "card_already_linked_message".localized
         }
     }
     
@@ -88,14 +88,14 @@ enum UserFacingNetworkingErrorForMultiplePaymentCards: String {
     var title: String {
         switch self {
         case .planAlreadyLinked:
-            return "card_already_linked_title"
+            return "card_already_linked_title".localized
         }
     }
     
     var message: String {
         switch self {
         case .planAlreadyLinked:
-            return "cards_already_linked_message"
+            return "cards_already_linked_message".localized
         }
     }
     
