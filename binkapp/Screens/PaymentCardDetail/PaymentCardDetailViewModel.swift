@@ -305,16 +305,20 @@ class PaymentCardDetailViewModel {
 
     private func linkMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
         repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard, error in
-            
-            if case .userFacingError(_) = error, let error = error, let planName = membershipCard.membershipPlan?.account?.planName, let planNameCard = membershipCard.membershipPlan?.account?.planNameCard {
-                let planDetails = planName + " " + planNameCard
-                let userFacingError = UserFacingNetworkingError.errorForKey(error.message)
-                let formattedString = String(format: userFacingError?.message ?? "", planDetails, planDetails)
-                let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError?.title, message: formattedString)
-                let navigationRequest = AlertNavigationRequest(alertController: alert)
-                Current.navigate.to(navigationRequest)
-                completion()
-                return
+            guard let error = error else { return }
+            if case .userFacingNetworkingError(let networkingError) = error {
+                if case .userFacingError(let userFacingError) = networkingError {
+                    let messagePrefix = "card_already_linked_message_prefix".localized
+                    let planName = membershipCard.membershipPlan?.account?.planName ?? ""
+                    let planNameCard = membershipCard.membershipPlan?.account?.planNameCard ?? ""
+                    let planDetails = "\(planName) \(planNameCard)"
+                    let formattedString = String(format: userFacingError.message, messagePrefix, planDetails, planDetails)
+                    let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError.title, message: formattedString)
+                    let navigationRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(navigationRequest)
+                    completion()
+                    return
+                }
             }
             
             if let paymentCard = paymentCard {

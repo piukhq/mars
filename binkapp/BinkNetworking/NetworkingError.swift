@@ -60,6 +60,7 @@ enum NetworkingError: BinkError {
     }
 }
 
+/// A convenience object for errors returned from the API that we explicitly want to present to the user.
 enum UserFacingNetworkingError: String {
     case planAlreadyLinked = "PLAN_ALREADY_LINKED"
     
@@ -79,27 +80,5 @@ enum UserFacingNetworkingError: String {
     
     static func errorForKey(_ errorKey: String) -> UserFacingNetworkingError? {
         return UserFacingNetworkingError(rawValue: errorKey)
-    }
-}
-
-enum UserFacingNetworkingErrorForMultiplePaymentCards: String {
-    case planAlreadyLinked = "PLAN_ALREADY_LINKED"
-    
-    var title: String {
-        switch self {
-        case .planAlreadyLinked:
-            return "card_already_linked_title".localized
-        }
-    }
-    
-    var message: String {
-        switch self {
-        case .planAlreadyLinked:
-            return "cards_already_linked_message".localized
-        }
-    }
-    
-    static func errorForKey(_ errorKey: String) -> UserFacingNetworkingErrorForMultiplePaymentCards? {
-        return UserFacingNetworkingErrorForMultiplePaymentCards(rawValue: errorKey)
     }
 }

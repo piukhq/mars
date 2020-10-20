@@ -23,7 +23,7 @@ enum WalletServiceError: BinkError {
     case failedToDeletePaymentCard
     case failedToLinkMembershipCardToPaymentCard
     case customError(String)
-    case userFacingError(NetworkingError)
+    case userFacingNetworkingError(NetworkingError)
 
     var domain: BinkErrorDomain {
         return .walletService
@@ -57,7 +57,7 @@ enum WalletServiceError: BinkError {
             return "Failed to link membership card to payment card"
         case .customError(let message):
             return message
-        case .userFacingError(let error):
+        case .userFacingNetworkingError(let error):
             return error.message
         }
     }
@@ -217,7 +217,7 @@ extension WalletServiceProtocol {
                 completion(.success(response))
             case .failure(let networkError):
                 if case .userFacingError(_) = networkError {
-                    completion(.failure(.userFacingError(networkError)))
+                    completion(.failure(.userFacingNetworkingError(networkError)))
                 } else {
                     completion(.failure(.failedToLinkMembershipCardToPaymentCard))
                 }

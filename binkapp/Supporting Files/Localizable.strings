@@ -355,8 +355,9 @@
 // MARK: - Errors
 "communication_error" = "There was a problem communicating with the server. Please try again later.";
 "card_already_linked_title" = "Already Linked";
-"card_already_linked_message" = "This payment card is already linked to a different %@. Please unlink the other %@ before proceeding, but be aware this may only be possible from another application.";
-"cards_already_linked_message" = "One of these payment cards are already linked to a different %@. Please unlink the other %@ before proceeding, but be aware this may only be possible from another application";
+"card_already_linked_message" = "%@ already linked to a different %@. Please unlink the other %@ before proceeding, but be aware this may only be possible from another application.";
+"card_already_linked_message_prefix" = "This payment card is";
+"cards_already_linked_message_prefix" = "One of these payment cards are";
 
 // MARK: - Wallet prompts
 "wallet_prompt_loyalty" = "Link this card to your payment cards to automatically collect rewards.";

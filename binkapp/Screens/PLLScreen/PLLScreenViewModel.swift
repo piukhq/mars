@@ -71,20 +71,17 @@ class PLLScreenViewModel {
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion(true)
         }) { [weak self] error in
-            if case .userFacingError = error, let error = error, let planName = self?.membershipCard.membershipPlan?.account?.planName, let planNameCard = self?.membershipCard.membershipPlan?.account?.planNameCard {
-                let planDetails = planName + " " + planNameCard
-                if self?.changedLinkCards.count ?? 0 > 1 {
-                    let userFacingError = UserFacingNetworkingErrorForMultiplePaymentCards.errorForKey(error.message)
-                    let formattedString = String(format: userFacingError?.message ?? "", planDetails, planDetails)
-                    self?.displaySimplePopup(title: userFacingError?.title, message: formattedString) {
+            guard let error = error else { return }
+            if case .userFacingNetworkingError(let networkingError) = error {
+                if case .userFacingError(let userFacingError) = networkingError {
+                    let messagePrefix = self?.changedLinkCards.count == 1 ? "card_already_linked_message_prefix".localized : "cards_already_linked_message_prefix".localized
+                    let planName = self?.membershipCard.membershipPlan?.account?.planName ?? ""
+                    let planNameCard = self?.membershipCard.membershipPlan?.account?.planNameCard ?? ""
+                    let planDetails = "\(planName) \(planNameCard)"
+                    let formattedString = String(format: userFacingError.message, messagePrefix, planDetails, planDetails)
+                    self?.displaySimplePopup(title: userFacingError.title, message: formattedString, completion: {
                         completion(false)
-                    }
-                } else {
-                    let userFacingError = UserFacingNetworkingError.errorForKey(error.message)
-                    let formattedString = String(format: userFacingError?.message ?? "", planDetails, planDetails)
-                    self?.displaySimplePopup(title: userFacingError?.title, message: formattedString) {
-                        completion(false)
-                    }
+                    })
                 }
             }
         }
