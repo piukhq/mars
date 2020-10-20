@@ -182,12 +182,16 @@ extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
             floatingButtons.primaryButton.startLoading()
             view.isUserInteractionEnabled = false
         }
-        viewModel.toggleLinkForMembershipCards { [weak self] in
+        viewModel.toggleLinkForMembershipCards { [weak self] success in
             guard let self = self else { return }
-            self.reloadContent()
-            self.view.isUserInteractionEnabled = true
-            floatingButtons.primaryButton.stopLoading()
-            self.handlePrimaryButtonPress()
+            if success {
+                self.reloadContent()
+                self.view.isUserInteractionEnabled = true
+                floatingButtons.primaryButton.stopLoading()
+                self.handlePrimaryButtonPress()
+            } else {
+                self.viewModel.close()
+            }
         }
     }
     

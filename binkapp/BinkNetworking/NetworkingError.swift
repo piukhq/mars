@@ -21,6 +21,8 @@ enum NetworkingError: BinkError {
     case serverError(Int)
     case checkStatusCode(Int)
     case customError(String)
+    case userFacingError(UserFacingNetworkingError)
+
 
     var domain: BinkErrorDomain {
         return .networking
@@ -52,6 +54,31 @@ enum NetworkingError: BinkError {
             return "Error with status code \(String(status))"
         case .customError(let message):
             return message
+        case .userFacingError(let error):
+            return error.rawValue
         }
+    }
+}
+
+/// A convenience object for errors returned from the API that we explicitly want to present to the user.
+enum UserFacingNetworkingError: String {
+    case planAlreadyLinked = "PLAN_ALREADY_LINKED"
+    
+    var title: String {
+        switch self {
+        case .planAlreadyLinked:
+            return "card_already_linked_title".localized
+        }
+    }
+    
+    var message: String {
+        switch self {
+        case .planAlreadyLinked:
+            return "card_already_linked_message".localized
+        }
+    }
+    
+    static func errorForKey(_ errorKey: String) -> UserFacingNetworkingError? {
+        return UserFacingNetworkingError(rawValue: errorKey)
     }
 }
