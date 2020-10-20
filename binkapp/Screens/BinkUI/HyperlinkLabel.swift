@@ -14,7 +14,7 @@ protocol HyperlinkLabelDelegate: AnyObject {
 
 class HyperlinkLabel: UILabel {
     private let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
-    private var range: NSRange!
+    private var range: NSRange?
     private weak var delegate: HyperlinkLabelDelegate?
     
     func configure(_ text: String, withHyperlink hyperlink: String, delegate: HyperlinkLabelDelegate?) {
@@ -24,14 +24,18 @@ class HyperlinkLabel: UILabel {
         self.delegate = delegate
         let attributedString = NSMutableAttributedString(string: text)
         range = (text as NSString).range(of: hyperlink)
-        attributedString.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: range)
-        attributedText = attributedString
+        if let range = range {
+            attributedString.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: range)
+            attributedText = attributedString
+        }
     }
     
     @objc private func tapLabel(gesture: UITapGestureRecognizer) {
-        if gesture.didTapAttributedTextInLabel(label: self, inRange: range) {
-            delegate?.hyperlinkLabelWasTapped(self)
-        } 
+        if let range = range {
+            if gesture.didTapAttributedTextInLabel(label: self, inRange: range) {
+                delegate?.hyperlinkLabelWasTapped(self)
+            }
+        }
     }
 }
 
