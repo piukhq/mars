@@ -14,9 +14,6 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
     private var hasSetupCell = false
     
     private var refreshTimer: Timer?
-    private var zendeskPromptFirstNameTextField: UITextField!
-    private var zendeskPromptLastNameTextField: UITextField!
-    private var zendeskPromptOKAction: UIAlertAction!
 
     // MARK: - UI lazy vars
 
@@ -419,64 +416,7 @@ extension LayoutHelper {
 
 extension PaymentCardDetailViewController: HyperlinkLabelDelegate {
     func hyperlinkLabelWasTapped(_ hyperlinkLabel: HyperlinkLabel) {
-        let launchContactUs = {
-            let viewController = RequestUi.buildRequestList()
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        }
-    
-        if ZendeskService.shouldPromptForIdentity {
-            let alert = UIAlertController.makeZendeskIdentityAlertController(firstNameTextField: { [weak self] textField in
-                self?.zendeskPromptFirstNameTextField = textField
-            }, lastNameTextField: { [weak self] textField in
-                self?.zendeskPromptLastNameTextField = textField
-            }, okActionObject: { [weak self] actionObject in
-                self?.zendeskPromptOKAction = actionObject
-            }, okActionHandler: {
-                launchContactUs()
-            }, textFieldDelegate: self)
-            let navigationRequest = AlertNavigationRequest(alertController: alert)
-            Current.navigate.to(navigationRequest)
-        } else {
-            launchContactUs()
-        }
-    }
-}
-
-extension PaymentCardDetailViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        /// If both textfields are empty, disable ok action as at least one textfield will be empty after updating
-        let firstNameText = zendeskPromptFirstNameTextField.text ?? ""
-        let lastNameText = zendeskPromptLastNameTextField.text ?? ""
-        if firstNameText.isEmpty && lastNameText.isEmpty {
-            zendeskPromptOKAction.isEnabled = false
-        }
-        /// If both textfields are NOT empty, and the replacement string is NOT empty, we know that both textfields must have values after updating
-        if !firstNameText.isEmpty && !lastNameText.isEmpty && !string.isEmpty {
-            zendeskPromptOKAction.isEnabled = true
-        }
-
-        /// If the textfield being updated is firstName, and it has no current value, and the replacement string has a value, and lastName has a value then we know that both textfields will have values after updating
-        if textField == zendeskPromptFirstNameTextField && firstNameText.isEmpty && !string.isEmpty && !lastNameText.isEmpty {
-            zendeskPromptOKAction.isEnabled = true
-        }
-
-        /// If the textfield being updated is lastName, and it has no current value, and the replacement string has a value, and firstName has a value then we know that both textfields will have values after updating
-        if textField == zendeskPromptLastNameTextField && lastNameText.isEmpty && !string.isEmpty && !firstNameText.isEmpty {
-            zendeskPromptOKAction.isEnabled = true
-        }
-
-        /// If the textfield being updated is firstName, and it's current value is only one character, and the replacement string has no value then we know the textfield will have no value after updating
-        if textField == zendeskPromptFirstNameTextField && firstNameText.count == 1 && string.isEmpty {
-            zendeskPromptOKAction.isEnabled = false
-        }
-
-        /// If the textfield being updated is lastName, and it's current value is only one character, and the replacement string has no value then we know the textfield will have no value after updating
-        if textField == zendeskPromptLastNameTextField && lastNameText.count == 1 && string.isEmpty {
-            zendeskPromptOKAction.isEnabled = false
-        }
-
-        return true
+        ZendeskTickets().launch()
     }
 }
 

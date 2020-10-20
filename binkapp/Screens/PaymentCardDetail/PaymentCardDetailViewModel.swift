@@ -8,7 +8,6 @@
 
 import Foundation
 import SupportSDK
-//import ZendeskCoreSDK
 
 class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
