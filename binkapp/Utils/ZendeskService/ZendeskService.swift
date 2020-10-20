@@ -61,10 +61,6 @@ final class ZendeskService {
         Zendesk.instance?.setIdentity(identity)
     }
     
-    static func isTargettingProduction() -> Bool {
-        return APIConstants.isProduction
-    }
-    
     static var pendingPaymentCardsArticleID: String {
         return APIConstants.isProduction ? "360016688220" : "360016721639"
     }
