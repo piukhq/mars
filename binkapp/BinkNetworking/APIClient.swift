@@ -277,6 +277,10 @@ private extension APIClient {
             completion?(false, .invalidResponse)
             return
         }
+        
+        #if DEBUG
+        ResponseCodeVisualiser.show(statusCode)
+        #endif
 
         if statusCode == unauthorizedStatus && endpoint.shouldRespondToUnauthorizedStatus {
             // Unauthorized response
