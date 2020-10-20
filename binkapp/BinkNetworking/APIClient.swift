@@ -217,22 +217,9 @@ private extension APIClient {
             }
 
             #if DEBUG
-               guard let window = UIApplication.shared.keyWindow else {
-                   fatalError("Couldn't get window. Probably not a good thing...")
-               }
-               
-               if let statusCodeView = window.subviews.first(where: { $0.isKind(of: StatusCodeAlertView.self) }) as? StatusCodeAlertView {
-                   statusCodeView.update(withStatusCode: statusCode)
-               } else {
-                   let view = StatusCodeAlertView(statusCode: statusCode, window: window)
-                   window.addSubview(view)
-                   DispatchQueue.main.async {
-                       view.show()
-                   }
-               }
+            ResponseCodeVisualiser.show(statusCode)
             #endif
 
-            
             guard let data = response.data else {
                 completion?(.failure(.invalidResponse), response.response)
                 return
