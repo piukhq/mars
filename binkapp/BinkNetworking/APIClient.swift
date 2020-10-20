@@ -216,6 +216,10 @@ private extension APIClient {
                 return
             }
 
+            #if DEBUG
+            ResponseCodeVisualiser.show(statusCode)
+            #endif
+
             guard let data = response.data else {
                 completion?(.failure(.invalidResponse), response.response)
                 return
@@ -273,6 +277,10 @@ private extension APIClient {
             completion?(false, .invalidResponse)
             return
         }
+        
+        #if DEBUG
+        ResponseCodeVisualiser.show(statusCode)
+        #endif
 
         if statusCode == unauthorizedStatus && endpoint.shouldRespondToUnauthorizedStatus {
             // Unauthorized response
