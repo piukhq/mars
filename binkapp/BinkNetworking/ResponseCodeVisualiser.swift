@@ -65,13 +65,11 @@ class StatusCodeAlertView: UIView {
     
     func update(withStatusCode statusCode: Int) {
         timer?.invalidate()
-        
         UIView.transition(with: textLabel, duration: 0.25, options: .transitionCrossDissolve, animations: {
             self.textLabel.text = String(statusCode)
         })
         
         backgroundColor = successStatusRange.contains(statusCode) ? .systemGreen : .systemRed
-        
         timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
             self.hide()
         }
