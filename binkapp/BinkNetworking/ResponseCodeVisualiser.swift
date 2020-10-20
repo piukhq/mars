@@ -10,6 +10,7 @@ import UIKit
 
 final class ResponseCodeVisualiser {
     static func show(_ statusCode: Int) {
+        guard Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser) else { return }
         guard let window = UIApplication.shared.keyWindow else {
             fatalError("Couldn't get window.")
         }
