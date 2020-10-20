@@ -298,8 +298,8 @@ private extension PLLScreenViewController {
         
         activePaymentCardsTableView.isHidden = !viewModel.shouldShowActivePaymentCards
         
-        pendingCardsTitleLabel.text = "Pending payment cards"
-        pendingCardsDetailLabel.text = "The payment cards below are pending authorisation. You will be able to link them to you loyalty card once they've been approved."
+        pendingCardsTitleLabel.text = "pll_screen_pending_cards_title".localized
+        pendingCardsDetailLabel.text = "pll_screen_pending_cards_detail".localized
         pendingCardsTitleLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
         pendingCardsDetailLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
         pendingPaymentCardsTableView.isHidden = !viewModel.shouldShowPendingPaymentCards
