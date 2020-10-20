@@ -17,7 +17,7 @@ final class ZendeskTickets: NSObject, UITextFieldDelegate {
     func launch() {
         let launchContactUs = {
             let viewController = RequestUi.buildRequestList()
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController, hideCloseButton: true)
             Current.navigate.to(navigationRequest)
         }
     

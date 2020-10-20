@@ -25,6 +25,10 @@ class PaymentCardDetailViewModel {
         return paymentCard.paymentCardStatus
     }
     
+    var paymentCardIsActive: Bool {
+        return paymentCardStatus == .active
+    }
+    
     var pendingRefreshInterval: TimeInterval {
         return 30
     }
@@ -44,7 +48,7 @@ class PaymentCardDetailViewModel {
     }
 
     var addedCardsTitle: String {
-        switch paymentCard.paymentCardStatus {
+        switch paymentCardStatus {
         case .active:
             return "pcd_active_card_title".localized
         case .pending:
@@ -55,7 +59,7 @@ class PaymentCardDetailViewModel {
     }
 
     var addedCardsDescription: String {
-        switch paymentCard.paymentCardStatus {
+        switch paymentCardStatus {
         case .active:
             return "pcd_active_card_description".localized
         case .pending:
@@ -250,15 +254,13 @@ class PaymentCardDetailViewModel {
     }
     
     func toFAQsScreen() {
-        DispatchQueue.main.async {
-            let helpCenterConfig = HelpCenterUiConfiguration()
-            helpCenterConfig.showContactOptions = false            
-            let articleConfig = ArticleUiConfiguration()
-            articleConfig.showContactOptions = false
-            let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: ZendeskService.pendingPaymentCardsArticleID, andConfigs: [helpCenterConfig, articleConfig])
-            let navigationRequest = PushNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        }
+        let helpCenterConfig = HelpCenterUiConfiguration()
+        helpCenterConfig.showContactOptions = false
+        let articleConfig = ArticleUiConfiguration()
+        articleConfig.showContactOptions = false
+        let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: ZendeskService.pendingPaymentCardsArticleID, andConfigs: [helpCenterConfig, articleConfig])
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, hideCloseButton: true)
+        Current.navigate.to(navigationRequest)
     }
     
     func showDeleteConfirmationAlert() {
