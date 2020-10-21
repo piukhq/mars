@@ -12,6 +12,7 @@ import WebKit
 enum WebScrapableMerchant: String {
     case tesco
     case boots
+    case morrisons
 }
 
 protocol WebScrapable {
@@ -27,6 +28,8 @@ protocol WebScrapable {
     var loginScriptFileName: String { get }
     var pointsScrapingScriptFileName: String { get }
     var detectTextScriptFileName: String { get }
+    var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType { get }
+    var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency { get }
     var reCaptchaTextIdentiferClass: String? { get }
     var reCaptchaMessage: String? { get }
     var incorrectCredentialsMessage: String? { get }
@@ -109,6 +112,18 @@ struct WebScrapingCredentials {
 }
 
 class WebScrapingUtility: NSObject {
+    enum ReCaptchaPresentationType {
+        case persistent // reCaptcha is presented as soon as the login screen is loaded
+        case reactive // reCaptcha is presented once a login has been attempted
+        case none // reCaptcha is never presented to the user
+    }
+    
+    enum ReCaptchaPresentationFrequency {
+        case always // reCaptcha is presented every time
+        case sometimes // reCaptcha is presented sometimes
+        case never // reCaptcha is never presented to the user
+    }
+    
     private let webView: WKWebView
     private let agent: WebScrapable
     private let membershipCard: CD_MembershipCard
@@ -201,6 +216,11 @@ class WebScrapingUtility: NSObject {
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 return
             }
+            
+            if self.agent.reCaptchaPresentationType == .persistent && self.agent.reCaptchaPresentationFrequency == .always {
+                // At this point we know that the user will be presented with a reCaptcha, and we'll have already filled their credentials so we should present the webview
+                self.presentWebView()
+            }
         }
     }
 
@@ -249,6 +269,7 @@ class WebScrapingUtility: NSObject {
         case incorrectCredentialsMessaging
     }
     
+    // TODO: Make this more scalable. Callsite should handle the completion logic
     private func detectText(_ type: DetectTextType) throws {
         // Disable reCaptcha detection on balance refresh
         if type == .reCaptchaMessaging, isBalanceRefresh { return }
@@ -375,6 +396,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 if shouldAttemptLogin {
                     hasAttemptedLogin = true
                     try login(credentials: credentials)
+                    // TODO: what if login failed, but the webview doesnt trigger navigation? We just sit here
                 } else {
                     // We should only fall into here if we know we are at the login url, but we've already attempted a login
                     self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCard: self.membershipCard, withAgent: self.agent)

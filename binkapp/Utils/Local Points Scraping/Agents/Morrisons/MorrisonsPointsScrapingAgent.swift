@@ -1,33 +1,33 @@
 //
-//  BootsPointsScrapingAgent.swift
+//  MorrisonsPointsScrapingAgent.swift
 //  binkapp
 //
-//  Created by Nick Farrant on 08/09/2020.
+//  Created by Nick Farrant on 10/09/2020.
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
 import Foundation
 
-struct BootsScrapingAgent: WebScrapable {
+struct MorrisonsScrapingAgent: WebScrapable {
     var merchant: WebScrapableMerchant {
-        return .boots
+        return .morrisons
     }
     
     var membershipPlanId: Int {
         switch APIConstants.currentEnvironment {
         case .dev:
-            return 4
+            return 12
         case .staging:
-            return 4
+            return 12
         case .preprod:
-            return 4
+            return 12
         case .production:
-            return 4
+            return 12
         }
     }
     
     var usernameFieldTitle: String {
-        return "Email"
+        return "Email address"
     }
     
     var passwordFieldTitle: String {
@@ -47,34 +47,34 @@ struct BootsScrapingAgent: WebScrapable {
     }
     
     var loginUrlString: String {
-        return "https://www.boots.com/webapp/wcs/stores/servlet/BootsLogonForm"
+        return "https://my.morrisons.com/more/#/login"
     }
     
     var scrapableUrlString: String {
-        return "https://www.boots.com/webapp/wcs/stores/servlet/AjaxLogonForm"
+        return "https://my.morrisons.com/more/#/mypoints"
     }
     
     var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType {
-        return .reactive
+        return .persistent
     }
     
     var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency {
-        return .sometimes
+        return .always
     }
     
     var reCaptchaMessage: String? {
-        return "To login, confirm you are not a robot"
+        return nil
     }
     
     var reCaptchaTextIdentiferClass: String? {
-        return "gigya-error-msg gigya-form-error-msg gigya-error-code-401020 gigya-error-msg-active"
+        return nil
     }
     
     var incorrectCredentialsMessage: String? {
-        return "If you're seeing this message you've either made a mistake in typing in your password, or it's time to change it"
+        return nil
     }
     
     var incorrectCredentialsTextIdentiferClass: String? {
-        return "gigya-error-msg gigya-form-error-msg gigya-error-msg-active gigya-error-code-403042"
+        return nil
     }
 }
