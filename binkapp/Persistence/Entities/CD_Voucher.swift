@@ -23,10 +23,10 @@ open class CD_Voucher: _CD_Voucher {
     
     var formattedHeadline: String? {
         let prefix = earn?.prefix ?? ""
-        let targetValue = earn?.targetValue?.intValue ?? 0
-        let value = earn?.value?.intValue ?? 0
-        let displayValue = targetValue - value
-        let displayValueString = "\(displayValue)"
+        let targetValue = earn?.targetValue?.doubleValue ?? 0.0
+        let value = earn?.value?.doubleValue ?? 0.0
+        let displayValue = NSNumber(value: targetValue - value) 
+        let displayValueString = displayValue.twoDecimalPointString()
         
         var suffix = ""
         if let earnSuffix = earn?.suffix {
@@ -35,7 +35,7 @@ open class CD_Voucher: _CD_Voucher {
         
         switch (earnType, voucherState) {
         case (.stamps, .inProgress):
-            return String(format: displayValue > 1 ? "plr_stamp_voucher_headline_plural".localized : "plr_stamp_voucher_headline".localized, prefix, displayValueString)
+            return String(format: displayValue.intValue > 1 ? "plr_stamp_voucher_headline_plural".localized : "plr_stamp_voucher_headline".localized, prefix, displayValueString)
         case (.accumulator, .inProgress):
             return String(format: "plr_accumulator_voucher_headline".localized, prefix, displayValueString, suffix)
         case (_, .issued):
