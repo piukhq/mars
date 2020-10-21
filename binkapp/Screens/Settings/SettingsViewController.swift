@@ -40,6 +40,7 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     }()
 
     internal lazy var blurBackground = defaultBlurredBackground()
+    private let zendeskTickets = ZendeskTickets()
     
     // MARK: - View Lifecycle
     
@@ -159,7 +160,7 @@ extension SettingsViewController: UITableViewDelegate {
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 case .contactUs:
-                    ZendeskTickets().launch()
+                    zendeskTickets.launch()
                 }
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {

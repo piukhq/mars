@@ -105,6 +105,7 @@ extension UIAlertController {
             ZendeskService.setIdentity(firstName: firstName, lastName: lastName)
             okActionHandler()
         }
+        okAction.isEnabled = false
         alert.addAction(cancelAction)
         alert.addAction(okAction)
         okActionObject(okAction)

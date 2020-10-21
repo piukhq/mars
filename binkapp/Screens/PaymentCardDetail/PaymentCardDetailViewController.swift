@@ -14,6 +14,7 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
     private var hasSetupCell = false
     
     private var refreshTimer: Timer?
+    private let zendeskTickets = ZendeskTickets()
 
     // MARK: - UI lazy vars
 
@@ -417,7 +418,6 @@ extension LayoutHelper {
 
 extension PaymentCardDetailViewController: HyperlinkLabelDelegate {
     func hyperlinkLabelWasTapped(_ hyperlinkLabel: HyperlinkLabel) {
-        ZendeskTickets().launch()
+        zendeskTickets.launch()
     }
 }
-
