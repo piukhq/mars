@@ -360,6 +360,10 @@
 
 // MARK: - Errors
 "communication_error" = "There was a problem communicating with the server. Please try again later.";
+"card_already_linked_title" = "Already Linked";
+"card_already_linked_message" = "%@ already linked to a different %@. Please unlink the other %@ before proceeding, but be aware this may only be possible from another application.";
+"card_already_linked_message_prefix" = "This payment card is";
+"cards_already_linked_message_prefix" = "One of these payment cards are";
 
 // MARK: - Wallet prompts
 "wallet_prompt_loyalty" = "Link this card to your payment cards to automatically collect rewards.";
@@ -393,7 +397,6 @@
 "zendesk_identity_prompt_last_name" = "Last name";
 
 // MARK: - Who We Are
-
 "who_we_are_title" = "Who we are";
 "who_we_are_body" = "Below are a list of people that have been instrumental in developing the app you now hold in your hands.";
 

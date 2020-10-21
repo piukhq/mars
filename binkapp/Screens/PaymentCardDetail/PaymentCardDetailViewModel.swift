@@ -320,13 +320,26 @@ class PaymentCardDetailViewModel {
     }
 
     private func linkMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
-        repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard in
-            // If we don't get a payment card back, we'll fail silently by firing the same completion handler anyway.
-            // The completion will always be to reload the views, so we will just see the local data.
+        repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard, error in
+            guard let error = error else { return }
+            if case .userFacingNetworkingError(let networkingError) = error {
+                if case .userFacingError(let userFacingError) = networkingError {
+                    let messagePrefix = "card_already_linked_message_prefix".localized
+                    let planName = membershipCard.membershipPlan?.account?.planName ?? ""
+                    let planNameCard = membershipCard.membershipPlan?.account?.planNameCard ?? ""
+                    let planDetails = "\(planName) \(planNameCard)"
+                    let formattedString = String(format: userFacingError.message, messagePrefix, planDetails, planDetails)
+                    let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError.title, message: formattedString)
+                    let navigationRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(navigationRequest)
+                    completion()
+                    return
+                }
+            }
+            
             if let paymentCard = paymentCard {
                 self?.paymentCard = paymentCard
             }
-            
             completion()
         }
     }

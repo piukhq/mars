@@ -23,6 +23,7 @@ enum WalletServiceError: BinkError {
     case failedToDeletePaymentCard
     case failedToLinkMembershipCardToPaymentCard
     case customError(String)
+    case userFacingNetworkingError(NetworkingError)
 
     var domain: BinkErrorDomain {
         return .walletService
@@ -56,6 +57,8 @@ enum WalletServiceError: BinkError {
             return "Failed to link membership card to payment card"
         case .customError(let message):
             return message
+        case .userFacingNetworkingError(let error):
+            return error.message
         }
     }
 }
@@ -208,12 +211,16 @@ extension WalletServiceProtocol {
     
     func toggleMembershipCardPaymentCardLink(membershipCard: CD_MembershipCard, paymentCard: CD_PaymentCard, shouldLink: Bool, completion: @escaping ServiceCompletionResultHandler<PaymentCardModel, WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .linkMembershipCardToPaymentCard(membershipCardId: membershipCard.id, paymentCardId: paymentCard.id), method: shouldLink ? .patch : .delete, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
+        Current.apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, response) in
             switch result {
             case .success(let response):
                 completion(.success(response))
-            case .failure:
-                completion(.failure(.failedToLinkMembershipCardToPaymentCard))
+            case .failure(let networkError):
+                if case .userFacingError(_) = networkError {
+                    completion(.failure(.userFacingNetworkingError(networkError)))
+                } else {
+                    completion(.failure(.failedToLinkMembershipCardToPaymentCard))
+                }
             }
         }
     }
