@@ -241,7 +241,7 @@ class PaymentCardDetailViewModel {
     }
 
     func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
-        informationRows[indexPath.row].action()
+        informationRows[safe: indexPath.row]?.action()
     }
 
     func toSecurityAndPrivacyScreen() {

@@ -161,8 +161,7 @@ private extension PaymentCardDetailViewController {
     func refresh() {
         viewModel.refreshPaymentCard {
             self.configureUI()
-            self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
-            Current.wallet.refreshLocal()
+            self.refreshViews()
         }
     }
     
@@ -244,9 +243,10 @@ private extension PaymentCardDetailViewController {
     }
 
     func refreshViews() {
-        self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, delegate: nil)
+        self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
         self.addedCardsTableView.reloadData()
         self.otherCardsTableView.reloadData()
+        self.informationTableView.reloadData()
         Current.wallet.refreshLocal()
     }
 }
