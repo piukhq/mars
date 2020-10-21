@@ -58,7 +58,9 @@ class PointsScrapingManager {
     }
     
     let agents: [WebScrapable] = [
-        TescoScrapingAgent()
+        TescoScrapingAgent(),
+        BootsScrapingAgent(),
+        MorrisonsScrapingAgent()
     ]
     
     // MARK: - Credentials handling
@@ -121,7 +123,7 @@ class PointsScrapingManager {
             throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
         }
                 
-        webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController().getVisibleViewController()!, agent: agent, membershipCard: membershipCard, delegate: self)
+        webScrapingUtility = WebScrapingUtility(agent: agent, membershipCard: membershipCard, delegate: self)
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
             try webScrapingUtility?.start()
@@ -179,7 +181,7 @@ class PointsScrapingManager {
         guard agentEnabled(agent) else { return }
         
         DispatchQueue.main.async {
-            self.webScrapingUtility = WebScrapingUtility(containerViewController: UIViewController(), agent: agent, membershipCard: membershipCard, delegate: self)
+            self.webScrapingUtility = WebScrapingUtility(agent: agent, membershipCard: membershipCard, delegate: self)
             
             do {
                 try self.webScrapingUtility?.start()
