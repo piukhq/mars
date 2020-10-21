@@ -111,14 +111,14 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         
         var rightInset: CGFloat = 0
         switch UIDevice.current.width {
-            case .iPhone5Size:
-                rightInset = 9
-            case .iPhone6Size:
-                rightInset = 9
-            case .iPhonePlusSize:
-                rightInset = 6
-            default:
-                rightInset = 7
+        case .iPhone5Size:
+            rightInset = 9
+        case .iPhone6Size:
+            rightInset = 9
+        case .iPhonePlusSize:
+            rightInset = 6
+        default:
+            rightInset = 7
         }
         settingsBarButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: rightInset)
         

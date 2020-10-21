@@ -153,7 +153,7 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
             pageControl.topAnchor.constraint(equalTo: learningContainer.bottomAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.height),
             pageControl.widthAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.width),
-            pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor),
+            pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
     }
 
@@ -179,13 +179,13 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
                 signInWithAppleButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
                 signInWithAppleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 signInWithAppleButton.bottomAnchor.constraint(equalTo: facebookPillButton.topAnchor, constant: -LayoutHelper.PillButton.verticalSpacing),
-                signInWithAppleButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25),
+                signInWithAppleButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25)
             ])
 
             signInWithAppleButton.addTarget(self, action: #selector(handleAppleIdRequest), for: .touchUpInside)
         } else {
             NSLayoutConstraint.activate([
-                facebookPillButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25),
+                facebookPillButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25)
             ])
         }
 

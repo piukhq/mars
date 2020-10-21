@@ -10,6 +10,8 @@ import Foundation
 import Alamofire
 import AlamofireImage
 
+// swiftlint:disable force_try force_unwrapping identifier_name
+
 // MARK: - Config and init
 typealias APIClientCompletionHandler<ResponseType: Any> = (Result<ResponseType, NetworkingError>, HTTPURLResponse?) -> Void
 

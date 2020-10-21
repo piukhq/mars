@@ -16,18 +16,18 @@ protocol BarBlurring {
 }
 
 enum BarTypeBlur {
-    case Navigation
-    case Tab
+    case navigationBar
+    case tabBar
 }
 
 extension BarBlurring {
 
     func prepareBarWithBlur(bar: UINavigationBar, blurBackground: UIVisualEffectView) {
-        prepareBlur(bar: bar, blurBackground: blurBackground, frame: frameWithType(type: .Navigation, background: blurBackground, bar: bar))
+        prepareBlur(bar: bar, blurBackground: blurBackground, frame: frameWithType(type: .navigationBar, background: blurBackground, bar: bar))
     }
 
     func prepareBarWithBlur(bar: UITabBar, blurBackground: UIVisualEffectView) {
-        prepareBlur(bar: bar, blurBackground: blurBackground, frame: frameWithType(type: .Tab, background: blurBackground, bar: bar))
+        prepareBlur(bar: bar, blurBackground: blurBackground, frame: frameWithType(type: .tabBar, background: blurBackground, bar: bar))
     }
     
     func frameWithType(type: BarTypeBlur, background: UIView, bar: UIView) -> CGRect {
@@ -35,10 +35,10 @@ extension BarBlurring {
         var topEdge, bottomEdge: CGFloat
 
         switch type {
-            case .Navigation:
+        case .navigationBar:
             topEdge = 50.0
             bottomEdge = 1.0
-            case .Tab:
+        case .tabBar:
             topEdge = 4.0
             bottomEdge = 0.0
         }

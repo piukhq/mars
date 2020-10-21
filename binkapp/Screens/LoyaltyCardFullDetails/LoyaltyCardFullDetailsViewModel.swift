@@ -25,7 +25,7 @@ class LoyaltyCardFullDetailsViewModel {
     init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.membershipCard = membershipCard
         self.informationRowFactory = informationRowFactory
-    }  
+    }
     
     var brandName: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""

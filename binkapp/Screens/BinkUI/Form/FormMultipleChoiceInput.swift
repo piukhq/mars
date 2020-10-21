@@ -34,12 +34,12 @@ class FormMultipleChoiceInput: UIInputView {
     }()
     
     private let sections: [[FormPickerData]]
-    private var selectedContent = [Int : FormPickerData]() {
+    private var selectedContent: [Int: FormPickerData] = [:] {
         didSet {
             var lastString: String?
             fullContentString = ""
             
-            selectedContent.sorted(by: { $0.key < $1.key }).forEach { key, value in
+            selectedContent.sorted(by: { $0.key < $1.key }).forEach { _, value in
                 if let separator = delegate?.multipleChoiceSeparatorForMultiValues(), lastString != nil {
                     fullContentString += "\(separator)"
                 }
@@ -47,7 +47,7 @@ class FormMultipleChoiceInput: UIInputView {
                 fullContentString += value.title
                 
                 if let backingDataValue = value.backingData {
-                    if backingData == nil { backingData = [Int]() }
+                    if backingData == nil { backingData = [] }
                 
                     backingData!.append(backingDataValue)
                 }
@@ -95,7 +95,7 @@ class FormMultipleChoiceInput: UIInputView {
     
     // MARK: - Actions
     
-    private func pickerSelected(_ component: Int,  index: Int) {
+    private func pickerSelected(_ component: Int, index: Int) {
         if let component = sections[safe: component], let row = component[safe: index], let index = sections.firstIndex(of: component) {
             selectedContent[index] = row
         }

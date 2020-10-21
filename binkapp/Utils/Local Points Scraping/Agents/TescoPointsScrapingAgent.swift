@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TescoScrapingAgent: WebScrapable {    
+struct TescoScrapingAgent: WebScrapable {
     var merchant: WebScrapableMerchant {
         return .tesco
     }

@@ -7,7 +7,7 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
     }
 
     func image(ofType type: ImageType) -> CD_MembershipCardImage? {
-        return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(integerLiteral: type.rawValue))).first as? CD_MembershipCardImage
+        return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(value: type.rawValue))).first as? CD_MembershipCardImage
     }
     
     var formattedTransactions: Set<CD_MembershipTransaction>? {

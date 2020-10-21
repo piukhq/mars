@@ -90,7 +90,7 @@ class WhoWeAreViewController: UIViewController {
         BinkTeamMember(name: "Karl Sigiscar"),
         BinkTeamMember(name: "Paul Tiritieu"),
         BinkTeamMember(name: "Sean Williams"),
-        BinkTeamMember(name: "Max Woodhams"),
+        BinkTeamMember(name: "Max Woodhams")
     ]
     
     

@@ -42,7 +42,7 @@ class LCDPlaceholderGenerator {
             let xStart = padding
             let yStart = padding
             
-            let attributes = [NSAttributedString.Key.font : UIFont.subtitle, NSAttributedString.Key.foregroundColor : UIColor.white ]
+            let attributes = [NSAttributedString.Key.font: UIFont.subtitle, NSAttributedString.Key.foregroundColor: UIColor.white ]
             let planNameAttributed = NSAttributedString(string: planName, attributes: attributes)
                         
             planNameAttributed.draw(at: CGPoint(x: xStart, y: yStart))

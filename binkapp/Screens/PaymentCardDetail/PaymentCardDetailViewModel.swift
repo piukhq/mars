@@ -179,7 +179,7 @@ class PaymentCardDetailViewModel {
 
     var pllMembershipCards: [CD_MembershipCard]? {
         // TODO: this should have the same sort as in the loyalty wallet
-        return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
+        return Current.wallet.membershipCards?.filter { $0.membershipPlan?.featureSet?.planCardType == .link }
     }
 
     var pllMembershipCardsCount: Int {

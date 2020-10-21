@@ -26,7 +26,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
          return Current.wallet.membershipCards
      }
 
-    func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> ()) {
+    func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> Void) {
         guard let card = cards?[indexPath.row] else {
             return
         }

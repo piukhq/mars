@@ -105,7 +105,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     func updatePreferences(checkboxes: [CheckboxView]) {
-        var params = [String: String]()
+        var params: [String: String] = [:]
         
         checkboxes.forEach {
             if let columnName = $0.columnName {

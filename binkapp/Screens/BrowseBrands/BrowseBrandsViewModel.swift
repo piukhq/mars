@@ -12,23 +12,23 @@ protocol BrowseBrandsViewModelDelegate: class {
 }
 
 class BrowseBrandsViewModel {
-    private var membershipPlans = [CD_MembershipPlan]()
+    private var membershipPlans: [CD_MembershipPlan] = []
     
     weak var delegate: BrowseBrandsViewModelDelegate?
     var shouldShowNoResultsLabel: Bool {
-        return filteredPlans.isEmpty 
+        return filteredPlans.isEmpty
     }
     var searchText = "" {
         didSet {
             filterPlans()
         }
     }
-    var filteredPlans = [CD_MembershipPlan]()
+    var filteredPlans: [CD_MembershipPlan] = []
     
     var filters: [String] {
         return mapFilters(fromPlans: membershipPlans)
     }
-    var selectedFilters = [String]() {
+    var selectedFilters: [String] = [] {
         didSet {
             filterPlans()
         }
@@ -138,11 +138,11 @@ class BrowseBrandsViewModel {
         getMembershipPlans().forEach { (plan) in
             guard let companyName = plan.account?.companyName, let category = plan.account?.category else {return}
             if searchText.isEmpty {
-                if selectedFilters.contains(category) && !filteredPlans.contains(plan){
+                if selectedFilters.contains(category) && !filteredPlans.contains(plan) {
                     filteredPlans.append(plan)
                 }
             } else {
-                if selectedFilters.contains(category) && companyName.localizedCaseInsensitiveContains(searchText) && !filteredPlans.contains(plan){
+                if selectedFilters.contains(category) && companyName.localizedCaseInsensitiveContains(searchText) && !filteredPlans.contains(plan) {
                     filteredPlans.append(plan)
                 }
             }

@@ -22,10 +22,6 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
         NotificationCenter.default.addObserver(self, selector: #selector(KeyboardLayoutConstraint.keyboardWillHideNotification(_:)), name: UIWindow.keyboardWillHideNotification, object: nil)
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     // MARK: Notification
     
     @objc func keyboardWillShowNotification(_ notification: Notification) {
@@ -48,7 +44,7 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
                     animations: {
                         UIApplication.shared.keyWindow?.layoutIfNeeded()
                         return
-                }, completion: { finished in
+                }, completion: { _ in
                 })
             default:
                 
@@ -77,7 +73,7 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
                     animations: {
                         UIApplication.shared.keyWindow?.layoutIfNeeded()
                         return
-                }, completion: { finished in
+                }, completion: { _ in
                 })
             default:
                 break

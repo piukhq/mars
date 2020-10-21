@@ -103,7 +103,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         let attrString = NSAttributedString(
             string: title,
-            attributes: [.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
         )
         button.setAttributedTitle(attrString, for: .normal)
         button.contentHorizontalAlignment = .left

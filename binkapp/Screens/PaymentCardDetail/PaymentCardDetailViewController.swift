@@ -153,7 +153,7 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
 
 }
 
-// MARK - Private methods
+// MARK: - Private methods
 
 private extension PaymentCardDetailViewController {
     func refresh() {

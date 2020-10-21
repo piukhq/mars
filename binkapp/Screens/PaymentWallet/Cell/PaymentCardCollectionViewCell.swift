@@ -9,7 +9,7 @@
 import UIKit
 
 // TECH DEBT: This is duplicated from loyalty cards.
-protocol WalletPaymentCardCollectionViewCellDelegate: NSObject {
+protocol WalletPaymentCardCollectionViewCellDelegate: AnyObject {
     func cellSwipeBegan(cell: PaymentCardCollectionViewCell)
     func cellDidFullySwipe(action: SwipeMode?, cell: PaymentCardCollectionViewCell)
     func cellPerform(action: CellAction, cell: PaymentCardCollectionViewCell)
@@ -148,7 +148,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         whitespaceIndexLocations.forEach { spaceIndex in
             if redacted.count > spaceIndex {
                 let space = "   "
-                redacted.insert(contentsOf:space, at: redacted.index(redacted.startIndex, offsetBy: spaceIndex))
+                redacted.insert(contentsOf: space, at: redacted.index(redacted.startIndex, offsetBy: spaceIndex))
                 padRange += space.count
             }
         }
@@ -361,7 +361,7 @@ extension PaymentCardCollectionViewCell {
         
         switch state {
         case .closed:
-            constant = 0 
+            constant = 0
         case .peek:
             guard let type = type else { return }
             

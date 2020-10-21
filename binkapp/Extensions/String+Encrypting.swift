@@ -27,28 +27,22 @@ public struct HMAC {
         return hexStringFromData(input: digest(input: stringData as NSData, algo: algo))
     }
     
-    private static func digest(input : NSData, algo: HMACAlgo) -> NSData {
+    private static func digest(input: NSData, algo: HMACAlgo) -> NSData {
         let digestLength = algo.digestLength()
         var hash = [UInt8](repeating: 0, count: digestLength)
         switch algo {
         case .MD5:
             CC_MD5(input.bytes, UInt32(input.length), &hash)
-            break
         case .SHA1:
             CC_SHA1(input.bytes, UInt32(input.length), &hash)
-            break
         case .SHA224:
             CC_SHA224(input.bytes, UInt32(input.length), &hash)
-            break
         case .SHA256:
             CC_SHA256(input.bytes, UInt32(input.length), &hash)
-            break
         case .SHA384:
             CC_SHA384(input.bytes, UInt32(input.length), &hash)
-            break
         case .SHA512:
             CC_SHA512(input.bytes, UInt32(input.length), &hash)
-            break
         }
         return NSData(bytes: hash, length: digestLength)
     }
@@ -59,7 +53,7 @@ public struct HMAC {
         
         var hexString = ""
         for byte in bytes {
-            hexString += String(format:"%02x", UInt8(byte))
+            hexString += String(format: "%02x", UInt8(byte))
         }
         
         return hexString

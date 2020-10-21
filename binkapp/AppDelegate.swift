@@ -14,7 +14,7 @@ import AlamofireNetworkActivityLogger
 import CardScan
 import Keys
 
-@UIApplicationMain 
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     var window: UIWindow?
     var stateMachine: RootStateMachine?
@@ -110,4 +110,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 }
-

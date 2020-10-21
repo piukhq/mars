@@ -131,7 +131,7 @@ class BaseFormViewController: BinkTrackableViewController, Form {
             maskingView.leftAnchor.constraint(equalTo: view.leftAnchor),
             maskingView.rightAnchor.constraint(equalTo: view.rightAnchor),
             maskingView.heightAnchor.constraint(equalToConstant: Constants.maskingHeight),
-            maskingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            maskingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
     }
     

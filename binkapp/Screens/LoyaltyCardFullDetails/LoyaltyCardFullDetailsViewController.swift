@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol LoyaltyCardFullDetailsModalDelegate {
+protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
    func modalWillDismiss()
 }
 
@@ -234,7 +234,7 @@ private extension LoyaltyCardFullDetailsViewController {
             stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: offerTilesStackView)
             NSLayoutConstraint.activate([
                 offerTilesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
-                offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+                offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding)
             ])
         }
 
@@ -287,7 +287,7 @@ private extension LoyaltyCardFullDetailsViewController {
             modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             separator.heightAnchor.constraint(equalToConstant: CGFloat.onePointScaled()),
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
         ])
     }
     

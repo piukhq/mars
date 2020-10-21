@@ -42,7 +42,7 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
 
     private let viewModel: PLRRewardsHistoryViewModel
 
-    init(viewModel: PLRRewardsHistoryViewModel){
+    init(viewModel: PLRRewardsHistoryViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -66,7 +66,7 @@ class PLRRewardsHistoryViewController: BinkTrackableViewController {
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            stackScrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            stackScrollView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
         
         // MARK: - Add vouchers

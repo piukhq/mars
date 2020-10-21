@@ -116,7 +116,7 @@ class PaymentWalletRepository: WalletServiceProtocol {
                     try? context.save()
                     
                     DispatchQueue.main.async {
-                        Current.database.performTask(with: newObject) { (context, safeObject) in
+                        Current.database.performTask(with: newObject) { (_, safeObject) in
                             onSuccess(safeObject)
                         }
                     }

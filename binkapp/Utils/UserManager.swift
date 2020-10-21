@@ -63,7 +63,7 @@ class UserManager {
     }
     
     private func getKeychainValue(for key: String) -> String? {
-        var token: String? = nil
+        var token: String?
         
         do {
             try token = keychain.getString(key)
@@ -85,7 +85,7 @@ class UserManager {
             }
     }
 
-    func setProfile(withResponse response: UserProfileResponse, updateZendeskIdentity: Bool)  {
+    func setProfile(withResponse response: UserProfileResponse, updateZendeskIdentity: Bool) {
         // Store what we can, but don't bail if the values don't exist
         if let email = response.email {
             try? keychain.set(email, key: Constants.emailKey)

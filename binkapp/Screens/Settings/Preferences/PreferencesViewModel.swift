@@ -31,7 +31,7 @@ class PreferencesViewModel {
         repository.getPreferences(onSuccess: { (preferences) in
             self.preferences = preferences
             onSuccess(preferences)
-        }) { (error) in
+        }) { _ in
             onError()
         }
     }
@@ -39,7 +39,7 @@ class PreferencesViewModel {
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (BinkError) -> Void) {
         repository.putPreferences(preferences: preferences, onSuccess: {
             onSuccess()
-        }) { (error) in
+        }) { error in
             print(error)
             onError(error)
         }

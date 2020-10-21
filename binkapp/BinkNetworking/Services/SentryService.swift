@@ -10,7 +10,6 @@ import Foundation
 import Sentry
 
 final class SentryService {
-        
     private static var environment: String {
         let envString: String
 

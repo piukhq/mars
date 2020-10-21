@@ -59,14 +59,14 @@ class FormDataSource: NSObject {
     /// We need the data source to hold a reference to the plan for some forms so that we can pass it through delegates to other objects
     private(set) var membershipPlan: CD_MembershipPlan?
     
-    private(set) var fields = [FormField]()
-    private(set) var checkboxes = [CheckboxView]()
-    private var cellTextFields = [Int: UITextField]()
+    private(set) var fields: [FormField] = []
+    private(set) var checkboxes: [CheckboxView] = []
+    private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
     
     var fullFormIsValid: Bool {
-        let formFieldsValid = fields.reduce(true, { $0 && $1.isValid() })
+        let formFieldsValid = fields.allSatisfy({ $0.isValid() })
         var checkboxesValid = true
         checkboxes.forEach { checkbox in
             if checkbox.columnKind == FormField.ColumnKind.planDocument || checkbox.columnKind == FormField.ColumnKind.none {
@@ -80,7 +80,7 @@ class FormDataSource: NSObject {
     }
     
     func currentFieldValues() -> [String: String] {
-        var values = [String: String]()
+        var values: [String: String] = [:]
         fields.forEach { values[$0.title.lowercased()] = $0.value }
         
         return values
@@ -374,7 +374,7 @@ extension FormDataSource {
     }
     
     private func getPlanDocumentsCheckboxes(journey: PlanDocumentDisplayModel, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
-        var checkboxes = [CheckboxView]()
+        var checkboxes: [CheckboxView] = []
         
         membershipPlan.account?.formattedPlanDocuments?.forEach { field in
                         
@@ -401,7 +401,7 @@ extension FormDataSource {
     }
 }
 
-//MARK: - Login
+// MARK: - Login
 
 extension FormDataSource {
     convenience init(accessForm: AccessForm) {
@@ -499,7 +499,7 @@ extension FormDataSource {
             let offersRange = baseMarketing.range(of: "preferences_prompt_highlight_offers".localized)
             let updatesRange = baseMarketing.range(of: "preferences_prompt_highlight_updates".localized)
             
-            let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
+            let attributes: [NSAttributedString.Key: Any]  = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
             
             attributedMarketing.addAttributes(attributes, range: rewardsRange)
             attributedMarketing.addAttributes(attributes, range: offersRange)
@@ -512,9 +512,9 @@ extension FormDataSource {
     }
     
     private func hyperlinkString(_ text: String, hyperlink: String) -> NSAttributedString {
-        let attributed = NSMutableAttributedString(string: text, attributes: [.font : UIFont.bodyTextSmall])
+        let attributed = NSMutableAttributedString(string: text, attributes: [.font: UIFont.bodyTextSmall])
         let countMinusHyperlinkString = text.count - hyperlink.count
-        attributed.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.blueAccent, .font : UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
+        attributed.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.blueAccent, .font: UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
                 
         return attributed
     }

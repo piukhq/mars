@@ -8,10 +8,10 @@
 
 import UIKit
 
+// swiftlint:disable function_body_length
 class SettingsFactoryMock {
     func sectionData() -> [SettingsSection] {
-        
-        var sections = [SettingsSection]()
+        var sections: [SettingsSection] = []
         
         // MARK: - Account
         
@@ -27,7 +27,6 @@ class SettingsFactoryMock {
                 actionRequired: false
             )
         ])
-        
         sections.append(accountSection)
         
         // MARK: - Support and feedback
@@ -54,7 +53,6 @@ class SettingsFactoryMock {
                 actionRequired: false
             )
         ])
-        
         sections.append(supportSection)
         
         // MARK: - About

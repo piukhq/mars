@@ -134,7 +134,7 @@ class BarcodeScannerViewController: UIViewController {
             widgetView.topAnchor.constraint(equalTo: explainerLabel.bottomAnchor, constant: Constants.widgetViewTopPadding),
             widgetView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.widgetViewLeftRightPadding),
             widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.widgetViewLeftRightPadding),
-            widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight),
+            widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight)
         ])
     }
 
@@ -147,7 +147,7 @@ class BarcodeScannerViewController: UIViewController {
             cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
             cancelButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -4),
             cancelButton.heightAnchor.constraint(equalToConstant: Constants.closeButtonSize.height),
-            cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width),
+            cancelButton.widthAnchor.constraint(equalToConstant: Constants.closeButtonSize.width)
         ])
 
         if !viewModel.isScanning {

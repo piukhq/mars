@@ -153,15 +153,15 @@ class FormField {
     let dataSourceRefreshBlock: DataSourceRefreshBlock?
     private(set) var value: String?
     
-    typealias ValueUpdatedBlock = (FormField, String?) -> ()
-    typealias PickerUpdatedBlock = (FormField, [Any]) -> ()
+    typealias ValueUpdatedBlock = (FormField, String?) -> Void
+    typealias PickerUpdatedBlock = (FormField, [Any]) -> Void
     typealias TextFieldShouldChange = (FormField, UITextField, NSRange, String?) -> (Bool)
-    typealias FieldExitedBlock = (FormField) -> ()
+    typealias FieldExitedBlock = (FormField) -> Void
     typealias ManualValidateBlock = (FormField) -> (Bool)
     
-    typealias DataSourceRefreshBlock = () -> ()
+    typealias DataSourceRefreshBlock = () -> Void
         
-    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock,  pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil, isReadOnly: Bool = false, fieldCommonName: FieldCommonName? = nil, alternatives: [FieldCommonName]? = nil, dataSourceRefreshBlock: DataSourceRefreshBlock? = nil) {
+    init(title: String, placeholder: String, validation: String?, validationErrorMessage: String? = nil, fieldType: FieldInputType, value: String? = nil, updated: @escaping ValueUpdatedBlock, shouldChange: @escaping TextFieldShouldChange, fieldExited: @escaping FieldExitedBlock, pickerSelected: PickerUpdatedBlock? = nil, columnKind: ColumnKind? = nil, manualValidate: ManualValidateBlock? = nil, forcedValue: String? = nil, isReadOnly: Bool = false, fieldCommonName: FieldCommonName? = nil, alternatives: [FieldCommonName]? = nil, dataSourceRefreshBlock: DataSourceRefreshBlock? = nil) {
         self.title = title
         self.placeholder = placeholder
         self.validation = validation

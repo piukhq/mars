@@ -19,7 +19,7 @@ struct UserMigrationController: UserServiceProtocol {
         static let currentUserKey = "BINKCurrentUserKey"
     }
     
-    private var legacyToken: String? = nil
+    private var legacyToken: String?
     
     init() {
         legacyToken = retrieveBinkLegacyToken()
@@ -33,7 +33,7 @@ struct UserMigrationController: UserServiceProtocol {
         return Current.userDefaults.bool(forKey: Constants.hasMigratedFromBinkLegacyKey)
     }
     
-    func renewTokenFromLegacyAppIfPossible(completion: @escaping (Bool) -> ()) {
+    func renewTokenFromLegacyAppIfPossible(completion: @escaping (Bool) -> Void) {
         guard hasMigrated == false, let token = legacyToken else {
             completion(false)
             return
@@ -98,14 +98,14 @@ struct UserMigrationController: UserServiceProtocol {
         guard status != errSecItemNotFound else { return nil }
         guard status == errSecSuccess else { return nil }
         
-        guard let existingItem = item as? [String : Any], let data = existingItem[kSecValueData as String] as? Data else {
+        guard let existingItem = item as? [String: Any], let data = existingItem[kSecValueData as String] as? Data else {
             return nil
         }
         
         NSKeyedUnarchiver.setClass(User.self, forClassName: Constants.userClass)
         NSKeyedUnarchiver.setClass(AuthToken.self, forClassName: Constants.authTokenClass)
         
-        if let dict = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String : AnyObject],
+        if let dict = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String: AnyObject],
             let user = dict[Constants.currentUserKey] as? User {
             // If we were successful in mapping to our new class types
             return user.token.accessToken

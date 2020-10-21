@@ -152,7 +152,7 @@ class WebScrapingUtility: NSObject {
         
         // Inject variables into login file
         let formattedLoginScript = String(format: loginScript, credentials.username, credentials.password)
-        runScript(formattedLoginScript) { [weak self] (value, error) in
+        runScript(formattedLoginScript) { [weak self] (_, error) in
             guard let self = self else { return }
             guard error == nil else {
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCard: self.membershipCard, withAgent: self.agent)

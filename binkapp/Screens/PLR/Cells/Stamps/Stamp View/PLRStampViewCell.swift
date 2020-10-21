@@ -32,7 +32,7 @@ class PLRStampViewCell: UICollectionViewCell {
             innerView.widthAnchor.constraint(equalToConstant: Constants.innerViewWidthHeight),
             innerView.heightAnchor.constraint(equalToConstant: Constants.innerViewWidthHeight),
             innerView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            innerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            innerView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
 

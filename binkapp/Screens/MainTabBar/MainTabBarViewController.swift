@@ -18,7 +18,7 @@ extension LayoutHelper {
 class MainTabBarViewController: UITabBarController, BarBlurring {
     let viewModel: MainTabBarViewModel
     var selectedTabBarOption = Buttons.loyaltyItem.rawValue
-    var items = [UITabBarItem]()
+    var items: [UITabBarItem] = []
     lazy var blurBackground = defaultBlurredBackground()
     
     init(viewModel: MainTabBarViewModel) {

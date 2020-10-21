@@ -27,8 +27,8 @@ public struct ReusableModalConfiguration {
 
     static func makeAttributedString(title: String, description: String) -> NSMutableAttributedString {
         let attributedString = NSMutableAttributedString()
-        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font: UIFont.headline])
+        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font: UIFont.bodyTextLarge])
         attributedString.append(attributedTitle)
         attributedString.append(attributedBody)
 

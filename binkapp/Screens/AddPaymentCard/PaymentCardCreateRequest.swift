@@ -55,8 +55,8 @@ struct PaymentCardCreateRequest: Codable {
         
         // Get first six and last four
         
-        var firstSix: String? = nil
-        var lastFour: String? = nil
+        var firstSix: String?
+        var lastFour: String?
         if let firstSixEndIndex = pan.index(pan.startIndex, offsetBy: 6, limitedBy: pan.endIndex),
             let lastFourStartIndex = pan.index(pan.endIndex, offsetBy: -4, limitedBy: pan.startIndex) {
             firstSix = String(pan[pan.startIndex..<firstSixEndIndex])

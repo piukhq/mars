@@ -82,7 +82,7 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
         
         let footerView = SettingsTableViewFooter(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: SettingsTableViewFooter.height))
@@ -151,7 +151,6 @@ extension SettingsViewController: UITableViewDelegate {
             switch rowData.action {
             case let .customAction(action):
                 action()
-                break
             case let .launchSupport(service):
                 switch service {
                 case .faq:
@@ -192,7 +191,6 @@ extension SettingsViewController: UITableViewDelegate {
                 case is SettingsViewController.Type:
                     let vc = SettingsViewController(viewModel: viewModel)
                     present(vc, animated: true)
-                    break
                 case is DebugMenuTableViewController.Type:
                     let debugMenuFactory = DebugMenuFactory()
                     let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
@@ -200,7 +198,6 @@ extension SettingsViewController: UITableViewDelegate {
                     debugMenuFactory.delegate = debugMenuViewController
                     let navigationRequest = PushNavigationRequest(viewController: debugMenuViewController)
                     Current.navigate.to(navigationRequest)
-                    break
                 case is PreferencesViewController.Type:
                     let viewController = PreferencesViewController(viewModel: PreferencesViewModel())
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
@@ -211,22 +208,17 @@ extension SettingsViewController: UITableViewDelegate {
                     Current.navigate.to(navigationRequest)
                 default:
                     print("Unsupported VC for presentation")
-                    break
                 }
             case .pushToReusable(let screen):
                 switch screen {
                 case .securityAndPrivacy:
                     toSecurityAndPrivacyVC()
-                    break
                 case .howItWorks:
                     toHowItWorksVC()
-                    break
                 case .privacyPolicy:
                     presentWebView(url: Constants.privacyPolicyUrl)
-                    break
                 case .termsAndConditions:
                     presentWebView(url: Constants.termsAndConditionsUrl)
-                    break
                 }
             case .logout:
                 let alert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
@@ -296,7 +288,7 @@ extension UIAlertController {
             lastNameTextField(textField)
         }
         let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "ok".localized, style: .default) { action in
+        let okAction = UIAlertAction(title: "ok".localized, style: .default) { _ in
             let firstName = alert.textFields?[0].text
             let lastName = alert.textFields?[1].text
             let request = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)

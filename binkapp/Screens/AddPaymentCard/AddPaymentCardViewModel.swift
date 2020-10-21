@@ -102,7 +102,7 @@ class AddPaymentCardViewModel {
             case .pll:
                 Current.navigate.close()
             }
-        }) { error in
+        }) { _ in
             onError()
             self.displayError()
         }

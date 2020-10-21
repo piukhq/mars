@@ -156,7 +156,7 @@ class FormCollectionViewCell: UICollectionViewCell {
             topConstraint,
             bottomConstraint,
             separator.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            separator.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            separator.rightAnchor.constraint(equalTo: contentView.rightAnchor)
             ])
     }
     
@@ -181,7 +181,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         
         if case let .expiry(months, years) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
-        }  else if case let .choice(data) = field.fieldType {
+        } else if case let .choice(data) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [data], delegate: self)
             pickerSelectedChoice = data.first?.title
             formField?.updateValue(pickerSelectedChoice)

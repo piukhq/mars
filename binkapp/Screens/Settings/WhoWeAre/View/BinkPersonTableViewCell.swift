@@ -19,5 +19,5 @@ class BinkPersonTableViewCell: UITableViewCell {
     func configure(with teamMember: BinkTeamMember) {
         titleLabel.text = teamMember.name
         titleLabel.font = UIFont.bodyTextLarge
-    }    
+    }
 }

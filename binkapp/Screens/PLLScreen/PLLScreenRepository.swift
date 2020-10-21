@@ -11,8 +11,8 @@ import UIKit
 class PLLScreenRepository: WalletServiceProtocol {
     func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping () -> Void) {
         
-        var idsToRemove = [String]()
-        var idsToAdd = [String]()
+        var idsToRemove: [String] = []
+        var idsToAdd: [String] = []
         var fullSuccess = true // assume true
         
         let group = DispatchGroup()

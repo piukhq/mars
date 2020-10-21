@@ -69,7 +69,7 @@ class MainScreenRouter {
         delegate?.router(self, didLogin: true)
     }
     
-    //MARK: - App in background
+    // MARK: - App in background
     
     @objc func appWillResignActive() {
         guard let topViewController = UIViewController.topMostViewController() else { return }

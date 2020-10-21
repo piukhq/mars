@@ -224,7 +224,7 @@ extension PLLScreenViewController: UITableViewDataSource {
                 showAsLinked: viewModel.linkedPaymentCards?.contains(paymentCard) == true
             )
         }
-        return cell 
+        return cell
     }
 }
 
@@ -261,10 +261,8 @@ private extension PLLScreenViewController {
         switch journey {
         case .newCard:
             viewModel.close()
-            break
         case .existingCard:
             viewModel.isEmptyPll ? viewModel.toPaymentScanner(delegate: self) : viewModel.close()
-            break
         }
     }
 }

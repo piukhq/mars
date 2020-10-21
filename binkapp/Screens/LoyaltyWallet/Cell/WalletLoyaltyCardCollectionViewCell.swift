@@ -25,7 +25,7 @@ enum CellAction {
     case login
 }
 
-protocol WalletLoyaltyCardCollectionViewCellDelegate: NSObject {
+protocol WalletLoyaltyCardCollectionViewCellDelegate: AnyObject {
     func cellSwipeBegan(cell: WalletLoyaltyCardCollectionViewCell)
     func cellDidFullySwipe(action: SwipeMode?, cell: WalletLoyaltyCardCollectionViewCell)
     func cellPerform(action: CellAction, cell: WalletLoyaltyCardCollectionViewCell)

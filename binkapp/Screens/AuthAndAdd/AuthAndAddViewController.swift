@@ -8,7 +8,7 @@
 import UIKit
 import NotificationCenter
 
-class AuthAndAddViewController: BaseFormViewController {    
+class AuthAndAddViewController: BaseFormViewController {
     private struct Constants {
         static let postCollectionViewPadding: CGFloat = 15.0
         static let cardPadding: CGFloat = 30.0
@@ -79,7 +79,7 @@ class AuthAndAddViewController: BaseFormViewController {
         NSLayoutConstraint.activate([
             floatingButtons.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtons.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
+            floatingButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding)
         ])
     }
     

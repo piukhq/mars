@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol LoginTextFieldDelegate {
+protocol LoginTextFieldDelegate: AnyObject {
     func loginTextFieldView(_ loginTextFieldView: LoginTextFieldView, didCompleteWithColumn column: String, value: String, fieldType: FieldType)
 }
 
@@ -17,7 +17,7 @@ class LoginTextFieldView: CustomView {
     @IBOutlet private weak var textField: UITextField!
     @IBOutlet private weak var separatorView: UIView!
     
-    private var delegate: LoginTextFieldDelegate?
+    private weak var delegate: LoginTextFieldDelegate?
     private var validationRegEx: String?
     private var title: String = ""
     private var fieldType: FieldType?

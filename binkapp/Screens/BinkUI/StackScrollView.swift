@@ -100,7 +100,7 @@ open class StackScrollView: UIScrollView {
                 stackViewTopConstraint,
                 stackView.widthAnchor.constraint(equalTo: widthAnchor),
                 stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-                stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
+                stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
                 ])
             
             if adjustForKeyboard {

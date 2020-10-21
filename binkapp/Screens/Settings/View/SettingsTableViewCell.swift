@@ -106,7 +106,7 @@ class SettingsTableViewCell: UITableViewCell {
             chevron.heightAnchor.constraint(equalToConstant: Constants.chevronWidthHeight),
             chevron.widthAnchor.constraint(equalToConstant: Constants.chevronWidthHeight),
             chevron.rightAnchor.constraint(equalTo: rightAnchor, constant: -Constants.chevronRightPadding),
-            chevron.centerYAnchor.constraint(equalTo: centerYAnchor),
+            chevron.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     

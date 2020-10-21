@@ -12,7 +12,7 @@ import XCTest
 class StorageUtilityTests: XCTestCase {
 
     override func setUp() {
-        StorageUtilityMock.sharedStoredObjects = [StorageUtilityMock.StoredObject]()
+        StorageUtilityMock.sharedStoredObjects: [StorageUtilityMock.StoredObject] = []
     }
 
     func test_addStoredObject_addsObjectThatDoesNotExist() {

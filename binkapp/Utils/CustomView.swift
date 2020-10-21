@@ -46,9 +46,9 @@ open class CustomView: UIView {
     private func loadViewFromNib() -> UIView {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: self.reuseableId, bundle: bundle)
-        let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
-        
-        return view
+        let view = nib.instantiate(withOwner: self, options: nil).first as? UIView
+        guard let viewFromNib = view else { fatalError("Cannot create view from nib")}
+        return viewFromNib
     }
     
     open func configureUI() {

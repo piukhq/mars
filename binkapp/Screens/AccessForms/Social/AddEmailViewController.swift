@@ -9,7 +9,7 @@
 import UIKit
 
 class AddEmailViewController: BaseFormViewController {
-    typealias AddEmailCompletion = (FacebookRequest) -> ()
+    typealias AddEmailCompletion = (FacebookRequest) -> Void
     
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)

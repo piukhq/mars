@@ -76,7 +76,7 @@ class RootStateMachine: NSObject, UserServiceProtocol {
         }
     }
     
-    private func clearLocalStorage(completion: @escaping () -> ()) {
+    private func clearLocalStorage(completion: @escaping () -> Void) {
         Current.database.performBackgroundTask { context in
             context.deleteAll(CD_MembershipCard.self)
             context.deleteAll(CD_PaymentCard.self)

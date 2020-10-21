@@ -8,7 +8,7 @@
 
 import Foundation
 
-fileprivate var debugBaseURL = "" {
+private var debugBaseURL = "" {
     didSet {
         Current.userDefaults.set(debugBaseURL, forDefaultsKey: .debugBaseURL)
     }
@@ -41,7 +41,7 @@ enum Configuration {
     }
     
     static func value(for key: String) throws -> String {
-        guard let object = Bundle.main.object(forInfoDictionaryKey:key) else { throw ConfigurationError.missingKey }
+        guard let object = Bundle.main.object(forInfoDictionaryKey: key) else { throw ConfigurationError.missingKey }
         guard let string = object as? String, !string.isEmpty else { throw ConfigurationError.invalidValue }
         return string
     }
@@ -75,8 +75,7 @@ struct APIConstants {
         do {
             let configBaseURL = try Configuration.value(for: "API_BASE_URL")
             return configBaseURL
-        }
-        catch {
+        } catch {
             fatalError(error.localizedDescription)
         }
     }
@@ -86,7 +85,7 @@ struct APIConstants {
     }
     
     static func moveToCustomURL(url: String) {
-        if url == "" {
+        if url.isEmpty {
             changeEnvironment(environment: .dev)
             return
         }
@@ -102,11 +101,9 @@ struct APIConstants {
         do {
             let rawValue = try Configuration.value(for: "SECRET")
             return SecretKeyType(rawValue: rawValue)
-        }
-        catch {
+        } catch {
             fatalError(error.localizedDescription)
         }
-        
     }
     
     static let clientID = "MKd3FfDGBi1CIUQwtahmPap64lneCa2R6GvVWKg6dNg4w9Jnpd"

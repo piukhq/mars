@@ -10,11 +10,11 @@ import Foundation
 import FBSDKLoginKit
 
 struct FacebookLoginController {
-    static func login(with baseViewController: UIViewController, onSuccess: @escaping (_ request: FacebookRequest) -> (), onError: @escaping (_ isCancelled: Bool) -> ()) {
+    static func login(with baseViewController: UIViewController, onSuccess: @escaping (_ request: FacebookRequest) -> Void, onError: @escaping (_ isCancelled: Bool) -> Void) {
         
         let loginManager = LoginManager()
         
-        loginManager.logIn(permissions: ["email"], from: baseViewController) { (result, error) in
+        loginManager.logIn(permissions: ["email"], from: baseViewController) { (result, _) in
             guard result?.isCancelled == false else {
                 DispatchQueue.main.async {
                     onError(result?.isCancelled == true)
@@ -48,9 +48,9 @@ struct FacebookLoginController {
             }
             
             // Perform graph request for email
-            let graph = GraphRequest(graphPath: "me", parameters: ["fields":"email"])
+            let graph = GraphRequest(graphPath: "me", parameters: ["fields": "email"])
             
-            graph.start { (connection, result, error) in
+            graph.start { (_, result, _) in
                 if let result = result as? [String: String], let resultEmail = result["email"] {
                     request.email = resultEmail
                 }
