@@ -33,8 +33,8 @@ final class APIClient {
     }
 
     enum APIVersion: String {
-        case v1_1 = "v=1.1" // TODO: Deprecate this when 1.3 lands
         case v1_2 = "v=1.2"
+        case v1_3 = "v=1.3"
     }
 
     var networkIsReachable: Bool {
@@ -59,7 +59,7 @@ final class APIClient {
         return APIConstants.isPreProduction
     }
 
-    var apiVersion: APIVersion = .v1_2
+    var apiVersion: APIVersion = .v1_3
 
     private let successStatusRange = 200...299
     private let noResponseStatus = 204
