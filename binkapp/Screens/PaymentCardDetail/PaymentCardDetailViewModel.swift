@@ -12,7 +12,11 @@ import SupportSDK
 class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
-    private var paymentCard: CD_PaymentCard
+    private var paymentCard: CD_PaymentCard {
+        didSet {
+            buildInformationRows()
+        }
+    }
     private let repository = PaymentCardDetailRepository()
     private let informationRowFactory: WalletCardDetailInformationRowFactory
 
@@ -20,6 +24,8 @@ class PaymentCardDetailViewModel {
         self.paymentCard = paymentCard
         self.informationRowFactory = informationRowFactory
     }
+
+    var informationRows: [CardDetailInformationRow] = []
 
     var paymentCardStatus: PaymentCardStatus {
         return paymentCard.paymentCardStatus
@@ -231,9 +237,8 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: Information rows
-
-    var informationRows: [CardDetailInformationRow] {
-        return informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
+    private func buildInformationRows() {
+        informationRows = informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
     }
 
     func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
