@@ -23,6 +23,7 @@ class PaymentCardDetailViewModel {
     init(paymentCard: CD_PaymentCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.paymentCard = paymentCard
         self.informationRowFactory = informationRowFactory
+        buildInformationRows()
     }
 
     var informationRows: [CardDetailInformationRow] = []
@@ -309,18 +310,6 @@ class PaymentCardDetailViewModel {
             removeLinkToMembershipCard(membershipCard, completion: completion)
         } else {
             linkMembershipCard(membershipCard, completion: completion)
-        }
-    }
-
-    func getLinkedMembershipCards(completion: @escaping () -> Void) {
-        repository.getPaymentCard(forId: paymentCard.id) { [weak self] paymentCard in
-            // If we don't get a payment card back, we'll fail silently by firing the same completion handler anyway.
-            // The completion will always be to reload the views, so we will just see the local data.
-            if let paymentCard = paymentCard {
-                self?.paymentCard = paymentCard
-            }
-
-            completion()
         }
     }
 

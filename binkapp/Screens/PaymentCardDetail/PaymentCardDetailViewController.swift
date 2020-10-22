@@ -124,6 +124,10 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         configureLayout()
         configureUI()
         setupTables()
+
+        if viewModel.paymentCardIsActive {
+            refresh()
+        }
         
         if viewModel.paymentCardStatus == .pending {
             refreshTimer = Timer.scheduledTimer(withTimeInterval: viewModel.pendingRefreshInterval, repeats: false, block: { timer in
@@ -156,9 +160,10 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
 // MARK - Private methods
 
 private extension PaymentCardDetailViewController {
+    /// Called when card is pending, and timer fires to refresh the payment card
+    /// Called on viewDidLoad if card is active
     func refresh() {
         viewModel.refreshPaymentCard {
-            self.configureUI()
             self.refreshViews()
         }
     }
@@ -229,18 +234,11 @@ private extension PaymentCardDetailViewController {
         addedCardsTableView.register(PaymentCardDetailLoyaltyCardStatusCell.self, asNib: true)
         otherCardsTableView.register(PaymentCardDetailAddLoyaltyCardCell.self, asNib: true)
         informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
-
-        getLinkedCards()
-    }
-
-    func getLinkedCards() {
-        viewModel.getLinkedMembershipCards { [weak self] in
-            self?.refreshViews()
-        }
     }
 
     func refreshViews() {
         self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
+        self.configureUI()
         self.addedCardsTableView.reloadData()
         self.otherCardsTableView.reloadData()
         self.informationTableView.reloadData()
