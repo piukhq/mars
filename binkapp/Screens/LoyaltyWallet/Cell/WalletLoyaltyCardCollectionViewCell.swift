@@ -128,9 +128,9 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         case .v1_3:
             if let secondaryColor = plan.card?.secondaryColour {
                 rectangleView.secondColor = UIColor(hexString: secondaryColor)
-                break
+            } else {
+                rectangleView.secondColor = secondaryBrandColour
             }
-            rectangleView.secondColor = secondaryBrandColour
         }
         
         /// Brand name
