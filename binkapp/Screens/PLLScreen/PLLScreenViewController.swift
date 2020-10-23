@@ -269,7 +269,7 @@ extension PLLScreenViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == pendingPaymentCardsTableView {
-            // TODO: Navigate to FAQ
+            viewModel.toFAQScreen()
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

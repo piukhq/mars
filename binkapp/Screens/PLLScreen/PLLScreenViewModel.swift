@@ -168,6 +168,12 @@ class PLLScreenViewModel {
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
+
+    func toFAQScreen() {
+        let viewController = ZendeskService.makeFAQViewController()
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, hideCloseButton: true)
+        Current.navigate.to(navigationRequest)
+    }
 }
 
 extension PLLScreenViewModel: CoreDataRepositoryProtocol {
