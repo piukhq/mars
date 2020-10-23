@@ -92,7 +92,7 @@ enum APIEndpoint: Equatable {
         }
     }
 
-    private var shouldVersionPin: Bool {
+    public var shouldVersionPin: Bool {
         switch self {
         case .spreedly:
             return false
