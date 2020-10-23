@@ -59,7 +59,7 @@ final class APIClient {
         return APIConstants.isPreProduction
     }
 
-    var apiVersion: APIVersion = .v1_3
+    var apiVersion: APIVersion = .v1_2
 
     private let successStatusRange = 200...299
     private let noResponseStatus = 204
