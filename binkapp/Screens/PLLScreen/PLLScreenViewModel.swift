@@ -82,15 +82,23 @@ class PLLScreenViewModel {
         }
     }
     
-    func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
+    func toggleLinkForMembershipCards(completion: @escaping (Bool) -> Void) {
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
-            completion()
-        }) { [weak self] in
-            completion()
-            self?.displaySimplePopup(
-                title: "pll_error_title".localized,
-                message: "pll_error_message".localized
-            )
+            completion(true)
+        }) { [weak self] error in
+            guard let error = error else { return }
+            if case .userFacingNetworkingError(let networkingError) = error {
+                if case .userFacingError(let userFacingError) = networkingError {
+                    let messagePrefix = self?.changedLinkCards.count == 1 ? "card_already_linked_message_prefix".localized : "cards_already_linked_message_prefix".localized
+                    let planName = self?.membershipCard.membershipPlan?.account?.planName ?? ""
+                    let planNameCard = self?.membershipCard.membershipPlan?.account?.planNameCard ?? ""
+                    let planDetails = "\(planName) \(planNameCard)"
+                    let formattedString = String(format: userFacingError.message, messagePrefix, planDetails, planDetails)
+                    self?.displaySimplePopup(title: userFacingError.title, message: formattedString, completion: {
+                        completion(false)
+                    })
+                }
+            }
         }
     }
     
@@ -109,8 +117,8 @@ class PLLScreenViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func displaySimplePopup(title: String, message: String) {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
+    func displaySimplePopup(title: String?, message: String?, completion: @escaping () -> Void) {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message, completion: completion)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
