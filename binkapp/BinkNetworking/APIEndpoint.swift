@@ -33,7 +33,8 @@ enum APIEndpoint: Equatable {
         // TODO: Don't hardcode the headers
         var headers = [
             "Content-Type": "application/json",
-            "Accept": "application/json\(shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")"
+            "Accept": "application/json\(shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")",
+            "User-Agent": "Bink App / iOS \(Bundle.shortVersionNumber ?? "") / \(UIDevice.current.systemVersion)"
         ]
 
         if authRequired {
