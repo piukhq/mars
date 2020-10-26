@@ -92,7 +92,7 @@ struct BinkNetworkRequest {
     var endpoint: APIEndpoint
     var method: HTTPMethod
     var queryParameters: [String: String]?
-    var headers: [String: String]?
+    var headers: [BinkHTTPHeader]?
     var isUserDriven: Bool
 }
 struct ValidatedNetworkRequest {
@@ -187,7 +187,8 @@ extension APIClient {
             return
         }
 
-        let requestHeaders = HTTPHeaders(request.headers ?? request.endpoint.headers)
+//        let requestHeaders = HTTPHeaders(request.headers ?? request.endpoint.headers)
+        let requestHeaders = HTTPHeaders(BinkHTTPHeader.dictionary(headers: request.headers ?? request.endpoint.headers))
         completion(ValidatedNetworkRequest(requestUrl: url, headers: requestHeaders), nil)
     }
 }
