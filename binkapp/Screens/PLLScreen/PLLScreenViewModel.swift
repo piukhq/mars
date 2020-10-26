@@ -16,16 +16,31 @@ class PLLScreenViewModel {
     private let paymentScannerStrings = PaymentCardScannerStrings()
     
     let journey: PllScreenJourney
-    var paymentCards: [CD_PaymentCard]? {
-        return Current.wallet.paymentCards
+    
+    var activePaymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .active }
     }
-    var hasPaymentCards: Bool {
-        return Current.wallet.hasPaymentCards
+    
+    var pendingPaymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .pending }
     }
+    
+    var hasActivePaymentCards: Bool {
+        return activePaymentCards != nil && activePaymentCards?.count != 0
+    }
+    
     private(set) var changedLinkCards = [CD_PaymentCard]()
     
+    var shouldShowActivePaymentCards: Bool {
+        return hasActivePaymentCards
+    }
+    
+    var shouldShowPendingPaymentCards: Bool {
+        return pendingPaymentCards != nil && pendingPaymentCards?.count != 0
+    }
+    
     var isEmptyPll: Bool {
-        return paymentCards == nil ? true : paymentCards?.count == 0
+        return !shouldShowActivePaymentCards
     }
     
     var shouldShowBackButton: Bool {
@@ -151,6 +166,12 @@ class PLLScreenViewModel {
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+
+    func toFAQScreen() {
+        let viewController = ZendeskService.makeFAQViewController()
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, hideCloseButton: true)
         Current.navigate.to(navigationRequest)
     }
 }

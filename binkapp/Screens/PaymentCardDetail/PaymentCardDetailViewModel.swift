@@ -260,11 +260,7 @@ class PaymentCardDetailViewModel {
     }
     
     func toFAQsScreen() {
-        let helpCenterConfig = HelpCenterUiConfiguration()
-        helpCenterConfig.showContactOptions = false
-        let articleConfig = ArticleUiConfiguration()
-        articleConfig.showContactOptions = false
-        let viewController = ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: ZendeskService.pendingPaymentCardsArticleID, andConfigs: [helpCenterConfig, articleConfig])
+        let viewController = ZendeskService.makeFAQViewController()
         let navigationRequest = ModalNavigationRequest(viewController: viewController, hideCloseButton: true)
         Current.navigate.to(navigationRequest)
     }
