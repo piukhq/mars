@@ -760,6 +760,7 @@
 		BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		C5D1F95CBE07939CA29E03E5 /* Pods-binkapp.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.beta.xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.beta.xcconfig"; sourceTree = "<group>"; };
 		CBE46BB3E6386EE997F95088 /* Pods-binkappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.debug.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
 		CE341ED6252DC01A00577153 /* WhoWeAreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreViewController.swift; sourceTree = "<group>"; };
 		CE341F0A252DED1400577153 /* BinkPersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkPersonTableViewCell.swift; sourceTree = "<group>"; };
 		CE341F0B252DED1400577153 /* BinkPersonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BinkPersonTableViewCell.xib; sourceTree = "<group>"; };
@@ -3993,6 +3994,7 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */,
 				706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */,
 				70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */,
 				7049B63C24AB52AA00661128 /* binkapp - 30-06-20 - Add field alternatives.xcdatamodel */,
@@ -4004,7 +4006,7 @@
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = 706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */;
+			currentVersion = CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
