@@ -60,4 +60,8 @@ final class ZendeskService {
         let identity = Identity.createAnonymous(name: fullName, email: Current.userManager.currentEmailAddress)
         Zendesk.instance?.setIdentity(identity)
     }
+    
+    static var pendingPaymentCardsArticleID: String {
+        return APIConstants.isProduction ? "360016688220" : "360016721639"
+    }
 }

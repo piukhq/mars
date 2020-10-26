@@ -48,15 +48,17 @@ struct ModalNavigationRequest: BaseNavigationRequest {
     let embedInNavigationController: Bool
     let animated: Bool
     let transition: UIModalTransitionStyle
-    let allowDismiss: Bool
+    let dragToDismiss: Bool
+    let hideCloseButton: Bool
     let completion: EmptyCompletionBlock?
-    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, transition: UIModalTransitionStyle = .coverVertical, allowDismiss: Bool = true, completion: EmptyCompletionBlock? = nil) {
+    init(viewController: UIViewController, fullScreen: Bool = false, embedInNavigationController: Bool = true, animated: Bool = true, transition: UIModalTransitionStyle = .coverVertical, dragToDismiss: Bool = true, hideCloseButton: Bool = false, completion: EmptyCompletionBlock? = nil) {
         self.viewController = viewController
         self.fullScreen = fullScreen
         self.embedInNavigationController = embedInNavigationController
         self.animated = animated
         self.transition = transition
-        self.allowDismiss = allowDismiss
+        self.dragToDismiss = dragToDismiss
+        self.hideCloseButton = hideCloseButton
         self.completion = completion
     }
 }
@@ -169,7 +171,7 @@ class BaseNavigationHandler {
                 navigationController?.popViewController(animated: navigationRequest.animated, completion: navigationRequest.completion)
             }
         case let navigationRequest as ModalNavigationRequest:
-            let viewController = navigationRequest.embedInNavigationController ? PortraitNavigationController(rootViewController: navigationRequest.viewController, isModallyPresented: true, shouldShowCloseButton: navigationRequest.allowDismiss) : navigationRequest.viewController
+            let viewController = navigationRequest.embedInNavigationController ? PortraitNavigationController(rootViewController: navigationRequest.viewController, isModallyPresented: true, shouldShowCloseButton: !navigationRequest.hideCloseButton) : navigationRequest.viewController
             
             // Otherwise will default to iOS 13 style modal
             if navigationRequest.fullScreen {
@@ -178,7 +180,7 @@ class BaseNavigationHandler {
             
             viewController.modalTransitionStyle = navigationRequest.transition
             
-            if !navigationRequest.allowDismiss {
+            if !navigationRequest.dragToDismiss {
                 if #available(iOS 13.0, *) {
                     viewController.isModalInPresentation = true
                 }
