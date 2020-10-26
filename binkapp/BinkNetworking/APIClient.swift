@@ -187,8 +187,7 @@ extension APIClient {
             return
         }
 
-//        let requestHeaders = HTTPHeaders(request.headers ?? request.endpoint.headers)
-        let requestHeaders = HTTPHeaders(BinkHTTPHeader.dictionary(headers: request.headers ?? request.endpoint.headers))
+        let requestHeaders = HTTPHeaders(BinkHTTPHeaders.dictionary(request.headers ?? request.endpoint.headers))
         completion(ValidatedNetworkRequest(requestUrl: url, headers: requestHeaders), nil)
     }
 }

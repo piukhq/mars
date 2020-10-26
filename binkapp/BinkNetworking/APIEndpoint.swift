@@ -28,48 +28,15 @@ enum APIEndpoint: Equatable {
     case paymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
     case spreedly
-
-//    var headers: [HTTPHeader] {
-//        // TODO: Don't hardcode the headers
-////        var headers = [
-////            "Content-Type": "application/json",
-////            "Accept": "application/json\(shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")",
-////            "User-Agent": "Bink App / iOS \(Bundle.shortVersionNumber ?? "") / \(UIDevice.current.systemVersion)"
-////        ]
-//        let userAgent = "Bink App / iOS \(Bundle.shortVersionNumber ?? "") / \(UIDevice.current.systemVersion)"
-//        let acceptHeader: HTTPHeader = shouldVersionPin ? .accept("application/json;\(Current.apiClient.apiVersion.rawValue)") : .accept("application/json")
-//        var headers: [HTTPHeader] = [.contentType("application/json"), .userAgent(userAgent), acceptHeader]
-//
-//
-//        if authRequired {
-//            guard let token = Current.userManager.currentToken else { return headers }
-//            headers.append(.authorization(token))
-//        }
-//
-//        return headers
-//    }
     
     var headers: [BinkHTTPHeader] {
-        // TODO: Don't hardcode the headers
-//        var headers = [
-//            "Content-Type": "application/json",
-//            "Accept": "application/json\(shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")",
-//            "User-Agent": "Bink App / iOS \(Bundle.shortVersionNumber ?? "") / \(UIDevice.current.systemVersion)"
-//        ]
-        
         var headers: [BinkHTTPHeader] = [.defaultUserAgent, .defaultContentType]
-        
-        if shouldVersionPin {
-            headers.append(.acceptEncoding("application/json;\(Current.apiClient.apiVersion.rawValue)"))
-        } else {
-            headers.append(.defaultAcceptEncoding)
-        }
+        shouldVersionPin ? headers.append(.accept("application/json;\(Current.apiClient.apiVersion.rawValue)")) : headers.append(.defaultAccept)
         
         if authRequired {
             guard let token = Current.userManager.currentToken else { return headers }
             headers.append(.authorization(token))
         }
-
         return headers
     }
 

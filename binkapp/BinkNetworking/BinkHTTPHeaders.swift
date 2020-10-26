@@ -9,14 +9,15 @@
 import UIKit
 
 struct BinkHTTPHeaders {
-    public static let defaultHeaders: [BinkHTTPHeader] = [.defaultUserAgent, .defaultContentType]
+    public static func dictionary(_ headers: [BinkHTTPHeader]) -> [String: String] {
+        let namesAndValues = headers.map { ($0.name, $0.value) }
+        return Dictionary(namesAndValues, uniquingKeysWith: { _, last in last })
+    }
 }
 
 struct BinkHTTPHeader {
-    private let name: String
-    private let value: String
-    public static var headers: [BinkHTTPHeader] = []
-
+    public let name: String
+    public let value: String
     
     // MARK: - Headers
 
@@ -28,14 +29,13 @@ struct BinkHTTPHeader {
         return BinkHTTPHeader(name: "Content-Type", value: value)
     }
     
-    public static func acceptEncoding(_ value: String) -> BinkHTTPHeader {
+    public static func accept(_ value: String) -> BinkHTTPHeader {
         return BinkHTTPHeader(name: "Accept", value: value)
     }
     
     public static func authorization(_ value: String) -> BinkHTTPHeader {
         return BinkHTTPHeader(name: "Authorization", value: "Token \(value)")
     }
-    
     
     // MARK: - Defaults
 
@@ -47,29 +47,15 @@ struct BinkHTTPHeader {
         return contentType("application/json")
     }()
     
-    public static let defaultAcceptEncoding: BinkHTTPHeader = {
-        return acceptEncoding("application/json")
-//        return BinkHTTPHeader(name: "Accept", value: "application/json\(APIEndpoint.shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")")
+    public static let defaultAccept: BinkHTTPHeader = {
+        return accept("application/json")
     }()
     
     
     // MARK: - Convert To Dictionary
 
-    public static func dictionary(headers: [BinkHTTPHeader]) -> [String: String] {
+    public static func dictionary(_ headers: [BinkHTTPHeader]) -> [String: String] {
         let namesAndValues = headers.map { ($0.name, $0.value) }
-
         return Dictionary(namesAndValues, uniquingKeysWith: { _, last in last })
     }
-    
-//    public static let defaultAuthorisation: BinkHTTPHeader = {
-//        guard let token = Current.userManager.currentToken else { return headers }
-//        return authorization(<#T##value: String##String#>)
-//    }
-    
-    
-    //        if authRequired {
-    //            guard let token = Current.userManager.currentToken else { return headers }
-    //            headers["Authorization"] = "Token " + token
-    //        }
-    
 }
