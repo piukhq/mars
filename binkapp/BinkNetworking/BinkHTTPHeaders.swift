@@ -9,15 +9,19 @@
 import UIKit
 
 struct BinkHTTPHeaders {
-    public let defaultHeaders: [BinkHTTPHeader] = [.userAgent]
+    public let defaultHeaders: [BinkHTTPHeader] = [.defaultUserAgent]
 }
 
 struct BinkHTTPHeader {
     private let name: String
     private let value: String
     
-    public static let userAgent: BinkHTTPHeader = {
-        return BinkHTTPHeader(name: "User-Agent", value: "Bink App / iOS \(Bundle.shortVersionNumber ?? "") / \(UIDevice.current.systemVersion)")
+    public static func userAgent(_ value: String) -> BinkHTTPHeader {
+        return BinkHTTPHeader(name: "User-Agent", value: value)
+    }
+    
+    public static let defaultUserAgent: BinkHTTPHeader = {
+        return userAgent("Bink App / iOS \(Bundle.shortVersionNumber ?? "") / \(UIDevice.current.systemVersion)")
     }()
     
     public static let contentType: BinkHTTPHeader = {
@@ -25,7 +29,10 @@ struct BinkHTTPHeader {
     }()
     
     public static let accept: BinkHTTPHeader = {
-        return BinkHTTPHeader(name: "Accept", value: "application/json\(APIEndpoint.shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")")
+        let shouldVersionPin = APIEndpoint.spreedly
+        return BinkHTTPHeader(name: "Accept", value: "application/json)")
+
+//        return BinkHTTPHeader(name: "Accept", value: "application/json\(APIEndpoint.shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")")
     }()
     
  
