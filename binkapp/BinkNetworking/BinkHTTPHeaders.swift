@@ -9,7 +9,7 @@
 import UIKit
 
 struct BinkHTTPHeaders {
-    public let defaultHeaders: [BinkHTTPHeader] = [.defaultUserAgent, .defaultContentType]
+    public static let defaultHeaders: [BinkHTTPHeader] = [.defaultUserAgent, .defaultContentType]
 }
 
 struct BinkHTTPHeader {
@@ -30,6 +30,10 @@ struct BinkHTTPHeader {
         return BinkHTTPHeader(name: "Accect", value: value)
     }
     
+    public static func authorization(_ value: String) -> BinkHTTPHeader {
+        return BinkHTTPHeader(name: "Authorization", value: "Token \(value)")
+    }
+    
     
     // MARK: - Defaults
 
@@ -46,7 +50,15 @@ struct BinkHTTPHeader {
 //        return BinkHTTPHeader(name: "Accept", value: "application/json\(APIEndpoint.shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")")
     }()
     
- 
+//    public static let defaultAuthorisation: BinkHTTPHeader = {
+//        guard let token = Current.userManager.currentToken else { return headers }
+//        return authorization(<#T##value: String##String#>)
+//    }
     
+    
+    //        if authRequired {
+    //            guard let token = Current.userManager.currentToken else { return headers }
+    //            headers["Authorization"] = "Token " + token
+    //        }
     
 }
