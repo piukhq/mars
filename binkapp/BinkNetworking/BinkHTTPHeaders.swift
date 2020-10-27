@@ -51,6 +51,10 @@ struct BinkHTTPHeader {
         return accept("application/json")
     }()
     
+    static let acceptWithAPIVersion: BinkHTTPHeader = {
+        return accept("application/json;\(Current.apiClient.apiVersion.rawValue)")
+    }()
+    
     
     // MARK: - Convert To Dictionary
 
