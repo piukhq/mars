@@ -65,7 +65,7 @@ class PLLScreenViewModel {
     }
     
     var shouldAllowDismiss: Bool {
-        return !hasPaymentCards
+        return !hasActivePaymentCards
     }
         
     init(membershipCard: CD_MembershipCard, journey: PllScreenJourney, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
