@@ -7,21 +7,33 @@
 //
 
 import Foundation
+import SupportSDK
 
 class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
 
-    private var paymentCard: CD_PaymentCard
+    private var paymentCard: CD_PaymentCard {
+        didSet {
+            buildInformationRows()
+        }
+    }
     private let repository = PaymentCardDetailRepository()
     private let informationRowFactory: WalletCardDetailInformationRowFactory
 
     init(paymentCard: CD_PaymentCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.paymentCard = paymentCard
         self.informationRowFactory = informationRowFactory
+        buildInformationRows()
     }
+
+    var informationRows: [CardDetailInformationRow] = []
 
     var paymentCardStatus: PaymentCardStatus {
         return paymentCard.paymentCardStatus
+    }
+    
+    var paymentCardIsActive: Bool {
+        return paymentCardStatus == .active
     }
     
     var pendingRefreshInterval: TimeInterval {
@@ -43,7 +55,7 @@ class PaymentCardDetailViewModel {
     }
 
     var addedCardsTitle: String {
-        switch paymentCard.paymentCardStatus {
+        switch paymentCardStatus {
         case .active:
             return "pcd_active_card_title".localized
         case .pending:
@@ -54,15 +66,16 @@ class PaymentCardDetailViewModel {
     }
 
     var addedCardsDescription: String {
-        switch paymentCard.paymentCardStatus {
+        switch paymentCardStatus {
         case .active:
             return "pcd_active_card_description".localized
         case .pending:
-            return String(format: "pcd_pending_card_description".localized, cardAddedDateString ?? "")
+            return "pcd_pending_card_description".localized
         case .failed:
             return "pcd_failed_card_description".localized
         }
     }
+    
     
     var cardAddedDateString: String? {
         guard let timestamp = paymentCard.account?.formattedConsents?.first?.timestamp?.doubleValue else { return nil }
@@ -79,13 +92,53 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: - View configuration decisioning
+    
+    var shouldShowPaymentCardCell: Bool {
+        return true
+    }
+    
+    var shouldShowAddedCardsTitleLabel: Bool {
+        switch paymentCardStatus {
+        case .active:
+            return shouldShowAddedLoyaltyCardTableView
+        default: return true
+        }
+    }
+    
+    var shouldShowAddedCardsDescriptionLabel: Bool {
+        return shouldShowAddedCardsTitleLabel
+    }
+    
+    var shouldShowOtherCardsTitleLabel: Bool {
+        switch paymentCardStatus {
+        case .active:
+            return shouldShowOtherCardsTableView
+        default: return false
+        }
+    }
+    
+    var shouldShowOtherCardsDescriptionLabel: Bool {
+        shouldShowOtherCardsTitleLabel
+    }
+    
+    var shouldShowCardAddedLabel: Bool {
+        return paymentCardStatus == .pending
+    }
 
     var shouldShowAddedLoyaltyCardTableView: Bool {
-        return pllMembershipCardsCount != 0
+        return paymentCardStatus == .active && pllMembershipCardsCount != 0
     }
 
     var shouldShowOtherCardsTableView: Bool {
-        return pllPlansNotAddedToWallet?.count != 0
+        return paymentCardStatus == .active && pllPlansNotAddedToWallet?.count != 0
+    }
+    
+    var shouldShowInformationTableView: Bool {
+        return true
+    }
+    
+    var shouldShowSeparator: Bool {
+        return paymentCardStatus != .active
     }
 
     // MARK: PLL membership plans
@@ -185,9 +238,8 @@ class PaymentCardDetailViewModel {
     }
 
     // MARK: Information rows
-
-    var informationRows: [CardDetailInformationRow] {
-        return informationRowFactory.makePaymentInformationRows()
+    private func buildInformationRows() {
+        informationRows = informationRowFactory.makePaymentInformationRows(for: paymentCardStatus)
     }
 
     func informationRow(forIndexPath indexPath: IndexPath) -> CardDetailInformationRow {
@@ -195,7 +247,7 @@ class PaymentCardDetailViewModel {
     }
 
     func performActionForInformationRow(atIndexPath indexPath: IndexPath) {
-        informationRows[indexPath.row].action()
+        informationRows[safe: indexPath.row]?.action()
     }
 
     func toSecurityAndPrivacyScreen() {
@@ -204,6 +256,12 @@ class PaymentCardDetailViewModel {
         let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
         let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+    
+    func toFAQsScreen() {
+        let viewController = ZendeskService.makeFAQViewController()
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, hideCloseButton: true)
         Current.navigate.to(navigationRequest)
     }
     
@@ -251,26 +309,27 @@ class PaymentCardDetailViewModel {
         }
     }
 
-    func getLinkedMembershipCards(completion: @escaping () -> Void) {
-        repository.getPaymentCard(forId: paymentCard.id) { [weak self] paymentCard in
-            // If we don't get a payment card back, we'll fail silently by firing the same completion handler anyway.
-            // The completion will always be to reload the views, so we will just see the local data.
-            if let paymentCard = paymentCard {
-                self?.paymentCard = paymentCard
-            }
-
-            completion()
-        }
-    }
-
     private func linkMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
-        repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard in
-            // If we don't get a payment card back, we'll fail silently by firing the same completion handler anyway.
-            // The completion will always be to reload the views, so we will just see the local data.
-            if let paymentCard = paymentCard {
-                self?.paymentCard = paymentCard
+        repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard, error in
+            guard let error = error else { return }
+            if case .userFacingNetworkingError(let networkingError) = error {
+                if case .userFacingError(let userFacingError) = networkingError {
+                    let messagePrefix = "card_already_linked_message_prefix".localized
+                    let planName = membershipCard.membershipPlan?.account?.planName ?? ""
+                    let planNameCard = membershipCard.membershipPlan?.account?.planNameCard ?? ""
+                    let planDetails = "\(planName) \(planNameCard)"
+                    let formattedString = String(format: userFacingError.message, messagePrefix, planDetails, planDetails)
+                    let alert = ViewControllerFactory.makeOkAlertViewController(title: userFacingError.title, message: formattedString)
+                    let navigationRequest = AlertNavigationRequest(alertController: alert)
+                    Current.navigate.to(navigationRequest)
+                    completion()
+                    return
+                }
             }
             
+            if let paymentCard = paymentCard {
+                self?.paymentCard = paymentCard
+            }
             completion()
         }
     }

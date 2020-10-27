@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SupportSDK
 
 class PaymentCardDetailViewController: BinkTrackableViewController {
     private var viewModel: PaymentCardDetailViewModel
     private var hasSetupCell = false
     
     private var refreshTimer: Timer?
+    private let zendeskTickets = ZendeskTickets()
 
     // MARK: - UI lazy vars
 
@@ -43,8 +45,8 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         return title
     }()
 
-    private lazy var addedCardsDescriptionLabel: UILabel = {
-        let description = UILabel()
+    private lazy var addedCardsDescriptionLabel: HyperlinkLabel = {
+        let description = HyperlinkLabel()
         description.font = .bodyTextLarge
         description.numberOfLines = 0
         description.textAlignment = .left
@@ -123,7 +125,9 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
         configureUI()
         setupTables()
 
-        getLinkedCards()
+        if viewModel.paymentCardIsActive {
+            refresh()
+        }
         
         if viewModel.paymentCardStatus == .pending {
             refreshTimer = Timer.scheduledTimer(withTimeInterval: viewModel.pendingRefreshInterval, repeats: false, block: { timer in
@@ -156,27 +160,32 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
 // MARK - Private methods
 
 private extension PaymentCardDetailViewController {
+    /// Called when card is pending, and timer fires to refresh the payment card
+    /// Called on viewDidLoad if card is active
     func refresh() {
         viewModel.refreshPaymentCard {
-            self.configureUI()
-            self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
-            Current.wallet.refreshLocal()
+            self.refreshViews()
         }
     }
     
     func configureUI() {
         addedCardsTitleLabel.text = viewModel.addedCardsTitle
-        addedCardsDescriptionLabel.text = viewModel.addedCardsDescription
+        viewModel.paymentCardIsActive ? addedCardsDescriptionLabel.text = viewModel.addedCardsDescription : addedCardsDescriptionLabel.configure(viewModel.addedCardsDescription, withHyperlink: "pcd_pending_card_hyperlink".localized, delegate: self)
+        
         otherCardsTitleLabel.text = viewModel.otherCardsTitle
         otherCardsDescriptionLabel.text = viewModel.otherCardsDescription
         cardAddedLabel.text = viewModel.cardAddedDateString
         
-        [addedCardsTableView, otherCardsTableView, otherCardsTitleLabel, otherCardsDescriptionLabel].forEach {
-            $0.isHidden = viewModel.paymentCardStatus != .active
-        }
-        
-        cardAddedLabel.isHidden = viewModel.paymentCardStatus != .pending
-        separator.isHidden = viewModel.paymentCardStatus == .active
+        card.isHidden = !viewModel.shouldShowPaymentCardCell
+        addedCardsTitleLabel.isHidden = !viewModel.shouldShowAddedCardsTitleLabel
+        addedCardsDescriptionLabel.isHidden = !viewModel.shouldShowAddedCardsDescriptionLabel
+        otherCardsTitleLabel.isHidden = !viewModel.shouldShowOtherCardsTitleLabel
+        otherCardsDescriptionLabel.isHidden = !viewModel.shouldShowOtherCardsDescriptionLabel
+        cardAddedLabel.isHidden = !viewModel.shouldShowCardAddedLabel
+        addedCardsTableView.isHidden = !viewModel.shouldShowAddedLoyaltyCardTableView
+        otherCardsTableView.isHidden = !viewModel.shouldShowOtherCardsTableView
+        informationTableView.isHidden = !viewModel.shouldShowInformationTableView
+        separator.isHidden = !viewModel.shouldShowSeparator
         
         stackScrollView.customPadding(viewModel.paymentCardStatus == .pending ? 20 : 0, after: cardAddedLabel)
         stackScrollView.customPadding(viewModel.paymentCardStatus != .active ? 20 : 0, after: addedCardsDescriptionLabel)
@@ -225,21 +234,14 @@ private extension PaymentCardDetailViewController {
         addedCardsTableView.register(PaymentCardDetailLoyaltyCardStatusCell.self, asNib: true)
         otherCardsTableView.register(PaymentCardDetailAddLoyaltyCardCell.self, asNib: true)
         informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
-
-        getLinkedCards()
-    }
-
-    func getLinkedCards() {
-        viewModel.getLinkedMembershipCards { [weak self] in
-            self?.addedCardsTableView.reloadData()
-            self?.otherCardsTableView.reloadData()
-        }
     }
 
     func refreshViews() {
-        self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, delegate: nil)
+        self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
+        self.configureUI()
         self.addedCardsTableView.reloadData()
         self.otherCardsTableView.reloadData()
+        self.informationTableView.reloadData()
         Current.wallet.refreshLocal()
     }
 }
@@ -368,6 +370,8 @@ extension PaymentCardDetailViewController: CardDetailInformationRowFactoryDelega
             viewModel.toSecurityAndPrivacyScreen()
         case .deletePaymentCard:
             viewModel.showDeleteConfirmationAlert()
+        case .faqs:
+            viewModel.toFAQsScreen()
         default:
             return
         }
@@ -404,5 +408,11 @@ extension LayoutHelper {
         static let tableViewCellSeparatorInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
         static let pllCellRowHeight: CGFloat = 100
         static let informationRowCellHeight: CGFloat = 88
+    }
+}
+
+extension PaymentCardDetailViewController: HyperlinkLabelDelegate {
+    func hyperlinkLabelWasTapped(_ hyperlinkLabel: HyperlinkLabel) {
+        zendeskTickets.launch()
     }
 }

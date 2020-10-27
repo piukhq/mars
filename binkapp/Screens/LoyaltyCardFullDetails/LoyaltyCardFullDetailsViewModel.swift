@@ -18,14 +18,6 @@ class LoyaltyCardFullDetailsViewModel {
     }
     let membershipCard: CD_MembershipCard
     
-    var aboutTitle: String {
-        if let planName = membershipCard.membershipPlan?.account?.planName {
-            return String(format: "about_membership_plan_title".localized, planName)
-        } else {
-            return "about_membership_title".localized
-        }
-    }
-    
     var isMembershipCardAuthorised: Bool {
         return membershipCard.status?.status == .authorised
     }
@@ -133,7 +125,7 @@ class LoyaltyCardFullDetailsViewModel {
             Current.navigate.to(navigationRequest)
         case .pll, .pllEmpty:
             let viewController = ViewControllerFactory.makePllViewController(membershipCard: membershipCard, journey: .existingCard, delegate: delegate)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController, allowDismiss: false)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: action == .pllEmpty)
             Current.navigate.to(navigationRequest)
         case .unLinkable:
             let title = "unlinkable_pll_title".localized
@@ -173,9 +165,8 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     func toAboutMembershipPlanScreen() {
-        let attributedString = ReusableModalConfiguration.makeAttributedString(title: aboutTitle, description: membershipCard.membershipPlan?.account?.planDescription ?? "")
-        let configuration = ReusableModalConfiguration(text: attributedString)
-        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(configuration: configuration)
+        guard let plan = membershipCard.membershipPlan else { return }
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: plan)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }

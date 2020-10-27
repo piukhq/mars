@@ -21,7 +21,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -75,6 +75,14 @@ class DebugMenuFactory {
         }, cellType: .titleSubtitle)
     }
     
+    private func makeResponseCodeVisualiserRow() -> DebugMenuRow {
+        let shouldShowVisualiser = Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser)
+        return DebugMenuRow(title: "Response Code Visualiser", subtitle: shouldShowVisualiser ? "On" : "Off", action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .responseCodeVisualiser)
+            }, cellType: .titleSubtitle)
+    }
+    
     func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
@@ -94,7 +102,7 @@ class DebugMenuFactory {
             NotificationCenter.default.post(name: .shouldLogout, object: nil)
         }))
         alert.addAction(UIAlertAction(title: "Custom", style: .destructive, handler: { _ in
-            let customAlert = UIAlertController(title: "Base URL", message: "Please insert a valid URL.", preferredStyle: .alert)
+            let customAlert = UIAlertController(title: "Base URL", message: "Please insert a valid URL, removing https:// or http://", preferredStyle: .alert)
             customAlert.addTextField { textField in
                 textField.placeholder = "api.dev.gb.com"
             }

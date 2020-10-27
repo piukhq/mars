@@ -55,7 +55,7 @@ class AuthAndAddViewModel {
     
     var title: String {
         switch formPurpose {
-        case .signUp, .signUpFailed: return "sign_up_new_card_title".localized
+        case .signUp, .signUpFailed: return String(format: "sign_up_new_card_title".localized, membershipPlan.account?.planName ?? "a new card")
         case .add, .addFromScanner: return "credentials_title".localized
         case .addFailed: return "log_in_title".localized
         case .ghostCard, .patchGhostCard: return "register_ghost_card_title".localized
@@ -96,6 +96,9 @@ class AuthAndAddViewModel {
             }
             return nil
         case .ghostCard, .patchGhostCard:
+            if membershipPlan.isPLL, let description = membershipPlan.account?.planRegisterInfo {
+                return description
+            }
             guard let planNameCard = membershipPlan.account?.planNameCard else { return nil }
             return String(format: "register_ghost_card_description".localized, planNameCard)
         case .addFailed, .signUpFailed:
@@ -355,10 +358,9 @@ class AuthAndAddViewModel {
     }
     
     func brandHeaderWasTapped() {
-        let title = membershipPlan.account?.planName ?? ""
-        let description = membershipPlan.account?.planDescription ?? ""
-        
-        toReusableTemplate(title: title, description: description)
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func displaySimplePopup(title: String?, message: String?) {

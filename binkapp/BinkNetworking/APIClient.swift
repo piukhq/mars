@@ -33,8 +33,8 @@ final class APIClient {
     }
 
     enum APIVersion: String {
-        case v1_1 = "v=1.1" // TODO: Deprecate this when 1.3 lands
         case v1_2 = "v=1.2"
+        case v1_3 = "v=1.3"
     }
 
     var networkIsReachable: Bool {
@@ -201,7 +201,7 @@ private extension APIClient {
             completion?(.failure(.sslPinningFailure), response.response)
             return
         }
-
+        
         if let error = response.error {
             completion?(.failure(.customError(error.localizedDescription)), response.response)
             return
@@ -216,11 +216,15 @@ private extension APIClient {
                 return
             }
 
+            #if DEBUG
+            ResponseCodeVisualiser.show(statusCode)
+            #endif
+
             guard let data = response.data else {
                 completion?(.failure(.invalidResponse), response.response)
                 return
             }
-
+            
             if statusCode == unauthorizedStatus && endpoint.shouldRespondToUnauthorizedStatus {
                 // Unauthorized response
                 NotificationCenter.default.post(name: .shouldLogout, object: nil)
@@ -237,8 +241,13 @@ private extension APIClient {
                     let errorsArray = try? decoder.decode([String].self, from: data)
                     let errorsDictionary = try? decoder.decode([String: String].self, from: data)
                     let errorMessage = decodedResponseErrors?.nonFieldErrors?.first ?? errorsDictionary?.values.first ?? errorsArray?.first
-                    completion?(.failure(.customError(errorMessage ?? "went_wrong".localized)), response.response)
-                    return
+                    if let errorKey = errorsDictionary?.keys.first, let userFacingNetworkingError = UserFacingNetworkingError.errorForKey(errorKey) {
+                        completion?(.failure(.userFacingError(userFacingNetworkingError)), response.response)
+                        return
+                    } else {
+                        completion?(.failure(.customError(errorMessage ?? "went_wrong".localized)), response.response)
+                        return
+                    }
                 }
                 completion?(.failure(.clientError(statusCode)), response.response)
                 return
@@ -273,6 +282,10 @@ private extension APIClient {
             completion?(false, .invalidResponse)
             return
         }
+        
+        #if DEBUG
+        ResponseCodeVisualiser.show(statusCode)
+        #endif
 
         if statusCode == unauthorizedStatus && endpoint.shouldRespondToUnauthorizedStatus {
             // Unauthorized response

@@ -27,8 +27,8 @@ class BrandHeaderView: CustomView {
         
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
         
-        if let planNameCard = membershipPlan.account?.planNameCard {
-            loyaltyPlanButton.setTitle(planNameCard + " info", for: .normal)
+        if let planName = membershipPlan.account?.planName {
+            loyaltyPlanButton.setTitle("\(planName) info", for: .normal)
             loyaltyPlanButton.setImage(UIImage(named: "iconsChevronRight")?.withRenderingMode(.alwaysTemplate), for: .normal)
         } else {
             loyaltyPlanButton.isHidden = true

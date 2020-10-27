@@ -14,6 +14,10 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
     var imagesSet: Set<CD_MembershipPlanImage>? {
         return images as? Set<CD_MembershipPlanImage>
     }
+    
+    var isPLL: Bool {
+        return featureSet?.planCardType == .link
+    }
 
     var isPLR: Bool {
         return featureSet?.hasVouchers?.boolValue ?? false || hasVouchers?.boolValue ?? false
@@ -46,5 +50,6 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
         case voucherStampsRedeemedDetail = "Voucher_Redeemed_Detail"
         case voucherStampsInProgressDetail = "Voucher_Inprogress_Detail"
         case voucherStampsIssuedDetail = "Voucher_Issued_Detail"
+        case voucherStampsCancelledDetail = "Voucher_Cancelled_Detail"
     }
 }
