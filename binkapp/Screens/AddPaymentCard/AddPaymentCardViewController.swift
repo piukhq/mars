@@ -237,6 +237,10 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
             return false
         }
     }
+    
+    func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource) {
+        viewModel.toPaymentCardScanner()
+    }
 }
 
 extension AddPaymentCardViewController: FormCollectionViewCellDelegate {

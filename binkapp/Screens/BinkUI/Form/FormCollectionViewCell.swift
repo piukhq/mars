@@ -12,6 +12,7 @@ protocol FormCollectionViewCellDelegate: class {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
     func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell)
+
 }
 extension FormCollectionViewCellDelegate {
     func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
