@@ -125,7 +125,7 @@ class LoyaltyCardFullDetailsViewModel {
             Current.navigate.to(navigationRequest)
         case .pll, .pllEmpty:
             let viewController = ViewControllerFactory.makePllViewController(membershipCard: membershipCard, journey: .existingCard, delegate: delegate)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: false)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: action == .pllEmpty)
             Current.navigate.to(navigationRequest)
         case .unLinkable:
             let title = "unlinkable_pll_title".localized

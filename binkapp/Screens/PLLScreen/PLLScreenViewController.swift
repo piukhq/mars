@@ -192,6 +192,19 @@ class PLLScreenViewController: BinkTrackableViewController {
             self.activePaymentCardsTableView.reloadData()
             self.pendingPaymentCardsTableView.reloadData()
             self.configureUI()
+            
+            // We may be moving from empty PLL to PLL state if we've added a card directly from here
+            // So we should update the modal state
+            self.refreshModalState()
+        }
+    }
+    
+    private func refreshModalState() {
+        if !viewModel.shouldAllowDismiss {
+            navigationItem.rightBarButtonItem = nil
+            if #available(iOS 13.0, *) {
+                isModalInPresentation = true
+            }
         }
     }
 }

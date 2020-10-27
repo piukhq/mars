@@ -63,6 +63,10 @@ class PLLScreenViewModel {
     var secondaryMessageText: String {
         return "pll_screen_secondary_message".localized
     }
+    
+    var shouldAllowDismiss: Bool {
+        return !hasActivePaymentCards
+    }
         
     init(membershipCard: CD_MembershipCard, journey: PllScreenJourney, delegate: LoyaltyCardFullDetailsModalDelegate? = nil) {
         self.membershipCard = membershipCard
