@@ -131,8 +131,10 @@ extension FormDataSource {
             updated: updatedBlock,
             shouldChange: shouldChangeBlock,
             fieldExited: fieldExitedBlock,
-            forcedValue: model.fullPan
+            forcedValue: model.fullPan,
+            fieldCommonName: .cardNumber
         )
+        
         
         let monthData = Calendar.current.monthSymbols.enumerated().compactMap { index, _ in
             FormPickerData(String(format: "%02d", index + 1), backingData: index + 1)
