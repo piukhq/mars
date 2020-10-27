@@ -117,7 +117,7 @@ class AddPaymentCardViewModel {
     }
     
     func toPaymentCardScanner() {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, allowSkip: false, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
         
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
             Current.navigate.close()
