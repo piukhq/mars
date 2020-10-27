@@ -34,6 +34,9 @@ class AddPaymentCardViewModel {
     var paymentCardType: PaymentCardType? {
         return paymentCard.cardType
     }
+    
+    //TODO: Check if we actually need these
+    let strings = PaymentCardScannerStrings()
 
     func setPaymentCardType(_ cardType: PaymentCardType?) {
         paymentCard.cardType = cardType
@@ -112,4 +115,47 @@ class AddPaymentCardViewModel {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
+    
+    func toPaymentCardScanner() {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+        
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
+            Current.navigate.close()
+        }
+        
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            Current.navigate.close {
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
+                if granted {
+                    Current.navigate.close {
+                        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                        Current.navigate.to(navigationRequest)
+                    }
+                } else {
+                    if let alert = enterManuallyAlert {
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    }
+                }
+            }
+        }
+    }
+    
+//    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
+//        Current.navigate.close()
+////        Current.navigate.close {
+////            let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
+////            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+////            Current.navigate.to(navigationRequest)
+////        }
+//    }
 }
