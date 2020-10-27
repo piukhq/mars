@@ -11,11 +11,11 @@ import UIKit
 protocol FormCollectionViewCellDelegate: class {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
-    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell)
+    func formCollectionViewCellDidReceiveScannerButtonTap(_ cell: FormCollectionViewCell)
 
 }
 extension FormCollectionViewCellDelegate {
-    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
+    func formCollectionViewCellDidReceiveScannerButtonTap(_ cell: FormCollectionViewCell) {}
 }
 
 class FormCollectionViewCell: UICollectionViewCell {
@@ -238,7 +238,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func handleScanButtonTap() {
-        delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
+        delegate?.formCollectionViewCellDidReceiveScannerButtonTap(self)
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {

@@ -578,7 +578,7 @@ extension FormDataSource: FormCollectionViewCellDelegate {
         }
     }
     
-    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {
+    func formCollectionViewCellDidReceiveScannerButtonTap(_ cell: FormCollectionViewCell) {
         guard let plan = membershipPlan else {
             delegate?.formDataSourceShouldPresentPaymentScanner(self)
             return
