@@ -120,8 +120,19 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
         rectangleView.firstColor = primaryBrandColor
-        rectangleView.secondColor = plan.generatedSecondaryBrandColor
-
+        
+        let secondaryBrandColour = plan.generatedSecondaryBrandColor
+        switch Current.apiClient.apiVersion {
+        case .v1_2:
+            rectangleView.secondColor = secondaryBrandColour
+        case .v1_3:
+            if let secondaryColor = plan.card?.secondaryColour {
+                rectangleView.secondColor = UIColor(hexString: secondaryColor)
+            } else {
+                rectangleView.secondColor = secondaryBrandColour
+            }
+        }
+        
         /// Brand name
         cardNameLabel.text = plan.account?.companyName
         

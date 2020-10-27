@@ -22,6 +22,25 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
         iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
     }
+    
+    func configure(with paymentCard: CD_PaymentCard) {
+        headerLabel.text = paymentCard.card?.nameOnCard
+        detailLabel.text = String(format: "pll_screen_card_ending".localized, paymentCard.card?.lastFour ?? "")
+        statusLabel.text = paymentCard.paymentCardStatus.rawValue
+        statusLabel.textColor = .amberPending
+        
+        var paymentCardProviderImageName: String
+        switch PaymentCardType.type(from: paymentCard.card?.firstSix) {
+        case .visa:
+            paymentCardProviderImageName = "visalogoContainer"
+        case .amex:
+            paymentCardProviderImageName = "americanexpresslogoContainer"
+        case .mastercard:
+            paymentCardProviderImageName = "mastercardlogoContainer"
+        default: return
+        }
+        iconImageView.image = UIImage(named: paymentCardProviderImageName)
+    }
 
     private func textColor(forStatus status: CD_MembershipCardStatus?) -> UIColor {
         switch status?.status {

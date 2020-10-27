@@ -16,16 +16,31 @@ class PLLScreenViewModel {
     private let paymentScannerStrings = PaymentCardScannerStrings()
     
     let journey: PllScreenJourney
-    var paymentCards: [CD_PaymentCard]? {
-        return Current.wallet.paymentCards
+    
+    var activePaymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .active }
     }
-    var hasPaymentCards: Bool {
-        return Current.wallet.hasPaymentCards
+    
+    var pendingPaymentCards: [CD_PaymentCard]? {
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .pending }
     }
+    
+    var hasActivePaymentCards: Bool {
+        return activePaymentCards != nil && activePaymentCards?.count != 0
+    }
+    
     private(set) var changedLinkCards = [CD_PaymentCard]()
     
+    var shouldShowActivePaymentCards: Bool {
+        return hasActivePaymentCards
+    }
+    
+    var shouldShowPendingPaymentCards: Bool {
+        return pendingPaymentCards != nil && pendingPaymentCards?.count != 0
+    }
+    
     var isEmptyPll: Bool {
-        return paymentCards == nil ? true : paymentCards?.count == 0
+        return !shouldShowActivePaymentCards
     }
     
     var shouldShowBackButton: Bool {
@@ -71,15 +86,23 @@ class PLLScreenViewModel {
         }
     }
     
-    func toggleLinkForMembershipCards(completion: @escaping () -> Void) {
+    func toggleLinkForMembershipCards(completion: @escaping (Bool) -> Void) {
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
-            completion()
-        }) { [weak self] in
-            completion()
-            self?.displaySimplePopup(
-                title: "pll_error_title".localized,
-                message: "pll_error_message".localized
-            )
+            completion(true)
+        }) { [weak self] error in
+            guard let error = error else { return }
+            if case .userFacingNetworkingError(let networkingError) = error {
+                if case .userFacingError(let userFacingError) = networkingError {
+                    let messagePrefix = self?.changedLinkCards.count == 1 ? "card_already_linked_message_prefix".localized : "cards_already_linked_message_prefix".localized
+                    let planName = self?.membershipCard.membershipPlan?.account?.planName ?? ""
+                    let planNameCard = self?.membershipCard.membershipPlan?.account?.planNameCard ?? ""
+                    let planDetails = "\(planName) \(planNameCard)"
+                    let formattedString = String(format: userFacingError.message, messagePrefix, planDetails, planDetails)
+                    self?.displaySimplePopup(title: userFacingError.title, message: formattedString, completion: {
+                        completion(false)
+                    })
+                }
+            }
         }
     }
     
@@ -98,8 +121,8 @@ class PLLScreenViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func displaySimplePopup(title: String, message: String) {
-        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message)
+    func displaySimplePopup(title: String?, message: String?, completion: @escaping () -> Void) {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: title, message: message, completion: completion)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
@@ -147,6 +170,12 @@ class PLLScreenViewModel {
     func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .pll)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
+    }
+
+    func toFAQScreen() {
+        let viewController = ZendeskService.makeFAQViewController()
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, hideCloseButton: true)
         Current.navigate.to(navigationRequest)
     }
 }

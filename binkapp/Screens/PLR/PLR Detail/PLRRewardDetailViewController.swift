@@ -105,11 +105,11 @@ private extension PLRRewardDetailViewController {
         switch (viewModel.voucherState, viewModel.voucherEarnType) {
         case (.inProgress, .accumulator), (.issued, .accumulator):
             setupCellForType(PLRAccumulatorActiveCell.self)
-        case (.redeemed, .accumulator), (.expired, .accumulator):
+        case (.redeemed, .accumulator), (.expired, .accumulator), (.cancelled, .accumulator):
             setupCellForType(PLRAccumulatorInactiveCell.self)
         case (.inProgress, .stamps), (.issued, .stamps):
             setupCellForType(PLRStampsActiveCell.self)
-        case (.redeemed, .stamps), (.expired, .stamps):
+        case (.redeemed, .stamps), (.expired, .stamps), (.cancelled, .stamps):
             setupCellForType(PLRStampsInactiveCell.self)
         default:
             break

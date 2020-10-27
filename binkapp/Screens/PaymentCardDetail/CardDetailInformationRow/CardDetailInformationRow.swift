@@ -18,6 +18,7 @@ struct CardDetailInformationRow {
         case deleteMembershipCard(membershipCard: CD_MembershipCard)
         case deletePaymentCard
         case rewardsHistory
+        case faqs
 
         var title: String {
             switch self {
@@ -39,6 +40,8 @@ struct CardDetailInformationRow {
                 return "Delete this card"
             case .rewardsHistory:
                 return "Rewards history"
+            case .faqs:
+                return "FAQs"
             }
         }
 
@@ -52,6 +55,8 @@ struct CardDetailInformationRow {
                 return "Remove this card from Bink"
             case .rewardsHistory:
                 return "See your past rewards"
+            case .faqs:
+                return "Learn more"
             }
         }
     }
@@ -59,7 +64,7 @@ struct CardDetailInformationRow {
 
 protocol CardDetailInformationRowFactory {
     func makeLoyaltyInformationRows(membershipCard: CD_MembershipCard) -> [CardDetailInformationRow]
-    func makePaymentInformationRows() -> [CardDetailInformationRow]
+    func makePaymentInformationRows(for status: PaymentCardStatus) -> [CardDetailInformationRow]
 }
 
 protocol CardDetailInformationRowFactoryDelegate: AnyObject {
@@ -79,8 +84,13 @@ class WalletCardDetailInformationRowFactory: CardDetailInformationRowFactory {
         return [makeAboutPlanRow(membershipCard: membershipCard), makeSecurityAndPrivacyRow(), makeDeleteMembershipCardRow(membershipCard: membershipCard)]
     }
 
-    func makePaymentInformationRows() -> [CardDetailInformationRow] {
-        return [makeSecurityAndPrivacyRow(), makeDeletePaymentCardRow()]
+    func makePaymentInformationRows(for status: PaymentCardStatus) -> [CardDetailInformationRow] {
+        switch status {
+        case .active:
+            return [makeSecurityAndPrivacyRow(), makeDeletePaymentCardRow()]
+        case .failed, .pending:
+            return [makeSecurityAndPrivacyRow(), makeDeletePaymentCardRow(), makeFAQsRow()]
+        }
     }
 
     private func makeRewardsHistoryRow() -> CardDetailInformationRow {
@@ -115,6 +125,15 @@ class WalletCardDetailInformationRowFactory: CardDetailInformationRowFactory {
         return CardDetailInformationRow(type: .deletePaymentCard) { [weak self] in
             guard let self = self else { return }
             self.delegate?.cardDetailInformationRowFactory(self, shouldPerformActionForRowType: .deletePaymentCard)
+        }
+    }
+    
+    private func makeFAQsRow() -> CardDetailInformationRow {
+        return CardDetailInformationRow(type: .faqs) { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.delegate?.cardDetailInformationRowFactory(self, shouldPerformActionForRowType: .faqs)
+            }
         }
     }
 }
