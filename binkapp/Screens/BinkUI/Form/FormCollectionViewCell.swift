@@ -213,7 +213,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     private func configureTextFieldRightView(shouldDisplay: Bool) {
         if formField?.fieldCommonName == .cardNumber && formField?.alternatives?.contains(.barcode) == true && shouldDisplay {
             textFieldRightView.isHidden = false
-        } else if formField?.fieldCommonName == .cardNumber {
+        } else if formField?.fieldCommonName == .cardNumber && shouldDisplay {
             textFieldRightView.isHidden = false
         } else {
             textFieldRightView.isHidden = true
