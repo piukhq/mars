@@ -9,9 +9,12 @@
 import UIKit
 
 struct BinkHTTPHeaders {
-    static func dictionary(_ headers: [BinkHTTPHeader]) -> [String: String] {
-        let namesAndValues = headers.map { ($0.name, $0.value) }
-        return Dictionary(namesAndValues, uniquingKeysWith: { _, last in last })
+    static func asDictionary(_ headers: [BinkHTTPHeader]) -> [String: String] {
+        var dictionary: [String: String] = [:]
+        headers.forEach {
+            dictionary[$0.name] = $0.value
+        }
+        return dictionary
     }
 }
 
@@ -54,12 +57,4 @@ struct BinkHTTPHeader {
     static let acceptWithAPIVersion: BinkHTTPHeader = {
         return accept("application/json;\(Current.apiClient.apiVersion.rawValue)")
     }()
-    
-    
-    // MARK: - Convert To Dictionary
-
-    static func dictionary(_ headers: [BinkHTTPHeader]) -> [String: String] {
-        let namesAndValues = headers.map { ($0.name, $0.value) }
-        return Dictionary(namesAndValues, uniquingKeysWith: { _, last in last })
-    }
 }
