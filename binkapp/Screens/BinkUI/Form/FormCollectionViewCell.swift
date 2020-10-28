@@ -177,7 +177,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.autocapitalizationType = field.fieldType.capitalization()
         textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
         formField = field
-        configureTextFieldRightView(shouldDisplay: true)
+        configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
         
         if case let .expiry(months, years) = field.fieldType {
