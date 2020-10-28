@@ -271,8 +271,9 @@ extension AddPaymentCardViewController: ScanDelegate {
         Current.navigate.close(animated: true) {
             let paymentCardCreateModel = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: self.viewModel.paymentCard.nameOnCard, month: month, year: year)
             self.card.configureWithAddViewModel(paymentCardCreateModel)
+            self.viewModel.paymentCard = paymentCardCreateModel
             self.dataSource = FormDataSource(paymentCardCreateModel, delegate: self)
-//            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
+            self.formValidityUpdated(fullFormIsValid: self.dataSource.fullFormIsValid)
         }
     }
 
