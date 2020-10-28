@@ -144,13 +144,4 @@ class AddPaymentCardViewModel {
             }
         }
     }
-    
-//    func toAddPaymentCardScreen(model: PaymentCardCreateModel? = nil) {
-//        Current.navigate.close()
-////        Current.navigate.close {
-////            let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
-////            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-////            Current.navigate.to(navigationRequest)
-////        }
-//    }
 }
