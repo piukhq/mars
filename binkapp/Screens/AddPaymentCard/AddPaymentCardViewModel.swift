@@ -6,6 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import CardScan
 import UIKit
 
 enum AddPaymentCardJourney {
@@ -16,7 +17,8 @@ enum AddPaymentCardJourney {
 class AddPaymentCardViewModel {
     private let repository = PaymentWalletRepository()
     private let journey: AddPaymentCardJourney
-    let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
+    private let strings = PaymentCardScannerStrings()
+    var paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
     var shouldDisplayTermsAndConditions: Bool {
         return true
@@ -35,9 +37,6 @@ class AddPaymentCardViewModel {
         return paymentCard.cardType
     }
     
-    //TODO: Check if we actually need these
-    let strings = PaymentCardScannerStrings()
-
     func setPaymentCardType(_ cardType: PaymentCardType?) {
         paymentCard.cardType = cardType
     }
@@ -116,8 +115,8 @@ class AddPaymentCardViewModel {
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
     }
     
-    func toPaymentCardScanner() {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, allowSkip: false, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+    func toPaymentCardScanner(_ scanDelegate: ScanDelegate?) {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, allowSkip: false, delegate: scanDelegate) else { return }
         
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
             Current.navigate.close()
