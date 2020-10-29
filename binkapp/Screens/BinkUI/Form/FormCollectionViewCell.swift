@@ -13,9 +13,8 @@ protocol FormCollectionViewCellDelegate: class {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
     func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell)
     func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell)
-
-
 }
+
 extension FormCollectionViewCellDelegate {
     func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
     func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {}
@@ -241,7 +240,11 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func handleScanButtonTap() {
-        formField?.fieldType == .paymentCardNumber ? delegate?.formCollectionViewCellDidReceivePaymentScannerButtonTap(self) : delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
+        if formField?.fieldType == .paymentCardNumber {
+            delegate?.formCollectionViewCellDidReceivePaymentScannerButtonTap(self)
+        } else {
+            delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
+        }
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
