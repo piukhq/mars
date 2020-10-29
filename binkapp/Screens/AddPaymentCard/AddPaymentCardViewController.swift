@@ -277,5 +277,7 @@ extension AddPaymentCardViewController: ScanDelegate {
         }
     }
 
-    func userDidSkip(_ scanViewController: ScanViewController) {}
+    func userDidSkip(_ scanViewController: ScanViewController) {
+        Current.navigate.close()
+    }
 }
