@@ -241,7 +241,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func handleScanButtonTap() {
-        delegate?.formCollectionViewCellDidReceiveScannerButtonTap(self)
+        formField?.fieldType == .paymentCardNumber ? delegate?.formCollectionViewCellDidReceivePaymentScannerButtonTap(self) : delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
