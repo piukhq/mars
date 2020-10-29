@@ -11,11 +11,14 @@ import UIKit
 protocol FormCollectionViewCellDelegate: class {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
-    func formCollectionViewCellDidReceiveScannerButtonTap(_ cell: FormCollectionViewCell)
+    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell)
+    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell)
+
 
 }
 extension FormCollectionViewCellDelegate {
-    func formCollectionViewCellDidReceiveScannerButtonTap(_ cell: FormCollectionViewCell) {}
+    func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
+    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {}
 }
 
 class FormCollectionViewCell: UICollectionViewCell {

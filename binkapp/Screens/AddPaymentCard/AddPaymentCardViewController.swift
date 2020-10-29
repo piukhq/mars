@@ -240,7 +240,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
     }
     
     func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource) {
-        viewModel.toPaymentCardScanner(self)
+        viewModel.toPaymentCardScanner(delegate: self)
     }
 }
 
