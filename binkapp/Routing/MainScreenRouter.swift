@@ -34,24 +34,6 @@ class MainScreenRouter {
         //Outage error - Server 500-599 status code
         NotificationCenter.default.addObserver(self, selector: #selector(displayOutageError), name: .outageError, object: nil)
     }
-
-    func jailbroken() -> UIViewController {
-        return JailbrokenViewController()
-    }
-
-    func getOnboardingViewController() -> UIViewController {
-        let viewModel = OnboardingViewModel(router: self)
-        let nav = PortraitNavigationController(rootViewController: OnboardingViewController(viewModel: viewModel))
-        navController = nav
-        return nav
-    }
-    
-    func toForgotPasswordViewController(navigationController: UINavigationController?) {
-        let repository = ForgotPasswordRepository(apiClient: apiClient)
-        let viewModel = ForgotPasswordViewModel(repository: repository)
-        let viewController = ForgotPasswordViewController(viewModel: viewModel)
-        navigationController?.pushViewController(viewController, animated: true)
-    }
     
     @objc func displayOutageError() {
         let alert = UIAlertController(title: "error_title".localized, message: "communication_error".localized, preferredStyle: .alert)

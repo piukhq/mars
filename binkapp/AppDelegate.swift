@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         self.window = UIWindow(frame: UIScreen.main.bounds)
 
         if let mainWindow = self.window {
-            stateMachine = RootStateMachine(window: mainWindow)
+            Current.rootStateMachine.launch(withWindow: mainWindow)
         }
         
         let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)

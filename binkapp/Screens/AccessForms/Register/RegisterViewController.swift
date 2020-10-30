@@ -20,11 +20,8 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
         view.addSubview(button)
         return button
     }()
-    
-    private let router: MainScreenRouter
         
-    init(router: MainScreenRouter) {
-        self.router = router
+    init() {
         super.init(title: "register_title".localized, description: "register_subtitle".localized, dataSource: FormDataSource(accessForm: .register))
         dataSource.delegate = self
     }
@@ -90,7 +87,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
                         BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                     })
                     
-                    self?.router.didLogin()
+                    Current.rootStateMachine.handleLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
                     self?.continueButton.stopLoading()
                     
