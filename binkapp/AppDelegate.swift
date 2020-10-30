@@ -13,6 +13,7 @@ import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
 import CardScan
 import Keys
+import SafariServices
 
 @UIApplicationMain 
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
@@ -93,6 +94,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
+
+        addObservers()
     
         return true
     }
@@ -111,3 +114,77 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     }
 }
 
+private extension AppDelegate {
+    func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(presentSSLPinningFailurePopup), name: .didFailServerTrustEvaluation, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(displayOutageError), name: .outageError, object: nil)
+    }
+
+    @objc func displayOutageError() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "communication_error".localized)
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+    }
+
+    @objc func presentSSLPinningFailurePopup() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "ssl_pinning_failure_title".localized, message: "ssl_pinning_failure_text".localized)
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+    }
+
+    @objc func appWillResignActive() {
+        guard let topViewController = UIViewController.topMostViewController() else { return }
+
+        // This should be a temporary workaround while we wait for a change in Bouncer's library.
+        if let navigationController = topViewController as? PortraitNavigationController, let presentingViewController = topViewController.presentingViewController {
+            if navigationController.visibleViewController?.isKind(of: CardScan.ScanViewController.self) == true {
+                navigationController.visibleViewController?.dismiss(animated: false, completion: {
+                    self.displayLaunchScreen(visibleViewController: presentingViewController)
+                    return
+                })
+            }
+        }
+
+        if topViewController.isKind(of: UIAlertController.self), let presentingViewController = topViewController.presentingViewController {
+            topViewController.dismiss(animated: false) {
+                self.displayLaunchScreen(visibleViewController: presentingViewController)
+                return
+            }
+        }
+
+        displayLaunchScreen(visibleViewController: topViewController)
+    }
+
+    func displayLaunchScreen(visibleViewController: UIViewController) {
+        // If there is no current user, we have no need to present the splash screen
+        guard Current.userManager.hasCurrentUser else {
+            return
+        }
+
+        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        if let modalNavigationController = visibleViewController.navigationController, visibleViewController.isModal {
+            modalNavigationController.present(vc, animated: false, completion: nil)
+        } else {
+            visibleViewController.present(vc, animated: false, completion: nil)
+        }
+    }
+
+    @objc func appDidBecomeActive() {
+        guard let visibleVC = UIViewController.topMostViewController() else { return }
+        if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal == true {
+            modalNavigationController.dismiss(animated: true, completion: nil)
+        } else if visibleVC.isKind(of: SFSafariViewController.self) == false {
+            visibleVC.dismiss(animated: true, completion: nil)
+        }
+    }
+
+    @objc func appWillEnterForeground() {
+        //Fixme: Strange behaviour happening when user has to give canera permissions manually, once the user is on settings page if ge makes some changes(turning camera permissions switch on) when resumes the app this is called and the AddingOptionScreen is dismissed. If the user doesn't change anything on the settings screeen the AddingOptionsScreen will not be dismissed.
+    }
+}
