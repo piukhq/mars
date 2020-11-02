@@ -47,7 +47,7 @@ class RemoteConfigUtil {
         remoteConfig.fetch { [weak self] (status, _) in
             guard let self = self else { return }
             if status == .success {
-                self.remoteConfig.activate(completionHandler: { _ in
+                self.remoteConfig.activate(completion: { _, _ in
                     completion?()
                 })
             } else {
