@@ -16,7 +16,6 @@ class LoyaltyWalletViewModel: WalletViewModel {
     typealias T = CD_MembershipCard
 
     private let repository = LoyaltyWalletRepository()
-    private let paymentScanStrings = PaymentCardScannerStrings()
 
     var walletPrompts: [WalletPrompt]? {
         return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
@@ -47,7 +46,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .addPaymentCards:
-            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScanStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }

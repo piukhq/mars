@@ -13,7 +13,6 @@ class PaymentWalletViewModel: WalletViewModel {
     typealias T = CD_PaymentCard
 
     private let repository = PaymentWalletRepository()
-    private let paymentScanStrings = PaymentCardScannerStrings()
 
     var walletPrompts: [WalletPrompt]? {
         return WalletPromptFactory.makeWalletPrompts(forWallet: .payment)
@@ -32,7 +31,7 @@ class PaymentWalletViewModel: WalletViewModel {
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .addPaymentCards:
-            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScanStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         default:
