@@ -19,6 +19,7 @@ class World {
     lazy var navigate = Navigate()
     lazy var pointsScrapingManager = PointsScrapingManager()
     lazy var remoteConfig = RemoteConfigUtil()
+    lazy var paymentCardScannerStrings = PaymentCardScannerStrings()
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
     
     private let prodBundleIdentifier = "com.bink.wallet"

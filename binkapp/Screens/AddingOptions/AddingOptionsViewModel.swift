@@ -45,8 +45,7 @@ class AddingOptionsViewModel {
     }
     
     func toPaymentCardScanner() {
-        let scanDelegate = Current.navigate.paymentCardScannerDelegate
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: scanDelegate as! ScanStringsDataSource, delegate: scanDelegate) else { return }
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
         
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
             self?.toAddPaymentCardScreen()

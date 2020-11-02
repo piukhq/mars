@@ -64,7 +64,7 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
     }
 }
 
-extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDelegate, ScanStringsDataSource {
+extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDelegate {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
         let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
         let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
@@ -99,11 +99,4 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }
-    
-    func positionCard() -> String { return "payment_scanner_explainer_text".localized }
-    func widgetTitle() -> String { return "payment_scanner_widget_title".localized }
-    func widgetExplainerText() -> String { return "payment_scanner_widget_explainer_text".localized }
-    func scanCard() -> String { return "" }
-    func backButton() -> String { return " " }
-    func skipButton() -> String { return " " }
 }
