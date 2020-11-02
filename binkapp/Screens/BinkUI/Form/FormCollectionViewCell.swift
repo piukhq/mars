@@ -12,9 +12,12 @@ protocol FormCollectionViewCellDelegate: class {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField)
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField)
     func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell)
+    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell)
 }
+
 extension FormCollectionViewCellDelegate {
     func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {}
+    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {}
 }
 
 class FormCollectionViewCell: UICollectionViewCell {
@@ -176,7 +179,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         textField.autocapitalizationType = field.fieldType.capitalization()
         textField.clearButtonMode = field.fieldCommonName == .barcode ? .always : .whileEditing
         formField = field
-        configureTextFieldRightView(shouldDisplay: true)
+        configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
         
         if case let .expiry(months, years) = field.fieldType {
@@ -213,6 +216,8 @@ class FormCollectionViewCell: UICollectionViewCell {
     private func configureTextFieldRightView(shouldDisplay: Bool) {
         if formField?.fieldCommonName == .cardNumber && formField?.alternatives?.contains(.barcode) == true && shouldDisplay {
             textFieldRightView.isHidden = false
+        } else if formField?.fieldCommonName == .cardNumber && shouldDisplay {
+            textFieldRightView.isHidden = false
         } else {
             textFieldRightView.isHidden = true
         }
@@ -235,7 +240,11 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func handleScanButtonTap() {
-        delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
+        if formField?.fieldType == .paymentCardNumber {
+            delegate?.formCollectionViewCellDidReceivePaymentScannerButtonTap(self)
+        } else {
+            delegate?.formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(self)
+        }
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {

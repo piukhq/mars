@@ -26,9 +26,9 @@ final class ViewControllerFactory {
         return BrowseBrandsViewController(viewModel: BrowseBrandsViewModel())
     }
     
-    static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, delegate: ScanDelegate?) -> ScanViewController? {
+    static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, allowSkip: Bool = true, delegate: ScanDelegate?) -> ScanViewController? {
         guard let viewController = ScanViewController.createViewController(withDelegate: delegate) else { return nil }
-        viewController.allowSkip = true
+        viewController.allowSkip = allowSkip
         viewController.cornerColor = .white
         viewController.torchButtonImage = UIImage(named: "payment_scanner_torch")
         viewController.stringDataSource = strings
