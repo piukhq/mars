@@ -25,6 +25,12 @@ import UIKit
     @objc func positionCard() -> String
     @objc func backButton() -> String
     @objc func skipButton() -> String
+    @objc func widgetTitle() -> String
+    @objc func widgetExplainerText() -> String
+}
+
+@objc public protocol CaptureOutputDelegate {
+    func capture(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection)
 }
 
 // The FullScanStringsDataSource protocol defines all of the strings
@@ -39,10 +45,6 @@ import UIKit
     @objc func denyPermissionTitle() -> String
     @objc func denyPermissionMessage() -> String
     @objc func denyPermissionButton() -> String
-}
-
-public protocol MainLoopDelegate: class {
-    func shouldRunBaseMainLoop(fullCardImage: CGImage, roiRectangle: CGRect, scanViewController: ScanViewController) -> Bool
 }
 
 @objc public class CreditCard: NSObject {
@@ -87,14 +89,20 @@ public protocol MainLoopDelegate: class {
 }
 
 @objc public class ScanViewController: ScanBaseViewController {
+    struct Constants {
+        static let guideImageInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        static let widgetViewTopPadding: CGFloat = 90
+        static let widgetViewLeftRightPadding: CGFloat = 25
+        static let widgetViewHeight: CGFloat = 100
+    }
     
     public weak var scanDelegate: ScanDelegate?
+    public weak var captureOutputDelegate: CaptureOutputDelegate?
     @objc public weak var stringDataSource: ScanStringsDataSource?
     @objc public var allowSkip = false
     public var torchLevel: Float? 
     public var scanQrCode = false
-    public weak var mainLoopDelegate: MainLoopDelegate?
-    public var strongMainLoopDelegate: MainLoopDelegate?
+    public var navigationBarIsHidden = true
     @objc public var hideBackButtonImage = false
     @IBOutlet weak var backButtonImageToTextConstraint: NSLayoutConstraint!
     @IBOutlet weak var backButtonWidthConstraint: NSLayoutConstraint!
@@ -128,13 +136,28 @@ public protocol MainLoopDelegate: class {
     @IBOutlet weak var torchButtonHeightConstraint: NSLayoutConstraint!
     public var torchButtonSize: CGSize?
     @IBOutlet weak var cornerView: CornerView!
-    var cornerBorderColor = UIColor.green.cgColor
-    var denyPermissionTitle = "Need camera access"
-    var denyPermissionMessage = "Please enable camera access in your settings to scan your card"
+    var cornerBorderColor = UIColor.clear.cgColor
+    var denyPermissionTitle = "Please allow camera access"
+    var denyPermissionMessage = "To scan your cards, you'll need to allow Bink access to your device's camera."
     var denyPermissionButtonText = "OK"
-    
     var calledDelegate = false
+    
     @objc var backgroundBlurEffectView: UIVisualEffectView?
+    @objc var maskingBlurEffectView: UIVisualEffectView?
+    private lazy var guideImageView: UIImageView = {
+        let image = UIImage(named: "scanner_guide")
+        let imageView = UIImageView(image: image)
+        return imageView
+    }()
+    
+    private lazy var widgetView: PaymentScannerWidgetView = {
+        let widget = PaymentScannerWidgetView()
+        widget.addTarget(self, selector: #selector(enterManually))
+        widget.translatesAutoresizingMaskIntoConstraints = false
+        widget.titleLabel.text = stringDataSource?.widgetTitle()
+        widget.explainerLabel.text = stringDataSource?.widgetExplainerText()
+        return widget
+    }()
     
     @objc static public func createViewController(withDelegate delegate: ScanDelegate? = nil) -> ScanViewController? {
         // use default config
@@ -150,11 +173,26 @@ public protocol MainLoopDelegate: class {
         // The forced unwrap here is intentional -- we expect this to crash
         // if someone uses it with an invalid bundle
         let bundle = CSBundle.bundle()!
-        
         let storyboard = UIStoryboard(name: "CardScan", bundle: bundle)
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
             viewController.scanDelegate = delegate
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            // For the iPad you can use the full screen style but you have to select "requires full screen" in
+            // the Info.plist to lock it in portrait mode. For iPads, we recommend using a formSheet, which
+            // handles all orientations correctly.
+            viewController.modalPresentationStyle = .formSheet
+        } else {
+            viewController.modalPresentationStyle = .fullScreen
+        }
+        
         return viewController
+    }
+    
+    @objc func enterManually() {
+        self.cancelScan()
+        self.calledDelegate = true
+        self.scanDelegate?.userDidSkip(self)
     }
     
     @IBAction func backTextPress() {
@@ -189,7 +227,7 @@ public protocol MainLoopDelegate: class {
         }
     }
     
-    func setStrings() {
+    public func setStrings() {
         guard let dataSource = self.stringDataSource else {
             return
         }
@@ -198,17 +236,29 @@ public protocol MainLoopDelegate: class {
         self.positionCardLabel.text = dataSource.positionCard()
         self.skipButton.setTitle(dataSource.skipButton(), for: .normal)
         self.backButton.setTitle(dataSource.backButton(), for: .normal)
-        
-        guard let fullDataSource = dataSource as? FullScanStringsDataSource else {
-            return
-        }
-        
-        self.denyPermissionMessage = fullDataSource.denyPermissionMessage()
-        self.denyPermissionTitle = fullDataSource.denyPermissionTitle()
-        self.denyPermissionButtonText = fullDataSource.denyPermissionButton()
     }
     
     func setUiCustomization() {
+        self.backgroundBlurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffect.Style.extraLight))
+        guard let backgroundBlurEffectView = self.backgroundBlurEffectView else { return }
+        backgroundBlurEffectView.frame = self.view.bounds
+        self.blurView.addSubview(backgroundBlurEffectView)
+        guideImageView.frame = regionOfInterestLabel.frame.inset(by: Constants.guideImageInset)
+        view.addSubview(guideImageView)
+        view.addSubview(widgetView)
+        
+        NSLayoutConstraint.activate([
+            widgetView.topAnchor.constraint(equalTo: regionOfInterestLabel.bottomAnchor, constant: Constants.widgetViewTopPadding),
+            widgetView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constants.widgetViewLeftRightPadding),
+            widgetView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -Constants.widgetViewLeftRightPadding),
+            widgetView.heightAnchor.constraint(equalToConstant: Constants.widgetViewHeight),
+        ])
+        
+        backButtonImage = UIImage(named: "close")
+        regionOfInterestLabel.layer.borderWidth = 0.0
+        positionCardFont = UIFont(name: "NunitoSans-Light", size: 18.0)
+        torchButton.isHidden = true
+        
         if self.hideBackButtonImage {
             self.backButtonImageButton.setImage(nil, for: .normal)
             // the image button is 8 from safe area and has a width of 32 the
@@ -225,9 +275,6 @@ public protocol MainLoopDelegate: class {
         if let font = self.backButtonFont {
             self.backButton.titleLabel?.font = font
         }
-        if let font = self.scanCardFont {
-            self.scanCardLabel.font = font
-        }
         if let font = self.positionCardFont {
             self.positionCardLabel.font = font
         }
@@ -240,13 +287,11 @@ public protocol MainLoopDelegate: class {
         if let image = self.torchButtonImage {
             self.torchButton.setImage(image, for: .normal)
         }
-        if let color = self.cornerColor {
-            self.cornerBorderColor = color.cgColor
-        }
         if let size = self.torchButtonSize {
             self.torchButtonWidthConstraint.constant = size.width
             self.torchButtonHeightConstraint.constant = size.height
         }
+        self.hideNavigationBar = self.navigationBarIsHidden
     }
     
     func showDenyAlert() {
@@ -278,7 +323,6 @@ public protocol MainLoopDelegate: class {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setStrings()
         self.setUiCustomization()
         self.calledDelegate = false
@@ -298,12 +342,6 @@ public protocol MainLoopDelegate: class {
         super.viewWillAppear(true)
         self.cornerView.layer.borderColor = self.cornerBorderColor
         self.addBackgroundObservers()
-        
-    }
-    
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.removeBackgroundObservers()
     }
     
     public override func viewDidLayoutSubviews() {
@@ -332,6 +370,11 @@ public protocol MainLoopDelegate: class {
         return true
     }
     
+    override public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        super.captureOutput(output, didOutput: sampleBuffer, from: connection)
+        captureOutputDelegate?.capture(output, didOutput: sampleBuffer, from: connection)
+    }
+    
     override public func onScannedCard(number: String, expiryYear: String?, expiryMonth: String?, scannedImage: UIImage?) {
         
         if self.calledDelegate {
@@ -349,6 +392,8 @@ public protocol MainLoopDelegate: class {
         card.expiryMonth = expiryMonth
         card.expiryYear = expiryYear
         card.image = scannedImage
+        // This is a hack to work around having to change our public interface
+        card.name = predictedName
 
         self.scanDelegate?.userDidScanCard(self, creditCard: card)
     }
@@ -358,50 +403,35 @@ public protocol MainLoopDelegate: class {
         self.toggleTorch()
     }
     
-    // MARK: main loop
-    @available(iOS 11.2, *)
-    override public func blockingMlModel(fullCardImage: CGImage, roiRectangle: CGRect) {
-        guard mainLoopDelegate?.shouldRunBaseMainLoop(fullCardImage: fullCardImage, roiRectangle: roiRectangle, scanViewController: self) ?? true else {
-            return
-        }
-        
-        guard strongMainLoopDelegate?.shouldRunBaseMainLoop(fullCardImage: fullCardImage, roiRectangle: roiRectangle, scanViewController: self) ?? true else {
-            return
-        }
-        
-        super.blockingMlModel(fullCardImage: fullCardImage, roiRectangle: roiRectangle)
-    }
 }
 
 extension ScanViewController {
      @objc func viewOnWillResignActive() {
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-        self.backgroundBlurEffectView = UIVisualEffectView(effect: blurEffect)
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.extraLight)
+        self.maskingBlurEffectView = UIVisualEffectView(effect: blurEffect)
 
-        guard let backgroundBlurEffectView = self.backgroundBlurEffectView else {
+        guard let maskingBlurEffectView = self.maskingBlurEffectView else {
             return
         }
 
-        backgroundBlurEffectView.frame = self.view.bounds
-        backgroundBlurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.view.addSubview(backgroundBlurEffectView)
+        maskingBlurEffectView.frame = self.view.bounds
+        maskingBlurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.view.addSubview(maskingBlurEffectView)
      }
     
      @objc func viewOnDidBecomeActive() {
-        if let backgroundBlurEffectView = self.backgroundBlurEffectView {
-            backgroundBlurEffectView.removeFromSuperview()
+        if let maskingBlurEffectView = self.maskingBlurEffectView {
+            maskingBlurEffectView.removeFromSuperview()
         }
+
+        cardNumberLabel.isHidden = true
+        expiryLabel.isHidden = true
      }
      
      func addBackgroundObservers() {
          NotificationCenter.default.addObserver(self, selector: #selector(viewOnWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
          NotificationCenter.default.addObserver(self, selector: #selector(viewOnDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
      }
-    
-    func removeBackgroundObservers() {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
 }
 
 // https://stackoverflow.com/a/53143736/947883

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreML
 
 public struct Api {
     
@@ -110,6 +111,10 @@ public struct Api {
         return bundle.infoDictionary?["CFBundleShortVersionString"].flatMap { $0 as? String }
     }
     
+    static func getDeviceLocale() -> String? {
+        return NSLocale.preferredLanguages.first
+    }
+    
     static public func apiCallWithDeviceInfo(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
         if baseUrl == nil || apiKey == nil {
             DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
@@ -124,10 +129,108 @@ public struct Api {
         apiParameters["platform"] = "ios"
         apiParameters["os"] = osVersion
         apiParameters["device_type"] = deviceType()
+        apiParameters["device_locale"] = getDeviceLocale()
         apiParameters["build"] = build
         apiParameters["sdk_version"] = getSdkVersion()
         
         apiCall(endpoint: endpoint, parameters: apiParameters, completion: completion)
+    }
+    
+    @available(iOS 11.0, *)
+    static public func downloadAndCompileLatestModel(signedUrl: String, completion: @escaping ((_ response: URL?, _ error: ApiError?) -> Void)) {
+        guard let url = URL(string: signedUrl) else {
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
+            return
+        }
+        
+        let session = URLSession(configuration: configuration())
+        session.downloadTask(with: url) { (location: URL?, response: URLResponse?, error: Error?) in
+            guard let location = location, let compiledUrl = try? MLModel.compileModel(at: location) else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                completion(compiledUrl, nil)
+            }
+        }.resume()
+    }
+    
+    static public func getLatestModelConfig(modelClass: String, modelFrameworkVersion: String, parameters: [String: Any], completion: @escaping ((_ response: ModelConfigResponse?, _ error: ApiError?) -> Void)) {
+        if baseUrl == nil || apiKey == nil {
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
+            return
+        }
+        
+        let endpoint = "/v1/model/ios/\(modelClass)/\(modelFrameworkVersion)"
+        downloadLatestModelConfig(endpoint: endpoint, parameters: [:]) { response, error in
+            guard let response = response, error == nil else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+           
+            guard let modelVersion = response["model_version"] as? String,
+                let hash = response["model_hash"] as? String,
+                let hashAlgorithm = response["model_hash_algorithm"] as? String,
+                let signedUrl = response["model_url"] as? String else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                completion(ModelConfigResponse(modelVersion: modelVersion, hash: hash, hashAlgorithm: hashAlgorithm, signedUrl: signedUrl), nil)
+            }
+        }
+    }
+    
+    private static func downloadLatestModelConfig(endpoint: String, parameters: [String: Any], completion: @escaping ApiCompletion) {
+        guard let baseUrl = self.baseUrl else {
+            DispatchQueue.main.async { completion(nil, apiUrlNotSet) }
+            return
+        }
+        
+        guard let url = urlWithQueryParameters(baseUrl: baseUrl, endpoint: endpoint, parameters: parameters) else {
+            DispatchQueue.main.async { completion(nil, defaultError) }
+            return
+        }
+
+        let session = URLSession(configuration: configuration())
+        session.dataTask(with: url) { data, response, error in
+            guard let rawData = data else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+
+            let jsonData = try? JSONSerialization.jsonObject(with: rawData)
+            guard let responseData = jsonData as? [String: Any] else {
+                DispatchQueue.main.async { completion(nil, defaultError) }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                if "error" == responseData["status"] as? String {
+                    completion(nil, ApiError(response: responseData))
+                } else {
+                    completion(responseData, nil)
+                }
+            }
+        }.resume()
+    }
+    
+    /**
+     Returns URL for GET request created with parameters casted to [String: String]. Make sure all parameter values can be easily converted to String. 
+    */
+    static func urlWithQueryParameters(baseUrl: String, endpoint: String, parameters: [String: Any]) -> URL? {
+        var stringParameters: [String: String] = [:]
+        for (key, value) in parameters {
+            stringParameters[key] = "\(value)"
+        }
+        
+        var components = URLComponents(string: baseUrl + endpoint)
+        components?.queryItems = stringParameters.map { (key, value) in URLQueryItem(name: key, value: value) }
+        let encodedQuery = components?.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+        components?.percentEncodedQuery = encodedQuery
+        return components?.url
     }
     
     static func scanStats(scanStats: ScanStats, completion: @escaping ApiCompletion) {

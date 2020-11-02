@@ -64,7 +64,7 @@ extension MainTabBarViewController: UITabBarControllerDelegate {
     }
 }
 
-extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDelegate {
+extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDelegate, ScanStringsDataSource {
     func barcodeScannerViewController(_ viewController: BarcodeScannerViewController, didScanBarcode barcode: String, forMembershipPlan membershipPlan: CD_MembershipPlan, completion: (() -> Void)?) {
         let prefilledBarcodeValue = FormDataSource.PrefilledValue(commonName: .barcode, value: barcode)
         let viewController = ViewControllerFactory.makeAuthAndAddViewController(membershipPlan: membershipPlan, formPurpose: .addFromScanner, prefilledFormValues: [prefilledBarcodeValue])
@@ -99,4 +99,11 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
         Current.navigate.to(navigationRequest)
     }
+    
+    func positionCard() -> String { return "Position your card in the frame so the card number is visible" }
+    func widgetTitle() -> String { return "Enter Manually" }
+    func widgetExplainerText() -> String { return "You can also type in the card details yourself" }
+    func scanCard() -> String { return "" }
+    func backButton() -> String { return " " }
+    func skipButton() -> String { return " " }
 }

@@ -10,8 +10,6 @@ import UIKit
 import CardScan
 
 class AddingOptionsViewModel {
-    private let strings = PaymentCardScannerStrings()
-
     func toLoyaltyScanner() {
         let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: Current.navigate.loyaltyCardScannerDelegate)
         
@@ -47,7 +45,8 @@ class AddingOptionsViewModel {
     }
     
     func toPaymentCardScanner() {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+        let scanDelegate = Current.navigate.paymentCardScannerDelegate
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: scanDelegate as! ScanStringsDataSource, delegate: scanDelegate) else { return }
         
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
             self?.toAddPaymentCardScreen()
