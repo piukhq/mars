@@ -10,6 +10,7 @@ import Foundation
 import AVKit
 import AVFoundation
 import UIKit
+import CardScan
 
 class PermissionsUtility {
     
@@ -27,6 +28,42 @@ class PermissionsUtility {
         AVCaptureDevice.requestAccess(for: .video) { granted in
             DispatchQueue.main.async {
                 completion(granted)
+            }
+        }
+    }
+}
+
+extension PermissionsUtility {
+    static func launchLoyaltyScanner(_ viewController: BarcodeScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: @escaping EmptyCompletionBlock) {
+        launchScanner(viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
+    }
+
+    static func launchPaymentScanner(_ viewController: ScanViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: @escaping EmptyCompletionBlock) {
+        launchScanner(viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
+    }
+
+    private static func launchScanner(viewController: UIViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: @escaping EmptyCompletionBlock) {
+        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
+            enterManuallyAction()
+        }
+
+        if PermissionsUtility.videoCaptureIsAuthorized {
+            grantedAction()
+        } else if PermissionsUtility.videoCaptureIsDenied {
+            if let alert = enterManuallyAlert {
+                let navigationRequest = AlertNavigationRequest(alertController: alert)
+                Current.navigate.to(navigationRequest)
+            }
+        } else {
+            PermissionsUtility.requestVideoCaptureAuthorization { granted in
+                if granted {
+                    grantedAction()
+                } else {
+                    if let alert = enterManuallyAlert {
+                        let navigationRequest = AlertNavigationRequest(alertController: alert)
+                        Current.navigate.to(navigationRequest)
+                    }
+                }
             }
         }
     }
