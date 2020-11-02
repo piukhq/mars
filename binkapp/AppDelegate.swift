@@ -168,9 +168,6 @@ private extension AppDelegate {
     }
 
     @objc func appDidBecomeActive() {
-        guard let topViewController = UIViewController.topMostViewController() else { return }
-        if topViewController.restorationIdentifier == "LaunchScreen" {
-            Current.navigate.close()
-        }
+        Current.navigate.closeShieldView()
     }
 }

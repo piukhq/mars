@@ -26,4 +26,8 @@ extension UIViewController {
         }
         return nil
     }
+
+    var isShieldView: Bool {
+        return self.restorationIdentifier == "LaunchScreen"
+    }
 }
