@@ -14,10 +14,10 @@
 
 #import "FirebaseABTesting/Sources/ABTConditionalUserPropertyController.h"
 
+#import <FirebaseABTesting/FIRLifecycleEvents.h>
+#import <FirebaseAnalyticsInterop/FIRAnalyticsInterop.h>
+#import <FirebaseCore/FIRLogger.h>
 #import "FirebaseABTesting/Sources/ABTConstants.h"
-#import "FirebaseABTesting/Sources/Public/FirebaseABTesting/FIRLifecycleEvents.h"
-#import "FirebaseCore/Sources/Private/FirebaseCoreInternal.h"
-#import "Interop/Analytics/Public/FIRAnalyticsInterop.h"
 
 @implementation ABTConditionalUserPropertyController {
   dispatch_queue_t _analyticOperationQueue;
@@ -73,7 +73,7 @@
 - (void)setExperimentWithOrigin:(NSString *)origin
                         payload:(ABTExperimentPayload *)payload
                          events:(FIRLifecycleEvents *)events
-                         policy:(ABTExperimentPayloadExperimentOverflowPolicy)policy {
+                         policy:(ABTExperimentPayload_ExperimentOverflowPolicy)policy {
   NSInteger maxNumOfExperiments = [self maxNumberOfExperimentsOfOrigin:origin];
   if (maxNumOfExperiments < 0) {
     return;
@@ -88,10 +88,10 @@
   }
 
   if (maxNumOfExperiments <= experiments.count) {
-    ABTExperimentPayloadExperimentOverflowPolicy overflowPolicy =
+    ABTExperimentPayload_ExperimentOverflowPolicy overflowPolicy =
         [self overflowPolicyWithPayload:payload originalPolicy:policy];
     id experimentToClear = experiments.firstObject;
-    if (overflowPolicy == ABTExperimentPayloadExperimentOverflowPolicyDiscardOldest &&
+    if (overflowPolicy == ABTExperimentPayload_ExperimentOverflowPolicy_DiscardOldest &&
         experimentToClear) {
       NSString *expID = [self experimentIDOfExperiment:experimentToClear];
       NSString *varID = [self variantIDOfExperiment:experimentToClear];
@@ -265,17 +265,17 @@
          [variantID isEqualToString:payload.variantId];
 }
 
-- (ABTExperimentPayloadExperimentOverflowPolicy)
+- (ABTExperimentPayload_ExperimentOverflowPolicy)
     overflowPolicyWithPayload:(ABTExperimentPayload *)payload
-               originalPolicy:(ABTExperimentPayloadExperimentOverflowPolicy)originalPolicy {
-  if ([payload overflowPolicyIsValid]) {
+               originalPolicy:(ABTExperimentPayload_ExperimentOverflowPolicy)originalPolicy {
+  if (payload.overflowPolicy != ABTExperimentPayload_ExperimentOverflowPolicy_PolicyUnspecified) {
     return payload.overflowPolicy;
   }
-  if (originalPolicy == ABTExperimentPayloadExperimentOverflowPolicyIgnoreNewest ||
-      originalPolicy == ABTExperimentPayloadExperimentOverflowPolicyDiscardOldest) {
+  if (originalPolicy != ABTExperimentPayload_ExperimentOverflowPolicy_PolicyUnspecified &&
+      ABTExperimentPayload_ExperimentOverflowPolicy_IsValidValue(originalPolicy)) {
     return originalPolicy;
   }
-  return ABTExperimentPayloadExperimentOverflowPolicyDiscardOldest;
+  return ABTExperimentPayload_ExperimentOverflowPolicy_DiscardOldest;
 }
 
 @end

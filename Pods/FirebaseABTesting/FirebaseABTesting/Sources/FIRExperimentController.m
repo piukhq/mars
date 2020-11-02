@@ -12,15 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "FirebaseABTesting/Sources/Public/FirebaseABTesting/FIRExperimentController.h"
+#import <FirebaseABTesting/FIRExperimentController.h>
 
+#import <FirebaseABTesting/FIRLifecycleEvents.h>
+#import <FirebaseCore/FIRLogger.h>
 #import "FirebaseABTesting/Sources/ABTConditionalUserPropertyController.h"
 #import "FirebaseABTesting/Sources/ABTConstants.h"
-#import "FirebaseABTesting/Sources/Private/ABTExperimentPayload.h"
-#import "FirebaseABTesting/Sources/Public/FirebaseABTesting/FIRLifecycleEvents.h"
-#import "FirebaseCore/Sources/Private/FirebaseCoreInternal.h"
 
-#import "Interop/Analytics/Public/FIRAnalyticsInterop.h"
+#import <FirebaseAnalyticsInterop/FIRAnalyticsInterop.h>
+#import <FirebaseCore/FIRAppInternal.h>
+#import <FirebaseCore/FIRComponent.h>
+#import <FirebaseCore/FIRComponentContainer.h>
+#import <FirebaseCore/FIRDependency.h>
+#import <FirebaseCore/FIRLibrary.h>
 
 #ifndef FIRABTesting_VERSION
 #error "FIRABTesting_VERSION is not defined: \
@@ -35,19 +39,19 @@ add -DFIRABTesting_VERSION=... to the build invocation"
 #define STR_EXPAND(x) #x
 
 /// Default experiment overflow policy.
-const ABTExperimentPayloadExperimentOverflowPolicy FIRDefaultExperimentOverflowPolicy =
-    ABTExperimentPayloadExperimentOverflowPolicyDiscardOldest;
+const ABTExperimentPayload_ExperimentOverflowPolicy FIRDefaultExperimentOverflowPolicy =
+    ABTExperimentPayload_ExperimentOverflowPolicy_DiscardOldest;
 
 /// Deserialize the experiment payloads.
 ABTExperimentPayload *ABTDeserializeExperimentPayload(NSData *payload) {
-  // Verify that we have a JSON object.
   NSError *error;
-  id JSONObject = [NSJSONSerialization JSONObjectWithData:payload options:kNilOptions error:&error];
-  if (JSONObject == nil) {
+  ABTExperimentPayload *experimentPayload = [ABTExperimentPayload parseFromData:payload
+                                                                          error:&error];
+  if (error) {
     FIRLogError(kFIRLoggerABTesting, @"I-ABT000001", @"Failed to parse experiment payload: %@",
                 error.debugDescription);
   }
-  return [ABTExperimentPayload parseFromData:payload];
+  return experimentPayload;
 }
 
 /// Returns a list of experiments to be set given the payloads and current list of experiments from
@@ -174,7 +178,7 @@ NSArray *ABTExperimentsToClearFromPayloads(
 
 - (void)updateExperimentsWithServiceOrigin:(NSString *)origin
                                     events:(FIRLifecycleEvents *)events
-                                    policy:(ABTExperimentPayloadExperimentOverflowPolicy)policy
+                                    policy:(ABTExperimentPayload_ExperimentOverflowPolicy)policy
                              lastStartTime:(NSTimeInterval)lastStartTime
                                   payloads:(NSArray<NSData *> *)payloads
                          completionHandler:
@@ -193,7 +197,7 @@ NSArray *ABTExperimentsToClearFromPayloads(
 
 - (void)updateExperimentsWithServiceOrigin:(NSString *)origin
                                     events:(FIRLifecycleEvents *)events
-                                    policy:(ABTExperimentPayloadExperimentOverflowPolicy)policy
+                                    policy:(ABTExperimentPayload_ExperimentOverflowPolicy)policy
                              lastStartTime:(NSTimeInterval)lastStartTime
                                   payloads:(NSArray<NSData *> *)payloads {
   [self updateExperimentsWithServiceOrigin:origin
@@ -208,7 +212,7 @@ NSArray *ABTExperimentsToClearFromPayloads(
     updateExperimentConditionalUserPropertiesWithServiceOrigin:(NSString *)origin
                                                         events:(FIRLifecycleEvents *)events
                                                         policy:
-                                                            (ABTExperimentPayloadExperimentOverflowPolicy)
+                                                            (ABTExperimentPayload_ExperimentOverflowPolicy)
                                                                 policy
                                                  lastStartTime:(NSTimeInterval)lastStartTime
                                                       payloads:(NSArray<NSData *> *)payloads
@@ -326,7 +330,7 @@ NSArray *ABTExperimentsToClearFromPayloads(
   FIRLifecycleEvents *lifecycleEvents = [[FIRLifecycleEvents alloc] init];
 
   // Ensure that trigger event is nil, which will immediately set the experiment to active.
-  [experimentPayload clearTriggerEvent];
+  experimentPayload.triggerEvent = nil;
 
   [controller setExperimentWithOrigin:origin
                               payload:experimentPayload

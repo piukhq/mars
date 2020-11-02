@@ -16,13 +16,14 @@
 
 #import "FirebaseRemoteConfig/Sources/RCNConfigContent.h"
 
-#import "FirebaseRemoteConfig/Sources/Public/FirebaseRemoteConfig/FIRRemoteConfig.h"
+#import <FirebaseRemoteConfig/FIRRemoteConfig.h>
 #import "FirebaseRemoteConfig/Sources/RCNConfigConstants.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigDBManager.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigDefines.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigValue_Internal.h"
 
-#import "FirebaseCore/Sources/Private/FirebaseCoreInternal.h"
+#import <FirebaseCore/FIRApp.h>
+#import <FirebaseCore/FIRLogger.h>
 
 @implementation RCNConfigContent {
   /// Active config data that is currently used.

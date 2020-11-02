@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-#import "FirebaseRemoteConfig/Sources/Public/FirebaseRemoteConfig/FIRRemoteConfig.h"
+#import <FirebaseRemoteConfig/FIRRemoteConfig.h>
 
-#import "FirebaseABTesting/Sources/Private/FirebaseABTestingInternal.h"
-#import "FirebaseCore/Sources/Private/FirebaseCoreInternal.h"
+#import <FirebaseABTesting/FIRExperimentController.h>
+#import <FirebaseCore/FIRAppInternal.h>
+#import <FirebaseCore/FIRComponentContainer.h>
+#import <FirebaseCore/FIRLogger.h>
+#import <FirebaseCore/FIROptionsInternal.h>
 #import "FirebaseRemoteConfig/Sources/FIRRemoteConfigComponent.h"
 #import "FirebaseRemoteConfig/Sources/Private/FIRRemoteConfig_Private.h"
-#import "FirebaseRemoteConfig/Sources/Private/RCNConfigFetch.h"
 #import "FirebaseRemoteConfig/Sources/Private/RCNConfigSettings.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigConstants.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigContent.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigDBManager.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigExperiment.h"
+#import "FirebaseRemoteConfig/Sources/RCNConfigFetch.h"
 #import "FirebaseRemoteConfig/Sources/RCNConfigValue_Internal.h"
 #import "FirebaseRemoteConfig/Sources/RCNDevice.h"
 
@@ -233,28 +236,27 @@ static NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, FIRRemote
     (FIRRemoteConfigFetchAndActivateCompletion)completionHandler {
   __weak FIRRemoteConfig *weakSelf = self;
   FIRRemoteConfigFetchCompletion fetchCompletion =
-      ^(FIRRemoteConfigFetchStatus fetchStatus, NSError *fetchError) {
+      ^(FIRRemoteConfigFetchStatus fetchStatus, NSError *error) {
         FIRRemoteConfig *strongSelf = weakSelf;
         if (!strongSelf) {
           return;
         }
         // Fetch completed. We are being called on the main queue.
         // If fetch is successful, try to activate the fetched config
-        if (fetchStatus == FIRRemoteConfigFetchStatusSuccess && !fetchError) {
-          [strongSelf activateWithCompletionHandler:^(NSError *_Nullable activateError) {
-            if (completionHandler) {
-              FIRRemoteConfigFetchAndActivateStatus status =
-                  activateError ? FIRRemoteConfigFetchAndActivateStatusSuccessUsingPreFetchedData
-                                : FIRRemoteConfigFetchAndActivateStatusSuccessFetchedFromRemote;
-              completionHandler(status, nil);
-            }
-          }];
-        } else if (completionHandler) {
-          FIRRemoteConfigFetchAndActivateStatus status =
-              fetchStatus == FIRRemoteConfigFetchStatusSuccess
-                  ? FIRRemoteConfigFetchAndActivateStatusSuccessUsingPreFetchedData
-                  : FIRRemoteConfigFetchAndActivateStatusError;
-          completionHandler(status, fetchError);
+        bool didActivate = false;
+        if (fetchStatus == FIRRemoteConfigFetchStatusSuccess && !error) {
+          didActivate = [strongSelf activateFetched];
+        }
+        if (completionHandler) {
+          FIRRemoteConfigFetchAndActivateStatus status = FIRRemoteConfigFetchAndActivateStatusError;
+          if (fetchStatus == FIRRemoteConfigFetchStatusSuccess) {
+            status = didActivate ? FIRRemoteConfigFetchAndActivateStatusSuccessFetchedFromRemote
+                                 : FIRRemoteConfigFetchAndActivateStatusSuccessUsingPreFetchedData;
+          } else {
+            status = FIRRemoteConfigFetchAndActivateStatusError;
+          }
+          // Pass along the fetch error e.g. throttled.
+          completionHandler(status, error);
         }
       };
   [self fetchWithCompletionHandler:fetchCompletion];
@@ -275,18 +277,7 @@ static NSMutableDictionary<NSString *, NSMutableDictionary<NSString *, FIRRemote
   return didActivate;
 }
 
-typedef void (^FIRRemoteConfigActivateChangeCompletion)(BOOL changed, NSError *_Nullable error);
-
-- (void)activateWithCompletion:(FIRRemoteConfigActivateChangeCompletion)completion {
-  [self activateWithEitherHandler:completion deprecatedHandler:nil];
-}
-
 - (void)activateWithCompletionHandler:(FIRRemoteConfigActivateCompletion)completionHandler {
-  [self activateWithEitherHandler:nil deprecatedHandler:completionHandler];
-}
-
-- (void)activateWithEitherHandler:(FIRRemoteConfigActivateChangeCompletion)completion
-                deprecatedHandler:(FIRRemoteConfigActivateCompletion)deprecatedHandler {
   __weak FIRRemoteConfig *weakSelf = self;
   void (^applyBlock)(void) = ^(void) {
     FIRRemoteConfig *strongSelf = weakSelf;
@@ -294,12 +285,10 @@ typedef void (^FIRRemoteConfigActivateChangeCompletion)(BOOL changed, NSError *_
       NSError *error = [NSError errorWithDomain:FIRRemoteConfigErrorDomain
                                            code:FIRRemoteConfigErrorInternalError
                                        userInfo:@{@"ActivationFailureReason" : @"Internal Error."}];
-      if (completion) {
+      if (completionHandler) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-          completion(NO, error);
+          completionHandler(error);
         });
-      } else if (deprecatedHandler) {
-        deprecatedHandler(error);
       }
       FIRLogError(kFIRLoggerRemoteConfig, @"I-RCN000068", @"Internal error activating config.");
       return;
@@ -308,21 +297,17 @@ typedef void (^FIRRemoteConfigActivateChangeCompletion)(BOOL changed, NSError *_
     // ignored.
     if (strongSelf->_settings.lastETagUpdateTime == 0 ||
         strongSelf->_settings.lastETagUpdateTime <= strongSelf->_settings.lastApplyTimeInterval) {
-      FIRLogDebug(kFIRLoggerRemoteConfig, @"I-RCN000069",
-                  @"Most recently fetched config is already activated.");
-      if (completion) {
+      FIRLogWarning(kFIRLoggerRemoteConfig, @"I-RCN000069",
+                    @"Most recently fetched config is already activated.");
+      NSError *error = [NSError
+          errorWithDomain:FIRRemoteConfigErrorDomain
+                     code:FIRRemoteConfigErrorInternalError
+                 userInfo:@{
+                   @"ActivationFailureReason" : @"Most recently fetched config is already activated"
+                 }];
+      if (completionHandler) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-          completion(NO, nil);
-        });
-      } else if (deprecatedHandler) {
-        NSError *error = [NSError
-            errorWithDomain:FIRRemoteConfigErrorDomain
-                       code:FIRRemoteConfigErrorInternalError
-                   userInfo:@{
-                     @"ActivationFailureReason" : @"Most recently fetched config already activated"
-                   }];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-          deprecatedHandler(error);
+          completionHandler(error);
         });
       }
       return;
@@ -333,13 +318,9 @@ typedef void (^FIRRemoteConfigActivateChangeCompletion)(BOOL changed, NSError *_
     [strongSelf updateExperiments];
     strongSelf->_settings.lastApplyTimeInterval = [[NSDate date] timeIntervalSince1970];
     FIRLogDebug(kFIRLoggerRemoteConfig, @"I-RCN000069", @"Config activated.");
-    if (completion) {
+    if (completionHandler) {
       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        completion(YES, nil);
-      });
-    } else if (deprecatedHandler) {
-      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        deprecatedHandler(nil);
+        completionHandler(nil);
       });
     }
   };

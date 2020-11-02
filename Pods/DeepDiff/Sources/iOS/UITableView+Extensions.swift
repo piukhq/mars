@@ -6,7 +6,6 @@
 //  Copyright © 2018 Khoa Pham. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
 import UIKit
 
 public extension UITableView {
@@ -92,4 +91,3 @@ public extension UITableView {
     }
   }
 }
-#endif

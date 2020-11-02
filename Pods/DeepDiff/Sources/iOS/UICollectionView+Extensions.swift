@@ -6,7 +6,6 @@
 //  Copyright © 2018 Khoa Pham. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
 import UIKit
 
 public extension UICollectionView {
@@ -61,4 +60,4 @@ public extension UICollectionView {
     }
   }
 }
-#endif
+

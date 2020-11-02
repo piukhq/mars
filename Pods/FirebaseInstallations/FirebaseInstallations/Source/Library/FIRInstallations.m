@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#import "FirebaseInstallations/Source/Library/Public/FirebaseInstallations/FIRInstallations.h"
+#import "FIRInstallations.h"
 
 #if __has_include(<FBLPromises/FBLPromises.h>)
 #import <FBLPromises/FBLPromises.h>
@@ -22,16 +22,21 @@
 #import "FBLPromises.h"
 #endif
 
-#import "FirebaseCore/Sources/Private/FirebaseCoreInternal.h"
+#import <FirebaseCore/FIRAppInternal.h>
+#import <FirebaseCore/FIRComponent.h>
+#import <FirebaseCore/FIRComponentContainer.h>
+#import <FirebaseCore/FIRLibrary.h>
+#import <FirebaseCore/FIRLogger.h>
+#import <FirebaseCore/FIROptions.h>
 
-#import "FirebaseInstallations/Source/Library/FIRInstallationsAuthTokenResultInternal.h"
+#import "FIRInstallationsAuthTokenResultInternal.h"
 
-#import "FirebaseInstallations/Source/Library/Errors/FIRInstallationsErrorUtil.h"
-#import "FirebaseInstallations/Source/Library/FIRInstallationsItem.h"
-#import "FirebaseInstallations/Source/Library/FIRInstallationsLogger.h"
-#import "FirebaseInstallations/Source/Library/InstallationsIDController/FIRInstallationsIDController.h"
-#import "FirebaseInstallations/Source/Library/InstallationsStore/FIRInstallationsStoredAuthToken.h"
-#import "FirebaseInstallations/Source/Library/Public/FirebaseInstallations/FIRInstallationsVersion.h"
+#import "FIRInstallationsErrorUtil.h"
+#import "FIRInstallationsIDController.h"
+#import "FIRInstallationsItem.h"
+#import "FIRInstallationsLogger.h"
+#import "FIRInstallationsStoredAuthToken.h"
+#import "FIRInstallationsVersion.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -84,12 +89,10 @@ NS_ASSUME_NONNULL_BEGIN
                                                       projectID:appOptions.projectID
                                                     GCMSenderID:appOptions.GCMSenderID
                                                     accessGroup:appOptions.appGroupID];
-
-  // `prefetchAuthToken` is disabled due to b/156746574.
   return [self initWithAppOptions:appOptions
                           appName:appName
         installationsIDController:IDController
-                prefetchAuthToken:NO];
+                prefetchAuthToken:YES];
 }
 
 /// The initializer is supposed to be used by tests to inject `installationsStore`.
