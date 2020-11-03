@@ -17,12 +17,11 @@ class PaymentCardCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var switchButton: BinkSwitch!
-    @IBOutlet private weak var separatorView: UIView!
     private weak var delegate: PaymentCardCellDelegate?
     private var cardIndex = 0
     private var firstUse = true
     
-    func configureUI(paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, journey: PllScreenJourney, isLastCell: Bool, showAsLinked: Bool) {
+    func configureUI(paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, journey: PllScreenJourney, showAsLinked: Bool) {
         self.delegate = delegate
         self.cardIndex = cardIndex
 
@@ -36,9 +35,8 @@ class PaymentCardCell: UITableViewCell {
         default:
             break
         }
-        separatorView.isHidden = isLastCell
         titleLabel.text = paymentCard.card?.nameOnCard
-        subtitleLabel.text = "pll_screen_card_ending".localized + (paymentCard.card?.lastFour ?? "")
+        subtitleLabel.text = String(format: "pll_screen_card_ending".localized, paymentCard.card?.lastFour ?? "")
         switchButton.isOn = journey == .newCard ? true : showAsLinked
         
         selectionStyle = .none

@@ -20,7 +20,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -72,6 +72,14 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "Force Crash", subtitle: "This will immediately crash the application", action: {
             SentryService.forceCrash()
         }, cellType: .titleSubtitle)
+    }
+    
+    private func makeResponseCodeVisualiserRow() -> DebugMenuRow {
+        let shouldShowVisualiser = Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser)
+        return DebugMenuRow(title: "Response Code Visualiser", subtitle: shouldShowVisualiser ? "On" : "Off", action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .responseCodeVisualiser)
+            }, cellType: .titleSubtitle)
     }
     
     func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {

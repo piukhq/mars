@@ -22,7 +22,8 @@ class CheckboxView: CustomView {
     @IBOutlet private weak var checkboxButton: UIButton!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var textView: UITextView!
-
+    @IBOutlet private weak var textViewLeadingConstraint: NSLayoutConstraint!
+    
     private var checkedState: Bool = false
     private(set) var hideCheckbox: Bool = false
     private(set) var optional: Bool = false
@@ -67,7 +68,12 @@ class CheckboxView: CustomView {
         self.hideCheckbox = hideCheckbox
 
         // We don't need a delegate if we don't have a checkbox, so we send a nil delegate to hide it
-        checkboxButton.isHidden = hideCheckbox
+
+        if hideCheckbox {
+            checkboxButton.isHidden = true
+            textView.textContainer.lineFragmentPadding = 0
+            textViewLeadingConstraint.constant = -checkboxButton.frame.width
+        }
 
         guard let safeUrl = url else {
             self.title = title

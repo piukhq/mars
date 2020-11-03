@@ -20,6 +20,8 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     
     // I don't particular like this being a data source delegate method, but do we have any other route from collection view cell to the view controller?
     func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan)
+    func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource)
+
 }
 
 extension FormDataSourceDelegate {
@@ -34,6 +36,7 @@ extension FormDataSourceDelegate {
     func formDataSourceShouldRefresh(_ dataSource: FormDataSource) {}
     
     func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan) {}
+    func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource) {}
 }
 
 enum AccessForm {
@@ -131,8 +134,10 @@ extension FormDataSource {
             updated: updatedBlock,
             shouldChange: shouldChangeBlock,
             fieldExited: fieldExitedBlock,
-            forcedValue: model.fullPan
+            forcedValue: model.fullPan,
+            fieldCommonName: .cardNumber
         )
+        
         
         let monthData = Calendar.current.monthSymbols.enumerated().compactMap { index, _ in
             FormPickerData(String(format: "%02d", index + 1), backingData: index + 1)
@@ -575,5 +580,9 @@ extension FormDataSource: FormCollectionViewCellDelegate {
     func formCollectionViewCellDidReceiveLoyaltyScannerButtonTap(_ cell: FormCollectionViewCell) {
         guard let plan = membershipPlan else { return }
         delegate?.formDataSource(self, shouldPresentLoyaltyScannerForPlan: plan)
+    }
+    
+    func formCollectionViewCellDidReceivePaymentScannerButtonTap(_ cell: FormCollectionViewCell) {
+        delegate?.formDataSourceShouldPresentPaymentScanner(self)
     }
 }

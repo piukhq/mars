@@ -197,7 +197,7 @@ extension UserServiceProtocol {
     }
     
     func renewToken(_ currentToken: String, completion: ServiceCompletionResultHandler<RenewTokenResponse, UserServiceError>? = nil) {
-        let request = BinkNetworkRequest(endpoint: .renew, method: .post, headers: ["Authorization": "Token " + currentToken, "Content-Type": "application/json", "Accept": "application/json;\(Current.apiClient.apiVersion.rawValue)"], isUserDriven: false)
+        let request = BinkNetworkRequest(endpoint: .renew, method: .post, headers: [.authorization(currentToken), .defaultContentType, .acceptWithAPIVersion], isUserDriven: false)
         Current.apiClient.performRequest(request, expecting: RenewTokenResponse.self) { (result, _) in
             switch result {
             case .success(let response):
@@ -208,3 +208,4 @@ extension UserServiceProtocol {
         }
     }
 }
+

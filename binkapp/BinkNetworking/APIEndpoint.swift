@@ -29,19 +29,15 @@ enum APIEndpoint: Equatable {
     case paymentCard(cardId: String)
     case linkMembershipCardToPaymentCard(membershipCardId: String, paymentCardId: String)
     case spreedly
-
-    var headers: [String: String] {
-        // TODO: Don't hardcode the headers
-        var headers = [
-            "Content-Type": "application/json",
-            "Accept": "application/json\(shouldVersionPin ? ";\(Current.apiClient.apiVersion.rawValue)" : "")"
-        ]
-
+    
+    var headers: [BinkHTTPHeader] {
+        var headers: [BinkHTTPHeader] = [.defaultUserAgent, .defaultContentType]
+        shouldVersionPin ? headers.append(.acceptWithAPIVersion) : headers.append(.defaultAccept)
+        
         if authRequired {
             guard let token = Current.userManager.currentToken else { return headers }
-            headers["Authorization"] = "Token " + token
+            headers.append(.authorization(token))
         }
-
         return headers
     }
 

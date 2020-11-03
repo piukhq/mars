@@ -59,7 +59,7 @@ class BinkModuleView: CustomView {
     
     // MARK: - Actions
     
-    @IBAction func pointsModuleTappedd(_ sender: Any) {
+    @IBAction func pointsModuleTapped(_ sender: Any) {
         if let binkModuleAction = action {
             delegate?.binkModuleViewWasTapped(moduleView: self, withAction: binkModuleAction)
         }

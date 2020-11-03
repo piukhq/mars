@@ -60,4 +60,16 @@ enum ZendeskService {
         let identity = Identity.createAnonymous(name: fullName, email: Current.userManager.currentEmailAddress)
         Zendesk.instance?.setIdentity(identity)
     }
+    
+    static var pendingPaymentCardsArticleID: String {
+        return APIConstants.isProduction ? "360016688220" : "360016721639"
+    }
+
+    static func makeFAQViewController() -> UIViewController {
+        let helpCenterConfig = HelpCenterUiConfiguration()
+        helpCenterConfig.showContactOptions = false
+        let articleConfig = ArticleUiConfiguration()
+        articleConfig.showContactOptions = false
+        return ZDKHelpCenterUi.buildHelpCenterArticleUi(withArticleId: ZendeskService.pendingPaymentCardsArticleID, andConfigs: [helpCenterConfig, articleConfig])
+    }
 }

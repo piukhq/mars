@@ -54,11 +54,27 @@ struct TescoScrapingAgent: WebScrapable {
         return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
     }
 
-    var loginScriptFileName: String {
-        return "TescoLogin"
+    var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType {
+        return .none
     }
-
-    var pointsScrapingScriptFileName: String {
-        return "TescoPointsScrape"
+    
+    var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency {
+        return .never
+    }
+    
+    var reCaptchaMessage: String? {
+        return nil
+    }
+    
+    var reCaptchaTextIdentiferClass: String? {
+        return nil
+    }
+    
+    var incorrectCredentialsMessage: String? {
+        return nil
+    }
+    
+    var incorrectCredentialsTextIdentiferClass: String? {
+        return nil
     }
 }

@@ -25,7 +25,7 @@ enum CellAction {
     case login
 }
 
-protocol WalletLoyaltyCardCollectionViewCellDelegate: AnyObject {
+protocol WalletLoyaltyCardCollectionViewCellDelegate: NSObject {
     func cellSwipeBegan(cell: WalletLoyaltyCardCollectionViewCell)
     func cellDidFullySwipe(action: SwipeMode?, cell: WalletLoyaltyCardCollectionViewCell)
     func cellPerform(action: CellAction, cell: WalletLoyaltyCardCollectionViewCell)
@@ -51,14 +51,14 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
     }()
     
     private lazy var height: NSLayoutConstraint = {
-        let height = contentView.heightAnchor.constraint(equalToConstant: bounds.size.height)
-        height.isActive = true
-        return height
-    }()
-    
+           let height = contentView.heightAnchor.constraint(equalToConstant: bounds.size.height)
+           height.isActive = true
+           return height
+       }()
+
     private var viewModel: WalletLoyaltyCardCellViewModel!
     private weak var delegate: WalletLoyaltyCardCollectionViewCellDelegate?
-    
+
     private var swipeGradientLayer: CAGradientLayer?
     private var startingOffset: CGFloat = 0
     
@@ -75,7 +75,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
             setupShadow()
         }
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         set(to: .closed, animated: false)
@@ -101,7 +101,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         [cardNameLabel, cardValuePointsLabel, cardValueSuffixLabel, cardLinkStatusLabel].forEach {
             $0?.textColor = .white
         }
-        
+
         cardNameLabel.font = .subtitle
         cardValuePointsLabel.font = .pointsValue
         cardValueSuffixLabel.font = .navbarHeaderLine2
@@ -113,14 +113,25 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         self.delegate = delegate
         
         guard let plan = viewModel.membershipPlan else { return }
-        
+
         /// Brand icon
         cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
         
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
         rectangleView.firstColor = primaryBrandColor
-        rectangleView.secondColor = plan.generatedSecondaryBrandColor
+        
+        let secondaryBrandColour = plan.generatedSecondaryBrandColor
+        switch Current.apiClient.apiVersion {
+        case .v1_2:
+            rectangleView.secondColor = secondaryBrandColour
+        case .v1_3:
+            if let secondaryColor = plan.card?.secondaryColour {
+                rectangleView.secondColor = UIColor(hexString: secondaryColor)
+            } else {
+                rectangleView.secondColor = secondaryBrandColour
+            }
+        }
         
         /// Brand name
         cardNameLabel.text = plan.account?.companyName
@@ -132,22 +143,22 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         cardLinkStatusLabel.isHidden = !viewModel.shouldShowLinkStatus
         
         /// Login Button will not be visible for the MVP and waiting for the correct reason codes/state to display it
-        //        logInAlert.configureForType(.loyaltyLogIn) { [weak self] in
-        //            guard let self = self else { return }
-        //            self.delegate?.cellPerform(action: .login, cell: self)
-        //        }
+//        logInAlert.configureForType(.loyaltyLogIn) { [weak self] in
+//            guard let self = self else { return }
+//            self.delegate?.cellPerform(action: .login, cell: self)
+//        }
         logInAlert.isHidden = true
-        
+
         /// Card Value
         cardValuePointsLabel.text = viewModel.pointsValueText
         cardValueSuffixLabel.text = viewModel.pointsValueSuffixText
         cardValuePointsLabel.isHidden = !viewModel.shouldShowPointsValueLabel
         cardValueSuffixLabel.isHidden = !viewModel.shouldShowPointsSuffixLabel
-        
+
         [cardNameLabel, cardValuePointsLabel, cardLinkStatusLabel, cardValueSuffixLabel].forEach {
             $0.textColor = primaryBrandColor.isLight(threshold: 0.8) ? .black : .white
         }
-        
+
         containerView.backgroundColor = .clear
     }
     
@@ -175,7 +186,7 @@ extension WalletLoyaltyCardCollectionViewCell {
             print()
         }
     }
-    
+
     private func updateButtonState(with swipeMode: SwipeMode) {
         switch swipeMode {
         case .delete:
@@ -189,85 +200,80 @@ extension WalletLoyaltyCardCollectionViewCell {
             deleteButton.isHidden = true
         }
     }
-    
+
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
-        if let gradientLayer = swipeGradientLayer {
+        if swipeGradientLayer == nil {
             swipeGradientLayer = CAGradientLayer()
-            contentView.layer.insertSublayer(gradientLayer, at: 0)
+            contentView.layer.insertSublayer(swipeGradientLayer!, at: 0)
         }
-        
+
         swipeGradientLayer?.frame = bounds
         swipeGradientLayer?.colors = [firstColor.cgColor, secondColor.cgColor]
         swipeGradientLayer?.locations = [0.0, 1.0]
         swipeGradientLayer?.startPoint = CGPoint(x: 1.0, y: 0.0)
         swipeGradientLayer?.endPoint = CGPoint(x: 0.0, y: 0.0)
     }
-    
+
     override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return false }
         return abs((pan.velocity(in: pan.view)).x) > abs((pan.velocity(in: pan.view)).y)
     }
-    
+
     @IBAction func logInButtonTapped(_ sender: Any) {
         delegate?.cellPerform(action: .login, cell: self)
     }
-    
-    
+
+
     @IBAction func deleteButtonTapped(_ sender: Any) {
         delegate?.cellPerform(action: .delete, cell: self)
     }
-    
+
     @IBAction func barcodeButtonTapped(_ sender: Any) {
         delegate?.cellPerform(action: .barcode, cell: self)
     }
-    
+
     @objc func handlePan(gestureRecognizer: UIPanGestureRecognizer) {
         guard let view = gestureRecognizer.view else { return }
-        
+
         let translationX = startingOffset + gestureRecognizer.translation(in: view.superview).x * 1.3
-        
+
         if gestureRecognizer.state == .began {
             // Save the view's original position.
             swipeMode = .unset
             delegate?.cellSwipeBegan(cell: self)
         }
-        
+
         if gestureRecognizer.state == .changed {
             // Save the view's original position.
-            
+
             swipeMode = translationX > 0 ? .barcode : .delete
             var constant: CGFloat = translationX
             var maxValue: CGFloat?
             var minValue: CGFloat?
-            
+
             if swipeMode == .barcode {
                 maxValue = view.frame.size.width * 0.9
                 minValue = 0
-                
-                guard let maxValue = maxValue else { return }
-                guard let minValue = minValue else { return }
-                
-                let limitToUpper = min(translationX, maxValue)
-                constant = max(limitToUpper, minValue)
+
+                let limitToUpper = min(translationX, maxValue!)
+                constant = max(limitToUpper, minValue!)
             } else if swipeMode == .delete {
                 maxValue = -(view.frame.size.width * 0.5)
                 minValue = 0
-                
-                guard let maxValue = maxValue else { return }
-                guard let minValue = minValue else { return }
-                
-                let limitToUpper = max(translationX, maxValue)
-                constant = min(limitToUpper, minValue)
+
+                let limitToUpper = max(translationX, maxValue!)
+                constant = min(limitToUpper, minValue!)
             }
-            
+
             cardContainerCenterXConstraint.constant = constant
         }
-        
+
         if gestureRecognizer.state == .ended || gestureRecognizer.state == .cancelled {
+
             // Get percentage through
-            
+
             let percentage = abs(translationX) / view.frame.size.width
-            
+
             if percentage < 0.3 {
                 swipeMode = .unset
                 set(to: .closed, as: swipeMode)
@@ -280,47 +286,47 @@ extension WalletLoyaltyCardCollectionViewCell {
             }
         }
     }
-    
+
     func set(to state: SwipeState, as type: SwipeMode? = nil, animated: Bool = true) {
         swipeState = state
         let width = rectangleView.frame.size.width
         let constant: CGFloat
-        
+
         switch state {
         case .closed:
             constant = 0
         case .peek:
-            
+
             guard let type = type else { return }
-            
+
             if type == .barcode {
                 constant = width * 0.3
             } else {
                 constant = -(width * 0.3)
             }
         case .expanded:
-            
+
             guard let type = type else { return }
-            
+
             if type == .barcode {
                 constant = width
             } else {
                 constant = -(width * 0.5)
             }
         }
-        
+
         startingOffset = constant
-        
+
         let block = { [weak self] in
             self?.cardContainerCenterXConstraint.constant = constant
             self?.layoutIfNeeded()
         }
-        
+
         guard animated else {
             block()
             return
         }
-        
+
         UIView.animate(withDuration: 0.3) {
             block()
         }

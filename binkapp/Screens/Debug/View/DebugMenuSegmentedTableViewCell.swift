@@ -13,20 +13,20 @@ class DebugMenuSegmentedTableViewCell: UITableViewCell {
     
     @IBAction func segmentedControlAction(_ sender: Any) {
         switch segmentedControl.selectedSegmentIndex {
-        case 0: Current.apiClient.apiVersion = .v1_1
-        case 1: Current.apiClient.apiVersion = .v1_2
-        default: break
+            case 0: Current.apiClient.apiVersion = .v1_2
+            case 1: Current.apiClient.apiVersion = .v1_3
+            default: break
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        segmentedControl.setTitle("API v1.1", forSegmentAt: 0)
-        segmentedControl.setTitle("API v1.2", forSegmentAt: 1)
+        segmentedControl.setTitle("API v1.2", forSegmentAt: 0)
+        segmentedControl.setTitle("API v1.3", forSegmentAt: 1)
         
         switch Current.apiClient.apiVersion {
-        case .v1_1: segmentedControl.selectedSegmentIndex = 0
-        case .v1_2: segmentedControl.selectedSegmentIndex = 1
+            case .v1_2: segmentedControl.selectedSegmentIndex = 0
+            case .v1_3: segmentedControl.selectedSegmentIndex = 1
         }
     }
 }

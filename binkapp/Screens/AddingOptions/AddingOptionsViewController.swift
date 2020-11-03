@@ -111,7 +111,7 @@ class PaymentCardScannerStrings: ScanStringsDataSource {
     }
     
     func positionCard() -> String {
-        return "Position your payment card in the area above"
+        return "Position your card in the frame so the card number is visible"
     }
     
     func backButton() -> String {

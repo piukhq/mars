@@ -61,7 +61,7 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
         }
     }
 
-    func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?) -> Void) {
+    func linkMembershipCard(_ membershipCard: CD_MembershipCard, toPaymentCard paymentCard: CD_PaymentCard, completion: @escaping (CD_PaymentCard?, WalletServiceError?) -> Void) {
         toggleMembershipCardPaymentCardLink(membershipCard: membershipCard, paymentCard: paymentCard, shouldLink: true) { result in
             switch result {
             case .success(let response):
@@ -80,13 +80,13 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
                         Current.database.performTask { context in
                             let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
                             
-                            completion(fetchedObject)
+                            completion(fetchedObject, nil)
                         }
                     }
                 }
-            case .failure:
+            case .failure(let walletError):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
-                completion(nil)
+                completion(nil, walletError)
             }
         }
     }
