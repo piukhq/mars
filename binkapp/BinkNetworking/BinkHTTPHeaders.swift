@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct BinkHTTPHeaders {
+enum BinkHTTPHeaders {
     static func asDictionary(_ headers: [BinkHTTPHeader]) -> [String: String] {
         var dictionary: [String: String] = [:]
         headers.forEach {

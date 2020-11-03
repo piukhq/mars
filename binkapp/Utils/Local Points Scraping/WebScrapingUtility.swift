@@ -137,7 +137,7 @@ class WebScrapingUtility: NSObject {
         return topViewController.view.subviews.contains(webView)
     }
     private var isBalanceRefresh: Bool {
-        guard let balances = membershipCard.formattedBalances, balances.count > 0 else { return false }
+        guard let balances = membershipCard.formattedBalances, !balances.isEmpty else { return false }
         return true
     }
     private weak var delegate: WebScrapingUtilityDelegate?

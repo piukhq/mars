@@ -11,7 +11,7 @@ import CardScan
 class PLLScreenViewModel {
     private var membershipCard: CD_MembershipCard
     private let repository = PLLScreenRepository()
-    private let delegate: LoyaltyCardFullDetailsModalDelegate?
+    private weak var delegate: LoyaltyCardFullDetailsModalDelegate?
     
     private let paymentScannerStrings = PaymentCardScannerStrings()
     
@@ -26,17 +26,19 @@ class PLLScreenViewModel {
     }
     
     var hasActivePaymentCards: Bool {
-        return activePaymentCards != nil && activePaymentCards?.count != 0
+        guard let activePaymentCards = activePaymentCards else { return false }
+        return !activePaymentCards.isEmpty
     }
     
-    private(set) var changedLinkCards = [CD_PaymentCard]()
+    private(set) var changedLinkCards: [CD_PaymentCard] = []
     
     var shouldShowActivePaymentCards: Bool {
         return hasActivePaymentCards
     }
     
     var shouldShowPendingPaymentCards: Bool {
-        return pendingPaymentCards != nil && pendingPaymentCards?.count != 0
+        guard let pendingPaymentCards = pendingPaymentCards else { return false }
+        return !pendingPaymentCards.isEmpty
     }
     
     var isEmptyPll: Bool {
@@ -74,7 +76,7 @@ class PLLScreenViewModel {
         self.delegate = delegate
     }
     
-    // MARK:  - Public methods
+    // MARK: - Public methods
     
     func addCardToChangedCardsArray(card: CD_PaymentCard) {
         if !(changedLinkCards.contains(card)) {
