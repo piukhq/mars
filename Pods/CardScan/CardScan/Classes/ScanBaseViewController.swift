@@ -266,6 +266,8 @@ public protocol TestingImageDataSource: AnyObject {
         self.isNavigationBarHidden = self.navigationController?.isNavigationBarHidden ?? true
         let hideNavigationBar = self.hideNavigationBar ?? true
         self.navigationController?.setNavigationBarHidden(hideNavigationBar, animated: animated)
+        self.setupMask()
+
     }
     
     override open func viewDidLayoutSubviews() {
@@ -275,7 +277,6 @@ public protocol TestingImageDataSource: AnyObject {
         self.regionOfInterestLabelFrame = roiFrame
         self.previewViewFrame = previewViewFrame
         self.setUpCorners()
-        self.setupMask()
     }
     
     override open func viewDidAppear(_ animated: Bool) {
