@@ -9,7 +9,6 @@
 import CoreData
 
 public extension NSManagedObjectContext {
-    
     func fetchWithID<T: NSManagedObject>(_ type: T.Type, id: NSManagedObjectID) -> T? {
         return object(with: id) as? T
     }

@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 extension UIColor {
-    
     convenience init(hexString: String, alpha: CGFloat = 1.0) {
         let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         let scanner = Scanner(string: hexString)
@@ -33,40 +32,40 @@ extension UIColor {
         var b: CGFloat = 0
         var a: CGFloat = 0
         getRed(&r, green: &g, blue: &b, alpha: &a)
-        let rgb: Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+        let rgb: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0
         return String(format: "#%06x", rgb)
     }
     
     class var blueAccent: UIColor {
-        return UIColor(red: 67/255, green: 113/255, blue: 254/255, alpha: 1)
+        return UIColor(red: 67 / 255, green: 113 / 255, blue: 254 / 255, alpha: 1)
     }
     
     class var binkPurple: UIColor {
-        return UIColor(red: 180/255, green: 111/255, blue: 234/255, alpha: 1)
+        return UIColor(red: 180 / 255, green: 111 / 255, blue: 234 / 255, alpha: 1)
     }
     
     class var greenOk: UIColor {
-        return UIColor(red: 0/255, green: 193/255, blue: 118/255, alpha: 1)
+        return UIColor(red: 0 / 255, green: 193 / 255, blue: 118 / 255, alpha: 1)
     }
 
     class var blueInactive: UIColor {
-        return UIColor(red: 177/255, green: 194/255, blue: 203/255, alpha: 1)
+        return UIColor(red: 177 / 255, green: 194 / 255, blue: 203 / 255, alpha: 1)
     }
 
     static var facebookButton: UIColor {
-        return UIColor(red: 59/255, green: 89/255, blue: 152/255, alpha: 1.0)
+        return UIColor(red: 59 / 255, green: 89 / 255, blue: 152 / 255, alpha: 1.0)
     }
     
     static var greyFifty: UIColor {
-        return UIColor(red: 127/255, green: 127/255, blue: 127/255, alpha: 1.0)
+        return UIColor(red: 127 / 255, green: 127 / 255, blue: 127 / 255, alpha: 1.0)
     }
 
     // MARK: - Card swipe gradients
-    static let barcodeSwipeGradientLeft = UIColor(red: 180/255.0, green: 111/255.0, blue: 234/255.0, alpha: 1.0)
-    static let barcodeSwipeGradientRight = UIColor(red: 67/255.0, green: 113/255.0, blue: 254/255.0, alpha: 1.0)
+    static let barcodeSwipeGradientLeft = UIColor(red: 180 / 255.0, green: 111 / 255.0, blue: 234 / 255.0, alpha: 1.0)
+    static let barcodeSwipeGradientRight = UIColor(red: 67 / 255.0, green: 113 / 255.0, blue: 254 / 255.0, alpha: 1.0)
 
-    static let deleteSwipeGradientLeft = UIColor(red: 1, green: 107/255.0, blue: 54/255.0, alpha: 1.0)
-    static let deleteSwipeGradientRight = UIColor(red: 235/255.0, green: 0, blue: 27/255.0, alpha: 1.0)
+    static let deleteSwipeGradientLeft = UIColor(red: 1, green: 107 / 255.0, blue: 54 / 255.0, alpha: 1.0)
+    static let deleteSwipeGradientRight = UIColor(red: 235 / 255.0, green: 0, blue: 27 / 255.0, alpha: 1.0)
 
     static let amberPending = UIColor(hexString: "#f5a623")
     static let redAttention = UIColor(hexString: "#eb001b")
@@ -127,10 +126,7 @@ extension UIColor {
     private func adjust(by percentage: CGFloat = 30.0) -> UIColor? {
         var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
         if getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
-            return UIColor(red: min(red + percentage/100, 1.0),
-                           green: min(green + percentage/100, 1.0),
-                           blue: min(blue + percentage/100, 1.0),
-                           alpha: alpha)
+            return UIColor(red: min(red + percentage / 100, 1.0), green: min(green + percentage / 100, 1.0), blue: min(blue + percentage / 100, 1.0), alpha: alpha)
         } else {
             return nil
         }

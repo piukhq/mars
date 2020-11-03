@@ -14,7 +14,6 @@ enum SocialLoginRequestType {
 }
 
 class SocialTermsAndConditionsViewController: BaseFormViewController, UserServiceProtocol {
-
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -185,7 +184,6 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     }
     
     func updatePreferences(checkboxes: [CheckboxView]) {
-
         var params: [String: String] = [:]
 
         checkboxes.forEach {

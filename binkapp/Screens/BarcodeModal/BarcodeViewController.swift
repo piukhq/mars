@@ -8,7 +8,6 @@
 import UIKit
 
 class BarcodeViewController: BinkTrackableViewController {
-    
     enum Constants {
         static let largeSpace: CGFloat = 20
         static let smallSpace: CGFloat = -5

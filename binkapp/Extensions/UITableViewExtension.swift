@@ -11,8 +11,7 @@ import UIKit
 public extension UITableView {
     func register<T: UITableViewCell>(_: T.Type, asNib: Bool = false) {
         if asNib {
-            register(UINib(nibName: T.reuseIdentifier, bundle: nil),
-                     forCellReuseIdentifier: T.reuseIdentifier)
+            register(UINib(nibName: T.reuseIdentifier, bundle: nil), forCellReuseIdentifier: T.reuseIdentifier)
         } else {
             register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
         }

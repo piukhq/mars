@@ -63,7 +63,6 @@ extension LoginTextFieldView: InputValidation {
         titleLabel.textColor = .red
         return false
     }
-    
 }
 
 extension LoginTextFieldView: UITextFieldDelegate {

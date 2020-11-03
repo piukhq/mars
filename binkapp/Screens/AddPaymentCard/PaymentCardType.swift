@@ -106,7 +106,6 @@ enum PaymentCardType: String, Codable {
 }
 
 fileprivate extension PaymentCardType {
-    
     struct FormatValues {
         let prefixes: [PrefixContainable]
         let length: Int

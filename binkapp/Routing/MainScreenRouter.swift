@@ -22,23 +22,23 @@ class MainScreenRouter {
     
     init(delegate: MainScreenRouterDelegate?) {
         self.delegate = delegate
-
-//        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
+        
+        //        NotificationCenter.default.addObserver(self, selector: #selector(presentNoConnectivityPopup), name: .noInternetConnection, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-
+        
         // SSL Pinning failure
         NotificationCenter.default.addObserver(self, selector: #selector(presentSSLPinningFailurePopup), name: .didFailServerTrustEvaluation, object: nil)
         
         //Outage error - Server 500-599 status code
         NotificationCenter.default.addObserver(self, selector: #selector(displayOutageError), name: .outageError, object: nil)
     }
-
+    
     func jailbroken() -> UIViewController {
         return JailbrokenViewController()
     }
-
+    
     func getOnboardingViewController() -> UIViewController {
         let viewModel = OnboardingViewModel(router: self)
         let nav = PortraitNavigationController(rootViewController: OnboardingViewController(viewModel: viewModel))
@@ -58,7 +58,7 @@ class MainScreenRouter {
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default, handler: nil))
         navController?.present(alert, animated: true, completion: nil)
     }
-
+    
     @objc func presentSSLPinningFailurePopup() {
         let alert = UIAlertController(title: "ssl_pinning_failure_title".localized, message: "ssl_pinning_failure_text".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: nil))
@@ -99,7 +99,7 @@ class MainScreenRouter {
         guard Current.userManager.hasCurrentUser else {
             return
         }
-
+        
         let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
         vc.modalPresentationStyle = .fullScreen
@@ -114,7 +114,7 @@ class MainScreenRouter {
     @objc func appDidBecomeActive() {
         guard let visibleVC = UIViewController.topMostViewController() else { return }
         if let modalNavigationController = visibleVC.navigationController, visibleVC.isModal == true {
-           modalNavigationController.dismiss(animated: true, completion: nil)
+            modalNavigationController.dismiss(animated: true, completion: nil)
         } else if visibleVC.isKind(of: SFSafariViewController.self) == false {
             visibleVC.dismiss(animated: true, completion: nil)
         }

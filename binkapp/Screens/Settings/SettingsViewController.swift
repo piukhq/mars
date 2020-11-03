@@ -12,7 +12,6 @@ import ZendeskCoreSDK
 import SupportSDK
 
 class SettingsViewController: BinkTrackableViewController, BarBlurring {
-    
     // MARK: - Helpers
     
     private enum Constants {
@@ -109,7 +108,6 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
 }
 
 extension SettingsViewController: UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.sectionsCount
     }

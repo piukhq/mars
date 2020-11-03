@@ -16,7 +16,6 @@ struct SettingsFactory {
     }
     
     func sectionData() -> [SettingsSection] {
-        
         var sections: [SettingsSection] = []
         
         // MARK: - Account

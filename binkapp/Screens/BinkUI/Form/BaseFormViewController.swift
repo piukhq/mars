@@ -13,7 +13,6 @@ protocol Form {
 }
 
 class BaseFormViewController: BinkTrackableViewController, Form {
-    
     // MARK: - Helpers
     
     private enum Constants {
@@ -132,7 +131,7 @@ class BaseFormViewController: BinkTrackableViewController, Form {
             maskingView.rightAnchor.constraint(equalTo: view.rightAnchor),
             maskingView.heightAnchor.constraint(equalToConstant: Constants.maskingHeight),
             maskingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+        ])
     }
     
     private func setBottomItemMask() {

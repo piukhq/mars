@@ -48,7 +48,7 @@ class PreferencesViewController: BinkTrackableViewController {
         errorLabel.textColor = .red
         
         let attributedString = NSMutableAttributedString(string: "preferences_screen_description".localized, attributes: [.font: UIFont.bodyTextLarge])
-        let base: NSString = NSString(string: attributedString.string)
+        let base = NSString(string: attributedString.string)
         let rewardsRange = base.range(of: "preferences_prompt_highlight_rewards".localized)
         let offersRange = base.range(of: "preferences_prompt_highlight_offers".localized)
         let updatesRange = base.range(of: "preferences_prompt_highlight_updates".localized)

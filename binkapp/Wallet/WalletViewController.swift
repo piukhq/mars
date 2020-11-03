@@ -232,7 +232,6 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
                 return
             }
             viewModel.toCardDetail(for: card)
-            
         } else {
             guard let joinCard = viewModel.promptCard(forIndexPath: indexPath) else {
                 return

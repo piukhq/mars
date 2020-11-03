@@ -9,7 +9,6 @@
 import UIKit
 
 class RegisterViewController: BaseFormViewController, UserServiceProtocol {
-
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +53,6 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     @objc func continueButtonTapped() {
-        
         let fields = dataSource.currentFieldValues()
                 
         let loginRequest = LoginRegisterRequest(

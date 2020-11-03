@@ -10,7 +10,6 @@ import Foundation
 import JWTDecode
 
 struct UserMigrationController: UserServiceProtocol {
-    
     private enum Constants {
         static let hasMigratedFromBinkLegacyKey = "hasMigratedFromBinkLegacyKey"
         static let internalDictKey = "BINKKeychainInternalDictionary"
@@ -87,11 +86,13 @@ struct UserMigrationController: UserServiceProtocol {
     }
     
     private func retrieveBinkLegacyToken() -> String? {
-        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
-                                    kSecMatchLimit as String: kSecMatchLimitOne,
-                                    kSecReturnAttributes as String: true,
-                                    kSecAttrAccount as String: Constants.internalDictKey,
-                                    kSecReturnData as String: true]
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecReturnAttributes as String: true,
+            kSecAttrAccount as String: Constants.internalDictKey,
+            kSecReturnData as String: true
+        ]
         
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
@@ -105,8 +106,7 @@ struct UserMigrationController: UserServiceProtocol {
         NSKeyedUnarchiver.setClass(User.self, forClassName: Constants.userClass)
         NSKeyedUnarchiver.setClass(AuthToken.self, forClassName: Constants.authTokenClass)
         
-        if let dict = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String: AnyObject],
-            let user = dict[Constants.currentUserKey] as? User {
+        if let dict = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String: AnyObject], let user = dict[Constants.currentUserKey] as? User {
             // If we were successful in mapping to our new class types
             return user.token.accessToken
         }

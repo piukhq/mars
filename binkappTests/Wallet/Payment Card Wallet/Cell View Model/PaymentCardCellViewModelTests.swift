@@ -11,10 +11,10 @@ import CoreData
 @testable import binkapp
 
 class PaymentCardCellViewModelTests: XCTestCase {
-
     var basePaymentCard: PaymentCardModel!
 
     override func setUp() {
+        super.setUp()
         basePaymentCard = PaymentCardModel(apiId: nil, membershipCards: nil, status: nil, card: PaymentCardCardResponse(), images: nil, account: PaymentCardAccountResponse())
     }
 
@@ -95,5 +95,4 @@ class PaymentCardCellViewModelTests: XCTestCase {
         let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
         XCTAssertTrue(sut.paymentCardIsExpired)
     }
-
 }

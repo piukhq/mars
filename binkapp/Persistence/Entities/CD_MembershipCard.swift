@@ -32,7 +32,7 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
         guard let vouchers = sortedVouchers else { return nil }
         let filteredVouchers = vouchers.filter { $0.state == VoucherState.redeemed.rawValue || $0.state == VoucherState.cancelled.rawValue || $0.state == VoucherState.expired.rawValue }
         let redeemDateDescriptor = NSSortDescriptor(key: "dateRedeemed", ascending: false)
-        let expiryDateDescriptor =  NSSortDescriptor(key: "expiryDate", ascending: false)
+        let expiryDateDescriptor = NSSortDescriptor(key: "expiryDate", ascending: false)
         if let inactiveVouchers = filteredVouchers as NSArray? {
             return inactiveVouchers.sortedArray(using: [expiryDateDescriptor, redeemDateDescriptor]) as? [CD_Voucher]
         }

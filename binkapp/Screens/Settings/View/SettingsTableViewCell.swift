@@ -9,7 +9,6 @@
 import UIKit
 
 class SettingsTableViewCell: UITableViewCell {
-    
     private enum Constants {
         static let separatorHeight: CGFloat = 1.0
         static let leftRightPadding: CGFloat = 25.0

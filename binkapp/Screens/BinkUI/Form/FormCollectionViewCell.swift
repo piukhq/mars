@@ -157,7 +157,7 @@ class FormCollectionViewCell: UICollectionViewCell {
             bottomConstraint,
             separator.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             separator.rightAnchor.constraint(equalTo: contentView.rightAnchor)
-            ])
+        ])
     }
     
     // MARK: - Public Methods

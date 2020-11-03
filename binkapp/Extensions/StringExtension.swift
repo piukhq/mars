@@ -8,6 +8,8 @@
 
 import Foundation
 
+// swiftlint:disable force_unwrapping
+
 extension String {
     static func randomString(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"

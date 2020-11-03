@@ -77,7 +77,6 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
                     try? backgroundContext.save()
                     
                     DispatchQueue.main.async {
-                        
                         Current.database.performTask { context in
                             let fetchedObject = context.fetchWithApiID(CD_PaymentCard.self, id: newObjectId)
                             
@@ -99,7 +98,6 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
                 BinkAnalytics.track(PLLAnalyticsEvent.pllDelete(loyaltyCard: membershipCard, paymentCard: paymentCard))
                 
                 Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
-                    
                     if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCard.id) {
                         safePaymentCard?.removeLinkedMembershipCardsObject(membershipCardToRemove)
                     }

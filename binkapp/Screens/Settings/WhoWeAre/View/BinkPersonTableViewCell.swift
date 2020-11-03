@@ -9,10 +9,10 @@
 import UIKit
 
 class BinkPersonTableViewCell: UITableViewCell {
-
     @IBOutlet private weak var titleLabel: UILabel!
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         setSeparatorDefaultWidth()
     }
 

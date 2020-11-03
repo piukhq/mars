@@ -12,7 +12,6 @@ import AVFoundation
 import UIKit
 
 enum PermissionsUtility {
-    
     // MARK: - Camera permissions
     
     static var videoCaptureIsAuthorized: Bool {

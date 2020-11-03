@@ -44,7 +44,7 @@ class BinkModuleView: CustomView {
     
     func configure(moduleType: ModuleType, membershipCard: CD_MembershipCard, paymentCards: [CD_PaymentCard]? = nil, delegate: BinkModuleViewDelegate? = nil) {
         self.delegate = delegate
-
+        
         switch moduleType {
         case .points:
             configurePointsModule(membershipCard: membershipCard)
@@ -53,7 +53,7 @@ class BinkModuleView: CustomView {
                 configureLinkModule(membershipCard: membershipCard, paymentCards: paymentCardsArray)
             }
         }
-
+        
         layer.applyDefaultBinkShadow()
     }
     
@@ -78,8 +78,7 @@ private extension BinkModuleView {
     
     // Configure points module view
     func configurePointsModule(membershipCard: CD_MembershipCard) {
-        guard let plan = membershipCard.membershipPlan,
-            plan.featureSet?.hasPoints?.boolValue ?? false || plan.featureSet?.transactionsAvailable?.boolValue ?? false else {
+        guard let plan = membershipCard.membershipPlan, plan.featureSet?.hasPoints?.boolValue ?? false || plan.featureSet?.transactionsAvailable?.boolValue ?? false else {
             // Points module 1.5
             configure(imageName: "lcdModuleIconsPointsInactive", titleText: "history_title".localized, subtitleText: "not_available_title".localized, touchAction: .loginUnavailable)
             return
@@ -95,12 +94,9 @@ private extension BinkModuleView {
                     configure(imageName: "lcdModuleIconsPointsActive", titleText: "plr_lcd_points_module_title".localized, subtitleText: "plr_lcd_points_module_description".localized, touchAction: .aboutMembership)
                 }
             }
-
+            
             // Points module 1.1, 1.2
-            if let balances = membershipCard.balances.allObjects as? [CD_MembershipCardBalance],
-                let balance = balances.first,
-                let value = balance.value {
-                                
+            if let balances = membershipCard.balances.allObjects as? [CD_MembershipCardBalance], let balance = balances.first, let value = balance.value {
                 var titleText: String
                 let prefix = balance.prefix ?? ""
                 let suffix = balance.suffix ?? ""
@@ -132,8 +128,8 @@ private extension BinkModuleView {
                     // Points module 1.8
                     configure(imageName: imageName, titleText: "sign_up_failed_title".localized, subtitleText: "please_try_again_title".localized, touchAction: .signUp)
                 case .accountNotRegistered:
-                     // Points module 1.x (to be defined)
-                     configure(imageName: imageName, titleText: "register_gc_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .patchGhostCard)
+                    // Points module 1.x (to be defined)
+                    configure(imageName: imageName, titleText: "register_gc_title".localized, subtitleText: "points_module_to_see_history".localized, touchAction: .patchGhostCard)
                 case .accountAlreadyExists:
                     // Points module 1.12
                     configure(imageName: imageName, titleText: "points_module_account_exists_status".localized, subtitleText: "points_module_log_in".localized, touchAction: .loginChanges)

@@ -130,7 +130,6 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
     }
 
     private func setLayout() {
-        
         let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.learningContainerHeight)
         learningContainerHeightConstraint.priority = .init(999)
 
@@ -275,7 +274,7 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
         let nextPage = pageControl.currentPage + 1
 
         if pageControl.currentPage != onboardingViews.count - 1 {
-            let nextPageX: CGFloat = CGFloat(nextPage) * scrollView.frame.width
+            let nextPageX = CGFloat(nextPage) * scrollView.frame.width
             scrollView.setContentOffset(CGPoint(x: nextPageX, y: 0), animated: true)
             pageControl.currentPage = nextPage
         } else {
@@ -306,7 +305,7 @@ extension LayoutHelper {
         static let learningContainerHeight: CGFloat = 382
         static let learningContainerTopPadding: CGFloat = 12
         static let pageControlMinimumBottomPadding: CGFloat = -25
-        static let pageControlSize: CGSize = CGSize(width: 40, height: 40)
+        static let pageControlSize = CGSize(width: 40, height: 40)
         static let autoScrollTimeInterval: TimeInterval = 12
         static let learningViewTopPadding: CGFloat = 50
     }

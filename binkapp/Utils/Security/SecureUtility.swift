@@ -11,7 +11,6 @@ import Keys
 import SwiftyRSA
 
 enum SecureUtility {
-
     static func getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String? {
         // If we are pinning to API v1.1, return nil
         if Current.apiClient.apiVersion == .v1_1 { return nil }

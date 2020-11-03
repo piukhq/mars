@@ -44,7 +44,6 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
             return cell
         }
     }
-
 }
 
 extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelegate {

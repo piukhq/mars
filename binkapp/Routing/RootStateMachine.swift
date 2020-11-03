@@ -10,7 +10,6 @@ import UIKit
 import DTTJailbreakDetection
 
 class RootStateMachine: NSObject, UserServiceProtocol {
-    
     private let window: UIWindow
     private var router: MainScreenRouter?
     private lazy var migrationController = UserMigrationController()

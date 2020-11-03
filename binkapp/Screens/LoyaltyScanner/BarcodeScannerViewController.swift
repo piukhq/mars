@@ -26,7 +26,7 @@ protocol BarcodeScannerViewControllerDelegate: AnyObject {
 class BarcodeScannerViewController: UIViewController {
     enum Constants {
         static let rectOfInterestInset: CGFloat = 25
-        static let viewFrameRatio: CGFloat = 12/18
+        static let viewFrameRatio: CGFloat = 12 / 18
         static let maskedAreaY: CGFloat = 100
         static let maskedAreaCornerRadius: CGFloat = 8
         static let guideImageInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)

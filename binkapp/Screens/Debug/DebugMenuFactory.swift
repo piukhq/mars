@@ -13,7 +13,6 @@ protocol DebugMenuFactoryDelegate: AnyObject {
 }
 
 class DebugMenuFactory {
-
     weak var delegate: DebugMenuFactoryDelegate?
 
     func makeDebugMenuSections() -> [DebugMenuSection] {

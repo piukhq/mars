@@ -80,7 +80,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         
         configureSearchTextField()
         configureCollectionView()
-                
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -93,7 +93,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTapped))
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.systemGray, .font: UIFont.linkTextButtonNormal], for: .highlighted)
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
-
+        
         navigationItem.leftBarButtonItem = filtersButton
         
         self.title = "browse_brands_title".localized
@@ -130,11 +130,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         
         // Magnifying glass icon
         let searchIconView = UIView(frame: CGRect(x: 0, y: 0, width: searchTextField.frame.height, height: searchTextField.frame.height))
-        let searchImageView = UIImageView(frame:
-            CGRect(x: Constants.searchIconLeftPadding,
-                   y: Constants.searchIconTopPadding,
-                   width: Constants.searchIconSideSize,
-                   height: Constants.searchIconSideSize))
+        let searchImageView = UIImageView(frame: CGRect(x: Constants.searchIconLeftPadding, y: Constants.searchIconTopPadding, width: Constants.searchIconSideSize, height: Constants.searchIconSideSize))
         
         searchImageView.contentMode = .scaleAspectFit
         searchImageView.image = UIImage(named: "search")
@@ -176,13 +172,13 @@ class BrowseBrandsViewController: BinkTrackableViewController {
         } else {
             displayFilters(with: tableContentOffsetY)
         }
-        filtersVisible = !filtersVisible
+        filtersVisible.toggle()
     }
     
     private func hideFilters(with contentOffsetY: CGFloat) {
         filtersButton?.isEnabled = false
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
-
+        
         if !self.noMatchesLabel.isHidden {
             self.noMatchesLabelTopConstraint.constant = 0.0
         }
@@ -195,7 +191,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
             self?.tableView.contentInset.top = 0.0
             self?.filtersButton?.isEnabled = true
             self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
-
         }
     }
     
@@ -212,9 +207,9 @@ class BrowseBrandsViewController: BinkTrackableViewController {
             UIView.performWithoutAnimation {
                 self.collectionView.performBatchUpdates(nil, completion: nil)
             }
-           self.view.layoutIfNeeded()
+            self.view.layoutIfNeeded()
         }) { [weak self] _ in
-                self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
+            self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
             self?.filtersButton?.isEnabled = true
             self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
@@ -285,7 +280,6 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
 
 extension BrowseBrandsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
         var searchText = ""
         if string.isEmpty && range.length > 0 {
             searchText = textField.text ?? ""
@@ -347,7 +341,7 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
         guard let cell: FilterBrandsCollectionViewCell = collectionView.cellForItem(at: indexPath) as? FilterBrandsCollectionViewCell else {
             fatalError("Couldn't load cell")
         }
-        cell.cellWasTapped = !cell.cellWasTapped
+        cell.cellWasTapped.toggle()
         if selectedCollectionViewIndexPaths.contains(indexPath) {
             if let index = selectedCollectionViewIndexPaths.firstIndex(of: indexPath) {
                 selectedCollectionViewIndexPaths.remove(at: index)

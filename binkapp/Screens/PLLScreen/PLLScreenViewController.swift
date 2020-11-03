@@ -14,7 +14,6 @@ enum PllScreenJourney {
 }
 
 class PLLScreenViewController: BinkTrackableViewController {
-    
     // MARK: - Properties
     
     private let viewModel: PLLScreenViewModel
@@ -94,10 +93,10 @@ class PLLScreenViewController: BinkTrackableViewController {
             
             viewModel.paymentCards?.forEach {
                 /*
-                 Filter out cards already associated with this account.
-                 This means that we don't try to re-add any cards that we have already linked to this account.
-                 For arguments sake sometimes this is not a new card.. it's a re-authenticated old card.
-                 */
+                Filter out cards already associated with this account.
+                This means that we don't try to re-add any cards that we have already linked to this account.
+                For arguments sake sometimes this is not a new card.. it's a re-authenticated old card.
+                */
                 if !card.linkedPaymentCards.contains($0) {
                     viewModel.addCardToChangedCardsArray(card: $0)
                 }
@@ -111,7 +110,7 @@ class PLLScreenViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
         
         configureBrandHeader()
@@ -146,9 +145,7 @@ class PLLScreenViewController: BinkTrackableViewController {
             floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
             floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            floatingButtonsView.heightAnchor.constraint(equalToConstant: floatingButtonsView.isSecondaryButtonHidden ?
-                LayoutHelper.PrimarySecondaryButtonView.oneButtonHeight :
-                LayoutHelper.PrimarySecondaryButtonView.twoButtonsHeight)
+            floatingButtonsView.heightAnchor.constraint(equalToConstant: floatingButtonsView.isSecondaryButtonHidden ? LayoutHelper.PrimarySecondaryButtonView.oneButtonHeight : LayoutHelper.PrimarySecondaryButtonView.twoButtonsHeight)
         ])
     }
     

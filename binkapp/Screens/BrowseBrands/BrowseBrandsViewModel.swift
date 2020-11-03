@@ -42,7 +42,7 @@ class BrowseBrandsViewModel {
         Current.database.performTask { context in
             let plans = context.fetchAll(CD_MembershipPlan.self)
             self.membershipPlans = plans.sorted(by: { (firstPlan, secondPlan) -> Bool in
-                (firstPlan.account?.companyName)! < (secondPlan.account?.companyName)!
+                (firstPlan.account?.companyName ?? "") < (secondPlan.account?.companyName ?? "")
             })
             self.selectedFilters = self.mapFilters(fromPlans: self.membershipPlans)
         }

@@ -150,7 +150,6 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
             card.configureWithViewModel(viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
         }
     }
-
 }
 
 // MARK: - Private methods

@@ -9,7 +9,6 @@
 import UIKit
 
 class LoginViewController: BaseFormViewController, UserServiceProtocol {
-    
     private enum Constants {
         static let hyperlinkHeight: CGFloat = 54.0
     }
@@ -74,7 +73,6 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     @objc func continueButtonTapped() {
-        
         continueButton.startLoading()
         
         let fields = dataSource.currentFieldValues()

@@ -52,5 +52,4 @@ class PLRStampViewCell: UICollectionViewCell {
             return .black15
         }
     }
-
 }

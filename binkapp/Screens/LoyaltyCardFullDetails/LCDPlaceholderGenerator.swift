@@ -9,7 +9,6 @@
 import UIKit
 
 enum LCDPlaceholderGenerator {
-    
     /// Although this is the preferred option, this is still dependent on an API call to retrieve the icon image
     static func generate(with colorHexString: String, iconImage: UIImage, destSize: CGSize) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: destSize)

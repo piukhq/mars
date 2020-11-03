@@ -8,7 +8,7 @@
 import UIKit
 
 protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
-   func modalWillDismiss()
+    func modalWillDismiss()
 }
 
 class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring {
@@ -18,9 +18,9 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         static let postCellPadding: CGFloat = 20
         static let cornerRadius: CGFloat = 12
     }
-
+    
     // MARK: - UI Lazy Variables
-
+    
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +32,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.contentInset = LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets
         return stackView
     }()
-
+    
     private lazy var brandHeader: UIImageView = {
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = true
@@ -42,7 +42,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         imageView.layer.applyDefaultBinkShadow()
         return imageView
     }()
-
+    
     private lazy var showBarcodeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .bodyTextLarge
@@ -50,7 +50,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         button.addTarget(self, action: #selector(showBarcodeButtonPressed), for: .touchUpInside)
         return button
     }()
-
+    
     private lazy var modulesStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [pointsModule, linkModule])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -61,15 +61,15 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.spacing = Constants.stackViewSpacing
         return stackView
     }()
-
+    
     private lazy var pointsModule: BinkModuleView = {
         return BinkModuleView()
     }()
-
+    
     private lazy var linkModule: BinkModuleView = {
         return BinkModuleView()
     }()
-
+    
     private lazy var offerTilesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,14 +80,14 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         stackView.spacing = Constants.stackViewSpacing
         return stackView
     }()
-
+    
     lazy var separator: UIView = {
         let separator = UIView()
         separator.backgroundColor = .lightGray
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
-
+    
     lazy var informationTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.separatorColor = .lightGray
@@ -114,7 +114,7 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
+        
         configureUI()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
@@ -152,25 +152,25 @@ extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.informationRows.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CardDetailInfoTableViewCell = tableView.dequeue(indexPath: indexPath)
-
+        
         let informationRow = viewModel.informationRow(forIndexPath: indexPath)
         cell.configureWithInformationRow(informationRow)
-
+        
         if tableView.cellAtIndexPathIsLastInSection(indexPath) {
             cell.hideSeparator()
         }
-
+        
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.performActionForInformationRow(atIndexPath: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return LayoutHelper.PaymentCardDetail.informationRowCellHeight
     }
@@ -182,7 +182,7 @@ private extension LoyaltyCardFullDetailsViewController {
     func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
-
+        
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
         
         if viewModel.membershipCard.card?.barcode != nil || viewModel.membershipCard.card?.membershipId != nil {
@@ -193,14 +193,14 @@ private extension LoyaltyCardFullDetailsViewController {
             let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
             brandHeader.addGestureRecognizer(gestureRecogniser)
         }
-
+        
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: showBarcodeButton)
-
+        
         stackScrollView.add(arrangedSubview: modulesStackView)
         configureModules()
-
+        
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: modulesStackView)
-
+        
         if viewModel.shouldShouldPLR {
             if let vouchers = viewModel.vouchers {
                 for voucher in vouchers {
@@ -220,7 +220,7 @@ private extension LoyaltyCardFullDetailsViewController {
                 }
             }
         }
-
+        
         if viewModel.shouldShowOfferTiles {
             stackScrollView.add(arrangedSubview: offerTilesStackView)
             if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
@@ -237,11 +237,11 @@ private extension LoyaltyCardFullDetailsViewController {
                 offerTilesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding)
             ])
         }
-
+        
         stackScrollView.add(arrangedSubview: separator)
-
+        
         stackScrollView.add(arrangedSubview: informationTableView)
-
+        
         configureLayout()
         
         guard let plan = viewModel.membershipCard.membershipPlan else { return }
@@ -271,7 +271,7 @@ private extension LoyaltyCardFullDetailsViewController {
         cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
         stackScrollView.customPadding(Constants.postCellPadding, after: cell)
     }
-
+    
     func configureLayout() {
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -295,7 +295,7 @@ private extension LoyaltyCardFullDetailsViewController {
         pointsModule.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
         linkModule.configure(moduleType: .link, membershipCard: viewModel.membershipCard, paymentCards: viewModel.paymentCards, delegate: self)
     }
-
+    
     @objc func showBarcodeButtonPressed() {
         viewModel.toBarcodeModel()
     }
@@ -334,7 +334,7 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
-
+        
         let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
         navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
     }
@@ -353,8 +353,8 @@ extension LayoutHelper {
         static let navBarTitleViewScrollOffset: CGFloat = 100
         static let contentPadding: CGFloat = 25
         static let headerToBarcodeButtonPadding: CGFloat = 12
-        private static let brandHeaderAspectRatio: CGFloat = 115/182
-        private static let brandHeaderAspectRatioLink: CGFloat = 25/41
+        private static let brandHeaderAspectRatio: CGFloat = 115 / 182
+        private static let brandHeaderAspectRatioLink: CGFloat = 25 / 41
         static let modulesStackViewHeight: CGFloat = 128
         static let barcodeButtonHeight: CGFloat = 22
         static let informationTableSeparatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)

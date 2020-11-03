@@ -9,7 +9,6 @@
 import Foundation
 
 struct PaymentCardDetailLoyaltyCardStatusCellViewModel: PaymentCardDetailCellViewModelProtocol {
-
     let membershipCard: CD_MembershipCard
 
     init(membershipCard: CD_MembershipCard) {

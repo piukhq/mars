@@ -13,6 +13,7 @@ class CardDetailInfoTableViewCell: UITableViewCell {
     @IBOutlet private weak var subtitleLabel: UILabel!
 
     override func prepareForReuse() {
+        super.prepareForReuse()
         setSeparatorDefaultWidth()
     }
 
@@ -20,5 +21,4 @@ class CardDetailInfoTableViewCell: UITableViewCell {
         titleLabel.text = informationRow.type.title
         subtitleLabel.text = informationRow.type.subtitle
     }
-    
 }

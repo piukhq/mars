@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 public class KeyboardLayoutConstraint: NSLayoutConstraint {
-    
     private var offset: CGFloat = 0
     private var keyboardVisibleHeight: CGFloat = 0
     
@@ -50,9 +49,7 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
                 
                 break
             }
-            
         }
-        
     }
     
     @objc func keyboardWillHideNotification(_ notification: NSNotification) {
@@ -60,7 +57,6 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
         self.updateConstant()
         
         if let userInfo = notification.userInfo {
-            
             switch (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber) {
             case let (.some(duration), .some(curve)):
                 
@@ -84,5 +80,4 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
     func updateConstant() {
         self.constant = offset + keyboardVisibleHeight
     }
-    
 }

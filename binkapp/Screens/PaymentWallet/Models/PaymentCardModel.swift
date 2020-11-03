@@ -21,7 +21,7 @@ struct PaymentCardModel: Codable {
     var status: String?
     var card: PaymentCardCardResponse?
     var account: PaymentCardAccountResponse?
-
+    
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
         case membershipCards = "membership_cards"
@@ -58,7 +58,7 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
         // UUID - Use the object's existing uuid or generate a new one at this point
         let uuid = cdObject.uuid ?? UUID().uuidString
         update(cdObject, \.uuid, with: uuid, delta: delta)
-
+        
         if let card = card {
             let cdCard = card.mapToCoreData(context, .update, overrideID: PaymentCardCardResponse.overrideId(forParentId: overrideID ?? id))
             update(cdCard, \.paymentCard, with: cdObject, delta: delta)
@@ -66,7 +66,7 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
         } else {
             update(cdObject, \.card, with: nil, delta: false)
         }
-
+        
         if let account = account {
             let cdAccount = account.mapToCoreData(context, .update, overrideID: PaymentCardAccountResponse.overrideId(forParentId: overrideID ?? id))
             update(cdAccount, \.paymentCard, with: cdObject, delta: delta)
@@ -76,10 +76,10 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
         }
         
         cdObject.linkedMembershipCards.forEach {
-             guard let membershipCard = $0 as? CD_MembershipCard else { return }
-             cdObject.removeLinkedMembershipCardsObject(membershipCard)
+            guard let membershipCard = $0 as? CD_MembershipCard else { return }
+            cdObject.removeLinkedMembershipCardsObject(membershipCard)
         }
-
+        
         membershipCards?.filter({ $0.activeLink == true }).forEach { membershipCard in
             if let cdMembershipCard = context.fetchWithApiID(CD_MembershipCard.self, id: String(membershipCard.id ?? 0)) {
                 cdObject.addLinkedMembershipCardsObject(cdMembershipCard)

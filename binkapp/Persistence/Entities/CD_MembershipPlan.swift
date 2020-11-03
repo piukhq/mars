@@ -2,7 +2,6 @@ import UIKit
 
 @objc(CD_MembershipPlan)
 open class CD_MembershipPlan: _CD_MembershipPlan {
-    
     func image(ofType type: ImageType) -> CD_MembershipPlanImage? {
         return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(value: type.rawValue))).first as? CD_MembershipPlanImage
     }

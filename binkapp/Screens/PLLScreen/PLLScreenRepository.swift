@@ -10,7 +10,6 @@ import UIKit
 
 class PLLScreenRepository: WalletServiceProtocol {
     func toggleLinkForPaymentCards(membershipCard: CD_MembershipCard, changedLinkCards: [CD_PaymentCard], onSuccess: @escaping () -> Void, onError: @escaping () -> Void) {
-        
         var idsToRemove: [String] = []
         var idsToAdd: [String] = []
         var fullSuccess = true // assume true
@@ -77,7 +76,6 @@ private extension PLLScreenRepository {
             case .success:
                 BinkAnalytics.track(PLLAnalyticsEvent.pllDelete(loyaltyCard: membershipCard, paymentCard: paymentCard))
                 Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
-                    
                     if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCard.id) {
                         safePaymentCard?.removeLinkedMembershipCardsObject(membershipCardToRemove)
                     }

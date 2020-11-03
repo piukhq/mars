@@ -9,7 +9,6 @@
 import UIKit
 
 class PLRRewardDetailViewController: BinkTrackableViewController {
-
     // MARK: - UI properties
 
     private lazy var stackScrollView: StackScrollView = {

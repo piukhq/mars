@@ -61,7 +61,7 @@ class PLRCellViewModel {
             // This ensures that if target is 0 but value is also 0, then progress is 100%
             return value == 0 ? 1 : 0
         }
-        return value/target
+        return value / target
     }
 
     var stampsCollected: Int {

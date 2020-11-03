@@ -13,7 +13,6 @@ public protocol StackScrollViewDelegate: AnyObject {
 }
 
 open class StackScrollView: UIScrollView {
-    
     // MARK: - Helpers
     
     private enum Constants {
@@ -25,7 +24,7 @@ open class StackScrollView: UIScrollView {
     private let stackView: UIStackView
     
     private var stackViewTopConstraint = NSLayoutConstraint()
-
+    
     private var lastContentInset: UIEdgeInsets?
     
     public var arrangedSubviews: [UIView] {
@@ -101,7 +100,7 @@ open class StackScrollView: UIScrollView {
                 stackView.widthAnchor.constraint(equalTo: widthAnchor),
                 stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
                 stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
-                ])
+            ])
             
             if adjustForKeyboard {
                 NotificationCenter.default.addObserver(self, selector: .keyboardShow, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -109,12 +108,12 @@ open class StackScrollView: UIScrollView {
             }
         } else {
             /*
-             HACK: We need just under the highest priority to ensure these two constraints are honoured.
-             The preferredContentSizeWidthConstraint is required to make the stackScrollview try to be as large as it
-             can be before scrolling.
-             The minimumContentWidthGuidingConstraint is required to ensure that the scrollView attemps to grow causing
-             the necessary layout pass required to start drawing it's content.
-             */
+            HACK: We need just under the highest priority to ensure these two constraints are honoured.
+            The preferredContentSizeWidthConstraint is required to make the stackScrollview try to be as large as it
+            can be before scrolling.
+            The minimumContentWidthGuidingConstraint is required to ensure that the scrollView attemps to grow causing
+            the necessary layout pass required to start drawing it's content.
+            */
             preferredContentSizeWidthConstraint.priority = .almostRequired
             minimumContentWidthGuidingConstraint.priority = .almostRequired
             NSLayoutConstraint.activate([
@@ -125,7 +124,7 @@ open class StackScrollView: UIScrollView {
                 stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
                 preferredContentSizeWidthConstraint,
                 minimumContentWidthGuidingConstraint
-                ])
+            ])
         }
     }
     
@@ -177,7 +176,7 @@ open class StackScrollView: UIScrollView {
     public func customPadding(_ padding: CGFloat, after: UIView) {
         stackView.setCustomSpacing(padding, after: after)
     }
-
+    
     /// A method to leverage the customPaddingAfter method by finding the view before the subview in question, and adding padding after it
     /// - Parameter padding: The desired padding
     /// - Parameter before: The view which the padding should be applied before

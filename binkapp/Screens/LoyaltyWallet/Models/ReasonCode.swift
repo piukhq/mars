@@ -50,7 +50,10 @@ enum ReasonCode: String, Codable, CaseIterable {
 
     var code: Int {
         let codeString = String(rawValue.suffix(3))
-        return Int(codeString)! // Tech debt
+        guard let code = Int(codeString) else {
+            fatalError("Could not cast code as Int")
+        }
+        return code
     }
 
     var description: String {

@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 class MainTabBarViewModel {
-    
     // MARK: - Helpers
     
     private enum Constants {

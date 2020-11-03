@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 open class CustomView: UIView {
-    
     public var view: UIView!
     
     var reuseableId: String {
@@ -51,7 +50,5 @@ open class CustomView: UIView {
         return viewFromNib
     }
     
-    open func configureUI() {
-        
-    }
+    open func configureUI() {}
 }

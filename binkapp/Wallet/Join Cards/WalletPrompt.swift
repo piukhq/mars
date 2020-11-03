@@ -32,7 +32,6 @@ enum WalletPromptType {
     }
 
     var userDefaultsDismissKey: String {
-        
         var userDefaultsDismiss = ""
         
         // Let these be on a per user basis

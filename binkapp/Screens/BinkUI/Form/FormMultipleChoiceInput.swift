@@ -48,8 +48,8 @@ class FormMultipleChoiceInput: UIInputView {
                 
                 if let backingDataValue = value.backingData {
                     if backingData == nil { backingData = [] }
-                
-                    backingData!.append(backingDataValue)
+
+                    backingData?.append(backingDataValue)
                 }
                 
                 lastString = value.title
@@ -103,7 +103,7 @@ class FormMultipleChoiceInput: UIInputView {
     
     @objc fileprivate func doneInputView() {
         endEditing(true)
-//        textfield.resignFirstResponder()
+        //        textfield.resignFirstResponder()
     }
 }
 
@@ -130,10 +130,7 @@ extension FormMultipleChoiceInput: UIPickerViewDelegate {
         return 42
     }
     
-    public func pickerView(_ pickerView: UIPickerView,
-                           viewForRow row: Int,
-                           forComponent component: Int,
-                           reusing view: UIView?) -> UIView {
+    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         var pickerLabel: UILabel
         
         if view == nil {

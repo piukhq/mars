@@ -84,7 +84,7 @@ class WebScrapingUtility: NSObject {
     private var hasAttemptedLogin = false
     private weak var delegate: WebScrapingUtilityDelegate?
     
-    init(containerViewController: UIViewController, agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
+    init(containerViewController: UIViewController?, agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
         self.containerViewController = containerViewController
         webView = WKWebView(frame: .zero)
         self.agent = agent

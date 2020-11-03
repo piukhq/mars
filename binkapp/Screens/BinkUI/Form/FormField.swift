@@ -33,7 +33,6 @@ enum FieldCommonName: String {
 }
 
 struct FormPickerData: Equatable {
-    
     let title: String
     let backingData: Int?
     

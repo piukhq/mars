@@ -21,7 +21,6 @@ enum BarTypeBlur {
 }
 
 extension BarBlurring {
-
     func prepareBarWithBlur(bar: UINavigationBar, blurBackground: UIVisualEffectView) {
         prepareBlur(bar: bar, blurBackground: blurBackground, frame: frameWithType(type: .navigationBar, background: blurBackground, bar: bar))
     }
@@ -31,7 +30,6 @@ extension BarBlurring {
     }
     
     func frameWithType(type: BarTypeBlur, background: UIView, bar: UIView) -> CGRect {
-
         var topEdge, bottomEdge: CGFloat
 
         switch type {
@@ -71,7 +69,7 @@ extension BarBlurring {
     }
     
     func defaultBlurredBackground() -> UIVisualEffectView {
-        let visualEffectView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect.init(style: .light))
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         visualEffectView.translatesAutoresizingMaskIntoConstraints = false
         visualEffectView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         return visualEffectView
@@ -85,7 +83,6 @@ private extension UIView {
         if let navBar = self as? UINavigationBar {
             navBar.shadowImage = UIImage()
             navBar.setBackgroundImage(UIImage(), for: .default)
-            
         } else if let tabBar = self as? UITabBar {
             tabBar.backgroundImage = UIImage()
         }

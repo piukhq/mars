@@ -38,7 +38,6 @@ struct AccountPostModel: Codable {
     }
     
     mutating func addField(_ field: PostModel, to type: MembershipAccountPostModelType) {
-                
         switch type {
         case .add:
             if addFields == nil {

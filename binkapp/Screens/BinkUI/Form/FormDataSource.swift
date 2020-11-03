@@ -154,7 +154,7 @@ extension FormDataSource {
             manualValidate: manualValidateBlock,
             /// It's fine to force unwrap here, as we are already guarding against the values being nil and we don't want to provide default values
             /// We will never reach the force unwrapping if either value is nil
-            forcedValue: model.month == nil || model.year == nil ? nil : "\(String(format: "%02d", model.month!))/\(model.year!)"
+            forcedValue: model.month == nil || model.year == nil ? nil : "\(String(format: "%02d", model.month ?? 0))/\(model.year ?? 0)"
         )
 
         let nameOnCardField = FormField(
@@ -377,7 +377,6 @@ extension FormDataSource {
         var checkboxes: [CheckboxView] = []
         
         membershipPlan.account?.formattedPlanDocuments?.forEach { field in
-                        
             let displayFields = field.formattedDisplay
             
             guard displayFields.contains(where: { $0.value == journey.rawValue }) else { return }

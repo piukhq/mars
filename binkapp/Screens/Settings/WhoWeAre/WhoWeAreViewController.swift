@@ -14,10 +14,8 @@ struct BinkTeamMember {
 }
 
 class WhoWeAreViewController: UIViewController {
-
-    
     // MARK: - UI Lazy Variables
-
+    
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +56,7 @@ class WhoWeAreViewController: UIViewController {
     }()
     
     private lazy var descriptionText: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.text = "who_we_are_body".localized
@@ -66,7 +64,7 @@ class WhoWeAreViewController: UIViewController {
         label.numberOfLines = 0
         return label
     }()
-
+    
     private lazy var binkPeopleTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.separatorColor = .lightGray
@@ -105,7 +103,6 @@ class WhoWeAreViewController: UIViewController {
 // MARK: - Tableview
 
 extension WhoWeAreViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return teamMembers.count
     }
@@ -117,7 +114,7 @@ extension WhoWeAreViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView.cellAtIndexPathIsLastInSection(indexPath) {
             cell.hideSeparator()
         }
-
+        
         return cell
     }
     
@@ -130,7 +127,6 @@ extension WhoWeAreViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - Private Methods
 
 private extension WhoWeAreViewController {
-    
     func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: binkLogo)

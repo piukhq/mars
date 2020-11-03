@@ -67,7 +67,7 @@ struct PaymentCardCreateRequest: Codable {
             token: PaymentCardCreateRequest.fakeToken(),
             firstSixDigits: SecureUtility.encryptedSensitiveFieldValue(firstSix) ?? "",
             lastFourDigits: SecureUtility.encryptedSensitiveFieldValue(lastFour) ?? "",
-            nameOnCard: model.nameOnCard!,
+            nameOnCard: model.nameOnCard ?? "",
             month: SecureUtility.encryptedSensitiveFieldValue("\(month)") ?? "",
             year: SecureUtility.encryptedSensitiveFieldValue("\(year)") ?? "",
             fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month)),
