@@ -117,7 +117,7 @@ fileprivate extension PaymentCardType {
         }
         
         func isPrefixValid(_ fullPan: String) -> Bool {
-            guard prefixes.count > 0 else { return true }
+            guard !prefixes.isEmpty else { return true }
             return prefixes.contains { $0.hasCommonPrefix(with: fullPan) }
         }
         

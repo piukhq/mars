@@ -9,7 +9,7 @@
 import UIKit
 
 class PLRStampViewCell: UICollectionViewCell {
-    struct Constants {
+    enum Constants {
         static let innerViewWidthHeight: CGFloat = 10
         static let innerViewCornerRadius: CGFloat = 5
         static let outerViewCornerRadius: CGFloat = 12

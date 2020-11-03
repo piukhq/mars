@@ -90,7 +90,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     }
 
     var hasPaymentCards: Bool {
-        return paymentCards != nil && paymentCards?.count != 0
+        guard let paymentCards = paymentCards else { return false }
+        return !paymentCards.isEmpty
     }
 
     var hasValidPaymentCards: Bool {

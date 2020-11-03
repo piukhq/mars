@@ -78,7 +78,7 @@ extension PaymentCardModel: CoreDataMappable, CoreDataIDMappable {
         cdObject.linkedMembershipCards.forEach {
              guard let membershipCard = $0 as? CD_MembershipCard else { return }
              cdObject.removeLinkedMembershipCardsObject(membershipCard)
-         }
+        }
 
         membershipCards?.filter({ $0.activeLink == true }).forEach { membershipCard in
             if let cdMembershipCard = context.fetchWithApiID(CD_MembershipCard.self, id: String(membershipCard.id ?? 0)) {

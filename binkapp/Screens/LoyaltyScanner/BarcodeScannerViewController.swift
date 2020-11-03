@@ -24,7 +24,7 @@ protocol BarcodeScannerViewControllerDelegate: AnyObject {
 }
 
 class BarcodeScannerViewController: UIViewController {
-    struct Constants {
+    enum Constants {
         static let rectOfInterestInset: CGFloat = 25
         static let viewFrameRatio: CGFloat = 12/18
         static let maskedAreaY: CGFloat = 100
@@ -187,7 +187,7 @@ class BarcodeScannerViewController: UIViewController {
 
         guard let captureOutput = captureOutput else { return }
 
-        if session.outputs.count == 0 {
+        if !session.outputs.isEmpty {
             if session.canAddOutput(captureOutput) {
                 session.addOutput(captureOutput)
                 captureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)

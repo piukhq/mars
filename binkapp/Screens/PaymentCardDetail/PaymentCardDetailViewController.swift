@@ -393,7 +393,7 @@ extension PaymentCardDetailViewController: UIScrollViewDelegate {
 // MARK: - Layout Helper
 
 extension LayoutHelper {
-    struct PaymentCardDetail {
+    enum PaymentCardDetail {
         static func navBarTitleViewScrollOffset(withNavigationBar navigationBar: UINavigationBar?) -> CGFloat {
             let stackScrollViewInitialOffset: CGFloat = 108
             let desiredOffset = LayoutHelper.statusBarHeight + LayoutHelper.heightForNavigationBar(navigationBar) + stackScrollViewContentInsets.top + (LayoutHelper.WalletDimensions.cardSize.height / 2)

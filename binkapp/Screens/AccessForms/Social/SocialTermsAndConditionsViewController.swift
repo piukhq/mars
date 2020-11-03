@@ -194,7 +194,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
             }
         }
 
-        guard params.count > 0 else { return }
+        guard !params.isEmpty else { return }
 
         // We don't worry about whether this was successful or not
         setPreferences(params: params)

@@ -9,7 +9,7 @@
 import Foundation
 import FBSDKLoginKit
 
-struct FacebookLoginController {
+enum FacebookLoginController {
     static func login(with baseViewController: UIViewController, onSuccess: @escaping (_ request: FacebookRequest) -> Void, onError: @escaping (_ isCancelled: Bool) -> Void) {
         
         let loginManager = LoginManager()

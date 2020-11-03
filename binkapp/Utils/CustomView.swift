@@ -47,7 +47,7 @@ open class CustomView: UIView {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: self.reuseableId, bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil).first as? UIView
-        guard let viewFromNib = view else { fatalError("Cannot create view from nib")}
+        guard let viewFromNib = view else { fatalError("Cannot create view from nib") }
         return viewFromNib
     }
     

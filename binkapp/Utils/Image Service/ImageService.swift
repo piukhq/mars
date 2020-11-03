@@ -121,7 +121,7 @@ extension UIImageView {
 }
 
 /// A utility class to handle the expiration of objects stored to disk. When an object is
-final class StorageUtility {
+enum StorageUtility {
     fileprivate static var sharedStoredObjects: [StoredObject] = []
     fileprivate static let sharedStoredObjectsKey = "sharedStoredObjects"
 

@@ -9,7 +9,7 @@
 import UIKit
 
 class PLRRewardsHistoryViewController: BinkTrackableViewController {
-    struct Constants {
+    enum Constants {
         static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
         static let postCellPadding: CGFloat = 20
     }

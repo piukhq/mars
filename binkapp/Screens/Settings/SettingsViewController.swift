@@ -15,7 +15,7 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
     
     // MARK: - Helpers
     
-    private struct Constants {
+    private enum Constants {
         static let rowHeight: CGFloat = 88
         static let headerHeight: CGFloat = 50
         static let privacyPolicyUrl = "https://bink.com/privacy-policy/"

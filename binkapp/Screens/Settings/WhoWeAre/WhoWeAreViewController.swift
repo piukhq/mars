@@ -158,7 +158,7 @@ private extension WhoWeAreViewController {
 }
 
 extension LayoutHelper {
-    struct WhoWeAre {
+    enum WhoWeAre {
         static let stackScrollMargin = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         static let tableViewSeperatorInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
         static let logoDimension: CGFloat = 142

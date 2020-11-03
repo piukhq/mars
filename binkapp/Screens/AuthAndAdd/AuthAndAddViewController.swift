@@ -9,7 +9,7 @@ import UIKit
 import NotificationCenter
 
 class AuthAndAddViewController: BaseFormViewController {
-    private struct Constants {
+    private enum Constants {
         static let postCollectionViewPadding: CGFloat = 15.0
         static let cardPadding: CGFloat = 30.0
         static let cellErrorLabelSafeSpacing: CGFloat = 60.0

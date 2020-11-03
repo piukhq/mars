@@ -12,7 +12,7 @@ import ZendeskCoreSDK
 import SupportSDK
 import Keys
 
-final class ZendeskService {
+enum ZendeskService {
     private static var appId: String {
         return APIConstants.isProduction ? BinkappKeys().zendeskProductionAppId : BinkappKeys().zendeskSandboxAppId
     }

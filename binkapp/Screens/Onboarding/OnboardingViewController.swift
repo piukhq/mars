@@ -17,7 +17,7 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
     private var didLayoutSubviews = false
     private var timer: Timer?
 
-    private struct Constants {
+    private enum Constants {
         static let floatingButtonsHeight: CGFloat = 129.0
     }
     
@@ -302,7 +302,7 @@ extension OnboardingViewController: BinkPrimarySecondaryButtonViewDelegate {
 }
 
 extension LayoutHelper {
-    struct Onboarding {
+    enum Onboarding {
         static let learningContainerHeight: CGFloat = 382
         static let learningContainerTopPadding: CGFloat = 12
         static let pageControlMinimumBottomPadding: CGFloat = -25

@@ -47,7 +47,7 @@ enum Configuration {
     }
 }
 
-struct APIConstants {
+enum APIConstants {
     static var currentEnvironment: EnvironmentType {
         guard let environmment = EnvironmentType(rawValue: baseURLString) else {
             fatalError("Could not identify environment")

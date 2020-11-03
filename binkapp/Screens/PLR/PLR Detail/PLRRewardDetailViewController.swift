@@ -193,7 +193,7 @@ private extension PLRRewardDetailViewController {
 }
 
 extension LayoutHelper {
-    struct PLRRewardDetail {
+    enum PLRRewardDetail {
         static let stackViewPadding: CGFloat = 25
         static let codeLabelTopPadding: CGFloat = 48
         static let headerLabelTopPadding: CGFloat = 30

@@ -10,7 +10,7 @@ import Foundation
 import Keys
 import SwiftyRSA
 
-final class SecureUtility {
+enum SecureUtility {
 
     static func getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String? {
         // If we are pinning to API v1.1, return nil

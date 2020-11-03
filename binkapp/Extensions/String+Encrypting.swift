@@ -18,7 +18,7 @@ extension String {
     }
 }
 
-public struct HMAC {
+public enum HMAC {
     
     static func hash(inp: String, algo: HMACAlgo) -> String {
         guard let stringData = inp.data(using: String.Encoding.utf8, allowLossyConversion: false) else {

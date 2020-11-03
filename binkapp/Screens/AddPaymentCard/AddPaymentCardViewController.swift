@@ -16,7 +16,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         return cell
     }()
     
-    private struct Constants {
+    private enum Constants {
         static let cardPadding: CGFloat = 30.0
         static let cardHeight: CGFloat = 120.0
         static let hyperlinkHeight: CGFloat = 54.0
@@ -76,7 +76,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         
         constraints.append(contentsOf: [
             card.heightAnchor.constraint(equalToConstant: Constants.cardHeight),
-                card.widthAnchor.constraint(equalTo: collectionView.widthAnchor)
+            card.widthAnchor.constraint(equalTo: collectionView.widthAnchor)
         ])
 
         NSLayoutConstraint.activate(constraints)
@@ -162,11 +162,11 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
              EXAMPLE: 4242424242424242 becomes 4242 4242 4242 4242
             */
             
-            if newValue.count > 0 {
+            if !newValue.isEmpty {
                 let values = type.lengthRange()
                 let cardLength = values.length + values.whitespaceIndexes.count
                 
-                if let textFieldText = textField.text, values.whitespaceIndexes.contains(range.location) && newValue.count > 0 {
+                if let textFieldText = textField.text, values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
                     textField.text = textFieldText + " "
                 }
                 

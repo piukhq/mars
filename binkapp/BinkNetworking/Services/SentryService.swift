@@ -9,7 +9,7 @@
 import Foundation
 import Sentry
 
-final class SentryService {
+enum SentryService {
     private static var environment: String {
         let envString: String
 

@@ -117,7 +117,8 @@ class PaymentCardDetailViewModel {
     }
 
     var shouldShowOtherCardsTableView: Bool {
-        return paymentCardStatus == .active && pllPlansNotAddedToWallet?.count != 0
+        guard let plans = pllPlansNotAddedToWallet else { return false }
+        return paymentCardStatus == .active && !plans.isEmpty
     }
     
     var shouldShowInformationTableView: Bool {

@@ -16,7 +16,7 @@ import AlamofireImage
 typealias APIClientCompletionHandler<ResponseType: Any> = (Result<ResponseType, NetworkingError>, HTTPURLResponse?) -> Void
 
 final class APIClient {
-    struct Certificates {
+    enum Certificates {
         static let bink = Certificates.certificate(filename: "bink")
 
         private static func certificate(filename: String) -> SecCertificate {

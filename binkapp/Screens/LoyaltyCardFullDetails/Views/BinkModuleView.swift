@@ -169,14 +169,14 @@ private extension BinkModuleView {
         }
         switch membershipCard.status?.status {
         case .authorised:
-            let possiblyLinkedCard = paymentCards.first(where: { $0.linkedMembershipCards.count > 0})
-            guard membershipCard.linkedPaymentCards.count == 0, !membershipCard.linkedPaymentCards.contains(possiblyLinkedCard as Any) else {
+            let possiblyLinkedCard = paymentCards.first(where: { !$0.linkedMembershipCards.isEmpty })
+            guard membershipCard.linkedPaymentCards.isEmpty, !membershipCard.linkedPaymentCards.contains(possiblyLinkedCard as Any) else {
                 // Link module 2.1
-                let subtitleText = String(format: paymentCards.count == 1 ? "link_module_to_number_of_payment_card_message".localized : "link_module_to_number_of_payment_cards_message".localized, membershipCard.linkedPaymentCards.count, paymentCards.count)
+                let subtitleText = String(format: paymentCards.isEmpty ? "link_module_to_number_of_payment_card_message".localized : "link_module_to_number_of_payment_cards_message".localized, membershipCard.linkedPaymentCards.count, paymentCards.count)
                 configure(imageName: "lcdModuleIconsLinkActive", titleText: "card_linked_status".localized, subtitleText: subtitleText, touchAction: .pll)
                 return
             }
-            if paymentCards.count == 0 {
+            if paymentCards.isEmpty {
                 // Link module 2.2
                 configure(imageName: "lcdModuleIconsLinkError", titleText: "card_link_status".localized, subtitleText: "link_module_to_payment_cards_message".localized, touchAction: .pllEmpty)
             } else {

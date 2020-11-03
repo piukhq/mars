@@ -9,7 +9,7 @@
 import UIKit
 
 class LoyaltyScannerWidgetView: CustomView {
-    struct Constants {
+    enum Constants {
         static let cornerRadius: CGFloat = 4
     }
 

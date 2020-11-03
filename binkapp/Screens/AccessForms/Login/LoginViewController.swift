@@ -10,7 +10,7 @@ import UIKit
 
 class LoginViewController: BaseFormViewController, UserServiceProtocol {
     
-    private struct Constants {
+    private enum Constants {
         static let hyperlinkHeight: CGFloat = 54.0
     }
     

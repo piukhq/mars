@@ -52,7 +52,7 @@ class FormDataSource: NSObject {
     
     typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate & FormCollectionViewCellDelegate
     
-    private struct Constants {
+    private enum Constants {
         static let expiryYearsInTheFuture = 50
     }
     

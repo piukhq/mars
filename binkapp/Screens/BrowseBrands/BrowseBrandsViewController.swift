@@ -7,7 +7,7 @@
 
 import UIKit
 
-fileprivate struct Constants {
+fileprivate enum Constants {
     static let tableViewHeaderHeight: CGFloat = 47.0
     static let searchIconLeftPadding = 12
     static let searchIconTopPadding = 13
@@ -287,7 +287,7 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         var searchText = ""
-        if string == "" && range.length > 0 {
+        if string.isEmpty && range.length > 0 {
             searchText = textField.text ?? ""
             searchText.removeLast()
         } else {
@@ -295,7 +295,7 @@ extension BrowseBrandsViewController: UITextFieldDelegate {
         }
         viewModel.searchText = searchText
         switchTableWithNoMatchesLabel()
-        textField.textColor = searchText != "" ? .black : .greyFifty
+        textField.textColor = !searchText.isEmpty ? .black : .greyFifty
         return true
     }
     

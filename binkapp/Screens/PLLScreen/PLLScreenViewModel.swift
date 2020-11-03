@@ -25,7 +25,8 @@ class PLLScreenViewModel {
     private(set) var changedLinkCards: [CD_PaymentCard] = []
     
     var isEmptyPll: Bool {
-        return paymentCards == nil ? true : paymentCards?.count == 0
+        guard let paymentCards = paymentCards else { return true }
+        return paymentCards.isEmpty
     }
     
     var shouldShowBackButton: Bool {

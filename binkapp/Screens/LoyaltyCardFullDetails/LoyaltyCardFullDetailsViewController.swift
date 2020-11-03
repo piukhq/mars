@@ -12,7 +12,7 @@ protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
 }
 
 class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring {
-    struct Constants {
+    enum Constants {
         static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
         static let stackViewSpacing: CGFloat = 12
         static let postCellPadding: CGFloat = 20
@@ -349,7 +349,7 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
 }
 
 extension LayoutHelper {
-    struct LoyaltyCardDetail {
+    enum LoyaltyCardDetail {
         static let navBarTitleViewScrollOffset: CGFloat = 100
         static let contentPadding: CGFloat = 25
         static let headerToBarcodeButtonPadding: CGFloat = 12

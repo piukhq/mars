@@ -113,7 +113,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
             }
         }
         
-        guard params.count > 0 else { return }
+        guard !params.isEmpty else { return }
         
         setPreferences(params: params)
     }

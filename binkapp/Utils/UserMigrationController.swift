@@ -11,7 +11,7 @@ import JWTDecode
 
 struct UserMigrationController: UserServiceProtocol {
     
-    private struct Constants {
+    private enum Constants {
         static let hasMigratedFromBinkLegacyKey = "hasMigratedFromBinkLegacyKey"
         static let internalDictKey = "BINKKeychainInternalDictionary"
         static let userClass = "BINKUser"
@@ -125,7 +125,7 @@ struct UserMigrationController: UserServiceProtocol {
     
     required init?(coder: NSCoder) {
         guard let token = coder.decodeObject(forKey: "token") as? AuthToken else {
-            fatalError()
+            fatalError("Could not decode token.")
         }
         
         self.token = token
@@ -141,7 +141,7 @@ struct UserMigrationController: UserServiceProtocol {
     
     required init?(coder: NSCoder) {
         guard let accessToken = coder.decodeObject(forKey: "accessToken") as? String else {
-            fatalError()
+            fatalError("Could not decode token.")
         }
         self.accessToken = accessToken
     }

@@ -12,7 +12,7 @@ class MainTabBarViewModel {
     
     // MARK: - Helpers
     
-    private struct Constants {
+    private enum Constants {
         static let iconInsets: CGFloat = 6.0
         static let centerInsets: CGFloat = 8.0
     }

@@ -9,7 +9,7 @@ import UIKit
 import CardScan
 
 extension LayoutHelper {
-    struct settingsButton {
+    enum SettingsButton {
         static let widthRatio: CGFloat = 0.13
         static let height: CGFloat = 24
     }

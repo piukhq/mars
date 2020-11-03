@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct WalletViewControllerConstants {
+enum WalletViewControllerConstants {
     static let dotViewHeightWidth: CGFloat = 10
     static let dotViewRightPadding: CGFloat = 18
     static let dotViewTopPadding: CGFloat = 3

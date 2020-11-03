@@ -21,7 +21,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     private weak var delegate: FormCollectionViewCellDelegate?
     // MARK: - Helpers
     
-    private struct Constants {
+    private enum Constants {
         static let titleLabelHeight: CGFloat = 20.0
         static let textFieldHeight: CGFloat = 24.0
         static let stackViewSpacing: CGFloat = 2.0
@@ -206,8 +206,9 @@ class FormCollectionViewCell: UICollectionViewCell {
     // MARK: - Actions
     
     @objc func textFieldUpdated(_ textField: UITextField, text: String?, backingData: [Int]?) {
-        formField?.updateValue(textField.text)
-        configureTextFieldRightView(shouldDisplay: textField.text == "")
+        guard let textFieldText = textField.text else { return }
+        formField?.updateValue(textFieldText)
+        configureTextFieldRightView(shouldDisplay: textFieldText.isEmpty)
     }
     
     private func configureTextFieldRightView(shouldDisplay: Bool) {

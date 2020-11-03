@@ -16,7 +16,7 @@ open class StackScrollView: UIScrollView {
     
     // MARK: - Helpers
     
-    private struct Constants {
+    private enum Constants {
         static let minimumGuideSizeWidth: CGFloat = 30.0
     }
     
@@ -78,7 +78,7 @@ open class StackScrollView: UIScrollView {
     // MARK: - Initialisation
     
     public init(axis: NSLayoutConstraint.Axis, arrangedSubviews: [UIView]? = nil, adjustForKeyboard: Bool = true) {
-        if let subviews = arrangedSubviews, subviews.count > 0 {
+        if let subviews = arrangedSubviews, !subviews.isEmpty {
             stackView = UIStackView(arrangedSubviews: subviews)
         } else {
             stackView = UIStackView(frame: .zero)

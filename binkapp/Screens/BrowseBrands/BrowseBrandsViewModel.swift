@@ -35,7 +35,7 @@ class BrowseBrandsViewModel {
     }
     
     var existingCardsPlanIDs: [String]? {
-        return Current.wallet.membershipCards?.map { ($0.membershipPlan?.id ?? "")}
+        return Current.wallet.membershipCards?.map { ($0.membershipPlan?.id ?? "") }
     }
         
     init() {
@@ -129,14 +129,14 @@ class BrowseBrandsViewModel {
     }
     
     private func mapFilters(fromPlans plans: [CD_MembershipPlan]) -> [String] {
-        let filters = plans.map({ ($0.account?.category ?? "")})
+        let filters = plans.map({ ($0.account?.category ?? "") })
         return filters.uniq(source: filters)
     }
     
     private func filterPlans() {
         filteredPlans = []
         getMembershipPlans().forEach { (plan) in
-            guard let companyName = plan.account?.companyName, let category = plan.account?.category else {return}
+            guard let companyName = plan.account?.companyName, let category = plan.account?.category else { return }
             if searchText.isEmpty {
                 if selectedFilters.contains(category) && !filteredPlans.contains(plan) {
                     filteredPlans.append(plan)

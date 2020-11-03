@@ -16,12 +16,12 @@ extension LayoutHelper {
         return navigationBar?.frame.height ?? 0
     }
 
-    struct BinkInfoButton {
+    enum BinkInfoButton {
         static let imageEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 7, right: 5)
         static let titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 3)
     }
 
-    struct WalletDimensions {
+    enum WalletDimensions {
         static let cardHorizontalPadding: CGFloat = 25.0
         private static let cardWidth: CGFloat = UIScreen.main.bounds.width - (WalletDimensions.cardHorizontalPadding * 2)
         static let cardSize = CGSize(width: WalletDimensions.cardWidth, height: 120.0)

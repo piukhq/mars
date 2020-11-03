@@ -11,7 +11,7 @@ import AVKit
 import AVFoundation
 import UIKit
 
-class PermissionsUtility {
+enum PermissionsUtility {
     
     // MARK: - Camera permissions
     

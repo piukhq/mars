@@ -25,21 +25,21 @@ disabled_rules:
   - legacy_constructor
 
 opt_in_rules:
-#  - array_init
-#  - attributes
-#  - closure_end_indentation
-#  - closure_spacing
-#  - collection_alignment
-#  - colon # promote to error
-#  - convenience_type
-#  - discouraged_object_literal
-#  - empty_collection_literal
-#  - empty_count
-#  - empty_string
-#  - enum_case_associated_values_count
-#  - fatal_error_message
-#  - first_where
-#  - force_unwrapping
+  - array_init
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - collection_alignment
+  - colon # promote to error
+  - convenience_type
+  - discouraged_object_literal
+  - empty_collection_literal
+  - empty_count
+  - empty_string
+  - enum_case_associated_values_count
+  - fatal_error_message
+  - first_where
+  - force_unwrapping
 #  - implicitly_unwrapped_optional
 #  - indentation_width
 #  - last_where
