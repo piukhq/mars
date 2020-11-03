@@ -34,17 +34,17 @@ class PermissionsUtility {
 }
 
 extension PermissionsUtility {
-    static func launchLoyaltyScanner(_ viewController: BarcodeScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: @escaping EmptyCompletionBlock) {
+    static func launchLoyaltyScanner(_ viewController: BarcodeScannerViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
         launchScanner(viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
     }
 
-    static func launchPaymentScanner(_ viewController: ScanViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: @escaping EmptyCompletionBlock) {
+    static func launchPaymentScanner(_ viewController: ScanViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
         launchScanner(viewController: viewController, grantedAction: grantedAction, enterManuallyAction: enterManuallyAction)
     }
 
-    private static func launchScanner(viewController: UIViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: @escaping EmptyCompletionBlock) {
+    private static func launchScanner(viewController: UIViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
         let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
-            enterManuallyAction()
+            enterManuallyAction?()
         }
 
         if PermissionsUtility.videoCaptureIsAuthorized {
