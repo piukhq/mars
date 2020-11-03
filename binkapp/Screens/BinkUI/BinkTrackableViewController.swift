@@ -35,6 +35,6 @@ class BinkTrackableViewController: UIViewController {
     var screenName: String?
     func setScreenName(trackedScreen: TrackedScreen) {
         screenName = trackedScreen.rawValue
-        Analytics.logEvent(screenName ?? "", parameters: nil)
+        Analytics.setScreenName(screenName, screenClass: nil)
     }
 }
