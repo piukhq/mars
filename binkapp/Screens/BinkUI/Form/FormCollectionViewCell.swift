@@ -27,6 +27,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         static let stackViewSpacing: CGFloat = 2.0
         static let postTextFieldSpacing: CGFloat = 16.0
         static let postSeparatorSpacing: CGFloat = 8.0
+        static let validationLabelHeight: CGFloat = 20.0
     }
 
     // MARK: - Properties
@@ -94,6 +95,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         label.text = "form_field_validation_error".localized
         label.isHidden = true
         label.setContentCompressionResistancePriority(.required, for: .vertical)
+        label.heightAnchor.constraint(equalToConstant: Constants.validationLabelHeight).isActive = true
         return label
     }()
     
