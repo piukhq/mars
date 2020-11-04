@@ -126,6 +126,8 @@ class FormCollectionViewCell: UICollectionViewCell {
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let layoutAttributes = super.preferredLayoutAttributesFitting(layoutAttributes)
         layoutAttributes.frame.size.width = preferredWidth
+        layoutAttributes.bounds.size.height = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+
         return layoutAttributes
     }
     
