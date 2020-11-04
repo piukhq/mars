@@ -165,6 +165,13 @@ class AuthAndAddViewModel {
                     NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
                 }
                 Current.navigate.to(tabNavigationRequest)
+
+                // TODO: InAppReviewable - Start in app review journey here if card is pll
+//                if card.membershipPlan?.isPLL == true {
+//                    /// Initialise and begin the journey. Access this journey
+//                    let journey = PllLoyaltyInAppReviewableJourney()
+//                    try? journey.begin()
+//                }
             }
             }, onError: { [weak self] error in
                 self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)

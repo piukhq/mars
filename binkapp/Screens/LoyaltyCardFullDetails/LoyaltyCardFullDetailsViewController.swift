@@ -135,6 +135,10 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
     
     // MARK: - Navigation Bar Blurring
     
@@ -344,6 +348,7 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 
 extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDelegate {
     func modalWillDismiss() {
+        // TODO: InAppReviewable - if there is an in progress pll loyalty journey in progress, update it here
         configureModules()
     }
 }
