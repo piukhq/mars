@@ -17,12 +17,8 @@ extension InAppReviewable {
     func requestInAppReview() {
         guard canRequestReview else { return }
         SKStoreReviewController.requestReview()
-
-        // Update last requested time
-        let requestedTime = Date().timeIntervalSince1970
-        Current.userDefaults.set(requestedTime, forDefaultsKey: .inAppReviewLastRequested)
-        
-        // Update last minor version
+        setUpdatedRequestTime()
+        setUpdatedRequestedMinorVersions()
     }
 
     private var canRequestReview: Bool {
@@ -30,10 +26,13 @@ extension InAppReviewable {
     }
 
     private var requestTimeLimitHasPassed: Bool {
-        if let lastRequestedDefaultsValue = Current.userDefaults.value(forDefaultsKey: .inAppReviewLastRequested) {
+        /// Can we get a user defaults value for the last request time?
+        if let lastRequestedDefaultsValue = Current.userDefaults.value(forDefaultsKey: .inAppReviewLastRequestedDate) {
             guard let lastRequest = lastRequestedDefaultsValue as? TimeInterval else {
+                /// We have a user defaults value, but it is of the wrong type. Fatal error to be fixed.
                 fatalError("Cannot cast last request value as TimeInterval.")
             }
+            /// Has it been 7 days since we last requested a review?
             let lastRequestDate = Date(timeIntervalSince1970: lastRequest)
             return Date.hasElapsed(days: 7, since: lastRequestDate)
         }
@@ -43,10 +42,41 @@ extension InAppReviewable {
     }
 
     private var reviewRequestedForCurrentMinorVersion: Bool {
+        /// Can we identify the current minor version?
+        guard let currentMinorVersion = Bundle.minorVersion else {
+            fatalError("Could not read minor version.")
+        }
+
+        /// Can we get a user defaults value for the minor versions that previously displayed requests?
+        if let requestedMinorVersionsDefaultsValues = Current.userDefaults.value(forDefaultsKey: .inAppReviewRequestedMinorVersions) {
+            guard let requestedMinorVersions = requestedMinorVersionsDefaultsValues as? [Int] else {
+                /// We have a user defaults value, but it is of the wrong type. Fatal error to be fixed.
+                fatalError("Cannot cast last request minor version as array of integers.")
+            }
+            /// Have we requested a review for the current minor version before?
+            return requestedMinorVersions.contains(currentMinorVersion)
+        }
+
+        // The user defaults value has not been set yet, so we are safe to continue.
         return false
     }
 
     private var enabledInRemoteConfig: Bool {
-        return true
+        return Current.remoteConfig.boolValueForConfigKey(.inAppReviewEnabled)
+    }
+
+    private func setUpdatedRequestTime() {
+        let requestedTime = Date().timeIntervalSince1970
+        Current.userDefaults.set(requestedTime, forDefaultsKey: .inAppReviewLastRequestedDate)
+    }
+
+    private func setUpdatedRequestedMinorVersions() {
+        guard let currentMinorVersion = Bundle.minorVersion else { return }
+        let requestedMinorVersionsDefaultsValues = Current.userDefaults.value(forDefaultsKey: .inAppReviewRequestedMinorVersions)
+        var requestedMinorVersions = requestedMinorVersionsDefaultsValues as? [Int]
+        requestedMinorVersions?.append(currentMinorVersion)
+
+        /// Update the existing list of minor versions, or create a new list with the current minor version.
+        Current.userDefaults.set(requestedMinorVersions ?? [currentMinorVersion], forDefaultsKey: .inAppReviewRequestedMinorVersions)
     }
 }

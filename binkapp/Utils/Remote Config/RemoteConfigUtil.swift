@@ -13,6 +13,7 @@ class RemoteConfigUtil {
     enum RemoteConfigKey {
         case localPointsCollectionMasterEnabled
         case localPointsCollectionAgentEnabled(WebScrapable)
+        case inAppReviewEnabled
         
         var formattedKey: String {
             switch self {
@@ -20,6 +21,8 @@ class RemoteConfigUtil {
                 return "LPC_master_enabled"
             case .localPointsCollectionAgentEnabled(let agent):
                 return "LPC_\(agent.merchant)_enabled"
+            case .inAppReviewEnabled:
+                return "in_app_review_enabled"
             }
         }
     }

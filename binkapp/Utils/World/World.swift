@@ -57,7 +57,8 @@ extension UserDefaults: BinkUserDefaults {
         case lpcDebugWebView
         case lpcUseCookies
         case responseCodeVisualiser
-        case inAppReviewLastRequested
+        case inAppReviewLastRequestedDate
+        case inAppReviewRequestedMinorVersions
         
         var keyValue: String {
             switch self {
@@ -75,8 +76,10 @@ extension UserDefaults: BinkUserDefaults {
                 return "lpcUseCookies"
             case .responseCodeVisualiser:
                 return "responseCodeVisualiser"
-            case .inAppReviewLastRequested:
-                return "inAppReviewLastRequested"
+            case .inAppReviewLastRequestedDate:
+                return "inAppReviewLastRequestedDate"
+            case .inAppReviewRequestedMinorVersions:
+                return "inAppReviewRequestedMinorVersions"
             }
         }
     }
