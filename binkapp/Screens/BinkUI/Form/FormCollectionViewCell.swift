@@ -193,6 +193,11 @@ class FormCollectionViewCell: UICollectionViewCell {
             let datePicker = UIDatePicker()
             datePicker.datePickerMode = .date
             datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+            
+            if #available(iOS 14.0, *) {
+                datePicker.preferredDatePickerStyle = .wheels
+            }
+            
             textField.inputView = datePicker
             pickerSelectedChoice = datePicker.date.getFormattedString(format: .dayShortMonthYearWithSlash)
             formField?.updateValue(pickerSelectedChoice)
