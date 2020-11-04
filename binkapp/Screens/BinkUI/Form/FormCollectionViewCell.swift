@@ -27,6 +27,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         static let stackViewSpacing: CGFloat = 2.0
         static let postTextFieldSpacing: CGFloat = 16.0
         static let postSeparatorSpacing: CGFloat = 8.0
+        static let validationLabelHeight: CGFloat = 20.0
     }
 
     // MARK: - Properties
@@ -94,6 +95,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         label.text = "form_field_validation_error".localized
         label.isHidden = true
         label.setContentCompressionResistancePriority(.required, for: .vertical)
+        label.heightAnchor.constraint(equalToConstant: Constants.validationLabelHeight).isActive = true
         return label
     }()
     
@@ -124,6 +126,8 @@ class FormCollectionViewCell: UICollectionViewCell {
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let layoutAttributes = super.preferredLayoutAttributesFitting(layoutAttributes)
         layoutAttributes.frame.size.width = preferredWidth
+        layoutAttributes.bounds.size.height = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+
         return layoutAttributes
     }
     
@@ -189,6 +193,11 @@ class FormCollectionViewCell: UICollectionViewCell {
             let datePicker = UIDatePicker()
             datePicker.datePickerMode = .date
             datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+            
+            if #available(iOS 14.0, *) {
+                datePicker.preferredDatePickerStyle = .wheels
+            }
+            
             textField.inputView = datePicker
             pickerSelectedChoice = datePicker.date.getFormattedString(format: .dayShortMonthYearWithSlash)
             formField?.updateValue(pickerSelectedChoice)
