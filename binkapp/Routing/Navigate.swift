@@ -94,6 +94,13 @@ struct CloseModalNavigationRequest: BaseNavigationRequest {
     }
 }
 
+struct CloseShieldViewNavigationRequest: BaseNavigationRequest {
+    let completion: EmptyCompletionBlock?
+    init(completion: EmptyCompletionBlock? = nil) {
+        self.completion = completion
+    }
+}
+
 struct ExternalUrlNavigationRequest: BaseNavigationRequest {
     let urlString: String
     let completion: EmptyCompletionBlock?
@@ -107,6 +114,7 @@ class Navigate {
     static let transitionDuration: TimeInterval = 0.3
     private let navigationHandler = BaseNavigationHandler()
     private var rootViewController: UIViewController?
+    private var allowRequests = true
     
     private var tabBarController: MainTabBarViewController? {
         return rootViewController as? MainTabBarViewController
@@ -128,7 +136,29 @@ class Navigate {
     }
     
     func to(_ navigationRequest: BaseNavigationRequest) {
-        navigationHandler.to(navigationRequest)
+        guard allowRequests else { return }
+
+        /// If we are attempting to close the shield screen, we should always continue.
+        if let request = navigationRequest as? CloseShieldViewNavigationRequest {
+            navigationHandler.to(request)
+            return
+        }
+
+        /// If the top view is the shield screen at this point, we weren't expecting it to be.
+        /// We should dismiss the shield view before executing the navigation request that we originally intended.
+        /// We only know of this behaviour when system alerts (i.e. camera permission) are presented.
+        if let topViewController = UIViewController.topMostViewController(), topViewController.isShieldView {
+            /// Temporarily ignore any incoming navigation requests while we dismiss the shield view
+            allowRequests = false
+            let closeLaunchScreenNavigationRequest = CloseModalNavigationRequest {
+                self.navigationHandler.to(navigationRequest)
+                /// Once the shield view has been closed, allow navigation requests as normal
+                self.allowRequests = true
+            }
+            navigationHandler.to(closeLaunchScreenNavigationRequest)
+        } else {
+            navigationHandler.to(navigationRequest)
+        }
     }
     
     func back(toRoot: Bool = false, animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
@@ -137,6 +167,10 @@ class Navigate {
     
     func close(animated: Bool = true, completion: EmptyCompletionBlock? = nil) {
         to(CloseModalNavigationRequest(animated: animated, completion: completion))
+    }
+
+    func closeShieldView(completion: EmptyCompletionBlock? = nil) {
+        to(CloseShieldViewNavigationRequest(completion: completion))
     }
 }
 
@@ -211,6 +245,9 @@ class BaseNavigationHandler {
         case let navigationRequest as ExternalUrlNavigationRequest:
             guard let url = URL(string: navigationRequest.urlString), UIApplication.shared.canOpenURL(url) else { return }
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        case let navigationRequest as CloseShieldViewNavigationRequest:
+            guard topViewController?.isShieldView == true else { return }
+            topViewController?.dismiss(animated: true, completion: navigationRequest.completion)
         default:
             fatalError("Navigation route not implemented")
         }

@@ -60,7 +60,6 @@
 		3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */; };
 		3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C794D8E23018DBA000A31FD /* BrowseBrandsViewModel.swift */; };
 		3C7AF52B23757FB0005964E0 /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7AF52A23757FB0005964E0 /* FloatExtension.swift */; };
-		3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FD222F073B500FA3031 /* MainScreenRouter.swift */; };
 		3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FDF22F073CE00FA3031 /* MainTabBarViewModel.swift */; };
 		3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE022F073CE00FA3031 /* MainTabBarViewController.swift */; };
 		3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE222F073CE00FA3031 /* LoyaltyWalletViewController.swift */; };
@@ -543,7 +542,6 @@
 		3C794D8B23018C25000A31FD /* BrowseBrandsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowseBrandsViewController.xib; sourceTree = "<group>"; };
 		3C794D8E23018DBA000A31FD /* BrowseBrandsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewModel.swift; sourceTree = "<group>"; };
 		3C7AF52A23757FB0005964E0 /* FloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtension.swift; sourceTree = "<group>"; };
-		3C873FD222F073B500FA3031 /* MainScreenRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreenRouter.swift; sourceTree = "<group>"; };
 		3C873FDF22F073CE00FA3031 /* MainTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewModel.swift; sourceTree = "<group>"; };
 		3C873FE022F073CE00FA3031 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		3C873FE222F073CE00FA3031 /* LoyaltyWalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoyaltyWalletViewController.swift; sourceTree = "<group>"; };
@@ -1158,7 +1156,6 @@
 		3C873FD122F073B500FA3031 /* Routing */ = {
 			isa = PBXGroup;
 			children = (
-				3C873FD222F073B500FA3031 /* MainScreenRouter.swift */,
 				BD9E4CD0237014D300C6F098 /* RootStateMachine.swift */,
 				70B316E624E6AF2800D86DE5 /* Navigate.swift */,
 			);
@@ -3016,7 +3013,6 @@
 				BD9E4CD823740A7500C6F098 /* PreferenceChangeResponse.swift in Sources */,
 				5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */,
 				EF758E0F23225F45000D26A9 /* NSManagedObjectContext.swift in Sources */,
-				3C873FD322F073B600FA3031 /* MainScreenRouter.swift in Sources */,
 				3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */,
 				BDBAA1BA235E1BBB00087E12 /* SettingsTableViewHeader.swift in Sources */,
 				EFA5F6D12379A53B0027AB80 /* VoucherBurnModel.swift in Sources */,

@@ -10,28 +10,19 @@ import UIKit
 import DTTJailbreakDetection
 
 class RootStateMachine: NSObject, UserServiceProtocol {
-    
-    private let window: UIWindow
-    private var router: MainScreenRouter?
+    private var window: UIWindow?
     private lazy var migrationController = UserMigrationController()
     
-    init(window: UIWindow) {
+    func launch(withWindow window: UIWindow) {
         self.window = window
-        super.init()
-        self.router = MainScreenRouter(delegate: self)
-        launch()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(handleLogout), name: .shouldLogout, object: nil)
-    }
-    
-    private func launch() {
+
         if DTTJailbreakDetection.isJailbroken() {
-            moveTo(router?.jailbroken())
+            moveTo(ViewControllerFactory.makeJailbrokenViewController())
         } else if Current.userManager.currentToken == nil {
             handleUnauthenticated()
         } else {
-            let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
-            moveTo(tabBarController)
+            handleLogin()
         }
         
         window.tintColor = .black
@@ -46,16 +37,20 @@ class RootStateMachine: NSObject, UserServiceProtocol {
             migrationController.renewTokenFromLegacyAppIfPossible { success in
                 DispatchQueue.main.async { [weak self] in
                     if success {
-                        let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
-                        self?.moveTo(tabBarController)
+                        self?.handleLogin()
                     } else {
-                        self?.moveTo(self?.router?.getOnboardingViewController())
+                        self?.moveTo(ViewControllerFactory.makeOnboardingViewController())
                     }
                 }
             }
         } else {
-            moveTo(router?.getOnboardingViewController())
+            moveTo(ViewControllerFactory.makeOnboardingViewController())
         }
+    }
+
+    func handleLogin() {
+        let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
+        moveTo(tabBarController)
     }
     
     /// User driven logout that triggers API call and clears local storage
@@ -92,20 +87,12 @@ class RootStateMachine: NSObject, UserServiceProtocol {
         Current.userManager.removeUser()
         Current.userDefaults.set(false, forDefaultsKey: .hasLaunchedWallet)
         NotificationCenter.default.post(name: .shouldTrashLocalWallets, object: nil)
-        moveTo(router?.getOnboardingViewController())
+        moveTo(ViewControllerFactory.makeOnboardingViewController())
     }
     
     func moveTo(_ viewController: UIViewController?) {
+        guard let window = window else { fatalError("Window does not exist. This should never happen.")}
         window.rootViewController = viewController
         Current.navigate.setRootViewController(viewController)
-    }
-}
-
-extension RootStateMachine: MainScreenRouterDelegate {
-    func router(_ router: MainScreenRouter, didLogin: Bool) {
-        if didLogin {
-            let tabBarController = MainTabBarViewController(viewModel: MainTabBarViewModel())
-            moveTo(tabBarController)
-        }
     }
 }
