@@ -104,3 +104,21 @@ class AddingOptionsViewController: BinkTrackableViewController {
         }
     }
 }
+
+class PaymentCardScannerStrings: ScanStringsDataSource {
+    func scanCard() -> String {
+        return " "
+    }
+    
+    func positionCard() -> String {
+        return "Position your card in the frame so the card number is visible"
+    }
+    
+    func backButton() -> String {
+        return " "
+    }
+    
+    func skipButton() -> String {
+        "Enter manually"
+    }
+}
