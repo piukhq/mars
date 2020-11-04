@@ -20,7 +20,7 @@ class World {
     lazy var pointsScrapingManager = PointsScrapingManager()
     lazy var remoteConfig = RemoteConfigUtil()
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
-    var inAppReviewableJourney: InAppReviewableJourney?
+    var inAppReviewableJourney: Any? // We cast this to the correct type using generics when we need to
     
     private let prodBundleIdentifier = "com.bink.wallet"
 

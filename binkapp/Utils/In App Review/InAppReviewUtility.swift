@@ -44,6 +44,8 @@ enum InAppReviewableJourneyType {
 }
 
 protocol InAppReviewableJourney {
+    associatedtype T
+    static var inProgressJourney: T? { get }
     var journeyType: InAppReviewableJourneyType { get }
     var isComplete: Bool { get }
     func begin()
@@ -51,7 +53,12 @@ protocol InAppReviewableJourney {
 }
 
 extension InAppReviewableJourney {
+    static var inProgressJourney: T? {
+        return Current.inAppReviewableJourney as? T
+    }
+
     func begin() {
+        // TODO: Check there isn't already a journey in progress
         Current.inAppReviewableJourney = self
     }
 
@@ -61,6 +68,8 @@ extension InAppReviewableJourney {
 }
 
 struct PllLoyaltyInAppReviewableJourney: InAppReviewableJourney {
+    typealias T = Self
+
     var journeyType: InAppReviewableJourneyType {
         return .pllLoyaltyCard
     }
