@@ -22,6 +22,7 @@ class BaseFormViewController: BinkTrackableViewController, Form {
         static let maskingHeight: CGFloat = 209.0
         static let bottomInset: CGFloat = 150.0
         static let postCollectionViewPadding: CGFloat = 15.0
+        static let offsetPadding: CGFloat = 30.0
     }
     
     // MARK: - Properties
@@ -160,7 +161,7 @@ class BaseFormViewController: BinkTrackableViewController, Form {
 
                 if cellVisibleOffset > visibleOffset {
                     let actualOffset = self.stackScrollView.contentOffset.y
-                    let neededOffset = CGPoint(x: 0, y: actualOffset + cellVisibleOffset - visibleOffset)
+                    let neededOffset = CGPoint(x: 0, y: Constants.offsetPadding + actualOffset + cellVisibleOffset - visibleOffset)
                     self.stackScrollView.setContentOffset(neededOffset, animated: true)
 
                     /// From iOS 14, we are seeing this method being called more often than we would like due to a notification trigger not only when the cell's text field is selected, but when typed into.
