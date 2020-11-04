@@ -155,6 +155,7 @@
 		70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B316E624E6AF2800D86DE5 /* Navigate.swift */; };
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
+		70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */; };
 		70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8024E56B3B005A30D2 /* UserService.swift */; };
 		70E31A8324E56B4D005A30D2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8224E56B4D005A30D2 /* APIService.swift */; };
 		70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E867742489303F001ED282 /* SecureUtilityTests.swift */; };
@@ -651,6 +652,7 @@
 		70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
 		70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TescoPointsScrapingAgent.swift; sourceTree = "<group>"; };
+		70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewUtility.swift; sourceTree = "<group>"; };
 		70E31A8024E56B3B005A30D2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		70E31A8224E56B4D005A30D2 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		70E867742489303F001ED282 /* SecureUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtilityTests.swift; sourceTree = "<group>"; };
@@ -1346,6 +1348,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				70D747FB2552A74600E9D2C1 /* In App Review */,
 				70B61D50251251D4006A98C8 /* View controller factory */,
 				7097489E24D32A42008D0E29 /* Remote Config */,
 				7097489C24D088E3008D0E29 /* Objective-C */,
@@ -1627,6 +1630,14 @@
 				70450DD3252B658F00F36566 /* DetectText.js */,
 			);
 			path = Agents;
+			sourceTree = "<group>";
+		};
+		70D747FB2552A74600E9D2C1 /* In App Review */ = {
+			isa = PBXGroup;
+			children = (
+				70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */,
+			);
+			path = "In App Review";
 			sourceTree = "<group>";
 		};
 		70E86778248E76B9001ED282 /* Local Points Scraping */ = {
@@ -3188,6 +3199,7 @@
 				BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */,
 				EFA5F7172379A7C70027AB80 /* CD_MembershipCard.swift in Sources */,
 				3C873FF722F073CF00FA3031 /* LoyaltyWalletViewController.swift in Sources */,
+				70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */,
 				3C93975D2386A2E00063C0B3 /* PreferencesModel.swift in Sources */,
 				EFA5F6CD2379A4F00027AB80 /* VoucherModel.swift in Sources */,
 				EF2E8825233A6FCF00F678F3 /* CardAlertView.swift in Sources */,
