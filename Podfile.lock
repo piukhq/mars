@@ -210,7 +210,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CardScan:
-    :commit: 6f951d1f2429e90da09ee4a896fbf8a380f261b9
+    :commit: ff92c4a2738451a9eba509a4dc9c20452b8947e1
     :git: "git@git.bink.com:Pantheon/iOS/cardscan-ios.git"
   SwiftyRSA:
     :commit: 856b75c249607ee4fbd8634aea62135dfb17fd83

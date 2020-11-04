@@ -389,7 +389,7 @@ import UIKit
         self.calledDelegate = true
         let card = CreditCard(number: number)
         card.expiryMonth = expiryMonth
-        card.expiryYear = expiryYear
+        card.expiryYear = expiryYear != nil ? "20\(expiryYear ?? "")" : nil
         card.image = scannedImage
         // This is a hack to work around having to change our public interface
         card.name = predictedName
