@@ -22,6 +22,7 @@ extension InAppReviewable {
     }
 
     private var canRequestReview: Bool {
+        guard Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules) else { return true }
         return requestTimeLimitHasPassed && !reviewRequestedForCurrentMinorVersion && enabledInRemoteConfig
     }
 

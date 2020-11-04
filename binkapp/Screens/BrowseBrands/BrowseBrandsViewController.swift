@@ -18,7 +18,7 @@ fileprivate struct Constants {
     static let filterViewHeightPadding: CGFloat = 10.0
 }
 
-class BrowseBrandsViewController: BinkTrackableViewController {
+class BrowseBrandsViewController: BinkTrackableViewController, InAppReviewable {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var searchTextField: BinkTextField!
     @IBOutlet private weak var noMatchesLabel: UILabel!
@@ -67,7 +67,7 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        requestInAppReview()
         tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self

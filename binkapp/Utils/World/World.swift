@@ -59,6 +59,7 @@ extension UserDefaults: BinkUserDefaults {
         case responseCodeVisualiser
         case inAppReviewLastRequestedDate
         case inAppReviewRequestedMinorVersions
+        case applyInAppReviewRules
         
         var keyValue: String {
             switch self {
@@ -80,6 +81,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "inAppReviewLastRequestedDate"
             case .inAppReviewRequestedMinorVersions:
                 return "inAppReviewRequestedMinorVersions"
+            case .applyInAppReviewRules:
+                return "applyInAppReviewRules"
             }
         }
     }
