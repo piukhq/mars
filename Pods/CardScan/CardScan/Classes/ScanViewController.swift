@@ -243,7 +243,6 @@ import UIKit
         guard let backgroundBlurEffectView = self.backgroundBlurEffectView else { return }
         backgroundBlurEffectView.frame = self.view.bounds
         self.blurView.addSubview(backgroundBlurEffectView)
-        guideImageView.frame = regionOfInterestLabel.frame.inset(by: Constants.guideImageInset)
         view.addSubview(guideImageView)
         view.addSubview(widgetView)
         
@@ -345,6 +344,7 @@ import UIKit
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        guideImageView.frame = regionOfInterestLabel.frame.inset(by: Constants.guideImageInset)
     }
     
     override public func showCardNumber(_ number: String, expiry: String?) {
