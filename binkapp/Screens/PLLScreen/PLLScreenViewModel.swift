@@ -137,31 +137,11 @@ class PLLScreenViewModel {
     
     func toPaymentScanner(delegate: ScanDelegate?) {
         guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: delegate) else { return }
-        
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController { [weak self] in
-            self?.toAddPaymentCardScreen()
-        }
-        
-        if PermissionsUtility.videoCaptureIsAuthorized {
+        PermissionsUtility.launchPaymentScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
-        } else if PermissionsUtility.videoCaptureIsDenied {
-            if let alert = enterManuallyAlert {
-                let navigationRequest = AlertNavigationRequest(alertController: alert)
-                Current.navigate.to(navigationRequest)
-            }
-        } else {
-            PermissionsUtility.requestVideoCaptureAuthorization { granted in
-                if granted {
-                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
-                } else {
-                    if let alert = enterManuallyAlert {
-                        let navigationRequest = AlertNavigationRequest(alertController: alert)
-                        Current.navigate.to(navigationRequest)
-                    }
-                }
-            }
+        } enterManuallyAction: { [weak self] in
+            self?.toAddPaymentCardScreen()
         }
     }
     

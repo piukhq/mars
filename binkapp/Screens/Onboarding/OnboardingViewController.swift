@@ -13,7 +13,7 @@ import AuthenticationServices
 class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegate {
     @IBOutlet private weak var facebookPillButton: BinkPillButton!
     @IBOutlet private weak var floatingButtonsView: BinkPrimarySecondaryButtonView!
-    private let viewModel: OnboardingViewModel
+    private let viewModel = OnboardingViewModel()
     private var didLayoutSubviews = false
     private var timer: Timer?
 
@@ -89,15 +89,6 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
         learningContainer.addSubview(pageControl)
         return pageControl
     }()
-
-    init(viewModel: OnboardingViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -112,7 +103,6 @@ class OnboardingViewController: BinkTrackableViewController, UIScrollViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
-        viewModel.navigationController = navigationController
     }
     
     override func viewDidAppear(_ animated: Bool) {

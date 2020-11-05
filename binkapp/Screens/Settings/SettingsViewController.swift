@@ -169,11 +169,8 @@ extension SettingsViewController: UITableViewDelegate {
                     present(vc, animated: true)
                     break
                 case is DebugMenuTableViewController.Type:
-                    let debugMenuFactory = DebugMenuFactory()
-                    let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
-                    let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
-                    debugMenuFactory.delegate = debugMenuViewController
-                    let navigationRequest = PushNavigationRequest(viewController: debugMenuViewController)
+                    let viewController = ViewControllerFactory.makeDebugViewController()
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                     break
                 case is PreferencesViewController.Type:

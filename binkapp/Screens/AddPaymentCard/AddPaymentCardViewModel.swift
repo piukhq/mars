@@ -117,29 +117,9 @@ class AddPaymentCardViewModel {
     
     func toPaymentCardScanner(delegate scanDelegate: ScanDelegate?) {
         guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: scanDelegate) else { return }
-        
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {}
-        
-        if PermissionsUtility.videoCaptureIsAuthorized {
+        PermissionsUtility.launchPaymentScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
-        } else if PermissionsUtility.videoCaptureIsDenied {
-            if let alert = enterManuallyAlert {
-                let navigationRequest = AlertNavigationRequest(alertController: alert)
-                Current.navigate.to(navigationRequest)
-            }
-        } else {
-            PermissionsUtility.requestVideoCaptureAuthorization { granted in
-                if granted {
-                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
-                } else {
-                    if let alert = enterManuallyAlert {
-                        let navigationRequest = AlertNavigationRequest(alertController: alert)
-                        Current.navigate.to(navigationRequest)
-                    }
-                }
-            }
         }
     }
 }

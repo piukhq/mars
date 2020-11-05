@@ -17,6 +17,7 @@ class World {
     lazy var userManager = UserManager()
     lazy var apiClient = APIClient()
     lazy var navigate = Navigate()
+    lazy var rootStateMachine = RootStateMachine()
     lazy var pointsScrapingManager = PointsScrapingManager()
     lazy var remoteConfig = RemoteConfigUtil()
     lazy var paymentCardScannerStrings = PaymentCardScannerStrings()
@@ -58,6 +59,9 @@ extension UserDefaults: BinkUserDefaults {
         case lpcDebugWebView
         case lpcUseCookies
         case responseCodeVisualiser
+        case inAppReviewLastRequestedDate
+        case inAppReviewRequestedMinorVersions
+        case applyInAppReviewRules
         
         var keyValue: String {
             switch self {
@@ -75,6 +79,12 @@ extension UserDefaults: BinkUserDefaults {
                 return "lpcUseCookies"
             case .responseCodeVisualiser:
                 return "responseCodeVisualiser"
+            case .inAppReviewLastRequestedDate:
+                return "inAppReviewLastRequestedDate"
+            case .inAppReviewRequestedMinorVersions:
+                return "inAppReviewRequestedMinorVersions"
+            case .applyInAppReviewRules:
+                return "applyInAppReviewRules"
             }
         }
     }

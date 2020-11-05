@@ -9,9 +9,6 @@
 import UIKit
 
 class OnboardingViewModel {
-    let router: MainScreenRouter
-    var navigationController: UINavigationController?
-
     private let fallbackUserEmail = "Bink20iteration1@testbink.com"
 
     private var userEmail: String {
@@ -20,10 +17,6 @@ class OnboardingViewModel {
             return fallbackUserEmail
         }
         return userEmail
-    }
-
-    init(router: MainScreenRouter) {
-        self.router = router
     }
 
     var signUpWithEmailButtonText: String {
@@ -51,33 +44,36 @@ class OnboardingViewModel {
     }
     
     func pushToSocialTermsAndConditions(requestType: SocialLoginRequestType) {
-        let termsAndConditions = SocialTermsAndConditionsViewController(router: router, requestType: requestType)
-        navigationController?.pushViewController(termsAndConditions, animated: true)
+        let viewController = ViewControllerFactory.makeSocialTermsAndConditionsViewController(requestType: requestType)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func pushToAddEmail(request: FacebookRequest) {
-        let addEmail = AddEmailViewController(router: router, request: request) { [weak self] request in
+        let viewController = ViewControllerFactory.makeAddEmailViewController(request: request) { [weak self] request in
             self?.pushToSocialTermsAndConditions(requestType: .facebook(request))
         }
-        
-        navigationController?.pushViewController(addEmail, animated: true)
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func pushToRegister() {
         BinkAnalytics.track(OnboardingAnalyticsEvent.start(journey: .register))
-        navigationController?.pushViewController(RegisterViewController(router: router), animated: true)
+        let viewController = ViewControllerFactory.makeRegisterViewController()
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func pushToLogin() {
         BinkAnalytics.track(OnboardingAnalyticsEvent.start(journey: .login))
-        navigationController?.pushViewController(LoginViewController(router: router), animated: true)
+        let viewController = ViewControllerFactory.makeLoginViewController()
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func openDebugMenu() {
-        let debugMenuFactory = DebugMenuFactory()
-        let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
-        let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
-        debugMenuFactory.delegate = debugMenuViewController
-        navigationController?.pushViewController(debugMenuViewController, animated: true)
+        let viewController = ViewControllerFactory.makeDebugViewController()
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }
