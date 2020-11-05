@@ -153,7 +153,11 @@ class AuthAndAddViewModel {
                 let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
                 let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
                 let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest) {
-                    if card.membershipPlan?.featureSet?.planCardType == .link {
+                    if card.membershipPlan?.isPLL == true {
+                        /// Initialise and begin the in-app reviewable journey.
+                        let journey = PllLoyaltyInAppReviewableJourney()
+                        journey.begin()
+
                         let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
                         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
                         Current.navigate.to(navigationRequest)
@@ -165,13 +169,6 @@ class AuthAndAddViewModel {
                     NotificationCenter.default.post(name: .didAddMembershipCard, object: nil)
                 }
                 Current.navigate.to(tabNavigationRequest)
-
-                // TODO: InAppReviewable - Start in app review journey here if card is pll
-                if card.membershipPlan?.isPLL == true {
-                    /// Initialise and begin the journey. Access this journey
-                    let journey = PllLoyaltyInAppReviewableJourney()
-                    journey.begin()
-                }
             }
             }, onError: { [weak self] error in
                 self?.displaySimplePopup(title: "error_title".localized, message: error?.localizedDescription)
@@ -206,7 +203,11 @@ class AuthAndAddViewModel {
             let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest)
             Current.navigate.to(tabNavigationRequest)
 
-            if card.membershipPlan?.featureSet?.cardType == 2 {
+            if card.membershipPlan?.isPLL == true {
+                /// Initialise and begin the in-app reviewable journey.
+                let journey = PllLoyaltyInAppReviewableJourney()
+                journey.begin()
+
                 let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
                 let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
                 Current.navigate.to(navigationRequest)
