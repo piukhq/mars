@@ -9,12 +9,6 @@
 import Foundation
 
 class ForgotPasswordRepository: UserServiceProtocol {
-    private let apiClient: APIClient
-    
-    init(apiClient: APIClient) {
-        self.apiClient = apiClient
-    }
-    
     func continueButtonTapped(email: String, completion: @escaping () -> Void) {
         submitForgotPasswordRequest(forEmailAddress: email) { (_, _) in
             completion()

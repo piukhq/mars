@@ -26,9 +26,9 @@ final class ViewControllerFactory {
         return BrowseBrandsViewController(viewModel: BrowseBrandsViewModel())
     }
     
-    static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, delegate: ScanDelegate?) -> ScanViewController? {
+    static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, allowSkip: Bool = true, delegate: ScanDelegate?) -> ScanViewController? {
         guard let viewController = ScanViewController.createViewController(withDelegate: delegate) else { return nil }
-        viewController.allowSkip = true
+        viewController.allowSkip = allowSkip
         viewController.cornerColor = .white
         viewController.torchButtonImage = UIImage(named: "payment_scanner_torch")
         viewController.stringDataSource = strings
@@ -146,6 +146,33 @@ final class ViewControllerFactory {
         let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
         return SettingsViewController(viewModel: viewModel)
     }
+
+    // MARK: - Onboarding
+
+    static func makeOnboardingViewController() -> PortraitNavigationController {
+        return PortraitNavigationController(rootViewController: OnboardingViewController())
+    }
+
+    static func makeSocialTermsAndConditionsViewController(requestType: SocialLoginRequestType) -> SocialTermsAndConditionsViewController {
+        return SocialTermsAndConditionsViewController(requestType: requestType)
+    }
+
+    static func makeAddEmailViewController(request: FacebookRequest, completion: @escaping AddEmailViewController.AddEmailCompletion) -> AddEmailViewController {
+        return AddEmailViewController(request: request, completion: completion)
+    }
+
+    static func makeRegisterViewController() -> RegisterViewController {
+        return RegisterViewController()
+    }
+
+    static func makeLoginViewController() -> LoginViewController {
+        return LoginViewController()
+    }
+
+    static func makeForgottenPasswordViewController() -> ForgotPasswordViewController {
+        let viewModel = ForgotPasswordViewModel(repository: ForgotPasswordRepository())
+        return ForgotPasswordViewController(viewModel: viewModel)
+    }
     
     // MARK: - Reusable
     
@@ -175,23 +202,27 @@ final class ViewControllerFactory {
         return alert
     }
     
-    static func makeOkAlertViewController(title: String?, message: String?) -> UIAlertController {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
-        return alert
-    }
-    
     static func makeOkAlertViewController(title: String?, message: String?, completion: EmptyCompletionBlock? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
-            if let completion = completion {
-                completion()
-            }
+            completion?()
         }))
         return alert
     }
     
     static func makeWebViewController(urlString: String) -> WebViewController {
         return WebViewController(urlString: urlString)
+    }
+
+    static func makeDebugViewController() -> DebugMenuTableViewController {
+        let debugMenuFactory = DebugMenuFactory()
+        let debugMenuViewModel = DebugMenuViewModel(debugMenuFactory: debugMenuFactory)
+        let debugMenuViewController = DebugMenuTableViewController(viewModel: debugMenuViewModel)
+        debugMenuFactory.delegate = debugMenuViewController
+        return debugMenuViewController
+    }
+
+    static func makeJailbrokenViewController() -> JailbrokenViewController {
+        return JailbrokenViewController()
     }
 }

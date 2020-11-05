@@ -378,30 +378,9 @@ class AuthAndAddViewModel {
     
     func toLoyaltyScanner(forPlan plan: CD_MembershipPlan, delegate: BarcodeScannerViewControllerDelegate?) {
         let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: delegate)
-        
-        // TODO: Move this to view controller factory and make this entire function more reusable
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {}
-        
-        if PermissionsUtility.videoCaptureIsAuthorized {
+        PermissionsUtility.launchLoyaltyScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
-        } else if PermissionsUtility.videoCaptureIsDenied {
-            if let alert = enterManuallyAlert {
-                let navigationRequest = AlertNavigationRequest(alertController: alert)
-                Current.navigate.to(navigationRequest)
-            }
-        } else {
-            PermissionsUtility.requestVideoCaptureAuthorization { granted in
-                if granted {
-                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
-                } else {
-                    if let alert = enterManuallyAlert {
-                        let navigationRequest = AlertNavigationRequest(alertController: alert)
-                        Current.navigate.to(navigationRequest)
-                    }
-                }
-            }
         }
     }
 }

@@ -33,8 +33,14 @@ class PaymentWalletViewModel: WalletViewModel {
         switch walletPrompt.type {
         case .addPaymentCards:
             guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScanStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
+            PermissionsUtility.launchPaymentScanner(viewController) {
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            } enterManuallyAction: {
+                let addPaymentCardViewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
+                let navigationRequest = ModalNavigationRequest(viewController: addPaymentCardViewController)
+                Current.navigate.to(navigationRequest)
+            }
         default:
             return
         }

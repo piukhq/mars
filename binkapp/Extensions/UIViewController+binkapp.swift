@@ -16,29 +16,6 @@ extension UIViewController {
             || self.tabBarController?.presentingViewController is UITabBarController
     }
     
-    func getVisibleViewController() -> UIViewController? {
-        let rootVC = UIApplication.shared.keyWindow?.rootViewController
-
-        if rootVC?.presentedViewController == nil {
-            return rootVC
-        }
-
-        if let presented = rootVC?.presentedViewController {
-            if presented.isKind(of: UINavigationController.self) {
-                let navigationController = presented as? UINavigationController
-                return navigationController?.viewControllers.last
-            }
-
-            if presented.isKind(of: UITabBarController.self) {
-                let tabBarController = presented as? UITabBarController
-                return tabBarController?.selectedViewController
-            }
-
-            return presented
-        }
-        return nil
-    }
-    
     static func topMostViewController() -> UIViewController? {
         let keyWindow = UIApplication.shared.keyWindow
         if var topController = keyWindow?.rootViewController {
@@ -48,5 +25,9 @@ extension UIViewController {
             return topController
         }
         return nil
+    }
+
+    var isShieldView: Bool {
+        return self.restorationIdentifier == "LaunchScreen"
     }
 }
