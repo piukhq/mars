@@ -347,6 +347,11 @@ import UIKit
         guideImageView.frame = regionOfInterestLabel.frame.inset(by: Constants.guideImageInset)
     }
     
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        widgetView.stopTimer()
+    }
+    
     override public func showCardNumber(_ number: String, expiry: String?) {
         // we're assuming that the image takes up the full width and that
         // video has the same aspect ratio of the screen

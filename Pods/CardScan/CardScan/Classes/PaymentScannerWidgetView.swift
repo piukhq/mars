@@ -35,11 +35,6 @@ class PaymentScannerWidgetView: UIView {
         configure()
     }
     
-    override func removeFromSuperview() {
-        super.removeFromSuperview()
-        timer?.invalidate()
-    }
-
     func xibSetup() {
         view = loadViewFromNib()
         view.frame = bounds
@@ -57,18 +52,21 @@ class PaymentScannerWidgetView: UIView {
     func addTarget(_ target: Any?, selector: Selector?) {
         addGestureRecognizer(UITapGestureRecognizer(target: target, action: selector))
     }
-
+    
+    func stopTimer() {
+        timer?.invalidate()
+    }
+    
     private func configure() {
         clipsToBounds = true
         layer.cornerRadius = Constants.cornerRadius
-
         titleLabel.font = UIFont(name: "NunitoSans-ExtraBold", size: Constants.fontSize)
         explainerLabel.font = UIFont(name: "NunitoSans-Light", size: Constants.fontSize)
         explainerLabel.numberOfLines = 2
         explainerLabel.adjustsFontSizeToFitWidth = true
         explainerLabel.minimumScaleFactor = 0.4
         imageView.image = UIImage(named: "loyalty_scanner_enter_manually")
-
+        
         if #available(iOS 10.0, *) {
             timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] _ in
                 let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
