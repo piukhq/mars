@@ -70,7 +70,13 @@ class AuthAndAddRepository: WalletServiceProtocol {
                     Current.database.performBackgroundTask { context in
                         let newObject = response.mapToCoreData(context, .update, overrideID: nil)
                         try? context.save()
-                        onSuccess(newObject)
+                        
+                        DispatchQueue.main.async {
+                            Current.database.performTask(with: newObject) { (context, safeObject) in
+                                guard let existingCard = safeObject else { return }
+                                onSuccess(existingCard)
+                            }
+                        }
                     }
                 case .failure(let error):
                     onError(error)
