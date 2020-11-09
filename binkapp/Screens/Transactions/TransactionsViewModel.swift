@@ -24,6 +24,23 @@ struct TransactionsViewModel {
         }
         return "recent_transaction_history_subtitle".localized
     }
+
+    private var storedMostRecentTransaction: MembershipCardStoredMostRecentTransaction? {
+        guard let dictionary = Current.userDefaults.value(forDefaultsKey: .membershipCardMostRecentTransaction(membershipCardId: membershipCard.id)) as? [String: Any] else { return nil }
+        return MembershipCardStoredMostRecentTransaction.fromDictionary(dictionary)
+    }
+
+    var hasStoredMostRecentTransaction: Bool {
+        return storedMostRecentTransaction != nil
+    }
+
+    var shouldRequestInAppReview: Bool {
+        if let storeMostRecentTransaction = storedMostRecentTransaction {
+            return !storeMostRecentTransaction.isMostRecentTransaction(from: transactions)
+        } else {
+            return false
+        }
+    }
     
     init(membershipCard: CD_MembershipCard) {
         self.membershipCard = membershipCard
@@ -43,5 +60,11 @@ struct TransactionsViewModel {
         let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: plan)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
+    }
+
+    func storeMostRecentTransaction() {
+        guard let timestamp = transactions.first?.timestamp?.intValue else { return }
+        let mostRecentTransaction = MembershipCardStoredMostRecentTransaction(membershipCardId: membershipCard.id, timestamp: timestamp)
+        Current.userDefaults.set(mostRecentTransaction.toDictionary, forDefaultsKey: .membershipCardMostRecentTransaction(membershipCardId: membershipCard.id))
     }
 }
