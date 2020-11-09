@@ -97,7 +97,7 @@ extension WalletServiceProtocol {
         
         if let existingCard = existingMembershipCard {
             endpoint = .membershipCard(cardId: existingCard.id)
-            method = .put
+            method = .patch
         } else {
             endpoint = .membershipCards
             method = .post
