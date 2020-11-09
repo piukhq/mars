@@ -13,8 +13,6 @@ class PLLScreenViewModel {
     private let repository = PLLScreenRepository()
     private let delegate: LoyaltyCardFullDetailsModalDelegate?
     
-    private let paymentScannerStrings = PaymentCardScannerStrings()
-    
     let journey: PllScreenJourney
     
     var activePaymentCards: [CD_PaymentCard]? {
@@ -138,7 +136,7 @@ class PLLScreenViewModel {
     }
     
     func toPaymentScanner(delegate: ScanDelegate?) {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: delegate) else { return }
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: delegate) else { return }
         PermissionsUtility.launchPaymentScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)

@@ -20,7 +20,7 @@ pod 'DTTJailbreakDetection'
 pod 'JWTDecode', '~> 2.4'
 pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
 pod 'ZendeskSupportSDK'
-pod 'CardScan'
+pod 'CardScan', :git => 'git@git.bink.com:Pantheon/iOS/cardscan-ios.git'
 pod 'ZXingObjC', '~> 3.6.5'
 
 plugin 'cocoapods-keys', {

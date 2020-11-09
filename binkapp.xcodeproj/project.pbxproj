@@ -253,6 +253,7 @@
 		CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */; };
 		CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
+		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
 		CEACE7212543309E004DD27E /* BinkHTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
 		DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB088544234FD8A30041A67A /* PLLScreenRepository.swift */; };
@@ -768,6 +769,7 @@
 		CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskTickets.swift; sourceTree = "<group>"; };
 		CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCodeVisualiser.swift; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
+		CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardScannerStrings.swift; sourceTree = "<group>"; };
 		CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkHTTPHeaders.swift; sourceTree = "<group>"; };
 		CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		D43061FB7A72A290DA13F3BF /* Pods-binkappUITests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store.xcconfig"; sourceTree = "<group>"; };
@@ -1263,6 +1265,7 @@
 				3CF029F122F45AEC009A0E61 /* AddingOptionsViewController.xib */,
 				3CF029F722F45B8C009A0E61 /* AddingOptionsEnum.swift */,
 				3C63ABC722F9D47E00BE143B /* AddingOptionsViewModel.swift */,
+				CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */,
 			);
 			path = AddingOptions;
 			sourceTree = "<group>";
@@ -3062,6 +3065,7 @@
 				EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */,
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
+				CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */,
 				EF6921762469A9290049875B /* DebugSecondaryPlanColorCell.swift in Sources */,
 				CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */,
 				3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */,
