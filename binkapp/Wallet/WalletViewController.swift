@@ -14,7 +14,7 @@ struct WalletViewControllerConstants {
     static let dotViewTopPadding: CGFloat = 3
 }
 
-class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring {
+class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring, InAppReviewable {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -64,6 +64,14 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         navigationItem.titleView = UIImageView(image: UIImage(named: "bink_top_logo"))
 
         configureCollectionView()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if PllLoyaltyInAppReviewableJourney.isInProgress {
+            requestInAppReview()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {

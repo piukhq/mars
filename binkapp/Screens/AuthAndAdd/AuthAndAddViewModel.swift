@@ -154,9 +154,7 @@ class AuthAndAddViewModel {
                 let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
                 let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest) {
                     if card.membershipPlan?.isPLL == true {
-                        /// Initialise and begin the in-app reviewable journey.
-                        let journey = PllLoyaltyInAppReviewableJourney()
-                        journey.begin()
+                        PllLoyaltyInAppReviewableJourney().begin()
 
                         let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
                         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
@@ -204,9 +202,7 @@ class AuthAndAddViewModel {
             Current.navigate.to(tabNavigationRequest)
 
             if card.membershipPlan?.isPLL == true {
-                /// Initialise and begin the in-app reviewable journey.
-                let journey = PllLoyaltyInAppReviewableJourney()
-                journey.begin()
+                PllLoyaltyInAppReviewableJourney().begin()
 
                 let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
                 let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)

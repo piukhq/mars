@@ -16,6 +16,7 @@ protocol InAppReviewable {
 
 extension InAppReviewable {
     func requestInAppReview() {
+        Current.inAppReviewableJourney = nil
         guard canRequestReview else { return }
         SKStoreReviewController.requestReview()
         setUpdatedRequestTime()

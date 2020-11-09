@@ -87,6 +87,11 @@ class PLLScreenViewModel {
     }
     
     func toggleLinkForMembershipCards(completion: @escaping (Bool) -> Void) {
+        if changedLinkCards.isEmpty {
+            /// This journey requires a PPL linkage to take place. Otherwise, end the journey.
+            PllLoyaltyInAppReviewableJourney.end()
+        }
+
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion(true)
             // TODO: InAppReviewable - if there is a pll loyalty journey in progress, update it here
