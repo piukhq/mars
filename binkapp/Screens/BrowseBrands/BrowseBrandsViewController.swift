@@ -67,7 +67,6 @@ class BrowseBrandsViewController: BinkTrackableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self

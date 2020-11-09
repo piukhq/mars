@@ -22,6 +22,7 @@ struct DebugMenuRow {
         case lpcWebView
         case lpcCookies
         case responseCodeVisualiser
+        case inAppReviewRules
     }
     
     enum CellType {

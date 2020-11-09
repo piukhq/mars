@@ -13,6 +13,7 @@ import FBSDKCoreKit
 import AlamofireNetworkActivityLogger
 import CardScan
 import Keys
+import SafariServices
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
@@ -61,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         self.window = UIWindow(frame: UIScreen.main.bounds)
 
         if let mainWindow = self.window {
-            stateMachine = RootStateMachine(window: mainWindow)
+            Current.rootStateMachine.launch(withWindow: mainWindow)
         }
         
         let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
@@ -92,6 +93,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
+
+        addObservers()
     
         return true
     }
@@ -107,5 +110,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         // Facebook
         ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+}
+
+private extension AppDelegate {
+    func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(presentSSLPinningFailurePopup), name: .didFailServerTrustEvaluation, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(displayOutageError), name: .outageError, object: nil)
+    }
+
+    @objc func displayOutageError() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "error_title".localized, message: "communication_error".localized)
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+    }
+
+    @objc func presentSSLPinningFailurePopup() {
+        let alert = ViewControllerFactory.makeOkAlertViewController(title: "ssl_pinning_failure_title".localized, message: "ssl_pinning_failure_text".localized)
+        let navigationRequest = AlertNavigationRequest(alertController: alert)
+        Current.navigate.to(navigationRequest)
+    }
+
+    @objc func appWillResignActive() {
+        guard let topViewController = UIViewController.topMostViewController() else { return }
+
+        // Dismiss scanners and alerts
+        if let navigationController = topViewController as? PortraitNavigationController {
+            if navigationController.visibleViewController?.isKind(of: CardScan.ScanViewController.self) == true || navigationController.visibleViewController?.isKind(of: BarcodeScannerViewController.self) == true {
+                Current.navigate.close(animated: false) {
+                    self.displayLaunchScreen()
+                    return
+                }
+            }
+        }
+
+        if topViewController.isKind(of: UIAlertController.self) {
+            Current.navigate.close(animated: false) {
+                self.displayLaunchScreen()
+                return
+            }
+        }
+
+        displayLaunchScreen()
+    }
+
+    func displayLaunchScreen() {
+        // If there is no current user, we have no need to present the splash screen
+        guard Current.userManager.hasCurrentUser else { return }
+
+        let storyboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "LaunchScreen")
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, fullScreen: true, embedInNavigationController: false, transition: .crossDissolve)
+        Current.navigate.to(navigationRequest)
+    }
+
+    @objc func appDidBecomeActive() {
+        Current.navigate.closeShieldView()
     }
 }

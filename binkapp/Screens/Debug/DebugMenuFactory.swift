@@ -20,7 +20,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -65,7 +65,7 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "LPC use cookies", subtitle: shouldUseCookies ? "Yes" : "No", action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcCookies)
-            }, cellType: .titleSubtitle)
+        }, cellType: .titleSubtitle)
     }
     
     private func makeForceCrashRow() -> DebugMenuRow {
@@ -80,6 +80,14 @@ class DebugMenuFactory {
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .responseCodeVisualiser)
             }, cellType: .titleSubtitle)
+    }
+
+    private func makeInAppReviewRow() -> DebugMenuRow {
+        let shouldApplyRules = Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules)
+        return DebugMenuRow(title: "Apply in-app review rules", subtitle: shouldApplyRules ? "Yes" : "No", action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .inAppReviewRules)
+        }, cellType: .titleSubtitle)
     }
     
     func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {

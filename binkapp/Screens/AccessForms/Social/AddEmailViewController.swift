@@ -21,13 +21,11 @@ class AddEmailViewController: BaseFormViewController {
         view.addSubview(button)
         return button
     }()
-    
-    private let router: MainScreenRouter?
+
     private var request: FacebookRequest
     private let completion: AddEmailCompletion
         
-    init(router: MainScreenRouter?, request: FacebookRequest, completion: @escaping AddEmailCompletion) {
-        self.router = router
+    init(request: FacebookRequest, completion: @escaping AddEmailCompletion) {
         self.request = request
         self.completion = completion
         super.init(title: "add_email_title".localized, description: "add_email_subtitle".localized, dataSource: FormDataSource(accessForm: .addEmail))

@@ -23,11 +23,8 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         view.addSubview(button)
         return button
     }()
-    
-    private let router: MainScreenRouter
 
-    init(router: MainScreenRouter) {
-        self.router = router
+    init() {
         super.init(title: "login_title".localized, description: "login_subtitle".localized, dataSource: FormDataSource(accessForm: .login))
         dataSource.delegate = self
     }
@@ -107,7 +104,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
                     })
                     
                     self?.continueButton.stopLoading()
-                    self?.router.didLogin()
+                    Current.rootStateMachine.handleLogin()
                     BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
                 })
@@ -119,7 +116,9 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     @objc func forgotPasswordTapped() {
-        router.toForgotPasswordViewController(navigationController: navigationController)
+        let viewController = ViewControllerFactory.makeForgottenPasswordViewController()
+        let navigationRequest = PushNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     private func showError() {
