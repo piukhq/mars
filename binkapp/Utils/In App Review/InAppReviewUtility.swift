@@ -43,3 +43,12 @@ struct PllLoyaltyInAppReviewableJourney: InAppReviewableJourney {
 struct TransactionsHistoryInAppReviewableJourney: InAppReviewableJourney {
     typealias J = Self
 }
+
+struct InAppReviewUtility {
+    static func recordAppLaunch() {
+        let timestamp = Date().timeIntervalSince1970
+        var appLaunches = Current.userDefaults.value(forDefaultsKey: .appLaunches) as? [TimeInterval]
+        appLaunches?.append(timestamp)
+        Current.userDefaults.set(appLaunches ?? [timestamp], forDefaultsKey: .appLaunches)
+    }
+}

@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     var stateMachine: RootStateMachine?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
         #if DEBUG
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
@@ -96,6 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
 
         addObservers()
+        InAppReviewUtility.recordAppLaunch()
     
         return true
     }
@@ -106,6 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         Current.wallet.refreshMembershipPlansIfNecessary()
+        InAppReviewUtility.recordAppLaunch()
     }
 
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
