@@ -286,7 +286,6 @@ public protocol TestingImageDataSource: AnyObject {
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.videoFeed.willDisappear()
-        self.navigationController?.setNavigationBarHidden(self.isNavigationBarHidden ?? false, animated: animated)
     }
     
     override open func viewDidDisappear(_ animated: Bool) {
