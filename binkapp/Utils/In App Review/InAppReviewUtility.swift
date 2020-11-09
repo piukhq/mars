@@ -39,3 +39,7 @@ extension InAppReviewableJourney {
 struct PllLoyaltyInAppReviewableJourney: InAppReviewableJourney {
     typealias J = Self
 }
+
+struct TransactionsHistoryInAppReviewableJourney: InAppReviewableJourney {
+    typealias J = Self
+}
