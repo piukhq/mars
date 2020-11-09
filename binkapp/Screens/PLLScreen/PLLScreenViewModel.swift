@@ -94,7 +94,6 @@ class PLLScreenViewModel {
 
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion(true)
-            // TODO: InAppReviewable - if there is a pll loyalty journey in progress, update it here
         }) { [weak self] error in
             guard let error = error else { return }
             if case .userFacingNetworkingError(let networkingError) = error {
