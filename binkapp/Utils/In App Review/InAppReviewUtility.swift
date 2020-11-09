@@ -44,11 +44,23 @@ struct TransactionsHistoryInAppReviewableJourney: InAppReviewableJourney {
     typealias J = Self
 }
 
-struct InAppReviewUtility {
+struct InAppReviewUtility: InAppReviewable {
+    static let minimumMembershipCards = 4
+    static let minimumAppLaunches = 10
+    static let minimumDaysSinceFirstLaunch = 2
+
     static func recordAppLaunch() {
         let timestamp = Date().timeIntervalSince1970
         var appLaunches = Current.userDefaults.value(forDefaultsKey: .appLaunches) as? [TimeInterval]
         appLaunches?.append(timestamp)
         Current.userDefaults.set(appLaunches ?? [timestamp], forDefaultsKey: .appLaunches)
+    }
+    
+    static var canRequestReviewBasedOnUsage: Bool {
+        guard let membershipCards = Current.wallet.membershipCards, membershipCards.count > minimumMembershipCards else { return false }
+        guard let appLaunches = Current.userDefaults.value(forDefaultsKey: .appLaunches) as? [TimeInterval] else { return false }
+        guard appLaunches.count > minimumAppLaunches else { return false }
+        let firstAppLaunch = Date(timeIntervalSince1970: appLaunches[0])
+        return Date.hasElapsed(days: minimumDaysSinceFirstLaunch, since: firstAppLaunch)
     }
 }
