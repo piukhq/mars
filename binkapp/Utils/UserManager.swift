@@ -156,6 +156,6 @@ class UserManager {
                 }
             }
             Current.userDefaults.set(true, forDefaultsKey: .hasPreviouslyLaunchedApp)
-        }        
+        }
     }
 }

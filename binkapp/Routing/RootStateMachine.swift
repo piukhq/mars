@@ -91,7 +91,7 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     }
     
     func moveTo(_ viewController: UIViewController?) {
-        guard let window = window else { fatalError("Window does not exist. This should never happen.")}
+        guard let window = window else { fatalError("Window does not exist. This should never happen.") }
         window.rootViewController = viewController
         Current.navigate.setRootViewController(viewController)
     }

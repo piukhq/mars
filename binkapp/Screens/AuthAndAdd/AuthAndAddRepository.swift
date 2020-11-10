@@ -72,7 +72,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
                         try? context.save()
                         
                         DispatchQueue.main.async {
-                            Current.database.performTask(with: newObject) { (context, safeObject) in
+                            Current.database.performTask(with: newObject) { (_, safeObject) in
                                 guard let existingCard = safeObject else { return }
                                 onSuccess(existingCard)
                             }
