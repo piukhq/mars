@@ -59,7 +59,12 @@ final class APIClient {
         return APIConstants.isPreProduction
     }
 
-    var apiVersion: APIVersion = .v1_2
+    let apiVersion: APIVersion = .v1_2
+    
+    #if DEBUG
+    /// Only used for switching over to an API version. This isn't backed by user defaults and will reset.
+    var overrideVersion: APIVersion?
+    #endif
 
     private let successStatusRange = 200...299
     private let noResponseStatus = 204
@@ -95,6 +100,7 @@ struct BinkNetworkRequest {
     var headers: [BinkHTTPHeader]?
     var isUserDriven: Bool
 }
+
 struct ValidatedNetworkRequest {
     var requestUrl: String
     var headers: HTTPHeaders

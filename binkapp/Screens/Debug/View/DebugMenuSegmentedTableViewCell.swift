@@ -13,8 +13,8 @@ class DebugMenuSegmentedTableViewCell: UITableViewCell {
     
     @IBAction func segmentedControlAction(_ sender: Any) {
         switch segmentedControl.selectedSegmentIndex {
-            case 0: Current.apiClient.apiVersion = .v1_2
-            case 1: Current.apiClient.apiVersion = .v1_3
+            case 0: Current.apiClient.overrideVersion = .v1_2
+            case 1: Current.apiClient.overrideVersion = .v1_3
             default: break
         }
     }
@@ -24,9 +24,11 @@ class DebugMenuSegmentedTableViewCell: UITableViewCell {
         segmentedControl.setTitle("API v1.2", forSegmentAt: 0)
         segmentedControl.setTitle("API v1.3", forSegmentAt: 1)
         
-        switch Current.apiClient.apiVersion {
+        switch Current.apiClient.overrideVersion {
             case .v1_2: segmentedControl.selectedSegmentIndex = 0
             case .v1_3: segmentedControl.selectedSegmentIndex = 1
+        case .none:
+            segmentedControl.selectedSegmentIndex = 0
         }
     }
 }
