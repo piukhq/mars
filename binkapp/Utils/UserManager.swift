@@ -144,9 +144,8 @@ class UserManager {
         }
     }
     
-    static func removeKeychainItemsOnFirstLaunch() {
+    func clearKeychainIfNecessary() {
         if !Current.userDefaults.bool(forDefaultsKey: .hasPreviouslyLaunchedApp) {
-            let keychain = Keychain(service: APIConstants.bundleID)
             for key in keychain.allKeys() {
                 if key != Constants.tokenKey {
                     do {
