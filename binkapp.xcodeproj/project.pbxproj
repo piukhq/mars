@@ -156,7 +156,6 @@
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
 		70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */; };
 		70D748022552CC7800E9D2C1 /* InAppReviewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D748012552CC7800E9D2C1 /* InAppReviewable.swift */; };
-		70D748142552E94400E9D2C1 /* PllLoyaltyInAppReviewableJourney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D748132552E94400E9D2C1 /* PllLoyaltyInAppReviewableJourney.swift */; };
 		70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8024E56B3B005A30D2 /* UserService.swift */; };
 		70E31A8324E56B4D005A30D2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8224E56B4D005A30D2 /* APIService.swift */; };
 		70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E867742489303F001ED282 /* SecureUtilityTests.swift */; };
@@ -655,7 +654,6 @@
 		70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TescoPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewUtility.swift; sourceTree = "<group>"; };
 		70D748012552CC7800E9D2C1 /* InAppReviewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewable.swift; sourceTree = "<group>"; };
-		70D748132552E94400E9D2C1 /* PllLoyaltyInAppReviewableJourney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PllLoyaltyInAppReviewableJourney.swift; sourceTree = "<group>"; };
 		70E31A8024E56B3B005A30D2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		70E31A8224E56B4D005A30D2 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		70E867742489303F001ED282 /* SecureUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtilityTests.swift; sourceTree = "<group>"; };
@@ -1639,19 +1637,10 @@
 		70D747FB2552A74600E9D2C1 /* In App Review */ = {
 			isa = PBXGroup;
 			children = (
-				70D748122552E92500E9D2C1 /* Journeys */,
 				70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */,
 				70D748012552CC7800E9D2C1 /* InAppReviewable.swift */,
 			);
 			path = "In App Review";
-			sourceTree = "<group>";
-		};
-		70D748122552E92500E9D2C1 /* Journeys */ = {
-			isa = PBXGroup;
-			children = (
-				70D748132552E94400E9D2C1 /* PllLoyaltyInAppReviewableJourney.swift */,
-			);
-			path = Journeys;
 			sourceTree = "<group>";
 		};
 		70E86778248E76B9001ED282 /* Local Points Scraping */ = {
@@ -3060,7 +3049,6 @@
 				3C873FF522F073CF00FA3031 /* MainTabBarViewModel.swift in Sources */,
 				EFA5F7542379AAB20027AB80 /* CD_VoucherEarn.swift in Sources */,
 				70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */,
-				70D748142552E94400E9D2C1 /* PllLoyaltyInAppReviewableJourney.swift in Sources */,
 				96F22E022508B6060009951B /* SentryService.swift in Sources */,
 				EFA5F7202379A7C70027AB80 /* CD_MembershipCardStatus.swift in Sources */,
 				EFEB5BF3237C7BC000E18743 /* PLRRewardsHistoryViewModel.swift in Sources */,
