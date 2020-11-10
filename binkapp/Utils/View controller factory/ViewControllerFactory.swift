@@ -117,10 +117,17 @@ final class ViewControllerFactory {
         }
         
         let attributedString = ReusableModalConfiguration.makeAttributedString(title: titleString, description: descriptionString)
-        let config = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "Go to site", mainButtonCompletion: {
-            print("Button tapped")
-        })
-        return makeReusableTemplateViewController(configuration: config, floatingButtons: true)
+        var configuration = ReusableModalConfiguration(text: attributedString)
+        
+        if let websiteURL = membershipPlan.account?.planURL {
+            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "Go to site", mainButtonCompletion: {
+                let viewController = makeWebViewController(urlString: websiteURL)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            })
+        }
+        
+        return makeReusableTemplateViewController(configuration: configuration, floatingButtons: true)
     }
     
     static func makeSecurityAndPrivacyViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
