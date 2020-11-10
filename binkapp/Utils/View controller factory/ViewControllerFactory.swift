@@ -117,8 +117,10 @@ final class ViewControllerFactory {
         }
         
         let attributedString = ReusableModalConfiguration.makeAttributedString(title: titleString, description: descriptionString)
-        let configuration = ReusableModalConfiguration(text: attributedString)
-        return makeReusableTemplateViewController(configuration: configuration, floatingButtons: false)
+        let config = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "Go to site", mainButtonCompletion: {
+            print("Button tapped")
+        })
+        return makeReusableTemplateViewController(configuration: config, floatingButtons: true)
     }
     
     static func makeSecurityAndPrivacyViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
