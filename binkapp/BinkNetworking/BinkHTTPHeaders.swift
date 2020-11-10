@@ -54,7 +54,15 @@ struct BinkHTTPHeader {
         return accept("application/json")
     }()
     
-    static let acceptWithAPIVersion: BinkHTTPHeader = {
-        return accept("application/json;\(Current.apiClient.apiVersion.rawValue)")
-    }()
+    static func acceptWithAPIVersion() -> BinkHTTPHeader {
+        let apiVersion: String
+        
+        #if DEBUG
+        apiVersion = Current.apiClient.overrideVersion?.rawValue ?? Current.apiClient.apiVersion.rawValue
+        #else
+        apiVersion = Current.apiClient.apiVersion.rawValue
+        #endif
+        
+        return accept("application/json;\(apiVersion)")
+    }
 }
