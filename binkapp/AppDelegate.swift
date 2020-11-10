@@ -97,6 +97,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
 
         addObservers()
     
+        if !Current.userDefaults.bool(forDefaultsKey: .hasPreviouslyLaunchedApp) {
+            
+            
+            Current.userDefaults.set(true, forDefaultsKey: .hasPreviouslyLaunchedApp)
+        }
+        
+        
         return true
     }
     
