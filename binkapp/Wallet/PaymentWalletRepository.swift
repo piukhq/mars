@@ -82,7 +82,6 @@ class PaymentWalletRepository: WalletServiceProtocol {
     }
 
     private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
-
         let hash = SecureUtility.getPaymentCardHash(from: paymentCard)
 
         var paymentCreateRequest: PaymentCardCreateRequest?
@@ -116,7 +115,7 @@ class PaymentWalletRepository: WalletServiceProtocol {
                     try? context.save()
                     
                     DispatchQueue.main.async {
-                        Current.database.performTask(with: newObject) { (context, safeObject) in
+                        Current.database.performTask(with: newObject) { (_, safeObject) in
                             onSuccess(safeObject)
                         }
                     }

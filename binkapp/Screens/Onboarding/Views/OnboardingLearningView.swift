@@ -68,5 +68,4 @@ class OnboardingLearningView: CustomView {
         bodyTextLabel.text = type.bodyText
         imageTopPaddingConstraint.constant = type.topPadding
     }
-
 }

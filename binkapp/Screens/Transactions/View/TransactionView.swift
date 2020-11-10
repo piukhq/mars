@@ -30,7 +30,8 @@ class TransactionView: CustomView {
         }
       
         guard let prefix = transaction.formattedAmounts?.first?.prefix else {
-            let suffix = transaction.formattedAmounts?.first?.suffix != "" ? transaction.formattedAmounts?.first?.currency : nil
+            guard let firstSuffix = transaction.formattedAmounts?.first?.suffix else { return }
+            let suffix = !firstSuffix.isEmpty ? transaction.formattedAmounts?.first?.currency : nil
             setValueLabel(text: "%d \(suffix ?? "")", transactionValue: transactionValue, addDecimals: false)
             return
         }

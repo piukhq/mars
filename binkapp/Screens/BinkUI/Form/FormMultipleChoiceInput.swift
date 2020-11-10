@@ -34,12 +34,12 @@ class FormMultipleChoiceInput: UIInputView {
     }()
     
     private let sections: [[FormPickerData]]
-    private var selectedContent = [Int : FormPickerData]() {
+    private var selectedContent: [Int: FormPickerData] = [:] {
         didSet {
             var lastString: String?
             fullContentString = ""
             
-            selectedContent.sorted(by: { $0.key < $1.key }).forEach { key, value in
+            selectedContent.sorted(by: { $0.key < $1.key }).forEach { _, value in
                 if let separator = delegate?.multipleChoiceSeparatorForMultiValues(), lastString != nil {
                     fullContentString += "\(separator)"
                 }
@@ -47,9 +47,9 @@ class FormMultipleChoiceInput: UIInputView {
                 fullContentString += value.title
                 
                 if let backingDataValue = value.backingData {
-                    if backingData == nil { backingData = [Int]() }
-                
-                    backingData!.append(backingDataValue)
+                    if backingData == nil { backingData = [] }
+
+                    backingData?.append(backingDataValue)
                 }
                 
                 lastString = value.title
@@ -95,7 +95,7 @@ class FormMultipleChoiceInput: UIInputView {
     
     // MARK: - Actions
     
-    private func pickerSelected(_ component: Int,  index: Int) {
+    private func pickerSelected(_ component: Int, index: Int) {
         if let component = sections[safe: component], let row = component[safe: index], let index = sections.firstIndex(of: component) {
             selectedContent[index] = row
         }
@@ -103,7 +103,7 @@ class FormMultipleChoiceInput: UIInputView {
     
     @objc fileprivate func doneInputView() {
         endEditing(true)
-//        textfield.resignFirstResponder()
+        //        textfield.resignFirstResponder()
     }
 }
 
@@ -130,10 +130,7 @@ extension FormMultipleChoiceInput: UIPickerViewDelegate {
         return 42
     }
     
-    public func pickerView(_ pickerView: UIPickerView,
-                           viewForRow row: Int,
-                           forComponent component: Int,
-                           reusing view: UIView?) -> UIView {
+    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         var pickerLabel: UILabel
         
         if view == nil {

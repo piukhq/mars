@@ -9,7 +9,7 @@
 import UIKit
 
 // TECH DEBT: This is duplicated from loyalty cards.
-protocol WalletPaymentCardCollectionViewCellDelegate: NSObject {
+protocol WalletPaymentCardCollectionViewCellDelegate: AnyObject {
     func cellSwipeBegan(cell: PaymentCardCollectionViewCell)
     func cellDidFullySwipe(action: SwipeMode?, cell: PaymentCardCollectionViewCell)
     func cellPerform(action: CellAction, cell: PaymentCardCollectionViewCell)
@@ -81,7 +81,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         alertView.isHidden = true
         statusLabel.isHidden = false
         statusImageView.isHidden = false
-
+        
         processGradient(UIColor.deleteSwipeGradientLeft, UIColor.deleteSwipeGradientRight)
         processGradient(type: viewModel.paymentCardType)
     }
@@ -148,16 +148,16 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
         whitespaceIndexLocations.forEach { spaceIndex in
             if redacted.count > spaceIndex {
                 let space = "   "
-                redacted.insert(contentsOf:space, at: redacted.index(redacted.startIndex, offsetBy: spaceIndex))
+                redacted.insert(contentsOf: space, at: redacted.index(redacted.startIndex, offsetBy: spaceIndex))
                 padRange += space.count
             }
         }
         
         /*
-         The below is kind of a nightmare. Due to the way UILabel draws itself, we need the lineheight to be set to a constant
-         so that when an unredacted character (of a different font size) is added, there is no visual vertical shifting taking
-         place. Due to using NSAttributedString we've lost some safety because we have to use NSRange.
-         */
+        The below is kind of a nightmare. Due to the way UILabel draws itself, we need the lineheight to be set to a constant
+        so that when an unredacted character (of a different font size) is added, there is no visual vertical shifting taking
+        place. Due to using NSAttributedString we've lost some safety because we have to use NSRange.
+        */
         
         let attributedString = NSMutableAttributedString(string: redacted)
         var nsRange = NSRange(range, in: stripped)
@@ -328,15 +328,17 @@ extension PaymentCardCollectionViewCell {
                 maxValue = -(view.frame.size.width * 0.5)
                 minValue = 0
                 
-                let limitToUpper = max(translationX, maxValue!)
-                constant = min(limitToUpper, minValue!)
+                guard let maxValue = maxValue else { return }
+                guard let minValue = minValue else { return }
+                
+                let limitToUpper = max(translationX, maxValue)
+                constant = min(limitToUpper, minValue)
             }
             
             cardContainerCenterXConstraint.constant = constant
         }
         
         if gestureRecognizer.state == .ended || gestureRecognizer.state == .cancelled {
-            
             // Get percentage through
             
             let percentage = abs(translationX) / view.frame.size.width
@@ -361,7 +363,7 @@ extension PaymentCardCollectionViewCell {
         
         switch state {
         case .closed:
-            constant = 0 
+            constant = 0
         case .peek:
             guard let type = type else { return }
             

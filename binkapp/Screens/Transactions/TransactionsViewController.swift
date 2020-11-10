@@ -9,7 +9,7 @@
 import UIKit
 
 class TransactionsViewController: BinkTrackableViewController, InAppReviewable {
-    private struct Constants {
+    private enum Constants {
         static let horizontalInset: CGFloat = 25.0
         static let bottomInset: CGFloat = 25.0
     }

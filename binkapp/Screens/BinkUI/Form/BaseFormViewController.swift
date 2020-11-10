@@ -13,10 +13,9 @@ protocol Form {
 }
 
 class BaseFormViewController: BinkTrackableViewController, Form {
-    
     // MARK: - Helpers
     
-    private struct Constants {
+    private enum Constants {
         static let normalCellHeight: CGFloat = 84.0
         static let horizontalInset: CGFloat = 25.0
         static let maskingHeight: CGFloat = 209.0
@@ -131,8 +130,8 @@ class BaseFormViewController: BinkTrackableViewController, Form {
             maskingView.leftAnchor.constraint(equalTo: view.leftAnchor),
             maskingView.rightAnchor.constraint(equalTo: view.rightAnchor),
             maskingView.heightAnchor.constraint(equalToConstant: Constants.maskingHeight),
-            maskingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            ])
+            maskingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     private func setBottomItemMask() {
@@ -145,7 +144,7 @@ class BaseFormViewController: BinkTrackableViewController, Form {
     }
     
     private func configureCheckboxes() {
-        guard dataSource.checkboxes.count > 0 else { return }
+        guard !dataSource.checkboxes.isEmpty else { return }
         stackScrollView.add(arrangedSubviews: dataSource.checkboxes)
     }
     

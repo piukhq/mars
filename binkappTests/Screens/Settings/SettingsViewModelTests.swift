@@ -10,7 +10,6 @@ import XCTest
 @testable import binkapp
 
 class SettingsViewModelTests: XCTestCase {
-    
     func test_sections_returnsANotNilArrayOfSections() {
         let sut = SettingsViewModelMock()
         XCTAssertNotNil(sut.sections)

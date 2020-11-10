@@ -14,7 +14,6 @@ enum SocialLoginRequestType {
 }
 
 class SocialTermsAndConditionsViewController: BaseFormViewController, UserServiceProtocol {
-
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +74,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
             loginWithFacebook(request: request, preferenceCheckboxes: preferenceCheckboxes)
         case .apple(let request):
             loginWithApple(request: request, preferenceCheckboxes: preferenceCheckboxes)
-        }        
+        }
     }
     
     // FIXME: To avoid the code duplicate below, in future we need to build the Facebook and Apple request objects from a common object type
@@ -159,8 +158,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     }
     
     func updatePreferences(checkboxes: [CheckboxView]) {
-
-        var params = [String: String]()
+        var params: [String: String] = [:]
 
         checkboxes.forEach {
             if let columnName = $0.columnName {
@@ -168,7 +166,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
             }
         }
 
-        guard params.count > 0 else { return }
+        guard !params.isEmpty else { return }
 
         // We don't worry about whether this was successful or not
         setPreferences(params: params)
@@ -178,9 +176,9 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
         let message: String
         
         switch requestType {
-        case .apple(_):
+        case .apple:
             message = "social_tandcs_siwa_error".localized
-        case .facebook(_):
+        case .facebook:
             message = "social_tandcs_facebook_error".localized
         }
         

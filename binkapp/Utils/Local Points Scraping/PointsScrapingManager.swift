@@ -10,7 +10,6 @@ import Foundation
 import KeychainAccess
 
 class PointsScrapingManager {
-    
     // MARK: - Objects
     
     enum CredentialStoreType: String {
@@ -89,9 +88,8 @@ class PointsScrapingManager {
     
     func retrieveCredentials(forMembershipCardId cardId: String) throws -> WebScrapingCredentials {
         do {
-            guard let username = try keychain.get(keychainKeyForCardId(cardId, credentialType: .username)),
-                let password = try keychain.get(keychainKeyForCardId(cardId, credentialType: .password)) else {
-                    throw PointsScrapingManagerError.failedToRetrieveCredentials
+            guard let username = try keychain.get(keychainKeyForCardId(cardId, credentialType: .username)), let password = try keychain.get(keychainKeyForCardId(cardId, credentialType: .password)) else {
+                throw PointsScrapingManagerError.failedToRetrieveCredentials
             }
             return WebScrapingCredentials(username: username, password: password)
         } catch {
@@ -122,7 +120,7 @@ class PointsScrapingManager {
         guard let agent = agents.first(where: { $0.membershipPlanId == planId }) else {
             throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
         }
-                
+
         webScrapingUtility = WebScrapingUtility(agent: agent, membershipCard: membershipCard, delegate: self)
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
@@ -263,7 +261,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 
                 guard let pointsValue = Double(pointsValue) else {
                     fatalError("We should never get here. If we have got this far, we should always be able to parse the points value correctly. Perhaps the merchant data has changed.")
-//                    self.transitionToFailed(membershipCardId: membershipCard.id)
+                    //                    self.transitionToFailed(membershipCardId: membershipCard.id)
                 }
                 
                 // Set new balance object
@@ -283,7 +281,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                 } catch {
                     self.transitionToFailed(membershipCard: membershipCard)
                 }
-            
+
                 self.pointsScrapingDidComplete()
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionSuccess(membershipCard: membershipCard))
                 BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionStatus(membershipCard: membershipCard))

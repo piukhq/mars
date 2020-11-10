@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HapticFeedbackUtil {
+enum HapticFeedbackUtil {
     enum FeedbackType {
         case impact(style: UIImpactFeedbackGenerator.FeedbackStyle)
         case selection

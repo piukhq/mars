@@ -9,8 +9,9 @@
 import Foundation
 import DeepDiff
 
+// swiftlint:disable convenience_type
 class StorageUtilityMock {
-    static var sharedStoredObjects = [StoredObject]()
+    static var sharedStoredObjects: [StoredObject] = []
 
     enum ExpiryPolicy: Int, Codable {
         case week = 7
@@ -53,7 +54,7 @@ class StorageUtilityMock {
             "bcdef",
             "cdefg",
             "defgh",
-            "efghi",
+            "efghi"
         ]
 
         // Get urls from stored objects

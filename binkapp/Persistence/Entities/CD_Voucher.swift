@@ -25,7 +25,7 @@ open class CD_Voucher: _CD_Voucher {
         let prefix = earn?.prefix ?? ""
         let targetValue = earn?.targetValue?.doubleValue ?? 0.0
         let value = earn?.value?.doubleValue ?? 0.0
-        let displayValue = NSNumber(value: targetValue - value) 
+        let displayValue = NSNumber(value: targetValue - value)
         let displayValueString = displayValue.twoDecimalPointString()
         
         var suffix = ""

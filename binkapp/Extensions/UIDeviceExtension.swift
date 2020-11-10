@@ -6,6 +6,8 @@
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
+// swiftlint:disable discouraged_direct_init
+
 import UIKit
 
 extension UIDevice {

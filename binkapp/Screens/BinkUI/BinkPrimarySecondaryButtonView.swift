@@ -56,7 +56,7 @@ class BinkPrimarySecondaryButtonView: CustomView {
 }
 
 extension LayoutHelper {
-    struct PrimarySecondaryButtonView {
+    enum PrimarySecondaryButtonView {
         static let height: CGFloat = (PillButton.height * 2) + PillButton.verticalSpacing + PillButton.bottomPadding
         static let bottomPadding: CGFloat = 16
         static let oneButtonHeight: CGFloat = 102

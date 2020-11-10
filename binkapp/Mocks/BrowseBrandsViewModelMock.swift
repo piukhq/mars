@@ -8,6 +8,7 @@
 
 import Foundation
 
+// swiftlint:disable line_length
 class BrowseBrandsViewModelMock {
     private let membershipPlans: [MembershipPlanModel]
     
@@ -19,19 +20,19 @@ class BrowseBrandsViewModelMock {
             filterPlans()
         }
     }
-    var filteredPlans = [MembershipPlanModel]()
+    var filteredPlans: [MembershipPlanModel] = []
     
     var filters: [String] {
         return mapFilters(fromPlans: membershipPlans)
     }
-    var selectedFilters = [String]() {
+    var selectedFilters: [String] = [] {
         didSet {
             filterPlans()
         }
     }
     
     var existingCardsPlanIDs: [String]? {
-        return Current.wallet.membershipCards?.map { ($0.membershipPlan?.id ?? "")}
+        return Current.wallet.membershipCards?.map { ($0.membershipPlan?.id ?? "") }
     }
         
     init(membershipPlans: [MembershipPlanModel]) {
@@ -119,24 +120,23 @@ class BrowseBrandsViewModelMock {
     }
     
     private func mapFilters(fromPlans plans: [MembershipPlanModel]) -> [String] {
-        let filters = plans.map({ ($0.account?.category ?? "")})
+        let filters = plans.map({ ($0.account?.category ?? "") })
         return filters.uniq(source: filters)
     }
     
     private func filterPlans() {
         filteredPlans = []
-        getMembershipPlans().forEach { (plan) in
-            guard let companyName = plan.account?.companyName, let category = plan.account?.category else {return}
+        getMembershipPlans().forEach { plan in
+            guard let companyName = plan.account?.companyName, let category = plan.account?.category else { return }
             if searchText.isEmpty {
-                if selectedFilters.contains(category) && !filteredPlans.contains(plan){
+                if selectedFilters.contains(category) && !filteredPlans.contains(plan) {
                     filteredPlans.append(plan)
                 }
             } else {
-                if selectedFilters.contains(category) && companyName.localizedCaseInsensitiveContains(searchText) && !filteredPlans.contains(plan){
+                if selectedFilters.contains(category) && companyName.localizedCaseInsensitiveContains(searchText) && !filteredPlans.contains(plan) {
                     filteredPlans.append(plan)
                 }
             }
         }
     }
 }
-

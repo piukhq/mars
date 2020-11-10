@@ -9,8 +9,7 @@
 import UIKit
 import CardScan
 
-final class ViewControllerFactory {
-    
+enum ViewControllerFactory {
     // MARK: - Adding Options
     
     static func makeAddingOptionsViewController() -> AddingOptionsViewController {

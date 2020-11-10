@@ -9,8 +9,7 @@
 import UIKit
 
 class SettingsTableViewCell: UITableViewCell {
-    
-    private struct Constants {
+    private enum Constants {
         static let separatorHeight: CGFloat = 1.0
         static let leftRightPadding: CGFloat = 25.0
         static let chevronRightPadding: CGFloat = 28.0
@@ -106,7 +105,7 @@ class SettingsTableViewCell: UITableViewCell {
             chevron.heightAnchor.constraint(equalToConstant: Constants.chevronWidthHeight),
             chevron.widthAnchor.constraint(equalToConstant: Constants.chevronWidthHeight),
             chevron.rightAnchor.constraint(equalTo: rightAnchor, constant: -Constants.chevronRightPadding),
-            chevron.centerYAnchor.constraint(equalTo: centerYAnchor),
+            chevron.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     

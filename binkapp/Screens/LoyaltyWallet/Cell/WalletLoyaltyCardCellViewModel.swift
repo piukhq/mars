@@ -72,7 +72,7 @@ struct WalletLoyaltyCardCellViewModel {
     }
 
     var hasLinkedPaymentCards: Bool {
-        return membershipCard.status?.status == .authorised && membershipCard.linkedPaymentCards.count > 0
+        return membershipCard.status?.status == .authorised && !membershipCard.linkedPaymentCards.isEmpty
     }
 
     var linkStatusText: String? {
@@ -119,7 +119,7 @@ struct WalletLoyaltyCardCellViewModel {
             return voucher.balanceString
         }
         
-        if cardStatus == .authorised && membershipCard.balances.allObjects.isEmpty {
+        if cardStatus == .authorised && membershipCard.balances.isEmpty {
             return "pending_title".localized
         }
 
@@ -149,5 +149,11 @@ struct WalletLoyaltyCardCellViewModel {
             }
         }
         return balance?.suffix
+    }
+}
+
+extension NSSet {
+    var isEmpty: Bool {
+        return allObjects.isEmpty
     }
 }

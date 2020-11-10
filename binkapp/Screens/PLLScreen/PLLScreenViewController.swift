@@ -14,7 +14,6 @@ enum PllScreenJourney {
 }
 
 class PLLScreenViewController: BinkTrackableViewController {
-    
     // MARK: - Properties
     
     private let viewModel: PLLScreenViewModel
@@ -123,10 +122,10 @@ class PLLScreenViewController: BinkTrackableViewController {
             
             viewModel.activePaymentCards?.forEach {
                 /*
-                 Filter out cards already associated with this account.
-                 This means that we don't try to re-add any cards that we have already linked to this account.
-                 For arguments sake sometimes this is not a new card.. it's a re-authenticated old card.
-                 */
+                Filter out cards already associated with this account.
+                This means that we don't try to re-add any cards that we have already linked to this account.
+                For arguments sake sometimes this is not a new card.. it's a re-authenticated old card.
+                */
                 if !card.linkedPaymentCards.contains($0) {
                     viewModel.addCardToChangedCardsArray(card: $0)
                 }
@@ -334,10 +333,8 @@ private extension PLLScreenViewController {
         switch journey {
         case .newCard:
             viewModel.close()
-            break
         case .existingCard:
             viewModel.isEmptyPll ? viewModel.toPaymentScanner(delegate: self) : viewModel.close()
-            break
         }
     }
 }

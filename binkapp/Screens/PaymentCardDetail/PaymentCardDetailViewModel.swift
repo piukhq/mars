@@ -130,7 +130,8 @@ class PaymentCardDetailViewModel {
     }
 
     var shouldShowOtherCardsTableView: Bool {
-        return paymentCardStatus == .active && pllPlansNotAddedToWallet?.count != 0
+        guard let plans = pllPlansNotAddedToWallet else { return false }
+        return paymentCardStatus == .active && !plans.isEmpty
     }
     
     var shouldShowInformationTableView: Bool {
@@ -192,7 +193,7 @@ class PaymentCardDetailViewModel {
 
     var pllMembershipCards: [CD_MembershipCard]? {
         // TODO: this should have the same sort as in the loyalty wallet
-        return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
+        return Current.wallet.membershipCards?.filter { $0.membershipPlan?.featureSet?.planCardType == .link }
     }
 
     var pllMembershipCardsCount: Int {

@@ -7,7 +7,7 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
     }
 
     func image(ofType type: ImageType) -> CD_MembershipCardImage? {
-        return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(integerLiteral: type.rawValue))).first as? CD_MembershipCardImage
+        return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(value: type.rawValue))).first as? CD_MembershipCardImage
     }
     
     var formattedTransactions: Set<CD_MembershipTransaction>? {
@@ -32,7 +32,7 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
         guard let vouchers = sortedVouchers else { return nil }
         let filteredVouchers = vouchers.filter { $0.state == VoucherState.redeemed.rawValue || $0.state == VoucherState.cancelled.rawValue || $0.state == VoucherState.expired.rawValue }
         let redeemDateDescriptor = NSSortDescriptor(key: "dateRedeemed", ascending: false)
-        let expiryDateDescriptor =  NSSortDescriptor(key: "expiryDate", ascending: false)
+        let expiryDateDescriptor = NSSortDescriptor(key: "expiryDate", ascending: false)
         if let inactiveVouchers = filteredVouchers as NSArray? {
             return inactiveVouchers.sortedArray(using: [expiryDateDescriptor, redeemDateDescriptor]) as? [CD_Voucher]
         }

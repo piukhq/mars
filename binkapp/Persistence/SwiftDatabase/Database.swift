@@ -6,6 +6,8 @@
 //  Copyright © 2019 Max Woodhams. All rights reserved.
 //
 
+// swiftlint:disable all
+
 import UIKit
 import CoreData
 

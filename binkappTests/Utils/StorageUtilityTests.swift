@@ -9,10 +9,12 @@
 import XCTest
 @testable import binkapp
 
-class StorageUtilityTests: XCTestCase {
+// swiftlint:disable force_unwrapping
 
+class StorageUtilityTests: XCTestCase {
     override func setUp() {
-        StorageUtilityMock.sharedStoredObjects = [StorageUtilityMock.StoredObject]()
+        super.setUp()
+        StorageUtilityMock.sharedStoredObjects: [StorageUtilityMock.StoredObject] = []
     }
 
     func test_addStoredObject_addsObjectThatDoesNotExist() {
@@ -73,5 +75,4 @@ class StorageUtilityTests: XCTestCase {
         StorageUtilityMock.refreshPlanImages()
         XCTAssertEqual(StorageUtilityMock.sharedStoredObjects.count, 0)
     }
-
 }

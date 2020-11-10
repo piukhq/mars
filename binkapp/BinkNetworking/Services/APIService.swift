@@ -6,6 +6,8 @@
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
+// swiftlint:disable type_name
+
 import Foundation
 
 /// Used when there isn't an object being passed into the completion handler, just a success bool where it makes sense not to complicate things with Result.

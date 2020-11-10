@@ -12,7 +12,6 @@ class DebugMenuSegmentedTableViewCell: UITableViewCell {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     @IBAction func segmentedControlAction(_ sender: Any) {
-        
         let version: APIClient.APIVersion?
         
         switch segmentedControl.selectedSegmentIndex {
@@ -22,7 +21,6 @@ class DebugMenuSegmentedTableViewCell: UITableViewCell {
             version = .v1_3
         default:
             version = nil
-            break
         }
         
         #if DEBUG

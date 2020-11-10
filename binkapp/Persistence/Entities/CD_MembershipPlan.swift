@@ -2,13 +2,12 @@ import UIKit
 
 @objc(CD_MembershipPlan)
 open class CD_MembershipPlan: _CD_MembershipPlan {
-    
     func image(ofType type: ImageType) -> CD_MembershipPlanImage? {
-        return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(integerLiteral: type.rawValue))).first as? CD_MembershipPlanImage
+        return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(value: type.rawValue))).first as? CD_MembershipPlanImage
     }
     
     func firstIconImage() -> CD_MembershipPlanImage? {
-        return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(integerLiteral: 3))).first as? CD_MembershipPlanImage
+        return images.filtered(using: NSPredicate(format: "type == %@", NSNumber(value: 3))).first as? CD_MembershipPlanImage
     }
     
     var imagesSet: Set<CD_MembershipPlanImage>? {

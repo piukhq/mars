@@ -47,7 +47,6 @@ enum BarcodeType: Int {
     
     /// Code 39 barcodes draw at a fixed width [in the ZXing library](https://github.com/zxing/zxing/blob/723b65fe3dc65b88d26efa4c65e4217234a06ef0/core/src/main/java/com/google/zxing/oned/Code39Writer.java#L59).
     func preferredWidth(for length: Int, targetWidth: CGFloat) -> CGFloat {
-        
         switch self {
         case .code39:
             let baseWidth = CGFloat(24 + 1 + (13 * length))
