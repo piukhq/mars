@@ -411,3 +411,43 @@ enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
         }
     }
 }
+
+enum InAppReviewAnalyticsEvent: BinkAnalyticsEvent {
+    case add
+    case transactions
+    case time
+
+    var name: String {
+        return "in-app-review-request"
+    }
+
+    var data: [String : Any]? {
+        switch self {
+        case .add:
+            return [
+                "review_trigger": "ADD"
+            ]
+        case .transactions:
+            return [
+                "review_trigger": "TRANSACTIONS"
+            ]
+        case .time:
+            return [
+                "review_trigger": "TIME"
+            ]
+        }
+    }
+
+    static var eventForInProgressJourney: InAppReviewAnalyticsEvent? {
+        if let _ = Current.inAppReviewableJourney as? PllLoyaltyInAppReviewableJourney {
+            return InAppReviewAnalyticsEvent.add
+        }
+        if let _ = Current.inAppReviewableJourney as? TransactionsHistoryInAppReviewableJourney {
+            return InAppReviewAnalyticsEvent.transactions
+        }
+        if let _ = Current.inAppReviewableJourney as? TimeAndUsageBasedInAppReviewableJourney {
+            return InAppReviewAnalyticsEvent.time
+        }
+        return nil
+    }
+}

@@ -15,9 +15,15 @@ protocol InAppReviewable {
 
 extension InAppReviewable {
     func requestInAppReview() {
-        Current.inAppReviewableJourney = nil
+        defer {
+            Current.inAppReviewableJourney = nil
+        }
+        
         guard canRequestReview else { return }
         SKStoreReviewController.requestReview()
+        if let event = InAppReviewAnalyticsEvent.eventForInProgressJourney {
+            BinkAnalytics.track(event)
+        }
         setUpdatedRequestTime()
         setUpdatedRequestedMinorVersions()
     }
