@@ -22,6 +22,7 @@ class BaseFormViewController: BinkTrackableViewController, Form {
         static let maskingHeight: CGFloat = 209.0
         static let bottomInset: CGFloat = 150.0
         static let postCollectionViewPadding: CGFloat = 15.0
+        static let offsetPadding: CGFloat = 30.0
     }
     
     // MARK: - Properties
@@ -82,7 +83,6 @@ class BaseFormViewController: BinkTrackableViewController, Form {
     }()
     
     var initialContentOffset: CGPoint = .zero
-    var keyboardHeight: CGFloat = 0.0
     var selectedCellYOrigin: CGFloat = 0.0
     var selectedCellHeight: CGFloat = 0.0
     
@@ -152,18 +152,23 @@ class BaseFormViewController: BinkTrackableViewController, Form {
     @objc func handleKeyboardWillShow(_ notification: Notification) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
             guard let self = self else { return }
+
             if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                 let keyboardRectangle = keyboardFrame.cgRectValue
                 let keyboardHeight = keyboardRectangle.height
-                self.keyboardHeight = keyboardHeight
-                
                 let visibleOffset = UIScreen.main.bounds.height - keyboardHeight
                 let cellVisibleOffset = self.selectedCellYOrigin + self.selectedCellHeight
-                
+
                 if cellVisibleOffset > visibleOffset {
                     let actualOffset = self.stackScrollView.contentOffset.y
-                    let neededOffset = CGPoint(x: 0, y: actualOffset + cellVisibleOffset - visibleOffset)
+                    let neededOffset = CGPoint(x: 0, y: Constants.offsetPadding + actualOffset + cellVisibleOffset - visibleOffset)
                     self.stackScrollView.setContentOffset(neededOffset, animated: true)
+
+                    /// From iOS 14, we are seeing this method being called more often than we would like due to a notification trigger not only when the cell's text field is selected, but when typed into.
+                    /// We are resetting these values so that the existing behaviour will still work, whereby these values are updated from delegate methods when they should be, but when the notification is
+                    /// called from text input, these won't be updated and therefore will remain as 0.0, and won't fall into this if statement and won't update the content offset of the stack scroll view.
+                    self.selectedCellYOrigin = 0.0
+                    self.selectedCellHeight = 0.0
                 }
             }
         }
