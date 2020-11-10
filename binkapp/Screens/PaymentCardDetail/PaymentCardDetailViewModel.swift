@@ -311,8 +311,7 @@ class PaymentCardDetailViewModel {
 
     private func linkMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
         repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard, error in
-            guard let error = error else { return }
-            if case .userFacingNetworkingError(let networkingError) = error {
+            if let error = error, case .userFacingNetworkingError(let networkingError) = error {
                 if case .userFacingError(let userFacingError) = networkingError {
                     let messagePrefix = "card_already_linked_message_prefix".localized
                     let planName = membershipCard.membershipPlan?.account?.planName ?? ""
