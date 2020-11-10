@@ -64,6 +64,7 @@ extension UserDefaults: BinkUserDefaults {
         case inAppReviewRequestedMinorVersions
         case applyInAppReviewRules
         case membershipCardMostRecentTransaction(membershipCardId: String)
+        case hasPreviouslyLaunchedApp
         
         var keyValue: String {
             switch self {
@@ -89,6 +90,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "applyInAppReviewRules"
             case .membershipCardMostRecentTransaction(let cardId):
                 return "membership_card_most_recent_transaction_\(cardId)"
+            case .hasPreviouslyLaunchedApp:
+                return "hasPreviouslyLaunchedApp"
             }
         }
     }
