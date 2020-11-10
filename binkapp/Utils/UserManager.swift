@@ -41,7 +41,7 @@ struct UserProfileUpdateRequest: Codable {
 }
 
 class UserManager {
-    private struct Constants {
+    struct Constants {
         static let tokenKey = "token_key"
         static let emailKey = "email_key"
         static let firstNameKey = "first_name_key"

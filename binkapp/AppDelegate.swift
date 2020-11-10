@@ -14,6 +14,7 @@ import AlamofireNetworkActivityLogger
 import CardScan
 import Keys
 import SafariServices
+import KeychainAccess
 
 @UIApplicationMain 
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
@@ -96,13 +97,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
 
         addObservers()
+
     
         if !Current.userDefaults.bool(forDefaultsKey: .hasPreviouslyLaunchedApp) {
-            
-            
+            let keychain = Keychain(service: APIConstants.bundleID)
+            for key in keychain.allKeys() {
+                if key != UserManager.Constants.tokenKey {
+                    do {
+                        try keychain.remove(key)
+                    } catch {
+                        fatalError("Could not remove item from keychain on first launch: \(error)")
+                    }
+                }
+            }
             Current.userDefaults.set(true, forDefaultsKey: .hasPreviouslyLaunchedApp)
         }
-        
         
         return true
     }
