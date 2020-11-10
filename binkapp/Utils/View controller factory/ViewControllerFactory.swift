@@ -120,7 +120,7 @@ final class ViewControllerFactory {
         var configuration = ReusableModalConfiguration(text: attributedString)
         
         if let websiteURL = membershipPlan.account?.planURL {
-            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "Go to site", mainButtonCompletion: {
+            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, mainButtonCompletion: {
                 let viewController = makeWebViewController(urlString: websiteURL)
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)

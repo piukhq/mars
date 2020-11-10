@@ -188,6 +188,7 @@
 "native_join_unavailable_title" = "Sign up not supported";
 "native_join_unavailable_description" = "%@ does not support signing up for a new loyalty account via the Bink app.\n\nPlease go to the merchant’s website to sign up for a card, then return to the Bink app and add your new card details.";
 "to_merchant_site_button" = "Go to merchant site";
+"go_to_site_button" = "Go to site";
 
 "unlinkable_pll_title" = "Payment Linked Loyalty unavailable";
 "unlinkable_pll_description" = "Payment Linked Loyalty (PLL) allows customers’ payment cards to be securely linked to loyalty programmes, enabling every customer to be identified and rewarded every time they shop.\nThis is currently not available for this merchant.";
