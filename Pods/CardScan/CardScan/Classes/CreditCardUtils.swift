@@ -19,6 +19,17 @@ public struct CreditCardUtils {
                                      "67"]
     private static let prefixesUnionPay = ["62"]
     private static let prefixesVisa = ["4"]
+
+    public static var prefixesRegional: [String] = []
+    
+    private static var cardTypeMap: [(ClosedRange<Int>, CardType)]? = nil
+    
+    /**
+        Adds the BINs implemented by the MIR network in Russia as regional cards
+     */
+    public static func addMirSupport() {
+        prefixesRegional += ["2200", "2201", "2202", "2203", "2204"]
+    }
     
     /**
         Checks if the card number is valid.
@@ -246,9 +257,62 @@ public struct CreditCardUtils {
             return CardNetwork.MASTERCARD
         case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesUnionPay):
             return CardNetwork.UNIONPAY
+        case hasAnyPrefix(cardNumber: cardNumber, prefixes: prefixesRegional):
+            return CardNetwork.REGIONAL
         default:
             return CardNetwork.UNKNOWN
         }
+    }
+    
+    /**
+        Returns the card's type (debit, credit, preiad, unknown) based on the card number
+        -   Parameter cardNumber: The card number as a string
+        -   Returns: The card's type as a CardType enum
+     */
+    public static func determineCardType(cardNumber: String) -> CardType {
+        guard let iin = Int(cardNumber.prefix(6)) else {
+            return .UNKNOWN
+        }
+        
+        let cardTypes: [(ClosedRange<Int>, CardType)]
+        if let cardTypeMap = self.cardTypeMap {
+            cardTypes = cardTypeMap
+        } else {
+            guard let filePath = CSBundle.bundle()?.path(forResource: "card_types", ofType: "txt", inDirectory: "Config") else {
+                // unable to find the file
+                return .UNKNOWN
+            }
+            
+            guard let contents = try? String(contentsOfFile: filePath) else {
+                // unable to read the contents of the file
+                return .UNKNOWN
+            }
+            
+            cardTypes = contents.components(separatedBy: "\n").compactMap {
+                let items = $0.components(separatedBy: ",")
+                guard items.count == 3 else {
+                    return nil
+                }
+                
+                let cardType = CardType.fromString(items[2])
+                guard let startIin = Int(items[0]), let endIin = Int(items[1]) else {
+                    return nil
+                }
+                guard cardType != .UNKNOWN else {
+                    return nil
+                }
+                
+                return (startIin...endIin, cardType)
+            }
+            
+            guard !cardTypes.isEmpty else {
+                return .UNKNOWN
+            }
+            
+            self.cardTypeMap = cardTypes
+        }
+        
+        return cardTypes.first { $0.0.contains(iin) }?.1 ?? .UNKNOWN
     }
     
     /**

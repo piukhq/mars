@@ -267,7 +267,7 @@ extension AddPaymentCardViewController: ScanDelegate {
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = Int(creditCard.expiryMonth ?? "") ?? viewModel.paymentCard.month
-        let year = Int(creditCard.expiryYear ?? "") ?? viewModel.paymentCard.year
+        let year = creditCard.expiryYear != nil ? Int("20\(creditCard.expiryYear ?? "")") : nil
         Current.navigate.close(animated: true) {
             let paymentCardCreateModel = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: self.viewModel.paymentCard.nameOnCard, month: month, year: year)
             self.card.configureWithAddViewModel(paymentCardCreateModel)

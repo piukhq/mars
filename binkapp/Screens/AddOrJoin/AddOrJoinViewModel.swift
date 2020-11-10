@@ -11,9 +11,7 @@ import CardScan
 class AddOrJoinViewModel {
     private let membershipPlan: CD_MembershipPlan
     private let membershipCard: CD_MembershipCard?
-    
-    private let paymentScannerStrings = PaymentCardScannerStrings()
-    
+        
     init(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) {
         self.membershipPlan = membershipPlan
         self.membershipCard = membershipCard
@@ -122,7 +120,7 @@ class AddOrJoinViewModel {
     }
     
     private func toPaymentCardScanner() {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
 
         PermissionsUtility.launchPaymentScanner(viewController, grantedAction: {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
