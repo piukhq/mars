@@ -41,7 +41,7 @@ struct UserProfileUpdateRequest: Codable {
 }
 
 class UserManager {
-    struct Constants {
+    private struct Constants {
         static let tokenKey = "token_key"
         static let emailKey = "email_key"
         static let firstNameKey = "first_name_key"
@@ -142,5 +142,21 @@ class UserManager {
             let loginManager = LoginManager()
             loginManager.logOut()
         }
+    }
+    
+    static func removeKeychainItemsOnFirstLaunch() {
+        if !Current.userDefaults.bool(forDefaultsKey: .hasPreviouslyLaunchedApp) {
+            let keychain = Keychain(service: APIConstants.bundleID)
+            for key in keychain.allKeys() {
+                if key != Constants.tokenKey {
+                    do {
+                        try keychain.remove(key)
+                    } catch {
+                        fatalError("Could not remove item from keychain on first launch: \(error)")
+                    }
+                }
+            }
+            Current.userDefaults.set(true, forDefaultsKey: .hasPreviouslyLaunchedApp)
+        }        
     }
 }
