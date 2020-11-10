@@ -10,8 +10,6 @@ import UIKit
 import CardScan
 
 class AddingOptionsViewModel {
-    private let strings = PaymentCardScannerStrings()
-
     func toLoyaltyScanner() {
         let viewController = ViewControllerFactory.makeLoyaltyScannerViewController(delegate: Current.navigate.loyaltyCardScannerDelegate)
         PermissionsUtility.launchLoyaltyScanner(viewController, grantedAction: {
@@ -25,7 +23,7 @@ class AddingOptionsViewModel {
     }
     
     func toPaymentCardScanner() {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
         PermissionsUtility.launchPaymentScanner(viewController, grantedAction: {
             Current.navigate.close {
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)

@@ -11,7 +11,7 @@ protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
     func modalWillDismiss()
 }
 
-class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring {
+class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring, InAppReviewable {
     enum Constants {
         static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
         static let stackViewSpacing: CGFloat = 12
@@ -134,6 +134,15 @@ class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlur
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        /// We know that if we are dismissing the LCD, we will always be returned to the loyalty wallet
+        if PllLoyaltyInAppReviewableJourney.isInProgress {
+            requestInAppReview()
+        }
     }
     
     // MARK: - Navigation Bar Blurring

@@ -143,4 +143,19 @@ class UserManager {
             loginManager.logOut()
         }
     }
+    
+    func clearKeychainIfNecessary() {
+        if !Current.userDefaults.bool(forDefaultsKey: .hasPreviouslyLaunchedApp) {
+            for key in keychain.allKeys() {
+                if key != Constants.tokenKey {
+                    do {
+                        try keychain.remove(key)
+                    } catch {
+                        fatalError("Could not remove item from keychain on first launch: \(error)")
+                    }
+                }
+            }
+            Current.userDefaults.set(true, forDefaultsKey: .hasPreviouslyLaunchedApp)
+        }        
+    }
 }

@@ -15,6 +15,7 @@ enum BinkErrorDomain: Int {
     case userService
     case webScrapingUtility
     case pointsScrapingManager
+    case inAppReviewableJourney
 }
 
 protocol BinkError: Error {

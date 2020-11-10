@@ -155,6 +155,7 @@
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
 		70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */; };
+		70D748022552CC7800E9D2C1 /* InAppReviewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D748012552CC7800E9D2C1 /* InAppReviewable.swift */; };
 		70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8024E56B3B005A30D2 /* UserService.swift */; };
 		70E31A8324E56B4D005A30D2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8224E56B4D005A30D2 /* APIService.swift */; };
 		70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E867742489303F001ED282 /* SecureUtilityTests.swift */; };
@@ -253,6 +254,7 @@
 		CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */; };
 		CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
+		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
 		CEACE7212543309E004DD27E /* BinkHTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
 		DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB088544234FD8A30041A67A /* PLLScreenRepository.swift */; };
@@ -651,6 +653,7 @@
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
 		70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TescoPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewUtility.swift; sourceTree = "<group>"; };
+		70D748012552CC7800E9D2C1 /* InAppReviewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewable.swift; sourceTree = "<group>"; };
 		70E31A8024E56B3B005A30D2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		70E31A8224E56B4D005A30D2 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		70E867742489303F001ED282 /* SecureUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtilityTests.swift; sourceTree = "<group>"; };
@@ -768,6 +771,7 @@
 		CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskTickets.swift; sourceTree = "<group>"; };
 		CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCodeVisualiser.swift; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
+		CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardScannerStrings.swift; sourceTree = "<group>"; };
 		CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkHTTPHeaders.swift; sourceTree = "<group>"; };
 		CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HyperlinkLabel.swift; sourceTree = "<group>"; };
 		D43061FB7A72A290DA13F3BF /* Pods-binkappUITests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store.xcconfig"; sourceTree = "<group>"; };
@@ -1263,6 +1267,7 @@
 				3CF029F122F45AEC009A0E61 /* AddingOptionsViewController.xib */,
 				3CF029F722F45B8C009A0E61 /* AddingOptionsEnum.swift */,
 				3C63ABC722F9D47E00BE143B /* AddingOptionsViewModel.swift */,
+				CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */,
 			);
 			path = AddingOptions;
 			sourceTree = "<group>";
@@ -1633,6 +1638,7 @@
 			isa = PBXGroup;
 			children = (
 				70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */,
+				70D748012552CC7800E9D2C1 /* InAppReviewable.swift */,
 			);
 			path = "In App Review";
 			sourceTree = "<group>";
@@ -3080,6 +3086,7 @@
 				EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */,
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
+				CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */,
 				EF6921762469A9290049875B /* DebugSecondaryPlanColorCell.swift in Sources */,
 				CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */,
 				3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */,
@@ -3173,6 +3180,7 @@
 				3C2C90F923191CED00D112E3 /* AddFieldPostModel.swift in Sources */,
 				EFF59F21234CAE5600CF3992 /* CardDetailInformationRow.swift in Sources */,
 				BD99D2DC235091AA00823FC4 /* SettingsFactory.swift in Sources */,
+				70D748022552CC7800E9D2C1 /* InAppReviewable.swift in Sources */,
 				3C453CB42338E84500287B56 /* PaymentWalletViewController.swift in Sources */,
 				3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
@@ -3454,7 +3462,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3467,7 +3475,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.5;
+				MARKETING_VERSION = 2.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.alpha;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink α";
@@ -3488,7 +3496,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3509,7 +3517,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.5;
+				MARKETING_VERSION = 2.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet.beta;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = "Bink β";
@@ -3691,7 +3699,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3704,7 +3712,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.5;
+				MARKETING_VERSION = 2.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;
@@ -3835,7 +3843,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3848,7 +3856,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.5;
+				MARKETING_VERSION = 2.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bink.wallet;
 				PRODUCT_MODULE_NAME = binkapp;
 				PRODUCT_NAME = Bink;

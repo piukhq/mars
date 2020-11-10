@@ -95,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
 
         addObservers()
-    
+        Current.userManager.clearKeychainIfNecessary()
         return true
     }
     

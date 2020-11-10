@@ -32,7 +32,7 @@ enum APIEndpoint: Equatable {
     
     var headers: [BinkHTTPHeader] {
         var headers: [BinkHTTPHeader] = [.defaultUserAgent, .defaultContentType]
-        shouldVersionPin ? headers.append(.acceptWithAPIVersion) : headers.append(.defaultAccept)
+        shouldVersionPin ? headers.append(.acceptWithAPIVersion()) : headers.append(.defaultAccept)
         
         if authRequired {
             guard let token = Current.userManager.currentToken else { return headers }

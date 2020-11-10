@@ -22,7 +22,7 @@ public class BlurView: UIView {
         let roiCornerRadius = roi.layer.cornerRadius
         let roiFrame = roi.layer.frame
         let roundedRectpath = UIBezierPath.init(roundedRect: roiFrame, cornerRadius: roiCornerRadius).cgPath
-        
+        self.backgroundColor = .clear
         path.addRect(self.layer.bounds)
         path.addPath(roundedRectpath)
         maskLayer.path = path

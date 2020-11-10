@@ -12,11 +12,24 @@ class DebugMenuSegmentedTableViewCell: UITableViewCell {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     @IBAction func segmentedControlAction(_ sender: Any) {
+        
+        let version: APIClient.APIVersion?
+        
         switch segmentedControl.selectedSegmentIndex {
-        case 0: Current.apiClient.apiVersion = .v1_2
-        case 1: Current.apiClient.apiVersion = .v1_3
-        default: break
+        case 0:
+            version = .v1_2
+        case 1:
+            version = .v1_3
+        default:
+            version = nil
+            break
         }
+        
+        #if DEBUG
+        if let version = version {
+            Current.apiClient.overrideVersion = version
+        }
+        #endif
     }
     
     override func awakeFromNib() {
@@ -24,9 +37,15 @@ class DebugMenuSegmentedTableViewCell: UITableViewCell {
         segmentedControl.setTitle("API v1.2", forSegmentAt: 0)
         segmentedControl.setTitle("API v1.3", forSegmentAt: 1)
         
-        switch Current.apiClient.apiVersion {
-        case .v1_2: segmentedControl.selectedSegmentIndex = 0
-        case .v1_3: segmentedControl.selectedSegmentIndex = 1
+        #if DEBUG
+        switch Current.apiClient.overrideVersion {
+        case .v1_2:
+            segmentedControl.selectedSegmentIndex = 0
+        case .v1_3:
+            segmentedControl.selectedSegmentIndex = 1
+        case .none:
+            segmentedControl.selectedSegmentIndex = 0
         }
+        #endif
     }
 }

@@ -13,8 +13,6 @@ class PLLScreenViewModel {
     private let repository = PLLScreenRepository()
     private weak var delegate: LoyaltyCardFullDetailsModalDelegate?
     
-    private let paymentScannerStrings = PaymentCardScannerStrings()
-    
     let journey: PllScreenJourney
     
     var activePaymentCards: [CD_PaymentCard]? {
@@ -89,6 +87,11 @@ class PLLScreenViewModel {
     }
     
     func toggleLinkForMembershipCards(completion: @escaping (Bool) -> Void) {
+        if changedLinkCards.isEmpty {
+            /// This journey requires a PPL linkage to take place. Otherwise, end the journey.
+            PllLoyaltyInAppReviewableJourney.end()
+        }
+
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion(true)
         }) { [weak self] error in
@@ -140,7 +143,7 @@ class PLLScreenViewModel {
     }
     
     func toPaymentScanner(delegate: ScanDelegate?) {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: delegate) else { return }
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: delegate) else { return }
         PermissionsUtility.launchPaymentScanner(viewController) {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)

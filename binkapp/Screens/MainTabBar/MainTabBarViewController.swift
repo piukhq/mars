@@ -87,7 +87,7 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = Int(creditCard.expiryMonth ?? "")
-        let year = Int(creditCard.expiryYear ?? "")
+        let year = creditCard.expiryYear != nil ? Int("20\(creditCard.expiryYear ?? "")") : nil
         let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
