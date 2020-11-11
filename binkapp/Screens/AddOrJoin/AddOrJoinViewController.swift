@@ -85,6 +85,7 @@ class AddOrJoinViewController: BinkTrackableViewController {
         plansStackView.addArrangedSubview(linkView)
 
         addCardButton.isHidden = !viewModel.shouldShowAddCardButton
+        newCardButton.isHidden = !viewModel.shouldShowNewCardButton
     }
 }
 
