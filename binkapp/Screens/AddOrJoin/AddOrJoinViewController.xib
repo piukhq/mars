@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,34 +35,46 @@
                         <constraint firstAttribute="height" constant="477" placeholder="YES" id="SUc-6q-7eo"/>
                     </constraints>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhF-oE-Ivd" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
-                    <rect key="frame" x="184" y="761" width="46" height="30"/>
-                    <state key="normal" title="Button"/>
-                    <connections>
-                        <action selector="addCardButtonAction:" destination="-1" eventType="touchUpInside" id="hzh-fD-DkV"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GaW-1z-bOB" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
-                    <rect key="frame" x="184" y="816" width="46" height="30"/>
-                    <state key="normal" title="Button"/>
-                    <connections>
-                        <action selector="newCardButtonAction:" destination="-1" eventType="touchUpInside" id="225-vT-L4k"/>
-                    </connections>
-                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="i7N-oW-ZVG">
+                    <rect key="frame" x="52" y="717" width="310.5" height="129"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhF-oE-Ivd" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="310.5" height="52"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="52" id="d38-A1-Kjf"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="addCardButtonAction:" destination="-1" eventType="touchUpInside" id="hzh-fD-DkV"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GaW-1z-bOB" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="77" width="310.5" height="52"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="52" id="NCS-2O-pWD"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="newCardButtonAction:" destination="-1" eventType="touchUpInside" id="225-vT-L4k"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="NhF-oE-Ivd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="U7E-3X-eA4" secondAttribute="bottom" constant="20" id="Aix-LO-m3J"/>
                 <constraint firstItem="U7E-3X-eA4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="Brp-R9-3KS"/>
-                <constraint firstItem="NhF-oE-Ivd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="L8Y-14-0NY"/>
+                <constraint firstItem="i7N-oW-ZVG" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.75" id="F8o-a7-Zdi"/>
+                <constraint firstItem="i7N-oW-ZVG" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="IkW-bv-nhi"/>
                 <constraint firstItem="e0u-b7-Tam" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="NuI-MJ-bCe"/>
                 <constraint firstItem="e0u-b7-Tam" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="RCp-Nd-sv3"/>
-                <constraint firstItem="GaW-1z-bOB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Zgp-DC-Cf2"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="U7E-3X-eA4" secondAttribute="bottom" constant="183" id="UhW-0S-0r4"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="i7N-oW-ZVG" secondAttribute="bottom" constant="16" id="Usl-1u-3bf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="e0u-b7-Tam" secondAttribute="trailing" constant="25" id="aUj-WE-ERR"/>
                 <constraint firstItem="U7E-3X-eA4" firstAttribute="top" secondItem="e0u-b7-Tam" secondAttribute="bottom" constant="30" id="gAe-tZ-s3h"/>
                 <constraint firstItem="U7E-3X-eA4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="kJP-Tk-y7u"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="131.8840579710145" y="107.8125"/>
         </view>
     </objects>
