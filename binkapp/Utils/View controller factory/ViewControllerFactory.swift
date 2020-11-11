@@ -99,7 +99,7 @@ final class ViewControllerFactory {
         return PLRRewardsHistoryViewController(viewModel: viewModel)
     }
     
-    static func makeAboutMembershipPlanViewController(membershipPlan: CD_MembershipPlan) -> ReusableTemplateViewController {
+    static func makeAboutMembershipPlanViewController(membershipPlan: CD_MembershipPlan, completion: @escaping EmptyCompletionBlock) -> ReusableTemplateViewController {
         var titleString = ""
         if let planName = membershipPlan.account?.planName {
             titleString = String(format: "about_membership_plan_title".localized, planName)
@@ -119,12 +119,8 @@ final class ViewControllerFactory {
         let attributedString = ReusableModalConfiguration.makeAttributedString(title: titleString, description: descriptionString)
         var configuration = ReusableModalConfiguration(text: attributedString)
         
-        if let websiteURL = membershipPlan.account?.planURL {
-            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, mainButtonCompletion: {
-                let viewController = makeWebViewController(urlString: websiteURL)
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            })
+        if let _ = membershipPlan.account?.planURL {
+            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, mainButtonCompletion: completion)
         }
         
         return makeReusableTemplateViewController(configuration: configuration, floatingButtons: true)
