@@ -641,7 +641,6 @@
 		706D203824D851BA004BCCF3 /* CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_CardAccount.swift; sourceTree = "<group>"; };
 		706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-BETA.plist"; sourceTree = "<group>"; };
 		706D204124D97104004BCCF3 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
-		706EDED2255D49CB005F40CA /* Dangerfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dangerfile.swift; path = binkapp/Dangerfile.swift; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
 		7097489D24D088FE008D0E29 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
 		7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigUtil.swift; sourceTree = "<group>"; };
@@ -1452,7 +1451,6 @@
 		5ECE045F22CE5797001BA964 = {
 			isa = PBXGroup;
 			children = (
-				706EDED2255D49CB005F40CA /* Dangerfile.swift */,
 				706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */,
 				EF7F6E6423E47BFA00352DCF /* GoogleService-Info.plist */,
 				5ECE046A22CE5798001BA964 /* binkapp */,
