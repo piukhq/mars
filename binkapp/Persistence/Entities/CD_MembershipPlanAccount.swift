@@ -33,6 +33,6 @@ open class CD_MembershipPlanAccount: _CD_MembershipPlanAccount {
     }
     
     var hasEnrolFields: Bool {
-        return enrolFields.count != 0
+        return enrolFields.isEmpty
     }
 }
