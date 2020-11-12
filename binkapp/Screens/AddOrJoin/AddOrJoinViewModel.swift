@@ -102,13 +102,7 @@ class AddOrJoinViewModel {
     }
     
     func brandHeaderWasTapped() {
-        let buttonCompletionBlock = {
-            let viewController = ViewControllerFactory.makeWebViewController(urlString: self.membershipPlan.account?.planURL ?? "")
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        }
-        
-        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan, completion: buttonCompletionBlock)
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: membershipPlan)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }

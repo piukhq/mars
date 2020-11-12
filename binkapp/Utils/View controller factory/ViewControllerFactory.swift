@@ -99,7 +99,7 @@ final class ViewControllerFactory {
         return PLRRewardsHistoryViewController(viewModel: viewModel)
     }
     
-    static func makeAboutMembershipPlanViewController(membershipPlan: CD_MembershipPlan, completion: @escaping EmptyCompletionBlock) -> ReusableTemplateViewController {
+    static func makeAboutMembershipPlanViewController(membershipPlan: CD_MembershipPlan) -> ReusableTemplateViewController {
         var titleString = ""
         if let planName = membershipPlan.account?.planName {
             titleString = String(format: "about_membership_plan_title".localized, planName)
@@ -119,8 +119,13 @@ final class ViewControllerFactory {
         let attributedString = ReusableModalConfiguration.makeAttributedString(title: titleString, description: descriptionString)
         var configuration = ReusableModalConfiguration(text: attributedString)
         
-        if let _ = membershipPlan.account?.planURL {
-            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, mainButtonCompletion: completion)
+        if let url = membershipPlan.account?.planURL {
+            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, mainButtonCompletion: {
+                /// Implemented navigation logic here instead of passing comletion block in via method property to reduce code repetition as it's called from multiple viewModels
+                let viewController = makeWebViewController(urlString: url)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            })
         }
         
         return makeReusableTemplateViewController(configuration: configuration, floatingButtons: true)

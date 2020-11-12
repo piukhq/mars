@@ -57,14 +57,7 @@ struct TransactionsViewModel {
     
     func brandHeaderWasTapped() {
         guard let plan = membershipCard.membershipPlan else { return }
-        
-        let buttonCompletionBlock = {
-            let viewController = ViewControllerFactory.makeWebViewController(urlString: plan.account?.planURL ?? "")
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        }
-        
-        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: plan, completion: buttonCompletionBlock)
+        let viewController = ViewControllerFactory.makeAboutMembershipPlanViewController(membershipPlan: plan)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
