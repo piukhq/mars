@@ -11,7 +11,6 @@ import Disk
 import DeepDiff
 
 final class ImageService {
-
     typealias ImageCompletionHandler = (UIImage?) -> Void
 
     enum PathType {
@@ -22,7 +21,6 @@ final class ImageService {
     }
 
     fileprivate func retrieveImage(forPathType pathType: PathType, forceRefresh: Bool = false, policy: StorageUtility.ExpiryPolicy, completion: @escaping ImageCompletionHandler) {
-
         guard let imagePath = path(forType: pathType) else { return }
 
         // Are we forcing a refresh?
@@ -108,11 +106,7 @@ extension UIImageView {
         let imageService = ImageService()
         imageService.retrieveImage(forPathType: pathType, policy: policy) { [weak self] retrievedImage in
             if let self = self, animated {
-                UIView.transition(with: self,
-                duration: 0.3,
-                options: .transitionCrossDissolve,
-                animations: { self.image = retrievedImage },
-                completion: nil)
+                UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve, animations: { self.image = retrievedImage }, completion: nil)
             } else {
                 self?.image = retrievedImage
             }
@@ -121,8 +115,8 @@ extension UIImageView {
 }
 
 /// A utility class to handle the expiration of objects stored to disk. When an object is
-final class StorageUtility {
-    fileprivate static var sharedStoredObjects = [StoredObject]()
+enum StorageUtility {
+    fileprivate static var sharedStoredObjects: [StoredObject] = []
     fileprivate static let sharedStoredObjectsKey = "sharedStoredObjects"
 
     enum ExpiryPolicy: Int, Codable {
@@ -154,7 +148,6 @@ final class StorageUtility {
     }
 
     fileprivate static func addStoredObject(_ object: StoredObject) {
-
         // Check we aren't already storing this object
         let storedObjectPaths = sharedStoredObjects.map {
             $0.objectPath

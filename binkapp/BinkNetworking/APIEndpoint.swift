@@ -10,6 +10,7 @@ import Foundation
 import Keys
 import Alamofire
 
+// swiftlint:disable identifier_name
 enum APIEndpoint: Equatable {
     case service
     case login

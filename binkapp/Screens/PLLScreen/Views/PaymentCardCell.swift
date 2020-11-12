@@ -28,13 +28,10 @@ class PaymentCardCell: UITableViewCell {
         switch PaymentCardType.type(from: paymentCard.card?.firstSix) {
         case .visa:
             paymentCardImageView.image = UIImage(named: "visalogoContainer")
-            break
         case .amex:
             paymentCardImageView.image = UIImage(named: "americanexpresslogoContainer")
-            break
         case .mastercard:
             paymentCardImageView.image = UIImage(named: "mastercardlogoContainer")
-            break
         default:
             break
         }

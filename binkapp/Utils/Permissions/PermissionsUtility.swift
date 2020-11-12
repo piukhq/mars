@@ -12,8 +12,7 @@ import AVFoundation
 import UIKit
 import CardScan
 
-class PermissionsUtility {
-    
+enum PermissionsUtility {
     // MARK: - Camera permissions
     
     static var videoCaptureIsAuthorized: Bool {

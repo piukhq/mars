@@ -137,7 +137,7 @@ class WebScrapingUtility: NSObject {
         return topViewController.view.subviews.contains(webView)
     }
     private var isBalanceRefresh: Bool {
-        guard let balances = membershipCard.formattedBalances, balances.count > 0 else { return false }
+        guard let balances = membershipCard.formattedBalances, !balances.isEmpty else { return false }
         return true
     }
     private weak var delegate: WebScrapingUtilityDelegate?
@@ -210,7 +210,7 @@ class WebScrapingUtility: NSObject {
         
         // Inject variables into login file
         let formattedLoginScript = String(format: loginScript, credentials.username, credentials.password)
-        runScript(formattedLoginScript) { [weak self] (value, error) in
+        runScript(formattedLoginScript) { [weak self] (_, error) in
             guard let self = self else { return }
             guard error == nil else {
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCard: self.membershipCard, withAgent: self.agent)

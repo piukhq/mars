@@ -1,6 +1,8 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to CD_MembershipCardAccount.swift instead.
 
+// swiftlint:disable all
+
 import Foundation
 import CoreData
 

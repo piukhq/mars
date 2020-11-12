@@ -40,12 +40,10 @@ class AddingOptionView: CustomView {
             optionTypeImageView.image = UIImage(named: "loyalty")
             titleLabel.text = "add_loyalty_card_title".localized
             descriptionLabel.text = UIDevice.current.height != .iPhone5Size ? "scan_a_card_description".localized : ""
-            break
         case .browse:
             optionTypeImageView.image = UIImage(named: "browse")
             titleLabel.text = "browse_brands_title".localized
             descriptionLabel.text = UIDevice.current.height != .iPhone5Size ? "find_and_join_description".localized : ""
-            break
         case .payment:
             optionTypeImageView.image = UIImage(named: "payment")
             titleLabel.text = "add_payment_card_title".localized
@@ -53,7 +51,6 @@ class AddingOptionView: CustomView {
             cardsStackView.addArrangedSubview(UIImageView(image: UIImage(named: "mastercard")))
             cardsStackView.addArrangedSubview(UIImageView(image: UIImage(named: "amex")))
             cardsStackView.addArrangedSubview(UIImageView(image: UIImage(named: "visa")))
-            break
         }
     }
 }

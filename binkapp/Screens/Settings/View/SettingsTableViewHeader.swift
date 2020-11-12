@@ -9,7 +9,6 @@
 import UIKit
 
 class SettingsTableViewHeader: UIView {
-    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -30,7 +29,6 @@ class SettingsTableViewHeader: UIView {
     }
     
     private func customise(with title: String) {
-        
         titleLabel.text = title
         backgroundColor = .white
         

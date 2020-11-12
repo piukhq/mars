@@ -130,7 +130,8 @@ class PaymentCardDetailViewModel {
     }
 
     var shouldShowOtherCardsTableView: Bool {
-        return paymentCardStatus == .active && pllPlansNotAddedToWallet?.count != 0
+        guard let plans = pllPlansNotAddedToWallet else { return false }
+        return paymentCardStatus == .active && !plans.isEmpty
     }
     
     var shouldShowInformationTableView: Bool {
@@ -192,7 +193,7 @@ class PaymentCardDetailViewModel {
 
     var pllMembershipCards: [CD_MembershipCard]? {
         // TODO: this should have the same sort as in the loyalty wallet
-        return Current.wallet.membershipCards?.filter( { $0.membershipPlan?.featureSet?.planCardType == .link })
+        return Current.wallet.membershipCards?.filter { $0.membershipPlan?.featureSet?.planCardType == .link }
     }
 
     var pllMembershipCardsCount: Int {
@@ -311,8 +312,7 @@ class PaymentCardDetailViewModel {
 
     private func linkMembershipCard(_ membershipCard: CD_MembershipCard, completion: @escaping () -> Void) {
         repository.linkMembershipCard(membershipCard, toPaymentCard: paymentCard) { [weak self] paymentCard, error in
-            guard let error = error else { return }
-            if case .userFacingNetworkingError(let networkingError) = error {
+            if let error = error, case .userFacingNetworkingError(let networkingError) = error {
                 if case .userFacingError(let userFacingError) = networkingError {
                     let messagePrefix = "card_already_linked_message_prefix".localized
                     let planName = membershipCard.membershipPlan?.account?.planName ?? ""

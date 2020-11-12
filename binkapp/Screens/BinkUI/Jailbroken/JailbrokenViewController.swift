@@ -9,9 +9,7 @@
 import UIKit
 
 class JailbrokenViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
 }

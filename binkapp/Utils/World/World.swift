@@ -51,7 +51,6 @@ protocol BinkUserDefaults {
 }
 
 extension UserDefaults: BinkUserDefaults {
-
     enum Keys {
         case hasLaunchedWallet
         case userEmail

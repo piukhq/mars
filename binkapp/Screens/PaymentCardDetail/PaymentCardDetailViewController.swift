@@ -154,10 +154,9 @@ class PaymentCardDetailViewController: BinkTrackableViewController {
             card.configureWithViewModel(viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
         }
     }
-
 }
 
-// MARK - Private methods
+// MARK: - Private methods
 
 private extension PaymentCardDetailViewController {
     /// Called when card is pending, and timer fires to refresh the payment card
@@ -393,7 +392,7 @@ extension PaymentCardDetailViewController: UIScrollViewDelegate {
 // MARK: - Layout Helper
 
 extension LayoutHelper {
-    struct PaymentCardDetail {
+    enum PaymentCardDetail {
         static func navBarTitleViewScrollOffset(withNavigationBar navigationBar: UINavigationBar?) -> CGFloat {
             let stackScrollViewInitialOffset: CGFloat = 108
             let desiredOffset = LayoutHelper.statusBarHeight + LayoutHelper.heightForNavigationBar(navigationBar) + stackScrollViewContentInsets.top + (LayoutHelper.WalletDimensions.cardSize.height / 2)

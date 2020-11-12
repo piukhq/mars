@@ -13,10 +13,10 @@ class binkappTests: XCTestCase {
 //    let tabBarTests = TabBarTests()
 
     override func setUp() {
-
+        super.setUp()
     }
 
     override func tearDown() {
-        
+        super.tearDown()
     }
 }

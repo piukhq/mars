@@ -77,7 +77,7 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
             textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             textView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
             textView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
-            textView.bottomAnchor.constraint(equalTo: floatingButtonsContainer.bottomAnchor),
+            textView.bottomAnchor.constraint(equalTo: floatingButtonsContainer.bottomAnchor)
         ])
     }
 }
@@ -86,7 +86,7 @@ class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
 
 extension ReusableTemplateViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsPrimaryButtonWasTapped(_: BinkPrimarySecondaryButtonView) {
-        viewModel.mainButtonWasTapped() { [weak self] in
+        viewModel.mainButtonWasTapped { [weak self] in
             guard let self = self else { return }
             self.delegate?.primaryButtonWasTapped(self)
         }

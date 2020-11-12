@@ -10,11 +10,13 @@ import Foundation
 import Alamofire
 import AlamofireImage
 
+// swiftlint:disable force_try force_unwrapping identifier_name
+
 // MARK: - Config and init
 typealias APIClientCompletionHandler<ResponseType: Any> = (Result<ResponseType, NetworkingError>, HTTPURLResponse?) -> Void
 
 final class APIClient {
-    struct Certificates {
+    enum Certificates {
         static let bink = Certificates.certificate(filename: "bink")
 
         private static func certificate(filename: String) -> SecCertificate {

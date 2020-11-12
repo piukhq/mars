@@ -18,7 +18,7 @@ extension CheckboxViewDelegate {
 }
 
 class CheckboxView: CustomView {
-    typealias TextAction = () -> ()
+    typealias TextAction = () -> Void
     @IBOutlet private weak var checkboxButton: UIButton!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var textView: UITextView!
