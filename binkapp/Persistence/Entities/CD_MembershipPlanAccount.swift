@@ -31,4 +31,8 @@ open class CD_MembershipPlanAccount: _CD_MembershipPlanAccount {
     var formattedPlanDocuments: Set<CD_PlanDocument>? {
         return planDocuments as? Set<CD_PlanDocument>
     }
+    
+    var hasEnrolFields: Bool {
+        return enrolFields.count != 0
+    }
 }
