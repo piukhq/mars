@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 class PLRRewardDetailViewModelMock {
-    private var voucher: VoucherModel
-    private var membershipPlan: MembershipPlanModel
+    var voucher: VoucherModel
+    var membershipPlan: MembershipPlanModel
 
     init(voucher: VoucherModel, plan: MembershipPlanModel) {
         self.voucher = voucher
