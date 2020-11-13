@@ -52,4 +52,11 @@ class DateExtensionTests: XCTestCase {
         let lastYear = formatter.date(from: isoDate) ?? Date()
         XCTAssertFalse(lastYear.monthIsExpired)
     }
+    
+    func test_numberOfSecondsInDays() {
+        XCTAssertEqual(Date.numberOfSecondsIn(days: 1), 86400)
+        XCTAssertEqual(Date.numberOfSecondsIn(days: 2), 172800)
+        XCTAssertEqual(Date.numberOfSecondsIn(days: 4), 345600)
+        XCTAssertEqual(Date.numberOfSecondsIn(days: 8), 691200)
+    }
 }
