@@ -13,7 +13,7 @@ struct MembershipPlanModel: Codable {
     let status: String?
     let featureSet: FeatureSetModel?
     let images: [MembershipPlanImageModel]?
-    let account: MembershipPlanAccountModel?
+    var account: MembershipPlanAccountModel?
     let balances: [BalanceModel]?
     let dynamicContent: [DynamicContentField]?
     let hasVouchers: Bool?
