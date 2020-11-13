@@ -168,31 +168,7 @@ class PLRRewardDetailViewModelMock {
 
     // MARK: - Helpers
 
-//    var voucherState: VoucherState? {
-//        return VoucherState(rawValue: voucher.state)
-//    }
-//
-//    var voucherEarnType: VoucherEarnType? {
-//        return voucher.earnType
-//    }
-
     var voucherAmountText: String {
-//        var string = ""
-//        if let prefix = voucher.burn?.prefix {
-//            string.append(prefix)
-//        }
-//        let voucherBurnValue = Float(voucher.burn?.value ?? 0.0)
-//        if let value = twoDecimalPointString(floatValue: voucherBurnValue) {
-//            string.append(value)
-//        }
-//        if let suffix = voucher.burn?.suffix {
-//            string.append(" ")
-//            string.append(suffix)
-//        }
-//        if let type = voucher.burn?.type?.rawValue {
-//            string.append(" ")
-//            string.append(type)
-//        }
         return "voucher"
     }
     
@@ -214,5 +190,3 @@ class PLRRewardDetailViewModelMock {
 //    }
     
 }
-
-

@@ -35,14 +35,14 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     }
     
     func test_headerString_for_issued_state() {
-//        accumulatorVoucher.state = .issued
-//        var sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-//        let issuedHeaderString = String(format: "plr_voucher_detail_issued_header".localized, sut.voucherAmountText)
-//        XCTAssertEqual(sut.headerString, issuedHeaderString)
-//
-//        voucher.earn?.type = .stamps
-//        sut = PLRRewardDetailViewModelMock(voucher: voucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.headerString, issuedHeaderString)
+        accumulatorVoucher.state = .issued
+        var sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        let issuedHeaderString = String(format: "plr_voucher_detail_issued_header".localized, sut.voucherAmountText)
+        XCTAssertEqual(sut.headerString, issuedHeaderString)
+
+        stampsVoucher.state = .issued
+        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.headerString, issuedHeaderString)
     }
     
     func test_headerString_for_accumulator_redeemed_state() {
