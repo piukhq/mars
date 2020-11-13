@@ -10,12 +10,14 @@ import Foundation
 import UIKit
 
 class PLRRewardDetailViewModelMock {
-    private let voucher: VoucherModel
-    private let membershipPlan: MembershipPlanModel
+    private var voucher: VoucherModel
+    private var membershipPlan: MembershipPlanModel
 
     init(voucher: VoucherModel, plan: MembershipPlanModel) {
         self.voucher = voucher
         self.membershipPlan = plan
+        
+        self.voucher.state = .expired
     }
 
 //    var voucherCellViewModel: PLRCellViewModel {
@@ -32,28 +34,28 @@ class PLRRewardDetailViewModelMock {
         return voucher.code
     }
 
-//    var headerString: String? {
-//        switch (voucherEarnType, voucherState) {
-//        case (.accumulator, .issued):
-//            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
-//        case (.accumulator, .redeemed):
-//            return String(format: "plr_voucher_detail_redeemed_header".localized, voucherAmountText)
-//        case (.accumulator, .expired):
-//            return String(format: "plr_voucher_detail_expired_header".localized, voucherAmountText)
-//        case (.stamps, .inProgress):
-//            return "plr_stamp_voucher_detail_inprogress_header".localized
-//        case (.stamps, .issued):
-//            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
-//        case (.stamps, .redeemed):
-//            return "plr_stamp_voucher_detail_redeemed_header".localized
-//        case (.stamps, .expired):
-//            return "plr_stamp_voucher_detail_expired_header".localized
-//        case (.stamps, .cancelled), (.accumulator, .cancelled):
-//            return "plr_stamp_voucher_detail_cancelled_header".localized
-//        default:
-//            return nil
-//        }
-//    }
+    var headerString: String? {
+        switch (voucher.earn?.type, voucher.state) {
+        case (.accumulator, .issued):
+            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
+        case (.accumulator, .redeemed):
+            return String(format: "plr_voucher_detail_redeemed_header".localized, voucherAmountText)
+        case (.accumulator, .expired):
+            return String(format: "plr_voucher_detail_expired_header".localized, voucherAmountText)
+        case (.stamps, .inProgress):
+            return "plr_stamp_voucher_detail_inprogress_header".localized
+        case (.stamps, .issued):
+            return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
+        case (.stamps, .redeemed):
+            return "plr_stamp_voucher_detail_redeemed_header".localized
+        case (.stamps, .expired):
+            return "plr_stamp_voucher_detail_expired_header".localized
+        case (.stamps, .cancelled), (.accumulator, .cancelled):
+            return "plr_stamp_voucher_detail_cancelled_header".localized
+        default:
+            return nil
+        }
+    }
 //
 //    var subtextString: String? {
 //        switch (voucherEarnType, voucherState) {
@@ -169,31 +171,39 @@ class PLRRewardDetailViewModelMock {
     // MARK: - Helpers
 
 //    var voucherState: VoucherState? {
-//        return VoucherState(rawValue: voucher.state ?? "")
+//        return VoucherState(rawValue: voucher.state)
 //    }
 //
 //    var voucherEarnType: VoucherEarnType? {
 //        return voucher.earnType
 //    }
-//
-//    var voucherAmountText: String {
-//        var string = ""
-//        if let prefix = voucher.burn?.prefix {
-//            string.append(prefix)
-//        }
-//        if let value = voucher.burn?.value?.twoDecimalPointString() {
-//            string.append(value)
-//        }
-//        if let suffix = voucher.burn?.suffix {
-//            string.append(" ")
-//            string.append(suffix)
-//        }
-//        if let type = voucher.burn?.type {
-//            string.append(" ")
-//            string.append(type)
-//        }
-//        return string
-//    }
+
+    var voucherAmountText: String {
+        var string = ""
+        if let prefix = voucher.burn?.prefix {
+            string.append(prefix)
+        }
+        let voucherBurnValue = Float(voucher.burn?.value ?? 0.0)
+        if let value = twoDecimalPointString(floatValue: voucherBurnValue) {
+            string.append(value)
+        }
+        if let suffix = voucher.burn?.suffix {
+            string.append(" ")
+            string.append(suffix)
+        }
+        if let type = voucher.burn?.type?.rawValue {
+            string.append(" ")
+            string.append(type)
+        }
+        return string
+    }
+    
+    func twoDecimalPointString(floatValue: Float) -> String? {
+        guard floatValue.hasDecimals else {
+            return "\(self)"
+        }
+        return String(format: "%.02f", floatValue)
+    }
 //
 //    private var voucherPlanDocument: CD_PlanDocument? {
 //        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return nil }
@@ -204,6 +214,7 @@ class PLRRewardDetailViewModelMock {
 //        }
 //        return nil
 //    }
+    
 }
 
 

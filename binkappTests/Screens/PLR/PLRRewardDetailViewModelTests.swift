@@ -28,4 +28,8 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         let sut = PLRRewardDetailViewModelMock(voucher: voucher, plan: membershipPlan)
         XCTAssertEqual(sut.codeString, "123456")
     }
+    
+    func test_headerString_matches_correct_voucherState_and_earnType() {
+        
+    }
 }
