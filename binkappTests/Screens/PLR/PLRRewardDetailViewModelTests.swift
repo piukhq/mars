@@ -55,4 +55,22 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
         XCTAssertEqual(sut.headerString, redeemedHeaderString)
     }
+
+    func test_headerString_for_accumulator_expired_state() {
+        accumulatorVoucher.state = .expired
+        var sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        let redeemedHeaderString = String(format: "plr_voucher_detail_expired_header".localized, sut.voucherAmountText)
+        XCTAssertEqual(sut.headerString, redeemedHeaderString)
+
+        stampsVoucher.state = .expired
+        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.headerString, redeemedHeaderString)
+    }
+    
+    func test_headerString_for_accumulator_inProgress_state() {
+        stampsVoucher.state = .inProgress
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        let redeemedHeaderString = String(format: "plr_stamp_voucher_detail_inprogress_header".localized, sut.voucherAmountText)
+        XCTAssertEqual(sut.headerString, redeemedHeaderString)
+    }
 }
