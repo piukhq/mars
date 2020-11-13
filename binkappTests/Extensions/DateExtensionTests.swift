@@ -34,6 +34,11 @@ class DateExtensionTests: XCTestCase {
         XCTAssertEqual(DateFormat.dayShortMonthYear24HourSecond.rawValue, "dd MMM yyyy HH:mm:ss")
     }
     
+    func test_timeAgoString() {
+        XCTAssertEqual(oneDayAgo.timeAgoString(), "1 day")
+        XCTAssertEqual(lastYear.timeAgoString(), "367 days")
+    }
+    
     func test_getFormattedString_output_format() {
         XCTAssertEqual(currentDate?.getFormattedString(format: .dayMonthYear), "12 November 2020")
         XCTAssertEqual(currentDate?.getFormattedString(format: .dayShortMonthYear), "12 Nov 2020")
