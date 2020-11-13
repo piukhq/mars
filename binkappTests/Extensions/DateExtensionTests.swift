@@ -9,18 +9,22 @@
 import XCTest
 @testable import binkapp
 
+@available(iOS 13.0, *)
 class DateExtensionTests: XCTestCase {
     let formatter = DateFormatter()
-    var date: Date!
+    var currentDate: Date!
     var lastYear: Date!
+    var oneDayAgo: Date!
+
     
     override func setUp() {
         super.setUp()
         let currentIsoDate = "2020-11-12T10:44:00+0000"
         let lastYearIsoDate = "2019-11-12T10:44:00+0000"
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        date = formatter.date(from: currentIsoDate)
+        currentDate = formatter.date(from: currentIsoDate)
         lastYear = formatter.date(from: lastYearIsoDate)
+        oneDayAgo = Date().advanced(by: -86400)
     }
     
     func test_date_format_enum() {
@@ -31,21 +35,21 @@ class DateExtensionTests: XCTestCase {
     }
     
     func test_getFormattedString_output_format() {
-        XCTAssertEqual(date?.getFormattedString(format: .dayMonthYear), "12 November 2020")
-        XCTAssertEqual(date?.getFormattedString(format: .dayShortMonthYear), "12 Nov 2020")
-        XCTAssertEqual(date?.getFormattedString(format: .dayShortMonthYear24HourSecond), "12 Nov 2020 10:44:00")
-        XCTAssertEqual(date?.getFormattedString(format: .dayShortMonthYearWithSlash), "12/11/2020")
+        XCTAssertEqual(currentDate?.getFormattedString(format: .dayMonthYear), "12 November 2020")
+        XCTAssertEqual(currentDate?.getFormattedString(format: .dayShortMonthYear), "12 Nov 2020")
+        XCTAssertEqual(currentDate?.getFormattedString(format: .dayShortMonthYear24HourSecond), "12 Nov 2020 10:44:00")
+        XCTAssertEqual(currentDate?.getFormattedString(format: .dayShortMonthYearWithSlash), "12/11/2020")
     }
     
     func test_make_date_from_components() {
         let expiryDate = Date.makeDate(year: 2020, month: 11, day: 12, hr: 10, min: 44, sec: 00)
-        XCTAssertEqual(expiryDate, date)
+        XCTAssertEqual(expiryDate, currentDate)
     }
     
     func test_date_isLaterThan_another_date() {
-        XCTAssertTrue(lastYear?.isLaterThan(date: date, toGranularity: .day) ?? false)
-        XCTAssertTrue(lastYear?.isLaterThan(date: date, toGranularity: .month) ?? false)
-        XCTAssertTrue(lastYear?.isLaterThan(date: date, toGranularity: .year) ?? false)
+        XCTAssertTrue(lastYear?.isLaterThan(date: currentDate, toGranularity: .day) ?? false)
+        XCTAssertTrue(lastYear?.isLaterThan(date: currentDate, toGranularity: .month) ?? false)
+        XCTAssertTrue(lastYear?.isLaterThan(date: currentDate, toGranularity: .year) ?? false)
     }
     
     func test_monthIsExpired_false() {
@@ -74,6 +78,15 @@ class DateExtensionTests: XCTestCase {
     }
     
     func test_days_hasElapsed() {
-        XCTAssertTrue(Date.hasElapsed(days: 365, since: lastYear))
+        let oneDayAgo = Date().advanced(by: -86400)
+        XCTAssertFalse(Date.hasElapsed(days: 2, since: oneDayAgo))
+    }
+    
+    func test_hours_hasElapsed() {
+        XCTAssertTrue(Date.hasElapsed(hours: 24, since: oneDayAgo))
+    }
+    
+    func test_minutes_hasElapsed() {
+        XCTAssertTrue(Date.hasElapsed(minutes: 1440, since: oneDayAgo))
     }
 }
