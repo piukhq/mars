@@ -59,4 +59,18 @@ class DateExtensionTests: XCTestCase {
         XCTAssertEqual(Date.numberOfSecondsIn(days: 4), 345600)
         XCTAssertEqual(Date.numberOfSecondsIn(days: 8), 691200)
     }
+    
+    func test_numberOfSecondsInHours() {
+        XCTAssertEqual(Date.numberOfSecondsIn(hours: 1), 3600)
+        XCTAssertEqual(Date.numberOfSecondsIn(hours: 2), 7200)
+        XCTAssertEqual(Date.numberOfSecondsIn(hours: 4), 14400)
+        XCTAssertEqual(Date.numberOfSecondsIn(hours: 8), 28800)
+    }
+    
+    func test_numberOfSecondsInMinutes() {
+        XCTAssertEqual(Date.numberOfSecondsIn(minutes: 1), 60)
+        XCTAssertEqual(Date.numberOfSecondsIn(minutes: 2), 120)
+        XCTAssertEqual(Date.numberOfSecondsIn(minutes: 4), 240)
+        XCTAssertEqual(Date.numberOfSecondsIn(minutes: 8), 480)
+    }
 }
