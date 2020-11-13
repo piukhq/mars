@@ -12,12 +12,15 @@ import XCTest
 class DateExtensionTests: XCTestCase {
     let formatter = DateFormatter()
     var date: Date!
+    var lastYear: Date!
     
     override func setUp() {
         super.setUp()
-        let isoDate = "2020-11-12T10:44:00+0000"
+        let currentIsoDate = "2020-11-12T10:44:00+0000"
+        let lastYearIsoDate = "2019-11-12T10:44:00+0000"
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        date = formatter.date(from: isoDate)
+        date = formatter.date(from: currentIsoDate)
+        lastYear = formatter.date(from: lastYearIsoDate)
     }
     
     func test_date_format_enum() {
@@ -40,16 +43,12 @@ class DateExtensionTests: XCTestCase {
     }
     
     func test_date_isLaterThan_another_date() {
-        let isoDate = "2019-11-12T10:44:00+0000"
-        let lastYear = formatter.date(from: isoDate)
         XCTAssertTrue(lastYear?.isLaterThan(date: date, toGranularity: .day) ?? false)
         XCTAssertTrue(lastYear?.isLaterThan(date: date, toGranularity: .month) ?? false)
         XCTAssertTrue(lastYear?.isLaterThan(date: date, toGranularity: .year) ?? false)
     }
     
     func test_monthIsExpired_false() {
-        let isoDate = "2019-11-12T10:44:00+0000"
-        let lastYear = formatter.date(from: isoDate) ?? Date()
         XCTAssertFalse(lastYear.monthIsExpired)
     }
     
@@ -72,5 +71,9 @@ class DateExtensionTests: XCTestCase {
         XCTAssertEqual(Date.numberOfSecondsIn(minutes: 2), 120)
         XCTAssertEqual(Date.numberOfSecondsIn(minutes: 4), 240)
         XCTAssertEqual(Date.numberOfSecondsIn(minutes: 8), 480)
+    }
+    
+    func test_days_hasElapsed() {
+        XCTAssertTrue(Date.hasElapsed(days: 365, since: lastYear))
     }
 }
