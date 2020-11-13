@@ -42,9 +42,14 @@ class DateExtensionTests: XCTestCase {
     func test_date_isLaterThan_another_date() {
         let isoDate = "2019-11-12T10:44:00+0000"
         let lastYear = formatter.date(from: isoDate)
-        
         XCTAssertTrue(lastYear?.isLaterThan(date: date, toGranularity: .day) ?? false)
         XCTAssertTrue(lastYear?.isLaterThan(date: date, toGranularity: .month) ?? false)
         XCTAssertTrue(lastYear?.isLaterThan(date: date, toGranularity: .year) ?? false)
+    }
+    
+    func test_monthIsExpired_false() {
+        let isoDate = "2019-11-12T10:44:00+0000"
+        let lastYear = formatter.date(from: isoDate) ?? Date()
+        XCTAssertFalse(lastYear.monthIsExpired)
     }
 }
