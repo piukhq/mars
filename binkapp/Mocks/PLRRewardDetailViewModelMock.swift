@@ -16,8 +16,6 @@ class PLRRewardDetailViewModelMock {
     init(voucher: VoucherModel, plan: MembershipPlanModel) {
         self.voucher = voucher
         self.membershipPlan = plan
-        
-        self.voucher.state = .expired
     }
 
 //    var voucherCellViewModel: PLRCellViewModel {
@@ -179,26 +177,26 @@ class PLRRewardDetailViewModelMock {
 //    }
 
     var voucherAmountText: String {
-        var string = ""
-        if let prefix = voucher.burn?.prefix {
-            string.append(prefix)
-        }
-        let voucherBurnValue = Float(voucher.burn?.value ?? 0.0)
-        if let value = twoDecimalPointString(floatValue: voucherBurnValue) {
-            string.append(value)
-        }
-        if let suffix = voucher.burn?.suffix {
-            string.append(" ")
-            string.append(suffix)
-        }
-        if let type = voucher.burn?.type?.rawValue {
-            string.append(" ")
-            string.append(type)
-        }
-        return string
+//        var string = ""
+//        if let prefix = voucher.burn?.prefix {
+//            string.append(prefix)
+//        }
+//        let voucherBurnValue = Float(voucher.burn?.value ?? 0.0)
+//        if let value = twoDecimalPointString(floatValue: voucherBurnValue) {
+//            string.append(value)
+//        }
+//        if let suffix = voucher.burn?.suffix {
+//            string.append(" ")
+//            string.append(suffix)
+//        }
+//        if let type = voucher.burn?.type?.rawValue {
+//            string.append(" ")
+//            string.append(type)
+//        }
+        return "voucher"
     }
     
-    func twoDecimalPointString(floatValue: Float) -> String? {
+    private func twoDecimalPointString(floatValue: Float) -> String? {
         guard floatValue.hasDecimals else {
             return "\(self)"
         }

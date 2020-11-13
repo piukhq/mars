@@ -30,6 +30,9 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     }
     
     func test_headerString_matches_correct_voucherState_and_earnType() {
-        
+        voucher.state = .issued
+        voucher.earn = VoucherEarnModel(apiId: nil, currency: nil, prefix: nil, suffix: nil, type: .accumulator, targetValue: nil, value: nil)
+        let sut = PLRRewardDetailViewModelMock(voucher: voucher, plan: membershipPlan)
+        XCTAssertEqual(sut.headerString, String(format: "plr_voucher_detail_issued_header".localized, sut.voucherAmountText))
     }
 }
