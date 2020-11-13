@@ -37,40 +37,51 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     func test_headerString_for_issued_state() {
         accumulatorVoucher.state = .issued
         var sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-        let issuedHeaderString = String(format: "plr_voucher_detail_issued_header".localized, sut.voucherAmountText)
-        XCTAssertEqual(sut.headerString, issuedHeaderString)
+        let headerString = String(format: "plr_voucher_detail_issued_header".localized, sut.voucherAmountText)
+        XCTAssertEqual(sut.headerString, headerString)
 
         stampsVoucher.state = .issued
         sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-        XCTAssertEqual(sut.headerString, issuedHeaderString)
+        XCTAssertEqual(sut.headerString, headerString)
     }
     
-    func test_headerString_for_accumulator_redeemed_state() {
+    func test_headerString_for_redeemed_state() {
         accumulatorVoucher.state = .redeemed
         var sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-        let redeemedHeaderString = String(format: "plr_voucher_detail_redeemed_header".localized, sut.voucherAmountText)
-        XCTAssertEqual(sut.headerString, redeemedHeaderString)
+        let headerString = String(format: "plr_voucher_detail_redeemed_header".localized, sut.voucherAmountText)
+        XCTAssertEqual(sut.headerString, headerString)
 
         stampsVoucher.state = .redeemed
         sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-        XCTAssertEqual(sut.headerString, redeemedHeaderString)
+        XCTAssertEqual(sut.headerString, headerString)
     }
 
-    func test_headerString_for_accumulator_expired_state() {
+    func test_headerString_for_expired_state() {
         accumulatorVoucher.state = .expired
         var sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-        let redeemedHeaderString = String(format: "plr_voucher_detail_expired_header".localized, sut.voucherAmountText)
-        XCTAssertEqual(sut.headerString, redeemedHeaderString)
+        let headerString = String(format: "plr_voucher_detail_expired_header".localized, sut.voucherAmountText)
+        XCTAssertEqual(sut.headerString, headerString)
 
         stampsVoucher.state = .expired
         sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-        XCTAssertEqual(sut.headerString, redeemedHeaderString)
+        XCTAssertEqual(sut.headerString, headerString)
     }
     
-    func test_headerString_for_accumulator_inProgress_state() {
+    func test_headerString_for_inProgress_state() {
         stampsVoucher.state = .inProgress
         let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-        let redeemedHeaderString = String(format: "plr_stamp_voucher_detail_inprogress_header".localized, sut.voucherAmountText)
-        XCTAssertEqual(sut.headerString, redeemedHeaderString)
+        let headerString = String(format: "plr_stamp_voucher_detail_inprogress_header".localized, sut.voucherAmountText)
+        XCTAssertEqual(sut.headerString, headerString)
+    }
+    
+    func test_headerString_for_cancelled_state() {
+        accumulatorVoucher.state = .cancelled
+        var sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        let headerString = String(format: "plr_stamp_voucher_detail_cancelled_header".localized, sut.voucherAmountText)
+        XCTAssertEqual(sut.headerString, headerString)
+
+        stampsVoucher.state = .cancelled
+        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.headerString, headerString)
     }
 }
