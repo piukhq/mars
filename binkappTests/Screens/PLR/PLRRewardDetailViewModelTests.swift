@@ -141,4 +141,10 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
         XCTAssertEqual(sut.subtextString, "Expired")
     }
+    
+    func test_subtextString_for_voucher_cancelled_state() {
+        stampsVoucher.state = .cancelled
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.subtextString, "Cancelled")
+    }
 }
