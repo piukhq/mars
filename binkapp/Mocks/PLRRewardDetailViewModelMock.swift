@@ -18,10 +18,6 @@ class PLRRewardDetailViewModelMock {
         self.membershipPlan = plan
     }
 
-//    var voucherCellViewModel: PLRCellViewModel {
-//        return PLRCellViewModel(voucher: voucher)
-//    }
-
     // MARK: - String values
 
     var title: String? {
