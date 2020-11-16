@@ -187,4 +187,9 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
         XCTAssertEqual(sut.termsAndConditionsButtonTitle, "Terms & Conditions")
     }
+    
+    func test_termsAndConditions_urlString_is_correct() {
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.termsAndConditionsButtonUrlString, "https://policies.staging.gb.bink.com/wasabi/tc.html")
+    }
 }

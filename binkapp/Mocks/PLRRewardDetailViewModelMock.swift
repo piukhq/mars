@@ -114,11 +114,11 @@ class PLRRewardDetailViewModelMock {
         guard let document = voucherPlanDocument else { return nil }
         return document.name
     }
-//
-//    private var termsAndConditionsButtonUrlString: String? {
-//        guard let document = voucherPlanDocument else { return nil }
-//        return document.url
-//    }
+
+    var termsAndConditionsButtonUrlString: String? {
+        guard let document = voucherPlanDocument else { return nil }
+        return document.url
+    }
 
 //    func openTermsAndConditionsWebView() {
 //        guard let url = termsAndConditionsButtonUrlString else { return }
