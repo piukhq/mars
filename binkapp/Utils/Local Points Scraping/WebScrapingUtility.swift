@@ -13,6 +13,10 @@ enum WebScrapableMerchant: String {
     case tesco
     case boots
     case morrisons
+    case superdrug
+    case waterstones
+    case heathrow
+    case perfumeshop
 }
 
 protocol WebScrapable {
