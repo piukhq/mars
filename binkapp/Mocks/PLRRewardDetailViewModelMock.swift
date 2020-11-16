@@ -16,8 +16,6 @@ class PLRRewardDetailViewModelMock {
     init(voucher: VoucherModel, plan: MembershipPlanModel) {
         self.voucher = voucher
         self.membershipPlan = plan
-        
-        buildDynamicContentForVoucherSubtext()
     }
 
 //    var voucherCellViewModel: PLRCellViewModel {
@@ -66,7 +64,6 @@ class PLRRewardDetailViewModelMock {
             return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", burnValue?.twoDecimalPointString() ?? "", voucher.burn?.type?.rawValue ?? "")
         case (.accumulator, .issued):
             return String(format: "plr_voucher_detail_subtext_issued".localized, voucher.burn?.prefix ?? "", burnValue?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
-
         case (.stamps, .inProgress):
             return membershipPlan.dynamicContent?.first(where: { $0.column == DynamicContentColumn.voucherStampsInProgressDetail.rawValue })?.value
         case (.stamps, .issued):
@@ -80,16 +77,6 @@ class PLRRewardDetailViewModelMock {
         default:
             return nil
         }
-    }
-    
-    func buildDynamicContentForVoucherSubtext() {
-        let expired = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "expired")
-        let redeemed = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "redeemed")
-        let inProgress = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "inProgress")
-        let issued = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "issued")
-        let cancelled = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "cancelled")
-
-        membershipPlan.dynamicContent = [expired, redeemed, inProgress, issued, cancelled]
     }
     
     enum DynamicContentColumn: String {
