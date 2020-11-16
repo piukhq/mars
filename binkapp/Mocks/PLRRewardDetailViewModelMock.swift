@@ -160,19 +160,19 @@ class PLRRewardDetailViewModelMock {
         }
     }
 
-//    var shouldShowTermsAndConditionsButton: Bool {
-//        var shouldDisplay = false
-//        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return shouldDisplay }
-//        for document in planDocuments {
-//            for display in document.formattedDisplay {
-//                if display.value == PlanDocumentDisplayModel.voucher.rawValue {
-//                    shouldDisplay = true
-//                    break
-//                }
-//            }
-//        }
-//        return shouldDisplay
-//    }
+    var shouldShowTermsAndConditionsButton: Bool {
+        var shouldDisplay = false
+        guard let planDocuments = membershipPlan.account?.planDocuments else { return shouldDisplay }
+        for document in planDocuments {
+            for display in document.display ?? [] {
+                if display.rawValue == PlanDocumentDisplayModel.voucher.rawValue {
+                    shouldDisplay = true
+                    break
+                }
+            }
+        }
+        return shouldDisplay
+    }
 
     // MARK: - Helpers
 

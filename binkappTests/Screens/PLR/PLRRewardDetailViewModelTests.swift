@@ -15,8 +15,8 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     var stampsVoucher: VoucherModel!
     
     override func setUpWithError() throws {
-        let documents = PlanDocumentModel(apiId: nil, name: "Terms & Conditions", documentDescription: nil, url: "https://policies.staging.gb.bink.com/wasabi/tc.html", display: [.voucher], checkbox: nil)
-        let accountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: nil, category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: [documents], addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
+        let planDocument = PlanDocumentModel(apiId: nil, name: "Terms & Conditions", documentDescription: nil, url: "https://policies.staging.gb.bink.com/wasabi/tc.html", display: [.voucher], checkbox: nil)
+        let accountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: nil, category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: [planDocument], addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
         membershipPlan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: accountModel, balances: nil, dynamicContent: dynamicContentForVoucherSubtext(), hasVouchers: true, card: nil)
         
         let accumulatorVoucherEarnModel = VoucherEarnModel(apiId: nil, currency: nil, prefix: "£", suffix: "@@@@@@", type: .accumulator, targetValue: 20, value: nil)
@@ -286,5 +286,17 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         
         sut.voucher.expiryDate = 0
         XCTAssertFalse(sut.shouldShowExpiredDate)
+    }
+    
+    func test_shouldShowTermsAndConditionsButton_if_voucher() {
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertTrue(sut.shouldShowTermsAndConditionsButton)
+        
+        sut.membershipPlan.account?.planDocuments = []
+        XCTAssertFalse(sut.shouldShowTermsAndConditionsButton)
+
+        let planDocument = PlanDocumentModel(apiId: nil, name: nil, documentDescription: nil, url: nil, display: [.add], checkbox: nil)
+        sut.membershipPlan.account?.planDocuments = [planDocument]
+        XCTAssertFalse(sut.shouldShowTermsAndConditionsButton)
     }
 }

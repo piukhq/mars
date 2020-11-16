@@ -13,7 +13,7 @@ struct PlanDocumentModel: Codable {
     let name: String?
     let documentDescription: String?
     let url: String?
-    let display: [PlanDocumentDisplayModel]?
+    var display: [PlanDocumentDisplayModel]?
     let checkbox: Bool?
 
     enum CodingKeys: String, CodingKey {

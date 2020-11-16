@@ -23,7 +23,7 @@ struct MembershipPlanAccountModel: Codable {
     let enrolIncentive: String?
     let forgottenPasswordUrl: String?
     let tiers: [TierModel]?
-    let planDocuments: [PlanDocumentModel]?
+    var planDocuments: [PlanDocumentModel]?
     let addFields: [AddFieldModel]?
     let authoriseFields: [AuthoriseFieldModel]?
     let registrationFields: [RegistrationFieldModel]?
