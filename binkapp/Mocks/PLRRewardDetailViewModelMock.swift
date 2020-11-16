@@ -91,21 +91,22 @@ class PLRRewardDetailViewModelMock {
         let dateIssued = voucher.dateIssued as NSNumber?
         return String.fromTimestamp(dateIssued?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
     }
-//
-//    var redeemedDateString: String? {
-//        return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
-//    }
-//
-//    var expiredDateString: String? {
-//        switch voucherState {
-//        case .expired, .cancelled:
-//            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
-//        case .issued:
-//            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
-//        default:
-//            return ""
-//        }
-//    }
+
+    var redeemedDateString: String? {
+        let dateRedeemed = voucher.dateRedeemed as NSNumber?
+        return String.fromTimestamp(dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
+    }
+
+    var expiredDateString: String? {
+        switch voucherState {
+        case .expired, .cancelled:
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
+        case .issued:
+            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
+        default:
+            return ""
+        }
+    }
 //
 //    var termsAndConditionsButtonTitle: String? {
 //        guard let document = voucherPlanDocument else { return nil }
