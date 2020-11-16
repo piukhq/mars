@@ -159,27 +159,23 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     
     func test_expiredDateString_is_correct() {
         stampsVoucher.state = .expired
-        var sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
         XCTAssertEqual(sut.expiredDateString, "Expired 24 Aug 2018 04:08:20")
         
-        stampsVoucher.state = .cancelled
-        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        sut.voucher.state = .cancelled
         XCTAssertEqual(sut.expiredDateString, "Expired 24 Aug 2018 04:08:20")
         
-        stampsVoucher.state = .issued
-        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        sut.voucher.state = .issued
         XCTAssertEqual(sut.expiredDateString, "Expires 24 Aug 2018 04:08:20")
         
         accumulatorVoucher.state = .expired
-        sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        sut.voucher = accumulatorVoucher
         XCTAssertEqual(sut.expiredDateString, "Expired 28 Aug 2018 19:15:00")
         
-        accumulatorVoucher.state = .cancelled
-        sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        sut.voucher.state = .cancelled
         XCTAssertEqual(sut.expiredDateString, "Expired 28 Aug 2018 19:15:00")
         
-        accumulatorVoucher.state = .issued
-        sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        sut.voucher.state = .issued
         XCTAssertEqual(sut.expiredDateString, "Expires 28 Aug 2018 19:15:00")
     }
     
@@ -195,11 +191,18 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     
     func test_shouldShowCode_if_in_issued_state() {
         stampsVoucher.state = .expired
-        var sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
         XCTAssertFalse(sut.shouldShowCode)
         
-        stampsVoucher.state = .issued
-        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        sut.voucher.state = .issued
         XCTAssertTrue(sut.shouldShowCode)
+    }
+    
+    func test_shouldShowHeader_if_string_exists() {
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertFalse(sut.shouldShowHeader)
+        
+        sut.voucher.state = .issued
+        XCTAssertTrue(sut.shouldShowHeader)
     }
 }

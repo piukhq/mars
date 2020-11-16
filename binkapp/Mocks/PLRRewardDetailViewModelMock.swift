@@ -126,10 +126,10 @@ class PLRRewardDetailViewModelMock {
     var shouldShowCode: Bool {
         return voucherState == .issued
     }
-//
-//    var shouldShowHeader: Bool {
-//        return headerString != nil
-//    }
+
+    var shouldShowHeader: Bool {
+        return headerString != nil
+    }
 //
 //    var shouldShowSubtext: Bool {
 //        return subtextString != nil
