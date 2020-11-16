@@ -213,4 +213,46 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         sut.voucher.state = .issued
         XCTAssertTrue(sut.shouldShowSubtext)
     }
+    
+    func test_shouldShowIssuedDate_for_stamps_voucher() {
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        sut.voucher.state = .issued
+        XCTAssertTrue(sut.shouldShowIssuedDate)
+
+        sut.voucher.state = .expired
+        XCTAssertTrue(sut.shouldShowIssuedDate)
+        
+        sut.voucher.state = .redeemed
+        XCTAssertTrue(sut.shouldShowIssuedDate)
+        
+        sut.voucher.state = .cancelled
+        XCTAssertTrue(sut.shouldShowIssuedDate)
+        
+        sut.voucher.state = .inProgress
+        XCTAssertFalse(sut.shouldShowIssuedDate)
+        
+        sut.voucher.dateIssued = 0
+        XCTAssertFalse(sut.shouldShowIssuedDate)
+    }
+    
+    func test_shouldShowIssuedDate_for_accumulator_voucher() {
+        let sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        sut.voucher.state = .issued
+        XCTAssertTrue(sut.shouldShowIssuedDate)
+
+        sut.voucher.state = .expired
+        XCTAssertTrue(sut.shouldShowIssuedDate)
+        
+        sut.voucher.state = .redeemed
+        XCTAssertFalse(sut.shouldShowIssuedDate)
+        
+        sut.voucher.state = .cancelled
+        XCTAssertTrue(sut.shouldShowIssuedDate)
+        
+        sut.voucher.state = .inProgress
+        XCTAssertFalse(sut.shouldShowIssuedDate)
+        
+        sut.voucher.dateIssued = 0
+        XCTAssertFalse(sut.shouldShowIssuedDate)
+    }
 }

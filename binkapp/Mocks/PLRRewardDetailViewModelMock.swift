@@ -33,7 +33,7 @@ class PLRRewardDetailViewModelMock {
     }
 
     var headerString: String? {
-        switch (voucher.earn?.type, voucherState) {
+        switch (voucherEarnType, voucherState) {
         case (.accumulator, .issued):
             return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
         case (.accumulator, .redeemed):
@@ -58,7 +58,7 @@ class PLRRewardDetailViewModelMock {
     var subtextString: String? {
         let burnValue = voucher.burn?.value as NSNumber?
 
-        switch (voucher.earn?.type, voucherState) {
+        switch (voucherEarnType, voucherState) {
         case (.accumulator, .inProgress):
             let targetValue = voucher.earn?.targetValue as NSNumber?
             return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", burnValue?.twoDecimalPointString() ?? "", voucher.burn?.type?.rawValue ?? "")
@@ -100,7 +100,7 @@ class PLRRewardDetailViewModelMock {
     var expiredDateString: String? {
         let expiryDate = voucher.expiryDate as NSNumber?
         
-        switch voucher.state {
+        switch voucherState {
         case .expired, .cancelled:
             return String.fromTimestamp(expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
         case .issued:
@@ -134,16 +134,16 @@ class PLRRewardDetailViewModelMock {
     var shouldShowSubtext: Bool {
         return subtextString != nil
     }
-//
-//    var shouldShowIssuedDate: Bool {
-//        guard voucher.dateIssued != 0 else { return false }
-//        switch (voucherEarnType, voucherState) {
-//        case (_, .issued), (_, .expired), (.stamps, .redeemed), (_, .cancelled):
-//            return true
-//        default:
-//            return false
-//        }
-//    }
+
+    var shouldShowIssuedDate: Bool {
+        guard voucher.dateIssued != 0 else { return false }
+        switch (voucherEarnType, voucherState) {
+        case (_, .issued), (_, .expired), (.stamps, .redeemed), (_, .cancelled):
+            return true
+        default:
+            return false
+        }
+    }
 //
 //    var shouldShowRedeemedDate: Bool {
 //        guard voucher.dateRedeemed != 0 else { return false }
@@ -180,6 +180,10 @@ class PLRRewardDetailViewModelMock {
     
     var voucherState: VoucherState? {
         return voucher.state
+    }
+    
+    var voucherEarnType: VoucherEarnType? {
+        return voucher.earn?.type
     }
 
     private var voucherPlanDocument: PlanDocumentModel? {
