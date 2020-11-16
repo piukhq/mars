@@ -33,7 +33,7 @@ class PLRRewardDetailViewModelMock {
     }
 
     var headerString: String? {
-        switch (voucher.earn?.type, voucher.state) {
+        switch (voucher.earn?.type, voucherState) {
         case (.accumulator, .issued):
             return String(format: "plr_voucher_detail_issued_header".localized, voucherAmountText)
         case (.accumulator, .redeemed):
@@ -58,7 +58,7 @@ class PLRRewardDetailViewModelMock {
     var subtextString: String? {
         let burnValue = voucher.burn?.value as NSNumber?
 
-        switch (voucher.earn?.type, voucher.state) {
+        switch (voucher.earn?.type, voucherState) {
         case (.accumulator, .inProgress):
             let targetValue = voucher.earn?.targetValue as NSNumber?
             return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", burnValue?.twoDecimalPointString() ?? "", voucher.burn?.type?.rawValue ?? "")
@@ -120,18 +120,12 @@ class PLRRewardDetailViewModelMock {
         return document.url
     }
 
-//    func openTermsAndConditionsWebView() {
-//        guard let url = termsAndConditionsButtonUrlString else { return }
-//        let viewController = ViewControllerFactory.makeWebViewController(urlString: url)
-//        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-//        Current.navigate.to(navigationRequest)
-//    }
-//
-//    // MARK: - View decisioning
-//
-//    var shouldShowCode: Bool {
-//        return voucherState == .issued
-//    }
+
+    // MARK: - View decisioning
+
+    var shouldShowCode: Bool {
+        return voucherState == .issued
+    }
 //
 //    var shouldShowHeader: Bool {
 //        return headerString != nil
@@ -182,8 +176,10 @@ class PLRRewardDetailViewModelMock {
 
     // MARK: - Helpers
 
-    var voucherAmountText: String {
-        return "voucher"
+    let voucherAmountText = "voucher"
+    
+    var voucherState: VoucherState? {
+        return voucher.state
     }
 
     private var voucherPlanDocument: PlanDocumentModel? {

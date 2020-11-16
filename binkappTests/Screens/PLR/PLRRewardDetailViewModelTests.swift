@@ -192,4 +192,14 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
         XCTAssertEqual(sut.termsAndConditionsButtonUrlString, "https://policies.staging.gb.bink.com/wasabi/tc.html")
     }
+    
+    func test_shouldShowCode_if_in_issued_state() {
+        stampsVoucher.state = .expired
+        var sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertFalse(sut.shouldShowCode)
+        
+        stampsVoucher.state = .issued
+        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertTrue(sut.shouldShowCode)
+    }
 }
