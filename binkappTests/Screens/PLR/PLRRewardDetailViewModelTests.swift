@@ -26,12 +26,12 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         stampsVoucher = VoucherModel(apiId: nil, state: nil, code: "123456", barcode: nil, barcodeType: nil, headline: nil, subtext: nil, dateRedeemed: nil, dateIssued: 3332020, expiryDate: nil, earn: stampsVoucherEarnModel, burn: nil)
     }
     
-    func dynamicContentForVoucherSubtext() -> [DynamicContentField] {
-        let expired = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "expired")
-        let redeemed = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsRedeemedDetail.rawValue, value: "redeemed")
+    private func dynamicContentForVoucherSubtext() -> [DynamicContentField] {
+        let expired = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "Expired")
+        let redeemed = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsRedeemedDetail.rawValue, value: "Redeemed")
         let inProgress = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsInProgressDetail.rawValue, value: "Spend £7.00 or more to get a stamp. Collect 7 stamps to get a Meal Voucher of up to £7 off your next meal.")
-        let issued = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsIssuedDetail.rawValue, value: "issued")
-        let cancelled = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsCancelledDetail.rawValue, value: "cancelled")
+        let issued = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsIssuedDetail.rawValue, value: "Earned")
+        let cancelled = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsCancelledDetail.rawValue, value: "Cancelled")
         return [expired, redeemed, inProgress, issued, cancelled]
     }
     
@@ -122,5 +122,23 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         stampsVoucher.state = .inProgress
         let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
         XCTAssertEqual(sut.subtextString, "Spend £7.00 or more to get a stamp. Collect 7 stamps to get a Meal Voucher of up to £7 off your next meal.")
+    }
+    
+    func test_subtextString_for_stamps_voucher_issued_state() {
+        stampsVoucher.state = .issued
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.subtextString, "Earned")
+    }
+    
+    func test_subtextString_for_stamps_voucher_redeemed_state() {
+        stampsVoucher.state = .redeemed
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.subtextString, "Redeemed")
+    }
+    
+    func test_subtextString_for_stamps_voucher_expired_state() {
+        stampsVoucher.state = .expired
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.subtextString, "Expired")
     }
 }
