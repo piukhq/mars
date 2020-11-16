@@ -144,11 +144,11 @@ class PLRRewardDetailViewModelMock {
             return false
         }
     }
-//
-//    var shouldShowRedeemedDate: Bool {
-//        guard voucher.dateRedeemed != 0 else { return false }
-//        return voucherState == .redeemed
-//    }
+
+    var shouldShowRedeemedDate: Bool {
+        guard voucher.dateRedeemed != 0 else { return false }
+        return voucherState == .redeemed
+    }
 //
 //    var shouldShowExpiredDate: Bool {
 //        guard voucher.expiryDate != 0 else { return false }

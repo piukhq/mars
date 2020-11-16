@@ -255,4 +255,15 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         sut.voucher.dateIssued = 0
         XCTAssertFalse(sut.shouldShowIssuedDate)
     }
+    
+    func test_shouldShowRedeemedDate_for_redeemed_state() {
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertFalse(sut.shouldShowRedeemedDate)
+        
+        sut.voucher.state = .redeemed
+        XCTAssertTrue(sut.shouldShowRedeemedDate)
+        
+        sut.voucher.dateRedeemed = 0
+        XCTAssertFalse(sut.shouldShowRedeemedDate)
+    }
 }
