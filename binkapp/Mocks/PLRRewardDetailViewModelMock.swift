@@ -98,11 +98,13 @@ class PLRRewardDetailViewModelMock {
     }
 
     var expiredDateString: String? {
-        switch voucherState {
+        let expiryDate = voucher.expiryDate as NSNumber?
+        
+        switch voucher.state {
         case .expired, .cancelled:
-            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
+            return String.fromTimestamp(expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
         case .issued:
-            return String.fromTimestamp(voucher.expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
+            return String.fromTimestamp(expiryDate?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
         default:
             return ""
         }

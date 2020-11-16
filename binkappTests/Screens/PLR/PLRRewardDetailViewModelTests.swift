@@ -19,10 +19,10 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         
         let accumulatorVoucherEarnModel = VoucherEarnModel(apiId: nil, currency: nil, prefix: "£", suffix: "@@@@@@", type: .accumulator, targetValue: 20, value: nil)
         let burnModel = VoucherBurnModel(apiId: nil, currency: nil, prefix: "£", suffix: nil, value: 500, type: .voucher)
-        accumulatorVoucher = VoucherModel(apiId: nil, state: nil, code: "123456", barcode: nil, barcodeType: nil, headline: nil, subtext: nil, dateRedeemed: 1536080200, dateIssued: 999999999, expiryDate: nil, earn: accumulatorVoucherEarnModel, burn: burnModel)
+        accumulatorVoucher = VoucherModel(apiId: nil, state: nil, code: "123456", barcode: nil, barcodeType: nil, headline: nil, subtext: nil, dateRedeemed: 1536080200, dateIssued: 999999999, expiryDate: 1535480100, earn: accumulatorVoucherEarnModel, burn: burnModel)
         
         let stampsVoucherEarnModel = VoucherEarnModel(apiId: nil, currency: nil, prefix: nil, suffix: nil, type: .stamps, targetValue: nil, value: nil)
-        stampsVoucher = VoucherModel(apiId: nil, state: nil, code: "123456", barcode: nil, barcodeType: nil, headline: nil, subtext: nil, dateRedeemed: 1536080100, dateIssued: 3332020, expiryDate: nil, earn: stampsVoucherEarnModel, burn: nil)
+        stampsVoucher = VoucherModel(apiId: nil, state: nil, code: "123456", barcode: nil, barcodeType: nil, headline: nil, subtext: nil, dateRedeemed: 1536080100, dateIssued: 3332020, expiryDate: 1535080100, earn: stampsVoucherEarnModel, burn: nil)
     }
     
     private func dynamicContentForVoucherSubtext() -> [DynamicContentField] {
@@ -153,5 +153,31 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         
         sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
         XCTAssertEqual(sut.redeemedDateString, "Redeemed 04 Sep 2018 17:56:40")
+    }
+    
+    func test_expiredDateString_is_correct() {
+        stampsVoucher.state = .expired
+        var sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.expiredDateString, "Expired 24 Aug 2018 04:08:20")
+        
+        stampsVoucher.state = .cancelled
+        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.expiredDateString, "Expired 24 Aug 2018 04:08:20")
+        
+        stampsVoucher.state = .issued
+        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.expiredDateString, "Expires 24 Aug 2018 04:08:20")
+        
+        accumulatorVoucher.state = .expired
+        sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.expiredDateString, "Expired 28 Aug 2018 19:15:00")
+        
+        accumulatorVoucher.state = .cancelled
+        sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.expiredDateString, "Expired 28 Aug 2018 19:15:00")
+        
+        accumulatorVoucher.state = .issued
+        sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.expiredDateString, "Expires 28 Aug 2018 19:15:00")
     }
 }
