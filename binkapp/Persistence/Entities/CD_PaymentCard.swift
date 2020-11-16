@@ -21,7 +21,7 @@ open class CD_PaymentCard: _CD_PaymentCard, WalletCardProtocol {
         guard let expiryDate = Date.makeDate(year: expiryYear.intValue, month: expiryMonth.intValue, day: 01, hr: 12, min: 00, sec: 00) else {
             return false
         }
-
-        return expiryDate.isLaterThan(date: Date(), toGranularity: .month)
+        
+        return expiryDate.isBefore(date: Date(), toGranularity: .month)
     }
 }

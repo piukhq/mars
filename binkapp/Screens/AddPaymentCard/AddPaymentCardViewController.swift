@@ -227,7 +227,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
             guard let year = Int(yearString) else { return false }
             guard let expiryDate = Date.makeDate(year: year, month: month, day: 01, hr: 12, min: 00, sec: 00) else { return false }
             
-            return expiryDate.monthIsExpired
+            return expiryDate.monthHasNotExpired
         default:
             return false
         }

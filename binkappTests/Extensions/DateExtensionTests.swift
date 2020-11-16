@@ -19,11 +19,8 @@ class DateExtensionTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        let currentIsoDate = "2020-11-12T10:44:00+0000"
-        let lastYearIsoDate = "2019-11-12T10:44:00+0000"
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        currentDate = formatter.date(from: currentIsoDate)
-        lastYear = formatter.date(from: lastYearIsoDate)
+        currentDate = Date.makeDate(year: 2020, month: 11, day: 12, hr: 10, min: 44, sec: 00)
+        lastYear = Date.makeDate(year: 2019, month: 11, day: 12, hr: 10, min: 44, sec: 00)
         oneDayAgo = Date().advanced(by: -86400)
     }
     
@@ -36,7 +33,12 @@ class DateExtensionTests: XCTestCase {
     
     func test_timeAgoString() {
         XCTAssertEqual(oneDayAgo.timeAgoString(), "1 day")
-        XCTAssertEqual(lastYear.timeAgoString(), "367 days")
+        
+        let threeDaysAgo = Date().addingTimeInterval( -259200)
+        XCTAssertEqual(threeDaysAgo.timeAgoString(), "3 days")
+        
+        let oneWeekAgo = Date().addingTimeInterval( -604800)
+        XCTAssertEqual(oneWeekAgo.timeAgoString(), "7 days")
     }
     
     func test_getFormattedString_output_format() {
@@ -51,14 +53,18 @@ class DateExtensionTests: XCTestCase {
         XCTAssertEqual(expiryDate, currentDate)
     }
     
-    func test_date_isLaterThan_another_date() {
-        XCTAssertTrue(lastYear?.isLaterThan(date: currentDate, toGranularity: .day) ?? false)
-        XCTAssertTrue(lastYear?.isLaterThan(date: currentDate, toGranularity: .month) ?? false)
-        XCTAssertTrue(lastYear?.isLaterThan(date: currentDate, toGranularity: .year) ?? false)
+    func test_date_isBefore_another_date() {
+        XCTAssertTrue(lastYear?.isBefore(date: currentDate, toGranularity: .day) ?? false)
+        XCTAssertTrue(lastYear?.isBefore(date: currentDate, toGranularity: .month) ?? false)
+        XCTAssertTrue(lastYear?.isBefore(date: currentDate, toGranularity: .year) ?? false)
+        XCTAssertTrue(oneDayAgo.isBefore(date: Date(), toGranularity: .day))
+        XCTAssertFalse(Date().addingTimeInterval(86400).isBefore(date: Date(), toGranularity: .day))
     }
     
-    func test_monthIsExpired_false() {
-        XCTAssertFalse(lastYear.monthIsExpired)
+    func test_monthHasNotExpired() {
+        XCTAssertFalse(lastYear.monthHasNotExpired)
+        XCTAssertFalse(Date().addingTimeInterval((-86400 * 33)).monthHasNotExpired)
+        XCTAssertTrue(Date().monthHasNotExpired)
     }
     
     func test_numberOfSecondsInDays() {
@@ -83,15 +89,17 @@ class DateExtensionTests: XCTestCase {
     }
     
     func test_days_hasElapsed() {
-        let oneDayAgo = Date().advanced(by: -86400)
         XCTAssertFalse(Date.hasElapsed(days: 2, since: oneDayAgo))
+        XCTAssertTrue(Date.hasElapsed(days: 1, since: oneDayAgo))
     }
     
     func test_hours_hasElapsed() {
+        XCTAssertFalse(Date.hasElapsed(hours: 25, since: oneDayAgo))
         XCTAssertTrue(Date.hasElapsed(hours: 24, since: oneDayAgo))
     }
     
     func test_minutes_hasElapsed() {
+        XCTAssertFalse(Date.hasElapsed(minutes: 1441, since: oneDayAgo))
         XCTAssertTrue(Date.hasElapsed(minutes: 1440, since: oneDayAgo))
     }
 }
