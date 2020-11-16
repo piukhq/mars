@@ -266,4 +266,25 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         sut.voucher.dateRedeemed = 0
         XCTAssertFalse(sut.shouldShowRedeemedDate)
     }
+    
+    func test_shouldShowExpiredDate() {
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        sut.voucher.state = .issued
+        XCTAssertTrue(sut.shouldShowExpiredDate)
+
+        sut.voucher.state = .expired
+        XCTAssertTrue(sut.shouldShowExpiredDate)
+        
+        sut.voucher.state = .cancelled
+        XCTAssertTrue(sut.shouldShowExpiredDate)
+        
+        sut.voucher.state = .redeemed
+        XCTAssertFalse(sut.shouldShowExpiredDate)
+        
+        sut.voucher.state = .inProgress
+        XCTAssertFalse(sut.shouldShowExpiredDate)
+        
+        sut.voucher.expiryDate = 0
+        XCTAssertFalse(sut.shouldShowExpiredDate)
+    }
 }

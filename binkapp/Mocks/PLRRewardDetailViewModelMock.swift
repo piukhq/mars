@@ -149,16 +149,16 @@ class PLRRewardDetailViewModelMock {
         guard voucher.dateRedeemed != 0 else { return false }
         return voucherState == .redeemed
     }
-//
-//    var shouldShowExpiredDate: Bool {
-//        guard voucher.expiryDate != 0 else { return false }
-//        switch voucherState {
-//        case .expired, .issued, .cancelled:
-//            return true
-//        default:
-//            return false
-//        }
-//    }
+
+    var shouldShowExpiredDate: Bool {
+        guard voucher.expiryDate != 0 else { return false }
+        switch voucherState {
+        case .expired, .issued, .cancelled:
+            return true
+        default:
+            return false
+        }
+    }
 
 //    var shouldShowTermsAndConditionsButton: Bool {
 //        var shouldDisplay = false
