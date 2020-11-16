@@ -54,14 +54,14 @@ class PLRRewardDetailViewModelMock {
             return nil
         }
     }
-//
+
 //    var subtextString: String? {
-//        switch (voucherEarnType, voucherState) {
+//        switch (voucher.earn?.type, voucher.state) {
 //        case (.accumulator, .inProgress):
 //            return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.type ?? "")
 //        case (.accumulator, .issued):
 //            return String(format: "plr_voucher_detail_subtext_issued".localized, voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
-//            
+//
 //        case (.stamps, .inProgress):
 //            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsInProgressDetail)
 //        case (.stamps, .issued):
@@ -77,9 +77,10 @@ class PLRRewardDetailViewModelMock {
 //        }
 //    }
 
-//    var issuedDateString: String? {
-//        return String.fromTimestamp(voucher.dateIssued?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
-//    }
+    var issuedDateString: String? {
+        let dateIssued = voucher.dateIssued as NSNumber?
+        return String.fromTimestamp(dateIssued?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
+    }
 //
 //    var redeemedDateString: String? {
 //        return String.fromTimestamp(voucher.dateRedeemed?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
