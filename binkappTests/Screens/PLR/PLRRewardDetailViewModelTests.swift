@@ -29,7 +29,7 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     func dynamicContentForVoucherSubtext() -> [DynamicContentField] {
         let expired = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "expired")
         let redeemed = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsRedeemedDetail.rawValue, value: "redeemed")
-        let inProgress = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsInProgressDetail.rawValue, value: "inProgress")
+        let inProgress = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsInProgressDetail.rawValue, value: "Spend £7.00 or more to get a stamp. Collect 7 stamps to get a Meal Voucher of up to £7 off your next meal.")
         let issued = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsIssuedDetail.rawValue, value: "issued")
         let cancelled = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsCancelledDetail.rawValue, value: "cancelled")
         return [expired, redeemed, inProgress, issued, cancelled]
@@ -121,6 +121,6 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     func test_subtextString_for_stamps_voucher_inProgress_state() {
         stampsVoucher.state = .inProgress
         let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-        XCTAssertEqual(sut.subtextString, "Use")
+        XCTAssertEqual(sut.subtextString, "Spend £7.00 or more to get a stamp. Collect 7 stamps to get a Meal Voucher of up to £7 off your next meal.")
     }
 }
