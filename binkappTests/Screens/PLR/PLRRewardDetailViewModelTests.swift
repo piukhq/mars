@@ -18,7 +18,7 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         membershipPlan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: true, card: nil)
         
         let accumulatorVoucherEarnModel = VoucherEarnModel(apiId: nil, currency: nil, prefix: "£", suffix: "@@@@@@", type: .accumulator, targetValue: 20, value: nil)
-        let burnModel = VoucherBurnModel(apiId: nil, currency: nil, prefix: "£", suffix: "$", value: 500, type: .voucher)
+        let burnModel = VoucherBurnModel(apiId: nil, currency: nil, prefix: "£", suffix: nil, value: 500, type: .voucher)
         
         accumulatorVoucher = VoucherModel(apiId: nil, state: nil, code: "123456", barcode: nil, barcodeType: nil, headline: nil, subtext: nil, dateRedeemed: nil, dateIssued: 999999999, expiryDate: nil, earn: accumulatorVoucherEarnModel, burn: burnModel)
         
@@ -100,5 +100,11 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         accumulatorVoucher.state = .inProgress
         let sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
         XCTAssertEqual(sut.subtextString, "Spend £20 with us and you\'ll get a £500 voucher.")
+    }
+    
+    func test_subtextString_for_accumulator_voucher_issued_state() {
+        accumulatorVoucher.state = .issued
+        let sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
+        XCTAssertEqual(sut.subtextString, "Use the code above to redeem your reward. You will get £500 off your purchase.")
     }
 }
