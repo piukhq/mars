@@ -130,10 +130,10 @@ class PLRRewardDetailViewModelMock {
     var shouldShowHeader: Bool {
         return headerString != nil
     }
-//
-//    var shouldShowSubtext: Bool {
-//        return subtextString != nil
-//    }
+
+    var shouldShowSubtext: Bool {
+        return subtextString != nil
+    }
 //
 //    var shouldShowIssuedDate: Bool {
 //        guard voucher.dateIssued != 0 else { return false }

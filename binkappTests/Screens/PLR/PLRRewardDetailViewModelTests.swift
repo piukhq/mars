@@ -205,4 +205,12 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         sut.voucher.state = .issued
         XCTAssertTrue(sut.shouldShowHeader)
     }
+    
+    func test_shouldShowSubtext_if_string_exists() {
+        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
+        XCTAssertFalse(sut.shouldShowSubtext)
+        
+        sut.voucher.state = .issued
+        XCTAssertTrue(sut.shouldShowSubtext)
+    }
 }
