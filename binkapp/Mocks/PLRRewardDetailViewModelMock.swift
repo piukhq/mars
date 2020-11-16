@@ -109,11 +109,11 @@ class PLRRewardDetailViewModelMock {
             return ""
         }
     }
-//
-//    var termsAndConditionsButtonTitle: String? {
-//        guard let document = voucherPlanDocument else { return nil }
-//        return document.name
-//    }
+
+    var termsAndConditionsButtonTitle: String? {
+        guard let document = voucherPlanDocument else { return nil }
+        return document.name
+    }
 //
 //    private var termsAndConditionsButtonUrlString: String? {
 //        guard let document = voucherPlanDocument else { return nil }
@@ -185,22 +185,14 @@ class PLRRewardDetailViewModelMock {
     var voucherAmountText: String {
         return "voucher"
     }
-    
-//    private func twoDecimalPointString(floatValue: Float) -> String? {
-//        guard floatValue.hasDecimals else {
-//            return "\(self)"
-//        }
-//        return String(format: "%.02f", floatValue)
-//    }
-//
-//    private var voucherPlanDocument: CD_PlanDocument? {
-//        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return nil }
-//        for document in planDocuments {
-//            if let _ = document.formattedDisplay.first(where: { $0.value == PlanDocumentDisplayModel.voucher.rawValue }) {
-//                return document
-//            }
-//        }
-//        return nil
-//    }
-    
+
+    private var voucherPlanDocument: PlanDocumentModel? {
+        guard let planDocuments = membershipPlan.account?.planDocuments else { return nil }
+        for document in planDocuments {
+            if let _ = document.display?.first(where: { $0.rawValue == PlanDocumentDisplayModel.voucher.rawValue }) {
+                return document
+            }
+        }
+        return nil
+    }
 }
