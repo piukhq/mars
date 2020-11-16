@@ -16,6 +16,8 @@ class PLRRewardDetailViewModelMock {
     init(voucher: VoucherModel, plan: MembershipPlanModel) {
         self.voucher = voucher
         self.membershipPlan = plan
+        
+        buildDynamicContentForVoucherSubtext()
     }
 
 //    var voucherCellViewModel: PLRCellViewModel {
@@ -55,27 +57,48 @@ class PLRRewardDetailViewModelMock {
         }
     }
 
-//    var subtextString: String? {
-//        switch (voucher.earn?.type, voucher.state) {
-//        case (.accumulator, .inProgress):
-//            return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", voucher.earn?.targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.type ?? "")
-//        case (.accumulator, .issued):
-//            return String(format: "plr_voucher_detail_subtext_issued".localized, voucher.burn?.prefix ?? "", voucher.burn?.value?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
-//
-//        case (.stamps, .inProgress):
-//            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsInProgressDetail)
-//        case (.stamps, .issued):
-//            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsIssuedDetail)
-//        case (.stamps, .redeemed):
-//            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsRedeemedDetail)
-//        case (.stamps, .expired):
-//            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsExpiredDetail)
-//        case (.stamps, .cancelled), (.accumulator, .cancelled):
-//            return membershipPlan.dynamicContentValue(forColumn: .voucherStampsCancelledDetail)
-//        default:
-//            return nil
-//        }
-//    }
+    var subtextString: String? {
+        let burnValue = voucher.burn?.value as NSNumber?
+
+        switch (voucher.earn?.type, voucher.state) {
+        case (.accumulator, .inProgress):
+            let targetValue = voucher.earn?.targetValue as NSNumber?
+            return String(format: "plr_voucher_detail_subtext_inprogress".localized, voucher.earn?.prefix ?? "", targetValue?.twoDecimalPointString() ?? "", voucher.burn?.prefix ?? "", burnValue?.twoDecimalPointString() ?? "", voucher.burn?.type?.rawValue ?? "")
+        case (.accumulator, .issued):
+            return String(format: "plr_voucher_detail_subtext_issued".localized, voucher.burn?.prefix ?? "", burnValue?.twoDecimalPointString() ?? "", voucher.burn?.suffix ?? "")
+
+        case (.stamps, .inProgress):
+            return membershipPlan.dynamicContent?.first(where: { $0.column == DynamicContentColumn.voucherStampsInProgressDetail.rawValue })?.value
+        case (.stamps, .issued):
+            return membershipPlan.dynamicContent?.first(where: { $0.column == DynamicContentColumn.voucherStampsIssuedDetail.rawValue })?.value
+        case (.stamps, .redeemed):
+            return membershipPlan.dynamicContent?.first(where: { $0.column == DynamicContentColumn.voucherStampsRedeemedDetail.rawValue })?.value
+        case (.stamps, .expired):
+            return membershipPlan.dynamicContent?.first(where: { $0.column == DynamicContentColumn.voucherStampsExpiredDetail.rawValue })?.value
+        case (.stamps, .cancelled), (.accumulator, .cancelled):
+            return membershipPlan.dynamicContent?.first(where: { $0.column == DynamicContentColumn.voucherStampsCancelledDetail.rawValue })?.value
+        default:
+            return nil
+        }
+    }
+    
+    func buildDynamicContentForVoucherSubtext() {
+        let expired = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "expired")
+        let redeemed = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "redeemed")
+        let inProgress = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "inProgress")
+        let issued = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "issued")
+        let cancelled = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "cancelled")
+
+        membershipPlan.dynamicContent = [expired, redeemed, inProgress, issued, cancelled]
+    }
+    
+    enum DynamicContentColumn: String {
+        case voucherStampsExpiredDetail = "Voucher_Expired_Detail"
+        case voucherStampsRedeemedDetail = "Voucher_Redeemed_Detail"
+        case voucherStampsInProgressDetail = "Voucher_Inprogress_Detail"
+        case voucherStampsIssuedDetail = "Voucher_Issued_Detail"
+        case voucherStampsCancelledDetail = "Voucher_Cancelled_Detail"
+    }
 
     var issuedDateString: String? {
         let dateIssued = voucher.dateIssued as NSNumber?
@@ -173,12 +196,12 @@ class PLRRewardDetailViewModelMock {
         return "voucher"
     }
     
-    private func twoDecimalPointString(floatValue: Float) -> String? {
-        guard floatValue.hasDecimals else {
-            return "\(self)"
-        }
-        return String(format: "%.02f", floatValue)
-    }
+//    private func twoDecimalPointString(floatValue: Float) -> String? {
+//        guard floatValue.hasDecimals else {
+//            return "\(self)"
+//        }
+//        return String(format: "%.02f", floatValue)
+//    }
 //
 //    private var voucherPlanDocument: CD_PlanDocument? {
 //        guard let planDocuments = membershipPlan.account?.formattedPlanDocuments else { return nil }

@@ -16,6 +16,7 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     
     override func setUpWithError() throws {
         membershipPlan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: nil, balances: nil, dynamicContent: nil, hasVouchers: true, card: nil)
+        
         let accumulatorVoucherEarnModel = VoucherEarnModel(apiId: nil, currency: nil, prefix: nil, suffix: nil, type: .accumulator, targetValue: nil, value: nil)
         accumulatorVoucher = VoucherModel(apiId: nil, state: nil, code: "123456", barcode: nil, barcodeType: nil, headline: nil, subtext: nil, dateRedeemed: nil, dateIssued: 999999999, expiryDate: nil, earn: accumulatorVoucherEarnModel, burn: nil)
         
@@ -37,7 +38,7 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     func test_headerString_for_issued_state() {
         accumulatorVoucher.state = .issued
         var sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-        let headerString     = String(format: "plr_voucher_detail_issued_header".localized, sut.voucherAmountText)
+        let headerString = String(format: "plr_voucher_detail_issued_header".localized, sut.voucherAmountText)
         XCTAssertEqual(sut.headerString, headerString)
 
         stampsVoucher.state = .issued

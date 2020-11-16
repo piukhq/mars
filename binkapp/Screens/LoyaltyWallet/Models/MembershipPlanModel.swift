@@ -15,7 +15,7 @@ struct MembershipPlanModel: Codable {
     let images: [MembershipPlanImageModel]?
     var account: MembershipPlanAccountModel?
     let balances: [BalanceModel]?
-    let dynamicContent: [DynamicContentField]?
+    var dynamicContent: [DynamicContentField]?
     let hasVouchers: Bool?
     let card: CardModel?
     
