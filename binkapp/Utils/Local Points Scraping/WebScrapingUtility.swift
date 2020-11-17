@@ -249,14 +249,14 @@ class WebScrapingUtility: NSObject {
             return
         }
 
-        runScript(scrapeScript) { [weak self] (pointsValue, error) in
+        runScript(scrapeScript) { [weak self] (html, error) in
             guard let self = self else { return }
             guard error == nil else {
                 self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteScrapingScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
                 return
             }
             
-            guard let pointsValue = pointsValue as? String, !pointsValue.isEmpty else {
+            guard let htmlString = html as? String, !htmlString.isEmpty else {
                 completion(.failure(.failedToCastReturnValue))
                 return
             }
@@ -270,12 +270,7 @@ class WebScrapingUtility: NSObject {
                 Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
             }
 
-//            let html = "<div class='span5 plus-col-balance alpha'>Current <span class='inline-plus'>plus</span> Balance: <strong>£0.00</strong></div>"
-//            let doc = try? SwiftSoup.parse(html)
-//            let paragraphs = try? doc?.select("p")
-//            let points = try? paragraphs?.first()?.text()
-            
-            completion(.success(self.agent.pointsValueFromCustomHTMLParser(pointsValue) ?? pointsValue))
+            completion(.success(self.agent.pointsValueFromCustomHTMLParser(htmlString) ?? htmlString))
         }
     }
     
