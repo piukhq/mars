@@ -79,4 +79,11 @@ class BarcodeViewModelTests: XCTestCase {
         sut.membershipCard.card?.barcodeType = nil
         XCTAssertEqual(sut.barcodeType, .code128)
     }
+    
+    func test_barcode_image_is_returned() {
+        let size = CGSize(width: 200, height: 200)
+        XCTAssertNotNil(sut.barcodeImage(withSize: size))
+        sut.membershipCard.card?.barcode = nil
+        XCTAssertNil(sut.barcodeImage(withSize: size))
+    }
 }
