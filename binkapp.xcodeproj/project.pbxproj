@@ -146,6 +146,9 @@
 		706D203C24D85B76004BCCF3 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */ = {isa = PBXBuildFile; fileRef = 706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */; };
 		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
+		70840E662562ADAD000E17A5 /* SuperdrugLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70840E642562ADAC000E17A5 /* SuperdrugLogin.js */; };
+		70840E672562ADAD000E17A5 /* SuperdrugPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70840E652562ADAD000E17A5 /* SuperdrugPointsScrape.js */; };
+		70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */; };
 		709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */; };
 		70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */; };
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
@@ -641,6 +644,9 @@
 		706D203824D851BA004BCCF3 /* CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_CardAccount.swift; sourceTree = "<group>"; };
 		706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-BETA.plist"; sourceTree = "<group>"; };
 		706D204124D97104004BCCF3 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
+		70840E642562ADAC000E17A5 /* SuperdrugLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SuperdrugLogin.js; sourceTree = "<group>"; };
+		70840E652562ADAD000E17A5 /* SuperdrugPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SuperdrugPointsScrape.js; sourceTree = "<group>"; };
+		70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperdrugPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
 		7097489D24D088FE008D0E29 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
 		7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigUtil.swift; sourceTree = "<group>"; };
@@ -1591,6 +1597,16 @@
 			path = Morrisons;
 			sourceTree = "<group>";
 		};
+		70840E622562AC76000E17A5 /* Superdrug */ = {
+			isa = PBXGroup;
+			children = (
+				70840E642562ADAC000E17A5 /* SuperdrugLogin.js */,
+				70840E652562ADAD000E17A5 /* SuperdrugPointsScrape.js */,
+				70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */,
+			);
+			path = Superdrug;
+			sourceTree = "<group>";
+		};
 		7097489C24D088E3008D0E29 /* Objective-C */ = {
 			isa = PBXGroup;
 			children = (
@@ -1626,6 +1642,7 @@
 		70BD4BD024B774EB006E4E3D /* Agents */ = {
 			isa = PBXGroup;
 			children = (
+				70840E622562AC76000E17A5 /* Superdrug */,
 				70661B8D250A56DB006DB009 /* Morrisons */,
 				70661B86250792C0006DB009 /* Boots */,
 				70661B85250792B6006DB009 /* Tesco */,
@@ -2683,6 +2700,7 @@
 				EF7F6E6523E47BFA00352DCF /* GoogleService-Info.plist in Resources */,
 				3CD3493422F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
+				70840E672562ADAD000E17A5 /* SuperdrugPointsScrape.js in Resources */,
 				3CD3493622F99E1D000C1F4D /* NunitoSans-BlackItalic.ttf in Resources */,
 				EF46E28E235F642100BA2CAF /* BinkPrimarySecondaryButtonView.xib in Resources */,
 				EFF59F1A234B73C900CF3992 /* CardDetailInfoTableViewCell.xib in Resources */,
@@ -2703,6 +2721,7 @@
 				EF2E881F233A354500F678F3 /* PaymentCardCollectionViewCell.xib in Resources */,
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
 				B766599A2320F68D00B327BE /* HyperlinkAlertController.xib in Resources */,
+				70840E662562ADAD000E17A5 /* SuperdrugLogin.js in Resources */,
 				BD9FB6B72338120700E5559A /* TransactionsViewController.xib in Resources */,
 				EF6921772469A9290049875B /* DebugSecondaryPlanColorCell.xib in Resources */,
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
@@ -3217,6 +3236,7 @@
 				BD99D2DA234FDF6F00823FC4 /* SettingsViewModel.swift in Sources */,
 				CE341F0C252DED1400577153 /* BinkPersonTableViewCell.swift in Sources */,
 				EF480C1F235754AD0060B7C1 /* WalletPrompt.swift in Sources */,
+				70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */,
 				EFA5F71E2379A7C70027AB80 /* _CD_MembershipCardAccount.swift in Sources */,
 				BD9BAAD9232AF4AB00D2E1C4 /* DiffAware+Extension.swift in Sources */,
 				EFA5F7172379A7C70027AB80 /* CD_MembershipCard.swift in Sources */,
