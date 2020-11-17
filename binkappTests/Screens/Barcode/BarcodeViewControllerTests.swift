@@ -75,4 +75,14 @@ class BarcodeViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.barcodeErrorLabel.text, "This barcode cannot be displayed")
         XCTAssertTrue(sut.barcodeErrorLabel.isHidden)
     }
+    
+    func test_barcodeLabelText() {
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(sut.barcodeLabel.text, "Barcode:")
+    }
+    
+    func test_barcodeNumberLabelText() {
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(sut.barcodeNumberLabel.text, "123456789")
+    }
 }
