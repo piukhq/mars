@@ -49,4 +49,15 @@ class BarcodeViewControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         XCTAssertTrue(sut.numberLabel.isHidden)
     }
+    
+    func test_titleLabel_is_not_hidden() {
+        sut.loadViewIfNeeded()
+        XCTAssertFalse(sut.titleLabel.isHidden)
+    }
+    
+    func test_titleLabel_is_hidden() {
+        sut.viewModel.membershipCard.card?.membershipId = nil
+        sut.loadViewIfNeeded()
+        XCTAssertTrue(sut.titleLabel.isHidden)
+    }
 }
