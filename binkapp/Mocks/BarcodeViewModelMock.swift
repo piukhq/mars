@@ -39,10 +39,10 @@ class BarcodeViewModelMock {
     }
     
     var barcodeType: BarcodeType {
-        guard let barcodeType = membershipCard.card?.barcodeType else {
+        guard let barcodeType = BarcodeType(rawValue: membershipCard.card?.barcodeType ?? 0) else {
             return .code128
         }
-        return BarcodeType(rawValue: barcodeType) ?? .code128
+        return barcodeType
     }
 
     init(membershipCard: MembershipCardModel, membershipPlan: MembershipPlanModel) {
@@ -85,4 +85,3 @@ class BarcodeViewModelMock {
         return exception == nil ? image : nil
     }
 }
-
