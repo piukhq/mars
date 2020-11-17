@@ -12,17 +12,26 @@ import XCTest
 class BarcodeViewModelTests: XCTestCase {
     private var membershipCard: MembershipCardModel!
     private var membershipPlan: MembershipPlanModel!
+    private var sut: BarcodeViewModelMock!
 
     override func setUp() {
         super.setUp()
         let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
         membershipPlan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
         
-        membershipCard = MembershipCardModel(apiId: nil, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        let cardModel = CardModel(apiId: nil, barcode: "123456789", membershipId: nil, barcodeType: nil, colour: nil, secondaryColour: nil)
+        membershipCard = MembershipCardModel(apiId: nil, membershipPlan: nil, membershipTransactions: nil, status: nil, card: cardModel, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        sut = BarcodeViewModelMock(membershipCard: membershipCard, membershipPlan: membershipPlan)
     }
     
     func test_title_is_correct() {
-        let sut = BarcodeViewModelMock(membershipCard: membershipCard, membershipPlan: membershipPlan)
         XCTAssertEqual(sut.title, "Harvey Nichols")
+    }
+    
+    func test_isBarcodeAvailable() {
+        XCTAssertTrue(sut.isBarcodeAvailable)
+        
+        sut.membershipCard.card?.barcode = nil
+        XCTAssertFalse(sut.isBarcodeAvailable)
     }
 }

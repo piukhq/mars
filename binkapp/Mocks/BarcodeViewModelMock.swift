@@ -11,8 +11,8 @@ import UIKit
 import ZXingObjC
 
 class BarcodeViewModelMock {
-    private let membershipCard: MembershipCardModel
-    private let membershipPlan: MembershipPlanModel
+    var membershipCard: MembershipCardModel
+    var membershipPlan: MembershipPlanModel
     
     var title: String {
         return membershipPlan.account?.companyName ?? ""
