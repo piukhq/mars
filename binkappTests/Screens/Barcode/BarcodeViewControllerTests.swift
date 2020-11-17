@@ -26,7 +26,17 @@ class BarcodeViewControllerTests: XCTestCase {
         XCTAssertFalse(sut.hasDrawnBarcode)
         
         sut.loadViewIfNeeded()
-
         XCTAssertTrue(sut.hasDrawnBarcode)
+    }
+    
+    func test_barcodeImageView_is_not_hidden() {
+        sut.loadViewIfNeeded()
+        XCTAssertFalse(sut.barcodeImageView.isHidden)
+    }
+    
+    func test_barcodeImageView_is_hidden() {
+        sut.viewModel.membershipCard.card?.barcode = nil
+        sut.loadViewIfNeeded()
+        XCTAssertTrue(sut.barcodeImageView.isHidden)
     }
 }
