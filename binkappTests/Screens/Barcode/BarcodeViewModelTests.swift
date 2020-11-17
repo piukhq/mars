@@ -45,4 +45,13 @@ class BarcodeViewModelTests: XCTestCase {
         sut.membershipCard.card?.membershipId = nil
         XCTAssertFalse(sut.isCardNumberAvailable)
     }
+    
+    func test_barcodeNumber_string() {
+        XCTAssertEqual(sut.barcodeNumber, "123456789")
+        
+        sut.membershipCard.card?.barcode = nil
+        XCTAssertEqual(sut.barcodeNumber, "")
+    }
+    
+    
 }
