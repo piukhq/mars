@@ -47,7 +47,7 @@ if !mergeRequest.description.contains("IB20") {
 }
 
 xcov.report(
-  scheme: 'binkapp beta',
-  workspace: 'binkapp.xcworkspace',
-  xccov_file_direct_path: ENV['BITRISE_XCRESULT_PATH']
+  scheme: "binkapp beta",
+  workspace: "binkapp.xcworkspace",
+  xccov_file_direct_path: ENV["BITRISE_XCRESULT_PATH"]
 )
