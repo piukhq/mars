@@ -1,38 +1,37 @@
 //
-//  SuperdrugPointsScrapingAgent.swift
+//  WaterstonesPointsScrapingAgent.swift
 //  binkapp
 //
-//  Created by Nick Farrant on 16/11/2020.
+//  Created by Nick Farrant on 17/11/2020.
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
 import Foundation
-import SwiftSoup
 
-struct SuperdrugScrapingAgent: WebScrapable {
+struct WaterstonesScrapingAgent: WebScrapable {
     var merchant: WebScrapableMerchant {
-        return .superdrug
+        return .waterstones
     }
 
     var membershipPlanId: Int {
         switch APIConstants.currentEnvironment {
         case .dev:
-            return 16
+            return 52
         case .staging:
-            return 16
+            return 52
         case .preprod:
-            return 16
+            return 52
         case .production:
-            return 16
+            return 52
         }
     }
 
     var usernameFieldTitle: String {
-        return "Email address"
+        return "email"
     }
 
     var passwordFieldTitle: String {
-        return "Password"
+        return "password"
     }
 
     var loyaltySchemeBalanceCurrency: String? {
@@ -48,11 +47,11 @@ struct SuperdrugScrapingAgent: WebScrapable {
     }
 
     var loginUrlString: String {
-        return "https://www.superdrug.com/login"
+        return "https://www.waterstones.com/plus/signin"
     }
 
     var scrapableUrlString: String {
-        return "https://www.superdrug.com/login"
+        return "https://www.waterstones.com/account/waterstonescard"
     }
 
     var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType {
@@ -76,18 +75,6 @@ struct SuperdrugScrapingAgent: WebScrapable {
     }
 
     var incorrectCredentialsTextIdentiferClass: String? {
-        return nil
-    }
-    
-    func pointsValueFromCustomHTMLParser(_ html: String) -> String? {
-        do {
-            // Get an array of all the <b></b> elements in the html
-            // Select the last element, as we know this to be the points balance
-            // Return the inner HTML text value
-            return try SwiftSoup.parse(html).select("b").last()?.text()
-        } catch let error {
-            print(error.localizedDescription)
-        }
         return nil
     }
 }

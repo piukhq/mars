@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import SwiftSoup
 
 enum WebScrapableMerchant: String {
     case tesco
@@ -38,6 +39,7 @@ protocol WebScrapable {
     var reCaptchaMessage: String? { get }
     var incorrectCredentialsMessage: String? { get }
     var incorrectCredentialsTextIdentiferClass: String? { get }
+    func pointsValueFromCustomHTMLParser(_ html: String) -> String?
 }
 
 extension WebScrapable {
@@ -52,6 +54,8 @@ extension WebScrapable {
     var detectTextScriptFileName: String {
         return "DetectText"
     }
+
+    func pointsValueFromCustomHTMLParser(_ html: String) -> String? { return nil }
 }
 
 enum WebScrapingUtilityError: BinkError {
@@ -155,7 +159,9 @@ class WebScrapingUtility: NSObject {
     }
     
     func start() throws {
-        guard let url = URL(string: agent.scrapableUrlString) else {
+        /// If we are refreshing the balance, we should try to access the scrapable url straight away, otherwise we know we'll need to login
+        let urlString = isBalanceRefresh ? agent.scrapableUrlString : agent.loginUrlString
+        guard let url = URL(string: urlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
@@ -242,7 +248,7 @@ class WebScrapingUtility: NSObject {
             completion(.failure(.agentProvidedInvalidScrapeScript))
             return
         }
-        
+
         runScript(scrapeScript) { [weak self] (pointsValue, error) in
             guard let self = self else { return }
             guard error == nil else {
@@ -263,8 +269,13 @@ class WebScrapingUtility: NSObject {
                 }
                 Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
             }
+
+//            let html = "<div class='span5 plus-col-balance alpha'>Current <span class='inline-plus'>plus</span> Balance: <strong>£0.00</strong></div>"
+//            let doc = try? SwiftSoup.parse(html)
+//            let paragraphs = try? doc?.select("p")
+//            let points = try? paragraphs?.first()?.text()
             
-            completion(.success(pointsValue))
+            completion(.success(self.agent.pointsValueFromCustomHTMLParser(pointsValue) ?? pointsValue))
         }
     }
     
@@ -363,6 +374,11 @@ class WebScrapingUtility: NSObject {
     }
     
     private var isLikelyAtScrapableScreen: Bool {
+        guard agent.loginUrlString != agent.scrapableUrlString else {
+            // This agent has the same url for login and scraping
+            // If we have attempted login, we may be able to scrape here
+            return hasAttemptedLogin
+        }
         return webView.url?.absoluteString.starts(with: agent.scrapableUrlString) == true
     }
 }
