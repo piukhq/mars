@@ -14,7 +14,8 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     var accumulatorVoucher: VoucherModel!
     var stampsVoucher: VoucherModel!
     
-    override func setUpWithError() throws {
+    override func setUp() {
+        super.setUp()
         let planDocument = PlanDocumentModel(apiId: nil, name: "Terms & Conditions", documentDescription: nil, url: "https://policies.staging.gb.bink.com/wasabi/tc.html", display: [.voucher], checkbox: nil)
         let accountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: nil, category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: [planDocument], addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
         membershipPlan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: accountModel, balances: nil, dynamicContent: dynamicContentForVoucherSubtext(), hasVouchers: true, card: nil)
@@ -102,7 +103,7 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     func test_subtextString_for_accumulator_voucher_inProgress_state() {
         accumulatorVoucher.state = .inProgress
         let sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-        XCTAssertEqual(sut.subtextString, "Spend £20 with us and you\'ll get a £500 voucher.")
+        XCTAssertEqual(sut.subtextString, "Spend £20 with us and you'll get a £500 voucher.")
     }
     
     func test_subtextString_for_accumulator_voucher_issued_state() {
