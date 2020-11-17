@@ -95,4 +95,21 @@ class BarcodeViewControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         XCTAssertEqual(sut.numberLabel.text, "999 666")
     }
+    
+    func test_descriptionLabel_text_forLoyaltyCard_withBarcode() {
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(sut.descriptionLabel.text, "Scan this barcode at the store, just like you would a physical loyalty card. Bear in mind that some store scanners cannot read from screens.")
+    }
+    
+    func test_descriptionLabel_text_forLoyaltyCard_withNoBarcode() {
+        sut.viewModel.membershipCard.card?.barcode = nil
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(sut.descriptionLabel.text, "Show this card number in-store just like you would a physical loyalty card.")
+    }
+    
+    func test_descriptionLabel_text_forCoupon() {
+        sut.viewModel.barcodeUse = .coupon
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(sut.descriptionLabel.text, "Scan this barcode at the store, just like you would a physical coupon. Bear in mind that some store scanners cannot read from screens.")
+    }
 }
