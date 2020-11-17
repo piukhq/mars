@@ -34,9 +34,7 @@ class BarcodeViewModelMock {
         return membershipCard.card?.barcode ?? ""
     }
     
-    var barcodeUse: BarcodeUse {
-        return .loyaltyCard
-    }
+    var barcodeUse: BarcodeUse = .loyaltyCard
     
     var barcodeType: BarcodeType {
         guard let barcodeType = BarcodeType(rawValue: membershipCard.card?.barcodeType ?? 0) else {
