@@ -12,7 +12,7 @@ struct CardModel: Codable, Hashable {
     let apiId: Int?
     var barcode: String?
     var membershipId: String?
-    let barcodeType: Int?
+    var barcodeType: Int?
     let colour: String?
     let secondaryColour: String?
     
