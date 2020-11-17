@@ -14,18 +14,18 @@ class BarcodeViewControllerMock: BinkTrackableViewController {
         static let smallSpace: CGFloat = -5
     }
     
-    @IBOutlet private weak var stackView: UIStackView!
-    @IBOutlet private weak var barcodeImageView: UIImageView!
-    @IBOutlet private weak var barcodeErrorLabel: UILabel!
-    @IBOutlet private weak var barcodeLabel: UILabel!
-    @IBOutlet private weak var barcodeNumberLabel: BinkCopyableLabel!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var numberLabel: BinkCopyableLabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var barcodeImageView: UIImageView!
+    @IBOutlet weak var barcodeErrorLabel: UILabel!
+    @IBOutlet weak var barcodeLabel: UILabel!
+    @IBOutlet weak var barcodeNumberLabel: BinkCopyableLabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var numberLabel: BinkCopyableLabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
-    private var previousBrightness: CGFloat?
+    var previousBrightness: CGFloat?
 
-    private let viewModel: BarcodeViewModelMock
+    var viewModel: BarcodeViewModelMock
     var hasDrawnBarcode = false
     
     init(viewModel: BarcodeViewModelMock) {
