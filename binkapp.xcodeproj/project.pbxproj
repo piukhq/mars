@@ -167,6 +167,9 @@
 		70E8DFDD2563E3050027A244 /* HeathrowPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8DFDC2563E3050027A244 /* HeathrowPointsScrapingAgent.swift */; };
 		70E8DFE62563E6F70027A244 /* HeathrowPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFE42563E6F60027A244 /* HeathrowPointsScrape.js */; };
 		70E8DFE72563E6F70027A244 /* HeathrowLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFE52563E6F70027A244 /* HeathrowLogin.js */; };
+		70E8DFED2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8DFEC2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift */; };
+		70E8DFF32563E8CE0027A244 /* PerfumeshopLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFF12563E8CE0027A244 /* PerfumeshopLogin.js */; };
+		70E8DFF42563E8CE0027A244 /* PerfumeshopPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFF22563E8CE0027A244 /* PerfumeshopPointsScrape.js */; };
 		92CE3430695A6558F2EC1793 /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */; };
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
 		96F22E022508B6060009951B /* SentryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F22E012508B6060009951B /* SentryService.swift */; };
@@ -671,6 +674,9 @@
 		70E8DFDC2563E3050027A244 /* HeathrowPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeathrowPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70E8DFE42563E6F60027A244 /* HeathrowPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = HeathrowPointsScrape.js; sourceTree = "<group>"; };
 		70E8DFE52563E6F70027A244 /* HeathrowLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = HeathrowLogin.js; sourceTree = "<group>"; };
+		70E8DFEC2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeShopPointsScrapingAgent.swift; sourceTree = "<group>"; };
+		70E8DFF12563E8CE0027A244 /* PerfumeshopLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerfumeshopLogin.js; sourceTree = "<group>"; };
+		70E8DFF22563E8CE0027A244 /* PerfumeshopPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerfumeshopPointsScrape.js; sourceTree = "<group>"; };
 		73A4EB9236825CAA23208015 /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		747EE940A8617CF70F3CD693 /* Pods-binkappUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.debug.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7C1A952F8EB9E33671155804 /* Pods-binkappUITests.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.nightly.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.nightly.xcconfig"; sourceTree = "<group>"; };
@@ -1648,6 +1654,7 @@
 		70BD4BD024B774EB006E4E3D /* Agents */ = {
 			isa = PBXGroup;
 			children = (
+				70E8DFEB2563E8000027A244 /* Perfume Shop */,
 				70E8DFDB2563E2F20027A244 /* Heathrow */,
 				70840E622562AC76000E17A5 /* Superdrug */,
 				70661B8D250A56DB006DB009 /* Morrisons */,
@@ -1685,6 +1692,16 @@
 				70E8DFDC2563E3050027A244 /* HeathrowPointsScrapingAgent.swift */,
 			);
 			path = Heathrow;
+			sourceTree = "<group>";
+		};
+		70E8DFEB2563E8000027A244 /* Perfume Shop */ = {
+			isa = PBXGroup;
+			children = (
+				70E8DFF12563E8CE0027A244 /* PerfumeshopLogin.js */,
+				70E8DFF22563E8CE0027A244 /* PerfumeshopPointsScrape.js */,
+				70E8DFEC2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift */,
+			);
+			path = "Perfume Shop";
 			sourceTree = "<group>";
 		};
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
@@ -2700,6 +2717,7 @@
 				70B316E524E5A47000D86DE5 /* TescoPointsScrape.js in Resources */,
 				EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */,
 				B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */,
+				70E8DFF32563E8CE0027A244 /* PerfumeshopLogin.js in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
@@ -2717,6 +2735,7 @@
 				EFA5F7672379BD690027AB80 /* PLRStampsActiveCell.xib in Resources */,
 				EF7F6E6523E47BFA00352DCF /* GoogleService-Info.plist in Resources */,
 				3CD3493422F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf in Resources */,
+				70E8DFF42563E8CE0027A244 /* PerfumeshopPointsScrape.js in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
 				70840E672562ADAD000E17A5 /* SuperdrugPointsScrape.js in Resources */,
 				3CD3493622F99E1D000C1F4D /* NunitoSans-BlackItalic.ttf in Resources */,
@@ -2981,6 +3000,7 @@
 				B7263347230589EE00951037 /* BalanceModel.swift in Sources */,
 				EF586FE023578735000917B6 /* WalletPromptCollectionViewCell.swift in Sources */,
 				3C17FC3222F2CCAD00E423A2 /* MembershipCardImageModel.swift in Sources */,
+				70E8DFED2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift in Sources */,
 				3CD4F14E230D35AE0075F63C /* BinkInfoButton.swift in Sources */,
 				EFEB5BFD237E96F500E18743 /* CGFloatExtension.swift in Sources */,
 				3CD8027E239130EE00D26888 /* ForgotPasswordViewController.swift in Sources */,

@@ -61,7 +61,8 @@ class PointsScrapingManager {
         BootsScrapingAgent(),
         MorrisonsScrapingAgent(),
         SuperdrugScrapingAgent(),
-        HeathrowScrapingAgent()
+        HeathrowScrapingAgent(),
+        PerfumeShopScrapingAgent()
     ]
     
     // MARK: - Credentials handling
