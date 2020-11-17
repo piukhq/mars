@@ -10,7 +10,7 @@ import CoreData
 
 struct CardModel: Codable, Hashable {
     let apiId: Int?
-    let barcode: String?
+    var barcode: String?
     let membershipId: String?
     let barcodeType: Int?
     let colour: String?
