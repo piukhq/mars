@@ -45,3 +45,9 @@ if !mergeRequest.title.contains("IB20") {
 if !mergeRequest.description.contains("IB20") {
     warn("Merge request description should include a JIRA ticket number.")
 }
+
+xcov.report(
+  scheme: 'binkapp beta',
+  workspace: 'binkapp.xcworkspace',
+  xccov_file_direct_path: ENV['BITRISE_XCRESULT_PATH']
+)
