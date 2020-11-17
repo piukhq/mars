@@ -21,43 +21,58 @@ class BarcodeViewControllerTests: XCTestCase {
         sut = BarcodeViewControllerMock(viewModel: viewModel)
     }
     
-    func test_hasDrawnBarcode_is_true() {
+    func test_hasDrawnBarcode_isTrue() {
         XCTAssertFalse(sut.hasDrawnBarcode)
         
         sut.loadViewIfNeeded()
         XCTAssertTrue(sut.hasDrawnBarcode)
     }
     
-    func test_barcodeImageView_is_not_hidden() {
+    func test_barcodeImageView_isNotHidden() {
         sut.loadViewIfNeeded()
         XCTAssertFalse(sut.barcodeImageView.isHidden)
     }
     
-    func test_barcodeImageView_is_hidden() {
+    func test_barcodeImageView_isHidden() {
         sut.viewModel.membershipCard.card?.barcode = nil
         sut.loadViewIfNeeded()
         XCTAssertTrue(sut.barcodeImageView.isHidden)
     }
     
-    func test_numberLabel_is_not_hidden() {
+    func test_numberLabel_isNotHidden() {
         sut.loadViewIfNeeded()
         XCTAssertFalse(sut.numberLabel.isHidden)
     }
     
-    func test_numberLabel_is_hidden() {
+    func test_numberLabel_isHidden() {
         sut.viewModel.membershipCard.card?.membershipId = nil
         sut.loadViewIfNeeded()
         XCTAssertTrue(sut.numberLabel.isHidden)
     }
     
-    func test_titleLabel_is_not_hidden() {
+    func test_titleLabel_isNotHidden() {
         sut.loadViewIfNeeded()
         XCTAssertFalse(sut.titleLabel.isHidden)
     }
     
-    func test_titleLabel_is_hidden() {
+    func test_titleLabel_isHidden() {
         sut.viewModel.membershipCard.card?.membershipId = nil
         sut.loadViewIfNeeded()
         XCTAssertTrue(sut.titleLabel.isHidden)
+    }
+    
+    func test_correctUI_isShown_forBarcode() {
+        sut.loadViewIfNeeded()
+        XCTAssertFalse(sut.barcodeImageView.isHidden)
+        XCTAssertTrue(sut.barcodeErrorLabel.isHidden)
+        XCTAssertNotNil(sut.barcodeImageView.image)
+    }
+    
+    func test_correctUI_isShown_forNoBarcode() {
+        sut.viewModel.membershipCard.card?.barcode = nil
+        sut.loadViewIfNeeded()
+        XCTAssertTrue(sut.barcodeImageView.isHidden)
+        XCTAssertEqual(sut.barcodeErrorLabel.text, "This barcode cannot be displayed")
+        XCTAssertTrue(sut.barcodeErrorLabel.isHidden)
     }
 }
