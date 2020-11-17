@@ -76,13 +76,23 @@ class BarcodeViewControllerTests: XCTestCase {
         XCTAssertTrue(sut.barcodeErrorLabel.isHidden)
     }
     
-    func test_barcodeLabelText() {
+    func test_barcodeLabel_text() {
         sut.loadViewIfNeeded()
         XCTAssertEqual(sut.barcodeLabel.text, "Barcode:")
     }
     
-    func test_barcodeNumberLabelText() {
+    func test_barcodeNumberLabel_text() {
         sut.loadViewIfNeeded()
         XCTAssertEqual(sut.barcodeNumberLabel.text, "123456789")
+    }
+    
+    func test_titleLabel_text() {
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(sut.titleLabel.text, "Card number:")
+    }
+    
+    func test_numberLabel_text() {
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(sut.numberLabel.text, "999 666")
     }
 }
