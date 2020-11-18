@@ -43,7 +43,7 @@ struct TescoScrapingAgent: WebScrapable {
     }
 
     var loyaltySchemeBalanceSuffix: String? {
-        return "pts"
+        return "points"
     }
     
     var loginUrlString: String {

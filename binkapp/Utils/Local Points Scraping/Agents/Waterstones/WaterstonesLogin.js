@@ -11,7 +11,7 @@ setTimeout(function() {
 function checkLoginFields() {
     var usernameInput = document.getElementById('login_form_email');
     var passwordInput = document.getElementById('login_form_password');
-    var buttons = document.getElementsByClassName('button button-teal');
+    var buttons = document.getElementsByClassName('button button-teal button-formsubmit');
     var signInButton = buttons[0];
     usernameInput.value = username;
     passwordInput.value = password;

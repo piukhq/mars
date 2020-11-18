@@ -80,14 +80,6 @@ struct SuperdrugScrapingAgent: WebScrapable {
     }
     
     func pointsValueFromCustomHTMLParser(_ html: String) -> String? {
-        do {
-            // Get an array of all the <b></b> elements in the html
-            // Select the last element, as we know this to be the points balance
-            // Return the inner HTML text value
-            return try SwiftSoup.parse(html).select("b").last()?.text()
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        return nil
+        return try? SwiftSoup.parse(html).select("b").last()?.text()
     }
 }

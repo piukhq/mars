@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftSoup
 
 struct WaterstonesScrapingAgent: WebScrapable {
     var merchant: WebScrapableMerchant {
@@ -43,7 +44,7 @@ struct WaterstonesScrapingAgent: WebScrapable {
     }
 
     var loyaltySchemeBalanceSuffix: String? {
-        return "points"
+        return "stamps"
     }
 
     var loginUrlString: String {
@@ -76,5 +77,9 @@ struct WaterstonesScrapingAgent: WebScrapable {
 
     var incorrectCredentialsTextIdentiferClass: String? {
         return nil
+    }
+
+    func pointsValueFromCustomHTMLParser(_ html: String) -> String? {
+        return try? SwiftSoup.parse(html).select("strong").last()?.text().replacingOccurrences(of: " stamps", with: "")
     }
 }

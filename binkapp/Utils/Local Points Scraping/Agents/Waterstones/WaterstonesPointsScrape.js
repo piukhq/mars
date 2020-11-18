@@ -1,1 +1,1 @@
-document.getElementsByClassName('pointvalue')[0].innerHTML
+document.getElementsByClassName('plus-balance-row')[0].innerHTML
