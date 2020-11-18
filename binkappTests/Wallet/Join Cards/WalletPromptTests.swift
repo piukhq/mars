@@ -49,4 +49,9 @@ class WalletPromptTests: XCTestCase {
         XCTAssertEqual(loyaltyJoinPrompt.membershipPlan, membershipPlan)
         XCTAssertNil(addPaymentCardsWalletPrompt.membershipPlan)
     }
+    
+    func test_iconImageNameString_isCorrect() {
+        XCTAssertEqual(addPaymentCardsWalletPrompt.iconImageName, "payment")
+        XCTAssertNil(loyaltyJoinPrompt.iconImageName)
+    }
 }
