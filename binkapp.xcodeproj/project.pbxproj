@@ -2595,7 +2595,7 @@
 				450A1F7AA044C2D403358768 /* [CP] Embed Pods Frameworks */,
 				BDA4EE9A2320508500A99CB1 /* Embed Frameworks */,
 				BDA4EE9B2320ED4D00A99CB1 /* ShellScript */,
-				70FFDD07253F1A58004EF1F1 /* ShellScript */,
+				70FFDD07253F1A58004EF1F1 /* Swift Lint */,
 			);
 			buildRules = (
 			);
@@ -2835,7 +2835,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-binkapp/Pods-binkapp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		70FFDD07253F1A58004EF1F1 /* ShellScript */ = {
+		70FFDD07253F1A58004EF1F1 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2844,6 +2844,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Swift Lint";
 			outputFileListPaths = (
 			);
 			outputPaths = (

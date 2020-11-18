@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SupportSDK
 
 class PaymentCardDetailViewModel {
     typealias EmptyCompletionBlock = () -> Void
