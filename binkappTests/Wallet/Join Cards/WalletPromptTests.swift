@@ -26,4 +26,9 @@ class WalletPromptTests: XCTestCase {
         XCTAssertEqual(addPaymentCardsWalletPrompt.title, "Add your payment cards")
         XCTAssertEqual(loyaltyJoinPrompt.title, "Harvey Nichols Rewards")
     }
+    
+    func test_bodyString_is_correct() {
+        XCTAssertEqual(addPaymentCardsWalletPrompt.body, "Collect rewards automatically for select loyalty cards by linking them to your payment cards.")
+        XCTAssertEqual(loyaltyJoinPrompt.body, "Link this card to your payment cards to automatically collect rewards.")
+    }
 }
