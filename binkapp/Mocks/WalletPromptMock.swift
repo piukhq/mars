@@ -74,7 +74,7 @@ protocol WalletPromptProtocolMock {
     var userDefaultsDismissKey: String { get }
     var membershipPlan: MembershipPlanModel? { get }
     var iconImageName: String? { get }
-    static func userDefaultsDismissKey(forType type: WalletPromptTypeMock) -> String
+    func userDefaultsDismissKey(forType type: WalletPromptTypeMock) -> String
     init(type: WalletPromptTypeMock)
 }
 
@@ -105,7 +105,7 @@ class WalletPromptMock: WalletPromptProtocolMock {
         return type.iconImageName
     }
 
-    static func userDefaultsDismissKey(forType type: WalletPromptTypeMock) -> String {
+    func userDefaultsDismissKey(forType type: WalletPromptTypeMock) -> String {
         return type.userDefaultsDismissKey
     }
 }

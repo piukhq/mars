@@ -34,15 +34,8 @@ class WalletPromptTests: XCTestCase {
     }
     
     func test_userDefaultsDismissKeyString_isCorrect() {
-        var userDefaultsDismiss = ""
-        if let email = Current.userManager.currentEmailAddress {
-            userDefaultsDismiss += "\(email)_"
-        }
-        
-        XCTAssertEqual(addPaymentCardsWalletPrompt.userDefaultsDismissKey, userDefaultsDismiss + "add_payment_card_prompt_was_dismissed")
-
-        let planName = loyaltyJoinPrompt.type.membershipPlan?.account?.planName ?? ""
-        XCTAssertEqual(loyaltyJoinPrompt.userDefaultsDismissKey, userDefaultsDismiss + "join_card_\(planName)_was_dismissed")
+        XCTAssertEqual(addPaymentCardsWalletPrompt.userDefaultsDismissKey, userDefaultsDismissKey(forType: .addPaymentCards))
+        XCTAssertEqual(loyaltyJoinPrompt.userDefaultsDismissKey, userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: membershipPlan)))
     }
     
     func test_membershipPlanString_isCorrect() {
@@ -53,5 +46,25 @@ class WalletPromptTests: XCTestCase {
     func test_iconImageNameString_isCorrect() {
         XCTAssertEqual(addPaymentCardsWalletPrompt.iconImageName, "payment")
         XCTAssertNil(loyaltyJoinPrompt.iconImageName)
+    }
+    
+    func test_userDefaultsDismissKeyFuncString_isCorrect() {
+        XCTAssertEqual(addPaymentCardsWalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards), userDefaultsDismissKey(forType: .addPaymentCards))
+        XCTAssertEqual(loyaltyJoinPrompt.userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: membershipPlan)), userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: membershipPlan)))
+    }
+    
+    private func userDefaultsDismissKey(forType type: WalletPromptTypeMock) -> String {
+        var userDefaultsDismiss = ""
+        if let email = Current.userManager.currentEmailAddress {
+            userDefaultsDismiss += "\(email)_"
+        }
+        
+        switch type {
+        case .addPaymentCards:
+            return userDefaultsDismiss + "add_payment_card_prompt_was_dismissed"
+        case .loyaltyJoin(let plan):
+            let planName = plan.account?.planName ?? ""
+            return userDefaultsDismiss + "join_card_\(planName)_was_dismissed"
+        }
     }
 }
