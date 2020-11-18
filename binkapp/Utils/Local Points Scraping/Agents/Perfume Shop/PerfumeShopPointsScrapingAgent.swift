@@ -34,14 +34,6 @@ struct PerfumeShopScrapingAgent: WebScrapable {
         return "password"
     }
 
-    var loyaltySchemeBalanceCurrency: String? {
-        return nil
-    }
-
-    var loyaltySchemeBalancePrefix: String? {
-        return nil
-    }
-
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }
@@ -52,29 +44,5 @@ struct PerfumeShopScrapingAgent: WebScrapable {
 
     var scrapableUrlString: String {
         return "https://www.theperfumeshop.com/my-account"
-    }
-
-    var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType {
-        return .none
-    }
-
-    var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency {
-        return .never
-    }
-
-    var reCaptchaMessage: String? {
-        return nil
-    }
-
-    var reCaptchaTextIdentiferClass: String? {
-        return nil
-    }
-
-    var incorrectCredentialsMessage: String? {
-        return nil
-    }
-
-    var incorrectCredentialsTextIdentiferClass: String? {
-        return nil
     }
 }

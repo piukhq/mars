@@ -43,6 +43,18 @@ protocol WebScrapable {
 }
 
 extension WebScrapable {
+    var loyaltySchemeBalanceCurrency: String? {
+        return nil
+    }
+
+    var loyaltySchemeBalanceSuffix: String? {
+        return nil
+    }
+
+    var loyaltySchemeBalancePrefix: String? {
+        return nil
+    }
+
     var loginScriptFileName: String {
         return "\(merchant.rawValue.capitalized)Login"
     }
@@ -53,6 +65,30 @@ extension WebScrapable {
     
     var detectTextScriptFileName: String {
         return "DetectText"
+    }
+
+    var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType {
+        return .none
+    }
+
+    var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency {
+        return .never
+    }
+
+    var reCaptchaTextIdentiferClass: String? {
+        return nil
+    }
+    
+    var reCaptchaMessage: String? {
+        return nil
+    }
+
+    var incorrectCredentialsMessage: String? {
+        return nil
+    }
+
+    var incorrectCredentialsTextIdentiferClass: String? {
+        return nil
     }
 
     func pointsValueFromCustomHTMLParser(_ html: String) -> String? { return nil }

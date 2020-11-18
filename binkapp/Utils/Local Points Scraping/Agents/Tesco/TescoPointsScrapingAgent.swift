@@ -34,14 +34,6 @@ struct TescoScrapingAgent: WebScrapable {
         return "Password"
     }
 
-    var loyaltySchemeBalanceCurrency: String? {
-        return nil
-    }
-
-    var loyaltySchemeBalancePrefix: String? {
-        return nil
-    }
-
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }
@@ -52,29 +44,5 @@ struct TescoScrapingAgent: WebScrapable {
 
     var scrapableUrlString: String {
         return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
-    }
-
-    var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType {
-        return .none
-    }
-    
-    var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency {
-        return .never
-    }
-    
-    var reCaptchaMessage: String? {
-        return nil
-    }
-    
-    var reCaptchaTextIdentiferClass: String? {
-        return nil
-    }
-    
-    var incorrectCredentialsMessage: String? {
-        return nil
-    }
-    
-    var incorrectCredentialsTextIdentiferClass: String? {
-        return nil
     }
 }
