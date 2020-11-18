@@ -1515,6 +1515,7 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
+				CE387A3925656E75006BAC11 /* BinkUI */,
 				CEF389E9255D72B30063C718 /* Extensions */,
 				EF7F6E5F23E4286F00352DCF /* Utils */,
 				EF8B701023587BB0006CE3DD /* Models */,
@@ -1934,22 +1935,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		CEF389E9255D72B30063C718 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				CEF389EA255D72E90063C718 /* DateExtensionTests.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-        CEF389E9255D72B30063C718 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				CEF389EA255D72E90063C718 /* DateExtensionTests.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		CE3878492562EEB3006BAC11 /* Barcode */ = {
 			isa = PBXGroup;
 			children = (
@@ -1965,6 +1950,21 @@
 				CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */,
 			);
 			path = "Join Cards";
+			sourceTree = "<group>";
+		};
+		CE387A3925656E75006BAC11 /* BinkUI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BinkUI;
+			sourceTree = "<group>";
+		};
+		CEF389E9255D72B30063C718 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CEF389EA255D72E90063C718 /* DateExtensionTests.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		EF2E880F2333859900F678F3 /* World */ = {
@@ -2294,7 +2294,7 @@
 				CE085DA5255EB581003966ED /* PLRRewardDetailViewModelMock.swift */,
 				CE3878522562EF16006BAC11 /* BarcodeViewModelMock.swift */,
 				CE3878C22563FC62006BAC11 /* BarcodeViewControllerMock.swift */,
-                CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */,
+				CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
