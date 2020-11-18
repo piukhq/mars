@@ -62,7 +62,7 @@ extension Date {
         return calendar.date(from: components)
     }
     
-    func isLaterThan(date: Date, toGranularity: Calendar.Component) -> Bool {
+    func isBefore(date: Date, toGranularity: Calendar.Component) -> Bool {
         let comparisonResult = Calendar.current.compare(self, to: date, toGranularity: toGranularity)
         
         switch comparisonResult {
@@ -75,8 +75,8 @@ extension Date {
         }
     }
 
-    var monthIsExpired: Bool {
-        return !self.isLaterThan(date: Date(), toGranularity: .month)
+    var monthHasNotExpired: Bool {
+        return !self.isBefore(date: Date(), toGranularity: .month)
     }
 
     static func numberOfSecondsIn(days: Int) -> Int {
