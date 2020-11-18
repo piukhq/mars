@@ -116,8 +116,18 @@ enum ViewControllerFactory {
         }
         
         let attributedString = ReusableModalConfiguration.makeAttributedString(title: titleString, description: descriptionString)
-        let configuration = ReusableModalConfiguration(text: attributedString)
-        return makeReusableTemplateViewController(configuration: configuration, floatingButtons: false)
+        var configuration = ReusableModalConfiguration(text: attributedString)
+        
+        if let url = membershipPlan.account?.planURL {
+            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, mainButtonCompletion: {
+                /// Implemented navigation logic here instead of passing comletion block in via method property to reduce code repetition as it's called from multiple viewModels
+                let viewController = makeWebViewController(urlString: url)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            })
+        }
+        
+        return makeReusableTemplateViewController(configuration: configuration, floatingButtons: true)
     }
     
     static func makeSecurityAndPrivacyViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
