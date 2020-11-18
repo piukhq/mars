@@ -240,7 +240,7 @@ extension FormDataSource {
             }
         }
         
-        if formPurpose == .add || formPurpose == .addFailed || formPurpose == .ghostCard {
+        if formPurpose == .add || formPurpose == .ghostCard {
             model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(checked: false)
