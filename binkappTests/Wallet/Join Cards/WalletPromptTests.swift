@@ -1,0 +1,29 @@
+//
+//  WalletPromptTests.swift
+//  binkappTests
+//
+//  Created by Sean Williams on 17/11/2020.
+//  Copyright © 2020 Bink. All rights reserved.
+//
+
+import XCTest
+@testable import binkapp
+
+class WalletPromptTests: XCTestCase {
+    var addPaymentCardsWalletPrompt: WalletPromptMock!
+    var loyaltyJoinPrompt: WalletPromptMock!
+    
+    override func setUp() {
+        super.setUp()
+        addPaymentCardsWalletPrompt = WalletPromptMock(type: .addPaymentCards)
+
+        let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: "Harvey Nichols Rewards", planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
+        let membershipPlan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        loyaltyJoinPrompt = WalletPromptMock(type: .loyaltyJoin(membershipPlan: membershipPlan))
+    }
+    
+    func test_titleString_is_correct() {
+        XCTAssertEqual(addPaymentCardsWalletPrompt.title, "Add your payment cards")
+        XCTAssertEqual(loyaltyJoinPrompt.title, "Harvey Nichols Rewards")
+    }
+}

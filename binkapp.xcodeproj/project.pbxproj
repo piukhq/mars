@@ -255,6 +255,8 @@
 		CE3878532562EF16006BAC11 /* BarcodeViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878522562EF16006BAC11 /* BarcodeViewModelMock.swift */; };
 		CE3878BE2563ED9A006BAC11 /* BarcodeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */; };
 		CE3878C32563FC62006BAC11 /* BarcodeViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878C22563FC62006BAC11 /* BarcodeViewControllerMock.swift */; };
+		CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */; };
+		CE3878D7256510CC006BAC11 /* WalletPromptMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */; };
 		CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */; };
 		CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
@@ -776,6 +778,8 @@
 		CE3878522562EF16006BAC11 /* BarcodeViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModelMock.swift; sourceTree = "<group>"; };
 		CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewControllerTests.swift; sourceTree = "<group>"; };
 		CE3878C22563FC62006BAC11 /* BarcodeViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewControllerMock.swift; sourceTree = "<group>"; };
+		CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptTests.swift; sourceTree = "<group>"; };
+		CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptMock.swift; sourceTree = "<group>"; };
 		CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskTickets.swift; sourceTree = "<group>"; };
 		CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCodeVisualiser.swift; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
@@ -1924,6 +1928,14 @@
 			path = Barcode;
 			sourceTree = "<group>";
 		};
+		CE3878CD25643C06006BAC11 /* Join Cards */ = {
+			isa = PBXGroup;
+			children = (
+				CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */,
+			);
+			path = "Join Cards";
+			sourceTree = "<group>";
+		};
 		EF2E880F2333859900F678F3 /* World */ = {
 			isa = PBXGroup;
 			children = (
@@ -2079,6 +2091,7 @@
 		EF586FE12357A8DC000917B6 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				CE3878CD25643C06006BAC11 /* Join Cards */,
 				EF586FE22357A8E3000917B6 /* Payment Card Wallet */,
 			);
 			path = Wallet;
@@ -2248,6 +2261,7 @@
 				3CEE169C2440ABBC00933859 /* BrowseBrandsViewModelMock.swift */,
 				CE3878522562EF16006BAC11 /* BarcodeViewModelMock.swift */,
 				CE3878C22563FC62006BAC11 /* BarcodeViewControllerMock.swift */,
+				CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2980,6 +2994,7 @@
 				BD458B4B236ED5B90029A538 /* AddEmailViewController.swift in Sources */,
 				BD9E4CCF236F8D6100C6F098 /* RenewTokenResponse.swift in Sources */,
 				EF758E0823225F35000D26A9 /* Database.swift in Sources */,
+				CE3878D7256510CC006BAC11 /* WalletPromptMock.swift in Sources */,
 				BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */,
 				BD458B3C236B5B710029A538 /* LoginRegisterResponse.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,
@@ -3303,6 +3318,7 @@
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
 				EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */,
 				CE3878BE2563ED9A006BAC11 /* BarcodeViewControllerTests.swift in Sources */,
+				CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */,
 				EF758E1623225F95000D26A9 /* DatabaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
