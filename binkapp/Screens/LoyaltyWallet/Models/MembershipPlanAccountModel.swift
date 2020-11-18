@@ -13,7 +13,7 @@ struct MembershipPlanAccountModel: Codable {
     let planName: String?
     let planNameCard: String?
     let planURL: String?
-    let companyName: String?
+    var companyName: String?
     let category: String?
     let planSummary: String?
     let planDescription: String?
@@ -23,7 +23,7 @@ struct MembershipPlanAccountModel: Codable {
     let enrolIncentive: String?
     let forgottenPasswordUrl: String?
     let tiers: [TierModel]?
-    let planDocuments: [PlanDocumentModel]?
+    var planDocuments: [PlanDocumentModel]?
     let addFields: [AddFieldModel]?
     let authoriseFields: [AuthoriseFieldModel]?
     let registrationFields: [RegistrationFieldModel]?
