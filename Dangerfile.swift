@@ -50,7 +50,6 @@ xcov.report(
     scheme: 'binkapp beta',
     workspace: 'binkapp.xcworkspace',
     configuration: "Beta",
-    minimum_coverage_percentage: 75,
     only_project_targets: true
 )
 
