@@ -158,7 +158,7 @@ class PLRRewardDetailViewModelTests: XCTestCase {
         
         dateRedeemedString = String.fromTimestamp((accumulatorVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
         sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-        XCTAssertEqual(sut.redeemedDateString, "Redeemed 04 Sep 2018 17:56:40")
+        XCTAssertEqual(sut.redeemedDateString, dateRedeemedString)
     }
     
     func test_expiredDateString_is_correct() {
