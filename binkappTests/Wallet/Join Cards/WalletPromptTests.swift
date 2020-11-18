@@ -31,4 +31,16 @@ class WalletPromptTests: XCTestCase {
         XCTAssertEqual(addPaymentCardsWalletPrompt.body, "Collect rewards automatically for select loyalty cards by linking them to your payment cards.")
         XCTAssertEqual(loyaltyJoinPrompt.body, "Link this card to your payment cards to automatically collect rewards.")
     }
+    
+    func test_userDefaultsDismissKey_string() {
+        var userDefaultsDismiss = ""
+        if let email = Current.userManager.currentEmailAddress {
+            userDefaultsDismiss += "\(email)_"
+        }
+        
+        XCTAssertEqual(addPaymentCardsWalletPrompt.userDefaultsDismissKey, userDefaultsDismiss + "add_payment_card_prompt_was_dismissed")
+
+        let planName = loyaltyJoinPrompt.type.membershipPlan?.account?.planName ?? ""
+        XCTAssertEqual(loyaltyJoinPrompt.userDefaultsDismissKey, userDefaultsDismiss + "join_card_\(planName)_was_dismissed")
+    }
 }
