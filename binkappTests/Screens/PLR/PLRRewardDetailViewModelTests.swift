@@ -143,16 +143,20 @@ class PLRRewardDetailViewModelTests: XCTestCase {
     
     func test_issuedDateString_is_correctly_formatted() {
         var sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-        XCTAssertEqual(sut.issuedDateString, "Added 08 Feb 1970 14:33:40")
+        var dateIssuedString = String.fromTimestamp((stampsVoucher.dateIssued as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
+        XCTAssertEqual(sut.issuedDateString, dateIssuedString)
         
+        dateIssuedString = String.fromTimestamp((accumulatorVoucher.dateIssued as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
         sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-        XCTAssertEqual(sut.issuedDateString, "Added 09 Sep 2001 02:46:39")
+        XCTAssertEqual(sut.issuedDateString, dateIssuedString)
     }
     
     func test_redeemedDateString_is_correct() {
         var sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-        XCTAssertEqual(sut.redeemedDateString, "Redeemed 04 Sep 2018 17:55:00")
+        var dateRedeemedString = String.fromTimestamp((stampsVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
+        XCTAssertEqual(sut.redeemedDateString, dateRedeemedString)
         
+        dateRedeemedString = String.fromTimestamp((accumulatorVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
         sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
         XCTAssertEqual(sut.redeemedDateString, "Redeemed 04 Sep 2018 17:56:40")
     }
