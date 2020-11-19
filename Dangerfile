@@ -8,8 +8,7 @@
 # Generate report
 report = xcov.produce_report(
   scheme: 'binkapp beta',
-  workspace: 'binkapp.xcworkspace',
-  only_project_targets: true,
+  workspace: './binkapp.xcworkspace',
   xccov_file_direct_path: ENV['BITRISE_XCRESULT_PATH']
 )
 
