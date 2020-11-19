@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "fastlane"
 gem "rest-client"
-gem "danger"
+gem "danger-gitlab"
 gem "danger-xcov"
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
