@@ -12,37 +12,37 @@ protocol BrowseBrandsViewModelDelegate: class {
 }
 
 class BrowseBrandsViewModel {
-    private var membershipPlans = [CD_MembershipPlan]()
+    private var membershipPlans: [CD_MembershipPlan] = []
     
     weak var delegate: BrowseBrandsViewModelDelegate?
     var shouldShowNoResultsLabel: Bool {
-        return filteredPlans.isEmpty 
+        return filteredPlans.isEmpty
     }
     var searchText = "" {
         didSet {
             filterPlans()
         }
     }
-    var filteredPlans = [CD_MembershipPlan]()
+    var filteredPlans: [CD_MembershipPlan] = []
     
     var filters: [String] {
         return mapFilters(fromPlans: membershipPlans)
     }
-    var selectedFilters = [String]() {
+    var selectedFilters: [String] = [] {
         didSet {
             filterPlans()
         }
     }
     
     var existingCardsPlanIDs: [String]? {
-        return Current.wallet.membershipCards?.map { ($0.membershipPlan?.id ?? "")}
+        return Current.wallet.membershipCards?.map { ($0.membershipPlan?.id ?? "") }
     }
         
     init() {
         Current.database.performTask { context in
             let plans = context.fetchAll(CD_MembershipPlan.self)
             self.membershipPlans = plans.sorted(by: { (firstPlan, secondPlan) -> Bool in
-                (firstPlan.account?.companyName)! < (secondPlan.account?.companyName)!
+                (firstPlan.account?.companyName ?? "") < (secondPlan.account?.companyName ?? "")
             })
             self.selectedFilters = self.mapFilters(fromPlans: self.membershipPlans)
         }
@@ -129,20 +129,20 @@ class BrowseBrandsViewModel {
     }
     
     private func mapFilters(fromPlans plans: [CD_MembershipPlan]) -> [String] {
-        let filters = plans.map({ ($0.account?.category ?? "")})
+        let filters = plans.map({ ($0.account?.category ?? "") })
         return filters.uniq(source: filters)
     }
     
     private func filterPlans() {
         filteredPlans = []
         getMembershipPlans().forEach { (plan) in
-            guard let companyName = plan.account?.companyName, let category = plan.account?.category else {return}
+            guard let companyName = plan.account?.companyName, let category = plan.account?.category else { return }
             if searchText.isEmpty {
-                if selectedFilters.contains(category) && !filteredPlans.contains(plan){
+                if selectedFilters.contains(category) && !filteredPlans.contains(plan) {
                     filteredPlans.append(plan)
                 }
             } else {
-                if selectedFilters.contains(category) && companyName.localizedCaseInsensitiveContains(searchText) && !filteredPlans.contains(plan){
+                if selectedFilters.contains(category) && companyName.localizedCaseInsensitiveContains(searchText) && !filteredPlans.contains(plan) {
                     filteredPlans.append(plan)
                 }
             }

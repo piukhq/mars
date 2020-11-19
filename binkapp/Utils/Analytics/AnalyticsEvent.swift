@@ -68,7 +68,7 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .start(let journey):
             Current.onboardingTrackingId = UUID().uuidString
@@ -164,7 +164,7 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .addLoyaltyCardRequest(let request, let formPurpose):
             guard let planId = request.membershipPlan else { return nil }
@@ -316,7 +316,7 @@ enum PLLAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .pllPatch(let loyaltyCard, let paymentCard, let response):
             guard let paymentId = paymentCard.uuid else { return nil }
@@ -378,7 +378,7 @@ enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .localPointsCollectionSuccess(let membershipCard):
             guard let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }

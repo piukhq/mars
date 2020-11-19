@@ -33,8 +33,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     /// On launch, we want to return our locally persisted wallet before we go and get a refreshed copy.
     /// Should only be called once, when the tab bar is loaded and our wallet view controllers can listen for notifications.
     func launch() {
-        loadWallets(forType: .localLaunch, reloadPlans: false, isUserDriven: false) { [weak self] (success, error) in
-            self?.loadWallets(forType: .reload, reloadPlans: true, isUserDriven: false) { (success, error) in
+        loadWallets(forType: .localLaunch, reloadPlans: false, isUserDriven: false) { [weak self] (_, _) in
+            self?.loadWallets(forType: .reload, reloadPlans: true, isUserDriven: false) { (_, _) in
                 self?.refreshManager.start()
                 Current.pointsScrapingManager.refreshBalancesIfNecessary()
             }
@@ -45,7 +45,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     /// Should only be called from a pull to refresh.
     func reload() {
         /// Not nested in a refresh manager condition, as pull to refresh should always be permitted
-        loadWallets(forType: .reload, reloadPlans: true, isUserDriven: true) { [weak self] (success, error) in
+        loadWallets(forType: .reload, reloadPlans: true, isUserDriven: true) { [weak self] (success, _) in
             if success {
                 self?.refreshManager.resetAll()
                 Current.pointsScrapingManager.refreshBalancesIfNecessary()
@@ -73,7 +73,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     /// Called each time the app enters the foreground
     func refreshMembershipPlansIfNecessary() {
         if refreshManager.isActive && refreshManager.canRefreshPlans {
-            loadMembershipPlans(forceRefresh: true, isUserDriven: false) { [weak self] (success, error) in
+            loadMembershipPlans(forceRefresh: true, isUserDriven: false) { [weak self] (success, _) in
                 if success {
                     self?.refreshManager.resetPlansTimer()
                 }
@@ -93,7 +93,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     }
 
     var hasPaymentCards: Bool {
-        return paymentCards != nil && paymentCards?.count != 0
+        guard let paymentCards = paymentCards else { return false }
+        return !paymentCards.isEmpty
     }
 
     var hasValidPaymentCards: Bool {

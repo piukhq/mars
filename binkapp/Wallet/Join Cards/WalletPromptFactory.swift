@@ -9,7 +9,7 @@
 import Foundation
 import CardScan
 
-final class WalletPromptFactory {
+enum WalletPromptFactory {
     enum WalletType {
         case loyalty
         case payment

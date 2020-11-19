@@ -9,7 +9,7 @@ import UIKit
 import CardScan
 
 extension LayoutHelper {
-    struct settingsButton {
+    enum SettingsButton {
         static let widthRatio: CGFloat = 0.13
         static let height: CGFloat = 24
     }
@@ -18,7 +18,7 @@ extension LayoutHelper {
 class MainTabBarViewController: UITabBarController, BarBlurring {
     let viewModel: MainTabBarViewModel
     var selectedTabBarOption = Buttons.loyaltyItem.rawValue
-    var items = [UITabBarItem]()
+    var items: [UITabBarItem] = []
     lazy var blurBackground = defaultBlurredBackground()
     
     init(viewModel: MainTabBarViewModel) {

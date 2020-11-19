@@ -64,15 +64,6 @@ class AddOrJoinViewController: BinkTrackableViewController {
         addCardButton.translatesAutoresizingMaskIntoConstraints = false
         newCardButton.translatesAutoresizingMaskIntoConstraints = false
 
-        NSLayoutConstraint.activate([
-            addCardButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
-            addCardButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            newCardButton.topAnchor.constraint(equalTo: addCardButton.bottomAnchor, constant: LayoutHelper.PillButton.verticalSpacing),
-            newCardButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
-            newCardButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            newCardButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding)
-        ])
-        
         guard let cardType = membershipPlan.featureSet?.planCardType else { return }
         let storeView = LoyaltyPlanView()
         storeView.configure(for: .storeCell, cardType: cardType)
@@ -85,6 +76,7 @@ class AddOrJoinViewController: BinkTrackableViewController {
         plansStackView.addArrangedSubview(linkView)
 
         addCardButton.isHidden = !viewModel.shouldShowAddCardButton
+        newCardButton.isHidden = !viewModel.shouldShowNewCardButton
     }
 }
 

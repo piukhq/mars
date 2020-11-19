@@ -51,7 +51,6 @@ protocol BinkUserDefaults {
 }
 
 extension UserDefaults: BinkUserDefaults {
-
     enum Keys {
         case hasLaunchedWallet
         case userEmail
@@ -65,6 +64,7 @@ extension UserDefaults: BinkUserDefaults {
         case applyInAppReviewRules
         case membershipCardMostRecentTransaction(membershipCardId: String)
         case appLaunches
+        case hasPreviouslyLaunchedApp
         
         var keyValue: String {
             switch self {
@@ -89,9 +89,9 @@ extension UserDefaults: BinkUserDefaults {
             case .applyInAppReviewRules:
                 return "applyInAppReviewRules"
             case .membershipCardMostRecentTransaction(let cardId):
-                return "membershipCardMostRecentTransaction_cardId_\(cardId)"
-            case .appLaunches:
-                return "appLaunches"
+                return "membership_card_most_recent_transaction_\(cardId)"
+            case .hasPreviouslyLaunchedApp:
+                return "hasPreviouslyLaunchedApp"
             }
         }
     }

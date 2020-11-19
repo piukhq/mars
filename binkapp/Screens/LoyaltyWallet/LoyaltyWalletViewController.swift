@@ -45,7 +45,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             cell.configureUIWithViewModel(viewModel: cellViewModel, delegate: self)
             
             return cell
-            
         } else {
             // join card
             let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)

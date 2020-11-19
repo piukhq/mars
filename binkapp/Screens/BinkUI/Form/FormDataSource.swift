@@ -21,7 +21,6 @@ protocol FormDataSourceDelegate: NSObjectProtocol {
     // I don't particular like this being a data source delegate method, but do we have any other route from collection view cell to the view controller?
     func formDataSource(_ dataSource: FormDataSource, shouldPresentLoyaltyScannerForPlan plan: CD_MembershipPlan)
     func formDataSourceShouldPresentPaymentScanner(_ dataSource: FormDataSource)
-
 }
 
 extension FormDataSourceDelegate {
@@ -55,21 +54,21 @@ class FormDataSource: NSObject {
     
     typealias MultiDelegate = FormDataSourceDelegate & CheckboxViewDelegate & FormCollectionViewCellDelegate
     
-    private struct Constants {
+    private enum Constants {
         static let expiryYearsInTheFuture = 50
     }
     
     /// We need the data source to hold a reference to the plan for some forms so that we can pass it through delegates to other objects
     private(set) var membershipPlan: CD_MembershipPlan?
     
-    private(set) var fields = [FormField]()
-    private(set) var checkboxes = [CheckboxView]()
-    private var cellTextFields = [Int: UITextField]()
+    private(set) var fields: [FormField] = []
+    private(set) var checkboxes: [CheckboxView] = []
+    private var cellTextFields: [Int: UITextField] = [:]
     private var selectedCheckboxIndex = 0
     weak var delegate: MultiDelegate?
     
     var fullFormIsValid: Bool {
-        let formFieldsValid = fields.reduce(true, { $0 && $1.isValid() })
+        let formFieldsValid = fields.allSatisfy({ $0.isValid() })
         var checkboxesValid = true
         checkboxes.forEach { checkbox in
             if checkbox.columnKind == FormField.ColumnKind.planDocument || checkbox.columnKind == FormField.ColumnKind.none {
@@ -83,7 +82,7 @@ class FormDataSource: NSObject {
     }
     
     func currentFieldValues() -> [String: String] {
-        var values = [String: String]()
+        var values: [String: String] = [:]
         fields.forEach { values[$0.title.lowercased()] = $0.value }
         
         return values
@@ -159,7 +158,7 @@ extension FormDataSource {
             manualValidate: manualValidateBlock,
             /// It's fine to force unwrap here, as we are already guarding against the values being nil and we don't want to provide default values
             /// We will never reach the force unwrapping if either value is nil
-            forcedValue: model.month == nil || model.year == nil ? nil : "\(String(format: "%02d", model.month!))/\(model.year!)"
+            forcedValue: model.month == nil || model.year == nil ? nil : "\(String(format: "%02d", model.month ?? 0))/\(model.year ?? 0)"
         )
 
         let nameOnCardField = FormField(
@@ -241,7 +240,7 @@ extension FormDataSource {
             }
         }
         
-        if formPurpose == .add || formPurpose == .addFailed || formPurpose == .ghostCard {
+        if formPurpose == .add || formPurpose == .ghostCard {
             model.account?.formattedAddFields(omitting: [.barcode])?.sorted(by: { $0.order.intValue < $1.order.intValue }).forEach { field in
                 if field.fieldInputType == .checkbox {
                     let checkbox = CheckboxView(checked: false)
@@ -379,10 +378,9 @@ extension FormDataSource {
     }
     
     private func getPlanDocumentsCheckboxes(journey: PlanDocumentDisplayModel, membershipPlan: CD_MembershipPlan) -> [CheckboxView] {
-        var checkboxes = [CheckboxView]()
+        var checkboxes: [CheckboxView] = []
         
         membershipPlan.account?.formattedPlanDocuments?.forEach { field in
-                        
             let displayFields = field.formattedDisplay
             
             guard displayFields.contains(where: { $0.value == journey.rawValue }) else { return }
@@ -406,7 +404,7 @@ extension FormDataSource {
     }
 }
 
-//MARK: - Login
+// MARK: - Login
 
 extension FormDataSource {
     convenience init(accessForm: AccessForm) {
@@ -504,7 +502,7 @@ extension FormDataSource {
             let offersRange = baseMarketing.range(of: "preferences_prompt_highlight_offers".localized)
             let updatesRange = baseMarketing.range(of: "preferences_prompt_highlight_updates".localized)
             
-            let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
+            let attributes: [NSAttributedString.Key: Any]  = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
             
             attributedMarketing.addAttributes(attributes, range: rewardsRange)
             attributedMarketing.addAttributes(attributes, range: offersRange)
@@ -517,9 +515,9 @@ extension FormDataSource {
     }
     
     private func hyperlinkString(_ text: String, hyperlink: String) -> NSAttributedString {
-        let attributed = NSMutableAttributedString(string: text, attributes: [.font : UIFont.bodyTextSmall])
+        let attributed = NSMutableAttributedString(string: text, attributes: [.font: UIFont.bodyTextSmall])
         let countMinusHyperlinkString = text.count - hyperlink.count
-        attributed.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.blueAccent, .font : UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
+        attributed.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.blueAccent, .font: UIFont.checkboxText], range: NSMakeRange(countMinusHyperlinkString, hyperlink.count))
                 
         return attributed
     }

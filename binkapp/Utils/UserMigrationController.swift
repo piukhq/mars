@@ -10,8 +10,7 @@ import Foundation
 import JWTDecode
 
 struct UserMigrationController: UserServiceProtocol {
-    
-    private struct Constants {
+    private enum Constants {
         static let hasMigratedFromBinkLegacyKey = "hasMigratedFromBinkLegacyKey"
         static let internalDictKey = "BINKKeychainInternalDictionary"
         static let userClass = "BINKUser"
@@ -19,7 +18,7 @@ struct UserMigrationController: UserServiceProtocol {
         static let currentUserKey = "BINKCurrentUserKey"
     }
     
-    private var legacyToken: String? = nil
+    private var legacyToken: String?
     
     init() {
         legacyToken = retrieveBinkLegacyToken()
@@ -33,7 +32,7 @@ struct UserMigrationController: UserServiceProtocol {
         return Current.userDefaults.bool(forKey: Constants.hasMigratedFromBinkLegacyKey)
     }
     
-    func renewTokenFromLegacyAppIfPossible(completion: @escaping (Bool) -> ()) {
+    func renewTokenFromLegacyAppIfPossible(completion: @escaping (Bool) -> Void) {
         guard hasMigrated == false, let token = legacyToken else {
             completion(false)
             return
@@ -87,26 +86,27 @@ struct UserMigrationController: UserServiceProtocol {
     }
     
     private func retrieveBinkLegacyToken() -> String? {
-        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
-                                    kSecMatchLimit as String: kSecMatchLimitOne,
-                                    kSecReturnAttributes as String: true,
-                                    kSecAttrAccount as String: Constants.internalDictKey,
-                                    kSecReturnData as String: true]
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecReturnAttributes as String: true,
+            kSecAttrAccount as String: Constants.internalDictKey,
+            kSecReturnData as String: true
+        ]
         
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
         guard status != errSecItemNotFound else { return nil }
         guard status == errSecSuccess else { return nil }
         
-        guard let existingItem = item as? [String : Any], let data = existingItem[kSecValueData as String] as? Data else {
+        guard let existingItem = item as? [String: Any], let data = existingItem[kSecValueData as String] as? Data else {
             return nil
         }
         
         NSKeyedUnarchiver.setClass(User.self, forClassName: Constants.userClass)
         NSKeyedUnarchiver.setClass(AuthToken.self, forClassName: Constants.authTokenClass)
         
-        if let dict = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String : AnyObject],
-            let user = dict[Constants.currentUserKey] as? User {
+        if let dict = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String: AnyObject], let user = dict[Constants.currentUserKey] as? User {
             // If we were successful in mapping to our new class types
             return user.token.accessToken
         }
@@ -125,7 +125,7 @@ struct UserMigrationController: UserServiceProtocol {
     
     required init?(coder: NSCoder) {
         guard let token = coder.decodeObject(forKey: "token") as? AuthToken else {
-            fatalError()
+            fatalError("Could not decode token.")
         }
         
         self.token = token
@@ -141,7 +141,7 @@ struct UserMigrationController: UserServiceProtocol {
     
     required init?(coder: NSCoder) {
         guard let accessToken = coder.decodeObject(forKey: "accessToken") as? String else {
-            fatalError()
+            fatalError("Could not decode token.")
         }
         self.accessToken = accessToken
     }

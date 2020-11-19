@@ -97,7 +97,7 @@ extension WalletServiceProtocol {
         
         if let existingCard = existingMembershipCard {
             endpoint = .membershipCard(cardId: existingCard.id)
-            method = .put
+            method = .patch
         } else {
             endpoint = .membershipCards
             method = .post
@@ -216,7 +216,7 @@ extension WalletServiceProtocol {
             case .success(let response):
                 completion(.success(response))
             case .failure(let networkError):
-                if case .userFacingError(_) = networkError {
+                if case .userFacingError = networkError {
                     completion(.failure(.userFacingNetworkingError(networkError)))
                 } else {
                     completion(.failure(.failedToLinkMembershipCardToPaymentCard))

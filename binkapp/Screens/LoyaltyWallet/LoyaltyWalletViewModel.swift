@@ -12,9 +12,8 @@ import CoreData
 import CardScan
 
 class LoyaltyWalletViewModel: WalletViewModel {
-    
     typealias T = CD_MembershipCard
-
+    
     private let repository = LoyaltyWalletRepository()
 
     var walletPrompts: [WalletPrompt]? {
@@ -22,10 +21,10 @@ class LoyaltyWalletViewModel: WalletViewModel {
     }
     
     var cards: [CD_MembershipCard]? {
-         return Current.wallet.membershipCards
-     }
-
-    func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> ()) {
+        return Current.wallet.membershipCards
+    }
+    
+    func toBarcodeViewController(indexPath: IndexPath, completion: @escaping () -> Void) {
         guard let card = cards?[indexPath.row] else {
             return
         }
@@ -33,12 +32,12 @@ class LoyaltyWalletViewModel: WalletViewModel {
         let navigationRequest = ModalNavigationRequest(viewController: viewController, completion: completion)
         Current.navigate.to(navigationRequest)
     }
-
+    
     func toCardDetail(for card: CD_MembershipCard) {
         let navigationRequest = PushNavigationRequest(viewController: ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card))
         Current.navigate.to(navigationRequest)
     }
-
+    
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
         case .loyaltyJoin(let membershipPlan):
@@ -57,7 +56,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
             }
         }
     }
-
+    
     func showDeleteConfirmationAlert(card: CD_MembershipCard, onCancel: @escaping () -> Void) {
         let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
             guard let self = self else { return }

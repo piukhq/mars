@@ -14,7 +14,7 @@ struct MembershipCardModel: Codable {
     let membershipPlan: Int?
     let membershipTransactions: [MembershipTransaction]?
     let status: MembershipCardStatusModel?
-    let card: CardModel?
+    var card: CardModel?
     let images: [MembershipCardImageModel]?
     let account: MembershipCardAccountModel?
     let paymentCards: [LinkedCardResponse]?

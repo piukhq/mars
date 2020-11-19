@@ -52,11 +52,11 @@ class LoyaltyPlanView: CustomView {
     
     private func configureDescription(for planType: PlanType, cardType: CD_FeatureSet.PlanCardType) {
         switch planType {
-            case .storeCell:
+        case .storeCell:
             descriptionLabel.text = "add_join_screen_store_description".localized
-            case .viewCell:
+        case .viewCell:
             descriptionLabel.text = cardType.rawValue > 0 ? "add_join_screen_view_description".localized : "add_join_screen_view_description_inactive".localized
-            case .linkCell:
+        case .linkCell:
             descriptionLabel.text = cardType.rawValue > 1 ? "add_join_screen_link_description".localized : "add_join_screen_link_description_inactive".localized
         }
     }
