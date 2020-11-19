@@ -17,11 +17,9 @@ ${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework
 ${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework
 ${PODS_ROOT}/ZendeskCommonUISDK/CommonUISDK.framework
 ${PODS_ROOT}/ZendeskCoreSDK/ZendeskCoreSDK.framework
-${PODS_ROOT}/ZendeskCoreSDK/ZendeskCoreSDK.framework.dSYM
 ${PODS_ROOT}/ZendeskMessagingAPISDK/MessagingAPI.framework
 ${PODS_ROOT}/ZendeskMessagingSDK/MessagingSDK.framework
 ${PODS_ROOT}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework
-${PODS_ROOT}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework.dSYM
 ${PODS_ROOT}/ZendeskSupportProvidersSDK/SupportProvidersSDK.framework
 ${PODS_ROOT}/ZendeskSupportSDK/SupportSDK.framework
 ${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework

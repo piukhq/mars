@@ -7,26 +7,18 @@
 
 import UIKit
 
-class LoyaltyWalletViewController: UIViewController
-{
-
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
-  {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-  }
-  
-  required init?(coder aDecoder: NSCoder)
-  {
-    super.init(coder: aDecoder)
-  }
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-  {
+class LoyaltyWalletViewController: UIViewController {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
     
-  }
-  
-  override func viewDidLoad()
-  {
-    super.viewDidLoad()
-  }
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {}
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }

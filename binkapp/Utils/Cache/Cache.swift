@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Cache {
+enum Cache {
     static let sharedImageCache = NSCache<NSString, UIImage>()
 
     static func clearAll() {

@@ -25,7 +25,7 @@ class PreferencesRepository: UserServiceProtocol {
     }
     
     func putPreferences(preferences: [String: String], onSuccess: @escaping () -> Void, onError: @escaping (BinkError) -> Void) {
-        setPreferences(params: preferences) { (success, error) in
+        setPreferences(params: preferences) { (_, error) in
             if let error = error {
                 onError(error)
                 return

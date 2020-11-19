@@ -9,7 +9,6 @@
 import UIKit
 
 class RegisterViewController: BaseFormViewController, UserServiceProtocol {
-
     private lazy var continueButton: BinkGradientButton = {
         let button = BinkGradientButton(frame: .zero)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +50,6 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     @objc func continueButtonTapped() {
-        
         let fields = dataSource.currentFieldValues()
                 
         let loginRequest = LoginRegisterRequest(
@@ -102,7 +100,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     func updatePreferences(checkboxes: [CheckboxView]) {
-        var params = [String: String]()
+        var params: [String: String] = [:]
         
         checkboxes.forEach {
             if let columnName = $0.columnName {
@@ -110,7 +108,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
             }
         }
         
-        guard params.count > 0 else { return }
+        guard !params.isEmpty else { return }
         
         setPreferences(params: params)
     }

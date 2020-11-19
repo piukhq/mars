@@ -9,7 +9,6 @@
 import UIKit
 
 class DebugMenuTableViewCell: UITableViewCell {
-    
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
     

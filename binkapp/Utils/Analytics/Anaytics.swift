@@ -17,7 +17,7 @@ protocol AnalyticsTrackable {
 
 /// Convenience class wrapping access to the app's current tracking tool.
 /// Classes that conform to AnalyticsTrackable should call this method passing their trackableEvent and additionalTrackingData properties
-struct BinkAnalytics {
+enum BinkAnalytics {
     enum UserPropertyKey: String {
         case osVersion
         case networkStrength

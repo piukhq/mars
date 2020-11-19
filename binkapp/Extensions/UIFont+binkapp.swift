@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 extension UIFont {
-    
     class var headline: UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 25.0) ?? UIFont()
     }

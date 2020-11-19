@@ -17,5 +17,4 @@ class DetailNavigationTitleView: UIView {
         detailLabel.text = detail
         detailLabel.isHidden = detail == nil
     }
-
 }

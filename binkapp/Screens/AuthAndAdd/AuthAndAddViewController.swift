@@ -8,8 +8,8 @@
 import UIKit
 import NotificationCenter
 
-class AuthAndAddViewController: BaseFormViewController {    
-    private struct Constants {
+class AuthAndAddViewController: BaseFormViewController {
+    private enum Constants {
         static let postCollectionViewPadding: CGFloat = 15.0
         static let cardPadding: CGFloat = 30.0
         static let cellErrorLabelSafeSpacing: CGFloat = 60.0
@@ -20,7 +20,7 @@ class AuthAndAddViewController: BaseFormViewController {
         brandHeader.heightAnchor.constraint(equalToConstant: 110).isActive = true
         return brandHeader
     }()
-
+    
     private lazy var floatingButtons: BinkPrimarySecondaryButtonView = {
         let floatingButtons = BinkPrimarySecondaryButtonView()
         floatingButtons.configure(primaryButtonTitle: viewModel.buttonTitle, secondaryButtonTitle: nil)
@@ -79,7 +79,7 @@ class AuthAndAddViewController: BaseFormViewController {
         NSLayoutConstraint.activate([
             floatingButtons.leftAnchor.constraint(equalTo: view.leftAnchor),
             floatingButtons.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
+            floatingButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding)
         ])
     }
     
@@ -134,14 +134,14 @@ extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
     func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
         //TODO: Re-enable this functionality at a later date, this has been disabled for MS1: 10/02/19 because the 1.1.4 API doesn't consistently support ghost card registration
         
-//        let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
-//        guard (fields?.contains(where: { $0.value == LinkingSupportType.registration.rawValue }) ?? false) else {
-            viewModel.toReusableTemplate(title: "registration_unavailable_title".localized, description: "registration_unavailable_description".localized)
-//            return
-//        }
-//        viewModel.reloadWithGhostCardFields()
-//        }
-//        viewModel.reloadWith(newFormPuropse: .ghostCard)
+        //        let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
+        //        guard (fields?.contains(where: { $0.value == LinkingSupportType.registration.rawValue }) ?? false) else {
+        viewModel.toReusableTemplate(title: "registration_unavailable_title".localized, description: "registration_unavailable_description".localized)
+        //            return
+        //        }
+        //        viewModel.reloadWithGhostCardFields()
+        //        }
+        //        viewModel.reloadWith(newFormPuropse: .ghostCard)
     }
 }
 

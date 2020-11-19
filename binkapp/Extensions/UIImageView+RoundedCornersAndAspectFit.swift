@@ -18,7 +18,7 @@ extension UIImageView {
             var drawingRect: CGRect = bounds
 
             if boundsScale > imageScale {
-                drawingRect.size.width =  drawingRect.size.height * imageScale
+                drawingRect.size.width = drawingRect.size.height * imageScale
                 drawingRect.origin.x = (bounds.size.width - drawingRect.size.width) / 2
             } else {
                 drawingRect.size.height = drawingRect.size.width / imageScale

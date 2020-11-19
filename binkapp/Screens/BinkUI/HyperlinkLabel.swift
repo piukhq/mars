@@ -13,7 +13,7 @@ protocol HyperlinkLabelDelegate: AnyObject {
 }
 
 class HyperlinkLabel: UILabel {
-    private let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
+    private let tapGesture = UITapGestureRecognizer()
     private var range: NSRange?
     private weak var delegate: HyperlinkLabelDelegate?
     
@@ -25,7 +25,7 @@ class HyperlinkLabel: UILabel {
         let attributedString = NSMutableAttributedString(string: text)
         range = (text as NSString).range(of: hyperlink)
         if let range = range {
-            attributedString.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: range)
+            attributedString.addAttributes([.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent], range: range)
             attributedText = attributedString
         }
     }
@@ -47,7 +47,8 @@ extension UITapGestureRecognizer {
         let textContainer = NSTextContainer(size: CGSize.zero)
 
         let mutableAttribString = NSMutableAttributedString(attributedString: attributedText)
-        mutableAttribString.addAttributes([.font: label.font!], range: NSRange(location: 0, length: attributedText.length))
+        guard let font = label.font else { return false }
+        mutableAttribString.addAttributes([.font: font], range: NSRange(location: 0, length: attributedText.length))
         let textStorage = NSTextStorage(attributedString: mutableAttribString)
 
         layoutManager.addTextContainer(textContainer)

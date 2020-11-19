@@ -15,7 +15,7 @@ import CardScan
 import Keys
 import SafariServices
 
-@UIApplicationMain 
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     var window: UIWindow?
     var stateMachine: RootStateMachine?
@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
 
         addObservers()
         InAppReviewUtility.recordAppLaunch()
-    
+        Current.userManager.clearKeychainIfNecessary()
         return true
     }
     

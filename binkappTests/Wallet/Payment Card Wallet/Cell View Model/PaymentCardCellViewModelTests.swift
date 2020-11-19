@@ -11,11 +11,11 @@ import CoreData
 @testable import binkapp
 
 class PaymentCardCellViewModelTests: XCTestCase {
-
     var basePaymentCard: PaymentCardModel!
 
     override func setUp() {
-        basePaymentCard = PaymentCardModel(apiId: nil, membershipCards: nil, status: nil, card: PaymentCardCardResponse(), images: nil, account: PaymentCardAccountResponse())
+        super.setUp()
+        basePaymentCard = PaymentCardModel(apiId: nil, membershipCards: nil, status: nil, card: PaymentCardCardResponse(), account: PaymentCardAccountResponse())
     }
 
     func test_nameOnCard() {
@@ -52,7 +52,7 @@ class PaymentCardCellViewModelTests: XCTestCase {
     func test_paymentCardIsLinkedToMembershipCards_isCorrect_whenLinked() {
         basePaymentCard.membershipCards = [
             LinkedCardResponse(id: 1, activeLink: true),
-            LinkedCardResponse(id: 1, activeLink: false),
+            LinkedCardResponse(id: 1, activeLink: false)
         ]
         let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
         XCTAssertTrue(sut.paymentCardIsLinkedToMembershipCards)
@@ -66,7 +66,7 @@ class PaymentCardCellViewModelTests: XCTestCase {
     func test_linkedText_ifLinkedToOneMembershipCard() {
         basePaymentCard.membershipCards = [
             LinkedCardResponse(id: 1, activeLink: true),
-            LinkedCardResponse(id: 2, activeLink: false),
+            LinkedCardResponse(id: 2, activeLink: false)
         ]
         let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
         XCTAssertEqual(sut.linkedText, "Linked to 1 loyalty card")
@@ -76,7 +76,7 @@ class PaymentCardCellViewModelTests: XCTestCase {
         basePaymentCard.membershipCards = [
             LinkedCardResponse(id: 1, activeLink: true),
             LinkedCardResponse(id: 2, activeLink: true),
-            LinkedCardResponse(id: 3, activeLink: false),
+            LinkedCardResponse(id: 3, activeLink: false)
         ]
         let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
         XCTAssertEqual(sut.linkedText, "Linked to 2 loyalty cards")
@@ -95,5 +95,4 @@ class PaymentCardCellViewModelTests: XCTestCase {
         let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
         XCTAssertTrue(sut.paymentCardIsExpired)
     }
-
 }

@@ -10,8 +10,7 @@ import Foundation
 import Keys
 import SwiftyRSA
 
-final class SecureUtility {
-
+enum SecureUtility {
     static func getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String? {
         guard let pan = paymentCard.fullPan?.replacingOccurrences(of: " ", with: "") else { return nil }
         guard let month = paymentCard.month else { return nil }

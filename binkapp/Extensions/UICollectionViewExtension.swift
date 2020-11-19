@@ -9,7 +9,6 @@
 import UIKit
 
 public extension UICollectionView {
-    
     // MARK: - Cell
 
     func register<T: UICollectionViewCell>(_: T.Type, asNib: Bool = false) {

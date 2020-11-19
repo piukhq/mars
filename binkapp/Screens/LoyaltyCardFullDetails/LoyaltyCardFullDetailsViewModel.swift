@@ -25,7 +25,7 @@ class LoyaltyCardFullDetailsViewModel {
     init(membershipCard: CD_MembershipCard, informationRowFactory: WalletCardDetailInformationRowFactory) {
         self.membershipCard = membershipCard
         self.informationRowFactory = informationRowFactory
-    }  
+    }
     
     var brandName: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
@@ -53,7 +53,7 @@ class LoyaltyCardFullDetailsViewModel {
     var shouldShowOfferTiles: Bool {
         // If there are no images, there are no offer tiles! Return early
         guard let planImages = membershipCard.membershipPlan?.imagesSet else { return false }
-        return planImages.filter({ $0.type?.intValue == 2}).count != 0
+        return !planImages.filter({ $0.type?.intValue == 2 }).isEmpty
     }
     
     var brandHeaderAspectRatio: CGFloat {
@@ -182,14 +182,14 @@ class LoyaltyCardFullDetailsViewModel {
     
     func getOfferTileImageUrls() -> [String]? {
         let planImages = membershipCard.membershipPlan?.imagesSet
-        return planImages?.filter({ $0.type?.intValue == 2}).compactMap { $0.url }
+        return planImages?.filter({ $0.type?.intValue == 2 }).compactMap { $0.url }
     }
     
     // MARK: PLR
 
     
     var shouldShouldPLR: Bool {
-        return membershipCard.membershipPlan?.isPLR ?? false && membershipCard.vouchers.count != 0
+        return membershipCard.membershipPlan?.isPLR ?? false && !membershipCard.vouchers.isEmpty
     }
     
     var activeVouchersCount: Int {

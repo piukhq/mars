@@ -8,6 +8,7 @@
 
 import Foundation
 
+// swiftlint:disable nesting
 struct SpreedlyRequest: Codable {
     struct PaymentMethod: Codable {
         struct CreditCard: Codable {

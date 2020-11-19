@@ -14,7 +14,6 @@ struct SettingsSection {
 }
 
 struct SettingsRow {
-
     typealias VoidClosure = () -> Void
     
     enum RowType: String {

@@ -10,7 +10,6 @@ import XCTest
 @testable import binkapp
 
 class SecureUtilityTests: XCTestCase {
-
     func test_md5() {
         let stringToHash = "This is an md5 hashing test"
         let expectedHash = "cee1ac6a0563980b32124db54cb53d7a"

@@ -22,4 +22,3 @@ class OfferTileView: CustomView {
         }
     }
 }
-

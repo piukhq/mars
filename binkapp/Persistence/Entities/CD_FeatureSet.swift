@@ -18,4 +18,8 @@ open class CD_FeatureSet: _CD_FeatureSet {
     var formattedLinkingSupport: [CD_LinkingSupport] {
         return linkingSupport.allObjects as? [CD_LinkingSupport] ?? []
     }
+    
+    func hasLinkingSupportForType(_ type: LinkingSupportType) -> Bool {
+        return formattedLinkingSupport.contains { $0.value == type.rawValue }
+    }
 }

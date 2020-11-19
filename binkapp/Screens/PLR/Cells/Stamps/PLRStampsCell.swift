@@ -9,7 +9,7 @@
 import UIKit
 
 class PLRStampsCell: PLRBaseCollectionViewCell {
-    struct Constants {
+    enum Constants {
         static let stampViewWidth: CGFloat = 24
         static let interimSpacing: CGFloat = 12
     }

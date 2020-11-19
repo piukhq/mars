@@ -2,6 +2,8 @@ import XCTest
 import CoreData
 @testable import binkapp
 
+// swiftlint:disable all
+
 class DatabaseTests: XCTestCase {
 
     // MARK: - Setup

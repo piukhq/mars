@@ -12,10 +12,9 @@ import ZendeskCoreSDK
 import SupportSDK
 
 class SettingsViewController: BinkTrackableViewController, BarBlurring {
-    
     // MARK: - Helpers
     
-    private struct Constants {
+    private enum Constants {
         static let rowHeight: CGFloat = 88
         static let headerHeight: CGFloat = 50
         static let privacyPolicyUrl = "https://bink.com/privacy-policy/"
@@ -79,7 +78,7 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
         
         let footerView = SettingsTableViewFooter(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: SettingsTableViewFooter.height))
@@ -106,7 +105,6 @@ class SettingsViewController: BinkTrackableViewController, BarBlurring {
 }
 
 extension SettingsViewController: UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.sectionsCount
     }
@@ -148,7 +146,6 @@ extension SettingsViewController: UITableViewDelegate {
             switch rowData.action {
             case let .customAction(action):
                 action()
-                break
             case let .launchSupport(service):
                 switch service {
                 case .faq:
@@ -167,12 +164,10 @@ extension SettingsViewController: UITableViewDelegate {
                 case is SettingsViewController.Type:
                     let vc = SettingsViewController(viewModel: viewModel)
                     present(vc, animated: true)
-                    break
                 case is DebugMenuTableViewController.Type:
                     let viewController = ViewControllerFactory.makeDebugViewController()
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
-                    break
                 case is PreferencesViewController.Type:
                     let viewController = PreferencesViewController(viewModel: PreferencesViewModel())
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
@@ -183,22 +178,17 @@ extension SettingsViewController: UITableViewDelegate {
                     Current.navigate.to(navigationRequest)
                 default:
                     print("Unsupported VC for presentation")
-                    break
                 }
             case .pushToReusable(let screen):
                 switch screen {
                 case .securityAndPrivacy:
                     toSecurityAndPrivacyVC()
-                    break
                 case .howItWorks:
                     toHowItWorksVC()
-                    break
                 case .privacyPolicy:
                     presentWebView(url: Constants.privacyPolicyUrl)
-                    break
                 case .termsAndConditions:
                     presentWebView(url: Constants.termsAndConditionsUrl)
-                    break
                 }
             case .logout:
                 let alert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)

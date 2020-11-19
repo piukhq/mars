@@ -21,5 +21,4 @@ class DebugSecondaryPlanColorCell: UICollectionViewCell {
         planLabel.text = plan.account?.companyName
         planLabel.textColor = primaryColor.isLight(threshold: 0.8) ? .black : .white
     }
-    
 }
