@@ -418,7 +418,7 @@ enum InAppReviewAnalyticsEvent: BinkAnalyticsEvent {
     case time
 
     var name: String {
-        return "in-app-review-request"
+        return "in_app_review_request"
     }
 
     var data: [String : Any]? {
