@@ -259,6 +259,7 @@
 		CE3878C32563FC62006BAC11 /* BarcodeViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878C22563FC62006BAC11 /* BarcodeViewControllerMock.swift */; };
 		CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */; };
 		CE3878D7256510CC006BAC11 /* WalletPromptMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */; };
+		CE387AA6256574EF006BAC11 /* BrandHeaderViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */; };
 		CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */; };
 		CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
@@ -266,6 +267,7 @@
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
 		CED69E6B253D7A5700A4CA21 /* HyperlinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */; };
 		CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF389EA255D72E90063C718 /* DateExtensionTests.swift */; };
+		CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */; };
 		DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB088544234FD8A30041A67A /* PLLScreenRepository.swift */; };
 		DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4D8EAC2440864C0085595D /* SettingsViewModelTests.swift */; };
 		DB4D8EAF24471FF00085595D /* SettingsFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4D8EAE24471FF00085595D /* SettingsFactoryMock.swift */; };
@@ -785,6 +787,8 @@
 		CE3878C22563FC62006BAC11 /* BarcodeViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewControllerMock.swift; sourceTree = "<group>"; };
 		CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptTests.swift; sourceTree = "<group>"; };
 		CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptMock.swift; sourceTree = "<group>"; };
+		CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderViewTests.swift; sourceTree = "<group>"; };
+		CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderViewMock.swift; sourceTree = "<group>"; };
 		CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskTickets.swift; sourceTree = "<group>"; };
 		CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCodeVisualiser.swift; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
@@ -1955,6 +1959,7 @@
 		CE387A3925656E75006BAC11 /* BinkUI */ = {
 			isa = PBXGroup;
 			children = (
+				CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */,
 			);
 			path = BinkUI;
 			sourceTree = "<group>";
@@ -2295,6 +2300,7 @@
 				CE3878522562EF16006BAC11 /* BarcodeViewModelMock.swift */,
 				CE3878C22563FC62006BAC11 /* BarcodeViewControllerMock.swift */,
 				CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */,
+				CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -3255,6 +3261,7 @@
 				3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
 				BDB0186C232D96EB00BFFA18 /* BaseFormViewController.swift in Sources */,
+				CE387AA6256574EF006BAC11 /* BrandHeaderViewMock.swift in Sources */,
 				EFA5F71C2379A7C70027AB80 /* _CD_MembershipPlanAccount.swift in Sources */,
 				EF46E286235E007300BA2CAF /* OnboardingViewModel.swift in Sources */,
 				B726335123058E2300951037 /* TierModel.swift in Sources */,
@@ -3349,6 +3356,7 @@
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,
+				CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */,
 				EF586FE52357A90C000917B6 /* PaymentCardCellViewModelTests.swift in Sources */,
 				DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */,
 				CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */,
