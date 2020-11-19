@@ -13,9 +13,8 @@ class BrandHeaderViewMock {
     
     func configure(plan: MembershipPlanModel?) {
         guard let membershipPlan = plan else { return }
-        
         loyaltyPlanButton = BinkInfoButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        
+
         if let planName = membershipPlan.account?.planName {
             loyaltyPlanButton.setTitle("\(planName) info", for: .normal)
             loyaltyPlanButton.setImage(UIImage(named: "iconsChevronRight")?.withRenderingMode(.alwaysTemplate), for: .normal)
