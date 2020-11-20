@@ -163,6 +163,7 @@
 		70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86779248E76C9001ED282 /* WebScrapingUtility.swift */; };
 		70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */; };
 		70E8E4AA256712D80027A244 /* CoreDataTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */; };
+		70E8E5A72567FB690027A244 /* OptionalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E5A62567FB690027A244 /* OptionalExtension.swift */; };
 		92CE3430695A6558F2EC1793 /* Pods_binkappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F65555E3DA76BDC3C3CDF35 /* Pods_binkappUITests.framework */; };
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
 		96F22E022508B6060009951B /* SentryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F22E012508B6060009951B /* SentryService.swift */; };
@@ -674,6 +675,7 @@
 		70E86779248E76C9001ED282 /* WebScrapingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtility.swift; sourceTree = "<group>"; };
 		70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModelTests.swift; sourceTree = "<group>"; };
 		70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTestable.swift; sourceTree = "<group>"; };
+		70E8E5A62567FB690027A244 /* OptionalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalExtension.swift; sourceTree = "<group>"; };
 		73A4EB9236825CAA23208015 /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		747EE940A8617CF70F3CD693 /* Pods-binkappUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.debug.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7C1A952F8EB9E33671155804 /* Pods-binkappUITests.nightly.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.nightly.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.nightly.xcconfig"; sourceTree = "<group>"; };
@@ -1791,6 +1793,7 @@
 				EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */,
 				BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */,
 				EFD602F0243E11B2003AC746 /* UINavigationControllerExtension.swift */,
+				70E8E5A62567FB690027A244 /* OptionalExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3142,6 +3145,7 @@
 				3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */,
 				BDBAA1BA235E1BBB00087E12 /* SettingsTableViewHeader.swift in Sources */,
 				EFA5F6D12379A53B0027AB80 /* VoucherBurnModel.swift in Sources */,
+				70E8E5A72567FB690027A244 /* OptionalExtension.swift in Sources */,
 				EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */,
 				EFA5F7152379A7C70027AB80 /* _CD_Tier.swift in Sources */,
 				BD99D2D8234FDF2C00823FC4 /* SettingsViewController.swift in Sources */,

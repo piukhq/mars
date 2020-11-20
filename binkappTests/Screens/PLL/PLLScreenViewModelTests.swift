@@ -33,12 +33,12 @@ class PLLScreenViewModelTests: XCTestCase, CoreDataTestable {
 
     // MARK: - Empty wallet
 
-    func test_activePaymentCards_returnEmpty_whenNoneHaveBeenAdded() {
-        XCTAssertEqual(Self.baseSut.activePaymentCards, [])
+    func test_activePaymentCards_returnsNilOrEmpty_whenNoneHaveBeenAdded() {
+        XCTAssertTrue(Self.baseSut.activePaymentCards.isNilOrEmpty)
     }
 
-    func test_pendingPaymentCards_returnEmpty_whenNoneHaveBeenAdded() {
-        XCTAssertEqual(Self.baseSut.pendingPaymentCards, [])
+    func test_pendingPaymentCards_returnsNil_whenNoneHaveBeenAdded() {
+        XCTAssertTrue(Self.baseSut.pendingPaymentCards.isNilOrEmpty)
     }
 
     func test_hasActivePaymentCards_returnsFalse_whenNoneHaveBeenAdded() {
