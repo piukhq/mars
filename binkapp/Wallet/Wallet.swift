@@ -58,7 +58,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     func reloadWalletsIfNecessary(willPerformRefresh: (Bool) -> Void) {
         if refreshManager.isActive && refreshManager.canRefreshAccounts {
             willPerformRefresh(true)
-            loadWallets(forType: .reload, reloadPlans: false, isUserDriven: false) { [weak self] (success, error) in
+            loadWallets(forType: .reload, reloadPlans: false, isUserDriven: false) { [weak self] (success, _) in
                 if success {
                     self?.refreshManager.resetAccountsTimer()
                     Current.pointsScrapingManager.refreshBalancesIfNecessary()

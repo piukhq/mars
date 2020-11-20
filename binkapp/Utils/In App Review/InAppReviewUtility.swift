@@ -44,7 +44,7 @@ struct TransactionsHistoryInAppReviewableJourney: InAppReviewableJourney {
     typealias J = Self
 }
 
-struct InAppReviewUtility {
+enum InAppReviewUtility {
     static let minimumMembershipCards = 4
     static let minimumAppLaunches = 10
     static let minimumDaysSinceFirstLaunch = 2
