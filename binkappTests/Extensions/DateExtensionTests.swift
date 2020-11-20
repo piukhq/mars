@@ -45,7 +45,7 @@ class DateExtensionTests: XCTestCase {
         XCTAssertEqual(currentDate?.getFormattedString(format: .dayMonthYear), "12 November 2020")
         XCTAssertEqual(currentDate?.getFormattedString(format: .dayShortMonthYear), "12 Nov 2020")
         XCTAssertEqual(currentDate?.getFormattedString(format: .dayShortMonthYear24HourSecond), "12 Nov 2020 10:44:00")
-        XCTAssertEqual(currentDate?.getFormattedString(format: .dayShortMonthYearWithSlash), "12/11/2020") 
+        XCTAssertEqual(currentDate?.getFormattedString(format: .dayShortMonthYearWithSlash), "12/11/2020")
     }
     
     func test_make_date_from_components() {

@@ -14,7 +14,7 @@ enum WalletViewControllerConstants {
     static let dotViewTopPadding: CGFloat = 3
 }
 
-class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring {
+class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring, InAppReviewable {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +78,11 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
             self.refreshControl.endRefreshing()
         }
         
-        Current.wallet.reloadWalletsIfNecessary()
+        Current.wallet.reloadWalletsIfNecessary { willPerformRefresh in
+            if willPerformRefresh, InAppReviewUtility.canRequestReviewBasedOnUsage {
+                requestInAppReview()
+            }
+        }
         configureLoadingIndicator()
         
         /// In case the Zendesk SDK is slow to return a state, we should configure the navigation item to a default state

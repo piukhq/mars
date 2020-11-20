@@ -95,6 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
 
         addObservers()
+        InAppReviewUtility.recordAppLaunch()
         Current.userManager.clearKeychainIfNecessary()
         return true
     }
@@ -105,6 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         Current.wallet.refreshMembershipPlansIfNecessary()
+        InAppReviewUtility.recordAppLaunch()
     }
 
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
