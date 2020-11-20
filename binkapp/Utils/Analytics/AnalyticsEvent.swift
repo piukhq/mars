@@ -421,7 +421,7 @@ enum InAppReviewAnalyticsEvent: BinkAnalyticsEvent {
         return "in_app_review_request"
     }
 
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .add:
             return [

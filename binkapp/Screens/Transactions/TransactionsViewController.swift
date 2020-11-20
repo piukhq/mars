@@ -104,8 +104,7 @@ class TransactionsViewController: BinkTrackableViewController, InAppReviewable {
         }
 
         if viewModel.shouldRequestInAppReview {
-            /// We only begin this journey here because we need it to be in progress for tracking to take place, but don't want it interfering with other journeys.
-            TimeAndUsageBasedInAppReviewableJourney().begin()
+            TransactionsHistoryInAppReviewableJourney().begin()
             requestInAppReview()
         }
     }
