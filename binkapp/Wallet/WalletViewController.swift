@@ -80,6 +80,7 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         
         Current.wallet.reloadWalletsIfNecessary { willPerformRefresh in
             if willPerformRefresh, InAppReviewUtility.canRequestReviewBasedOnUsage {
+                TimeAndUsageBasedInAppReviewableJourney().begin()
                 requestInAppReview()
             }
         }
