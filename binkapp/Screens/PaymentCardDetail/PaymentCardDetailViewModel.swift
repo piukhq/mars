@@ -58,7 +58,7 @@ class PaymentCardDetailViewModel {
         case .active:
             return "pcd_active_card_title".localized
         case .pending:
-            return paymentCard.isExpired() ? "pcd_failed_card_title".localized : "pcd_pending_card_title".localized
+            return paymentCard.isExpired ? "pcd_failed_card_title".localized : "pcd_pending_card_title".localized
         case .failed:
             return "pcd_failed_card_title".localized
         }
@@ -69,7 +69,7 @@ class PaymentCardDetailViewModel {
         case .active:
             return "pcd_active_card_description".localized
         case .pending:
-            return paymentCard.isExpired() ? "pcd_failed_card_description".localized : "pcd_pending_card_description".localized
+            return paymentCard.isExpired ? "pcd_failed_card_description".localized : "pcd_pending_card_description".localized
         case .failed:
             return "pcd_failed_card_description".localized
         }
@@ -121,7 +121,7 @@ class PaymentCardDetailViewModel {
     }
     
     var shouldShowCardAddedLabel: Bool {
-        return paymentCardStatus == .pending && !paymentCard.isExpired()
+        return paymentCardStatus == .pending && !paymentCard.isExpired
     }
 
     var shouldShowAddedLoyaltyCardTableView: Bool {

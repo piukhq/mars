@@ -12,7 +12,7 @@ open class CD_PaymentCard: _CD_PaymentCard, WalletCardProtocol {
         return PaymentCardStatus(rawValue: status ?? "") ?? .pending
     }
 
-    func isExpired() -> Bool {
+    var isExpired: Bool {
         guard let card = card,
             let expiryYear = card.year,
             let expiryMonth = card.month else {

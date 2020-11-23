@@ -99,7 +99,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 
     var hasValidPaymentCards: Bool {
         guard let paymentCards = paymentCards else { return false }
-        let validPaymentCards = paymentCards.filter { !$0.isExpired() }
+        let validPaymentCards = paymentCards.filter { !$0.isExpired }
         return !validPaymentCards.isEmpty
     }
 
