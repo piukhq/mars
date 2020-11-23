@@ -18,7 +18,7 @@ class VideoFeed {
     private var setupResult: SessionSetupResult = .success
     var videoDeviceInput: AVCaptureDeviceInput!
     var videoDevice: AVCaptureDevice?
-    
+    var videoDeviceConnection: AVCaptureConnection?
     var torch: Torch?
     
     func pauseSession() {
@@ -48,12 +48,12 @@ class VideoFeed {
         }
     }
     
-    func setup(captureDelegate: AVCaptureVideoDataOutputSampleBufferDelegate, completion: @escaping ((_ success: Bool) -> Void)) {
-        sessionQueue.async { self.configureSession(captureDelegate: captureDelegate, completion: completion) }
+    func setup(captureDelegate: AVCaptureVideoDataOutputSampleBufferDelegate, initialVideoOrientation: AVCaptureVideoOrientation, completion: @escaping ((_ success: Bool) -> Void)) {
+        sessionQueue.async { self.configureSession(captureDelegate: captureDelegate, initialVideoOrientation: initialVideoOrientation, completion: completion) }
     }
     
     
-    func configureSession(captureDelegate: AVCaptureVideoDataOutputSampleBufferDelegate, completion: @escaping ((_ success: Bool) -> Void)) {
+    func configureSession(captureDelegate: AVCaptureVideoDataOutputSampleBufferDelegate, initialVideoOrientation: AVCaptureVideoOrientation, completion: @escaping ((_ success: Bool) -> Void)) {
         if setupResult != .success {
             DispatchQueue.main.async { completion(false) }
             return
@@ -128,11 +128,10 @@ class VideoFeed {
                 session.sessionPreset = .high
             }
             
-            let connection = videoDeviceOutput.connection(with: .video)
-            if connection?.isVideoOrientationSupported ?? false {
-                connection?.videoOrientation = .portrait
+            self.videoDeviceConnection = videoDeviceOutput.connection(with: .video)
+            if self.videoDeviceConnection?.isVideoOrientationSupported ?? false {
+                self.videoDeviceConnection?.videoOrientation = initialVideoOrientation
             }
-            
         } catch {
             print("Could not create video device input: \(error)")
             setupResult = .configurationFailed

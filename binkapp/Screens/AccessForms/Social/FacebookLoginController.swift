@@ -40,9 +40,9 @@ struct FacebookLoginController {
              fail so check the declined permissions to save an API call.
              */
             if result?.declinedPermissions.contains("email") == true {
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
                     onSuccess(request)
-                }
+                })
                 
                 return
             }
@@ -55,9 +55,9 @@ struct FacebookLoginController {
                     request.email = resultEmail
                 }
                 
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
                     onSuccess(request)
-                }
+                })
             }
         }
     }

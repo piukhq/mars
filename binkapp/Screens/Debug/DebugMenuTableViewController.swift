@@ -93,6 +93,10 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             let shouldShow = Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser)
             Current.userDefaults.set(!shouldShow, forDefaultsKey: .responseCodeVisualiser)
             tableView.reloadData()
+        case .inAppReviewRules:
+            let shouldApply = Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules)
+            Current.userDefaults.set(!shouldApply, forDefaultsKey: .applyInAppReviewRules)
+            tableView.reloadData()
         default:
             return
         }

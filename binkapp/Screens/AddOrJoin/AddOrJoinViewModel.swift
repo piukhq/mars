@@ -11,9 +11,7 @@ import CardScan
 class AddOrJoinViewModel {
     private let membershipPlan: CD_MembershipPlan
     private let membershipCard: CD_MembershipCard?
-    
-    private let paymentScannerStrings = PaymentCardScannerStrings()
-    
+        
     init(membershipPlan: CD_MembershipPlan, membershipCard: CD_MembershipCard? = nil) {
         self.membershipPlan = membershipPlan
         self.membershipCard = membershipCard
@@ -122,34 +120,15 @@ class AddOrJoinViewModel {
     }
     
     private func toPaymentCardScanner() {
-        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: paymentScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
-        
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
+
+        PermissionsUtility.launchPaymentScanner(viewController, grantedAction: {
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }, enterManuallyAction: {
             let viewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
-        }
-        
-        if PermissionsUtility.videoCaptureIsAuthorized {
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        } else if PermissionsUtility.videoCaptureIsDenied {
-            if let alert = enterManuallyAlert {
-                let navigationRequest = AlertNavigationRequest(alertController: alert)
-                Current.navigate.to(navigationRequest)
-            }
-        } else {
-            PermissionsUtility.requestVideoCaptureAuthorization { granted in
-                if granted {
-                    let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                    Current.navigate.to(navigationRequest)
-                } else {
-                    if let alert = enterManuallyAlert {
-                        let navigationRequest = AlertNavigationRequest(alertController: alert)
-                        Current.navigate.to(navigationRequest)
-                    }
-                }
-            }
-        }
+        })
     }
 }

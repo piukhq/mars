@@ -93,7 +93,7 @@
 "pll_screen_secondary_message" = "Add them to link this card and others.";
 
 "pll_screen_pending_cards_title" = "Pending payment cards";
-"pll_screen_pending_cards_detail" = "The payment cards below are pending authorisation. You will be able to link them to you loyalty card once they've been approved.";
+"pll_screen_pending_cards_detail" = "The payment cards below are pending authorisation. You will be able to link them to your loyalty card once they've been approved.";
 
 "delete_card_confirmation" = "Are you sure you want to delete this card?";
 "yes" = "Yes";
@@ -393,6 +393,11 @@
 "loyalty_scanner_widget_title_unrecognized_barcode_text" = "Unrecognised barcode";
 "loyalty_scanner_widget_explainer_enter_manually_text" = "You can also type in the card details yourself.";
 "loyalty_scanner_widget_explainer_unrecognized_barcode_text" = "Please try adding the card manually.";
+
+// MARK: - Payment Scanner
+"payment_scanner_explainer_text" = "Position your card in the frame so the card number is visible";
+"payment_scanner_widget_title" = "Enter Manually";
+"payment_scanner_widget_explainer_text" = "You can also type in the card details yourself";
 
 // MARK: - Zendesk
 

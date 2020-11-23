@@ -15,7 +15,7 @@ class PaymentCardCellViewModelTests: XCTestCase {
     var basePaymentCard: PaymentCardModel!
 
     override func setUp() {
-        basePaymentCard = PaymentCardModel(apiId: nil, membershipCards: nil, status: nil, card: PaymentCardCardResponse(), images: nil, account: PaymentCardAccountResponse())
+        basePaymentCard = PaymentCardModel(apiId: nil, membershipCards: nil, status: nil, card: PaymentCardCardResponse(), account: PaymentCardAccountResponse())
     }
 
     func test_nameOnCard() {

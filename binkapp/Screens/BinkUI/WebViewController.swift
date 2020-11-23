@@ -42,6 +42,15 @@ class WebViewController: UIViewController {
         setActivityIndicator()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // Use the toolbar height to make sure webview is inset correctly
+        var currentEdgeInsets = webView.scrollView.contentInset
+        currentEdgeInsets.bottom = navigationController?.toolbar.frame.size.height ?? 0
+        webView.scrollView.contentInset = currentEdgeInsets
+    }
+    
     private func setWebView() {
         webView = WKWebView(frame: view.frame)
         webView.navigationDelegate = self

@@ -6,6 +6,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+import CardScan
 import UIKit
 
 enum AddPaymentCardJourney {
@@ -16,7 +17,8 @@ enum AddPaymentCardJourney {
 class AddPaymentCardViewModel {
     private let repository = PaymentWalletRepository()
     private let journey: AddPaymentCardJourney
-    let paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
+    private let strings = PaymentCardScannerStrings()
+    var paymentCard: PaymentCardCreateModel // Exposed to allow realtime updating
 
     var shouldDisplayTermsAndConditions: Bool {
         return true
@@ -34,7 +36,7 @@ class AddPaymentCardViewModel {
     var paymentCardType: PaymentCardType? {
         return paymentCard.cardType
     }
-
+    
     func setPaymentCardType(_ cardType: PaymentCardType?) {
         paymentCard.cardType = cardType
     }
@@ -111,5 +113,13 @@ class AddPaymentCardViewModel {
     func displayError() {
         let alert = ViewControllerFactory.makeOkAlertViewController(title: "add_payment_error_title".localized, message: "add_payment_error_message".localized)
         Current.navigate.to(AlertNavigationRequest(alertController: alert))
+    }
+    
+    func toPaymentCardScanner(delegate scanDelegate: ScanDelegate?) {
+        guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: strings, delegate: scanDelegate) else { return }
+        PermissionsUtility.launchPaymentScanner(viewController) {
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
     }
 }

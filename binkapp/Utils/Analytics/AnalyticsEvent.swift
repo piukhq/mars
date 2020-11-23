@@ -60,7 +60,7 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
         case .start:
             return "onboarding_start"
         case .userComplete:
-            return "onboarding_user_compelete"
+            return "onboarding_user_complete"
         case .serviceComplete:
             return "onboarding_service_complete"
         case .end:
