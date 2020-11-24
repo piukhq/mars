@@ -20,7 +20,7 @@ class PLLScreenViewModel {
     }
     
     var pendingPaymentCards: [CD_PaymentCard]? {
-        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .pending }
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .pending && !$0.isExpired }
     }
     
     var hasActivePaymentCards: Bool {
