@@ -44,6 +44,12 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
             return cell
         }
     }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        super.collectionView(collectionView, didSelectItemAt: indexPath)
+        let cell = collectionView.cellForItem(at: indexPath) as? PaymentCardCollectionViewCell
+        cell?.set(to: .closed)
+    }
 }
 
 extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelegate {

@@ -56,9 +56,10 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? WalletLoyaltyCardCollectionViewCell else { return }
-        cell.set(to: .closed)
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        super.collectionView(collectionView, didSelectItemAt: indexPath)
+        let cell = collectionView.cellForItem(at: indexPath) as? WalletLoyaltyCardCollectionViewCell
+        cell?.set(to: .closed)
     }
 }
 
