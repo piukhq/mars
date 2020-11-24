@@ -1,48 +1,48 @@
 //
-//  TescoPointsScrapingAgent.swift
+//  HeathrowPointsScrapingAgent.swift
 //  binkapp
 //
-//  Created by Nick Farrant on 09/07/2020.
+//  Created by Nick Farrant on 17/11/2020.
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
 import Foundation
 
-struct TescoScrapingAgent: WebScrapable {
+struct HeathrowScrapingAgent: WebScrapable {
     var merchant: WebScrapableMerchant {
-        return .tesco
+        return .heathrow
     }
-    
+
     var membershipPlanId: Int {
         switch APIConstants.currentEnvironment {
         case .dev:
-            return 207
+            return 32
         case .staging:
-            return 230
+            return 32
         case .preprod:
-            return 230
+            return 32
         case .production:
-            return 203
+            return 32
         }
     }
-    
+
     var usernameFieldTitle: String {
-        return "Email"
+        return "email/card number"
     }
-    
+
     var passwordFieldTitle: String {
-        return "Password"
+        return "password"
     }
 
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }
-    
+
     var loginUrlString: String {
-        return "https://secure.tesco.com/account/en-GB/login?from=https://secure.tesco.com/Clubcard/MyAccount/home/Home"
+        return "https://www.heathrow.com/heathrow-rewards/login"
     }
 
     var scrapableUrlString: String {
-        return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
+        return "https://www.heathrow.com/rewards/home?login=Login%20Succcessful"
     }
 }
