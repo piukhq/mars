@@ -14,6 +14,7 @@ class RemoteConfigUtil {
         case localPointsCollectionMasterEnabled
         case localPointsCollectionAgentEnabled(WebScrapable)
         case inAppReviewEnabled
+        case dynamicActions
         
         var formattedKey: String {
             switch self {
@@ -23,6 +24,8 @@ class RemoteConfigUtil {
                 return "LPC_\(agent.merchant)_enabled"
             case .inAppReviewEnabled:
                 return "in_app_review_enabled"
+            case .dynamicActions:
+                return "dynamic_actions"
             }
         }
     }
@@ -61,5 +64,9 @@ class RemoteConfigUtil {
     
     func boolValueForConfigKey(_ configKey: RemoteConfigKey) -> Bool {
         return remoteConfig.configValue(forKey: configKey.formattedKey).boolValue
+    }
+
+    func objectForConfigKey<T: Codable>(_ configKey: RemoteConfigKey, forObjectType objectType: T.Type) -> T? {
+        return remoteConfig.configValue(forKey: configKey.formattedKey).stringValue?.asDecodedObject(ofType: objectType)
     }
 }
