@@ -34,14 +34,6 @@ struct BootsScrapingAgent: WebScrapable {
         return "Password"
     }
     
-    var loyaltySchemeBalanceCurrency: String? {
-        return nil
-    }
-    
-    var loyaltySchemeBalancePrefix: String? {
-        return nil
-    }
-    
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }

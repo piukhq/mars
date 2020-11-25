@@ -34,14 +34,6 @@ struct MorrisonsScrapingAgent: WebScrapable {
         return "Password"
     }
     
-    var loyaltySchemeBalanceCurrency: String? {
-        return nil
-    }
-    
-    var loyaltySchemeBalancePrefix: String? {
-        return nil
-    }
-    
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }
@@ -60,21 +52,5 @@ struct MorrisonsScrapingAgent: WebScrapable {
     
     var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency {
         return .always
-    }
-    
-    var reCaptchaMessage: String? {
-        return nil
-    }
-    
-    var reCaptchaTextIdentiferClass: String? {
-        return nil
-    }
-    
-    var incorrectCredentialsMessage: String? {
-        return nil
-    }
-    
-    var incorrectCredentialsTextIdentiferClass: String? {
-        return nil
     }
 }

@@ -60,7 +60,7 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
         case .start:
             return "onboarding_start"
         case .userComplete:
-            return "onboarding_user_compelete"
+            return "onboarding_user_complete"
         case .serviceComplete:
             return "onboarding_service_complete"
         case .end:
@@ -409,5 +409,45 @@ enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
                 "error_string": error.message
             ]
         }
+    }
+}
+
+enum InAppReviewAnalyticsEvent: BinkAnalyticsEvent {
+    case add
+    case transactions
+    case time
+
+    var name: String {
+        return "in_app_review_request"
+    }
+
+    var data: [String: Any]? {
+        switch self {
+        case .add:
+            return [
+                "review_trigger": "ADD"
+            ]
+        case .transactions:
+            return [
+                "review_trigger": "TRANSACTIONS"
+            ]
+        case .time:
+            return [
+                "review_trigger": "TIME"
+            ]
+        }
+    }
+
+    static var eventForInProgressJourney: InAppReviewAnalyticsEvent? {
+        if let _ = Current.inAppReviewableJourney as? PllLoyaltyInAppReviewableJourney {
+            return InAppReviewAnalyticsEvent.add
+        }
+        if let _ = Current.inAppReviewableJourney as? TransactionsHistoryInAppReviewableJourney {
+            return InAppReviewAnalyticsEvent.transactions
+        }
+        if let _ = Current.inAppReviewableJourney as? TimeAndUsageBasedInAppReviewableJourney {
+            return InAppReviewAnalyticsEvent.time
+        }
+        return nil
     }
 }

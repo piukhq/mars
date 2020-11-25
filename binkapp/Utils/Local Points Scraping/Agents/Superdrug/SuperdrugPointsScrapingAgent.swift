@@ -1,35 +1,36 @@
 //
-//  TescoPointsScrapingAgent.swift
+//  SuperdrugPointsScrapingAgent.swift
 //  binkapp
 //
-//  Created by Nick Farrant on 09/07/2020.
+//  Created by Nick Farrant on 16/11/2020.
 //  Copyright © 2020 Bink. All rights reserved.
 //
 
 import Foundation
+import SwiftSoup
 
-struct TescoScrapingAgent: WebScrapable {
+struct SuperdrugScrapingAgent: WebScrapable {
     var merchant: WebScrapableMerchant {
-        return .tesco
+        return .superdrug
     }
-    
+
     var membershipPlanId: Int {
         switch APIConstants.currentEnvironment {
         case .dev:
-            return 207
+            return 16
         case .staging:
-            return 230
+            return 16
         case .preprod:
-            return 230
+            return 16
         case .production:
-            return 203
+            return 16
         }
     }
-    
+
     var usernameFieldTitle: String {
-        return "Email"
+        return "Email address"
     }
-    
+
     var passwordFieldTitle: String {
         return "Password"
     }
@@ -37,12 +38,16 @@ struct TescoScrapingAgent: WebScrapable {
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }
-    
+
     var loginUrlString: String {
-        return "https://secure.tesco.com/account/en-GB/login?from=https://secure.tesco.com/Clubcard/MyAccount/home/Home"
+        return "https://www.superdrug.com/login"
     }
 
     var scrapableUrlString: String {
-        return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
+        return "https://www.superdrug.com/login"
+    }
+    
+    func pointsValueFromCustomHTMLParser(_ html: String) -> String? {
+        return try? SwiftSoup.parse(html).select("b").last()?.text()
     }
 }

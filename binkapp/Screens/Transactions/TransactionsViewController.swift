@@ -104,6 +104,7 @@ class TransactionsViewController: BinkTrackableViewController, InAppReviewable {
         }
 
         if viewModel.shouldRequestInAppReview {
+            TransactionsHistoryInAppReviewableJourney().begin()
             requestInAppReview()
         }
     }
