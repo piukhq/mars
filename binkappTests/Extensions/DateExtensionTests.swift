@@ -25,9 +25,9 @@ class DateExtensionTests: XCTestCase {
     }
     
     func test_date_format_enum() {
-        XCTAssertEqual(DateFormat.dayMonthYear.rawValue, "dd MMMM YYYY")
-        XCTAssertEqual(DateFormat.dayShortMonthYear.rawValue, "dd MMM YYYY")
-        XCTAssertEqual(DateFormat.dayShortMonthYearWithSlash.rawValue, "dd/MM/YYYY")
+        XCTAssertEqual(DateFormat.dayMonthYear.rawValue, "dd MMMM yyyy")
+        XCTAssertEqual(DateFormat.dayShortMonthYear.rawValue, "dd MMM yyyy")
+        XCTAssertEqual(DateFormat.dayShortMonthYearWithSlash.rawValue, "dd/MM/yyyy")
         XCTAssertEqual(DateFormat.dayShortMonthYear24HourSecond.rawValue, "dd MMM yyyy HH:mm:ss")
     }
     
