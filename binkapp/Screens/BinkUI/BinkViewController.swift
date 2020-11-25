@@ -32,13 +32,25 @@ enum TrackedScreen: String {
 }
 
 class BinkViewController: UIViewController {
+    private let dynamicActionUtility = DynamicActionsUtility()
     var screenName: String?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureDynamicActionIfNecessary()
+    }
+
     func setScreenName(trackedScreen: TrackedScreen) {
         screenName = trackedScreen.rawValue
         Analytics.setScreenName(screenName, screenClass: nil)
     }
 
-    func configureDynamicAction() {
-
+    private func configureDynamicActionIfNecessary() {
+        guard let availableActions = dynamicActionUtility.availableActions(for: self) else { return }
+        guard let firstAction = availableActions.first else { return }
+        guard let location = firstAction.location(for: self) else { return }
+        print(location)
+        let barButtonItem = UIBarButtonItem(title: "🎄", style: .plain, target: self, action: nil)
+        navigationItem.leftBarButtonItem = barButtonItem
     }
 }

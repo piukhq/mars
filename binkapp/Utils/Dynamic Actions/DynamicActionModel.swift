@@ -24,6 +24,12 @@ struct DynamicAction: Codable {
         case locations
         case event
     }
+
+    func location(for viewController: BinkViewController) -> DynamicActionLocation? {
+        // LOL - Had to use Swift.type(of:) otherwise Xcode thought I was refering to the `type` property in DynamicAction
+        // 👏 Swift compiler, great job.
+        return locations?.first(where: { $0.screen?.viewControllerType == Swift.type(of: viewController) })
+    }
 }
 
 enum DynamicActionType: String, Codable {
@@ -40,6 +46,15 @@ struct DynamicActionLocation: Codable {
 enum DynamicActionScreen: String, Codable {
     case loyaltyWallet = "loyalty_wallet"
     case paymentWallet = "payment_wallet"
+
+    var viewControllerType: BinkViewController.Type {
+        switch self {
+        case .loyaltyWallet:
+            return LoyaltyWalletViewController.self
+        case .paymentWallet:
+            return PaymentWalletViewController.self
+        }
+    }
 }
 
 enum DynamicActionArea: String, Codable {
