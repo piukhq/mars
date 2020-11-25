@@ -9,12 +9,12 @@
 import Foundation
 
 struct DynamicAction: Codable {
-    let name: String
-    let type: DynamicActionType
-    let startDate: Int
-    let endDate: Int
-    let locations: [DynamicActionLocation]
-    let event: DynamicActionEvent
+    let name: String?
+    let type: DynamicActionType?
+    let startDate: Int?
+    let endDate: Int?
+    let locations: [DynamicActionLocation]?
+    let event: DynamicActionEvent?
 
     enum CodingKeys: String, CodingKey {
         case name
@@ -31,10 +31,10 @@ enum DynamicActionType: String, Codable {
 }
 
 struct DynamicActionLocation: Codable {
-    let icon: String
-    let screen: DynamicActionScreen
-    let area: DynamicActionArea
-    let action: DynamicActionHandler
+    let icon: String?
+    let screen: DynamicActionScreen?
+    let area: DynamicActionArea?
+    let action: DynamicActionHandler?
 }
 
 enum DynamicActionScreen: String, Codable {
@@ -51,8 +51,8 @@ enum DynamicActionHandler: String, Codable {
 }
 
 struct DynamicActionEvent: Codable {
-    let type: DynamicActionEventType
-    let body: DynamicActionEventBody
+    let type: DynamicActionEventType?
+    let body: DynamicActionEventBody?
 }
 
 enum DynamicActionEventType: String, Codable {
@@ -60,14 +60,14 @@ enum DynamicActionEventType: String, Codable {
 }
 
 struct DynamicActionEventBody: Codable {
-    let title: String
-    let description: String
-    let cta: DynamicActionEventBodyCTA
+    let title: String?
+    let description: String?
+    let cta: DynamicActionEventBodyCTA?
 }
 
 struct DynamicActionEventBodyCTA: Codable {
-    let title: String
-    let action: DynamicActionEventBodyCTAHandler
+    let title: String?
+    let action: DynamicActionEventBodyCTAHandler?
 }
 
 enum DynamicActionEventBodyCTAHandler: String, Codable {
