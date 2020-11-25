@@ -58,8 +58,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         super.collectionView(collectionView, didSelectItemAt: indexPath)
-        let cell = collectionView.cellForItem(at: indexPath) as? WalletLoyaltyCardCollectionViewCell
-        cell?.set(to: .closed)
+        resetAllSwipeStates()
     }
 }
 
@@ -115,10 +114,16 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
             promptForDelete(with: index, cell: cell)
         }
     }
-    
+
     func cellSwipeBegan(cell: WalletLoyaltyCardCollectionViewCell) {
-        let cells = collectionView.visibleCells.filter { $0 != cell }
-        guard let walletCells = cells as? [WalletLoyaltyCardCollectionViewCell] else { return }
-        walletCells.forEach { $0.set(to: .closed) }
+        // We have to filter the cells based on their type, because otherwise the wallet prompt cells are included, and then we can't cast properly
+        let cells = collectionView.visibleCells.filter { $0 != cell }.filter { $0.isKind(of: WalletLoyaltyCardCollectionViewCell.self) } as? [WalletLoyaltyCardCollectionViewCell]
+        cells?.forEach { $0.set(to: .closed) }
+    }
+
+    func resetAllSwipeStates() {
+        // We have to filter the cells based on their type, because otherwise the wallet prompt cells are included, and then we can't cast properly
+        let cells = collectionView.visibleCells.filter { $0.isKind(of: WalletLoyaltyCardCollectionViewCell.self) } as? [WalletLoyaltyCardCollectionViewCell]
+        cells?.forEach { $0.set(to: .closed) }
     }
 }
