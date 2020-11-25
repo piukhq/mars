@@ -9,7 +9,7 @@
 import UIKit
 import CardScan
 
-class AddingOptionsViewController: BinkTrackableViewController {
+class AddingOptionsViewController: BinkViewController {
     enum ScanType {
         case loyalty
         case payment

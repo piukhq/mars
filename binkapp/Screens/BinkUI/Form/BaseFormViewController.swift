@@ -12,7 +12,7 @@ protocol Form {
     func formValidityUpdated(fullFormIsValid: Bool)
 }
 
-class BaseFormViewController: BinkTrackableViewController, Form {
+class BaseFormViewController: BinkViewController, Form {
     // MARK: - Helpers
     
     private enum Constants {

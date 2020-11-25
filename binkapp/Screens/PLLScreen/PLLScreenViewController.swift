@@ -13,7 +13,7 @@ enum PllScreenJourney {
     case existingCard
 }
 
-class PLLScreenViewController: BinkTrackableViewController {
+class PLLScreenViewController: BinkViewController {
     // MARK: - Properties
     
     private let viewModel: PLLScreenViewModel

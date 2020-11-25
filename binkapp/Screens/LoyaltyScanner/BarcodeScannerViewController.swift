@@ -23,7 +23,7 @@ protocol BarcodeScannerViewControllerDelegate: AnyObject {
     func barcodeScannerViewControllerShouldEnterManually(_ viewController: BarcodeScannerViewController, completion: (() -> Void)?)
 }
 
-class BarcodeScannerViewController: UIViewController {
+class BarcodeScannerViewController: BinkViewController {
     enum Constants {
         static let rectOfInterestInset: CGFloat = 25
         static let viewFrameRatio: CGFloat = 12 / 18

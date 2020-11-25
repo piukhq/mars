@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TransactionsViewController: BinkTrackableViewController, InAppReviewable {
+class TransactionsViewController: BinkViewController, InAppReviewable {
     private enum Constants {
         static let horizontalInset: CGFloat = 25.0
         static let bottomInset: CGFloat = 25.0

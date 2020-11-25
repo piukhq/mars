@@ -8,7 +8,7 @@
 import UIKit
 import CardScan
 
-class AddOrJoinViewController: BinkTrackableViewController {
+class AddOrJoinViewController: BinkViewController {
     @IBOutlet private weak var brandHeaderView: BrandHeaderView!
     @IBOutlet private weak var plansStackView: UIStackView!
     @IBOutlet private weak var addCardButton: BinkGradientButton!
