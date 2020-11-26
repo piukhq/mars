@@ -16,11 +16,11 @@ class PLLScreenViewModel {
     let journey: PllScreenJourney
     
     var activePaymentCards: [CD_PaymentCard]? {
-        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .active }
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .active && !$0.isExpired }
     }
     
     var pendingPaymentCards: [CD_PaymentCard]? {
-        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .pending }
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .pending && !$0.isExpired }
     }
     
     var hasActivePaymentCards: Bool {
