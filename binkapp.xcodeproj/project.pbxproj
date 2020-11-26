@@ -164,6 +164,9 @@
 		70E31A8324E56B4D005A30D2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8224E56B4D005A30D2 /* APIService.swift */; };
 		70E39801256E8CDA009AD8CB /* DynamicActionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E39800256E8CDA009AD8CB /* DynamicActionsUtility.swift */; };
 		70E39806256E8F4F009AD8CB /* BinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E39805256E8F4F009AD8CB /* BinkViewController.swift */; };
+		70E3984E256FE7BA009AD8CB /* DynamicActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E3984C256FE7BA009AD8CB /* DynamicActionViewController.swift */; };
+		70E3984F256FE7BA009AD8CB /* DynamicActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E3984D256FE7BA009AD8CB /* DynamicActionViewController.xib */; };
+		70E39854256FF576009AD8CB /* DynamicActionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E39853256FF576009AD8CB /* DynamicActionHeaderView.xib */; };
 		70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E867742489303F001ED282 /* SecureUtilityTests.swift */; };
 		70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */; };
 		70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86779248E76C9001ED282 /* WebScrapingUtility.swift */; };
@@ -688,6 +691,9 @@
 		70E31A8224E56B4D005A30D2 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		70E39800256E8CDA009AD8CB /* DynamicActionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsUtility.swift; sourceTree = "<group>"; };
 		70E39805256E8F4F009AD8CB /* BinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkViewController.swift; sourceTree = "<group>"; };
+		70E3984C256FE7BA009AD8CB /* DynamicActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionViewController.swift; sourceTree = "<group>"; };
+		70E3984D256FE7BA009AD8CB /* DynamicActionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DynamicActionViewController.xib; sourceTree = "<group>"; };
+		70E39853256FF576009AD8CB /* DynamicActionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DynamicActionHeaderView.xib; sourceTree = "<group>"; };
 		70E867742489303F001ED282 /* SecureUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtilityTests.swift; sourceTree = "<group>"; };
 		70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewFooter.swift; sourceTree = "<group>"; };
 		70E86779248E76C9001ED282 /* WebScrapingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtility.swift; sourceTree = "<group>"; };
@@ -1432,6 +1438,7 @@
 		3CF054D322FDABCA0069E98A /* BinkUI */ = {
 			isa = PBXGroup;
 			children = (
+				70E39848256FE78D009AD8CB /* Dynamic Action */,
 				EFD602EA243B9446003AC746 /* Animations */,
 				EFA81012240404F00000D21D /* Jailbroken */,
 				EF2E8823233A6FB000F678F3 /* Wallets */,
@@ -1719,6 +1726,16 @@
 				70D748012552CC7800E9D2C1 /* InAppReviewable.swift */,
 			);
 			path = "In App Review";
+			sourceTree = "<group>";
+		};
+		70E39848256FE78D009AD8CB /* Dynamic Action */ = {
+			isa = PBXGroup;
+			children = (
+				70E3984C256FE7BA009AD8CB /* DynamicActionViewController.swift */,
+				70E3984D256FE7BA009AD8CB /* DynamicActionViewController.xib */,
+				70E39853256FF576009AD8CB /* DynamicActionHeaderView.xib */,
+			);
+			path = "Dynamic Action";
 			sourceTree = "<group>";
 		};
 		70E86778248E76B9001ED282 /* Local Points Scraping */ = {
@@ -2860,6 +2877,7 @@
 				3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */,
 				EFCAF91B2371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib in Resources */,
 				70661B91250A5713006DB009 /* MorrisonsPointsScrape.js in Resources */,
+				70E39854256FF576009AD8CB /* DynamicActionHeaderView.xib in Resources */,
 				B774E9AB233123BD006D4131 /* ReusableTemplateViewController.xib in Resources */,
 				B713662F232A63BA008A0ED7 /* BinkModuleView.xib in Resources */,
 				70661B90250A5713006DB009 /* MorrisonsLogin.js in Resources */,
@@ -2872,6 +2890,7 @@
 				BD9FB6B72338120700E5559A /* TransactionsViewController.xib in Resources */,
 				EF6921772469A9290049875B /* DebugSecondaryPlanColorCell.xib in Resources */,
 				70E8DFE72563E6F70027A244 /* HeathrowLogin.js in Resources */,
+				70E3984F256FE7BA009AD8CB /* DynamicActionViewController.xib in Resources */,
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
 				EFA81016240405070000D21D /* JailbrokenViewController.xib in Resources */,
 				EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */,
@@ -3316,6 +3335,7 @@
 				EF9E9BD223C73BA1002FF18E /* UIDeviceExtension.swift in Sources */,
 				B7D577B3231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift in Sources */,
 				EFD602F1243E11B2003AC746 /* UINavigationControllerExtension.swift in Sources */,
+				70E3984E256FE7BA009AD8CB /* DynamicActionViewController.swift in Sources */,
 				EF8BF1FD2341480800D2E5F3 /* PaymentCardAccountConsentsResponse.swift in Sources */,
 				DB8DE35A2373130100F07F11 /* Bundle+binkapp.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,

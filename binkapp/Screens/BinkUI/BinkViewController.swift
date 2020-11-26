@@ -33,6 +33,8 @@ enum TrackedScreen: String {
 
 class BinkViewController: UIViewController {
     private let dynamicActionUtility = DynamicActionsUtility()
+    private var dynamicAction: DynamicAction?
+
     var screenName: String?
 
     override func viewDidLoad() {
@@ -44,13 +46,35 @@ class BinkViewController: UIViewController {
         screenName = trackedScreen.rawValue
         Analytics.setScreenName(screenName, screenClass: nil)
     }
+}
 
-    private func configureDynamicActionIfNecessary() {
+// MARK: - Dynamic Actions
+
+private extension BinkViewController {
+    func configureDynamicActionIfNecessary() {
+        // TODO: Do we need this? Just get the first action back
         guard let availableActions = dynamicActionUtility.availableActions(for: self) else { return }
-        guard let firstAction = availableActions.first else { return }
-        guard let location = firstAction.location(for: self) else { return }
+        dynamicAction = availableActions.first
+        guard let location = dynamicAction?.location(for: self) else { return }
         print(location)
-        let barButtonItem = UIBarButtonItem(title: "🎄", style: .plain, target: self, action: nil)
+
+        // TODO: Single tap or double tap?
+        let barButtonItem = UIBarButtonItem(title: "🎄", style: .plain, target: self, action: #selector(dynamicActionHandler))
         navigationItem.leftBarButtonItem = barButtonItem
+    }
+
+    @objc func dynamicActionHandler() {
+        // Get view controller
+        guard let dynamicAction = dynamicAction else { return }
+        let viewModel = DynamicActionViewModel(dynamicAction: dynamicAction)
+        let viewController = DynamicActionViewController(viewModel: viewModel)
+
+        switch dynamicAction.event?.type {
+        case .launchModal:
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        case .none:
+            return
+        }
     }
 }
