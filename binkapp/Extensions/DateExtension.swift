@@ -9,9 +9,9 @@
 import Foundation
 
 enum DateFormat: String {
-    case dayMonthYear = "dd MMMM YYYY"
-    case dayShortMonthYear = "dd MMM YYYY"
-    case dayShortMonthYearWithSlash = "dd/MM/YYYY"
+    case dayMonthYear = "dd MMMM yyyy"
+    case dayShortMonthYear = "dd MMM yyyy"
+    case dayShortMonthYearWithSlash = "dd/MM/yyyy"
     case dayShortMonthYear24HourSecond = "dd MMM yyyy HH:mm:ss"
 }
 
