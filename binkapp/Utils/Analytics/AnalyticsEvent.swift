@@ -451,3 +451,23 @@ enum InAppReviewAnalyticsEvent: BinkAnalyticsEvent {
         return nil
     }
 }
+
+// MARK: - Dynamic actions
+
+enum DynamicActionsAnalyticsEvent: BinkAnalyticsEvent {
+    case triggered(DynamicAction)
+
+    var name: String {
+        return "dynamic_action_triggered"
+    }
+
+    var data: [String : Any]? {
+        switch self {
+        case .triggered(let action):
+            guard let actionName = action.name else { return nil }
+            return [
+                "dynamic_action_name": actionName
+            ]
+        }
+    }
+}

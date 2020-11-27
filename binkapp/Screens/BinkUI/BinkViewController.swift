@@ -75,6 +75,8 @@ private extension BinkViewController {
         let viewModel = DynamicActionViewModel(dynamicAction: dynamicAction)
         let viewController = DynamicActionViewController(viewModel: viewModel)
 
+        BinkAnalytics.track(DynamicActionsAnalyticsEvent.triggered(dynamicAction))
+
         switch dynamicAction.event?.type {
         case .launchModal:
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
