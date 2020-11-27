@@ -59,8 +59,11 @@ private extension BinkViewController {
         print(location)
 
         // TODO: Single tap or double tap?
-        let barButtonItem = UIBarButtonItem(title: "🎄", style: .plain, target: self, action: #selector(dynamicActionHandler))
-        navigationItem.leftBarButtonItem = barButtonItem
+
+        if let emojiString = location.icon?.toEmoji() {
+            let barButtonItem = UIBarButtonItem(title: emojiString, style: .plain, target: self, action: #selector(dynamicActionHandler))
+            navigationItem.leftBarButtonItem = barButtonItem
+        }
     }
 
     @objc func dynamicActionHandler() {
@@ -76,5 +79,18 @@ private extension BinkViewController {
         case .none:
             return
         }
+    }
+}
+
+extension String {
+    func toEmoji() -> String? {
+        // Strip the payload value to just the unicode
+        let trimStartIndex = index(startIndex, offsetBy: 2)
+        let strippedCode = self[trimStartIndex..<endIndex]
+
+        // Convert to numeric value
+        guard let charCode = UInt32(strippedCode, radix: 16) else { return nil }
+        guard let unicode = UnicodeScalar(charCode) else { return nil }
+        return String(unicode)
     }
 }
