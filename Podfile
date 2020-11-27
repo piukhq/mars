@@ -62,13 +62,13 @@ target 'binkapp' do
     # Pods for testing
     common_pods
   end
+end
 
-  target 'binkappUITests' do
+target 'binkappUITests' do
     inherit! :search_paths
-    # Pods for testing
-    common_pods
-  end
-
+    use_frameworks!
+  # Pods for testing
+  common_pods
 end
 
 post_install do |installer|
