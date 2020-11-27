@@ -28,7 +28,12 @@ struct DynamicActionViewModel {
     }
 
     var headerViewImageName: String? {
-        return dynamicAction.type?.imageName
+        switch dynamicAction.type {
+        case .xmas:
+            return "bink-logo-christmas"
+        case .none:
+            return nil
+        }
     }
 
     var dynamicActionType: DynamicActionType? {
@@ -36,7 +41,12 @@ struct DynamicActionViewModel {
     }
 
     func buttonHandler() {
-        dynamicAction.event?.body?.cta?.action?.handler()
+        switch dynamicAction.event?.body?.cta?.action {
+        case .zendeskContactUs:
+            ZendeskTickets().launch()
+        case .none:
+            return
+        }
     }
 }
 

@@ -52,13 +52,10 @@ class BinkViewController: UIViewController {
 
 private extension BinkViewController {
     func configureDynamicActionIfNecessary() {
-        // TODO: Do we need this? Just get the first action back
-        guard let availableActions = dynamicActionUtility.availableActions(for: self) else { return }
-        dynamicAction = availableActions.first
+        /// Is there an active dynamic action available for this screen?
+        guard let availableAction = dynamicActionUtility.availableAction(for: self) else { return }
+        dynamicAction = availableAction
         guard let location = dynamicAction?.location(for: self) else { return }
-        print(location)
-
-        // TODO: Single tap or double tap?
 
         switch location.area {
         case .leftTopBar:
@@ -74,7 +71,6 @@ private extension BinkViewController {
     }
 
     @objc func dynamicActionHandler() {
-        // Get view controller
         guard let dynamicAction = dynamicAction else { return }
         let viewModel = DynamicActionViewModel(dynamicAction: dynamicAction)
         let viewController = DynamicActionViewController(viewModel: viewModel)
@@ -91,11 +87,11 @@ private extension BinkViewController {
 
 extension String {
     func toEmoji() -> String? {
-        // Strip the payload value to just the unicode
+        /// Strip the payload value to just the unicode
         let trimStartIndex = index(startIndex, offsetBy: 2)
         let strippedCode = self[trimStartIndex..<endIndex]
 
-        // Convert to numeric value
+        /// Convert to numeric value
         guard let charCode = UInt32(strippedCode, radix: 16) else { return nil }
         guard let unicode = UnicodeScalar(charCode) else { return nil }
         return String(unicode)
