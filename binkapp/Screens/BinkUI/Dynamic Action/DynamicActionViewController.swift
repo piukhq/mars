@@ -10,6 +10,7 @@ import UIKit
 
 struct DynamicActionViewModel {
     private let dynamicAction: DynamicAction
+    private let zendeskTickets = ZendeskTickets()
 
     init(dynamicAction: DynamicAction) {
         self.dynamicAction = dynamicAction
@@ -43,7 +44,7 @@ struct DynamicActionViewModel {
     func buttonHandler() {
         switch dynamicAction.event?.body?.cta?.action {
         case .zendeskContactUs:
-            ZendeskTickets().launch()
+            zendeskTickets.launch()
         case .none:
             return
         }
