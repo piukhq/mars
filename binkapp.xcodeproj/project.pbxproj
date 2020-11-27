@@ -158,6 +158,8 @@
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
 		70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */; };
+		70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6863D257152F300403448 /* DynamicActionsTests.swift */; };
+		70D6864625715D4800403448 /* DynamicActionsUtilityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */; };
 		70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */; };
 		70D748022552CC7800E9D2C1 /* InAppReviewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D748012552CC7800E9D2C1 /* InAppReviewable.swift */; };
 		70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8024E56B3B005A30D2 /* UserService.swift */; };
@@ -685,6 +687,8 @@
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
 		70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TescoPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionModel.swift; sourceTree = "<group>"; };
+		70D6863D257152F300403448 /* DynamicActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsTests.swift; sourceTree = "<group>"; };
+		70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsUtilityMock.swift; sourceTree = "<group>"; };
 		70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewUtility.swift; sourceTree = "<group>"; };
 		70D748012552CC7800E9D2C1 /* InAppReviewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewable.swift; sourceTree = "<group>"; };
 		70E31A8024E56B3B005A30D2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -1557,6 +1561,7 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
+				70D6863C257152D700403448 /* Dynamic Actions */,
 				CE387A3925656E75006BAC11 /* BinkUI */,
 				CEF389E9255D72B30063C718 /* Extensions */,
 				EF7F6E5F23E4286F00352DCF /* Utils */,
@@ -1715,6 +1720,14 @@
 			children = (
 				70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */,
 				70E39800256E8CDA009AD8CB /* DynamicActionsUtility.swift */,
+			);
+			path = "Dynamic Actions";
+			sourceTree = "<group>";
+		};
+		70D6863C257152D700403448 /* Dynamic Actions */ = {
+			isa = PBXGroup;
+			children = (
+				70D6863D257152F300403448 /* DynamicActionsTests.swift */,
 			);
 			path = "Dynamic Actions";
 			sourceTree = "<group>";
@@ -2402,6 +2415,7 @@
 				CE3878C22563FC62006BAC11 /* BarcodeViewControllerMock.swift */,
 				CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */,
 				CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */,
+				70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -3229,6 +3243,7 @@
 				3CBA5EFF2456F175008252B6 /* WebViewController.swift in Sources */,
 				B7385F54234780D2007B88DA /* BinkSwitch.swift in Sources */,
 				B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */,
+				70D6864625715D4800403448 /* DynamicActionsUtilityMock.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				EF46E288235E01DD00BA2CAF /* BinkPillButton.swift in Sources */,
 				BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */,
@@ -3469,6 +3484,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
+				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
