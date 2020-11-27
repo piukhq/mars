@@ -20,6 +20,8 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .continueButtonTapped, for: .touchUpInside)
         button.isEnabled = false
+        button.accessibilityLabel = "Continue"
+        button.accessibilityIdentifier = "Continue"
         view.addSubview(button)
         return button
     }()

@@ -26,7 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         NetworkActivityLogger.shared.startLogging()
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
         #endif
-
+        
+        if CommandLine.arguments.contains("enable-testing") {
+            configureAppForTesting()
+        }
+        
         // Firebase
         FirebaseApp.configure()
        
@@ -170,5 +174,9 @@ private extension AppDelegate {
 
     @objc func appDidBecomeActive() {
         Current.navigate.closeShieldView()
+    }
+    
+    func configureAppForTesting() {
+        UIView.setAnimationsEnabled(false)
     }
 }

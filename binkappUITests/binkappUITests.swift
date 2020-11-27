@@ -2,8 +2,8 @@
 //  binkappUITests.swift
 //  binkappUITests
 //
-//  Created by Karl Sigiscar on 04/07/2019.
-//  Copyright © 2019 Bink. All rights reserved.
+//  Created by Sean Williams on 27/11/2020.
+//  Copyright © 2020 Bink. All rights reserved.
 //
 
 import XCTest
