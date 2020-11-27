@@ -60,9 +60,16 @@ private extension BinkViewController {
 
         // TODO: Single tap or double tap?
 
-        if let emojiString = location.icon?.toEmoji() {
-            let barButtonItem = UIBarButtonItem(title: emojiString, style: .plain, target: self, action: #selector(dynamicActionHandler))
-            navigationItem.leftBarButtonItem = barButtonItem
+        switch location.area {
+        case .leftTopBar:
+            guard let iconString = location.icon else { return }
+            if let emoji = iconString.toEmoji() {
+                navigationItem.leftBarButtonItem = UIBarButtonItem(title: emoji, style: .plain, target: self, action: #selector(dynamicActionHandler))
+            } else if let iconImage = UIImage(named: iconString) {
+                navigationItem.leftBarButtonItem = UIBarButtonItem(image: iconImage, style: .plain, target: self, action: #selector(dynamicActionHandler))
+            }
+        case .none:
+            return
         }
     }
 

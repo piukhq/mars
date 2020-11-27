@@ -38,7 +38,7 @@ enum DynamicActionType: String, Codable {
     var imageName: String? {
         switch self {
         case .xmas:
-            return "bink-logo"
+            return "bink-logo-christmas"
         }
     }
 }
