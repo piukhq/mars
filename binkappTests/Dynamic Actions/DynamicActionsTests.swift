@@ -101,4 +101,10 @@ class DynamicActionsTests: XCTestCase {
         let otherViewController = BinkViewController()
         XCTAssertNil(utility.availableAction(for: otherViewController))
     }
+
+    // MARK: - Emoji 😍
+
+    func test_correctEmojiIsReturned() {
+        XCTAssertEqual(baseDynamicActionModel.locations?.first?.icon?.toEmoji(), "🎄")
+    }
 }
