@@ -34,6 +34,13 @@ struct DynamicAction: Codable {
 
 enum DynamicActionType: String, Codable {
     case xmas
+
+    var imageName: String? {
+        switch self {
+        case .xmas:
+            return "bink-logo"
+        }
+    }
 }
 
 struct DynamicActionLocation: Codable {
@@ -87,4 +94,11 @@ struct DynamicActionEventBodyCTA: Codable {
 
 enum DynamicActionEventBodyCTAHandler: String, Codable {
     case zendeskContactUs = "zd_contact_us"
+
+    func handler() {
+        switch self {
+        case .zendeskContactUs:
+            ZendeskTickets().launch()
+        }
+    }
 }

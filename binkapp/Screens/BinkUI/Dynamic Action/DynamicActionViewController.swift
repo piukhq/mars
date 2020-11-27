@@ -26,6 +26,14 @@ struct DynamicActionViewModel {
     var buttonTitle: String? {
         return dynamicAction.event?.body?.cta?.title
     }
+
+    var headerViewImageName: String? {
+        return dynamicAction.type?.imageName
+    }
+
+    func buttonHandler() {
+        dynamicAction.event?.body?.cta?.action?.handler()
+    }
 }
 
 class DynamicActionViewController: BinkViewController {
@@ -54,6 +62,11 @@ class DynamicActionViewController: BinkViewController {
         descriptionLabel.text = viewModel.descriptionString
         descriptionLabel.font = .bodyTextLarge
         button.setTitle(viewModel.buttonTitle, for: .normal)
+        button.addTarget(self, action: #selector(buttonHandler), for: .touchUpInside)
+    }
+
+    @objc private func buttonHandler() {
+        viewModel.buttonHandler()
     }
 }
 
@@ -61,6 +74,8 @@ class DynamicActionHeaderView: CustomView {
     @IBOutlet private weak var imageView: UIImageView!
 
     func configureWithViewModel(_ viewModel: DynamicActionViewModel) {
-        imageView.image = UIImage(named: "bink-logo")
+        if let imageName = viewModel.headerViewImageName {
+            imageView.image = UIImage(named: imageName)
+        }
     }
 }
