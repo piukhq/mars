@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5ECE047E22CE579B001BA964"
-               BuildableName = "binkappTests.xctest"
-               BlueprintName = "binkappTests"
+               BlueprintIdentifier = "5ECE048922CE579B001BA964"
+               BuildableName = "binkappUITests.xctest"
+               BlueprintName = "binkappUITests"
                ReferencedContainer = "container:binkapp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -51,6 +51,26 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5ECE047E22CE579B001BA964"
+               BuildableName = "binkappTests.xctest"
+               BlueprintName = "binkappTests"
+               ReferencedContainer = "container:binkapp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5ECE048922CE579B001BA964"
+               BuildableName = "binkappUITests.xctest"
+               BlueprintName = "binkappUITests"
+               ReferencedContainer = "container:binkapp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
