@@ -185,6 +185,10 @@ class WebScrapingUtility: NSObject {
         return true
     }
     private weak var delegate: WebScrapingUtilityDelegate?
+
+    private var isIdle = false
+    private var idleTimer: Timer?
+    private let idleThreshold: TimeInterval = 10
     
     init(agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
         webView = WKWebView(frame: .zero)
@@ -230,8 +234,38 @@ class WebScrapingUtility: NSObject {
             self.webView.navigationDelegate = self
             self.webView.load(request)
         }
+
+        startIdlingTimer()
     }
-    
+
+    private func startIdlingTimer() {
+        print("LPC: Starting timer")
+        idleTimer?.invalidate()
+        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
+            print("LPC: Idling")
+            self.isIdle = true
+            timer.invalidate()
+
+            // Check for recaptcha or invalid credentials
+            // TODO: Make this reusable
+            if self.canAttemptToDetectReCaptcha {
+                do {
+                    try self.detectText(.reCaptchaMessaging)
+                } catch {
+                    self.canAttemptToDetectReCaptcha = true
+                }
+            }
+
+            if self.canAttemptToDetectIncorrectCredentials {
+                do {
+                    try self.detectText(.incorrectCredentialsMessaging)
+                } catch {
+                    self.canAttemptToDetectIncorrectCredentials = true
+                }
+            }
+        })
+    }
+
     private func presentWebView() {
         guard !isPresentingWebView else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -416,6 +450,7 @@ class WebScrapingUtility: NSObject {
 
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        startIdlingTimer()
         canAttemptToDetectReCaptcha = true
         canAttemptToDetectIncorrectCredentials = true
         
@@ -445,6 +480,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
             do {
                 let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCard.id)
                 if shouldAttemptLogin {
+                    print("LPC: attempt login")
                     hasAttemptedLogin = true
                     try login(credentials: credentials)
                     // TODO: what if login failed, but the webview doesnt trigger navigation? We just sit here
@@ -464,6 +500,8 @@ extension WebScrapingUtility: WKNavigationDelegate {
     
     @available(iOS 13.0, *)
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
+        print("LPC: decidePolicy")
+        startIdlingTimer()
         if canAttemptToDetectReCaptcha {
             do {
                 try detectText(.reCaptchaMessaging)
