@@ -600,7 +600,6 @@
 		4E7D69E76A3338F0932FE04F1404C447 /* ZXDataMatrixDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2B21199942B5116B4B8259348CE9B7 /* ZXDataMatrixDecoder.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		4EA9986E71B13F68321C447FFC481451 /* Disk.h in Headers */ = {isa = PBXBuildFile; fileRef = 822B91F6454D31D2E1A0670D5BD6C7CA /* Disk.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4F0EBF2DDD7B32E24CE895FB4DC5DB3E /* GPBArray_PackagePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 470C5982EB8FA4CA04BA637B2EA7F9EB /* GPBArray_PackagePrivate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4F4A01D10765CBCBBBC7A0AFBEDDE865 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7F8838ED2B8811F2F8FB859F61D59C /* Foundation.framework */; };
 		4FBD7D661DD71ADC6E1F805DAF657802 /* FBSDKError.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A30D4197AF22EC00D9AB6DA679F5ADD /* FBSDKError.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		501BFEFD99224D660F5C0E7FFA4D9167 /* ZXRSSPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C98905DDE5751443162F91BF92C272A /* ZXRSSPair.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		50285D1BEA32178105584EB787F690B2 /* GDTCOREvent+NetworkConnectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3FAF5A7858971FA5CFB7BA96F8642E /* GDTCOREvent+NetworkConnectionInfo.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -624,7 +623,6 @@
 		542097B3FFC5DFE6289F5A3C92C99BAE /* ZXQRCodeMultiReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B867647206097667C8F3501AE4504A2 /* ZXQRCodeMultiReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		54CDDC4D2A10CD1FD523AE9EDFCD7D36 /* FBSDKWebDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CDEFBA3B3C09A947191200B6E4B60CD2 /* FBSDKWebDialog.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		550AC474BAD6DE4972A6EBEAEAB7822B /* FBSDKWebViewAppLinkResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = EA1A1C6FB75A9396C6CB18922A4B0516 /* FBSDKWebViewAppLinkResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55200D9656F89B330786CEDA39953358 /* Pods-binkappUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9D70864FAFE582AF2ECBE7C75E3462 /* Pods-binkappUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5578FE977F1A2248FCDD00DB0458029E /* FBSDKLibAnalyzer.h in Headers */ = {isa = PBXBuildFile; fileRef = C699CDC0E7BC89FE1D4D5151EF3A8603 /* FBSDKLibAnalyzer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		557EEF71D4AD9EC6A30F5D9B70AA0F47 /* FBSDKEventBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = CE7E642C43E9E2FBDDE9991BA2CC5C7B /* FBSDKEventBinding.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		558B16F5BE9A612C10D9580FD9B29075 /* FBSDKDynamicFrameworkLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D29053580A79C784E261A6CE66F2EC1 /* FBSDKDynamicFrameworkLoader.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -640,6 +638,7 @@
 		5793950FE664C8A1A1CD12C0813E5B72 /* ZXQRCodeBitMatrixParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEC74321C0E74BEA184948CEFB83A48 /* ZXQRCodeBitMatrixParser.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		5878D3DFDB4366FA58044AB2D2D6A0F5 /* FBSDKErrorReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 82DE55EDC6B0E8BB674AABCCD4839916 /* FBSDKErrorReport.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		587BF6410AD6B53553CEFD9CEA03F827 /* ZXResultPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9A058758F32A12EAF307D4229F3F82 /* ZXResultPoint.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		589EBCF63058DEE30F486202B4F06627 /* Pods-binkappUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AE79E7A26EC8867A086FB649B57A5E /* Pods-binkappUITests-dummy.m */; };
 		58DDC190C7C1878E973F84A78305CF9D /* ZXAztecReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E4E19368462ACC91B64376A4EBE5E7D /* ZXAztecReader.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		591BEBE8F695AF9505D1388F808B73FB /* FBSDKLoginManagerLoginResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 65EAB092D49CDFD5A251724F491DF528 /* FBSDKLoginManagerLoginResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5984F3C6BA4ECBC4116A9E4F78076E35 /* ZXRSSExpandedCurrentParsingState.m in Sources */ = {isa = PBXBuildFile; fileRef = FE3C08CFD71A764A5608A422819B64F0 /* ZXRSSExpandedCurrentParsingState.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -814,7 +813,6 @@
 		7B90B6B8BB8435F80C96AAEB7CD285D8 /* FBSDKAppEventsStateManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F680587673671E2A1F48B1197DD639ED /* FBSDKAppEventsStateManager.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7B9B20BB585EF3F036E6EC946CB2302C /* ZXAI01393xDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = CA2A2CA7D6E9F7B1DDFC7195CE7720E0 /* ZXAI01393xDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7BD7310A065A9F17637828437FDBD023 /* ZXBoolArray.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE5642A5F4D6EA83CAA57AE8B12A614 /* ZXBoolArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7C2B68615B531B649636BC84A433ABFF /* Pods-binkappUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AE79E7A26EC8867A086FB649B57A5E /* Pods-binkappUITests-dummy.m */; };
 		7C470AEC175F9C8FE217F2C3295AAC27 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55432A105D77B7ADE6420EF86E48D24A /* Request.swift */; };
 		7C4F5ECAA9C87CE7FBD98F8F7582C1B2 /* GDTCORUploadPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = 81D45C7C4B3DE7CEE6857986678A8B3A /* GDTCORUploadPackage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7C83057F327CE29AF1C4442905A29EB7 /* DTTJailbreakDetection-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DE4A2BB594624ADA714045EA3A9FC3D /* DTTJailbreakDetection-dummy.m */; };
@@ -1068,6 +1066,7 @@
 		AC11FE18F590FDB5B9BBC34DA8BBEFE6 /* FBSDKWebViewAppLinkResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 371DC21656C4CD998B25D210F51D5AA9 /* FBSDKWebViewAppLinkResolver.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		AC485586A90EC15943C7BCF3AE4C2BEF /* ZXPDF417DetectionResultColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 34EC56107C250542DB9C2A4117FFAD03 /* ZXPDF417DetectionResultColumn.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		AC793F7705D76A9C5029E0E89F350B43 /* GDTCORUploadCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F01370409D1C4E7504926BF0026055 /* GDTCORUploadCoordinator.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		AC8212E559AA9D44DE29C7D2216C3D38 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7F8838ED2B8811F2F8FB859F61D59C /* Foundation.framework */; };
 		AC8CCDB2881D5031C7196ED51D1FC548 /* ZXQRCodeDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E08C6CC86388E71482EEF19EDE44D6 /* ZXQRCodeDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD09708D50672E2535E8C504F9B6029F /* ZXSMSTOMMSTOResultParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C313D023F5C4F64AD399A408E66113D /* ZXSMSTOMMSTOResultParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD0E11FC8D5211FE898126433C2817AC /* FBSDKURLSessionTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E4AFBFE340A6A0A0AFA64C5C003F04 /* FBSDKURLSessionTask.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -1116,6 +1115,7 @@
 		B3AD828CA769E216A4D7051E5C59E67D /* FBSDKBasicUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 23AFCFB8EA0DE39A108077E9B62FF101 /* FBSDKBasicUtility.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		B3B4BDC1928592466D49501B122F5BCF /* FBSDKLoginButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D54C1D6E3182534970F871678E9005 /* FBSDKLoginButton.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		B3BAF3A38E41954BD7DC5E7F2B7F83A9 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20A717B1953C9817408EFCEE2376C0A /* Image.swift */; };
+		B3E798347FE1184D9B4FB09C1BC10FFC /* Pods-binkappUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DA9D70864FAFE582AF2ECBE7C75E3462 /* Pods-binkappUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B3FB5FFC16BA655BCC39F924493FE296 /* ZXMultiFinderPatternFinder.h in Headers */ = {isa = PBXBuildFile; fileRef = 5082677E03563CCC3DC5546F226A5F20 /* ZXMultiFinderPatternFinder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B41467754EF2AF3454F8FF11261A7C5C /* BinkappKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B8D3079493A506106D7E9E5CEF24D8 /* BinkappKeys.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		B4163F40F2FD4573CF022B3B9B8C319E /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6EC69A00A5572178D9540B0271BC4D0 /* BlurView.swift */; };
@@ -1525,12 +1525,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		01A70946E7BDF9C9848DF9AC3A3A9C91 /* PBXContainerItemProxy */ = {
+		01FF84C94A1B196A3E11351B8D201A99 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 28907903AF6DD0AD321D92CD660E7E23;
-			remoteInfo = FBSDKCoreKit;
+			remoteGlobalIDString = 5C0371EE948D0357B8EE0E34ABB44BF0;
+			remoteInfo = GoogleDataTransport;
 		};
 		028F836FD55ACFA9A02AC0D42C81F6DB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1538,13 +1538,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5EB4B0B6DA6D5C0C3365733BEAA1C485;
 			remoteInfo = FirebaseCoreDiagnosticsInterop;
-		};
-		02A626FD843B21ED147C9B7625CA4017 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 52B60EC2A583F24ACBB69C113F5488B9;
-			remoteInfo = SwiftLint;
 		};
 		035B49E183E0C680B52A46DFC3A2F237 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1560,13 +1553,6 @@
 			remoteGlobalIDString = C9778AE8394BE451567650E0B239BA21;
 			remoteInfo = AlamofireImage;
 		};
-		04F07331C048317933C14C96BC1C7856 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8AABDD06F1327BC62BE3ECBBB02AF715;
-			remoteInfo = AlamofireNetworkActivityLogger;
-		};
 		0527E091457CFE6F47F539F7F3161ECA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -1574,12 +1560,19 @@
 			remoteGlobalIDString = B7FD2D91EB22188E295F7D1E59A7F649;
 			remoteInfo = ZendeskSupportSDK;
 		};
-		05E389B1F74E0B860331127667D8DABB /* PBXContainerItemProxy */ = {
+		05C1B5CEB8A05CCB94430C8FE77ACCD4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7A35B702D709EA37681B6545A4E1EF1B;
-			remoteInfo = CardScan;
+			remoteGlobalIDString = 2BBF7206D7FAC92C82A042A99C4A98F8;
+			remoteInfo = PromisesObjC;
+		};
+		063E8507F4114FD8E7D86691F7218E3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 615C831BCE925ED486B225B87E44926D;
+			remoteInfo = KeychainAccess;
 		};
 		06FB2D7760CF4D6316C61E7C4D454289 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1587,6 +1580,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C49E7A4D59E5C8BE8DE9FB1EFB150185;
 			remoteInfo = FirebaseAnalytics;
+		};
+		08ED71B6FC35414D6935E7A25777DEFF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F68D031908A0059566798048C48F776;
+			remoteInfo = FirebaseABTesting;
 		};
 		09233408E306D9B322FE4204EDF54E7F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1616,19 +1616,12 @@
 			remoteGlobalIDString = 51471EE35F2E9E19E51A74944E5ABB7F;
 			remoteInfo = FirebaseRemoteConfig;
 		};
-		12DA841C54B90A232FDDD6FD6EA0CFFD /* PBXContainerItemProxy */ = {
+		153F362BCC9E3CC5AA27D97B868604B9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D6FA74719A43C5D8075E0A71C342EDB7;
-			remoteInfo = ZendeskMessagingAPISDK;
-		};
-		13F25AD6FF25B319598CD0F2729C237E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F4F25FCAC51B51FD5F986EB939BF1F87;
-			remoteInfo = GoogleDataTransportCCTSupport;
+			remoteGlobalIDString = 28907903AF6DD0AD321D92CD660E7E23;
+			remoteInfo = FBSDKCoreKit;
 		};
 		16A91268A2086201BDE26A69FDFC2AE9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1658,19 +1651,19 @@
 			remoteGlobalIDString = B53D977A951AFC38B21751B706C1DF83;
 			remoteInfo = GoogleAppMeasurement;
 		};
-		197AA80BB60C986E048D813B5D4D5FCD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B18DF951F9A910FD9C21E52090001182;
-			remoteInfo = "Pods-binkapp";
-		};
 		1AFAE3EC9F42390A583C00D9722C53EF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 30950EABCD5EFA0462FC017837EB16BE;
 			remoteInfo = ZXingObjC;
+		};
+		1B6A6545080BC2FDC4777A6E1D3646E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D372E53E2E8FEAA06A0439FB85E65767;
+			remoteInfo = FirebaseAnalyticsInterop;
 		};
 		1D773A1E589ED1D0BE5B704A4DF410F0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1686,6 +1679,20 @@
 			remoteGlobalIDString = 8D7F5D5DD528D21A72DC87ADA5B12E2D;
 			remoteInfo = GoogleUtilities;
 		};
+		1F33C5CBC3586E6F9F4C7EE0D1A22FEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F6F4AFBD904C071B9FDEC3399BA8F49;
+			remoteInfo = FacebookSDK;
+		};
+		1F387BEEF0CB75C7796F0DB159C2CAE4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30950EABCD5EFA0462FC017837EB16BE;
+			remoteInfo = ZXingObjC;
+		};
 		202D6A6BB3E70BB30E949FC9DAFAB93B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -1700,19 +1707,26 @@
 			remoteGlobalIDString = 92A1C13902E7ACDA3ABB5BA1FEACC86C;
 			remoteInfo = SwiftyRSA;
 		};
+		2251D4FB28B538E1E11FEC0A6D3C9648 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52B60EC2A583F24ACBB69C113F5488B9;
+			remoteInfo = SwiftLint;
+		};
+		235D0C2E0124AAE19CEF6258F3628909 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C49E7A4D59E5C8BE8DE9FB1EFB150185;
+			remoteInfo = FirebaseAnalytics;
+		};
 		2388021C2CA8579F240EBAE538D33D70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 7D8830E5D05F68364F3360F2C0DA9813;
 			remoteInfo = ZendeskSupportProvidersSDK;
-		};
-		23D090768A7FB543613323476C6A0B5A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9C4611B429142D173AD077CF82E8897;
-			remoteInfo = ZendeskMessagingSDK;
 		};
 		23FC44A7488A01BC43D276917ABD4E98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1721,20 +1735,6 @@
 			remoteGlobalIDString = 2BBF7206D7FAC92C82A042A99C4A98F8;
 			remoteInfo = PromisesObjC;
 		};
-		240E6E7A10C306E55E5F5909F9D8A249 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EAAA1AD3A8A1B59AB91319EE40752C6D;
-			remoteInfo = Alamofire;
-		};
-		24790C98046817C3A5DCB204A49D2956 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 51471EE35F2E9E19E51A74944E5ABB7F;
-			remoteInfo = FirebaseRemoteConfig;
-		};
 		24B9D29DB5439E2C0B08776A7DF3AC71 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -1742,19 +1742,33 @@
 			remoteGlobalIDString = 5C0371EE948D0357B8EE0E34ABB44BF0;
 			remoteInfo = GoogleDataTransport;
 		};
+		266A9AEE20092667F485C6F0BE507312 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 470FE31978DC918618A329D8B55C85FF;
+			remoteInfo = Protobuf;
+		};
+		2825497F76119E4E8F0B8AECC2C9BFCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2B5E7DCCBBFB32341D857D01211A1A3;
+			remoteInfo = nanopb;
+		};
+		28B8A78F0595534BF07EA777D0042863 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7D8830E5D05F68364F3360F2C0DA9813;
+			remoteInfo = ZendeskSupportProvidersSDK;
+		};
 		2D00025B30A6F5BE79F095C8A5DE6B0E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 30950EABCD5EFA0462FC017837EB16BE;
 			remoteInfo = ZXingObjC;
-		};
-		2D15B094C47912874B2C6AFD550A5899 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B53D977A951AFC38B21751B706C1DF83;
-			remoteInfo = GoogleAppMeasurement;
 		};
 		2E023F2824E9979FB981409E713A7940 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1777,19 +1791,19 @@
 			remoteGlobalIDString = 5C0371EE948D0357B8EE0E34ABB44BF0;
 			remoteInfo = GoogleDataTransport;
 		};
-		303DBD15E730D792326DF2081FCFF81E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4402AFF83DBDC4DD07E198685FDC2DF2;
-			remoteInfo = FirebaseCore;
-		};
 		317412EB6ED528E61B06F8716458B3C9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D2B5E7DCCBBFB32341D857D01211A1A3;
 			remoteInfo = nanopb;
+		};
+		330EB5419FE6F279F83B2ADAFE00A0AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F43F9AE813A5C024E5F9B8766CD7BD7;
+			remoteInfo = ZendeskSDKConfigurationsSDK;
 		};
 		331DB6F0278B744325E771ADE84679BF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1805,13 +1819,6 @@
 			remoteGlobalIDString = 0F43F9AE813A5C024E5F9B8766CD7BD7;
 			remoteInfo = ZendeskSDKConfigurationsSDK;
 		};
-		3AF19EE4488BBC30735B6C5C96DC9887 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 470FE31978DC918618A329D8B55C85FF;
-			remoteInfo = Protobuf;
-		};
 		3E16DCE30A0906D70B664A7DC2CB3F73 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -1819,12 +1826,12 @@
 			remoteGlobalIDString = D6FA74719A43C5D8075E0A71C342EDB7;
 			remoteInfo = ZendeskMessagingAPISDK;
 		};
-		3E763D0011149AF9CDDA1171AA764877 /* PBXContainerItemProxy */ = {
+		3EB39CDDB9F651C49EA4FF9F119A7FDD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8F68D031908A0059566798048C48F776;
-			remoteInfo = FirebaseABTesting;
+			remoteGlobalIDString = 914C00A85014D51C5BD9DC8C6E07C79F;
+			remoteInfo = Disk;
 		};
 		400EE46670595B04F0B4238E58AF0246 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1861,13 +1868,6 @@
 			remoteGlobalIDString = CB83A11C8D5DDAE33988A94AF1C7653D;
 			remoteInfo = ZendeskCoreSDK;
 		};
-		4A51FB30217B00313C4CFCA1F63B139E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8F6F4AFBD904C071B9FDEC3399BA8F49;
-			remoteInfo = FacebookSDK;
-		};
 		4C5997BABA3DC4FD78D4FC0121C08F3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -1875,12 +1875,12 @@
 			remoteGlobalIDString = F4F25FCAC51B51FD5F986EB939BF1F87;
 			remoteInfo = GoogleDataTransportCCTSupport;
 		};
-		4F4482FC23D6D260A99692A7D06BCE5D /* PBXContainerItemProxy */ = {
+		4F85CC63BAE488093FD09E7F2973D035 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5C0371EE948D0357B8EE0E34ABB44BF0;
-			remoteInfo = GoogleDataTransport;
+			remoteGlobalIDString = F4F25FCAC51B51FD5F986EB939BF1F87;
+			remoteInfo = GoogleDataTransportCCTSupport;
 		};
 		50362E1625FEFD30EB6F4AA6B899205B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1945,6 +1945,13 @@
 			remoteGlobalIDString = 8855FA3C893F687828F263462F8BD04A;
 			remoteInfo = DTTJailbreakDetection;
 		};
+		61AA0A31D5BB2102FB6EE77F05F6737B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 620E05868772C10B4920DC7E324F2C87;
+			remoteInfo = FirebaseCoreDiagnostics;
+		};
 		633FA84238A0C6F805C8ABEEA1D89005 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -2001,12 +2008,12 @@
 			remoteGlobalIDString = 51739D5CAFE341492EA02A9121CBC60F;
 			remoteInfo = FBSDKMarketingKit;
 		};
-		6AA932B9A05C3BC07E2D8CCCB27253E2 /* PBXContainerItemProxy */ = {
+		6AC4AEDE8B1801750E3132647DF8C0E4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D2B5E7DCCBBFB32341D857D01211A1A3;
-			remoteInfo = nanopb;
+			remoteGlobalIDString = 87803597EB3F20FC46472B85392EC4FD;
+			remoteInfo = FirebaseInstallations;
 		};
 		6B2D1BB806A61FB5FD734A92D9E9E407 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2029,12 +2036,12 @@
 			remoteGlobalIDString = B798275031D11315684486DC2E2B6FCA;
 			remoteInfo = DeepDiff;
 		};
-		72EA73A6F0D0C0A8EDBDFC1DFDD4F822 /* PBXContainerItemProxy */ = {
+		71C7280AB881F6E5E35E13A9E151FD71 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 87803597EB3F20FC46472B85392EC4FD;
-			remoteInfo = FirebaseInstallations;
+			remoteGlobalIDString = 8AABDD06F1327BC62BE3ECBBB02AF715;
+			remoteInfo = AlamofireNetworkActivityLogger;
 		};
 		7306EB132B1B38909042C52EEF1099F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2071,13 +2078,6 @@
 			remoteGlobalIDString = 22E1F0E7CBECE226FC294E79C21B0033;
 			remoteInfo = JWTDecode;
 		};
-		797C3D4E54E17E2EAB6708286A8C565E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 92A1C13902E7ACDA3ABB5BA1FEACC86C;
-			remoteInfo = SwiftyRSA;
-		};
 		79A4A2BDA3C2E062E17B8BA288AD0328 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -2099,12 +2099,19 @@
 			remoteGlobalIDString = 8D7F5D5DD528D21A72DC87ADA5B12E2D;
 			remoteInfo = GoogleUtilities;
 		};
-		7C48974DD4E79943A3D0BD6A97D4C423 /* PBXContainerItemProxy */ = {
+		7F8413A0EBEABD33515AB4B7BDB561B5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 10C5885FCB0908EF785774EE52473DAB;
-			remoteInfo = FBSDKLoginKit;
+			remoteGlobalIDString = D9C4611B429142D173AD077CF82E8897;
+			remoteInfo = ZendeskMessagingSDK;
+		};
+		81AA72053F179A50CCFAA8FF12F51328 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 072CEA044D2EF26F03496D5996BBF59F;
+			remoteInfo = Firebase;
 		};
 		827FB7E819D5E5135FA07A82ADB34288 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2113,19 +2120,19 @@
 			remoteGlobalIDString = 28907903AF6DD0AD321D92CD660E7E23;
 			remoteInfo = FBSDKCoreKit;
 		};
+		82973EF99BB08B18DBB49627A216C9C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9778AE8394BE451567650E0B239BA21;
+			remoteInfo = AlamofireImage;
+		};
 		8358F648A64042E45ED8F7F34D59921C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D372E53E2E8FEAA06A0439FB85E65767;
 			remoteInfo = FirebaseAnalyticsInterop;
-		};
-		84BA5291719A12C142BA39F600677E77 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 22E1F0E7CBECE226FC294E79C21B0033;
-			remoteInfo = JWTDecode;
 		};
 		85DAE7A0827662B31B5B93E3B84FB3F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2162,6 +2169,13 @@
 			remoteGlobalIDString = AC6C5B512338029B3195562CA1FAB3FF;
 			remoteInfo = ZendeskCommonUISDK;
 		};
+		904CB31E41C517C628FED54FFC82ABBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4402AFF83DBDC4DD07E198685FDC2DF2;
+			remoteInfo = FirebaseCore;
+		};
 		90737C1945A2020F6A32ABFA1183997E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -2197,12 +2211,12 @@
 			remoteGlobalIDString = EAAA1AD3A8A1B59AB91319EE40752C6D;
 			remoteInfo = Alamofire;
 		};
-		946D2A4626035A5F97D5C4855AE4B5FD /* PBXContainerItemProxy */ = {
+		92AEAF1F23421CA5F745867380167CE8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B798275031D11315684486DC2E2B6FCA;
-			remoteInfo = DeepDiff;
+			remoteGlobalIDString = 51739D5CAFE341492EA02A9121CBC60F;
+			remoteInfo = FBSDKMarketingKit;
 		};
 		9488FCBAD1937E9D1F57FC07E3AE91DE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2217,20 +2231,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 620E05868772C10B4920DC7E324F2C87;
 			remoteInfo = FirebaseCoreDiagnostics;
-		};
-		96A7466B79059B6320A33C8FA01EE991 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B7FD2D91EB22188E295F7D1E59A7F649;
-			remoteInfo = ZendeskSupportSDK;
-		};
-		974648D1381184D6C6B3CD7597F472D2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D372E53E2E8FEAA06A0439FB85E65767;
-			remoteInfo = FirebaseAnalyticsInterop;
 		};
 		99FF3722B643E75CDE9873EF9C3DD227 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2253,6 +2253,13 @@
 			remoteGlobalIDString = 0F43F9AE813A5C024E5F9B8766CD7BD7;
 			remoteInfo = ZendeskSDKConfigurationsSDK;
 		};
+		9E573DE6E24970FA10064B023C2CDC72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22E1F0E7CBECE226FC294E79C21B0033;
+			remoteInfo = JWTDecode;
+		};
 		9EE65E67A9FD2999FEFAAC87E1BC9E10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -2267,12 +2274,19 @@
 			remoteGlobalIDString = 038B9A85B25D53B15C36692368AA8E7E;
 			remoteInfo = "Keys-framework";
 		};
-		A14936211D06AB18F0E28D4074C3881F /* PBXContainerItemProxy */ = {
+		9F56CBD7BBC6EC5C91B31F0F0D8E60A6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 2BBF7206D7FAC92C82A042A99C4A98F8;
-			remoteInfo = PromisesObjC;
+			remoteGlobalIDString = EAAA1AD3A8A1B59AB91319EE40752C6D;
+			remoteInfo = Alamofire;
+		};
+		A08DECD46C26FF963ADD5FA951ACFB20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 10C5885FCB0908EF785774EE52473DAB;
+			remoteInfo = FBSDKLoginKit;
 		};
 		A22878B537942B3529D51822020E91DB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2281,12 +2295,12 @@
 			remoteGlobalIDString = 4402AFF83DBDC4DD07E198685FDC2DF2;
 			remoteInfo = FirebaseCore;
 		};
-		A44EABDE1CEDB2AE194547AD21C87C2F /* PBXContainerItemProxy */ = {
+		A25CA5F7660B767E589E34246829D376 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 914C00A85014D51C5BD9DC8C6E07C79F;
-			remoteInfo = Disk;
+			remoteGlobalIDString = 8855FA3C893F687828F263462F8BD04A;
+			remoteInfo = DTTJailbreakDetection;
 		};
 		A49F1F7E6201B07888BF40C99BEA2F69 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2296,13 +2310,6 @@
 			remoteInfo = ZendeskSupportSDK;
 		};
 		A6096AEF6C09800DB04DB086B06D93CA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 615C831BCE925ED486B225B87E44926D;
-			remoteInfo = KeychainAccess;
-		};
-		A83D536B21046ED6CDBE873E849FC30B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -2337,12 +2344,26 @@
 			remoteGlobalIDString = D2B5E7DCCBBFB32341D857D01211A1A3;
 			remoteInfo = nanopb;
 		};
+		ADAD6378DEEA6134E66ACDB35ACD4151 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5EB4B0B6DA6D5C0C3365733BEAA1C485;
+			remoteInfo = FirebaseCoreDiagnosticsInterop;
+		};
 		AE7BFA8F9B754596D614DB83688EE86A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 28907903AF6DD0AD321D92CD660E7E23;
 			remoteInfo = FBSDKCoreKit;
+		};
+		B02390CC3274D5A8D588EAC3F14DD2C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB83A11C8D5DDAE33988A94AF1C7653D;
+			remoteInfo = ZendeskCoreSDK;
 		};
 		B3045294071BC3078A433FA03680835B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2365,13 +2386,6 @@
 			remoteGlobalIDString = 2BBF7206D7FAC92C82A042A99C4A98F8;
 			remoteInfo = PromisesObjC;
 		};
-		B55448E28E16342C4FFC140A89876132 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8855FA3C893F687828F263462F8BD04A;
-			remoteInfo = DTTJailbreakDetection;
-		};
 		B5A98DA4C231B0F2CE7C869721CC745E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -2379,12 +2393,12 @@
 			remoteGlobalIDString = C49E7A4D59E5C8BE8DE9FB1EFB150185;
 			remoteInfo = FirebaseAnalytics;
 		};
-		B8A33F787DF3C5FEE2C60CEA3ECCEF10 /* PBXContainerItemProxy */ = {
+		B7EB9C0DB179F24847CEE836B9C83C81 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 30950EABCD5EFA0462FC017837EB16BE;
-			remoteInfo = ZXingObjC;
+			remoteGlobalIDString = B798275031D11315684486DC2E2B6FCA;
+			remoteInfo = DeepDiff;
 		};
 		B8A4D6FA8E6A7E0B65A439EFA7336B06 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2407,12 +2421,12 @@
 			remoteGlobalIDString = F4F25FCAC51B51FD5F986EB939BF1F87;
 			remoteInfo = GoogleDataTransportCCTSupport;
 		};
-		C09E5ADCCF5CA6CE920BF977B53E3E6C /* PBXContainerItemProxy */ = {
+		BE9E476759AE0BBA96ECD98DCC5EE0DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7D8830E5D05F68364F3360F2C0DA9813;
-			remoteInfo = ZendeskSupportProvidersSDK;
+			remoteGlobalIDString = 51471EE35F2E9E19E51A74944E5ABB7F;
+			remoteInfo = FirebaseRemoteConfig;
 		};
 		C0AE9DF94F91F95A89BF79D1174B6CAA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2456,12 +2470,12 @@
 			remoteGlobalIDString = C49E7A4D59E5C8BE8DE9FB1EFB150185;
 			remoteInfo = FirebaseAnalytics;
 		};
-		CDE1AB3F37807484E944CDC6F53CCFE1 /* PBXContainerItemProxy */ = {
+		CFE347ACCD1E2B587A6928D307156F4E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 620E05868772C10B4920DC7E324F2C87;
-			remoteInfo = FirebaseCoreDiagnostics;
+			remoteGlobalIDString = B53D977A951AFC38B21751B706C1DF83;
+			remoteInfo = GoogleAppMeasurement;
 		};
 		D109E29FD6C9339216E7DAC188C37AB9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2483,13 +2497,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2B5E7DCCBBFB32341D857D01211A1A3;
 			remoteInfo = nanopb;
-		};
-		D76D546800F578D63C0787614693ED9E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D7F5D5DD528D21A72DC87ADA5B12E2D;
-			remoteInfo = GoogleUtilities;
 		};
 		D8FF252C3BD36CC2FB1AAB1E3C2D8E28 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2519,6 +2526,13 @@
 			remoteGlobalIDString = C9778AE8394BE451567650E0B239BA21;
 			remoteInfo = AlamofireImage;
 		};
+		DDED6B91E3E039E461E7E2D354EE6E90 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6FA74719A43C5D8075E0A71C342EDB7;
+			remoteInfo = ZendeskMessagingAPISDK;
+		};
 		DE27974CE3416B9E6886C4C3EC74BB52 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -2547,12 +2561,12 @@
 			remoteGlobalIDString = B798275031D11315684486DC2E2B6FCA;
 			remoteInfo = DeepDiff;
 		};
-		E354A7535CDFDD7226A334F28450144E /* PBXContainerItemProxy */ = {
+		E24AD750D119225D8D828373C4093CBE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5EB4B0B6DA6D5C0C3365733BEAA1C485;
-			remoteInfo = FirebaseCoreDiagnosticsInterop;
+			remoteGlobalIDString = AC6C5B512338029B3195562CA1FAB3FF;
+			remoteInfo = ZendeskCommonUISDK;
 		};
 		E3FB9B6413C218D9E6B2911108CA26E7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2582,6 +2596,13 @@
 			remoteGlobalIDString = D9C4611B429142D173AD077CF82E8897;
 			remoteInfo = ZendeskMessagingSDK;
 		};
+		E723A9A3F92C8687973085A61C51735E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7FD2D91EB22188E295F7D1E59A7F649;
+			remoteInfo = ZendeskSupportSDK;
+		};
 		E7AB61AC126910D2C208164EE9A63D96 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -2596,33 +2617,12 @@
 			remoteGlobalIDString = 5EB4B0B6DA6D5C0C3365733BEAA1C485;
 			remoteInfo = FirebaseCoreDiagnosticsInterop;
 		};
-		E9F0C635B71BFAF3ECFC394415082EAA /* PBXContainerItemProxy */ = {
+		EF25BF76C06C1C4E8E329F2CE1A310C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 072CEA044D2EF26F03496D5996BBF59F;
-			remoteInfo = Firebase;
-		};
-		EA0E8449A5DBF429E5A10CBD5832F0CF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 51739D5CAFE341492EA02A9121CBC60F;
-			remoteInfo = FBSDKMarketingKit;
-		};
-		EBE6126E459F5B96AB1C6F38176EC7BD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C9778AE8394BE451567650E0B239BA21;
-			remoteInfo = AlamofireImage;
-		};
-		EDF652FD269C5A6275CFD0F4129AAB3B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AC6C5B512338029B3195562CA1FAB3FF;
-			remoteInfo = ZendeskCommonUISDK;
+			remoteGlobalIDString = 92A1C13902E7ACDA3ABB5BA1FEACC86C;
+			remoteInfo = SwiftyRSA;
 		};
 		EFAF07E11F6DC525A550824E593DD47B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2631,19 +2631,12 @@
 			remoteGlobalIDString = 7A35B702D709EA37681B6545A4E1EF1B;
 			remoteInfo = CardScan;
 		};
-		EFC96A6135944F56EFE4EA30D51890C1 /* PBXContainerItemProxy */ = {
+		F19F92B5A50B42DF36A187F3D68CA201 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 0F43F9AE813A5C024E5F9B8766CD7BD7;
-			remoteInfo = ZendeskSDKConfigurationsSDK;
-		};
-		F27916C2248FBCB2CE58E371A3B5BF1E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C49E7A4D59E5C8BE8DE9FB1EFB150185;
-			remoteInfo = FirebaseAnalytics;
+			remoteGlobalIDString = 7A35B702D709EA37681B6545A4E1EF1B;
+			remoteInfo = CardScan;
 		};
 		F552442A27EA764B445D8E417C03146F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2666,6 +2659,13 @@
 			remoteGlobalIDString = 072CEA044D2EF26F03496D5996BBF59F;
 			remoteInfo = Firebase;
 		};
+		FA4C0232F354BE6916EC02D962A3F90B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D7F5D5DD528D21A72DC87ADA5B12E2D;
+			remoteInfo = GoogleUtilities;
+		};
 		FE3B3FA32713409C2D7B59D8DD657F3A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -2679,13 +2679,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7D8830E5D05F68364F3360F2C0DA9813;
 			remoteInfo = ZendeskSupportProvidersSDK;
-		};
-		FE57BFED0F65F1042AE0280FCC004660 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CB83A11C8D5DDAE33988A94AF1C7653D;
-			remoteInfo = ZendeskCoreSDK;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -4353,14 +4346,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6932B1C38C0C4C01D6308F5FFCF22BDC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4F4A01D10765CBCBBBC7A0AFBEDDE865 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6DB3B5DE817E4338F52465089B892659 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -4416,6 +4401,14 @@
 			files = (
 				F59642922BA7E24A693861519F4D509E /* FBSDKCoreKit.framework in Frameworks */,
 				17FE56EDAAB31F075A3B9EC03BC3FD26 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCB23EE51219F1609299E6DAAA197789 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC8212E559AA9D44DE29C7D2216C3D38 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7755,6 +7748,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AF02F4EDCA0BFDE98A4EF9713669E2F8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3E798347FE1184D9B4FB09C1BC10FFC /* Pods-binkappUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BA3E80A55DEE487D13F3F3FDB3B2564E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -7842,14 +7843,6 @@
 				09E6DAF9AE7228B0BF83321F95EB4530 /* GDTCCTUploader.h in Headers */,
 				65AAF2EDCB268384C5F78AA9B256EBC6 /* GDTCOREvent+NetworkConnectionInfo.h in Headers */,
 				8A5F907D9B8B9C81C2A4ABC30C568871 /* GoogleDataTransportCCTSupport-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EF4979A1C659B9F93C0C8F9272F907BA /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				55200D9656F89B330786CEDA39953358 /* Pods-binkappUITests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8117,56 +8110,55 @@
 		};
 		5FEBDB5803077151DE240ED466D5231B /* Pods-binkappUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 40C7EFDB4B371E7764AF57F817CA070C /* Build configuration list for PBXNativeTarget "Pods-binkappUITests" */;
+			buildConfigurationList = 1264E8375283B8F6CF7D65196D2A6471 /* Build configuration list for PBXNativeTarget "Pods-binkappUITests" */;
 			buildPhases = (
-				EF4979A1C659B9F93C0C8F9272F907BA /* Headers */,
-				5E93EF70BF93167F5CF4F02346532166 /* Sources */,
-				6932B1C38C0C4C01D6308F5FFCF22BDC /* Frameworks */,
-				57532974392D59E6260818E08E6BE405 /* Resources */,
+				AF02F4EDCA0BFDE98A4EF9713669E2F8 /* Headers */,
+				B26F1B1E096EC522F6BD5CA2BF8BB222 /* Sources */,
+				CCB23EE51219F1609299E6DAAA197789 /* Frameworks */,
+				228829DD1EDD20B5F3C15606A42A1E68 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				947BC0681C376114116CF98CECD8720E /* PBXTargetDependency */,
-				B5ECDCC46543CCC7F41E96C127760EB1 /* PBXTargetDependency */,
-				A67C7EEE00387E4493D286F0D9B20C79 /* PBXTargetDependency */,
-				DA07E7069C9161DC334FE5A476778F6D /* PBXTargetDependency */,
-				1039C227E50745A9521E39888E078603 /* PBXTargetDependency */,
-				E8C5E7F2ADA6A4CBDCF6775877CB3EE6 /* PBXTargetDependency */,
-				4978AF462D3D6D4C400B00262514F232 /* PBXTargetDependency */,
-				3FBFBF37B9E1ED52A2417059A7C1D197 /* PBXTargetDependency */,
-				3D2EB12537475115280EFEA1BD9A5616 /* PBXTargetDependency */,
-				CD5235752A7B01878AF6A5AAF5C0F6FF /* PBXTargetDependency */,
-				36602A1CC17D2583C799992933FC6F8B /* PBXTargetDependency */,
-				50939F323484D3BEA40A6D73CD866E21 /* PBXTargetDependency */,
-				143FC0A53F227A23668000865FC7CA47 /* PBXTargetDependency */,
-				DE76297955A8C797380DF07AC1D3D421 /* PBXTargetDependency */,
-				C60D4204E3F2493CA44E657BC3B83B5D /* PBXTargetDependency */,
-				E5C54A6F28D99C8BFAFD68BC4E308059 /* PBXTargetDependency */,
-				DAE3184D4645F6EB5D43B96FF7A8D242 /* PBXTargetDependency */,
-				224B9E2AA60D32E81FEF7470148CF58D /* PBXTargetDependency */,
-				8A5D7074F7103281C359B6CEF47E6A59 /* PBXTargetDependency */,
-				BE02B7C304F63CA2280A697739A3AF17 /* PBXTargetDependency */,
-				AA1BA4E153EBE7E9801A41EEF48891A5 /* PBXTargetDependency */,
-				7E3F5643DE18114A46D3C47FB93D8790 /* PBXTargetDependency */,
-				01E5DB3F707595963D4A074EE9CD003A /* PBXTargetDependency */,
-				290C8AD9FB20B5FFD956E48666E131AD /* PBXTargetDependency */,
-				69991FBE63CBAE4CF2168AE9E1DBD662 /* PBXTargetDependency */,
-				E7980EDB48C6967EDF12147DC925A9CB /* PBXTargetDependency */,
-				149A66978BB187174DDAF275ACC4C64A /* PBXTargetDependency */,
-				28D7346B8188D037D2B2569EA8614475 /* PBXTargetDependency */,
-				69F0DDA9CB5B97049835F8869FCF837B /* PBXTargetDependency */,
-				04DCCE1740DC03A8BBF4B27D5F454B94 /* PBXTargetDependency */,
-				1A8D686CAAAC70FD8C7500C45B8857D0 /* PBXTargetDependency */,
-				2D5F1E684828AEEB8C9107AD09026E72 /* PBXTargetDependency */,
-				CCD6A6F8F16119322C224675637EF56F /* PBXTargetDependency */,
-				912052A4160736C704ABA9631E93F1B7 /* PBXTargetDependency */,
-				69C53931465DAFE7F48305CEB3E991E0 /* PBXTargetDependency */,
-				FE7B493775A07C8BA2C86B07084A5CF0 /* PBXTargetDependency */,
-				5ED0E63039B9FD341D0FDA54F0148B27 /* PBXTargetDependency */,
-				832CF7D3583A02946D3C9FDC298E115E /* PBXTargetDependency */,
-				F13A61A15EEF70769119C66306867AAB /* PBXTargetDependency */,
-				5B68C6DAEEA7DCD773276FC4534E2F44 /* PBXTargetDependency */,
+				909AC510FAAE54F53FB02F183A2EC39C /* PBXTargetDependency */,
+				D231383DCD4FC3EA1E7A2C9F508884D1 /* PBXTargetDependency */,
+				AE8FEEFA2513B219912DD3756259C2D8 /* PBXTargetDependency */,
+				9F3832298230C9C4B0B7ABAC824FCB6D /* PBXTargetDependency */,
+				56A668FEC16260518EE1F5F9D019BD0D /* PBXTargetDependency */,
+				929214C9240933591A4A3AC283D600F5 /* PBXTargetDependency */,
+				E601D5D6BF8031990B5163B1353D3C17 /* PBXTargetDependency */,
+				21E62833F6A2B6F02435D32E47AB84CA /* PBXTargetDependency */,
+				D392CDABF621C2B6D5DF519326735EFE /* PBXTargetDependency */,
+				3230820A6563AB68368DF20322A77C54 /* PBXTargetDependency */,
+				90CDFB476357ADCAA8B88DAFB6AC5926 /* PBXTargetDependency */,
+				48329D8A7089129BC00412764EB7B107 /* PBXTargetDependency */,
+				662EC257B6E1FC8F294DA3DE3D201A29 /* PBXTargetDependency */,
+				D1349B9BD1508EAC55753FA3FAD17C9E /* PBXTargetDependency */,
+				5A0DF73A77CA910A592A673C6EE27804 /* PBXTargetDependency */,
+				438363CD779BE06B979F7AE104326123 /* PBXTargetDependency */,
+				814439452CB68B269FC7B57DFCCEDDAB /* PBXTargetDependency */,
+				F0BAFB36404E7D55E7CA2F37B371DBE7 /* PBXTargetDependency */,
+				A4F2200F73D887C98793A55808B4C27E /* PBXTargetDependency */,
+				DC09599EAA5B4F238806A5773401410B /* PBXTargetDependency */,
+				92C74F4D4289206151DCBBB84938B9BC /* PBXTargetDependency */,
+				0E792AC376DFE72AD33BD845732CC068 /* PBXTargetDependency */,
+				023871C95B04C8B07B599271E667A069 /* PBXTargetDependency */,
+				E1F8AA8A1937EA1D5D287C2DB3E4D098 /* PBXTargetDependency */,
+				225478D1A919FFE0EC2298A2688C7EA7 /* PBXTargetDependency */,
+				8708C4E14D0208EE73A1F93DC6C15B22 /* PBXTargetDependency */,
+				7027666D3E28F60A209CFF82CAB2FB22 /* PBXTargetDependency */,
+				8032F2DE75F6CFD765A88ACB233E00F7 /* PBXTargetDependency */,
+				CFF619BCBD11E054BAA6DE7F47936302 /* PBXTargetDependency */,
+				85260379FFBA445A0D52BD8696E16910 /* PBXTargetDependency */,
+				D29B3362371AF69EE4A91862BB32BB75 /* PBXTargetDependency */,
+				3F47DCD624CD2DC4AAAC329540D02251 /* PBXTargetDependency */,
+				145A79EA588267CFD7720F6C0E660B56 /* PBXTargetDependency */,
+				1722390632EE5B38072C35FA44EE0FD1 /* PBXTargetDependency */,
+				EA3EBE8C1914B55565305CE79AB04500 /* PBXTargetDependency */,
+				E6CD1345461CF9F53A9FB7C133D8DC49 /* PBXTargetDependency */,
+				D9376A9F976223FF353F845A8C44D91E /* PBXTargetDependency */,
+				29E441D76C742D745DCFB632F7B4DC79 /* PBXTargetDependency */,
+				BEA2755168560D31EABA00D717AF63A4 /* PBXTargetDependency */,
 			);
 			name = "Pods-binkappUITests";
 			productName = "Pods-binkappUITests";
@@ -8656,6 +8648,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		228829DD1EDD20B5F3C15606A42A1E68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2C0F11A8E3EBD2724DC08B9032406B78 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -8685,13 +8684,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		52017FE119109F92F4A5C1AE1AAA5951 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		57532974392D59E6260818E08E6BE405 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -8973,14 +8965,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E6E382595DFB66D12FE4C39742526C8 /* Pods-binkapp-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5E93EF70BF93167F5CF4F02346532166 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7C2B68615B531B649636BC84A433ABFF /* Pods-binkappUITests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9354,6 +9338,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B26F1B1E096EC522F6BD5CA2BF8BB222 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589EBCF63058DEE30F486202B4F06627 /* Pods-binkappUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B33682CB80079C2AF24FC9C18E9F655B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9701,11 +9693,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		01E5DB3F707595963D4A074EE9CD003A /* PBXTargetDependency */ = {
+		023871C95B04C8B07B599271E667A069 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GoogleDataTransportCCTSupport;
 			target = F4F25FCAC51B51FD5F986EB939BF1F87 /* GoogleDataTransportCCTSupport */;
-			targetProxy = 13F25AD6FF25B319598CD0F2729C237E /* PBXContainerItemProxy */;
+			targetProxy = 4F85CC63BAE488093FD09E7F2973D035 /* PBXContainerItemProxy */;
 		};
 		0268071B62BCCE29CD881223370ACBA3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9724,12 +9716,6 @@
 			name = nanopb;
 			target = D2B5E7DCCBBFB32341D857D01211A1A3 /* nanopb */;
 			targetProxy = C92414D5DF85FFC5D9171C762045359F /* PBXContainerItemProxy */;
-		};
-		04DCCE1740DC03A8BBF4B27D5F454B94 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftLint;
-			target = 52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */;
-			targetProxy = 02A626FD843B21ED147C9B7625CA4017 /* PBXContainerItemProxy */;
 		};
 		06D2CB6AE705CB0803246EFAB1B15B0B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9761,17 +9747,17 @@
 			target = 28907903AF6DD0AD321D92CD660E7E23 /* FBSDKCoreKit */;
 			targetProxy = 66C756EF45B3FBA7912CA3BB6B1374AE /* PBXContainerItemProxy */;
 		};
+		0E792AC376DFE72AD33BD845732CC068 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoogleDataTransport;
+			target = 5C0371EE948D0357B8EE0E34ABB44BF0 /* GoogleDataTransport */;
+			targetProxy = 01FF84C94A1B196A3E11351B8D201A99 /* PBXContainerItemProxy */;
+		};
 		0EA0D75FAC23FD90780222C53ADB1F1F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FacebookSDK;
 			target = 8F6F4AFBD904C071B9FDEC3399BA8F49 /* FacebookSDK */;
 			targetProxy = 7A6BC272D4A82270B623BA0F91D0C0A2 /* PBXContainerItemProxy */;
-		};
-		1039C227E50745A9521E39888E078603 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DTTJailbreakDetection;
-			target = 8855FA3C893F687828F263462F8BD04A /* DTTJailbreakDetection */;
-			targetProxy = B55448E28E16342C4FFC140A89876132 /* PBXContainerItemProxy */;
 		};
 		10D3DF5BE222DE341C29AF017045DA57 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9791,17 +9777,11 @@
 			target = 072CEA044D2EF26F03496D5996BBF59F /* Firebase */;
 			targetProxy = F79C9147AE4D9E5B5B35219773B76485 /* PBXContainerItemProxy */;
 		};
-		143FC0A53F227A23668000865FC7CA47 /* PBXTargetDependency */ = {
+		145A79EA588267CFD7720F6C0E660B56 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = FirebaseABTesting;
-			target = 8F68D031908A0059566798048C48F776 /* FirebaseABTesting */;
-			targetProxy = 3E763D0011149AF9CDDA1171AA764877 /* PBXContainerItemProxy */;
-		};
-		149A66978BB187174DDAF275ACC4C64A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Pods-binkapp";
-			target = B18DF951F9A910FD9C21E52090001182 /* Pods-binkapp */;
-			targetProxy = 197AA80BB60C986E048D813B5D4D5FCD /* PBXContainerItemProxy */;
+			name = ZendeskCoreSDK;
+			target = CB83A11C8D5DDAE33988A94AF1C7653D /* ZendeskCoreSDK */;
+			targetProxy = B02390CC3274D5A8D588EAC3F14DD2C5 /* PBXContainerItemProxy */;
 		};
 		15867690A41EC624123FD0B4171E6344 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9814,6 +9794,12 @@
 			name = GoogleDataTransport;
 			target = 5C0371EE948D0357B8EE0E34ABB44BF0 /* GoogleDataTransport */;
 			targetProxy = 24B9D29DB5439E2C0B08776A7DF3AC71 /* PBXContainerItemProxy */;
+		};
+		1722390632EE5B38072C35FA44EE0FD1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ZendeskMessagingAPISDK;
+			target = D6FA74719A43C5D8075E0A71C342EDB7 /* ZendeskMessagingAPISDK */;
+			targetProxy = DDED6B91E3E039E461E7E2D354EE6E90 /* PBXContainerItemProxy */;
 		};
 		17E0CB9BFFA70DBB9FAC6D8A525129CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9833,12 +9819,6 @@
 			target = 51739D5CAFE341492EA02A9121CBC60F /* FBSDKMarketingKit */;
 			targetProxy = 68C998AF0BBCC70159BBC71B009CBF32 /* PBXContainerItemProxy */;
 		};
-		1A8D686CAAAC70FD8C7500C45B8857D0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftyRSA;
-			target = 92A1C13902E7ACDA3ABB5BA1FEACC86C /* SwiftyRSA */;
-			targetProxy = 797C3D4E54E17E2EAB6708286A8C565E /* PBXContainerItemProxy */;
-		};
 		1CB399ECAC293E432787A21F60E5C5B0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ZendeskMessagingAPISDK;
@@ -9857,11 +9837,17 @@
 			target = B7FD2D91EB22188E295F7D1E59A7F649 /* ZendeskSupportSDK */;
 			targetProxy = A49F1F7E6201B07888BF40C99BEA2F69 /* PBXContainerItemProxy */;
 		};
-		224B9E2AA60D32E81FEF7470148CF58D /* PBXTargetDependency */ = {
+		21E62833F6A2B6F02435D32E47AB84CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = FirebaseCoreDiagnosticsInterop;
-			target = 5EB4B0B6DA6D5C0C3365733BEAA1C485 /* FirebaseCoreDiagnosticsInterop */;
-			targetProxy = E354A7535CDFDD7226A334F28450144E /* PBXContainerItemProxy */;
+			name = FBSDKCoreKit;
+			target = 28907903AF6DD0AD321D92CD660E7E23 /* FBSDKCoreKit */;
+			targetProxy = 153F362BCC9E3CC5AA27D97B868604B9 /* PBXContainerItemProxy */;
+		};
+		225478D1A919FFE0EC2298A2688C7EA7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JWTDecode;
+			target = 22E1F0E7CBECE226FC294E79C21B0033 /* JWTDecode */;
+			targetProxy = 9E573DE6E24970FA10064B023C2CDC72 /* PBXContainerItemProxy */;
 		};
 		22BABD3564CCDE452C15D81EFCC7B65D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9881,17 +9867,11 @@
 			target = D372E53E2E8FEAA06A0439FB85E65767 /* FirebaseAnalyticsInterop */;
 			targetProxy = FE3B3FA32713409C2D7B59D8DD657F3A /* PBXContainerItemProxy */;
 		};
-		28D7346B8188D037D2B2569EA8614475 /* PBXTargetDependency */ = {
+		29E441D76C742D745DCFB632F7B4DC79 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = PromisesObjC;
-			target = 2BBF7206D7FAC92C82A042A99C4A98F8 /* PromisesObjC */;
-			targetProxy = A14936211D06AB18F0E28D4074C3881F /* PBXContainerItemProxy */;
-		};
-		290C8AD9FB20B5FFD956E48666E131AD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GoogleUtilities;
-			target = 8D7F5D5DD528D21A72DC87ADA5B12E2D /* GoogleUtilities */;
-			targetProxy = D76D546800F578D63C0787614693ED9E /* PBXContainerItemProxy */;
+			name = ZendeskSupportSDK;
+			target = B7FD2D91EB22188E295F7D1E59A7F649 /* ZendeskSupportSDK */;
+			targetProxy = E723A9A3F92C8687973085A61C51735E /* PBXContainerItemProxy */;
 		};
 		2A4D0B01D3FCA55D1486C07CFA24F29C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9911,12 +9891,6 @@
 			target = 8AABDD06F1327BC62BE3ECBBB02AF715 /* AlamofireNetworkActivityLogger */;
 			targetProxy = 2E023F2824E9979FB981409E713A7940 /* PBXContainerItemProxy */;
 		};
-		2D5F1E684828AEEB8C9107AD09026E72 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ZXingObjC;
-			target = 30950EABCD5EFA0462FC017837EB16BE /* ZXingObjC */;
-			targetProxy = B8A33F787DF3C5FEE2C60CEA3ECCEF10 /* PBXContainerItemProxy */;
-		};
 		2D95BAD09827A9A7D6B4549090C7BBAA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FBSDKLoginKit;
@@ -9935,6 +9909,12 @@
 			target = 5C0371EE948D0357B8EE0E34ABB44BF0 /* GoogleDataTransport */;
 			targetProxy = 2E11FC2F17BCAFA96556A50A0E4372FF /* PBXContainerItemProxy */;
 		};
+		3230820A6563AB68368DF20322A77C54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FBSDKMarketingKit;
+			target = 51739D5CAFE341492EA02A9121CBC60F /* FBSDKMarketingKit */;
+			targetProxy = 92AEAF1F23421CA5F745867380167CE8 /* PBXContainerItemProxy */;
+		};
 		33C5DFA8FD642DD12E64AB3A020C32A5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GoogleAppMeasurement;
@@ -9946,12 +9926,6 @@
 			name = Alamofire;
 			target = EAAA1AD3A8A1B59AB91319EE40752C6D /* Alamofire */;
 			targetProxy = 331DB6F0278B744325E771ADE84679BF /* PBXContainerItemProxy */;
-		};
-		36602A1CC17D2583C799992933FC6F8B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FacebookSDK;
-			target = 8F6F4AFBD904C071B9FDEC3399BA8F49 /* FacebookSDK */;
-			targetProxy = 4A51FB30217B00313C4CFCA1F63B139E /* PBXContainerItemProxy */;
 		};
 		368EE038871FFEEE58CD6585AD49B8D5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9971,17 +9945,11 @@
 			target = B7FD2D91EB22188E295F7D1E59A7F649 /* ZendeskSupportSDK */;
 			targetProxy = 0527E091457CFE6F47F539F7F3161ECA /* PBXContainerItemProxy */;
 		};
-		3D2EB12537475115280EFEA1BD9A5616 /* PBXTargetDependency */ = {
+		3F47DCD624CD2DC4AAAC329540D02251 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = FBSDKLoginKit;
-			target = 10C5885FCB0908EF785774EE52473DAB /* FBSDKLoginKit */;
-			targetProxy = 7C48974DD4E79943A3D0BD6A97D4C423 /* PBXContainerItemProxy */;
-		};
-		3FBFBF37B9E1ED52A2417059A7C1D197 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FBSDKCoreKit;
-			target = 28907903AF6DD0AD321D92CD660E7E23 /* FBSDKCoreKit */;
-			targetProxy = 01A70946E7BDF9C9848DF9AC3A3A9C91 /* PBXContainerItemProxy */;
+			name = ZendeskCommonUISDK;
+			target = AC6C5B512338029B3195562CA1FAB3FF /* ZendeskCommonUISDK */;
+			targetProxy = E24AD750D119225D8D828373C4093CBE /* PBXContainerItemProxy */;
 		};
 		42D7C1BCB6B111ED34423CB50C15593C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9995,17 +9963,17 @@
 			target = 4402AFF83DBDC4DD07E198685FDC2DF2 /* FirebaseCore */;
 			targetProxy = F552442A27EA764B445D8E417C03146F /* PBXContainerItemProxy */;
 		};
-		4978AF462D3D6D4C400B00262514F232 /* PBXTargetDependency */ = {
+		438363CD779BE06B979F7AE104326123 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = Disk;
-			target = 914C00A85014D51C5BD9DC8C6E07C79F /* Disk */;
-			targetProxy = A44EABDE1CEDB2AE194547AD21C87C2F /* PBXContainerItemProxy */;
+			name = FirebaseCore;
+			target = 4402AFF83DBDC4DD07E198685FDC2DF2 /* FirebaseCore */;
+			targetProxy = 904CB31E41C517C628FED54FFC82ABBD /* PBXContainerItemProxy */;
 		};
-		50939F323484D3BEA40A6D73CD866E21 /* PBXTargetDependency */ = {
+		48329D8A7089129BC00412764EB7B107 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Firebase;
 			target = 072CEA044D2EF26F03496D5996BBF59F /* Firebase */;
-			targetProxy = E9F0C635B71BFAF3ECFC394415082EAA /* PBXContainerItemProxy */;
+			targetProxy = 81AA72053F179A50CCFAA8FF12F51328 /* PBXContainerItemProxy */;
 		};
 		5291045D1736DED1F7ACF173D2849DD5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10018,6 +9986,12 @@
 			name = FBSDKLoginKit;
 			target = 10C5885FCB0908EF785774EE52473DAB /* FBSDKLoginKit */;
 			targetProxy = 5356DF88394F159BF93CB86585D71B22 /* PBXContainerItemProxy */;
+		};
+		56A668FEC16260518EE1F5F9D019BD0D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DTTJailbreakDetection;
+			target = 8855FA3C893F687828F263462F8BD04A /* DTTJailbreakDetection */;
+			targetProxy = A25CA5F7660B767E589E34246829D376 /* PBXContainerItemProxy */;
 		};
 		5941F1B5957D2781D016EE22FC6B67FF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10037,29 +10011,23 @@
 			target = 8D7F5D5DD528D21A72DC87ADA5B12E2D /* GoogleUtilities */;
 			targetProxy = E7AB61AC126910D2C208164EE9A63D96 /* PBXContainerItemProxy */;
 		};
+		5A0DF73A77CA910A592A673C6EE27804 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FirebaseAnalyticsInterop;
+			target = D372E53E2E8FEAA06A0439FB85E65767 /* FirebaseAnalyticsInterop */;
+			targetProxy = 1B6A6545080BC2FDC4777A6E1D3646E4 /* PBXContainerItemProxy */;
+		};
 		5A8F226BC02E047C13806B6B566D33FA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ZendeskMessagingSDK;
 			target = D9C4611B429142D173AD077CF82E8897 /* ZendeskMessagingSDK */;
 			targetProxy = 916F85FB151867ED43C13436E40EC423 /* PBXContainerItemProxy */;
 		};
-		5B68C6DAEEA7DCD773276FC4534E2F44 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = nanopb;
-			target = D2B5E7DCCBBFB32341D857D01211A1A3 /* nanopb */;
-			targetProxy = 6AA932B9A05C3BC07E2D8CCCB27253E2 /* PBXContainerItemProxy */;
-		};
 		5E70961AB8DAF8E48E9A904F38655A50 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FirebaseCoreDiagnosticsInterop;
 			target = 5EB4B0B6DA6D5C0C3365733BEAA1C485 /* FirebaseCoreDiagnosticsInterop */;
 			targetProxy = 028F836FD55ACFA9A02AC0D42C81F6DB /* PBXContainerItemProxy */;
-		};
-		5ED0E63039B9FD341D0FDA54F0148B27 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ZendeskSDKConfigurationsSDK;
-			target = 0F43F9AE813A5C024E5F9B8766CD7BD7 /* ZendeskSDKConfigurationsSDK */;
-			targetProxy = EFC96A6135944F56EFE4EA30D51890C1 /* PBXContainerItemProxy */;
 		};
 		60A97C6A7E0B4C4E0B0AF953786478E8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10085,6 +10053,12 @@
 			target = 8D7F5D5DD528D21A72DC87ADA5B12E2D /* GoogleUtilities */;
 			targetProxy = 7C36F49B4314D3D794F09684198C333C /* PBXContainerItemProxy */;
 		};
+		662EC257B6E1FC8F294DA3DE3D201A29 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FirebaseABTesting;
+			target = 8F68D031908A0059566798048C48F776 /* FirebaseABTesting */;
+			targetProxy = 08ED71B6FC35414D6935E7A25777DEFF /* PBXContainerItemProxy */;
+		};
 		6706C155CFF2CBB67F0C257C3B64CB5A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PromisesObjC;
@@ -10097,24 +10071,6 @@
 			target = 28907903AF6DD0AD321D92CD660E7E23 /* FBSDKCoreKit */;
 			targetProxy = AE7BFA8F9B754596D614DB83688EE86A /* PBXContainerItemProxy */;
 		};
-		69991FBE63CBAE4CF2168AE9E1DBD662 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JWTDecode;
-			target = 22E1F0E7CBECE226FC294E79C21B0033 /* JWTDecode */;
-			targetProxy = 84BA5291719A12C142BA39F600677E77 /* PBXContainerItemProxy */;
-		};
-		69C53931465DAFE7F48305CEB3E991E0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ZendeskMessagingAPISDK;
-			target = D6FA74719A43C5D8075E0A71C342EDB7 /* ZendeskMessagingAPISDK */;
-			targetProxy = 12DA841C54B90A232FDDD6FD6EA0CFFD /* PBXContainerItemProxy */;
-		};
-		69F0DDA9CB5B97049835F8869FCF837B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Protobuf;
-			target = 470FE31978DC918618A329D8B55C85FF /* Protobuf */;
-			targetProxy = 3AF19EE4488BBC30735B6C5C96DC9887 /* PBXContainerItemProxy */;
-		};
 		6FEA129C7CF71EE158B733FA0AA6EAFC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Protobuf;
@@ -10126,6 +10082,12 @@
 			name = ZendeskCommonUISDK;
 			target = AC6C5B512338029B3195562CA1FAB3FF /* ZendeskCommonUISDK */;
 			targetProxy = D18DE07EADD0875BD63018DD6E517461 /* PBXContainerItemProxy */;
+		};
+		7027666D3E28F60A209CFF82CAB2FB22 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PromisesObjC;
+			target = 2BBF7206D7FAC92C82A042A99C4A98F8 /* PromisesObjC */;
+			targetProxy = 05C1B5CEB8A05CCB94430C8FE77ACCD4 /* PBXContainerItemProxy */;
 		};
 		71A28975AD5F6D9616CA8422515556A4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10163,12 +10125,6 @@
 			target = 470FE31978DC918618A329D8B55C85FF /* Protobuf */;
 			targetProxy = A8DB56C55C1EFCE27AA5F67117B86445 /* PBXContainerItemProxy */;
 		};
-		7E3F5643DE18114A46D3C47FB93D8790 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GoogleDataTransport;
-			target = 5C0371EE948D0357B8EE0E34ABB44BF0 /* GoogleDataTransport */;
-			targetProxy = 4F4482FC23D6D260A99692A7D06BCE5D /* PBXContainerItemProxy */;
-		};
 		7F421F1F0F2D7E35DD65E55C511662DE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GoogleUtilities;
@@ -10181,11 +10137,17 @@
 			target = 4402AFF83DBDC4DD07E198685FDC2DF2 /* FirebaseCore */;
 			targetProxy = F5F5C7E959E34EDCF8F52256AC4C7325 /* PBXContainerItemProxy */;
 		};
-		832CF7D3583A02946D3C9FDC298E115E /* PBXTargetDependency */ = {
+		8032F2DE75F6CFD765A88ACB233E00F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = ZendeskSupportProvidersSDK;
-			target = 7D8830E5D05F68364F3360F2C0DA9813 /* ZendeskSupportProvidersSDK */;
-			targetProxy = C09E5ADCCF5CA6CE920BF977B53E3E6C /* PBXContainerItemProxy */;
+			name = Protobuf;
+			target = 470FE31978DC918618A329D8B55C85FF /* Protobuf */;
+			targetProxy = 266A9AEE20092667F485C6F0BE507312 /* PBXContainerItemProxy */;
+		};
+		814439452CB68B269FC7B57DFCCEDDAB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FirebaseCoreDiagnostics;
+			target = 620E05868772C10B4920DC7E324F2C87 /* FirebaseCoreDiagnostics */;
+			targetProxy = 61AA0A31D5BB2102FB6EE77F05F6737B /* PBXContainerItemProxy */;
 		};
 		83B9134BB050DA8CA7C1F349072B85EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10193,11 +10155,23 @@
 			target = B798275031D11315684486DC2E2B6FCA /* DeepDiff */;
 			targetProxy = E0D7B6F66989B959F5029E8C6EC3214C /* PBXContainerItemProxy */;
 		};
+		85260379FFBA445A0D52BD8696E16910 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftyRSA;
+			target = 92A1C13902E7ACDA3ABB5BA1FEACC86C /* SwiftyRSA */;
+			targetProxy = EF25BF76C06C1C4E8E329F2CE1A310C2 /* PBXContainerItemProxy */;
+		};
 		8592B98E8BD958C137A66AD22AFD44D0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FirebaseABTesting;
 			target = 8F68D031908A0059566798048C48F776 /* FirebaseABTesting */;
 			targetProxy = 85DAE7A0827662B31B5B93E3B84FB3F8 /* PBXContainerItemProxy */;
+		};
+		8708C4E14D0208EE73A1F93DC6C15B22 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KeychainAccess;
+			target = 615C831BCE925ED486B225B87E44926D /* KeychainAccess */;
+			targetProxy = 063E8507F4114FD8E7D86691F7218E3C /* PBXContainerItemProxy */;
 		};
 		8878C8BB12D4997559EA22B57814A3CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10217,12 +10191,6 @@
 			target = 8D7F5D5DD528D21A72DC87ADA5B12E2D /* GoogleUtilities */;
 			targetProxy = 1E24734A70296E70DF2195196FF13D90 /* PBXContainerItemProxy */;
 		};
-		8A5D7074F7103281C359B6CEF47E6A59 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FirebaseInstallations;
-			target = 87803597EB3F20FC46472B85392EC4FD /* FirebaseInstallations */;
-			targetProxy = 72EA73A6F0D0C0A8EDBDFC1DFDD4F822 /* PBXContainerItemProxy */;
-		};
 		8AF4C71C9CC44906C65CE99A363B6B11 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = DeepDiff;
@@ -10241,17 +10209,35 @@
 			target = 615C831BCE925ED486B225B87E44926D /* KeychainAccess */;
 			targetProxy = B3045294071BC3078A433FA03680835B /* PBXContainerItemProxy */;
 		};
-		912052A4160736C704ABA9631E93F1B7 /* PBXTargetDependency */ = {
+		909AC510FAAE54F53FB02F183A2EC39C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = ZendeskCoreSDK;
-			target = CB83A11C8D5DDAE33988A94AF1C7653D /* ZendeskCoreSDK */;
-			targetProxy = FE57BFED0F65F1042AE0280FCC004660 /* PBXContainerItemProxy */;
+			name = Alamofire;
+			target = EAAA1AD3A8A1B59AB91319EE40752C6D /* Alamofire */;
+			targetProxy = 9F56CBD7BBC6EC5C91B31F0F0D8E60A6 /* PBXContainerItemProxy */;
+		};
+		90CDFB476357ADCAA8B88DAFB6AC5926 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FacebookSDK;
+			target = 8F6F4AFBD904C071B9FDEC3399BA8F49 /* FacebookSDK */;
+			targetProxy = 1F33C5CBC3586E6F9F4C7EE0D1A22FEE /* PBXContainerItemProxy */;
 		};
 		91C489E8CC96A945A89BFBF707D6FFA9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ZendeskMessagingAPISDK;
 			target = D6FA74719A43C5D8075E0A71C342EDB7 /* ZendeskMessagingAPISDK */;
 			targetProxy = D109E29FD6C9339216E7DAC188C37AB9 /* PBXContainerItemProxy */;
+		};
+		929214C9240933591A4A3AC283D600F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DeepDiff;
+			target = B798275031D11315684486DC2E2B6FCA /* DeepDiff */;
+			targetProxy = B7EB9C0DB179F24847CEE836B9C83C81 /* PBXContainerItemProxy */;
+		};
+		92C74F4D4289206151DCBBB84938B9BC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoogleAppMeasurement;
+			target = B53D977A951AFC38B21751B706C1DF83 /* GoogleAppMeasurement */;
+			targetProxy = CFE347ACCD1E2B587A6928D307156F4E /* PBXContainerItemProxy */;
 		};
 		931CF1C816AC9840514DB6BF42CECCD6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10264,12 +10250,6 @@
 			name = FirebaseAnalyticsInterop;
 			target = D372E53E2E8FEAA06A0439FB85E65767 /* FirebaseAnalyticsInterop */;
 			targetProxy = 8358F648A64042E45ED8F7F34D59921C /* PBXContainerItemProxy */;
-		};
-		947BC0681C376114116CF98CECD8720E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Alamofire;
-			target = EAAA1AD3A8A1B59AB91319EE40752C6D /* Alamofire */;
-			targetProxy = 240E6E7A10C306E55E5F5909F9D8A249 /* PBXContainerItemProxy */;
 		};
 		96CE70763A391A0AC74690E569FC95B7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10307,6 +10287,12 @@
 			target = 7A35B702D709EA37681B6545A4E1EF1B /* CardScan */;
 			targetProxy = EFAF07E11F6DC525A550824E593DD47B /* PBXContainerItemProxy */;
 		};
+		9F3832298230C9C4B0B7ABAC824FCB6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CardScan;
+			target = 7A35B702D709EA37681B6545A4E1EF1B /* CardScan */;
+			targetProxy = F19F92B5A50B42DF36A187F3D68CA201 /* PBXContainerItemProxy */;
+		};
 		A07786035C2B29FF208183BC0F4437CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FirebaseRemoteConfig;
@@ -10319,11 +10305,11 @@
 			target = 28907903AF6DD0AD321D92CD660E7E23 /* FBSDKCoreKit */;
 			targetProxy = 827FB7E819D5E5135FA07A82ADB34288 /* PBXContainerItemProxy */;
 		};
-		A67C7EEE00387E4493D286F0D9B20C79 /* PBXTargetDependency */ = {
+		A4F2200F73D887C98793A55808B4C27E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = AlamofireNetworkActivityLogger;
-			target = 8AABDD06F1327BC62BE3ECBBB02AF715 /* AlamofireNetworkActivityLogger */;
-			targetProxy = 04F07331C048317933C14C96BC1C7856 /* PBXContainerItemProxy */;
+			name = FirebaseInstallations;
+			target = 87803597EB3F20FC46472B85392EC4FD /* FirebaseInstallations */;
+			targetProxy = 6AC4AEDE8B1801750E3132647DF8C0E4 /* PBXContainerItemProxy */;
 		};
 		A7F1EFE4BBACB99A58DEEF1CEDAC9FF9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10337,17 +10323,17 @@
 			target = 2BBF7206D7FAC92C82A042A99C4A98F8 /* PromisesObjC */;
 			targetProxy = B497635D03FD04C4C0CA1F53C4EB0A54 /* PBXContainerItemProxy */;
 		};
-		AA1BA4E153EBE7E9801A41EEF48891A5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GoogleAppMeasurement;
-			target = B53D977A951AFC38B21751B706C1DF83 /* GoogleAppMeasurement */;
-			targetProxy = 2D15B094C47912874B2C6AFD550A5899 /* PBXContainerItemProxy */;
-		};
 		AA62DB70E172890B19C3E2C9CCEA357A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftLint;
 			target = 52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */;
 			targetProxy = 633FA84238A0C6F805C8ABEEA1D89005 /* PBXContainerItemProxy */;
+		};
+		AE8FEEFA2513B219912DD3756259C2D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AlamofireNetworkActivityLogger;
+			target = 8AABDD06F1327BC62BE3ECBBB02AF715 /* AlamofireNetworkActivityLogger */;
+			targetProxy = 71C7280AB881F6E5E35E13A9E151FD71 /* PBXContainerItemProxy */;
 		};
 		B363EFDCF23910133256774B1AF672EE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10360,12 +10346,6 @@
 			name = ZendeskSupportProvidersSDK;
 			target = 7D8830E5D05F68364F3360F2C0DA9813 /* ZendeskSupportProvidersSDK */;
 			targetProxy = 9EE65E67A9FD2999FEFAAC87E1BC9E10 /* PBXContainerItemProxy */;
-		};
-		B5ECDCC46543CCC7F41E96C127760EB1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AlamofireImage;
-			target = C9778AE8394BE451567650E0B239BA21 /* AlamofireImage */;
-			targetProxy = EBE6126E459F5B96AB1C6F38176EC7BD /* PBXContainerItemProxy */;
 		};
 		B74D780FF74FE1EB1A8EA673E7066980 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10403,11 +10383,11 @@
 			target = 28907903AF6DD0AD321D92CD660E7E23 /* FBSDKCoreKit */;
 			targetProxy = 567855AA6B6D1F83DBD40E81CA1018D8 /* PBXContainerItemProxy */;
 		};
-		BE02B7C304F63CA2280A697739A3AF17 /* PBXTargetDependency */ = {
+		BEA2755168560D31EABA00D717AF63A4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = FirebaseRemoteConfig;
-			target = 51471EE35F2E9E19E51A74944E5ABB7F /* FirebaseRemoteConfig */;
-			targetProxy = 24790C98046817C3A5DCB204A49D2956 /* PBXContainerItemProxy */;
+			name = nanopb;
+			target = D2B5E7DCCBBFB32341D857D01211A1A3 /* nanopb */;
+			targetProxy = 2825497F76119E4E8F0B8AECC2C9BFCA /* PBXContainerItemProxy */;
 		};
 		BEB46230D6DCCE21D66376C93E8F24CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10438,12 +10418,6 @@
 			name = FirebaseAnalyticsInterop;
 			target = D372E53E2E8FEAA06A0439FB85E65767 /* FirebaseAnalyticsInterop */;
 			targetProxy = 1D773A1E589ED1D0BE5B704A4DF410F0 /* PBXContainerItemProxy */;
-		};
-		C60D4204E3F2493CA44E657BC3B83B5D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FirebaseAnalyticsInterop;
-			target = D372E53E2E8FEAA06A0439FB85E65767 /* FirebaseAnalyticsInterop */;
-			targetProxy = 974648D1381184D6C6B3CD7597F472D2 /* PBXContainerItemProxy */;
 		};
 		C63D941A98A3E4D99BAF154F071CCAEC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10481,29 +10455,47 @@
 			target = 0F43F9AE813A5C024E5F9B8766CD7BD7 /* ZendeskSDKConfigurationsSDK */;
 			targetProxy = BAB134FF05D931FBD8D10D4DE151F689 /* PBXContainerItemProxy */;
 		};
-		CCD6A6F8F16119322C224675637EF56F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ZendeskCommonUISDK;
-			target = AC6C5B512338029B3195562CA1FAB3FF /* ZendeskCommonUISDK */;
-			targetProxy = EDF652FD269C5A6275CFD0F4129AAB3B /* PBXContainerItemProxy */;
-		};
-		CD5235752A7B01878AF6A5AAF5C0F6FF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FBSDKMarketingKit;
-			target = 51739D5CAFE341492EA02A9121CBC60F /* FBSDKMarketingKit */;
-			targetProxy = EA0E8449A5DBF429E5A10CBD5832F0CF /* PBXContainerItemProxy */;
-		};
 		CEC29D4100F79E0F52A67B62E91156F9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FirebaseCore;
 			target = 4402AFF83DBDC4DD07E198685FDC2DF2 /* FirebaseCore */;
 			targetProxy = 8615F99DCBBA98E5430DC564C1A759F7 /* PBXContainerItemProxy */;
 		};
+		CFF619BCBD11E054BAA6DE7F47936302 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftLint;
+			target = 52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */;
+			targetProxy = 2251D4FB28B538E1E11FEC0A6D3C9648 /* PBXContainerItemProxy */;
+		};
 		D03B239D752A4F90F4F550D849F78CDF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = JWTDecode;
 			target = 22E1F0E7CBECE226FC294E79C21B0033 /* JWTDecode */;
 			targetProxy = 77E81FA69F6A69194511E7372E703ED2 /* PBXContainerItemProxy */;
+		};
+		D1349B9BD1508EAC55753FA3FAD17C9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FirebaseAnalytics;
+			target = C49E7A4D59E5C8BE8DE9FB1EFB150185 /* FirebaseAnalytics */;
+			targetProxy = 235D0C2E0124AAE19CEF6258F3628909 /* PBXContainerItemProxy */;
+		};
+		D231383DCD4FC3EA1E7A2C9F508884D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AlamofireImage;
+			target = C9778AE8394BE451567650E0B239BA21 /* AlamofireImage */;
+			targetProxy = 82973EF99BB08B18DBB49627A216C9C5 /* PBXContainerItemProxy */;
+		};
+		D29B3362371AF69EE4A91862BB32BB75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ZXingObjC;
+			target = 30950EABCD5EFA0462FC017837EB16BE /* ZXingObjC */;
+			targetProxy = 1F387BEEF0CB75C7796F0DB159C2CAE4 /* PBXContainerItemProxy */;
+		};
+		D392CDABF621C2B6D5DF519326735EFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FBSDKLoginKit;
+			target = 10C5885FCB0908EF785774EE52473DAB /* FBSDKLoginKit */;
+			targetProxy = A08DECD46C26FF963ADD5FA951ACFB20 /* PBXContainerItemProxy */;
 		};
 		D47E623AAE4D47A962EBD1DD980FA0D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10529,11 +10521,11 @@
 			target = 5EB4B0B6DA6D5C0C3365733BEAA1C485 /* FirebaseCoreDiagnosticsInterop */;
 			targetProxy = E7C9E541800E25F7CD13ECEFB773C78D /* PBXContainerItemProxy */;
 		};
-		DA07E7069C9161DC334FE5A476778F6D /* PBXTargetDependency */ = {
+		D9376A9F976223FF353F845A8C44D91E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = CardScan;
-			target = 7A35B702D709EA37681B6545A4E1EF1B /* CardScan */;
-			targetProxy = 05E389B1F74E0B860331127667D8DABB /* PBXContainerItemProxy */;
+			name = ZendeskSupportProvidersSDK;
+			target = 7D8830E5D05F68364F3360F2C0DA9813 /* ZendeskSupportProvidersSDK */;
+			targetProxy = 28B8A78F0595534BF07EA777D0042863 /* PBXContainerItemProxy */;
 		};
 		DA69B9E8970335BD04A9F8A09369F371 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10541,11 +10533,11 @@
 			target = 620E05868772C10B4920DC7E324F2C87 /* FirebaseCoreDiagnostics */;
 			targetProxy = 969EF5C54E3AF168E102059579EBEE12 /* PBXContainerItemProxy */;
 		};
-		DAE3184D4645F6EB5D43B96FF7A8D242 /* PBXTargetDependency */ = {
+		DC09599EAA5B4F238806A5773401410B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = FirebaseCoreDiagnostics;
-			target = 620E05868772C10B4920DC7E324F2C87 /* FirebaseCoreDiagnostics */;
-			targetProxy = CDE1AB3F37807484E944CDC6F53CCFE1 /* PBXContainerItemProxy */;
+			name = FirebaseRemoteConfig;
+			target = 51471EE35F2E9E19E51A74944E5ABB7F /* FirebaseRemoteConfig */;
+			targetProxy = BE9E476759AE0BBA96ECD98DCC5EE0DA /* PBXContainerItemProxy */;
 		};
 		DD7C56CFF27E89BF4679DAB5700CFFE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10559,17 +10551,17 @@
 			target = 2BBF7206D7FAC92C82A042A99C4A98F8 /* PromisesObjC */;
 			targetProxy = 23FC44A7488A01BC43D276917ABD4E98 /* PBXContainerItemProxy */;
 		};
-		DE76297955A8C797380DF07AC1D3D421 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FirebaseAnalytics;
-			target = C49E7A4D59E5C8BE8DE9FB1EFB150185 /* FirebaseAnalytics */;
-			targetProxy = F27916C2248FBCB2CE58E371A3B5BF1E /* PBXContainerItemProxy */;
-		};
 		E1CAC91CBF81875E1390A92624D79374 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FirebaseCore;
 			target = 4402AFF83DBDC4DD07E198685FDC2DF2 /* FirebaseCore */;
 			targetProxy = A22878B537942B3529D51822020E91DB /* PBXContainerItemProxy */;
+		};
+		E1F8AA8A1937EA1D5D287C2DB3E4D098 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoogleUtilities;
+			target = 8D7F5D5DD528D21A72DC87ADA5B12E2D /* GoogleUtilities */;
+			targetProxy = FA4C0232F354BE6916EC02D962A3F90B /* PBXContainerItemProxy */;
 		};
 		E384591874A06A529AC3AC8135C0D8C8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10595,11 +10587,17 @@
 			target = C9778AE8394BE451567650E0B239BA21 /* AlamofireImage */;
 			targetProxy = 038B80B242284CD7A83F95C51657CB83 /* PBXContainerItemProxy */;
 		};
-		E5C54A6F28D99C8BFAFD68BC4E308059 /* PBXTargetDependency */ = {
+		E601D5D6BF8031990B5163B1353D3C17 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = FirebaseCore;
-			target = 4402AFF83DBDC4DD07E198685FDC2DF2 /* FirebaseCore */;
-			targetProxy = 303DBD15E730D792326DF2081FCFF81E /* PBXContainerItemProxy */;
+			name = Disk;
+			target = 914C00A85014D51C5BD9DC8C6E07C79F /* Disk */;
+			targetProxy = 3EB39CDDB9F651C49EA4FF9F119A7FDD /* PBXContainerItemProxy */;
+		};
+		E6CD1345461CF9F53A9FB7C133D8DC49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ZendeskSDKConfigurationsSDK;
+			target = 0F43F9AE813A5C024E5F9B8766CD7BD7 /* ZendeskSDKConfigurationsSDK */;
+			targetProxy = 330EB5419FE6F279F83B2ADAFE00A0AE /* PBXContainerItemProxy */;
 		};
 		E781A1995C37F2532884CFC7D0BB01D3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10607,23 +10605,17 @@
 			target = C49E7A4D59E5C8BE8DE9FB1EFB150185 /* FirebaseAnalytics */;
 			targetProxy = CCD022C3988E0455E2F411AFC9568715 /* PBXContainerItemProxy */;
 		};
-		E7980EDB48C6967EDF12147DC925A9CB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = KeychainAccess;
-			target = 615C831BCE925ED486B225B87E44926D /* KeychainAccess */;
-			targetProxy = A83D536B21046ED6CDBE873E849FC30B /* PBXContainerItemProxy */;
-		};
-		E8C5E7F2ADA6A4CBDCF6775877CB3EE6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DeepDiff;
-			target = B798275031D11315684486DC2E2B6FCA /* DeepDiff */;
-			targetProxy = 946D2A4626035A5F97D5C4855AE4B5FD /* PBXContainerItemProxy */;
-		};
 		EA11A6C517A2243874E4D277DEBAB7EC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CardScan;
 			target = 7A35B702D709EA37681B6545A4E1EF1B /* CardScan */;
 			targetProxy = 8AAE6CE5F1069384D00832BCC25A8E88 /* PBXContainerItemProxy */;
+		};
+		EA3EBE8C1914B55565305CE79AB04500 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ZendeskMessagingSDK;
+			target = D9C4611B429142D173AD077CF82E8897 /* ZendeskMessagingSDK */;
+			targetProxy = 7F8413A0EBEABD33515AB4B7BDB561B5 /* PBXContainerItemProxy */;
 		};
 		EBE59800E5BE3211479E6EF980C35A4E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10661,11 +10653,11 @@
 			target = 28907903AF6DD0AD321D92CD660E7E23 /* FBSDKCoreKit */;
 			targetProxy = 202D6A6BB3E70BB30E949FC9DAFAB93B /* PBXContainerItemProxy */;
 		};
-		F13A61A15EEF70769119C66306867AAB /* PBXTargetDependency */ = {
+		F0BAFB36404E7D55E7CA2F37B371DBE7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = ZendeskSupportSDK;
-			target = B7FD2D91EB22188E295F7D1E59A7F649 /* ZendeskSupportSDK */;
-			targetProxy = 96A7466B79059B6320A33C8FA01EE991 /* PBXContainerItemProxy */;
+			name = FirebaseCoreDiagnosticsInterop;
+			target = 5EB4B0B6DA6D5C0C3365733BEAA1C485 /* FirebaseCoreDiagnosticsInterop */;
+			targetProxy = ADAD6378DEEA6134E66ACDB35ACD4151 /* PBXContainerItemProxy */;
 		};
 		FABF92A2265027D2BE94A8524FE0839A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10690,12 +10682,6 @@
 			name = ZendeskSDKConfigurationsSDK;
 			target = 0F43F9AE813A5C024E5F9B8766CD7BD7 /* ZendeskSDKConfigurationsSDK */;
 			targetProxy = 9D5093E16658DB87FA0A604592B10713 /* PBXContainerItemProxy */;
-		};
-		FE7B493775A07C8BA2C86B07084A5CF0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ZendeskMessagingSDK;
-			target = D9C4611B429142D173AD077CF82E8897 /* ZendeskMessagingSDK */;
-			targetProxy = 23D090768A7FB543613323476C6A0B5A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -11069,6 +11055,45 @@
 			};
 			name = Beta;
 		};
+		0D900454EE2DD304CD16BD2C303B971B /* Beta */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 746C640596AB5E6314C2CE2E54321B07 /* Pods-binkappUITests.beta.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Beta;
+		};
 		0DFD56F98D4EE26CF3EDEBCF083A8AD0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -11137,45 +11162,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		0EF2961A39A5A4B45C1FC094F24640E9 /* App Store */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 30A4398B9CD343CBEE1FE285E4AC1606 /* Pods-binkappUITests.app store.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = "App Store";
 		};
 		0FF0E70E4330E3CD489FF2EC4CFA71B0 /* App Store (Internal) */ = {
 			isa = XCBuildConfiguration;
@@ -11998,6 +11984,45 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		27199924FAF11F0EE2CE008E2275A12A /* App Store (Internal) */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E82742334F35EA024CF73C52EF34E4E0 /* Pods-binkappUITests.app store (internal).xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "App Store (Internal)";
 		};
 		28C09891753C6562B32874411B1734E0 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -13740,43 +13765,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Alpha;
-		};
-		5D31A69DA27E2567D14B9F11BAD4B775 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		5D99CE59E7DCCCAFEE93E892C2DC7DE4 /* Alpha */ = {
 			isa = XCBuildConfiguration;
@@ -15825,6 +15813,43 @@
 			};
 			name = Alpha;
 		};
+		9BA33649A8EC745C671DCDEC143C2F80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		A0FB6E22AC1B77B16E5D3E124F04136F /* Alpha */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9CA60A01B1BDBEA4F102F55A728310D0 /* FirebaseCoreDiagnosticsInterop.release.xcconfig */;
@@ -16371,45 +16396,6 @@
 			};
 			name = "App Store";
 		};
-		BAAC0830CFFF67D73C604BFE9BD05561 /* App Store (Internal) */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E82742334F35EA024CF73C52EF34E4E0 /* Pods-binkappUITests.app store (internal).xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = "App Store (Internal)";
-		};
 		BAF526F5D926702956677E355831B42F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -16568,6 +16554,44 @@
 			};
 			name = "App Store";
 		};
+		BE681218E764903B54B9B9334F6DD0CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		BF7E220E438000AB682CE80E036DE9EA /* App Store */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 58B633C77D0FBAEB30436D17BBB459F3 /* FirebaseCore.release.xcconfig */;
@@ -16717,6 +16741,45 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = "App Store (Internal)";
+		};
+		C3CF6564A0438225A3D82CFA0C761CA2 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 30A4398B9CD343CBEE1FE285E4AC1606 /* Pods-binkappUITests.app store.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "App Store";
 		};
 		C42930D4E5DD4EE31D49C18BA2EA576F /* Beta */ = {
 			isa = XCBuildConfiguration;
@@ -17217,44 +17280,6 @@
 			};
 			name = Beta;
 		};
-		D3ABF9E37DDD4F8BD20EAD44E92FDD08 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		D3E7A4471AA66D10CC24768B64617F9E /* Alpha */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3DAF532944450E54B436EE05CB111C88 /* FirebaseInstallations.release.xcconfig */;
@@ -17466,45 +17491,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		D7CEFD1962B41A6A814B34BB53ACA39F /* Alpha */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B3EB82E01CA53CCCB35F201D967AA477 /* Pods-binkappUITests.alpha.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Alpha;
 		};
 		D85044DB61CA1FBE4AA60959A9EC654D /* Alpha */ = {
 			isa = XCBuildConfiguration;
@@ -18286,45 +18272,6 @@
 			};
 			name = Debug;
 		};
-		F20A98E1294DD454777DB71C5A8A60B4 /* Beta */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 746C640596AB5E6314C2CE2E54321B07 /* Pods-binkappUITests.beta.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Beta;
-		};
 		F23D29FDC270E08B48EF05B7F0524902 /* App Store (Internal) */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E63E645068145E138BABDA3682960D56 /* KeychainAccess.release.xcconfig */;
@@ -18360,6 +18307,45 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = "App Store (Internal)";
+		};
+		F34C6FFE78495E7462FF7F9C8761B6DA /* Alpha */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3EB82E01CA53CCCB35F201D967AA477 /* Pods-binkappUITests.alpha.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Alpha;
 		};
 		F41A2531B54B2CB166A715A693582509 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -18929,6 +18915,19 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		1264E8375283B8F6CF7D65196D2A6471 /* Build configuration list for PBXNativeTarget "Pods-binkappUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F34C6FFE78495E7462FF7F9C8761B6DA /* Alpha */,
+				C3CF6564A0438225A3D82CFA0C761CA2 /* App Store */,
+				27199924FAF11F0EE2CE008E2275A12A /* App Store (Internal) */,
+				0D900454EE2DD304CD16BD2C303B971B /* Beta */,
+				9BA33649A8EC745C671DCDEC143C2F80 /* Debug */,
+				BE681218E764903B54B9B9334F6DD0CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		170A59E57E39EFCB19CFB60B8A7AA44F /* Build configuration list for PBXAggregateTarget "ZendeskSupportProvidersSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -19081,19 +19080,6 @@
 				5C19FE6EFB3076EC24B57245EF86AD41 /* Beta */,
 				D758247E7B347DDB9CB645A0817DA693 /* Debug */,
 				FC9C591CD825BC78F5EF702C083AC24A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		40C7EFDB4B371E7764AF57F817CA070C /* Build configuration list for PBXNativeTarget "Pods-binkappUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D7CEFD1962B41A6A814B34BB53ACA39F /* Alpha */,
-				0EF2961A39A5A4B45C1FC094F24640E9 /* App Store */,
-				BAAC0830CFFF67D73C604BFE9BD05561 /* App Store (Internal) */,
-				F20A98E1294DD454777DB71C5A8A60B4 /* Beta */,
-				5D31A69DA27E2567D14B9F11BAD4B775 /* Debug */,
-				D3ABF9E37DDD4F8BD20EAD44E92FDD08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
