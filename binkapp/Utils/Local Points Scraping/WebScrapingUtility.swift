@@ -242,10 +242,8 @@ class WebScrapingUtility: NSObject {
     }
 
     private func resetIdlingTimer() {
-        print("LPC: Starting timer")
         idleTimer?.invalidate()
         idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
-            print("LPC: Idling")
             self.isIdle = true
             timer.invalidate()
 
@@ -484,6 +482,10 @@ class WebScrapingUtility: NSObject {
         }
         return webView.url?.absoluteString.starts(with: agent.scrapableUrlString) == true
     }
+
+    func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
+        return membershipCard.id == card.id
+    }
 }
 
 extension WebScrapingUtility: WKNavigationDelegate {
@@ -518,7 +520,6 @@ extension WebScrapingUtility: WKNavigationDelegate {
             do {
                 let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCard.id)
                 if shouldAttemptLogin {
-                    print("LPC: attempt login")
                     hasAttemptedLogin = true
                     try login(credentials: credentials)
                 } else {
@@ -537,7 +538,6 @@ extension WebScrapingUtility: WKNavigationDelegate {
     
     @available(iOS 13.0, *)
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
-        print("LPC: decidePolicy")
         resetIdlingTimer()
 
         // TODO: nest these
