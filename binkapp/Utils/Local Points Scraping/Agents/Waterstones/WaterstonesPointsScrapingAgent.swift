@@ -50,4 +50,12 @@ struct WaterstonesScrapingAgent: WebScrapable {
     func pointsValueFromCustomHTMLParser(_ html: String) -> String? {
         return try? SwiftSoup.parse(html).select("strong").last()?.text().replacingOccurrences(of: " stamps", with: "")
     }
+
+    var incorrectCredentialsTextIdentiferClass: String? {
+        return "plus-alert-info"
+    }
+
+    var incorrectCredentialsMessage: String? {
+        return "Your login details are invalid. Please try again."
+    }
 }

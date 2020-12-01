@@ -108,6 +108,7 @@ enum WebScrapingUtilityError: BinkError {
     case failedToCastReturnValue
     case loginFailed
     case userDismissedWebView
+    case unhandledIdling
     
     var domain: BinkErrorDomain {
         return .webScrapingUtility
@@ -141,6 +142,8 @@ enum WebScrapingUtilityError: BinkError {
             return "Failed to execute detect text script"
         case .userDismissedWebView:
             return "User dismissed webview"
+        case .unhandledIdling:
+            return "Unhandled idling"
         }
     }
 }
@@ -235,10 +238,10 @@ class WebScrapingUtility: NSObject {
             self.webView.load(request)
         }
 
-        startIdlingTimer()
+        resetIdlingTimer()
     }
 
-    private func startIdlingTimer() {
+    private func resetIdlingTimer() {
         print("LPC: Starting timer")
         idleTimer?.invalidate()
         idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
@@ -246,21 +249,19 @@ class WebScrapingUtility: NSObject {
             self.isIdle = true
             timer.invalidate()
 
-            // Check for recaptcha or invalid credentials
-            // TODO: Make this reusable
-            if self.canAttemptToDetectReCaptcha {
-                do {
-                    try self.detectText(.reCaptchaMessaging)
-                } catch {
-                    self.canAttemptToDetectReCaptcha = true
-                }
-            }
-
-            if self.canAttemptToDetectIncorrectCredentials {
-                do {
-                    try self.detectText(.incorrectCredentialsMessaging)
-                } catch {
-                    self.canAttemptToDetectIncorrectCredentials = true
+            /// We check for incorrect credentials first, because if that is detected then we don't care about recaptcha
+            self.detectIncorrectCredentialsText { [weak self] textDetected in
+                guard let self = self else { return }
+                if !textDetected {
+                    /// We only need to handle the case where no text is detected, as the parent method handles the detection handling.
+                    /// In this case, the reason we are idling is not due to incorrect credentials, so we should check for recaptcha
+                    self.detectRecaptchaText { recaptchaDetected in
+                        /// Again, we only need to handle non-detection.
+                        /// In this case, we aren't idling because of incorrect credentials OR recaptcha, so let's fail the scraping with a reason of unhandled idling.
+                        if !recaptchaDetected {
+                            self.finish(withError: .unhandledIdling)
+                        }
+                    }
                 }
             }
         })
@@ -293,7 +294,7 @@ class WebScrapingUtility: NSObject {
         runScript(formattedLoginScript) { [weak self] (_, error) in
             guard let self = self else { return }
             guard error == nil else {
-                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteLoginScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
+                self.finish(withError: .failedToExecuteLoginScript)
                 return
             }
             
@@ -322,7 +323,7 @@ class WebScrapingUtility: NSObject {
         runScript(scrapeScript) { [weak self] (html, error) in
             guard let self = self else { return }
             guard error == nil else {
-                self.delegate?.webScrapingUtility(self, didCompleteWithError: .failedToExecuteScrapingScript, forMembershipCard: self.membershipCard, withAgent: self.agent)
+                self.finish(withError: .failedToExecuteScrapingScript)
                 return
             }
             
@@ -348,9 +349,8 @@ class WebScrapingUtility: NSObject {
         case reCaptchaMessaging
         case incorrectCredentialsMessaging
     }
-    
-    // TODO: Make this more scalable. Callsite should handle the completion logic
-    private func detectText(_ type: DetectTextType) throws {
+
+    private func detectText(_ type: DetectTextType, completion: ((Bool) -> ())? = nil) throws {
         // Disable reCaptcha detection on balance refresh
         if type == .reCaptchaMessaging, isBalanceRefresh { return }
         
@@ -371,6 +371,7 @@ class WebScrapingUtility: NSObject {
         } catch {
             throw WebScrapingUtilityError.invalidDetectTextScript
         }
+
         var formattedScript: String
         switch type {
         case .reCaptchaMessaging:
@@ -387,6 +388,7 @@ class WebScrapingUtility: NSObject {
                 case .incorrectCredentialsMessaging:
                     self.canAttemptToDetectIncorrectCredentials = true
                 }
+                completion?(false)
                 return
             }
             
@@ -394,11 +396,13 @@ class WebScrapingUtility: NSObject {
             case .reCaptchaMessaging:
                 guard let message = self.agent.reCaptchaMessage, valueString.contains(message) else {
                     self.canAttemptToDetectReCaptcha = true
+                    completion?(false)
                     return
                 }
             case .incorrectCredentialsMessaging:
                 guard let message = self.agent.incorrectCredentialsMessage, valueString.contains(message) else {
                     self.canAttemptToDetectIncorrectCredentials = true
+                    completion?(false)
                     return
                 }
             }
@@ -409,17 +413,51 @@ class WebScrapingUtility: NSObject {
                 self.canAttemptToDetectReCaptcha = false
             case .incorrectCredentialsMessaging:
                 self.canAttemptToDetectIncorrectCredentials = false
-                self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCard: self.membershipCard, withAgent: self.agent)
+                self.finish(withError: .loginFailed)
                 // At this point, we should close the webView if we have displayed it for reCaptcha
                 if self.isPresentingWebView {
                     Current.navigate.close()
                 }
+            }
+
+            completion?(true)
+        }
+    }
+
+    private func detectRecaptchaText(completion: ((Bool) -> Void)? = nil) {
+        if canAttemptToDetectReCaptcha {
+            do {
+                try detectText(.reCaptchaMessaging, completion: completion)
+            } catch {
+                canAttemptToDetectReCaptcha = true
+            }
+        }
+    }
+
+    private func detectIncorrectCredentialsText(completion: ((Bool) -> Void)? = nil) {
+        if canAttemptToDetectIncorrectCredentials {
+            do {
+                try detectText(.incorrectCredentialsMessaging, completion: completion)
+            } catch {
+                canAttemptToDetectIncorrectCredentials = true
             }
         }
     }
     
     private func runScript(_ script: String, completion: @escaping (Any?, Error?) -> Void) {
         webView.evaluateJavaScript(script, completionHandler: completion)
+    }
+
+    private func finish(withValue value: String? = nil, withError error: WebScrapingUtilityError? = nil) {
+        idleTimer?.invalidate()
+
+        if let value = value {
+            delegate?.webScrapingUtility(self, didCompleteWithValue: value, forMembershipCard: membershipCard, withAgent: agent)
+        }
+
+        if let error = error {
+            delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: membershipCard, withAgent: agent)
+        }
     }
     
     private var shouldScrape: Bool {
@@ -450,7 +488,7 @@ class WebScrapingUtility: NSObject {
 
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        startIdlingTimer()
+        resetIdlingTimer()
         canAttemptToDetectReCaptcha = true
         canAttemptToDetectIncorrectCredentials = true
         
@@ -471,9 +509,9 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 
                 switch result {
                 case .failure(let error):
-                    self.delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: self.membershipCard, withAgent: self.agent)
+                    self.finish(withError: error)
                 case .success(let pointsValue):
-                    self.delegate?.webScrapingUtility(self, didCompleteWithValue: pointsValue, forMembershipCard: self.membershipCard, withAgent: self.agent)
+                    self.finish(withValue: pointsValue)
                 }
             }
         } else {
@@ -483,16 +521,15 @@ extension WebScrapingUtility: WKNavigationDelegate {
                     print("LPC: attempt login")
                     hasAttemptedLogin = true
                     try login(credentials: credentials)
-                    // TODO: what if login failed, but the webview doesnt trigger navigation? We just sit here
                 } else {
                     // We should only fall into here if we know we are at the login url, but we've already attempted a login
-                    self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCard: self.membershipCard, withAgent: self.agent)
+                    self.finish(withError: .loginFailed)
                 }
             } catch {
                 if let webScrapingError = error as? WebScrapingUtilityError {
-                    self.delegate?.webScrapingUtility(self, didCompleteWithError: webScrapingError, forMembershipCard: self.membershipCard, withAgent: self.agent)
+                    self.finish(withError: webScrapingError)
                 } else {
-                    self.delegate?.webScrapingUtility(self, didCompleteWithError: .loginFailed, forMembershipCard: self.membershipCard, withAgent: self.agent)
+                    self.finish(withError: .loginFailed)
                 }
             }
         }
@@ -501,22 +538,11 @@ extension WebScrapingUtility: WKNavigationDelegate {
     @available(iOS 13.0, *)
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
         print("LPC: decidePolicy")
-        startIdlingTimer()
-        if canAttemptToDetectReCaptcha {
-            do {
-                try detectText(.reCaptchaMessaging)
-            } catch {
-                canAttemptToDetectReCaptcha = true
-            }
-        }
-        
-        if canAttemptToDetectIncorrectCredentials {
-            do {
-                try detectText(.incorrectCredentialsMessaging)
-            } catch {
-                canAttemptToDetectIncorrectCredentials = true
-            }
-        }
+        resetIdlingTimer()
+
+        // TODO: nest these
+        detectRecaptchaText()
+        detectIncorrectCredentialsText()
         
         decisionHandler(.allow, preferences)
     }
@@ -525,7 +551,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
 extension WebScrapingUtility: WebScrapingViewControllerDelegate {
     func webScrapingViewControllerDidDismiss(_ viewController: WebScrapingViewController) {
         if !hasCompletedLogin {
-            delegate?.webScrapingUtility(self, didCompleteWithError: .userDismissedWebView, forMembershipCard: membershipCard, withAgent: agent)
+            self.finish(withError: .userDismissedWebView)
         }
     }
 }
