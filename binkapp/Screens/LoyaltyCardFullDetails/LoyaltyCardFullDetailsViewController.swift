@@ -196,6 +196,7 @@ extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableView
 
 private extension LoyaltyCardFullDetailsViewController {
     func configureUI() {
+        view.addSubview(secondaryColorView)
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
         
@@ -275,6 +276,8 @@ private extension LoyaltyCardFullDetailsViewController {
         } else {
             brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
         }
+        
+        configureSecondaryColorViewLayout()
     }
     
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
@@ -304,6 +307,15 @@ private extension LoyaltyCardFullDetailsViewController {
             separator.heightAnchor.constraint(equalToConstant: CGFloat.onePointScaled()),
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
+        ])
+    }
+    
+    func configureSecondaryColorViewLayout() {
+        NSLayoutConstraint.activate([
+            secondaryColorView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            secondaryColorView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            secondaryColorView.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
+            secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
     }
     
