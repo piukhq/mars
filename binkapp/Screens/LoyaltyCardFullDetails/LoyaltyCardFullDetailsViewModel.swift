@@ -60,6 +60,10 @@ class LoyaltyCardFullDetailsViewModel {
         return LayoutHelper.LoyaltyCardDetail.brandHeaderAspectRatio(forMembershipCard: membershipCard)
     }
     
+    var secondaryColor: UIColor? {
+        return membershipCard.membershipPlan?.generatedSecondaryBrandColor
+    }
+    
     // MARK: - Public methods
     
     func toBarcodeModel() {
