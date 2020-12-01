@@ -314,9 +314,12 @@ private extension LoyaltyCardFullDetailsViewController {
         NSLayoutConstraint.activate([
             secondaryColorView.leftAnchor.constraint(equalTo: view.leftAnchor),
             secondaryColorView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            secondaryColorView.topAnchor.constraint(equalTo: stackScrollView.topAnchor),
-            secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
+            secondaryColorView.topAnchor.constraint(equalTo: view.topAnchor),
+            secondaryColorView.heightAnchor.constraint(equalToConstant: 200)
+//            secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
+        
+        let heightConstraint = NSLayoutConstraint(item: secondaryColorView, attribute: <#T##NSLayoutConstraint.Attribute#>, relatedBy: <#T##NSLayoutConstraint.Relation#>, toItem: <#T##Any?#>, attribute: <#T##NSLayoutConstraint.Attribute#>, multiplier: <#T##CGFloat#>, constant: <#T##CGFloat#>)
     }
     
     func configureModules() {
@@ -365,6 +368,8 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
         
         let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
         navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
+        
+        secondaryColorView.heightAnchor
     }
 }
 
