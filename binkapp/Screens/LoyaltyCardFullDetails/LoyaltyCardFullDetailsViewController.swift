@@ -43,6 +43,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         return imageView
     }()
     
+    private lazy var secondaryColorView: UIView = {
+        let secondaryColorView = UIView()
+        secondaryColorView.translatesAutoresizingMaskIntoConstraints = false
+        secondaryColorView.backgroundColor = .binkPurple
+        return secondaryColorView
+    }()
+    
     private lazy var showBarcodeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .bodyTextLarge
