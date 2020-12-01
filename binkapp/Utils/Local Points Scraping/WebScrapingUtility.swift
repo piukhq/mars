@@ -350,7 +350,7 @@ class WebScrapingUtility: NSObject {
         case incorrectCredentialsMessaging
     }
 
-    private func detectText(_ type: DetectTextType, completion: ((Bool) -> ())? = nil) throws {
+    private func detectText(_ type: DetectTextType, completion: ((Bool) -> Void)? = nil) throws {
         // Disable reCaptcha detection on balance refresh
         if type == .reCaptchaMessaging, isBalanceRefresh { return }
         

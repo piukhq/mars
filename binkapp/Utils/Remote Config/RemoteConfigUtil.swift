@@ -17,11 +17,13 @@ class RemoteConfigUtil {
         case dynamicActions
         
         var formattedKey: String {
+            let isDebug = !APIConstants.isProduction
+
             switch self {
             case .localPointsCollectionMasterEnabled:
-                return "LPC_master_enabled"
+                return "LPC_master_enabled\(isDebug ? "_debug" : "")"
             case .localPointsCollectionAgentEnabled(let agent):
-                return "LPC_\(agent.merchant)_enabled"
+                return "LPC_\(agent.merchant)_enabled\(isDebug ? "_debug" : "")"
             case .inAppReviewEnabled:
                 return "in_app_review_enabled"
             case .dynamicActions:
