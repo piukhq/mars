@@ -46,7 +46,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     private lazy var secondaryColorView: UIView = {
         let secondaryColorView = UIView()
         secondaryColorView.translatesAutoresizingMaskIntoConstraints = false
-        secondaryColorView.backgroundColor = .binkPurple
+        secondaryColorView.backgroundColor = viewModel.secondaryColor
         return secondaryColorView
     }()
     
