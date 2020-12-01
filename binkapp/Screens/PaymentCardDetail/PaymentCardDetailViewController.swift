@@ -9,7 +9,7 @@
 import UIKit
 import SupportSDK
 
-class PaymentCardDetailViewController: BinkTrackableViewController {
+class PaymentCardDetailViewController: BinkViewController {
     private var viewModel: PaymentCardDetailViewModel
     private var hasSetupCell = false
     

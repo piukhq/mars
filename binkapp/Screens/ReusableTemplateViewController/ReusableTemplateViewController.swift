@@ -13,7 +13,7 @@ protocol ReusableTemplateViewControllerDelegate: AnyObject {
     func primaryButtonWasTapped(_ viewController: ReusableTemplateViewController)
 }
 
-class ReusableTemplateViewController: BinkTrackableViewController, BarBlurring {
+class ReusableTemplateViewController: BinkViewController, BarBlurring {
     lazy var blurBackground = defaultBlurredBackground()
     
     @IBOutlet private weak var floatingButtonsContainer: BinkPrimarySecondaryButtonView!

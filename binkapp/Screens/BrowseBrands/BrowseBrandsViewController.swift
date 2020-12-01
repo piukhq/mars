@@ -18,7 +18,7 @@ fileprivate enum Constants {
     static let filterViewHeightPadding: CGFloat = 10.0
 }
 
-class BrowseBrandsViewController: BinkTrackableViewController {
+class BrowseBrandsViewController: BinkViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var searchTextField: BinkTextField!
     @IBOutlet private weak var noMatchesLabel: UILabel!

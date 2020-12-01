@@ -11,7 +11,7 @@ protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
     func modalWillDismiss()
 }
 
-class LoyaltyCardFullDetailsViewController: BinkTrackableViewController, BarBlurring, InAppReviewable {
+class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InAppReviewable {
     enum Constants {
         static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
         static let stackViewSpacing: CGFloat = 12

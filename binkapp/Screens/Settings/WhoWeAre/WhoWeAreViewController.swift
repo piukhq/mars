@@ -13,7 +13,7 @@ struct BinkTeamMember {
     let name: String
 }
 
-class WhoWeAreViewController: UIViewController {
+class WhoWeAreViewController: BinkViewController {
     // MARK: - UI Lazy Variables
     
     private lazy var stackScrollView: StackScrollView = {

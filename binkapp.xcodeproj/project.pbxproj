@@ -157,10 +157,17 @@
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
 		70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */; };
+		70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6863D257152F300403448 /* DynamicActionsTests.swift */; };
+		70D6864625715D4800403448 /* DynamicActionsUtilityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */; };
 		70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */; };
 		70D748022552CC7800E9D2C1 /* InAppReviewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D748012552CC7800E9D2C1 /* InAppReviewable.swift */; };
 		70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8024E56B3B005A30D2 /* UserService.swift */; };
 		70E31A8324E56B4D005A30D2 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E31A8224E56B4D005A30D2 /* APIService.swift */; };
+		70E39801256E8CDA009AD8CB /* DynamicActionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E39800256E8CDA009AD8CB /* DynamicActionsUtility.swift */; };
+		70E39806256E8F4F009AD8CB /* BinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E39805256E8F4F009AD8CB /* BinkViewController.swift */; };
+		70E3984E256FE7BA009AD8CB /* DynamicActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E3984C256FE7BA009AD8CB /* DynamicActionViewController.swift */; };
+		70E3984F256FE7BA009AD8CB /* DynamicActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E3984D256FE7BA009AD8CB /* DynamicActionViewController.xib */; };
+		70E39854256FF576009AD8CB /* DynamicActionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70E39853256FF576009AD8CB /* DynamicActionHeaderView.xib */; };
 		70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E867742489303F001ED282 /* SecureUtilityTests.swift */; };
 		70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */; };
 		70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86779248E76C9001ED282 /* WebScrapingUtility.swift */; };
@@ -374,7 +381,6 @@
 		EF8F0486238D583300BD708B /* CD_LinkingSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */; };
 		EF94AF0523D887AE00AAA039 /* SpreedlyModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0423D887AE00AAA039 /* SpreedlyModels.swift */; };
 		EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0723D9B89B00AAA039 /* Anaytics.swift */; };
-		EF94AF0A23D9C24900AAA039 /* BinkTrackableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0923D9C24900AAA039 /* BinkTrackableViewController.swift */; };
 		EF94AF0D23D9F04700AAA039 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */; };
 		EF94AF0F23DF55EE00AAA039 /* BinkTrackableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF0E23DF55EE00AAA039 /* BinkTrackableButton.swift */; };
 		EF94AF1423E05B5D00AAA039 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF94AF1323E05B5D00AAA039 /* ImageService.swift */; };
@@ -683,10 +689,17 @@
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
 		70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TescoPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionModel.swift; sourceTree = "<group>"; };
+		70D6863D257152F300403448 /* DynamicActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsTests.swift; sourceTree = "<group>"; };
+		70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsUtilityMock.swift; sourceTree = "<group>"; };
 		70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewUtility.swift; sourceTree = "<group>"; };
 		70D748012552CC7800E9D2C1 /* InAppReviewable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewable.swift; sourceTree = "<group>"; };
 		70E31A8024E56B3B005A30D2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		70E31A8224E56B4D005A30D2 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		70E39800256E8CDA009AD8CB /* DynamicActionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsUtility.swift; sourceTree = "<group>"; };
+		70E39805256E8F4F009AD8CB /* BinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkViewController.swift; sourceTree = "<group>"; };
+		70E3984C256FE7BA009AD8CB /* DynamicActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionViewController.swift; sourceTree = "<group>"; };
+		70E3984D256FE7BA009AD8CB /* DynamicActionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DynamicActionViewController.xib; sourceTree = "<group>"; };
+		70E39853256FF576009AD8CB /* DynamicActionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DynamicActionHeaderView.xib; sourceTree = "<group>"; };
 		70E867742489303F001ED282 /* SecureUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtilityTests.swift; sourceTree = "<group>"; };
 		70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewFooter.swift; sourceTree = "<group>"; };
 		70E86779248E76C9001ED282 /* WebScrapingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtility.swift; sourceTree = "<group>"; };
@@ -912,7 +925,6 @@
 		EF8F0484238D583200BD708B /* CD_LinkingSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_LinkingSupport.swift; sourceTree = "<group>"; };
 		EF94AF0423D887AE00AAA039 /* SpreedlyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpreedlyModels.swift; sourceTree = "<group>"; };
 		EF94AF0723D9B89B00AAA039 /* Anaytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anaytics.swift; sourceTree = "<group>"; };
-		EF94AF0923D9C24900AAA039 /* BinkTrackableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTrackableViewController.swift; sourceTree = "<group>"; };
 		EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		EF94AF0E23DF55EE00AAA039 /* BinkTrackableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTrackableButton.swift; sourceTree = "<group>"; };
 		EF94AF1323E05B5D00AAA039 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
@@ -1423,6 +1435,7 @@
 		3CF054D322FDABCA0069E98A /* BinkUI */ = {
 			isa = PBXGroup;
 			children = (
+				70E39848256FE78D009AD8CB /* Dynamic Action */,
 				EFD602EA243B9446003AC746 /* Animations */,
 				EFA81012240404F00000D21D /* Jailbroken */,
 				EF2E8823233A6FB000F678F3 /* Wallets */,
@@ -1439,10 +1452,10 @@
 				EFA5F6C1237467CC0027AB80 /* NestedTableView.swift */,
 				EFEB5BFE2382984B00E18743 /* HyperlinkButton.swift */,
 				CED69E6A253D7A5700A4CA21 /* HyperlinkLabel.swift */,
-				EF94AF0923D9C24900AAA039 /* BinkTrackableViewController.swift */,
 				EF94AF0E23DF55EE00AAA039 /* BinkTrackableButton.swift */,
 				3CBA5EFE2456F175008252B6 /* WebViewController.swift */,
 				CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */,
+				70E39805256E8F4F009AD8CB /* BinkViewController.swift */,
 			);
 			name = BinkUI;
 			path = Screens/BinkUI;
@@ -1532,6 +1545,7 @@
 		5ECE048222CE579B001BA964 /* binkappTests */ = {
 			isa = PBXGroup;
 			children = (
+				70D6863C257152D700403448 /* Dynamic Actions */,
 				CE387A3925656E75006BAC11 /* BinkUI */,
 				CEF389E9255D72B30063C718 /* Extensions */,
 				EF7F6E5F23E4286F00352DCF /* Utils */,
@@ -1689,6 +1703,15 @@
 			isa = PBXGroup;
 			children = (
 				70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */,
+				70E39800256E8CDA009AD8CB /* DynamicActionsUtility.swift */,
+			);
+			path = "Dynamic Actions";
+			sourceTree = "<group>";
+		};
+		70D6863C257152D700403448 /* Dynamic Actions */ = {
+			isa = PBXGroup;
+			children = (
+				70D6863D257152F300403448 /* DynamicActionsTests.swift */,
 			);
 			path = "Dynamic Actions";
 			sourceTree = "<group>";
@@ -1700,6 +1723,16 @@
 				70D748012552CC7800E9D2C1 /* InAppReviewable.swift */,
 			);
 			path = "In App Review";
+			sourceTree = "<group>";
+		};
+		70E39848256FE78D009AD8CB /* Dynamic Action */ = {
+			isa = PBXGroup;
+			children = (
+				70E3984C256FE7BA009AD8CB /* DynamicActionViewController.swift */,
+				70E3984D256FE7BA009AD8CB /* DynamicActionViewController.xib */,
+				70E39853256FF576009AD8CB /* DynamicActionHeaderView.xib */,
+			);
+			path = "Dynamic Action";
 			sourceTree = "<group>";
 		};
 		70E86778248E76B9001ED282 /* Local Points Scraping */ = {
@@ -2366,6 +2399,7 @@
 				CE3878C22563FC62006BAC11 /* BarcodeViewControllerMock.swift */,
 				CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */,
 				CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */,
+				70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2844,6 +2878,7 @@
 				3CC267F022F4276E00F0F9E3 /* Localizable.strings in Resources */,
 				EFCAF91B2371C9AC0044BA11 /* PaymentCardDetailLoyaltyCardStatusCell.xib in Resources */,
 				70661B91250A5713006DB009 /* MorrisonsPointsScrape.js in Resources */,
+				70E39854256FF576009AD8CB /* DynamicActionHeaderView.xib in Resources */,
 				B774E9AB233123BD006D4131 /* ReusableTemplateViewController.xib in Resources */,
 				B713662F232A63BA008A0ED7 /* BinkModuleView.xib in Resources */,
 				70661B90250A5713006DB009 /* MorrisonsLogin.js in Resources */,
@@ -2856,6 +2891,7 @@
 				BD9FB6B72338120700E5559A /* TransactionsViewController.xib in Resources */,
 				EF6921772469A9290049875B /* DebugSecondaryPlanColorCell.xib in Resources */,
 				70E8DFE72563E6F70027A244 /* HeathrowLogin.js in Resources */,
+				70E3984F256FE7BA009AD8CB /* DynamicActionViewController.xib in Resources */,
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
 				EFA81016240405070000D21D /* JailbrokenViewController.xib in Resources */,
 				EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */,
@@ -3132,6 +3168,7 @@
 				EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */,
 				EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */,
 				BD9FB6B82338120700E5559A /* TransactionsViewModel.swift in Sources */,
+				70E39806256E8F4F009AD8CB /* BinkViewController.swift in Sources */,
 				EF4C4781246017C80056CE17 /* ZendeskService.swift in Sources */,
 				EF8BF1F9234147E000D2E5F3 /* LinkedCardResponse.swift in Sources */,
 				B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */,
@@ -3150,7 +3187,6 @@
 				EFA81025240565750000D21D /* CD_PlanDynamicContent.swift in Sources */,
 				5ECE047422CE5798001BA964 /* binkapp.xcdatamodeld in Sources */,
 				EF54911C2371CB3300FE17BE /* PaymentCardDetailTableViewCell.swift in Sources */,
-				EF94AF0A23D9C24900AAA039 /* BinkTrackableViewController.swift in Sources */,
 				EFA5F7352379A7C70027AB80 /* CD_MembershipCardAmount.swift in Sources */,
 				BDD9C8A7233D07D1003CD616 /* UICollectionViewExtension.swift in Sources */,
 				EFA5F72F2379A7C70027AB80 /* _CD_App.swift in Sources */,
@@ -3194,6 +3230,7 @@
 				3CBA5EFF2456F175008252B6 /* WebViewController.swift in Sources */,
 				B7385F54234780D2007B88DA /* BinkSwitch.swift in Sources */,
 				B726334F23058DC800951037 /* RegistrationFieldModel.swift in Sources */,
+				70D6864625715D4800403448 /* DynamicActionsUtilityMock.swift in Sources */,
 				B726334923058A1E00951037 /* EnrolFieldModel.swift in Sources */,
 				EF46E288235E01DD00BA2CAF /* BinkPillButton.swift in Sources */,
 				BDB01882232E93A100BFFA18 /* FormMultipleChoiceInput.swift in Sources */,
@@ -3213,6 +3250,7 @@
 				EF59A12F24474572001B60B8 /* NetworkingError.swift in Sources */,
 				EFA5F71D2379A7C70027AB80 /* CD_Tier.swift in Sources */,
 				3C2C90FF23193F6700D112E3 /* AccountPostModel.swift in Sources */,
+				70E39801256E8CDA009AD8CB /* DynamicActionsUtility.swift in Sources */,
 				EFA5F7162379A7C70027AB80 /* _CD_PaymentCard.swift in Sources */,
 				3C9B1A2723854BF60078A1EC /* PreferencesViewModel.swift in Sources */,
 				3C7AF52B23757FB0005964E0 /* FloatExtension.swift in Sources */,
@@ -3299,6 +3337,7 @@
 				EF9E9BD223C73BA1002FF18E /* UIDeviceExtension.swift in Sources */,
 				B7D577B3231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift in Sources */,
 				EFD602F1243E11B2003AC746 /* UINavigationControllerExtension.swift in Sources */,
+				70E3984E256FE7BA009AD8CB /* DynamicActionViewController.swift in Sources */,
 				EF8BF1FD2341480800D2E5F3 /* PaymentCardAccountConsentsResponse.swift in Sources */,
 				DB8DE35A2373130100F07F11 /* Bundle+binkapp.swift in Sources */,
 				3CC267F222F428A400F0F9E3 /* String+Localization.swift in Sources */,
@@ -3432,6 +3471,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */,
+				70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */,
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,

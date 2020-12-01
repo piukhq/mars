@@ -11,8 +11,8 @@ import Foundation
 struct DynamicAction: Codable {
     let name: String?
     let type: DynamicActionType?
-    let startDate: Int?
-    let endDate: Int?
+    let startDate: Double?
+    let endDate: Double?
     let locations: [DynamicActionLocation]?
     let event: DynamicActionEvent?
 
@@ -23,6 +23,21 @@ struct DynamicAction: Codable {
         case endDate = "end_date"
         case locations
         case event
+    }
+
+    var isActive: Bool {
+        guard let startDate = startDate else { return false }
+        guard let endDate = endDate else { return false }
+        let start = Date(timeIntervalSince1970: startDate)
+        let end = Date(timeIntervalSince1970: endDate)
+        let now = Date()
+        return start < now && end > now
+    }
+
+    func location(for viewController: BinkViewController) -> DynamicActionLocation? {
+        // LOL - Had to use Swift.type(of:) otherwise Xcode thought I was refering to the `type` property in DynamicAction
+        // 👏 Swift compiler, great job.
+        return locations?.first(where: { $0.screen?.viewControllerType == Swift.type(of: viewController) })
     }
 }
 
@@ -40,6 +55,15 @@ struct DynamicActionLocation: Codable {
 enum DynamicActionScreen: String, Codable {
     case loyaltyWallet = "loyalty_wallet"
     case paymentWallet = "payment_wallet"
+
+    var viewControllerType: BinkViewController.Type {
+        switch self {
+        case .loyaltyWallet:
+            return LoyaltyWalletViewController.self
+        case .paymentWallet:
+            return PaymentWalletViewController.self
+        }
+    }
 }
 
 enum DynamicActionArea: String, Codable {
