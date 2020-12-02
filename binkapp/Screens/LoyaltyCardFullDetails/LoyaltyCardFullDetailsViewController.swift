@@ -121,9 +121,14 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+
+//        if #available(iOS 13.0, *) {
+////            navigationController?.navigationBar.standardAppearance.shadowImage = UIImage()
+////            navigationController?.navigationBar.standardAppearance.backgroundImage = UIImage()
+//            navigationController?.navigationBar.standardAppearance.backgroundEffect = nil
+//            navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
+//        }
         configureUI()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
     }
     
@@ -136,11 +141,19 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureModules()
+        if #available(iOS 13.0, *) {
+            navigationController?.navigationBar.standardAppearance.backgroundEffect = nil
+            navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
+        if #available(iOS 13.0, *) {
+            navigationController?.navigationBar.standardAppearance.backgroundEffect = nil
+            navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -157,8 +170,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        guard let bar = navigationController?.navigationBar else { return }
-        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
+//        guard let bar = navigationController?.navigationBar else { return }
+//        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
 }
 
@@ -195,7 +208,7 @@ extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableView
 // MARK: - Private methods
 
 private extension LoyaltyCardFullDetailsViewController {
-    func configureUI() {        
+    func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
         view.insertSubview(secondaryColorView, belowSubview: brandHeader)
@@ -313,7 +326,7 @@ private extension LoyaltyCardFullDetailsViewController {
         NSLayoutConstraint.activate([
             secondaryColorView.leftAnchor.constraint(equalTo: brandHeader.leftAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             secondaryColorView.rightAnchor.constraint(equalTo: brandHeader.rightAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
-            secondaryColorView.topAnchor.constraint(equalTo: brandHeader.topAnchor, constant: LayoutHelper.LoyaltyCardDetail.secondaryColorViewHeightOffset),
+            secondaryColorView.topAnchor.constraint(equalTo: brandHeader.topAnchor, constant: -LayoutHelper.LoyaltyCardDetail.secondaryColorViewHeightOffset),
             secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
         
