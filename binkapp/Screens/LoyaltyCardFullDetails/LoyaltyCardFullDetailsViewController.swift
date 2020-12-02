@@ -195,11 +195,10 @@ extension LoyaltyCardFullDetailsViewController: UITableViewDelegate, UITableView
 // MARK: - Private methods
 
 private extension LoyaltyCardFullDetailsViewController {
-    func configureUI() {
-        view.addSubview(secondaryColorView)
+    func configureUI() {        
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
-        
+        view.insertSubview(secondaryColorView, belowSubview: brandHeader)
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
         
         if viewModel.membershipCard.card?.barcode != nil || viewModel.membershipCard.card?.membershipId != nil {
@@ -312,14 +311,13 @@ private extension LoyaltyCardFullDetailsViewController {
     
     func configureSecondaryColorViewLayout() {
         NSLayoutConstraint.activate([
-            secondaryColorView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            secondaryColorView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            secondaryColorView.topAnchor.constraint(equalTo: view.topAnchor),
-            secondaryColorView.heightAnchor.constraint(equalToConstant: 200)
-//            secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
+            secondaryColorView.leftAnchor.constraint(equalTo: brandHeader.leftAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            secondaryColorView.rightAnchor.constraint(equalTo: brandHeader.rightAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+            secondaryColorView.topAnchor.constraint(equalTo: brandHeader.topAnchor, constant: -200),
+            secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
         
-        let heightConstraint = NSLayoutConstraint(item: secondaryColorView, attribute: <#T##NSLayoutConstraint.Attribute#>, relatedBy: <#T##NSLayoutConstraint.Relation#>, toItem: <#T##Any?#>, attribute: <#T##NSLayoutConstraint.Attribute#>, multiplier: <#T##CGFloat#>, constant: <#T##CGFloat#>)
+        view.sendSubviewToBack(secondaryColorView)
     }
     
     func configureModules() {
@@ -369,7 +367,8 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
         let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
         navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
         
-        secondaryColorView.heightAnchor
+//        secondaryColorView.heightConstraint?.constant = secondaryColorView.heightConstraint!.constant - scrollView.contentOffset.y
+//        scrollView.contentOffset.y = 0.0
     }
 }
 
@@ -395,4 +394,24 @@ extension LayoutHelper {
             return card.membershipPlan?.featureSet?.planCardType == .link ? brandHeaderAspectRatioLink : brandHeaderAspectRatio
         }
     }
+}
+
+
+extension UIView {
+var heightConstraint: NSLayoutConstraint? {
+    get {
+        return constraints.first(where: {
+            $0.firstAttribute == .height && $0.relation == .equal
+        })
+    }
+    set { setNeedsLayout() }
+}
+var widthConstraint: NSLayoutConstraint? {
+    get {
+        return constraints.first(where: {
+            $0.firstAttribute == .width && $0.relation == .equal
+        })
+    }
+    set { setNeedsLayout() }
+}
 }
