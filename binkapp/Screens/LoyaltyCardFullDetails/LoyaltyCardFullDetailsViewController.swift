@@ -313,7 +313,7 @@ private extension LoyaltyCardFullDetailsViewController {
         NSLayoutConstraint.activate([
             secondaryColorView.leftAnchor.constraint(equalTo: brandHeader.leftAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             secondaryColorView.rightAnchor.constraint(equalTo: brandHeader.rightAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
-            secondaryColorView.topAnchor.constraint(equalTo: brandHeader.topAnchor, constant: -200),
+            secondaryColorView.topAnchor.constraint(equalTo: brandHeader.topAnchor, constant: LayoutHelper.LoyaltyCardDetail.secondaryColorViewHeightOffset),
             secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
         
@@ -369,6 +369,8 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
         
 //        secondaryColorView.heightConstraint?.constant = secondaryColorView.heightConstraint!.constant - scrollView.contentOffset.y
 //        scrollView.contentOffset.y = 0.0
+        
+        //TODO: - Remove height contraint from uiview extantion if unsued
     }
 }
 
@@ -390,28 +392,9 @@ extension LayoutHelper {
         static let modulesStackViewHeight: CGFloat = 128
         static let barcodeButtonHeight: CGFloat = 22
         static let informationTableSeparatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+        static let secondaryColorViewHeightOffset: CGFloat = 400
         static func brandHeaderAspectRatio(forMembershipCard card: CD_MembershipCard) -> CGFloat {
             return card.membershipPlan?.featureSet?.planCardType == .link ? brandHeaderAspectRatioLink : brandHeaderAspectRatio
         }
     }
-}
-
-
-extension UIView {
-var heightConstraint: NSLayoutConstraint? {
-    get {
-        return constraints.first(where: {
-            $0.firstAttribute == .height && $0.relation == .equal
-        })
-    }
-    set { setNeedsLayout() }
-}
-var widthConstraint: NSLayoutConstraint? {
-    get {
-        return constraints.first(where: {
-            $0.firstAttribute == .width && $0.relation == .equal
-        })
-    }
-    set { setNeedsLayout() }
-}
 }
