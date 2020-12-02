@@ -27,11 +27,11 @@ struct HeathrowScrapingAgent: WebScrapable {
     }
 
     var usernameFieldTitle: String {
-        return "email/card number"
+        return "Email Address / Card Number"
     }
 
     var passwordFieldTitle: String {
-        return "password"
+        return "Password"
     }
 
     var loyaltySchemeBalanceSuffix: String? {

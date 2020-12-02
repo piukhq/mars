@@ -28,11 +28,11 @@ struct WaterstonesScrapingAgent: WebScrapable {
     }
 
     var usernameFieldTitle: String {
-        return "email"
+        return "Email Address"
     }
 
     var passwordFieldTitle: String {
-        return "password"
+        return "Password"
     }
 
     var loyaltySchemeBalanceSuffix: String? {

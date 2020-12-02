@@ -191,7 +191,7 @@ class WebScrapingUtility: NSObject {
 
     private var isIdle = false
     private var idleTimer: Timer?
-    private let idleThreshold: TimeInterval = 10
+    private let idleThreshold: TimeInterval = 60
     
     init(agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
         webView = WKWebView(frame: .zero)
@@ -540,10 +540,12 @@ extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
         resetIdlingTimer()
 
-        // TODO: nest these
-        detectRecaptchaText()
-        detectIncorrectCredentialsText()
-        
+        detectIncorrectCredentialsText { textDetected in
+            if !textDetected {
+                self.detectRecaptchaText()
+            }
+        }
+
         decisionHandler(.allow, preferences)
     }
 }
