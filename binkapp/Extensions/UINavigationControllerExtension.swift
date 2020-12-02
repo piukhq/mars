@@ -28,4 +28,16 @@ extension UINavigationController {
             }
         }
     }
+    
+    func setNavigationBarInvisible(_ invisible: Bool) {
+        if #available(iOS 13.0, *) {
+            if invisible {
+                self.navigationBar.standardAppearance.backgroundEffect = nil
+                self.navigationBar.standardAppearance.backgroundColor = .clear
+            } else {
+                self.navigationBar.standardAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
+                self.navigationBar.standardAppearance.backgroundEffect = UIBlurEffect(style: .light)
+            }
+        }
+    }
 }

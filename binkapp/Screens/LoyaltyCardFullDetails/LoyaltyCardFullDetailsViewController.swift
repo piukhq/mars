@@ -121,13 +121,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
-//        if #available(iOS 13.0, *) {
-////            navigationController?.navigationBar.standardAppearance.shadowImage = UIImage()
-////            navigationController?.navigationBar.standardAppearance.backgroundImage = UIImage()
-//            navigationController?.navigationBar.standardAppearance.backgroundEffect = nil
-//            navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
-//        }
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
     }
@@ -141,19 +134,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureModules()
-        if #available(iOS 13.0, *) {
-            navigationController?.navigationBar.standardAppearance.backgroundEffect = nil
-            navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
-        }
+        navigationController?.setNavigationBarInvisible(true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
-        if #available(iOS 13.0, *) {
-            navigationController?.navigationBar.standardAppearance.backgroundEffect = nil
-            navigationController?.navigationBar.standardAppearance.backgroundColor = .clear
-        }
+        navigationController?.setNavigationBarInvisible(true)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -163,6 +150,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         if PllLoyaltyInAppReviewableJourney.isInProgress {
             requestInAppReview()
         }
+        navigationController?.setNavigationBarInvisible(false)
     }
     
     // MARK: - Navigation Bar Blurring
@@ -170,8 +158,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-//        guard let bar = navigationController?.navigationBar else { return }
-//        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
+        guard let bar = navigationController?.navigationBar else { return }
+        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
 }
 
