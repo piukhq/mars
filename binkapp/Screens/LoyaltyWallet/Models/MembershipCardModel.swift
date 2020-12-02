@@ -99,11 +99,15 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
                 update(cdObject, \.status, with: nil, delta: false)
             }
         } else {
-            if cdObject.status == nil {
-                let status = MembershipCardStatusModel(apiId: nil, state: .pending, reasonCodes: [.attemptingToScrapePointsValue])
-                let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
-                update(cdStatus, \.card, with: cdObject, delta: delta)
-                update(cdObject, \.status, with: cdStatus, delta: delta)
+            // Are we currently attempting to perform local points scraping for this membership card?
+            // If so, we don't want to update it's status - this is handled elsewhere.
+            if !Current.pointsScrapingManager.isCurrentlyScraping(forMembershipCard: cdObject) {
+                if cdObject.status == nil || cdObject.status?.status == .pending {
+                    let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
+                    let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
+                    update(cdStatus, \.card, with: cdObject, delta: delta)
+                    update(cdObject, \.status, with: cdStatus, delta: delta)
+                }
             }
         }
 

@@ -27,11 +27,11 @@ struct HeathrowScrapingAgent: WebScrapable {
     }
 
     var usernameFieldTitle: String {
-        return "email/card number"
+        return "Email Address / Card Number"
     }
 
     var passwordFieldTitle: String {
-        return "password"
+        return "Password"
     }
 
     var loyaltySchemeBalanceSuffix: String? {
@@ -44,5 +44,13 @@ struct HeathrowScrapingAgent: WebScrapable {
 
     var scrapableUrlString: String {
         return "https://www.heathrow.com/rewards/home?login=Login%20Succcessful"
+    }
+
+    var incorrectCredentialsTextIdentiferClass: String? {
+        return "flex flex-center validation-error-message login-error-message lg-px6 md-px2 sm-px1"
+    }
+
+    var incorrectCredentialsMessage: String? {
+        return "Invalid Login Details. Please check the details you have entered and try again"
     }
 }
