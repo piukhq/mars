@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "fastlane"
 gem "rest-client"
+gem "cocoapods-keys"
 gem "cocoapods"
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
