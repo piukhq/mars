@@ -94,6 +94,12 @@ platform :ios do
       changelog: "No tests notes"
     )
 
+    push_to_git_remote(
+      remote: "origin",
+      local_branch: "release/cuaron",
+      remote_branch: "release/cuaron",
+    )
+
     # sentry_upload_dsym(
     #  auth_token: ENV["SENTRY_AUTH_TOKEN"],
     #  org_slug: 'bink',
