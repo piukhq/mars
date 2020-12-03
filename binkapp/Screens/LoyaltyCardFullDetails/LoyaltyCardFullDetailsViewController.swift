@@ -362,14 +362,22 @@ extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
 
 extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
         let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
         
         let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
-        navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
+        navigationItem.titleView = offsetY > offset ? titleView : nil
         
 //        secondaryColorView.heightConstraint?.constant = secondaryColorView.heightConstraint!.constant - scrollView.contentOffset.y
 //        scrollView.contentOffset.y = 0.0
+        print(offsetY)
+        
+        if offsetY > 0.0 && offsetY < offset {
+            navigationController?.setNavigationBarInvisible(false)
+        } else if offsetY < 0.0 {
+            navigationController?.setNavigationBarInvisible(true)
+        }
         
         //TODO: - Remove height contraint from uiview extantion if unsued
     }
