@@ -86,10 +86,7 @@ platform :ios do
     # end
 
     increment_build_number
-    clean_build_artifacts
     commit_version_bump
-
-    cocoapods(deployment: true)
 
     build_app(
       workspace: "binkapp.xcworkspace", 
