@@ -44,13 +44,11 @@ extension UINavigationController {
         } else {
             self.navigationBar.subviews.forEach({ navBarView in
                 guard let blurView = navBarView as? UIVisualEffectView else { return }
-                if invisible {
-                    UIView.animate(withDuration: 0.2) {
+                UIView.animate(withDuration: 0.2) {
+                    if invisible {
                         blurView.effect = nil
                         blurView.backgroundColor = .clear
-                    }
-                } else {
-                    UIView.animate(withDuration: 0.2) {
+                    } else {
                         blurView.effect = UIBlurEffect(style: .light)
                         blurView.backgroundColor = .init(white: 1.0, alpha: 0.6)
                     }
