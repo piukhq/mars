@@ -80,25 +80,32 @@ platform :ios do
   end
 
   desc "Submit branch to TestFlight"
-  lane :beta do |parameters|
-    build_app(scheme: "binkapp app store")
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+  lane :beta do |options|
+    # if !options[:changelog]
+    #   UI.user_error!("You didn't enter a changelog!")
+    # end
 
-    sentry_upload_dsym(
-     auth_token: ENV["SENTRY_AUTH_TOKEN"],
-     org_slug: 'bink',
-     project_slug: 'mars',
-     dsym_path: 'Bink.app.dSYM.zip'
+    increment_build_number
+    commit_version_bump
+
+    build_app(
+      workspace: "binkapp.xcworkspace", 
+      scheme: "binkapp app store"
     )
+
+    upload_to_testflight(
+      skip_waiting_for_build_processing: false,
+      apple_id: "1142153931",
+      distribute_external: true, 
+      groups: "Mobile Squad", 
+      changelog: "No tests notes"
+    )
+
+    # sentry_upload_dsym(
+    #  auth_token: ENV["SENTRY_AUTH_TOKEN"],
+    #  org_slug: 'bink',
+    #  project_slug: 'mars',
+    #  dsym_path: 'Bink.app.dSYM.zip'
+    # )
   end
-
-  desc "Submit dysm to Sentry for Firebase App Distribution"
-  lane :beta_dsym do
-    sentry_upload_dsym(
-      auth_token: ENV["SENTRY_AUTH_TOKEN"],
-      org_slug: 'bink',
-      project_slug: 'mars',
-      dsym_path: ENV["BITRISE_DSYM_PATH"]
-    )
-  end  
 end
