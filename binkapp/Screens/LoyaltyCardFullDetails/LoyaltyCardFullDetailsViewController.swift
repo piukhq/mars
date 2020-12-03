@@ -136,7 +136,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         super.viewWillAppear(animated)
         configureModules()
         if !navigationBarIsVisible {
-            navigationController?.setNavigationBarInvisible(true)
+            navigationController?.setNavigationBarInvisible(true, animated: false)
         }
     }
     
