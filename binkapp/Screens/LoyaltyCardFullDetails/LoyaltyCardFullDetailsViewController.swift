@@ -143,6 +143,9 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
+        if !navigationBarIsVisible {
+            navigationController?.setNavigationBarInvisible(true, animated: false)
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
