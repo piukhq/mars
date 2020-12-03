@@ -362,20 +362,23 @@ extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
 
 extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
+        let scrollViewOffsetY = scrollView.contentOffset.y
         let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
         
-        let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
-        navigationItem.titleView = offsetY > offset ? titleView : nil
+        let titleViewOffset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
+        navigationItem.titleView = scrollViewOffsetY > titleViewOffset ? titleView : nil
         
-//        secondaryColorView.heightConstraint?.constant = secondaryColorView.heightConstraint!.constant - scrollView.contentOffset.y
-//        scrollView.contentOffset.y = 0.0
-        print(offsetY)
-        
-        if offsetY > 0.0 && offsetY < offset {
+        let secondaryColorViewHeightWithOffset = secondaryColorView.frame.height == 0.0 ? 500 : secondaryColorView.frame.height
+        let secondaryColorViewHeight = secondaryColorViewHeightWithOffset - LayoutHelper.LoyaltyCardDetail.secondaryColorViewHeightOffset
+        let navBarHeight = navigationController?.navigationBar.frame.height ?? 0
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let topBarHeight = navBarHeight + statusBarHeight
+        let navBarThreshold = secondaryColorViewHeight - topBarHeight
+
+        if scrollViewOffsetY > navBarThreshold && scrollViewOffsetY < titleViewOffset {
             navigationController?.setNavigationBarInvisible(false)
-        } else if offsetY < 0.0 {
+        } else if scrollViewOffsetY < navBarThreshold {
             navigationController?.setNavigationBarInvisible(true)
         }
         
