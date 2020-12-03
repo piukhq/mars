@@ -85,6 +85,7 @@ platform :ios do
     #   UI.user_error!("You didn't enter a changelog!")
     # end
 
+    cocoapods
     increment_build_number
     clean_build_artifacts
     commit_version_bump
