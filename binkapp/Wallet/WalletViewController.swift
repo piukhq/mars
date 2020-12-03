@@ -69,10 +69,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
-        if #available(iOS 13.0, *) {
-            navigationController?.navigationBar.standardAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
-            navigationController?.navigationBar.standardAppearance.backgroundEffect = UIBlurEffect(style: .light)
-        } 
+        navigationController?.setNavigationBarInvisible(false)
         
         // We are doing this because the loading indicator is getting stuck when quickly switching between tabs
         // May need to change the approach

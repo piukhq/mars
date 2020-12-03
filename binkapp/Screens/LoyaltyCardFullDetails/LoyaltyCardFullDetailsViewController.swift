@@ -108,6 +108,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
     internal lazy var blurBackground = defaultBlurredBackground()
+    private var navigationBarIsVisible = false
     
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -134,13 +135,14 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureModules()
-        navigationController?.setNavigationBarInvisible(true)
+        if !navigationBarIsVisible {
+            navigationController?.setNavigationBarInvisible(true)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
-        navigationController?.setNavigationBarInvisible(true)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -151,15 +153,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
             requestInAppReview()
         }
         navigationController?.setNavigationBarInvisible(false)
-    }
-    
-    // MARK: - Navigation Bar Blurring
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        guard let bar = navigationController?.navigationBar else { return }
-        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
 }
 
@@ -378,11 +371,11 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 
         if scrollViewOffsetY > navBarThreshold && scrollViewOffsetY < titleViewOffset {
             navigationController?.setNavigationBarInvisible(false)
+            navigationBarIsVisible = true
         } else if scrollViewOffsetY < navBarThreshold {
             navigationController?.setNavigationBarInvisible(true)
+            navigationBarIsVisible = false
         }
-        
-        //TODO: - Remove height contraint from uiview extantion if unsued
     }
 }
 
