@@ -34,26 +34,16 @@ extension UINavigationController {
         
         if #available(iOS 13.0, *) {
             UIView.animate(withDuration: animationDuration) {
-                if visible {
-                    self.navigationBar.standardAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
-                    self.navigationBar.standardAppearance.backgroundEffect = UIBlurEffect(style: .light)
-                } else {
-                    self.navigationBar.standardAppearance.backgroundEffect = nil
-                    self.navigationBar.standardAppearance.backgroundColor = .clear
-                }
+                self.navigationBar.standardAppearance.backgroundEffect = visible ? UIBlurEffect(style: .light) : nil
+                self.navigationBar.standardAppearance.backgroundColor = visible ? UIColor(white: 1.0, alpha: 0.6) : .clear
                 self.navigationBar.layoutIfNeeded()
             }
         } else {
-            self.navigationBar.subviews.forEach({ navBarView in
+            navigationBar.subviews.forEach({ navBarView in
                 guard let blurView = navBarView as? UIVisualEffectView else { return }
                 UIView.animate(withDuration: animationDuration) {
-                    if visible {
-                        blurView.effect = UIBlurEffect(style: .light)
-                        blurView.backgroundColor = .init(white: 1.0, alpha: 0.6)
-                    } else {
-                        blurView.effect = nil
-                        blurView.backgroundColor = .clear
-                    }
+                    blurView.effect = visible ? UIBlurEffect(style: .light) : nil
+                    blurView.backgroundColor = visible ? UIColor(white: 1.0, alpha: 0.6) : .clear
                 }
             })
         }
