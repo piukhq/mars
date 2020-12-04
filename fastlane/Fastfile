@@ -94,7 +94,7 @@ platform :ios do
     )
 
     upload_to_testflight(
-      skip_waiting_for_build_processing: false,
+      skip_waiting_for_build_processing: true,
       distribute_external: true, 
       groups: "Mobile Squad", 
       changelog: "No tests notes"
@@ -106,12 +106,12 @@ platform :ios do
       remote_branch: "release/cuaron",
     )
 
-    # sentry_upload_dsym(
-    #  auth_token: ENV["SENTRY_AUTH_TOKEN"],
-    #  org_slug: 'bink',
-    #  project_slug: 'mars',
-    #  dsym_path: 'Bink.app.dSYM.zip'
-    # )
+    sentry_upload_dsym(
+     auth_token: ENV["SENTRY_AUTH_TOKEN"],
+     org_slug: 'bink',
+     project_slug: 'mars',
+     dsym_path: 'Bink.app.dSYM.zip'
+    )
   end
 
   desc "Increment the build number and commit to git"
