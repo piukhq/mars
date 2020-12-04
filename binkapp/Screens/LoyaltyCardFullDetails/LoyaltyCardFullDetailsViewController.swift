@@ -108,7 +108,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
     internal lazy var blurBackground = defaultBlurredBackground()
-    private var navigationBarIsVisible = false
+    private var navigationBarShouldBeVisible = false
     
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -135,17 +135,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureModules()
-        if !navigationBarIsVisible {
-            navigationController?.setNavigationBarVisibility(false, animated: false)
-        }
+        navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
-        if !navigationBarIsVisible {
-            navigationController?.setNavigationBarVisibility(false, animated: false)
-        }
+        navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -155,7 +151,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         if PllLoyaltyInAppReviewableJourney.isInProgress {
             requestInAppReview()
         }
-        navigationController?.setNavigationBarVisibility(false)
     }
 }
 
@@ -374,10 +369,10 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
 
         if scrollViewOffsetY > navBarThreshold && scrollViewOffsetY < titleViewOffset {
             navigationController?.setNavigationBarVisibility(true)
-            navigationBarIsVisible = true
+            navigationBarShouldBeVisible = true
         } else if scrollViewOffsetY < navBarThreshold {
             navigationController?.setNavigationBarVisibility(false)
-            navigationBarIsVisible = false
+            navigationBarShouldBeVisible = false
         }
     }
 }

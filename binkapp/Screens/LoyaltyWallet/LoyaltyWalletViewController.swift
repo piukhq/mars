@@ -24,7 +24,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarVisibility(true)
+        navigationController?.setNavigationBarVisibility(true, animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
