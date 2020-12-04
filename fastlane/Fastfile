@@ -101,8 +101,8 @@ platform :ios do
 
     push_to_git_remote(
       remote: "origin",
-      local_branch: "release/cuaron",
-      remote_branch: "release/cuaron",
+      local_branch: ENV["BITRISE_GIT_BRANCH"],
+      remote_branch: ENV["BITRISE_GIT_BRANCH"],
     )
 
     sentry_upload_dsym(
