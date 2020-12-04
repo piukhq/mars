@@ -136,7 +136,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         super.viewWillAppear(animated)
         configureModules()
         if !navigationBarIsVisible {
-            navigationController?.setNavigationBarInvisible(true, animated: false)
+            navigationController?.setNavigationBarVisibility(false, animated: false)
         }
     }
     
@@ -144,7 +144,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
         if !navigationBarIsVisible {
-            navigationController?.setNavigationBarInvisible(true, animated: false)
+            navigationController?.setNavigationBarVisibility(false, animated: false)
         }
     }
 
@@ -155,7 +155,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         if PllLoyaltyInAppReviewableJourney.isInProgress {
             requestInAppReview()
         }
-        navigationController?.setNavigationBarInvisible(false)
+        navigationController?.setNavigationBarVisibility(false)
     }
 }
 
@@ -373,10 +373,10 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
         let navBarThreshold = secondaryColorViewHeight - topBarHeight
 
         if scrollViewOffsetY > navBarThreshold && scrollViewOffsetY < titleViewOffset {
-            navigationController?.setNavigationBarInvisible(false)
+            navigationController?.setNavigationBarVisibility(true)
             navigationBarIsVisible = true
         } else if scrollViewOffsetY < navBarThreshold {
-            navigationController?.setNavigationBarInvisible(true)
+            navigationController?.setNavigationBarVisibility(false)
             navigationBarIsVisible = false
         }
     }

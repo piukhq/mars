@@ -29,17 +29,17 @@ extension UINavigationController {
         }
     }
     
-    func setNavigationBarInvisible(_ invisible: Bool, animated: Bool = true) {
+    func setNavigationBarVisibility(_ visible: Bool, animated: Bool = true) {
         let animationDuration = animated ? 0.2 : 0.0
         
         if #available(iOS 13.0, *) {
             UIView.animate(withDuration: animationDuration) {
-                if invisible {
-                    self.navigationBar.standardAppearance.backgroundEffect = nil
-                    self.navigationBar.standardAppearance.backgroundColor = .clear
-                } else {
+                if visible {
                     self.navigationBar.standardAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
                     self.navigationBar.standardAppearance.backgroundEffect = UIBlurEffect(style: .light)
+                } else {
+                    self.navigationBar.standardAppearance.backgroundEffect = nil
+                    self.navigationBar.standardAppearance.backgroundColor = .clear
                 }
                 self.navigationBar.layoutIfNeeded()
             }
@@ -47,12 +47,12 @@ extension UINavigationController {
             self.navigationBar.subviews.forEach({ navBarView in
                 guard let blurView = navBarView as? UIVisualEffectView else { return }
                 UIView.animate(withDuration: animationDuration) {
-                    if invisible {
-                        blurView.effect = nil
-                        blurView.backgroundColor = .clear
-                    } else {
+                    if visible {
                         blurView.effect = UIBlurEffect(style: .light)
                         blurView.backgroundColor = .init(white: 1.0, alpha: 0.6)
+                    } else {
+                        blurView.effect = nil
+                        blurView.backgroundColor = .clear
                     }
                 }
             })
