@@ -28,7 +28,7 @@ struct SuperdrugScrapingAgent: WebScrapable {
     }
 
     var usernameFieldTitle: String {
-        return "Email address"
+        return "Email Address"
     }
 
     var passwordFieldTitle: String {

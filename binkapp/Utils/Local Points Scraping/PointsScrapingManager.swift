@@ -50,7 +50,11 @@ class PointsScrapingManager {
     
     private static let baseCredentialStoreKey = "com.bink.wallet.pointsScraping.credentials.cardId_%@.%@"
     private let keychain = Keychain(service: APIConstants.bundleID)
+
     private var webScrapingUtility: WebScrapingUtility?
+    var isRunning: Bool {
+        return webScrapingUtility != nil
+    }
     
     private var isMasterEnabled: Bool {
         return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionMasterEnabled)
@@ -230,6 +234,10 @@ class PointsScrapingManager {
         webScrapingUtility = nil
         NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
         refreshNextBalanceIfNecessary()
+    }
+
+    func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
+        return webScrapingUtility?.isCurrentlyScraping(forMembershipCard: card) == true
     }
 }
 
