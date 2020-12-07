@@ -61,11 +61,7 @@ class LoyaltyCardFullDetailsViewModel {
     }
     
     var secondaryColor: UIColor? {
-        if let secondaryColor = membershipCard.membershipPlan?.card?.secondaryColour {
-            return UIColor(hexString: secondaryColor)
-        } else {
-            return membershipCard.membershipPlan?.generatedSecondaryBrandColor
-        }
+        return membershipCard.membershipPlan?.secondaryBrandColor
     }
     
     // MARK: - Public methods

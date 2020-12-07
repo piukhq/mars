@@ -109,6 +109,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     private let viewModel: LoyaltyCardFullDetailsViewModel
     internal lazy var blurBackground = defaultBlurredBackground()
     private var navigationBarShouldBeVisible = false
+//    private var secondaryColorViewHeight: CGFloat = 0.0
+    private var previousOffset = 0.0
+    private lazy var topConstraint: NSLayoutConstraint = {
+        let constraint = secondaryColorView.topAnchor.constraint(equalTo: stackScrollView.topAnchor)
+        constraint.isActive = true
+        return constraint
+    }()
     
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -305,10 +312,8 @@ private extension LoyaltyCardFullDetailsViewController {
         NSLayoutConstraint.activate([
             secondaryColorView.leftAnchor.constraint(equalTo: brandHeader.leftAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             secondaryColorView.rightAnchor.constraint(equalTo: brandHeader.rightAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
-            secondaryColorView.topAnchor.constraint(equalTo: brandHeader.topAnchor, constant: -LayoutHelper.LoyaltyCardDetail.secondaryColorViewHeightOffset),
             secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
-        
         view.sendSubviewToBack(secondaryColorView)
     }
     
@@ -357,23 +362,20 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
         let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
         
-        let titleViewOffset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
-        navigationItem.titleView = scrollViewOffsetY > titleViewOffset ? titleView : nil
+        if scrollViewOffsetY > LayoutHelper.LoyaltyCardDetail.contentPadding {
+            navigationController?.setNavigationBarVisibility(true)
+            navigationBarShouldBeVisible = true
+            navigationItem.titleView = titleView
+        } else {
+            navigationController?.setNavigationBarVisibility(false)
+            navigationBarShouldBeVisible = false
+            navigationItem.titleView = nil
+        }
         
-        let secondaryColorViewHeightWithOffset = secondaryColorView.frame.height == 0.0 ? 500 : secondaryColorView.frame.height
-        let secondaryColorViewHeight = secondaryColorViewHeightWithOffset - LayoutHelper.LoyaltyCardDetail.secondaryColorViewHeightOffset
         let navBarHeight = navigationController?.navigationBar.frame.height ?? 0
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         let topBarHeight = navBarHeight + statusBarHeight
-        let navBarThreshold = secondaryColorViewHeight - topBarHeight
-
-        if scrollViewOffsetY > navBarThreshold && scrollViewOffsetY < titleViewOffset {
-            navigationController?.setNavigationBarVisibility(true)
-            navigationBarShouldBeVisible = true
-        } else if scrollViewOffsetY < navBarThreshold {
-            navigationController?.setNavigationBarVisibility(false)
-            navigationBarShouldBeVisible = false
-        }
+        topConstraint.priority = secondaryColorView.frame.height < topBarHeight ? .almostRequired : .required
     }
 }
 
@@ -387,7 +389,6 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
 
 extension LayoutHelper {
     enum LoyaltyCardDetail {
-        static let navBarTitleViewScrollOffset: CGFloat = 100
         static let contentPadding: CGFloat = 25
         static let headerToBarcodeButtonPadding: CGFloat = 12
         private static let brandHeaderAspectRatio: CGFloat = 115 / 182
@@ -395,9 +396,14 @@ extension LayoutHelper {
         static let modulesStackViewHeight: CGFloat = 128
         static let barcodeButtonHeight: CGFloat = 22
         static let informationTableSeparatorInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
-        static let secondaryColorViewHeightOffset: CGFloat = 400
         static func brandHeaderAspectRatio(forMembershipCard card: CD_MembershipCard) -> CGFloat {
             return card.membershipPlan?.featureSet?.planCardType == .link ? brandHeaderAspectRatioLink : brandHeaderAspectRatio
         }
+    }
+}
+
+extension UIView {
+    func constraintWith(identifier: String) -> NSLayoutConstraint? {
+        return self.constraints.first(where: { $0.identifier == identifier })
     }
 }
