@@ -109,7 +109,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     private let viewModel: LoyaltyCardFullDetailsViewModel
     internal lazy var blurBackground = defaultBlurredBackground()
     private var navigationBarShouldBeVisible = false
-//    private var secondaryColorViewHeight: CGFloat = 0.0
     private var previousOffset = 0.0
     private lazy var topConstraint: NSLayoutConstraint = {
         let constraint = secondaryColorView.topAnchor.constraint(equalTo: stackScrollView.topAnchor)
@@ -158,6 +157,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         if PllLoyaltyInAppReviewableJourney.isInProgress {
             requestInAppReview()
         }
+        navigationController?.setNavigationBarVisibility(true, animated: true)
     }
 }
 
