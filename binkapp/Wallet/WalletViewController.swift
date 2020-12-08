@@ -80,7 +80,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         
         Current.wallet.reloadWalletsIfNecessary { willPerformRefresh in
             if willPerformRefresh, InAppReviewUtility.canRequestReviewBasedOnUsage {
-//            if InAppReviewUtility.canRequestReviewBasedOnUsage {
                 TimeAndUsageBasedInAppReviewableJourney().begin()
                 requestInAppReview()
             }
