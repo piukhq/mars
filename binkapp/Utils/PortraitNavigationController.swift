@@ -96,22 +96,32 @@ class PortraitNavigationController: UINavigationController {
 
 extension PortraitNavigationController {
     func configureNavigationBarAppearance() {
-        let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
-        let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
-
         if #available(iOS 13, *) {
-            let navAppearance = UINavigationBarAppearance()
-            navAppearance.configureWithTransparentBackground()
-            navAppearance.shadowImage = UIImage()
-            navAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
-            navAppearance.backgroundEffect = UIBlurEffect(style: .light)
-            navAppearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: UIColor.black]
-            navAppearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
-            navigationBar.standardAppearance = navAppearance
-            navigationBar.scrollEdgeAppearance = navAppearance
+            navigationBar.standardAppearance = .defaultAppearance
+            navigationBar.scrollEdgeAppearance = .defaultAppearance
         } else {
+            let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
+            let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
             UINavigationBar.appearance().backIndicatorImage = backButtonImage
             UINavigationBar.appearance().backIndicatorTransitionMaskImage = backButtonImage
         }
     }
+}
+
+@available(iOS 13.0, *)
+extension UINavigationBarAppearance {
+    static let defaultAppearance: UINavigationBarAppearance = {
+        let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
+        let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.shadowImage = UIImage()
+        appearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
+        appearance.backgroundEffect = UIBlurEffect(style: .light)
+        appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: UIColor.black]
+        appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
+
+        return appearance
+    }()
 }
