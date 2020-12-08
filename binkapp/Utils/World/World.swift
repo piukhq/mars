@@ -65,6 +65,7 @@ extension UserDefaults: BinkUserDefaults {
         case membershipCardMostRecentTransaction(membershipCardId: String)
         case appLaunches
         case hasPreviouslyLaunchedApp
+        case hasBackgroundedApp
         
         var keyValue: String {
             switch self {
@@ -94,6 +95,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "appLaunches"
             case .hasPreviouslyLaunchedApp:
                 return "hasPreviouslyLaunchedApp"
+            case .hasBackgroundedApp:
+                return "hasBackgroundedApp"
             }
         }
     }

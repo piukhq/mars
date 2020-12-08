@@ -19,7 +19,7 @@ extension InAppReviewable {
             Current.inAppReviewableJourney = nil
         }
         
-        guard canRequestReview else { return }
+//        guard canRequestReview else { return }
         SKStoreReviewController.requestReview()
         if let event = InAppReviewAnalyticsEvent.eventForInProgressJourney {
             BinkAnalytics.track(event)

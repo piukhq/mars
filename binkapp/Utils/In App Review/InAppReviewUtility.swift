@@ -50,8 +50,10 @@ struct TimeAndUsageBasedInAppReviewableJourney: InAppReviewableJourney {
 
 enum InAppReviewUtility {
     static let minimumMembershipCards = 4
-    static let minimumAppLaunches = 10
-    static let minimumDaysSinceFirstLaunch = 2
+    static let minimumAppLaunches = 0
+    static let minimumDaysSinceFirstLaunch = 0
+//    static let minimumAppLaunches = 10
+//    static let minimumDaysSinceFirstLaunch = 2
 
     static func recordAppLaunch() {
         let timestamp = Date().timeIntervalSince1970
@@ -60,10 +62,15 @@ enum InAppReviewUtility {
         Current.userDefaults.set(appLaunches ?? [timestamp], forDefaultsKey: .appLaunches)
     }
     
+    static func recordAppBackgrounded(_ request: Bool) {
+        Current.userDefaults.set(request, forDefaultsKey: .hasBackgroundedApp)
+    }
+    
     static var canRequestReviewBasedOnUsage: Bool {
         guard let membershipCards = Current.wallet.membershipCards, membershipCards.count > minimumMembershipCards else { return false }
         guard let appLaunches = Current.userDefaults.value(forDefaultsKey: .appLaunches) as? [TimeInterval] else { return false }
         guard appLaunches.count > minimumAppLaunches else { return false }
+        guard !Current.userDefaults.bool(forDefaultsKey: .hasBackgroundedApp) else { return false }
         let firstAppLaunch = Date(timeIntervalSince1970: appLaunches[0])
         return Date.hasElapsed(days: minimumDaysSinceFirstLaunch, since: firstAppLaunch)
     }
