@@ -79,13 +79,12 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         }
         
         Current.wallet.reloadWalletsIfNecessary { willPerformRefresh in
-//            if willPerformRefresh, InAppReviewUtility.canRequestReviewBasedOnUsage {
-            if InAppReviewUtility.canRequestReviewBasedOnUsage {
+            if willPerformRefresh, InAppReviewUtility.canRequestReviewBasedOnUsage {
+//            if InAppReviewUtility.canRequestReviewBasedOnUsage {
                 TimeAndUsageBasedInAppReviewableJourney().begin()
                 requestInAppReview()
             }
         }
-        InAppReviewUtility.recordAppBackgrounded(false)
         configureLoadingIndicator()
         
         /// In case the Zendesk SDK is slow to return a state, we should configure the navigation item to a default state
