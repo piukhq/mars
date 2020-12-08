@@ -79,17 +79,17 @@ final class APIClient {
     private let session: Session
 
     init() {
-//        let url = EnvironmentType.production.rawValue
-//        let evaluators = [
-//            url:
-//                PinnedCertificatesTrustEvaluator(certificates: [
-//                    Certificates.bink
-//                ])
-//        ]
+        let url = EnvironmentType.production.rawValue
+        let evaluators = [
+            url:
+                PinnedCertificatesTrustEvaluator(certificates: [
+                    Certificates.bink
+                ])
+        ]
 
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 10.0
-        session = Session(configuration: configuration)
+        session = Session(configuration: configuration, serverTrustManager: ServerTrustManager(allHostsMustBeEvaluated: false, evaluators: evaluators))
     }
 }
 
