@@ -39,6 +39,9 @@ class FormMultipleChoiceInput: UIInputView {
             var lastString: String?
             fullContentString = ""
             
+            // Reset backingData from last call
+            backingData = []
+            
             selectedContent.sorted(by: { $0.key < $1.key }).forEach { _, value in
                 if let separator = delegate?.multipleChoiceSeparatorForMultiValues(), lastString != nil {
                     fullContentString += "\(separator)"
@@ -47,8 +50,6 @@ class FormMultipleChoiceInput: UIInputView {
                 fullContentString += value.title
                 
                 if let backingDataValue = value.backingData {
-                    if backingData == nil { backingData = [] }
-
                     backingData?.append(backingDataValue)
                 }
                 
