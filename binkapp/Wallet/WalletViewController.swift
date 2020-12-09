@@ -253,7 +253,8 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return true
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
+        return cell.isKind(of: WalletLoyaltyCardCollectionViewCell.self) || cell.isKind(of: PaymentCardCollectionViewCell.self)
     }
 
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
