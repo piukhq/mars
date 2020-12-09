@@ -226,7 +226,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let cell = collectionView.cellForItem(at: indexPath) else {
-
             if indexPath.row < viewModel.cardCount {
                 return LayoutHelper.WalletDimensions.cardSize
             } else {
@@ -234,15 +233,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             }
         }
 
-        if orderingManager.isReordering {
-            return cell.frame.size
-        }
-
-        if indexPath.row < viewModel.cardCount {
-            return LayoutHelper.WalletDimensions.cardSize
-        } else {
-            return LayoutHelper.WalletDimensions.walletPromptSize
-        }
+        return cell.frame.size
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
