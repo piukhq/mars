@@ -375,7 +375,11 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
         let navBarHeight = navigationController?.navigationBar.frame.height ?? 0
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         let topBarHeight = navBarHeight + statusBarHeight
-        topConstraint.priority = secondaryColorView.frame.height < topBarHeight ? .almostRequired : .required
+        if #available(iOS 13.0, *) {
+            topConstraint.priority = secondaryColorView.frame.height < topBarHeight ? .almostRequired : .required
+        } else {
+            // TODO: - Find fix for iOS 12
+        }
     }
 }
 
@@ -399,11 +403,5 @@ extension LayoutHelper {
         static func brandHeaderAspectRatio(forMembershipCard card: CD_MembershipCard) -> CGFloat {
             return card.membershipPlan?.featureSet?.planCardType == .link ? brandHeaderAspectRatioLink : brandHeaderAspectRatio
         }
-    }
-}
-
-extension UIView {
-    func constraintWith(identifier: String) -> NSLayoutConstraint? {
-        return self.constraints.first(where: { $0.identifier == identifier })
     }
 }

@@ -33,12 +33,12 @@ extension UINavigationController {
         let animationDuration = animated ? 0.2 : 0.0
         
         if #available(iOS 13.0, *) {
-            UIView.animate(withDuration: animationDuration) {
-                self.navigationBar.standardAppearance.backgroundEffect = visible ? UIBlurEffect(style: .light) : nil
-                self.navigationBar.standardAppearance.backgroundColor = visible ? UIColor(white: 1.0, alpha: 0.6) : .clear
-                self.navigationBar.scrollEdgeAppearance?.backgroundEffect = visible ? UIBlurEffect(style: .light) : nil
-                self.navigationBar.scrollEdgeAppearance?.backgroundColor = visible ? UIColor(white: 1.0, alpha: 0.6) : .clear
-                if animated {
+            self.navigationBar.standardAppearance.backgroundEffect = visible ? UIBlurEffect(style: .light) : nil
+            self.navigationBar.standardAppearance.backgroundColor = visible ? UIColor(white: 1.0, alpha: 0.6) : .clear
+            self.navigationBar.scrollEdgeAppearance?.backgroundEffect = visible ? UIBlurEffect(style: .light) : nil
+            self.navigationBar.scrollEdgeAppearance?.backgroundColor = visible ? UIColor(white: 1.0, alpha: 0.6) : .clear
+            if animated {
+                UIView.animate(withDuration: animationDuration) {
                     self.navigationBar.layoutIfNeeded()
                 }
             }
