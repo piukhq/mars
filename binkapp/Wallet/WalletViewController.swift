@@ -38,6 +38,8 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private var hasSupportUpdates = false
     private let dotView = UIView()
 
+    private var orderingManager = WalletOrderingManager()
+
     let viewModel: T
 
     init(viewModel: T) {
@@ -223,6 +225,19 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let cell = collectionView.cellForItem(at: indexPath) else {
+
+            if indexPath.row < viewModel.cardCount {
+                return LayoutHelper.WalletDimensions.cardSize
+            } else {
+                return LayoutHelper.WalletDimensions.walletPromptSize
+            }
+        }
+
+        if orderingManager.isReordering {
+            return cell.frame.size
+        }
+
         if indexPath.row < viewModel.cardCount {
             return LayoutHelper.WalletDimensions.cardSize
         } else {
@@ -273,13 +288,28 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
                 break
             }
+            orderingManager.start()
             collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
         case .changed:
             collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
         case .ended:
+            orderingManager.stop()
             collectionView.endInteractiveMovement()
         default:
+            orderingManager.stop()
             collectionView.cancelInteractiveMovement()
         }
+    }
+}
+
+struct WalletOrderingManager {
+    var isReordering = false
+
+    mutating func start() {
+        isReordering = true
+    }
+
+    mutating func stop() {
+        isReordering = false
     }
 }
