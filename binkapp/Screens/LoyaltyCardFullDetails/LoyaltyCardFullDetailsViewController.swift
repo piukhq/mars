@@ -115,6 +115,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         constraint.isActive = true
         return constraint
     }()
+    private var initialScrollviewLoadCount = 0
     
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -358,28 +359,31 @@ extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
 
 extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let scrollViewOffsetY = scrollView.contentOffset.y
         let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
-        
-        if scrollViewOffsetY > LayoutHelper.LoyaltyCardDetail.contentPadding {
+
+        let navBarHeight = navigationController?.navigationBar.frame.height ?? 0
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let topBarHeight = navBarHeight + statusBarHeight
+        let secondaryColorViewHeight = secondaryColorView.frame.height
+
+        if secondaryColorViewHeight < topBarHeight && initialScrollviewLoadCount > 3 {
             navigationController?.setNavigationBarVisibility(true)
             navigationBarShouldBeVisible = true
             navigationItem.titleView = titleView
-        } else {
+        } else if secondaryColorViewHeight > topBarHeight {
             navigationController?.setNavigationBarVisibility(false)
             navigationBarShouldBeVisible = false
             navigationItem.titleView = nil
         }
         
-        let navBarHeight = navigationController?.navigationBar.frame.height ?? 0
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        let topBarHeight = navBarHeight + statusBarHeight
         if #available(iOS 13.0, *) {
             topConstraint.priority = secondaryColorView.frame.height < topBarHeight ? .almostRequired : .required
         } else {
             // TODO: - Find fix for iOS 12
         }
+        
+        initialScrollviewLoadCount += 1
     }
 }
 
