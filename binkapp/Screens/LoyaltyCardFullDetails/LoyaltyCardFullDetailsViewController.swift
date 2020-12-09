@@ -110,12 +110,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     internal lazy var blurBackground = defaultBlurredBackground()
     private var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
-    private lazy var topConstraint: NSLayoutConstraint = {
-        let constraint = secondaryColorView.topAnchor.constraint(equalTo: stackScrollView.topAnchor)
-        constraint.isActive = true
-        return constraint
-    }()
-    private var initialScrollviewLoadCount = 0
+    private var topConstraint: NSLayoutConstraint?
+    private var didLayoutSubviews = false
     
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -159,6 +155,11 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
             requestInAppReview()
         }
         navigationController?.setNavigationBarVisibility(true, animated: true)
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        didLayoutSubviews = true
     }
 }
 
@@ -315,6 +316,9 @@ private extension LoyaltyCardFullDetailsViewController {
             secondaryColorView.rightAnchor.constraint(equalTo: brandHeader.rightAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
+        topConstraint = secondaryColorView.topAnchor.constraint(equalTo: stackScrollView.topAnchor)
+        topConstraint?.isActive = true
+
         view.sendSubviewToBack(secondaryColorView)
     }
     
@@ -359,6 +363,8 @@ extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
 
 extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard didLayoutSubviews else { return }
+
         let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
 
@@ -367,7 +373,7 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
         let topBarHeight = navBarHeight + statusBarHeight
         let secondaryColorViewHeight = secondaryColorView.frame.height
 
-        if secondaryColorViewHeight < topBarHeight && initialScrollviewLoadCount > 3 {
+        if secondaryColorViewHeight < topBarHeight {
             navigationController?.setNavigationBarVisibility(true)
             navigationBarShouldBeVisible = true
             navigationItem.titleView = titleView
@@ -378,12 +384,11 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
         }
         
         if #available(iOS 13.0, *) {
-            topConstraint.priority = secondaryColorView.frame.height < topBarHeight ? .almostRequired : .required
+            topConstraint?.priority = secondaryColorViewHeight < topBarHeight ? .almostRequired : .required
         } else {
             // TODO: - Find fix for iOS 12
+            topConstraint?.priority = UILayoutPriority(999)
         }
-        
-        initialScrollviewLoadCount += 1
     }
 }
 
