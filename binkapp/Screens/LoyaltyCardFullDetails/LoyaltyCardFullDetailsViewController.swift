@@ -311,12 +311,15 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configureSecondaryColorViewLayout() {
+        topConstraint = secondaryColorView.topAnchor.constraint(equalTo: stackScrollView.topAnchor)
+        topConstraint?.priority = .almostRequired
         NSLayoutConstraint.activate([
             secondaryColorView.leftAnchor.constraint(equalTo: brandHeader.leftAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             secondaryColorView.rightAnchor.constraint(equalTo: brandHeader.rightAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
-        topConstraint = secondaryColorView.topAnchor.constraint(equalTo: stackScrollView.topAnchor)
+
+
         topConstraint?.isActive = true
 
         view.sendSubviewToBack(secondaryColorView)
@@ -381,13 +384,6 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
             navigationController?.setNavigationBarVisibility(false)
             navigationBarShouldBeVisible = false
             navigationItem.titleView = nil
-        }
-        
-        if #available(iOS 13.0, *) {
-            topConstraint?.priority = secondaryColorViewHeight < topBarHeight ? .almostRequired : .required
-        } else {
-            // TODO: - Find fix for iOS 12
-            topConstraint?.priority = UILayoutPriority(999)
         }
     }
 }
