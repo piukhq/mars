@@ -254,7 +254,17 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
 
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
-        return cell.isKind(of: WalletLoyaltyCardCollectionViewCell.self) || cell.isKind(of: PaymentCardCollectionViewCell.self)
+        return !cell.isKind(of: WalletPromptCollectionViewCell.self)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+        guard let cell = collectionView.cellForItem(at: proposedIndexPath) else { return proposedIndexPath }
+
+        if cell.isKind(of: WalletPromptCollectionViewCell.self) {
+            return originalIndexPath
+        }
+
+        return proposedIndexPath
     }
 
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
