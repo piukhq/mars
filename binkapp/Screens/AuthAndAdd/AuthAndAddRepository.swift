@@ -51,7 +51,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
                 }
                 
             case .failure(let error):
-                BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardResponseFail(request: request, formPurpose: formPurpose))
+                BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardResponseFail(request: request, formPurpose: formPurpose, responseData: responseData))
                 onError(error)
             }
         }

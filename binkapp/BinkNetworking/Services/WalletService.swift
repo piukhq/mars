@@ -138,14 +138,14 @@ extension WalletServiceProtocol {
         }
     }
     
-    func deleteMembershipCard(_ membershipCard: CD_MembershipCard, completion: ServiceCompletionSuccessHandler<WalletServiceError>?) {
+    func deleteMembershipCard(_ membershipCard: CD_MembershipCard, completion: ServiceCompletionSuccessResponseDataHandler<WalletServiceError>?) {
         let request = BinkNetworkRequest(endpoint: .membershipCard(cardId: membershipCard.id), method: .delete, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithNoResponse(request, body: nil) { (success, _, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: nil) { (success, _, responseData) in
             guard success else {
-                completion?(false, .failedToDeleteMembershipCard)
+                completion?(false, .failedToDeleteMembershipCard, responseData)
                 return
             }
-            completion?(true, nil)
+            completion?(true, nil, responseData)
         }
     }
 

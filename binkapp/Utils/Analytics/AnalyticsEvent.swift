@@ -97,7 +97,7 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
 enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     case addLoyaltyCardRequest(request: MembershipCardPostModel, formPurpose: FormPurpose)
     case addLoyaltyCardResponseSuccess(loyaltyCard: CD_MembershipCard, formPurpose: FormPurpose, statusCode: Int)
-    case addLoyaltyCardResponseFail(request: MembershipCardPostModel, formPurpose: FormPurpose)
+    case addLoyaltyCardResponseFail(request: MembershipCardPostModel, formPurpose: FormPurpose, responseData: NetworkResponseData?)
     
     case addPaymentCardRequest(request: PaymentCardCreateModel)
     case addPaymentCardResponseSuccess(request: PaymentCardCreateModel, paymentCard: CD_PaymentCard, statusCode: Int)
@@ -105,7 +105,7 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     
     case deleteLoyaltyCard(card: WalletCard)
     case deleteLoyaltyCardResponseSuccess(card: TrackableWalletCard?)
-    case deleteLoyaltyCardResponseFail(card: TrackableWalletCard?)
+    case deleteLoyaltyCardResponseFail(card: TrackableWalletCard?, responseData: NetworkResponseData?)
     
     case deletePaymentCard(card: WalletCard)
     case deletePaymentCardResponseSuccess(card: TrackableWalletCard?)
@@ -189,12 +189,15 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
                 "loyalty_plan": planId
             ]
             
-        case .addLoyaltyCardResponseFail(let request, let formPurpose):
+        case .addLoyaltyCardResponseFail(let request, let formPurpose, let responseData):
             guard let planId = request.membershipPlan else { return nil }
+            guard let statusCode = responseData?.urlResponse?.statusCode else { return nil }
             return [
                 "loyalty_card_journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
                 "client_account_id": request.uuid,
-                "loyalty_plan": planId
+                "loyalty_plan": planId,
+                "error_code": statusCode,
+                "error_message": responseData?.errorMessage ?? "Error message not provided"
             ]
             
         case .addPaymentCardRequest(let request):
@@ -241,12 +244,15 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
                 "client_account_id": uuid
             ]
             
-        case .deleteLoyaltyCardResponseFail(let card):
+        case .deleteLoyaltyCardResponseFail(let card, let responseData):
             guard let planIdString = card?.loyaltyPlan, let planId = Int(planIdString) else { return nil }
             guard let uuid = card?.uuid else { return nil }
+            guard let statusCode = responseData?.urlResponse?.statusCode else { return nil }
             return [
                 "loyalty_plan": planId,
-                "client_account_id": uuid
+                "client_account_id": uuid,
+                "error_code": statusCode,
+                "error_message": responseData?.errorMessage ?? "Error message not provided"
             ]
             
         case .deletePaymentCard(let card):
