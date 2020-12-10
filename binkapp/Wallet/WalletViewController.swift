@@ -256,6 +256,21 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
 
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("Moving")
+
+
+        // If the reordered data source is nil, we haven't made any unsaved changed
+        // Set the data source to the current section's data
+        // Otherwise, we are currently reordering so we shouldn't assign the data source
+//        if reorderedDataSource == nil {
+//            reorderedDataSource = sections
+//        }
+//        guard var section = reorderedDataSource?[sourceIndexPath.section] else { return }
+//        guard var rows = section.rows else { return }
+//        let movedObject = rows[sourceIndexPath.row]
+//        rows.remove(at: sourceIndexPath.row)
+//        rows.insert(movedObject, at: destinationIndexPath.row)
+//        section.rows = rows
+//        reorderedDataSource?[sourceIndexPath.section] = section
     }
 
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
