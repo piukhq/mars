@@ -208,7 +208,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private func loadPaymentCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { [weak self] cards in
-                self?.paymentCards = cards
+                self?.applyLocalPaymentWalletOrder(to: cards)
                 completion(true, nil)
             }
             return
@@ -219,7 +219,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
                     self?.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { cards in
-                        self?.paymentCards = cards
+                        self?.applyLocalPaymentWalletOrder(to: cards)
                         completion(true, nil)
                     }
                 })
@@ -262,6 +262,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 }
 
 // MARK: - Local wallet ordering
+
+// TODO: Logout and login not persisting correctly.
 
 extension Wallet {
     enum WalletType: String, Codable {

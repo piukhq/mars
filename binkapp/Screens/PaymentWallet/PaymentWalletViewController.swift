@@ -49,6 +49,11 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
         super.collectionView(collectionView, didSelectItemAt: indexPath)
         resetAllSwipeStates()
     }
+
+    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard let paymentCard = viewModel.cards?[sourceIndexPath.row] else { return }
+        Current.wallet.reorderPaymentCard(paymentCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
 }
 
 extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelegate {
