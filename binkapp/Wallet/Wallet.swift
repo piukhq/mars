@@ -21,7 +21,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private(set) var membershipCards: [CD_MembershipCard]?
     private(set) var paymentCards: [CD_PaymentCard]?
 
-    private var localMembershipCardsOrder: [String]?
+    var localMembershipCardsOrder: [String]?
 
     private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
@@ -187,6 +187,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
+                // TODO: Sort these based on local order. This will happen after adding a card
                 self?.membershipCards = cards
                 completion(true, nil)
             }
@@ -197,52 +198,30 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
                     self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: { cards in
-                        // We get the cards from the API, in whatever order it gives us
-                        // Here we should apply the local order if there is one
-
-                        // This is the API order except moving the last card to the start. It works.
-                        self?.localMembershipCardsOrder = ["39399", "43031", "42736", "42735", "42733", "41752"]
-
-                        // This means the last time we had a local order, we only had one card.
-                        // The API will return more than one, we should handle this correctly and show all of them
-                        // This works
-//                        self?.localMembershipCardsOrder = ["39399", "12345"]
-
-                        // What if the API has a card that we didn't have in the local order before?
-                        // If there is a locally stored order, any card id's that aren't in the order should be at the top in the order they came back from the API in.
-                        // All newly added cards should also go to the top of the wallet.
-
                         if let order = self?.localMembershipCardsOrder {
-                            // Start by ordering the cards that we get back from the API that have an id match
                             var orderedCards = order.map { orderObject in
                                 cards?.first(where: { $0.id == orderObject })
                             }
 
-                            // Sort the cards we got back from the API but we don't have a match for
-                            // Create an array of cards that aren't in the orderedCards array
                             var newCards = cards?.compactMap { $0 }.filter { !orderedCards.contains($0) }
 
-                            // Insert each new card into orderedCards
-                            // Reverse the order so that they insert in the same order we get them from the API
                             newCards?.reverse()
                             newCards?.forEach {
                                 orderedCards.insert($0, at: 0)
                             }
 
-                            // Sort the cards that we have an id for, but aren't present in the API response
                             self?.localMembershipCardsOrder?.removeAll(where: { orderId in
                                 !orderedCards.contains { orderedCard in
                                     orderedCard?.id == orderId
                                 }
                             })
 
-                            // Set the local order to represent the new order
                             self?.localMembershipCardsOrder = orderedCards.compactMap { $0?.id }
                             // TODO: Save this to user defaults against the user id
 
                             self?.membershipCards = orderedCards.compactMap({ $0 })
                         } else {
-                            // If there is not, just return the cards as we got them from the API
+                            self?.localMembershipCardsOrder = cards?.compactMap { $0.id }
                             self?.membershipCards = cards
                         }
 
@@ -308,5 +287,17 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                 return
             }
         }
+    }
+}
+
+// MARK: - Local wallet ordering
+
+extension Wallet {
+    func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
+        membershipCards?.remove(at: sourceIndex)
+        membershipCards?.insert(card, at: destinationIndex)
+
+        localMembershipCardsOrder?.remove(at: sourceIndex)
+        localMembershipCardsOrder?.insert(card.id, at: destinationIndex)
     }
 }

@@ -60,6 +60,11 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         super.collectionView(collectionView, didSelectItemAt: indexPath)
         resetAllSwipeStates()
     }
+
+    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard let membershipCard = viewModel.cards?[sourceIndexPath.row] else { return }
+        Current.wallet.reorderMembershipCard(membershipCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
 }
 
 extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelegate {
