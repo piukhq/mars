@@ -9,7 +9,7 @@ import Foundation
 
 class AuthAndAddRepository: WalletServiceProtocol {
     func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, scrapingCredentials: WebScrapingCredentials? = nil, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (BinkError?) -> Void) {
-        addMembershipCard(withRequestModel: request, existingMembershipCard: existingMembershipCard) { (result, rawResponse) in
+        addMembershipCard(withRequestModel: request, existingMembershipCard: existingMembershipCard) { (result, responseData) in
             switch result {
             case .success(let response):
                 // Map to core data
@@ -18,8 +18,8 @@ class AuthAndAddRepository: WalletServiceProtocol {
                     
                     // The uuid will have already been set in the mapToCoreData call, but thats fine we can set it to the desired value here from the initial post request
                     newObject.uuid = request.uuid
-                    
-                    if let statusCode = rawResponse?.statusCode {
+
+                    if let statusCode = responseData?.urlResponse?.statusCode {
                         BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardResponseSuccess(loyaltyCard: newObject, formPurpose: formPurpose, statusCode: statusCode))
                     }
 

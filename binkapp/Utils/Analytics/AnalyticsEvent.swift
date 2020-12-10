@@ -101,7 +101,7 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     
     case addPaymentCardRequest(request: PaymentCardCreateModel)
     case addPaymentCardResponseSuccess(request: PaymentCardCreateModel, paymentCard: CD_PaymentCard, statusCode: Int)
-    case addPaymentCardResponseFail(request: PaymentCardCreateModel)
+    case addPaymentCardResponseFail(request: PaymentCardCreateModel, responseData: NetworkResponseData?)
     
     case deleteLoyaltyCard(card: WalletCard)
     case deleteLoyaltyCardResponseSuccess(card: TrackableWalletCard?)
@@ -109,7 +109,7 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     
     case deletePaymentCard(card: WalletCard)
     case deletePaymentCardResponseSuccess(card: TrackableWalletCard?)
-    case deletePaymentCardResponseFail(card: TrackableWalletCard?)
+    case deletePaymentCardResponseFail(card: TrackableWalletCard?, responseData: NetworkResponseData?)
     
     case loyaltyCardStatus(loyaltyCard: CD_MembershipCard, newStatus: MembershipCardStatus?)
     case paymentCardStatus(paymentCard: CD_PaymentCard, newStatus: String?)
@@ -214,11 +214,14 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
                 "payment_status": status
             ]
             
-        case .addPaymentCardResponseFail(let request):
+        case .addPaymentCardResponseFail(let request, let responseData):
             guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { return nil }
+            guard let statusCode = responseData?.urlResponse?.statusCode else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": request.uuid
+                "client_account_id": request.uuid,
+                "error_code": statusCode,
+                "error_message": responseData?.errorMessage ?? "Error message not provided"
             ]
             
         case .deleteLoyaltyCard(let card):
@@ -263,12 +266,15 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
                 "client_account_id": uuid
             ]
             
-        case .deletePaymentCardResponseFail(let card):
+        case .deletePaymentCardResponseFail(let card, let responseData):
             guard let paymentScheme = card?.paymentScheme else { return nil }
             guard let uuid = card?.uuid else { return nil }
+            guard let statusCode = responseData?.urlResponse?.statusCode else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": uuid
+                "client_account_id": uuid,
+                "error_code": statusCode,
+                "error_message": responseData?.errorMessage ?? "Error message not provided"
             ]
             
         case .loyaltyCardStatus(let card, let status):

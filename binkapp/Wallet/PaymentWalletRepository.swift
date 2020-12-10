@@ -15,10 +15,9 @@ class PaymentWalletRepository: WalletServiceProtocol {
         trackableCard = TrackableWalletCard(uuid: paymentCard.uuid, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
         
         BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: paymentCard))
-        
-        deletePaymentCard(paymentCard) { (success, _) in
+        deletePaymentCard(paymentCard) { (success, _, responseData) in
             guard success else {
-                BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard))
+                BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard, responseData: responseData))
                 return
             }
             BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseSuccess(card: trackableCard))
@@ -98,8 +97,7 @@ class PaymentWalletRepository: WalletServiceProtocol {
         }
         
         BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardRequest(request: paymentCard))
-
-        addPaymentCard(withRequestModel: request) { (result, rawResponse) in
+        addPaymentCard(withRequestModel: request) { (result, responseData) in
             switch result {
             case .success(let response):
                 Current.database.performBackgroundTask { context in
@@ -108,7 +106,7 @@ class PaymentWalletRepository: WalletServiceProtocol {
                     // The uuid will have already been set in the mapToCoreData call, but thats fine we can set it to the desired value here from the initial post request
                     newObject.uuid = paymentCard.uuid
                     
-                    if let statusCode = rawResponse?.statusCode {
+                    if let statusCode = responseData?.urlResponse?.statusCode {
                         BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseSuccess(request: paymentCard, paymentCard: newObject, statusCode: statusCode))
                     }
                     
@@ -121,7 +119,7 @@ class PaymentWalletRepository: WalletServiceProtocol {
                     }
                 }
             case .failure(let error):
-                BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseFail(request: paymentCard))
+                BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseFail(request: paymentCard, responseData: responseData))
                 onError(error)
             }
         }
