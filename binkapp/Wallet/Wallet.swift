@@ -21,23 +21,6 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private(set) var membershipCards: [CD_MembershipCard]?
     private(set) var paymentCards: [CD_PaymentCard]?
 
-    enum WalletType: String, Codable {
-        case loyalty
-        case payment
-    }
-
-    var localMembershipCardsOrder: [String]? {
-        get {
-            guard let userId = Current.userManager.currentUserId else { return nil }
-            return Current.userDefaults.value(forDefaultsKey: .localWalletOrder(userId: userId, walletType: .loyalty)) as? [String]
-        }
-        set {
-            guard let order = newValue else { return }
-            guard let userId = Current.userManager.currentUserId else { return }
-            Current.userDefaults.set(order, forDefaultsKey: .localWalletOrder(userId: userId, walletType: .loyalty))
-        }
-    }
-
     private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
         let shouldDisplay = !Current.userDefaults.bool(forDefaultsKey: .hasLaunchedWallet)
@@ -281,6 +264,40 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 // MARK: - Local wallet ordering
 
 extension Wallet {
+    enum WalletType: String, Codable {
+        case loyalty
+        case payment
+    }
+    
+    private var localMembershipCardsOrder: [String]? {
+        get {
+            return getLocalWalletOrder(for: .loyalty)
+        }
+        set {
+            setLocalWalletOrder(newValue, for: .loyalty)
+        }
+    }
+
+    private var localPaymentCardsOrder: [String]? {
+        get {
+            return getLocalWalletOrder(for: .payment)
+        }
+        set {
+            setLocalWalletOrder(newValue, for: .payment)
+        }
+    }
+
+    private func getLocalWalletOrder(for walletType: WalletType) -> [String]? {
+        guard let userId = Current.userManager.currentUserId else { return nil }
+        return Current.userDefaults.value(forDefaultsKey: .localWalletOrder(userId: userId, walletType: walletType)) as? [String]
+    }
+
+    private func setLocalWalletOrder(_ newValue: [String]?, for walletType: WalletType) {
+        guard let order = newValue else { return }
+        guard let userId = Current.userManager.currentUserId else { return }
+        Current.userDefaults.set(order, forDefaultsKey: .localWalletOrder(userId: userId, walletType: walletType))
+    }
+
     func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
         /// Update the wallet's datasource
         membershipCards?.remove(at: sourceIndex)
@@ -294,7 +311,20 @@ extension Wallet {
         }
     }
 
-    func applyLocalLoyaltyWalletOrder(to cards: [CD_MembershipCard]?) {
+    func reorderPaymentCard(_ card: CD_PaymentCard, from sourceIndex: Int, to destinationIndex: Int) {
+        /// Update the wallet's datasource
+        paymentCards?.remove(at: sourceIndex)
+        paymentCards?.insert(card, at: destinationIndex)
+
+        /// Sync the local ordering
+        if var order = localPaymentCardsOrder {
+            order.remove(at: sourceIndex)
+            order.insert(card.id, at: destinationIndex)
+            localPaymentCardsOrder = order
+        }
+    }
+
+    private func applyLocalLoyaltyWalletOrder(to cards: [CD_MembershipCard]?) {
         /// If we have a local order set
         if let order = localMembershipCardsOrder {
             /// Sort cards in the custom order
@@ -323,6 +353,38 @@ extension Wallet {
             /// Sync the datasource and set the local card order
             localMembershipCardsOrder = cards?.compactMap { $0.id }
             membershipCards = cards
+        }
+    }
+
+    private func applyLocalPaymentWalletOrder(to cards: [CD_PaymentCard]?) {
+        /// If we have a local order set
+        if let order = localPaymentCardsOrder {
+            /// Sort cards in the custom order
+            var orderedCards = order.map { orderObject in
+                cards?.first(where: { $0.id == orderObject })
+            }
+
+            /// Add any new cards that have been added since the last update to the local order
+            var newCards = cards?.compactMap { $0 }.filter { !orderedCards.contains($0) }
+            newCards?.reverse()
+            newCards?.forEach {
+                orderedCards.insert($0, at: 0)
+            }
+
+            /// Remove any card id's that were ordered, but weren't present in the most recent cards response
+            localPaymentCardsOrder?.removeAll(where: { orderId in
+                !orderedCards.contains { orderedCard in
+                    orderedCard?.id == orderId
+                }
+            })
+
+            /// Sync the datasource and local card order
+            localPaymentCardsOrder = orderedCards.compactMap { $0?.id }
+            paymentCards = orderedCards.compactMap({ $0 })
+        } else {
+            /// Sync the datasource and set the local card order
+            localPaymentCardsOrder = cards?.compactMap { $0.id }
+            paymentCards = cards
         }
     }
 }
