@@ -170,19 +170,17 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             guard let planId = request.membershipPlan else { return nil }
             return [
                 "loyalty_card_journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
-                "client_account_id": request.uuid,
                 "loyalty_plan": planId,
                 "scanned_card": formPurpose == .addFromScanner ? "true" : "false"
             ]
             
         case .addLoyaltyCardResponseSuccess(let card, let formPurpose, let statusCode):
-            guard let uuid = card.uuid else { return nil }
             guard let cardStatus = card.status?.status?.rawValue else { return nil }
             guard let reasonCode = card.status?.formattedReasonCodes?.first?.rawValue else { return nil }
             guard let planIdString = card.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
             return [
                 "loyalty_card_journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
-                "client_account_id": uuid,
+                "client_account_id": card.id ?? "",
                 "account_is_new": statusCode == 201 ? "true" : "false",
                 "loyalty_status": cardStatus,
                 "loyalty_reason_code": reasonCode,
@@ -193,15 +191,13 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             guard let planId = request.membershipPlan else { return nil }
             return [
                 "loyalty_card_journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
-                "client_account_id": request.uuid,
                 "loyalty_plan": planId
             ]
             
         case .addPaymentCardRequest(let request):
             guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { return nil }
             return [
-                "payment_scheme": paymentScheme,
-                "client_account_id": request.uuid
+                "payment_scheme": paymentScheme
             ]
             
         case .addPaymentCardResponseSuccess(let request, let card, let statusCode):
@@ -209,7 +205,7 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             guard let status = card.status else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": request.uuid,
+                "client_account_id": card.id ?? "",
                 "account_is_new": statusCode == 201 ? "true" : "false",
                 "payment_status": status
             ]
@@ -217,76 +213,67 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
         case .addPaymentCardResponseFail(let request):
             guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { return nil }
             return [
-                "payment_scheme": paymentScheme,
-                "client_account_id": request.uuid
+                "payment_scheme": paymentScheme
             ]
             
         case .deleteLoyaltyCard(let card):
             guard let loyaltyCard = card as? CD_MembershipCard else { return nil }
             guard let planIdString = loyaltyCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
-            guard let uuid = loyaltyCard.uuid else { return nil }
             return [
                 "loyalty_plan": planId,
-                "client_account_id": uuid
+                "client_account_id": loyaltyCard.id ?? ""
             ]
             
         case .deleteLoyaltyCardResponseSuccess(let card):
             guard let planIdString = card?.loyaltyPlan, let planId = Int(planIdString) else { return nil }
-            guard let uuid = card?.uuid else { return nil }
             return [
                 "loyalty_plan": planId,
-                "client_account_id": uuid
+                "client_account_id": card?.id ?? ""
             ]
             
         case .deleteLoyaltyCardResponseFail(let card):
             guard let planIdString = card?.loyaltyPlan, let planId = Int(planIdString) else { return nil }
-            guard let uuid = card?.uuid else { return nil }
             return [
                 "loyalty_plan": planId,
-                "client_account_id": uuid
+                "client_account_id": card?.id ?? ""
             ]
             
         case .deletePaymentCard(let card):
             guard let paymentCard = card as? CD_PaymentCard else { return nil }
             guard let paymentScheme = paymentCard.card?.paymentSchemeIdentifier else { return nil }
-            guard let uuid = paymentCard.uuid else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": uuid
+                "client_account_id": card.id ?? ""
             ]
             
         case .deletePaymentCardResponseSuccess(let card):
             guard let paymentScheme = card?.paymentScheme else { return nil }
-            guard let uuid = card?.uuid else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": uuid
+                "client_account_id": card?.id ?? ""
             ]
             
         case .deletePaymentCardResponseFail(let card):
             guard let paymentScheme = card?.paymentScheme else { return nil }
-            guard let uuid = card?.uuid else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": uuid
+                "client_account_id": card?.id ?? ""
             ]
             
         case .loyaltyCardStatus(let card, let status):
-            guard let uuid = card.uuid else { return nil }
             guard let status = status?.rawValue else { return nil }
             guard let planIdString = card.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
             return [
-                "client_account_id": uuid,
+                "client_account_id": card.id ?? "",
                 "status": status,
                 "loyalty_card_plan": planId
             ]
             
         case .paymentCardStatus(let card, let status):
-            guard let uuid = card.uuid else { return nil }
             guard let status = status else { return nil }
             guard let paymentScheme = card.card?.paymentSchemeIdentifier else { return nil }
             return [
-                "client_account_id": uuid,
+                "client_account_id": card.id ?? "",
                 "status": status,
                 "payment_scheme": paymentScheme
             ]
