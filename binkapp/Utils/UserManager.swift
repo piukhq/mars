@@ -46,6 +46,7 @@ class UserManager {
         static let emailKey = "email_key"
         static let firstNameKey = "first_name_key"
         static let lastNameKey = "last_name_key"
+        static let userIdKey = "user_id_key"
     }
     
     private let keychain = Keychain(service: APIConstants.bundleID)
@@ -60,6 +61,10 @@ class UserManager {
         guard let token = currentToken else { return false }
         guard !token.isEmpty else { return false }
         return true
+    }
+    
+    var userId: String? {
+        return try? keychain.getString(Constants.userIdKey)
     }
     
     private func getKeychainValue(for key: String) -> String? {
@@ -106,6 +111,7 @@ class UserManager {
         
         // Set user id for analytics and crash reporting
         guard let userId = response.uid else { return }
+        try? keychain.set(userId, key: Constants.userIdKey)
         
         let sentryUser = Sentry.User(userId: userId)
         SentrySDK.setUser(sentryUser)
