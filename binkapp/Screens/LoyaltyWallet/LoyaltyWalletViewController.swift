@@ -34,6 +34,10 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = cellToBeMoved, !orderingManager.isReordering {
+            return cell
+        }
+        
         if indexPath.row < viewModel.cardCount {
             let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             

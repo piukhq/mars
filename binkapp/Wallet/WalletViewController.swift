@@ -38,7 +38,8 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private var hasSupportUpdates = false
     private let dotView = UIView()
 
-    private var orderingManager = WalletOrderingManager()
+    var orderingManager = WalletOrderingManager()
+    var cellToBeMoved: UICollectionViewCell?
 
     let viewModel: T
 
@@ -237,7 +238,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        fatalError("Should be implemented by subclass")
+        fatalError("Subclasses should override this method")
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -281,11 +282,16 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             }
             orderingManager.start()
             collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+            cellToBeMoved = collectionView.cellForItem(at: selectedIndexPath)
         case .changed:
             collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
         case .ended:
             orderingManager.stop()
-            collectionView.endInteractiveMovement()
+            collectionView.performBatchUpdates {
+                collectionView.endInteractiveMovement()
+            } completion: { _ in
+                self.cellToBeMoved = nil
+            }
         default:
             orderingManager.stop()
             collectionView.cancelInteractiveMovement()
