@@ -304,9 +304,11 @@ struct WalletOrderingManager {
 
     mutating func start() {
         isReordering = true
+        // TODO: Disable wallet refresh timer
     }
 
     mutating func stop() {
         isReordering = false
+        // TODO: Enable wallet refresh timer
     }
 }

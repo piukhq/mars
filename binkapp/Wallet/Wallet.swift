@@ -21,7 +21,22 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private(set) var membershipCards: [CD_MembershipCard]?
     private(set) var paymentCards: [CD_PaymentCard]?
 
-    var localMembershipCardsOrder: [String]?
+    enum WalletType: String, Codable {
+        case loyalty
+        case payment
+    }
+
+    var localMembershipCardsOrder: [String]? {
+        get {
+            guard let userId = Current.userManager.currentUserId else { return nil }
+            return Current.userDefaults.value(forDefaultsKey: .localWalletOrder(userId: userId, walletType: .loyalty)) as? [String]
+        }
+        set {
+            guard let order = newValue else { return }
+            guard let userId = Current.userManager.currentUserId else { return }
+            Current.userDefaults.set(order, forDefaultsKey: .localWalletOrder(userId: userId, walletType: .loyalty))
+        }
+    }
 
     private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
@@ -187,8 +202,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
-                // TODO: Sort these based on local order. This will happen after adding a card
-                self?.membershipCards = cards
+                self?.applyLocalLoyaltyWalletOrder(to: cards)
                 completion(true, nil)
             }
             return
@@ -198,33 +212,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
                     self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: { cards in
-                        if let order = self?.localMembershipCardsOrder {
-                            var orderedCards = order.map { orderObject in
-                                cards?.first(where: { $0.id == orderObject })
-                            }
-
-                            var newCards = cards?.compactMap { $0 }.filter { !orderedCards.contains($0) }
-
-                            newCards?.reverse()
-                            newCards?.forEach {
-                                orderedCards.insert($0, at: 0)
-                            }
-
-                            self?.localMembershipCardsOrder?.removeAll(where: { orderId in
-                                !orderedCards.contains { orderedCard in
-                                    orderedCard?.id == orderId
-                                }
-                            })
-
-                            self?.localMembershipCardsOrder = orderedCards.compactMap { $0?.id }
-                            // TODO: Save this to user defaults against the user id
-
-                            self?.membershipCards = orderedCards.compactMap({ $0 })
-                        } else {
-                            self?.localMembershipCardsOrder = cards?.compactMap { $0.id }
-                            self?.membershipCards = cards
-                        }
-
+                        self?.applyLocalLoyaltyWalletOrder(to: cards)
                         completion(true, nil)
                     })
                 })
@@ -294,10 +282,47 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
 
 extension Wallet {
     func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
+        /// Update the wallet's datasource
         membershipCards?.remove(at: sourceIndex)
         membershipCards?.insert(card, at: destinationIndex)
 
-        localMembershipCardsOrder?.remove(at: sourceIndex)
-        localMembershipCardsOrder?.insert(card.id, at: destinationIndex)
+        /// Sync the local ordering
+        if var order = localMembershipCardsOrder {
+            order.remove(at: sourceIndex)
+            order.insert(card.id, at: destinationIndex)
+            localMembershipCardsOrder = order
+        }
+    }
+
+    func applyLocalLoyaltyWalletOrder(to cards: [CD_MembershipCard]?) {
+        /// If we have a local order set
+        if let order = localMembershipCardsOrder {
+            /// Sort cards in the custom order
+            var orderedCards = order.map { orderObject in
+                cards?.first(where: { $0.id == orderObject })
+            }
+
+            /// Add any new cards that have been added since the last update to the local order
+            var newCards = cards?.compactMap { $0 }.filter { !orderedCards.contains($0) }
+            newCards?.reverse()
+            newCards?.forEach {
+                orderedCards.insert($0, at: 0)
+            }
+
+            /// Remove any card id's that were ordered, but weren't present in the most recent cards response
+            localMembershipCardsOrder?.removeAll(where: { orderId in
+                !orderedCards.contains { orderedCard in
+                    orderedCard?.id == orderId
+                }
+            })
+
+            /// Sync the datasource and local card order
+            localMembershipCardsOrder = orderedCards.compactMap { $0?.id }
+            membershipCards = orderedCards.compactMap({ $0 })
+        } else {
+            /// Sync the datasource and set the local card order
+            localMembershipCardsOrder = cards?.compactMap { $0.id }
+            membershipCards = cards
+        }
     }
 }
