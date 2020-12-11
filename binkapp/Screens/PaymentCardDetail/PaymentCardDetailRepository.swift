@@ -39,9 +39,9 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
         
         BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: paymentCard))
         
-        deletePaymentCard(paymentCard) { (success, _) in
+        deletePaymentCard(paymentCard) { (success, _, responseData) in
             guard success else {
-                BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard))
+                BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard, responseData: responseData))
                 return
             }
             BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseSuccess(card: trackableCard))
