@@ -12,7 +12,7 @@ import CoreData
 struct LoyaltyWalletRepository: WalletServiceProtocol {
     func delete(_ membershipCard: CD_MembershipCard, completion: EmptyCompletionBlock? = nil) {
         var trackableCard = TrackableWalletCard()
-        trackableCard = TrackableWalletCard(uuid: membershipCard.uuid, loyaltyPlan: membershipCard.membershipPlan?.id, paymentScheme: nil)
+        trackableCard = TrackableWalletCard(id: membershipCard.id, loyaltyPlan: membershipCard.membershipPlan?.id, paymentScheme: nil)
         
         BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCard(card: membershipCard))
         

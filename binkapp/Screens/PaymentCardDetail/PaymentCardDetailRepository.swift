@@ -35,7 +35,7 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
     }
 
     func delete(_ paymentCard: CD_PaymentCard, completion: EmptyCompletionBlock? = nil) {
-        let trackableCard = TrackableWalletCard(uuid: paymentCard.uuid, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
+        let trackableCard = TrackableWalletCard(id: paymentCard.id, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
         
         BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: paymentCard))
         
