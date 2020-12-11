@@ -55,7 +55,7 @@ class UserManager {
     lazy var currentEmailAddress: String? = getKeychainValue(for: Constants.emailKey)
     lazy var currentFirstName: String? = getKeychainValue(for: Constants.firstNameKey)
     lazy var currentLastName: String? = getKeychainValue(for: Constants.lastNameKey)
-    lazy var userId: String? = getKeychainValue(for: Constants.userIdKey)
+    lazy var currentUserId: String? = getKeychainValue(for: Constants.userIdKey)
     
     var hasCurrentUser: Bool {
         // We can safely assume that if we have no token, we have no user
