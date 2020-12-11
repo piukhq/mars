@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         }
         
         // Firebase
+        Analytics.setUserID(Current.userManager.currentUserId)
         FirebaseApp.configure()
        
         // Sentry Crash Reporting

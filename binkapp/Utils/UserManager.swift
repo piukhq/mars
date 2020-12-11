@@ -46,6 +46,7 @@ class UserManager {
         static let emailKey = "email_key"
         static let firstNameKey = "first_name_key"
         static let lastNameKey = "last_name_key"
+        static let userIdKey = "user_id_key"
     }
     
     private let keychain = Keychain(service: APIConstants.bundleID)
@@ -54,6 +55,7 @@ class UserManager {
     lazy var currentEmailAddress: String? = getKeychainValue(for: Constants.emailKey)
     lazy var currentFirstName: String? = getKeychainValue(for: Constants.firstNameKey)
     lazy var currentLastName: String? = getKeychainValue(for: Constants.lastNameKey)
+    lazy var currentUserId: String? = getKeychainValue(for: Constants.userIdKey)
     
     var hasCurrentUser: Bool {
         // We can safely assume that if we have no token, we have no user
@@ -106,6 +108,7 @@ class UserManager {
         
         // Set user id for analytics and crash reporting
         guard let userId = response.uid else { return }
+        try? keychain.set(userId, key: Constants.userIdKey)
         
         let sentryUser = Sentry.User(userId: userId)
         SentrySDK.setUser(sentryUser)
