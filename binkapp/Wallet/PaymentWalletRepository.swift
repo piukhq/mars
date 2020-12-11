@@ -12,7 +12,7 @@ import CoreData
 class PaymentWalletRepository: WalletServiceProtocol {
     func delete(_ paymentCard: CD_PaymentCard, completion: EmptyCompletionBlock? = nil) {
         var trackableCard = TrackableWalletCard()
-        trackableCard = TrackableWalletCard(uuid: paymentCard.uuid, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
+        trackableCard = TrackableWalletCard(id: paymentCard.id, loyaltyPlan: nil, paymentScheme: paymentCard.card?.paymentSchemeIdentifier)
         
         BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCard(card: paymentCard))
         deletePaymentCard(paymentCard) { (success, _, responseData) in

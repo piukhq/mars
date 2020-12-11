@@ -12,7 +12,7 @@ typealias EmptyCompletionBlock = () -> Void
 // TODO: This should be reusable code whether in LCD or wallet
 class LoyaltyCardFullDetailsRepository: WalletServiceProtocol {
     func delete(_ membershipCard: CD_MembershipCard, completion: EmptyCompletionBlock? = nil) {
-        let trackableCard = TrackableWalletCard(uuid: membershipCard.uuid, loyaltyPlan: membershipCard.membershipPlan?.id, paymentScheme: nil)
+        let trackableCard = TrackableWalletCard(id: membershipCard.id, loyaltyPlan: membershipCard.membershipPlan?.id, paymentScheme: nil)
         
         BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCard(card: membershipCard))
         
