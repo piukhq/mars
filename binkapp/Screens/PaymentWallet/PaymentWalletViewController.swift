@@ -25,6 +25,10 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = cellToBeMoved, !orderingManager.isReordering {
+            return cell
+        }
+        
         if indexPath.row < viewModel.walletPromptsCount {
             let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let walletPrompt = viewModel.walletPrompts?[indexPath.row] else {

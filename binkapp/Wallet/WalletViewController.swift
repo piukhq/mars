@@ -287,11 +287,8 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
         case .ended:
             orderingManager.stop()
-            collectionView.performBatchUpdates {
-                collectionView.endInteractiveMovement()
-            } completion: { _ in
-                self.cellToBeMoved = nil
-            }
+            collectionView.endInteractiveMovement()
+            cellToBeMoved = nil
         default:
             orderingManager.stop()
             collectionView.cancelInteractiveMovement()
