@@ -12,13 +12,13 @@ import CoreData
 struct LoyaltyWalletRepository: WalletServiceProtocol {
     func delete(_ membershipCard: CD_MembershipCard, completion: EmptyCompletionBlock? = nil) {
         var trackableCard = TrackableWalletCard()
-        trackableCard = TrackableWalletCard(uuid: membershipCard.uuid, loyaltyPlan: membershipCard.membershipPlan?.id, paymentScheme: nil)
+        trackableCard = TrackableWalletCard(id: membershipCard.id, loyaltyPlan: membershipCard.membershipPlan?.id, paymentScheme: nil)
         
         BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCard(card: membershipCard))
         
-        deleteMembershipCard(membershipCard) { (success, _) in
+        deleteMembershipCard(membershipCard) { (success, _, responseData) in
             guard success else {
-                BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseFail(card: trackableCard))
+                BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseFail(card: trackableCard, responseData: responseData))
                 return
             }
             BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseSuccess(card: trackableCard))

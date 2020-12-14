@@ -112,6 +112,7 @@ class UserManager {
         
         // Set user id for analytics and crash reporting
         guard let userId = response.uid else { return }
+        try? keychain.set(userId, key: Constants.userIdKey)
         
         let sentryUser = Sentry.User(userId: userId)
         SentrySDK.setUser(sentryUser)
