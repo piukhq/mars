@@ -21,6 +21,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private(set) var membershipCards: [CD_MembershipCard]?
     private(set) var paymentCards: [CD_PaymentCard]?
 
+    private var hasLaunched = false
+
     private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
         let shouldDisplay = !Current.userDefaults.bool(forDefaultsKey: .hasLaunchedWallet)
@@ -37,6 +39,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             self?.loadWallets(forType: .reload, reloadPlans: true, isUserDriven: false) { (_, _) in
                 self?.refreshManager.start()
                 Current.pointsScrapingManager.refreshBalancesIfNecessary()
+                self?.hasLaunched = true
             }
         }
     }
@@ -90,6 +93,10 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             }
             completion?()
         })
+    }
+
+    func handleLogout() {
+        hasLaunched = false
     }
 
     var hasPaymentCards: Bool {
@@ -329,6 +336,9 @@ extension Wallet {
     private func applyLocalLoyaltyWalletOrder(to cards: [CD_MembershipCard]?) {
         guard let cards = cards else { return }
 
+        /// On logout, we delete all core data objects, so the first time we fall into this method is when we attempt to load local cards, which won't exist. We should return out at this point.
+        if cards.isEmpty && !hasLaunched { return }
+
         /// If we have a local order set
         if var order = localMembershipCardsOrder {
             /// Remove id's from local order that don't exist in the latest cards response
@@ -360,6 +370,9 @@ extension Wallet {
 
     private func applyLocalPaymentWalletOrder(to cards: [CD_PaymentCard]?) {
         guard let cards = cards else { return }
+
+        /// On logout, we delete all core data objects, so the first time we fall into this method is when we attempt to load local cards, which won't exist. We should return out at this point.
+        if cards.isEmpty && !hasLaunched { return }
 
         /// If we have a local order set
         if var order = localPaymentCardsOrder {
