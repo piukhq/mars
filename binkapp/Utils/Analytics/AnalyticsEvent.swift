@@ -461,7 +461,7 @@ enum DynamicActionsAnalyticsEvent: BinkAnalyticsEvent {
         return "dynamic_action_triggered"
     }
 
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .triggered(let action):
             guard let actionName = action.name else { return nil }

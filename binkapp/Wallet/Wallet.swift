@@ -327,65 +327,65 @@ extension Wallet {
     }
 
     private func applyLocalLoyaltyWalletOrder(to cards: [CD_MembershipCard]?) {
+        guard let cards = cards else { return }
+
         /// If we have a local order set
-        if let order = localMembershipCardsOrder {
+        if var order = localMembershipCardsOrder {
+            /// Remove id's from local order that don't exist in the latest cards response
+            order.removeAll { cardId in
+                !cards.contains(where: { $0.id == cardId })
+            }
+
+            /// Add id's to top of local order for any new cards in the response
+            var newCardIds = cards.compactMap { $0.id }.filter { !order.contains($0) }
+            newCardIds.reverse()
+            newCardIds.forEach {
+                order.insert($0, at: 0)
+            }
+
             /// Sort cards in the custom order
-            var orderedCards = order.map { orderObject in
-                cards?.first(where: { $0.id == orderObject })
+            let orderedCards = order.map { cardId in
+                cards.first(where: { $0.id == cardId })
             }
-
-            /// Add any new cards that have been added since the last update to the local order
-            var newCards = cards?.compactMap { $0 }.filter { !orderedCards.contains($0) }
-            newCards?.reverse()
-            newCards?.forEach {
-                orderedCards.insert($0, at: 0)
-            }
-
-            /// Remove any card id's that were ordered, but weren't present in the most recent cards response
-            localMembershipCardsOrder?.removeAll(where: { orderId in
-                !orderedCards.contains { orderedCard in
-                    orderedCard?.id == orderId
-                }
-            })
 
             /// Sync the datasource and local card order
-            localMembershipCardsOrder = orderedCards.compactMap { $0?.id }
+            localMembershipCardsOrder = order
             membershipCards = orderedCards.compactMap({ $0 })
         } else {
             /// Sync the datasource and set the local card order
-            localMembershipCardsOrder = cards?.compactMap { $0.id }
+            localMembershipCardsOrder = cards.compactMap { $0.id }
             membershipCards = cards
         }
     }
 
     private func applyLocalPaymentWalletOrder(to cards: [CD_PaymentCard]?) {
+        guard let cards = cards else { return }
+
         /// If we have a local order set
-        if let order = localPaymentCardsOrder {
+        if var order = localPaymentCardsOrder {
+            /// Remove id's from local order that don't exist in the latest cards response
+            order.removeAll { cardId in
+                !cards.contains(where: { $0.id == cardId })
+            }
+
+            /// Add id's to top of local order for any new cards in the response
+            var newCardIds = cards.compactMap { $0.id }.filter { !order.contains($0) }
+            newCardIds.reverse()
+            newCardIds.forEach {
+                order.insert($0, at: 0)
+            }
+
             /// Sort cards in the custom order
-            var orderedCards = order.map { orderObject in
-                cards?.first(where: { $0.id == orderObject })
+            let orderedCards = order.map { cardId in
+                cards.first(where: { $0.id == cardId })
             }
-
-            /// Add any new cards that have been added since the last update to the local order
-            var newCards = cards?.compactMap { $0 }.filter { !orderedCards.contains($0) }
-            newCards?.reverse()
-            newCards?.forEach {
-                orderedCards.insert($0, at: 0)
-            }
-
-            /// Remove any card id's that were ordered, but weren't present in the most recent cards response
-            localPaymentCardsOrder?.removeAll(where: { orderId in
-                !orderedCards.contains { orderedCard in
-                    orderedCard?.id == orderId
-                }
-            })
 
             /// Sync the datasource and local card order
-            localPaymentCardsOrder = orderedCards.compactMap { $0?.id }
+            localPaymentCardsOrder = order
             paymentCards = orderedCards.compactMap({ $0 })
         } else {
             /// Sync the datasource and set the local card order
-            localPaymentCardsOrder = cards?.compactMap { $0.id }
+            localPaymentCardsOrder = cards.compactMap { $0.id }
             paymentCards = cards
         }
     }
