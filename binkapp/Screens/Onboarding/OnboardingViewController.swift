@@ -122,17 +122,25 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     private func setLayout() {
         let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.learningContainerHeight)
         learningContainerHeightConstraint.priority = .init(999)
-
+        
+        // TODO: - Fix bottom constraint
+        let floatingButtonsViewBottomConstraint = floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding)
+        floatingButtonsViewBottomConstraint.priority = .required
+        let floatingButtonsRightConstraint = floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        floatingButtonsRightConstraint.priority = .almostRequired
+        let floatingButtonsLeftConstraint = floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor)
+        floatingButtonsLeftConstraint.priority = .almostRequired
+        
         NSLayoutConstraint.activate([
             learningContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LayoutHelper.Onboarding.learningContainerTopPadding),
             learningContainer.leftAnchor.constraint(equalTo: view.leftAnchor),
             learningContainer.rightAnchor.constraint(equalTo: view.rightAnchor),
             learningContainerHeightConstraint,
 
-            floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
-            floatingButtonsView.heightAnchor.constraint(equalToConstant: Constants.floatingButtonsHeight),
+            floatingButtonsLeftConstraint,
+            floatingButtonsRightConstraint,
+            floatingButtonsViewBottomConstraint,
+            floatingButtonsView.heightAnchor.constraint(lessThanOrEqualToConstant: Constants.floatingButtonsHeight),
 
             facebookPillButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
             facebookPillButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
