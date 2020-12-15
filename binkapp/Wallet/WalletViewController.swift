@@ -39,7 +39,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private let dotView = UIView()
 
     var orderingManager = WalletOrderingManager()
-    var cellToBeMoved: UICollectionViewCell?
 
     let viewModel: T
 
@@ -282,13 +281,16 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             }
             orderingManager.start()
             collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-            cellToBeMoved = collectionView.cellForItem(at: selectedIndexPath)
         case .changed:
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
+            if let bounds = gesture.view?.bounds {
+                let gestureLocation = gesture.location(in: gesture.view)
+                let centerX: CGFloat = bounds.size.width / 2
+                let updatedLocation = CGPoint(x: centerX, y: gestureLocation.y)
+                collectionView.updateInteractiveMovementTargetPosition(updatedLocation)
+            }
         case .ended:
             orderingManager.stop()
             collectionView.endInteractiveMovement()
-            cellToBeMoved = nil
         default:
             orderingManager.stop()
             collectionView.cancelInteractiveMovement()
