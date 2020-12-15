@@ -110,10 +110,6 @@ class UserManager {
             ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
         
-        // Set user id for analytics and crash reporting
-        guard let userId = response.uid else { return }
-        try? keychain.set(userId, key: Constants.userIdKey)
-        
         let sentryUser = Sentry.User(userId: userId)
         SentrySDK.setUser(sentryUser)
         Analytics.setUserID(userId)
