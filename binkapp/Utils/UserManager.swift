@@ -104,15 +104,14 @@ class UserManager {
         if let userId = response.uid {
             try? keychain.set(userId, key: Constants.userIdKey)
             currentUserId = userId
+            let sentryUser = Sentry.User(userId: userId)
+            SentrySDK.setUser(sentryUser)
+            Analytics.setUserID(userId)
         }
         
         if updateZendeskIdentity {
             ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
-        
-        let sentryUser = Sentry.User(userId: userId)
-        SentrySDK.setUser(sentryUser)
-        Analytics.setUserID(userId)
     }
     
     private func setToken(with response: TokenResponseProtocol) throws {
