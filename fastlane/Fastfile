@@ -105,6 +105,17 @@ platform :ios do
       remote_branch: ENV["BITRISE_GIT_BRANCH"],
     )
 
+    beta_dsym
+  end
+
+  desc "Increment the build number and commit to git"
+  lane :bump do |options|
+    increment_build_number
+    commit_version_bump
+  end
+
+  desc "Upload dsyms"
+  lane :beta_dsym do |options|
     sentry_upload_dsym(
      auth_token: ENV["SENTRY_AUTH_TOKEN"],
      org_slug: 'bink',
@@ -113,10 +124,6 @@ platform :ios do
     )
   end
 
-  desc "Increment the build number and commit to git"
-  lane :bump do |options|
-    increment_build_number
-    commit_version_bump
-  end
+  
 
 end
