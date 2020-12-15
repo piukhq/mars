@@ -52,9 +52,8 @@ class FormCollectionViewCell: UICollectionViewCell {
         cameraButton.imageView?.contentMode = .scaleAspectFill
         cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            cameraButton.widthAnchor.constraint(equalToConstant: 30)
-        ])
+        cameraButton.setContentHuggingPriority(.required, for: .horizontal)
+        cameraButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         return cameraButton
     }()
     
