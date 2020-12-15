@@ -53,7 +53,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
         cameraButton.setContentHuggingPriority(.required, for: .horizontal)
-        cameraButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         return cameraButton
     }()
     
