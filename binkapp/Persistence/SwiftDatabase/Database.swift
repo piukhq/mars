@@ -43,8 +43,15 @@ public class Database {
         storeConfig.shouldMigrateStoreAutomatically = true
         storeConfig.shouldInferMappingModelAutomatically = true
         
-        if UIApplication.isRunningUnitTests() {
-            storeConfig.type = NSInMemoryStoreType
+        if UIApplication.isRunningUnitTests {
+            /*
+             While it's not documented anywhere publicly, Apple's current recommendation appears to favor using an SQLite store that writes to /dev/null over an NSInMemoryStoreType based store. Writing to /dev/null effectively uses an in-memory store, except you get all the features that you also get from the SQLite store that your app uses. This makes unit testing with a /dev/null based store far more accurate than an NSInMemoryStoreType based store.
+
+             Apple talks about it in this WWDC video (https://developer.apple.com/videos/play/wwdc2018/224/), and you can learn more about in-memory SQLite stores here.
+
+             Unfortunately, Apple has not updated their documentation for NSInMemoryStoreType to express their latest recommendations so using the /dev/null based approach will probably remain somewhat obscure for a while.
+             */
+            storeConfig.url = URL(fileURLWithPath: "/dev/null")
         } else {
             storeConfig.type = NSSQLiteStoreType
             let documents = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
