@@ -187,7 +187,7 @@ enum ViewControllerFactory {
     
     static func makeReusableTemplateViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
         let viewModel = ReusableModalViewModel(configurationModel: configuration)
-        return ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
+        return ReusableTemplateViewController(viewModel: viewModel)
     }
     
     static func makeDeleteConfirmationAlertController(message: String, deleteAction: @escaping EmptyCompletionBlock, onCancel: EmptyCompletionBlock? = nil) -> UIAlertController {

@@ -37,6 +37,7 @@ class BinkGradientButton: BinkPillButton {
 
     func configure(title: String, hasShadow: Bool = true) {
         setTitle(title, for: .normal)
+        titleLabel?.font = .buttonText
         self.hasShadow = hasShadow
     }
     

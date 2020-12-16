@@ -36,6 +36,12 @@ class BinkViewController: UIViewController {
     private var dynamicAction: DynamicAction?
 
     var screenName: String?
+    var buttonsView: BinkButtonsView? {
+        didSet {
+            guard let buttonsView = buttonsView else { return }
+            buttonsView.attach(to: view)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

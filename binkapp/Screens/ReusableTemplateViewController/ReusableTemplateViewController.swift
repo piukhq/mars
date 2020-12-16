@@ -15,18 +15,15 @@ protocol ReusableTemplateViewControllerDelegate: AnyObject {
 
 class ReusableTemplateViewController: BinkViewController, BarBlurring {
     lazy var blurBackground = defaultBlurredBackground()
-    
-    @IBOutlet private weak var floatingButtonsContainer: BinkPrimarySecondaryButtonView!
+
     @IBOutlet private weak var textView: UITextView!
 
     weak var delegate: ReusableTemplateViewControllerDelegate?
     
     private let viewModel: ReusableModalViewModel
-    private let floatingButtons: Bool
     
-    init(viewModel: ReusableModalViewModel, floatingButtons: Bool = true, delegate: ReusableTemplateViewControllerDelegate? = nil) {
+    init(viewModel: ReusableModalViewModel, delegate: ReusableTemplateViewControllerDelegate? = nil) {
         self.viewModel = viewModel
-        self.floatingButtons = floatingButtons
         self.delegate = delegate
         super.init(nibName: "ReusableTemplateViewController", bundle: Bundle(for: ReusableTemplateViewController.self))
     }
@@ -37,8 +34,7 @@ class ReusableTemplateViewController: BinkViewController, BarBlurring {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        floatingButtonsContainer.delegate = self
+
         textView.delegate = self
         configureUI()
     }
@@ -58,42 +54,32 @@ class ReusableTemplateViewController: BinkViewController, BarBlurring {
     }
     
     private func configureUI() {
-        let primary = viewModel.primaryButtonTitle
-        let secondary = viewModel.secondaryButtonTitle
-        let showingButtons = viewModel.primaryButtonTitle != nil || viewModel.secondaryButtonTitle != nil
-        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: showingButtons ? 209 : 140, right: 0)
+        textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 140, right: 0)
         textView.attributedText = viewModel.text
         textView.linkTextAttributes = [.foregroundColor: UIColor.blueAccent, .underlineStyle: NSUnderlineStyle.single.rawValue]
-        
-        floatingButtonsContainer.configure(primaryButtonTitle: primary, secondaryButtonTitle: secondary, hasGradient: floatingButtons)
-
-        floatingButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
         textView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            floatingButtonsContainer.leftAnchor.constraint(equalTo: view.leftAnchor),
-            floatingButtonsContainer.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtonsContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding),
             textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             textView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25),
             textView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
-            textView.bottomAnchor.constraint(equalTo: floatingButtonsContainer.bottomAnchor)
+            textView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-    }
-}
 
-// MARK: - BinkFloatingButtonsDelegate
-
-extension ReusableTemplateViewController: BinkPrimarySecondaryButtonViewDelegate {
-    func binkFloatingButtonsPrimaryButtonWasTapped(_: BinkPrimarySecondaryButtonView) {
-        viewModel.mainButtonWasTapped { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.primaryButtonWasTapped(self)
+        let primary = BinkButton(type: .gradient, title: "Primary", enabled: true) {
+            print("Primary was tapped")
         }
-    }
-    
-    func binkFloatingButtonsSecondaryButtonWasTapped(_: BinkPrimarySecondaryButtonView) {
-        viewModel.secondaryButtonWasTapped()
+        let secondary = BinkButton(type: .gradient, title: "Secondary", enabled: false) {
+            print("Secondary was tapped")
+        }
+        let tertiary = BinkButton(type: .pill(.facebook), enabled: false) {
+            print("Facebook was tapped")
+        }
+        let four = BinkButton(type: .plain, title: "Four", enabled: false) {
+            print("Four was tapped")
+        }
+        let buttonsView = BinkButtonsView(buttons: [primary, secondary, tertiary, four])
+        buttonsView.attach(to: view)
     }
 }
 

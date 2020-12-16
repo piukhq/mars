@@ -10,16 +10,11 @@ import UIKit
 
 class ForgotPasswordViewController: BaseFormViewController {
     private let viewModel: ForgotPasswordViewModel
-    
-    private lazy var continueButton: BinkPillButton = {
-        let button = BinkGradientButton(frame: .zero)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("continue_button_title".localized, for: .normal)
-        button.titleLabel?.font = UIFont.buttonText
-        button.addTarget(self, action: .continueButtonTapped, for: .touchUpInside)
-        button.isEnabled = false
-        view.addSubview(button)
-        return button
+
+    private lazy var continueButton: BinkButton = {
+        return BinkButton(type: .gradient, title: "continue_button_title".localized, enabled: false) { [weak self] in
+            self?.continueButtonTapped()
+        }
     }()
     
     init(viewModel: ForgotPasswordViewModel) {
@@ -39,19 +34,14 @@ class ForgotPasswordViewController: BaseFormViewController {
     }
     
     func configureLayout() {
-        NSLayoutConstraint.activate([
-            continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            continueButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
-            continueButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
-            continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+        buttonsView = BinkButtonsView(buttons: [continueButton])
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
-        continueButton.isEnabled = fullFormIsValid
+        continueButton.enabled = fullFormIsValid
     }
     
-    @objc func continueButtonTapped() {
+    func continueButtonTapped() {
         continueButton.startLoading()
         viewModel.continueButtonTapped(completion: {
             self.continueButton.stopLoading()
@@ -72,8 +62,4 @@ extension ForgotPasswordViewController: FormDataSourceDelegate {
 extension ForgotPasswordViewController: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
-}
-
-private extension Selector {
-    static let continueButtonTapped = #selector(ForgotPasswordViewController.continueButtonTapped)
 }
