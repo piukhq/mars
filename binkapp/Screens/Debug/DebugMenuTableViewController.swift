@@ -77,7 +77,7 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
         case .endpoint:
             guard let navController = navigationController else { return }
             let alert = debugMenuFactory.makeEnvironmentAlertController(navigationController: navController)
-            navController.present(alert, animated: true, completion: nil)
+            navController.present(alert, animated: true)
         case .secondaryColor:
             let viewController = DebugSecondaryPlanColorViewController()
             navigationController?.pushViewController(viewController, animated: true)

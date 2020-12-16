@@ -234,6 +234,7 @@ class PaymentCardCollectionViewCell: WalletCardCollectionViewCell, UIGestureReco
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        width.priority = .almostRequired
         width.constant = bounds.size.width
         height.constant = bounds.size.height
         return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: targetSize.height))
