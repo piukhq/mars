@@ -10,57 +10,68 @@ import XCTest
 import CoreData
 @testable import binkapp
 
-class PaymentCardCellViewModelTests: XCTestCase {
+class PaymentCardCellViewModelTests: XCTestCase, CoreDataTestable {
     var basePaymentCard: PaymentCardModel!
+    
+    static var basePaymentCardResponse: PaymentCardModel!
+    
+    static var paymentCard: CD_PaymentCard!
+    
+    static let sut = PaymentCardCellViewModel(paymentCard: paymentCard)
 
-    override func setUp() {
+    override class func setUp() {
         super.setUp()
-        basePaymentCard = PaymentCardModel(apiId: nil, membershipCards: nil, status: nil, card: PaymentCardCardResponse(), account: PaymentCardAccountResponse())
+        let paymentCardResponseModel = PaymentCardCardResponse(apiId: 1, firstSix: "555555", lastFour: "4444", month: 01, year: 2030, country: nil, currencyCode: nil, nameOnCard: "Nick Farrant", provider: nil, type: nil)
+        let membershhipCards = [
+            LinkedCardResponse(id: 1, activeLink: true),
+            LinkedCardResponse(id: 1, activeLink: false)
+        ]
+        
+        basePaymentCardResponse = PaymentCardModel(apiId: 1, membershipCards: membershhipCards, status: "active", card: paymentCardResponseModel, account: PaymentCardAccountResponse())
+        
+        mapResponseToManagedObject(basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            self.paymentCard = paymentCard
+        }
     }
 
     func test_nameOnCard() {
-        basePaymentCard.card?.nameOnCard = "Nick Farrant"
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
-        XCTAssertEqual(sut.nameOnCardText, "Nick Farrant")
+        XCTAssertEqual(Self.sut.nameOnCardText, "Nick Farrant")
     }
 
     func test_cardNumberText() {
-        basePaymentCard.card?.lastFour = "4444"
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
-        XCTAssertEqual(sut.cardNumberText, "••••   ••••   ••••   4444")
+        XCTAssertEqual(Self.sut.cardNumberText?.string, "••••   ••••   ••••   4444")
     }
 
     func test_paymentCardType_isMasterCard() {
-        basePaymentCard.card?.firstSix = "555555"
-        basePaymentCard.card?.lastFour = "4444"
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
-        XCTAssertEqual(sut.paymentCardType, PaymentCardType.mastercard)
+        XCTAssertEqual(Self.sut.paymentCardType, PaymentCardType.mastercard)
     }
 
     func test_paymentCardType_isVisa() {
-        basePaymentCard.card?.firstSix = "424242"
-        basePaymentCard.card?.lastFour = "4242"
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
+        let paymentCardResponseModel = PaymentCardCardResponse(apiId: nil, firstSix: "424242", lastFour: "4242", month: 01, year: 2030, country: nil, currencyCode: nil, nameOnCard: "Nick Farrant", provider: nil, type: nil)
+        Self.basePaymentCardResponse.card = paymentCardResponseModel
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            PaymentCardCellViewModelTests.paymentCard = paymentCard
+        }
+        
+        let sut = PaymentCardCellViewModel(paymentCard: PaymentCardCellViewModelTests.paymentCard)
         XCTAssertEqual(sut.paymentCardType, PaymentCardType.visa)
     }
 
     func test_paymentCardIsLinkedToMembershipCards_isCorrect_whenNotLinked() {
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
-        XCTAssertFalse(sut.paymentCardIsLinkedToMembershipCards)
+        XCTAssertFalse(Self.sut.paymentCardIsLinkedToMembershipCards)
     }
 
     func test_paymentCardIsLinkedToMembershipCards_isCorrect_whenLinked() {
-        basePaymentCard.membershipCards = [
-            LinkedCardResponse(id: 1, activeLink: true),
-            LinkedCardResponse(id: 1, activeLink: false)
-        ]
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
-        XCTAssertTrue(sut.paymentCardIsLinkedToMembershipCards)
+//        basePaymentCard.membershipCards = [
+//            LinkedCardResponse(id: 1, activeLink: true),
+//            LinkedCardResponse(id: 1, activeLink: false)
+//        ]
+//        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
+        XCTAssertTrue(Self.sut.paymentCardIsLinkedToMembershipCards)
     }
 
     func test_linkedText_ifNoLinkedMembershipCards() {
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
-        XCTAssertEqual(sut.linkedText, "Not linked")
+        XCTAssertEqual(Self.sut.statusText, "Not linked")
     }
 
     func test_linkedText_ifLinkedToOneMembershipCard() {
@@ -83,16 +94,17 @@ class PaymentCardCellViewModelTests: XCTestCase {
     }
 
     func test_paymentCard_isExpired_recognisedCorrectly_whenNotExpired() {
-        basePaymentCard.card?.month = 01
-        basePaymentCard.card?.year = 2030
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
-        XCTAssertFalse(sut.paymentCardIsExpired)
+        XCTAssertFalse(Self.sut.paymentCardIsExpired)
     }
 
     func test_paymentCard_isExpired_recognisedCorrectly_whenExpired() {
-        basePaymentCard.card?.month = 01
-        basePaymentCard.card?.year = 2019
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
+        let paymentCardResponseModel = PaymentCardCardResponse(apiId: nil, firstSix: "424242", lastFour: "4242", month: 01, year: 2019, country: nil, currencyCode: nil, nameOnCard: "Nick Farrant", provider: nil, type: nil)
+        Self.basePaymentCardResponse.card = paymentCardResponseModel
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            PaymentCardCellViewModelTests.paymentCard = paymentCard
+        }
+        
+        let sut = PaymentCardCellViewModel(paymentCard: PaymentCardCellViewModelTests.paymentCard)
         XCTAssertTrue(sut.paymentCardIsExpired)
     }
 }
