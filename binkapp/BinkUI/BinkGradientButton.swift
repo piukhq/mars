@@ -64,8 +64,9 @@ class BinkGradientButton: BinkPillButton {
 }
 
 class BinkMiniGradientButton: BinkGradientButton {
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func configure(title: String, hasShadow: Bool = true) {
+        setTitle(title, for: .normal)
         titleLabel?.font = .miniButtonText
+        self.hasShadow = hasShadow
     }
 }
