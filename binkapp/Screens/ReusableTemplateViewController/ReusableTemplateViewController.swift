@@ -37,6 +37,7 @@ class ReusableTemplateViewController: BinkViewController, BarBlurring {
 
         textView.delegate = self
         configureUI()
+        configureButtons()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,21 +66,20 @@ class ReusableTemplateViewController: BinkViewController, BarBlurring {
             textView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -25),
             textView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
 
-        let primary = BinkButton(type: .gradient, title: "Primary", enabled: true) {
-            print("Primary was tapped")
+    private func configureButtons() {
+        var buttons: [BinkButton] = []
+
+        if let primaryTitle = viewModel.primaryButtonTitle, let primaryAction = viewModel.primaryButtonAction {
+            buttons.append(BinkButton(type: .gradient, title: primaryTitle, action: primaryAction))
         }
-        let secondary = BinkButton(type: .gradient, title: "Secondary", enabled: false) {
-            print("Secondary was tapped")
+
+        if let secondaryTitle = viewModel.secondaryButtonTitle, let secondaryAction = viewModel.secondaryButtonAction {
+            buttons.append(BinkButton(type: .gradient, title: secondaryTitle, action: secondaryAction))
         }
-        let tertiary = BinkButton(type: .pill(.facebook), enabled: false) {
-            print("Facebook was tapped")
-        }
-        let four = BinkButton(type: .plain, title: "Four", enabled: false) {
-            print("Four was tapped")
-        }
-        let buttonsView = BinkButtonsView(buttons: [primary, secondary, tertiary, four])
-        buttonsView.attach(to: view)
+
+        buttonsView = BinkButtonsView(buttons: buttons)
     }
 }
 

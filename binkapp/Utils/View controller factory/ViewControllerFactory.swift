@@ -119,7 +119,7 @@ enum ViewControllerFactory {
         var configuration = ReusableModalConfiguration(text: attributedString)
         
         if let url = membershipPlan.account?.planURL {
-            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, mainButtonCompletion: {
+            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, primaryButtonAction: {
                 /// Implemented navigation logic here instead of passing comletion block in via method property to reduce code repetition as it's called from multiple viewModels
                 let viewController = makeWebViewController(urlString: url)
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
