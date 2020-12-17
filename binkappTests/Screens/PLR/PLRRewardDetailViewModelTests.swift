@@ -109,104 +109,108 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
         let headerString = String(format: "plr_stamp_voucher_detail_inprogress_header".localized, Self.baseStampsSut.voucherAmountText)
         XCTAssertEqual(Self.baseStampsSut.headerString, headerString)
     }
-//
-//    func test_headerString_for_cancelled_state() {
-//        accumulatorVoucher.state = .cancelled
-//        var sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-//        let headerString = String(format: "plr_stamp_voucher_detail_cancelled_header".localized, sut.voucherAmountText)
-//        XCTAssertEqual(sut.headerString, headerString)
-//
-//        stampsVoucher.state = .cancelled
-//        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.headerString, headerString)
-//    }
-//
-//    func test_subtextString_for_accumulator_voucher_inProgress_state() {
-//        accumulatorVoucher.state = .inProgress
-//        let sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.subtextString, "Spend £20 with us and you'll get a £500 voucher.")
-//    }
-//
-//    func test_subtextString_for_accumulator_voucher_issued_state() {
-//        accumulatorVoucher.state = .issued
-//        let sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.subtextString, "Use the code above to redeem your reward. You will get £500 off your purchase.")
-//    }
-//
-//    func test_subtextString_for_stamps_voucher_inProgress_state() {
-//        stampsVoucher.state = .inProgress
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.subtextString, "Spend £7.00 or more to get a stamp. Collect 7 stamps to get a Meal Voucher of up to £7 off your next meal.")
-//    }
-//
-//    func test_subtextString_for_stamps_voucher_issued_state() {
-//        stampsVoucher.state = .issued
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.subtextString, "Earned")
-//    }
-//
-//    func test_subtextString_for_stamps_voucher_redeemed_state() {
-//        stampsVoucher.state = .redeemed
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.subtextString, "Redeemed")
-//    }
-//
-//    func test_subtextString_for_stamps_voucher_expired_state() {
-//        stampsVoucher.state = .expired
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.subtextString, "Expired")
-//    }
-//
-//    func test_subtextString_for_voucher_cancelled_state() {
-//        stampsVoucher.state = .cancelled
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.subtextString, "Cancelled")
-//    }
-//
-//    func test_issuedDateString_is_correctly_formatted() {
-//        var sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        var dateIssuedString = String.fromTimestamp((stampsVoucher.dateIssued as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
-//        XCTAssertEqual(sut.issuedDateString, dateIssuedString)
-//
-//        dateIssuedString = String.fromTimestamp((accumulatorVoucher.dateIssued as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
-//        sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.issuedDateString, dateIssuedString)
-//    }
-//
-//    func test_redeemedDateString_is_correct() {
-//        var sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        var dateRedeemedString = String.fromTimestamp((stampsVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
-//        XCTAssertEqual(sut.redeemedDateString, dateRedeemedString)
-//
-//        dateRedeemedString = String.fromTimestamp((accumulatorVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
-//        sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.redeemedDateString, dateRedeemedString)
-//    }
-//
-//    func test_expiredDateString_is_correct() {
-//        stampsVoucher.state = .expired
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        let formattedExpiryDate = String.fromTimestamp((stampsVoucher.expiryDate as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
-//        let formattedExpiresDate = String.fromTimestamp((stampsVoucher.expiryDate as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
-//
-//        XCTAssertEqual(sut.expiredDateString, formattedExpiryDate)
-//
-//        sut.voucher.state = .cancelled
-//        XCTAssertEqual(sut.expiredDateString, formattedExpiryDate)
-//
-//        sut.voucher.state = .issued
-//        XCTAssertEqual(sut.expiredDateString, formattedExpiresDate)
-//
-//        accumulatorVoucher.state = .expired
-//        sut.voucher = accumulatorVoucher
-//        XCTAssertEqual(sut.expiredDateString, formattedExpiryDate)
-//
-//        sut.voucher.state = .cancelled
-//        XCTAssertEqual(sut.expiredDateString, formattedExpiryDate)
-//
-//        sut.voucher.state = .issued
-//        XCTAssertEqual(sut.expiredDateString, formattedExpiresDate)
-//    }
+
+    func test_headerString_for_cancelled_state() {
+        Self.accumulatorVoucherResponse.state = .cancelled
+        mapAccumulatorVoucher()
+        let headerString = String(format: "plr_stamp_voucher_detail_cancelled_header".localized, Self.baseAccumulatorSut.voucherAmountText)
+        XCTAssertEqual(Self.baseAccumulatorSut.headerString, headerString)
+
+        Self.stampsVoucherResponse.state = .cancelled
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.headerString, headerString)
+    }
+
+    func test_subtextString_for_accumulator_voucher_inProgress_state() {
+        Self.accumulatorVoucherResponse.state = .inProgress
+        mapAccumulatorVoucher()
+        XCTAssertEqual(Self.baseAccumulatorSut.subtextString, "Spend £20 with us and you'll get a £500 voucher.")
+    }
+
+    func test_subtextString_for_accumulator_voucher_issued_state() {
+        Self.accumulatorVoucherResponse.state = .issued
+        mapAccumulatorVoucher()
+        XCTAssertEqual(Self.baseAccumulatorSut.subtextString, "Use the code above to redeem your reward. You will get £500 off your purchase.")
+    }
+
+    func test_subtextString_for_stamps_voucher_inProgress_state() {
+        Self.stampsVoucherResponse.state = .inProgress
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.subtextString, "Spend £7.00 or more to get a stamp. Collect 7 stamps to get a Meal Voucher of up to £7 off your next meal.")
+    }
+
+    func test_subtextString_for_stamps_voucher_issued_state() {
+        Self.stampsVoucherResponse.state = .issued
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.subtextString, "Earned")
+    }
+
+    func test_subtextString_for_stamps_voucher_redeemed_state() {
+        Self.stampsVoucherResponse.state = .redeemed
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.subtextString, "Redeemed")
+    }
+
+    func test_subtextString_for_stamps_voucher_expired_state() {
+        Self.stampsVoucherResponse.state = .expired
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.subtextString, "Expired")
+    }
+
+    func test_subtextString_for_voucher_cancelled_state() {
+        Self.stampsVoucherResponse.state = .cancelled
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.subtextString, "Cancelled")
+    }
+
+    func test_issuedDateString_is_correctly_formatted() {
+        mapStampsVoucher()
+        var dateIssuedString = String.fromTimestamp((Self.stampsVoucher.dateIssued as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
+        XCTAssertEqual(Self.baseStampsSut.issuedDateString, dateIssuedString)
+
+        mapAccumulatorVoucher()
+        dateIssuedString = String.fromTimestamp((Self.accumulatorVoucher.dateIssued as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_issued_date_prefix".localized)
+        XCTAssertEqual(Self.baseAccumulatorSut.issuedDateString, dateIssuedString)
+    }
+
+    func test_redeemedDateString_is_correct() {
+        mapStampsVoucher()
+        var dateRedeemedString = String.fromTimestamp((Self.stampsVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
+        XCTAssertEqual(Self.baseStampsSut.redeemedDateString, dateRedeemedString)
+
+        mapAccumulatorVoucher()
+        dateRedeemedString = String.fromTimestamp((Self.accumulatorVoucher.dateRedeemed as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_redeemed_date_prefix".localized)
+        XCTAssertEqual(Self.baseAccumulatorSut.redeemedDateString, dateRedeemedString)
+    }
+
+    func test_expiredDateString_is_correct() {
+        Self.stampsVoucherResponse.state = .expired
+        mapStampsVoucher()
+        let formattedExpiryDate = String.fromTimestamp((Self.stampsVoucher.expiryDate as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expired_date_prefix".localized)
+        let formattedExpiresDate = String.fromTimestamp((Self.stampsVoucher.expiryDate as NSNumber?)?.doubleValue, withFormat: .dayShortMonthYear24HourSecond, prefix: "plr_voucher_detail_expires_date_prefix".localized)
+
+        XCTAssertEqual(Self.baseStampsSut.expiredDateString, formattedExpiryDate)
+
+        Self.stampsVoucherResponse.state = .cancelled
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.expiredDateString, formattedExpiryDate)
+
+        Self.stampsVoucherResponse.state = .issued
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.expiredDateString, formattedExpiresDate)
+
+        Self.accumulatorVoucherResponse.state = .expired
+        mapAccumulatorVoucher()
+        XCTAssertEqual(Self.baseStampsSut.expiredDateString, formattedExpiryDate)
+
+        Self.accumulatorVoucherResponse.state = .cancelled
+        mapAccumulatorVoucher()
+        XCTAssertEqual(Self.baseStampsSut.expiredDateString, formattedExpiryDate)
+
+        Self.accumulatorVoucherResponse.state = .issued
+        mapAccumulatorVoucher()
+        XCTAssertEqual(Self.baseStampsSut.expiredDateString, formattedExpiresDate)
+    }
 //
 //    func test_termsAndConditions_button_title_is_correct() {
 //        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
