@@ -39,12 +39,20 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
     }
     
     private static func dynamicContentForVoucherSubtext() -> [DynamicContentField] {
-        let expired = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "Expired")
-        let redeemed = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsRedeemedDetail.rawValue, value: "Redeemed")
-        let inProgress = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsInProgressDetail.rawValue, value: "Spend £7.00 or more to get a stamp. Collect 7 stamps to get a Meal Voucher of up to £7 off your next meal.")
-        let issued = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsIssuedDetail.rawValue, value: "Earned")
-        let cancelled = DynamicContentField(apiId: nil, column: PLRRewardDetailViewModelMock.DynamicContentColumn.voucherStampsCancelledDetail.rawValue, value: "Cancelled")
+        let expired = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "Expired")
+        let redeemed = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsRedeemedDetail.rawValue, value: "Redeemed")
+        let inProgress = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsInProgressDetail.rawValue, value: "Spend £7.00 or more to get a stamp. Collect 7 stamps to get a Meal Voucher of up to £7 off your next meal.")
+        let issued = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsIssuedDetail.rawValue, value: "Earned")
+        let cancelled = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsCancelledDetail.rawValue, value: "Cancelled")
         return [expired, redeemed, inProgress, issued, cancelled]
+    }
+    
+    enum DynamicContentColumn: String {
+        case voucherStampsExpiredDetail = "Voucher_Expired_Detail"
+        case voucherStampsRedeemedDetail = "Voucher_Redeemed_Detail"
+        case voucherStampsInProgressDetail = "Voucher_Inprogress_Detail"
+        case voucherStampsIssuedDetail = "Voucher_Issued_Detail"
+        case voucherStampsCancelledDetail = "Voucher_Cancelled_Detail"
     }
     
     private func mapAccumulatorVoucher() {
