@@ -42,9 +42,9 @@ class ForgotPasswordViewController: BaseFormViewController {
     }
     
     func continueButtonTapped() {
-        continueButton.startLoading()
+        continueButton.toggleLoading(isLoading: true)
         viewModel.continueButtonTapped(completion: {
-            self.continueButton.stopLoading()
+            self.continueButton.toggleLoading(isLoading: false)
         })
     }
 }

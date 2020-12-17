@@ -35,17 +35,16 @@ class BinkButton {
         self.action = action
     }
 
-    func startLoading() {
+    func toggleLoading(isLoading: Bool) {
         guard let button = button as? BinkPillButton else { return }
-        button.startLoading()
+        if isLoading {
+            button.startLoading()
+        } else {
+            button.stopLoading()
+        }
     }
 
-    func stopLoading() {
-        guard let button = button as? BinkPillButton else { return }
-        button.stopLoading()
-    }
-
-    @objc func performAction() {
+    @objc private func performAction() {
         action()
     }
 
@@ -74,13 +73,9 @@ class BinkButton {
         }
     }
 
-    func attachButton(to view: UIView) {
-        if let stackView = view as? UIStackView {
-            stackView.addArrangedSubview(button)
-        } else {
-            view.addSubview(button)
-        }
+    func attachButton(to stackView: UIStackView) {
+        stackView.addArrangedSubview(button)
         button.heightAnchor.constraint(equalToConstant: 52).isActive = true
-        button.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.75).isActive = true
+        button.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.75).isActive = true
     }
 }
