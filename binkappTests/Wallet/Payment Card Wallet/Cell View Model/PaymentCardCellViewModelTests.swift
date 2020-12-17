@@ -47,7 +47,7 @@ class PaymentCardCellViewModelTests: XCTestCase, CoreDataTestable {
     }
 
     func test_paymentCardType_isVisa() {
-        let paymentCardResponseModel = PaymentCardCardResponse(apiId: nil, firstSix: "424242", lastFour: "4242", month: 01, year: 2030, country: nil, currencyCode: nil, nameOnCard: "Nick Farrant", provider: nil, type: nil)
+        let paymentCardResponseModel = PaymentCardCardResponse(apiId: nil, firstSix: "424242", lastFour: nil, month: nil, year: nil, country: nil, currencyCode: nil, nameOnCard: nil, provider: nil, type: nil)
         Self.basePaymentCardResponse.card = paymentCardResponseModel
         mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
             PaymentCardCellViewModelTests.paymentCard = paymentCard
