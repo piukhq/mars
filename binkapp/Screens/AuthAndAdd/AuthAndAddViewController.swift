@@ -20,14 +20,11 @@ class AuthAndAddViewController: BaseFormViewController {
         brandHeader.heightAnchor.constraint(equalToConstant: 110).isActive = true
         return brandHeader
     }()
-    
-    private lazy var floatingButtons: BinkPrimarySecondaryButtonView = {
-        let floatingButtons = BinkPrimarySecondaryButtonView()
-        floatingButtons.configure(primaryButtonTitle: viewModel.buttonTitle, secondaryButtonTitle: nil)
-        floatingButtons.primaryButton.isEnabled = self.dataSource.fullFormIsValid
-        floatingButtons.delegate = self
-        floatingButtons.translatesAutoresizingMaskIntoConstraints = false
-        return floatingButtons
+
+    private lazy var primaryButton: BinkButton = {
+        return BinkButton(type: .gradient, title: viewModel.buttonTitle, enabled: dataSource.fullFormIsValid) { [weak self] in
+            self?.handlePrimaryButtonTap()
+        }
     }()
     
     private let viewModel: AuthAndAddViewModel
@@ -75,12 +72,7 @@ class AuthAndAddViewController: BaseFormViewController {
     // MARK: - Layout
     
     func configureLayout() {
-        view.addSubview(floatingButtons)
-        NSLayoutConstraint.activate([
-            floatingButtons.leftAnchor.constraint(equalTo: view.leftAnchor),
-            floatingButtons.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtons.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding)
-        ])
+        buttonsView = BinkButtonsView(buttons: [primaryButton])
     }
     
     func configureUI() {
@@ -95,9 +87,16 @@ class AuthAndAddViewController: BaseFormViewController {
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.isHidden = viewModel.getDescription() == nil
     }
+
+    private func handlePrimaryButtonTap() {
+        primaryButton.toggleLoading(isLoading: true)
+        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: { [weak self] in
+            self?.primaryButton.toggleLoading(isLoading: false)
+        })
+    }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
-        floatingButtons.primaryButton.isEnabled = fullFormIsValid
+        primaryButton.enabled = fullFormIsValid
     }
     
     override func checkboxView(_ checkboxView: CheckboxView, didTapOn URL: URL) {
@@ -123,27 +122,20 @@ extension AuthAndAddViewController: BarcodeScannerViewControllerDelegate {
     }
 }
 
-extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {
-    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        floatingButtons.primaryButton.startLoading()
-        try? viewModel.addMembershipCard(with: dataSource.fields, checkboxes: dataSource.checkboxes, completion: {
-            floatingButtons.primaryButton.stopLoading()
-        })
-    }
-    
-    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        //TODO: Re-enable this functionality at a later date, this has been disabled for MS1: 10/02/19 because the 1.1.4 API doesn't consistently support ghost card registration
-        
-        //        let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
-        //        guard (fields?.contains(where: { $0.value == LinkingSupportType.registration.rawValue }) ?? false) else {
-        viewModel.toReusableTemplate(title: "registration_unavailable_title".localized, description: "registration_unavailable_description".localized)
-        //            return
-        //        }
-        //        viewModel.reloadWithGhostCardFields()
-        //        }
-        //        viewModel.reloadWith(newFormPuropse: .ghostCard)
-    }
-}
+//extension AuthAndAddViewController: BinkPrimarySecondaryButtonViewDelegate {    
+//    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
+//        //TODO: Re-enable this functionality at a later date, this has been disabled for MS1: 10/02/19 because the 1.1.4 API doesn't consistently support ghost card registration
+//        
+//        //        let fields = viewModel.getMembershipPlan().featureSet?.formattedLinkingSupport
+//        //        guard (fields?.contains(where: { $0.value == LinkingSupportType.registration.rawValue }) ?? false) else {
+//        viewModel.toReusableTemplate(title: "registration_unavailable_title".localized, description: "registration_unavailable_description".localized)
+//        //            return
+//        //        }
+//        //        viewModel.reloadWithGhostCardFields()
+//        //        }
+//        //        viewModel.reloadWith(newFormPuropse: .ghostCard)
+//    }
+//}
 
 extension AuthAndAddViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
