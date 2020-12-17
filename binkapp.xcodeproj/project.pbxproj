@@ -209,7 +209,6 @@
 		B766599E23214A4600B327BE /* WalletLoyaltyCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE422F073CE00FA3031 /* WalletLoyaltyCardCollectionViewCell.swift */; };
 		B774E9AA233123BD006D4131 /* ReusableTemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774E9A8233123BD006D4131 /* ReusableTemplateViewController.swift */; };
 		B774E9AB233123BD006D4131 /* ReusableTemplateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B774E9A9233123BD006D4131 /* ReusableTemplateViewController.xib */; };
-		B774E9AD233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */; };
 		B7D577B3231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */; };
 		B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */; };
 		B7D577B823180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B723180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift */; };
@@ -743,7 +742,6 @@
 		B76659982320F68C00B327BE /* HyperlinkAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HyperlinkAlertController.xib; sourceTree = "<group>"; };
 		B774E9A8233123BD006D4131 /* ReusableTemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTemplateViewController.swift; sourceTree = "<group>"; };
 		B774E9A9233123BD006D4131 /* ReusableTemplateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReusableTemplateViewController.xib; sourceTree = "<group>"; };
-		B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTermsAndConditionsViewModel.swift; sourceTree = "<group>"; };
 		B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewController.swift; sourceTree = "<group>"; };
 		B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModel.swift; sourceTree = "<group>"; };
 		B7D577B723180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsRepository.swift; sourceTree = "<group>"; };
@@ -1826,7 +1824,6 @@
 			children = (
 				B774E9A8233123BD006D4131 /* ReusableTemplateViewController.swift */,
 				B774E9A9233123BD006D4131 /* ReusableTemplateViewController.xib */,
-				B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */,
 				3C4BE8C7233B590100EC4BF6 /* ReusableModalViewModel.swift */,
 			);
 			path = ReusableTemplateViewController;
@@ -3215,7 +3212,6 @@
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
 				EF8BF1ED233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift in Sources */,
 				CEACE7212543309E004DD27E /* BinkHTTPHeaders.swift in Sources */,
-				B774E9AD233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift in Sources */,
 				EFA5F7422379A7C70027AB80 /* _CD_MembershipPlan.swift in Sources */,
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
 				3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */,

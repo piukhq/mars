@@ -9,22 +9,15 @@
 import UIKit
 import Firebase
 
-protocol ReusableTemplateViewControllerDelegate: AnyObject {
-    func primaryButtonWasTapped(_ viewController: ReusableTemplateViewController)
-}
-
 class ReusableTemplateViewController: BinkViewController, BarBlurring {
     lazy var blurBackground = defaultBlurredBackground()
 
     @IBOutlet private weak var textView: UITextView!
 
-    weak var delegate: ReusableTemplateViewControllerDelegate?
-    
     private let viewModel: ReusableModalViewModel
     
-    init(viewModel: ReusableModalViewModel, delegate: ReusableTemplateViewControllerDelegate? = nil) {
+    init(viewModel: ReusableModalViewModel) {
         self.viewModel = viewModel
-        self.delegate = delegate
         super.init(nibName: "ReusableTemplateViewController", bundle: Bundle(for: ReusableTemplateViewController.self))
     }
     

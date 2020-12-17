@@ -116,7 +116,16 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     @objc func addButtonTapped() {
         if viewModel.shouldDisplayTermsAndConditions {
-            viewModel.toPaymentTermsAndConditions(delegate: self)
+            viewModel.toPaymentTermsAndConditions(acceptAction: { [weak self] in
+                Current.navigate.close {
+                    self?.addButton.startLoading()
+                    self?.viewModel.addPaymentCard { [weak self] in
+                        self?.addButton.stopLoading()
+                    }
+                }
+            }, declineAction: {
+                Current.navigate.close()
+            })
         } else {
             addButton.startLoading()
             viewModel.addPaymentCard { [weak self] in
@@ -131,15 +140,6 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
         addButton.isEnabled = fullFormIsValid
-    }
-}
-
-extension AddPaymentCardViewController: ReusableTemplateViewControllerDelegate {
-    func primaryButtonWasTapped(_ viewController: ReusableTemplateViewController) {
-        addButton.startLoading()
-        viewModel.addPaymentCard { [weak self] in
-            self?.addButton.stopLoading()
-        }
     }
 }
 

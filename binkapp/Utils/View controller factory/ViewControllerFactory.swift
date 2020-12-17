@@ -49,10 +49,9 @@ enum ViewControllerFactory {
         return AuthAndAddViewController(viewModel: viewModel)
     }
     
-    static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: ReusableTemplateViewControllerDelegate?) -> ReusableTemplateViewController {
-        let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel)
-        let viewController = ReusableTemplateViewController(viewModel: viewModel, delegate: delegate)
-        viewController.delegate = delegate
+    static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration) -> ReusableTemplateViewController {
+        let viewModel = ReusableModalViewModel(configurationModel: configurationModel)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel)
         return viewController
     }
     

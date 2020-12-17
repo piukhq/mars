@@ -54,7 +54,7 @@ class AddPaymentCardViewModel {
         paymentCard.year = year
     }
 
-    func toPaymentTermsAndConditions(delegate: ReusableTemplateViewControllerDelegate?) {
+    func toPaymentTermsAndConditions(acceptAction: @escaping BinkButtonAction, declineAction: @escaping BinkButtonAction) {
         let description = "terms_and_conditions_description".localized
         let titleAttributedString = NSMutableAttributedString(string: "terms_and_conditions_title".localized + "\n", attributes: [
             .font: UIFont.headline
@@ -72,8 +72,8 @@ class AddPaymentCardViewModel {
         attributedText.append(titleAttributedString)
         attributedText.append(descriptionAttributedString)
         
-        let configurationModel = ReusableModalConfiguration(title: "terms_and_conditions_title".localized, text: attributedText)
-        let viewController = ViewControllerFactory.makePaymentTermsAndConditionsViewController(configurationModel: configurationModel, delegate: delegate)
+        let configurationModel = ReusableModalConfiguration(title: "terms_and_conditions_title".localized, text: attributedText, primaryButtonTitle: "i_accept".localized, primaryButtonAction: acceptAction, secondaryButtonTitle: "i_decline".localized, secondaryButtonAction: declineAction)
+        let viewController = ViewControllerFactory.makePaymentTermsAndConditionsViewController(configurationModel: configurationModel)
         let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: false)
         Current.navigate.to(navigationRequest)
     }
