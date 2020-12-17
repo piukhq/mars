@@ -91,23 +91,24 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.baseStampsSut.headerString, "plr_stamp_voucher_detail_redeemed_header".localized)
     }
 
-//    func test_headerString_for_expired_state() {
-//        accumulatorVoucher.state = .expired
-//        var sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-//        let headerString = String(format: "plr_voucher_detail_expired_header".localized, sut.voucherAmountText)
-//        XCTAssertEqual(sut.headerString, headerString)
-//
-//        stampsVoucher.state = .expired
-//        sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.headerString, headerString)
-//    }
-//
-//    func test_headerString_for_inProgress_state() {
-//        stampsVoucher.state = .inProgress
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        let headerString = String(format: "plr_stamp_voucher_detail_inprogress_header".localized, sut.voucherAmountText)
-//        XCTAssertEqual(sut.headerString, headerString)
-//    }
+    func test_headerString_for_expired_state() {
+        mapAccumulatorVoucher()
+        let headerString = String(format: "plr_voucher_detail_expired_header".localized, Self.baseAccumulatorSut.voucherAmountText)
+        Self.accumulatorVoucherResponse.state = .expired
+        mapAccumulatorVoucher()
+        XCTAssertEqual(Self.baseAccumulatorSut.headerString, headerString)
+
+        Self.stampsVoucherResponse.state = .expired
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.headerString, "plr_stamp_voucher_detail_expired_header".localized)
+    }
+
+    func test_headerString_for_inProgress_state() {
+        Self.stampsVoucherResponse.state = .inProgress
+        mapStampsVoucher()
+        let headerString = String(format: "plr_stamp_voucher_detail_inprogress_header".localized, Self.baseStampsSut.voucherAmountText)
+        XCTAssertEqual(Self.baseStampsSut.headerString, headerString)
+    }
 //
 //    func test_headerString_for_cancelled_state() {
 //        accumulatorVoucher.state = .cancelled
