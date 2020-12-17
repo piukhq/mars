@@ -18,7 +18,7 @@ class BinkButton {
     }
 
     private let type: ButtonType
-    private let title: String
+    private var title: String
     private let action: BinkButtonAction
     private lazy var button = makeButton()
 
@@ -42,6 +42,10 @@ class BinkButton {
         } else {
             button.stopLoading()
         }
+    }
+
+    func setTitle(_ title: String) {
+        button.setTitle(title, for: .normal)
     }
 
     @objc private func performAction() {
