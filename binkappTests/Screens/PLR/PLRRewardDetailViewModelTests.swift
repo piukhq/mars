@@ -59,6 +59,22 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
         }
     }
     
+    func test_termsAndConditions_button_title_is_correct() {
+        let planDocument = PlanDocumentModel(apiId: nil, name: "Terms & Conditions", documentDescription: nil, url: "https://policies.staging.gb.bink.com/wasabi/tc.html", display: [.voucher], checkbox: nil)
+        let accountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Tesco", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: [planDocument], addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
+        Self.membershipPlanResponse.account = accountModel
+        mapResponseToManagedObject(Self.membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { plan in
+            Self.membershipPlan = plan
+        }
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.termsAndConditionsButtonTitle, "Terms & Conditions")
+    }
+
+    func test_termsAndConditions_urlString_is_correct() {
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.termsAndConditionsButtonUrlString, "https://policies.staging.gb.bink.com/wasabi/tc.html")
+    }
+    
     func test_title_string_is_correct() {
         mapAccumulatorVoucher()
         XCTAssertEqual(Self.baseAccumulatorSut.title, "Tesco")
@@ -70,10 +86,12 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
     }
 
     func test_headerString_for_issued_state() {
+        Self.accumulatorVoucherResponse.state = .issued
         mapAccumulatorVoucher()
         let headerString = String(format: "plr_voucher_detail_issued_header".localized, Self.baseAccumulatorSut.voucherAmountText)
         XCTAssertEqual(Self.baseAccumulatorSut.headerString, headerString)
         
+        Self.stampsVoucherResponse.state = .issued
         mapStampsVoucher()
         let stampsHeaderString = String(format: "plr_voucher_detail_issued_header".localized, Self.baseStampsSut.voucherAmountText)
         XCTAssertEqual(Self.baseStampsSut.headerString, stampsHeaderString)
@@ -212,16 +230,6 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.baseStampsSut.expiredDateString, formattedExpiresDate)
     }
 
-    func test_termsAndConditions_button_title_is_correct() {
-        mapStampsVoucher()
-        XCTAssertEqual(Self.baseStampsSut.termsAndConditionsButtonTitle, "Terms & Conditions")
-    }
-
-    func test_termsAndConditions_urlString_is_correct() {
-        mapStampsVoucher()
-        XCTAssertEqual(Self.baseStampsSut.termsAndConditionsButtonUrlString, "https://policies.staging.gb.bink.com/wasabi/tc.html")
-    }
-
     func test_shouldShowCode_if_in_issued_state() {
         Self.stampsVoucherResponse.state = .expired
         mapStampsVoucher()
@@ -250,89 +258,107 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
         XCTAssertFalse(Self.baseStampsSut.shouldShowSubtext)
     }
 
-//    func test_shouldShowIssuedDate_for_stamps_voucher() {
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        sut.voucher.state = .issued
-//        XCTAssertTrue(sut.shouldShowIssuedDate)
-//
-//        sut.voucher.state = .expired
-//        XCTAssertTrue(sut.shouldShowIssuedDate)
-//
-//        sut.voucher.state = .redeemed
-//        XCTAssertTrue(sut.shouldShowIssuedDate)
-//
-//        sut.voucher.state = .cancelled
-//        XCTAssertTrue(sut.shouldShowIssuedDate)
-//
-//        sut.voucher.state = .inProgress
-//        XCTAssertFalse(sut.shouldShowIssuedDate)
-//
-//        sut.voucher.dateIssued = 0
-//        XCTAssertFalse(sut.shouldShowIssuedDate)
-//    }
-//
-//    func test_shouldShowIssuedDate_for_accumulator_voucher() {
-//        let sut = PLRRewardDetailViewModelMock(voucher: accumulatorVoucher, plan: membershipPlan)
-//        sut.voucher.state = .issued
-//        XCTAssertTrue(sut.shouldShowIssuedDate)
-//
-//        sut.voucher.state = .expired
-//        XCTAssertTrue(sut.shouldShowIssuedDate)
-//
-//        sut.voucher.state = .redeemed
-//        XCTAssertFalse(sut.shouldShowIssuedDate)
-//
-//        sut.voucher.state = .cancelled
-//        XCTAssertTrue(sut.shouldShowIssuedDate)
-//
-//        sut.voucher.state = .inProgress
-//        XCTAssertFalse(sut.shouldShowIssuedDate)
-//
-//        sut.voucher.dateIssued = 0
-//        XCTAssertFalse(sut.shouldShowIssuedDate)
-//    }
-//
-//    func test_shouldShowRedeemedDate_for_redeemed_state() {
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertFalse(sut.shouldShowRedeemedDate)
-//
-//        sut.voucher.state = .redeemed
-//        XCTAssertTrue(sut.shouldShowRedeemedDate)
-//
-//        sut.voucher.dateRedeemed = 0
-//        XCTAssertFalse(sut.shouldShowRedeemedDate)
-//    }
-//
-//    func test_shouldShowExpiredDate() {
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        sut.voucher.state = .issued
-//        XCTAssertTrue(sut.shouldShowExpiredDate)
-//
-//        sut.voucher.state = .expired
-//        XCTAssertTrue(sut.shouldShowExpiredDate)
-//
-//        sut.voucher.state = .cancelled
-//        XCTAssertTrue(sut.shouldShowExpiredDate)
-//
-//        sut.voucher.state = .redeemed
-//        XCTAssertFalse(sut.shouldShowExpiredDate)
-//
-//        sut.voucher.state = .inProgress
-//        XCTAssertFalse(sut.shouldShowExpiredDate)
-//
-//        sut.voucher.expiryDate = 0
-//        XCTAssertFalse(sut.shouldShowExpiredDate)
-//    }
-//
-//    func test_shouldShowTermsAndConditionsButton_if_voucher() {
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertTrue(sut.shouldShowTermsAndConditionsButton)
-//
-//        sut.membershipPlan.account?.planDocuments = []
-//        XCTAssertFalse(sut.shouldShowTermsAndConditionsButton)
-//
-//        let planDocument = PlanDocumentModel(apiId: nil, name: nil, documentDescription: nil, url: nil, display: [.add], checkbox: nil)
-//        sut.membershipPlan.account?.planDocuments = [planDocument]
-//        XCTAssertFalse(sut.shouldShowTermsAndConditionsButton)
-//    }
+    func test_shouldShowIssuedDate_for_stamps_voucher() {
+        Self.stampsVoucherResponse.state = .issued
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowIssuedDate)
+
+        Self.stampsVoucherResponse.state = .expired
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowIssuedDate)
+
+        Self.stampsVoucherResponse.state = .redeemed
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowIssuedDate)
+
+        Self.stampsVoucherResponse.state = .cancelled
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowIssuedDate)
+
+        Self.stampsVoucherResponse.state = .inProgress
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowIssuedDate)
+
+        Self.stampsVoucherResponse.dateIssued = 0
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowIssuedDate)
+    }
+
+    func test_shouldShowIssuedDate_for_accumulator_voucher() {
+        Self.accumulatorVoucherResponse.state = .issued
+        mapAccumulatorVoucher()
+        XCTAssertTrue(Self.baseAccumulatorSut.shouldShowIssuedDate)
+
+        Self.accumulatorVoucherResponse.state = .expired
+        mapAccumulatorVoucher()
+        XCTAssertTrue(Self.baseAccumulatorSut.shouldShowIssuedDate)
+
+        Self.accumulatorVoucherResponse.state = .redeemed
+        mapAccumulatorVoucher()
+        XCTAssertFalse(Self.baseAccumulatorSut.shouldShowIssuedDate)
+
+        Self.accumulatorVoucherResponse.state = .cancelled
+        mapAccumulatorVoucher()
+        XCTAssertTrue(Self.baseAccumulatorSut.shouldShowIssuedDate)
+
+        Self.accumulatorVoucherResponse.state = .inProgress
+        mapAccumulatorVoucher()
+        XCTAssertFalse(Self.baseAccumulatorSut.shouldShowIssuedDate)
+
+        Self.accumulatorVoucherResponse.dateIssued = 0
+        mapAccumulatorVoucher()
+        XCTAssertFalse(Self.baseAccumulatorSut.shouldShowIssuedDate)
+    }
+
+    func test_shouldShowRedeemedDate_for_redeemed_state() {
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowRedeemedDate)
+
+        Self.stampsVoucherResponse.state = .redeemed
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowRedeemedDate)
+
+        Self.stampsVoucherResponse.dateRedeemed = 0
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowRedeemedDate)
+    }
+
+    func test_shouldShowExpiredDate() {
+        Self.stampsVoucherResponse.state = .issued
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowExpiredDate)
+
+        Self.stampsVoucherResponse.state = .expired
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowExpiredDate)
+
+        Self.stampsVoucherResponse.state = .cancelled
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowExpiredDate)
+
+        Self.stampsVoucherResponse.state = .redeemed
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowExpiredDate)
+
+        Self.stampsVoucherResponse.state = .inProgress
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowExpiredDate)
+
+        Self.stampsVoucherResponse.expiryDate = 0
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowExpiredDate)
+    }
+
+    func test_shouldShowTermsAndConditionsButton_if_voucher() {
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowTermsAndConditionsButton)
+
+        Self.baseStampsSut.membershipPlan.account?.planDocuments = []
+        XCTAssertFalse(Self.baseStampsSut.shouldShowTermsAndConditionsButton)
+
+        let planDocument = PlanDocumentModel(apiId: nil, name: nil, documentDescription: nil, url: nil, display: [.add], checkbox: nil)
+        Self.membershipPlanResponse.account?.planDocuments = [planDocument]
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowTermsAndConditionsButton)
+    }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 class PLRRewardDetailViewModel {
     let voucher: CD_Voucher
-    let membershipPlan: CD_MembershipPlan
+    var membershipPlan: CD_MembershipPlan
 
     init(voucher: CD_Voucher, plan: CD_MembershipPlan) {
         self.voucher = voucher
