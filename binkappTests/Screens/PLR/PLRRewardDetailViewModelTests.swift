@@ -211,42 +211,45 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
         mapAccumulatorVoucher()
         XCTAssertEqual(Self.baseStampsSut.expiredDateString, formattedExpiresDate)
     }
-//
-//    func test_termsAndConditions_button_title_is_correct() {
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.termsAndConditionsButtonTitle, "Terms & Conditions")
-//    }
-//
-//    func test_termsAndConditions_urlString_is_correct() {
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertEqual(sut.termsAndConditionsButtonUrlString, "https://policies.staging.gb.bink.com/wasabi/tc.html")
-//    }
-//
-//    func test_shouldShowCode_if_in_issued_state() {
-//        stampsVoucher.state = .expired
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertFalse(sut.shouldShowCode)
-//
-//        sut.voucher.state = .issued
-//        XCTAssertTrue(sut.shouldShowCode)
-//    }
-//
-//    func test_shouldShowHeader_if_string_exists() {
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertFalse(sut.shouldShowHeader)
-//
-//        sut.voucher.state = .issued
-//        XCTAssertTrue(sut.shouldShowHeader)
-//    }
-//
-//    func test_shouldShowSubtext_if_string_exists() {
-//        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
-//        XCTAssertFalse(sut.shouldShowSubtext)
-//
-//        sut.voucher.state = .issued
-//        XCTAssertTrue(sut.shouldShowSubtext)
-//    }
-//
+
+    func test_termsAndConditions_button_title_is_correct() {
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.termsAndConditionsButtonTitle, "Terms & Conditions")
+    }
+
+    func test_termsAndConditions_urlString_is_correct() {
+        mapStampsVoucher()
+        XCTAssertEqual(Self.baseStampsSut.termsAndConditionsButtonUrlString, "https://policies.staging.gb.bink.com/wasabi/tc.html")
+    }
+
+    func test_shouldShowCode_if_in_issued_state() {
+        Self.stampsVoucherResponse.state = .expired
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowCode)
+
+        Self.stampsVoucherResponse.state = .issued
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowCode)
+    }
+
+    func test_shouldShowHeader_if_string_exists() {
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowHeader)
+
+        Self.stampsVoucherResponse.state = nil
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowHeader)
+    }
+
+    func test_shouldShowSubtext_if_string_exists() {
+        mapStampsVoucher()
+        XCTAssertTrue(Self.baseStampsSut.shouldShowSubtext)
+
+        Self.stampsVoucherResponse.state = nil
+        mapStampsVoucher()
+        XCTAssertFalse(Self.baseStampsSut.shouldShowSubtext)
+    }
+
 //    func test_shouldShowIssuedDate_for_stamps_voucher() {
 //        let sut = PLRRewardDetailViewModelMock(voucher: stampsVoucher, plan: membershipPlan)
 //        sut.voucher.state = .issued

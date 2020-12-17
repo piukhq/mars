@@ -100,7 +100,7 @@ class PLRRewardDetailViewModel {
         return document.name
     }
 
-    private var termsAndConditionsButtonUrlString: String? {
+    var termsAndConditionsButtonUrlString: String? {
         guard let document = voucherPlanDocument else { return nil }
         return document.url
     }
