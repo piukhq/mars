@@ -26,12 +26,13 @@ struct DynamicAction: Codable {
     }
 
     var isActive: Bool {
-        guard let startDate = startDate else { return false }
-        guard let endDate = endDate else { return false }
-        let start = Date(timeIntervalSince1970: startDate)
-        let end = Date(timeIntervalSince1970: endDate)
-        let now = Date()
-        return start < now && end > now
+        return true
+//        guard let startDate = startDate else { return false }
+//        guard let endDate = endDate else { return false }
+//        let start = Date(timeIntervalSince1970: startDate)
+//        let end = Date(timeIntervalSince1970: endDate)
+//        let now = Date()
+//        return start < now && end > now
     }
 
     func location(for viewController: BinkViewController) -> DynamicActionLocation? {
