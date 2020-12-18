@@ -21,11 +21,6 @@ class BinkPillButton: BinkTrackableButton {
         return activityIndicator
     }()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setTitleColor(.white, for: .normal)
-    }
-
     override func layoutSubviews() {
         super.layoutSubviews()
 

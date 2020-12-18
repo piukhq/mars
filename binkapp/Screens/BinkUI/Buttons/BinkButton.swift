@@ -58,19 +58,24 @@ class BinkButton {
             let button = BinkPillButton()
             button.configureForType(pillButtonType, hasShadow: true)
             button.isEnabled = enabled
+            button.setTitleColor(.white, for: .normal)
+            button.setTitleColor(UIColor.white.withAlphaComponent(0.3), for: .highlighted)
             button.addTarget(self, action: #selector(performAction), for: .touchUpInside)
             return button
         case .gradient:
             let button = BinkGradientButton()
             button.configure(title: title, hasShadow: true)
             button.isEnabled = enabled
+            button.setTitleColor(.white, for: .normal)
+            button.setTitleColor(UIColor.white.withAlphaComponent(0.3), for: .highlighted)
             button.addTarget(self, action: #selector(performAction), for: .touchUpInside)
             return button
         case .plain:
-            let button = UIButton()
+            let button = BinkTrackableButton()
             button.setTitle(title, for: .normal)
-            button.setTitleColor(.black, for: .normal)
             button.titleLabel?.font = .buttonText
+            button.setTitleColor(.black, for: .normal)
+            button.setTitleColor(UIColor.black.withAlphaComponent(0.3), for: .highlighted)
             button.isEnabled = enabled
             button.addTarget(self, action: #selector(performAction), for: .touchUpInside)
             return button
