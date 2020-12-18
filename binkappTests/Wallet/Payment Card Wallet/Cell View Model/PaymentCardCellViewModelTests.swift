@@ -11,9 +11,11 @@ import CoreData
 @testable import binkapp
 
 class PaymentCardCellViewModelTests: XCTestCase, CoreDataTestable {
-    var basePaymentCard: PaymentCardModel!
-    
+//    var basePaymentCard: PaymentCardModel!
+    static var membershipCards: [LinkedCardResponse]!
     static var basePaymentCardResponse: PaymentCardModel!
+    static var membershipCardResponse: MembershipCardModel!
+    static var membershipCardResponse2: MembershipCardModel!
     
     static var paymentCard: CD_PaymentCard!
     
@@ -22,15 +24,25 @@ class PaymentCardCellViewModelTests: XCTestCase, CoreDataTestable {
     override class func setUp() {
         super.setUp()
         let paymentCardResponseModel = PaymentCardCardResponse(apiId: 1, firstSix: "555555", lastFour: "4444", month: 01, year: 2030, country: nil, currencyCode: nil, nameOnCard: "Nick Farrant", provider: nil, type: nil)
-        let membershhipCards = [
+        membershipCards = [
             LinkedCardResponse(id: 1, activeLink: true),
-            LinkedCardResponse(id: 1, activeLink: false)
+            LinkedCardResponse(id: 2, activeLink: false)
         ]
+        membershipCardResponse = MembershipCardModel(apiId: 1, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        membershipCardResponse2 = MembershipCardModel(apiId: 2, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
         
-        basePaymentCardResponse = PaymentCardModel(apiId: 1, membershipCards: membershhipCards, status: "active", card: paymentCardResponseModel, account: PaymentCardAccountResponse())
+        mapResponseToManagedObject(membershipCardResponse, managedObjectType: CD_MembershipCard.self) { _ in }
+        mapResponseToManagedObject(membershipCardResponse2, managedObjectType: CD_MembershipCard.self) { _ in }
         
+        basePaymentCardResponse = PaymentCardModel(apiId: 1, membershipCards: membershipCards, status: "active", card: paymentCardResponseModel, account: PaymentCardAccountResponse())
         mapResponseToManagedObject(basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
             self.paymentCard = paymentCard
+        }
+    }
+    
+    private func mapPaymentCard() {
+        mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
+            Self.paymentCard = paymentCard
         }
     }
 
@@ -58,39 +70,35 @@ class PaymentCardCellViewModelTests: XCTestCase, CoreDataTestable {
     }
 
     func test_paymentCardIsLinkedToMembershipCards_isCorrect_whenNotLinked() {
+        Self.basePaymentCardResponse.membershipCards = nil
+        mapPaymentCard()
         XCTAssertFalse(Self.sut.paymentCardIsLinkedToMembershipCards)
     }
 
     func test_paymentCardIsLinkedToMembershipCards_isCorrect_whenLinked() {
-//        basePaymentCard.membershipCards = [
-//            LinkedCardResponse(id: 1, activeLink: true),
-//            LinkedCardResponse(id: 1, activeLink: false)
-//        ]
-//        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
+        Self.basePaymentCardResponse.membershipCards = Self.membershipCards
+        mapPaymentCard()
         XCTAssertTrue(Self.sut.paymentCardIsLinkedToMembershipCards)
     }
 
     func test_linkedText_ifNoLinkedMembershipCards() {
+        Self.basePaymentCardResponse.membershipCards = nil
+        mapPaymentCard()
         XCTAssertEqual(Self.sut.statusText, "Not linked")
     }
 
     func test_linkedText_ifLinkedToOneMembershipCard() {
-        basePaymentCard.membershipCards = [
-            LinkedCardResponse(id: 1, activeLink: true),
-            LinkedCardResponse(id: 2, activeLink: false)
-        ]
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
-        XCTAssertEqual(sut.linkedText, "Linked to 1 loyalty card")
+        XCTAssertEqual(Self.sut.statusText, "Linked to 1 loyalty card")
     }
 
     func test_linkedText_ifLinkedToTwoMembershipCards() {
-        basePaymentCard.membershipCards = [
-            LinkedCardResponse(id: 1, activeLink: true),
-            LinkedCardResponse(id: 2, activeLink: true),
-            LinkedCardResponse(id: 3, activeLink: false)
-        ]
-        let sut = PaymentCardCellViewModelMock(paymentCard: basePaymentCard)
-        XCTAssertEqual(sut.linkedText, "Linked to 2 loyalty cards")
+        let membershipCardResponse = MembershipCardModel(apiId: 3, membershipPlan: nil, membershipTransactions: nil, status: nil, card: nil, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        mapResponseToManagedObject(membershipCardResponse, managedObjectType: CD_MembershipCard.self) { _ in }
+        Self.membershipCards.append(LinkedCardResponse(id: 3, activeLink: true))
+        Self.basePaymentCardResponse.membershipCards = Self.membershipCards
+        mapPaymentCard()
+        
+        XCTAssertEqual(Self.sut.statusText, "Linked to 2 loyalty cards")
     }
 
     func test_paymentCard_isExpired_recognisedCorrectly_whenNotExpired() {
