@@ -365,7 +365,6 @@
 		EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F6E6023E4288C00352DCF /* StorageUtilityTests.swift */; };
 		EF7F6E6323E4296C00352DCF /* StorageUtilityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F6E6223E4296C00352DCF /* StorageUtilityMock.swift */; };
 		EF7F6E6523E47BFA00352DCF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF7F6E6423E47BFA00352DCF /* GoogleService-Info.plist */; };
-		EF8B700F23585F76006CE3DD /* PaymentCardCellViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B700E23585F76006CE3DD /* PaymentCardCellViewModelMock.swift */; };
 		EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */; };
 		EF8B701A235DDC75006CE3DD /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */; };
 		EF8B701B235DDC75006CE3DD /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF8B7019235DDC75006CE3DD /* OnboardingViewController.xib */; };
@@ -911,7 +910,6 @@
 		EF7F6E6023E4288C00352DCF /* StorageUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageUtilityTests.swift; sourceTree = "<group>"; };
 		EF7F6E6223E4296C00352DCF /* StorageUtilityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageUtilityMock.swift; sourceTree = "<group>"; };
 		EF7F6E6423E47BFA00352DCF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		EF8B700E23585F76006CE3DD /* PaymentCardCellViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCellViewModelMock.swift; sourceTree = "<group>"; };
 		EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardBalanceModelTests.swift; sourceTree = "<group>"; };
 		EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		EF8B7019235DDC75006CE3DD /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
@@ -2404,7 +2402,6 @@
 		EF8B700D23585BF0006CE3DD /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				EF8B700E23585F76006CE3DD /* PaymentCardCellViewModelMock.swift */,
 				EF7F6E6223E4296C00352DCF /* StorageUtilityMock.swift */,
 				DB4D8EAE24471FF00085595D /* SettingsFactoryMock.swift */,
 				DB4D8EB0244722130085595D /* SettingsViewModelMock.swift */,
@@ -3128,7 +3125,6 @@
 				EF8B701A235DDC75006CE3DD /* OnboardingViewController.swift in Sources */,
 				BD3CB946232857BD005C37AE /* APIConstants.swift in Sources */,
 				EF5491202371D9C800FE17BE /* PaymentCardDetailAddLoyaltyCardCellViewModel.swift in Sources */,
-				EF8B700F23585F76006CE3DD /* PaymentCardCellViewModelMock.swift in Sources */,
 				BD458B3E236B5C0E0029A538 /* LoginRegisterRequest.swift in Sources */,
 				3C05F27E240FC28300060818 /* PaymentCardDetailLinkLoyaltyCardCellViewModel.swift in Sources */,
 				EFEB5C0123853B7900E18743 /* WalletRefreshManager.swift in Sources */,
