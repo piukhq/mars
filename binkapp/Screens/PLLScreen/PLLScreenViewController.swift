@@ -299,7 +299,7 @@ private extension PLLScreenViewController {
         }
         buttonsView = BinkButtonsView(buttons: buttons)
         buttonsView.layoutIfNeeded()
-        stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: buttonsView.bounds.height + BinkButtonsView.bottomSafePadding, right: 0)
+        stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: buttonsView.bounds.height, right: 0)
         view.sendSubviewToBack(stackScroll)
     }
 
