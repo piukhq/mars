@@ -20,6 +20,8 @@ protocol CoreDataTestable {
     ///   - completion: A strongly typed managed object mapped from the response model.
     static func mapResponseToManagedObject<ResponseModel: CoreDataMappable, ManagedObjectType: CD_BaseObject>(_ responseModel: ResponseModel, managedObjectType: ManagedObjectType.Type, completion: @escaping (ManagedObjectType) -> Void)
 
+    static func mapResponsesToManagedObjects<ResponseModel: CoreDataMappable, ManagedObjectType: CD_BaseObject>(_ responseModels: [ResponseModel], managedObjectType: ManagedObjectType.Type, completion: @escaping ([ManagedObjectType]) -> Void)
+    
     /// ** THIS METHOD SHOULD ONLY BE CALLED FROM INSIDE TEST CASES WHEN IT IS NECESSARY TO MUTATE A BASE RESPONSE MODEL **
     ///
     /// Map an API response model to a Core Data managed object. Instance method so that it can be run inside test cases.
@@ -28,6 +30,8 @@ protocol CoreDataTestable {
     ///   - managedObjectType: The Core Data managed object type to map to. Must conform to CoreDataMappable
     ///   - completion: A strongly typed managed object mapped from the response model.
     func mapResponseToManagedObject<ResponseModel: CoreDataMappable, ManagedObjectType: CD_BaseObject>(_ responseModel: ResponseModel, managedObjectType: ManagedObjectType.Type, completion: @escaping (ManagedObjectType) -> Void)
+    
+    func mapResponsesToManagedObjects<ResponseModel: CoreDataMappable, ManagedObjectType: CD_BaseObject>(_ responseModels: [ResponseModel], managedObjectType: ManagedObjectType.Type, completion: @escaping ([ManagedObjectType]) -> Void)
 }
 
 extension CoreDataTestable {
@@ -37,6 +41,19 @@ extension CoreDataTestable {
             completion(managedObject)
         }
     }
+    
+    static func mapResponsesToManagedObjects<ResponseModel: CoreDataMappable, ManagedObjectType: CD_BaseObject>(_ responseModels: [ResponseModel], managedObjectType: ManagedObjectType.Type, completion: @escaping ([ManagedObjectType]) -> Void) {
+        Current.database.performTask { context in
+            var managedObjects: [ManagedObjectType] = []
+            responseModels.forEach {
+                let managedObject = $0.mapToCoreData(context, .update, overrideID: nil) as! ManagedObjectType
+                managedObjects.append(managedObject)
+            }
+//            try? context.save()
+            completion(managedObjects)
+        }
+    }
+
 
     func mapResponseToManagedObject<ResponseModel: CoreDataMappable, ManagedObjectType: CD_BaseObject>(_ responseModel: ResponseModel, managedObjectType: ManagedObjectType.Type, completion: @escaping (ManagedObjectType) -> Void) {
         Current.database.performTask { context in
@@ -44,4 +61,17 @@ extension CoreDataTestable {
             completion(managedObject)
         }
     }
+    
+    func mapResponsesToManagedObjects<ResponseModel: CoreDataMappable, ManagedObjectType: CD_BaseObject>(_ responseModels: [ResponseModel], managedObjectType: ManagedObjectType.Type, completion: @escaping ([ManagedObjectType]) -> Void) {
+        Current.database.performTask { context in
+            var managedObjects: [ManagedObjectType] = []
+            responseModels.forEach {
+                let managedObject = $0.mapToCoreData(context, .update, overrideID: nil) as! ManagedObjectType
+                managedObjects.append(managedObject)
+            }
+//            try? context.save()
+            completion(managedObjects)
+        }
+    }
+
 }
