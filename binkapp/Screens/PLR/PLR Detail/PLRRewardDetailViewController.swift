@@ -8,8 +8,7 @@
 
 import UIKit
 
-class PLRRewardDetailViewController: BinkTrackableViewController {
-
+class PLRRewardDetailViewController: BinkViewController {
     // MARK: - UI properties
 
     private lazy var stackScrollView: StackScrollView = {
@@ -82,7 +81,7 @@ class PLRRewardDetailViewController: BinkTrackableViewController {
 
     // MARK: - Init and view lifecycle
 
-    init(viewModel: PLRRewardDetailViewModel){
+    init(viewModel: PLRRewardDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -174,7 +173,7 @@ private extension PLRRewardDetailViewController {
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
     }
 
@@ -193,7 +192,7 @@ private extension PLRRewardDetailViewController {
 }
 
 extension LayoutHelper {
-    struct PLRRewardDetail {
+    enum PLRRewardDetail {
         static let stackViewPadding: CGFloat = 25
         static let codeLabelTopPadding: CGFloat = 48
         static let headerLabelTopPadding: CGFloat = 30

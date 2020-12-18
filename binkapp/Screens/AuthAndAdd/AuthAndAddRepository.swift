@@ -8,7 +8,7 @@
 import Foundation
 
 class AuthAndAddRepository: WalletServiceProtocol {
-    func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, scrapingCredentials: WebScrapingCredentials? = nil, onSuccess: @escaping (CD_MembershipCard?) -> (), onError: @escaping (BinkError?) -> ()) {
+    func addMembershipCard(request: MembershipCardPostModel, formPurpose: FormPurpose, existingMembershipCard: CD_MembershipCard?, scrapingCredentials: WebScrapingCredentials? = nil, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (BinkError?) -> Void) {
         addMembershipCard(withRequestModel: request, existingMembershipCard: existingMembershipCard) { (result, rawResponse) in
             switch result {
             case .success(let response):
@@ -35,7 +35,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
                     try? context.save()
                     
                     DispatchQueue.main.async {
-                        Current.database.performTask(with: newObject) { (context, safeObject) in
+                        Current.database.performTask(with: newObject) { (_, safeObject) in
                             if let card = safeObject, let credentials = scrapingCredentials {
                                 do {
                                     try Current.pointsScrapingManager.enableLocalPointsScrapingForCardIfPossible(withRequest: request, credentials: credentials, membershipCard: card)
@@ -60,7 +60,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
     // TODO: I don't like this, can we refactor it?
     func postGhostCard(parameters: MembershipCardPostModel, existingMembershipCard: CD_MembershipCard?, onSuccess: @escaping (CD_MembershipCard?) -> Void, onError: @escaping (BinkError?) -> Void) {
         var mutableModel = parameters
-        var registrationModel: [PostModel]? = nil
+        var registrationModel: [PostModel]?
         if let card = existingMembershipCard {
             mutableModel.account?.addFields = nil
             mutableModel.account?.authoriseFields = nil
@@ -72,7 +72,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
                         try? context.save()
                         
                         DispatchQueue.main.async {
-                            Current.database.performTask(with: newObject) { (context, safeObject) in
+                            Current.database.performTask(with: newObject) { (_, safeObject) in
                                 guard let existingCard = safeObject else { return }
                                 onSuccess(existingCard)
                             }

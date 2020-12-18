@@ -8,8 +8,8 @@
 
 import UIKit
 
-class TransactionsViewController: BinkTrackableViewController {
-    private struct Constants {
+class TransactionsViewController: BinkViewController, InAppReviewable {
+    private enum Constants {
         static let horizontalInset: CGFloat = 25.0
         static let bottomInset: CGFloat = 25.0
     }
@@ -64,6 +64,12 @@ class TransactionsViewController: BinkTrackableViewController {
         super.viewDidLoad()
         configureUI()
     }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        requestInAppReviewIfNecessary()
+    }
     
     private func configureUI() {
         NSLayoutConstraint.activate([
@@ -86,10 +92,50 @@ class TransactionsViewController: BinkTrackableViewController {
         }
         lastTransactionView.hideSeparatorView()
     }
+
+    private func requestInAppReviewIfNecessary() {
+        defer {
+            viewModel.storeMostRecentTransaction()
+        }
+
+        guard viewModel.hasStoredMostRecentTransaction else {
+            /// Must be first view of this card's transactions. Store the most recent transaction after returning.
+            return
+        }
+
+        if viewModel.shouldRequestInAppReview {
+            TransactionsHistoryInAppReviewableJourney().begin()
+            requestInAppReview()
+        }
+    }
 }
 
 extension TransactionsViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.brandHeaderWasTapped()
+    }
+}
+
+struct MembershipCardStoredMostRecentTransaction: Codable {
+    let membershipCardId: String
+    let timestamp: Int
+
+    func isMostRecentTransaction(from latestTransactions: [CD_MembershipTransaction]?) -> Bool {
+        guard let transactions = latestTransactions else { return true }
+        guard let mostRecentTransactionTimestamp = transactions.first?.timestamp?.intValue else { return true }
+        return mostRecentTransactionTimestamp <= timestamp
+    }
+
+    var toDictionary: [String: Any] {
+        return [
+            "membershipCardId": membershipCardId,
+            "timestamp": timestamp
+        ]
+    }
+
+    static func fromDictionary(_ dictionary: [String: Any]) -> MembershipCardStoredMostRecentTransaction? {
+        guard let cardId = dictionary["membershipCardId"] as? String else { return nil }
+        guard let timestamp = dictionary["timestamp"] as? Int else { return nil }
+        return MembershipCardStoredMostRecentTransaction(membershipCardId: cardId, timestamp: timestamp)
     }
 }

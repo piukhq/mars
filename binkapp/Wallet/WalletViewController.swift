@@ -8,13 +8,13 @@
 
 import UIKit
 
-struct WalletViewControllerConstants {
+enum WalletViewControllerConstants {
     static let dotViewHeightWidth: CGFloat = 10
     static let dotViewRightPadding: CGFloat = 18
     static let dotViewTopPadding: CGFloat = 3
 }
 
-class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring {
+class WalletViewController<T: WalletViewModel>: BinkViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring, InAppReviewable {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +78,12 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
             self.refreshControl.endRefreshing()
         }
         
-        Current.wallet.reloadWalletsIfNecessary()
+        Current.wallet.reloadWalletsIfNecessary { willPerformRefresh in
+            if willPerformRefresh, InAppReviewUtility.canRequestReviewBasedOnUsage {
+                TimeAndUsageBasedInAppReviewableJourney().begin()
+                requestInAppReview()
+            }
+        }
         configureLoadingIndicator()
         
         /// In case the Zendesk SDK is slow to return a state, we should configure the navigation item to a default state
@@ -111,14 +116,14 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
         
         var rightInset: CGFloat = 0
         switch UIDevice.current.width {
-            case .iPhone5Size:
-                rightInset = 9
-            case .iPhone6Size:
-                rightInset = 9
-            case .iPhonePlusSize:
-                rightInset = 6
-            default:
-                rightInset = 7
+        case .iPhone5Size:
+            rightInset = 9
+        case .iPhone6Size:
+            rightInset = 9
+        case .iPhonePlusSize:
+            rightInset = 6
+        default:
+            rightInset = 7
         }
         settingsBarButton.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: rightInset)
         
@@ -232,7 +237,6 @@ class WalletViewController<T: WalletViewModel>: BinkTrackableViewController, UIC
                 return
             }
             viewModel.toCardDetail(for: card)
-            
         } else {
             guard let joinCard = viewModel.promptCard(forIndexPath: indexPath) else {
                 return

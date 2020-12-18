@@ -9,7 +9,7 @@
 import UIKit
 import CardScan
 
-class AddingOptionsViewController: BinkTrackableViewController {
+class AddingOptionsViewController: BinkViewController {
     enum ScanType {
         case loyalty
         case payment
@@ -59,18 +59,18 @@ class AddingOptionsViewController: BinkTrackableViewController {
         loyaltyCardView.configure(addingOption: .loyalty)
         browseBrandsView.configure(addingOption: .browse)
         addPaymentCardView.configure(addingOption: .payment)
-
+        
         NSLayoutConstraint.activate([
-                      loyaltyCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
-                      browseBrandsView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
-                      addPaymentCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
+            loyaltyCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
+            browseBrandsView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight),
+            addPaymentCardView.heightAnchor.constraint(lessThanOrEqualToConstant: maximumHeight)
         ])
         
         addGesturesToViews()
         stackView.addArrangedSubview(loyaltyCardView)
         stackView.addArrangedSubview(browseBrandsView)
         stackView.addArrangedSubview(addPaymentCardView)
-
+        
         stackView.layoutIfNeeded()
         let constant = addPaymentCardView.frame.height * 0.75
         stackviewBottomConstraint.priority = .defaultLow

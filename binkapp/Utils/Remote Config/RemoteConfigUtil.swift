@@ -14,15 +14,20 @@ class RemoteConfigUtil {
         case localPointsCollectionMasterEnabled
         case localPointsCollectionAgentEnabled(WebScrapable)
         case inAppReviewEnabled
+        case dynamicActions
         
         var formattedKey: String {
+            let isDebug = !APIConstants.isProduction
+
             switch self {
             case .localPointsCollectionMasterEnabled:
-                return "LPC_master_enabled"
+                return "LPC_master_enabled\(isDebug ? "_debug" : "")"
             case .localPointsCollectionAgentEnabled(let agent):
-                return "LPC_\(agent.merchant)_enabled"
+                return "LPC_\(agent.merchant)_enabled\(isDebug ? "_debug" : "")"
             case .inAppReviewEnabled:
                 return "in_app_review_enabled"
+            case .dynamicActions:
+                return "dynamic_actions"
             }
         }
     }
@@ -61,5 +66,9 @@ class RemoteConfigUtil {
     
     func boolValueForConfigKey(_ configKey: RemoteConfigKey) -> Bool {
         return remoteConfig.configValue(forKey: configKey.formattedKey).boolValue
+    }
+
+    func objectForConfigKey<T: Codable>(_ configKey: RemoteConfigKey, forObjectType objectType: T.Type) -> T? {
+        return remoteConfig.configValue(forKey: configKey.formattedKey).stringValue?.asDecodedObject(ofType: objectType)
     }
 }

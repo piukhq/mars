@@ -14,7 +14,7 @@ struct MembershipCardModel: Codable {
     let membershipPlan: Int?
     let membershipTransactions: [MembershipTransaction]?
     let status: MembershipCardStatusModel?
-    let card: CardModel?
+    var card: CardModel?
     let images: [MembershipCardImageModel]?
     let account: MembershipCardAccountModel?
     let paymentCards: [LinkedCardResponse]?
@@ -99,13 +99,15 @@ extension MembershipCardModel: CoreDataMappable, CoreDataIDMappable {
                 update(cdObject, \.status, with: nil, delta: false)
             }
         } else {
-            // We pass through here when mapping all other objects during add/auth.
-            // We can safely set it to failed here if the status is nil, as we know that add/auth handles setting a pending state once this mapping is complete
-            if cdObject.status == nil || cdObject.status?.status == .pending {
-                let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
-                let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
-                update(cdStatus, \.card, with: cdObject, delta: delta)
-                update(cdObject, \.status, with: cdStatus, delta: delta)
+            // Are we currently attempting to perform local points scraping for this membership card?
+            // If so, we don't want to update it's status - this is handled elsewhere.
+            if !Current.pointsScrapingManager.isCurrentlyScraping(forMembershipCard: cdObject) {
+                if cdObject.status == nil || cdObject.status?.status == .pending {
+                    let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
+                    let cdStatus = status.mapToCoreData(context, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: overrideID ?? id))
+                    update(cdStatus, \.card, with: cdObject, delta: delta)
+                    update(cdObject, \.status, with: cdStatus, delta: delta)
+                }
             }
         }
 

@@ -48,7 +48,6 @@ class AddingOptionsViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }
-        
     }
 
     @objc func close() {

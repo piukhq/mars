@@ -10,7 +10,6 @@ import XCTest
 @testable import binkapp
 
 class DebugMenuViewModelTests: XCTestCase {
-
     func test_titleText() {
         let factory = DebugMenuFactory()
         let sut = DebugMenuViewModel(debugMenuFactory: factory)
@@ -66,5 +65,4 @@ class DebugMenuViewModelTests: XCTestCase {
         let endpointRow = sut.row(atIndexPath: IndexPath(row: 1, section: 0))
         XCTAssertEqual(endpointRow.subtitle, APIConstants.baseURLString)
     }
-
 }

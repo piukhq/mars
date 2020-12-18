@@ -9,7 +9,7 @@ import UIKit
 import CardScan
 
 extension LayoutHelper {
-    struct settingsButton {
+    enum SettingsButton {
         static let widthRatio: CGFloat = 0.13
         static let height: CGFloat = 24
     }
@@ -18,7 +18,7 @@ extension LayoutHelper {
 class MainTabBarViewController: UITabBarController, BarBlurring {
     let viewModel: MainTabBarViewModel
     var selectedTabBarOption = Buttons.loyaltyItem.rawValue
-    var items = [UITabBarItem]()
+    var items: [UITabBarItem] = []
     lazy var blurBackground = defaultBlurredBackground()
     
     init(viewModel: MainTabBarViewModel) {
@@ -86,8 +86,8 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
-        let month = Int(creditCard.expiryMonth ?? "")
-        let year = creditCard.expiryYear != nil ? Int("20\(creditCard.expiryYear ?? "")") : nil
+        let month = creditCard.expiryMonthInteger()
+        let year = creditCard.expiryYearInteger()
         let model = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: nil, month: month, year: year)
         let viewController = ViewControllerFactory.makeAddPaymentCardViewController(model: model, journey: .wallet)
         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)

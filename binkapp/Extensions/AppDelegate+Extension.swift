@@ -11,7 +11,7 @@ import UIKit
 extension UIApplication {
     func topViewControllerWithRootViewController(rootViewController: UIViewController?) -> UIViewController? {
         guard let rootViewController = rootViewController else { return nil }
-        if (rootViewController is UITabBarController) {
+        if rootViewController is UITabBarController {
             return topViewControllerWithRootViewController(rootViewController: (rootViewController as? UITabBarController)?.selectedViewController)
         } else if rootViewController is UINavigationController {
             return topViewControllerWithRootViewController(rootViewController: (rootViewController as? UINavigationController)?.visibleViewController)

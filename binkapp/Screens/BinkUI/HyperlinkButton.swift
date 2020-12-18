@@ -18,7 +18,7 @@ class HyperlinkButton: UIButton {
         guard let title = title else { return }
         let attrString = NSAttributedString(
             string: title,
-            attributes: [.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
         )
         setAttributedTitle(attrString, for: .normal)
     }

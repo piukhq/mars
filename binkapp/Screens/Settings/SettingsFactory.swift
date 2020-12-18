@@ -16,8 +16,7 @@ struct SettingsFactory {
     }
     
     func sectionData() -> [SettingsSection] {
-        
-        var sections = [SettingsSection]()
+        var sections: [SettingsSection] = []
         
         // MARK: - Account
         
@@ -77,7 +76,8 @@ struct SettingsFactory {
                 subtitle: "settings_row_howitworks_subtitle".localized,
                 action: .pushToReusable(screen: .howItWorks),
                 actionRequired: rowsWithActionRequired?.contains(.howItWorks) ?? false
-            ), SettingsRow(
+            ),
+            SettingsRow(
                 type: .whoWeAre,
                 action: .pushToViewController(viewController: WhoWeAreViewController.self),
                 actionRequired: rowsWithActionRequired?.contains(.whoWeAre) ?? false

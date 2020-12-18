@@ -22,6 +22,7 @@ pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
 pod 'ZendeskSupportSDK'
 pod 'CardScan', :git => 'git@git.bink.com:Pantheon/iOS/cardscan-ios.git'
 pod 'ZXingObjC', '~> 3.6.5'
+pod 'SwiftLint'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
@@ -61,13 +62,13 @@ target 'binkapp' do
     # Pods for testing
     common_pods
   end
+end
 
-  target 'binkappUITests' do
+target 'binkappUITests' do
     inherit! :search_paths
-    # Pods for testing
-    common_pods
-  end
-
+    use_frameworks!
+  # Pods for testing
+  common_pods
 end
 
 post_install do |installer|

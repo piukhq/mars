@@ -54,7 +54,7 @@ struct PaymentCardCellViewModel {
     }
 
     var paymentCardIsExpired: Bool {
-        return paymentCard.isExpired()
+        return paymentCard.isExpired
     }
     
     private var paymentCardStatus: PaymentCardStatus? {

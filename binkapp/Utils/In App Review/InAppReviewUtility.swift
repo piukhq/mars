@@ -7,79 +7,64 @@
 //
 
 import Foundation
-import StoreKit
 
-protocol InAppReviewable {
-    func requestInAppReview()
+protocol InAppReviewableJourney {
+    associatedtype J
+
+    static var isInProgress: Bool { get }
+    func begin()
+    static func end()
 }
 
-extension InAppReviewable {
-    func requestInAppReview() {
-        guard canRequestReview else { return }
-        SKStoreReviewController.requestReview()
-        setUpdatedRequestTime()
-        setUpdatedRequestedMinorVersions()
-    }
-
-    private var canRequestReview: Bool {
-        #if DEBUG
-        guard Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules) else { return true }
-        #endif
-        return requestTimeLimitHasPassed && !reviewRequestedForCurrentMinorVersion && enabledInRemoteConfig
-    }
-
-    private var requestTimeLimitHasPassed: Bool {
-        /// Can we get a user defaults value for the last request time?
-        if let lastRequestedDefaultsValue = Current.userDefaults.value(forDefaultsKey: .inAppReviewLastRequestedDate) {
-            guard let lastRequest = lastRequestedDefaultsValue as? TimeInterval else {
-                /// We have a user defaults value, but it is of the wrong type. Fatal error to be fixed.
-                fatalError("Cannot cast last request value as TimeInterval.")
-            }
-            /// Has it been 7 days since we last requested a review?
-            let lastRequestDate = Date(timeIntervalSince1970: lastRequest)
-            return Date.hasElapsed(days: 7, since: lastRequestDate)
+extension InAppReviewableJourney {
+    static var isInProgress: Bool {
+        if let _ = Current.inAppReviewableJourney as? J {
+            return true
         }
-
-        // The user defaults value has not been set yet, so we are safe to continue.
-        return true
-    }
-
-    private var reviewRequestedForCurrentMinorVersion: Bool {
-        /// Can we identify the current minor version?
-        guard let currentMinorVersion = Bundle.minorVersion else {
-            fatalError("Could not read minor version.")
-        }
-
-        /// Can we get a user defaults value for the minor versions that previously displayed requests?
-        if let requestedMinorVersionsDefaultsValues = Current.userDefaults.value(forDefaultsKey: .inAppReviewRequestedMinorVersions) {
-            guard let requestedMinorVersions = requestedMinorVersionsDefaultsValues as? [Int] else {
-                /// We have a user defaults value, but it is of the wrong type. Fatal error to be fixed.
-                fatalError("Cannot cast last request minor version as array of integers.")
-            }
-            /// Have we requested a review for the current minor version before?
-            return requestedMinorVersions.contains(currentMinorVersion)
-        }
-
-        // The user defaults value has not been set yet, so we are safe to continue.
         return false
     }
 
-    private var enabledInRemoteConfig: Bool {
-        return Current.remoteConfig.boolValueForConfigKey(.inAppReviewEnabled)
+    func begin() {
+        guard Current.inAppReviewableJourney == nil else { return }
+        Current.inAppReviewableJourney = self
     }
 
-    private func setUpdatedRequestTime() {
-        let requestedTime = Date().timeIntervalSince1970
-        Current.userDefaults.set(requestedTime, forDefaultsKey: .inAppReviewLastRequestedDate)
+    static func end() {
+        if isInProgress {
+            Current.inAppReviewableJourney = nil
+        }
     }
+}
 
-    private func setUpdatedRequestedMinorVersions() {
-        guard let currentMinorVersion = Bundle.minorVersion else { return }
-        let requestedMinorVersionsDefaultsValues = Current.userDefaults.value(forDefaultsKey: .inAppReviewRequestedMinorVersions)
-        var requestedMinorVersions = requestedMinorVersionsDefaultsValues as? [Int]
-        requestedMinorVersions?.append(currentMinorVersion)
+struct PllLoyaltyInAppReviewableJourney: InAppReviewableJourney {
+    typealias J = Self
+}
 
-        /// Update the existing list of minor versions, or create a new list with the current minor version.
-        Current.userDefaults.set(requestedMinorVersions ?? [currentMinorVersion], forDefaultsKey: .inAppReviewRequestedMinorVersions)
+struct TransactionsHistoryInAppReviewableJourney: InAppReviewableJourney {
+    typealias J = Self
+}
+
+struct TimeAndUsageBasedInAppReviewableJourney: InAppReviewableJourney {
+    typealias J = Self
+}
+
+enum InAppReviewUtility {
+    static let minimumMembershipCards = 4
+    static let minimumAppLaunches = 10
+    static let minimumDaysSinceFirstLaunch = 2
+
+    static func recordAppLaunch() {
+        let timestamp = Date().timeIntervalSince1970
+        var appLaunches = Current.userDefaults.value(forDefaultsKey: .appLaunches) as? [TimeInterval]
+        appLaunches?.append(timestamp)
+        Current.userDefaults.set(appLaunches ?? [timestamp], forDefaultsKey: .appLaunches)
+    }
+    
+    static var canRequestReviewBasedOnUsage: Bool {
+        guard let membershipCards = Current.wallet.membershipCards, membershipCards.count > minimumMembershipCards else { return false }
+        guard let appLaunches = Current.userDefaults.value(forDefaultsKey: .appLaunches) as? [TimeInterval] else { return false }
+        guard appLaunches.count > minimumAppLaunches else { return false }
+        let firstAppLaunch = Date(timeIntervalSince1970: appLaunches[0])
+        return Date.hasElapsed(days: minimumDaysSinceFirstLaunch, since: firstAppLaunch)
     }
 }

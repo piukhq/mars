@@ -15,19 +15,22 @@ import CardScan
 import Keys
 import SafariServices
 
-@UIApplicationMain 
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     var window: UIWindow?
     var stateMachine: RootStateMachine?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
         #if DEBUG
         NetworkActivityLogger.shared.level = .debug
         NetworkActivityLogger.shared.startLogging()
         ScanViewController.configure(apiKey: BinkappKeys().bouncerPaymentCardScanningKeyDev)
         #endif
-
+        
+        if CommandLine.arguments.contains("enable-testing") {
+            configureAppForTesting()
+        }
+        
         // Firebase
         FirebaseApp.configure()
        
@@ -96,7 +99,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
 
         addObservers()
-    
+        InAppReviewUtility.recordAppLaunch()
+        Current.userManager.clearKeychainIfNecessary()
         return true
     }
     
@@ -106,6 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         Current.wallet.refreshMembershipPlansIfNecessary()
+        InAppReviewUtility.recordAppLaunch()
     }
 
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -169,5 +174,9 @@ private extension AppDelegate {
 
     @objc func appDidBecomeActive() {
         Current.navigate.closeShieldView()
+    }
+    
+    func configureAppForTesting() {
+        UIView.setAnimationsEnabled(false)
     }
 }

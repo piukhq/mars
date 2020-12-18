@@ -33,5 +33,4 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
         linkToggle.isGradientVisible = linkToggle.isOn
         delegate?.linkedLoyaltyCardCell(self, shouldToggleLinkedStateForMembershipCard: viewModel.membershipCard)
     }
-    
 }

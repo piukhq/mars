@@ -6,6 +6,8 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
+// swiftlint:disable all
+
 import XCTest
 @testable import binkapp
 
@@ -15,14 +17,14 @@ class MembershipCardBalanceModelTests: XCTestCase {
         "id": 0,
         "value": 1.0,
         "currency": "GBP",
-        "prefix": "£",
+        "prefix": "£"
     ]
 
     let stubbedInvalidResponse: [String: Any] = [
         "id": 0,
         "value": 1.0,
         "currency": "GBP",
-        "prefix": true,
+        "prefix": true
     ]
 
     func test_membershipCardBalance_validResponse_decodesCorrectly() {

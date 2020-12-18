@@ -8,10 +8,12 @@
 
 import Foundation
 
+// swiftlint:disable force_unwrapping
+
 extension String {
     static func randomString(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map{ _ in
+        return String((0..<length).map { _ in
             return letters.randomElement()!
         })
     }
@@ -26,5 +28,14 @@ extension String {
 
     func toNSString() -> NSString {
         return self as NSString
+    }
+
+    /// Convert a valid JSON string to a decoded Swift object.
+    /// - Parameter objectType: The object type you are attempted to decode the JSON to. Passed in as String.self or [String].self.
+    /// - Returns: An optional, fully typed decoded Swift object
+    func asDecodedObject<T: Decodable>(ofType objectType: T.Type) -> T? {
+        guard let data = data(using: .utf8) else { return nil }
+        guard let decodedObject = try? JSONDecoder().decode(objectType, from: data) else { return nil }
+        return decodedObject
     }
 }

@@ -55,8 +55,8 @@ struct PaymentCardCreateRequest: Codable {
         
         // Get first six and last four
         
-        var firstSix: String? = nil
-        var lastFour: String? = nil
+        var firstSix: String?
+        var lastFour: String?
         if let firstSixEndIndex = pan.index(pan.startIndex, offsetBy: 6, limitedBy: pan.endIndex),
             let lastFourStartIndex = pan.index(pan.endIndex, offsetBy: -4, limitedBy: pan.startIndex) {
             firstSix = String(pan[pan.startIndex..<firstSixEndIndex])
@@ -67,7 +67,7 @@ struct PaymentCardCreateRequest: Codable {
             token: PaymentCardCreateRequest.fakeToken(),
             firstSixDigits: SecureUtility.encryptedSensitiveFieldValue(firstSix) ?? "",
             lastFourDigits: SecureUtility.encryptedSensitiveFieldValue(lastFour) ?? "",
-            nameOnCard: model.nameOnCard!,
+            nameOnCard: model.nameOnCard ?? "",
             month: SecureUtility.encryptedSensitiveFieldValue("\(month)") ?? "",
             year: SecureUtility.encryptedSensitiveFieldValue("\(year)") ?? "",
             fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month)),
@@ -79,7 +79,7 @@ struct PaymentCardCreateRequest: Codable {
     }
 
     /// This should only be used for creating genuine payment cards using Spreedly path in a production environment
-    init?(spreedlyResponse: SpreedlyResponse, hash: String?) {
+    init(spreedlyResponse: SpreedlyResponse, hash: String?) {
         let paymentMethodResponse = spreedlyResponse.transaction?.paymentMethod
         card = Card(
             token: paymentMethodResponse?.token ?? "",

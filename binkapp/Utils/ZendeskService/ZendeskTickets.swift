@@ -90,7 +90,7 @@ extension UIAlertController {
             lastNameTextField(textField)
         }
         let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "ok".localized, style: .default) { action in
+        let okAction = UIAlertAction(title: "ok".localized, style: .default) { _ in
             let firstName = alert.textFields?[0].text
             let lastName = alert.textFields?[1].text
             let request = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)

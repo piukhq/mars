@@ -22,6 +22,11 @@ class AddOrJoinViewModel {
         return membershipPlan.canAddCard
     }
     
+    var shouldShowNewCardButton: Bool {
+        let planSupportsEnrol = membershipPlan.featureSet?.hasLinkingSupportForType(.enrol) ?? false
+        return planSupportsEnrol && membershipPlan.account?.hasEnrolFields ?? false
+    }
+    
     func getMembershipPlan() -> CD_MembershipPlan {
         return membershipPlan
     }

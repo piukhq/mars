@@ -17,7 +17,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         return cell
     }()
     
-    private struct Constants {
+    private enum Constants {
         static let cardPadding: CGFloat = 30.0
         static let cardHeight: CGFloat = 120.0
         static let hyperlinkHeight: CGFloat = 54.0
@@ -51,7 +51,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         stackScrollView.insert(arrangedSubview: card, atIndex: 0, customSpacing: Constants.cardPadding)
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "security_and_privacy_title".localized)])
         configureLayout()
@@ -67,7 +67,6 @@ class AddPaymentCardViewController: BaseFormViewController {
     // MARK: - Layout
     
     func configureLayout() {
-        
         var constraints = [
             addButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
             addButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
@@ -77,9 +76,9 @@ class AddPaymentCardViewController: BaseFormViewController {
         
         constraints.append(contentsOf: [
             card.heightAnchor.constraint(equalToConstant: Constants.cardHeight),
-                card.widthAnchor.constraint(equalTo: collectionView.widthAnchor)
+            card.widthAnchor.constraint(equalTo: collectionView.widthAnchor)
         ])
-
+        
         NSLayoutConstraint.activate(constraints)
     }
     
@@ -104,7 +103,7 @@ class AddPaymentCardViewController: BaseFormViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         let attrString = NSAttributedString(
             string: title,
-            attributes: [.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
         )
         button.setAttributedTitle(attrString, for: .normal)
         button.contentHorizontalAlignment = .left
@@ -152,22 +151,18 @@ extension AddPaymentCardViewController: URLSessionDelegate {
 
 extension AddPaymentCardViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, textField: UITextField, shouldChangeTo newValue: String?, in range: NSRange, for field: FormField) -> Bool {
-        if let type = viewModel.paymentCardType,
-            let newValue = newValue,
-            let text = textField.text,
-            field.fieldType == .paymentCardNumber {
-            
+        if let type = viewModel.paymentCardType, let newValue = newValue, let text = textField.text, field.fieldType == .paymentCardNumber {
             /*
-             Potentially "needlessly" complex, but the below will insert whitespace to format card numbers correctly according
-             to the pattern available in PaymentCardType.
-             EXAMPLE: 4242424242424242 becomes 4242 4242 4242 4242
+            Potentially "needlessly" complex, but the below will insert whitespace to format card numbers correctly according
+            to the pattern available in PaymentCardType.
+            EXAMPLE: 4242424242424242 becomes 4242 4242 4242 4242
             */
             
-            if newValue.count > 0 {
+            if !newValue.isEmpty {
                 let values = type.lengthRange()
                 let cardLength = values.length + values.whitespaceIndexes.count
                 
-                if let textFieldText = textField.text, values.whitespaceIndexes.contains(range.location) && newValue.count > 0 {
+                if let textFieldText = textField.text, values.whitespaceIndexes.contains(range.location) && !newValue.isEmpty {
                     textField.text = textFieldText + " "
                 }
                 
@@ -178,7 +173,6 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
                     return newValue == filtered
                 }
             } else {
-                
                 // If newValue length is 0 then we can assume this is a delete, and if the next character after
                 // this one is a whitespace string then let's remove it.
                 
@@ -197,7 +191,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
                 return true
             }
         }
-    
+        
         return true
     }
     
@@ -207,7 +201,7 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
             viewModel.setPaymentCardType(type)
             viewModel.setPaymentCardFullPan(value)
         }
-
+        
         if field.fieldType == .text { viewModel.setPaymentCardName(value) }
         card.configureWithAddViewModel(viewModel.paymentCard)
     }
@@ -215,13 +209,13 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
     func formDataSource(_ dataSource: FormDataSource, selected options: [Any], for field: FormField) {
         // For mapping to the payment card expiry fields, we only care if we have BOTH
         guard options.count > 1 else { return }
-
+        
         let month = options.first as? Int
         let year = options.last as? Int
-
+        
         viewModel.setPaymentCardExpiry(month: month, year: year)
     }
-
+    
     func formDataSource(_ dataSource: FormDataSource, manualValidate field: FormField) -> Bool {
         switch field.fieldType {
         case .expiry(months: _, years: _):
@@ -231,9 +225,9 @@ extension AddPaymentCardViewController: FormDataSourceDelegate {
             guard let yearString = dateStrings[safe: 1] else { return false }
             guard let month = Int(monthString) else { return false }
             guard let year = Int(yearString) else { return false }
-            guard let expiryDate = Date.makeDate(year: year, month: month, day: 01, hr: 00, min: 00, sec: 00) else { return false }
-
-            return expiryDate.monthIsExpired
+            guard let expiryDate = Date.makeDate(year: year, month: month, day: 01, hr: 12, min: 00, sec: 00) else { return false }
+            
+            return expiryDate.monthHasNotExpired
         default:
             return false
         }
@@ -266,8 +260,8 @@ extension AddPaymentCardViewController: ScanDelegate {
 
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
-        let month = Int(creditCard.expiryMonth ?? "") ?? viewModel.paymentCard.month
-        let year = creditCard.expiryYear != nil ? Int("20\(creditCard.expiryYear ?? "")") : nil
+        let month = creditCard.expiryMonthInteger() ?? viewModel.paymentCard.month
+        let year = creditCard.expiryYearInteger() ?? viewModel.paymentCard.year
         Current.navigate.close(animated: true) {
             let paymentCardCreateModel = PaymentCardCreateModel(fullPan: creditCard.number, nameOnCard: self.viewModel.paymentCard.nameOnCard, month: month, year: year)
             self.card.configureWithAddViewModel(paymentCardCreateModel)

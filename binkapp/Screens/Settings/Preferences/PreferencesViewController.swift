@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreferencesViewController: BinkTrackableViewController {
+class PreferencesViewController: BinkViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var stackView: UIStackView!
@@ -47,13 +47,13 @@ class PreferencesViewController: BinkTrackableViewController {
         errorLabel.font = UIFont.bodyTextSmall
         errorLabel.textColor = .red
         
-        let attributedString = NSMutableAttributedString(string: "preferences_screen_description".localized, attributes: [.font : UIFont.bodyTextLarge])
-        let base: NSString = NSString(string: attributedString.string)
+        let attributedString = NSMutableAttributedString(string: "preferences_screen_description".localized, attributes: [.font: UIFont.bodyTextLarge])
+        let base = NSString(string: attributedString.string)
         let rewardsRange = base.range(of: "preferences_prompt_highlight_rewards".localized)
         let offersRange = base.range(of: "preferences_prompt_highlight_offers".localized)
         let updatesRange = base.range(of: "preferences_prompt_highlight_updates".localized)
         
-        let attributes: [NSAttributedString.Key : Any]  = [.font : UIFont.subtitle]
+        let attributes: [NSAttributedString.Key: Any]  = [.font: UIFont.subtitle]
         
         attributedString.addAttributes(attributes, range: rewardsRange)
         attributedString.addAttributes(attributes, range: offersRange)
@@ -98,7 +98,7 @@ extension PreferencesViewController: CheckboxViewDelegate {
 
         viewModel.putPreferences(preferences: dictionary, onSuccess: { [weak self] in
             self?.errorLabel.isHidden = true
-        }) { [weak self] (error) in
+        }) { [weak self] _ in
             checkboxView.reset()
             self?.errorLabel.text = "preferences_update_fail".localized
             self?.errorLabel.isHidden = false

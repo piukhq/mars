@@ -21,7 +21,7 @@ struct UserProfileResponse: Codable {
     var firstName: String?
     var lastName: String?
     var email: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case uid
         case firstName = "first_name"
@@ -33,7 +33,7 @@ struct UserProfileResponse: Codable {
 struct UserProfileUpdateRequest: Codable {
     var firstName: String?
     var lastName: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
         case lastName = "last_name"
@@ -41,7 +41,7 @@ struct UserProfileUpdateRequest: Codable {
 }
 
 class UserManager {
-    private struct Constants {
+    private enum Constants {
         static let tokenKey = "token_key"
         static let emailKey = "email_key"
         static let firstNameKey = "first_name_key"
@@ -54,7 +54,7 @@ class UserManager {
     lazy var currentEmailAddress: String? = getKeychainValue(for: Constants.emailKey)
     lazy var currentFirstName: String? = getKeychainValue(for: Constants.firstNameKey)
     lazy var currentLastName: String? = getKeychainValue(for: Constants.lastNameKey)
-
+    
     var hasCurrentUser: Bool {
         // We can safely assume that if we have no token, we have no user
         guard let token = currentToken else { return false }
@@ -63,7 +63,7 @@ class UserManager {
     }
     
     private func getKeychainValue(for key: String) -> String? {
-        var token: String? = nil
+        var token: String?
         
         do {
             try token = keychain.getString(key)
@@ -73,19 +73,19 @@ class UserManager {
         
         return token
     }
-        
+    
     func setNewUser<T>(with response: T) where T: TokenResponseProtocol {
-            do {
-                try setToken(with: response)
-                if let loginRegisterResponse = response as? LoginRegisterResponse {
-                    try setEmail(with: loginRegisterResponse)
-                }
-            } catch let error {
-                print(error)
+        do {
+            try setToken(with: response)
+            if let loginRegisterResponse = response as? LoginRegisterResponse {
+                try setEmail(with: loginRegisterResponse)
             }
+        } catch let error {
+            print(error)
+        }
     }
-
-    func setProfile(withResponse response: UserProfileResponse, updateZendeskIdentity: Bool)  {
+    
+    func setProfile(withResponse response: UserProfileResponse, updateZendeskIdentity: Bool) {
         // Store what we can, but don't bail if the values don't exist
         if let email = response.email {
             try? keychain.set(email, key: Constants.emailKey)
@@ -99,7 +99,7 @@ class UserManager {
             try? keychain.set(lastName, key: Constants.lastNameKey)
             currentLastName = lastName
         }
-
+        
         if updateZendeskIdentity {
             ZendeskService.setIdentity(firstName: currentFirstName, lastName: currentLastName)
         }
@@ -141,6 +141,21 @@ class UserManager {
         if AccessToken.current != nil {
             let loginManager = LoginManager()
             loginManager.logOut()
+        }
+    }
+    
+    func clearKeychainIfNecessary() {
+        if !Current.userDefaults.bool(forDefaultsKey: .hasPreviouslyLaunchedApp) {
+            for key in keychain.allKeys() {
+                if key != Constants.tokenKey {
+                    do {
+                        try keychain.remove(key)
+                    } catch {
+                        fatalError("Could not remove item from keychain on first launch: \(error)")
+                    }
+                }
+            }
+            Current.userDefaults.set(true, forDefaultsKey: .hasPreviouslyLaunchedApp)
         }
     }
 }

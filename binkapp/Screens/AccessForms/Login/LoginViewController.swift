@@ -9,8 +9,7 @@
 import UIKit
 
 class LoginViewController: BaseFormViewController, UserServiceProtocol {
-    
-    private struct Constants {
+    private enum Constants {
         static let hyperlinkHeight: CGFloat = 54.0
     }
     
@@ -21,6 +20,8 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         button.titleLabel?.font = UIFont.buttonText
         button.addTarget(self, action: .continueButtonTapped, for: .touchUpInside)
         button.isEnabled = false
+        button.accessibilityLabel = "Continue"
+        button.accessibilityIdentifier = "Continue"
         view.addSubview(button)
         return button
     }()
@@ -57,7 +58,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         button.translatesAutoresizingMaskIntoConstraints = false
         let attrString = NSAttributedString(
             string: title,
-            attributes: [.underlineStyle : NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
+            attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, .font: UIFont.linkUnderlined, .foregroundColor: UIColor.blueAccent]
         )
         button.setAttributedTitle(attrString, for: .normal)
         button.contentHorizontalAlignment = .left
@@ -71,7 +72,6 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     @objc func continueButtonTapped() {
-        
         continueButton.startLoading()
         
         let fields = dataSource.currentFieldValues()

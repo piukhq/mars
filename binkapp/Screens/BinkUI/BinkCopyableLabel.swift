@@ -9,7 +9,6 @@
 import UIKit
 
 class BinkCopyableLabel: UILabel {
-        
     override init(frame: CGRect) {
         super.init(frame: frame)
         sharedInit()
@@ -38,8 +37,8 @@ class BinkCopyableLabel: UILabel {
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return action == #selector(UIResponderStandardEditActions.copy)
-      }
-
+    }
+    
     @objc private func showMenu(_ sender: Any) {
         becomeFirstResponder()
         let menu = UIMenuController.shared

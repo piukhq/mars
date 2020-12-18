@@ -68,7 +68,7 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .start(let journey):
             Current.onboardingTrackingId = UUID().uuidString
@@ -164,7 +164,7 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .addLoyaltyCardRequest(let request, let formPurpose):
             guard let planId = request.membershipPlan else { return nil }
@@ -316,7 +316,7 @@ enum PLLAnalyticsEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .pllPatch(let loyaltyCard, let paymentCard, let response):
             guard let paymentId = paymentCard.uuid else { return nil }
@@ -378,7 +378,7 @@ enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
         }
     }
     
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .localPointsCollectionSuccess(let membershipCard):
             guard let planIdString = membershipCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
@@ -407,6 +407,66 @@ enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
             return [
                 "client_account_id": uuid,
                 "error_string": error.message
+            ]
+        }
+    }
+}
+
+enum InAppReviewAnalyticsEvent: BinkAnalyticsEvent {
+    case add
+    case transactions
+    case time
+
+    var name: String {
+        return "in_app_review_request"
+    }
+
+    var data: [String: Any]? {
+        switch self {
+        case .add:
+            return [
+                "review_trigger": "ADD"
+            ]
+        case .transactions:
+            return [
+                "review_trigger": "TRANSACTIONS"
+            ]
+        case .time:
+            return [
+                "review_trigger": "TIME"
+            ]
+        }
+    }
+
+    static var eventForInProgressJourney: InAppReviewAnalyticsEvent? {
+        if let _ = Current.inAppReviewableJourney as? PllLoyaltyInAppReviewableJourney {
+            return InAppReviewAnalyticsEvent.add
+        }
+        if let _ = Current.inAppReviewableJourney as? TransactionsHistoryInAppReviewableJourney {
+            return InAppReviewAnalyticsEvent.transactions
+        }
+        if let _ = Current.inAppReviewableJourney as? TimeAndUsageBasedInAppReviewableJourney {
+            return InAppReviewAnalyticsEvent.time
+        }
+        return nil
+    }
+}
+
+// MARK: - Dynamic actions
+
+enum DynamicActionsAnalyticsEvent: BinkAnalyticsEvent {
+    case triggered(DynamicAction)
+
+    var name: String {
+        return "dynamic_action_triggered"
+    }
+
+    var data: [String : Any]? {
+        switch self {
+        case .triggered(let action):
+            guard let actionName = action.name else { return nil }
+            return [
+                "dynamic_action_name": actionName
             ]
         }
     }

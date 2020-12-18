@@ -25,14 +25,14 @@ class PLRAccumulatorActiveCell: PLRAccumulatorCell {
 }
 
 extension LayoutHelper {
-    struct PLRCollectionViewCell {
+    enum PLRCollectionViewCell {
         static let infoButtonCornerRadius: CGFloat = 10
         static let accumulatorActiveCellHeight: CGFloat = 188
         static let accumulatorInactiveCellHeight: CGFloat = 170
         static let stampsActiveCellHeight: CGFloat = 200
         static let stampsInactiveCellHeight: CGFloat = 176
 
-        struct Accumulator {
+        enum Accumulator {
             static let progressBarCornerRadius: CGFloat = 6
         }
     }

@@ -22,6 +22,7 @@ class World {
     lazy var remoteConfig = RemoteConfigUtil()
     lazy var paymentCardScannerStrings = PaymentCardScannerStrings()
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
+    var inAppReviewableJourney: Any? // We cast this to the correct type using generics when we need to
     
     private let prodBundleIdentifier = "com.bink.wallet"
 
@@ -50,7 +51,6 @@ protocol BinkUserDefaults {
 }
 
 extension UserDefaults: BinkUserDefaults {
-
     enum Keys {
         case hasLaunchedWallet
         case userEmail
@@ -62,6 +62,9 @@ extension UserDefaults: BinkUserDefaults {
         case inAppReviewLastRequestedDate
         case inAppReviewRequestedMinorVersions
         case applyInAppReviewRules
+        case membershipCardMostRecentTransaction(membershipCardId: String)
+        case appLaunches
+        case hasPreviouslyLaunchedApp
         
         var keyValue: String {
             switch self {
@@ -85,6 +88,12 @@ extension UserDefaults: BinkUserDefaults {
                 return "inAppReviewRequestedMinorVersions"
             case .applyInAppReviewRules:
                 return "applyInAppReviewRules"
+            case .membershipCardMostRecentTransaction(let cardId):
+                return "membership_card_most_recent_transaction_\(cardId)"
+            case .appLaunches:
+                return "appLaunches"
+            case .hasPreviouslyLaunchedApp:
+                return "hasPreviouslyLaunchedApp"
             }
         }
     }

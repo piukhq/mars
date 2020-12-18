@@ -9,7 +9,7 @@
 import UIKit
 
 class PLRStampView: UIView {
-    struct Constants {
+    enum Constants {
         static let innerViewWidthHeight: CGFloat = 10
         static let innerViewCornerRadius: CGFloat = 5
         static let outerViewCornerRadius: CGFloat = 12
@@ -37,7 +37,7 @@ class PLRStampView: UIView {
             innerView.widthAnchor.constraint(equalToConstant: Constants.innerViewWidthHeight),
             innerView.heightAnchor.constraint(equalToConstant: Constants.innerViewWidthHeight),
             innerView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            innerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            innerView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
 }

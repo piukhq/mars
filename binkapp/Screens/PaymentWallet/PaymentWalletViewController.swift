@@ -45,6 +45,10 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
         }
     }
 
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        super.collectionView(collectionView, didSelectItemAt: indexPath)
+        resetAllSwipeStates()
+    }
 }
 
 extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelegate {
@@ -77,8 +81,14 @@ extension PaymentWalletViewController: WalletPaymentCardCollectionViewCellDelega
     }
 
     func cellSwipeBegan(cell: PaymentCardCollectionViewCell) {
-        let cells = collectionView.visibleCells.filter { $0 != cell }
-        guard let walletCells = cells as? [PaymentCardCollectionViewCell] else { return }
-        walletCells.forEach { $0.set(to: .closed) }
+        // We have to filter the cells based on their type, because otherwise the wallet prompt cells are included, and then we can't cast properly
+        let cells = collectionView.visibleCells.filter { $0 != cell }.filter { $0.isKind(of: PaymentCardCollectionViewCell.self) } as? [PaymentCardCollectionViewCell]
+        cells?.forEach { $0.set(to: .closed) }
+    }
+
+    func resetAllSwipeStates() {
+        // We have to filter the cells based on their type, because otherwise the wallet prompt cells are included, and then we can't cast properly
+        let cells = collectionView.visibleCells.filter { $0.isKind(of: PaymentCardCollectionViewCell.self) } as? [PaymentCardCollectionViewCell]
+        cells?.forEach { $0.set(to: .closed) }
     }
 }

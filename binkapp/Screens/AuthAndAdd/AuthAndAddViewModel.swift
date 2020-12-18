@@ -148,12 +148,13 @@ class AuthAndAddViewModel {
         
         repository.addMembershipCard(request: model, formPurpose: formPurpose, existingMembershipCard: existingMembershipCard, scrapingCredentials: scrapingCredentials, onSuccess: { card in
             if let card = card {
-                
                 // Navigate to LCD for the new card behind the modal
                 let lcdViewController = ViewControllerFactory.makeLoyaltyCardDetailViewController(membershipCard: card)
                 let lcdNavigationRequest = PushNavigationRequest(viewController: lcdViewController)
                 let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest) {
-                    if card.membershipPlan?.featureSet?.planCardType == .link {
+                    if card.membershipPlan?.isPLL == true {
+                        PllLoyaltyInAppReviewableJourney().begin()
+
                         let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
                         let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
                         Current.navigate.to(navigationRequest)
@@ -173,7 +174,6 @@ class AuthAndAddViewModel {
     }
     
     private func addGhostCard(with formFields: [FormField], checkboxes: [CheckboxView]? = nil, existingMembershipCard: CD_MembershipCard?) throws {
-        
         // Setup with both
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .add)
         populateCard(with: formFields, checkboxes: checkboxes, columnKind: .register)
@@ -199,7 +199,9 @@ class AuthAndAddViewModel {
             let tabNavigationRequest = TabBarNavigationRequest(tab: .loyalty, popToRoot: true, backgroundPushNavigationRequest: lcdNavigationRequest)
             Current.navigate.to(tabNavigationRequest)
 
-            if card.membershipPlan?.featureSet?.cardType == 2 {
+            if card.membershipPlan?.isPLL == true {
+                PllLoyaltyInAppReviewableJourney().begin()
+
                 let viewController = ViewControllerFactory.makePllViewController(membershipCard: card, journey: .newCard)
                 let navigationRequest = PushNavigationRequest(viewController: viewController, hidesBackButton: true)
                 Current.navigate.to(navigationRequest)
@@ -346,8 +348,8 @@ class AuthAndAddViewModel {
     
     func toReusableTemplate(title: String, description: String) {
         let attributedString = NSMutableAttributedString()
-        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font : UIFont.headline])
-        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font : UIFont.bodyTextLarge])
+        let attributedTitle = NSAttributedString(string: title + "\n", attributes: [NSAttributedString.Key.font: UIFont.headline])
+        let attributedBody = NSAttributedString(string: description, attributes: [NSAttributedString.Key.font: UIFont.bodyTextLarge])
         attributedString.append(attributedTitle)
         attributedString.append(attributedBody)
         

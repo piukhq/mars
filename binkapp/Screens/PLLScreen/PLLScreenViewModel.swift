@@ -11,30 +11,32 @@ import CardScan
 class PLLScreenViewModel {
     private var membershipCard: CD_MembershipCard
     private let repository = PLLScreenRepository()
-    private let delegate: LoyaltyCardFullDetailsModalDelegate?
+    private weak var delegate: LoyaltyCardFullDetailsModalDelegate?
     
     let journey: PllScreenJourney
     
     var activePaymentCards: [CD_PaymentCard]? {
-        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .active }
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .active && !$0.isExpired }
     }
     
     var pendingPaymentCards: [CD_PaymentCard]? {
-        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .pending }
+        return Current.wallet.paymentCards?.filter { $0.paymentCardStatus == .pending && !$0.isExpired }
     }
     
     var hasActivePaymentCards: Bool {
-        return activePaymentCards != nil && activePaymentCards?.count != 0
+        guard let activePaymentCards = activePaymentCards else { return false }
+        return !activePaymentCards.isEmpty
     }
     
-    private(set) var changedLinkCards = [CD_PaymentCard]()
+    private(set) var changedLinkCards: [CD_PaymentCard] = []
     
     var shouldShowActivePaymentCards: Bool {
         return hasActivePaymentCards
     }
     
     var shouldShowPendingPaymentCards: Bool {
-        return pendingPaymentCards != nil && pendingPaymentCards?.count != 0
+        guard let pendingPaymentCards = pendingPaymentCards else { return false }
+        return !pendingPaymentCards.isEmpty
     }
     
     var isEmptyPll: Bool {
@@ -72,7 +74,7 @@ class PLLScreenViewModel {
         self.delegate = delegate
     }
     
-    // MARK:  - Public methods
+    // MARK: - Public methods
     
     func addCardToChangedCardsArray(card: CD_PaymentCard) {
         if !(changedLinkCards.contains(card)) {
@@ -85,6 +87,11 @@ class PLLScreenViewModel {
     }
     
     func toggleLinkForMembershipCards(completion: @escaping (Bool) -> Void) {
+        if changedLinkCards.isEmpty {
+            /// This journey requires a PPL linkage to take place. Otherwise, end the journey.
+            PllLoyaltyInAppReviewableJourney.end()
+        }
+
         repository.toggleLinkForPaymentCards(membershipCard: membershipCard, changedLinkCards: changedLinkCards, onSuccess: {
             completion(true)
         }) { [weak self] error in

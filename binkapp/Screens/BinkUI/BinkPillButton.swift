@@ -107,7 +107,7 @@ class BinkMiniPillButton: BinkPillButton {
 }
 
 extension LayoutHelper {
-    struct PillButton {
+    enum PillButton {
         static let height: CGFloat = 52
         static let cornerRadius: CGFloat = PillButton.height / 2
         static let widthPercentage: CGFloat = 0.75
