@@ -52,9 +52,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         cameraButton.imageView?.contentMode = .scaleAspectFill
         cameraButton.addTarget(self, action: .handleScanButtonTap, for: .touchUpInside)
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            cameraButton.widthAnchor.constraint(equalToConstant: 30)
-        ])
+        cameraButton.setContentHuggingPriority(.required, for: .horizontal)
         return cameraButton
     }()
     
@@ -81,7 +79,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var inputAccessory: UIToolbar = {
-        let bar = UIToolbar()
+        let bar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done = UIBarButtonItem(title: "Done", style: .plain, target: self, action: .accessoryDoneTouchUpInside)
         bar.items = [flexSpace, done]

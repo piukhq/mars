@@ -173,6 +173,9 @@
 		70E867752489303F001ED282 /* SecureUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E867742489303F001ED282 /* SecureUtilityTests.swift */; };
 		70E86777248E6BE5001ED282 /* SettingsTableViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */; };
 		70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86779248E76C9001ED282 /* WebScrapingUtility.swift */; };
+		70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */; };
+		70E8E4AA256712D80027A244 /* CoreDataTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */; };
+		70E8E5A72567FB690027A244 /* OptionalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E5A62567FB690027A244 /* OptionalExtension.swift */; };
 		70E8DFDD2563E3050027A244 /* HeathrowPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8DFDC2563E3050027A244 /* HeathrowPointsScrapingAgent.swift */; };
 		70E8DFE62563E6F70027A244 /* HeathrowPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFE42563E6F60027A244 /* HeathrowPointsScrape.js */; };
 		70E8DFE72563E6F70027A244 /* HeathrowLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFE52563E6F70027A244 /* HeathrowLogin.js */; };
@@ -703,6 +706,9 @@
 		70E867742489303F001ED282 /* SecureUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureUtilityTests.swift; sourceTree = "<group>"; };
 		70E86776248E6BE5001ED282 /* SettingsTableViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewFooter.swift; sourceTree = "<group>"; };
 		70E86779248E76C9001ED282 /* WebScrapingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtility.swift; sourceTree = "<group>"; };
+		70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModelTests.swift; sourceTree = "<group>"; };
+		70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTestable.swift; sourceTree = "<group>"; };
+		70E8E5A62567FB690027A244 /* OptionalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalExtension.swift; sourceTree = "<group>"; };
 		70E8DFDC2563E3050027A244 /* HeathrowPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeathrowPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70E8DFE42563E6F60027A244 /* HeathrowPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = HeathrowPointsScrape.js; sourceTree = "<group>"; };
 		70E8DFE52563E6F70027A244 /* HeathrowLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = HeathrowLogin.js; sourceTree = "<group>"; };
@@ -1749,6 +1755,14 @@
 			path = "Local Points Scraping";
 			sourceTree = "<group>";
 		};
+		70E8E3792566DE310027A244 /* PLL */ = {
+			isa = PBXGroup;
+			children = (
+				70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */,
+			);
+			path = PLL;
+			sourceTree = "<group>";
+		};
 		70E8DFDB2563E2F20027A244 /* Heathrow */ = {
 			isa = PBXGroup;
 			children = (
@@ -1782,6 +1796,7 @@
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */,
 				EF758E1823229972000D26A9 /* Entities */,
 				EF758E1723225FAC000D26A9 /* Model */,
 				EF758E0623225F1C000D26A9 /* SwiftDatabase */,
@@ -1879,6 +1894,7 @@
 				EF94AF0C23D9F04700AAA039 /* DictionaryExtension.swift */,
 				BDFAA07C23E24DC600949271 /* UIImage+Extension.swift */,
 				EFD602F0243E11B2003AC746 /* UINavigationControllerExtension.swift */,
+				70E8E5A62567FB690027A244 /* OptionalExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2176,6 +2192,7 @@
 		EF485578231E5A3600FC9E5F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				70E8E3792566DE310027A244 /* PLL */,
 				CE085D5D255EA17D003966ED /* PLR */,
 				CE3878492562EEB3006BAC11 /* Barcode */,
 				3CDDEFFB243C75490009BD0B /* Settings */,
@@ -3242,6 +3259,7 @@
 				3C8BBC292326541D00363349 /* NotificationNameExtension.swift in Sources */,
 				BDBAA1BA235E1BBB00087E12 /* SettingsTableViewHeader.swift in Sources */,
 				EFA5F6D12379A53B0027AB80 /* VoucherBurnModel.swift in Sources */,
+				70E8E5A72567FB690027A244 /* OptionalExtension.swift in Sources */,
 				EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */,
 				EFA5F7152379A7C70027AB80 /* _CD_Tier.swift in Sources */,
 				BD99D2D8234FDF2C00823FC4 /* SettingsViewController.swift in Sources */,
@@ -3409,6 +3427,7 @@
 				3C05A9DE2327CE6300620583 /* PaymentCardModel.swift in Sources */,
 				EF8F0485238D583300BD708B /* _CD_LinkingSupport.swift in Sources */,
 				3CE892682338A79D00991DA8 /* UIImageView+RoundedCornersAndAspectFit.swift in Sources */,
+				70E8E4AA256712D80027A244 /* CoreDataTestable.swift in Sources */,
 				3CCC46C722FC6540008476E3 /* BarcodeViewModel.swift in Sources */,
 				EFA5F73A2379A7C70027AB80 /* _CD_BaseObject.swift in Sources */,
 				BD99D2DA234FDF6F00823FC4 /* SettingsViewModel.swift in Sources */,
@@ -3480,6 +3499,7 @@
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,
+				70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */,
 				CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */,
 				EF586FE52357A90C000917B6 /* PaymentCardCellViewModelTests.swift in Sources */,
 				DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */,
@@ -3672,7 +3692,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development: Jenkins Server (SJHC7DA3J5)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 59;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3706,7 +3726,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 59;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3912,7 +3932,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 59;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4059,7 +4079,7 @@
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Loyalty Angels Ltd (HC34M8YE55)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 59;
 				DEVELOPMENT_TEAM = HC34M8YE55;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -9,7 +9,7 @@
 import UIKit
 
 public extension UIApplication {
-    static func isRunningUnitTests() -> Bool {
+    static var isRunningUnitTests: Bool {
         return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     }
 }

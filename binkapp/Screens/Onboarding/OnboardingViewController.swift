@@ -134,8 +134,14 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
 
     private func setLayout() {
         let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.learningContainerHeight)
-        learningContainerHeightConstraint.priority = .init(999)
-
+        learningContainerHeightConstraint.priority = .defaultHigh
+        let floatingButtonsViewBottomConstraint = floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding)
+        floatingButtonsViewBottomConstraint.priority = .almostRequired
+        let floatingButtonsRightConstraint = floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        floatingButtonsRightConstraint.priority = .almostRequired
+        let floatingButtonsLeftConstraint = floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor)
+        floatingButtonsLeftConstraint.priority = .almostRequired
+        
         NSLayoutConstraint.activate([
             learningContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LayoutHelper.Onboarding.learningContainerTopPadding),
             learningContainer.leftAnchor.constraint(equalTo: view.leftAnchor),
