@@ -72,7 +72,7 @@ class AuthAndAddViewController: BaseFormViewController {
     // MARK: - Layout
     
     func configureLayout() {
-        buttonsView = BinkButtonsView(buttons: [primaryButton])
+        buttons = [primaryButton]
     }
     
     func configureUI() {

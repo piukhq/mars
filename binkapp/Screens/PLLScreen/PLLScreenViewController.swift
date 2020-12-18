@@ -297,7 +297,7 @@ private extension PLLScreenViewController {
         case .existingCard:
             primaryButton.setTitle(viewModel.isEmptyPll ? "pll_screen_add_cards_button_title".localized : "done".localized)
         }
-        buttonsView = BinkButtonsView(buttons: buttons)
+        self.buttons = buttons
         buttonsView.layoutIfNeeded()
         stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: buttonsView.bounds.height, right: 0)
         view.sendSubviewToBack(stackScroll)

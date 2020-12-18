@@ -84,7 +84,7 @@ class DynamicActionViewController: BinkViewController {
 
         configureAnimationIfNecessary()
 
-        buttonsView = BinkButtonsView(buttons: [button])
+        buttons = [button]
         NSLayoutConstraint.activate([
             descriptionLabel.bottomAnchor.constraint(greaterThanOrEqualTo: buttonsView.topAnchor, constant: -20)
         ])

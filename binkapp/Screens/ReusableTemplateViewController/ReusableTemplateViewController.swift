@@ -72,7 +72,7 @@ class ReusableTemplateViewController: BinkViewController, BarBlurring {
             buttons.append(BinkButton(type: .plain, title: secondaryTitle, action: secondaryAction))
         }
 
-        buttonsView = BinkButtonsView(buttons: buttons)
+        self.buttons = buttons
     }
 }
 

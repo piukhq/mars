@@ -34,7 +34,7 @@ class ForgotPasswordViewController: BaseFormViewController {
     }
     
     func configureLayout() {
-        buttonsView = BinkButtonsView(buttons: [continueButton])
+        buttons = [continueButton]
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {

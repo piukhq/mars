@@ -34,7 +34,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        buttonsView = BinkButtonsView(buttons: [continueButton])
+        buttons = [continueButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {

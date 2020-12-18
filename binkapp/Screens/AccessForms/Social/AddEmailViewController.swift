@@ -33,7 +33,7 @@ class AddEmailViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        buttonsView = BinkButtonsView(buttons: [continueButton])
+        buttons = [continueButton]
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {

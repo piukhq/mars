@@ -36,6 +36,12 @@ class BinkViewController: UIViewController {
     private var dynamicAction: DynamicAction?
 
     var screenName: String?
+
+    var buttons: [BinkButton] = [] {
+        didSet {
+            buttonsView = BinkButtonsView(buttons: buttons)
+        }
+    }
     var buttonsView: BinkButtonsView! {
         didSet {
             guard let buttonsView = buttonsView else { return }

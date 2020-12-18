@@ -148,7 +148,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
 
-        buttonsView = BinkButtonsView(buttons: [facebookButton, registerButton, loginButton])
+        buttons = [facebookButton, registerButton, loginButton]
     }
 
     @available(iOS 13.0, *)
