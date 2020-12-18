@@ -66,6 +66,7 @@ class BinkGradientButton: BinkPillButton {
 class BinkMiniGradientButton: BinkGradientButton {
     override func configure(title: String, hasShadow: Bool = true) {
         setTitle(title, for: .normal)
+        setTitleColor(.white, for: .normal)
         titleLabel?.font = .miniButtonText
         self.hasShadow = hasShadow
     }
