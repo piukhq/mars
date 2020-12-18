@@ -284,13 +284,10 @@ private extension PLLScreenViewController {
         pendingCardsTitleLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
         pendingCardsDetailLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
         pendingPaymentCardsTableView.isHidden = !viewModel.shouldShowPendingPaymentCards
-        
-        stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
 
         var buttons: [BinkButton] = [primaryButton]
         switch journey {
         case .newCard:
-//            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: viewModel.hasActivePaymentCards ? nil : "pll_screen_add_cards_button_title".localized, hasGradient: true)
             primaryButton.setTitle("done".localized)
 
             if !viewModel.hasActivePaymentCards {
@@ -298,10 +295,12 @@ private extension PLLScreenViewController {
                 buttons.append(secondaryButton)
             }
         case .existingCard:
-//            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil, hasGradient: true)
             primaryButton.setTitle(viewModel.isEmptyPll ? "pll_screen_add_cards_button_title".localized : "done".localized)
         }
         buttonsView = BinkButtonsView(buttons: buttons)
+        buttonsView.layoutIfNeeded()
+        stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: buttonsView.bounds.height + BinkButtonsView.bottomSafePadding, right: 0)
+        view.sendSubviewToBack(stackScroll)
     }
 
     func handlePrimaryButtonTap() {

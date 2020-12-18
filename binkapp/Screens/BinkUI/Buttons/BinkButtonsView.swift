@@ -36,9 +36,17 @@ class BinkButtonsView: UIStackView {
     func attach(to view: UIView) {
         view.addSubview(self)
         NSLayoutConstraint.activate([
-            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -BinkButtonsView.bottomPadding),
             leftAnchor.constraint(equalTo: view.leftAnchor),
             rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
     }
+}
+
+extension BinkButtonsView {
+    static let bottomPadding: CGFloat = 16
+    static let bottomSafePadding: CGFloat = {
+        let safeAreaBottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+        return bottomPadding + safeAreaBottom
+    }()
 }
