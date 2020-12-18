@@ -39,11 +39,17 @@ class PaymentCardCellViewModelTests: XCTestCase, CoreDataTestable {
         }
     }
     
+    
+    // MARK: - Helper Methods
+
     private func mapPaymentCard() {
         mapResponseToManagedObject(Self.basePaymentCardResponse, managedObjectType: CD_PaymentCard.self) { paymentCard in
             Self.paymentCard = paymentCard
         }
     }
+
+    
+    // MARK: - Tests
 
     func test_nameOnCard() {
         XCTAssertEqual(Self.sut.nameOnCardText, "Nick Farrant")

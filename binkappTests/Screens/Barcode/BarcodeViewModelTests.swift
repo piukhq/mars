@@ -32,12 +32,18 @@ class BarcodeViewModelTests: XCTestCase, CoreDataTestable {
         }
     }
     
+    
+    // MARK: - Helper Methods
+
     private func mapMembershipCard() {
         mapResponseToManagedObject(Self.membershipCardResponse, managedObjectType: CD_MembershipCard.self) { card in
             Self.membershipCard = card
         }
     }
     
+    
+    // MARK: - Tests
+
     func test_title_is_correct() {
         XCTAssertEqual(Self.sut.title, "Harvey Nichols")
     }

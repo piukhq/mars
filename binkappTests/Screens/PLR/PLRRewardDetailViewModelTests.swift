@@ -38,6 +38,9 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
         }
     }
     
+    
+    // MARK: - Helper Methods
+    
     private static func dynamicContentForVoucherSubtext() -> [DynamicContentField] {
         let expired = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsExpiredDetail.rawValue, value: "Expired")
         let redeemed = DynamicContentField(apiId: nil, column: DynamicContentColumn.voucherStampsRedeemedDetail.rawValue, value: "Redeemed")
@@ -67,6 +70,9 @@ class PLRRewardDetailViewModelTests: XCTestCase, CoreDataTestable {
         }
     }
     
+    
+    // MARK: - Tests
+
     func test_termsAndConditions_button_title_is_correct() {
         let planDocument = PlanDocumentModel(apiId: nil, name: "Terms & Conditions", documentDescription: nil, url: "https://policies.staging.gb.bink.com/wasabi/tc.html", display: [.voucher], checkbox: nil)
         let accountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Tesco", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: [planDocument], addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
