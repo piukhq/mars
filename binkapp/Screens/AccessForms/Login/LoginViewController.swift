@@ -33,7 +33,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "login_forgot_password".localized)])
         
-        buttons = [continueButton]
+        footerButtons = [continueButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -27,7 +27,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        buttons = [continueButton]
+        footerButtons = [continueButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {

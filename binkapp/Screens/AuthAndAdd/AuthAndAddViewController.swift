@@ -72,7 +72,7 @@ class AuthAndAddViewController: BaseFormViewController {
     // MARK: - Layout
     
     func configureLayout() {
-        buttons = [primaryButton]
+        footerButtons = [primaryButton]
     }
     
     func configureUI() {

@@ -34,7 +34,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        buttons = [continueButton]
+        footerButtons = [continueButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {

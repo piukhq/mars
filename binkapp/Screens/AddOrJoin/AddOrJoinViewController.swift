@@ -75,7 +75,7 @@ class AddOrJoinViewController: BinkViewController {
         if viewModel.shouldShowNewCardButton {
             buttons.append(getNewCardButton)
         }
-        self.buttons = buttons
+        footerButtons = buttons
     }
 }
 

@@ -84,9 +84,9 @@ class DynamicActionViewController: BinkViewController {
 
         configureAnimationIfNecessary()
 
-        buttons = [button]
+        footerButtons = [button]
         NSLayoutConstraint.activate([
-            descriptionLabel.bottomAnchor.constraint(greaterThanOrEqualTo: buttonsView.topAnchor, constant: -20)
+            descriptionLabel.bottomAnchor.constraint(greaterThanOrEqualTo: footerButtonsView.topAnchor, constant: -20)
         ])
     }
 

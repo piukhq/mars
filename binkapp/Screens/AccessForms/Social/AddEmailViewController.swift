@@ -33,7 +33,7 @@ class AddEmailViewController: BaseFormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        buttons = [continueButton]
+        footerButtons = [continueButton]
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {

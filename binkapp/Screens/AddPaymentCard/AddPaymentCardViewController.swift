@@ -62,7 +62,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     // MARK: - Layout
     
     func configureLayout() {
-        buttons = [addButton]
+        footerButtons = [addButton]
 
         NSLayoutConstraint.activate([
             card.heightAnchor.constraint(equalToConstant: Constants.cardHeight),

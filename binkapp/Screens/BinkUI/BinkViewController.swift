@@ -37,14 +37,14 @@ class BinkViewController: UIViewController {
 
     var screenName: String?
 
-    var buttons: [BinkButton] = [] {
+    var footerButtons: [BinkButton] = [] {
         didSet {
-            buttonsView = BinkButtonsView(buttons: buttons)
+            footerButtonsView = BinkButtonsView(buttons: footerButtons)
         }
     }
-    var buttonsView: BinkButtonsView! {
+    var footerButtonsView: BinkButtonsView! {
         didSet {
-            guard let buttonsView = buttonsView else { return }
+            guard let buttonsView = footerButtonsView else { return }
             buttonsView.attach(to: view)
         }
     }

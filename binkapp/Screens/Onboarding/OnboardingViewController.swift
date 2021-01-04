@@ -148,7 +148,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
 
-        buttons = [facebookButton, registerButton, loginButton]
+        footerButtons = [facebookButton, registerButton, loginButton]
     }
 
     @available(iOS 13.0, *)
@@ -165,7 +165,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     }
 
     private func configureUI() {
-        if #available(iOS 13.0, *), signInWithAppleEnabled, let buttonsView = buttonsView {
+        if #available(iOS 13.0, *), signInWithAppleEnabled, let buttonsView = footerButtonsView {
             view.addSubview(signInWithAppleButton)
             signInWithAppleButton.layer.applyDefaultBinkShadow()
             NSLayoutConstraint.activate([
@@ -177,7 +177,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             ])
 
             signInWithAppleButton.addTarget(self, action: #selector(handleAppleIdRequest), for: .touchUpInside)
-        } else if let buttonsView = buttonsView {
+        } else if let buttonsView = footerButtonsView {
             NSLayoutConstraint.activate([
                 buttonsView.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25)
             ])
