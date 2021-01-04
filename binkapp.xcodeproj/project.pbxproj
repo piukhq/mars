@@ -278,7 +278,6 @@
 		CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */; };
 		CE3878BE2563ED9A006BAC11 /* BarcodeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */; };
 		CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */; };
-		CE387AA6256574EF006BAC11 /* BrandHeaderViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */; };
 		CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */; };
 		CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
@@ -811,7 +810,6 @@
 		CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewControllerTests.swift; sourceTree = "<group>"; };
 		CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptTests.swift; sourceTree = "<group>"; };
 		CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderViewTests.swift; sourceTree = "<group>"; };
-		CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderViewMock.swift; sourceTree = "<group>"; };
 		CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskTickets.swift; sourceTree = "<group>"; };
 		CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCodeVisualiser.swift; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2391,7 +2389,6 @@
 			isa = PBXGroup;
 			children = (
 				EF7F6E6223E4296C00352DCF /* StorageUtilityMock.swift */,
-				CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */,
 				70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */,
 			);
 			path = Mocks;
@@ -3367,7 +3364,6 @@
 				3C3C604F2302E65600D9EA25 /* BrandModel.swift in Sources */,
 				B726334D23058D2700951037 /* PlanDocumentModel.swift in Sources */,
 				BDB0186C232D96EB00BFFA18 /* BaseFormViewController.swift in Sources */,
-				CE387AA6256574EF006BAC11 /* BrandHeaderViewMock.swift in Sources */,
 				EFA5F71C2379A7C70027AB80 /* _CD_MembershipPlanAccount.swift in Sources */,
 				EF46E286235E007300BA2CAF /* OnboardingViewModel.swift in Sources */,
 				B726335123058E2300951037 /* TierModel.swift in Sources */,

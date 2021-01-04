@@ -62,6 +62,16 @@
                ReferencedContainer = "container:binkapp.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5ECE048922CE579B001BA964"
+               BuildableName = "binkappUITests.xctest"
+               BlueprintName = "binkappUITests"
+               ReferencedContainer = "container:binkapp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
