@@ -291,8 +291,6 @@
 		CEFB742325668A5100896DE5 /* BrandHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */; };
 		DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB088544234FD8A30041A67A /* PLLScreenRepository.swift */; };
 		DB4D8EAD2440864C0085595D /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4D8EAC2440864C0085595D /* SettingsViewModelTests.swift */; };
-		DB4D8EAF24471FF00085595D /* SettingsFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4D8EAE24471FF00085595D /* SettingsFactoryMock.swift */; };
-		DB4D8EB1244722130085595D /* SettingsViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4D8EB0244722130085595D /* SettingsViewModelMock.swift */; };
 		DB8DE35A2373130100F07F11 /* Bundle+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8DE3592373130100F07F11 /* Bundle+binkapp.swift */; };
 		DBA6CB4F237C94CD000313D4 /* UIViewController+binkapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */; };
 		DBE54851240D514B00EDEE90 /* FilterBrandsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE5484F240D514B00EDEE90 /* FilterBrandsCollectionViewCell.swift */; };
@@ -827,8 +825,6 @@
 		CEF389EA255D72E90063C718 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		DB088544234FD8A30041A67A /* PLLScreenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenRepository.swift; sourceTree = "<group>"; };
 		DB4D8EAC2440864C0085595D /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
-		DB4D8EAE24471FF00085595D /* SettingsFactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFactoryMock.swift; sourceTree = "<group>"; };
-		DB4D8EB0244722130085595D /* SettingsViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelMock.swift; sourceTree = "<group>"; };
 		DB8DE3592373130100F07F11 /* Bundle+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+binkapp.swift"; sourceTree = "<group>"; };
 		DBA6CB4E237C94CD000313D4 /* UIViewController+binkapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+binkapp.swift"; sourceTree = "<group>"; };
 		DBE5484F240D514B00EDEE90 /* FilterBrandsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBrandsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2397,8 +2393,6 @@
 			isa = PBXGroup;
 			children = (
 				EF7F6E6223E4296C00352DCF /* StorageUtilityMock.swift */,
-				DB4D8EAE24471FF00085595D /* SettingsFactoryMock.swift */,
-				DB4D8EB0244722130085595D /* SettingsViewModelMock.swift */,
 				CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */,
 				CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */,
 				70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */,
@@ -3143,7 +3137,6 @@
 				EFA5F73B2379A7C70027AB80 /* CD_App.swift in Sources */,
 				BDB01876232E125C00BFFA18 /* ReusableView.swift in Sources */,
 				EFA5F72A2379A7C70027AB80 /* CD_Voucher.swift in Sources */,
-				DB4D8EAF24471FF00085595D /* SettingsFactoryMock.swift in Sources */,
 				EFA5F71A2379A7C70027AB80 /* CD_BaseObject.swift in Sources */,
 				BD458B38236B417D0029A538 /* LoginViewController.swift in Sources */,
 				EF4B46692346491E009A3651 /* PaymentCardDetailViewModel.swift in Sources */,
@@ -3163,7 +3156,6 @@
 				EF94AF0823D9B89B00AAA039 /* Anaytics.swift in Sources */,
 				EF94AF0523D887AE00AAA039 /* SpreedlyModels.swift in Sources */,
 				70661B93250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift in Sources */,
-				DB4D8EB1244722130085595D /* SettingsViewModelMock.swift in Sources */,
 				70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */,
 				EFF59F23234DEE7500CF3992 /* DetailNavigationTitleView.swift in Sources */,
 				EFEB5BF1237C7BA300E18743 /* PLRRewardDetailViewModel.swift in Sources */,
