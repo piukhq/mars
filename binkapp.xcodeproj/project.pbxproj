@@ -116,7 +116,6 @@
 		3CEABFD02316AB88009B1122 /* MembershipCardBalanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEABFCF2316AB87009B1122 /* MembershipCardBalanceModel.swift */; };
 		3CEABFD22316ABA9009B1122 /* MembershipCardAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEABFD12316ABA8009B1122 /* MembershipCardAmount.swift */; };
 		3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE169A2440550D00933859 /* BrowseBrandsViewModelTests.swift */; };
-		3CEE169D2440ABBC00933859 /* BrowseBrandsViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE169C2440ABBC00933859 /* BrowseBrandsViewModelMock.swift */; };
 		3CF029EF22F45ACE009A0E61 /* AddingOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF029EE22F45ACE009A0E61 /* AddingOptionView.swift */; };
 		3CF029F222F45AEC009A0E61 /* AddingOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF029F022F45AEC009A0E61 /* AddingOptionsViewController.swift */; };
 		3CF029F322F45AEC009A0E61 /* AddingOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CF029F122F45AEC009A0E61 /* AddingOptionsViewController.xib */; };
@@ -633,7 +632,6 @@
 		3CEABFCF2316AB87009B1122 /* MembershipCardBalanceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembershipCardBalanceModel.swift; sourceTree = "<group>"; };
 		3CEABFD12316ABA8009B1122 /* MembershipCardAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembershipCardAmount.swift; sourceTree = "<group>"; };
 		3CEE169A2440550D00933859 /* BrowseBrandsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewModelTests.swift; sourceTree = "<group>"; };
-		3CEE169C2440ABBC00933859 /* BrowseBrandsViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseBrandsViewModelMock.swift; sourceTree = "<group>"; };
 		3CF029EE22F45ACE009A0E61 /* AddingOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingOptionView.swift; sourceTree = "<group>"; };
 		3CF029F022F45AEC009A0E61 /* AddingOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingOptionsViewController.swift; sourceTree = "<group>"; };
 		3CF029F122F45AEC009A0E61 /* AddingOptionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddingOptionsViewController.xib; sourceTree = "<group>"; };
@@ -2401,7 +2399,6 @@
 				EF7F6E6223E4296C00352DCF /* StorageUtilityMock.swift */,
 				DB4D8EAE24471FF00085595D /* SettingsFactoryMock.swift */,
 				DB4D8EB0244722130085595D /* SettingsViewModelMock.swift */,
-				3CEE169C2440ABBC00933859 /* BrowseBrandsViewModelMock.swift */,
 				CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */,
 				CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */,
 				70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */,
@@ -3360,7 +3357,6 @@
 				EFA5F7102379A7C70027AB80 /* _CD_MembershipCard.swift in Sources */,
 				3C466B9E22FAE6190044478D /* CardModel.swift in Sources */,
 				706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */,
-				3CEE169D2440ABBC00933859 /* BrowseBrandsViewModelMock.swift in Sources */,
 				709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */,
 				EFA5F70D2379A7C70027AB80 /* _CD_PaymentCardAccount.swift in Sources */,
 				EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */,

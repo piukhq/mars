@@ -10,71 +10,60 @@ import XCTest
 @testable import binkapp
 
 class SettingsViewModelTests: XCTestCase {
+    var sut = SettingsViewModel(rowsWithActionRequired: [])
+    
     func test_sections_returnsANotNilArrayOfSections() {
-        let sut = SettingsViewModelMock()
         XCTAssertNotNil(sut.sections)
     }
     
     func test_title_returnsCorrectTitle() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.title, "settings_title".localized)
     }
     
     func test_cellHeight_returnsCorrectHeight() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.cellHeight, 60)
     }
     
     func test_rowsCount_returnsCorrectCountForAccountSection() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 0), 2)
     }
     
     func test_rowsCount_returnsCorrectCountForSupportSection() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 1), 3)
     }
     
     func test_rowsCount_returnsCorrectCountForAboutSection() {
-        let sut = SettingsViewModelMock()
-        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 2), 2)
+        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 2), 3)
     }
     
     func test_rowsCount_returnsCorrectCountForLegalSection() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 3), 2)
     }
     
     #if DEBUG
     func test_rowsCount_returnsCorrectCountForDebugSection() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 4), 1)
     }
     #endif
     
     func test_titleForSection_returnsCorrectTitleForAccountSection() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.titleForSection(atIndex: 0), "settings_section_account_title".localized)
     }
     
     func test_titleForSection_returnsCorrectTitleForSupportSection() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.titleForSection(atIndex: 1), "settings_section_support_title".localized)
     }
     
     func test_titleForSection_returnsCorrectTitleForAboutSection() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.titleForSection(atIndex: 2), "settings_section_about_title".localized)
     }
     
     func test_titleForSection_returnsCorrectTitleForLegalSection() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.titleForSection(atIndex: 3), "settings_section_legal_title".localized)
     }
     
     #if DEBUG
     func test_titleForSection_returnsCorrectTitleForDebugSection() {
-        let sut = SettingsViewModelMock()
         XCTAssertEqual(sut.titleForSection(atIndex: 4), "settings_section_debug_title".localized)
     }
     #endif
@@ -115,6 +104,10 @@ class SettingsViewModelTests: XCTestCase {
         XCTAssertEqual(howItWorks?.title, "How it works")
     }
     
+    func test_row_returnsCorrectRowForWhoWeAreRow() {
+        let whoWeAre = getSettingsRow(forRow: 2, section: 2)
+        XCTAssertEqual(whoWeAre?.title, "Who we are")
+    }
     func test_row_returnsCorrectRowForPrivacyRow() {
         let privacy = getSettingsRow(forRow: 0, section: 3)
         XCTAssertEqual(privacy?.title, "Privacy policy")
@@ -133,7 +126,6 @@ class SettingsViewModelTests: XCTestCase {
     #endif
     
     func getSettingsRow(forRow row: Int, section: Int) -> SettingsRow? {
-        let sut = SettingsViewModelMock()
         let indexPath = IndexPath(row: row, section: section)
         return sut.row(atIndexPath: indexPath)
     }
