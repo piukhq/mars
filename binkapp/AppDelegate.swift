@@ -113,6 +113,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         Current.wallet.refreshMembershipPlansIfNecessary()
         InAppReviewUtility.recordAppLaunch()
     }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        Current.wallet.handleAppDidEnterBackground()
+    }
 
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         // Facebook

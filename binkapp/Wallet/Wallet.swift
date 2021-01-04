@@ -16,6 +16,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     }
     
     private let refreshManager = WalletRefreshManager()
+    var foregroundRefreshCount = 0
 
     private(set) var membershipPlans: [CD_MembershipPlan]?
     private(set) var membershipCards: [CD_MembershipCard]?
@@ -60,6 +61,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             willPerformRefresh(true)
             loadWallets(forType: .reload, reloadPlans: false, isUserDriven: false) { [weak self] (success, _) in
                 if success {
+                    self?.foregroundRefreshCount += 1
                     self?.refreshManager.resetAccountsTimer()
                     Current.pointsScrapingManager.refreshBalancesIfNecessary()
                 }
@@ -90,6 +92,10 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             }
             completion?()
         })
+    }
+    
+    func handleAppDidEnterBackground() {
+        foregroundRefreshCount = 0
     }
 
     var hasPaymentCards: Bool {
