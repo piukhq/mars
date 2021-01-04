@@ -49,7 +49,6 @@ extension CoreDataTestable {
                 let managedObject = $0.mapToCoreData(context, .update, overrideID: nil) as! ManagedObjectType
                 managedObjects.append(managedObject)
             }
-//            try? context.save()
             completion(managedObjects)
         }
     }
@@ -69,9 +68,7 @@ extension CoreDataTestable {
                 let managedObject = $0.mapToCoreData(context, .update, overrideID: nil) as! ManagedObjectType
                 managedObjects.append(managedObject)
             }
-//            try? context.save()
             completion(managedObjects)
         }
     }
-
 }
