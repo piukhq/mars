@@ -133,6 +133,7 @@
 		5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047522CE579B001BA964 /* Assets.xcassets */; };
 		5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ECE047722CE579B001BA964 /* LaunchScreen.storyboard */; };
 		5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048322CE579B001BA964 /* binkappTests.swift */; };
+		70285D842588B674007B4298 /* BinkButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70285D832588B674007B4298 /* BinkButtonsView.swift */; };
 		70450DD4252B658F00F36566 /* DetectText.js in Resources */ = {isa = PBXBuildFile; fileRef = 70450DD3252B658F00F36566 /* DetectText.js */; };
 		70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */; };
 		70661B8B250795DF006DB009 /* BootsPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70661B89250795DF006DB009 /* BootsPointsScrape.js */; };
@@ -157,6 +158,7 @@
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
 		70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */; };
+		70CE8967258A807E00078ADA /* BinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CE8966258A807E00078ADA /* BinkButton.swift */; };
 		70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6863D257152F300403448 /* DynamicActionsTests.swift */; };
 		70D6864625715D4800403448 /* DynamicActionsUtilityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */; };
 		70D747FD2552A75D00E9D2C1 /* InAppReviewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */; };
@@ -209,7 +211,6 @@
 		B766599E23214A4600B327BE /* WalletLoyaltyCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C873FE422F073CE00FA3031 /* WalletLoyaltyCardCollectionViewCell.swift */; };
 		B774E9AA233123BD006D4131 /* ReusableTemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774E9A8233123BD006D4131 /* ReusableTemplateViewController.swift */; };
 		B774E9AB233123BD006D4131 /* ReusableTemplateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B774E9A9233123BD006D4131 /* ReusableTemplateViewController.xib */; };
-		B774E9AD233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */; };
 		B7D577B3231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */; };
 		B7D577B623180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */; };
 		B7D577B823180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D577B723180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift */; };
@@ -317,8 +318,6 @@
 		EF3BC915234779C900FE52ED /* PaymentWalletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BC914234779C900FE52ED /* PaymentWalletRepository.swift */; };
 		EF46E286235E007300BA2CAF /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF46E285235E007300BA2CAF /* OnboardingViewModel.swift */; };
 		EF46E288235E01DD00BA2CAF /* BinkPillButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF46E287235E01DD00BA2CAF /* BinkPillButton.swift */; };
-		EF46E28D235F642100BA2CAF /* BinkPrimarySecondaryButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF46E28B235F642000BA2CAF /* BinkPrimarySecondaryButtonView.swift */; };
-		EF46E28E235F642100BA2CAF /* BinkPrimarySecondaryButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF46E28C235F642000BA2CAF /* BinkPrimarySecondaryButtonView.xib */; };
 		EF480C1B2355F9470060B7C1 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C192355F9470060B7C1 /* WalletViewController.swift */; };
 		EF480C1F235754AD0060B7C1 /* WalletPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C1E235754AD0060B7C1 /* WalletPrompt.swift */; };
 		EF480C21235754C20060B7C1 /* WalletPromptFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF480C20235754C20060B7C1 /* WalletPromptFactory.swift */; };
@@ -369,7 +368,6 @@
 		EF8B700F23585F76006CE3DD /* PaymentCardCellViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B700E23585F76006CE3DD /* PaymentCardCellViewModelMock.swift */; };
 		EF8B701223587BE3006CE3DD /* MembershipCardBalanceModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */; };
 		EF8B701A235DDC75006CE3DD /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */; };
-		EF8B701B235DDC75006CE3DD /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF8B7019235DDC75006CE3DD /* OnboardingViewController.xib */; };
 		EF8BF1ED233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BF1EC233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift */; };
 		EF8BF1EF233CBCE300D2E5F3 /* CAGradientLayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BF1EE233CBCE300D2E5F3 /* CAGradientLayerExtension.swift */; };
 		EF8BF1F1233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8BF1F0233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift */; };
@@ -664,6 +662,7 @@
 		5ECE049022CE579B001BA964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67B8D6E0B8AB406C5DE33137 /* Pods-binkapp.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		6D524C6191655F19A0B9384F /* Pods-binkappUITests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store.xcconfig"; sourceTree = "<group>"; };
+		70285D832588B674007B4298 /* BinkButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButtonsView.swift; sourceTree = "<group>"; };
 		70450DD3252B658F00F36566 /* DetectText.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = DetectText.js; sourceTree = "<group>"; };
 		7049B63C24AB52AA00661128 /* binkapp - 30-06-20 - Add field alternatives.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 30-06-20 - Add field alternatives.xcdatamodel"; sourceTree = "<group>"; };
 		70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootsPointsScrapingAgent.swift; sourceTree = "<group>"; };
@@ -692,6 +691,7 @@
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
 		70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TescoPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionModel.swift; sourceTree = "<group>"; };
+		70CE8966258A807E00078ADA /* BinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButton.swift; sourceTree = "<group>"; };
 		70D6863D257152F300403448 /* DynamicActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsTests.swift; sourceTree = "<group>"; };
 		70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsUtilityMock.swift; sourceTree = "<group>"; };
 		70D747FC2552A75D00E9D2C1 /* InAppReviewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppReviewUtility.swift; sourceTree = "<group>"; };
@@ -744,7 +744,6 @@
 		B76659982320F68C00B327BE /* HyperlinkAlertController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HyperlinkAlertController.xib; sourceTree = "<group>"; };
 		B774E9A8233123BD006D4131 /* ReusableTemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTemplateViewController.swift; sourceTree = "<group>"; };
 		B774E9A9233123BD006D4131 /* ReusableTemplateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReusableTemplateViewController.xib; sourceTree = "<group>"; };
-		B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTermsAndConditionsViewModel.swift; sourceTree = "<group>"; };
 		B7D577B1231809D700C6B145 /* LoyaltyCardFullDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewController.swift; sourceTree = "<group>"; };
 		B7D577B523180A0400C6B145 /* LoyaltyCardFullDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsViewModel.swift; sourceTree = "<group>"; };
 		B7D577B723180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyCardFullDetailsRepository.swift; sourceTree = "<group>"; };
@@ -862,8 +861,6 @@
 		EF3BC914234779C900FE52ED /* PaymentWalletRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWalletRepository.swift; sourceTree = "<group>"; };
 		EF46E285235E007300BA2CAF /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		EF46E287235E01DD00BA2CAF /* BinkPillButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkPillButton.swift; sourceTree = "<group>"; };
-		EF46E28B235F642000BA2CAF /* BinkPrimarySecondaryButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinkPrimarySecondaryButtonView.swift; path = binkapp/Screens/BinkUI/BinkPrimarySecondaryButtonView.swift; sourceTree = SOURCE_ROOT; wrapsLines = 0; };
-		EF46E28C235F642000BA2CAF /* BinkPrimarySecondaryButtonView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BinkPrimarySecondaryButtonView.xib; path = binkapp/Screens/BinkUI/BinkPrimarySecondaryButtonView.xib; sourceTree = SOURCE_ROOT; };
 		EF480C192355F9470060B7C1 /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		EF480C1E235754AD0060B7C1 /* WalletPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPrompt.swift; sourceTree = "<group>"; };
 		EF480C20235754C20060B7C1 /* WalletPromptFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptFactory.swift; sourceTree = "<group>"; };
@@ -916,7 +913,6 @@
 		EF8B700E23585F76006CE3DD /* PaymentCardCellViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCellViewModelMock.swift; sourceTree = "<group>"; };
 		EF8B701123587BE3006CE3DD /* MembershipCardBalanceModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembershipCardBalanceModelTests.swift; sourceTree = "<group>"; };
 		EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
-		EF8B7019235DDC75006CE3DD /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
 		EF8BF1EC233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCellViewModel.swift; sourceTree = "<group>"; };
 		EF8BF1EE233CBCE300D2E5F3 /* CAGradientLayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayerExtension.swift; sourceTree = "<group>"; };
 		EF8BF1F0233E06ED00D2E5F3 /* AddPaymentCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentCardViewModel.swift; sourceTree = "<group>"; };
@@ -1441,6 +1437,7 @@
 		3CF054D322FDABCA0069E98A /* BinkUI */ = {
 			isa = PBXGroup;
 			children = (
+				70285D822588B657007B4298 /* Buttons */,
 				70E39848256FE78D009AD8CB /* Dynamic Action */,
 				EFD602EA243B9446003AC746 /* Animations */,
 				EFA81012240404F00000D21D /* Jailbroken */,
@@ -1450,8 +1447,6 @@
 				3CFDB226230C38A700E75A14 /* BinkTextField.swift */,
 				3CFDB224230C382400E75A14 /* BinkGradientButton.swift */,
 				3CD4F14D230D35AE0075F63C /* BinkInfoButton.swift */,
-				EF46E28B235F642000BA2CAF /* BinkPrimarySecondaryButtonView.swift */,
-				EF46E28C235F642000BA2CAF /* BinkPrimarySecondaryButtonView.xib */,
 				3CD39615231E8E7100CD5C31 /* LayoutHelper.swift */,
 				BDB01883232EB14A00BFFA18 /* StackScrollView.swift */,
 				EF46E287235E01DD00BA2CAF /* BinkPillButton.swift */,
@@ -1609,6 +1604,15 @@
 				BD458B37236B417D0029A538 /* LoginViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		70285D822588B657007B4298 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				70285D832588B674007B4298 /* BinkButtonsView.swift */,
+				70CE8966258A807E00078ADA /* BinkButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		7051C7A7247E790C007B37EB /* PaymentScanner */ = {
@@ -1826,7 +1830,6 @@
 			children = (
 				B774E9A8233123BD006D4131 /* ReusableTemplateViewController.swift */,
 				B774E9A9233123BD006D4131 /* ReusableTemplateViewController.xib */,
-				B774E9AC233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift */,
 				3C4BE8C7233B590100EC4BF6 /* ReusableModalViewModel.swift */,
 			);
 			path = ReusableTemplateViewController;
@@ -2434,7 +2437,6 @@
 			children = (
 				EF5884482360604B0011698D /* Views */,
 				EF8B7018235DDC75006CE3DD /* OnboardingViewController.swift */,
-				EF8B7019235DDC75006CE3DD /* OnboardingViewController.xib */,
 				EF46E285235E007300BA2CAF /* OnboardingViewModel.swift */,
 			);
 			path = Onboarding;
@@ -2852,7 +2854,6 @@
 				70661B8B250795DF006DB009 /* BootsPointsScrape.js in Resources */,
 				3CE24B2D2304014600B258C8 /* AddOrJoinViewController.xib in Resources */,
 				EFCAF9222371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib in Resources */,
-				EF8B701B235DDC75006CE3DD /* OnboardingViewController.xib in Resources */,
 				EF762583236B1967002214C3 /* OnboardingLearningView.xib in Resources */,
 				3CD3493F22F99E1D000C1F4D /* NunitoSans-ExtraBoldItalic.ttf in Resources */,
 				3CD3493C22F99E1D000C1F4D /* NunitoSans-Bold.ttf in Resources */,
@@ -2883,7 +2884,6 @@
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
 				70840E672562ADAD000E17A5 /* SuperdrugPointsScrape.js in Resources */,
 				3CD3493622F99E1D000C1F4D /* NunitoSans-BlackItalic.ttf in Resources */,
-				EF46E28E235F642100BA2CAF /* BinkPrimarySecondaryButtonView.xib in Resources */,
 				EFF59F1A234B73C900CF3992 /* CardDetailInfoTableViewCell.xib in Resources */,
 				EF5229BA2423FC96004AC972 /* prodPublicKey.der in Resources */,
 				70450DD4252B658F00F36566 /* DetectText.js in Resources */,
@@ -3192,7 +3192,6 @@
 				DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */,
 				BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */,
 				BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */,
-				EF46E28D235F642100BA2CAF /* BinkPrimarySecondaryButtonView.swift in Sources */,
 				EFA5F7132379A7C70027AB80 /* CD_MembershipCardImage.swift in Sources */,
 				EF51CCD7243B56150035BF02 /* LoyaltyScannerWidgetView.swift in Sources */,
 				3CF029EF22F45ACE009A0E61 /* AddingOptionView.swift in Sources */,
@@ -3218,7 +3217,6 @@
 				3C873FF622F073CF00FA3031 /* MainTabBarViewController.swift in Sources */,
 				EF8BF1ED233BA8AF00D2E5F3 /* PaymentCardCellViewModel.swift in Sources */,
 				CEACE7212543309E004DD27E /* BinkHTTPHeaders.swift in Sources */,
-				B774E9AD233123E8006D4131 /* PaymentTermsAndConditionsViewModel.swift in Sources */,
 				EFA5F7422379A7C70027AB80 /* _CD_MembershipPlan.swift in Sources */,
 				3CE24B2C2304014600B258C8 /* AddOrJoinViewModel.swift in Sources */,
 				3C05A9E02327D35100620583 /* PortraitNavigationController.swift in Sources */,
@@ -3308,6 +3306,7 @@
 				3C873FFA22F073CF00FA3031 /* LoyaltyWalletViewModel.swift in Sources */,
 				3CD802822391314900D26888 /* ForgotPasswordRepository.swift in Sources */,
 				70E31A8124E56B3B005A30D2 /* UserService.swift in Sources */,
+				70CE8967258A807E00078ADA /* BinkButton.swift in Sources */,
 				EF59A12824473589001B60B8 /* APIClient.swift in Sources */,
 				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
 				EF8F0481238D582300BD708B /* _CD_PlanDocument.swift in Sources */,
@@ -3382,6 +3381,7 @@
 				3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */,
 				EFA8101D240562100000D21D /* PlanDynamicContentModel.swift in Sources */,
 				3C2C91012319560C00D112E3 /* InputView.swift in Sources */,
+				70285D842588B674007B4298 /* BinkButtonsView.swift in Sources */,
 				BD9E4CD1237014D300C6F098 /* RootStateMachine.swift in Sources */,
 				EFF59F1E234C828900CF3992 /* PaymentCardDetailRepository.swift in Sources */,
 				EFA5F71B2379A7C70027AB80 /* CD_RegistrationField.swift in Sources */,

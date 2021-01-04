@@ -23,16 +23,11 @@ class AddPaymentCardViewController: BaseFormViewController {
         static let hyperlinkHeight: CGFloat = 54.0
         static let cellErrorLabelSafeSpacing: CGFloat = 60.0
     }
-    
-    private lazy var addButton: BinkGradientButton = {
-        let button = BinkGradientButton(frame: .zero)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Add", for: .normal)
-        button.titleLabel?.font = UIFont.buttonText
-        button.addTarget(self, action: .addButtonTapped, for: .touchUpInside)
-        button.isEnabled = false
-        view.addSubview(button)
-        return button
+
+    private lazy var addButton: BinkButton = {
+        return BinkButton(type: .gradient, title: "Add", enabled: false) { [weak self] in
+            self?.addButtonTapped()
+        }
     }()
     
     private var hasSetupCell = false
@@ -67,19 +62,12 @@ class AddPaymentCardViewController: BaseFormViewController {
     // MARK: - Layout
     
     func configureLayout() {
-        var constraints = [
-            addButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            addButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
-            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
-            addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ]
-        
-        constraints.append(contentsOf: [
+        footerButtons = [addButton]
+
+        NSLayoutConstraint.activate([
             card.heightAnchor.constraint(equalToConstant: Constants.cardHeight),
             card.widthAnchor.constraint(equalTo: collectionView.widthAnchor)
         ])
-        
-        NSLayoutConstraint.activate(constraints)
     }
     
     override func viewDidLayoutSubviews() {
@@ -114,13 +102,22 @@ class AddPaymentCardViewController: BaseFormViewController {
     
     // MARK: - Actions
     
-    @objc func addButtonTapped() {
+    private func addButtonTapped() {
         if viewModel.shouldDisplayTermsAndConditions {
-            viewModel.toPaymentTermsAndConditions(delegate: self)
+            viewModel.toPaymentTermsAndConditions(acceptAction: { [weak self] in
+                Current.navigate.close {
+                    self?.addButton.toggleLoading(isLoading: true)
+                    self?.viewModel.addPaymentCard { [weak self] in
+                        self?.addButton.toggleLoading(isLoading: false)
+                    }
+                }
+            }, declineAction: {
+                Current.navigate.close()
+            })
         } else {
-            addButton.startLoading()
+            addButton.toggleLoading(isLoading: true)
             viewModel.addPaymentCard { [weak self] in
-                self?.addButton.stopLoading()
+                self?.addButton.toggleLoading(isLoading: false)
             }
         }
     }
@@ -130,16 +127,7 @@ class AddPaymentCardViewController: BaseFormViewController {
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
-        addButton.isEnabled = fullFormIsValid
-    }
-}
-
-extension AddPaymentCardViewController: ReusableTemplateViewControllerDelegate {
-    func primaryButtonWasTapped(_ viewController: ReusableTemplateViewController) {
-        addButton.startLoading()
-        viewModel.addPaymentCard { [weak self] in
-            self?.addButton.stopLoading()
-        }
+        addButton.enabled = fullFormIsValid
     }
 }
 
@@ -249,7 +237,6 @@ extension AddPaymentCardViewController: FormCollectionViewCellDelegate {
 }
 
 private extension Selector {
-    static let addButtonTapped = #selector(AddPaymentCardViewController.addButtonTapped)
     static let privacyButtonTapped = #selector(AddPaymentCardViewController.privacyButtonTapped)
 }
 

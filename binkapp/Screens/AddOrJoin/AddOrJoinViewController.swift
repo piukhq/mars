@@ -11,17 +11,19 @@ import CardScan
 class AddOrJoinViewController: BinkViewController {
     @IBOutlet private weak var brandHeaderView: BrandHeaderView!
     @IBOutlet private weak var plansStackView: UIStackView!
-    @IBOutlet private weak var addCardButton: BinkGradientButton!
-    @IBOutlet private weak var newCardButton: BinkGradientButton!
     private let viewModel: AddOrJoinViewModel
-    
-    @IBAction func addCardButtonAction(_ sender: Any) {
-        viewModel.toAuthAndAddScreen()
-    }
-    
-    @IBAction func newCardButtonAction(_ sender: Any) {
-        viewModel.didSelectAddNewCard()
-    }
+
+    private lazy var addCardButton: BinkButton = {
+        return BinkButton(type: .gradient, title: "add_my_card_button".localized) { [weak self] in
+            self?.viewModel.toAuthAndAddScreen()
+        }
+    }()
+
+    private lazy var getNewCardButton: BinkButton = {
+        return BinkButton(type: .gradient, title: "get_new_card_button".localized) { [weak self] in
+            self?.viewModel.didSelectAddNewCard()
+        }
+    }()
     
     init(viewModel: AddOrJoinViewModel) {
         self.viewModel = viewModel
@@ -54,15 +56,6 @@ class AddOrJoinViewController: BinkViewController {
         let membershipPlan = viewModel.getMembershipPlan()
         
         brandHeaderView.configure(plan: membershipPlan, delegate: self)
-        
-        addCardButton.titleLabel?.font = UIFont.buttonText
-        addCardButton.setTitle("add_my_card_button".localized, for: .normal)
-        
-        newCardButton.titleLabel?.font = UIFont.buttonText
-        newCardButton.setTitle("get_new_card_button".localized, for: .normal)
-
-        addCardButton.translatesAutoresizingMaskIntoConstraints = false
-        newCardButton.translatesAutoresizingMaskIntoConstraints = false
 
         guard let cardType = membershipPlan.featureSet?.planCardType else { return }
         let storeView = LoyaltyPlanView()
@@ -75,8 +68,14 @@ class AddOrJoinViewController: BinkViewController {
         linkView.configure(for: .linkCell, cardType: cardType)
         plansStackView.addArrangedSubview(linkView)
 
-        addCardButton.isHidden = !viewModel.shouldShowAddCardButton
-        newCardButton.isHidden = !viewModel.shouldShowNewCardButton
+        var buttons: [BinkButton] = []
+        if viewModel.shouldShowAddCardButton {
+            buttons.append(addCardButton)
+        }
+        if viewModel.shouldShowNewCardButton {
+            buttons.append(getNewCardButton)
+        }
+        footerButtons = buttons
     }
 }
 

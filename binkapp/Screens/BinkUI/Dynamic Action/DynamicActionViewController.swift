@@ -24,8 +24,8 @@ struct DynamicActionViewModel {
         return dynamicAction.event?.body?.description
     }
 
-    var buttonTitle: String? {
-        return dynamicAction.event?.body?.cta?.title
+    var buttonTitle: String {
+        return dynamicAction.event?.body?.cta?.title ?? ""
     }
 
     var headerViewImageName: String? {
@@ -55,7 +55,12 @@ class DynamicActionViewController: BinkViewController {
     @IBOutlet private weak var headerView: DynamicActionHeaderView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var button: BinkGradientButton!
+
+    private lazy var button: BinkButton = {
+        return BinkButton(type: .gradient, title: viewModel.buttonTitle) { [weak self] in
+            self?.viewModel.buttonHandler()
+        }
+    }()
 
     private let viewModel: DynamicActionViewModel
 
@@ -76,10 +81,13 @@ class DynamicActionViewController: BinkViewController {
         titleLabel.font = .headline
         descriptionLabel.text = viewModel.descriptionString
         descriptionLabel.font = .bodyTextLarge
-        button.setTitle(viewModel.buttonTitle, for: .normal)
-        button.addTarget(self, action: #selector(buttonHandler), for: .touchUpInside)
 
         configureAnimationIfNecessary()
+
+        footerButtons = [button]
+        NSLayoutConstraint.activate([
+            descriptionLabel.bottomAnchor.constraint(greaterThanOrEqualTo: footerButtonsView.topAnchor, constant: -20)
+        ])
     }
 
     @objc private func buttonHandler() {

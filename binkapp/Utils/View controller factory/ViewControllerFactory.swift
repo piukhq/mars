@@ -49,10 +49,9 @@ enum ViewControllerFactory {
         return AuthAndAddViewController(viewModel: viewModel)
     }
     
-    static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration, delegate: ReusableTemplateViewControllerDelegate?) -> ReusableTemplateViewController {
-        let viewModel = PaymentTermsAndConditionsViewModel(configurationModel: configurationModel)
-        let viewController = ReusableTemplateViewController(viewModel: viewModel, delegate: delegate)
-        viewController.delegate = delegate
+    static func makePaymentTermsAndConditionsViewController(configurationModel: ReusableModalConfiguration) -> ReusableTemplateViewController {
+        let viewModel = ReusableModalViewModel(configurationModel: configurationModel)
+        let viewController = ReusableTemplateViewController(viewModel: viewModel)
         return viewController
     }
     
@@ -119,7 +118,7 @@ enum ViewControllerFactory {
         var configuration = ReusableModalConfiguration(text: attributedString)
         
         if let url = membershipPlan.account?.planURL {
-            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, mainButtonCompletion: {
+            configuration = ReusableModalConfiguration(text: attributedString, primaryButtonTitle: "go_to_site_button".localized, primaryButtonAction: {
                 /// Implemented navigation logic here instead of passing comletion block in via method property to reduce code repetition as it's called from multiple viewModels
                 let viewController = makeWebViewController(urlString: url)
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
@@ -187,7 +186,7 @@ enum ViewControllerFactory {
     
     static func makeReusableTemplateViewController(configuration: ReusableModalConfiguration, floatingButtons: Bool = true) -> ReusableTemplateViewController {
         let viewModel = ReusableModalViewModel(configurationModel: configuration)
-        return ReusableTemplateViewController(viewModel: viewModel, floatingButtons: floatingButtons)
+        return ReusableTemplateViewController(viewModel: viewModel)
     }
     
     static func makeDeleteConfirmationAlertController(message: String, deleteAction: @escaping EmptyCompletionBlock, onCancel: EmptyCompletionBlock? = nil) -> UIAlertController {

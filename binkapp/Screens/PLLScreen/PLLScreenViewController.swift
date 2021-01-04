@@ -101,13 +101,17 @@ class PLLScreenViewController: BinkViewController {
         tableView.separatorStyle = .none
         return tableView
     }()
-    
-    private lazy var floatingButtonsView: BinkPrimarySecondaryButtonView = {
-        let floatingButtonsView = BinkPrimarySecondaryButtonView(frame: .zero)
-        floatingButtonsView.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(floatingButtonsView)
-        return floatingButtonsView
+
+    private lazy var primaryButton: BinkButton = {
+        return BinkButton(type: .gradient) { [weak self] in
+            self?.handlePrimaryButtonTap()
+        }
+    }()
+
+    private lazy var secondaryButton: BinkButton = {
+        return BinkButton(type: .plain) { [weak self] in
+            self?.handleSecondaryButtonTap()
+        }
     }()
     
     // MARK: - Initialisation
@@ -147,7 +151,6 @@ class PLLScreenViewController: BinkViewController {
         configureLayout()
         activePaymentCardsTableView.register(PaymentCardCell.self, asNib: true)
         pendingPaymentCardsTableView.register(PaymentCardDetailLoyaltyCardStatusCell.self, asNib: true)
-        floatingButtonsView.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleWalletReload), name: .didLoadLocalWallet, object: nil)
@@ -176,13 +179,7 @@ class PLLScreenViewController: BinkViewController {
             pendingCardsDetailLabel.leftAnchor.constraint(equalTo: stackScroll.leftAnchor, constant: 25),
             pendingCardsDetailLabel.rightAnchor.constraint(equalTo: stackScroll.rightAnchor, constant: -25),
             pendingPaymentCardsTableView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            brandHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            floatingButtonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            floatingButtonsView.heightAnchor.constraint(equalToConstant: floatingButtonsView.isSecondaryButtonHidden ?
-                LayoutHelper.PrimarySecondaryButtonView.oneButtonHeight :
-                LayoutHelper.PrimarySecondaryButtonView.twoButtonsHeight)
+            brandHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
     
@@ -213,38 +210,6 @@ class PLLScreenViewController: BinkViewController {
 extension PLLScreenViewController: LoyaltyButtonDelegate {
     func brandHeaderViewWasTapped(_ brandHeaderView: BrandHeaderView) {
         viewModel.brandHeaderWasTapped()
-    }
-}
-
-// MARK: - BinkFloatingButtonsViewDelegate
-
-extension PLLScreenViewController: BinkPrimarySecondaryButtonViewDelegate {
-    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        guard Current.apiClient.networkIsReachable else {
-            viewModel.displayNoConnectivityPopup { [weak self] in
-                self?.viewModel.close()
-            }
-            return
-        }
-        if !viewModel.isEmptyPll && !viewModel.changedLinkCards.isEmpty {
-            floatingButtons.primaryButton.startLoading()
-            view.isUserInteractionEnabled = false
-        }
-        viewModel.toggleLinkForMembershipCards { [weak self] success in
-            guard let self = self else { return }
-            if success {
-                self.reloadContent()
-                self.view.isUserInteractionEnabled = true
-                floatingButtons.primaryButton.stopLoading()
-                self.handlePrimaryButtonPress()
-            } else {
-                self.viewModel.close()
-            }
-        }
-    }
-    
-    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        viewModel.toPaymentScanner(delegate: self)
     }
 }
 
@@ -319,23 +284,57 @@ private extension PLLScreenViewController {
         pendingCardsTitleLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
         pendingCardsDetailLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
         pendingPaymentCardsTableView.isHidden = !viewModel.shouldShowPendingPaymentCards
-        
-        stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: LayoutHelper.PrimarySecondaryButtonView.height, right: 0)
+
+        var buttons: [BinkButton] = [primaryButton]
         switch journey {
         case .newCard:
-            floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: viewModel.hasActivePaymentCards ? nil : "pll_screen_add_cards_button_title".localized, hasGradient: true)
+            primaryButton.setTitle("done".localized)
+
+            if !viewModel.hasActivePaymentCards {
+                secondaryButton.setTitle("pll_screen_add_cards_button_title".localized)
+                buttons.append(secondaryButton)
+            }
         case .existingCard:
-            viewModel.isEmptyPll ? floatingButtonsView.configure(primaryButtonTitle: "pll_screen_add_cards_button_title".localized, secondaryButtonTitle: nil) : floatingButtonsView.configure(primaryButtonTitle: "done".localized, secondaryButtonTitle: nil, hasGradient: true)
+            primaryButton.setTitle(viewModel.isEmptyPll ? "pll_screen_add_cards_button_title".localized : "done".localized)
+        }
+        footerButtons = buttons
+        footerButtonsView.layoutIfNeeded()
+        stackScroll.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: footerButtonsView.bounds.height, right: 0)
+        view.sendSubviewToBack(stackScroll)
+    }
+
+    func handlePrimaryButtonTap() {
+        guard Current.apiClient.networkIsReachable else {
+            viewModel.displayNoConnectivityPopup { [weak self] in
+                self?.viewModel.close()
+            }
+            return
+        }
+        if !viewModel.isEmptyPll && !viewModel.changedLinkCards.isEmpty {
+            primaryButton.toggleLoading(isLoading: true)
+            view.isUserInteractionEnabled = false
+        }
+        viewModel.toggleLinkForMembershipCards { [weak self] success in
+            guard let self = self else { return }
+            if success {
+                self.reloadContent()
+                self.view.isUserInteractionEnabled = true
+                self.primaryButton.toggleLoading(isLoading: false)
+
+                switch self.journey {
+                case .newCard:
+                    self.viewModel.close()
+                case .existingCard:
+                    self.viewModel.isEmptyPll ? self.viewModel.toPaymentScanner(delegate: self) : self.viewModel.close()
+                }
+            } else {
+                self.viewModel.close()
+            }
         }
     }
-    
-    func handlePrimaryButtonPress() {
-        switch journey {
-        case .newCard:
-            viewModel.close()
-        case .existingCard:
-            viewModel.isEmptyPll ? viewModel.toPaymentScanner(delegate: self) : viewModel.close()
-        }
+
+    func handleSecondaryButtonTap() {
+        viewModel.toPaymentScanner(delegate: self)
     }
 }
 

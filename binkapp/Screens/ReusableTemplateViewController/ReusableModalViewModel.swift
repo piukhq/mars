@@ -12,17 +12,17 @@ public struct ReusableModalConfiguration {
     var title: String
     var text: NSMutableAttributedString
     var primaryButtonTitle: String?
-    var mainButtonCompletion: () -> Void?
+    var primaryButtonAction: BinkButtonAction?
     var secondaryButtonTitle: String?
-    var secondaryButtonCompletion: () -> Void?
+    var secondaryButtonAction: BinkButtonAction?
     
-    init(title: String = "", text: NSMutableAttributedString, primaryButtonTitle: String? = nil, mainButtonCompletion: @escaping (() -> Void) = { }, secondaryButtonTitle: String? = nil, secondaryButtonCompletion: @escaping (() -> Void) = { }) {
+    init(title: String = "", text: NSMutableAttributedString, primaryButtonTitle: String? = nil, primaryButtonAction: BinkButtonAction? = nil, secondaryButtonTitle: String? = nil, secondaryButtonAction: BinkButtonAction? = nil) {
         self.title = title
         self.text = text
         self.primaryButtonTitle = primaryButtonTitle
-        self.mainButtonCompletion = mainButtonCompletion
+        self.primaryButtonAction = primaryButtonAction
         self.secondaryButtonTitle = secondaryButtonTitle
-        self.secondaryButtonCompletion = secondaryButtonCompletion
+        self.secondaryButtonAction = secondaryButtonAction
     }
 
     static func makeAttributedString(title: String, description: String) -> NSMutableAttributedString {
@@ -51,16 +51,16 @@ open class ReusableModalViewModel {
         return configurationModel.primaryButtonTitle
     }
     
-    var mainButtonCompletion: () -> Void? {
-        return configurationModel.mainButtonCompletion
+    var primaryButtonAction: BinkButtonAction? {
+        return configurationModel.primaryButtonAction
     }
     
     var secondaryButtonTitle: String? {
         return configurationModel.secondaryButtonTitle
     }
     
-    var secondaryButtonCompletion: () -> Void? {
-        return configurationModel.secondaryButtonCompletion
+    var secondaryButtonAction: BinkButtonAction? {
+        return configurationModel.secondaryButtonAction
     }
     
     var shouldHideButtonsView: Bool {
@@ -71,11 +71,11 @@ open class ReusableModalViewModel {
         self.configurationModel = configurationModel
     }
     
-    func mainButtonWasTapped(completion: (() -> Void)? = nil) {
-        mainButtonCompletion()
+    func mainButtonWasTapped(completion: (BinkButtonAction)? = nil) {
+        primaryButtonAction?()
     }
     
     func secondaryButtonWasTapped() {
-        secondaryButtonCompletion()
+        secondaryButtonAction?()
     }
 }

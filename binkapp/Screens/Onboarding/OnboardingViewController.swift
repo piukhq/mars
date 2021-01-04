@@ -11,15 +11,9 @@ import FBSDKLoginKit
 import AuthenticationServices
 
 class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
-    @IBOutlet private weak var facebookPillButton: BinkPillButton!
-    @IBOutlet private weak var floatingButtonsView: BinkPrimarySecondaryButtonView!
     private let viewModel = OnboardingViewModel()
     private var didLayoutSubviews = false
     private var timer: Timer?
-
-    private enum Constants {
-        static let floatingButtonsHeight: CGFloat = 129.0
-    }
     
     lazy var learningContainer: UIView = {
         let container = UIView()
@@ -56,6 +50,24 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     
     private lazy var signInWithAppleEnabled: Bool = {
         return APIConstants.isProduction && Current.isReleaseTypeBuild
+    }()
+
+    private lazy var facebookButton: BinkButton = {
+        return BinkButton(type: .pill(.facebook)) { [weak self] in
+            self?.handleFacebookButtonPressed()
+        }
+    }()
+
+    private lazy var registerButton: BinkButton = {
+        return BinkButton(type: .gradient, title: viewModel.signUpWithEmailButtonText) { [weak self] in
+            self?.viewModel.pushToRegister()
+        }
+    }()
+
+    private lazy var loginButton: BinkButton = {
+        return BinkButton(type: .plain, title: viewModel.loginWithEmailButtonText) { [weak self] in
+            self?.viewModel.pushToLogin()
+        }
     }()
 
     @available(iOS 13.0, *)
@@ -103,6 +115,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
+        view.backgroundColor = .white
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -122,12 +135,6 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     private func setLayout() {
         let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.learningContainerHeight)
         learningContainerHeightConstraint.priority = .defaultHigh
-        let floatingButtonsViewBottomConstraint = floatingButtonsView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -LayoutHelper.PrimarySecondaryButtonView.bottomPadding)
-        floatingButtonsViewBottomConstraint.priority = .almostRequired
-        let floatingButtonsRightConstraint = floatingButtonsView.rightAnchor.constraint(equalTo: view.rightAnchor)
-        floatingButtonsRightConstraint.priority = .almostRequired
-        let floatingButtonsLeftConstraint = floatingButtonsView.leftAnchor.constraint(equalTo: view.leftAnchor)
-        floatingButtonsLeftConstraint.priority = .almostRequired
         
         NSLayoutConstraint.activate([
             learningContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: LayoutHelper.Onboarding.learningContainerTopPadding),
@@ -135,21 +142,13 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             learningContainer.rightAnchor.constraint(equalTo: view.rightAnchor),
             learningContainerHeightConstraint,
 
-            floatingButtonsLeftConstraint,
-            floatingButtonsRightConstraint,
-            floatingButtonsViewBottomConstraint,
-            floatingButtonsView.heightAnchor.constraint(lessThanOrEqualToConstant: Constants.floatingButtonsHeight),
-
-            facebookPillButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
-            facebookPillButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            facebookPillButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            facebookPillButton.bottomAnchor.constraint(equalTo: floatingButtonsView.topAnchor, constant: -LayoutHelper.PillButton.verticalSpacing),
-
             pageControl.topAnchor.constraint(equalTo: learningContainer.bottomAnchor),
             pageControl.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.height),
             pageControl.widthAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.pageControlSize.width),
             pageControl.centerXAnchor.constraint(equalTo: learningContainer.centerXAnchor)
         ])
+
+        footerButtons = [facebookButton, registerButton, loginButton]
     }
 
     @available(iOS 13.0, *)
@@ -166,32 +165,23 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     }
 
     private func configureUI() {
-        if #available(iOS 13.0, *), signInWithAppleEnabled {
+        if #available(iOS 13.0, *), signInWithAppleEnabled, let buttonsView = footerButtonsView {
             view.addSubview(signInWithAppleButton)
             signInWithAppleButton.layer.applyDefaultBinkShadow()
             NSLayoutConstraint.activate([
                 signInWithAppleButton.heightAnchor.constraint(equalToConstant: 55),
                 signInWithAppleButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
                 signInWithAppleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                signInWithAppleButton.bottomAnchor.constraint(equalTo: facebookPillButton.topAnchor, constant: -LayoutHelper.PillButton.verticalSpacing),
+                signInWithAppleButton.bottomAnchor.constraint(equalTo: buttonsView.topAnchor, constant: -LayoutHelper.PillButton.verticalSpacing),
                 signInWithAppleButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25)
             ])
 
             signInWithAppleButton.addTarget(self, action: #selector(handleAppleIdRequest), for: .touchUpInside)
-        } else {
+        } else if let buttonsView = footerButtonsView {
             NSLayoutConstraint.activate([
-                facebookPillButton.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25)
+                buttonsView.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25)
             ])
         }
-
-        facebookPillButton.translatesAutoresizingMaskIntoConstraints = false
-        floatingButtonsView.translatesAutoresizingMaskIntoConstraints = false
-
-        facebookPillButton.configureForType(.facebook)
-        facebookPillButton.addTarget(self, action: #selector(handleFacebookButtonPressed), for: .touchUpInside)
-
-        floatingButtonsView.configure(primaryButtonTitle: viewModel.signUpWithEmailButtonText, secondaryButtonTitle: viewModel.loginWithEmailButtonText)
-        floatingButtonsView.delegate = self
 
         view.layoutIfNeeded() // Get those autolayout fraaaamez
         scrollView.frame = CGRect(x: 0, y: 0, width: learningContainer.frame.width, height: learningContainer.frame.height)
@@ -211,7 +201,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
 
     // MARK: Button handlers
 
-    @objc private func handleFacebookButtonPressed() {
+    private func handleFacebookButtonPressed() {
         guard Current.apiClient.networkIsReachable else {
             let alert = ViewControllerFactory.makeNoConnectivityAlertController()
             let navigationRequest = AlertNavigationRequest(alertController: alert)
@@ -283,16 +273,6 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     
     @objc func openDebugMenu() {
         viewModel.openDebugMenu()
-    }
-}
-
-extension OnboardingViewController: BinkPrimarySecondaryButtonViewDelegate {
-    func binkFloatingButtonsPrimaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        viewModel.pushToRegister()
-    }
-
-    func binkFloatingButtonsSecondaryButtonWasTapped(_ floatingButtons: BinkPrimarySecondaryButtonView) {
-        viewModel.pushToLogin()
     }
 }
 
