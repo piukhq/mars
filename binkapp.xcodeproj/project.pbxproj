@@ -278,7 +278,6 @@
 		CE38784B2562EEDA006BAC11 /* BarcodeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */; };
 		CE3878BE2563ED9A006BAC11 /* BarcodeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */; };
 		CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */; };
-		CE3878D7256510CC006BAC11 /* WalletPromptMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */; };
 		CE387AA6256574EF006BAC11 /* BrandHeaderViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */; };
 		CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */; };
 		CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */; };
@@ -811,7 +810,6 @@
 		CE38784A2562EEDA006BAC11 /* BarcodeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewModelTests.swift; sourceTree = "<group>"; };
 		CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewControllerTests.swift; sourceTree = "<group>"; };
 		CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptTests.swift; sourceTree = "<group>"; };
-		CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptMock.swift; sourceTree = "<group>"; };
 		CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderViewTests.swift; sourceTree = "<group>"; };
 		CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderViewMock.swift; sourceTree = "<group>"; };
 		CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskTickets.swift; sourceTree = "<group>"; };
@@ -2393,7 +2391,6 @@
 			isa = PBXGroup;
 			children = (
 				EF7F6E6223E4296C00352DCF /* StorageUtilityMock.swift */,
-				CE3878D6256510CC006BAC11 /* WalletPromptMock.swift */,
 				CE387AA5256574EF006BAC11 /* BrandHeaderViewMock.swift */,
 				70D6864525715D4800403448 /* DynamicActionsUtilityMock.swift */,
 			);
@@ -3143,7 +3140,6 @@
 				BD458B4B236ED5B90029A538 /* AddEmailViewController.swift in Sources */,
 				BD9E4CCF236F8D6100C6F098 /* RenewTokenResponse.swift in Sources */,
 				EF758E0823225F35000D26A9 /* Database.swift in Sources */,
-				CE3878D7256510CC006BAC11 /* WalletPromptMock.swift in Sources */,
 				BD9FB6B62338120700E5559A /* TransactionsViewController.swift in Sources */,
 				BD458B3C236B5B710029A538 /* LoginRegisterResponse.swift in Sources */,
 				3C119BA12315332B0015CE91 /* LoyaltyPlanView.swift in Sources */,

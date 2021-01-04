@@ -13,7 +13,7 @@ protocol LoyaltyButtonDelegate: class {
 
 class BrandHeaderView: CustomView {
     @IBOutlet private weak var logoImageView: UIImageView!
-    @IBOutlet private weak var loyaltyPlanButton: BinkInfoButton!
+    @IBOutlet weak var loyaltyPlanButton: BinkInfoButton!
     
     private weak var delegate: LoyaltyButtonDelegate?
     
