@@ -43,6 +43,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         return imageView
     }()
     
+    private lazy var secondaryColorView: UIView = {
+        let secondaryColorView = UIView()
+        secondaryColorView.translatesAutoresizingMaskIntoConstraints = false
+        secondaryColorView.backgroundColor = viewModel.secondaryColor
+        return secondaryColorView
+    }()
+    
     private lazy var showBarcodeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .bodyTextLarge
@@ -101,6 +108,10 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
     internal lazy var blurBackground = defaultBlurredBackground()
+    private var navigationBarShouldBeVisible = false
+    private var previousOffset = 0.0
+    private var topConstraint: NSLayoutConstraint?
+    private var didLayoutSubviews = false
     
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -114,9 +125,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
         configureUI()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
     }
     
@@ -129,11 +138,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureModules()
+        navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
+        navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -143,15 +154,12 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
         if PllLoyaltyInAppReviewableJourney.isInProgress {
             requestInAppReview()
         }
+        navigationController?.setNavigationBarVisibility(true, animated: true)
     }
-    
-    // MARK: - Navigation Bar Blurring
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        guard let bar = navigationController?.navigationBar else { return }
-        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
+        didLayoutSubviews = true
     }
 }
 
@@ -191,7 +199,7 @@ private extension LoyaltyCardFullDetailsViewController {
     func configureUI() {
         view.addSubview(stackScrollView)
         stackScrollView.add(arrangedSubview: brandHeader)
-        
+        view.insertSubview(secondaryColorView, belowSubview: brandHeader)
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
         
         if viewModel.membershipCard.card?.barcode != nil || viewModel.membershipCard.card?.membershipId != nil {
@@ -268,6 +276,8 @@ private extension LoyaltyCardFullDetailsViewController {
         } else {
             brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
         }
+        
+        configureSecondaryColorViewLayout()
     }
     
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
@@ -298,6 +308,21 @@ private extension LoyaltyCardFullDetailsViewController {
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
             informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
         ])
+    }
+    
+    func configureSecondaryColorViewLayout() {
+        topConstraint = secondaryColorView.topAnchor.constraint(equalTo: stackScrollView.topAnchor)
+        topConstraint?.priority = .almostRequired
+        NSLayoutConstraint.activate([
+            secondaryColorView.leftAnchor.constraint(equalTo: brandHeader.leftAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
+            secondaryColorView.rightAnchor.constraint(equalTo: brandHeader.rightAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
+            secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
+        ])
+
+
+        topConstraint?.isActive = true
+
+        view.sendSubviewToBack(secondaryColorView)
     }
     
     func configureModules() {
@@ -341,11 +366,25 @@ extension LoyaltyCardFullDetailsViewController: BinkModuleViewDelegate {
 
 extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard didLayoutSubviews else { return }
+
         let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
-        
-        let offset = LayoutHelper.LoyaltyCardDetail.navBarTitleViewScrollOffset
-        navigationItem.titleView = scrollView.contentOffset.y > offset ? titleView : nil
+
+        let navBarHeight = navigationController?.navigationBar.frame.height ?? 0
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let topBarHeight = navBarHeight + statusBarHeight
+        let secondaryColorViewHeight = secondaryColorView.frame.height
+
+        if secondaryColorViewHeight < topBarHeight {
+            navigationController?.setNavigationBarVisibility(true)
+            navigationBarShouldBeVisible = true
+            navigationItem.titleView = titleView
+        } else if secondaryColorViewHeight > topBarHeight {
+            navigationController?.setNavigationBarVisibility(false)
+            navigationBarShouldBeVisible = false
+            navigationItem.titleView = nil
+        }
     }
 }
 
@@ -359,7 +398,6 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
 
 extension LayoutHelper {
     enum LoyaltyCardDetail {
-        static let navBarTitleViewScrollOffset: CGFloat = 100
         static let contentPadding: CGFloat = 25
         static let headerToBarcodeButtonPadding: CGFloat = 12
         private static let brandHeaderAspectRatio: CGFloat = 115 / 182
