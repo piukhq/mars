@@ -56,9 +56,7 @@ class CheckboxView: CustomView {
     
     func configure(title: NSMutableAttributedString, columnName: String, columnKind: FormField.ColumnKind, url: URL? = nil, delegate: CheckboxViewDelegate? = nil, optional: Bool = false, textSelected: TextAction? = nil, hideCheckbox: Bool = false) {
         checkboxButton.layer.cornerRadius = 4
-        if #available(iOS 13.0, *) {
-            checkboxButton.layer.cornerCurve = .continuous
-        }
+        checkboxButton.layer.cornerCurve = .continuous
         
         self.columnName = columnName
         self.columnKind = columnKind

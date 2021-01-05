@@ -60,11 +60,7 @@ class WebViewController: UIViewController {
     
     private func setActivityIndicator() {
         activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: webView.frame.width, height: webView.frame.height))
-        if #available(iOS 13.0, *) {
-            activityIndicator.style = .large
-        } else {
-            activityIndicator.style = .gray
-        }
+        activityIndicator.style = .large
         activityIndicator.hidesWhenStopped = true
         webView.addSubview(activityIndicator)
     }

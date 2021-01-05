@@ -46,23 +46,13 @@ class MainTabBarViewModel {
         let item = UITabBarItem(title: nil, image: UIImage(named: "loyaltyInactive"), tag: Buttons.loyaltyItem.rawValue)
         item.selectedImage = UIImage(named: "loyaltyActive")
         item.title = "Loyalty"
-        
-        if #available(iOS 13, *) {
-            item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)
-        }
-        
+        item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)
         return item
     }
     
     private func getTabBarAddButton() -> UITabBarItem {
         let item = UITabBarItem(title: nil, image: UIImage(named: "add"), tag: Buttons.addItem.rawValue)
-        
-        if #available(iOS 13, *) {
-            item.imageInsets = UIEdgeInsets(top: Constants.centerInsets, left: 0, bottom: -Constants.centerInsets, right: 0)
-        } else {
-            item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)
-        }
-        
+        item.imageInsets = UIEdgeInsets(top: Constants.centerInsets, left: 0, bottom: -Constants.centerInsets, right: 0)
         return item
     }
     
@@ -70,11 +60,7 @@ class MainTabBarViewModel {
         let item = UITabBarItem(title: nil, image: UIImage(named: "paymentInactive"), tag: Buttons.paymentItem.rawValue)
         item.selectedImage = UIImage(named: "paymentActive")
         item.title = "Payment"
-        
-        if #available(iOS 13, *) {
-            item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)
-        }
-        
+        item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)       
         return item
     }
     

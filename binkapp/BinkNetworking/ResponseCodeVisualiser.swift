@@ -79,8 +79,6 @@ class StatusCodeAlertView: UIView {
     private func configure() {
         addSubview(textLabel)
         layer.cornerRadius = 15
-        if #available(iOS 13.0, *) {
-            layer.cornerCurve = .continuous
-        }
+        layer.cornerCurve = .continuous
     }
 }

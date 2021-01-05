@@ -215,9 +215,7 @@ class BaseNavigationHandler {
             viewController.modalTransitionStyle = navigationRequest.transition
             
             if !navigationRequest.dragToDismiss {
-                if #available(iOS 13.0, *) {
-                    viewController.isModalInPresentation = true
-                }
+                viewController.isModalInPresentation = true
             }
             
             // We don't need to depend on a navigation controller to present modally, so simply present from the top view controller if possible
