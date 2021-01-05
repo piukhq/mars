@@ -34,7 +34,7 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
             return cell
         } else {
             let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let paymentCard = viewModel.cards?[indexPath.row] else {
+            guard let paymentCard = viewModel.cards?[safe: indexPath.row] else {
                 return cell
             }
 
