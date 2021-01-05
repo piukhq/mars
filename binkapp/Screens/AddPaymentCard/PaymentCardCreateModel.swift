@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CardScan
 
 class PaymentCardCreateModel: Codable {
     var fullPan: String?
@@ -46,5 +47,30 @@ class PaymentCardCreateModel: Codable {
                 fullPan = formattedFullPan
             }
         }
+    }
+}
+
+extension CreditCard {
+    func expiryMonthInteger() -> Int? {
+        guard let expiryMonth = expiryMonth, let expiryMonthInt = Int(expiryMonth)  else {
+            return nil
+        }
+        
+        return expiryMonthInt
+    }
+    
+    func expiryYearInteger() -> Int? {
+        var year = expiryYear
+        
+        // Is the digit exactly two? We need to prepend 20 if so
+        if let safeYear = year, safeYear.count == 2 {
+            year = "20" + safeYear
+        }
+        
+        guard let expiryYear = year, let expiryYearInt = Int(expiryYear)  else {
+            return nil
+        }
+        
+        return expiryYearInt
     }
 }

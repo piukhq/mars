@@ -14,15 +14,10 @@ enum SocialLoginRequestType {
 }
 
 class SocialTermsAndConditionsViewController: BaseFormViewController, UserServiceProtocol {
-    private lazy var continueButton: BinkGradientButton = {
-        let button = BinkGradientButton(frame: .zero)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("continue_button_title".localized, for: .normal)
-        button.titleLabel?.font = UIFont.buttonText
-        button.addTarget(self, action: .continueButtonTapped, for: .touchUpInside)
-        button.isEnabled = false
-        view.addSubview(button)
-        return button
+    private lazy var continueButton: BinkButton = {
+        return BinkButton(type: .gradient, title: "continue_button_title".localized, enabled: false) { [weak self] in
+            self?.continueButtonTapped()
+        }
     }()
 
     private let requestType: SocialLoginRequestType
@@ -39,21 +34,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        NSLayoutConstraint.activate([
-            continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            continueButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
-            continueButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
-            continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        
-        //TODO: remove this if we don't need to display the old screen at all
-        //        let lastView = stackScrollView.arrangedSubviews.last
-        //        stackScrollView.add(arrangedSubview: message)
-        //
-        //        if let lastView = lastView {
-        //            stackScrollView.customPadding(18.0, after: lastView)
-        //        }
+        footerButtons = [continueButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,12 +43,12 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
-        continueButton.isEnabled = fullFormIsValid
+        continueButton.enabled = fullFormIsValid
     }
     
     @objc func continueButtonTapped() {
         let preferenceCheckboxes = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
-        continueButton.startLoading()
+        continueButton.toggleLoading(isLoading: true)
         
         switch requestType {
         case .facebook(let request):
@@ -106,7 +87,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
                     
                     Current.rootStateMachine.handleLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                    self?.continueButton.stopLoading()
+                    self?.continueButton.toggleLoading(isLoading: false)
                     
                     BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
@@ -145,7 +126,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
                     
                     Current.rootStateMachine.handleLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                    self?.continueButton.stopLoading()
+                    self?.continueButton.toggleLoading(isLoading: false)
                     
                     BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
@@ -189,7 +170,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
 
     private func handleAuthError() {
         Current.userManager.removeUser()
-        continueButton.stopLoading()
+        continueButton.toggleLoading(isLoading: false)
         showError()
     }
     
@@ -209,8 +190,4 @@ extension SocialTermsAndConditionsViewController: FormDataSourceDelegate {
 extension SocialTermsAndConditionsViewController: FormCollectionViewCellDelegate {
     func formCollectionViewCell(_ cell: FormCollectionViewCell, didSelectField: UITextField) {}
     func formCollectionViewCell(_ cell: FormCollectionViewCell, shouldResignTextField textField: UITextField) {}
-}
-
-private extension Selector {
-    static let continueButtonTapped = #selector(SocialTermsAndConditionsViewController.continueButtonTapped)
 }

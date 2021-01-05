@@ -27,14 +27,17 @@ class PortraitNavigationController: UINavigationController {
         if isModallyPresented && shouldShowCloseButton {
             rootViewController.navigationItem.rightBarButtonItem = closeButton
         }
+        configureNavigationBarAppearance()
     }
     
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
+        configureNavigationBarAppearance()
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        configureNavigationBarAppearance()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -87,4 +90,38 @@ class PortraitNavigationController: UINavigationController {
     @objc private func close() {
         Current.navigate.close()
     }
+}
+
+// MARK: - Bar appearance
+
+extension PortraitNavigationController {
+    func configureNavigationBarAppearance() {
+        if #available(iOS 13, *) {
+            navigationBar.standardAppearance = .defaultAppearance
+            navigationBar.scrollEdgeAppearance = .defaultAppearance
+        } else {
+            let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
+            let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
+            UINavigationBar.appearance().backIndicatorImage = backButtonImage
+            UINavigationBar.appearance().backIndicatorTransitionMaskImage = backButtonImage
+        }
+    }
+}
+
+@available(iOS 13.0, *)
+extension UINavigationBarAppearance {
+    static let defaultAppearance: UINavigationBarAppearance = {
+        let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
+        let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.shadowImage = UIImage()
+        appearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
+        appearance.backgroundEffect = UIBlurEffect(style: .light)
+        appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: UIColor.black]
+        appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
+
+        return appearance
+    }()
 }

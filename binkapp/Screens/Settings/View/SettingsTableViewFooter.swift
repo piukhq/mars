@@ -47,8 +47,8 @@ class SettingsTableViewFooter: UIView {
     private func configure() {
         addSubview(labelsStackView)
         NSLayoutConstraint.activate([
-            labelsStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-            labelsStackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+            labelsStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            labelsStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             labelsStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

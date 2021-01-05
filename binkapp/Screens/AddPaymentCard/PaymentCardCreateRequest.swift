@@ -79,7 +79,7 @@ struct PaymentCardCreateRequest: Codable {
     }
 
     /// This should only be used for creating genuine payment cards using Spreedly path in a production environment
-    init?(spreedlyResponse: SpreedlyResponse, hash: String?) {
+    init(spreedlyResponse: SpreedlyResponse, hash: String?) {
         let paymentMethodResponse = spreedlyResponse.transaction?.paymentMethod
         card = Card(
             token: paymentMethodResponse?.token ?? "",
