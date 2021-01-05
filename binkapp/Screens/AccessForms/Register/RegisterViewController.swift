@@ -9,15 +9,10 @@
 import UIKit
 
 class RegisterViewController: BaseFormViewController, UserServiceProtocol {
-    private lazy var continueButton: BinkGradientButton = {
-        let button = BinkGradientButton(frame: .zero)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Continue", for: .normal)
-        button.titleLabel?.font = UIFont.buttonText
-        button.addTarget(self, action: .continueButtonTapped, for: .touchUpInside)
-        button.isEnabled = false
-        view.addSubview(button)
-        return button
+    private lazy var continueButton: BinkButton = {
+        return BinkButton(type: .gradient, title: "continue_button_title".localized, enabled: false) { [weak self] in
+            self?.continueButtonTapped()
+        }
     }()
         
     init() {
@@ -32,12 +27,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        NSLayoutConstraint.activate([
-            continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            continueButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
-            continueButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
-            continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+        footerButtons = [continueButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -46,7 +36,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
-        continueButton.isEnabled = fullFormIsValid
+        continueButton.enabled = fullFormIsValid
     }
     
     @objc func continueButtonTapped() {
@@ -59,7 +49,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
         
         let preferenceCheckboxes = dataSource.checkboxes.filter { $0.columnKind == .userPreference }
                 
-        continueButton.startLoading()
+        continueButton.toggleLoading(isLoading: true)
 
         registerUser(request: loginRequest) { [weak self] result in
             switch result {
@@ -87,7 +77,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
                     
                     Current.rootStateMachine.handleLogin()
                     self?.updatePreferences(checkboxes: preferenceCheckboxes)
-                    self?.continueButton.stopLoading()
+                    self?.continueButton.toggleLoading(isLoading: false)
                     
                     BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
@@ -121,7 +111,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
 
     private func handleRegistrationError() {
         Current.userManager.removeUser()
-        continueButton.stopLoading()
+        continueButton.toggleLoading(isLoading: false)
         showError()
     }
     

@@ -16,7 +16,7 @@ struct MembershipCardModel: Codable {
     let status: MembershipCardStatusModel?
     var card: CardModel?
     let images: [MembershipCardImageModel]?
-    let account: MembershipCardAccountModel?
+    var account: MembershipCardAccountModel?
     let paymentCards: [LinkedCardResponse]?
     let balances: [MembershipCardBalanceModel]?
     let vouchers: [VoucherModel]?

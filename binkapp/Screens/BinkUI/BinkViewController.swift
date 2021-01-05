@@ -37,6 +37,18 @@ class BinkViewController: UIViewController {
 
     var screenName: String?
 
+    var footerButtons: [BinkButton] = [] {
+        didSet {
+            footerButtonsView = BinkButtonsView(buttons: footerButtons)
+        }
+    }
+    var footerButtonsView: BinkButtonsView! {
+        didSet {
+            guard let buttonsView = footerButtonsView else { return }
+            buttonsView.attach(to: view)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDynamicActionIfNecessary()

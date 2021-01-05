@@ -32,16 +32,20 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
         let columns = dynamicContent as? Set<CD_PlanDynamicContent>
         return columns?.first(where: { $0.column == column.rawValue })?.value
     }
-
-    var generatedSecondaryBrandColor: UIColor {
-        var secondaryColor: UIColor?
-        let primaryColor = UIColor(hexString: card?.colour ?? "")
-        if primaryColor.isLight() {
-            secondaryColor = primaryColor.darker(by: 30)
+    
+    var secondaryBrandColor: UIColor {
+        if let secondaryColor = card?.secondaryColour {
+            return UIColor(hexString: secondaryColor)
         } else {
-            secondaryColor = primaryColor.lighter(by: 30)
+            var secondaryColor: UIColor?
+            let primaryColor = UIColor(hexString: card?.colour ?? "")
+            if primaryColor.isLight() {
+                secondaryColor = primaryColor.darker(by: 30)
+            } else {
+                secondaryColor = primaryColor.lighter(by: 30)
+            }
+            return secondaryColor ?? .darkGray
         }
-        return secondaryColor ?? .darkGray
     }
 
     enum DynamicContentColumn: String {

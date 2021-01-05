@@ -93,7 +93,7 @@ class AddOrJoinViewModel {
             return
         }
         
-        configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, mainButtonCompletion: {
+        configurationModel = ReusableModalConfiguration(title: "", text: attributedText, primaryButtonTitle: "to_merchant_site_button".localized, primaryButtonAction: {
             if let url = URL(string: planURL) {
                 let viewController = ViewControllerFactory.makeWebViewController(urlString: url.absoluteString)
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
@@ -113,7 +113,7 @@ class AddOrJoinViewModel {
     }
 
     private func toPaymentCardNeededScreen() {
-        let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, mainButtonCompletion: { [weak self] in
+        let configuration = ReusableModalConfiguration(title: "", text: ReusableModalConfiguration.makeAttributedString(title: "plr_payment_card_needed_title".localized, description: "plr_payment_card_needed_body".localized), primaryButtonTitle: "pll_screen_add_title".localized, primaryButtonAction: { [weak self] in
             guard let self = self else { return }
             Current.navigate.close {
                 self.toPaymentCardScanner()

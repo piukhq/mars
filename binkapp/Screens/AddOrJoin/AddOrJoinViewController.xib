@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddOrJoinViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
-                <outlet property="addCardButton" destination="NhF-oE-Ivd" id="r9h-eR-YNg"/>
                 <outlet property="brandHeaderView" destination="e0u-b7-Tam" id="2FY-Wl-DwC"/>
-                <outlet property="newCardButton" destination="GaW-1z-bOB" id="tO1-Nl-v5E"/>
                 <outlet property="plansStackView" destination="U7E-3X-eA4" id="lEv-Od-Lq3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -35,42 +33,14 @@
                         <constraint firstAttribute="height" constant="477" placeholder="YES" id="SUc-6q-7eo"/>
                     </constraints>
                 </stackView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="i7N-oW-ZVG">
-                    <rect key="frame" x="52" y="717" width="310.5" height="129"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhF-oE-Ivd" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="310.5" height="52"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="52" id="d38-A1-Kjf"/>
-                            </constraints>
-                            <state key="normal" title="Button"/>
-                            <connections>
-                                <action selector="addCardButtonAction:" destination="-1" eventType="touchUpInside" id="hzh-fD-DkV"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GaW-1z-bOB" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="77" width="310.5" height="52"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="52" id="NCS-2O-pWD"/>
-                            </constraints>
-                            <state key="normal" title="Button"/>
-                            <connections>
-                                <action selector="newCardButtonAction:" destination="-1" eventType="touchUpInside" id="225-vT-L4k"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="U7E-3X-eA4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="Brp-R9-3KS"/>
-                <constraint firstItem="i7N-oW-ZVG" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.75" id="F8o-a7-Zdi"/>
-                <constraint firstItem="i7N-oW-ZVG" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="IkW-bv-nhi"/>
                 <constraint firstItem="e0u-b7-Tam" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="NuI-MJ-bCe"/>
                 <constraint firstItem="e0u-b7-Tam" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="RCp-Nd-sv3"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="U7E-3X-eA4" secondAttribute="bottom" constant="165" id="UhW-0S-0r4"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="i7N-oW-ZVG" secondAttribute="bottom" constant="16" id="Usl-1u-3bf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="e0u-b7-Tam" secondAttribute="trailing" constant="25" id="aUj-WE-ERR"/>
                 <constraint firstItem="U7E-3X-eA4" firstAttribute="top" secondItem="e0u-b7-Tam" secondAttribute="bottom" constant="30" id="gAe-tZ-s3h"/>
                 <constraint firstItem="U7E-3X-eA4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="kJP-Tk-y7u"/>

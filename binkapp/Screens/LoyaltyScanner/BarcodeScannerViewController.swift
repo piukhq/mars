@@ -182,7 +182,7 @@ class BarcodeScannerViewController: BinkViewController {
 
         guard let captureOutput = captureOutput else { return }
 
-        if !session.outputs.isEmpty {
+        if session.outputs.isEmpty {
             if session.canAddOutput(captureOutput) {
                 session.addOutput(captureOutput)
                 captureOutput.setMetadataObjectsDelegate(self, queue: schemeScanningQueue)
