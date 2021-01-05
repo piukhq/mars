@@ -372,7 +372,7 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
 
         let navBarHeight = navigationController?.navigationBar.frame.height ?? 0
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         let topBarHeight = navBarHeight + statusBarHeight
         let secondaryColorViewHeight = secondaryColorView.frame.height
 

@@ -70,14 +70,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
             Current.rootStateMachine.launch(withWindow: mainWindow)
         }
         
-        if #available(iOS 13, *) {
-            let tabAppearance = UITabBarAppearance()
-            tabAppearance.configureWithTransparentBackground()
-            tabAppearance.shadowImage = UIImage()
-            tabAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
-            tabAppearance.backgroundEffect = UIBlurEffect(style: .light)
-            UITabBar.appearance().standardAppearance = tabAppearance
-        }
+        let tabAppearance = UITabBarAppearance()
+        tabAppearance.configureWithTransparentBackground()
+        tabAppearance.shadowImage = UIImage()
+        tabAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
+        tabAppearance.backgroundEffect = UIBlurEffect(style: .light)
+        UITabBar.appearance().standardAppearance = tabAppearance
         
         let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
         UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
