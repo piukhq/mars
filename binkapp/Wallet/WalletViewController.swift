@@ -38,6 +38,8 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private var hasSupportUpdates = false
     private let dotView = UIView()
 
+    var orderingManager = WalletOrderingManager()
+
     let viewModel: T
 
     init(viewModel: T) {
@@ -51,6 +53,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
+        collectionView.addGestureRecognizer(longPressGesture)
         
         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: .didLoadWallet, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshLocal), name: .didLoadLocalWallet, object: nil)
@@ -220,15 +225,19 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.row < viewModel.cardCount {
-            return LayoutHelper.WalletDimensions.cardSize
-        } else {
-            return LayoutHelper.WalletDimensions.walletPromptSize
+        guard let cell = collectionView.cellForItem(at: indexPath) else {
+            if indexPath.row < viewModel.cardCount {
+                return LayoutHelper.WalletDimensions.cardSize
+            } else {
+                return LayoutHelper.WalletDimensions.walletPromptSize
+            }
         }
+
+        return cell.frame.size
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        fatalError("Should be implemented by subclass")
+        fatalError("Subclasses should override this method")
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -243,5 +252,60 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             }
             viewModel.didSelectWalletPrompt(joinCard)
         }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        fatalError("Subclass should override this.")
+    }
+
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
+        return !cell.isKind(of: WalletPromptCollectionViewCell.self)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
+        guard let cell = collectionView.cellForItem(at: proposedIndexPath) else { return proposedIndexPath }
+
+        if cell.isKind(of: WalletPromptCollectionViewCell.self) {
+            return originalIndexPath
+        }
+
+        return proposedIndexPath
+    }
+
+    @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {
+                break
+            }
+            orderingManager.start()
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            if let bounds = gesture.view?.bounds {
+                let gestureLocation = gesture.location(in: gesture.view)
+                let centerX: CGFloat = bounds.size.width / 2
+                let updatedLocation = CGPoint(x: centerX, y: gestureLocation.y)
+                collectionView.updateInteractiveMovementTargetPosition(updatedLocation)
+            }
+        case .ended:
+            orderingManager.stop()
+            collectionView.endInteractiveMovement()
+        default:
+            orderingManager.stop()
+            collectionView.cancelInteractiveMovement()
+        }
+    }
+}
+
+struct WalletOrderingManager {
+    var isReordering = false
+
+    mutating func start() {
+        isReordering = true
+    }
+
+    mutating func stop() {
+        isReordering = false
     }
 }
