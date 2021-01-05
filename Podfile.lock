@@ -124,20 +124,19 @@ PODS:
   - SwiftyRSA (1.5.0):
     - SwiftyRSA/ObjC (= 1.5.0)
   - SwiftyRSA/ObjC (1.5.0)
-  - ZendeskCommonUISDK (4.2.0):
-    - ZendeskSDKConfigurationsSDK (~> 1.1.2)
-  - ZendeskCoreSDK (2.2.2)
-  - ZendeskMessagingAPISDK (3.2.0):
-    - ZendeskSDKConfigurationsSDK (~> 1.1.2)
-  - ZendeskMessagingSDK (3.2.0):
-    - ZendeskCommonUISDK (~> 4.2.0)
-    - ZendeskMessagingAPISDK (~> 3.2.0)
-  - ZendeskSDKConfigurationsSDK (1.1.3)
-  - ZendeskSupportProvidersSDK (5.0.1):
-    - ZendeskCoreSDK (~> 2.2.1)
-  - ZendeskSupportSDK (5.0.1):
-    - ZendeskMessagingSDK (~> 3.2.0)
-    - ZendeskSupportProvidersSDK (~> 5.0.1)
+  - ZendeskCommonUISDK (6.1.0)
+  - ZendeskCoreSDK (2.5.0)
+  - ZendeskMessagingAPISDK (3.8.1):
+    - ZendeskSDKConfigurationsSDK (~> 1.1.7)
+  - ZendeskMessagingSDK (3.8.1):
+    - ZendeskCommonUISDK (~> 6.1.0)
+    - ZendeskMessagingAPISDK (~> 3.8.1)
+  - ZendeskSDKConfigurationsSDK (1.1.7)
+  - ZendeskSupportProvidersSDK (5.2.0):
+    - ZendeskCoreSDK (~> 2.5.0)
+  - ZendeskSupportSDK (5.2.0):
+    - ZendeskMessagingSDK (~> 3.8.1)
+    - ZendeskSupportProvidersSDK (~> 5.2.0)
   - ZXingObjC (3.6.5):
     - ZXingObjC/All (= 3.6.5)
   - ZXingObjC/All (3.6.5)
@@ -160,7 +159,7 @@ DEPENDENCIES:
   - Keys (from `Pods/CocoaPodsKeys`)
   - SwiftLint
   - "SwiftyRSA (from `git@git.bink.com:Pantheon/iOS/SwiftyRSA.git`)"
-  - ZendeskSupportSDK
+  - ZendeskSupportSDK (~> 5.2.0)
   - ZXingObjC (~> 3.6.5)
 
 SPEC REPOS:
@@ -252,15 +251,15 @@ SPEC CHECKSUMS:
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
   SwiftLint: dfd554ff0dff17288ee574814ccdd5cea85d76f7
   SwiftyRSA: 56a08a690d181194d7c4babc0daaeaeb6b71bf27
-  ZendeskCommonUISDK: afbee7c58c04cf88012a48c079599ec0d1590d16
-  ZendeskCoreSDK: 86513e62c1ab68913416c9044463d9b687ca944f
-  ZendeskMessagingAPISDK: c12dacdb94a89a957d911d5cff82a7cc9ee9666b
-  ZendeskMessagingSDK: 9cd3a5af8bc0766b5e4774d8cbd8a0468263af97
-  ZendeskSDKConfigurationsSDK: 918241bc7ec30e0af9e1b16333d54a584ee8ab9e
-  ZendeskSupportProvidersSDK: e183d32abac888c448469e2005c4a5a8c3ed73f0
-  ZendeskSupportSDK: e52f37fa8bcba91f024b81025869fe5a2860f741
+  ZendeskCommonUISDK: 92ca6b16956430a2cb61c89aeaa6ca123d1f81fd
+  ZendeskCoreSDK: f3d5dcd6a18186dcecbecd56f66296c40fb2fcb4
+  ZendeskMessagingAPISDK: 986919a8f6f11a7019660d1ff798f1efb42fa572
+  ZendeskMessagingSDK: bf9a06f0cbb219617d9cf60a46aba1b68c8f3b30
+  ZendeskSDKConfigurationsSDK: 45fa87ec8418697f7fce5e56bec472052f0aedb5
+  ZendeskSupportProvidersSDK: 5221df6ca45e0b6f12470a5e8e65ccf3ccca17fa
+  ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 19f10222956be8c58a3be3ff7fc46e457ee636aa
+PODFILE CHECKSUM: c830be0b57fd1ab2c5d98998d3cc61b8946df740
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0
