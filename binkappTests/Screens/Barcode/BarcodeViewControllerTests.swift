@@ -20,8 +20,8 @@ class BarcodeViewControllerTests: XCTestCase, CoreDataTestable {
         let cardModel = CardModel(apiId: nil, barcode: "123456789", membershipId: "999 666", barcodeType: 0, colour: nil, secondaryColour: nil)
         baseMembershipCardResponse = MembershipCardModel(apiId: nil, membershipPlan: nil, membershipTransactions: nil, status: nil, card: cardModel, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
         
-        mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { card in
-            self.membershipCard = card
+        mapResponseToManagedObject(baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
+            self.membershipCard = membershipCard
         }
     }
     
@@ -29,8 +29,8 @@ class BarcodeViewControllerTests: XCTestCase, CoreDataTestable {
     // MARK: - Helper Methods
     
     private func mapMembershipCard() {
-        mapResponseToManagedObject(Self.baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { card in
-            Self.membershipCard = card
+        mapResponseToManagedObject(Self.baseMembershipCardResponse, managedObjectType: CD_MembershipCard.self) { membershipCard in
+            Self.membershipCard = membershipCard
         }
     }
     

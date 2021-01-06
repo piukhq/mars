@@ -14,6 +14,7 @@ class BrandHeaderViewTests: XCTestCase, CoreDataTestable, LoyaltyButtonDelegate 
     
     var sut: BrandHeaderView!
     var baseMembershipPlan: MembershipPlanModel!
+    var membershipPlan: CD_MembershipPlan!
     
     override func setUp() {
         super.setUp()
@@ -23,23 +24,26 @@ class BrandHeaderViewTests: XCTestCase, CoreDataTestable, LoyaltyButtonDelegate 
         baseMembershipPlan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: accountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
         
         mapResponseToManagedObject(baseMembershipPlan, managedObjectType: CD_MembershipPlan.self) { plan in
-            self.sut.configure(plan: plan, delegate: self)
+            self.membershipPlan = plan
         }
     }
     
     func test_loyaltyPlanButtonTitle_is_correct() {
+        self.sut.configure(plan: membershipPlan, delegate: self)
         XCTAssertEqual(sut.loyaltyPlanButton.titleLabel?.text, "Tesco Clubcard info")
     }
     
     func test_loyaltyPlanButton_hiddenState() {
+        self.sut.configure(plan: membershipPlan, delegate: self)
         XCTAssertFalse(sut.loyaltyPlanButton.isHidden)
         
         baseMembershipPlan.account?.planName = nil
         
         mapResponseToManagedObject(baseMembershipPlan, managedObjectType: CD_MembershipPlan.self) { plan in
-            self.sut.configure(plan: plan, delegate: self)
+            self.membershipPlan = plan
         }
         
+        self.sut.configure(plan: membershipPlan, delegate: self)
         XCTAssertTrue(sut.loyaltyPlanButton.isHidden)
     }
 }
