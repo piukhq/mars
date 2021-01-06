@@ -183,10 +183,9 @@ class LoyaltyCardFullDetailsViewModel {
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
-    
-    func getOfferTileImageUrls() -> [String]? {
-        let planImages = membershipCard.membershipPlan?.imagesSet
-        return planImages?.filter({ $0.type?.intValue == 2 }).compactMap { $0.url }
+
+    var offerTileImages: [CD_MembershipPlanImage]? {
+        return membershipCard.membershipPlan?.imagesSet?.filter({ $0.type?.intValue == 2 })
     }
     
     // MARK: PLR

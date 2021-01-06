@@ -240,13 +240,10 @@ private extension LoyaltyCardFullDetailsViewController {
         
         if viewModel.shouldShowOfferTiles {
             stackScrollView.add(arrangedSubview: offerTilesStackView)
-            if let offerTileImageUrls = viewModel.getOfferTileImageUrls() {
-                offerTileImageUrls.forEach { offer in
-                    let offerView = OfferTileView()
-                    offerView.translatesAutoresizingMaskIntoConstraints = false
-                    offerView.configure(imageUrl: offer)
-                    offerTilesStackView.addArrangedSubview(offerView)
-                }
+            viewModel.offerTileImages?.forEach { offerTileImage in
+                let offerTileView = OfferTileView(offerTileImage: offerTileImage)
+                offerTileView.translatesAutoresizingMaskIntoConstraints = false
+                offerTilesStackView.addArrangedSubview(offerTileView)
             }
             stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.contentPadding, after: offerTilesStackView)
             NSLayoutConstraint.activate([
