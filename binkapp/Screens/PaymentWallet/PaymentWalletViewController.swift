@@ -34,7 +34,7 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
             return cell
         } else {
             let cell: PaymentCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let paymentCard = viewModel.cards?[indexPath.row] else {
+            guard let paymentCard = viewModel.cards?[safe: indexPath.row] else {
                 return cell
             }
 
@@ -48,6 +48,11 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         super.collectionView(collectionView, didSelectItemAt: indexPath)
         resetAllSwipeStates()
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard let paymentCard = viewModel.cards?[sourceIndexPath.row] else { return }
+        Current.wallet.reorderPaymentCard(paymentCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
 }
 
