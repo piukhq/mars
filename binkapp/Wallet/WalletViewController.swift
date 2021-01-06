@@ -14,7 +14,7 @@ enum WalletViewControllerConstants {
     static let dotViewTopPadding: CGFloat = 3
 }
 
-class WalletViewController<T: WalletViewModel>: BinkViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, BarBlurring, InAppReviewable {
+class WalletViewController<T: WalletViewModel>: BinkViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, InAppReviewable {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -31,8 +31,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         layout.estimatedItemSize = LayoutHelper.WalletDimensions.cardSize
         return layout
     }()
-
-    internal lazy var blurBackground = defaultBlurredBackground()
 
     let refreshControl = UIRefreshControl()
     private var hasSupportUpdates = false
@@ -104,13 +102,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         }
         // We don't want to see it on non-wallet view controllers
         dotView.removeFromSuperview()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        guard let bar = navigationController?.navigationBar else { return }
-        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
     
     private func configureNavigationItem(hasSupportUpdates: Bool) {

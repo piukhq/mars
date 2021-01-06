@@ -9,9 +9,7 @@
 import UIKit
 import Firebase
 
-class ReusableTemplateViewController: BinkViewController, BarBlurring {
-    lazy var blurBackground = defaultBlurredBackground()
-
+class ReusableTemplateViewController: BinkViewController {
     @IBOutlet private weak var textView: UITextView!
 
     private let viewModel: ReusableModalViewModel
@@ -40,11 +38,7 @@ class ReusableTemplateViewController: BinkViewController, BarBlurring {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         textView.setContentOffset(.zero, animated: false)
-        
-        guard let bar = navigationController?.navigationBar else { return }
-        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
     
     private func configureUI() {

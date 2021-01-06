@@ -11,7 +11,7 @@ protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
     func modalWillDismiss()
 }
 
-class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InAppReviewable {
+class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable {
     enum Constants {
         static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
         static let stackViewSpacing: CGFloat = 12
@@ -107,7 +107,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, BarBlurring, InA
     }()
     
     private let viewModel: LoyaltyCardFullDetailsViewModel
-    internal lazy var blurBackground = defaultBlurredBackground()
     private var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
