@@ -39,7 +39,7 @@ class OfferTileView: CustomView {
     }
 
     @objc private func handleTap() {
-        if let ctaUrl = offerTileImage.ctaUrl {
+        if let ctaUrl = offerTileImage.ctaUrl, !ctaUrl.isEmpty {
             let viewController = WebViewController(urlString: ctaUrl)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
