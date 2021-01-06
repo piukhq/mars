@@ -60,7 +60,7 @@ class MainTabBarViewModel {
         let item = UITabBarItem(title: nil, image: UIImage(named: "paymentInactive"), tag: Buttons.paymentItem.rawValue)
         item.selectedImage = UIImage(named: "paymentActive")
         item.title = "Payment"
-        item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)       
+        item.imageInsets = UIEdgeInsets(top: Constants.iconInsets, left: 0, bottom: -Constants.iconInsets, right: 0)
         return item
     }
     
