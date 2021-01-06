@@ -22,6 +22,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private(set) var membershipCards: [CD_MembershipCard]?
     private(set) var paymentCards: [CD_PaymentCard]?
 
+    private var hasLaunched = false
+
     private(set) var shouldDisplayWalletPrompts: Bool?
     var shouldDisplayLoadingIndicator: Bool {
         let shouldDisplay = !Current.userDefaults.bool(forDefaultsKey: .hasLaunchedWallet)
@@ -38,6 +40,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             self?.loadWallets(forType: .reload, reloadPlans: true, isUserDriven: false) { (_, _) in
                 self?.refreshManager.start()
                 Current.pointsScrapingManager.refreshBalancesIfNecessary()
+                self?.hasLaunched = true
             }
         }
     }
@@ -96,6 +99,10 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     
     func handleAppDidEnterBackground() {
         foregroundRefreshCount = 0
+    }
+
+    func handleLogout() {
+        hasLaunched = false
     }
 
     var hasPaymentCards: Bool {
@@ -191,7 +198,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private func loadMembershipCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
-                self?.membershipCards = cards
+                guard let self = self else { return }
+                self.applyLocalWalletOrder(&self.localMembershipCardsOrder, to: cards, updating: &self.membershipCards)
                 completion(true, nil)
             }
             return
@@ -201,7 +209,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
                     self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: { cards in
-                        self?.membershipCards = cards
+                        guard let self = self else { return }
+                        self.applyLocalWalletOrder(&self.localMembershipCardsOrder, to: cards, updating: &self.membershipCards)
                         completion(true, nil)
                     })
                 })
@@ -214,7 +223,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     private func loadPaymentCards(forceRefresh: Bool = false, isUserDriven: Bool, completion: @escaping ServiceCompletionSuccessHandler<WalletServiceError>) {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { [weak self] cards in
-                self?.paymentCards = cards
+                guard let self = self else { return }
+                self.applyLocalWalletOrder(&self.localPaymentCardsOrder, to: cards, updating: &self.paymentCards)
                 completion(true, nil)
             }
             return
@@ -225,7 +235,8 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
             case .success(let response):
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
                     self?.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { cards in
-                        self?.paymentCards = cards
+                        guard let self = self else { return }
+                        self.applyLocalWalletOrder(&self.localPaymentCardsOrder, to: cards, updating: &self.paymentCards)
                         completion(true, nil)
                     }
                 })
@@ -263,6 +274,97 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                 completion(nil)
                 return
             }
+        }
+    }
+}
+
+// MARK: - Local wallet ordering
+
+extension Wallet {
+    enum WalletType: String, Codable {
+        case loyalty
+        case payment
+    }
+    
+    private var localMembershipCardsOrder: [String]? {
+        get {
+            return getLocalWalletOrder(for: .loyalty)
+        }
+        set {
+            setLocalWalletOrder(newValue, for: .loyalty)
+        }
+    }
+
+    private var localPaymentCardsOrder: [String]? {
+        get {
+            return getLocalWalletOrder(for: .payment)
+        }
+        set {
+            setLocalWalletOrder(newValue, for: .payment)
+        }
+    }
+
+    private func getLocalWalletOrder(for walletType: WalletType) -> [String]? {
+        guard let userId = Current.userManager.currentUserId else { return nil }
+        return Current.userDefaults.value(forDefaultsKey: .localWalletOrder(userId: userId, walletType: walletType)) as? [String]
+    }
+
+    private func setLocalWalletOrder(_ newValue: [String]?, for walletType: WalletType) {
+        guard let order = newValue else { return }
+        guard let userId = Current.userManager.currentUserId else { return }
+        Current.userDefaults.set(order, forDefaultsKey: .localWalletOrder(userId: userId, walletType: walletType))
+    }
+
+    func reorderMembershipCard(_ card: CD_MembershipCard, from sourceIndex: Int, to destinationIndex: Int) {
+        reorderWalletCard(card, in: &localMembershipCardsOrder, from: sourceIndex, to: destinationIndex, updating: &membershipCards)
+    }
+
+    func reorderPaymentCard(_ card: CD_PaymentCard, from sourceIndex: Int, to destinationIndex: Int) {
+        reorderWalletCard(card, in: &localPaymentCardsOrder, from: sourceIndex, to: destinationIndex, updating: &paymentCards)
+    }
+
+    private func reorderWalletCard<C: WalletCard>(_ card: C, in localCardsOrder: inout [String]?, from sourceIndex: Int, to destinationIndex: Int, updating walletDataSource: inout [C]?) {
+        /// Mutate the actual wallet datasource object
+        walletDataSource?.remove(at: sourceIndex)
+        walletDataSource?.insert(card, at: destinationIndex)
+
+        /// Sync the local ordering
+        localCardsOrder?.remove(at: sourceIndex)
+        localCardsOrder?.insert(card.id, at: destinationIndex)
+    }
+
+    private func applyLocalWalletOrder<C: WalletCard>(_ localOrder: inout [String]?, to cards: [C]?, updating walletDataSource: inout [C]?) {
+        guard let cards = cards else { return }
+
+        /// On logout, we delete all core data objects, so the first time we fall into this method is when we attempt to load local cards, which won't exist. We should return out at this point.
+        if cards.isEmpty && !hasLaunched { return }
+
+        /// If we have a local order set
+        if var order = localOrder {
+            /// Remove id's from local order that don't exist in the latest cards response
+            order.removeAll { cardId in
+                !cards.contains(where: { $0.id == cardId })
+            }
+
+            /// Add id's to top of local order for any new cards in the response
+            var newCardIds = cards.compactMap { $0.id }.filter { !order.contains($0) }
+            newCardIds.reverse()
+            newCardIds.forEach {
+                order.insert($0, at: 0)
+            }
+
+            /// Sort cards in the custom order
+            let orderedCards = order.map { cardId in
+                cards.first(where: { $0.id == cardId })
+            }
+
+            /// Sync the datasource and local card order
+            localOrder = order
+            walletDataSource = orderedCards.compactMap({ $0 })
+        } else {
+            /// Sync the datasource and set the local card order
+            localOrder = cards.compactMap { $0.id }
+            walletDataSource = cards
         }
     }
 }

@@ -41,6 +41,11 @@ class WebViewController: UIViewController {
         super.viewWillAppear(animated)
         setActivityIndicator()
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setToolbarHidden(true, animated: false)
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
