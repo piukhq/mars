@@ -160,6 +160,11 @@
 
 @end
 
+// TODO: - Remove pragma's once Zendesk have implemented fix
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
+
 CG_INLINE CGRect
 CGRectMakeCenteredInScreen(CGFloat width, CGFloat height)
 {
@@ -187,6 +192,7 @@ CGRectMakeCenteredInScreen(CGFloat width, CGFloat height)
     return rect;
 }
 
+#pragma clang diagnostic pop
 
 CG_INLINE CGRect
 CGMakeCenteredRectInRect(CGFloat width, CGFloat height, CGRect rect)
@@ -218,12 +224,18 @@ CGCenterRectInRect(CGRect rect, CGRect inRect)
 /**
  * Helper for device orientation.
  */
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
+
 CG_INLINE BOOL
 ZDKUIIsLandscape()
 {
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     return UIInterfaceOrientationIsLandscape(orientation);
 }
+
+#pragma clang diagnostic pop
 
 
 /**
