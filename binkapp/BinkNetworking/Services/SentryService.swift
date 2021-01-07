@@ -9,13 +9,57 @@
 import Foundation
 import Sentry
 
-enum SentryException: Int {
+enum SentryService {
+    private static var environment: String {
+        let envString: String
+
+        if Current.isReleaseTypeBuild && APIConstants.isProduction && !isDebug {
+            envString = "prod"
+        } else {
+            envString = "beta"
+        }
+
+        return envString
+    }
+
+    private static var isDebug: Bool {
+        let isDebug: Bool
+        #if DEBUG
+        isDebug = true
+        #else
+        isDebug = false
+        #endif
+
+        return isDebug
+    }
+
+    static func start() {
+        SentrySDK.start(options: [
+            "dsn": "https://de94701e62374e53bef78de0317b8089@sentry.uksouth.bink.sh/20",
+            "debug": isDebug, // Enabled debug when first installing is always helpful
+            "environment": environment, // beta, or prod
+            "release": Bundle.shortVersionNumber ?? ""
+        ])
+    }
+
+    static func forceCrash() {
+        SentrySDK.crash()
+    }
+
+    static func triggerException(_ exception: SentryException) {
+        SentrySDK.capture(error: exception.formattedError) { scope in
+            scope.setTag(value: "user_journey", key: exception.userJourneyTagValue)
+        }
+    }
+}
+
+enum SentryException {
     enum Domain: String {
         case general = "Bink Native General Errors"
         case loyalty = "Bink Native Loyalty Card Onboard Issues"
         case payment = "Bink Native Payment Card Enrol Issues"
 
-        var codePrefix: String {
+        var identifier: String {
             switch self {
             case .general:
                 return "BNE1"
@@ -36,16 +80,39 @@ enum SentryException: Int {
         }
     }
 
-    case invalidPayload = 3000
-    case tokenisationServiceRejectedRequest = 3001
-    case apiRejectedRequest = 3002
+    enum InvalidPayloadReason: String {
+        case failedToEncryptFirstSix = "Failed to encrypt first six"
+        case failedToEncryptLastFour = "Failed to encrypt last four"
+        case failedToEncryptMonth = "Failed to encrypt expiry month"
+        case failedToEncryptYear = "Failed to encrypt expiry year"
+        case failedToEncryptPaymentCardHash = "Failed to encrypt payment card hash"
+        case failedToBuildPaymentCardHashMalformedPan = "Failed to build payment card hash due to a malformed PAN"
+        case failedToBuildPaymentCardHashMalformedExpiryMonth = "Failed to build payment card hash due to a malformed expiry month"
+        case failedToBuildPaymentCardHashMalformedExpiryYear = "Failed to build payment card hash due to a malformed expiry year"
+        case failedToBuildPaymentCardHashDecodeSecret = "Failed to build payment card hash due a problem decoding the secret"
+    }
+
+    case invalidPayload(InvalidPayloadReason)
+    case tokenisationServiceRejectedRequest(NetworkResponseData?)
+    case apiRejectedRequest(NetworkResponseData?)
 
     var formattedError: NSError {
-        return NSError(domain: domain.rawValue, code: rawValue, userInfo: userInfo)
+        return NSError(domain: domain.rawValue, code: errorCode, userInfo: userInfo)
     }
 
     var userJourneyTagValue: String {
         return domain.userJourney
+    }
+
+    var errorCode: Int {
+        switch self {
+        case .invalidPayload:
+            return 3000
+        case .tokenisationServiceRejectedRequest:
+            return 3001
+        case .apiRejectedRequest:
+            return 3002
+        }
     }
 
     private var domain: Domain {
@@ -56,10 +123,16 @@ enum SentryException: Int {
     }
 
     private var userInfo: [String: Any] {
-        return [
-            NSLocalizedDescriptionKey: localizedDescription,
-            "test": "icles"
-        ]
+        var info: [String: Any] = [NSLocalizedDescriptionKey: localizedDescription]
+        switch self {
+        case .invalidPayload(let reason):
+            info["reason"] = reason.rawValue
+            return info
+        case .tokenisationServiceRejectedRequest(let networkResponse), .apiRejectedRequest(let networkResponse):
+            guard let response = networkResponse else { return info }
+            info["network_response"] = response
+            return info
+        }
     }
 
     private var localizedDescription: String {
@@ -70,50 +143,6 @@ enum SentryException: Int {
             return "Tokenisation service rejected request"
         case .apiRejectedRequest:
             return "Bink API rejected request"
-        }
-    }
-}
-
-enum SentryService {
-    private static var environment: String {
-        let envString: String
-
-        if Current.isReleaseTypeBuild && APIConstants.isProduction && !isDebug {
-            envString = "prod"
-        } else {
-            envString = "beta"
-        }
-        
-        return envString
-    }
-
-    private static var isDebug: Bool {
-        let isDebug: Bool
-        #if DEBUG
-            isDebug = true
-        #else
-            isDebug = false
-        #endif
-        
-        return isDebug
-    }
-    
-    static func start() {
-        SentrySDK.start(options: [
-            "dsn": "https://de94701e62374e53bef78de0317b8089@sentry.uksouth.bink.sh/20",
-            "debug": isDebug, // Enabled debug when first installing is always helpful
-            "environment": environment, // beta, or prod
-            "release": Bundle.shortVersionNumber ?? ""
-        ])
-    }
-    
-    static func forceCrash() {
-        SentrySDK.crash()
-    }
-
-    static func triggerException(_ exception: SentryException) {
-        SentrySDK.capture(error: exception.formattedError) { scope in
-            scope.setTag(value: "user_journey", key: exception.userJourneyTagValue)
         }
     }
 }

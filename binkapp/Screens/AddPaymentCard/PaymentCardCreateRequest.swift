@@ -79,17 +79,39 @@ struct PaymentCardCreateRequest: Codable {
     }
 
     /// This should only be used for creating genuine payment cards using Spreedly path in a production environment
-    init(spreedlyResponse: SpreedlyResponse, hash: String?) {
+    init?(spreedlyResponse: SpreedlyResponse, hash: String?) {
         let paymentMethodResponse = spreedlyResponse.transaction?.paymentMethod
+
+        guard let firstSix = SecureUtility.encryptedSensitiveFieldValue(paymentMethodResponse?.firstSix) else {
+            SentryService.triggerException(.invalidPayload(.failedToEncryptFirstSix))
+            return nil
+        }
+        guard let lastFour = SecureUtility.encryptedSensitiveFieldValue(paymentMethodResponse?.lastFour) else {
+            SentryService.triggerException(.invalidPayload(.failedToEncryptLastFour))
+            return nil
+        }
+        guard let month = SecureUtility.encryptedSensitiveFieldValue("\(paymentMethodResponse?.month ?? 0)") else {
+            SentryService.triggerException(.invalidPayload(.failedToEncryptMonth))
+            return nil
+        }
+        guard let year = SecureUtility.encryptedSensitiveFieldValue("\(paymentMethodResponse?.year ?? 0)") else {
+            SentryService.triggerException(.invalidPayload(.failedToEncryptYear))
+            return nil
+        }
+        guard let encryptedHash = SecureUtility.encryptedSensitiveFieldValue(hash) else {
+            SentryService.triggerException(.invalidPayload(.failedToEncryptPaymentCardHash))
+            return nil
+        }
+
         card = Card(
             token: paymentMethodResponse?.token ?? "",
-            firstSixDigits: SecureUtility.encryptedSensitiveFieldValue(paymentMethodResponse?.firstSix) ?? "",
-            lastFourDigits: SecureUtility.encryptedSensitiveFieldValue(paymentMethodResponse?.lastFour) ?? "",
+            firstSixDigits: firstSix,
+            lastFourDigits: lastFour,
             nameOnCard: paymentMethodResponse?.fullName ?? "",
-            month: SecureUtility.encryptedSensitiveFieldValue("\(paymentMethodResponse?.month ?? 0)") ?? "",
-            year: SecureUtility.encryptedSensitiveFieldValue("\(paymentMethodResponse?.year ?? 0)") ?? "",
+            month: month,
+            year: year,
             fingerprint: paymentMethodResponse?.fingerprint ?? "",
-            hash: SecureUtility.encryptedSensitiveFieldValue(hash) ?? ""
+            hash: encryptedHash
         )
 
         let timestamp = Date().timeIntervalSince1970

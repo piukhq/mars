@@ -81,7 +81,9 @@ class PaymentWalletRepository: WalletServiceProtocol {
     }
 
     private func createPaymentCard(_ paymentCard: PaymentCardCreateModel, spreedlyResponse: SpreedlyResponse? = nil, onSuccess: @escaping (CD_PaymentCard?) -> Void, onError: @escaping(BinkError?) -> Void) {
-        let hash = SecureUtility.getPaymentCardHash(from: paymentCard)
+        guard let hash = SecureUtility.getPaymentCardHash(from: paymentCard) else {
+            return
+        }
 
         var paymentCreateRequest: PaymentCardCreateRequest?
 

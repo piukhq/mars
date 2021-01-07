@@ -12,10 +12,22 @@ import SwiftyRSA
 
 enum SecureUtility {
     static func getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String? {
-        guard let pan = paymentCard.fullPan?.replacingOccurrences(of: " ", with: "") else { return nil }
-        guard let month = paymentCard.month else { return nil }
-        guard let year = paymentCard.year else { return nil }
-        guard let decodedSecret = decodedSecret() else { return nil }
+        guard let pan = paymentCard.fullPan?.replacingOccurrences(of: " ", with: "") else {
+            SentryService.triggerException(.invalidPayload(.failedToBuildPaymentCardHashMalformedPan))
+            return nil
+        }
+        guard let month = paymentCard.month else {
+            SentryService.triggerException(.invalidPayload(.failedToBuildPaymentCardHashMalformedExpiryMonth))
+            return nil
+        }
+        guard let year = paymentCard.year else {
+            SentryService.triggerException(.invalidPayload(.failedToBuildPaymentCardHashMalformedExpiryYear))
+            return nil
+        }
+        guard let decodedSecret = decodedSecret() else {
+            SentryService.triggerException(.invalidPayload(.failedToBuildPaymentCardHashDecodeSecret))
+            return nil
+        }
         let stringToHash = "\(pan)\(month)\(year)\(decodedSecret)"
         return stringToHash.sha512
     }
