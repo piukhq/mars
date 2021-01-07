@@ -17,7 +17,7 @@ class BinkPillButton: BinkTrackableButton {
     private var shadowLayer: CAShapeLayer!
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: .white)
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
         return activityIndicator
     }()
 
@@ -40,9 +40,7 @@ class BinkPillButton: BinkTrackableButton {
         }
 
         layer.cornerRadius = halfOfButtonHeight
-        if #available(iOS 13.0, *) {
-            layer.cornerCurve = .continuous
-        }
+        layer.cornerCurve = .continuous
 
         setupActivityIndicator()
     }

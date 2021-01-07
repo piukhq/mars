@@ -11,18 +11,18 @@ import UIKit
 enum ResponseCodeVisualiser {
     static func show(_ statusCode: Int) {
         guard Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser) else { return }
-        guard let window = UIApplication.shared.keyWindow else {
-            fatalError("Couldn't get window.")
-        }
-        
-        if let statusCodeView = window.subviews.first(where: { $0.isKind(of: StatusCodeAlertView.self) }) as? StatusCodeAlertView {
-            statusCodeView.update(withStatusCode: statusCode)
-        } else {
-            let view = StatusCodeAlertView(statusCode: statusCode, window: window)
-            window.addSubview(view)
-            DispatchQueue.main.async {
-                view.show()
+        if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+            if let statusCodeView = window.subviews.first(where: { $0.isKind(of: StatusCodeAlertView.self) }) as? StatusCodeAlertView {
+                statusCodeView.update(withStatusCode: statusCode)
+            } else {
+                let view = StatusCodeAlertView(statusCode: statusCode, window: window)
+                window.addSubview(view)
+                DispatchQueue.main.async {
+                    view.show()
+                }
             }
+        } else {
+            fatalError("Couldn't get window")
         }
     }
 }
@@ -79,8 +79,6 @@ class StatusCodeAlertView: UIView {
     private func configure() {
         addSubview(textLabel)
         layer.cornerRadius = 15
-        if #available(iOS 13.0, *) {
-            layer.cornerCurve = .continuous
-        }
+        layer.cornerCurve = .continuous
     }
 }

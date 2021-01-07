@@ -114,7 +114,7 @@ class BaseFormViewController: BinkViewController, Form {
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
     }
     

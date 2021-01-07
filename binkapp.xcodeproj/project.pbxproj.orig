@@ -122,7 +122,7 @@
 		3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF029F522F45B53009A0E61 /* CustomView.swift */; };
 		3CF029F822F45B8C009A0E61 /* AddingOptionsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF029F722F45B8C009A0E61 /* AddingOptionsEnum.swift */; };
 		3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */; };
-		3CFD913022F1BA8200F25AF1 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		3CFD913022F1BA8200F25AF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		3CFD913122F1BB7D00F25AF1 /* binkappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048E22CE579B001BA964 /* binkappUITests.swift */; };
 		3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFDB224230C382400E75A14 /* BinkGradientButton.swift */; };
 		3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFDB226230C38A700E75A14 /* BinkTextField.swift */; };
@@ -142,7 +142,7 @@
 		70661B93250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */; };
 		706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */; };
 		706D203A24D851BA004BCCF3 /* CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203824D851BA004BCCF3 /* CD_CardAccount.swift */; };
-		706D203C24D85B76004BCCF3 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		706D203C24D85B76004BCCF3 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */ = {isa = PBXBuildFile; fileRef = 706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */; };
 		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
 		70840E662562ADAD000E17A5 /* SuperdrugLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70840E642562ADAC000E17A5 /* SuperdrugLogin.js */; };
@@ -178,16 +178,19 @@
 		70E8DFED2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8DFEC2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift */; };
 		70E8DFF32563E8CE0027A244 /* PerfumeshopLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFF12563E8CE0027A244 /* PerfumeshopLogin.js */; };
 		70E8DFF42563E8CE0027A244 /* PerfumeshopPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFF22563E8CE0027A244 /* PerfumeshopPointsScrape.js */; };
-		70E8E0F5256415B20027A244 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 70E8E0F4256415B20027A244 /* SwiftPackageProductDependency */; };
+		70E8E0F5256415B20027A244 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 70E8E0F4256415B20027A244 /* SwiftSoup */; };
 		70E8E12825641A350027A244 /* WaterstonesPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E12725641A350027A244 /* WaterstonesPointsScrapingAgent.swift */; };
 		70E8E13125641A540027A244 /* WaterstonesLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8E12F25641A530027A244 /* WaterstonesLogin.js */; };
 		70E8E13225641A540027A244 /* WaterstonesPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8E13025641A540027A244 /* WaterstonesPointsScrape.js */; };
 		70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */; };
 		70E8E4AA256712D80027A244 /* CoreDataTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */; };
 		70E8E5A72567FB690027A244 /* OptionalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E5A62567FB690027A244 /* OptionalExtension.swift */; };
-<<<<<<< HEAD
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
+<<<<<<< HEAD
 =======
+		70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */; };
+		70E8E4AA256712D80027A244 /* CoreDataTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */; };
+		70E8E5A72567FB690027A244 /* OptionalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E5A62567FB690027A244 /* OptionalExtension.swift */; };
 		96F22E002507C5AC0009951B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* SwiftPackageProductDependency */; };
 >>>>>>> develop
 		96F22E022508B6060009951B /* SentryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F22E012508B6060009951B /* SentryService.swift */; };
@@ -222,7 +225,6 @@
 		B7FE19BA234391B000F2D6A0 /* PaymentCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7FE19B8234391B000F2D6A0 /* PaymentCardCell.swift */; };
 		B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B7FE19B9234391B000F2D6A0 /* PaymentCardCell.xib */; };
 		BD01E123231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD01E122231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib */; };
-		BD01E125231FA3A900D52713 /* BarBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01E124231FA3A900D52713 /* BarBlur.swift */; };
 		BD01E127231FA3D000D52713 /* AddingOptionsTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01E126231FA3D000D52713 /* AddingOptionsTabBarViewController.swift */; };
 		BD1E728A232AB91C002CC85E /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1E7289232AB91C002CC85E /* UIAlertController+Extension.swift */; };
 		BD25E6972388610B0027FF3E /* LoadingScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD25E6962388610B0027FF3E /* LoadingScreen.xib */; };
@@ -285,7 +287,7 @@
 		CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */; };
 		CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */; };
 		CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */; };
-		CE4A624925714EAE003271F6 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* SwiftPackageProductDependency */; };
+		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
 		CEACE7212543309E004DD27E /* BinkHTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */; };
 		CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC402DF2551B66400553C75 /* PaymentCardScannerStrings.swift */; };
@@ -657,6 +659,7 @@
 		67B8D6E0B8AB406C5DE33137 /* Pods-binkapp.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		6D524C6191655F19A0B9384F /* Pods-binkappUITests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store.xcconfig"; sourceTree = "<group>"; };
 		70285D832588B674007B4298 /* BinkButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButtonsView.swift; sourceTree = "<group>"; };
+		702B1F0725A479CA00C7563F /* binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel"; sourceTree = "<group>"; };
 		70450DD3252B658F00F36566 /* DetectText.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = DetectText.js; sourceTree = "<group>"; };
 		7049B63C24AB52AA00661128 /* binkapp - 30-06-20 - Add field alternatives.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 30-06-20 - Add field alternatives.xcdatamodel"; sourceTree = "<group>"; };
 		70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootsPointsScrapingAgent.swift; sourceTree = "<group>"; };
@@ -747,7 +750,6 @@
 		B7FE19B8234391B000F2D6A0 /* PaymentCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentCardCell.swift; sourceTree = "<group>"; };
 		B7FE19B9234391B000F2D6A0 /* PaymentCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentCardCell.xib; sourceTree = "<group>"; };
 		BD01E122231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WalletLoyaltyCardCollectionViewCell.xib; sourceTree = "<group>"; };
-		BD01E124231FA3A900D52713 /* BarBlur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarBlur.swift; sourceTree = "<group>"; };
 		BD01E126231FA3D000D52713 /* AddingOptionsTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddingOptionsTabBarViewController.swift; path = binkapp/Screens/AddingOptions/AddingOptionsTabBarViewController.swift; sourceTree = SOURCE_ROOT; };
 		BD1E7289232AB91C002CC85E /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 		BD25E6962388610B0027FF3E /* LoadingScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LoadingScreen.xib; path = binkapp/Screens/AccessForms/Loading/LoadingScreen.xib; sourceTree = SOURCE_ROOT; };
@@ -1040,8 +1042,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96F22E002507C5AC0009951B /* BuildFile in Frameworks */,
-				70E8E0F5256415B20027A244 /* BuildFile in Frameworks */,
+				96F22E002507C5AC0009951B /* Sentry in Frameworks */,
+				70E8E0F5256415B20027A244 /* SwiftSoup in Frameworks */,
 				C6812158579C0CBB400A495C /* Pods_binkapp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1058,7 +1060,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE4A624925714EAE003271F6 /* BuildFile in Frameworks */,
+				CE4A624925714EAE003271F6 /* Sentry in Frameworks */,
 				CB92D023BF75D98DF0B2550E /* Pods_binkappUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1406,7 +1408,6 @@
 				EF94AF1223E05B4D00AAA039 /* Image Service */,
 				EF8BF1F4233E60A300D2E5F3 /* Cache */,
 				EF2E880F2333859900F678F3 /* World */,
-				BD01E124231FA3A900D52713 /* BarBlur.swift */,
 				EF485575231D72DA00FC9E5F /* Protocols */,
 				3CD3494122F99E25000C1F4D /* Fonts */,
 				3CF029F522F45B53009A0E61 /* CustomView.swift */,
@@ -2704,8 +2705,8 @@
 			);
 			name = binkapp;
 			packageProductDependencies = (
-				96F22DFF2507C5AC0009951B /* SwiftPackageProductDependency */,
-				70E8E0F4256415B20027A244 /* SwiftPackageProductDependency */,
+				96F22DFF2507C5AC0009951B /* Sentry */,
+				70E8E0F4256415B20027A244 /* SwiftSoup */,
 			);
 			productName = binkapp;
 			productReference = 5ECE046822CE5798001BA964 /* Bink α.app */;
@@ -2748,7 +2749,7 @@
 			);
 			name = binkappUITests;
 			packageProductDependencies = (
-				CE4A624825714EAE003271F6 /* SwiftPackageProductDependency */,
+				CE4A624825714EAE003271F6 /* Sentry */,
 			);
 			productName = binkappUITests;
 			productReference = 5ECE048A22CE579B001BA964 /* binkappUITests.xctest */;
@@ -2791,8 +2792,8 @@
 			);
 			mainGroup = 5ECE045F22CE5797001BA964;
 			packageReferences = (
-				96F22DFE2507C5AC0009951B /* RemoteSwiftPackageReference */,
-				70E8E0F3256415B20027A244 /* RemoteSwiftPackageReference */,
+				96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				70E8E0F3256415B20027A244 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 			);
 			productRefGroup = 5ECE046922CE5798001BA964 /* Products */;
 			projectDirPath = "";
@@ -3181,7 +3182,6 @@
 				EFA5F72F2379A7C70027AB80 /* _CD_App.swift in Sources */,
 				3C9B1A2923854C040078A1EC /* PreferencesRepository.swift in Sources */,
 				B726334B23058A5C00951037 /* FeatureSetModel.swift in Sources */,
-				BD01E125231FA3A900D52713 /* BarBlur.swift in Sources */,
 				B726333F230586CC00951037 /* MembershipPlanModel.swift in Sources */,
 				EF7F6E6323E4296C00352DCF /* StorageUtilityMock.swift in Sources */,
 				EFA5F7432379A7C70027AB80 /* CD_PaymentCardAccount.swift in Sources */,
@@ -3302,7 +3302,7 @@
 				B713662D232A63AA008A0ED7 /* BinkModuleView.swift in Sources */,
 				EFA5F7142379A7C70027AB80 /* _CD_AuthoriseField.swift in Sources */,
 				70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */,
-				706D203C24D85B76004BCCF3 /* BuildFile in Sources */,
+				706D203C24D85B76004BCCF3 /* (null) in Sources */,
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
 				EFEB5BF9237E062500E18743 /* PLRStampsCell.swift in Sources */,
 				3C2C90F623190A8700D112E3 /* KeyboardLayoutConstraint.swift in Sources */,
@@ -3464,7 +3464,7 @@
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
 				EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */,
 				3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */,
-				3CFD913022F1BA8200F25AF1 /* BuildFile in Sources */,
+				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
 				CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */,
 				70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */,
@@ -3578,7 +3578,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3640,7 +3640,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -3668,7 +3668,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3710,7 +3710,7 @@
 					"PB_ENABLE_MALLOC=1",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3880,7 +3880,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -3908,7 +3908,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4027,7 +4027,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -4055,7 +4055,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = binkapp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4216,7 +4216,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		70E8E0F3256415B20027A244 /* RemoteSwiftPackageReference */ = {
+		70E8E0F3256415B20027A244 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
 			requirement = {
@@ -4224,7 +4224,7 @@
 				minimumVersion = 2.3.2;
 			};
 		};
-		96F22DFE2507C5AC0009951B /* RemoteSwiftPackageReference */ = {
+		96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
 			requirement = {
@@ -4235,19 +4235,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		70E8E0F4256415B20027A244 /* SwiftPackageProductDependency */ = {
+		70E8E0F4256415B20027A244 /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 70E8E0F3256415B20027A244 /* RemoteSwiftPackageReference */;
+			package = 70E8E0F3256415B20027A244 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
 		};
-		96F22DFF2507C5AC0009951B /* SwiftPackageProductDependency */ = {
+		96F22DFF2507C5AC0009951B /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 96F22DFE2507C5AC0009951B /* RemoteSwiftPackageReference */;
+			package = 96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
 		};
-		CE4A624825714EAE003271F6 /* SwiftPackageProductDependency */ = {
+		CE4A624825714EAE003271F6 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 96F22DFE2507C5AC0009951B /* RemoteSwiftPackageReference */;
+			package = 96F22DFE2507C5AC0009951B /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
 		};
 /* End XCSwiftPackageProductDependency section */
@@ -4256,6 +4256,7 @@
 		5ECE047222CE5798001BA964 /* binkapp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				702B1F0725A479CA00C7563F /* binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel */,
 				CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */,
 				706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */,
 				70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */,
@@ -4268,7 +4269,7 @@
 				BD475E6C23A256820071302A /* binkapp - Plan Documents Display.xcdatamodel */,
 				5ECE047322CE5798001BA964 /* binkapp.xcdatamodel */,
 			);
-			currentVersion = CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */;
+			currentVersion = 702B1F0725A479CA00C7563F /* binkapp - 5-1-21 - Membership plan image cta url.xcdatamodel */;
 			path = binkapp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
