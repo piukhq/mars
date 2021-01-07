@@ -15,6 +15,7 @@ struct MembershipPlanImageModel: Codable, Hashable {
     let url: String?
     let imageDescription: String?
     let encoding: String?
+    let ctaUrl: String?
     
     enum CodingKeys: String, CodingKey {
         case apiId = "id"
@@ -22,6 +23,7 @@ struct MembershipPlanImageModel: Codable, Hashable {
         case url
         case imageDescription = "description"
         case encoding
+        case ctaUrl = "cta_url"
     }
 }
 
@@ -32,6 +34,7 @@ extension MembershipPlanImageModel: CoreDataMappable, CoreDataIDMappable {
         update(cdObject, \.url, with: url, delta: delta)
         update(cdObject, \.imageDescription, with: imageDescription, delta: delta)
         update(cdObject, \.encoding, with: encoding, delta: delta)
+        update(cdObject, \.ctaUrl, with: ctaUrl, delta: delta)
 
         return cdObject
     }

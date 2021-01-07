@@ -9,81 +9,115 @@
 import XCTest
 @testable import binkapp
 
-class BarcodeViewModelTests: XCTestCase {
-    private var membershipCard: MembershipCardModel!
-    private var membershipPlan: MembershipPlanModel!
-    private var sut: BarcodeViewModelMock!
+class BarcodeViewModelTests: XCTestCase, CoreDataTestable {
+    static var membershipCardResponse: MembershipCardModel!
+    static var membershipPlanResponse: MembershipPlanModel!
+    static var cardResponse: CardModel!
+    
+    static var membershipCard: CD_MembershipCard!
+    static var sut = BarcodeViewModel(membershipCard: membershipCard)
 
-    override func setUp() {
+    override class func setUp() {
         super.setUp()
         let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
-        membershipPlan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        membershipPlanResponse = MembershipPlanModel(apiId: 5, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
         
-        let cardModel = CardModel(apiId: nil, barcode: "123456789", membershipId: "999 666", barcodeType: 0, colour: nil, secondaryColour: nil)
-        membershipCard = MembershipCardModel(apiId: nil, membershipPlan: nil, membershipTransactions: nil, status: nil, card: cardModel, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
-        sut = BarcodeViewModelMock(membershipCard: membershipCard, membershipPlan: membershipPlan)
+        cardResponse = CardModel(apiId: nil, barcode: "123456789", membershipId: "999 666", barcodeType: 0, colour: nil, secondaryColour: nil)
+        membershipCardResponse = MembershipCardModel(apiId: nil, membershipPlan: 5, membershipTransactions: nil, status: nil, card: cardResponse, images: nil, account: nil, paymentCards: nil, balances: nil, vouchers: nil)
+        
+        mapResponseToManagedObject(membershipPlanResponse, managedObjectType: CD_MembershipPlan.self) { _ in }
+        
+        mapResponseToManagedObject(membershipCardResponse, managedObjectType: CD_MembershipCard.self) { card in
+            self.membershipCard = card
+        }
     }
     
+    
+    // MARK: - Helper Methods
+
+    private func mapMembershipCard() {
+        mapResponseToManagedObject(Self.membershipCardResponse, managedObjectType: CD_MembershipCard.self) { card in
+            Self.membershipCard = card
+        }
+    }
+    
+    
+    // MARK: - Tests
+
     func test_title_is_correct() {
-        XCTAssertEqual(sut.title, "Harvey Nichols")
+        XCTAssertEqual(Self.sut.title, "Harvey Nichols")
     }
     
     func test_isBarcodeAvailable() {
-        XCTAssertTrue(sut.isBarcodeAvailable)
-        
-        sut.membershipCard.card?.barcode = nil
-        XCTAssertFalse(sut.isBarcodeAvailable)
+        Self.membershipCardResponse.card = Self.cardResponse
+        mapMembershipCard()
+        XCTAssertTrue(Self.sut.isBarcodeAvailable)
+
+        Self.membershipCardResponse.card?.barcode = nil
+        mapMembershipCard()
+        XCTAssertFalse(Self.sut.isBarcodeAvailable)
     }
-    
+
     func test_cardNumber_string() {
-        XCTAssertEqual(sut.cardNumber, "999 666")
+        XCTAssertEqual(Self.sut.cardNumber, "999 666")
     }
-    
+
     func test_isCardNumberAvailable() {
-        XCTAssertTrue(sut.isCardNumberAvailable)
-        
-        sut.membershipCard.card?.membershipId = nil
-        XCTAssertFalse(sut.isCardNumberAvailable)
+        XCTAssertTrue(Self.sut.isCardNumberAvailable)
+
+        Self.membershipCardResponse.card?.membershipId = nil
+        mapMembershipCard()
+        XCTAssertFalse(Self.sut.isCardNumberAvailable)
     }
-    
+
     func test_barcodeNumber_string() {
-        XCTAssertEqual(sut.barcodeNumber, "123456789")
-        
-        sut.membershipCard.card?.barcode = nil
-        XCTAssertEqual(sut.barcodeNumber, "")
+        Self.membershipCardResponse.card = Self.cardResponse
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeNumber, "123456789")
+
+        Self.membershipCardResponse.card?.barcode = nil
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeNumber, "")
     }
-    
+
     func test_barcodeUse_is_loyalty() {
-        XCTAssertNotEqual(sut.barcodeUse, .coupon)
-        XCTAssertEqual(sut.barcodeUse, .loyaltyCard)
+        XCTAssertNotEqual(Self.sut.barcodeUse, .coupon)
+        XCTAssertEqual(Self.sut.barcodeUse, .loyaltyCard)
     }
-    
+
     func test_barcodeType_is_correct() {
-        XCTAssertEqual(sut.barcodeType, .code128)
-        
-        sut.membershipCard.card?.barcodeType = 1
-        XCTAssertEqual(sut.barcodeType, .qr)
-        
-        sut.membershipCard.card?.barcodeType = 2
-        XCTAssertEqual(sut.barcodeType, .aztec)
-        
-        sut.membershipCard.card?.barcodeType = 3
-        XCTAssertEqual(sut.barcodeType, .pdf417)
-        
-        sut.membershipCard.card?.barcodeType = 4
-        XCTAssertEqual(sut.barcodeType, .ean13)
-        
-        sut.membershipCard.card?.barcodeType = 5
-        XCTAssertEqual(sut.barcodeType, .dataMatrix)
-        
-        sut.membershipCard.card?.barcodeType = nil
-        XCTAssertEqual(sut.barcodeType, .code128)
+        XCTAssertEqual(Self.sut.barcodeType, .code128)
+
+        Self.membershipCardResponse.card?.barcodeType = 1
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeType, .qr)
+
+        Self.membershipCardResponse.card?.barcodeType = 2
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeType, .aztec)
+
+        Self.membershipCardResponse.card?.barcodeType = 3
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeType, .pdf417)
+
+        Self.membershipCardResponse.card?.barcodeType = 4
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeType, .ean13)
+
+        Self.membershipCardResponse.card?.barcodeType = 5
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeType, .dataMatrix)
+
+        Self.membershipCardResponse.card?.barcodeType = nil
+        mapMembershipCard()
+        XCTAssertEqual(Self.sut.barcodeType, .code128)
     }
-    
+
     func test_barcode_image_is_returned() {
         let size = CGSize(width: 200, height: 200)
-        XCTAssertNotNil(sut.barcodeImage(withSize: size))
-        sut.membershipCard.card?.barcode = nil
-        XCTAssertNil(sut.barcodeImage(withSize: size))
+        XCTAssertNotNil(Self.sut.barcodeImage(withSize: size))
+        Self.membershipCardResponse.card?.barcode = nil
+        mapMembershipCard()
+        XCTAssertNil(Self.sut.barcodeImage(withSize: size))
     }
 }
