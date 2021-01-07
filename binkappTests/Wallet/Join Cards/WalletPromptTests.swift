@@ -9,51 +9,56 @@
 import XCTest
 @testable import binkapp
 
-class WalletPromptTests: XCTestCase {
-    var addPaymentCardsWalletPrompt: WalletPromptMock!
-    var loyaltyJoinPrompt: WalletPromptMock!
-    var membershipPlan: MembershipPlanModel!
+class WalletPromptTests: XCTestCase, CoreDataTestable {
+    static var addPaymentCardsWalletPrompt: WalletPrompt!
+    static var loyaltyJoinPrompt: WalletPrompt!
+    static var baseMembershipPlan: MembershipPlanModel!
+    static var membershipPlan: CD_MembershipPlan!
     
-    override func setUp() {
+    override class func setUp() {
         super.setUp()
-        addPaymentCardsWalletPrompt = WalletPromptMock(type: .addPaymentCards)
+        addPaymentCardsWalletPrompt = WalletPrompt(type: .addPaymentCards)
 
         let planAccountModel = MembershipPlanAccountModel(apiId: nil, planName: "Harvey Nichols Rewards", planNameCard: nil, planURL: nil, companyName: "Harvey Nichols", category: nil, planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil)
-        membershipPlan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
-        loyaltyJoinPrompt = WalletPromptMock(type: .loyaltyJoin(membershipPlan: membershipPlan))
+        baseMembershipPlan = MembershipPlanModel(apiId: nil, status: nil, featureSet: nil, images: nil, account: planAccountModel, balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+        
+        mapResponseToManagedObject(baseMembershipPlan, managedObjectType: CD_MembershipPlan.self) { plan in
+            self.membershipPlan = plan
+            self.loyaltyJoinPrompt = WalletPrompt(type: .loyaltyJoin(membershipPlan: plan))
+        }
     }
     
     func test_titleString_isCorrect() {
-        XCTAssertEqual(addPaymentCardsWalletPrompt.title, "Add your payment cards")
-        XCTAssertEqual(loyaltyJoinPrompt.title, "Harvey Nichols Rewards")
+        XCTAssertEqual(Self.addPaymentCardsWalletPrompt.title, "Add your payment cards")
+        XCTAssertEqual(Self.loyaltyJoinPrompt.title, "Harvey Nichols Rewards")
     }
     
     func test_bodyString_isCorrect() {
-        XCTAssertEqual(addPaymentCardsWalletPrompt.body, "Collect rewards automatically for select loyalty cards by linking them to your payment cards.")
-        XCTAssertEqual(loyaltyJoinPrompt.body, "Link this card to your payment cards to automatically collect rewards.")
+        XCTAssertEqual(Self.addPaymentCardsWalletPrompt.body, "Collect rewards automatically for select loyalty cards by linking them to your payment cards.")
+        XCTAssertEqual(Self.loyaltyJoinPrompt.body, "Link this card to your payment cards to automatically collect rewards.")
     }
     
     func test_userDefaultsDismissKeyString_isCorrect() {
-        XCTAssertEqual(addPaymentCardsWalletPrompt.userDefaultsDismissKey, userDefaultsDismissKey(forType: .addPaymentCards))
-        XCTAssertEqual(loyaltyJoinPrompt.userDefaultsDismissKey, userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: membershipPlan)))
+        XCTAssertEqual(Self.addPaymentCardsWalletPrompt.userDefaultsDismissKey, userDefaultsDismissKey(forType: .addPaymentCards))
+        XCTAssertEqual(Self.loyaltyJoinPrompt.userDefaultsDismissKey, userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: Self.membershipPlan)))
     }
     
     func test_membershipPlanString_isCorrect() {
-        XCTAssertEqual(loyaltyJoinPrompt.membershipPlan, membershipPlan)
-        XCTAssertNil(addPaymentCardsWalletPrompt.membershipPlan)
+        XCTAssertEqual(Self.loyaltyJoinPrompt.membershipPlan, Self.membershipPlan)
+        XCTAssertNil(Self.addPaymentCardsWalletPrompt.membershipPlan)
     }
     
     func test_iconImageNameString_isCorrect() {
-        XCTAssertEqual(addPaymentCardsWalletPrompt.iconImageName, "payment")
-        XCTAssertNil(loyaltyJoinPrompt.iconImageName)
+        XCTAssertEqual(Self.addPaymentCardsWalletPrompt.iconImageName, "payment")
+        XCTAssertNil(Self.loyaltyJoinPrompt.iconImageName)
     }
     
     func test_userDefaultsDismissKeyFuncString_isCorrect() {
-        XCTAssertEqual(addPaymentCardsWalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards), userDefaultsDismissKey(forType: .addPaymentCards))
-        XCTAssertEqual(loyaltyJoinPrompt.userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: membershipPlan)), userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: membershipPlan)))
+        XCTAssertEqual(WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards), userDefaultsDismissKey(forType: .addPaymentCards))
+        XCTAssertEqual(WalletPrompt.userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: Self.membershipPlan)), userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: Self.membershipPlan)))
     }
     
-    private func userDefaultsDismissKey(forType type: WalletPromptTypeMock) -> String {
+    private func userDefaultsDismissKey(forType type: WalletPromptType) -> String {
         var userDefaultsDismiss = ""
         if let email = Current.userManager.currentEmailAddress {
             userDefaultsDismiss += "\(email)_"
