@@ -48,7 +48,7 @@ enum SentryService {
 
     static func triggerException(_ exception: SentryException) {
         SentrySDK.capture(error: exception.formattedError) { scope in
-            scope.setTag(value: "user_journey", key: exception.userJourneyTagValue)
+            scope.setTag(value: exception.userJourneyTagValue, key: "user_journey")
         }
     }
 }
