@@ -140,14 +140,6 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
         let cells = collectionView.visibleCells.filter { $0.isKind(of: WalletLoyaltyCardCollectionViewCell.self) } as? [WalletLoyaltyCardCollectionViewCell]
         cells?.forEach { $0.set(to: .closed) }
     }
-    
-//    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//        return transition
-//    }
-//    
-//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-//      return nil
-//    }
 }
 
 extension LoyaltyWalletViewController: UINavigationControllerDelegate {
@@ -165,8 +157,9 @@ extension LoyaltyWalletViewController: UINavigationControllerDelegate {
 }
 
 class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    let duration = 1.0
+    let duration = 0.8
     var operation: UINavigationController.Operation = .push
+//    var membershipCard: CD_MembershipCard!
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
@@ -185,12 +178,14 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         guard let loyaltyCardFullDetails = toViewController as? LoyaltyCardFullDetailsViewController else { return }
         
         let containerView = transitionContext.containerView
-//        let primaryCardFrame = containerView.convert(loyaltyWallet.collectionView.cellForItem(at: loyaltyWallet.selectedIndexPath))
-
         let primaryCard = UIView()
-        primaryCard.frame = CGRect(x: 100, y: 100, width: 300, height: 200)
+        let layoutAttributes = loyaltyWallet.collectionView.layoutAttributesForItem(at: loyaltyWallet.selectedIndexPath)
+        print(layoutAttributes as Any)
+        let primaryCardY = layoutAttributes?.frame.minY
+        primaryCard.frame = CGRect(x: 100, y: primaryCardY ?? 0, width: 300, height: 200)
         primaryCard.transform = CGAffineTransform(rotationAngle: -20 * CGFloat.pi / 180)
-        primaryCard.backgroundColor = .red
+        let membershipCard = loyaltyWallet.viewModel.cards?[loyaltyWallet.selectedIndexPath.row]
+        primaryCard.backgroundColor = UIColor(hexString: membershipCard?.card?.colour ?? "")
         primaryCard.layer.cornerRadius = 12
         
         containerView.addSubview(loyaltyCardFullDetails.view)
@@ -200,9 +195,16 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         loyaltyWallet.view.isHidden = false
         loyaltyCardFullDetails.view.isHidden = false
         
+        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseIn) {
+            primaryCard.alpha = 0.1
+        } completion: { _ in
+            
+        }
+
+        
         UIView.animate(withDuration: duration) {
             primaryCard.transform = CGAffineTransform(rotationAngle: 0)
-            primaryCard.frame = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: loyaltyCardFullDetails.brandHeader.frame.maxY, width: loyaltyCardFullDetails.brandHeader.frame.width, height: loyaltyCardFullDetails.brandHeader.frame.height)
+            primaryCard.frame = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: loyaltyCardFullDetails.brandHeader.frame.maxY - 5, width: loyaltyCardFullDetails.brandHeader.frame.width, height: loyaltyCardFullDetails.brandHeader.frame.height)
             loyaltyWallet.view.alpha = 0
         } completion: { _ in
             loyaltyWallet.view.alpha = 1
