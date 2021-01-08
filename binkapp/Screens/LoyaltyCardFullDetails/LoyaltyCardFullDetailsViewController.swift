@@ -33,7 +33,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return stackView
     }()
     
-    private lazy var brandHeader: UIImageView = {
+    lazy var brandHeader: UIImageView = {
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = true
         imageView.clipsToBounds = true
@@ -43,7 +43,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return imageView
     }()
     
-    private lazy var secondaryColorView: UIView = {
+    lazy var secondaryColorView: UIView = {
         let secondaryColorView = UIView()
         secondaryColorView.translatesAutoresizingMaskIntoConstraints = false
         secondaryColorView.backgroundColor = viewModel.secondaryColor

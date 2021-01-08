@@ -202,6 +202,7 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         UIView.animate(withDuration: duration) {
             primaryCard.transform = CGAffineTransform(rotationAngle: 0)
+            primaryCard.frame = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: loyaltyCardFullDetails.brandHeader.frame.maxY, width: loyaltyCardFullDetails.brandHeader.frame.width, height: loyaltyCardFullDetails.brandHeader.frame.height)
             loyaltyWallet.view.alpha = 0
         } completion: { _ in
             loyaltyWallet.view.alpha = 1
