@@ -157,7 +157,6 @@ extension LoyaltyWalletViewController: UINavigationControllerDelegate {
             transition.operation = .push
             return transition
         case .pop:
-//            transition.operation = .pop
             return nil
         default:
             return nil
@@ -166,10 +165,8 @@ extension LoyaltyWalletViewController: UINavigationControllerDelegate {
 }
 
 class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    let duration = 1.5
+    let duration = 1.0
     var operation: UINavigationController.Operation = .push
-    var primaryCard = UIView()
-    var secondaryCard = UIView()
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
@@ -190,24 +187,27 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let containerView = transitionContext.containerView
 //        let primaryCardFrame = containerView.convert(loyaltyWallet.collectionView.cellForItem(at: loyaltyWallet.selectedIndexPath))
 
+        let primaryCard = UIView()
         primaryCard.frame = CGRect(x: 100, y: 100, width: 300, height: 200)
+        primaryCard.transform = CGAffineTransform(rotationAngle: -20 * CGFloat.pi / 180)
         primaryCard.backgroundColor = .red
-        
         primaryCard.layer.cornerRadius = 12
         
-        containerView.addSubview(loyaltyWallet.view)
-        containerView.addSubview(primaryCard)
         containerView.addSubview(loyaltyCardFullDetails.view)
-        
+        containerView.addSubview(primaryCard)
+        containerView.addSubview(loyaltyWallet.view)
+
         loyaltyWallet.view.isHidden = false
-        loyaltyCardFullDetails.view.isHidden = true
+        loyaltyCardFullDetails.view.isHidden = false
         
         UIView.animate(withDuration: duration) {
-            self.primaryCard.transform = CGAffineTransform(rotationAngle: -45)
+            primaryCard.transform = CGAffineTransform(rotationAngle: 0)
+            loyaltyWallet.view.alpha = 0
         } completion: { _ in
+            loyaltyWallet.view.alpha = 1
             loyaltyWallet.view.isHidden = false
             loyaltyCardFullDetails.view.isHidden = false
-            self.primaryCard.removeFromSuperview()
+            primaryCard.removeFromSuperview()
             transitionContext.completeTransition(true)
         }
     }
