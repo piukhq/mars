@@ -11,6 +11,9 @@ import DeepDiff
 import CardScan
 
 class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {
+    let transition = WalletAnimator()
+    var selectedIndexPath: IndexPath!
+    
     override func configureCollectionView() {
         super.configureCollectionView()
         collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
@@ -18,7 +21,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
     }
     
@@ -63,6 +66,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         super.collectionView(collectionView, didSelectItemAt: indexPath)
+        self.selectedIndexPath = indexPath
         resetAllSwipeStates()
     }
 
@@ -135,5 +139,76 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
         // We have to filter the cells based on their type, because otherwise the wallet prompt cells are included, and then we can't cast properly
         let cells = collectionView.visibleCells.filter { $0.isKind(of: WalletLoyaltyCardCollectionViewCell.self) } as? [WalletLoyaltyCardCollectionViewCell]
         cells?.forEach { $0.set(to: .closed) }
+    }
+    
+//    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//        return transition
+//    }
+//    
+//    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+//      return nil
+//    }
+}
+
+extension LoyaltyWalletViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        switch operation {
+        case .push:
+            transition.operation = .push
+            return transition
+        case .pop:
+//            transition.operation = .pop
+            return nil
+        default:
+            return nil
+        }
+    }
+}
+
+class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+    let duration = 1.5
+    var operation: UINavigationController.Operation = .push
+    var primaryCard = UIView()
+    var secondaryCard = UIView()
+    
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return duration
+    }
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard
+            let fromViewController = transitionContext.viewController(forKey: .from),
+            let toViewController = transitionContext.viewController(forKey: .to)
+        else {
+            transitionContext.completeTransition(false)
+            return
+        }
+
+        guard let loyaltyWallet = fromViewController as? LoyaltyWalletViewController else { return }
+        guard let loyaltyCardFullDetails = toViewController as? LoyaltyCardFullDetailsViewController else { return }
+        
+        let containerView = transitionContext.containerView
+//        let primaryCardFrame = containerView.convert(loyaltyWallet.collectionView.cellForItem(at: loyaltyWallet.selectedIndexPath))
+
+        primaryCard.frame = CGRect(x: 100, y: 100, width: 300, height: 200)
+        primaryCard.backgroundColor = .red
+        
+        primaryCard.layer.cornerRadius = 12
+        
+        containerView.addSubview(loyaltyWallet.view)
+        containerView.addSubview(primaryCard)
+        containerView.addSubview(loyaltyCardFullDetails.view)
+        
+        loyaltyWallet.view.isHidden = false
+        loyaltyCardFullDetails.view.isHidden = true
+        
+        UIView.animate(withDuration: duration) {
+            self.primaryCard.transform = CGAffineTransform(rotationAngle: -45)
+        } completion: { _ in
+            loyaltyWallet.view.isHidden = false
+            loyaltyCardFullDetails.view.isHidden = false
+            self.primaryCard.removeFromSuperview()
+            transitionContext.completeTransition(true)
+        }
     }
 }
