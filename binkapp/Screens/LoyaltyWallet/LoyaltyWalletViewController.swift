@@ -157,7 +157,7 @@ extension LoyaltyWalletViewController: UINavigationControllerDelegate {
 }
 
 class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    let duration = 4.0
+    let duration = 0.5
     var operation: UINavigationController.Operation = .push
 //    var membershipCard: CD_MembershipCard!
     
@@ -173,50 +173,60 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             transitionContext.completeTransition(false)
             return
         }
-
         guard let loyaltyWalletViewController = fromViewController as? LoyaltyWalletViewController else { return }
         guard let LCDViewController = toViewController as? LoyaltyCardFullDetailsViewController else { return }
-        
         let containerView = transitionContext.containerView
+        let collectionViewCellFrame = loyaltyWalletViewController.collectionView.layoutAttributesForItem(at: loyaltyWalletViewController.selectedIndexPath)?.frame
+        let cellFrame = loyaltyWalletViewController.collectionView.convert(collectionViewCellFrame ?? CGRect.zero, to: loyaltyWalletViewController.collectionView.superview)
+        let membershipCard = loyaltyWalletViewController.viewModel.cards?[loyaltyWalletViewController.selectedIndexPath.row]
+
+        /// Primary Card
         let primaryCard = UIView()
-        let cellFrame = loyaltyWalletViewController.collectionView.layoutAttributesForItem(at: loyaltyWalletViewController.selectedIndexPath)?.frame
-        print(cellFrame as Any)
-        
-        let actualCellPosition = loyaltyWalletViewController.collectionView.convert(cellFrame ?? CGRect.zero, to: loyaltyWalletViewController.collectionView.superview)
-        print(actualCellPosition as Any)
-        
-        primaryCard.frame = CGRect(x: 134 + (actualCellPosition.minX) + 7.5, y: (actualCellPosition.minY) - LayoutHelper.WalletDimensions.cardLineSpacing, width: 514.29 / 2, height: 370.52 / 2)
-
-//        primaryCard.frame = CGRect(x: 134 + (cellFrame?.minX ?? 25) + 7.5, y: (cellFrame?.minY ?? 0) + 38.72 + topBarHeight - LayoutHelper.WalletDimensions.cardLineSpacing - LayoutHelper.WalletDimensions.contentInset.top, width: 514.29 / 2, height: 370.52 / 2)
+        primaryCard.frame = CGRect(x: cellFrame.minX + 134 + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: 514.29 / 2, height: 370.52 / 2)
         primaryCard.transform = CGAffineTransform(rotationAngle: -20 * CGFloat.pi / 180)
-//        let membershipCard = loyaltyWalletViewController.viewModel.cards?[loyaltyWalletViewController.selectedIndexPath.row]
-//        primaryCard.backgroundColor = UIColor(hexString: membershipCard?.card?.colour ?? "")
-        primaryCard.backgroundColor = .black
-
+        primaryCard.backgroundColor = UIColor(hexString: membershipCard?.card?.colour ?? "")
         primaryCard.layer.cornerRadius = 12
+        
+        /// Secondary Card
+        let secondaryCard = UIView()
+        secondaryCard.frame = CGRect(x: cellFrame.minX + 120.76 + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: 427.54 / 2, height: 333.64 / 2)
+        secondaryCard.transform = CGAffineTransform(rotationAngle: -45 * CGFloat.pi / 180)
+        secondaryCard.backgroundColor = membershipCard?.membershipPlan?.secondaryBrandColor
+        secondaryCard.layer.cornerRadius = 12
         
         containerView.addSubview(LCDViewController.view)
         containerView.addSubview(loyaltyWalletViewController.view)
+        containerView.addSubview(secondaryCard)
         containerView.addSubview(primaryCard)
-
+        
+        /// Animations
         loyaltyWalletViewController.view.isHidden = false
         LCDViewController.view.isHidden = false
         
         UIView.animate(withDuration: duration / 2, delay: duration / 2, options: .curveEaseIn) {
             primaryCard.alpha = 0
+            secondaryCard.alpha = 0
         } completion: { _ in
         }
 
+        let navBarHeight = LCDViewController.navigationController?.navigationBar.frame.height ?? 0
+        let statusBarHeight = LCDViewController.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        let topBarHeight = navBarHeight + statusBarHeight
+        
+        let secondaryCardHeight = topBarHeight + (LCDViewController.brandHeader.frame.height / 2) + LayoutHelper.LoyaltyCardDetail.contentPadding
         
         UIView.animate(withDuration: duration) {
-//            primaryCard.transform = CGAffineTransform(rotationAngle: 0)
-//            primaryCard.frame = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: LCDViewController.brandHeader.frame.maxY - 5, width: LCDViewController.brandHeader.frame.width, height: LCDViewController.brandHeader.frame.height)
+            primaryCard.transform = CGAffineTransform(rotationAngle: 0)
+            primaryCard.frame = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: LCDViewController.brandHeader.frame.maxY - 5, width: LCDViewController.brandHeader.frame.width, height: LCDViewController.brandHeader.frame.height)
+            secondaryCard.transform = CGAffineTransform(rotationAngle: 0)
+            secondaryCard.frame = CGRect(x: 0, y: LCDViewController.secondaryColorView.frame.maxY, width: LCDViewController.view.frame.width, height: secondaryCardHeight)
             loyaltyWalletViewController.view.alpha = 0
         } completion: { _ in
             loyaltyWalletViewController.view.alpha = 1
             loyaltyWalletViewController.view.isHidden = false
             LCDViewController.view.isHidden = false
             primaryCard.removeFromSuperview()
+            secondaryCard.removeFromSuperview()
             transitionContext.completeTransition(true)
         }
     }
