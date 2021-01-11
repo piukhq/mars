@@ -137,8 +137,6 @@
 		70450DD4252B658F00F36566 /* DetectText.js in Resources */ = {isa = PBXBuildFile; fileRef = 70450DD3252B658F00F36566 /* DetectText.js */; };
 		70661B88250792DB006DB009 /* BootsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */; };
 		70661B8B250795DF006DB009 /* BootsPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70661B89250795DF006DB009 /* BootsPointsScrape.js */; };
-		70661B8C250795DF006DB009 /* BootsLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70661B8A250795DF006DB009 /* BootsLogin.js */; };
-		70661B90250A5713006DB009 /* MorrisonsLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70661B8E250A5713006DB009 /* MorrisonsLogin.js */; };
 		70661B91250A5713006DB009 /* MorrisonsPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70661B8F250A5713006DB009 /* MorrisonsPointsScrape.js */; };
 		70661B93250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */; };
 		706D203924D851BA004BCCF3 /* _CD_CardAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D203724D851BA004BCCF3 /* _CD_CardAccount.swift */; };
@@ -146,13 +144,11 @@
 		706D203C24D85B76004BCCF3 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */ = {isa = PBXBuildFile; fileRef = 706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */; };
 		706D204224D97104004BCCF3 /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706D204124D97104004BCCF3 /* AnalyticsEvent.swift */; };
-		70840E662562ADAD000E17A5 /* SuperdrugLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70840E642562ADAC000E17A5 /* SuperdrugLogin.js */; };
 		70840E672562ADAD000E17A5 /* SuperdrugPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70840E652562ADAD000E17A5 /* SuperdrugPointsScrape.js */; };
 		70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */; };
 		709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */; };
 		70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */; };
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
-		70B316E424E5A47000D86DE5 /* TescoLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70B316E224E5A47000D86DE5 /* TescoLogin.js */; };
 		70B316E524E5A47000D86DE5 /* TescoPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70B316E324E5A47000D86DE5 /* TescoPointsScrape.js */; };
 		70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B316E624E6AF2800D86DE5 /* Navigate.swift */; };
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
@@ -175,13 +171,10 @@
 		70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E86779248E76C9001ED282 /* WebScrapingUtility.swift */; };
 		70E8DFDD2563E3050027A244 /* HeathrowPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8DFDC2563E3050027A244 /* HeathrowPointsScrapingAgent.swift */; };
 		70E8DFE62563E6F70027A244 /* HeathrowPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFE42563E6F60027A244 /* HeathrowPointsScrape.js */; };
-		70E8DFE72563E6F70027A244 /* HeathrowLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFE52563E6F70027A244 /* HeathrowLogin.js */; };
 		70E8DFED2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8DFEC2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift */; };
-		70E8DFF32563E8CE0027A244 /* PerfumeshopLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFF12563E8CE0027A244 /* PerfumeshopLogin.js */; };
 		70E8DFF42563E8CE0027A244 /* PerfumeshopPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFF22563E8CE0027A244 /* PerfumeshopPointsScrape.js */; };
 		70E8E0F5256415B20027A244 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 70E8E0F4256415B20027A244 /* SwiftSoup */; };
 		70E8E12825641A350027A244 /* WaterstonesPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E12725641A350027A244 /* WaterstonesPointsScrapingAgent.swift */; };
-		70E8E13125641A540027A244 /* WaterstonesLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8E12F25641A530027A244 /* WaterstonesLogin.js */; };
 		70E8E13225641A540027A244 /* WaterstonesPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8E13025641A540027A244 /* WaterstonesPointsScrape.js */; };
 		70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */; };
 		70E8E4AA256712D80027A244 /* CoreDataTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */; };
@@ -659,8 +652,6 @@
 		7049B63C24AB52AA00661128 /* binkapp - 30-06-20 - Add field alternatives.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 30-06-20 - Add field alternatives.xcdatamodel"; sourceTree = "<group>"; };
 		70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootsPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70661B89250795DF006DB009 /* BootsPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BootsPointsScrape.js; sourceTree = "<group>"; };
-		70661B8A250795DF006DB009 /* BootsLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BootsLogin.js; sourceTree = "<group>"; };
-		70661B8E250A5713006DB009 /* MorrisonsLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MorrisonsLogin.js; sourceTree = "<group>"; };
 		70661B8F250A5713006DB009 /* MorrisonsPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MorrisonsPointsScrape.js; sourceTree = "<group>"; };
 		70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorrisonsPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		706D203624D85125004BCCF3 /* binkapp - 03-08-20 - Card accounts uuid.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 03-08-20 - Card accounts uuid.xcdatamodel"; sourceTree = "<group>"; };
@@ -668,7 +659,6 @@
 		706D203824D851BA004BCCF3 /* CD_CardAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_CardAccount.swift; sourceTree = "<group>"; };
 		706D203D24D96D34004BCCF3 /* GoogleService-Info-BETA.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-BETA.plist"; sourceTree = "<group>"; };
 		706D204124D97104004BCCF3 /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
-		70840E642562ADAC000E17A5 /* SuperdrugLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SuperdrugLogin.js; sourceTree = "<group>"; };
 		70840E652562ADAD000E17A5 /* SuperdrugPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SuperdrugPointsScrape.js; sourceTree = "<group>"; };
 		70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperdrugPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
@@ -676,7 +666,6 @@
 		7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigUtil.swift; sourceTree = "<group>"; };
 		70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsScrapingManager.swift; sourceTree = "<group>"; };
 		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
-		70B316E224E5A47000D86DE5 /* TescoLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoLogin.js; sourceTree = "<group>"; };
 		70B316E324E5A47000D86DE5 /* TescoPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TescoPointsScrape.js; sourceTree = "<group>"; };
 		70B316E624E6AF2800D86DE5 /* Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigate.swift; sourceTree = "<group>"; };
 		70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
@@ -700,12 +689,9 @@
 		70E86779248E76C9001ED282 /* WebScrapingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtility.swift; sourceTree = "<group>"; };
 		70E8DFDC2563E3050027A244 /* HeathrowPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeathrowPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70E8DFE42563E6F60027A244 /* HeathrowPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = HeathrowPointsScrape.js; sourceTree = "<group>"; };
-		70E8DFE52563E6F70027A244 /* HeathrowLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = HeathrowLogin.js; sourceTree = "<group>"; };
 		70E8DFEC2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeShopPointsScrapingAgent.swift; sourceTree = "<group>"; };
-		70E8DFF12563E8CE0027A244 /* PerfumeshopLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerfumeshopLogin.js; sourceTree = "<group>"; };
 		70E8DFF22563E8CE0027A244 /* PerfumeshopPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerfumeshopPointsScrape.js; sourceTree = "<group>"; };
 		70E8E12725641A350027A244 /* WaterstonesPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterstonesPointsScrapingAgent.swift; sourceTree = "<group>"; };
-		70E8E12F25641A530027A244 /* WaterstonesLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = WaterstonesLogin.js; sourceTree = "<group>"; };
 		70E8E13025641A540027A244 /* WaterstonesPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = WaterstonesPointsScrape.js; sourceTree = "<group>"; };
 		70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModelTests.swift; sourceTree = "<group>"; };
 		70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTestable.swift; sourceTree = "<group>"; };
@@ -1609,7 +1595,6 @@
 			children = (
 				70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */,
 				70B316E324E5A47000D86DE5 /* TescoPointsScrape.js */,
-				70B316E224E5A47000D86DE5 /* TescoLogin.js */,
 			);
 			path = Tesco;
 			sourceTree = "<group>";
@@ -1617,7 +1602,6 @@
 		70661B86250792C0006DB009 /* Boots */ = {
 			isa = PBXGroup;
 			children = (
-				70661B8A250795DF006DB009 /* BootsLogin.js */,
 				70661B89250795DF006DB009 /* BootsPointsScrape.js */,
 				70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */,
 			);
@@ -1627,7 +1611,6 @@
 		70661B8D250A56DB006DB009 /* Morrisons */ = {
 			isa = PBXGroup;
 			children = (
-				70661B8E250A5713006DB009 /* MorrisonsLogin.js */,
 				70661B8F250A5713006DB009 /* MorrisonsPointsScrape.js */,
 				70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */,
 			);
@@ -1637,7 +1620,6 @@
 		70840E622562AC76000E17A5 /* Superdrug */ = {
 			isa = PBXGroup;
 			children = (
-				70840E642562ADAC000E17A5 /* SuperdrugLogin.js */,
 				70840E652562ADAD000E17A5 /* SuperdrugPointsScrape.js */,
 				70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */,
 			);
@@ -1741,7 +1723,6 @@
 		70E8DFDB2563E2F20027A244 /* Heathrow */ = {
 			isa = PBXGroup;
 			children = (
-				70E8DFE52563E6F70027A244 /* HeathrowLogin.js */,
 				70E8DFE42563E6F60027A244 /* HeathrowPointsScrape.js */,
 				70E8DFDC2563E3050027A244 /* HeathrowPointsScrapingAgent.swift */,
 			);
@@ -1751,7 +1732,6 @@
 		70E8DFEB2563E8000027A244 /* Perfume Shop */ = {
 			isa = PBXGroup;
 			children = (
-				70E8DFF12563E8CE0027A244 /* PerfumeshopLogin.js */,
 				70E8DFF22563E8CE0027A244 /* PerfumeshopPointsScrape.js */,
 				70E8DFEC2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift */,
 			);
@@ -1761,7 +1741,6 @@
 		70E8E126256419FD0027A244 /* Waterstones */ = {
 			isa = PBXGroup;
 			children = (
-				70E8E12F25641A530027A244 /* WaterstonesLogin.js */,
 				70E8E13025641A540027A244 /* WaterstonesPointsScrape.js */,
 				70E8E12725641A350027A244 /* WaterstonesPointsScrapingAgent.swift */,
 			);
@@ -2810,7 +2789,6 @@
 			files = (
 				3CD3493722F99E1D000C1F4D /* NunitoSans-ExtraBold.ttf in Resources */,
 				3C3853D72407DB1D004D6C2A /* TransactionView.xib in Resources */,
-				70B316E424E5A47000D86DE5 /* TescoLogin.js in Resources */,
 				EF335C83234F565B00D49223 /* WalletPromptCollectionViewCell.xib in Resources */,
 				3C25BE0023019BC100E931EE /* BrandTableViewCell.xib in Resources */,
 				B71D51F92343692000BB3406 /* OfferTileView.xib in Resources */,
@@ -2833,10 +2811,8 @@
 				3CD3493C22F99E1D000C1F4D /* NunitoSans-Bold.ttf in Resources */,
 				3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */,
 				70B316E524E5A47000D86DE5 /* TescoPointsScrape.js in Resources */,
-				70E8E13125641A540027A244 /* WaterstonesLogin.js in Resources */,
 				EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */,
 				B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */,
-				70E8DFF32563E8CE0027A244 /* PerfumeshopLogin.js in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
@@ -2872,22 +2848,18 @@
 				70E39854256FF576009AD8CB /* DynamicActionHeaderView.xib in Resources */,
 				B774E9AB233123BD006D4131 /* ReusableTemplateViewController.xib in Resources */,
 				B713662F232A63BA008A0ED7 /* BinkModuleView.xib in Resources */,
-				70661B90250A5713006DB009 /* MorrisonsLogin.js in Resources */,
 				3CD3493522F99E1D000C1F4D /* NunitoSans-Light.ttf in Resources */,
 				EF2E881F233A354500F678F3 /* PaymentCardCollectionViewCell.xib in Resources */,
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
 				702B200E25A8D5CF00C7563F /* LocalPointsCollection_Login.js in Resources */,
 				B766599A2320F68D00B327BE /* HyperlinkAlertController.xib in Resources */,
-				70840E662562ADAD000E17A5 /* SuperdrugLogin.js in Resources */,
 				70E8E13225641A540027A244 /* WaterstonesPointsScrape.js in Resources */,
 				BD9FB6B72338120700E5559A /* TransactionsViewController.xib in Resources */,
 				EF6921772469A9290049875B /* DebugSecondaryPlanColorCell.xib in Resources */,
-				70E8DFE72563E6F70027A244 /* HeathrowLogin.js in Resources */,
 				70E3984F256FE7BA009AD8CB /* DynamicActionViewController.xib in Resources */,
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
 				EFA81016240405070000D21D /* JailbrokenViewController.xib in Resources */,
 				EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */,
-				70661B8C250795DF006DB009 /* BootsLogin.js in Resources */,
 				706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */,
 				BD25E6972388610B0027FF3E /* LoadingScreen.xib in Resources */,
 				3CD3493D22F99E1D000C1F4D /* NunitoSans-SemiBold.ttf in Resources */,
