@@ -23,7 +23,7 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
             if state1.sort != state2.sort {
                 return state1.sort < state2.sort
             } else {
-                return $0.id < $1.id
+                return $0.id > $1.id
             }
         }
     }
