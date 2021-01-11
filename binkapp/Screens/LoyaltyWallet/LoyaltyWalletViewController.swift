@@ -202,17 +202,22 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         /// Animations
         loyaltyWalletViewController.view.isHidden = false
         LCDViewController.view.isHidden = false
+        primaryCard.alpha = 0
+        secondaryCard.alpha = 0
         
-        UIView.animate(withDuration: duration / 2, delay: duration / 2, options: .curveEaseIn) {
-            primaryCard.alpha = 0
-            secondaryCard.alpha = 0
+        UIView.animate(withDuration: duration / 4, delay: 0, options: .curveEaseIn) {
+            primaryCard.alpha = 1
+            secondaryCard.alpha = 1
         } completion: { _ in
+            UIView.animate(withDuration: self.duration / 2, delay: self.duration / 4, options: .curveEaseOut) {
+                primaryCard.alpha = 0
+                secondaryCard.alpha = 0
+            }
         }
-
+        
         let navBarHeight = LCDViewController.navigationController?.navigationBar.frame.height ?? 0
         let statusBarHeight = LCDViewController.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         let topBarHeight = navBarHeight + statusBarHeight
-        
         let secondaryCardHeight = topBarHeight + (LCDViewController.brandHeader.frame.height / 2) + LayoutHelper.LoyaltyCardDetail.contentPadding
         
         UIView.animate(withDuration: duration) {
