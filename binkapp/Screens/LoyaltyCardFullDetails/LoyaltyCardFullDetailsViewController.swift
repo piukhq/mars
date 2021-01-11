@@ -50,6 +50,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return secondaryColorView
     }()
     
+    private lazy var brandHeaderBarcodeButtonPadding: UIView = {
+        let paddingView = UIView()
+        paddingView.translatesAutoresizingMaskIntoConstraints = false
+        paddingView.backgroundColor = .red
+        return paddingView
+    }()
+    
     private lazy var showBarcodeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .bodyTextLarge
@@ -110,8 +117,16 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
+    private var brandHeaderBarcodeButtonPaddingHeightConstraint: NSLayoutConstraint!
     private var didLayoutSubviews = false
-    
+    private var didLayoutSubviewsCount = 0 {
+        didSet {
+            if didLayoutSubviewsCount == 2 {
+                animatePadding()
+            }
+        }
+    }
+
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -159,6 +174,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         didLayoutSubviews = true
+        didLayoutSubviewsCount += 1
     }
 }
 
@@ -200,6 +216,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: brandHeader)
         view.insertSubview(secondaryColorView, belowSubview: brandHeader)
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
+        stackScrollView.add(arrangedSubview: brandHeaderBarcodeButtonPadding)
         
         if viewModel.membershipCard.card?.barcode != nil || viewModel.membershipCard.card?.membershipId != nil {
             let showBarcode = viewModel.membershipCard.card?.barcode != nil
@@ -288,6 +305,8 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configureLayout() {
+        brandHeaderBarcodeButtonPaddingHeightConstraint = NSLayoutConstraint(item: brandHeaderBarcodeButtonPadding, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 110)
+
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -296,6 +315,14 @@ private extension LoyaltyCardFullDetailsViewController {
             brandHeader.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             brandHeader.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             brandHeader.heightAnchor.constraint(equalTo: brandHeader.widthAnchor, multiplier: viewModel.brandHeaderAspectRatio),
+            brandHeaderBarcodeButtonPaddingHeightConstraint,
+//            brandHeaderBarcodeButtonPadding.topAnchor.constraint(equalTo: paddingView2.topAnchor),
+//            brandHeaderBarcodeButtonPadding.bottomAnchor.constraint(equalTo: paddingView2.bottomAnchor),
+//            brandHeaderBarcodeButtonPadding.leftAnchor.constraint(equalTo: view.leftAnchor),
+//            brandHeaderBarcodeButtonPadding.rightAnchor.constraint(equalTo: view.rightAnchor),
+//            containerView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor),
+//            containerView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor),
+//            containerView.heightAnchor.constraint(equalTo: brandHeaderBarcodeButtonPadding.heightAnchor),
             showBarcodeButton.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.barcodeButtonHeight),
             modulesStackView.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.modulesStackViewHeight),
             modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
@@ -315,7 +342,6 @@ private extension LoyaltyCardFullDetailsViewController {
             secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
 
-
         topConstraint?.isActive = true
 
         view.sendSubviewToBack(secondaryColorView)
@@ -328,6 +354,13 @@ private extension LoyaltyCardFullDetailsViewController {
     
     @objc func showBarcodeButtonPressed() {
         viewModel.toBarcodeModel()
+    }
+    
+    private func animatePadding() {
+        UIView.animate(withDuration: 0.67) {
+            self.brandHeaderBarcodeButtonPaddingHeightConstraint.constant = 0
+            self.view.layoutIfNeeded()
+        }
     }
 }
 

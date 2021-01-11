@@ -159,7 +159,6 @@ extension LoyaltyWalletViewController: UINavigationControllerDelegate {
 class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     let duration = 0.5
     var operation: UINavigationController.Operation = .push
-//    var membershipCard: CD_MembershipCard!
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
@@ -167,15 +166,13 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard
-            let fromViewController = transitionContext.viewController(forKey: .from),
-            let toViewController = transitionContext.viewController(forKey: .to)
+            let loyaltyWalletViewController = transitionContext.viewController(forKey: .from) as? LoyaltyWalletViewController,
+            let LCDViewController = transitionContext.viewController(forKey: .to) as? LoyaltyCardFullDetailsViewController
         else {
             transitionContext.completeTransition(false)
             return
         }
-        guard let loyaltyWalletViewController = fromViewController as? LoyaltyWalletViewController else { return }
-        guard let LCDViewController = toViewController as? LoyaltyCardFullDetailsViewController else { return }
-        let containerView = transitionContext.containerView
+        
         let collectionViewCellFrame = loyaltyWalletViewController.collectionView.layoutAttributesForItem(at: loyaltyWalletViewController.selectedIndexPath)?.frame
         let cellFrame = loyaltyWalletViewController.collectionView.convert(collectionViewCellFrame ?? CGRect.zero, to: loyaltyWalletViewController.collectionView.superview)
         let membershipCard = loyaltyWalletViewController.viewModel.cards?[loyaltyWalletViewController.selectedIndexPath.row]
@@ -186,6 +183,7 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         primaryCard.transform = CGAffineTransform(rotationAngle: -20 * CGFloat.pi / 180)
         primaryCard.backgroundColor = UIColor(hexString: membershipCard?.card?.colour ?? "")
         primaryCard.layer.cornerRadius = 12
+        primaryCard.alpha = 0
         
         /// Secondary Card
         let secondaryCard = UIView()
@@ -193,7 +191,9 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         secondaryCard.transform = CGAffineTransform(rotationAngle: -45 * CGFloat.pi / 180)
         secondaryCard.backgroundColor = membershipCard?.membershipPlan?.secondaryBrandColor
         secondaryCard.layer.cornerRadius = 12
+        secondaryCard.alpha = 0
         
+        let containerView = transitionContext.containerView
         containerView.addSubview(LCDViewController.view)
         containerView.addSubview(loyaltyWalletViewController.view)
         containerView.addSubview(secondaryCard)
@@ -202,8 +202,6 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         /// Animations
         loyaltyWalletViewController.view.isHidden = false
         LCDViewController.view.isHidden = false
-        primaryCard.alpha = 0
-        secondaryCard.alpha = 0
         
         UIView.animate(withDuration: duration / 4, delay: 0, options: .curveEaseIn) {
             primaryCard.alpha = 1
@@ -214,7 +212,7 @@ class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 secondaryCard.alpha = 0
             }
         }
-        
+                
         let navBarHeight = LCDViewController.navigationController?.navigationBar.frame.height ?? 0
         let statusBarHeight = LCDViewController.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         let topBarHeight = navBarHeight + statusBarHeight
