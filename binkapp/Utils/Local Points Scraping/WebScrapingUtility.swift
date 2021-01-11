@@ -56,7 +56,7 @@ extension WebScrapable {
     }
 
     var loginScriptFileName: String {
-        return "\(merchant.rawValue.capitalized)Login"
+        return "LocalPointsCollection_Login"
     }
     
     var pointsScrapingScriptFileName: String {
@@ -289,11 +289,15 @@ class WebScrapingUtility: NSObject {
         
         // Inject variables into login file
         let formattedLoginScript = String(format: loginScript, credentials.username, credentials.password)
-        runScript(formattedLoginScript) { [weak self] (_, error) in
+        runScript(formattedLoginScript) { [weak self] (response, error) in
             guard let self = self else { return }
             guard error == nil else {
                 self.finish(withError: .failedToExecuteLoginScript)
                 return
+            }
+
+            if let response = response {
+                print(response)
             }
             
             if self.agent.reCaptchaPresentationType == .persistent && self.agent.reCaptchaPresentationFrequency == .always {
