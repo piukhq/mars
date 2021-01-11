@@ -45,6 +45,17 @@ enum VoucherState: String, Codable {
     case inProgress = "inprogress"
     case expired
     case cancelled
+
+    var sort: Int {
+        switch self {
+        case .issued:
+            return 0
+        case .inProgress:
+            return 1
+        case .redeemed, .expired, .cancelled:
+            return 2
+        }
+    }
 }
 
 extension VoucherModel: CoreDataMappable, CoreDataIDMappable {

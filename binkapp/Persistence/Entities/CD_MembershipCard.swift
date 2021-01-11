@@ -16,8 +16,15 @@ open class CD_MembershipCard: _CD_MembershipCard, WalletCardProtocol {
 
     var sortedVouchers: [CD_Voucher]? {
         guard let vouchers = vouchers.allObjects as? [CD_Voucher] else { return nil }
-        return vouchers.sorted { (voucher1, voucher2) -> Bool in
-            return voucher1.id < voucher2.id
+        return vouchers.sorted {
+            guard let state1 = VoucherState(rawValue: $0.state ?? "") else { return false }
+            guard let state2 = VoucherState(rawValue: $1.state ?? "") else { return false }
+
+            if state1.sort != state2.sort {
+                return state1.sort < state2.sort
+            } else {
+                return $0.id < $1.id
+            }
         }
     }
 
