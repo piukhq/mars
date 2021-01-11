@@ -11,7 +11,7 @@ import DeepDiff
 import CardScan
 
 class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {
-    let transition = WalletAnimator()
+    let transition = LoyaltyWalletAnimator()
     var selectedIndexPath: IndexPath!
     
     override func configureCollectionView() {
@@ -146,19 +146,15 @@ extension LoyaltyWalletViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .push:
-            transition.operation = .push
             return transition
-        case .pop:
-            return nil
         default:
             return nil
         }
     }
 }
 
-class WalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    let duration = 0.5
-    var operation: UINavigationController.Operation = .push
+class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+    private let duration = 0.6
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration

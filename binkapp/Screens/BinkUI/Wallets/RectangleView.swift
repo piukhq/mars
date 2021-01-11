@@ -48,3 +48,9 @@ class RectangleView: UIView {
         context.restoreGState()
     }
 }
+
+extension LayoutHelper {
+    struct RectangleView {
+        
+    }
+}
