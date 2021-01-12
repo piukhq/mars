@@ -2,8 +2,11 @@ var queryString = "%@"
 
 performPointsScraping()
 
+// tesco = .pointvalue
+// heathrow = .total-points
+
 function performPointsScraping() {
-    const p = document.querySelector('.pointvalue')
+    const p = document.querySelector('.total-points')
 
     if (p.innerHTML) {
         return {

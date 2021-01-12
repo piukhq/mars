@@ -333,21 +333,21 @@ class WebScrapingUtility: NSObject {
                 print(response)
             }
             
-//            guard let htmlString = html as? String, !htmlString.isEmpty else {
-//                completion(.failure(.failedToCastReturnValue))
-//                return
-//            }
-//
-//            self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
-//                guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else { return }
-//                var cookiesDictionary: [String: Any] = [:]
-//                for cookie in cookies {
-//                    cookiesDictionary[cookie.name] = cookie.properties
-//                }
-//                Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
-//            }
-//
-//            completion(.success(self.agent.pointsValueFromCustomHTMLParser(htmlString) ?? htmlString))
+            guard let htmlString = response as? String, !htmlString.isEmpty else {
+                completion(.failure(.failedToCastReturnValue))
+                return
+            }
+
+            self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+                guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else { return }
+                var cookiesDictionary: [String: Any] = [:]
+                for cookie in cookies {
+                    cookiesDictionary[cookie.name] = cookie.properties
+                }
+                Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
+            }
+
+            completion(.success(self.agent.pointsValueFromCustomHTMLParser(htmlString) ?? htmlString))
         }
     }
     
