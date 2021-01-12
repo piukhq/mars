@@ -60,7 +60,7 @@ extension WebScrapable {
     }
     
     var pointsScrapingScriptFileName: String {
-        return "\(merchant.rawValue.capitalized)PointsScrape"
+        return "LocalPointsCollection_Points"
     }
     
     var detectTextScriptFileName: String {
@@ -242,27 +242,27 @@ class WebScrapingUtility: NSObject {
     }
 
     private func resetIdlingTimer() {
-        idleTimer?.invalidate()
-        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
-            self.isIdle = true
-            timer.invalidate()
-
-            /// We check for incorrect credentials first, because if that is detected then we don't care about recaptcha
-            self.detectIncorrectCredentialsText { [weak self] textDetected in
-                guard let self = self else { return }
-                if !textDetected {
-                    /// We only need to handle the case where no text is detected, as the parent method handles the detection handling.
-                    /// In this case, the reason we are idling is not due to incorrect credentials, so we should check for recaptcha
-                    self.detectRecaptchaText { recaptchaDetected in
-                        /// Again, we only need to handle non-detection.
-                        /// In this case, we aren't idling because of incorrect credentials OR recaptcha, so let's fail the scraping with a reason of unhandled idling.
-                        if !recaptchaDetected {
-                            self.finish(withError: .unhandledIdling)
-                        }
-                    }
-                }
-            }
-        })
+//        idleTimer?.invalidate()
+//        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
+//            self.isIdle = true
+//            timer.invalidate()
+//
+//            /// We check for incorrect credentials first, because if that is detected then we don't care about recaptcha
+//            self.detectIncorrectCredentialsText { [weak self] textDetected in
+//                guard let self = self else { return }
+//                if !textDetected {
+//                    /// We only need to handle the case where no text is detected, as the parent method handles the detection handling.
+//                    /// In this case, the reason we are idling is not due to incorrect credentials, so we should check for recaptcha
+//                    self.detectRecaptchaText { recaptchaDetected in
+//                        /// Again, we only need to handle non-detection.
+//                        /// In this case, we aren't idling because of incorrect credentials OR recaptcha, so let's fail the scraping with a reason of unhandled idling.
+//                        if !recaptchaDetected {
+//                            self.finish(withError: .unhandledIdling)
+//                        }
+//                    }
+//                }
+//            }
+//        })
     }
 
     private func presentWebView() {
@@ -322,28 +322,32 @@ class WebScrapingUtility: NSObject {
             return
         }
 
-        runScript(scrapeScript) { [weak self] (html, error) in
+        runScript(scrapeScript) { [weak self] (response, error) in
             guard let self = self else { return }
             guard error == nil else {
                 self.finish(withError: .failedToExecuteScrapingScript)
                 return
             }
-            
-            guard let htmlString = html as? String, !htmlString.isEmpty else {
-                completion(.failure(.failedToCastReturnValue))
-                return
-            }
-            
-            self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
-                guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else { return }
-                var cookiesDictionary: [String: Any] = [:]
-                for cookie in cookies {
-                    cookiesDictionary[cookie.name] = cookie.properties
-                }
-                Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
-            }
 
-            completion(.success(self.agent.pointsValueFromCustomHTMLParser(htmlString) ?? htmlString))
+            if let response = response {
+                print(response)
+            }
+            
+//            guard let htmlString = html as? String, !htmlString.isEmpty else {
+//                completion(.failure(.failedToCastReturnValue))
+//                return
+//            }
+//
+//            self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+//                guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else { return }
+//                var cookiesDictionary: [String: Any] = [:]
+//                for cookie in cookies {
+//                    cookiesDictionary[cookie.name] = cookie.properties
+//                }
+//                Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
+//            }
+//
+//            completion(.success(self.agent.pointsValueFromCustomHTMLParser(htmlString) ?? htmlString))
         }
     }
     
@@ -507,18 +511,18 @@ extension WebScrapingUtility: WKNavigationDelegate {
             
             // At this point, we should close the webView if we have displayed it for reCaptcha
             if isPresentingWebView {
-                Current.navigate.close()
+//                Current.navigate.close()
             }
             
-            getScrapedValue { [weak self] result in
-                guard let self = self else { return }
-                
-                switch result {
-                case .failure(let error):
-                    self.finish(withError: error)
-                case .success(let pointsValue):
-                    self.finish(withValue: pointsValue)
-                }
+            getScrapedValue { result in
+//                guard let self = self else { return }
+//
+//                switch result {
+//                case .failure(let error):
+//                    self.finish(withError: error)
+//                case .success(let pointsValue):
+//                    self.finish(withValue: pointsValue)
+//                }
             }
         } else {
             do {
