@@ -9,7 +9,8 @@
 import UIKit
 
 class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    private let duration = 0.6
+//    private let duration = 0.6
+    private let duration = 1.5
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return duration
@@ -58,10 +59,12 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         } completion: { _ in
             UIView.animate(withDuration: self.duration / 2, delay: self.duration / 4, options: .curveEaseOut) {
                 primaryCard.alpha = 0
-                secondaryCard.alpha = 0
+//                secondaryCard.alpha = 0
             }
         }
-                
+        
+        LCDViewController.secondaryColorView.isHidden = true
+        
         let navBarHeight = LCDViewController.navigationController?.navigationBar.frame.height ?? 0
         let statusBarHeight = LCDViewController.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         let topBarHeight = navBarHeight + statusBarHeight
@@ -69,12 +72,13 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         UIView.animate(withDuration: duration) {
             primaryCard.transform = CGAffineTransform(rotationAngle: 0)
-            primaryCard.frame = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: LCDViewController.brandHeader.frame.maxY - 5, width: LCDViewController.brandHeader.frame.width, height: LCDViewController.brandHeader.frame.height)
+            primaryCard.frame = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: topBarHeight + 25 - 5, width: LCDViewController.brandHeader.frame.width, height: LCDViewController.brandHeader.frame.height)
             secondaryCard.transform = CGAffineTransform(rotationAngle: 0)
             secondaryCard.frame = CGRect(x: 0, y: LCDViewController.secondaryColorView.frame.maxY, width: LCDViewController.view.frame.width, height: secondaryCardHeight)
             loyaltyWalletViewController.view.alpha = 0
         } completion: { _ in
             loyaltyWalletViewController.view.alpha = 1
+            LCDViewController.secondaryColorView.isHidden = false
             primaryCard.removeFromSuperview()
             secondaryCard.removeFromSuperview()
             transitionContext.completeTransition(true)
