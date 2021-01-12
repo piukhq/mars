@@ -4,9 +4,10 @@ performPointsScraping()
 
 // tesco = .pointvalue
 // heathrow = .total-points
+// waterstones = .plus-balance-row strong // will need client logic to strip " stamps" text
 
 function performPointsScraping() {
-    const p = document.querySelector('.total-points')
+    const p = document.querySelector('.plus-balance-row strong')
 
     if (p.innerHTML) {
         return {

@@ -174,7 +174,6 @@
 		70E8DFF42563E8CE0027A244 /* PerfumeshopPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8DFF22563E8CE0027A244 /* PerfumeshopPointsScrape.js */; };
 		70E8E0F5256415B20027A244 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 70E8E0F4256415B20027A244 /* SwiftSoup */; };
 		70E8E12825641A350027A244 /* WaterstonesPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E12725641A350027A244 /* WaterstonesPointsScrapingAgent.swift */; };
-		70E8E13225641A540027A244 /* WaterstonesPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70E8E13025641A540027A244 /* WaterstonesPointsScrape.js */; };
 		70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */; };
 		70E8E4AA256712D80027A244 /* CoreDataTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */; };
 		70E8E5A72567FB690027A244 /* OptionalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E5A62567FB690027A244 /* OptionalExtension.swift */; };
@@ -690,7 +689,6 @@
 		70E8DFEC2563E8220027A244 /* PerfumeShopPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeShopPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70E8DFF22563E8CE0027A244 /* PerfumeshopPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = PerfumeshopPointsScrape.js; sourceTree = "<group>"; };
 		70E8E12725641A350027A244 /* WaterstonesPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterstonesPointsScrapingAgent.swift; sourceTree = "<group>"; };
-		70E8E13025641A540027A244 /* WaterstonesPointsScrape.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = WaterstonesPointsScrape.js; sourceTree = "<group>"; };
 		70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModelTests.swift; sourceTree = "<group>"; };
 		70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTestable.swift; sourceTree = "<group>"; };
 		70E8E5A62567FB690027A244 /* OptionalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalExtension.swift; sourceTree = "<group>"; };
@@ -1738,7 +1736,6 @@
 		70E8E126256419FD0027A244 /* Waterstones */ = {
 			isa = PBXGroup;
 			children = (
-				70E8E13025641A540027A244 /* WaterstonesPointsScrape.js */,
 				70E8E12725641A350027A244 /* WaterstonesPointsScrapingAgent.swift */,
 			);
 			path = Waterstones;
@@ -2849,7 +2846,6 @@
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
 				702B200E25A8D5CF00C7563F /* LocalPointsCollection_Login.js in Resources */,
 				B766599A2320F68D00B327BE /* HyperlinkAlertController.xib in Resources */,
-				70E8E13225641A540027A244 /* WaterstonesPointsScrape.js in Resources */,
 				BD9FB6B72338120700E5559A /* TransactionsViewController.xib in Resources */,
 				EF6921772469A9290049875B /* DebugSecondaryPlanColorCell.xib in Resources */,
 				70E3984F256FE7BA009AD8CB /* DynamicActionViewController.xib in Resources */,
