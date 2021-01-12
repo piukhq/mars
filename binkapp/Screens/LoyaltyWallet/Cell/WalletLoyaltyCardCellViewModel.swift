@@ -115,7 +115,10 @@ struct WalletLoyaltyCardCellViewModel {
 
         // PLR
         if membershipPlan?.isPLR == true && cardStatus == .authorised {
-            guard let voucher = membershipCard.activeVouchers?.first else { return "" }
+            guard let voucher = membershipCard.activeVouchers?.first(where: {
+                let state = VoucherState(rawValue: $0.state ?? "")
+                return state == .inProgress
+            }) else { return nil }
             return voucher.balanceString
         }
         
