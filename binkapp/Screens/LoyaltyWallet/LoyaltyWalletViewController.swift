@@ -172,21 +172,22 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let collectionViewCellFrame = loyaltyWalletViewController.collectionView.layoutAttributesForItem(at: loyaltyWalletViewController.selectedIndexPath)?.frame
         let cellFrame = loyaltyWalletViewController.collectionView.convert(collectionViewCellFrame ?? CGRect.zero, to: loyaltyWalletViewController.collectionView.superview)
         let membershipCard = loyaltyWalletViewController.viewModel.cards?[loyaltyWalletViewController.selectedIndexPath.row]
+        let rectDimensions = LayoutHelper.RectangleView.self
 
         /// Primary Card
         let primaryCard = UIView()
-        primaryCard.frame = CGRect(x: cellFrame.minX + 134 + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: 514.29 / 2, height: 370.52 / 2)
-        primaryCard.transform = CGAffineTransform(rotationAngle: -20 * CGFloat.pi / 180)
+        primaryCard.frame = CGRect(x: cellFrame.minX + rectDimensions.primaryRectX + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: rectDimensions.primaryRectWidth / 2, height: rectDimensions.primaryRectHeight / 2)
+        primaryCard.transform = CGAffineTransform(rotationAngle: rectDimensions.primaryRectRotation)
         primaryCard.backgroundColor = UIColor(hexString: membershipCard?.card?.colour ?? "")
-        primaryCard.layer.cornerRadius = 12
+        primaryCard.layer.cornerRadius = rectDimensions.cornerRadius
         primaryCard.alpha = 0
         
         /// Secondary Card
         let secondaryCard = UIView()
-        secondaryCard.frame = CGRect(x: cellFrame.minX + 120.76 + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: 427.54 / 2, height: 333.64 / 2)
-        secondaryCard.transform = CGAffineTransform(rotationAngle: -45 * CGFloat.pi / 180)
+        secondaryCard.frame = CGRect(x: cellFrame.minX + rectDimensions.secondaryRectX + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: rectDimensions.secondaryRectWidth / 2, height: rectDimensions.secondaryRectHeight / 2)
+        secondaryCard.transform = CGAffineTransform(rotationAngle: rectDimensions.secondaryRectRotation)
         secondaryCard.backgroundColor = membershipCard?.membershipPlan?.secondaryBrandColor
-        secondaryCard.layer.cornerRadius = 12
+        secondaryCard.layer.cornerRadius = rectDimensions.cornerRadius
         secondaryCard.alpha = 0
         
         let containerView = transitionContext.containerView
@@ -196,9 +197,6 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(primaryCard)
         
         /// Animations
-        loyaltyWalletViewController.view.isHidden = false
-        LCDViewController.view.isHidden = false
-        
         UIView.animate(withDuration: duration / 4, delay: 0, options: .curveEaseIn) {
             primaryCard.alpha = 1
             secondaryCard.alpha = 1
@@ -222,8 +220,6 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             loyaltyWalletViewController.view.alpha = 0
         } completion: { _ in
             loyaltyWalletViewController.view.alpha = 1
-            loyaltyWalletViewController.view.isHidden = false
-            LCDViewController.view.isHidden = false
             primaryCard.removeFromSuperview()
             secondaryCard.removeFromSuperview()
             transitionContext.completeTransition(true)
