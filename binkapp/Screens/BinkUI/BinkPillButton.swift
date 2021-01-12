@@ -18,6 +18,7 @@ class BinkPillButton: BinkTrackableButton {
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.color = .white
         return activityIndicator
     }()
 
