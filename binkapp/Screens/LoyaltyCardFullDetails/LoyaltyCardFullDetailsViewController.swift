@@ -53,7 +53,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private lazy var brandHeaderBarcodeButtonPadding: UIView = {
         let paddingView = UIView()
         paddingView.translatesAutoresizingMaskIntoConstraints = false
-        paddingView.backgroundColor = .red
         return paddingView
     }()
     
@@ -113,7 +112,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return tableView
     }()
     
-    private let viewModel: LoyaltyCardFullDetailsViewModel
+    let viewModel: LoyaltyCardFullDetailsViewModel
     private var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
@@ -301,7 +300,7 @@ private extension LoyaltyCardFullDetailsViewController {
         }
         stackScrollView.add(arrangedSubview: cell)
         cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
-        stackScrollView.customPadding(Constants.postCellPadding, after: cell)
+//        stackScrollView.customPadding(Constants.postCellPadding, after: cell)
     }
     
     func configureLayout() {
