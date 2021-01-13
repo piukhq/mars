@@ -144,6 +144,9 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
 
 extension LoyaltyWalletViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return operation == .push ? transition : nil
+        if let _ = fromVC as? LoyaltyWalletViewController {
+            return operation == .push ? transition : nil
+        }
+        return nil
     }
 }
