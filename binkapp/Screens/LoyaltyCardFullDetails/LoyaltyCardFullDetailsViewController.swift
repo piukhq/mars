@@ -300,7 +300,7 @@ private extension LoyaltyCardFullDetailsViewController {
         }
         stackScrollView.add(arrangedSubview: cell)
         cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
-//        stackScrollView.customPadding(Constants.postCellPadding, after: cell)
+        stackScrollView.customPadding(Constants.postCellPadding, after: cell)
     }
     
     func configureLayout() {
@@ -349,7 +349,7 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     private func animatePadding() {
-        UIView.animate(withDuration: 0.67) {
+        UIView.animate(withDuration: 0.4) {
             self.brandHeaderBarcodeButtonPaddingHeightConstraint.constant = 0
             self.view.layoutIfNeeded()
         }
