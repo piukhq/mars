@@ -8,7 +8,6 @@
 
 import UIKit
 import WebKit
-import SwiftSoup
 
 enum WebScrapableMerchant: String {
     case tesco
@@ -39,7 +38,6 @@ protocol WebScrapable {
     var reCaptchaMessage: String? { get }
     var incorrectCredentialsMessage: String? { get }
     var incorrectCredentialsTextIdentiferClass: String? { get }
-    func pointsValueFromCustomHTMLParser(_ html: String) -> String?
 }
 
 extension WebScrapable {
