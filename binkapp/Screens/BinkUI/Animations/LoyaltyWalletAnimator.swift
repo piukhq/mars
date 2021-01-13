@@ -19,14 +19,15 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         guard
             let loyaltyWalletViewController = transitionContext.viewController(forKey: .from) as? LoyaltyWalletViewController,
             let lcdViewController = transitionContext.viewController(forKey: .to) as? LoyaltyCardFullDetailsViewController,
-            let membershipCard = loyaltyWalletViewController.viewModel.cards?[loyaltyWalletViewController.selectedIndexPath.row],
+            let selectedIndexPath = loyaltyWalletViewController.selectedIndexPath,
+            let membershipCard = loyaltyWalletViewController.viewModel.cards?[selectedIndexPath.row],
             let membershipPlan = membershipCard.membershipPlan
         else {
             transitionContext.completeTransition(false)
             return
         }
         
-        let collectionViewCellFrame = loyaltyWalletViewController.collectionView.layoutAttributesForItem(at: loyaltyWalletViewController.selectedIndexPath)?.frame
+        let collectionViewCellFrame = loyaltyWalletViewController.collectionView.layoutAttributesForItem(at: selectedIndexPath)?.frame
         let cellFrame = loyaltyWalletViewController.collectionView.convert(collectionViewCellFrame ?? CGRect.zero, to: loyaltyWalletViewController.collectionView.superview)
         let rectDimensions = LayoutHelper.RectangleView.self
         let navBarHeight = lcdViewController.navigationController?.navigationBar.frame.height ?? 0
@@ -79,7 +80,8 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         UIView.animate(withDuration: duration / 4, delay: 0, options: .curveEaseIn) {
             primaryCard.alpha = 1
             secondaryCard.alpha = 1
-        } completion: { _ in
+        } completion: { [weak self] _ in
+            guard let self = self else { return }
             UIView.animate(withDuration: self.duration / 2, delay: self.duration / 4, options: .curveEaseOut) {
                 primaryCard.alpha = 0
             }
@@ -94,7 +96,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             secondaryCard.frame = CGRect(x: -25, y: 0 - 5, width: lcdViewController.view.frame.width + 50, height: secondaryCardHeight)
             loyaltyWalletViewController.view.alpha = 0
             brandHeader.alpha = 1
-        } completion: { _ in
+        } completion: { _ in 
             loyaltyWalletViewController.view.alpha = 1
             lcdViewController.secondaryColorView.alpha = 1
             primaryCard.removeFromSuperview()

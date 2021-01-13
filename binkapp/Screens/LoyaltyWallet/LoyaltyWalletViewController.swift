@@ -12,7 +12,7 @@ import CardScan
 
 class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {
     let transition = LoyaltyWalletAnimator()
-    var selectedIndexPath: IndexPath!
+    var selectedIndexPath: IndexPath?
     
     override func configureCollectionView() {
         super.configureCollectionView()
@@ -66,7 +66,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         super.collectionView(collectionView, didSelectItemAt: indexPath)
-        self.selectedIndexPath = indexPath
+        selectedIndexPath = indexPath
         resetAllSwipeStates()
     }
 
@@ -144,11 +144,6 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
 
 extension LoyaltyWalletViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        switch operation {
-        case .push:
-            return transition
-        default:
-            return nil
-        }
+        return operation == .push ? transition : nil
     }
 }
