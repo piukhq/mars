@@ -149,7 +149,7 @@ enum WebScrapingUtilityError: BinkError {
 }
 
 protocol WebScrapingUtilityDelegate: AnyObject {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
 }
 
@@ -307,7 +307,7 @@ class WebScrapingUtility: NSObject {
         }
     }
 
-    private func getScrapedValue(completion: @escaping (Result<String, WebScrapingUtilityError>) -> Void) {
+    private func getScrapedValue(completion: @escaping (Result<Int, WebScrapingUtilityError>) -> Void) {
         guard let scrapeFile = Bundle.main.url(forResource: agent.pointsScrapingScriptFileName, withExtension: "js") else {
             completion(.failure(.scapingScriptFileNotFound))
             return
@@ -329,11 +329,16 @@ class WebScrapingUtility: NSObject {
                 return
             }
 
-            if let response = response {
-                print(response)
+            // This is a temporary solution until we use codable (future ticket)
+            guard let response = response as? [String: Any] else {
+                completion(.failure(.failedToCastReturnValue))
+                return
             }
-            
-            guard let htmlString = response as? String, !htmlString.isEmpty else {
+            guard let pointsValueString = response["points"] as? String else {
+                completion(.failure(.failedToCastReturnValue))
+                return
+            }
+            guard let pointsValue = Int(pointsValueString) else {
                 completion(.failure(.failedToCastReturnValue))
                 return
             }
@@ -347,7 +352,7 @@ class WebScrapingUtility: NSObject {
                 Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
             }
 
-            completion(.success(self.agent.pointsValueFromCustomHTMLParser(htmlString) ?? htmlString))
+            completion(.success(pointsValue))
         }
     }
     
@@ -454,7 +459,7 @@ class WebScrapingUtility: NSObject {
         webView.evaluateJavaScript(script, completionHandler: completion)
     }
 
-    private func finish(withValue value: String? = nil, withError error: WebScrapingUtilityError? = nil) {
+    private func finish(withValue value: Int? = nil, withError error: WebScrapingUtilityError? = nil) {
         idleTimer?.invalidate()
 
         if let value = value {
@@ -511,18 +516,18 @@ extension WebScrapingUtility: WKNavigationDelegate {
             
             // At this point, we should close the webView if we have displayed it for reCaptcha
             if isPresentingWebView {
-//                Current.navigate.close()
+                Current.navigate.close()
             }
             
-            getScrapedValue { result in
-//                guard let self = self else { return }
-//
-//                switch result {
-//                case .failure(let error):
-//                    self.finish(withError: error)
-//                case .success(let pointsValue):
-//                    self.finish(withValue: pointsValue)
-//                }
+            getScrapedValue { [weak self] result in
+                guard let self = self else { return }
+
+                switch result {
+                case .failure(let error):
+                    self.finish(withError: error)
+                case .success(let pointsValue):
+                    self.finish(withValue: pointsValue)
+                }
             }
         } else {
             do {
