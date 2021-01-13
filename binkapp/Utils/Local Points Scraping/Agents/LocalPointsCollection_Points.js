@@ -1,13 +1,18 @@
-var queryString = "%@"
+const queryStrings = [".pointvalue", ".total-points", ".plus-balance-row strong", ".sd-panel p:last-of-type b"]
 
 performPointsScraping()
 
-// tesco = .pointvalue
-// heathrow = .total-points
-// waterstones = .plus-balance-row strong // will need client logic to strip " stamps" text
-
 function performPointsScraping() {
-    const p = document.querySelector('.plus-balance-row strong')
+    var queryString
+    for (i = 0; i < queryStrings.length; i++) {
+        var points = document.querySelector(queryStrings[i])
+        if (points !== null) {
+            queryString = queryStrings[i]
+            break
+        }
+    }
+
+    const p = document.querySelector(queryString)
 
     if (p.innerHTML) {
         return {
