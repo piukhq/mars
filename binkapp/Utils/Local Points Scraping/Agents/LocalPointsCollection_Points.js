@@ -15,10 +15,22 @@ function performPointsScraping() {
     const p = document.querySelector(queryString)
 
     if (p.innerHTML) {
+        if (isNaN(p.innerHTML)) {
+            var num = p.innerHTML.match(/\d+/);
+            return {
+                "points": num[0]
+            }
+        }
         return {
             "points": p.innerHTML
         }
     } else if (p.innerText) {
+        if (isNaN(p.innerText)) {
+            var num = p.innerText.match(/\d+/);
+            return {
+                "points": num[0]
+            }
+        }
         return {
             "points": p.innerText
         }
