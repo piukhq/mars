@@ -29,22 +29,21 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         let collectionViewCellFrame = loyaltyWalletViewController.collectionView.layoutAttributesForItem(at: selectedIndexPath)?.frame
         let cellFrame = loyaltyWalletViewController.collectionView.convert(collectionViewCellFrame ?? CGRect.zero, to: loyaltyWalletViewController.collectionView.superview)
-        let rectDimensions = LayoutHelper.RectangleView.self
         let navBarHeight = lcdViewController.navigationController?.navigationBar.frame.height ?? 0
         let statusBarHeight = loyaltyWalletViewController.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         let topBarHeight = navBarHeight + statusBarHeight
         
         /// Primary Card
         let primaryCard = UIView()
-        primaryCard.frame = CGRect(x: cellFrame.minX + rectDimensions.primaryRectX + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: rectDimensions.primaryRectWidth / 2, height: rectDimensions.primaryRectHeight / 2)
-        primaryCard.transform = CGAffineTransform(rotationAngle: rectDimensions.primaryRectRotation)
+        primaryCard.frame = CGRect(x: cellFrame.minX + LayoutHelper.RectangleView.primaryRectX + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: LayoutHelper.RectangleView.primaryRectWidth / 2, height: LayoutHelper.RectangleView.primaryRectHeight / 2)
+        primaryCard.transform = CGAffineTransform(rotationAngle: LayoutHelper.RectangleView.primaryRectRotation)
         primaryCard.backgroundColor = UIColor(hexString: membershipCard.card?.colour ?? "")
-        primaryCard.layer.cornerRadius = rectDimensions.cornerRadius
+        primaryCard.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
         primaryCard.alpha = 0
         
         /// Brand Header
         let brandHeader = UIImageView()
-        brandHeader.layer.cornerRadius = rectDimensions.cornerRadius
+        brandHeader.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
         brandHeader.clipsToBounds = true
         brandHeader.contentMode = .scaleAspectFill
         let brandHeaderRect = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: topBarHeight + LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets.top, width: lcdViewController.brandHeader.frame.width, height: lcdViewController.brandHeader.frame.height)
@@ -61,10 +60,10 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         /// Secondary Card
         let secondaryCard = UIView()
-        secondaryCard.frame = CGRect(x: cellFrame.minX + rectDimensions.secondaryRectX + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: rectDimensions.secondaryRectWidth / 2, height: rectDimensions.secondaryRectHeight / 2)
-        secondaryCard.transform = CGAffineTransform(rotationAngle: rectDimensions.secondaryRectRotation)
+        secondaryCard.frame = CGRect(x: cellFrame.minX + LayoutHelper.RectangleView.secondaryRectX + 7.5, y: cellFrame.minY - LayoutHelper.WalletDimensions.cardLineSpacing, width: LayoutHelper.RectangleView.secondaryRectWidth / 2, height: LayoutHelper.RectangleView.secondaryRectHeight / 2)
+        secondaryCard.transform = CGAffineTransform(rotationAngle: LayoutHelper.RectangleView.secondaryRectRotation)
         secondaryCard.backgroundColor = membershipCard.membershipPlan?.secondaryBrandColor
-        secondaryCard.layer.cornerRadius = rectDimensions.cornerRadius
+        secondaryCard.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
         secondaryCard.alpha = 0
         
         let containerView = transitionContext.containerView
@@ -96,7 +95,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             secondaryCard.frame = CGRect(x: -25, y: 0 - 5, width: lcdViewController.view.frame.width + 50, height: secondaryCardHeight)
             loyaltyWalletViewController.view.alpha = 0
             brandHeader.alpha = 1
-        } completion: { _ in 
+        } completion: { _ in
             loyaltyWalletViewController.view.alpha = 1
             lcdViewController.secondaryColorView.alpha = 1
             primaryCard.removeFromSuperview()
