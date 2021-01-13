@@ -70,11 +70,12 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(lcdViewController.view)
         containerView.addSubview(loyaltyWalletViewController.view)
         containerView.addSubview(secondaryCard)
-        containerView.addSubview(primaryCard)
         containerView.addSubview(brandHeader)
+        containerView.addSubview(primaryCard)
         
         /// Animations
         lcdViewController.secondaryColorView.alpha = 0
+        lcdViewController.brandHeader.alpha = 0
         
         UIView.animate(withDuration: duration / 4, delay: 0, options: .curveEaseIn) {
             primaryCard.alpha = 1
@@ -95,6 +96,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             secondaryCard.frame = CGRect(x: -25, y: 0 - 5, width: lcdViewController.view.frame.width + 50, height: secondaryCardHeight)
             loyaltyWalletViewController.view.alpha = 0
             brandHeader.alpha = 1
+            lcdViewController.brandHeader.alpha = 1
         } completion: { _ in
             loyaltyWalletViewController.view.alpha = 1
             lcdViewController.secondaryColorView.alpha = 1
