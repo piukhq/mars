@@ -11,7 +11,7 @@ protocol LoyaltyCardFullDetailsModalDelegate: AnyObject {
     func modalWillDismiss()
 }
 
-class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable {
+class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable, UIGestureRecognizerDelegate {
     enum Constants {
         static let stackViewMargin = UIEdgeInsets(top: 12, left: 25, bottom: 20, right: 25)
         static let stackViewSpacing: CGFloat = 12
@@ -140,6 +140,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         view.backgroundColor = .white
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     @objc private func handlePointsScrapingUpdate() {
