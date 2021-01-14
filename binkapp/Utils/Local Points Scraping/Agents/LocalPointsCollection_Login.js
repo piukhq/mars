@@ -1,7 +1,7 @@
 var username = "%@"
 var password = "%@"
 
-var formIds = ["sign-in-form", "login-form", "loginForm"]
+const formIds = ["sign-in-form", "login-form", "loginForm"]
 
 performLogin()
 

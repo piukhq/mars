@@ -8,7 +8,6 @@
 
 import UIKit
 import WebKit
-import SwiftSoup
 
 enum WebScrapableMerchant: String {
     case tesco
@@ -39,7 +38,6 @@ protocol WebScrapable {
     var reCaptchaMessage: String? { get }
     var incorrectCredentialsMessage: String? { get }
     var incorrectCredentialsTextIdentiferClass: String? { get }
-    func pointsValueFromCustomHTMLParser(_ html: String) -> String?
 }
 
 extension WebScrapable {
@@ -60,7 +58,7 @@ extension WebScrapable {
     }
     
     var pointsScrapingScriptFileName: String {
-        return "\(merchant.rawValue.capitalized)PointsScrape"
+        return "LocalPointsCollection_Points"
     }
     
     var detectTextScriptFileName: String {
@@ -149,7 +147,7 @@ enum WebScrapingUtilityError: BinkError {
 }
 
 protocol WebScrapingUtilityDelegate: AnyObject {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
 }
 
@@ -242,27 +240,27 @@ class WebScrapingUtility: NSObject {
     }
 
     private func resetIdlingTimer() {
-        idleTimer?.invalidate()
-        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
-            self.isIdle = true
-            timer.invalidate()
-
-            /// We check for incorrect credentials first, because if that is detected then we don't care about recaptcha
-            self.detectIncorrectCredentialsText { [weak self] textDetected in
-                guard let self = self else { return }
-                if !textDetected {
-                    /// We only need to handle the case where no text is detected, as the parent method handles the detection handling.
-                    /// In this case, the reason we are idling is not due to incorrect credentials, so we should check for recaptcha
-                    self.detectRecaptchaText { recaptchaDetected in
-                        /// Again, we only need to handle non-detection.
-                        /// In this case, we aren't idling because of incorrect credentials OR recaptcha, so let's fail the scraping with a reason of unhandled idling.
-                        if !recaptchaDetected {
-                            self.finish(withError: .unhandledIdling)
-                        }
-                    }
-                }
-            }
-        })
+//        idleTimer?.invalidate()
+//        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
+//            self.isIdle = true
+//            timer.invalidate()
+//
+//            /// We check for incorrect credentials first, because if that is detected then we don't care about recaptcha
+//            self.detectIncorrectCredentialsText { [weak self] textDetected in
+//                guard let self = self else { return }
+//                if !textDetected {
+//                    /// We only need to handle the case where no text is detected, as the parent method handles the detection handling.
+//                    /// In this case, the reason we are idling is not due to incorrect credentials, so we should check for recaptcha
+//                    self.detectRecaptchaText { recaptchaDetected in
+//                        /// Again, we only need to handle non-detection.
+//                        /// In this case, we aren't idling because of incorrect credentials OR recaptcha, so let's fail the scraping with a reason of unhandled idling.
+//                        if !recaptchaDetected {
+//                            self.finish(withError: .unhandledIdling)
+//                        }
+//                    }
+//                }
+//            }
+//        })
     }
 
     private func presentWebView() {
@@ -307,7 +305,7 @@ class WebScrapingUtility: NSObject {
         }
     }
 
-    private func getScrapedValue(completion: @escaping (Result<String, WebScrapingUtilityError>) -> Void) {
+    private func getScrapedValue(completion: @escaping (Result<Int, WebScrapingUtilityError>) -> Void) {
         guard let scrapeFile = Bundle.main.url(forResource: agent.pointsScrapingScriptFileName, withExtension: "js") else {
             completion(.failure(.scapingScriptFileNotFound))
             return
@@ -322,18 +320,27 @@ class WebScrapingUtility: NSObject {
             return
         }
 
-        runScript(scrapeScript) { [weak self] (html, error) in
+        runScript(scrapeScript) { [weak self] (response, error) in
             guard let self = self else { return }
             guard error == nil else {
                 self.finish(withError: .failedToExecuteScrapingScript)
                 return
             }
-            
-            guard let htmlString = html as? String, !htmlString.isEmpty else {
+
+            // This is a temporary solution until we use codable (future ticket)
+            guard let response = response as? [String: Any] else {
                 completion(.failure(.failedToCastReturnValue))
                 return
             }
-            
+            guard let pointsValueString = response["points"] as? String else {
+                completion(.failure(.failedToCastReturnValue))
+                return
+            }
+            guard let pointsValue = Int(pointsValueString) else {
+                completion(.failure(.failedToCastReturnValue))
+                return
+            }
+
             self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
                 guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else { return }
                 var cookiesDictionary: [String: Any] = [:]
@@ -343,7 +350,7 @@ class WebScrapingUtility: NSObject {
                 Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
             }
 
-            completion(.success(self.agent.pointsValueFromCustomHTMLParser(htmlString) ?? htmlString))
+            completion(.success(pointsValue))
         }
     }
     
@@ -450,7 +457,7 @@ class WebScrapingUtility: NSObject {
         webView.evaluateJavaScript(script, completionHandler: completion)
     }
 
-    private func finish(withValue value: String? = nil, withError error: WebScrapingUtilityError? = nil) {
+    private func finish(withValue value: Int? = nil, withError error: WebScrapingUtilityError? = nil) {
         idleTimer?.invalidate()
 
         if let value = value {
@@ -512,7 +519,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
             
             getScrapedValue { [weak self] result in
                 guard let self = self else { return }
-                
+
                 switch result {
                 case .failure(let error):
                     self.finish(withError: error)

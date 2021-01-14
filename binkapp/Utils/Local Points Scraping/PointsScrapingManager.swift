@@ -261,7 +261,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
         }
     }
     
-    private func transitionToAuthorized(pointsValue: String, membershipCard: CD_MembershipCard, agent: WebScrapable) {
+    private func transitionToAuthorized(pointsValue: Int, membershipCard: CD_MembershipCard, agent: WebScrapable) {
         fetchMembershipCard(forId: membershipCard.id) { membershipCard in
             guard let membershipCard = membershipCard else {
                 fatalError("We should never get here. If we passed in a correct membership card id, we should get a card back.")
@@ -271,13 +271,8 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     fatalError("We should never get here. Core data didn't return us an object, why not?")
                 }
                 
-                guard let pointsValue = Double(pointsValue) else {
-                    fatalError("We should never get here. If we have got this far, we should always be able to parse the points value correctly. Perhaps the merchant data has changed.")
-                    //                    self.transitionToFailed(membershipCardId: membershipCard.id)
-                }
-                
                 // Set new balance object
-                let balance = MembershipCardBalanceModel(apiId: nil, value: pointsValue, currency: agent.loyaltySchemeBalanceCurrency, prefix: agent.loyaltySchemeBalancePrefix, suffix: agent.loyaltySchemeBalanceSuffix, updatedAt: Date().timeIntervalSince1970)
+                let balance = MembershipCardBalanceModel(apiId: nil, value: Double(pointsValue), currency: agent.loyaltySchemeBalanceCurrency, prefix: agent.loyaltySchemeBalancePrefix, suffix: agent.loyaltySchemeBalanceSuffix, updatedAt: Date().timeIntervalSince1970)
                 let cdBalance = balance.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardBalanceModel.overrideId(forParentId: membershipCard.id))
                 membershipCard.addBalancesObject(cdBalance)
                 cdBalance.card = membershipCard
@@ -332,7 +327,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 // MARK: - WebScrapingUtilityDelegate
 
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
-    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: String, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
         transitionToAuthorized(pointsValue: value, membershipCard: card, agent: agent)
     }
     
