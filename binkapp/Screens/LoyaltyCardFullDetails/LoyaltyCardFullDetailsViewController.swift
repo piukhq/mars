@@ -111,7 +111,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
     private var didLayoutSubviews = false
-    
+    private var statusBarStyle: UIStatusBarStyle = .darkContent
+
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -138,6 +139,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewWillAppear(animated)
         configureModules()
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
+        setNavigationBarAppearanceLight(!viewModel.secondaryColourIsLight)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -146,6 +148,10 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigationBarAppearanceLight(false)
+    }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
@@ -162,7 +168,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        viewModel.secondaryColourIsLight ? .darkContent : .lightContent
+        statusBarStyle
     }
 }
 
@@ -319,21 +325,16 @@ private extension LoyaltyCardFullDetailsViewController {
             secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
 
-
         topConstraint?.isActive = true
-
         view.sendSubviewToBack(secondaryColorView)
-        
-        if let colour = viewModel.secondaryColor {
-            setNeedsStatusBarAppearanceUpdate()
-            if !colour.isLight() {
-                navigationController?.navigationBar.tintColor = .white
-            } else {
-                navigationController?.navigationBar.tintColor = .black
-            }
-        }
     }
 
+    
+    private func setNavigationBarAppearanceLight(_ light: Bool) {
+        navigationController?.navigationBar.tintColor = light && !viewModel.secondaryColourIsLight ? .white : .black
+        statusBarStyle = light && !viewModel.secondaryColourIsLight ? .lightContent : .darkContent
+        setNeedsStatusBarAppearanceUpdate()
+    }
     
     func configureModules() {
         pointsModule.configure(moduleType: .points, membershipCard: viewModel.membershipCard, delegate: self)
@@ -390,10 +391,12 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
             navigationController?.setNavigationBarVisibility(true)
             navigationBarShouldBeVisible = true
             navigationItem.titleView = titleView
+            setNavigationBarAppearanceLight(false)
         } else if secondaryColorViewHeight > topBarHeight {
             navigationController?.setNavigationBarVisibility(false)
             navigationBarShouldBeVisible = false
             navigationItem.titleView = nil
+            setNavigationBarAppearanceLight(true)
         }
     }
 }
