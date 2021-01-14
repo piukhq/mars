@@ -116,7 +116,10 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
-    private var brandHeaderBarcodeButtonPaddingHeightConstraint: NSLayoutConstraint!
+    private lazy var brandHeaderBarcodeButtonPaddingHeightConstraint: NSLayoutConstraint = {
+        let constraint = NSLayoutConstraint(item: brandHeaderBarcodeButtonPadding, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 110)
+        return constraint
+    }()
     private var didLayoutSubviews = false
     private var didLayoutSubviewsCount = 0 {
         didSet {
@@ -304,8 +307,6 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     func configureLayout() {
-        brandHeaderBarcodeButtonPaddingHeightConstraint = NSLayoutConstraint(item: brandHeaderBarcodeButtonPadding, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 110)
-
         NSLayoutConstraint.activate([
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
