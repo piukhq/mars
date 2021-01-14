@@ -144,7 +144,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .loyaltyDetail)
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
-        setNeedsStatusBarAppearanceUpdate()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -163,7 +162,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
+        viewModel.secondaryColourIsLight ? .darkContent : .lightContent
     }
 }
 
@@ -329,7 +328,6 @@ private extension LoyaltyCardFullDetailsViewController {
             setNeedsStatusBarAppearanceUpdate()
             if !colour.isLight() {
                 navigationController?.navigationBar.tintColor = .white
-
             } else {
                 navigationController?.navigationBar.tintColor = .black
             }

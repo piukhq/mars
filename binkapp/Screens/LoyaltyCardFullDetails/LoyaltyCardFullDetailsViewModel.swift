@@ -64,6 +64,10 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.membershipPlan?.secondaryBrandColor
     }
     
+    var secondaryColourIsLight: Bool {
+        return secondaryColor?.isLight() ?? false
+    }
+    
     // MARK: - Public methods
     
     func toBarcodeModel() {
