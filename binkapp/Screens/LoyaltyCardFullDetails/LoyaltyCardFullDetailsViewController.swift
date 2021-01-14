@@ -116,8 +116,9 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
-    private lazy var brandHeaderBarcodeButtonPaddingHeightConstraint: NSLayoutConstraint = {
-        let constraint = NSLayoutConstraint(item: brandHeaderBarcodeButtonPadding, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 110)
+    private lazy var contentAnimationSpacerHeightConstraint: NSLayoutConstraint = {
+        let constraint = brandHeaderBarcodeButtonPadding.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.animationSpacerHeight)
+        constraint.isActive = true
         return constraint
     }()
     private var didLayoutSubviews = false
@@ -310,7 +311,7 @@ private extension LoyaltyCardFullDetailsViewController {
             brandHeader.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             brandHeader.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             brandHeader.heightAnchor.constraint(equalTo: brandHeader.widthAnchor, multiplier: viewModel.brandHeaderAspectRatio),
-            brandHeaderBarcodeButtonPaddingHeightConstraint,
+            contentAnimationSpacerHeightConstraint,
             showBarcodeButton.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.barcodeButtonHeight),
             modulesStackView.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.modulesStackViewHeight),
             modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
@@ -346,7 +347,7 @@ private extension LoyaltyCardFullDetailsViewController {
     
     private func animatePadding() {
         view.layoutIfNeeded()
-        self.brandHeaderBarcodeButtonPaddingHeightConstraint.constant = 0
+        self.contentAnimationSpacerHeightConstraint.constant = 0
         UIView.animate(withDuration: 0.4) {
             self.view.layoutIfNeeded()
         }
@@ -416,6 +417,7 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
 
 extension LayoutHelper {
     enum LoyaltyCardDetail {
+        static let animationSpacerHeight: CGFloat = 110
         static let contentPadding: CGFloat = 25
         static let headerToBarcodeButtonPadding: CGFloat = 12
         private static let brandHeaderAspectRatio: CGFloat = 115 / 182
