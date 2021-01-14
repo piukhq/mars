@@ -121,13 +121,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return constraint
     }()
     private var didLayoutSubviews = false
-    private var didLayoutSubviewsCount = 0 {
-        didSet {
-            if didLayoutSubviewsCount == 2 {
-                animatePadding()
-            }
-        }
-    }
 
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -176,7 +169,9 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         didLayoutSubviews = true
-        didLayoutSubviewsCount += 1
+        if didLayoutSubviews {
+            animatePadding()
+        }
     }
 }
 
@@ -350,8 +345,9 @@ private extension LoyaltyCardFullDetailsViewController {
     }
     
     private func animatePadding() {
+        view.layoutIfNeeded()
+        self.brandHeaderBarcodeButtonPaddingHeightConstraint.constant = 0
         UIView.animate(withDuration: 0.4) {
-            self.brandHeaderBarcodeButtonPaddingHeightConstraint.constant = 0
             self.view.layoutIfNeeded()
         }
     }
