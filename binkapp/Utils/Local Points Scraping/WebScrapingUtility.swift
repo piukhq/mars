@@ -107,6 +107,7 @@ enum WebScrapingUtilityError: BinkError {
     case loginFailed
     case userDismissedWebView
     case unhandledIdling
+    case javascriptError
     
     var domain: BinkErrorDomain {
         return .webScrapingUtility
@@ -142,6 +143,8 @@ enum WebScrapingUtilityError: BinkError {
             return "User dismissed webview"
         case .unhandledIdling:
             return "Unhandled idling"
+        case .javascriptError:
+            return "Javascript error"
         }
     }
 }
@@ -154,6 +157,21 @@ protocol WebScrapingUtilityDelegate: AnyObject {
 struct WebScrapingCredentials {
     let username: String
     let password: String
+}
+
+struct WebScrapingResponse: Codable {
+    var pointsString: String?
+    var errorMessage: String?
+
+    var pointsValue: Int? {
+        guard let string = pointsString else { return nil }
+        return Int(string)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case pointsString = "points"
+        case errorMessage = "error_message"
+    }
 }
 
 class WebScrapingUtility: NSObject {
@@ -286,21 +304,17 @@ class WebScrapingUtility: NSObject {
         }
         
         // Inject variables into login file
+        // TODO: Make this more reusable
         let formattedLoginScript = String(format: loginScript, credentials.username, credentials.password)
-        runScript(formattedLoginScript) { [weak self] (response, error) in
-            guard let self = self else { return }
-            guard error == nil else {
-                self.finish(withError: .failedToExecuteLoginScript)
-                return
-            }
 
-            if let response = response {
+        runScript(formattedLoginScript) { [weak self] result in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let response):
                 print(response)
-            }
-            
-            if self.agent.reCaptchaPresentationType == .persistent && self.agent.reCaptchaPresentationFrequency == .always {
-                // At this point we know that the user will be presented with a reCaptcha, and we'll have already filled their credentials so we should present the webview
-                self.presentWebView()
+            case .failure:
+                self.finish(withError: .failedToExecuteLoginScript)
             }
         }
     }
@@ -320,37 +334,27 @@ class WebScrapingUtility: NSObject {
             return
         }
 
-        runScript(scrapeScript) { [weak self] (response, error) in
+        runScript(scrapeScript, expectingResponse: true) { [weak self] result in
             guard let self = self else { return }
-            guard error == nil else {
-                self.finish(withError: .failedToExecuteScrapingScript)
-                return
-            }
 
-            // This is a temporary solution until we use codable (future ticket)
-            guard let response = response as? [String: Any] else {
-                completion(.failure(.failedToCastReturnValue))
-                return
-            }
-            guard let pointsValueString = response["points"] as? String else {
-                completion(.failure(.failedToCastReturnValue))
-                return
-            }
-            guard let pointsValue = Int(pointsValueString) else {
-                completion(.failure(.failedToCastReturnValue))
-                return
-            }
-
-            self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
-                guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else { return }
-                var cookiesDictionary: [String: Any] = [:]
-                for cookie in cookies {
-                    cookiesDictionary[cookie.name] = cookie.properties
+            switch result {
+            case .success(let response):
+                guard let points = response.pointsValue else {
+                    self.finish(withError: .failedToCastReturnValue)
+                    return
                 }
-                Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
+                self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+                    guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else { return }
+                    var cookiesDictionary: [String: Any] = [:]
+                    for cookie in cookies {
+                        cookiesDictionary[cookie.name] = cookie.properties
+                    }
+                    Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
+                }
+                completion(.success(points))
+            case .failure:
+                self.finish(withError: .failedToExecuteScrapingScript)
             }
-
-            completion(.success(pointsValue))
         }
     }
     
@@ -361,76 +365,76 @@ class WebScrapingUtility: NSObject {
 
     private func detectText(_ type: DetectTextType, completion: ((Bool) -> Void)? = nil) throws {
         // Disable reCaptcha detection on balance refresh
-        if type == .reCaptchaMessaging, isBalanceRefresh { return }
-        
-        switch type {
-        case .reCaptchaMessaging:
-            self.canAttemptToDetectReCaptcha = false
-        case .incorrectCredentialsMessaging:
-            self.canAttemptToDetectIncorrectCredentials = false
-        }
-        
-        guard let detectTextScriptFile = Bundle.main.url(forResource: agent.detectTextScriptFileName, withExtension: "js") else {
-            throw WebScrapingUtilityError.detectTextScriptFileNotFound
-        }
-        
-        var detectTextScript: String
-        do {
-            detectTextScript = try String(contentsOf: detectTextScriptFile)
-        } catch {
-            throw WebScrapingUtilityError.invalidDetectTextScript
-        }
-
-        var formattedScript: String
-        switch type {
-        case .reCaptchaMessaging:
-            formattedScript = String(format: detectTextScript, agent.reCaptchaTextIdentiferClass ?? "")
-        case .incorrectCredentialsMessaging:
-            formattedScript = String(format: detectTextScript, agent.incorrectCredentialsTextIdentiferClass ?? "")
-        }
-        
-        runScript(formattedScript) { (value, _) in
-            guard let valueString = value as? String else {
-                switch type {
-                case .reCaptchaMessaging:
-                    self.canAttemptToDetectReCaptcha = true
-                case .incorrectCredentialsMessaging:
-                    self.canAttemptToDetectIncorrectCredentials = true
-                }
-                completion?(false)
-                return
-            }
-            
-            switch type {
-            case .reCaptchaMessaging:
-                guard let message = self.agent.reCaptchaMessage, valueString.contains(message) else {
-                    self.canAttemptToDetectReCaptcha = true
-                    completion?(false)
-                    return
-                }
-            case .incorrectCredentialsMessaging:
-                guard let message = self.agent.incorrectCredentialsMessage, valueString.contains(message) else {
-                    self.canAttemptToDetectIncorrectCredentials = true
-                    completion?(false)
-                    return
-                }
-            }
-            
-            switch type {
-            case .reCaptchaMessaging:
-                self.presentWebView()
-                self.canAttemptToDetectReCaptcha = false
-            case .incorrectCredentialsMessaging:
-                self.canAttemptToDetectIncorrectCredentials = false
-                self.finish(withError: .loginFailed)
-                // At this point, we should close the webView if we have displayed it for reCaptcha
-                if self.isPresentingWebView {
-                    Current.navigate.close()
-                }
-            }
-
-            completion?(true)
-        }
+//        if type == .reCaptchaMessaging, isBalanceRefresh { return }
+//        
+//        switch type {
+//        case .reCaptchaMessaging:
+//            self.canAttemptToDetectReCaptcha = false
+//        case .incorrectCredentialsMessaging:
+//            self.canAttemptToDetectIncorrectCredentials = false
+//        }
+//        
+//        guard let detectTextScriptFile = Bundle.main.url(forResource: agent.detectTextScriptFileName, withExtension: "js") else {
+//            throw WebScrapingUtilityError.detectTextScriptFileNotFound
+//        }
+//        
+//        var detectTextScript: String
+//        do {
+//            detectTextScript = try String(contentsOf: detectTextScriptFile)
+//        } catch {
+//            throw WebScrapingUtilityError.invalidDetectTextScript
+//        }
+//
+//        var formattedScript: String
+//        switch type {
+//        case .reCaptchaMessaging:
+//            formattedScript = String(format: detectTextScript, agent.reCaptchaTextIdentiferClass ?? "")
+//        case .incorrectCredentialsMessaging:
+//            formattedScript = String(format: detectTextScript, agent.incorrectCredentialsTextIdentiferClass ?? "")
+//        }
+//        
+//        runScript(formattedScript) { (value, _) in
+//            guard let valueString = value as? String else {
+//                switch type {
+//                case .reCaptchaMessaging:
+//                    self.canAttemptToDetectReCaptcha = true
+//                case .incorrectCredentialsMessaging:
+//                    self.canAttemptToDetectIncorrectCredentials = true
+//                }
+//                completion?(false)
+//                return
+//            }
+//            
+//            switch type {
+//            case .reCaptchaMessaging:
+//                guard let message = self.agent.reCaptchaMessage, valueString.contains(message) else {
+//                    self.canAttemptToDetectReCaptcha = true
+//                    completion?(false)
+//                    return
+//                }
+//            case .incorrectCredentialsMessaging:
+//                guard let message = self.agent.incorrectCredentialsMessage, valueString.contains(message) else {
+//                    self.canAttemptToDetectIncorrectCredentials = true
+//                    completion?(false)
+//                    return
+//                }
+//            }
+//            
+//            switch type {
+//            case .reCaptchaMessaging:
+//                self.presentWebView()
+//                self.canAttemptToDetectReCaptcha = false
+//            case .incorrectCredentialsMessaging:
+//                self.canAttemptToDetectIncorrectCredentials = false
+//                self.finish(withError: .loginFailed)
+//                // At this point, we should close the webView if we have displayed it for reCaptcha
+//                if self.isPresentingWebView {
+//                    Current.navigate.close()
+//                }
+//            }
+//
+//            completion?(true)
+//        }
     }
 
     private func detectRecaptchaText(completion: ((Bool) -> Void)? = nil) {
@@ -453,8 +457,28 @@ class WebScrapingUtility: NSObject {
         }
     }
     
-    private func runScript(_ script: String, completion: @escaping (Any?, Error?) -> Void) {
-        webView.evaluateJavaScript(script, completionHandler: completion)
+    private func runScript(_ script: String, expectingResponse: Bool = false, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
+        webView.evaluateJavaScript(script) { (response, error) in
+            guard error == nil else {
+                completion(.failure(.javascriptError))
+                return
+            }
+
+            if expectingResponse {
+                guard let response = response else {
+                    completion(.failure(.javascriptError))
+                    return
+                }
+
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
+                    let scrapingResponse = try JSONDecoder().decode(WebScrapingResponse.self, from: data)
+                    completion(.success(scrapingResponse))
+                } catch {
+                    completion(.failure(.javascriptError))
+                }
+            }
+        }
     }
 
     private func finish(withValue value: Int? = nil, withError error: WebScrapingUtilityError? = nil) {
