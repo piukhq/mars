@@ -489,6 +489,7 @@ class WebScrapingUtility: NSObject {
         }
 
         if let error = error {
+            SentryService.triggerException(.localPointsCollectionFailed(error))
             delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: membershipCard, withAgent: agent)
         }
     }
