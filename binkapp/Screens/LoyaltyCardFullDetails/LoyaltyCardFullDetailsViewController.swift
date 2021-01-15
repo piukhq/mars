@@ -33,7 +33,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return stackView
     }()
     
-    private lazy var brandHeader: UIImageView = {
+    lazy var brandHeader: UIImageView = {
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = true
         imageView.clipsToBounds = true
@@ -43,11 +43,17 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return imageView
     }()
     
-    private lazy var secondaryColorView: UIView = {
+    lazy var secondaryColorView: UIView = {
         let secondaryColorView = UIView()
         secondaryColorView.translatesAutoresizingMaskIntoConstraints = false
         secondaryColorView.backgroundColor = viewModel.secondaryColor
         return secondaryColorView
+    }()
+    
+    private lazy var brandHeaderBarcodeButtonPadding: UIView = {
+        let paddingView = UIView()
+        paddingView.translatesAutoresizingMaskIntoConstraints = false
+        return paddingView
     }()
     
     private lazy var showBarcodeButton: UIButton = {
@@ -106,12 +112,18 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return tableView
     }()
     
-    private let viewModel: LoyaltyCardFullDetailsViewModel
+    let viewModel: LoyaltyCardFullDetailsViewModel
     private var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
+    private lazy var contentAnimationSpacerHeightConstraint: NSLayoutConstraint = {
+        let constraint = brandHeaderBarcodeButtonPadding.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.animationSpacerHeight)
+        constraint.isActive = true
+        return constraint
+    }()
     private var didLayoutSubviews = false
-    
+    private var statusBarStyle: UIStatusBarStyle = .darkContent
+
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -138,6 +150,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewWillAppear(animated)
         configureModules()
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
+        setNavigationBarAppearanceLight(viewModel.secondaryColourIsDark)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -146,6 +159,10 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigationBarAppearanceLight(false)
+    }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
@@ -159,6 +176,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         didLayoutSubviews = true
+        if didLayoutSubviews {
+            animatePadding()
+        }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        statusBarStyle
     }
 }
 
@@ -200,6 +224,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: brandHeader)
         view.insertSubview(secondaryColorView, belowSubview: brandHeader)
         stackScrollView.customPadding(LayoutHelper.LoyaltyCardDetail.headerToBarcodeButtonPadding, after: brandHeader)
+        stackScrollView.add(arrangedSubview: brandHeaderBarcodeButtonPadding)
         
         if viewModel.membershipCard.card?.barcode != nil || viewModel.membershipCard.card?.membershipId != nil {
             let showBarcode = viewModel.membershipCard.card?.barcode != nil
@@ -296,6 +321,7 @@ private extension LoyaltyCardFullDetailsViewController {
             brandHeader.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
             brandHeader.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             brandHeader.heightAnchor.constraint(equalTo: brandHeader.widthAnchor, multiplier: viewModel.brandHeaderAspectRatio),
+            contentAnimationSpacerHeightConstraint,
             showBarcodeButton.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.barcodeButtonHeight),
             modulesStackView.heightAnchor.constraint(equalToConstant: LayoutHelper.LoyaltyCardDetail.modulesStackViewHeight),
             modulesStackView.leftAnchor.constraint(equalTo: stackScrollView.leftAnchor, constant: LayoutHelper.LoyaltyCardDetail.contentPadding),
@@ -315,10 +341,20 @@ private extension LoyaltyCardFullDetailsViewController {
             secondaryColorView.bottomAnchor.constraint(equalTo: brandHeader.bottomAnchor, constant: -brandHeader.frame.height / 2)
         ])
 
-
         topConstraint?.isActive = true
-
         view.sendSubviewToBack(secondaryColorView)
+    }
+
+    
+    private func setNavigationBarAppearanceLight(_ lightAppearance: Bool) {
+        if lightAppearance && viewModel.secondaryColourIsDark && !navigationBarShouldBeVisible {
+            navigationController?.navigationBar.tintColor = .white
+            statusBarStyle = .lightContent
+        } else {
+            navigationController?.navigationBar.tintColor = .black
+            statusBarStyle = .darkContent
+        }
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     func configureModules() {
@@ -328,6 +364,14 @@ private extension LoyaltyCardFullDetailsViewController {
     
     @objc func showBarcodeButtonPressed() {
         viewModel.toBarcodeModel()
+    }
+    
+    private func animatePadding() {
+        view.layoutIfNeeded()
+        self.contentAnimationSpacerHeightConstraint.constant = 0
+        UIView.animate(withDuration: 0.4) {
+            self.view.layoutIfNeeded()
+        }
     }
 }
 
@@ -376,10 +420,12 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
             navigationController?.setNavigationBarVisibility(true)
             navigationBarShouldBeVisible = true
             navigationItem.titleView = titleView
+            setNavigationBarAppearanceLight(false)
         } else if secondaryColorViewHeight > topBarHeight {
             navigationController?.setNavigationBarVisibility(false)
             navigationBarShouldBeVisible = false
             navigationItem.titleView = nil
+            setNavigationBarAppearanceLight(true)
         }
     }
 }
@@ -394,6 +440,7 @@ extension LoyaltyCardFullDetailsViewController: LoyaltyCardFullDetailsModalDeleg
 
 extension LayoutHelper {
     enum LoyaltyCardDetail {
+        static let animationSpacerHeight: CGFloat = 110
         static let contentPadding: CGFloat = 25
         static let headerToBarcodeButtonPadding: CGFloat = 12
         private static let brandHeaderAspectRatio: CGFloat = 115 / 182
