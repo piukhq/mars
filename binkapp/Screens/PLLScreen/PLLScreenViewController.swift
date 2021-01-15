@@ -198,9 +198,7 @@ class PLLScreenViewController: BinkViewController {
     private func refreshModalState() {
         if !viewModel.shouldAllowDismiss {
             navigationItem.rightBarButtonItem = nil
-            if #available(iOS 13.0, *) {
-                isModalInPresentation = true
-            }
+            isModalInPresentation = true
         }
     }
 }

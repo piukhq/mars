@@ -48,6 +48,10 @@ class PortraitNavigationController: UINavigationController {
         return .portrait
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return viewControllers.last?.preferredStatusBarStyle ?? .default
+    }
+    
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         super.pushViewController(viewController, animated: animated)
         viewController.navigationItem.backBarButtonItem = backButton
@@ -96,19 +100,11 @@ class PortraitNavigationController: UINavigationController {
 
 extension PortraitNavigationController {
     func configureNavigationBarAppearance() {
-        if #available(iOS 13, *) {
-            navigationBar.standardAppearance = .defaultAppearance
-            navigationBar.scrollEdgeAppearance = .defaultAppearance
-        } else {
-            let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
-            let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
-            UINavigationBar.appearance().backIndicatorImage = backButtonImage
-            UINavigationBar.appearance().backIndicatorTransitionMaskImage = backButtonImage
-        }
+        navigationBar.standardAppearance = .defaultAppearance
+        navigationBar.scrollEdgeAppearance = .defaultAppearance
     }
 }
 
-@available(iOS 13.0, *)
 extension UINavigationBarAppearance {
     static let defaultAppearance: UINavigationBarAppearance = {
         let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)

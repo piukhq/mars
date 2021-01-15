@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftSoup
 
 struct SuperdrugScrapingAgent: WebScrapable {
     var merchant: WebScrapableMerchant {
@@ -45,9 +44,5 @@ struct SuperdrugScrapingAgent: WebScrapable {
 
     var scrapableUrlString: String {
         return "https://www.superdrug.com/login"
-    }
-    
-    func pointsValueFromCustomHTMLParser(_ html: String) -> String? {
-        return try? SwiftSoup.parse(html).select("b").last()?.text()
     }
 }

@@ -18,7 +18,6 @@ struct PaymentCardCreateRequest: Codable {
             case month
             case year
             case fingerprint
-            case hash
         }
         
         let token: String
@@ -28,7 +27,6 @@ struct PaymentCardCreateRequest: Codable {
         let month: String
         let year: String
         let fingerprint: String
-        let hash: String
     }
     
     struct Account: Codable {
@@ -47,7 +45,7 @@ struct PaymentCardCreateRequest: Codable {
     let account: Account
     
     /// This should only be used for creating test payment cards as it naturally bypasses the Spreedly path
-    init?(model: PaymentCardCreateModel, hash: String?) {
+    init?(model: PaymentCardCreateModel) {
         guard let pan = model.fullPan?.replacingOccurrences(of: " ", with: ""),
             let year = model.year,
             let month = model.month
@@ -70,8 +68,7 @@ struct PaymentCardCreateRequest: Codable {
             nameOnCard: model.nameOnCard ?? "",
             month: SecureUtility.encryptedSensitiveFieldValue("\(month)") ?? "",
             year: SecureUtility.encryptedSensitiveFieldValue("\(year)") ?? "",
-            fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month)),
-            hash: SecureUtility.encryptedSensitiveFieldValue(hash) ?? ""
+            fingerprint: PaymentCardCreateRequest.fakeFingerprint(pan: pan, expiryYear: String(year), expiryMonth: String(month))
         )
 
         let timestamp = Date().timeIntervalSince1970
@@ -79,7 +76,7 @@ struct PaymentCardCreateRequest: Codable {
     }
 
     /// This should only be used for creating genuine payment cards using Spreedly path in a production environment
-    init?(spreedlyResponse: SpreedlyResponse, hash: String?) {
+    init?(spreedlyResponse: SpreedlyResponse) {
         let paymentMethodResponse = spreedlyResponse.transaction?.paymentMethod
 
         guard let firstSix = SecureUtility.encryptedSensitiveFieldValue(paymentMethodResponse?.firstSix) else {
@@ -98,10 +95,6 @@ struct PaymentCardCreateRequest: Codable {
             SentryService.triggerException(.invalidPayload(.failedToEncryptYear))
             return nil
         }
-        guard let encryptedHash = SecureUtility.encryptedSensitiveFieldValue(hash) else {
-            SentryService.triggerException(.invalidPayload(.failedToEncryptPaymentCardHash))
-            return nil
-        }
 
         card = Card(
             token: paymentMethodResponse?.token ?? "",
@@ -110,8 +103,7 @@ struct PaymentCardCreateRequest: Codable {
             nameOnCard: paymentMethodResponse?.fullName ?? "",
             month: month,
             year: year,
-            fingerprint: paymentMethodResponse?.fingerprint ?? "",
-            hash: encryptedHash
+            fingerprint: paymentMethodResponse?.fingerprint ?? ""
         )
 
         let timestamp = Date().timeIntervalSince1970
@@ -121,7 +113,7 @@ struct PaymentCardCreateRequest: Codable {
     private static func fakeFingerprint(pan: String, expiryYear: String, expiryMonth: String) -> String {
         // Based a hash of the pan, it's the key identifier of the card
         let stringToHash = "\(pan)|\(expiryMonth)|\(expiryYear)"
-        return stringToHash.md5
+        return "TEST " + stringToHash.sha256
     }
     
     private static func fakeToken() -> String {

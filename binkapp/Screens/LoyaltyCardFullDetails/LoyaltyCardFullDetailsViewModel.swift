@@ -42,8 +42,11 @@ class LoyaltyCardFullDetailsViewModel {
         }
         
         // PLR
-        if membershipCard.membershipPlan?.isPLR == true {
-            guard let voucher = membershipCard.activeVouchers?.first else { return nil }
+        if membershipCard.membershipPlan?.isPLR == true && membershipCard.status?.status == .authorised {
+            guard let voucher = membershipCard.activeVouchers?.first(where: {
+                let state = VoucherState(rawValue: $0.state ?? "")
+                return state == .inProgress
+            }) else { return nil }
             return voucher.balanceString
         }
         
@@ -64,6 +67,10 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.membershipPlan?.secondaryBrandColor
     }
     
+    var secondaryColourIsDark: Bool {
+        return !(secondaryColor?.isLight() ?? false)
+    }
+        
     // MARK: - Public methods
     
     func toBarcodeModel() {
@@ -183,10 +190,9 @@ class LoyaltyCardFullDetailsViewModel {
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
-    
-    func getOfferTileImageUrls() -> [String]? {
-        let planImages = membershipCard.membershipPlan?.imagesSet
-        return planImages?.filter({ $0.type?.intValue == 2 }).compactMap { $0.url }
+
+    var offerTileImages: [CD_MembershipPlanImage]? {
+        return membershipCard.membershipPlan?.imagesSet?.filter({ $0.type?.intValue == 2 })
     }
     
     // MARK: PLR

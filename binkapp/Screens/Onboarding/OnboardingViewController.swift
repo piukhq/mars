@@ -70,7 +70,6 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         }
     }()
 
-    @available(iOS 13.0, *)
     lazy var signInWithAppleButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .continue, style: .black)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -151,7 +150,6 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         footerButtons = [facebookButton, registerButton, loginButton]
     }
 
-    @available(iOS 13.0, *)
     @objc private func handleAppleIdRequest() {
         BinkAnalytics.track(OnboardingAnalyticsEvent.start(journey: .apple))
         
@@ -165,7 +163,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     }
 
     private func configureUI() {
-        if #available(iOS 13.0, *), signInWithAppleEnabled, let buttonsView = footerButtonsView {
+        if signInWithAppleEnabled, let buttonsView = footerButtonsView {
             view.addSubview(signInWithAppleButton)
             signInWithAppleButton.layer.applyDefaultBinkShadow()
             NSLayoutConstraint.activate([
@@ -289,7 +287,6 @@ extension LayoutHelper {
 
 // MARK: - Sign in with Apple
 
-@available(iOS 13.0, *)
 extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         guard let window = view.window else {

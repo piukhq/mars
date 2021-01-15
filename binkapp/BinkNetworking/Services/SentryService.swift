@@ -85,11 +85,6 @@ enum SentryException {
         case failedToEncryptLastFour = "Failed to encrypt last four"
         case failedToEncryptMonth = "Failed to encrypt expiry month"
         case failedToEncryptYear = "Failed to encrypt expiry year"
-        case failedToEncryptPaymentCardHash = "Failed to encrypt payment card hash"
-        case failedToBuildPaymentCardHashMalformedPan = "Failed to build payment card hash due to a malformed PAN"
-        case failedToBuildPaymentCardHashMalformedExpiryMonth = "Failed to build payment card hash due to a malformed expiry month"
-        case failedToBuildPaymentCardHashMalformedExpiryYear = "Failed to build payment card hash due to a malformed expiry year"
-        case failedToBuildPaymentCardHashDecodeSecret = "Failed to build payment card hash due a problem decoding the secret"
     }
 
     case invalidPayload(InvalidPayloadReason)

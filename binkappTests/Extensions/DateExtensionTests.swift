@@ -9,7 +9,6 @@
 import XCTest
 @testable import binkapp
 
-@available(iOS 13.0, *)
 class DateExtensionTests: XCTestCase {
     let formatter = DateFormatter()
     var currentDate: Date!

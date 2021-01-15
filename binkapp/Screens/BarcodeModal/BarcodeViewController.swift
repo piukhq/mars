@@ -14,17 +14,17 @@ class BarcodeViewController: BinkViewController {
     }
     
     @IBOutlet private weak var stackView: UIStackView!
-    @IBOutlet private weak var barcodeImageView: UIImageView!
-    @IBOutlet private weak var barcodeErrorLabel: UILabel!
-    @IBOutlet private weak var barcodeLabel: UILabel!
-    @IBOutlet private weak var barcodeNumberLabel: BinkCopyableLabel!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var numberLabel: BinkCopyableLabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet weak var barcodeImageView: UIImageView!
+    @IBOutlet weak var barcodeErrorLabel: UILabel!
+    @IBOutlet weak var barcodeLabel: UILabel!
+    @IBOutlet weak var barcodeNumberLabel: BinkCopyableLabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var numberLabel: BinkCopyableLabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     private var previousBrightness: CGFloat?
 
-    private let viewModel: BarcodeViewModel
+    let viewModel: BarcodeViewModel
     var hasDrawnBarcode = false
     
     init(viewModel: BarcodeViewModel) {
