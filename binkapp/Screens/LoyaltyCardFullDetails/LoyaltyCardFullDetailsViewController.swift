@@ -122,6 +122,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return constraint
     }()
     private var didLayoutSubviews = false
+    private var statusBarStyle: UIStatusBarStyle = .darkContent
 
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -149,6 +150,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewWillAppear(animated)
         configureModules()
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
+        setNavigationBarAppearanceLight(viewModel.secondaryColourIsDark)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -157,6 +159,10 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigationBarAppearanceLight(false)
+    }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
@@ -173,6 +179,10 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         if didLayoutSubviews {
             animatePadding()
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        statusBarStyle
     }
 }
 
@@ -332,8 +342,19 @@ private extension LoyaltyCardFullDetailsViewController {
         ])
 
         topConstraint?.isActive = true
-
         view.sendSubviewToBack(secondaryColorView)
+    }
+
+    
+    private func setNavigationBarAppearanceLight(_ lightAppearance: Bool) {
+        if lightAppearance && viewModel.secondaryColourIsDark && !navigationBarShouldBeVisible {
+            navigationController?.navigationBar.tintColor = .white
+            statusBarStyle = .lightContent
+        } else {
+            navigationController?.navigationBar.tintColor = .black
+            statusBarStyle = .darkContent
+        }
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     func configureModules() {
@@ -399,10 +420,12 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
             navigationController?.setNavigationBarVisibility(true)
             navigationBarShouldBeVisible = true
             navigationItem.titleView = titleView
+            setNavigationBarAppearanceLight(false)
         } else if secondaryColorViewHeight > topBarHeight {
             navigationController?.setNavigationBarVisibility(false)
             navigationBarShouldBeVisible = false
             navigationItem.titleView = nil
+            setNavigationBarAppearanceLight(true)
         }
     }
 }

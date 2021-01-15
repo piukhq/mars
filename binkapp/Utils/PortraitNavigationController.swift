@@ -48,6 +48,10 @@ class PortraitNavigationController: UINavigationController {
         return .portrait
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return viewControllers.last?.preferredStatusBarStyle ?? .default
+    }
+    
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
         super.pushViewController(viewController, animated: animated)
         viewController.navigationItem.backBarButtonItem = backButton
