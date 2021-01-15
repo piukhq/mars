@@ -49,10 +49,7 @@ class PortraitNavigationController: UINavigationController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        if let topViewController = viewControllers.last {
-            return topViewController.preferredStatusBarStyle
-        }
-        return .default
+        return viewControllers.last?.preferredStatusBarStyle ?? .default
     }
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {

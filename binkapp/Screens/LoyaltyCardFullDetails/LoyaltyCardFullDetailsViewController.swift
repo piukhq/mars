@@ -139,7 +139,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         super.viewWillAppear(animated)
         configureModules()
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: false)
-        setNavigationBarAppearanceLight(!viewModel.secondaryColourIsLight)
+        setNavigationBarAppearanceLight(viewModel.secondaryColourIsDark)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -330,9 +330,14 @@ private extension LoyaltyCardFullDetailsViewController {
     }
 
     
-    private func setNavigationBarAppearanceLight(_ light: Bool) {
-        navigationController?.navigationBar.tintColor = light && !viewModel.secondaryColourIsLight ? .white : .black
-        statusBarStyle = light && !viewModel.secondaryColourIsLight ? .lightContent : .darkContent
+    private func setNavigationBarAppearanceLight(_ lightAppearance: Bool) {
+        if lightAppearance && viewModel.secondaryColourIsDark && !navigationBarShouldBeVisible {
+            navigationController?.navigationBar.tintColor = .white
+            statusBarStyle = .lightContent
+        } else {
+            navigationController?.navigationBar.tintColor = .black
+            statusBarStyle = .darkContent
+        }
         setNeedsStatusBarAppearanceUpdate()
     }
     

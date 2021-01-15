@@ -64,8 +64,8 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.membershipPlan?.secondaryBrandColor
     }
     
-    var secondaryColourIsLight: Bool {
-        return secondaryColor?.isLight() ?? false
+    var secondaryColourIsDark: Bool {
+        return !(secondaryColor?.isLight() ?? false)
     }
         
     // MARK: - Public methods
