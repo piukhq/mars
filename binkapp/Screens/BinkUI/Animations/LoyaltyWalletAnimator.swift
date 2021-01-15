@@ -19,7 +19,8 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         guard
             let loyaltyWalletViewController = transitionContext.viewController(forKey: .from) as? LoyaltyWalletViewController,
             let lcdViewController = transitionContext.viewController(forKey: .to) as? LoyaltyCardFullDetailsViewController,
-            let membershipCard = loyaltyWalletViewController.viewModel.cards?[loyaltyWalletViewController.selectedIndexPath?.row ?? 0],
+            let selectedIndexPath = loyaltyWalletViewController.selectedIndexPath,
+            let membershipCard = loyaltyWalletViewController.viewModel.cards?[selectedIndexPath.row],
             let membershipPlan = membershipCard.membershipPlan
         else {
             transitionContext.completeTransition(false)
@@ -27,7 +28,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         }
         
         lcdViewController.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        let selectedIndexPath = loyaltyWalletViewController.selectedIndexPath ?? IndexPath(item: 0, section: 0)
+        
         let collectionViewCellFrame = loyaltyWalletViewController.collectionView.layoutAttributesForItem(at: selectedIndexPath)?.frame
         let cellFrame = loyaltyWalletViewController.collectionView.convert(collectionViewCellFrame ?? CGRect.zero, to: loyaltyWalletViewController.collectionView.superview)
         let navBarHeight = lcdViewController.navigationController?.navigationBar.frame.height ?? 0
