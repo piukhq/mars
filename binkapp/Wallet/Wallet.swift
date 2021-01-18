@@ -199,6 +199,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_MembershipCard.self) { [weak self] cards in
                 guard let self = self else { return }
+                self.membershipCards = cards
                 self.applyLocalWalletOrder(&self.localMembershipCardsOrder, to: cards, updating: &self.membershipCards)
                 completion(true, nil)
             }
@@ -210,6 +211,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_MembershipCard.self, completion: {
                     self?.fetchCoreDataObjects(forObjectType: CD_MembershipCard.self, completion: { cards in
                         guard let self = self else { return }
+                        self.membershipCards = cards
                         self.applyLocalWalletOrder(&self.localMembershipCardsOrder, to: cards, updating: &self.membershipCards)
                         completion(true, nil)
                     })
@@ -224,6 +226,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         guard forceRefresh else {
             fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { [weak self] cards in
                 guard let self = self else { return }
+                self.paymentCards = cards
                 self.applyLocalWalletOrder(&self.localPaymentCardsOrder, to: cards, updating: &self.paymentCards)
                 completion(true, nil)
             }
@@ -236,6 +239,7 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                 self?.mapCoreDataObjects(objectsToMap: response, type: CD_PaymentCard.self, completion: {
                     self?.fetchCoreDataObjects(forObjectType: CD_PaymentCard.self) { cards in
                         guard let self = self else { return }
+                        self.paymentCards = cards
                         self.applyLocalWalletOrder(&self.localPaymentCardsOrder, to: cards, updating: &self.paymentCards)
                         completion(true, nil)
                     }
