@@ -65,7 +65,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        shouldUseTransition = true
         super.collectionView(collectionView, didSelectItemAt: indexPath)
         selectedIndexPath = indexPath
         resetAllSwipeStates()
