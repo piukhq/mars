@@ -37,6 +37,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private let dotView = UIView()
 
     var orderingManager = WalletOrderingManager()
+    
+    // We only want to use transition when tapping a wallet card cell and not when adding a new card
+    var shouldUseTransition = false
 
     let viewModel: T
 
@@ -236,11 +239,13 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             guard let card = viewModel.cards?[indexPath.row] else {
                 return
             }
+            shouldUseTransition = true
             viewModel.toCardDetail(for: card)
         } else {
             guard let joinCard = viewModel.promptCard(forIndexPath: indexPath) else {
                 return
             }
+            shouldUseTransition = false
             viewModel.didSelectWalletPrompt(joinCard)
         }
     }
