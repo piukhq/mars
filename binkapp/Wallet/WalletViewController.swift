@@ -19,7 +19,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.alwaysBounceVertical = true
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.contentInset = LayoutHelper.WalletDimensions.contentInset
 
         return collectionView

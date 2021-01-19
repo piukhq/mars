@@ -119,6 +119,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
+        rectangleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         rectangleView.firstColor = primaryBrandColor
         rectangleView.secondColor = plan.secondaryBrandColor
         
