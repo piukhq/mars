@@ -35,6 +35,12 @@ function performLogin() {
     }
 
     // Verify form exists
+    if (formId == null) {
+        return {
+            "error_message": "formId could not be determined."
+        }
+    }
+
     var f = document.querySelector('form[id=' + formId + ']')
     if (f == null) {
         return {

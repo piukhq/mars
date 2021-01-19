@@ -438,13 +438,13 @@ class WebScrapingUtility: NSObject {
     }
 
     private func detectRecaptchaText(completion: ((Bool) -> Void)? = nil) {
-        if canAttemptToDetectReCaptcha {
-            do {
-                try detectText(.reCaptchaMessaging, completion: completion)
-            } catch {
-                canAttemptToDetectReCaptcha = true
-            }
-        }
+//        if canAttemptToDetectReCaptcha {
+//            do {
+//                try detectText(.reCaptchaMessaging, completion: completion)
+//            } catch {
+//                canAttemptToDetectReCaptcha = true
+//            }
+//        }
     }
 
     private func detectIncorrectCredentialsText(completion: ((Bool) -> Void)? = nil) {
@@ -489,7 +489,7 @@ class WebScrapingUtility: NSObject {
         }
 
         if let error = error {
-            SentryService.triggerException(.localPointsCollectionFailed(error))
+//            SentryService.triggerException(.localPointsCollectionFailed(error))
             delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: membershipCard, withAgent: agent)
         }
     }
@@ -573,13 +573,13 @@ extension WebScrapingUtility: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
-        resetIdlingTimer()
-
-        detectIncorrectCredentialsText { textDetected in
-            if !textDetected {
-                self.detectRecaptchaText()
-            }
-        }
+//        resetIdlingTimer()
+//
+//        detectIncorrectCredentialsText { textDetected in
+//            if !textDetected {
+//                self.detectRecaptchaText()
+//            }
+//        }
 
         decisionHandler(.allow, preferences)
     }
