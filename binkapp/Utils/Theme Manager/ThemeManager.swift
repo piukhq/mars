@@ -50,7 +50,7 @@ struct ThemeManager {
         case text
     }
 
-    var currentTheme = Theme(type: .system) {
+    var currentTheme = Theme(type: .light) {
         didSet {
             // TODO: Set user default value
         }
@@ -76,7 +76,7 @@ struct ThemeManager {
 
 enum Styling {
     enum Colors {
-        static var viewBackground: UIColor = {
+        static var viewBackground: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
                 return .white
@@ -89,9 +89,9 @@ enum Styling {
                     return traitcollection.userInterfaceStyle == .light ? .white : binkBlueViewBackground
                 }
             }
-        }()
+        }
 
-        static var walletCardBackground: UIColor = {
+        static var walletCardBackground: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
                 return .white
@@ -104,9 +104,9 @@ enum Styling {
                     return traitcollection.userInterfaceStyle == .light ? .white : binkBlueCardBackground
                 }
             }
-        }()
+        }
 
-        static var dividerColor: UIColor = {
+        static var dividerColor: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
                 // TODO: Check current divider colours
@@ -120,9 +120,9 @@ enum Styling {
                     return traitcollection.userInterfaceStyle == .light ? .white : binkBlueDividerColor
                 }
             }
-        }()
+        }
 
-        static var textColor: UIColor = {
+        static var textColor: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
                 return .white
@@ -135,7 +135,7 @@ enum Styling {
                     return traitcollection.userInterfaceStyle == .light ? .white : binkBlueTextColor
                 }
             }
-        }()
+        }
 
         // MARK: Custom theme colours
 
