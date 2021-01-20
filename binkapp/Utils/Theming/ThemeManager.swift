@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ThemeManager {
+class ThemeManager {
     enum ScreenElement {
         case viewBackground
         case walletCardBackground
@@ -19,6 +19,7 @@ struct ThemeManager {
     var currentTheme: Theme {
         didSet {
             // TODO: Set user default value
+            NotificationCenter.default.post(name: .themeManagerDidSetTheme, object: nil)
         }
     }
 
@@ -26,7 +27,7 @@ struct ThemeManager {
         self.currentTheme = Theme(type: theme)
     }
 
-    mutating func setTheme(_ newTheme: Theme) {
+    func setTheme(_ newTheme: Theme) {
         currentTheme = newTheme
     }
 
@@ -41,5 +42,9 @@ struct ThemeManager {
         case .text:
             return currentTheme.textColor
         }
+    }
+
+    func addObserver(_ observer: Any, handler: Selector) {
+        NotificationCenter.default.addObserver(observer, selector: handler, name: .themeManagerDidSetTheme, object: nil)
     }
 }
