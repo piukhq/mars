@@ -78,10 +78,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         guard let membershipCard = viewModel.cards?[sourceIndexPath.row] else { return }
         Current.wallet.reorderMembershipCard(membershipCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
-
-    override func configureForCurrentTheme() {
-        super.configureForCurrentTheme()
-    }
 }
 
 extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelegate {
