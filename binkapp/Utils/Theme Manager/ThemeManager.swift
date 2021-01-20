@@ -13,6 +13,7 @@ struct CustomThemeConfiguration {
     let walletCardBackground: UIColor
     let dividerColor: UIColor
     let textColor: UIColor
+    let tabBar: UIColor
 }
 
 struct Theme {
@@ -25,7 +26,7 @@ struct Theme {
 
     let type: ThemeType
 
-    var viewControllerBackgroundColor: UIColor {
+    var viewBackgroundColor: UIColor {
         return Styling.Colors.viewBackground
     }
 
@@ -34,11 +35,15 @@ struct Theme {
     }
 
     var dividerColor: UIColor {
-        return Styling.Colors.dividerColor
+        return Styling.Colors.divider
     }
 
     var textColor: UIColor {
-        return Styling.Colors.textColor
+        return Styling.Colors.text
+    }
+    
+    var tabBarColor: UIColor {
+        return Styling.Colors.tabBar
     }
 }
 
@@ -48,6 +53,7 @@ struct ThemeManager {
         case walletCardBackground
         case divider
         case text
+        case tabBar
     }
 
     var currentTheme = Theme(type: .system) {
@@ -63,19 +69,21 @@ struct ThemeManager {
     func color(for element: ScreenElement) -> UIColor {
         switch element {
         case .viewBackground:
-            return currentTheme.viewControllerBackgroundColor
+            return currentTheme.viewBackgroundColor
         case .walletCardBackground:
             return currentTheme.walletCardBackgroundColor
         case .divider:
             return currentTheme.dividerColor
         case .text:
             return currentTheme.textColor
+        case .tabBar:
+            return currentTheme.tabBarColor
         }
     }
 }
 
-struct Styling {
-    struct Colors {
+enum Styling {
+    enum Colors {
         static var viewBackground: UIColor = {
             switch Current.themeManager.currentTheme.type {
             case .light:
@@ -106,7 +114,7 @@ struct Styling {
             }
         }()
 
-        static var dividerColor: UIColor = {
+        static var divider: UIColor = {
             switch Current.themeManager.currentTheme.type {
             case .light:
                 // TODO: Check current divider colours
@@ -122,7 +130,7 @@ struct Styling {
             }
         }()
 
-        static var textColor: UIColor = {
+        static var text: UIColor = {
             switch Current.themeManager.currentTheme.type {
             case .light:
                 return .white
@@ -136,10 +144,25 @@ struct Styling {
                 }
             }
         }()
+        
+        static var tabBar: UIColor = {
+            switch Current.themeManager.currentTheme.type {
+            case .light:
+                return UIColor(white: 1.0, alpha: 0.6)
+            case .dark:
+                return UIColor(hexString: "111127", alpha: 0.6)
+            case .custom(let config):
+                return config.tabBar
+            case .system:
+                return UIColor { (traitcollection: UITraitCollection) -> UIColor in
+                    return traitcollection.userInterfaceStyle == .light ? UIColor(white: 1.0, alpha: 0.6) : UIColor(hexString: "111127", alpha: 0.6)
+                }
+            }
+        }()
 
         // MARK: Custom theme colours
 
-        static var binkBlue = CustomThemeConfiguration(viewBackgroundColor: binkBlueViewBackground, walletCardBackground: binkBlueCardBackground, dividerColor: dividerColor, textColor: textColor)
+        static var binkBlue = CustomThemeConfiguration(viewBackgroundColor: binkBlueViewBackground, walletCardBackground: binkBlueCardBackground, dividerColor: divider, textColor: text, tabBar: tabBar)
 
         private static var binkBlueViewBackground: UIColor = {
             return UIColor(hexString: "111127")

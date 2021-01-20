@@ -73,8 +73,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         let tabAppearance = UITabBarAppearance()
         tabAppearance.configureWithTransparentBackground()
         tabAppearance.shadowImage = UIImage()
-        tabAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
-        tabAppearance.backgroundEffect = UIBlurEffect(style: .light)
+        tabAppearance.backgroundColor = Current.themeManager.color(for: .tabBar)
+
+        // TODO: set light or dark depending on theme
+        tabAppearance.backgroundEffect = UIBlurEffect(style: .dark)
         UITabBar.appearance().standardAppearance = tabAppearance
         
         let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
