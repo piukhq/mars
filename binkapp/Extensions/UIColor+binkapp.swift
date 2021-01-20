@@ -131,4 +131,12 @@ extension UIColor {
             return nil
         }
     }
+
+    // MARK: - Theming
+
+    // MARK: Bink Blue
+    static let binkBlueViewBackground = UIColor(hexString: "111127")
+    static let binkBlueCardBackground = UIColor(hexString: "1A1A38")
+    static let binkBlueDividerColor = UIColor(hexString: "767676")
+    static let binkBlueTextColor = UIColor(hexString: "FFFFFF")
 }

@@ -287,6 +287,11 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             collectionView.cancelInteractiveMovement()
         }
     }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        collectionView.reloadData()
+    }
 }
 
 struct WalletOrderingManager {
