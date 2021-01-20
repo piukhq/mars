@@ -14,6 +14,7 @@ struct CustomThemeConfiguration {
     let dividerColor: UIColor
     let textColor: UIColor
     let tabBar: UIColor
+    let barBlur: UIBlurEffect
 }
 
 struct Theme {
@@ -56,7 +57,7 @@ struct ThemeManager {
         case tabBar
     }
 
-    var currentTheme = Theme(type: .system) {
+    var currentTheme = Theme(type: .light) {
         didSet {
             // TODO: Set user default value
         }
@@ -86,7 +87,7 @@ struct ThemeManager {
         tabAppearance.configureWithTransparentBackground()
         tabAppearance.shadowImage = UIImage()
         tabAppearance.backgroundColor = Styling.Colors.tabBar
-        tabAppearance.backgroundEffect = traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
+        tabAppearance.backgroundEffect = Styling.barBlur(for: traitCollection)
         return tabAppearance
     }
     
@@ -98,15 +99,27 @@ struct ThemeManager {
         appearance.configureWithTransparentBackground()
         appearance.shadowImage = UIImage()
         appearance.backgroundColor = Styling.Colors.tabBar
-        appearance.backgroundEffect = traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
+        appearance.backgroundEffect = Styling.barBlur(for: traitCollection)
         appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: Styling.Colors.text]
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
-
         return appearance
     }
 }
 
 enum Styling {
+    static func barBlur(for traitCollection: UITraitCollection) -> UIBlurEffect {
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            return UIBlurEffect(style: .light)
+        case .dark:
+            return UIBlurEffect(style: .dark)
+        case .custom(let config):
+            return config.barBlur
+        case .system:
+            return traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
+        }
+    }
+    
     enum Colors {
         static var viewBackground: UIColor = {
             switch Current.themeManager.currentTheme.type {
@@ -159,7 +172,7 @@ enum Styling {
             case .light:
                 return .black
             case .dark:
-                return binkBlueViewBackground
+                return .white
             case .custom(let config):
                 return config.textColor
             case .system:
@@ -186,7 +199,7 @@ enum Styling {
 
         // MARK: Custom theme colours
 
-        static var binkBlue = CustomThemeConfiguration(viewBackgroundColor: binkBlueViewBackground, walletCardBackground: binkBlueCardBackground, dividerColor: divider, textColor: text, tabBar: tabBar)
+        static var binkBlue = CustomThemeConfiguration(viewBackgroundColor: binkBlueViewBackground, walletCardBackground: binkBlueCardBackground, dividerColor: divider, textColor: text, tabBar: tabBar, barBlur: UIBlurEffect(style: .dark))
 
         private static var binkBlueViewBackground: UIColor = {
             return UIColor(hexString: "111127")
