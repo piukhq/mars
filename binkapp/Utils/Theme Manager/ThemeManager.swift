@@ -142,14 +142,14 @@ enum Styling {
         static var text: UIColor = {
             switch Current.themeManager.currentTheme.type {
             case .light:
-                return .white
+                return .black
             case .dark:
                 return binkBlueViewBackground
             case .custom(let config):
                 return config.textColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .white : binkBlueTextColor
+                    return traitcollection.userInterfaceStyle == .light ? .black : binkBlueTextColor
                 }
             }
         }()
@@ -164,7 +164,6 @@ enum Styling {
                 return config.tabBar
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    Current.themeManager.currentTheme.tabBarAppearance.backgroundEffect = traitcollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
                     return traitcollection.userInterfaceStyle == .light ? UIColor(white: 1.0, alpha: 0.6) : UIColor(hexString: "111127", alpha: 0.6)
                 }
             }
