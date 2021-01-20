@@ -42,7 +42,7 @@ class DebugMenuSegmentedTableViewCell: UITableViewCell {
         case .v1_3:
             segmentedControl.selectedSegmentIndex = 1
         case .none:
-            segmentedControl.selectedSegmentIndex = 0
+            segmentedControl.selectedSegmentIndex = 1
         }
         #endif
     }
