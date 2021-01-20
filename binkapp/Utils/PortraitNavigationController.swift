@@ -60,6 +60,10 @@ class PortraitNavigationController: UINavigationController {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureNavigationBarAppearance()
+    }
+    
     func pushViewController(_ viewController: UIViewController, animated: Bool = false, hidesBackButton: Bool = false, completion: EmptyCompletionBlock? = nil) {
         viewController.navigationItem.setHidesBackButton(hidesBackButton, animated: true)
         pushViewController(viewController, animated: animated)
@@ -100,24 +104,7 @@ class PortraitNavigationController: UINavigationController {
 
 extension PortraitNavigationController {
     func configureNavigationBarAppearance() {
-        navigationBar.standardAppearance = .defaultAppearance
-        navigationBar.scrollEdgeAppearance = .defaultAppearance
+        navigationBar.standardAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
+        navigationBar.scrollEdgeAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
     }
-}
-
-extension UINavigationBarAppearance {
-    static let defaultAppearance: UINavigationBarAppearance = {
-        let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
-        let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
-
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.shadowImage = UIImage()
-        appearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
-        appearance.backgroundEffect = UIBlurEffect(style: .light)
-        appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: UIColor.black]
-        appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
-
-        return appearance
-    }()
 }

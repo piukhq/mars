@@ -89,6 +89,21 @@ struct ThemeManager {
         tabAppearance.backgroundEffect = traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
         return tabAppearance
     }
+    
+    func navBarAppearance(for traitCollection: UITraitCollection) -> UINavigationBarAppearance {
+        let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
+        let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
+
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.shadowImage = UIImage()
+        appearance.backgroundColor = Styling.Colors.tabBar
+        appearance.backgroundEffect = traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
+        appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: Styling.Colors.text]
+        appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
+
+        return appearance
+    }
 }
 
 enum Styling {
