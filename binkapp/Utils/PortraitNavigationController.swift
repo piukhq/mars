@@ -106,5 +106,6 @@ extension PortraitNavigationController {
     func configureNavigationBarAppearance() {
         navigationBar.standardAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
         navigationBar.scrollEdgeAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
+        navigationBar.tintColor = Current.themeManager.color(for: .text)
     }
 }
