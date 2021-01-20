@@ -27,17 +27,20 @@ class PortraitNavigationController: UINavigationController {
         if isModallyPresented && shouldShowCloseButton {
             rootViewController.navigationItem.rightBarButtonItem = closeButton
         }
-        configureNavigationBarAppearance()
+        configureForCurrentTheme()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
-        configureNavigationBarAppearance()
+        configureForCurrentTheme()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        configureNavigationBarAppearance()
+        configureForCurrentTheme()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -61,7 +64,7 @@ class PortraitNavigationController: UINavigationController {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        configureNavigationBarAppearance()
+        configureForCurrentTheme()
     }
     
     func pushViewController(_ viewController: UIViewController, animated: Bool = false, hidesBackButton: Bool = false, completion: EmptyCompletionBlock? = nil) {
@@ -98,12 +101,8 @@ class PortraitNavigationController: UINavigationController {
     @objc private func close() {
         Current.navigate.close()
     }
-}
 
-// MARK: - Bar appearance
-
-extension PortraitNavigationController {
-    func configureNavigationBarAppearance() {
+    @objc func configureForCurrentTheme() {
         navigationBar.standardAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
         navigationBar.scrollEdgeAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
         navigationBar.tintColor = Current.themeManager.color(for: .text)

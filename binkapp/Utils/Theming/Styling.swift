@@ -84,7 +84,7 @@ enum Styling {
             }
         }
 
-        static var tabBar: UIColor = {
+        static var tabBar: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
                 return UIColor.white.withAlphaComponent(0.6)
@@ -97,6 +97,6 @@ enum Styling {
                     return traitcollection.userInterfaceStyle == .light ? UIColor.white.withAlphaComponent(0.6) : UIColor.binkBlueViewBackground.withAlphaComponent(0.6)
                 }
             }
-        }()
+        }
     }
 }
