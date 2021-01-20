@@ -80,6 +80,15 @@ struct ThemeManager {
             return currentTheme.tabBarColor
         }
     }
+    
+    func tabBarAppearance(for traitCollection: UITraitCollection) -> UITabBarAppearance {
+        let tabAppearance = UITabBarAppearance()
+        tabAppearance.configureWithTransparentBackground()
+        tabAppearance.shadowImage = UIImage()
+        tabAppearance.backgroundColor = Styling.Colors.tabBar
+        tabAppearance.backgroundEffect = traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
+        return tabAppearance
+    }
 }
 
 enum Styling {
@@ -155,6 +164,7 @@ enum Styling {
                 return config.tabBar
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
+                    Current.themeManager.currentTheme.tabBarAppearance.backgroundEffect = traitcollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
                     return traitcollection.userInterfaceStyle == .light ? UIColor(white: 1.0, alpha: 0.6) : UIColor(hexString: "111127", alpha: 0.6)
                 }
             }

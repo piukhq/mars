@@ -66,6 +66,7 @@ class BinkViewController: UIViewController {
 
     func configureForCurrentTheme() {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        tabBarController?.tabBar.standardAppearance = Current.themeManager.tabBarAppearance(for: traitCollection)
     }
 }
 
