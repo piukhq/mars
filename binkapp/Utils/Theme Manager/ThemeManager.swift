@@ -74,8 +74,8 @@ struct ThemeManager {
     }
 }
 
-struct Styling {
-    struct Colors {
+enum Styling {
+    enum Colors {
         static var viewBackground: UIColor = {
             switch Current.themeManager.currentTheme.type {
             case .light:
