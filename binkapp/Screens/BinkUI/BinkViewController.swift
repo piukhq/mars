@@ -54,12 +54,6 @@ class BinkViewController: UIViewController {
         configureDynamicActionIfNecessary()
         configureForCurrentTheme()
         Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-//            let customConfig = CustomThemeConfiguration(viewBackgroundColor: .systemGreen, walletCardBackgroundColor: .systemYellow, dividerColor: .black, textColor: .black, barColor: .amberPending, barBlur: .light)
-//            Current.themeManager.setTheme(Theme(type: .custom(customConfig)))
-            Current.themeManager.setTheme(Theme(type: .dark))
-        }
     }
 
     func setScreenName(trackedScreen: TrackedScreen) {

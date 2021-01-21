@@ -106,5 +106,4 @@ struct Theme {
         return Styling.Colors.bar
     }
 
-
 }
