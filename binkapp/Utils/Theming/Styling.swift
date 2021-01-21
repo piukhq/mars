@@ -16,7 +16,7 @@ enum Styling {
         case .dark:
             return UIBlurEffect(style: .dark)
         case .custom(let config):
-            return UIBlurEffect(style: config.barBlur)
+            return UIBlurEffect(style: config.barBlurStyle)
         case .system:
             return traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
         }
@@ -58,7 +58,7 @@ enum Styling {
             case .dark:
                 return .binkBlueCardBackground
             case .custom(let config):
-                return config.walletCardBackground
+                return config.walletCardBackgroundColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
                     return traitcollection.userInterfaceStyle == .light ? .white : .binkBlueCardBackground
@@ -97,7 +97,7 @@ enum Styling {
             }
         }
 
-        static var tabBar: UIColor {
+        static var bar: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
                 return UIColor.white.withAlphaComponent(0.6)

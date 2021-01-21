@@ -19,8 +19,23 @@ class ThemeManager {
 
     var currentTheme: Theme {
         didSet {
-            // TODO: Set user default value
+            Current.userDefaults.set(currentTheme.type.userDefaultsId, forDefaultsKey: .theme)
+
+            if case .custom(let config) = Current.themeManager.currentTheme.type {
+                Current.userDefaults.set(config.toUserDefaultsData(), forDefaultsKey: .customThemeConfig)
+            } else {
+                Current.userDefaults.set(nil, forDefaultsKey: .customThemeConfig)
+            }
+
             NotificationCenter.default.post(name: .themeManagerDidSetTheme, object: nil)
+        }
+    }
+
+    init() {
+        if let preferredThemeType = Theme.ThemeType.fromUserDefaults() {
+            self.currentTheme = Theme(type: preferredThemeType)
+        } else {
+            self.currentTheme = Theme(type: .system)
         }
     }
 
@@ -43,7 +58,7 @@ class ThemeManager {
         case .text:
             return currentTheme.textColor
         case .tabBar:
-            return currentTheme.tabBarColor
+            return currentTheme.barColor
         }
     }
 
@@ -51,7 +66,7 @@ class ThemeManager {
         let tabAppearance = UITabBarAppearance()
         tabAppearance.configureWithTransparentBackground()
         tabAppearance.shadowImage = UIImage()
-        tabAppearance.backgroundColor = Styling.Colors.tabBar
+        tabAppearance.backgroundColor = Styling.Colors.bar
         tabAppearance.backgroundEffect = Styling.barBlur(for: traitCollection)
         return tabAppearance
     }
@@ -63,7 +78,7 @@ class ThemeManager {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         appearance.shadowImage = UIImage()
-        appearance.backgroundColor = Styling.Colors.tabBar
+        appearance.backgroundColor = Styling.Colors.bar
         appearance.backgroundEffect = Styling.barBlur(for: traitCollection)
         appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: Styling.Colors.text]
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
