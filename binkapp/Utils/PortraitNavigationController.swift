@@ -109,5 +109,6 @@ class PortraitNavigationController: UINavigationController {
         navigationBar.tintColor = Current.themeManager.color(for: .text)
         navigationBar.setNeedsLayout()
         statusBarStyle = Current.themeManager.statusBarStyle(for: traitCollection)
+        setNeedsStatusBarAppearanceUpdate()
     }
 }
