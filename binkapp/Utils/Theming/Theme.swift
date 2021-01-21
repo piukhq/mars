@@ -105,5 +105,4 @@ struct Theme {
     var barColor: UIColor {
         return Styling.Colors.bar
     }
-
 }

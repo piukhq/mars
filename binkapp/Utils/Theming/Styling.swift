@@ -69,15 +69,14 @@ enum Styling {
         static var divider: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
-                // TODO: Check current divider colours
-                return .black
+                return UIColor(hexString: "e5e5e5")
             case .dark:
                 return .binkBlueDividerColor
             case .custom(let config):
                 return config.dividerColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .black : .binkBlueDividerColor
+                    return traitcollection.userInterfaceStyle == .light ? UIColor(hexString: "e5e5e5") : .binkBlueDividerColor
                 }
             }
         }
