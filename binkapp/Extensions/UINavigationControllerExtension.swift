@@ -31,7 +31,7 @@ extension UINavigationController {
     
     func setNavigationBarVisibility(_ visible: Bool, animated: Bool = true) {
         let animationDuration = animated ? 0.2 : 0.0
-        let blurEffect = traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
+        let blurEffect = Styling.barBlur(for: traitCollection)
         let color = Styling.Colors.tabBar
         
         self.navigationBar.standardAppearance.backgroundEffect = visible ? blurEffect : nil

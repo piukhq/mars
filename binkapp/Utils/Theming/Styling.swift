@@ -31,7 +31,7 @@ enum Styling {
         case .custom(let config):
             return config.statusBarStyle
         case .system:
-            return traitCollection.userInterfaceStyle == .dark ? .lightContent : .darkContent
+            return .default
         }
     }
 
