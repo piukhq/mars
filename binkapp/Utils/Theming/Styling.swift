@@ -21,6 +21,19 @@ enum Styling {
             return traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
         }
     }
+    
+    static func statusBarStyle(for traitCollection: UITraitCollection) -> UIStatusBarStyle {
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            return .darkContent
+        case .dark:
+            return .lightContent
+        case .custom(let config):
+            return config.statusBarStyle
+        case .system:
+            return traitCollection.userInterfaceStyle == .dark ? .lightContent : .darkContent
+        }
+    }
 
     enum Colors {
         static var viewBackground: UIColor {

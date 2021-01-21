@@ -69,6 +69,10 @@ class ThemeManager {
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         return appearance
     }
+    
+    func statusBarStyle(for traitCollection: UITraitCollection) -> UIStatusBarStyle {
+        return Styling.statusBarStyle(for: traitCollection)
+    }
 
     func addObserver(_ observer: Any, handler: Selector) {
         NotificationCenter.default.addObserver(observer, selector: handler, name: .themeManagerDidSetTheme, object: nil)

@@ -15,8 +15,9 @@ struct CustomThemeConfiguration {
     let textColor: UIColor
     let barColor: UIColor
     let barBlur: UIBlurEffect.Style
+    let statusBarStyle: UIStatusBarStyle
 
-    static let binkDarkBlue = CustomThemeConfiguration(viewBackgroundColor: .binkBlueViewBackground, walletCardBackground: .binkBlueCardBackground, dividerColor: .binkBlueDividerColor, textColor: .binkBlueTextColor, barColor: .binkBlueViewBackground, barBlur: .dark)
+    static let binkDarkBlue = CustomThemeConfiguration(viewBackgroundColor: .binkBlueViewBackground, walletCardBackground: .binkBlueCardBackground, dividerColor: .binkBlueDividerColor, textColor: .binkBlueTextColor, barColor: .binkBlueViewBackground, barBlur: .dark, statusBarStyle: .lightContent)
 }
 
 struct Theme {

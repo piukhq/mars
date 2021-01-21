@@ -10,6 +10,7 @@ import UIKit
 
 class PortraitNavigationController: UINavigationController {
     private var isModallyPresented: Bool = false
+    private var statusBarStyle: UIStatusBarStyle = .default
     
     private lazy var backButton: UIBarButtonItem = {
         return UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -52,7 +53,7 @@ class PortraitNavigationController: UINavigationController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return viewControllers.last?.preferredStatusBarStyle ?? .default
+        return statusBarStyle
     }
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
@@ -106,5 +107,6 @@ class PortraitNavigationController: UINavigationController {
         navigationBar.standardAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
         navigationBar.scrollEdgeAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
         navigationBar.tintColor = Current.themeManager.color(for: .text)
+        statusBarStyle = Current.themeManager.statusBarStyle(for: traitCollection)
     }
 }
