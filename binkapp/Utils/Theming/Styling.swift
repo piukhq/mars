@@ -64,7 +64,7 @@ enum Styling {
                 return config.dividerColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .white : .binkBlueDividerColor
+                    return traitcollection.userInterfaceStyle == .light ? .black : .binkBlueDividerColor
                 }
             }
         }
@@ -79,7 +79,7 @@ enum Styling {
                 return config.textColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .white : .binkBlueTextColor
+                    return traitcollection.userInterfaceStyle == .light ? .black : .binkBlueTextColor
                 }
             }
         }
