@@ -55,9 +55,9 @@ class BinkViewController: UIViewController {
         configureForCurrentTheme()
         Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
 
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-//            Current.themeManager.setTheme(Theme(type: .dark))
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            Current.themeManager.setTheme(Theme(type: .dark))
+        }
     }
 
     func setScreenName(trackedScreen: TrackedScreen) {

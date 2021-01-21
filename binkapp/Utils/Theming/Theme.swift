@@ -13,10 +13,10 @@ struct CustomThemeConfiguration {
     let walletCardBackground: UIColor
     let dividerColor: UIColor
     let textColor: UIColor
-    let tabBar: UIColor
-    let barBlur: UIBlurEffect
+    let barColor: UIColor
+    let barBlur: UIBlurEffect.Style
 
-    static let binkDarkBlue = CustomThemeConfiguration(viewBackgroundColor: .binkBlueViewBackground, walletCardBackground: .binkBlueCardBackground, dividerColor: .binkBlueDividerColor, textColor: .binkBlueTextColor, tabBar: .binkBlueViewBackground, barBlur: UIBlurEffect(style: .dark))
+    static let binkDarkBlue = CustomThemeConfiguration(viewBackgroundColor: .binkBlueViewBackground, walletCardBackground: .binkBlueCardBackground, dividerColor: .binkBlueDividerColor, textColor: .binkBlueTextColor, barColor: .binkBlueViewBackground, barBlur: .dark)
 }
 
 struct Theme {

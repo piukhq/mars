@@ -16,7 +16,7 @@ enum Styling {
         case .dark:
             return UIBlurEffect(style: .dark)
         case .custom(let config):
-            return config.barBlur
+            return UIBlurEffect(style: config.barBlur)
         case .system:
             return traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
         }
@@ -91,7 +91,7 @@ enum Styling {
             case .dark:
                 return UIColor.binkBlueViewBackground.withAlphaComponent(0.6)
             case .custom(let config):
-                return config.tabBar
+                return config.barColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
                     return traitcollection.userInterfaceStyle == .light ? UIColor.white.withAlphaComponent(0.6) : UIColor.binkBlueViewBackground.withAlphaComponent(0.6)
