@@ -53,6 +53,7 @@ class MainTabBarViewController: UITabBarController {
     @objc func configureForCurrentTheme() {
         tabBar.standardAppearance = Current.themeManager.tabBarAppearance(for: traitCollection)
         tabBar.tintColor = Current.themeManager.color(for: .text)
+        tabBar.setNeedsLayout()
     }
 }
 
