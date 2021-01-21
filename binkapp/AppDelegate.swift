@@ -69,10 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         if let mainWindow = self.window {
             Current.rootStateMachine.launch(withWindow: mainWindow)
         }
-        
-        let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
-        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
 
         addObservers()
         InAppReviewUtility.recordAppLaunch()
