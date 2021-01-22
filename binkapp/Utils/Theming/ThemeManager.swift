@@ -86,3 +86,4 @@ class ThemeManager {
         NotificationCenter.default.addObserver(observer, selector: handler, name: .themeManagerDidSetTheme, object: nil)
     }
 }
+
