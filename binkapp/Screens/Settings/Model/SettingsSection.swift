@@ -28,6 +28,7 @@ struct SettingsRow {
         case termsAndConditions = "settings_row_termsandconditions_title"
         case debug = "settings_section_debug_title"
         case whoWeAre = "settings_who_we_are_title"
+        case theme = "settings_row_theme_title"
     }
     
     enum RowAction {

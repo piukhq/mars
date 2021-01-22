@@ -35,6 +35,35 @@ struct SettingsFactory {
         
         sections.append(accountSection)
         
+        // MARK: - Appearance
+        
+        let appearanceSection = SettingsSection(title: "settings_section_appearance_title".localized, rows: [
+            SettingsRow(
+                type: .theme,
+                subtitle: nil,
+                action: .customAction(action: {
+                    let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                    ac.addAction(UIAlertAction(title: "settings_theme_system_title".localized, style: .default, handler: { _ in
+                        Current.themeManager.setTheme(Theme(type: .system))
+                    }))
+                    ac.addAction(UIAlertAction(title: "settings_theme_light_title".localized, style: .default, handler: { _ in
+                        Current.themeManager.setTheme(Theme(type: .light))
+                    }))
+                    ac.addAction(UIAlertAction(title: "settings_theme_dark_title".localized, style: .default, handler: { _ in
+                        Current.themeManager.setTheme(Theme(type: .dark))
+                    }))
+                    ac.addAction(UIAlertAction(title: "settings_theme_cancel_title".localized, style: .cancel, handler: { _ in
+                        Current.themeManager.setTheme(Theme(type: .system))
+                    }))
+                    let navigationRequest = AlertNavigationRequest(alertController: ac)
+                    Current.navigate.to(navigationRequest)
+                }),
+                actionRequired: rowsWithActionRequired?.contains(.theme) ?? false
+            )
+        ])
+
+        sections.append(appearanceSection)
+        
         // MARK: - Support and feedback
         
         let supportSection = SettingsSection(title: "settings_section_support_title".localized, rows: [
