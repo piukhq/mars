@@ -19,6 +19,9 @@ class CardDetailInfoTableViewCell: UITableViewCell {
 
     func configureWithInformationRow(_ informationRow: CardDetailInformationRow) {
         titleLabel.text = informationRow.type.title
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         subtitleLabel.text = informationRow.type.subtitle
+        subtitleLabel.textColor = Current.themeManager.color(for: .text)
+        backgroundColor = .clear
     }
 }

@@ -104,6 +104,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     lazy var informationTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
         tableView.separatorColor = Current.themeManager.color(for: .divider)
+        tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
