@@ -45,7 +45,11 @@ struct CustomThemeConfiguration {
 }
 
 struct Theme {
-    enum ThemeType {
+    enum ThemeType: Equatable {
+        static func == (lhs: Theme.ThemeType, rhs: Theme.ThemeType) -> Bool {
+            return lhs.userDefaultsId == rhs.userDefaultsId
+        }
+        
         case light
         case dark
         case system

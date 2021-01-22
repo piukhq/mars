@@ -43,18 +43,32 @@ struct SettingsFactory {
                 subtitle: nil,
                 action: .customAction(action: {
                     let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                    ac.addAction(UIAlertAction(title: "settings_theme_system_title".localized, style: .default, handler: { _ in
+                    let systemAction = UIAlertAction(title: "settings_theme_system_title".localized, style: .default, handler: { _ in
                         Current.themeManager.setTheme(Theme(type: .system))
-                    }))
-                    ac.addAction(UIAlertAction(title: "settings_theme_light_title".localized, style: .default, handler: { _ in
+                    })
+                    if let _ = systemAction.value(forKey: "checked") as? Bool {
+                        systemAction.setValue(Current.themeManager.currentTheme.type == .system, forKey: "checked")
+                    }
+                    
+                    let lightAction = UIAlertAction(title: "settings_theme_light_title".localized, style: .default, handler: { _ in
                         Current.themeManager.setTheme(Theme(type: .light))
-                    }))
-                    ac.addAction(UIAlertAction(title: "settings_theme_dark_title".localized, style: .default, handler: { _ in
+                    })
+                    if let _ = lightAction.value(forKey: "checked") as? Bool {
+                        lightAction.setValue(Current.themeManager.currentTheme.type == .light, forKey: "checked")
+                    }
+                    
+                    let darkAction = UIAlertAction(title: "settings_theme_dark_title".localized, style: .default, handler: { _ in
                         Current.themeManager.setTheme(Theme(type: .dark))
-                    }))
-                    ac.addAction(UIAlertAction(title: "settings_theme_cancel_title".localized, style: .cancel, handler: { _ in
-                        Current.themeManager.setTheme(Theme(type: .system))
-                    }))
+                    })
+                    if let _ = darkAction.value(forKey: "checked") as? Bool {
+                        darkAction.setValue(Current.themeManager.currentTheme.type == .dark, forKey: "checked")
+                    }
+                    
+                    ac.addAction(systemAction)
+                    ac.addAction(lightAction)
+                    ac.addAction(darkAction)
+                    ac.addAction(UIAlertAction(title: "settings_theme_cancel_title".localized, style: .cancel))
+
                     let navigationRequest = AlertNavigationRequest(alertController: ac)
                     Current.navigate.to(navigationRequest)
                 }),
