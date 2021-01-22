@@ -16,11 +16,15 @@ class PLRAccumulatorActiveCell: PLRAccumulatorCell {
 
     override func configureWithViewModel(_ viewModel: PLRCellViewModel, tapAction: PLRBaseCollectionViewCell.CellTapAction?) {
         super.configureWithViewModel(viewModel, tapAction: tapAction)
-
+        backgroundColor = .red
         earnProgressLabel.text = viewModel.earnProgressString
+        earnProgressLabel.textColor = Current.themeManager.color(for: .text)
         earnTargetLabel.text = viewModel.earnTargetString
+        earnTargetLabel.textColor = Current.themeManager.color(for: .text)
         earnProgressValueLabel.text = viewModel.earnProgressValueString
+        earnProgressValueLabel.textColor = Current.themeManager.color(for: .text)
         earnTargetValueLabel.text = viewModel.earnTargetValueString
+        earnTargetValueLabel.textColor = Current.themeManager.color(for: .text)
     }
 }
 

@@ -14,8 +14,9 @@ class PLRStampsActiveCell: PLRStampsCell {
 
     override func configureWithViewModel(_ viewModel: PLRCellViewModel, tapAction: PLRBaseCollectionViewCell.CellTapAction?) {
         super.configureWithViewModel(viewModel, tapAction: tapAction)
-
         earnProgressLabel.text = viewModel.earnProgressString
+        earnProgressLabel.textColor = Current.themeManager.color(for: .text)
         earnProgressValueLabel.text = viewModel.earnProgressValueString
+        earnProgressValueLabel.textColor = Current.themeManager.color(for: .text)
     }
 }
