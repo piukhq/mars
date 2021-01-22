@@ -59,7 +59,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private lazy var showBarcodeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .bodyTextLarge
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(Current.themeManager.color(for: .text), for: .normal)
         button.addTarget(self, action: #selector(showBarcodeButtonPressed), for: .touchUpInside)
         return button
     }()
@@ -67,7 +67,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private lazy var modulesStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [pointsModule, linkModule])
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.axis = .horizontal
@@ -86,7 +86,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private lazy var offerTilesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.axis = .vertical
@@ -96,14 +96,14 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     
     lazy var separator: UIView = {
         let separator = UIView()
-        separator.backgroundColor = .lightGray
+        separator.backgroundColor = Current.themeManager.color(for: .divider)
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
     
     lazy var informationTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
-        tableView.separatorColor = .lightGray
+        tableView.separatorColor = Current.themeManager.color(for: .divider)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -135,7 +135,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
     }
