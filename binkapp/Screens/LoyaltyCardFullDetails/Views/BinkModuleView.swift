@@ -16,6 +16,8 @@ class BinkModuleView: CustomView {
     @IBOutlet private weak var moduleImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
+    @IBOutlet private weak var moduleView: UIView!
+    
     
     enum ModuleType: Int {
         case points
@@ -70,9 +72,12 @@ class BinkModuleView: CustomView {
 
 private extension BinkModuleView {
     func configure(imageName: String, titleText: String, subtitleText: String, touchAction: BinkModuleAction) {
+        moduleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         moduleImageView.image = UIImage(named: imageName)
         titleLabel.text = titleText
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         subtitleLabel.text = subtitleText
+        subtitleLabel.textColor = Current.themeManager.color(for: .text)
         action = touchAction
     }
     
