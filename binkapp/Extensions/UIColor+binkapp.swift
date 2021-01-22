@@ -9,81 +9,31 @@ import Foundation
 import UIKit
 
 extension UIColor {
-    convenience init(hexString: String, alpha: CFloat = 1.0) {
-        var hexSanitized = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
-        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
-
-        var rgb: UInt64 = 0
-
-        var r: CGFloat = 0.0
-        var g: CGFloat = 0.0
-        var b: CGFloat = 0.0
-        var a: CGFloat = 1.0
-
-        let length = hexSanitized.count
-
-        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else {
-            fatalError("Malformed hex string")
+    convenience init(hexString: String, alpha: CGFloat = 1.0) {
+        let hexString: String = hexString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let scanner = Scanner(string: hexString)
+        if hexString.hasPrefix("#") {
+            scanner.currentIndex = hexString.index(hexString.startIndex, offsetBy: 1)
         }
-
-        if length == 6 {
-            r = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
-            g = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
-            b = CGFloat(rgb & 0x0000FF) / 255.0
-        } else if length == 8 {
-            r = CGFloat((rgb & 0xFF000000) >> 24) / 255.0
-            g = CGFloat((rgb & 0x00FF0000) >> 16) / 255.0
-            b = CGFloat((rgb & 0x0000FF00) >> 8) / 255.0
-            a = CGFloat(rgb & 0x000000FF) / 255.0
-        } else {
-            fatalError("Malformed hex string")
-        }
-
-        self.init(red: r, green: g, blue: b, alpha: a)
+        var color: UInt64 = 0
+        scanner.scanHexInt64(&color)
+        let mask = 0x000000FF
+        let r = Int(color >> 16) & mask
+        let g = Int(color >> 8) & mask
+        let b = Int(color) & mask
+        let red = CGFloat(r) / 255.0
+        let green = CGFloat(g) / 255.0
+        let blue = CGFloat(b) / 255.0
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
-
-    // MARK: - Computed Properties
-
-    var toHex: String? {
-        return toHex()
-    }
-
-    // MARK: - From UIColor to String
-
-    func toHex(alpha: Bool = false) -> String? {
-        guard let components = cgColor.components, components.count >= 2 else {
-            return nil
-        }
-
-        var r = Float(0.0)
-        var g = Float(0.0)
-        var b = Float(0.0)
-        var a = Float(0.0)
-
-        switch components.count {
-        case 2:
-            r = Float(components[0])
-            g = Float(components[0])
-            b = Float(components[0])
-            a = Float(components[1])
-        case 3:
-            r = Float(components[0])
-            g = Float(components[1])
-            b = Float(components[2])
-            a = Float(1.0)
-        case 4:
-            r = Float(components[0])
-            g = Float(components[1])
-            b = Float(components[2])
-            a = Float(components[3])
-        default: break
-        }
-
-        if alpha {
-            return String(format: "%02lX%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255), lroundf(a * 255))
-        } else {
-            return String(format: "%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255))
-        }
+    func toHexString() -> String {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        let rgb: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0
+        return String(format: "#%06x", rgb)
     }
     
     class var blueAccent: UIColor {

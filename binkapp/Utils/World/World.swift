@@ -68,7 +68,6 @@ extension UserDefaults: BinkUserDefaults {
         case hasPreviouslyLaunchedApp
         case localWalletOrder(userId: String, walletType: Wallet.WalletType)
         case theme
-        case customThemeConfig
         
         var keyValue: String {
             switch self {
@@ -102,8 +101,6 @@ extension UserDefaults: BinkUserDefaults {
                 return "localWalletOrders_user_\(userId)_\(walletType.rawValue)"
             case .theme:
                 return "theme"
-            case .customThemeConfig:
-                return "customThemeConfig"
             }
         }
     }
