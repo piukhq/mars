@@ -14,21 +14,7 @@ class ThemeManager {
         case walletCardBackground
         case divider
         case text
-        case tabBar
-    }
-
-    var currentTheme: Theme {
-        didSet {
-            Current.userDefaults.set(currentTheme.type.userDefaultsId, forDefaultsKey: .theme)
-
-            if case .custom(let config) = Current.themeManager.currentTheme.type {
-                Current.userDefaults.set(config.toUserDefaultsData(), forDefaultsKey: .customThemeConfig)
-            } else {
-                Current.userDefaults.set(nil, forDefaultsKey: .customThemeConfig)
-            }
-
-            NotificationCenter.default.post(name: .themeManagerDidSetTheme, object: nil)
-        }
+        case bar
     }
 
     init() {
@@ -41,6 +27,13 @@ class ThemeManager {
 
     init(theme: Theme.ThemeType) {
         self.currentTheme = Theme(type: theme)
+    }
+
+    var currentTheme: Theme {
+        didSet {
+            Current.userDefaults.set(currentTheme.type.rawValue, forDefaultsKey: .theme)
+            NotificationCenter.default.post(name: .themeManagerDidSetTheme, object: nil)
+        }
     }
 
     func setTheme(_ newTheme: Theme) {
@@ -57,7 +50,7 @@ class ThemeManager {
             return currentTheme.dividerColor
         case .text:
             return currentTheme.textColor
-        case .tabBar:
+        case .bar:
             return currentTheme.barColor
         }
     }
@@ -93,3 +86,4 @@ class ThemeManager {
         NotificationCenter.default.addObserver(observer, selector: handler, name: .themeManagerDidSetTheme, object: nil)
     }
 }
+

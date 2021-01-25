@@ -354,7 +354,7 @@ private extension LoyaltyCardFullDetailsViewController {
         if lightAppearance && viewModel.secondaryColourIsDark && !navigationBarShouldBeVisible {
             navigationController?.navigationBar.tintColor = .white
             statusBarStyle = .lightContent
-        } else if lightAppearance && traitCollection.userInterfaceStyle == .dark {
+        } else if lightAppearance && traitCollection.userInterfaceStyle == .dark || Current.themeManager.currentTheme.type == .dark {
             navigationController?.navigationBar.tintColor = .white
             statusBarStyle = .lightContent
         } else {
@@ -428,7 +428,7 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
             navigationBarShouldBeVisible = true
             navigationItem.titleView = titleView
             
-            if traitCollection.userInterfaceStyle == .dark {
+            if traitCollection.userInterfaceStyle == .dark && Current.themeManager.currentTheme.type != .light || Current.themeManager.currentTheme.type == .dark {
                 setNavigationBarAppearanceLight(true)
             } else {
                 setNavigationBarAppearanceLight(false)

@@ -116,7 +116,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         
         /// Brand icon
         switch Current.themeManager.currentTheme.type {
-        case .light, .custom:
+        case .light:
             cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
         case .dark:
             cardIconImageView.setImage(forPathType: .membershipPlanDarkModeIcon(plan: plan))
