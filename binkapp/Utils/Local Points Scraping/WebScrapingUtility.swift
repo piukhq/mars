@@ -104,10 +104,11 @@ enum WebScrapingUtilityError: BinkError {
     case failedToExecuteScrapingScript
     case failedToExecuteDetectTextScript
     case failedToCastReturnValue
-    case loginFailed
+    case loginFailed(errorMessage: String?)
     case userDismissedWebView
     case unhandledIdling
     case javascriptError
+    case pointsScrapingFailed(errorMessage: String?)
     
     var domain: BinkErrorDomain {
         return .webScrapingUtility
@@ -131,7 +132,10 @@ enum WebScrapingUtilityError: BinkError {
             return "Failed to execute scraping script"
         case .failedToCastReturnValue:
             return "Failed to cast return value"
-        case .loginFailed:
+        case .loginFailed(let errorMessage):
+            if let error = errorMessage {
+                return "Login failed - \(error)"
+            }
             return "Login failed"
         case .detectTextScriptFileNotFound:
             return "Detect text script file not found"
@@ -145,6 +149,11 @@ enum WebScrapingUtilityError: BinkError {
             return "Unhandled idling"
         case .javascriptError:
             return "Javascript error"
+        case .pointsScrapingFailed(let errorMessage):
+            if let error = errorMessage {
+                return "Points scraping failed - \(error)"
+            }
+            return "Points scraping failed"
         }
     }
 }
@@ -312,7 +321,9 @@ class WebScrapingUtility: NSObject {
 
             switch result {
             case .success(let response):
-                print(response)
+                if let error = response.errorMessage {
+                    self.finish(withError: .loginFailed(errorMessage: error))
+                }
             case .failure:
                 self.finish(withError: .failedToExecuteLoginScript)
             }
@@ -339,6 +350,11 @@ class WebScrapingUtility: NSObject {
 
             switch result {
             case .success(let response):
+                if let error = response.errorMessage {
+                    self.finish(withError: .pointsScrapingFailed(errorMessage: error))
+                    return
+                }
+
                 guard let points = response.pointsValue else {
                     self.finish(withError: .failedToCastReturnValue)
                     return
@@ -560,13 +576,13 @@ extension WebScrapingUtility: WKNavigationDelegate {
                     try login(credentials: credentials)
                 } else {
                     // We should only fall into here if we know we are at the login url, but we've already attempted a login
-                    self.finish(withError: .loginFailed)
+                    self.finish(withError: .loginFailed(errorMessage: nil))
                 }
             } catch {
                 if let webScrapingError = error as? WebScrapingUtilityError {
                     self.finish(withError: webScrapingError)
                 } else {
-                    self.finish(withError: .loginFailed)
+                    self.finish(withError: .loginFailed(errorMessage: nil))
                 }
             }
         }
