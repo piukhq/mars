@@ -64,6 +64,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="rightDisclosureView" destination="XDQ-uW-GKm" id="3b8-gf-xK2"/>
                 <outlet property="subtitleLabel" destination="YcJ-fE-eiM" id="GX8-qA-DVM"/>
                 <outlet property="titleLabel" destination="1Vh-j5-wQS" id="cSW-PH-crR"/>
             </connections>
