@@ -162,7 +162,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        setNavigationBarAppearanceLight(false)
+        navigationController?.setNavigationBarVisibility(true, animated: true)
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -171,7 +171,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         if PllLoyaltyInAppReviewableJourney.isInProgress {
             requestInAppReview()
         }
-        navigationController?.setNavigationBarVisibility(true, animated: true)
     }
 
     override func viewDidLayoutSubviews() {
