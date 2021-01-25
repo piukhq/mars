@@ -114,7 +114,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }()
     
     let viewModel: LoyaltyCardFullDetailsViewModel
-    private var navigationBarShouldBeVisible = false
+    var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
     private lazy var contentAnimationSpacerHeightConstraint: NSLayoutConstraint = {
@@ -355,6 +355,9 @@ private extension LoyaltyCardFullDetailsViewController {
         if lightAppearance && viewModel.secondaryColourIsDark && !navigationBarShouldBeVisible {
             navigationController?.navigationBar.tintColor = .white
             statusBarStyle = .lightContent
+        } else if lightAppearance && traitCollection.userInterfaceStyle == .dark {
+            navigationController?.navigationBar.tintColor = .white
+            statusBarStyle = .lightContent
         } else {
             navigationController?.navigationBar.tintColor = .black
             statusBarStyle = .darkContent
@@ -425,12 +428,23 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
             navigationController?.setNavigationBarVisibility(true)
             navigationBarShouldBeVisible = true
             navigationItem.titleView = titleView
-            setNavigationBarAppearanceLight(false)
+            
+            if traitCollection.userInterfaceStyle == .dark {
+                setNavigationBarAppearanceLight(true)
+            } else {
+                setNavigationBarAppearanceLight(false)
+            }
         } else if secondaryColorViewHeight > topBarHeight {
             navigationController?.setNavigationBarVisibility(false)
             navigationBarShouldBeVisible = false
             navigationItem.titleView = nil
-            setNavigationBarAppearanceLight(true)
+            
+            // When navBar is hidden and in dark mode and secondary background colour is light, set navBar appearance to dark
+            if traitCollection.userInterfaceStyle == .dark && !viewModel.secondaryColourIsDark {
+                setNavigationBarAppearanceLight(false)
+            } else {
+                setNavigationBarAppearanceLight(true)
+            }
         }
     }
 }

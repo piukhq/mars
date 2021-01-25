@@ -53,7 +53,15 @@ class PortraitNavigationController: UINavigationController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return statusBarStyle
+        // If top view controller is LCD and navBar is visible, set status bar style using theme manager, otherwise get style from view controller
+        if let lcdVC = viewControllers.last as? LoyaltyCardFullDetailsViewController {
+            if lcdVC.navigationBarShouldBeVisible {
+                return statusBarStyle
+            } else {
+                return viewControllers.last?.preferredStatusBarStyle ?? statusBarStyle
+            }
+        }
+        return viewControllers.last?.preferredStatusBarStyle ?? statusBarStyle
     }
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
@@ -106,7 +114,16 @@ class PortraitNavigationController: UINavigationController {
     @objc func configureForCurrentTheme() {
         navigationBar.standardAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
         navigationBar.scrollEdgeAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
-        navigationBar.tintColor = Current.themeManager.color(for: .text)
+        
+        // If top view controller is LCD and navBar is not visible, don't change tint colour
+        if let lcdVC = viewControllers.last as? LoyaltyCardFullDetailsViewController {
+            if lcdVC.navigationBarShouldBeVisible {
+                navigationBar.tintColor = Current.themeManager.color(for: .text)
+            }
+        } else {
+            navigationBar.tintColor = Current.themeManager.color(for: .text)
+        }
+        
         navigationBar.setNeedsLayout()
         statusBarStyle = Current.themeManager.statusBarStyle(for: traitCollection)
         setNeedsStatusBarAppearanceUpdate()
