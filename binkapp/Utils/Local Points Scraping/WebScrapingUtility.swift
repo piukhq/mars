@@ -171,15 +171,21 @@ struct WebScrapingCredentials {
 struct WebScrapingResponse: Codable {
     var pointsString: String?
     var errorMessage: String?
+    var userActionRequired: Bool?
 
     var pointsValue: Int? {
         guard let string = pointsString else { return nil }
         return Int(string)
     }
 
+    var shouldDisplayWebview: Bool {
+        return userActionRequired == true
+    }
+
     enum CodingKeys: String, CodingKey {
         case pointsString = "points"
         case errorMessage = "error_message"
+        case userActionRequired = "user_action_required"
     }
 }
 
@@ -321,8 +327,14 @@ class WebScrapingUtility: NSObject {
 
             switch result {
             case .success(let response):
+                // Successfully executed login script, but didn't necessarily succeed
+                // We may have encountered an error, or recaptcha
                 if let error = response.errorMessage {
                     self.finish(withError: .loginFailed(errorMessage: error))
+                    return
+                }
+                if response.shouldDisplayWebview {
+                    self.presentWebView()
                 }
             case .failure:
                 self.finish(withError: .failedToExecuteLoginScript)
@@ -345,7 +357,7 @@ class WebScrapingUtility: NSObject {
             return
         }
 
-        runScript(scrapeScript, expectingResponse: true) { [weak self] result in
+        runScript(scrapeScript) { [weak self] result in
             guard let self = self else { return }
 
             switch result {
@@ -473,26 +485,24 @@ class WebScrapingUtility: NSObject {
         }
     }
     
-    private func runScript(_ script: String, expectingResponse: Bool = false, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
+    private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
         webView.evaluateJavaScript(script) { (response, error) in
             guard error == nil else {
                 completion(.failure(.javascriptError))
                 return
             }
+            
+            guard let response = response else {
+                completion(.failure(.javascriptError))
+                return
+            }
 
-            if expectingResponse {
-                guard let response = response else {
-                    completion(.failure(.javascriptError))
-                    return
-                }
-
-                do {
-                    let data = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-                    let scrapingResponse = try JSONDecoder().decode(WebScrapingResponse.self, from: data)
-                    completion(.success(scrapingResponse))
-                } catch {
-                    completion(.failure(.javascriptError))
-                }
+            do {
+                let data = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
+                let scrapingResponse = try JSONDecoder().decode(WebScrapingResponse.self, from: data)
+                completion(.success(scrapingResponse))
+            } catch {
+                completion(.failure(.javascriptError))
             }
         }
     }
