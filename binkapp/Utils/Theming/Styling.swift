@@ -15,8 +15,6 @@ enum Styling {
             return UIBlurEffect(style: .light)
         case .dark:
             return UIBlurEffect(style: .dark)
-        case .custom(let config):
-            return UIBlurEffect(style: config.barBlurStyle)
         case .system:
             return traitCollection.userInterfaceStyle == .dark ? UIBlurEffect(style: .dark) : UIBlurEffect(style: .light)
         }
@@ -28,8 +26,6 @@ enum Styling {
             return .darkContent
         case .dark:
             return .lightContent
-        case .custom(let config):
-            return config.statusBarStyle
         case .system:
             return .default
         }
@@ -42,8 +38,6 @@ enum Styling {
                 return .white
             case .dark:
                 return .binkBlueViewBackground
-            case .custom(let config):
-                return config.viewBackgroundColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
                     return traitcollection.userInterfaceStyle == .light ? .white : .binkBlueViewBackground
@@ -57,8 +51,6 @@ enum Styling {
                 return .white
             case .dark:
                 return .binkBlueCardBackground
-            case .custom(let config):
-                return config.walletCardBackgroundColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
                     return traitcollection.userInterfaceStyle == .light ? .white : .binkBlueCardBackground
@@ -73,8 +65,6 @@ enum Styling {
                 return .black
             case .dark:
                 return .binkBlueDividerColor
-            case .custom(let config):
-                return config.dividerColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
                     return traitcollection.userInterfaceStyle == .light ? .black : .binkBlueDividerColor
@@ -88,8 +78,6 @@ enum Styling {
                 return .black
             case .dark:
                 return .binkBlueTextColor
-            case .custom(let config):
-                return config.textColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
                     return traitcollection.userInterfaceStyle == .light ? .black : .binkBlueTextColor
@@ -103,8 +91,6 @@ enum Styling {
                 return UIColor.white.withAlphaComponent(0.6)
             case .dark:
                 return UIColor.binkBlueViewBackground.withAlphaComponent(0.6)
-            case .custom(let config):
-                return config.barColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
                     return traitcollection.userInterfaceStyle == .light ? UIColor.white.withAlphaComponent(0.6) : UIColor.binkBlueViewBackground.withAlphaComponent(0.6)
