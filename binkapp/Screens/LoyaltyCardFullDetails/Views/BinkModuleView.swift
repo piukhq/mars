@@ -16,7 +16,7 @@ class BinkModuleView: CustomView {
     @IBOutlet private weak var moduleImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var moduleView: UIView!
+    @IBOutlet private weak var contentView: UIView!
     
     
     enum ModuleType: Int {
@@ -72,7 +72,7 @@ class BinkModuleView: CustomView {
 
 private extension BinkModuleView {
     func configure(imageName: String, titleText: String, subtitleText: String, touchAction: BinkModuleAction) {
-        moduleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        contentView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         moduleImageView.image = UIImage(named: imageName)
         titleLabel.text = titleText
         titleLabel.textColor = Current.themeManager.color(for: .text)

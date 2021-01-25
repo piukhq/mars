@@ -24,7 +24,7 @@ class PLRStampViewCell: UICollectionViewCell {
         layer.cornerRadius = Constants.outerViewCornerRadius
 
         let innerView = UIView()
-        innerView.backgroundColor = .white
+        innerView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         innerView.translatesAutoresizingMaskIntoConstraints = false
         innerView.layer.cornerRadius = Constants.innerViewCornerRadius
         addSubview(innerView)
