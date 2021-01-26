@@ -14,7 +14,9 @@ class DetailNavigationTitleView: UIView {
 
     func configureWithTitle(_ title: String, detail: String?) {
         titleLabel.text = title
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         detailLabel.text = detail
+        detailLabel.textColor = Current.themeManager.color(for: .text)
         detailLabel.isHidden = detail == nil
     }
 }
