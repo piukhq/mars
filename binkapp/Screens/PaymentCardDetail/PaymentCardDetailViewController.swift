@@ -21,7 +21,7 @@ class PaymentCardDetailViewController: BinkViewController {
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         stackView.margin = LayoutHelper.PaymentCardDetail.stackScrollViewMargins
         stackView.distribution = .fill
         stackView.alignment = .center
