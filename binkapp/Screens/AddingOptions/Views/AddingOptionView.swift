@@ -22,9 +22,13 @@ class AddingOptionView: CustomView {
     }
     
     override func configureUI() {
+        backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         titleLabel.font = UIFont.headline
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         descriptionLabel.font = UIFont.bodyTextLarge
-
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
+        cardsStackView.tintColor = Current.themeManager.color(for: .text)
+        
         frame.size.height = 150
         
         view.layer.cornerRadius = 10
