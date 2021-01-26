@@ -34,7 +34,6 @@ enum TrackedScreen: String {
 class BinkViewController: UIViewController {
     private let dynamicActionUtility = DynamicActionsUtility()
     private var dynamicAction: DynamicAction?
-    private var statusBarStyle: UIStatusBarStyle = .default
 
     var screenName: String?
 
@@ -63,7 +62,7 @@ class BinkViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        statusBarStyle
+        Current.themeManager.statusBarStyle(for: traitCollection)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -72,7 +71,6 @@ class BinkViewController: UIViewController {
 
     @objc func configureForCurrentTheme() {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
-        statusBarStyle = Current.themeManager.statusBarStyle(for: traitCollection)
     }
 }
 
