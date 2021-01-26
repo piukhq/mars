@@ -31,7 +31,7 @@ class AddingOptionView: CustomView {
         
         frame.size.height = 150
         
-        view.layer.cornerRadius = 10
+        layer.cornerRadius = 10
         clipsToBounds = true
         
         layer.applyDefaultBinkShadow()

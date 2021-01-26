@@ -62,6 +62,11 @@ class SettingsViewController: BinkViewController {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .settings)
     }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        tableView.reloadData()
+    }
     
     private func configureLayout() {
         NSLayoutConstraint.activate([

@@ -31,21 +31,18 @@ class SettingsTableViewCell: UITableViewCell {
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = .subtitle
-        label.textColor = Current.themeManager.color(for: .text)
         return label
     }()
     
     private lazy var bodyLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyTextLarge
-        label.textColor = Current.themeManager.color(for: .text)
         return label
     }()
     
     private lazy var separator: UIView = {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.backgroundColor = Current.themeManager.color(for: .divider)
         contentView.addSubview(separator)
         return separator
     }()
@@ -79,7 +76,6 @@ class SettingsTableViewCell: UITableViewCell {
         let imageView = UIImageView(image: UIImage(named: "iconsChevronRight"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .center
-        imageView.tintColor = Current.themeManager.color(for: .text)
         contentView.addSubview(imageView)
         return imageView
     }()
@@ -125,6 +121,11 @@ class SettingsTableViewCell: UITableViewCell {
         
         separator.isHidden = !showSeparator
         actionRequiredIndicator.isHidden = !rowData.actionRequired
+
+        separator.backgroundColor = Current.themeManager.color(for: .divider)
+        bodyLabel.textColor = Current.themeManager.color(for: .text)
+        subtitleLabel.textColor = Current.themeManager.color(for: .text)
+        chevron.tintColor = Current.themeManager.color(for: .text)
     }
     
     
