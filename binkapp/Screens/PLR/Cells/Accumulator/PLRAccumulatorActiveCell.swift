@@ -16,7 +16,7 @@ class PLRAccumulatorActiveCell: PLRAccumulatorCell {
 
     override func configureWithViewModel(_ viewModel: PLRCellViewModel, tapAction: PLRBaseCollectionViewCell.CellTapAction?) {
         super.configureWithViewModel(viewModel, tapAction: tapAction)
-        backgroundColor = .red
+
         earnProgressLabel.text = viewModel.earnProgressString
         earnProgressLabel.textColor = Current.themeManager.color(for: .text)
         earnTargetLabel.text = viewModel.earnTargetString

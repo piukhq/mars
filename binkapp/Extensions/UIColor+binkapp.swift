@@ -139,4 +139,19 @@ extension UIColor {
     static let binkBlueCardBackground = UIColor(hexString: "1A1A38")
     static let binkBlueDividerColor = UIColor(hexString: "767676")
     static let binkBlueTextColor = UIColor(hexString: "FFFFFF")
+    
+    // MARK: Abstracted system colours
+    static let binkSystemGrey4Light = UIColor(hexString: "d1d1d6")
+    static let binkSystemGrey4Dark = UIColor(hexString: "3a3a3c")
+    
+    static var binkGrey1: UIColor {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            return .systemGray4
+        case .light:
+            return binkSystemGrey4Light
+        case .dark:
+            return binkSystemGrey4Dark
+        }
+    }
 }
