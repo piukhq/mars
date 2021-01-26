@@ -61,13 +61,12 @@ enum Styling {
         static var divider: UIColor {
             switch Current.themeManager.currentTheme.type {
             case .light:
-                // TODO: Check current divider colours
-                return .black
+                return .grey10
             case .dark:
                 return .binkBlueDividerColor
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .black : .binkBlueDividerColor
+                    return traitcollection.userInterfaceStyle == .light ? .grey10 : .binkBlueDividerColor
                 }
             }
         }

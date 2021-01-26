@@ -32,7 +32,7 @@ class SettingsViewController: BinkViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = Constants.rowHeight
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         view.addSubview(tableView)
         return tableView
