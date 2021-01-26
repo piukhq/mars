@@ -115,10 +115,25 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         guard let plan = viewModel.membershipPlan else { return }
         
         /// Brand icon
-        cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
+        case .dark:
+            cardIconImageView.setImage(forPathType: .membershipPlanDarkModeIcon(plan: plan))
+        case .system:
+            switch traitCollection.userInterfaceStyle {
+            case .light:
+                cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
+            case .dark:
+                cardIconImageView.setImage(forPathType: .membershipPlanDarkModeIcon(plan: plan))
+            default:
+                cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
+            }
+        }
         
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
+        rectangleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         rectangleView.firstColor = primaryBrandColor
         rectangleView.secondColor = plan.secondaryBrandColor
         

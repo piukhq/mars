@@ -184,6 +184,10 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         statusBarStyle
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: true)
+    }
 }
 
 // MARK: - Table view

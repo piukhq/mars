@@ -8,6 +8,7 @@ import CoreData
 
 public enum CD_MembershipPlanImageAttributes: String {
     case ctaUrl = "ctaUrl"
+    case darkModeUrl = "darkModeUrl"
     case encoding = "encoding"
     case imageDescription = "imageDescription"
     case type = "type"
@@ -50,6 +51,9 @@ open class _CD_MembershipPlanImage: CD_BaseObject {
 
     @NSManaged open
     var ctaUrl: String?
+
+    @NSManaged open
+    var darkModeUrl: String?
 
     @NSManaged open
     var encoding: String?

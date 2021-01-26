@@ -206,6 +206,13 @@
 "settings_row_preferences_title" = "Preferences";
 "settings_row_logout_title" = "Log out";
 
+"settings_section_appearance_title" = "Appearance";
+"settings_row_theme_title" = "Theme";
+"settings_theme_system_title" = "System";
+"settings_theme_light_title" = "Light";
+"settings_theme_dark_title" = "Dark";
+"settings_theme_cancel_title" = "Cancel";
+
 "settings_section_support_title" = "Support and feedback";
 "settings_row_faqs_title" = "FAQs";
 "settings_row_faqs_subtitle" = "Frequently asked questions";

@@ -10,6 +10,7 @@ import UIKit
 
 class PortraitNavigationController: UINavigationController {
     private var isModallyPresented: Bool = false
+    private var statusBarStyle: UIStatusBarStyle = .default
     
     private lazy var backButton: UIBarButtonItem = {
         return UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -27,17 +28,20 @@ class PortraitNavigationController: UINavigationController {
         if isModallyPresented && shouldShowCloseButton {
             rootViewController.navigationItem.rightBarButtonItem = closeButton
         }
-        configureNavigationBarAppearance()
+        configureForCurrentTheme()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
-        configureNavigationBarAppearance()
+        configureForCurrentTheme()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        configureNavigationBarAppearance()
+        configureForCurrentTheme()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,7 +53,7 @@ class PortraitNavigationController: UINavigationController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return viewControllers.last?.preferredStatusBarStyle ?? .default
+        return statusBarStyle
     }
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
@@ -58,6 +62,10 @@ class PortraitNavigationController: UINavigationController {
         if isModallyPresented {
             viewController.navigationItem.rightBarButtonItem = closeButton
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureForCurrentTheme()
     }
     
     func pushViewController(_ viewController: UIViewController, animated: Bool = false, hidesBackButton: Bool = false, completion: EmptyCompletionBlock? = nil) {
@@ -94,30 +102,13 @@ class PortraitNavigationController: UINavigationController {
     @objc private func close() {
         Current.navigate.close()
     }
-}
 
-// MARK: - Bar appearance
-
-extension PortraitNavigationController {
-    func configureNavigationBarAppearance() {
-        navigationBar.standardAppearance = .defaultAppearance
-        navigationBar.scrollEdgeAppearance = .defaultAppearance
+    @objc func configureForCurrentTheme() {
+        navigationBar.standardAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
+        navigationBar.scrollEdgeAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
+        navigationBar.tintColor = Current.themeManager.color(for: .text)
+        navigationBar.setNeedsLayout()
+        statusBarStyle = Current.themeManager.statusBarStyle(for: traitCollection)
+        setNeedsStatusBarAppearanceUpdate()
     }
-}
-
-extension UINavigationBarAppearance {
-    static let defaultAppearance: UINavigationBarAppearance = {
-        let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
-        let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
-
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.shadowImage = UIImage()
-        appearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
-        appearance.backgroundEffect = UIBlurEffect(style: .light)
-        appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: UIColor.black]
-        appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
-
-        return appearance
-    }()
 }
