@@ -23,7 +23,9 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
         self.delegate = delegate
 
         headerLabel.text = viewModel.headerText
+        headerLabel.textColor = Current.themeManager.color(for: .text)
         detailLabel.text = viewModel.detailText
+        detailLabel.textColor = Current.themeManager.color(for: .text)
         linkToggle.isOn = viewModel.isLinked
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
         iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))

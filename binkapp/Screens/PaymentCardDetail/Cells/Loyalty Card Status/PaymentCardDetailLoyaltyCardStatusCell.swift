@@ -15,7 +15,9 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
 
     func configureWithViewModel(_ viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel) {
         headerLabel.text = viewModel.headerText
+        headerLabel.textColor = Current.themeManager.color(for: .text)
         detailLabel.text = viewModel.detailText
+        detailLabel.textColor = Current.themeManager.color(for: .text)
         statusLabel.text = viewModel.statusText
         statusLabel.textColor = textColor(forStatus: viewModel.status)
         

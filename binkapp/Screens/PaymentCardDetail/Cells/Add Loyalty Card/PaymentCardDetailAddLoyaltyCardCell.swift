@@ -16,7 +16,9 @@ class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
     func configureWithViewModel(_ viewModel: PaymentCardDetailAddLoyaltyCardCellViewModel) {
         self.viewModel = viewModel
         headerLabel.text = viewModel.headerText
+        headerLabel.textColor = Current.themeManager.color(for: .text)
         detailLabel.text = viewModel.detailText
+        detailLabel.textColor = Current.themeManager.color(for: .text)
         iconImageView.setImage(forPathType: .membershipPlanIcon(plan: viewModel.membershipPlan))
         addCardButton.configure(title: "pcd_add_card_button_title".localized, hasShadow: false)
     }

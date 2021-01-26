@@ -99,7 +99,6 @@ class PaymentCardDetailViewController: BinkViewController {
     
     lazy var separator: UIView = {
         let separator = UIView()
-        separator.backgroundColor = .lightGray
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
@@ -156,7 +155,7 @@ class PaymentCardDetailViewController: BinkViewController {
     
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
-        configureUI()
+        refreshViews()
     }
 }
 
@@ -193,9 +192,19 @@ private extension PaymentCardDetailViewController {
         stackScrollView.customPadding(viewModel.paymentCardStatus == .pending ? 20 : 0, after: cardAddedLabel)
         stackScrollView.customPadding(viewModel.paymentCardStatus != .active ? 20 : 0, after: addedCardsDescriptionLabel)
         stackScrollView.customPadding(viewModel.shouldShowAddedLoyaltyCardTableView ? LayoutHelper.PaymentCardDetail.headerViewsPadding : 0, after: addedCardsTableView)
-        stackScrollView.backgroundColor = Current.themeManager.color(for: .viewBackground)
 
         stackScrollView.delegate = self
+        
+        stackScrollView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        addedCardsTitleLabel.textColor = Current.themeManager.color(for: .text)
+        addedCardsDescriptionLabel.textColor = Current.themeManager.color(for: .text)
+        otherCardsTitleLabel.textColor = Current.themeManager.color(for: .text)
+        otherCardsDescriptionLabel.textColor = Current.themeManager.color(for: .text)
+        cardAddedLabel.textColor = Current.themeManager.color(for: .text)
+        addedCardsTableView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        otherCardsTableView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        informationTableView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        separator.backgroundColor = Current.themeManager.color(for: .divider)
     }
 
     func configureLayout() {
