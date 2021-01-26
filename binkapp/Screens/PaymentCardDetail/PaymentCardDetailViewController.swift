@@ -21,7 +21,6 @@ class PaymentCardDetailViewController: BinkViewController {
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         stackView.margin = LayoutHelper.PaymentCardDetail.stackScrollViewMargins
         stackView.distribution = .fill
         stackView.alignment = .center
@@ -154,6 +153,11 @@ class PaymentCardDetailViewController: BinkViewController {
             card.configureWithViewModel(viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
         }
     }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        configureUI()
+    }
 }
 
 // MARK: - Private methods
@@ -189,7 +193,8 @@ private extension PaymentCardDetailViewController {
         stackScrollView.customPadding(viewModel.paymentCardStatus == .pending ? 20 : 0, after: cardAddedLabel)
         stackScrollView.customPadding(viewModel.paymentCardStatus != .active ? 20 : 0, after: addedCardsDescriptionLabel)
         stackScrollView.customPadding(viewModel.shouldShowAddedLoyaltyCardTableView ? LayoutHelper.PaymentCardDetail.headerViewsPadding : 0, after: addedCardsTableView)
-    
+        stackScrollView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+
         stackScrollView.delegate = self
     }
 
