@@ -25,5 +25,6 @@ class CardDetailInfoTableViewCell: UITableViewCell {
         subtitleLabel.textColor = Current.themeManager.color(for: .text)
         rightDisclosureView.tintColor = Current.themeManager.color(for: .text)
         backgroundColor = .clear
+        selectedBackgroundView = binkSelectedView()
     }
 }
