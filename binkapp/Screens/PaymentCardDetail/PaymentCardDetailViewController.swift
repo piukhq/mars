@@ -138,6 +138,7 @@ class PaymentCardDetailViewController: BinkViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .paymentDetail)
+        refreshViewsOnWalletUpdate()
     }
 
     override func viewDidLayoutSubviews() {
@@ -167,6 +168,13 @@ private extension PaymentCardDetailViewController {
     func refresh() {
         viewModel.refreshPaymentCard {
             self.refreshViews()
+        }
+    }
+    
+    private func refreshViewsOnWalletUpdate() {
+        if Current.wallet.hasRefreshed {
+            refreshViews()
+            Current.wallet.hasRefreshed = false
         }
     }
     
