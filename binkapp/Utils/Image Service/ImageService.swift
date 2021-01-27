@@ -115,6 +115,24 @@ extension UIImageView {
             }
         }
     }
+    
+    func setIconImage(membershipPlan: CD_MembershipPlan) {
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            self.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+        case .dark:
+            self.setImage(forPathType: .membershipPlanDarkModeIcon(plan: membershipPlan))
+        case .system:
+            switch traitCollection.userInterfaceStyle {
+            case .light:
+                self.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+            case .dark:
+                self.setImage(forPathType: .membershipPlanDarkModeIcon(plan: membershipPlan))
+            default:
+                self.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+            }
+        }
+    }
 }
 
 /// A utility class to handle the expiration of objects stored to disk. When an object is

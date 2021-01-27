@@ -22,7 +22,7 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
         statusLabel.textColor = textColor(forStatus: viewModel.status)
         
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
-        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+        iconImageView.setIconImage(membershipPlan: membershipPlan)
     }
     
     func configure(with paymentCard: CD_PaymentCard) {
