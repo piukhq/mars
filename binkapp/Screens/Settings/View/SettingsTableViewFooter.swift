@@ -23,7 +23,7 @@ class SettingsTableViewFooter: UIView {
         let label = UILabel()
         label.text = Current.userManager.currentEmailAddress ?? ""
         label.font = .navbarHeaderLine2
-        label.textColor = .disabledTextGrey
+        label.textColor = .systemGray2
         return label
     }()
     
@@ -31,7 +31,7 @@ class SettingsTableViewFooter: UIView {
         let label = UILabel()
         label.text = "Bink v\(Bundle.shortVersionNumber ?? "") \(Bundle.bundleVersion ?? "")"
         label.font = .navbarHeaderLine2
-        label.textColor = .disabledTextGrey
+        label.textColor = .systemGray2
         return label
     }()
     
