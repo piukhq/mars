@@ -23,6 +23,7 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
         
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
         iconImageView.setIconImage(membershipPlan: membershipPlan)
+        selectedBackgroundView = binkSelectedView()
     }
     
     func configure(with paymentCard: CD_PaymentCard) {

@@ -30,6 +30,7 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
         
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
         iconImageView.setIconImage(membershipPlan: membershipPlan)
+        selectedBackgroundView = binkSelectedView()
     }
 
     @IBAction private func didToggle() {
