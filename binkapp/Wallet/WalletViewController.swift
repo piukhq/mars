@@ -21,7 +21,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .clear
         collectionView.contentInset = LayoutHelper.WalletDimensions.contentInset
-
         return collectionView
     }()
 
@@ -291,6 +290,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
         collectionView.reloadData()
+        collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
     }
 }
 

@@ -81,6 +81,10 @@ class ThemeManager {
     func statusBarStyle(for traitCollection: UITraitCollection) -> UIStatusBarStyle {
         return Styling.statusBarStyle(for: traitCollection)
     }
+    
+    func scrollViewIndicatorStyle(for traitCollection: UITraitCollection) -> UIScrollView.IndicatorStyle {
+        return Styling.scrollViewIndicatorStyle(for: traitCollection)
+    }
 
     func addObserver(_ observer: Any, handler: Selector) {
         NotificationCenter.default.addObserver(observer, selector: handler, name: .themeManagerDidSetTheme, object: nil)
