@@ -59,7 +59,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private lazy var showBarcodeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .bodyTextLarge
-        button.setTitleColor(Current.themeManager.color(for: .text), for: .normal)
         button.addTarget(self, action: #selector(showBarcodeButtonPressed), for: .touchUpInside)
         return button
     }()
@@ -96,14 +95,12 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     
     lazy var separator: UIView = {
         let separator = UIView()
-        separator.backgroundColor = Current.themeManager.color(for: .divider)
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
     
     lazy var informationTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
-        tableView.separatorColor = Current.themeManager.color(for: .divider)
         tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -136,7 +133,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
     }
@@ -285,6 +281,10 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: informationTableView)
         
         configureLayout()
+        
+        showBarcodeButton.setTitleColor(Current.themeManager.color(for: .text), for: .normal)
+        separator.backgroundColor = Current.themeManager.color(for: .divider)
+        informationTableView.separatorColor = Current.themeManager.color(for: .divider)
         
         guard let plan = viewModel.membershipCard.membershipPlan else { return }
         
