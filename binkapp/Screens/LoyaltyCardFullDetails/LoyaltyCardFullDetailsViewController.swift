@@ -427,10 +427,11 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
             navigationController?.setNavigationBarVisibility(true)
             navigationBarShouldBeVisible = true
             navigationItem.titleView = titleView
-            
-            if traitCollection.userInterfaceStyle == .dark && Current.themeManager.currentTheme.type != .light || Current.themeManager.currentTheme.type == .dark {
+
+            switch (traitCollection.userInterfaceStyle, Current.themeManager.currentTheme.type) {
+            case (.dark, .dark), (.dark, .system), (_, .dark):
                 setNavigationBarAppearanceLight(true)
-            } else {
+            default:
                 setNavigationBarAppearanceLight(false)
             }
         } else if secondaryColorViewHeight > topBarHeight {

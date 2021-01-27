@@ -141,17 +141,17 @@ extension UIColor {
     static let binkBlueTextColor = UIColor(hexString: "FFFFFF")
     
     // MARK: Abstracted system colours
-    static let binkSystemGrey4Light = UIColor(hexString: "d1d1d6")
-    static let binkSystemGrey4Dark = UIColor(hexString: "3a3a3c")
+    static let binkSystemGray4Light = UIColor(hexString: "d1d1d6")
+    static let binkSystemGray4Dark = UIColor(hexString: "3a3a3c")
     
-    static var binkGrey1: UIColor {
+    static var binkSystemGray4: UIColor {
         switch Current.themeManager.currentTheme.type {
         case .system:
             return .systemGray4
         case .light:
-            return binkSystemGrey4Light
+            return binkSystemGray4Light
         case .dark:
-            return binkSystemGrey4Dark
+            return binkSystemGray4Dark
         }
     }
 }
