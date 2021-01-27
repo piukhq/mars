@@ -32,7 +32,7 @@ class SettingsViewController: BinkViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = Constants.rowHeight
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         view.addSubview(tableView)
         return tableView
@@ -61,6 +61,11 @@ class SettingsViewController: BinkViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .settings)
+    }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        tableView.reloadData()
     }
     
     private func configureLayout() {

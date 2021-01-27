@@ -13,8 +13,8 @@ class SettingsTableViewHeader: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.headline
+        label.textColor = Current.themeManager.color(for: .text)
         addSubview(label)
-        
         return label
     }()
     
@@ -30,7 +30,6 @@ class SettingsTableViewHeader: UIView {
     
     private func customise(with title: String) {
         titleLabel.text = title
-        backgroundColor = .white
         
         NSLayoutConstraint.activate([
             titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 25.0),
