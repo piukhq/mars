@@ -126,6 +126,15 @@ open class StackScrollView: UIScrollView {
                 minimumContentWidthGuidingConstraint
             ])
         }
+        
+        switch Current.themeManager.currentTheme.type {
+        case .dark:
+            indicatorStyle = .white
+        case .light:
+            indicatorStyle = .black
+        case .system:
+            indicatorStyle = .default
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
