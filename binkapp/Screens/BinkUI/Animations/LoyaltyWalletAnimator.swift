@@ -20,7 +20,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             let loyaltyWalletViewController = transitionContext.viewController(forKey: .from) as? LoyaltyWalletViewController,
             let lcdViewController = transitionContext.viewController(forKey: .to) as? LoyaltyCardFullDetailsViewController,
             let selectedIndexPath = loyaltyWalletViewController.selectedIndexPath,
-            let membershipCard = loyaltyWalletViewController.viewModel.cards?[selectedIndexPath.row],
+            let membershipCard = loyaltyWalletViewController.viewModel.cards?[safe: selectedIndexPath.row],
             let membershipPlan = membershipCard.membershipPlan
         else {
             transitionContext.completeTransition(false)
