@@ -58,6 +58,7 @@ enum SentryException {
         case general = "Bink Native General Errors"
         case loyalty = "Bink Native Loyalty Card Onboard Issues"
         case payment = "Bink Native Payment Card Enrol Issues"
+        case lpc = "Local Points Scraping Issues"
 
         var identifier: String {
             switch self {
@@ -67,6 +68,8 @@ enum SentryException {
                 return "BNE2"
             case .payment:
                 return "BNE3"
+            case .lpc:
+                return "BNE4"
             }
         }
 
@@ -90,6 +93,7 @@ enum SentryException {
     case invalidPayload(InvalidPayloadReason)
     case tokenisationServiceRejectedRequest(NetworkResponseData?)
     case apiRejectedRequest(NetworkResponseData?)
+    case localPointsCollectionFailed(WebScrapingUtilityError)
 
     var formattedError: NSError {
         return NSError(domain: domain.rawValue, code: errorCode, userInfo: userInfo)
@@ -107,6 +111,8 @@ enum SentryException {
             return 3001
         case .apiRejectedRequest:
             return 3002
+        case .localPointsCollectionFailed:
+            return 4001
         }
     }
 
@@ -114,6 +120,8 @@ enum SentryException {
         switch self {
         case .invalidPayload, .tokenisationServiceRejectedRequest, .apiRejectedRequest:
             return .payment
+        case .localPointsCollectionFailed:
+            return .lpc
         }
     }
 
@@ -127,6 +135,8 @@ enum SentryException {
             guard let response = networkResponse else { return info }
             info["network_response"] = response
             return info
+        case .localPointsCollectionFailed(let error):
+            return ["error_message": error.localizedDescription]
         }
     }
 
@@ -138,6 +148,8 @@ enum SentryException {
             return "Tokenisation service rejected request"
         case .apiRejectedRequest:
             return "Bink API rejected request"
+        case .localPointsCollectionFailed:
+            return "Local points collection failed"
         }
     }
 }
