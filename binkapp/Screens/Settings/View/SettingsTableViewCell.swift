@@ -126,6 +126,7 @@ class SettingsTableViewCell: UITableViewCell {
         bodyLabel.textColor = Current.themeManager.color(for: .text)
         subtitleLabel.textColor = Current.themeManager.color(for: .text)
         chevron.tintColor = Current.themeManager.color(for: .text)
+        selectedBackgroundView = binkSelectedView()
     }
     
     
