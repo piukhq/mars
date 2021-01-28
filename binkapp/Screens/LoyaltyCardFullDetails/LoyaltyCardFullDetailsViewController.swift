@@ -351,13 +351,11 @@ private extension LoyaltyCardFullDetailsViewController {
 
     
     private func setNavigationBarAppearanceLight(_ lightAppearance: Bool) {
-        if lightAppearance && viewModel.secondaryColourIsDark && !navigationBarShouldBeVisible {
+        switch (lightAppearance, viewModel.secondaryColourIsDark, navigationBarShouldBeVisible, traitCollection.userInterfaceStyle, Current.themeManager.currentTheme.type) {
+        case (true, true, false, _, _), (true, _, _, .dark, .dark), (true, _, _, .dark, .system), (_, _, _, _, .dark):
             navigationController?.navigationBar.tintColor = .white
             statusBarStyle = .lightContent
-        } else if lightAppearance && traitCollection.userInterfaceStyle == .dark && Current.themeManager.currentTheme.type != .light || Current.themeManager.currentTheme.type == .dark {
-            navigationController?.navigationBar.tintColor = .white
-            statusBarStyle = .lightContent
-        } else {
+        default:
             navigationController?.navigationBar.tintColor = .black
             statusBarStyle = .darkContent
         }
