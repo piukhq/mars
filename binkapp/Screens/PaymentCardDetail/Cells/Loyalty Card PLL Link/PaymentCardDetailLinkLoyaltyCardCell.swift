@@ -17,6 +17,11 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
 
     private var viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel!
     private weak var delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setSeparatorDefaultWidth()
+    }
 
     func configureWithViewModel(_ viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel, delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?) {
         self.viewModel = viewModel

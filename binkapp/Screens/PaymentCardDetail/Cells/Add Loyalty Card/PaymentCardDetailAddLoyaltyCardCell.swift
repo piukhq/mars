@@ -12,6 +12,11 @@ class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
     @IBOutlet private weak var addCardButton: BinkMiniGradientButton!
 
     private var viewModel: PaymentCardDetailAddLoyaltyCardCellViewModel!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setSeparatorDefaultWidth()
+    }
 
     func configureWithViewModel(_ viewModel: PaymentCardDetailAddLoyaltyCardCellViewModel) {
         self.viewModel = viewModel

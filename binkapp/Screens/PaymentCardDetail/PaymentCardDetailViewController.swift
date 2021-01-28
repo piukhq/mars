@@ -133,8 +133,6 @@ class PaymentCardDetailViewController: BinkViewController {
                 timer.invalidate()
             })
         }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshViews), name: .didLoadWallet, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -251,7 +249,7 @@ private extension PaymentCardDetailViewController {
         informationTableView.register(CardDetailInfoTableViewCell.self, asNib: true)
     }
 
-    @objc func refreshViews() {
+    func refreshViews() {
         self.card.configureWithViewModel(self.viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
         self.configureUI()
         self.addedCardsTableView.reloadData()

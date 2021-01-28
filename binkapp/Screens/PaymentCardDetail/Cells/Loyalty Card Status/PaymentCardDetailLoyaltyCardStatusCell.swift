@@ -13,6 +13,11 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
 
     private var viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel!
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setSeparatorDefaultWidth()
+    }
+    
     func configureWithViewModel(_ viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel) {
         headerLabel.text = viewModel.headerText
         headerLabel.textColor = Current.themeManager.color(for: .text)
