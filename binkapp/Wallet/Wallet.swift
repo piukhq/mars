@@ -17,7 +17,6 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     
     private let refreshManager = WalletRefreshManager()
     var foregroundRefreshCount = 0
-    var hasRefreshed = false
 
     private(set) var membershipPlans: [CD_MembershipPlan]?
     private(set) var membershipCards: [CD_MembershipCard]?
@@ -53,7 +52,6 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         loadWallets(forType: .reload, reloadPlans: true, isUserDriven: true) { [weak self] (success, _) in
             if success {
                 self?.refreshManager.resetAll()
-                self?.hasRefreshed = true
                 Current.pointsScrapingManager.refreshBalancesIfNecessary()
             }
         }
@@ -68,7 +66,6 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
                 if success {
                     self?.foregroundRefreshCount += 1
                     self?.refreshManager.resetAccountsTimer()
-                    self?.hasRefreshed = true
                     Current.pointsScrapingManager.refreshBalancesIfNecessary()
                 }
             }
