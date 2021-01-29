@@ -10,14 +10,9 @@ PODS:
   - DeepDiff (2.2.0)
   - Disk (0.6.4)
   - DTTJailbreakDetection (0.4.0)
-  - FacebookSDK (6.0.0):
-    - FacebookSDK/CoreKit (= 6.0.0)
-    - FacebookSDK/MarketingKit (= 6.0.0)
-  - FacebookSDK/CoreKit (6.0.0):
-    - FBSDKCoreKit (~> 6.0.0)
-  - FacebookSDK/MarketingKit (6.0.0):
-    - FacebookSDK/CoreKit
-    - FBSDKMarketingKit (~> 6.0.0)
+  - FacebookSDK (9.0.0):
+    - FacebookSDK/CoreKit (= 9.0.0)
+  - FacebookSDK/CoreKit (9.0.0)
   - FBSDKCoreKit (6.0.0):
     - FBSDKCoreKit/Basics (= 6.0.0)
     - FBSDKCoreKit/Core (= 6.0.0)
@@ -27,8 +22,6 @@ PODS:
   - FBSDKLoginKit (6.0.0):
     - FBSDKLoginKit/Login (= 6.0.0)
   - FBSDKLoginKit/Login (6.0.0):
-    - FBSDKCoreKit (~> 6.0.0)
-  - FBSDKMarketingKit (6.0.0):
     - FBSDKCoreKit (~> 6.0.0)
   - Firebase (6.24.0):
     - Firebase/Core (= 6.24.0)
@@ -149,7 +142,7 @@ DEPENDENCIES:
   - DeepDiff
   - Disk
   - DTTJailbreakDetection
-  - FacebookSDK (~> 6.0.0)
+  - FacebookSDK (~> 9.0.0)
   - FBSDKLoginKit (~> 6.0.0)
   - Firebase
   - Firebase/Analytics
@@ -173,7 +166,6 @@ SPEC REPOS:
     - FacebookSDK
     - FBSDKCoreKit
     - FBSDKLoginKit
-    - FBSDKMarketingKit
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -226,10 +218,9 @@ SPEC CHECKSUMS:
   DeepDiff: e329bc46dd14ca788d8ec08d34420799ba1d77f2
   Disk: dcee5c2e98fb72f9a924cde8da8435b08244a80e
   DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
-  FacebookSDK: c9c27c7d3c0fc189fab6b2f735b3a97b83fbe6e3
+  FacebookSDK: bf72fd600a9e58703fe1ab21ee35c961b416e4f6
   FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
   FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
-  FBSDKMarketingKit: 23dc92210340019f88e9fc1edbbc8c1ec43914b3
   Firebase: b28e55c60efd98963cd9011fe2fac5a10c2ba124
   FirebaseABTesting: 821a3a3e4a145987e80fee3657c4de1cb9adf693
   FirebaseAnalytics: 7386fc2176e3f93ad8ef34b5b1f2b33a891e4962
@@ -260,6 +251,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: e100a7a0a1bb5d7d43abbde3338727d985a4986d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: c830be0b57fd1ab2c5d98998d3cc61b8946df740
+PODFILE CHECKSUM: 76484ab3f611499e8dcc4897183b1542110825f0
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

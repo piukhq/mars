@@ -17,6 +17,7 @@ ${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework
 ${BUILT_PRODUCTS_DIR}/ZXingObjC/ZXingObjC.framework
 ${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework/FBSDKCoreKit
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/CommonUISDK/CommonUISDK.framework/CommonUISDK
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCoreSDK/ZendeskCoreSDK.framework/ZendeskCoreSDK
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/MessagingAPI/MessagingAPI.framework/MessagingAPI
