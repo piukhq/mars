@@ -289,6 +289,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
 
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
+        refreshControl.tintColor = Current.themeManager.color(for: .text)
         collectionView.reloadData()
         collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
     }
