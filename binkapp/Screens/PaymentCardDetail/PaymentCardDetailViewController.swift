@@ -348,8 +348,8 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
         }
 
         if tableView == otherCardsTableView {
-            guard let membershipPlan = viewModel.pllMembershipPlans?[indexPath.row] else { return }
-            viewModel.toAddOrJoin(forMembershipPlan: membershipPlan)
+            guard let plan = viewModel.pllPlanNotAddedToWallet(forIndexPath: indexPath) else { return }
+            viewModel.toAddOrJoin(forMembershipPlan: plan)
         }
 
         if tableView == informationTableView {
