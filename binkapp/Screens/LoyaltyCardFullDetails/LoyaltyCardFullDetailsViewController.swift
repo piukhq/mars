@@ -122,6 +122,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private var didLayoutSubviews = false
     private var statusBarStyle: UIStatusBarStyle = .darkContent
 
+    private let titleView: DetailNavigationTitleView = .fromNib()
+
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -180,9 +182,25 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         statusBarStyle
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
         navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: true)
+        showBarcodeButton.setTitleColor(Current.themeManager.color(for: .text), for: .normal)
+        separator.backgroundColor = Current.themeManager.color(for: .divider)
+        informationTableView.separatorColor = Current.themeManager.color(for: .divider)
+        informationTableView.reloadData()
+        titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
+
+        let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
+        if let voucherCells = plrVoucherCells as? [PLRBaseCollectionViewCell], let vouchers = viewModel.vouchers {
+            for index in 0..<voucherCells.count {
+                let cellViewModel = PLRCellViewModel(voucher: vouchers[index])
+                voucherCells[index].configureWithViewModel(cellViewModel) {
+                    self.viewModel.toVoucherDetailScreen(voucher: vouchers[index])
+                }
+            }
+        }
     }
 }
 
@@ -281,10 +299,6 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: informationTableView)
         
         configureLayout()
-        
-        showBarcodeButton.setTitleColor(Current.themeManager.color(for: .text), for: .normal)
-        separator.backgroundColor = Current.themeManager.color(for: .divider)
-        informationTableView.separatorColor = Current.themeManager.color(for: .divider)
         
         guard let plan = viewModel.membershipCard.membershipPlan else { return }
         
@@ -413,7 +427,6 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard didLayoutSubviews else { return }
 
-        let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
 
         let navBarHeight = navigationController?.navigationBar.frame.height ?? 0

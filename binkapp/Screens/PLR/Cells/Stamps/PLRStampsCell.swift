@@ -43,6 +43,7 @@ class PLRStampsCell: PLRBaseCollectionViewCell {
         stampsCollectionView.collectionViewLayout.invalidateLayout()
         stampsCollectionView.invalidateIntrinsicContentSize()
         stampsCollectionView.layoutIfNeeded()
+        stampsCollectionView.reloadData()
     }
 }
 
