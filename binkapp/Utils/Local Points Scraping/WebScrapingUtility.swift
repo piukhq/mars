@@ -172,6 +172,7 @@ struct WebScrapingResponse: Codable {
     var pointsString: String?
     var errorMessage: String?
     var userActionRequired: Bool?
+    var elementDetected: Bool?
 
     var pointsValue: Int? {
         guard let string = pointsString else { return nil }
@@ -186,6 +187,7 @@ struct WebScrapingResponse: Codable {
         case pointsString = "points"
         case errorMessage = "error_message"
         case userActionRequired = "user_action_required"
+        case elementDetected = "element_detected"
     }
 }
 
@@ -223,6 +225,8 @@ class WebScrapingUtility: NSObject {
     private var isIdle = false
     private var idleTimer: Timer?
     private let idleThreshold: TimeInterval = 60
+
+    private var detectElementTimer: Timer?
     
     init(agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
         webView = WKWebView(frame: .zero)
@@ -304,25 +308,15 @@ class WebScrapingUtility: NSObject {
             Current.navigate.to(navigationRequest)
         }
     }
-    
+
+    // TODO: Remove throw?
     private func login(credentials: WebScrapingCredentials) throws {
-        guard let loginFile = Bundle.main.url(forResource: agent.loginScriptFileName, withExtension: "js") else {
+        guard let script = script(scriptName: agent.loginScriptFileName) else {
             throw WebScrapingUtilityError.loginScriptFileNotFound
         }
-        
-        var loginScript: String
-        
-        do {
-            loginScript = try String(contentsOf: loginFile)
-        } catch {
-            throw WebScrapingUtilityError.agentProvidedInvalidLoginScript
-        }
-        
-        // Inject variables into login file
-        // TODO: Make this more reusable
-        let formattedLoginScript = String(format: loginScript, credentials.username, credentials.password)
+        let formattedScript = String(format: script, credentials.username, credentials.password)
 
-        runScript(formattedLoginScript) { [weak self] result in
+        runScript(formattedScript) { [weak self] result in
             guard let self = self else { return }
 
             switch result {
@@ -335,6 +329,12 @@ class WebScrapingUtility: NSObject {
                 }
                 if response.shouldDisplayWebview {
                     self.presentWebView()
+                    // every second, check if the recaptcha has succeeded
+                    self.detectElementTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.detectRecaptchaSuccess), userInfo: nil, repeats: true)
+
+                    // If it has, run a script to continue with login
+
+                    // Otherwise, the idle timer should kick in
                 }
             case .failure:
                 self.finish(withError: .failedToExecuteLoginScript)
@@ -342,22 +342,32 @@ class WebScrapingUtility: NSObject {
         }
     }
 
+    @objc private func detectRecaptchaSuccess() {
+        detectElement(queryString: "re-captcha[class*=-valid]") { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                if response.elementDetected == true {
+                    if self.isPresentingWebView {
+                        // TODO: Don't force to failed when closing the webview here
+                        Current.navigate.close()
+                        // TODO: Continue with login using submit button only
+                        // For morrisons, we can just run the login script again, and ignore captcha if the element is valid
+                    }
+                }
+            case .failure:
+                print("error")
+            }
+        }
+    }
+
     private func getScrapedValue(completion: @escaping (Result<Int, WebScrapingUtilityError>) -> Void) {
-        guard let scrapeFile = Bundle.main.url(forResource: agent.pointsScrapingScriptFileName, withExtension: "js") else {
+        guard let script = script(scriptName: agent.pointsScrapingScriptFileName) else {
             completion(.failure(.scapingScriptFileNotFound))
             return
         }
-        
-        var scrapeScript: String
-        
-        do {
-            scrapeScript = try String(contentsOf: scrapeFile)
-        } catch {
-            completion(.failure(.agentProvidedInvalidScrapeScript))
-            return
-        }
 
-        runScript(scrapeScript) { [weak self] result in
+        runScript(script) { [weak self] result in
             guard let self = self else { return }
 
             switch result {
@@ -385,106 +395,22 @@ class WebScrapingUtility: NSObject {
             }
         }
     }
-    
-    enum DetectTextType {
-        case reCaptchaMessaging
-        case incorrectCredentialsMessaging
-    }
 
-    private func detectText(_ type: DetectTextType, completion: ((Bool) -> Void)? = nil) throws {
-        // Disable reCaptcha detection on balance refresh
-//        if type == .reCaptchaMessaging, isBalanceRefresh { return }
-//        
-//        switch type {
-//        case .reCaptchaMessaging:
-//            self.canAttemptToDetectReCaptcha = false
-//        case .incorrectCredentialsMessaging:
-//            self.canAttemptToDetectIncorrectCredentials = false
-//        }
-//        
-//        guard let detectTextScriptFile = Bundle.main.url(forResource: agent.detectTextScriptFileName, withExtension: "js") else {
-//            throw WebScrapingUtilityError.detectTextScriptFileNotFound
-//        }
-//        
-//        var detectTextScript: String
-//        do {
-//            detectTextScript = try String(contentsOf: detectTextScriptFile)
-//        } catch {
-//            throw WebScrapingUtilityError.invalidDetectTextScript
-//        }
-//
-//        var formattedScript: String
-//        switch type {
-//        case .reCaptchaMessaging:
-//            formattedScript = String(format: detectTextScript, agent.reCaptchaTextIdentiferClass ?? "")
-//        case .incorrectCredentialsMessaging:
-//            formattedScript = String(format: detectTextScript, agent.incorrectCredentialsTextIdentiferClass ?? "")
-//        }
-//        
-//        runScript(formattedScript) { (value, _) in
-//            guard let valueString = value as? String else {
-//                switch type {
-//                case .reCaptchaMessaging:
-//                    self.canAttemptToDetectReCaptcha = true
-//                case .incorrectCredentialsMessaging:
-//                    self.canAttemptToDetectIncorrectCredentials = true
-//                }
-//                completion?(false)
-//                return
-//            }
-//            
-//            switch type {
-//            case .reCaptchaMessaging:
-//                guard let message = self.agent.reCaptchaMessage, valueString.contains(message) else {
-//                    self.canAttemptToDetectReCaptcha = true
-//                    completion?(false)
-//                    return
-//                }
-//            case .incorrectCredentialsMessaging:
-//                guard let message = self.agent.incorrectCredentialsMessage, valueString.contains(message) else {
-//                    self.canAttemptToDetectIncorrectCredentials = true
-//                    completion?(false)
-//                    return
-//                }
-//            }
-//            
-//            switch type {
-//            case .reCaptchaMessaging:
-//                self.presentWebView()
-//                self.canAttemptToDetectReCaptcha = false
-//            case .incorrectCredentialsMessaging:
-//                self.canAttemptToDetectIncorrectCredentials = false
-//                self.finish(withError: .loginFailed)
-//                // At this point, we should close the webView if we have displayed it for reCaptcha
-//                if self.isPresentingWebView {
-//                    Current.navigate.close()
-//                }
-//            }
-//
-//            completion?(true)
-//        }
-    }
-
-    private func detectRecaptchaText(completion: ((Bool) -> Void)? = nil) {
-//        if canAttemptToDetectReCaptcha {
-//            do {
-//                try detectText(.reCaptchaMessaging, completion: completion)
-//            } catch {
-//                canAttemptToDetectReCaptcha = true
-//            }
-//        }
-    }
-
-    private func detectIncorrectCredentialsText(completion: ((Bool) -> Void)? = nil) {
-        if canAttemptToDetectIncorrectCredentials {
-            do {
-                try detectText(.incorrectCredentialsMessaging, completion: completion)
-            } catch {
-                canAttemptToDetectIncorrectCredentials = true
-            }
+    private func detectElement(queryString: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
+        guard let script = script(scriptName: "LocalPointsCollection_DetectElement") else {
+            return
         }
+        let formattedScript = String(format: script, queryString)
+        runScript(formattedScript, completion: completion)
     }
-    
+
+    private func script(scriptName: String) -> String? {
+        guard let file = Bundle.main.url(forResource: scriptName, withExtension: "js") else {
+            return nil
+        }
+        return try? String(contentsOf: file)
+    }
+
     private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
         webView.evaluateJavaScript(script) { (response, error) in
             guard error == nil else {

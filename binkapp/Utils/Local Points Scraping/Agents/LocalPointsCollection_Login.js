@@ -7,7 +7,6 @@ performLogin()
 
 function performLogin() {
 
-    console.log("Checkpoint 1")
 
     //  ** FORM **
 
@@ -58,9 +57,6 @@ function performLogin() {
 
     //  ** EMAIL/USERNAME **
 
-    console.log("Checkpoint 2")
-    console.log("Form ID: " + formId)
-
 
     // To get email field, we should first check for type=email
     var e
@@ -92,8 +88,6 @@ function performLogin() {
 
     //  ** PASSWORD **
 
-    console.log("Checkpoint 3")
-
 
     // All password fields are input[type=password]
     var p = document.querySelector('form[id="' + formId + '"] input[type="password"]')
@@ -109,20 +103,25 @@ function performLogin() {
 
     // ** RECAPTCHA **
 
-    console.log("Checkpoint 4")
-
 
     // Can we detect a recaptcha anchor container on the web page?
-    let anchor = document.querySelector('div#rc-anchor-container')
+    let recaptcha = document.querySelector('re-captcha')
 
-    console.log("Checkpoint 4.1")
+    if (recaptcha) {
+        var node = document.createElement('div')
+        node.style.backgroundColor = 'white'
+        node.style.position = 'fixed'
+        node.style.top = '0'
+        node.style.bottom = '0'
+        node.style.left = '0'
+        node.style.right = '0'
+        node.style.zIndex = '999'
 
-    if (anchor) {
+        let container = document.querySelector('re-captcha div')
+        container.style.position = 'relative'
+        container.style.zIndex = '1000'
 
-        console.log("Checkpoint 4.2")
-        // Anchor container detected
-        // We should trigger the recaptcha challenge and display it to the user
-        anchor.click()
+        recaptcha.appendChild(node)
 
         return {
             "user_action_required": true
@@ -131,8 +130,6 @@ function performLogin() {
 
 
     //  ** SUBMIT **
-
-    console.log("Checkpoint 5")
 
 
     // To get button, try button[type=submit], otherwise filter.
