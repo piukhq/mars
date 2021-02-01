@@ -30,6 +30,17 @@ enum Styling {
             return .default
         }
     }
+    
+    static func scrollViewIndicatorStyle(for traitCollection: UITraitCollection) -> UIScrollView.IndicatorStyle {
+        switch Current.themeManager.currentTheme.type {
+        case .dark:
+            return .white
+        case .light:
+            return .black
+        case .system:
+            return .default
+        }
+    }
 
     enum Colors {
         static var viewBackground: UIColor {

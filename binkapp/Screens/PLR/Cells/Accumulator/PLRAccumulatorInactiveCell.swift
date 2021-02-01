@@ -14,5 +14,6 @@ class PLRAccumulatorInactiveCell: PLRAccumulatorCell {
     override func configureWithViewModel(_ viewModel: PLRCellViewModel, tapAction: PLRBaseCollectionViewCell.CellTapAction?) {
         super.configureWithViewModel(viewModel, tapAction: tapAction)
         timeDateLabel.text = viewModel.dateText
+        timeDateLabel.textColor = Current.themeManager.color(for: .text)
     }
 }

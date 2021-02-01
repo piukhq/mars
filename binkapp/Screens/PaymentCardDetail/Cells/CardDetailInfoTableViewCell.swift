@@ -11,7 +11,8 @@ import UIKit
 class CardDetailInfoTableViewCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
-
+    @IBOutlet weak var rightDisclosureView: UIImageView!
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         setSeparatorDefaultWidth()
@@ -19,6 +20,11 @@ class CardDetailInfoTableViewCell: UITableViewCell {
 
     func configureWithInformationRow(_ informationRow: CardDetailInformationRow) {
         titleLabel.text = informationRow.type.title
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         subtitleLabel.text = informationRow.type.subtitle
+        subtitleLabel.textColor = Current.themeManager.color(for: .text)
+        rightDisclosureView.tintColor = Current.themeManager.color(for: .text)
+        backgroundColor = .clear
+        selectedBackgroundView = binkSelectedView()
     }
 }

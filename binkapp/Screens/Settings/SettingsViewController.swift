@@ -66,6 +66,7 @@ class SettingsViewController: BinkViewController {
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
         tableView.reloadData()
+        tableView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
     }
     
     private func configureLayout() {
