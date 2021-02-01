@@ -105,7 +105,7 @@ extension UserServiceProtocol {
     
     func submitForgotPasswordRequest(forEmailAddress email: String, completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .forgotPassword, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithNoResponse(request, body: ["email": email]) { (success, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: ["email": email]) { (success, _, _) in
             guard success else {
                 completion?(false, .failedToSubmitForgotPasswordRequest)
                 return
@@ -164,7 +164,7 @@ extension UserServiceProtocol {
     
     func createService(params: [String: Any], completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _, _) in
             guard success else {
                 completion?(false, .failedToCreateService)
                 return
@@ -187,7 +187,7 @@ extension UserServiceProtocol {
     
     func setPreferences(params: [String: String], completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _, _) in
             guard success else {
                 completion?(false, .failedToSetPreferences)
                 return

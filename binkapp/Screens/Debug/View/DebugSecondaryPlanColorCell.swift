@@ -16,7 +16,7 @@ class DebugSecondaryPlanColorCell: UICollectionViewCell {
     func configureWithPlan(_ plan: CD_MembershipPlan) {
         let primaryColor = UIColor(hexString: plan.card?.colour ?? "")
         primaryColorView.backgroundColor = primaryColor
-        secondaryColorView.backgroundColor = plan.generatedSecondaryBrandColor
+        secondaryColorView.backgroundColor = plan.secondaryBrandColor
 
         planLabel.text = plan.account?.companyName
         planLabel.textColor = primaryColor.isLight(threshold: 0.8) ? .black : .white

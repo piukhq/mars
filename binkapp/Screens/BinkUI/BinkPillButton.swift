@@ -17,15 +17,10 @@ class BinkPillButton: BinkTrackableButton {
     private var shadowLayer: CAShapeLayer!
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: .white)
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.color = .white
         return activityIndicator
     }()
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setTitleColor(.white, for: .normal)
-        titleLabel?.font = .buttonText
-    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -46,9 +41,7 @@ class BinkPillButton: BinkTrackableButton {
         }
 
         layer.cornerRadius = halfOfButtonHeight
-        if #available(iOS 13.0, *) {
-            layer.cornerCurve = .continuous
-        }
+        layer.cornerCurve = .continuous
 
         setupActivityIndicator()
     }
@@ -56,6 +49,7 @@ class BinkPillButton: BinkTrackableButton {
     func configureForType(_ type: PillButtonType, hasShadow: Bool = true) {
         backgroundColor = backgroundColor(forType: type)
         setTitle(title(forType: type), for: .normal)
+        titleLabel?.font = .buttonText
         self.hasShadow = hasShadow
     }
 

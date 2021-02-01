@@ -15,11 +15,10 @@ extension LayoutHelper {
     }
 }
 
-class MainTabBarViewController: UITabBarController, BarBlurring {
+class MainTabBarViewController: UITabBarController {
     let viewModel: MainTabBarViewModel
     var selectedTabBarOption = Buttons.loyaltyItem.rawValue
     var items: [UITabBarItem] = []
-    lazy var blurBackground = defaultBlurredBackground()
     
     init(viewModel: MainTabBarViewModel) {
         self.viewModel = viewModel
@@ -38,14 +37,6 @@ class MainTabBarViewController: UITabBarController, BarBlurring {
         
         self.title = "" // TODO: Why? Remove.
         populateTabBar()
-    }
-
-    // MARK: - Navigation Bar Blurring
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        prepareBarWithBlur(bar: tabBar, blurBackground: blurBackground)
     }
     
     func populateTabBar() {

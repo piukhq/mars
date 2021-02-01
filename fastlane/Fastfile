@@ -105,18 +105,23 @@ platform :ios do
       remote_branch: ENV["BITRISE_GIT_BRANCH"],
     )
 
-    sentry_upload_dsym(
-     auth_token: ENV["SENTRY_AUTH_TOKEN"],
-     org_slug: 'bink',
-     project_slug: 'mars',
-     dsym_path: 'Bink.app.dSYM.zip'
-    )
+    beta_dsym
   end
 
   desc "Increment the build number and commit to git"
   lane :bump do |options|
     increment_build_number
     commit_version_bump
+  end
+
+  desc "Submit dysm to Sentry for Firebase App Distribution"
+  lane :beta_dsym do
+    sentry_upload_dsym(
+      auth_token: ENV["SENTRY_AUTH_TOKEN"],
+      org_slug: 'bink',
+      project_slug: 'mars',
+      dsym_path: ENV["BITRISE_DSYM_PATH"]
+    )
   end
 
 end

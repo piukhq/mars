@@ -11,6 +11,9 @@ import DeepDiff
 import CardScan
 
 class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> {
+    let transition = LoyaltyWalletAnimator()
+    var selectedIndexPath: IndexPath?
+    
     override func configureCollectionView() {
         super.configureCollectionView()
         collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
@@ -18,8 +21,13 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationController?.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarVisibility(true, animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,7 +66,13 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         super.collectionView(collectionView, didSelectItemAt: indexPath)
+        selectedIndexPath = indexPath
         resetAllSwipeStates()
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard let membershipCard = viewModel.cards?[sourceIndexPath.row] else { return }
+        Current.wallet.reorderMembershipCard(membershipCard, from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
 }
 
@@ -125,5 +139,17 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
         // We have to filter the cells based on their type, because otherwise the wallet prompt cells are included, and then we can't cast properly
         let cells = collectionView.visibleCells.filter { $0.isKind(of: WalletLoyaltyCardCollectionViewCell.self) } as? [WalletLoyaltyCardCollectionViewCell]
         cells?.forEach { $0.set(to: .closed) }
+    }
+}
+
+extension LoyaltyWalletViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        // Check whether we have tapped a cell or added a new card
+        guard shouldUseTransition else { return nil }
+        if let _ = fromVC as? LoyaltyWalletViewController {
+            shouldUseTransition = false
+            return operation == .push ? transition : nil
+        }
+        return nil
     }
 }

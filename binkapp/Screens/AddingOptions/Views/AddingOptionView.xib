@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -65,7 +65,7 @@
                 <constraint firstItem="eWc-me-K41" firstAttribute="leading" secondItem="FtI-NM-vir" secondAttribute="leading" id="gGn-U3-Ogc"/>
                 <constraint firstItem="FtI-NM-vir" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="ibn-VV-YcJ"/>
                 <constraint firstItem="jAU-Ag-eW7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="ith-Ca-ADi"/>
-                <constraint firstItem="eWc-me-K41" firstAttribute="top" secondItem="FtI-NM-vir" secondAttribute="bottom" constant="14" id="jrx-oA-JCa"/>
+                <constraint firstItem="eWc-me-K41" firstAttribute="top" secondItem="FtI-NM-vir" secondAttribute="bottom" priority="750" constant="14" id="jrx-oA-JCa"/>
                 <constraint firstItem="FtI-NM-vir" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="s29-Rp-hsQ"/>
                 <constraint firstItem="jAU-Ag-eW7" firstAttribute="top" secondItem="eWc-me-K41" secondAttribute="bottom" id="vu8-rp-7h5"/>
             </constraints>

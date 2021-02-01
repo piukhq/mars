@@ -9,8 +9,8 @@
 import Foundation
 
 extension String {
-    var md5: String {
-        return HMAC.hash(inp: self, algo: HMACAlgo.MD5)
+    var sha256: String {
+        return HMAC.hash(inp: self, algo: HMACAlgo.SHA256)
     }
     
     var sha512: String {
@@ -30,8 +30,6 @@ public enum HMAC {
         let digestLength = algo.digestLength()
         var hash = [UInt8](repeating: 0, count: digestLength)
         switch algo {
-        case .MD5:
-            CC_MD5(input.bytes, UInt32(input.length), &hash)
         case .SHA1:
             CC_SHA1(input.bytes, UInt32(input.length), &hash)
         case .SHA224:
@@ -60,13 +58,11 @@ public enum HMAC {
 }
 
 enum HMACAlgo {
-    case MD5, SHA1, SHA224, SHA256, SHA384, SHA512
+    case SHA1, SHA224, SHA256, SHA384, SHA512
     
     func digestLength() -> Int {
         var result: CInt = 0
         switch self {
-        case .MD5:
-            result = CC_MD5_DIGEST_LENGTH
         case .SHA1:
             result = CC_SHA1_DIGEST_LENGTH
         case .SHA224:

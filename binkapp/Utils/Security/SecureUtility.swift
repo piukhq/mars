@@ -11,15 +11,6 @@ import Keys
 import SwiftyRSA
 
 enum SecureUtility {
-    static func getPaymentCardHash(from paymentCard: PaymentCardCreateModel) -> String? {
-        guard let pan = paymentCard.fullPan?.replacingOccurrences(of: " ", with: "") else { return nil }
-        guard let month = paymentCard.month else { return nil }
-        guard let year = paymentCard.year else { return nil }
-        guard let decodedSecret = decodedSecret() else { return nil }
-        let stringToHash = "\(pan)\(month)\(year)\(decodedSecret)"
-        return stringToHash.sha512
-    }
-
     static func encryptedSensitiveFieldValue(_ value: String?) -> String? {
         guard let value = value else { return nil }
         guard let publicKeyName = publicKeyName() else { return nil }

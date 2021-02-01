@@ -18,7 +18,6 @@ class BaseFormViewController: BinkViewController, Form {
     private enum Constants {
         static let normalCellHeight: CGFloat = 84.0
         static let horizontalInset: CGFloat = 25.0
-        static let maskingHeight: CGFloat = 209.0
         static let bottomInset: CGFloat = 150.0
         static let postCollectionViewPadding: CGFloat = 15.0
         static let offsetPadding: CGFloat = 30.0
@@ -66,15 +65,6 @@ class BaseFormViewController: BinkViewController, Form {
         return description
     }()
     
-    private lazy var maskingView: UIView = {
-        let maskingView = UIView()
-        maskingView.translatesAutoresizingMaskIntoConstraints = false
-        maskingView.isUserInteractionEnabled = false
-        maskingView.backgroundColor = .white
-        view.addSubview(maskingView)
-        return maskingView
-    }()
-    
     private lazy var layout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1) // To invoke automatic self sizing
@@ -109,7 +99,6 @@ class BaseFormViewController: BinkViewController, Form {
         super.viewDidLayoutSubviews()
 
         if collectionView.contentSize.height == 0 { collectionView.layoutIfNeeded() }
-        setBottomItemMask()
     }
     
     override func viewDidLoad() {
@@ -125,22 +114,8 @@ class BaseFormViewController: BinkViewController, Form {
             stackScrollView.topAnchor.constraint(equalTo: view.topAnchor),
             stackScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stackScrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            
-            maskingView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            maskingView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            maskingView.heightAnchor.constraint(equalToConstant: Constants.maskingHeight),
-            maskingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            stackScrollView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
-    }
-    
-    private func setBottomItemMask() {
-        let maskGradient = CAGradientLayer()
-        maskGradient.frame = maskingView.bounds
-        maskGradient.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
-        maskGradient.locations = [0.0, 0.9]
-        
-        maskingView.layer.mask = maskGradient
     }
     
     private func configureCheckboxes() {

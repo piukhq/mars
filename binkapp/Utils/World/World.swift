@@ -65,6 +65,7 @@ extension UserDefaults: BinkUserDefaults {
         case membershipCardMostRecentTransaction(membershipCardId: String)
         case appLaunches
         case hasPreviouslyLaunchedApp
+        case localWalletOrder(userId: String, walletType: Wallet.WalletType)
         
         var keyValue: String {
             switch self {
@@ -94,6 +95,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "appLaunches"
             case .hasPreviouslyLaunchedApp:
                 return "hasPreviouslyLaunchedApp"
+            case .localWalletOrder(let userId, let walletType):
+                return "localWalletOrders_user_\(userId)_\(walletType.rawValue)"
             }
         }
     }

@@ -97,19 +97,19 @@ enum OnboardingAnalyticsEvent: BinkAnalyticsEvent {
 enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
     case addLoyaltyCardRequest(request: MembershipCardPostModel, formPurpose: FormPurpose)
     case addLoyaltyCardResponseSuccess(loyaltyCard: CD_MembershipCard, formPurpose: FormPurpose, statusCode: Int)
-    case addLoyaltyCardResponseFail(request: MembershipCardPostModel, formPurpose: FormPurpose)
+    case addLoyaltyCardResponseFail(request: MembershipCardPostModel, formPurpose: FormPurpose, responseData: NetworkResponseData?)
     
     case addPaymentCardRequest(request: PaymentCardCreateModel)
     case addPaymentCardResponseSuccess(request: PaymentCardCreateModel, paymentCard: CD_PaymentCard, statusCode: Int)
-    case addPaymentCardResponseFail(request: PaymentCardCreateModel)
+    case addPaymentCardResponseFail(request: PaymentCardCreateModel, responseData: NetworkResponseData?)
     
     case deleteLoyaltyCard(card: WalletCard)
     case deleteLoyaltyCardResponseSuccess(card: TrackableWalletCard?)
-    case deleteLoyaltyCardResponseFail(card: TrackableWalletCard?)
+    case deleteLoyaltyCardResponseFail(card: TrackableWalletCard?, responseData: NetworkResponseData?)
     
     case deletePaymentCard(card: WalletCard)
     case deletePaymentCardResponseSuccess(card: TrackableWalletCard?)
-    case deletePaymentCardResponseFail(card: TrackableWalletCard?)
+    case deletePaymentCardResponseFail(card: TrackableWalletCard?, responseData: NetworkResponseData?)
     
     case loyaltyCardStatus(loyaltyCard: CD_MembershipCard, newStatus: MembershipCardStatus?)
     case paymentCardStatus(paymentCard: CD_PaymentCard, newStatus: String?)
@@ -170,38 +170,37 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             guard let planId = request.membershipPlan else { return nil }
             return [
                 "loyalty_card_journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
-                "client_account_id": request.uuid,
                 "loyalty_plan": planId,
                 "scanned_card": formPurpose == .addFromScanner ? "true" : "false"
             ]
             
         case .addLoyaltyCardResponseSuccess(let card, let formPurpose, let statusCode):
-            guard let uuid = card.uuid else { return nil }
             guard let cardStatus = card.status?.status?.rawValue else { return nil }
             guard let reasonCode = card.status?.formattedReasonCodes?.first?.rawValue else { return nil }
             guard let planIdString = card.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
             return [
                 "loyalty_card_journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
-                "client_account_id": uuid,
+                "client_account_id": card.id ?? "",
                 "account_is_new": statusCode == 201 ? "true" : "false",
                 "loyalty_status": cardStatus,
                 "loyalty_reason_code": reasonCode,
                 "loyalty_plan": planId
             ]
             
-        case .addLoyaltyCardResponseFail(let request, let formPurpose):
+        case .addLoyaltyCardResponseFail(let request, let formPurpose, let responseData):
             guard let planId = request.membershipPlan else { return nil }
+            guard let statusCode = responseData?.urlResponse?.statusCode else { return nil }
             return [
                 "loyalty_card_journey": LoyaltyCardAccountJourney.journey(for: formPurpose).rawValue,
-                "client_account_id": request.uuid,
-                "loyalty_plan": planId
+                "loyalty_plan": planId,
+                "error_code": statusCode,
+                "error_message": responseData?.errorMessage ?? "Error message not provided"
             ]
             
         case .addPaymentCardRequest(let request):
             guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { return nil }
             return [
-                "payment_scheme": paymentScheme,
-                "client_account_id": request.uuid
+                "payment_scheme": paymentScheme
             ]
             
         case .addPaymentCardResponseSuccess(let request, let card, let statusCode):
@@ -209,84 +208,84 @@ enum CardAccountAnalyticsEvent: BinkAnalyticsEvent {
             guard let status = card.status else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": request.uuid,
+                "client_account_id": card.id ?? "",
                 "account_is_new": statusCode == 201 ? "true" : "false",
                 "payment_status": status
             ]
             
-        case .addPaymentCardResponseFail(let request):
+        case .addPaymentCardResponseFail(let request, let responseData):
             guard let paymentScheme = request.cardType?.paymentSchemeIdentifier else { return nil }
+            guard let statusCode = responseData?.urlResponse?.statusCode else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": request.uuid
+                "error_code": statusCode,
+                "error_message": responseData?.errorMessage ?? "Error message not provided"
             ]
             
         case .deleteLoyaltyCard(let card):
             guard let loyaltyCard = card as? CD_MembershipCard else { return nil }
             guard let planIdString = loyaltyCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
-            guard let uuid = loyaltyCard.uuid else { return nil }
             return [
                 "loyalty_plan": planId,
-                "client_account_id": uuid
+                "client_account_id": loyaltyCard.id ?? ""
             ]
             
         case .deleteLoyaltyCardResponseSuccess(let card):
             guard let planIdString = card?.loyaltyPlan, let planId = Int(planIdString) else { return nil }
-            guard let uuid = card?.uuid else { return nil }
             return [
                 "loyalty_plan": planId,
-                "client_account_id": uuid
+                "client_account_id": card?.id ?? ""
             ]
             
-        case .deleteLoyaltyCardResponseFail(let card):
+        case .deleteLoyaltyCardResponseFail(let card, let responseData):
             guard let planIdString = card?.loyaltyPlan, let planId = Int(planIdString) else { return nil }
-            guard let uuid = card?.uuid else { return nil }
+            guard let statusCode = responseData?.urlResponse?.statusCode else { return nil }
             return [
                 "loyalty_plan": planId,
-                "client_account_id": uuid
+                "client_account_id": card?.id ?? "",
+                "error_code": statusCode,
+                "error_message": responseData?.errorMessage ?? "Error message not provided"
             ]
             
         case .deletePaymentCard(let card):
             guard let paymentCard = card as? CD_PaymentCard else { return nil }
             guard let paymentScheme = paymentCard.card?.paymentSchemeIdentifier else { return nil }
-            guard let uuid = paymentCard.uuid else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": uuid
+                "client_account_id": card.id ?? ""
             ]
             
         case .deletePaymentCardResponseSuccess(let card):
             guard let paymentScheme = card?.paymentScheme else { return nil }
-            guard let uuid = card?.uuid else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": uuid
+                "client_account_id": card?.id ?? ""
             ]
             
-        case .deletePaymentCardResponseFail(let card):
+        case .deletePaymentCardResponseFail(let card, let responseData):
             guard let paymentScheme = card?.paymentScheme else { return nil }
-            guard let uuid = card?.uuid else { return nil }
+            guard let statusCode = responseData?.urlResponse?.statusCode else { return nil }
             return [
                 "payment_scheme": paymentScheme,
-                "client_account_id": uuid
+                "client_account_id": card?.id ?? "",
+                "error_code": statusCode,
+                "error_message": responseData?.errorMessage ?? "Error message not provided"
             ]
             
         case .loyaltyCardStatus(let card, let status):
-            guard let uuid = card.uuid else { return nil }
             guard let status = status?.rawValue else { return nil }
             guard let planIdString = card.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
             return [
-                "client_account_id": uuid,
+                "client_account_id": card.id ?? "",
                 "status": status,
                 "loyalty_card_plan": planId
             ]
             
         case .paymentCardStatus(let card, let status):
-            guard let uuid = card.uuid else { return nil }
             guard let status = status else { return nil }
             guard let paymentScheme = card.card?.paymentSchemeIdentifier else { return nil }
             return [
-                "client_account_id": uuid,
+                "client_account_id": card.id ?? "",
                 "status": status,
                 "payment_scheme": paymentScheme
             ]
@@ -461,7 +460,7 @@ enum DynamicActionsAnalyticsEvent: BinkAnalyticsEvent {
         return "dynamic_action_triggered"
     }
 
-    var data: [String : Any]? {
+    var data: [String: Any]? {
         switch self {
         case .triggered(let action):
             guard let actionName = action.name else { return nil }

@@ -86,6 +86,7 @@ class RootStateMachine: NSObject, UserServiceProtocol {
     @objc func completeLogout() {
         Current.userManager.removeUser()
         Current.userDefaults.set(false, forDefaultsKey: .hasLaunchedWallet)
+        Current.wallet.handleLogout()
         NotificationCenter.default.post(name: .shouldTrashLocalWallets, object: nil)
         moveTo(ViewControllerFactory.makeOnboardingViewController())
     }

@@ -9,8 +9,8 @@
 import Foundation
 
 class PLRRewardDetailViewModel {
-    private let voucher: CD_Voucher
-    private let membershipPlan: CD_MembershipPlan
+    let voucher: CD_Voucher
+    var membershipPlan: CD_MembershipPlan
 
     init(voucher: CD_Voucher, plan: CD_MembershipPlan) {
         self.voucher = voucher
@@ -100,7 +100,7 @@ class PLRRewardDetailViewModel {
         return document.name
     }
 
-    private var termsAndConditionsButtonUrlString: String? {
+    var termsAndConditionsButtonUrlString: String? {
         guard let document = voucherPlanDocument else { return nil }
         return document.url
     }

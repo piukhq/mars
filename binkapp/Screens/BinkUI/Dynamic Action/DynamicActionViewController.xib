@@ -10,7 +10,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DynamicActionViewController" customModule="binkapp" customModuleProvider="target">
             <connections>
-                <outlet property="button" destination="Dy8-tx-5cx" id="yLW-Y8-ZzQ"/>
                 <outlet property="descriptionLabel" destination="AuI-MV-0xl" id="9i1-Nz-oX5"/>
                 <outlet property="headerView" destination="aiJ-r8-ygR" id="mQ6-X0-hzz"/>
                 <outlet property="titleLabel" destination="hdv-BQ-rev" id="cI7-G7-KeP"/>
@@ -22,13 +21,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dy8-tx-5cx" customClass="BinkGradientButton" customModule="binkapp" customModuleProvider="target">
-                    <rect key="frame" x="47" y="595" width="281" height="52"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="52" id="nIA-Sy-4JZ"/>
-                    </constraints>
-                    <state key="normal" title="Button"/>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hdv-BQ-rev">
                     <rect key="frame" x="25" y="200" width="325" height="0.0"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -51,14 +43,10 @@
                 <constraint firstItem="aiJ-r8-ygR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="3h6-U4-dyw"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hdv-BQ-rev" secondAttribute="trailing" constant="25" id="4vu-F2-P9t"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="AuI-MV-0xl" secondAttribute="trailing" constant="25" id="7Vy-H7-vJ5"/>
-                <constraint firstItem="Dy8-tx-5cx" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="CyU-hI-qPi"/>
                 <constraint firstItem="aiJ-r8-ygR" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.3" id="FyR-JW-DCX"/>
                 <constraint firstItem="AuI-MV-0xl" firstAttribute="top" secondItem="hdv-BQ-rev" secondAttribute="bottom" id="Hyl-Dy-wI3"/>
                 <constraint firstItem="hdv-BQ-rev" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="KKu-6M-a8t"/>
-                <constraint firstItem="Dy8-tx-5cx" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-20" id="QAS-zC-nsN"/>
-                <constraint firstItem="Dy8-tx-5cx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="AuI-MV-0xl" secondAttribute="bottom" constant="20" id="TKY-ZP-tqT"/>
                 <constraint firstItem="aiJ-r8-ygR" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="am7-nv-cxj"/>
-                <constraint firstItem="Dy8-tx-5cx" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.75" id="brL-A6-b7y"/>
                 <constraint firstItem="hdv-BQ-rev" firstAttribute="top" secondItem="aiJ-r8-ygR" secondAttribute="bottom" id="fHO-s5-ffz"/>
                 <constraint firstItem="AuI-MV-0xl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="lo3-6O-vou"/>
                 <constraint firstItem="aiJ-r8-ygR" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="vxD-oJ-evp"/>

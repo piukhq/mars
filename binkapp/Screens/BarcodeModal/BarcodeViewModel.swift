@@ -59,7 +59,7 @@ enum BarcodeType: Int {
 }
 
 class BarcodeViewModel {
-    private let membershipCard: CD_MembershipCard
+    let membershipCard: CD_MembershipCard
     
     var title: String {
         return membershipCard.membershipPlan?.account?.companyName ?? ""
@@ -81,9 +81,7 @@ class BarcodeViewModel {
         return membershipCard.card?.barcode ?? ""
     }
     
-    var barcodeUse: BarcodeUse {
-        return .loyaltyCard
-    }
+    var barcodeUse: BarcodeUse = .loyaltyCard
     
     var barcodeType: BarcodeType {
         guard let barcodeType = membershipCard.card?.barcodeType?.intValue else {

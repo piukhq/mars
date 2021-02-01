@@ -12,18 +12,11 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     private enum Constants {
         static let hyperlinkHeight: CGFloat = 54.0
     }
-    
-    private lazy var continueButton: BinkGradientButton = {
-        let button = BinkGradientButton(frame: .zero)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("continue_button_title".localized, for: .normal)
-        button.titleLabel?.font = UIFont.buttonText
-        button.addTarget(self, action: .continueButtonTapped, for: .touchUpInside)
-        button.isEnabled = false
-        button.accessibilityLabel = "Continue"
-        button.accessibilityIdentifier = "Continue"
-        view.addSubview(button)
-        return button
+
+    private lazy var continueButton: BinkButton = {
+        return BinkButton(type: .gradient, title: "continue_button_title".localized, enabled: false) { [weak self] in
+            self?.continueButtonTapped()
+        }
     }()
 
     init() {
@@ -40,12 +33,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         
         stackScrollView.add(arrangedSubviews: [hyperlinkButton(title: "login_forgot_password".localized)])
         
-        NSLayoutConstraint.activate([
-            continueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
-            continueButton.heightAnchor.constraint(equalToConstant: LayoutHelper.PillButton.height),
-            continueButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -LayoutHelper.PillButton.bottomPadding),
-            continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+        footerButtons = [continueButton]
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,11 +56,11 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     override func formValidityUpdated(fullFormIsValid: Bool) {
-        continueButton.isEnabled = fullFormIsValid
+        continueButton.enabled = fullFormIsValid
     }
     
     @objc func continueButtonTapped() {
-        continueButton.startLoading()
+        continueButton.toggleLoading(isLoading: true)
         
         let fields = dataSource.currentFieldValues()
 
@@ -105,7 +93,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
                         BinkAnalytics.track(OnboardingAnalyticsEvent.userComplete)
                     })
                     
-                    self?.continueButton.stopLoading()
+                    self?.continueButton.toggleLoading(isLoading: false)
                     Current.rootStateMachine.handleLogin()
                     BinkAnalytics.track(OnboardingAnalyticsEvent.serviceComplete)
                     BinkAnalytics.track(OnboardingAnalyticsEvent.end(didSucceed: true))
@@ -131,7 +119,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
 
     private func handleLoginError() {
         Current.userManager.removeUser()
-        continueButton.stopLoading()
+        continueButton.toggleLoading(isLoading: false)
         showError()
     }
 }

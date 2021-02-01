@@ -32,7 +32,7 @@ class BinkCopyableLabel: UILabel {
         let board = UIPasteboard.general
         board.string = text
         let menu = UIMenuController.shared
-        menu.setMenuVisible(false, animated: true)
+        menu.hideMenu()
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -45,8 +45,7 @@ class BinkCopyableLabel: UILabel {
         if !menu.isMenuVisible {
             let xPosition = self.intrinsicContentSize.width / 2
             let rect = CGRect(x: xPosition, y: bounds.midY - 4, width: 0.0, height: 0.0)
-            menu.setTargetRect(rect, in: self)
-            menu.setMenuVisible(true, animated: true)
+            menu.showMenu(from: self, rect: rect)
         }
     }
 }

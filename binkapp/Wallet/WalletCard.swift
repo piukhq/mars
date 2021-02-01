@@ -22,7 +22,7 @@ protocol WalletCardProtocol {
 }
 
 struct TrackableWalletCard {
-    var uuid: String?
+    var id: String?
     var loyaltyPlan: String?
     var paymentScheme: Int?
 }

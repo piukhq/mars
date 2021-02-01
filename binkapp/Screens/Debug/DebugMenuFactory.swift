@@ -124,7 +124,7 @@ class DebugMenuFactory {
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
+        alert.pruneNegativeWidthConstraints()
         return alert
     }
 }

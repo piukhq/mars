@@ -11,7 +11,7 @@ import MessageUI
 import ZendeskCoreSDK
 import SupportSDK
 
-class SettingsViewController: BinkViewController, BarBlurring {
+class SettingsViewController: BinkViewController {
     // MARK: - Helpers
     
     private enum Constants {
@@ -38,7 +38,6 @@ class SettingsViewController: BinkViewController, BarBlurring {
         return tableView
     }()
 
-    internal lazy var blurBackground = defaultBlurredBackground()
     private let zendeskTickets = ZendeskTickets()
     
     // MARK: - View Lifecycle
@@ -62,15 +61,6 @@ class SettingsViewController: BinkViewController, BarBlurring {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .settings)
-    }
-
-    // MARK: - Navigation Bar Blurring
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        guard let bar = navigationController?.navigationBar else { return }
-        prepareBarWithBlur(bar: bar, blurBackground: blurBackground)
     }
     
     private func configureLayout() {

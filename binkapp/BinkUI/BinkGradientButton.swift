@@ -37,6 +37,7 @@ class BinkGradientButton: BinkPillButton {
 
     func configure(title: String, hasShadow: Bool = true) {
         setTitle(title, for: .normal)
+        titleLabel?.font = .buttonText
         self.hasShadow = hasShadow
     }
     
@@ -44,9 +45,7 @@ class BinkGradientButton: BinkPillButton {
         whiteLayer.frame = bounds
         whiteLayer.backgroundColor = UIColor.white.cgColor
         whiteLayer.cornerRadius = self.frame.size.height / 2
-        if #available(iOS 13.0, *) {
-            whiteLayer.cornerCurve = .continuous
-        }
+        whiteLayer.cornerCurve = .continuous
     }
 
     private func processGradient(_ firstColor: UIColor, _ secondColor: UIColor) {
@@ -54,17 +53,17 @@ class BinkGradientButton: BinkPillButton {
         gradientLayer.colors = [firstColor.cgColor, secondColor.cgColor]
         gradientLayer.locations = [0.0, 1.0]
         gradientLayer.cornerRadius = self.frame.size.height / 2
-        if #available(iOS 13.0, *) {
-            gradientLayer.cornerCurve = .continuous
-        }
+        gradientLayer.cornerCurve = .continuous
         gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.0)
         gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
     }
 }
 
 class BinkMiniGradientButton: BinkGradientButton {
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func configure(title: String, hasShadow: Bool = true) {
+        setTitle(title, for: .normal)
+        setTitleColor(.white, for: .normal)
         titleLabel?.font = .miniButtonText
+        self.hasShadow = hasShadow
     }
 }

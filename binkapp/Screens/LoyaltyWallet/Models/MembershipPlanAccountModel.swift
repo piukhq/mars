@@ -10,7 +10,7 @@ import CoreData
 
 struct MembershipPlanAccountModel: Codable {
     let apiId: Int?
-    let planName: String?
+    var planName: String?
     let planNameCard: String?
     let planURL: String?
     var companyName: String?

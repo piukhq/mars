@@ -52,6 +52,7 @@ enum InAppReviewUtility {
     static let minimumMembershipCards = 4
     static let minimumAppLaunches = 10
     static let minimumDaysSinceFirstLaunch = 2
+    static let minimumForegroundRefreshes = 1
 
     static func recordAppLaunch() {
         let timestamp = Date().timeIntervalSince1970
@@ -64,6 +65,7 @@ enum InAppReviewUtility {
         guard let membershipCards = Current.wallet.membershipCards, membershipCards.count > minimumMembershipCards else { return false }
         guard let appLaunches = Current.userDefaults.value(forDefaultsKey: .appLaunches) as? [TimeInterval] else { return false }
         guard appLaunches.count > minimumAppLaunches else { return false }
+        guard Current.wallet.foregroundRefreshCount >= minimumForegroundRefreshes else { return false }
         let firstAppLaunch = Date(timeIntervalSince1970: appLaunches[0])
         return Date.hasElapsed(days: minimumDaysSinceFirstLaunch, since: firstAppLaunch)
     }
