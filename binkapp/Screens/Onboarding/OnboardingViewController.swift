@@ -221,7 +221,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     func showError(_ isCancelled: Bool) {
         let message = isCancelled ? viewModel.facebookLoginCancelledText : viewModel.facebookLoginErrorText
         
-        let alert = UIAlertController(title: viewModel.facebookLoginErrorTitle, message: message, preferredStyle: .alert)
+        let alert = BinkAlertController(title: viewModel.facebookLoginErrorTitle, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: viewModel.facebookLoginOK, style: .default))
         present(alert, animated: true)
     }

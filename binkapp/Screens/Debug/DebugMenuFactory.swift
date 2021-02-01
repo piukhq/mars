@@ -90,8 +90,8 @@ class DebugMenuFactory {
         }, cellType: .titleSubtitle)
     }
     
-    func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    func makeEnvironmentAlertController(navigationController: UINavigationController) -> BinkAlertController {
+        let alert = BinkAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
             APIConstants.changeEnvironment(environment: .dev)
             NotificationCenter.default.post(name: .shouldLogout, object: nil)
@@ -109,7 +109,7 @@ class DebugMenuFactory {
             NotificationCenter.default.post(name: .shouldLogout, object: nil)
         }))
         alert.addAction(UIAlertAction(title: "Custom", style: .destructive, handler: { _ in
-            let customAlert = UIAlertController(title: "Base URL", message: "Please insert a valid URL, removing https:// or http://", preferredStyle: .alert)
+            let customAlert = BinkAlertController(title: "Base URL", message: "Please insert a valid URL, removing https:// or http://", preferredStyle: .alert)
             customAlert.addTextField { textField in
                 textField.placeholder = "api.dev.gb.com"
             }

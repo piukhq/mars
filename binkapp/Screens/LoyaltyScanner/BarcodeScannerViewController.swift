@@ -302,7 +302,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                             self.canPresentScanError = false
                             DispatchQueue.main.async {
                                 HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
-                                let alert = UIAlertController(title: "Error", message: "The card you scanned was not correct, please scan your \(planFromForm.account?.companyName ?? "") card", preferredStyle: .alert)
+                                let alert = BinkAlertController(title: "Error", message: "The card you scanned was not correct, please scan your \(planFromForm.account?.companyName ?? "") card", preferredStyle: .alert)
                                 let action = UIAlertAction(title: "OK", style: .cancel) { _ in
                                     DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
                                         self.canPresentScanError = true

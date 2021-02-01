@@ -22,7 +22,7 @@ final class ZendeskTickets: NSObject, UITextFieldDelegate {
         }
     
         if ZendeskService.shouldPromptForIdentity {
-            let alert = UIAlertController.makeZendeskIdentityAlertController(firstNameTextField: { [weak self] textField in
+            let alert = BinkAlertController.makeZendeskIdentityAlertController(firstNameTextField: { [weak self] textField in
                 self?.zendeskPromptFirstNameTextField = textField
             }, lastNameTextField: { [weak self] textField in
                 self?.zendeskPromptLastNameTextField = textField
@@ -75,8 +75,8 @@ final class ZendeskTickets: NSObject, UITextFieldDelegate {
 }
 
 extension UIAlertController {
-    static func makeZendeskIdentityAlertController(firstNameTextField: @escaping (UITextField) -> Void, lastNameTextField: @escaping (UITextField) -> Void, okActionObject: (UIAlertAction) -> Void, okActionHandler: @escaping () -> Void, textFieldDelegate: UITextFieldDelegate?) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: "zendesk_identity_prompt_message".localized, preferredStyle: .alert)
+    static func makeZendeskIdentityAlertController(firstNameTextField: @escaping (UITextField) -> Void, lastNameTextField: @escaping (UITextField) -> Void, okActionObject: (UIAlertAction) -> Void, okActionHandler: @escaping () -> Void, textFieldDelegate: UITextFieldDelegate?) -> BinkAlertController {
+        let alert = BinkAlertController(title: nil, message: "zendesk_identity_prompt_message".localized, preferredStyle: .alert)
         alert.addTextField { textField in
             textField.placeholder = "zendesk_identity_prompt_first_name".localized
             textField.autocapitalizationType = .words

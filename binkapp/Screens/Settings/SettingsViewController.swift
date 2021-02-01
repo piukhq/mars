@@ -199,7 +199,7 @@ extension SettingsViewController: UITableViewDelegate {
                     presentWebView(url: Constants.termsAndConditionsUrl)
                 }
             case .logout:
-                let alert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+                let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
                 alert.addAction(
                     UIAlertAction(title: "Log out", style: .default, handler: { _ in
                         NotificationCenter.default.post(name: .shouldLogout, object: nil)

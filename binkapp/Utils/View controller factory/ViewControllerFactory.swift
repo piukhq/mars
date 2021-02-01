@@ -189,8 +189,8 @@ enum ViewControllerFactory {
         return ReusableTemplateViewController(viewModel: viewModel)
     }
     
-    static func makeDeleteConfirmationAlertController(message: String, deleteAction: @escaping EmptyCompletionBlock, onCancel: EmptyCompletionBlock? = nil) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+    static func makeDeleteConfirmationAlertController(message: String, deleteAction: @escaping EmptyCompletionBlock, onCancel: EmptyCompletionBlock? = nil) -> BinkAlertController {
+        let alert = BinkAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in
             onCancel?()
         }))
@@ -200,8 +200,8 @@ enum ViewControllerFactory {
         return alert
     }
     
-    static func makeNoConnectivityAlertController(completion: EmptyCompletionBlock? = nil) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
+    static func makeNoConnectivityAlertController(completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
+        let alert = BinkAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
             if let completion = completion {
                 completion()
@@ -210,8 +210,8 @@ enum ViewControllerFactory {
         return alert
     }
     
-    static func makeOkAlertViewController(title: String?, message: String?, completion: EmptyCompletionBlock? = nil) -> UIAlertController {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    static func makeOkAlertViewController(title: String?, message: String?, completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
+        let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
             completion?()
         }))

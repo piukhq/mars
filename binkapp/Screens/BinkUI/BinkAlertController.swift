@@ -22,8 +22,6 @@ class BinkAlertController: UIAlertController {
     @objc func configureForCurrentTheme() {
         view.tintColor = Current.themeManager.color(for: .text)
         
-        let backgroundTransitionView = self.parent
-        
         switch Current.themeManager.currentTheme.type {
         case .dark:
             overrideUserInterfaceStyle = .dark
