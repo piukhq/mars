@@ -45,8 +45,4 @@ struct TescoScrapingAgent: WebScrapable {
     var scrapableUrlString: String {
         return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
     }
-
-    var loginScriptFileName: String {
-        return "LocalPointsCollection_Login_Tesco"
-    }
 }

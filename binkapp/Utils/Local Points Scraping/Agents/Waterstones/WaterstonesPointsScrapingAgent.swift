@@ -45,16 +45,4 @@ struct WaterstonesScrapingAgent: WebScrapable {
     var scrapableUrlString: String {
         return "https://www.waterstones.com/account/waterstonescard"
     }
-
-    var incorrectCredentialsTextIdentiferClass: String? {
-        return "plus-alert-info"
-    }
-
-    var incorrectCredentialsMessage: String? {
-        return "Your login details are invalid. Please try again."
-    }
-
-    var loginScriptFileName: String {
-        return "LocalPointsCollection_Login_Waterstones"
-    }
 }

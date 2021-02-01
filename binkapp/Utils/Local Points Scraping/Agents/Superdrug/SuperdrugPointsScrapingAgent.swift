@@ -45,8 +45,4 @@ struct SuperdrugScrapingAgent: WebScrapable {
     var scrapableUrlString: String {
         return "https://www.superdrug.com/login"
     }
-
-    var loginScriptFileName: String {
-        return "LocalPointsCollection_Login_Superdrug"
-    }
 }

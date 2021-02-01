@@ -31,13 +31,6 @@ protocol WebScrapable {
     var scrapableUrlString: String { get }
     var loginScriptFileName: String { get }
     var pointsScrapingScriptFileName: String { get }
-    var detectTextScriptFileName: String { get }
-    var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType { get }
-    var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency { get }
-    var reCaptchaTextIdentiferClass: String? { get }
-    var reCaptchaMessage: String? { get }
-    var incorrectCredentialsMessage: String? { get }
-    var incorrectCredentialsTextIdentiferClass: String? { get }
 }
 
 extension WebScrapable {
@@ -54,42 +47,12 @@ extension WebScrapable {
     }
 
     var loginScriptFileName: String {
-        return "LocalPointsCollection_Login"
+        return "LocalPointsCollection_Login_\(merchant.rawValue.capitalized)"
     }
     
     var pointsScrapingScriptFileName: String {
         return "LocalPointsCollection_Points"
     }
-    
-    var detectTextScriptFileName: String {
-        return "DetectText"
-    }
-
-    var reCaptchaPresentationType: WebScrapingUtility.ReCaptchaPresentationType {
-        return .none
-    }
-
-    var reCaptchaPresentationFrequency: WebScrapingUtility.ReCaptchaPresentationFrequency {
-        return .never
-    }
-
-    var reCaptchaTextIdentiferClass: String? {
-        return nil
-    }
-    
-    var reCaptchaMessage: String? {
-        return nil
-    }
-
-    var incorrectCredentialsMessage: String? {
-        return nil
-    }
-
-    var incorrectCredentialsTextIdentiferClass: String? {
-        return nil
-    }
-
-    func pointsValueFromCustomHTMLParser(_ html: String) -> String? { return nil }
 }
 
 enum WebScrapingUtilityError: BinkError {
