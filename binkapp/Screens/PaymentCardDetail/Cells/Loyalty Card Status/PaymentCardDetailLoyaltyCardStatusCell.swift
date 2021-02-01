@@ -13,14 +13,22 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
 
     private var viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel!
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setSeparatorDefaultWidth()
+    }
+    
     func configureWithViewModel(_ viewModel: PaymentCardDetailLoyaltyCardStatusCellViewModel) {
         headerLabel.text = viewModel.headerText
+        headerLabel.textColor = Current.themeManager.color(for: .text)
         detailLabel.text = viewModel.detailText
+        detailLabel.textColor = Current.themeManager.color(for: .text)
         statusLabel.text = viewModel.statusText
         statusLabel.textColor = textColor(forStatus: viewModel.status)
         
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
-        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+        iconImageView.setIconImage(membershipPlan: membershipPlan)
+        selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
     
     func configure(with paymentCard: CD_PaymentCard) {

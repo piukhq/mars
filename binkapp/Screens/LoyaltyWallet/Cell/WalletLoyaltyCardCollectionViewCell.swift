@@ -113,23 +113,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         self.delegate = delegate
         
         guard let plan = viewModel.membershipPlan else { return }
-        
-        /// Brand icon
-        switch Current.themeManager.currentTheme.type {
-        case .light:
-            cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
-        case .dark:
-            cardIconImageView.setImage(forPathType: .membershipPlanDarkModeIcon(plan: plan))
-        case .system:
-            switch traitCollection.userInterfaceStyle {
-            case .light:
-                cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
-            case .dark:
-                cardIconImageView.setImage(forPathType: .membershipPlanDarkModeIcon(plan: plan))
-            default:
-                cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
-            }
-        }
+        cardIconImageView.setIconImage(membershipPlan: plan)
         
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
