@@ -179,10 +179,6 @@ struct WebScrapingResponse: Codable {
         return Int(string)
     }
 
-    var shouldDisplayWebview: Bool {
-        return userActionRequired == true
-    }
-
     enum CodingKeys: String, CodingKey {
         case pointsString = "points"
         case errorMessage = "error_message"
@@ -208,7 +204,6 @@ class WebScrapingUtility: NSObject {
     private let agent: WebScrapable
     private let membershipCard: CD_MembershipCard
     private var hasAttemptedLogin = false
-    private var hasCompletedLogin = false
     private var canAttemptToDetectReCaptcha = false
     private var canAttemptToDetectIncorrectCredentials = false
     private var isPresentingWebView: Bool {
@@ -226,6 +221,7 @@ class WebScrapingUtility: NSObject {
     private var idleTimer: Timer?
     private let idleThreshold: TimeInterval = 60
 
+    private var isPerformingUserAction = false
     private var detectElementTimer: Timer?
     
     init(agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
@@ -302,7 +298,7 @@ class WebScrapingUtility: NSObject {
 
     private func presentWebView() {
         guard !isPresentingWebView else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let viewController = WebScrapingViewController(webView: self.webView, delegate: self)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
@@ -310,9 +306,10 @@ class WebScrapingUtility: NSObject {
     }
 
     // TODO: Remove throw?
-    private func login(credentials: WebScrapingCredentials) throws {
+    private func login(credentials: WebScrapingCredentials) {
         guard let script = script(scriptName: agent.loginScriptFileName) else {
-            throw WebScrapingUtilityError.loginScriptFileNotFound
+            self.finish(withError: .loginScriptFileNotFound)
+            return
         }
         let formattedScript = String(format: script, credentials.username, credentials.password)
 
@@ -327,14 +324,14 @@ class WebScrapingUtility: NSObject {
                     self.finish(withError: .loginFailed(errorMessage: error))
                     return
                 }
-                if response.shouldDisplayWebview {
-                    self.presentWebView()
-                    // every second, check if the recaptcha has succeeded
+                if response.userActionRequired == true {
+                    self.isPerformingUserAction = true
+
+                    if !self.isPresentingWebView {
+                        self.presentWebView()
+                    }
+
                     self.detectElementTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.detectRecaptchaSuccess), userInfo: nil, repeats: true)
-
-                    // If it has, run a script to continue with login
-
-                    // Otherwise, the idle timer should kick in
                 }
             case .failure:
                 self.finish(withError: .failedToExecuteLoginScript)
@@ -348,9 +345,20 @@ class WebScrapingUtility: NSObject {
             switch result {
             case .success(let response):
                 if response.elementDetected == true {
+                    self.detectElementTimer?.invalidate()
+                    self.isPerformingUserAction = false
+
                     if self.isPresentingWebView {
-                        // TODO: Don't force to failed when closing the webview here
-                        Current.navigate.close()
+                        if !Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView) {
+                            Current.navigate.close()
+                        }
+
+                        guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: self.membershipCard.id) else {
+                            self.finish(withError: .failedToExecuteLoginScript)
+                            return
+                        }
+                        self.login(credentials: credentials)
+
                         // TODO: Continue with login using submit button only
                         // For morrisons, we can just run the login script again, and ignore captcha if the element is valid
                     }
@@ -486,9 +494,6 @@ extension WebScrapingUtility: WKNavigationDelegate {
         guard !isRedirecting else { return }
         
         if shouldScrape {
-            // If we should scrape, we know we've successfully logged in.
-            hasCompletedLogin = true
-            
             // At this point, we should close the webView if we have displayed it for reCaptcha
             if isPresentingWebView {
                 Current.navigate.close()
@@ -509,7 +514,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCard.id)
                 if shouldAttemptLogin {
                     hasAttemptedLogin = true
-                    try login(credentials: credentials)
+                    login(credentials: credentials)
                 } else {
                     // We should only fall into here if we know we are at the login url, but we've already attempted a login
                     self.finish(withError: .loginFailed(errorMessage: nil))
@@ -539,7 +544,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
 
 extension WebScrapingUtility: WebScrapingViewControllerDelegate {
     func webScrapingViewControllerDidDismiss(_ viewController: WebScrapingViewController) {
-        if !hasCompletedLogin {
+        if isPerformingUserAction {
             self.finish(withError: .userDismissedWebView)
         }
     }

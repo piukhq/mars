@@ -1,7 +1,7 @@
 var username = "%@"
 var password = "%@"
 
-const formIds = ["sign-in-form", "login-form", "loginForm"]
+var formIds = ["sign-in-form", "login-form", "loginForm"]
 
 performLogin()
 
@@ -104,12 +104,12 @@ function performLogin() {
     // ** RECAPTCHA **
 
 
-    // Can we detect a recaptcha anchor container on the web page?
-    let recaptcha = document.querySelector('re-captcha')
+    // Can we detect an invalid recaptcha anchor container on the web page?
+    let recaptcha = document.querySelector('re-captcha[class*=-invalid]')
 
     if (recaptcha) {
         var node = document.createElement('div')
-        node.style.backgroundColor = 'white'
+        // node.style.backgroundColor = 'white'
         node.style.position = 'fixed'
         node.style.top = '0'
         node.style.bottom = '0'
