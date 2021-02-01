@@ -105,7 +105,7 @@ class PaymentCardCellViewModelTests: XCTestCase, CoreDataTestable {
     }
 
     func test_paymentCard_isExpired_recognisedCorrectly_whenNotExpired() {
-        let paymentCardResponseModel = PaymentCardCardResponse(apiId: nil, firstSix: nil, lastFour: nil, month: 01, year: 2021, country: nil, currencyCode: nil, nameOnCard: nil, provider: nil, type: nil)
+        let paymentCardResponseModel = PaymentCardCardResponse(apiId: nil, firstSix: nil, lastFour: nil, month: 01, year: 2030, country: nil, currencyCode: nil, nameOnCard: nil, provider: nil, type: nil)
         Self.basePaymentCardResponse.card = paymentCardResponseModel
         mapPaymentCard()
         XCTAssertFalse(Self.sut.paymentCardIsExpired)
