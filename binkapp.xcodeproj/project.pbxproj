@@ -148,6 +148,7 @@
 		70840E672562ADAD000E17A5 /* SuperdrugPointsScrape.js in Resources */ = {isa = PBXBuildFile; fileRef = 70840E652562ADAD000E17A5 /* SuperdrugPointsScrape.js */; };
 		70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */; };
 		70907E0825C8683C007629BB /* LocalPointsCollection_Login_Tesco.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */; };
+		70907E0D25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0C25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js */; };
 		709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */; };
 		70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */; };
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
@@ -663,6 +664,7 @@
 		70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperdrugPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
 		70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Tesco.js; sourceTree = "<group>"; };
+		70907E0C25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Heathrow.js; sourceTree = "<group>"; };
 		7097489D24D088FE008D0E29 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
 		7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigUtil.swift; sourceTree = "<group>"; };
 		70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsScrapingManager.swift; sourceTree = "<group>"; };
@@ -1722,6 +1724,7 @@
 		70E8DFDB2563E2F20027A244 /* Heathrow */ = {
 			isa = PBXGroup;
 			children = (
+				70907E0C25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js */,
 				70E8DFDC2563E3050027A244 /* HeathrowPointsScrapingAgent.swift */,
 			);
 			path = Heathrow;
@@ -2802,6 +2805,7 @@
 				3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */,
 				70661B8B250795DF006DB009 /* BootsPointsScrape.js in Resources */,
 				3CE24B2D2304014600B258C8 /* AddOrJoinViewController.xib in Resources */,
+				70907E0D25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js in Resources */,
 				EFCAF9222371CA080044BA11 /* PaymentCardDetailAddLoyaltyCardCell.xib in Resources */,
 				EF762583236B1967002214C3 /* OnboardingLearningView.xib in Resources */,
 				3CD3493F22F99E1D000C1F4D /* NunitoSans-ExtraBoldItalic.ttf in Resources */,

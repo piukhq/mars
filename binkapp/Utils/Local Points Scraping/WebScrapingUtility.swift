@@ -307,7 +307,6 @@ class WebScrapingUtility: NSObject {
         }
     }
 
-    // TODO: Remove throw?
     private func login(credentials: WebScrapingCredentials) {
         guard let script = script(scriptName: agent.loginScriptFileName) else {
             self.finish(withError: .loginScriptFileNotFound)

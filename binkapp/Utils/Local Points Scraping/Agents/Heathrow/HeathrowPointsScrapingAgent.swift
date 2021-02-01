@@ -53,4 +53,8 @@ struct HeathrowScrapingAgent: WebScrapable {
     var incorrectCredentialsMessage: String? {
         return "Invalid Login Details. Please check the details you have entered and try again"
     }
+
+    var loginScriptFileName: String {
+        return "LocalPointsCollection_Login_Heathrow"
+    }
 }
