@@ -149,6 +149,7 @@
 		70840E6C2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */; };
 		70907E0825C8683C007629BB /* LocalPointsCollection_Login_Tesco.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */; };
 		70907E0D25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E0C25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js */; };
+		70907E1225C87B82007629BB /* LocalPointsCollection_Login_Superdrug.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E1125C87B82007629BB /* LocalPointsCollection_Login_Superdrug.js */; };
 		709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */; };
 		70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */; };
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
@@ -665,6 +666,7 @@
 		70872F812475393900195679 /* Bink α.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bink α.entitlements"; sourceTree = "<group>"; };
 		70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Tesco.js; sourceTree = "<group>"; };
 		70907E0C25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Heathrow.js; sourceTree = "<group>"; };
+		70907E1125C87B82007629BB /* LocalPointsCollection_Login_Superdrug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Superdrug.js; sourceTree = "<group>"; };
 		7097489D24D088FE008D0E29 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
 		7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigUtil.swift; sourceTree = "<group>"; };
 		70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsScrapingManager.swift; sourceTree = "<group>"; };
@@ -1620,6 +1622,7 @@
 		70840E622562AC76000E17A5 /* Superdrug */ = {
 			isa = PBXGroup;
 			children = (
+				70907E1125C87B82007629BB /* LocalPointsCollection_Login_Superdrug.js */,
 				70840E652562ADAD000E17A5 /* SuperdrugPointsScrape.js */,
 				70840E6B2562ADBF000E17A5 /* SuperdrugPointsScrapingAgent.swift */,
 			);
@@ -2810,6 +2813,7 @@
 				EF762583236B1967002214C3 /* OnboardingLearningView.xib in Resources */,
 				3CD3493F22F99E1D000C1F4D /* NunitoSans-ExtraBoldItalic.ttf in Resources */,
 				3CD3493C22F99E1D000C1F4D /* NunitoSans-Bold.ttf in Resources */,
+				70907E1225C87B82007629BB /* LocalPointsCollection_Login_Superdrug.js in Resources */,
 				3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */,
 				EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */,
 				7010378F25ADFA6A00C68B53 /* LocalPointsCollection_Points.js in Resources */,
