@@ -16,6 +16,7 @@ final class ImageService {
     enum PathType {
         case membershipPlanIcon(plan: CD_MembershipPlan)
         case membershipPlanHero(plan: CD_MembershipPlan)
+        case membershipPlanDarkModeHero(plan: CD_MembershipPlan)
         case membershipPlanTier(card: CD_MembershipCard)
         case membershipPlanOfferTile(url: String)
     }
