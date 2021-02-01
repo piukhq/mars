@@ -51,7 +51,7 @@ extension WebScrapable {
     }
     
     var pointsScrapingScriptFileName: String {
-        return "LocalPointsCollection_Points"
+        return "LocalPointsCollection_Points_\(merchant.rawValue.capitalized)"
     }
 }
 
