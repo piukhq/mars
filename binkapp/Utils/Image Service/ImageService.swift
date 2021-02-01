@@ -17,6 +17,7 @@ final class ImageService {
         case membershipPlanIcon(plan: CD_MembershipPlan)
         case membershipPlanDarkModeIcon(plan: CD_MembershipPlan)
         case membershipPlanHero(plan: CD_MembershipPlan)
+        case membershipPlanDarkModeHero(plan: CD_MembershipPlan)
         case membershipPlanTier(card: CD_MembershipCard)
         case membershipPlanOfferTile(url: String)
     }
@@ -57,12 +58,19 @@ final class ImageService {
             return url ?? fallbackUrl
         case .membershipPlanHero(let plan):
             return plan.image(ofType: .hero)?.url
+        case .membershipPlanDarkModeHero(let plan):
+            let url = plan.image(ofType: .darkModeHero)?.url
+            let fallbackUrl = plan.image(ofType: .icon)?.url
+            return url ?? fallbackUrl
         case .membershipPlanTier(let card):
             /// If we have a tier image, return that
             if let tierImageUrl = card.image(ofType: .tier)?.url {
                 return tierImageUrl
                 /// Otherwise return the hero image url
             } else if let heroImageUrl = card.membershipPlan?.image(ofType: .hero)?.url {
+                
+                // TODO: - If we don;t have a tier image, switch on current them and return light or dark hero
+                
                 return heroImageUrl
             } else {
                 return nil
