@@ -81,6 +81,12 @@ class BinkButtonsView: UIStackView {
             rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
     }
+
+    func insertAdditionalViews(_ views: [UIView]) {
+        for additionalView in views {
+            insertArrangedSubview(additionalView, at: 1) // insert underneath the top spacer
+        }
+    }
 }
 
 extension BinkButtonsView {

@@ -14,9 +14,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     let transition = LoyaltyWalletAnimator()
     var selectedIndexPath: IndexPath?
     
-    // We only want to use transition when tapping a wallet card cell and not when adding a new card
-    var shouldUseTransition = false
-    
     override func configureCollectionView() {
         super.configureCollectionView()
         collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
@@ -68,7 +65,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        shouldUseTransition = true
         super.collectionView(collectionView, didSelectItemAt: indexPath)
         selectedIndexPath = indexPath
         resetAllSwipeStates()

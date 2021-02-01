@@ -66,7 +66,7 @@ final class APIClient {
         return APIConstants.isPreProduction
     }
 
-    let apiVersion: APIVersion = .v1_2
+    let apiVersion: APIVersion = .v1_3
     
     #if DEBUG
     /// Only used for switching over to an API version. This isn't backed by user defaults and will reset.
