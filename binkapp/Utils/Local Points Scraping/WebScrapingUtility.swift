@@ -169,6 +169,7 @@ struct WebScrapingCredentials {
 }
 
 struct WebScrapingResponse: Codable {
+    var success: Bool?
     var pointsString: String?
     var errorMessage: String?
     var userActionRequired: Bool?
@@ -180,6 +181,7 @@ struct WebScrapingResponse: Codable {
     }
 
     enum CodingKeys: String, CodingKey {
+        case success
         case pointsString = "points"
         case errorMessage = "error_message"
         case userActionRequired = "user_action_required"
