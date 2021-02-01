@@ -113,12 +113,11 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         self.delegate = delegate
         
         guard let plan = viewModel.membershipPlan else { return }
-        
-        /// Brand icon
-        cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
+        cardIconImageView.setIconImage(membershipPlan: plan)
         
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")
+        rectangleView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         rectangleView.firstColor = primaryBrandColor
         rectangleView.secondColor = plan.secondaryBrandColor
         

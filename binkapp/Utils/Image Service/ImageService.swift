@@ -15,6 +15,7 @@ final class ImageService {
 
     enum PathType {
         case membershipPlanIcon(plan: CD_MembershipPlan)
+        case membershipPlanDarkModeIcon(plan: CD_MembershipPlan)
         case membershipPlanHero(plan: CD_MembershipPlan)
         case membershipPlanTier(card: CD_MembershipCard)
         case membershipPlanOfferTile(url: String)
@@ -49,11 +50,13 @@ final class ImageService {
     private func path(forType type: PathType) -> String? {
         switch type {
         case .membershipPlanIcon(let plan):
-            guard let url = plan.image(ofType: .icon)?.url else { return nil }
-            return url
+            return plan.image(ofType: .icon)?.url
+        case .membershipPlanDarkModeIcon(let plan):
+            let url = plan.image(ofType: .icon)?.darkModeUrl
+            let fallbackUrl = plan.image(ofType: .icon)?.url
+            return url ?? fallbackUrl
         case .membershipPlanHero(let plan):
-            guard let url = plan.image(ofType: .hero)?.url else { return nil }
-            return url
+            return plan.image(ofType: .hero)?.url
         case .membershipPlanTier(let card):
             /// If we have a tier image, return that
             if let tierImageUrl = card.image(ofType: .tier)?.url {
@@ -109,6 +112,24 @@ extension UIImageView {
                 UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve, animations: { self.image = retrievedImage }, completion: nil)
             } else {
                 self?.image = retrievedImage
+            }
+        }
+    }
+    
+    func setIconImage(membershipPlan: CD_MembershipPlan) {
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            self.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+        case .dark:
+            self.setImage(forPathType: .membershipPlanDarkModeIcon(plan: membershipPlan))
+        case .system:
+            switch traitCollection.userInterfaceStyle {
+            case .light:
+                self.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+            case .dark:
+                self.setImage(forPathType: .membershipPlanDarkModeIcon(plan: membershipPlan))
+            default:
+                self.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
             }
         }
     }

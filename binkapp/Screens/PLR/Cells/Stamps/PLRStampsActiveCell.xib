@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -40,7 +41,7 @@
                                     <constraint firstAttribute="height" constant="24" id="q7A-y9-bGr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="18"/>
-                                <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="systemBlueColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sa-1W-oCR">
@@ -81,7 +82,7 @@
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="S5C-yw-UbQ" customClass="NestedCollectionView" customModule="binkapp" customModuleProvider="target">
                                 <rect key="frame" x="20" y="110" width="330" height="24"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="aF7-Mn-QlU"/>
                                 </constraints>
@@ -93,7 +94,7 @@
                                 </collectionViewFlowLayout>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9sa-1W-oCR" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="3mp-Be-tLx"/>
                             <constraint firstItem="S5C-yw-UbQ" firstAttribute="leading" secondItem="uLh-js-JTM" secondAttribute="leading" constant="20" id="7kF-d6-edg"/>
@@ -113,17 +114,17 @@
                     </view>
                 </subviews>
             </view>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <viewLayoutGuide key="safeArea" id="evD-wY-XwA"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="uLh-js-JTM" secondAttribute="trailing" id="VH3-ME-n4E"/>
                 <constraint firstItem="uLh-js-JTM" firstAttribute="top" secondItem="DDX-kG-7oJ" secondAttribute="top" id="Wiw-np-V5Z"/>
                 <constraint firstItem="uLh-js-JTM" firstAttribute="leading" secondItem="DDX-kG-7oJ" secondAttribute="leading" id="Y53-nb-IfZ"/>
                 <constraint firstAttribute="bottom" secondItem="uLh-js-JTM" secondAttribute="bottom" id="kId-YC-HyS"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="evD-wY-XwA"/>
             <size key="customSize" width="370" height="188"/>
             <connections>
-                <outlet property="containerView" destination="uLh-js-JTM" id="AoZ-Gs-BN2"/>
+                <outlet property="containerView" destination="uLh-js-JTM" id="Iuh-5t-bql"/>
                 <outlet property="earnProgressLabel" destination="Vqm-8a-YmY" id="KWX-87-PFt"/>
                 <outlet property="earnProgressValueLabel" destination="1HV-cm-aY3" id="0Kf-jY-ssQ"/>
                 <outlet property="headlineLabel" destination="9sa-1W-oCR" id="Ouf-3i-VWB"/>
@@ -134,4 +135,12 @@
             <point key="canvasLocation" x="-21.739130434782609" y="147.99107142857142"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

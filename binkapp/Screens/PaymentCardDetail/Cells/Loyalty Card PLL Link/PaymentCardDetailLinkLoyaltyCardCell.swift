@@ -17,16 +17,25 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
 
     private var viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel!
     private weak var delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setSeparatorDefaultWidth()
+    }
 
     func configureWithViewModel(_ viewModel: PaymentCardDetailLinkLoyaltyCardCellViewModel, delegate: PaymentCardDetailLinkLoyaltyCardCellDelegate?) {
         self.viewModel = viewModel
         self.delegate = delegate
 
         headerLabel.text = viewModel.headerText
+        headerLabel.textColor = Current.themeManager.color(for: .text)
         detailLabel.text = viewModel.detailText
+        detailLabel.textColor = Current.themeManager.color(for: .text)
         linkToggle.isOn = viewModel.isLinked
+        
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
-        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+        iconImageView.setIconImage(membershipPlan: membershipPlan)
+        selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
 
     @IBAction private func didToggle() {

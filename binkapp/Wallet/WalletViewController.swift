@@ -19,9 +19,8 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.alwaysBounceVertical = true
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.contentInset = LayoutHelper.WalletDimensions.contentInset
-
         return collectionView
     }()
 
@@ -291,6 +290,13 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             orderingManager.stop()
             collectionView.cancelInteractiveMovement()
         }
+    }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        refreshControl.tintColor = Current.themeManager.color(for: .text)
+        collectionView.reloadData()
+        collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
     }
 }
 

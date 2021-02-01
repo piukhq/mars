@@ -117,7 +117,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
         separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
-        separator.backgroundColor = UIColor(hexString: "e5e5e5")
+        separator.backgroundColor = .grey10
         contentView.addSubview(separator)
         return separator
     }()

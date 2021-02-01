@@ -28,8 +28,11 @@ class PLRBaseCollectionViewCell: UICollectionViewCell {
         setupShadow()
 
         voucherAmountLabel.text = viewModel.voucherAmountText
+        voucherAmountLabel.textColor = Current.themeManager.color(for: .text)
         voucherDescriptionLabel.text = viewModel.voucherDescriptionText
+        voucherDescriptionLabel.textColor = Current.themeManager.color(for: .text)
         headlineLabel.text = viewModel.headlineText
+        headlineLabel.textColor = Current.themeManager.color(for: .text)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         addGestureRecognizer(tapGesture)
@@ -41,7 +44,7 @@ class PLRBaseCollectionViewCell: UICollectionViewCell {
 
     private func setupShadow() {
         backgroundColor = .clear
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         containerView.layer.cornerRadius = 8
         containerView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 8

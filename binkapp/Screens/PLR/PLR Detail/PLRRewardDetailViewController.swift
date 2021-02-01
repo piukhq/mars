@@ -93,6 +93,7 @@ class PLRRewardDetailViewController: BinkViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        navigationController?.navigationBar.tintColor = Current.themeManager.color(for: .text)
     }
 }
 
