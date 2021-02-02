@@ -31,7 +31,9 @@ var invalidCredentialQuery = ""
 
 // Config
 
-var formRequiresValidationOverride = false
+var formForcedValidationClassName = ""
+var usernameForcedValidationClassName = ""
+var passwordForcedValidationClassName = ""
 
 
 performLogin()

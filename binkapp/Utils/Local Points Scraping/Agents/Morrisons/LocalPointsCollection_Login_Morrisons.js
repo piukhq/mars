@@ -26,7 +26,9 @@ var recaptchaChallengeQuery = ""
 
 // Config
 
-var formRequiresValidationOverride = true
+var formForcedValidationClassName = "form ng-dirty ng-touched ng-valid"
+var usernameForcedValidationClassName = "input input--email ng-dirty ng-valid ng-touched"
+var passwordForcedValidationClassName = "input input--password ng-valid ng-dirty ng-touched"
 
 
 performLogin()
@@ -90,7 +92,7 @@ function performLogin() {
 
     if (rInvalid) {
         var node = document.createElement('div')
-        node.style.backgroundColor = 'white'
+//        node.style.backgroundColor = 'white'
         node.style.position = 'fixed'
         node.style.top = '0'
         node.style.bottom = '0'
@@ -114,7 +116,9 @@ function performLogin() {
     // ** FORM VALIDATION **
 
 
-    // TODO: Logic for rendering the form as valid if required
+    f.className = formForcedValidationClassName
+    u.className = usernameForcedValidationClassName
+    p.className = passwordForcedValidationClassName
 
 
     // ** SUBMIT **
