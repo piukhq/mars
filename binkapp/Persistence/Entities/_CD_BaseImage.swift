@@ -1,28 +1,20 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to CD_MembershipPlanImage.swift instead.
-
-// swiftlint:disable all
+// Make changes to CD_BaseImage.swift instead.
 
 import Foundation
 import CoreData
 
-public enum CD_MembershipPlanImageAttributes: String {
-    case ctaUrl = "ctaUrl"
-    case encoding = "encoding"
-    case imageDescription = "imageDescription"
-    case type = "type"
+public enum CD_BaseImageAttributes: String {
+    case darkModeUrl = "darkModeUrl"
+    case url = "url"
 }
 
-public enum CD_MembershipPlanImageRelationships: String {
-    case plan = "plan"
-}
-
-open class _CD_MembershipPlanImage: CD_BaseImage {
+open class _CD_BaseImage: CD_BaseObject {
 
     // MARK: - Class methods
 
     override open class func entityName () -> String {
-        return "CD_MembershipPlanImage"
+        return "CD_BaseImage"
     }
 
     override open class func entity(managedObjectContext: NSManagedObjectContext) -> NSEntityDescription? {
@@ -30,7 +22,7 @@ open class _CD_MembershipPlanImage: CD_BaseImage {
     }
 
     @nonobjc
-    open class func fetchRequest() -> NSFetchRequest<CD_MembershipPlanImage> {
+    open class func fetchRequest() -> NSFetchRequest<CD_BaseImage> {
         return NSFetchRequest(entityName: self.entityName())
     }
 
@@ -41,28 +33,19 @@ open class _CD_MembershipPlanImage: CD_BaseImage {
     }
 
     public convenience init?(managedObjectContext: NSManagedObjectContext) {
-        guard let entity = _CD_MembershipPlanImage.entity(managedObjectContext: managedObjectContext) else { return nil }
+        guard let entity = _CD_BaseImage.entity(managedObjectContext: managedObjectContext) else { return nil }
         self.init(entity: entity, insertInto: managedObjectContext)
     }
 
     // MARK: - Properties
 
     @NSManaged open
-    var ctaUrl: String?
+    var darkModeUrl: String?
 
     @NSManaged open
-    var encoding: String?
-
-    @NSManaged open
-    var imageDescription: String?
-
-    @NSManaged open
-    var type: NSNumber?
+    var url: String?
 
     // MARK: - Relationships
-
-    @NSManaged open
-    var plan: CD_MembershipPlan?
 
 }
 
