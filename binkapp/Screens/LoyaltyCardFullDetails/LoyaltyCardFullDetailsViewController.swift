@@ -319,22 +319,8 @@ private extension LoyaltyCardFullDetailsViewController {
         }
         if viewModel.isMembershipCardAuthorised {
             brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
-        } else {            
-            switch Current.themeManager.currentTheme.type {
-            case .light:
-                brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
-            case .dark:
-                brandHeader.setImage(forPathType: .membershipPlanDarkModeHero(plan: plan), animated: true)
-            case .system:
-                switch traitCollection.userInterfaceStyle {
-                case .light:
-                    brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
-                case .dark:
-                    brandHeader.setImage(forPathType: .membershipPlanDarkModeHero(plan: plan), animated: true)
-                default:
-                    brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
-                }
-            }
+        } else {
+            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan))
         }
         
         configureSecondaryColorViewLayout()
