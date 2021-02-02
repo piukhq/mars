@@ -196,7 +196,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         if viewModel.isMembershipCardAuthorised {
             brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
         } else {
-            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan))
+            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
         }
 
         let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
@@ -320,7 +320,7 @@ private extension LoyaltyCardFullDetailsViewController {
         if viewModel.isMembershipCardAuthorised {
             brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
         } else {
-            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan))
+            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
         }
         
         configureSecondaryColorViewLayout()
