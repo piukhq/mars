@@ -7,8 +7,8 @@ var password = "%@"
 
 // Form selector queries
 
-var formQuery = "form#login-form"
-var usernameInputQuery = "form#login-form input[type=email]"
+var formQuery = "form"
+var usernameInputQuery = "form#login-form input#email"
 var passwordInputQuery = "form#login-form input[type=password]"
 var submitButtonQuery = "form#login-form button[type=submit]"
 
@@ -24,14 +24,9 @@ var recaptchaAnchorContainerQuery = "re-captcha div"
 var recaptchaChallengeQuery = ""
 
 
-// Error state selector queries
-
-var invalidCredentialQuery = ""
-
-
 // Config
 
-var formRequiresValidationOverride = false
+var formRequiresValidationOverride = true
 
 
 performLogin()
@@ -70,7 +65,7 @@ function performLogin() {
 
     u.value = username
 
-    
+
     // ** PASSWORD **
 
 
@@ -106,7 +101,7 @@ function performLogin() {
         let container = document.querySelector(recaptchaAnchorContainerQuery)
         container.style.position = 'relative'
         container.style.zIndex = '1000'
-        
+
         rInvalid.appendChild(node)
 
         return {
@@ -114,10 +109,6 @@ function performLogin() {
             "user_action_required": true
         }
     }
-
-    // Can we detect a valid recaptcha anchor?
-    var rValid = document.querySelector(recaptchaAnchorValidQuery)
-    // TODO: Can we do anything here?
 
 
     // ** FORM VALIDATION **
@@ -139,7 +130,7 @@ function performLogin() {
     }
 
     b.click()
-    
+
     return {
         "success": true
     }
