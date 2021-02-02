@@ -15,7 +15,6 @@ final class ImageService {
 
     enum PathType {
         case membershipPlanIcon(plan: CD_MembershipPlan)
-        case membershipPlanDarkModeIcon(plan: CD_MembershipPlan)
         case membershipPlanHero(plan: CD_MembershipPlan)
         case membershipPlanTier(card: CD_MembershipCard)
         case membershipPlanOfferTile(url: String)
@@ -47,53 +46,17 @@ final class ImageService {
         downloadImage(forPath: imagePath, withPolicy: policy, completion: completion)
     }
 
-//    func path1(forType type: PathType) -> String? {
-//        switch type {
-//        case .membershipPlanIcon(let plan):
-//            return plan.image(ofType: .icon)?.url
-//        case .membershipPlanDarkModeIcon(let plan):
-//            let url = plan.image(ofType: .icon)?.darkModeUrl
-//            let fallbackUrl = plan.image(ofType: .icon)?.url
-//            return url ?? fallbackUrl
-//        case .membershipPlanHero(let plan):
-//            return plan.image(ofType: .hero)?.url
-//        case .membershipPlanTier(let card):
-//            /// If we have a tier image, return that
-//            if let tierImageUrl = card.image(ofType: .tier)?.url {
-//                return tierImageUrl
-//                /// Otherwise return the hero image url
-//            } else if let heroImageUrl = card.membershipPlan?.image(ofType: .hero)?.url {
-//                
-//                // TODO: - If we dont have a tier image, switch on current theme and return light or dark hero
-//                
-//                return heroImageUrl
-//            } else {
-//                return nil
-//            }
-//        case .membershipPlanOfferTile(let url):
-//            return url
-//        }
-//    }
-    
     private func path(forType type: PathType, traitCollection: UITraitCollection?) -> String? {
-        var image: CD_MembershipPlanImage? = CD_MembershipPlanImage()
+        var image: CD_BaseImage? = CD_BaseImage()
         
         switch type {
         case .membershipPlanIcon(let plan):
             image = plan.image(ofType: .icon)
-        case .membershipPlanDarkModeIcon(let plan):
-            image = plan.image(ofType: .icon)
         case .membershipPlanHero(let plan):
             image = plan.image(ofType: .hero)
         case .membershipPlanTier(let card):
-            /// If we have a tier image, return that
-            if let tierImage = card.image(ofType: .tier) {
-                image = tierImage // FIX ME
-                
-                /// Otherwise return the hero image
-            } else if let heroImage = card.membershipPlan?.image(ofType: .hero) {
-                image = heroImage
-            }
+            /// If we have a tier image, return that, otherwise return hero
+            image = card.image(ofType: .tier) ?? card.membershipPlan?.image(ofType: .hero)
         case .membershipPlanOfferTile(let url):
             return url
         }
@@ -102,21 +65,21 @@ final class ImageService {
         
         switch Current.themeManager.currentTheme.type {
         case .light:
-            url = image?.url
+            url = image?.imageUrl
         case .dark:
-            url = image?.darkModeUrl
+            url = image?.darkModeImageUrl ?? image?.imageUrl
         case .system:
             switch traitCollection?.userInterfaceStyle {
             case .light:
-                url = image?.url
+                url = image?.imageUrl
             case .dark:
-                url = image?.darkModeUrl
+                url = image?.darkModeImageUrl ?? image?.imageUrl
             default:
-                url = image?.url
+                url = image?.imageUrl
             }
         }
         
-        return url ?? image?.url
+        return url
     }
  
 
@@ -163,42 +126,6 @@ extension UIImageView {
             }
         }
     }
-    
-    func setIconImage(membershipPlan: CD_MembershipPlan) {
-        switch Current.themeManager.currentTheme.type {
-        case .light:
-            self.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
-        case .dark:
-            self.setImage(forPathType: .membershipPlanDarkModeIcon(plan: membershipPlan))
-        case .system:
-            switch traitCollection.userInterfaceStyle {
-            case .light:
-                self.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
-            case .dark:
-                self.setImage(forPathType: .membershipPlanDarkModeIcon(plan: membershipPlan))
-            default:
-                self.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
-            }
-        }
-    }
-    
-//    func setHeroImage(membershipPlan: CD_MembershipPlan) {
-//        switch Current.themeManager.currentTheme.type {
-//        case .light:
-//            self.setImage(forPathType: .membershipPlanHero(plan: membershipPlan), animated: true)
-//        case .dark:
-//            self.setImage(forPathType: .membershipPlanDarkModeHero(plan: membershipPlan), animated: true)
-//        case .system:
-//            switch traitCollection.userInterfaceStyle {
-//            case .light:
-//                self.setImage(forPathType: .membershipPlanHero(plan: membershipPlan), animated: true)
-//            case .dark:
-//                self.setImage(forPathType: .membershipPlanDarkModeHero(plan: membershipPlan), animated: true)
-//            default:
-//                self.setImage(forPathType: .membershipPlanHero(plan: membershipPlan), animated: true)
-//            }
-//        }
-//    }
 }
 
 /// A utility class to handle the expiration of objects stored to disk. When an object is
@@ -272,7 +199,7 @@ enum StorageUtility {
         }
 
         // Get urls from plan images
-        let planImageUrls = planImages.map { $0.url ?? "" }
+        let planImageUrls = planImages.map { $0.imageUrl ?? "" }
 
         // Get urls from stored objects
         let storedObjectUrls = sharedStoredObjects.map { $0.objectPath }

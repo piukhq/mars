@@ -113,7 +113,7 @@ class WalletLoyaltyCardCollectionViewCell: WalletCardCollectionViewCell, UIGestu
         self.delegate = delegate
         
         guard let plan = viewModel.membershipPlan else { return }
-        cardIconImageView.setIconImage(membershipPlan: plan)
+        cardIconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
         
         /// Brand colours
         let primaryBrandColor = UIColor(hexString: viewModel.brandColorHex ?? "")

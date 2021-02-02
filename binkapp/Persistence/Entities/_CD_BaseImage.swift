@@ -5,8 +5,8 @@ import Foundation
 import CoreData
 
 public enum CD_BaseImageAttributes: String {
-    case darkModeUrl = "darkModeUrl"
-    case url = "url"
+    case darkModeImageUrl = "darkModeImageUrl"
+    case imageUrl = "imageUrl"
 }
 
 open class _CD_BaseImage: CD_BaseObject {
@@ -40,10 +40,10 @@ open class _CD_BaseImage: CD_BaseObject {
     // MARK: - Properties
 
     @NSManaged open
-    var darkModeUrl: String?
+    var darkModeImageUrl: String?
 
     @NSManaged open
-    var url: String?
+    var imageUrl: String?
 
     // MARK: - Relationships
 

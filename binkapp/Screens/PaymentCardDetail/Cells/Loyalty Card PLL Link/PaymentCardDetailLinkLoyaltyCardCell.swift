@@ -34,7 +34,7 @@ class PaymentCardDetailLinkLoyaltyCardCell: PaymentCardDetailTableViewCell {
         linkToggle.isOn = viewModel.isLinked
         
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
-        iconImageView.setIconImage(membershipPlan: membershipPlan)
+        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
         selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
 

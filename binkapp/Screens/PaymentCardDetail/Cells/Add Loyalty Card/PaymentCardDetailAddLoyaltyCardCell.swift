@@ -25,7 +25,7 @@ class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
         detailLabel.text = viewModel.detailText
         detailLabel.textColor = Current.themeManager.color(for: .text)
         addCardButton.configure(title: "pcd_add_card_button_title".localized, hasShadow: false)
-        iconImageView.setIconImage(membershipPlan: viewModel.membershipPlan)
+        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: viewModel.membershipPlan))
         selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
 
