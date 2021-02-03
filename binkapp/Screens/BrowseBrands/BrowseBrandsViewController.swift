@@ -208,7 +208,7 @@ class BrowseBrandsViewController: BinkViewController {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
         filtersButton?.isEnabled = false
-        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.linkTextButtonNormal], for: .disabled)
+        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkDynamicGrayBlack, .font: UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: self.view.frame.width - (Constants.marginPadding * 2), height: self.filterViewHeight)
@@ -220,7 +220,7 @@ class BrowseBrandsViewController: BinkViewController {
         }) { [weak self] _ in
             self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
             self?.filtersButton?.isEnabled = true
-            self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.linkTextButtonNormal], for: .normal)
+            self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkDynamicGrayBlack, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
     }
     
@@ -269,6 +269,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: Constants.tableViewHeaderHeight))
         titleLabel.font = UIFont.headline
         titleLabel.text = viewModel.getSectionTitleText(section: section)
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         view.addSubview(titleLabel)
         return view
     }

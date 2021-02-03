@@ -49,7 +49,7 @@ class PLRStampViewCell: UICollectionViewCell {
                 return .blueInactive
             }
         } else {
-            return .binkDynamicGray2
+            return .binkDynamicGray
         }
     }
 }

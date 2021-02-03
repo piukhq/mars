@@ -140,33 +140,32 @@ extension UIColor {
     static let binkBlueDividerColor = UIColor(hexString: "767676")
     static let binkBlueTextColor = UIColor(hexString: "FFFFFF")
     
-    // MARK: Abstracted system colours
-    static let binkDynamicGray1Light = UIColor(hexString: "AAAAAA")
-    static let binkDynamicGray2Light = UIColor(hexString: "d1d1d6")
-    
-    static var binkDynamicGray1: UIColor {
+    // MARK: Bink custom dynamic colours
+    static let binkDynamicGrayLight = UIColor(hexString: "d1d1d6")
+
+    static var binkDynamicGray: UIColor {
         switch Current.themeManager.currentTheme.type {
         case .system:
             return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGray1Light : .binkBlueDividerColor
+                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkBlueDividerColor
             }
         case .light:
-            return binkDynamicGray1Light
+            return binkDynamicGrayLight
         case .dark:
             return binkBlueDividerColor
         }
     }
     
-    static var binkDynamicGray2: UIColor {
+    static var binkDynamicGrayBlack: UIColor {
         switch Current.themeManager.currentTheme.type {
         case .system:
             return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGray2Light : .binkBlueDividerColor
+                return traitcollection.userInterfaceStyle == .light ? .black : .binkDynamicGrayLight
             }
         case .light:
-            return binkDynamicGray2Light
+            return .black
         case .dark:
-            return binkBlueDividerColor
+            return .binkDynamicGrayLight
         }
     }
 }

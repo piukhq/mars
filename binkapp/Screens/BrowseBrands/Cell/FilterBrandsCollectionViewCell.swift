@@ -35,7 +35,7 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
     
     func configureCell(with name: String) {
         backgroundColor = .clear
-        customSeparatorView.backgroundColor = .binkDynamicGray1
+        customSeparatorView.backgroundColor = Current.themeManager.color(for: .divider)
         filterTitleLabel.text = name
         filterTitleLabel.textColor = Current.themeManager.color(for: .text)
         filterTitle = name
