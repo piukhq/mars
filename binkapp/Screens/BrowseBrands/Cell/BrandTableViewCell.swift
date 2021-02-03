@@ -46,6 +46,7 @@ class BrandTableViewCell: UITableViewCell {
         descriptionLabel.textColor = Current.themeManager.color(for: .text)
 
         existingBrandIcon.isHidden = !brandExists
+        existingBrandIcon.tintColor = Current.themeManager.color(for: .text)
     }
     
     func hideSeparatorView() {
