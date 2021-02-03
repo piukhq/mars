@@ -24,18 +24,6 @@ var recaptchaAnchorContainerQuery = "re-captcha div"
 var recaptchaChallengeQuery = ""
 
 
-// Error state selector queries
-
-var invalidCredentialQuery = ""
-
-
-// Config
-
-var formForcedValidationClassName = ""
-var usernameForcedValidationClassName = ""
-var passwordForcedValidationClassName = ""
-
-
 performLogin()
 
 
@@ -70,8 +58,6 @@ function performLogin() {
         }
     }
 
-    u.value = username
-
     
     // ** PASSWORD **
 
@@ -85,7 +71,22 @@ function performLogin() {
         }
     }
 
+
+    // ** VALUE SETTING **
+
+
+    u.value = username
     p.value = password
+
+
+    // REACT value setter override handling
+    var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+    nativeInputValueSetter.call(u, username);
+    nativeInputValueSetter.call(p, password);
+
+    var valueSetterEvent = new Event('input', { bubbles: true});
+    u.dispatchEvent(valueSetterEvent);
+    p.dispatchEvent(valueSetterEvent);
 
 
     // ** RE-CAPTCHA
@@ -120,12 +121,6 @@ function performLogin() {
     // Can we detect a valid recaptcha anchor?
     var rValid = document.querySelector(recaptchaAnchorValidQuery)
     // TODO: Can we do anything here?
-
-
-    // ** FORM VALIDATION **
-
-
-    // TODO: Logic for rendering the form as valid if required
 
 
     // ** SUBMIT **

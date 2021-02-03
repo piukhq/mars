@@ -9,116 +9,9 @@
 import UIKit
 import WebKit
 
-enum WebScrapableMerchant: String {
-    case tesco
-    case boots
-    case morrisons
-    case superdrug
-    case waterstones
-    case heathrow
-    case perfumeshop
-}
-
-protocol WebScrapable {
-    var merchant: WebScrapableMerchant { get }
-    var membershipPlanId: Int { get }
-    var usernameFieldTitle: String { get }
-    var passwordFieldTitle: String { get }
-    var loyaltySchemeBalanceCurrency: String? { get }
-    var loyaltySchemeBalanceSuffix: String? { get }
-    var loyaltySchemeBalancePrefix: String? { get }
-    var loginUrlString: String { get }
-    var scrapableUrlString: String { get }
-    var loginScriptFileName: String { get }
-    var pointsScrapingScriptFileName: String { get }
-}
-
-extension WebScrapable {
-    var loyaltySchemeBalanceCurrency: String? {
-        return nil
-    }
-
-    var loyaltySchemeBalanceSuffix: String? {
-        return nil
-    }
-
-    var loyaltySchemeBalancePrefix: String? {
-        return nil
-    }
-
-    var loginScriptFileName: String {
-        return "LocalPointsCollection_Login_\(merchant.rawValue.capitalized)"
-    }
-    
-    var pointsScrapingScriptFileName: String {
-        return "LocalPointsCollection_Points_\(merchant.rawValue.capitalized)"
-    }
-}
-
-enum WebScrapingUtilityError: BinkError {
-    case agentProvidedInvalidUrl
-    case loginScriptFileNotFound
-    case scapingScriptFileNotFound
-    case detectTextScriptFileNotFound
-    case agentProvidedInvalidLoginScript
-    case agentProvidedInvalidScrapeScript
-    case invalidDetectTextScript
-    case failedToExecuteLoginScript
-    case failedToExecuteScrapingScript
-    case failedToExecuteDetectTextScript
-    case failedToCastReturnValue
-    case loginFailed(errorMessage: String?)
-    case userDismissedWebView
-    case unhandledIdling
-    case javascriptError
-    case pointsScrapingFailed(errorMessage: String?)
-    
-    var domain: BinkErrorDomain {
-        return .webScrapingUtility
-    }
-    
-    var message: String {
-        switch self {
-        case .agentProvidedInvalidUrl:
-            return "Agent provided invalid URL"
-        case .loginScriptFileNotFound:
-            return "Login script file not found"
-        case .scapingScriptFileNotFound:
-            return "Scraping script file not found"
-        case .agentProvidedInvalidLoginScript:
-            return "Agent provided invalid login script"
-        case .agentProvidedInvalidScrapeScript:
-            return "Agent provided invalid scrape script"
-        case .failedToExecuteLoginScript:
-            return "Failed to execute login script"
-        case .failedToExecuteScrapingScript:
-            return "Failed to execute scraping script"
-        case .failedToCastReturnValue:
-            return "Failed to cast return value"
-        case .loginFailed(let errorMessage):
-            if let error = errorMessage {
-                return "Login failed - \(error)"
-            }
-            return "Login failed"
-        case .detectTextScriptFileNotFound:
-            return "Detect text script file not found"
-        case .invalidDetectTextScript:
-            return "Invalid detect text script"
-        case .failedToExecuteDetectTextScript:
-            return "Failed to execute detect text script"
-        case .userDismissedWebView:
-            return "User dismissed webview"
-        case .unhandledIdling:
-            return "Unhandled idling"
-        case .javascriptError:
-            return "Javascript error"
-        case .pointsScrapingFailed(let errorMessage):
-            if let error = errorMessage {
-                return "Points scraping failed - \(error)"
-            }
-            return "Points scraping failed"
-        }
-    }
+struct WebScrapingCredentials {
+    let username: String
+    let password: String
 }
 
 protocol WebScrapingUtilityDelegate: AnyObject {
@@ -126,68 +19,37 @@ protocol WebScrapingUtilityDelegate: AnyObject {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
 }
 
-struct WebScrapingCredentials {
-    let username: String
-    let password: String
-}
-
-struct WebScrapingResponse: Codable {
-    var success: Bool?
-    var pointsString: String?
-    var errorMessage: String?
-    var userActionRequired: Bool?
-    var elementDetected: Bool?
-
-    var pointsValue: Int? {
-        guard let string = pointsString else { return nil }
-        return Int(string)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case success
-        case pointsString = "points"
-        case errorMessage = "error_message"
-        case userActionRequired = "user_action_required"
-        case elementDetected = "element_detected"
-    }
-}
-
 class WebScrapingUtility: NSObject {
-    enum ReCaptchaPresentationType {
-        case persistent // reCaptcha is presented as soon as the login screen is loaded
-        case reactive // reCaptcha is presented once a login has been attempted
-        case none // reCaptcha is never presented to the user
-    }
-    
-    enum ReCaptchaPresentationFrequency {
-        case always // reCaptcha is presented every time
-        case sometimes // reCaptcha is presented sometimes
-        case never // reCaptcha is never presented to the user
-    }
-    
     private let webView: WKWebView
     private let agent: WebScrapable
     private let membershipCard: CD_MembershipCard
+
+    private weak var delegate: WebScrapingUtilityDelegate?
+
+    private var idleTimer: Timer?
+    private var detectElementTimer: Timer?
+    private let idleThreshold: TimeInterval = 60
+
     private var hasAttemptedLogin = false
-    private var canAttemptToDetectReCaptcha = false
-    private var canAttemptToDetectIncorrectCredentials = false
+    private var isRunningScript = false
+    private var isPerformingUserAction = false
+    private var isIdle = false
+    private var isReloadingWebView = false
+
+    private var isInDebugMode: Bool {
+        return Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView)
+    }
+
     private var isPresentingWebView: Bool {
         guard let navigationViewController = UIViewController.topMostViewController() as? UINavigationController else { return false }
         guard let topViewController = navigationViewController.viewControllers.first else { return false }
         return topViewController.view.subviews.contains(webView)
     }
+
     private var isBalanceRefresh: Bool {
         guard let balances = membershipCard.formattedBalances, !balances.isEmpty else { return false }
         return true
     }
-    private weak var delegate: WebScrapingUtilityDelegate?
-
-    private var isIdle = false
-    private var idleTimer: Timer?
-    private let idleThreshold: TimeInterval = 60
-
-    private var isPerformingUserAction = false
-    private var detectElementTimer: Timer?
     
     init(agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
         webView = WKWebView(frame: .zero)
@@ -204,7 +66,7 @@ class WebScrapingUtility: NSObject {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
-        if Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView) {
+        if isInDebugMode {
             presentWebView()
         }
         
@@ -263,10 +125,17 @@ class WebScrapingUtility: NSObject {
 
     private func presentWebView() {
         guard !isPresentingWebView else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             let viewController = WebScrapingViewController(webView: self.webView, delegate: self)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
+        }
+    }
+
+    private func closeWebView(force: Bool = false) {
+        if !force, isInDebugMode { return }
+        if isPresentingWebView {
+            Current.navigate.close()
         }
     }
 
@@ -288,14 +157,12 @@ class WebScrapingUtility: NSObject {
                     self.finish(withError: .loginFailed(errorMessage: error))
                     return
                 }
+
                 if response.userActionRequired == true {
                     self.isPerformingUserAction = true
-
-                    if !self.isPresentingWebView {
-                        self.presentWebView()
-                    }
-
+                    self.presentWebView()
                     self.detectElementTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.detectRecaptchaSuccess), userInfo: nil, repeats: true)
+                    return
                 }
             case .failure:
                 self.finish(withError: .failedToExecuteLoginScript)
@@ -311,24 +178,16 @@ class WebScrapingUtility: NSObject {
                 if response.elementDetected == true {
                     self.detectElementTimer?.invalidate()
                     self.isPerformingUserAction = false
+                    self.closeWebView()
 
-                    if self.isPresentingWebView {
-                        if !Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView) {
-                            Current.navigate.close()
-                        }
-
-                        guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: self.membershipCard.id) else {
-                            self.finish(withError: .failedToExecuteLoginScript)
-                            return
-                        }
-                        self.login(credentials: credentials)
-
-                        // TODO: Continue with login using submit button only
-                        // For morrisons, we can just run the login script again, and ignore captcha if the element is valid
+                    guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: self.membershipCard.id) else {
+                        self.finish(withError: .failedToExecuteLoginScript)
+                        return
                     }
+                    self.login(credentials: credentials)
                 }
             case .failure:
-                print("error")
+                self.finish(withError: .loginFailed(errorMessage: "Failed to detect recaptcha element."))
             }
         }
     }
@@ -384,7 +243,10 @@ class WebScrapingUtility: NSObject {
     }
 
     private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
-        webView.evaluateJavaScript(script) { (response, error) in
+        if isRunningScript { return }
+        isRunningScript = true
+        webView.evaluateJavaScript(script) { [weak self] (response, error) in
+            self?.isRunningScript = false
             guard error == nil else {
                 completion(.failure(.javascriptError))
                 return
@@ -409,6 +271,7 @@ class WebScrapingUtility: NSObject {
         idleTimer?.invalidate()
 
         if let value = value {
+            closeWebView(force: true)
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, forMembershipCard: membershipCard, withAgent: agent)
         }
 
@@ -450,19 +313,28 @@ class WebScrapingUtility: NSObject {
 
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        handleWebViewNavigation()
+
+        // We know that if we entered this delegate method via a forced reload, we've now completed that
+        isReloadingWebView = false
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
+        decisionHandler(.allow, preferences)
+
+        if webView.url?.absoluteString.contains("#") == true, !isReloadingWebView, shouldScrape {
+            isReloadingWebView = true
+            webView.reload()
+        }
+    }
+
+    private func handleWebViewNavigation() {
         resetIdlingTimer()
-        canAttemptToDetectReCaptcha = true
-        canAttemptToDetectIncorrectCredentials = true
-        
+
         // We only care about the webview navigation to our agent's login url or scrapable url
         guard !isRedirecting else { return }
-        
+
         if shouldScrape {
-            // At this point, we should close the webView if we have displayed it for reCaptcha
-            if isPresentingWebView {
-                Current.navigate.close()
-            }
-            
             getScrapedValue { [weak self] result in
                 guard let self = self else { return }
 
@@ -492,54 +364,13 @@ extension WebScrapingUtility: WKNavigationDelegate {
             }
         }
     }
-    
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
-//        resetIdlingTimer()
-//
-//        detectIncorrectCredentialsText { textDetected in
-//            if !textDetected {
-//                self.detectRecaptchaText()
-//            }
-//        }
-
-        decisionHandler(.allow, preferences)
-    }
 }
 
 extension WebScrapingUtility: WebScrapingViewControllerDelegate {
     func webScrapingViewControllerDidDismiss(_ viewController: WebScrapingViewController) {
+        if isInDebugMode { return }
         if isPerformingUserAction {
             self.finish(withError: .userDismissedWebView)
         }
-    }
-}
-
-protocol WebScrapingViewControllerDelegate: AnyObject {
-    func webScrapingViewControllerDidDismiss(_ viewController: WebScrapingViewController)
-}
-
-class WebScrapingViewController: UIViewController {
-    private let webView: WKWebView
-    private weak var delegate: WebScrapingViewControllerDelegate?
-    
-    init(webView: WKWebView, delegate: WebScrapingViewControllerDelegate?) {
-        self.webView = webView
-        self.delegate = delegate
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        webView.frame = view.frame
-        view.addSubview(webView)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        delegate?.webScrapingViewControllerDidDismiss(self)
     }
 }

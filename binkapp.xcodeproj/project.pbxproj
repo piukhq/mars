@@ -181,6 +181,11 @@
 		70E8E37B2566DE430027A244 /* PLLScreenViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */; };
 		70E8E4AA256712D80027A244 /* CoreDataTestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */; };
 		70E8E5A72567FB690027A244 /* OptionalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E8E5A62567FB690027A244 /* OptionalExtension.swift */; };
+		70F7EC1B25CAC657005DE935 /* LocalPointsCollection_Points_Morrisons.js in Resources */ = {isa = PBXBuildFile; fileRef = 70F7EC1A25CAC656005DE935 /* LocalPointsCollection_Points_Morrisons.js */; };
+		70F7EC2125CAF932005DE935 /* WebScrapable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2025CAF932005DE935 /* WebScrapable.swift */; };
+		70F7EC2625CAF950005DE935 /* WebScrapingUtilityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2525CAF950005DE935 /* WebScrapingUtilityError.swift */; };
+		70F7EC2B25CAF97A005DE935 /* WebScrapingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */; };
+		70F7EC3025CAF9A2005DE935 /* WebScrapingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */; };
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
 		96F22E022508B6060009951B /* SentryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F22E012508B6060009951B /* SentryService.swift */; };
 		9B0A103BBA0F62048017D0B8 /* Pods_binkappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */; };
@@ -702,6 +707,11 @@
 		70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLLScreenViewModelTests.swift; sourceTree = "<group>"; };
 		70E8E4A5256712AF0027A244 /* CoreDataTestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTestable.swift; sourceTree = "<group>"; };
 		70E8E5A62567FB690027A244 /* OptionalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalExtension.swift; sourceTree = "<group>"; };
+		70F7EC1A25CAC656005DE935 /* LocalPointsCollection_Points_Morrisons.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Points_Morrisons.js; sourceTree = "<group>"; };
+		70F7EC2025CAF932005DE935 /* WebScrapable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapable.swift; sourceTree = "<group>"; };
+		70F7EC2525CAF950005DE935 /* WebScrapingUtilityError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtilityError.swift; sourceTree = "<group>"; };
+		70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingViewController.swift; sourceTree = "<group>"; };
+		70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingResponse.swift; sourceTree = "<group>"; };
 		782FD7EAEC7253B4F80C33EF /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		96F22E012508B6060009951B /* SentryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryService.swift; sourceTree = "<group>"; };
 		9AF638C55EA3C2FE09150516 /* Pods-binkappTests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.app store (internal).xcconfig"; sourceTree = "<group>"; };
@@ -1617,6 +1627,7 @@
 		70661B8D250A56DB006DB009 /* Morrisons */ = {
 			isa = PBXGroup;
 			children = (
+				70F7EC1A25CAC656005DE935 /* LocalPointsCollection_Points_Morrisons.js */,
 				70907E4E25C95EDA007629BB /* LocalPointsCollection_Login_Morrisons.js */,
 				70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */,
 			);
@@ -1718,12 +1729,14 @@
 		70E86778248E76B9001ED282 /* Local Points Scraping */ = {
 			isa = PBXGroup;
 			children = (
-				70907E1B25C87DA3007629BB /* LocalPointsCollection_Login_Template.js */,
-				70907E3325C883D3007629BB /* LocalPointsCollection_Points_Template.js */,
-				700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */,
+				70F7EC1F25CAF905005DE935 /* Scripts */,
 				70BD4BD024B774EB006E4E3D /* Agents */,
 				70E86779248E76C9001ED282 /* WebScrapingUtility.swift */,
 				70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */,
+				70F7EC2025CAF932005DE935 /* WebScrapable.swift */,
+				70F7EC2525CAF950005DE935 /* WebScrapingUtilityError.swift */,
+				70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */,
+				70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */,
 			);
 			path = "Local Points Scraping";
 			sourceTree = "<group>";
@@ -1762,6 +1775,16 @@
 				70E8E37A2566DE430027A244 /* PLLScreenViewModelTests.swift */,
 			);
 			path = PLL;
+			sourceTree = "<group>";
+		};
+		70F7EC1F25CAF905005DE935 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				70907E1B25C87DA3007629BB /* LocalPointsCollection_Login_Template.js */,
+				70907E3325C883D3007629BB /* LocalPointsCollection_Points_Template.js */,
+				700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */,
+			);
+			path = Scripts;
 			sourceTree = "<group>";
 		};
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
@@ -2826,6 +2849,7 @@
 				3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */,
 				EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */,
 				B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */,
+				70F7EC1B25CAC657005DE935 /* LocalPointsCollection_Points_Morrisons.js in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
@@ -3247,6 +3271,7 @@
 				EFEB5BF5237D9F6900E18743 /* PLRCellViewModel.swift in Sources */,
 				EFDEBDF72408279900CB755E /* SecureUtility.swift in Sources */,
 				B713662B2329374D008A0ED7 /* OfferTileView.swift in Sources */,
+				70F7EC2125CAF932005DE935 /* WebScrapable.swift in Sources */,
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
 				CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */,
 				EF6921762469A9290049875B /* DebugSecondaryPlanColorCell.swift in Sources */,
@@ -3265,6 +3290,7 @@
 				EF2E8811233385A400F678F3 /* World.swift in Sources */,
 				EF94AF0D23D9F04700AAA039 /* DictionaryExtension.swift in Sources */,
 				EF3BC90F234770E000FE52ED /* WalletViewModel.swift in Sources */,
+				70F7EC2B25CAF97A005DE935 /* WebScrapingViewController.swift in Sources */,
 				3CADDEAF231566C9006C3D9C /* LoginTextFieldView.swift in Sources */,
 				EF8BF1FF2341481A00D2E5F3 /* PaymentCardCardResponse.swift in Sources */,
 				3C63ABC822F9D47E00BE143B /* AddingOptionsViewModel.swift in Sources */,
@@ -3283,6 +3309,7 @@
 				B713662D232A63AA008A0ED7 /* BinkModuleView.swift in Sources */,
 				EFA5F7142379A7C70027AB80 /* _CD_AuthoriseField.swift in Sources */,
 				70E8677A248E76C9001ED282 /* WebScrapingUtility.swift in Sources */,
+				70F7EC2625CAF950005DE935 /* WebScrapingUtilityError.swift in Sources */,
 				706D203C24D85B76004BCCF3 /* (null) in Sources */,
 				3CB81C13231E74220075D3AC /* ImageTypeEnum.swift in Sources */,
 				EFEB5BF9237E062500E18743 /* PLRStampsCell.swift in Sources */,
@@ -3338,6 +3365,7 @@
 				EFA5F71B2379A7C70027AB80 /* CD_RegistrationField.swift in Sources */,
 				EFA5F7342379A7C70027AB80 /* _CD_FeatureSet.swift in Sources */,
 				B713662623268FEB008A0ED7 /* PLLScreenViewController.swift in Sources */,
+				70F7EC3025CAF9A2005DE935 /* WebScrapingResponse.swift in Sources */,
 				BD01E127231FA3D000D52713 /* AddingOptionsTabBarViewController.swift in Sources */,
 				EFA5F72B2379A7C70027AB80 /* _CD_MembershipCardAmount.swift in Sources */,
 				EFA5F7192379A7C70027AB80 /* CD_AddField.swift in Sources */,

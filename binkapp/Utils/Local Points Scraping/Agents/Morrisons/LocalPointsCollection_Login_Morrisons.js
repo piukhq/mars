@@ -24,13 +24,6 @@ var recaptchaAnchorContainerQuery = "re-captcha div"
 var recaptchaChallengeQuery = ""
 
 
-// Config
-
-var formForcedValidationClassName = "form ng-dirty ng-touched ng-valid"
-var usernameForcedValidationClassName = "input input--email ng-dirty ng-valid ng-touched"
-var passwordForcedValidationClassName = "input input--password ng-valid ng-dirty ng-touched"
-
-
 performLogin()
 
 
@@ -65,8 +58,6 @@ function performLogin() {
         }
     }
 
-    u.value = username
-
 
     // ** PASSWORD **
 
@@ -80,7 +71,17 @@ function performLogin() {
         }
     }
 
-    p.value = password
+
+    // ** VALUE SETTING **
+
+
+    var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+    nativeInputValueSetter.call(u, username);
+    nativeInputValueSetter.call(p, password);
+
+    var valueSetterEvent = new Event('input', { bubbles: true});
+    u.dispatchEvent(valueSetterEvent);
+    p.dispatchEvent(valueSetterEvent);
 
 
     // ** RE-CAPTCHA
@@ -92,7 +93,7 @@ function performLogin() {
 
     if (rInvalid) {
         var node = document.createElement('div')
-//        node.style.backgroundColor = 'white'
+        node.style.backgroundColor = 'white'
         node.style.position = 'fixed'
         node.style.top = '0'
         node.style.bottom = '0'
@@ -111,14 +112,6 @@ function performLogin() {
             "user_action_required": true
         }
     }
-
-
-    // ** FORM VALIDATION **
-
-
-    f.className = formForcedValidationClassName
-    u.className = usernameForcedValidationClassName
-    p.className = passwordForcedValidationClassName
 
 
     // ** SUBMIT **
