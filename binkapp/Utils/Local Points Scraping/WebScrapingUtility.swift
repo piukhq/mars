@@ -28,12 +28,11 @@ class WebScrapingUtility: NSObject {
 
     private var idleTimer: Timer?
     private var detectElementTimer: Timer?
-    private let idleThreshold: TimeInterval = 60
+    private let idleThreshold: TimeInterval = 10
 
     private var hasAttemptedLogin = false
     private var isRunningScript = false
     private var isPerformingUserAction = false
-    private var isIdle = false
     private var isReloadingWebView = false
 
     private var isInDebugMode: Bool {
@@ -100,27 +99,13 @@ class WebScrapingUtility: NSObject {
     }
 
     private func resetIdlingTimer() {
-//        idleTimer?.invalidate()
-//        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
-//            self.isIdle = true
-//            timer.invalidate()
-//
-//            /// We check for incorrect credentials first, because if that is detected then we don't care about recaptcha
-//            self.detectIncorrectCredentialsText { [weak self] textDetected in
-//                guard let self = self else { return }
-//                if !textDetected {
-//                    /// We only need to handle the case where no text is detected, as the parent method handles the detection handling.
-//                    /// In this case, the reason we are idling is not due to incorrect credentials, so we should check for recaptcha
-//                    self.detectRecaptchaText { recaptchaDetected in
-//                        /// Again, we only need to handle non-detection.
-//                        /// In this case, we aren't idling because of incorrect credentials OR recaptcha, so let's fail the scraping with a reason of unhandled idling.
-//                        if !recaptchaDetected {
-//                            self.finish(withError: .unhandledIdling)
-//                        }
-//                    }
-//                }
-//            }
-//        })
+        idleTimer?.invalidate()
+        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
+            // The webview has sat idle for a period of time without performing any navigation.
+            // If we don't force to failed, the card will remain in an unusable pending state.
+            timer.invalidate()
+            self.finish(withError: .unhandledIdling)
+        })
     }
 
     private func presentWebView() {
@@ -159,6 +144,7 @@ class WebScrapingUtility: NSObject {
                 }
 
                 if response.userActionRequired == true {
+                    self.idleTimer?.invalidate()
                     self.isPerformingUserAction = true
                     self.presentWebView()
                     self.detectElementTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.detectRecaptchaSuccess), userInfo: nil, repeats: true)
@@ -176,6 +162,7 @@ class WebScrapingUtility: NSObject {
             switch result {
             case .success(let response):
                 if response.elementDetected == true {
+                    self.resetIdlingTimer()
                     self.detectElementTimer?.invalidate()
                     self.isPerformingUserAction = false
                     self.closeWebView()
@@ -269,9 +256,11 @@ class WebScrapingUtility: NSObject {
 
     private func finish(withValue value: Int? = nil, withError error: WebScrapingUtilityError? = nil) {
         idleTimer?.invalidate()
+        detectElementTimer?.invalidate()
+
+        closeWebView(force: true)
 
         if let value = value {
-            closeWebView(force: true)
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, forMembershipCard: membershipCard, withAgent: agent)
         }
 
@@ -368,7 +357,10 @@ extension WebScrapingUtility: WKNavigationDelegate {
 
 extension WebScrapingUtility: WebScrapingViewControllerDelegate {
     func webScrapingViewControllerDidDismiss(_ viewController: WebScrapingViewController) {
-        if isInDebugMode { return }
+        if isInDebugMode {
+            resetIdlingTimer()
+            return
+        }
         if isPerformingUserAction {
             self.finish(withError: .userDismissedWebView)
         }
