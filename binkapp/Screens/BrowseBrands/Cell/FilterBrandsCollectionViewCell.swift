@@ -10,7 +10,7 @@ import UIKit
 
 class FilterBrandsCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var filterTitleLable: UILabel!
+    @IBOutlet private weak var filterTitleLabel: UILabel!
     @IBOutlet private weak var customSeparatorView: UIView!
     
     var cellWasTapped: Bool = false {
@@ -28,10 +28,16 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        customSeparatorView.isHidden = false
+    }
+    
     func configureCell(with name: String) {
         backgroundColor = .clear
-        filterTitleLable.text = name
-        filterTitleLable.textColor = Current.themeManager.color(for: .text)
+        customSeparatorView.backgroundColor = .binkDynamicGray1
+        filterTitleLabel.text = name
+        filterTitleLabel.textColor = Current.themeManager.color(for: .text)
         filterTitle = name
     }
     

@@ -141,17 +141,32 @@ extension UIColor {
     static let binkBlueTextColor = UIColor(hexString: "FFFFFF")
     
     // MARK: Abstracted system colours
-    static let binkSystemGray4Light = UIColor(hexString: "d1d1d6")
-    static let binkSystemGray4Dark = UIColor(hexString: "3a3a3c")
+    static let binkDynamicGray1Light = UIColor(hexString: "AAAAAA")
+    static let binkDynamicGray2Light = UIColor(hexString: "d1d1d6")
     
-    static var binkSystemGray4: UIColor {
+    static var binkDynamicGray1: UIColor {
         switch Current.themeManager.currentTheme.type {
         case .system:
-            return .systemGray4
+            return UIColor { (traitcollection: UITraitCollection) -> UIColor in
+                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGray1Light : .binkBlueDividerColor
+            }
         case .light:
-            return binkSystemGray4Light
+            return binkDynamicGray1Light
         case .dark:
-            return binkSystemGray4Dark
+            return binkBlueDividerColor
+        }
+    }
+    
+    static var binkDynamicGray2: UIColor {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            return UIColor { (traitcollection: UITraitCollection) -> UIColor in
+                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGray2Light : .binkBlueDividerColor
+            }
+        case .light:
+            return binkDynamicGray2Light
+        case .dark:
+            return binkBlueDividerColor
         }
     }
 }

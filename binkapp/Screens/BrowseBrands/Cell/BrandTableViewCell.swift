@@ -33,6 +33,7 @@ class BrandTableViewCell: UITableViewCell {
         backgroundColor = Current.themeManager.color(for: .viewBackground)
         
         disclosureIndicatorImageView.tintColor = Current.themeManager.color(for: .text)
+        separatorView.backgroundColor = .binkDynamicGray1
         
         brandLabel.font = UIFont.subtitle
         brandLabel.text = brandName

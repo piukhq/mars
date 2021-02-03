@@ -23,7 +23,7 @@ extension UITableViewCell {
     
     func binkTableViewCellSelectedBackgroundView() -> UIView {
         let selectedView = UIView(frame: bounds)
-        selectedView.backgroundColor = .binkSystemGray4
+        selectedView.backgroundColor = .binkDynamicGray2
         return selectedView
     }
 }
