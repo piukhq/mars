@@ -10,14 +10,13 @@ public enum CD_MembershipCardImageAttributes: String {
     case encoding = "encoding"
     case imageDescription = "imageDescription"
     case type = "type"
-    case url = "url"
 }
 
 public enum CD_MembershipCardImageRelationships: String {
     case membershipCards = "membershipCards"
 }
 
-open class _CD_MembershipCardImage: CD_BaseObject {
+open class _CD_MembershipCardImage: CD_BaseImage {
 
     // MARK: - Class methods
 
@@ -55,9 +54,6 @@ open class _CD_MembershipCardImage: CD_BaseObject {
 
     @NSManaged open
     var type: NSNumber?
-
-    @NSManaged open
-    var url: String?
 
     // MARK: - Relationships
 

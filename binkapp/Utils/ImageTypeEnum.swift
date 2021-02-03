@@ -18,4 +18,5 @@ enum ImageType: Int {
     case personalOffers
     case promotions
     case tier
+    case darkModeHero
 }
