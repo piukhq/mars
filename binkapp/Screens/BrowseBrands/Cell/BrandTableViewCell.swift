@@ -27,16 +27,20 @@ class BrandTableViewCell: UITableViewCell {
     }
     
     func configure(plan: CD_MembershipPlan, brandName: String, brandExists: Bool) {
+        logoImageView.backgroundColor = .clear
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
-
+        backgroundColor = Current.themeManager.color(for: .viewBackground)
+        
         brandLabel.font = UIFont.subtitle
         brandLabel.text = brandName
+        brandLabel.textColor = Current.themeManager.color(for: .text)
 
         let isPLL = plan.featureSet?.planCardType == .link
         descriptionLabel.isHidden = !isPLL
         descriptionLabel.font = UIFont.bodyTextSmall
         descriptionLabel.text = "can_be_linked_description".localized
-        
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
+
         existingBrandIcon.isHidden = !brandExists
     }
     

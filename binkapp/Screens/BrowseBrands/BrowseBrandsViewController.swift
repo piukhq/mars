@@ -33,7 +33,7 @@ class BrowseBrandsViewController: BinkViewController {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.alwaysBounceVertical = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
@@ -101,6 +101,10 @@ class BrowseBrandsViewController: BinkViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .browseBrands)
+    }
+    
+    override func configureForCurrentTheme() {
+        
     }
     
     private func configureCollectionView() {
