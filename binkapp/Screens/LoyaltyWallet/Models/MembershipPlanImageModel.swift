@@ -33,11 +33,11 @@ extension MembershipPlanImageModel: CoreDataMappable, CoreDataIDMappable {
     func objectToMapTo(_ cdObject: CD_MembershipPlanImage, in context: NSManagedObjectContext, delta: Bool, overrideID: String?) -> CD_MembershipPlanImage {
         update(cdObject, \.id, with: overrideID ?? id, delta: delta)
         update(cdObject, \.type, with: NSNumber(value: type ?? 0), delta: delta)
-        update(cdObject, \.url, with: url, delta: delta)
+        update(cdObject, \.imageUrl, with: url, delta: delta)
         update(cdObject, \.imageDescription, with: imageDescription, delta: delta)
         update(cdObject, \.encoding, with: encoding, delta: delta)
         update(cdObject, \.ctaUrl, with: ctaUrl, delta: delta)
-        update(cdObject, \.darkModeUrl, with: darkModeUrl, delta: delta)
+        update(cdObject, \.darkModeImageUrl, with: darkModeUrl, delta: delta)
 
         return cdObject
     }

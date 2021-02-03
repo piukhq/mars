@@ -27,7 +27,7 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
         statusLabel.textColor = textColor(forStatus: viewModel.status)
         
         guard let membershipPlan = viewModel.membershipCard.membershipPlan else { return }
-        iconImageView.setIconImage(membershipPlan: membershipPlan)
+        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
         selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
     
