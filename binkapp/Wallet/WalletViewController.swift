@@ -19,9 +19,8 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.alwaysBounceVertical = true
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.contentInset = LayoutHelper.WalletDimensions.contentInset
-
         return collectionView
     }()
 
@@ -37,6 +36,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private let dotView = UIView()
 
     var orderingManager = WalletOrderingManager()
+    
+    // We only want to use transition when tapping a wallet card cell and not when adding a new card
+    var shouldUseTransition = false
 
     let viewModel: T
 
@@ -236,11 +238,13 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             guard let card = viewModel.cards?[indexPath.row] else {
                 return
             }
+            shouldUseTransition = true
             viewModel.toCardDetail(for: card)
         } else {
             guard let joinCard = viewModel.promptCard(forIndexPath: indexPath) else {
                 return
             }
+            shouldUseTransition = false
             viewModel.didSelectWalletPrompt(joinCard)
         }
     }
@@ -286,6 +290,13 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             orderingManager.stop()
             collectionView.cancelInteractiveMovement()
         }
+    }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        refreshControl.tintColor = Current.themeManager.color(for: .text)
+        collectionView.reloadData()
+        collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
     }
 }
 

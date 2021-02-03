@@ -37,10 +37,23 @@ class MainTabBarViewController: UITabBarController {
         
         self.title = "" // TODO: Why? Remove.
         populateTabBar()
+
+        configureForCurrentTheme()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     func populateTabBar() {
         viewControllers = viewModel.viewControllers
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureForCurrentTheme()
+    }
+
+    @objc func configureForCurrentTheme() {
+        tabBar.standardAppearance = Current.themeManager.tabBarAppearance(for: traitCollection)
+        tabBar.tintColor = Current.themeManager.color(for: .text)
+        tabBar.setNeedsLayout()
     }
 }
 

@@ -21,7 +21,6 @@ class PaymentCardDetailViewController: BinkViewController {
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .white
         stackView.margin = LayoutHelper.PaymentCardDetail.stackScrollViewMargins
         stackView.distribution = .fill
         stackView.alignment = .center
@@ -100,7 +99,6 @@ class PaymentCardDetailViewController: BinkViewController {
     
     lazy var separator: UIView = {
         let separator = UIView()
-        separator.backgroundColor = .lightGray
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
@@ -154,6 +152,11 @@ class PaymentCardDetailViewController: BinkViewController {
             card.configureWithViewModel(viewModel.paymentCardCellViewModel, enableSwipeGesture: false, delegate: nil)
         }
     }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        refreshViews()
+    }
 }
 
 // MARK: - Private methods
@@ -189,8 +192,19 @@ private extension PaymentCardDetailViewController {
         stackScrollView.customPadding(viewModel.paymentCardStatus == .pending ? 20 : 0, after: cardAddedLabel)
         stackScrollView.customPadding(viewModel.paymentCardStatus != .active ? 20 : 0, after: addedCardsDescriptionLabel)
         stackScrollView.customPadding(viewModel.shouldShowAddedLoyaltyCardTableView ? LayoutHelper.PaymentCardDetail.headerViewsPadding : 0, after: addedCardsTableView)
-    
+
         stackScrollView.delegate = self
+        
+        stackScrollView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        addedCardsTitleLabel.textColor = Current.themeManager.color(for: .text)
+        addedCardsDescriptionLabel.textColor = Current.themeManager.color(for: .text)
+        otherCardsTitleLabel.textColor = Current.themeManager.color(for: .text)
+        otherCardsDescriptionLabel.textColor = Current.themeManager.color(for: .text)
+        cardAddedLabel.textColor = Current.themeManager.color(for: .text)
+        addedCardsTableView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        otherCardsTableView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        informationTableView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        separator.backgroundColor = Current.themeManager.color(for: .divider)
     }
 
     func configureLayout() {
@@ -334,8 +348,8 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
         }
 
         if tableView == otherCardsTableView {
-            guard let membershipPlan = viewModel.pllMembershipPlans?[indexPath.row] else { return }
-            viewModel.toAddOrJoin(forMembershipPlan: membershipPlan)
+            guard let plan = viewModel.pllPlanNotAddedToWallet(forIndexPath: indexPath) else { return }
+            viewModel.toAddOrJoin(forMembershipPlan: plan)
         }
 
         if tableView == informationTableView {

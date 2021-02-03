@@ -131,4 +131,27 @@ extension UIColor {
             return nil
         }
     }
+
+    // MARK: - Theming
+
+    // MARK: Bink Blue
+    static let binkBlueViewBackground = UIColor(hexString: "111127")
+    static let binkBlueCardBackground = UIColor(hexString: "1A1A38")
+    static let binkBlueDividerColor = UIColor(hexString: "767676")
+    static let binkBlueTextColor = UIColor(hexString: "FFFFFF")
+    
+    // MARK: Abstracted system colours
+    static let binkSystemGray4Light = UIColor(hexString: "d1d1d6")
+    static let binkSystemGray4Dark = UIColor(hexString: "3a3a3c")
+    
+    static var binkSystemGray4: UIColor {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            return .systemGray4
+        case .light:
+            return binkSystemGray4Light
+        case .dark:
+            return binkSystemGray4Dark
+        }
+    }
 }

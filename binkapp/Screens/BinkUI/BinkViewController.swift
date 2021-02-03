@@ -52,11 +52,25 @@ class BinkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDynamicActionIfNecessary()
+        configureForCurrentTheme()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
 
     func setScreenName(trackedScreen: TrackedScreen) {
         screenName = trackedScreen.rawValue
         Analytics.setScreenName(screenName, screenClass: nil)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        Current.themeManager.statusBarStyle(for: traitCollection)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureForCurrentTheme()
+    }
+
+    @objc func configureForCurrentTheme() {
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
     }
 }
 

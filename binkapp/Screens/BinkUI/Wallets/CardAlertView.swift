@@ -25,6 +25,7 @@ class CardAlertView: CustomView {
 
         alertLabel.text = type.rawValue
         alertLabel.font = .alertText
+        alertLabel.textColor = .black
         layer.cornerRadius = frame.height / 2
         clipsToBounds = true
 

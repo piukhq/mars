@@ -69,17 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         if let mainWindow = self.window {
             Current.rootStateMachine.launch(withWindow: mainWindow)
         }
-        
-        let tabAppearance = UITabBarAppearance()
-        tabAppearance.configureWithTransparentBackground()
-        tabAppearance.shadowImage = UIImage()
-        tabAppearance.backgroundColor = .init(white: 1.0, alpha: 0.6)
-        tabAppearance.backgroundEffect = UIBlurEffect(style: .light)
-        UITabBar.appearance().standardAppearance = tabAppearance
-        
-        let attributes = [NSAttributedString.Key.font: UIFont.tabBar, NSAttributedString.Key.foregroundColor: UIColor.black]
-        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .disabled)
 
         addObservers()
         InAppReviewUtility.recordAppLaunch()
