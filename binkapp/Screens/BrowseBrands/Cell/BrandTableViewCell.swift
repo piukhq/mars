@@ -14,6 +14,7 @@ class BrandTableViewCell: UITableViewCell {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var separatorView: UIView!
     @IBOutlet private weak var existingBrandIcon: UIImageView!
+    @IBOutlet private weak var disclosureIndicatorImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,6 +31,8 @@ class BrandTableViewCell: UITableViewCell {
         logoImageView.backgroundColor = .clear
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
         backgroundColor = Current.themeManager.color(for: .viewBackground)
+        
+        disclosureIndicatorImageView.tintColor = Current.themeManager.color(for: .text)
         
         brandLabel.font = UIFont.subtitle
         brandLabel.text = brandName

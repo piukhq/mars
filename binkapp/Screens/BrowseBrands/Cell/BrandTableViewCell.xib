@@ -96,6 +96,7 @@
             <connections>
                 <outlet property="brandLabel" destination="h6L-I3-vq2" id="r5j-jg-LnM"/>
                 <outlet property="descriptionLabel" destination="EFb-WZ-HWd" id="pGN-Qz-tvi"/>
+                <outlet property="disclosureIndicatorImageView" destination="XkQ-Fy-9UW" id="htW-hk-lh8"/>
                 <outlet property="existingBrandIcon" destination="Zhw-F5-t2D" id="UAh-0M-vFd"/>
                 <outlet property="labelsStackView" destination="AYI-9S-xZM" id="r7l-SC-e1s"/>
                 <outlet property="logoImageView" destination="Gj4-va-bae" id="GB3-TO-Lrk"/>

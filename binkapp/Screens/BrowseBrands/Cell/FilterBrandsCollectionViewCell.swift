@@ -29,7 +29,9 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(with name: String) {
+        backgroundColor = .clear
         filterTitleLable.text = name
+        filterTitleLable.textColor = Current.themeManager.color(for: .text)
         filterTitle = name
     }
     

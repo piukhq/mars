@@ -104,7 +104,13 @@ class BrowseBrandsViewController: BinkViewController {
     }
     
     override func configureForCurrentTheme() {
-        
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        collectionView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        topStackView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        noMatchesLabel.textColor = Current.themeManager.color(for: .text)
+        searchTextField.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        collectionView.reloadData()
+        tableView.reloadData()
     }
     
     private func configureCollectionView() {
