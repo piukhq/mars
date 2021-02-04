@@ -64,20 +64,15 @@ class ThemeManager {
         return tabAppearance
     }
 
-    func navBarAppearance(isModal: Bool, traitCollection: UITraitCollection) -> UINavigationBarAppearance {
+    func navBarAppearance(for traitCollection: UITraitCollection) -> UINavigationBarAppearance {
         let backInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         let backButtonImage = UIImage(named: "navbarIconsBack")?.withAlignmentRectInsets(backInsets)
 
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         appearance.shadowImage = UIImage()
-        if isModal {
-            appearance.backgroundColor = .clear
-            appearance.backgroundEffect = nil
-        } else {
-            appearance.backgroundColor = Styling.Colors.bar
-            appearance.backgroundEffect = Styling.barBlur(for: traitCollection)
-        }
+        appearance.backgroundColor = Styling.Colors.bar
+        appearance.backgroundEffect = Styling.barBlur(for: traitCollection)
         appearance.titleTextAttributes = [NSAttributedString.Key.font: UIFont.navBar, NSAttributedString.Key.foregroundColor: Styling.Colors.text]
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         return appearance
