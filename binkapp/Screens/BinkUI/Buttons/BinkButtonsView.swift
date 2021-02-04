@@ -28,7 +28,7 @@ class BinkButtonsView: UIStackView {
     private lazy var gradientMaskLayer: CAGradientLayer = {
         let gradientMaskLayer = CAGradientLayer()
         gradientMaskLayer.frame = backgroundMaskedView.bounds
-        gradientMaskLayer.colors = [UIColor.clear.cgColor, Current.themeManager.color(for: .viewBackground)]
+        gradientMaskLayer.colors = [UIColor.clear.cgColor, Current.themeManager.color(for: .viewBackground).cgColor]
         gradientMaskLayer.locations = [0, 0.8]
         return gradientMaskLayer
     }()
