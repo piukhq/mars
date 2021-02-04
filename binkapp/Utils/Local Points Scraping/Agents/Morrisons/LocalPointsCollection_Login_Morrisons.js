@@ -105,6 +105,8 @@ function performLogin() {
         container.style.position = 'relative'
         container.style.zIndex = '1000'
 
+        f.scrollIntoView()
+
         rInvalid.appendChild(node)
 
         return {
