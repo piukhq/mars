@@ -54,6 +54,7 @@ class BrowseBrandsViewController: BinkViewController {
     
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
+    private var didLayoutSubviews = false
     
     init(viewModel: BrowseBrandsViewModel) {
         self.viewModel = viewModel
@@ -103,14 +104,20 @@ class BrowseBrandsViewController: BinkViewController {
         setScreenName(trackedScreen: .browseBrands)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        didLayoutSubviews = true
+    }
     override func configureForCurrentTheme() {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
         collectionView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         topStackView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         noMatchesLabel.textColor = Current.themeManager.color(for: .text)
         searchTextField.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
-        collectionView.reloadData()
-        tableView.reloadData()
+        if didLayoutSubviews {
+            collectionView.reloadData()
+            tableView.reloadData()
+        }
     }
     
     private func configureCollectionView() {
