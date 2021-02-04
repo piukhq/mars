@@ -27,5 +27,14 @@ class BinkTextField: UITextField {
         
         textColor = Current.themeManager.color(for: .text)
         tintColor = Current.themeManager.color(for: .text)
+        
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            overrideUserInterfaceStyle = .light
+        case .dark:
+            overrideUserInterfaceStyle = .dark
+        case .system:
+            overrideUserInterfaceStyle = .unspecified
+        }
     }
 }
