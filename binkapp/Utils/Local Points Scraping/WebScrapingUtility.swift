@@ -265,7 +265,7 @@ class WebScrapingUtility: NSObject {
         }
 
         if let error = error {
-            SentryService.triggerException(.localPointsCollectionFailed(error))
+            SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: isBalanceRefresh))
             delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: membershipCard, withAgent: agent)
         }
     }
