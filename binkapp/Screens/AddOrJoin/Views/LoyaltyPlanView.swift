@@ -22,6 +22,9 @@ class LoyaltyPlanView: CustomView {
         configureIcon(for: planType, cardType: cardType)
         configureTitle(for: planType)
         configureDescription(for: planType, cardType: cardType)
+        view.backgroundColor = .clear
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
     }
     
     private func configureIcon(for planType: PlanType, cardType: CD_FeatureSet.PlanCardType) {
