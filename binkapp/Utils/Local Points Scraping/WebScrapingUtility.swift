@@ -28,7 +28,7 @@ class WebScrapingUtility: NSObject {
 
     private var idleTimer: Timer?
     private var detectElementTimer: Timer?
-    private let idleThreshold: TimeInterval = 10
+    private let idleThreshold: TimeInterval = 60
 
     private var hasAttemptedLogin = false
     private var isRunningScript = false
@@ -265,7 +265,7 @@ class WebScrapingUtility: NSObject {
         }
 
         if let error = error {
-//            SentryService.triggerException(.localPointsCollectionFailed(error))
+            SentryService.triggerException(.localPointsCollectionFailed(error))
             delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: membershipCard, withAgent: agent)
         }
     }
