@@ -46,6 +46,12 @@ class AddOrJoinViewController: BinkViewController {
         setScreenName(trackedScreen: .storeViewLink)
     }
     
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        let membershipPlan = viewModel.getMembershipPlan()
+        brandHeaderView.configure(plan: membershipPlan, delegate: self)
+    }
+    
     func setNavigationBar() {
         navigationController?.setNavigationBarHidden(false, animated: true)
         navigationItem.setHidesBackButton(false, animated: true)
