@@ -168,12 +168,13 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             buttonsView.insertAdditionalViews([signInWithAppleButton])
             NSLayoutConstraint.activate([
                 signInWithAppleButton.heightAnchor.constraint(equalToConstant: 55),
-                signInWithAppleButton.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage)
+                signInWithAppleButton.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
+                buttonsView.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor)
             ])
             signInWithAppleButton.addTarget(self, action: #selector(handleAppleIdRequest), for: .touchUpInside)
         } else if let buttonsView = footerButtonsView {
             NSLayoutConstraint.activate([
-                buttonsView.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25)
+                buttonsView.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor)
             ])
         }
 
