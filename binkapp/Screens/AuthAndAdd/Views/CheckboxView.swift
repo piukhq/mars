@@ -33,6 +33,7 @@ class CheckboxView: CustomView {
     private(set) var title: NSMutableAttributedString? {
         didSet {
             textView.attributedText = title
+            textView.textColor = Current.themeManager.color(for: .text)
         }
     }
     
