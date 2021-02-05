@@ -140,18 +140,33 @@ extension UIColor {
     static let binkBlueDividerColor = UIColor(hexString: "767676")
     static let binkBlueTextColor = UIColor(hexString: "FFFFFF")
     
-    // MARK: Abstracted system colours
-    static let binkSystemGray4Light = UIColor(hexString: "d1d1d6")
-    static let binkSystemGray4Dark = UIColor(hexString: "3a3a3c")
-    
-    static var binkSystemGray4: UIColor {
+    // MARK: Bink custom dynamic colours
+    static let binkDynamicGrayLight = UIColor(hexString: "d1d1d6")
+    static let binkDynamicGrayDark = UIColor.darkGray.withAlphaComponent(0.3)
+
+    static var binkDynamicGray: UIColor {
         switch Current.themeManager.currentTheme.type {
         case .system:
-            return .systemGray4
+            return UIColor { (traitcollection: UITraitCollection) -> UIColor in
+                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkBlueDividerColor
+            }
         case .light:
-            return binkSystemGray4Light
+            return binkDynamicGrayLight
         case .dark:
-            return binkSystemGray4Dark
+            return binkBlueDividerColor
+        }
+    }
+    
+    static var binkDynamicGray2: UIColor {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            return UIColor { (traitcollection: UITraitCollection) -> UIColor in
+                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkDynamicGrayDark
+            }
+        case .light:
+            return .binkDynamicGrayLight
+        case .dark:
+            return .binkDynamicGrayDark
         }
     }
 }

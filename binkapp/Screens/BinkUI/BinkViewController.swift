@@ -71,6 +71,14 @@ class BinkViewController: UIViewController {
 
     @objc func configureForCurrentTheme() {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            view.window?.overrideUserInterfaceStyle = .light
+        case .dark:
+            view.window?.overrideUserInterfaceStyle = .dark
+        case .system:
+            view.window?.overrideUserInterfaceStyle = .unspecified
+        }
     }
 }
 
