@@ -41,13 +41,16 @@ class LoyaltyScannerWidgetView: CustomView {
         addGestureRecognizer(UITapGestureRecognizer(target: target, action: selector))
     }
 
-    private func configure() {
+    func configure() {
         clipsToBounds = true
         layer.cornerRadius = Constants.cornerRadius
 
+        backgroundColor = Current.themeManager.color(for: .viewBackground)
         titleLabel.font = .subtitle
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         explainerLabel.font = .bodyTextLarge
         explainerLabel.numberOfLines = 2
+        explainerLabel.textColor = Current.themeManager.color(for: .text)
 
         setState(state)
     }

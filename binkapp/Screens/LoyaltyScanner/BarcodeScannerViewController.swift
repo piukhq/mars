@@ -52,7 +52,9 @@ class BarcodeScannerViewController: BinkViewController {
     private var canPresentScanError = true
 
     private lazy var blurredView: UIVisualEffectView = {
-        return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
+        let ve = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+        ve.backgroundColor = Current.themeManager.color(for: .bar)
+        return ve
     }()
 
     private lazy var guideImageView: UIImageView = {
@@ -66,6 +68,7 @@ class BarcodeScannerViewController: BinkViewController {
         label.text = "loyalty_scanner_explainer_text".localized
         label.font = .bodyTextLarge
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
         return label
     }()
 
@@ -98,15 +101,12 @@ class BarcodeScannerViewController: BinkViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-
         view.addSubview(previewView)
 
         // BLUR AND MASK
         blurredView.frame = view.frame
         let maskLayer = CAShapeLayer()
         maskLayer.frame = view.frame
-        maskLayer.fillColor = UIColor.black.cgColor
         // Setup rect of interest
         let inset = Constants.rectOfInterestInset
         let width = view.frame.size.width - (inset * 2)
@@ -158,6 +158,13 @@ class BarcodeScannerViewController: BinkViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopScanning()
+    }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        explainerLabel.textColor = Current.themeManager.color(for: .text)
+        cancelButton.tintColor = Current.themeManager.color(for: .text)
+        widgetView.configure()
     }
 
     private func startScanning() {
