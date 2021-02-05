@@ -72,7 +72,7 @@ class BinkButton {
             let button = BinkTrackableButton(type: .system)
             button.setTitle(title, for: .normal)
             button.titleLabel?.font = .buttonText
-            button.setTitleColor(.black, for: .normal)
+            button.setTitleColor(Current.themeManager.color(for: .text), for: .normal)
             button.isEnabled = enabled
             button.addTarget(self, action: #selector(performAction), for: .touchUpInside)
             return button

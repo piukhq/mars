@@ -114,7 +114,6 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
-        view.backgroundColor = .white
     }
     
     override func viewDidAppear(_ animated: Bool) {
