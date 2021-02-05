@@ -77,7 +77,7 @@ enum Styling {
                 return .binkBlueDivider
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkBlueDividerColor
+                    return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkBlueDivider
                 }
             }
         }

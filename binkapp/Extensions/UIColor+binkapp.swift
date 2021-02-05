@@ -149,12 +149,12 @@ extension UIColor {
         switch Current.themeManager.currentTheme.type {
         case .system:
             return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkBlueDividerColor
+                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkBlueDivider
             }
         case .light:
             return binkDynamicGrayLight
         case .dark:
-            return binkBlueDividerColor
+            return binkBlueDivider
         }
     }
     
