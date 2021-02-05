@@ -93,7 +93,7 @@ enum SentryException {
     case invalidPayload(InvalidPayloadReason)
     case tokenisationServiceRejectedRequest(NetworkResponseData?)
     case apiRejectedRequest(NetworkResponseData?)
-    case localPointsCollectionFailed(WebScrapingUtilityError)
+    case localPointsCollectionFailed(WebScrapingUtilityError, WebScrapableMerchant, balanceRefresh: Bool)
 
     var formattedError: NSError {
         return NSError(domain: domain.rawValue, code: errorCode, userInfo: userInfo)
@@ -135,8 +135,12 @@ enum SentryException {
             guard let response = networkResponse else { return info }
             info["network_response"] = response
             return info
-        case .localPointsCollectionFailed(let error):
-            return ["error_message": error.localizedDescription]
+        case .localPointsCollectionFailed(let error, let merchant, let isBalanceRefresh):
+            return [
+                "error_message": error.localizedDescription,
+                "merchant": merchant.rawValue,
+                "balance_refresh": isBalanceRefresh
+            ]
         }
     }
 
