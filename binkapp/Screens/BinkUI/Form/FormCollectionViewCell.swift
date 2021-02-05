@@ -117,7 +117,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
         separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
-        separator.backgroundColor = .grey10
         contentView.addSubview(separator)
         return separator
     }()
@@ -170,9 +169,10 @@ class FormCollectionViewCell: UICollectionViewCell {
     func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
         let isEnabled = !field.isReadOnly
         
+        tintColor = Current.themeManager.color(for: .text)
         titleLabel.text = field.title
-        titleLabel.textColor = isEnabled ? .black : .disabledTextGrey
-        textField.textColor = isEnabled ? .black : .disabledTextGrey
+        titleLabel.textColor = isEnabled ? Current.themeManager.color(for: .text) : .disabledTextGrey
+        textField.textColor = isEnabled ? Current.themeManager.color(for: .text) : .disabledTextGrey
         textField.text = field.forcedValue
         textField.placeholder = field.placeholder
         textField.isSecureTextEntry = field.fieldType.isSecureTextEntry
@@ -183,6 +183,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         formField = field
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
+        separator.backgroundColor = Current.themeManager.color(for: .divider)
         
         if case let .expiry(months, years) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)
