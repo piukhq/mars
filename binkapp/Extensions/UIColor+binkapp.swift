@@ -137,8 +137,9 @@ extension UIColor {
     // MARK: Bink Blue
     static let binkBlueViewBackground = UIColor(hexString: "111127")
     static let binkBlueCardBackground = UIColor(hexString: "1A1A38")
-    static let binkBlueDividerColor = UIColor(hexString: "767676")
-    static let binkBlueTextColor = UIColor(hexString: "FFFFFF")
+    static let binkBlueDivider = UIColor(hexString: "767676")
+    static let binkBlueText = UIColor(hexString: "FFFFFF")
+    static let binkBlueBarBackground = UIColor(hexString: "0E0E2A")
     
     // MARK: Bink custom dynamic colours
     static let binkDynamicGrayLight = UIColor(hexString: "d1d1d6")
