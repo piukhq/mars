@@ -16,9 +16,9 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
     var cellWasTapped: Bool = false {
         didSet {
             if cellWasTapped {
-                imageView.image = UIImage(imageLiteralResourceName: "inactive_check")
+                imageView.tintColor = .binkDynamicGray2
             } else {
-                imageView.image = UIImage(imageLiteralResourceName: "active_check")
+                imageView.tintColor = .blueAccent
             }
         }
     }
@@ -39,6 +39,7 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
         filterTitleLabel.text = name
         filterTitleLabel.textColor = Current.themeManager.color(for: .text)
         filterTitle = name
+        imageView.image = UIImage(imageLiteralResourceName: "active_check")
     }
     
     func hideSeparator() {

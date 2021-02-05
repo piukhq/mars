@@ -142,6 +142,7 @@ extension UIColor {
     
     // MARK: Bink custom dynamic colours
     static let binkDynamicGrayLight = UIColor(hexString: "d1d1d6")
+    static let binkDynamicGrayDark = UIColor.darkGray.withAlphaComponent(0.3)
 
     static var binkDynamicGray: UIColor {
         switch Current.themeManager.currentTheme.type {
@@ -156,16 +157,16 @@ extension UIColor {
         }
     }
     
-    static var binkDynamicGrayBlack: UIColor {
+    static var binkDynamicGray2: UIColor {
         switch Current.themeManager.currentTheme.type {
         case .system:
             return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                return traitcollection.userInterfaceStyle == .light ? .black : .binkDynamicGrayLight
+                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkDynamicGrayDark
             }
         case .light:
-            return .black
-        case .dark:
             return .binkDynamicGrayLight
+        case .dark:
+            return .binkDynamicGrayDark
         }
     }
 }

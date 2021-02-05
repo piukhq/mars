@@ -92,7 +92,7 @@ class BrowseBrandsViewController: BinkViewController {
         
         filtersButton = UIBarButtonItem(title: "filters_button_title".localized, style: .plain, target: self, action: #selector(filtersButtonTapped))
         filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.systemGray, .font: UIFont.linkTextButtonNormal], for: .highlighted)
-        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
+        filtersButton?.setTitleTextAttributes([.foregroundColor: filtersVisible ? UIColor.binkDynamicGray2 : UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         
         navigationItem.leftBarButtonItem = filtersButton
         
@@ -114,6 +114,8 @@ class BrowseBrandsViewController: BinkViewController {
         topStackView.backgroundColor = Current.themeManager.color(for: .viewBackground)
         noMatchesLabel.textColor = Current.themeManager.color(for: .text)
         searchTextField.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        filtersButton?.setTitleTextAttributes([.foregroundColor: filtersVisible ? UIColor.binkDynamicGray2 : UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
+        
         if didLayoutSubviews {
             collectionView.reloadData()
             tableView.reloadData()
@@ -215,7 +217,7 @@ class BrowseBrandsViewController: BinkViewController {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
         filtersButton?.isEnabled = false
-        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkDynamicGrayBlack, .font: UIFont.linkTextButtonNormal], for: .disabled)
+        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkDynamicGray2, .font: UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: self.view.frame.width - (Constants.marginPadding * 2), height: self.filterViewHeight)
@@ -227,7 +229,7 @@ class BrowseBrandsViewController: BinkViewController {
         }) { [weak self] _ in
             self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
             self?.filtersButton?.isEnabled = true
-            self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkDynamicGrayBlack, .font: UIFont.linkTextButtonNormal], for: .normal)
+            self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.binkDynamicGray2, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
     }
     
