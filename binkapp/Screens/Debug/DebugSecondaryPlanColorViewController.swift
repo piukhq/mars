@@ -17,6 +17,10 @@ class DebugSecondaryPlanColorViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+    }
 }
 
 extension DebugSecondaryPlanColorViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
