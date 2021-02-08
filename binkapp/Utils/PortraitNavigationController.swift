@@ -114,6 +114,7 @@ class PortraitNavigationController: UINavigationController {
     @objc func configureForCurrentTheme() {
         navigationBar.standardAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
         navigationBar.scrollEdgeAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
+        toolbar.standardAppearance = Current.themeManager.toolbarAppearance(for: traitCollection)
         
         // If top view controller is LCD and navBar is not visible, don't change tint colour
         if let loyaltyCardDetailsViewController = viewControllers.last as? LoyaltyCardFullDetailsViewController {

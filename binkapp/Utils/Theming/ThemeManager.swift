@@ -78,6 +78,15 @@ class ThemeManager {
         return appearance
     }
     
+    func toolbarAppearance(for traitCollection: UITraitCollection) -> UIToolbarAppearance {
+        let appearance = UIToolbarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.shadowImage = UIImage()
+        appearance.backgroundColor = Styling.Colors.bar
+        appearance.backgroundEffect = Styling.barBlur(for: traitCollection)
+        return appearance
+    }
+    
     func statusBarStyle(for traitCollection: UITraitCollection) -> UIStatusBarStyle {
         return Styling.statusBarStyle(for: traitCollection)
     }
