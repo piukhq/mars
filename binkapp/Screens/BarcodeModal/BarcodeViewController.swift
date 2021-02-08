@@ -21,6 +21,7 @@ class BarcodeViewController: BinkViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var numberLabel: BinkCopyableLabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var imageContainerView: UIView!
     
     private var previousBrightness: CGFloat?
 
@@ -76,10 +77,12 @@ class BarcodeViewController: BinkViewController {
         
         if let barcodeImage = viewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
             barcodeImageView.isHidden = false
+            imageContainerView.isHidden = false
             barcodeErrorLabel.isHidden = true
             barcodeImageView.image = barcodeImage
         } else {
             barcodeImageView.isHidden = true
+            imageContainerView.isHidden = true
             barcodeErrorLabel.text = "barcode_error".localized
             barcodeErrorLabel.font = UIFont.bodyTextLarge
             barcodeErrorLabel.isHidden = viewModel.isBarcodeAvailable ? false : true
