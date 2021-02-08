@@ -57,6 +57,11 @@ class BarcodeViewController: BinkViewController {
         UIScreen.main.brightness = previousBrightness ?? 0.5
     }
     
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        configureUI()
+    }
+    
     func configureUI() {
         guard !hasDrawnBarcode else { return }
         barcodeImageView.isHidden = !viewModel.isBarcodeAvailable
@@ -81,15 +86,15 @@ class BarcodeViewController: BinkViewController {
         }
                 
         barcodeLabel.font = UIFont.headline
-        barcodeLabel.textColor = .black
+        barcodeLabel.textColor = Current.themeManager.color(for: .text)
         barcodeLabel.text = viewModel.isBarcodeAvailable ? "barcode_title".localized : nil
         
         barcodeNumberLabel.font = UIFont.subtitle
-        barcodeNumberLabel.textColor = .black
+        barcodeNumberLabel.textColor = Current.themeManager.color(for: .text)
         barcodeNumberLabel.text = viewModel.barcodeNumber
         
         titleLabel.font = UIFont.headline
-        titleLabel.textColor = .black
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         titleLabel.text = "card_number_title".localized
         
         numberLabel.font = UIFont.subtitle
@@ -97,7 +102,7 @@ class BarcodeViewController: BinkViewController {
         numberLabel.text = viewModel.cardNumber
         
         descriptionLabel.font = UIFont.bodyTextLarge
-        descriptionLabel.textColor = .black
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
         descriptionLabel.textAlignment = .justified
         
         switch viewModel.barcodeUse {
