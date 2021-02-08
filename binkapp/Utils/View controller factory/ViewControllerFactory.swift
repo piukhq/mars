@@ -27,6 +27,7 @@ enum ViewControllerFactory {
     
     static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, allowSkip: Bool = true, delegate: ScanDelegate?) -> ScanViewController? {
         guard let viewController = ScanViewController.createViewController(withDelegate: delegate) else { return nil }
+        viewController.themeDelegate = Current.themeManager
         viewController.allowSkip = allowSkip
         viewController.cornerColor = .white
         viewController.torchButtonImage = UIImage(named: "payment_scanner_torch")

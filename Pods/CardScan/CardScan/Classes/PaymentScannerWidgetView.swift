@@ -57,14 +57,17 @@ class PaymentScannerWidgetView: UIView {
         timer?.invalidate()
     }
     
-    private func configure() {
+    func configure(withThemeDelegate themeDelegate: ThemeDelegate? = nil) {
         clipsToBounds = true
         layer.cornerRadius = Constants.cornerRadius
+        backgroundColor = themeDelegate?.backgroundColor
         titleLabel.font = UIFont(name: "NunitoSans-ExtraBold", size: Constants.fontSize)
+        titleLabel.textColor = themeDelegate?.textColor
         explainerLabel.font = UIFont(name: "NunitoSans-Light", size: Constants.fontSize)
         explainerLabel.numberOfLines = 2
         explainerLabel.adjustsFontSizeToFitWidth = true
         explainerLabel.minimumScaleFactor = 0.4
+        explainerLabel.textColor = themeDelegate?.textColor
         imageView.image = UIImage(named: "loyalty_scanner_enter_manually")
         
         if #available(iOS 10.0, *) {

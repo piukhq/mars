@@ -9,7 +9,7 @@ import AVKit
 import UIKit
 
 #if canImport(Stripe)
-    import Stripe
+import Stripe
 #endif
 
 
@@ -95,6 +95,8 @@ import UIKit
         static let widgetViewLeftRightPadding: CGFloat = 25
         static let widgetViewHeight: CGFloat = 100
     }
+
+    public weak var themeDelegate: ThemeDelegate?
     
     public weak var scanDelegate: ScanDelegate?
     public weak var captureOutputDelegate: CaptureOutputDelegate?
@@ -142,7 +144,10 @@ import UIKit
     var denyPermissionButtonText = "OK"
     var calledDelegate = false
     
-    @objc var backgroundBlurEffectView: UIVisualEffectView?
+    private lazy var blurredView: UIVisualEffectView = {
+        return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+    }()
+
     @objc var maskingBlurEffectView: UIVisualEffectView?
     private lazy var guideImageView: UIImageView = {
         let image = UIImage(named: "scanner_guide")
@@ -175,7 +180,7 @@ import UIKit
         let bundle = CSBundle.bundle()!
         let storyboard = UIStoryboard(name: "CardScan", bundle: bundle)
         let viewController = storyboard.instantiateViewController(withIdentifier: "scanCardViewController") as! ScanViewController
-            viewController.scanDelegate = delegate
+        viewController.scanDelegate = delegate
         
         if UIDevice.current.userInterfaceIdiom == .pad {
             // For the iPad you can use the full screen style but you have to select "requires full screen" in
@@ -239,10 +244,10 @@ import UIKit
     }
     
     func setUiCustomization() {
-        self.backgroundBlurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffect.Style.extraLight))
-        guard let backgroundBlurEffectView = self.backgroundBlurEffectView else { return }
-        backgroundBlurEffectView.frame = self.view.bounds
-        self.blurView.addSubview(backgroundBlurEffectView)
+        configureForCurrentTheme()
+
+        blurredView.frame = self.view.bounds
+        self.blurView.addSubview(blurredView)
         view.addSubview(guideImageView)
         view.addSubview(widgetView)
         
@@ -295,19 +300,19 @@ import UIKit
     func showDenyAlert() {
         let alert = UIAlertController(title: self.denyPermissionTitle, message: self.denyPermissionMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: self.denyPermissionButtonText, style: .default, handler: { action in
-            switch action.style{
-            case .default:
-                self.backButtonPress("")
-                
-            case .cancel:
-                print("cancel")
-                
-            case .destructive:
-                print("destructive")
+                                        switch action.style{
+                                        case .default:
+                                            self.backButtonPress("")
 
-            @unknown default:
-                assertionFailure("UIAlertAction case not handled")
-            }}))
+                                        case .cancel:
+                                            print("cancel")
+
+                                        case .destructive:
+                                            print("destructive")
+
+                                        @unknown default:
+                                            assertionFailure("UIAlertAction case not handled")
+                                        }}))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -390,7 +395,7 @@ import UIKit
             notification.prepare()
             notification.notificationOccurred(.success)
         }
-                
+
         self.calledDelegate = true
         let card = CreditCard(number: number)
         card.expiryMonth = expiryMonth
@@ -410,8 +415,8 @@ import UIKit
 }
 
 extension ScanViewController {
-     @objc func viewOnWillResignActive() {
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.extraLight)
+    @objc func viewOnWillResignActive() {
+        let blurEffect = UIBlurEffect(style: .regular)
         self.maskingBlurEffectView = UIVisualEffectView(effect: blurEffect)
 
         guard let maskingBlurEffectView = self.maskingBlurEffectView else {
@@ -421,21 +426,23 @@ extension ScanViewController {
         maskingBlurEffectView.frame = self.view.bounds
         maskingBlurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.view.addSubview(maskingBlurEffectView)
-     }
+    }
     
-     @objc func viewOnDidBecomeActive() {
+    @objc func viewOnDidBecomeActive() {
         if let maskingBlurEffectView = self.maskingBlurEffectView {
             maskingBlurEffectView.removeFromSuperview()
         }
 
         cardNumberLabel.isHidden = true
         expiryLabel.isHidden = true
-     }
-     
-     func addBackgroundObservers() {
-         NotificationCenter.default.addObserver(self, selector: #selector(viewOnWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-         NotificationCenter.default.addObserver(self, selector: #selector(viewOnDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-     }
+    }
+
+    func addBackgroundObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(viewOnWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(viewOnDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(configureForCurrentTheme), name: Notification.Name("theme_manager_did_set_theme"), object: nil)
+    }
 }
 
 // https://stackoverflow.com/a/53143736/947883
@@ -447,5 +454,26 @@ extension UIView {
                        animations: { self.alpha = 1 },
                        completion: { (value: Bool) in
                         if let complete = onCompletion { complete() }})
+    }
+}
+
+// MARK: - BinkApp Theming
+
+public protocol ThemeDelegate: AnyObject {
+    var backgroundColor: UIColor { get }
+    var barColor: UIColor { get }
+    var textColor: UIColor { get }
+}
+
+extension ScanViewController {
+    @objc func configureForCurrentTheme() {
+        blurredView.backgroundColor = themeDelegate?.barColor
+        positionCardLabel.textColor = themeDelegate?.textColor
+        backButtonImageButton.tintColor = themeDelegate?.textColor
+        widgetView.configure(withThemeDelegate: themeDelegate)
+    }
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureForCurrentTheme()
     }
 }

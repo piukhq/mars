@@ -52,9 +52,7 @@ class BarcodeScannerViewController: BinkViewController {
     private var canPresentScanError = true
 
     private lazy var blurredView: UIVisualEffectView = {
-        let ve = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-        ve.backgroundColor = Current.themeManager.color(for: .bar)
-        return ve
+        return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     }()
 
     private lazy var guideImageView: UIImageView = {
@@ -162,6 +160,7 @@ class BarcodeScannerViewController: BinkViewController {
 
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
+        blurredView.backgroundColor = Current.themeManager.color(for: .bar)
         explainerLabel.textColor = Current.themeManager.color(for: .text)
         cancelButton.tintColor = Current.themeManager.color(for: .text)
         widgetView.configure()
