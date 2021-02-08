@@ -126,6 +126,36 @@ extension UIImageView {
             }
         }
     }
+    
+    func setImage(forPaymentCardFirstSix firstSix: String) {
+        var darkImage = ""
+        switch Current.themeManager.currentTheme.type {
+        case .dark:
+            darkImage = "Dark"
+        case .light:
+            break
+        case .system:
+            switch traitCollection.userInterfaceStyle {
+            case .dark:
+                darkImage = "Dark"
+            default:
+                break
+            }
+        }
+        
+        var paymentCardProviderImageName: String
+        switch PaymentCardType.type(from: firstSix) {
+        case .visa:
+            paymentCardProviderImageName = "visalogoContainer\(darkImage)"
+        case .amex:
+            paymentCardProviderImageName = "americanexpresslogoContainer"
+        case .mastercard:
+            paymentCardProviderImageName = "mastercardlogoContainer\(darkImage)"
+        default: return
+        }
+        
+        self.image = UIImage(named: paymentCardProviderImageName)
+    }
 }
 
 /// A utility class to handle the expiration of objects stored to disk. When an object is

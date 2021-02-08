@@ -164,6 +164,8 @@ class PLLScreenViewController: BinkViewController {
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
         configureUI()
+        activePaymentCardsTableView.reloadData()
+        pendingPaymentCardsTableView.reloadData()
     }
     
     private func configureLayout() {
