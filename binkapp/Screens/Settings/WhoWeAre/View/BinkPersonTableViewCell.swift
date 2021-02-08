@@ -17,7 +17,10 @@ class BinkPersonTableViewCell: UITableViewCell {
     }
 
     func configure(with teamMember: BinkTeamMember) {
+        backgroundColor = .clear
         titleLabel.text = teamMember.name
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         titleLabel.font = UIFont.bodyTextLarge
+        titleLabel.textColor = Current.themeManager.color(for: .text)
     }
 }
