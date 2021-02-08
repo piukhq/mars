@@ -36,6 +36,8 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
         detailLabel.text = String(format: "pll_screen_card_ending".localized, paymentCard.card?.lastFour ?? "")
         statusLabel.text = paymentCard.paymentCardStatus.rawValue
         statusLabel.textColor = .amberPending
+        headerLabel.textColor = Current.themeManager.color(for: .text)
+        detailLabel.textColor = Current.themeManager.color(for: .text)
         
         var paymentCardProviderImageName: String
         switch PaymentCardType.type(from: paymentCard.card?.firstSix) {

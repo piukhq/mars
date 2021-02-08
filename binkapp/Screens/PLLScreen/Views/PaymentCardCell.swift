@@ -36,7 +36,9 @@ class PaymentCardCell: UITableViewCell {
             break
         }
         titleLabel.text = paymentCard.card?.nameOnCard
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         subtitleLabel.text = String(format: "pll_screen_card_ending".localized, paymentCard.card?.lastFour ?? "")
+        subtitleLabel.textColor = Current.themeManager.color(for: .text)
         switchButton.isOn = journey == .newCard ? true : showAsLinked
         
         selectionStyle = .none
