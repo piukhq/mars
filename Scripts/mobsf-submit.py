@@ -30,7 +30,7 @@ url = 'https://mobsf.uksouth.bink.sh/api/v1/scan'
 headers = {'X-Mobsf-Api-Key': mobsfApiKey}
 files = {
     'hash': hash, 
-    'file_name': path, 
+    'file_name': mobsfFiles, 
     'scan_type': scantype, 
     're_scan': 1
 }
