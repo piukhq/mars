@@ -19,6 +19,6 @@ class DebugMenuTableViewCell: UITableViewCell {
         subtitleLabel.text = debugRow.subtitle
         subtitleLabel.textColor = Current.themeManager.color(for: .text)
         accessoryType = debugRow.action == nil ? .none : .disclosureIndicator
-        selectionStyle = debugRow.action == nil ? .none : .default
+        selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
 }

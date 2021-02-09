@@ -34,6 +34,7 @@ class DebugMenuTableViewController: UITableViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
