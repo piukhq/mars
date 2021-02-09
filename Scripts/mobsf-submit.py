@@ -32,10 +32,11 @@ files = {
     'hash': hash, 
     'file_name': mobsfFiles, 
     'scan_type': scantype, 
-    're_scan': 1
+    're_scan': 0
 }
 
 print('== MobSF 2/3 == \nScan Starting')
+time.sleep(5)
 r = requests.post(url, data=files, headers=headers, auth=(mobsfUser, mobsfPass))
 print('Scan Complete - ', r.status_code)
 
@@ -44,7 +45,12 @@ url = 'https://mobsf.uksouth.bink.sh/api/v1/download_pdf'
 print('== MobSF 3/3 == \nReport Downloading')
 time.sleep(5)
 r = requests.post(url, data={'hash': hash}, headers=headers, auth=(mobsfUser, mobsfPass))
-print('Report Downloaded - ', r.status_code)
-with open(mobsfDest + '/report.pdf', 'wb') as f:
-    print('Report Saved')
-    f.write(r.content)
+
+if r:
+    print('Report Downloaded - ', r.status_code)
+    with open(mobsfDest + '/report.pdf', 'wb') as f:
+        print('Report Saved')
+        f.write(r.content)
+else:
+    print('An error has occurred.')
+    exit(1)
