@@ -42,6 +42,7 @@ print('Scan Complete - ', r.status_code)
 url = 'https://mobsf.uksouth.bink.sh/api/v1/download_pdf'
 
 print('== MobSF 3/3 == \nReport Downloading')
+time.sleep(5)
 r = requests.post(url, data={'hash': hash}, headers=headers, auth=(mobsfUser, mobsfPass))
 print('Report Downloaded - ', r.status_code)
 with open(mobsfDest + '/report.pdf', 'wb') as f:
