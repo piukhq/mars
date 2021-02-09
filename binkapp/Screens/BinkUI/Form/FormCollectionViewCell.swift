@@ -92,9 +92,9 @@ class FormCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = UIFont.textFieldExplainer
-        label.textColor = .red
         label.text = "form_field_validation_error".localized
         label.isHidden = true
+        label.textColor = .binkDynamicRed
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.heightAnchor.constraint(equalToConstant: Constants.validationLabelHeight).isActive = true
         return label
@@ -140,6 +140,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureLayout()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -165,6 +166,14 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Public Methods
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureForCurrentTheme()
+    }
+
+    @objc private func configureForCurrentTheme() {
+        validationLabel.textColor = .binkDynamicRed
+    }
     
     func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
         let isEnabled = !field.isReadOnly
