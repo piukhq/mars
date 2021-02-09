@@ -43,7 +43,7 @@ class BinkGradientButton: BinkPillButton {
     
     private func setWhiteLayer() {
         whiteLayer.frame = bounds
-        whiteLayer.backgroundColor = UIColor.white.cgColor
+        whiteLayer.backgroundColor = Current.themeManager.color(for: .viewBackground).cgColor
         whiteLayer.cornerRadius = self.frame.size.height / 2
         whiteLayer.cornerCurve = .continuous
     }
