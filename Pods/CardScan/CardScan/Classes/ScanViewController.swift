@@ -460,16 +460,18 @@ extension UIView {
 // MARK: - BinkApp Theming
 
 public protocol ThemeDelegate: AnyObject {
-    var backgroundColor: UIColor { get }
-    var barColor: UIColor { get }
-    var textColor: UIColor { get }
+    var scannerBackgroundColor: UIColor { get }
+    var widgetBackgroundColor: UIColor { get }
+    var scannerTextColor: UIColor { get }
+    var widgetTextColor: UIColor { get }
+    var closeButtonColor: UIColor { get }
 }
 
 extension ScanViewController {
     @objc func configureForCurrentTheme() {
-        blurredView.backgroundColor = themeDelegate?.barColor
-        positionCardLabel.textColor = themeDelegate?.textColor
-        backButtonImageButton.tintColor = themeDelegate?.textColor
+        blurredView.backgroundColor = themeDelegate?.scannerBackgroundColor
+        positionCardLabel.textColor = themeDelegate?.scannerTextColor
+        backButtonImageButton.tintColor = themeDelegate?.closeButtonColor
         widgetView.configure(withThemeDelegate: themeDelegate)
     }
 

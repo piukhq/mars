@@ -45,7 +45,7 @@ class LoyaltyScannerWidgetView: CustomView {
         clipsToBounds = true
         layer.cornerRadius = Constants.cornerRadius
 
-        backgroundColor = Current.themeManager.color(for: .viewBackground)
+        backgroundColor = Current.themeManager.color(for: .viewBackground).withAlphaComponent(0.5)
         titleLabel.font = .subtitle
         titleLabel.textColor = Current.themeManager.color(for: .text)
         explainerLabel.font = .bodyTextLarge

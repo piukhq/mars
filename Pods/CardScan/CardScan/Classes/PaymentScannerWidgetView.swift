@@ -60,31 +60,29 @@ class PaymentScannerWidgetView: UIView {
     func configure(withThemeDelegate themeDelegate: ThemeDelegate? = nil) {
         clipsToBounds = true
         layer.cornerRadius = Constants.cornerRadius
-        backgroundColor = themeDelegate?.backgroundColor
+        backgroundColor = themeDelegate?.widgetBackgroundColor
         titleLabel.font = UIFont(name: "NunitoSans-ExtraBold", size: Constants.fontSize)
-        titleLabel.textColor = themeDelegate?.textColor
+        titleLabel.textColor = themeDelegate?.widgetTextColor
         explainerLabel.font = UIFont(name: "NunitoSans-Light", size: Constants.fontSize)
         explainerLabel.numberOfLines = 2
         explainerLabel.adjustsFontSizeToFitWidth = true
         explainerLabel.minimumScaleFactor = 0.4
-        explainerLabel.textColor = themeDelegate?.textColor
+        explainerLabel.textColor = themeDelegate?.widgetTextColor
         imageView.image = UIImage(named: "loyalty_scanner_enter_manually")
         
-        if #available(iOS 10.0, *) {
-            timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] _ in
-                let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
-                notificationFeedbackGenerator.prepare()
-                notificationFeedbackGenerator.notificationOccurred(.error)
-                
-                let animation = CAKeyframeAnimation(keyPath: "transform.scale")
-                animation.timingFunction = CAMediaTimingFunction(name: .linear)
-                animation.duration = 0.6
-                animation.speed = 0.8
-                animation.values = [0.9, 1.1, 0.9, 1.1, 0.95, 1.05, 0.98, 1.02, 1.0]
-                self?.layer.add(animation, forKey: "shake")
-                self?.imageView.image = UIImage(named: "loyalty_scanner_error")
-            })
-        }
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] _ in
+            let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+            notificationFeedbackGenerator.prepare()
+            notificationFeedbackGenerator.notificationOccurred(.error)
+
+            let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+            animation.timingFunction = CAMediaTimingFunction(name: .linear)
+            animation.duration = 0.6
+            animation.speed = 0.8
+            animation.values = [0.9, 1.1, 0.9, 1.1, 0.95, 1.05, 0.98, 1.02, 1.0]
+            self?.layer.add(animation, forKey: "shake")
+            self?.imageView.image = UIImage(named: "loyalty_scanner_error")
+        })
     }
 }
 
