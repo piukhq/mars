@@ -27,7 +27,8 @@ class DebugMenuTableViewController: UITableViewController {
         super.viewDidLoad()
         
         title = viewModel.title
-        
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+
         tableView.register(DebugMenuTableViewCell.self, asNib: true)
         tableView.register(DebugMenuSegmentedTableViewCell.self, asNib: true)
     }
