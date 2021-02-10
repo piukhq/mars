@@ -5,22 +5,22 @@ inhibit_all_warnings!
 
 def common_pods
 
-pod 'Firebase'
-pod 'Firebase/Analytics'
-pod 'Firebase/RemoteConfig'
-pod 'Alamofire'
-pod 'AlamofireImage'
-pod 'AlamofireNetworkActivityLogger'
-pod 'DeepDiff'
-pod 'KeychainAccess'
-pod 'Disk'
-pod 'DTTJailbreakDetection'
-pod 'JWTDecode'
+pod 'Firebase', '~> 7.6.0'
+pod 'Firebase/Analytics', '~> 7.6.0'
+pod 'Firebase/RemoteConfig', '~> 7.6.0'
+pod 'Alamofire', '~> 5.4.1'
+pod 'AlamofireImage', '~> 4.1.0'
+pod 'AlamofireNetworkActivityLogger', '~> 3.4.0'
+pod 'DeepDiff', '~> 2.3.1'
+pod 'KeychainAccess', '~> 4.2.1'
+pod 'Disk', '~> 0.6.4'
+pod 'DTTJailbreakDetection', '~> 0.4.0'
+pod 'JWTDecode', '~> 2.6.0'
 pod 'SwiftyRSA', :git => 'git@git.bink.com:Pantheon/iOS/SwiftyRSA.git'
-pod 'ZendeskSupportSDK'
+pod 'ZendeskSupportSDK', '~> 5.2.0'
 pod 'CardScan', :git => 'git@git.bink.com:Pantheon/iOS/cardscan-ios.git'
-pod 'ZXingObjC'
-pod 'SwiftLint'
+pod 'ZXingObjC', '~> 3.6.5'
+pod 'SwiftLint', '~> 0.42.0'
 
 plugin 'cocoapods-keys', {
   :project => "binkapp",
