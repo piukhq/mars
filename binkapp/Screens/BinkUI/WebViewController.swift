@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController {
+class WebViewController: BinkViewController {
     private let url: URL?
     private var webView: WKWebView!
     private var activityIndicator: UIActivityIndicatorView!
@@ -56,7 +56,8 @@ class WebViewController: UIViewController {
         webView.scrollView.contentInset = currentEdgeInsets
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
         navigationController?.toolbar.tintColor = Current.themeManager.color(for: .text)
     }
     

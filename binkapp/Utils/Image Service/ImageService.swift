@@ -128,29 +128,24 @@ extension UIImageView {
     }
     
     func setImage(forPaymentCardFirstSix firstSix: String) {
-        var darkImage = ""
+        var isDarkMode = false
         switch Current.themeManager.currentTheme.type {
         case .dark:
-            darkImage = "Dark"
-        case .light:
-            break
+            isDarkMode = true
         case .system:
-            switch traitCollection.userInterfaceStyle {
-            case .dark:
-                darkImage = "Dark"
-            default:
-                break
-            }
+            if traitCollection.userInterfaceStyle == .dark { isDarkMode = true }
+        default:
+            break
         }
         
         var paymentCardProviderImageName: String
         switch PaymentCardType.type(from: firstSix) {
         case .visa:
-            paymentCardProviderImageName = "visalogoContainer\(darkImage)"
+            paymentCardProviderImageName = "visalogoContainer\(isDarkMode ? "Dark" : "")"
         case .amex:
             paymentCardProviderImageName = "americanexpresslogoContainer"
         case .mastercard:
-            paymentCardProviderImageName = "mastercardlogoContainer\(darkImage)"
+            paymentCardProviderImageName = "mastercardlogoContainer\(isDarkMode ? "Dark" : "")"
         default: return
         }
         

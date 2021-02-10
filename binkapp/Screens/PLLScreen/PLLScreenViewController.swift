@@ -163,7 +163,9 @@ class PLLScreenViewController: BinkViewController {
     
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
-        configureUI()
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        primaryMessageLabel.textColor = Current.themeManager.color(for: .text)
+        secondaryMessageLabel.textColor = Current.themeManager.color(for: .text)
         activePaymentCardsTableView.reloadData()
         pendingPaymentCardsTableView.reloadData()
     }
@@ -275,15 +277,12 @@ private extension PLLScreenViewController {
     func configureUI() {
         titleLabel.text = viewModel.titleText
         titleLabel.isHidden = !viewModel.shouldShowActivePaymentCards && viewModel.shouldShowPendingPaymentCards
-        titleLabel.textColor = Current.themeManager.color(for: .text)
         
         primaryMessageLabel.text = viewModel.primaryMessageText
         primaryMessageLabel.isHidden = titleLabel.isHidden
-        primaryMessageLabel.textColor = Current.themeManager.color(for: .text)
-        
+
         secondaryMessageLabel.text = viewModel.secondaryMessageText
         secondaryMessageLabel.isHidden = viewModel.shouldShowActivePaymentCards || viewModel.shouldShowPendingPaymentCards
-        secondaryMessageLabel.textColor = Current.themeManager.color(for: .text)
         
         activePaymentCardsTableView.isHidden = !viewModel.shouldShowActivePaymentCards
         

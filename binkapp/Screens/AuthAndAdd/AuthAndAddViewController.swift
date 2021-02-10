@@ -65,6 +65,12 @@ class AuthAndAddViewController: BaseFormViewController {
         }
     }
     
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
+    }
+    
     func setNavigationBar() {
         navigationItem.setHidesBackButton(false, animated: true)
     }
@@ -82,12 +88,10 @@ class AuthAndAddViewController: BaseFormViewController {
         
         titleLabel.text = viewModel.title
         titleLabel.font = UIFont.headline
-        titleLabel.textColor = Current.themeManager.color(for: .text)
         
         descriptionLabel.text = viewModel.getDescription()
         descriptionLabel.font = UIFont.bodyTextLarge
         descriptionLabel.isHidden = viewModel.getDescription() == nil
-        descriptionLabel.textColor = Current.themeManager.color(for: .text)
     }
 
     private func handlePrimaryButtonTap() {
