@@ -65,7 +65,6 @@ class BinkButton {
             let button = BinkGradientButton(type: .system)
             button.configure(title: title, hasShadow: true)
             button.isEnabled = enabled
-            button.setTitleColor(.white, for: .normal)
             button.addTarget(self, action: #selector(performAction), for: .touchUpInside)
             return button
         case .plain:
