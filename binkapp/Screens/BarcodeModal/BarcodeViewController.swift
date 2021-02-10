@@ -60,7 +60,10 @@ class BarcodeViewController: BinkViewController {
     
     override func configureForCurrentTheme() {
         super.configureForCurrentTheme()
-        configureUI()
+        barcodeLabel.textColor = Current.themeManager.color(for: .text)
+        barcodeNumberLabel.textColor = Current.themeManager.color(for: .text)
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        descriptionLabel.textColor = Current.themeManager.color(for: .text) 
     }
     
     func configureUI() {
@@ -89,15 +92,12 @@ class BarcodeViewController: BinkViewController {
         }
                 
         barcodeLabel.font = UIFont.headline
-        barcodeLabel.textColor = Current.themeManager.color(for: .text)
         barcodeLabel.text = viewModel.isBarcodeAvailable ? "barcode_title".localized : nil
         
         barcodeNumberLabel.font = UIFont.subtitle
-        barcodeNumberLabel.textColor = Current.themeManager.color(for: .text)
         barcodeNumberLabel.text = viewModel.barcodeNumber
         
         titleLabel.font = UIFont.headline
-        titleLabel.textColor = Current.themeManager.color(for: .text)
         titleLabel.text = "card_number_title".localized
         
         numberLabel.font = UIFont.subtitle
@@ -105,7 +105,6 @@ class BarcodeViewController: BinkViewController {
         numberLabel.text = viewModel.cardNumber
         
         descriptionLabel.font = UIFont.bodyTextLarge
-        descriptionLabel.textColor = Current.themeManager.color(for: .text)
         descriptionLabel.textAlignment = .justified
         
         switch viewModel.barcodeUse {
