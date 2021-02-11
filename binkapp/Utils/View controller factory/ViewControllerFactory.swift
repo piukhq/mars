@@ -150,9 +150,9 @@ enum ViewControllerFactory {
     
     // MARK: - Wallets
     
-    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?) -> SettingsViewController {
+    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?, delegate: SettingsViewControllerDelegate?) -> SettingsViewController {
         let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
-        return SettingsViewController(viewModel: viewModel)
+        return SettingsViewController(viewModel: viewModel, delegate: delegate)
     }
 
     // MARK: - Onboarding
