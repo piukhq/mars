@@ -49,6 +49,10 @@ class BinkViewController: UIViewController {
         }
     }
 
+    deinit {
+        Current.themeManager.removeObserver(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDynamicActionIfNecessary()

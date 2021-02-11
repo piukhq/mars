@@ -9,6 +9,10 @@
 import UIKit
 
 class BinkAlertController: UIAlertController {
+    deinit {
+        Current.themeManager.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureForCurrentTheme()
