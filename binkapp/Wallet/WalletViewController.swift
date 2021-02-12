@@ -91,8 +91,6 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         }
         configureLoadingIndicator()
         
-        /// In case the Zendesk SDK is slow to return a state, we should configure the navigation item to a default state
-        configureNavigationItem(hasSupportUpdates: false)
         checkForZendeskUpdates()
     }
 
@@ -102,6 +100,10 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             guard let self = self else { return }
             self.refreshControl.endRefreshing()
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         // We don't want to see it on non-wallet view controllers
         dotView.removeFromSuperview()
     }
@@ -148,10 +150,13 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         if hasSupportUpdates {
             actionRequiredSettings.append(.contactUs)
         }
-        viewModel.toSettings(rowsWithActionRequired: actionRequiredSettings)
+        viewModel.toSettings(rowsWithActionRequired: actionRequiredSettings, delegate: self)
     }
     
-    private func checkForZendeskUpdates() {
+    func checkForZendeskUpdates() {
+        /// In case the Zendesk SDK is slow to return a state, we should configure the navigation item to a default state
+        configureNavigationItem(hasSupportUpdates: Current.userDefaults.bool(forDefaultsKey: .hasSupportUpdates))
+
         ZendeskService.getIdentityRequestUpdates { hasUpdates in
             self.configureNavigationItem(hasSupportUpdates: hasUpdates)
         }
@@ -297,6 +302,12 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         refreshControl.tintColor = Current.themeManager.color(for: .text)
         collectionView.reloadData()
         collectionView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
+    }
+}
+
+extension WalletViewController: SettingsViewControllerDelegate {
+    func settingsViewControllerDidDismiss(_ settingsViewController: SettingsViewController) {
+        checkForZendeskUpdates()
     }
 }
 

@@ -11,6 +11,11 @@ import MessageUI
 import ZendeskCoreSDK
 import SupportSDK
 
+
+protocol SettingsViewControllerDelegate: AnyObject {
+    func settingsViewControllerDidDismiss(_ settingsViewController: SettingsViewController)
+}
+
 class SettingsViewController: BinkViewController {
     // MARK: - Helpers
     
@@ -39,11 +44,13 @@ class SettingsViewController: BinkViewController {
     }()
 
     private let zendeskTickets = ZendeskTickets()
+    private weak var delegate: SettingsViewControllerDelegate?
     
     // MARK: - View Lifecycle
     
-    init(viewModel: SettingsViewModel) {
+    init(viewModel: SettingsViewModel, delegate: SettingsViewControllerDelegate?) {
         self.viewModel = viewModel
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -61,6 +68,11 @@ class SettingsViewController: BinkViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .settings)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        delegate?.settingsViewControllerDidDismiss(self)
     }
 
     override func configureForCurrentTheme() {
@@ -158,7 +170,7 @@ extension SettingsViewController: UITableViewDelegate {
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {
                 case is SettingsViewController.Type:
-                    let vc = SettingsViewController(viewModel: viewModel)
+                    let vc = SettingsViewController(viewModel: viewModel, delegate: nil)
                     present(vc, animated: true)
                 case is DebugMenuTableViewController.Type:
                     let viewController = ViewControllerFactory.makeDebugViewController()
