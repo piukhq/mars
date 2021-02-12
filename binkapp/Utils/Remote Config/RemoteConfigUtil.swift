@@ -15,6 +15,7 @@ class RemoteConfigUtil {
         case localPointsCollectionAgentEnabled(WebScrapable)
         case inAppReviewEnabled
         case dynamicActions
+        case betaFeatures
         
         var formattedKey: String {
             let isDebug = !APIConstants.isProduction
@@ -28,6 +29,8 @@ class RemoteConfigUtil {
                 return "in_app_review_enabled"
             case .dynamicActions:
                 return "dynamic_actions"
+            case .betaFeatures:
+                return "beta_features"
             }
         }
     }

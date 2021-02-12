@@ -162,6 +162,7 @@
 		70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B316E624E6AF2800D86DE5 /* Navigate.swift */; };
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
+		70C3931D25D6E47F0065FDDE /* FeatureTogglingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C3931C25D6E47F0065FDDE /* FeatureTogglingManager.swift */; };
 		70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */; };
 		70CE8967258A807E00078ADA /* BinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CE8966258A807E00078ADA /* BinkButton.swift */; };
 		70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6863D257152F300403448 /* DynamicActionsTests.swift */; };
@@ -696,6 +697,7 @@
 		70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
 		70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TescoPointsScrapingAgent.swift; sourceTree = "<group>"; };
+		70C3931C25D6E47F0065FDDE /* FeatureTogglingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTogglingManager.swift; sourceTree = "<group>"; };
 		70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionModel.swift; sourceTree = "<group>"; };
 		70CE8966258A807E00078ADA /* BinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButton.swift; sourceTree = "<group>"; };
 		70D6863D257152F300403448 /* DynamicActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsTests.swift; sourceTree = "<group>"; };
@@ -1408,6 +1410,7 @@
 		3CF029F422F45B48009A0E61 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				70C3931B25D6E45A0065FDDE /* Feature Toggling */,
 				7061052F25B7345400A16DA5 /* Theming */,
 				70CA2F03256E79B0008E0A81 /* Dynamic Actions */,
 				70D747FB2552A74600E9D2C1 /* In App Review */,
@@ -1715,6 +1718,14 @@
 				70E8E126256419FD0027A244 /* Waterstones */,
 			);
 			path = Agents;
+			sourceTree = "<group>";
+		};
+		70C3931B25D6E45A0065FDDE /* Feature Toggling */ = {
+			isa = PBXGroup;
+			children = (
+				70C3931C25D6E47F0065FDDE /* FeatureTogglingManager.swift */,
+			);
+			path = "Feature Toggling";
 			sourceTree = "<group>";
 		};
 		70CA2F03256E79B0008E0A81 /* Dynamic Actions */ = {
@@ -3394,6 +3405,7 @@
 				EFA8101D240562100000D21D /* PlanDynamicContentModel.swift in Sources */,
 				3C2C91012319560C00D112E3 /* InputView.swift in Sources */,
 				70285D842588B674007B4298 /* BinkButtonsView.swift in Sources */,
+				70C3931D25D6E47F0065FDDE /* FeatureTogglingManager.swift in Sources */,
 				BD9E4CD1237014D300C6F098 /* RootStateMachine.swift in Sources */,
 				EFF59F1E234C828900CF3992 /* PaymentCardDetailRepository.swift in Sources */,
 				EFA5F71B2379A7C70027AB80 /* CD_RegistrationField.swift in Sources */,
