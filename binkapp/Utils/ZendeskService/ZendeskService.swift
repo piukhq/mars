@@ -52,7 +52,7 @@ enum ZendeskService {
     static func getIdentityRequestUpdates(completion: @escaping (Bool) -> Void) {
         let provider = ZDKRequestProvider()
         /// Forces fetch of requests and enables realtime update of unread messages
-        provider.getAllRequests { (req, _) in
+        provider.getAllRequests { _, _ in
             provider.getUpdatesForDevice { requestUpdates in
                 Current.userDefaults.set(requestUpdates?.hasUpdatedRequests(), forDefaultsKey: .hasSupportUpdates)
                 completion(requestUpdates?.hasUpdatedRequests() == true)
