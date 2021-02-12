@@ -184,8 +184,8 @@ class FormCollectionViewCell: UICollectionViewCell {
         
         tintColor = Current.themeManager.color(for: .text)
         titleLabel.text = field.title
-        titleLabel.textColor = isEnabled ? Current.themeManager.color(for: .text) : .disabledTextGrey
-        textField.textColor = isEnabled ? Current.themeManager.color(for: .text) : .disabledTextGrey
+        titleLabel.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
+        textField.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
         textField.text = field.forcedValue
         textField.placeholder = field.placeholder
         textField.isSecureTextEntry = field.fieldType.isSecureTextEntry
