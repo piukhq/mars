@@ -69,6 +69,8 @@ class AuthAndAddViewController: BaseFormViewController {
         super.configureForCurrentTheme()
         titleLabel.textColor = Current.themeManager.color(for: .text)
         descriptionLabel.textColor = Current.themeManager.color(for: .text)
+        let membershipPlan = viewModel.getMembershipPlan()
+        brandHeaderView.configure(plan: membershipPlan, delegate: self)
     }
     
     func setNavigationBar() {
