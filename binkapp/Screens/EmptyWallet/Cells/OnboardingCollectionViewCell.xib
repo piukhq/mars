@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NunitoSans-Bold.ttf">
+            <string>NunitoSans-Bold</string>
+        </array>
+        <array key="NunitoSans-Regular.ttf">
+            <string>NunitoSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="OnboardingCardCollectionViewCell" customModule="binkapp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="327"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="327"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fAV-MY-2kV">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="327"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hgI-TK-6Jo" userLabel="Header View">
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="123"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" ambiguous="YES" text="Header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Zu-4G-N4Z">
+                                        <rect key="frame" x="25" y="15" width="350" height="22.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Add these loyalty cards and link them to your payment cards to collect rewards automatically when you pay." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8f-7h-p36">
+                                        <rect key="frame" x="25" y="42.5" width="350" height="65.5"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                <constraints>
+                                    <constraint firstItem="H8f-7h-p36" firstAttribute="leading" secondItem="hgI-TK-6Jo" secondAttribute="leading" constant="25" id="6OR-lM-SDr"/>
+                                    <constraint firstAttribute="trailing" secondItem="H8f-7h-p36" secondAttribute="trailing" constant="25" id="7O1-lY-g0Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="7Zu-4G-N4Z" secondAttribute="trailing" constant="25" id="9nR-MW-xLE"/>
+                                    <constraint firstItem="7Zu-4G-N4Z" firstAttribute="top" secondItem="hgI-TK-6Jo" secondAttribute="top" constant="15" id="NRh-2B-FIs"/>
+                                    <constraint firstAttribute="height" constant="123" id="gWm-jX-Ix8"/>
+                                    <constraint firstItem="H8f-7h-p36" firstAttribute="top" secondItem="7Zu-4G-N4Z" secondAttribute="bottom" constant="5" id="lpD-x3-XHL"/>
+                                    <constraint firstItem="7Zu-4G-N4Z" firstAttribute="leading" secondItem="hgI-TK-6Jo" secondAttribute="leading" constant="25" id="u2W-vl-znO"/>
+                                    <constraint firstAttribute="bottom" secondItem="H8f-7h-p36" secondAttribute="bottom" constant="15" id="z0B-ss-pxt"/>
+                                </constraints>
+                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8e3-TN-Tw1">
+                                <rect key="frame" x="0.0" y="123" width="400" height="204"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="b4r-1S-i7u">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hgI-TK-6Jo" firstAttribute="top" secondItem="fAV-MY-2kV" secondAttribute="top" id="0e1-UW-225"/>
+                            <constraint firstItem="8e3-TN-Tw1" firstAttribute="top" secondItem="hgI-TK-6Jo" secondAttribute="bottom" id="4An-EQ-IJi"/>
+                            <constraint firstAttribute="bottom" secondItem="8e3-TN-Tw1" secondAttribute="bottom" id="EOJ-Uj-wa2"/>
+                            <constraint firstAttribute="trailing" secondItem="8e3-TN-Tw1" secondAttribute="trailing" id="TCl-0O-wNu"/>
+                            <constraint firstItem="hgI-TK-6Jo" firstAttribute="leading" secondItem="fAV-MY-2kV" secondAttribute="leading" id="fyF-X3-ecw"/>
+                            <constraint firstAttribute="trailing" secondItem="hgI-TK-6Jo" secondAttribute="trailing" id="o1P-UI-QYp"/>
+                            <constraint firstItem="8e3-TN-Tw1" firstAttribute="leading" secondItem="fAV-MY-2kV" secondAttribute="leading" id="wqb-oY-fU2"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="fAV-MY-2kV" secondAttribute="trailing" id="1rw-Nn-to6"/>
+                <constraint firstItem="fAV-MY-2kV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="9oO-YJ-y68"/>
+                <constraint firstItem="fAV-MY-2kV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="H1p-IX-qCB"/>
+                <constraint firstAttribute="bottom" secondItem="fAV-MY-2kV" secondAttribute="bottom" id="I0p-5M-Vct"/>
+            </constraints>
+            <connections>
+                <outlet property="containerView" destination="fAV-MY-2kV" id="Zmk-qg-bjh"/>
+                <outlet property="descriptionLabel" destination="H8f-7h-p36" id="MCL-vj-1Xm"/>
+                <outlet property="headerLabel" destination="7Zu-4G-N4Z" id="GbK-P5-ExO"/>
+                <outlet property="headerView" destination="hgI-TK-6Jo" id="gi2-mD-iHl"/>
+                <outlet property="merchantGridCollectionView" destination="8e3-TN-Tw1" id="nv3-eb-zhc"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="152.34375"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
