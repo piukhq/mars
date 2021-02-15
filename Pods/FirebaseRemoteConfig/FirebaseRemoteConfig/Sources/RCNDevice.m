@@ -59,7 +59,7 @@ NSString *FIRRemoteConfigDeviceCountry() {
   return [[[NSLocale currentLocale] objectForKey:NSLocaleCountryCode] lowercaseString];
 }
 
-NSDictionary<NSString *, NSArray *> *FIRRemoteConfigFirebaseLocaleMap() {
+NSDictionary<NSString *, NSArray *> *FIRRemoteConfigFirebaseLocaleMap(void) {
   return @{
     // Albanian
     @"sq" : @[ @"sq_AL" ],
@@ -102,7 +102,7 @@ NSDictionary<NSString *, NSArray *> *FIRRemoteConfigFirebaseLocaleMap() {
     // Malay
     @"ms" : @[ @"ms_MY" ],
     // Maltese
-    @"ms" : @[ @"mt_MT" ],
+    @"mt" : @[ @"mt_MT" ],
     // Polish
     @"pl" : @[ @"pl", @"pl_PL", @"pl-PL" ],
     // Romanian
@@ -179,7 +179,7 @@ NSDictionary<NSString *, NSArray *> *FIRRemoteConfigFirebaseLocaleMap() {
   };
 }
 
-NSArray<NSString *> *FIRRemoteConfigAppManagerLocales() {
+NSArray<NSString *> *FIRRemoteConfigAppManagerLocales(void) {
   NSMutableArray *locales = [NSMutableArray array];
   NSDictionary<NSString *, NSArray *> *localesMap = FIRRemoteConfigFirebaseLocaleMap();
   for (NSString *key in localesMap) {
@@ -187,7 +187,7 @@ NSArray<NSString *> *FIRRemoteConfigAppManagerLocales() {
   }
   return locales;
 }
-NSString *FIRRemoteConfigDeviceLocale() {
+NSString *FIRRemoteConfigDeviceLocale(void) {
   NSArray<NSString *> *locales = FIRRemoteConfigAppManagerLocales();
   NSArray<NSString *> *preferredLocalizations =
       [NSBundle preferredLocalizationsFromArray:locales
@@ -197,13 +197,9 @@ NSString *FIRRemoteConfigDeviceLocale() {
   return legalDocsLanguage ? legalDocsLanguage : @"en";
 }
 
-NSString *FIRRemoteConfigTimezone() {
+NSString *FIRRemoteConfigTimezone(void) {
   NSTimeZone *timezone = [NSTimeZone systemTimeZone];
   return timezone.name;
-}
-
-int FIRRemoteConfigSDKVersion() {
-  return kRCNMajorVersion * 10000 + kRCNMinorVersion * 100 + kRCNPatchVersion;
 }
 
 NSMutableDictionary *FIRRemoteConfigDeviceContextWithProjectIdentifier(
@@ -228,8 +224,8 @@ BOOL FIRRemoteConfigHasDeviceContextChanged(NSDictionary *deviceContext,
   if (![deviceContext[RCNDeviceContextKeyBuild] isEqual:FIRRemoteConfigAppBuildVersion()]) {
     return YES;
   }
-  if (!
-      [deviceContext[RCNDeviceContextKeyOSVersion] isEqual:[GULAppEnvironmentUtil systemVersion]]) {
+  if (![deviceContext[RCNDeviceContextKeyOSVersion]
+          isEqual:[GULAppEnvironmentUtil systemVersion]]) {
     return YES;
   }
   if (![deviceContext[RCNDeviceContextKeyDeviceLocale] isEqual:FIRRemoteConfigDeviceLocale()]) {
