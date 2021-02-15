@@ -489,7 +489,9 @@ extension FormDataSource {
             fields.append(passwordField)
         }
         
-        if !Current.isReleaseTypeBuild {
+        let customBundleClientEnabled = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
+        
+        if !Current.isReleaseTypeBuild && customBundleClientEnabled {
             let bundleIDField = FormField(
                 title: "Bundle ID",
                 placeholder: "Fam, your bundle ID",

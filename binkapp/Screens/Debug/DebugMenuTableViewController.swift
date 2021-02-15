@@ -109,6 +109,10 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
             let shouldApply = Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules)
             Current.userDefaults.set(!shouldApply, forDefaultsKey: .applyInAppReviewRules)
             tableView.reloadData()
+        case .customBundleClientLogin:
+            let customRules = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
+            Current.userDefaults.set(!customRules, forDefaultsKey: .allowCustomBundleClientOnLogin)
+            tableView.reloadData()
         default:
             return
         }

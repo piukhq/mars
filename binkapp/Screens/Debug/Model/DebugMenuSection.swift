@@ -23,6 +23,7 @@ struct DebugMenuRow {
         case lpcCookies
         case responseCodeVisualiser
         case inAppReviewRules
+        case customBundleClientLogin
     }
     
     enum CellType {
