@@ -63,11 +63,22 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         continueButton.toggleLoading(isLoading: true)
         
         let fields = dataSource.currentFieldValues()
-
-        let loginRequest = LoginRegisterRequest(
-            email: fields["email"],
-            password: fields["password"]
-        )
+        
+        let loginRequest: LoginRegisterRequest
+        
+        if !Current.isReleaseTypeBuild {
+            loginRequest = LoginRegisterRequest(
+                email: fields["email"],
+                password: fields["password"],
+                clientID: fields["client id"] ?? "",
+                bundleID: fields["bundle id"] ?? ""
+            )
+        } else {
+            loginRequest = LoginRegisterRequest(
+                email: fields["email"],
+                password: fields["password"]
+            )
+        }
 
         login(request: loginRequest) { [weak self] result in
             switch result {

@@ -489,6 +489,31 @@ extension FormDataSource {
             fields.append(passwordField)
         }
         
+        if !Current.isReleaseTypeBuild {
+            let bundleIDField = FormField(
+                title: "Bundle ID",
+                placeholder: "Fam, your bundle ID",
+                validation: nil,
+                fieldType: .text,
+                updated: updatedBlock,
+                shouldChange: shouldChangeBlock,
+                fieldExited: fieldExitedBlock
+            )
+            
+            let clientIDField = FormField(
+                title: "Client ID",
+                placeholder: "Lad, your client ID",
+                validation: nil,
+                fieldType: .text,
+                updated: updatedBlock,
+                shouldChange: shouldChangeBlock,
+                fieldExited: fieldExitedBlock
+            )
+            
+            fields.append(clientIDField)
+            fields.append(bundleIDField)
+        }
+        
         if accessForm == .register {
             let manualValidation: FormField.ManualValidateBlock = { [weak self] field in
                 guard let self = self, let delegate = self.delegate else { return false }
