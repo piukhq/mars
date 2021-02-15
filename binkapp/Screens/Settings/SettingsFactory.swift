@@ -37,46 +37,46 @@ struct SettingsFactory {
         
         // MARK: - Appearance
         
-        let appearanceSection = SettingsSection(title: "settings_section_appearance_title".localized, rows: [
-            SettingsRow(
-                type: .theme,
-                subtitle: nil,
-                action: .customAction(action: {
-                    let ac = BinkAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                    let systemAction = UIAlertAction(title: "settings_theme_system_title".localized, style: .default, handler: { _ in
-                        Current.themeManager.setTheme(Theme(type: .system))
-                    })
-                    if let _ = systemAction.value(forKey: "checked") as? Bool {
-                        systemAction.setValue(Current.themeManager.currentTheme.type == .system, forKey: "checked")
-                    }
-                    
-                    let lightAction = UIAlertAction(title: "settings_theme_light_title".localized, style: .default, handler: { _ in
-                        Current.themeManager.setTheme(Theme(type: .light))
-                    })
-                    if let _ = lightAction.value(forKey: "checked") as? Bool {
-                        lightAction.setValue(Current.themeManager.currentTheme.type == .light, forKey: "checked")
-                    }
-                    
-                    let darkAction = UIAlertAction(title: "settings_theme_dark_title".localized, style: .default, handler: { _ in
-                        Current.themeManager.setTheme(Theme(type: .dark))
-                    })
-                    if let _ = darkAction.value(forKey: "checked") as? Bool {
-                        darkAction.setValue(Current.themeManager.currentTheme.type == .dark, forKey: "checked")
-                    }
-                    
-                    ac.addAction(systemAction)
-                    ac.addAction(lightAction)
-                    ac.addAction(darkAction)
-                    ac.addAction(UIAlertAction(title: "settings_theme_cancel_title".localized, style: .cancel))
-
-                    let navigationRequest = AlertNavigationRequest(alertController: ac)
-                    Current.navigate.to(navigationRequest)
-                }),
-                actionRequired: rowsWithActionRequired?.contains(.theme) ?? false
-            )
-        ])
-
-        sections.append(appearanceSection)
+//        let appearanceSection = SettingsSection(title: "settings_section_appearance_title".localized, rows: [
+//            SettingsRow(
+//                type: .theme,
+//                subtitle: nil,
+//                action: .customAction(action: {
+//                    let ac = BinkAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//                    let systemAction = UIAlertAction(title: "settings_theme_system_title".localized, style: .default, handler: { _ in
+//                        Current.themeManager.setTheme(Theme(type: .system))
+//                    })
+//                    if let _ = systemAction.value(forKey: "checked") as? Bool {
+//                        systemAction.setValue(Current.themeManager.currentTheme.type == .system, forKey: "checked")
+//                    }
+//                    
+//                    let lightAction = UIAlertAction(title: "settings_theme_light_title".localized, style: .default, handler: { _ in
+//                        Current.themeManager.setTheme(Theme(type: .light))
+//                    })
+//                    if let _ = lightAction.value(forKey: "checked") as? Bool {
+//                        lightAction.setValue(Current.themeManager.currentTheme.type == .light, forKey: "checked")
+//                    }
+//                    
+//                    let darkAction = UIAlertAction(title: "settings_theme_dark_title".localized, style: .default, handler: { _ in
+//                        Current.themeManager.setTheme(Theme(type: .dark))
+//                    })
+//                    if let _ = darkAction.value(forKey: "checked") as? Bool {
+//                        darkAction.setValue(Current.themeManager.currentTheme.type == .dark, forKey: "checked")
+//                    }
+//                    
+//                    ac.addAction(systemAction)
+//                    ac.addAction(lightAction)
+//                    ac.addAction(darkAction)
+//                    ac.addAction(UIAlertAction(title: "settings_theme_cancel_title".localized, style: .cancel))
+//
+//                    let navigationRequest = AlertNavigationRequest(alertController: ac)
+//                    Current.navigate.to(navigationRequest)
+//                }),
+//                actionRequired: rowsWithActionRequired?.contains(.theme) ?? false
+//            )
+//        ])
+//
+//        sections.append(appearanceSection)
         
         // MARK: - Support and feedback
         
