@@ -37,7 +37,7 @@ struct Feature: Codable {
 
 final class FeatureTogglingManager {
 
-    // Has the use toggled the feature?
+    // Has the user toggled the feature?
 
     // Is the user enrolled in feature toggling?
 
