@@ -108,6 +108,7 @@ class BrowseBrandsViewController: BinkViewController {
         super.viewDidLayoutSubviews()
         didLayoutSubviews = true
     }
+    
     override func configureForCurrentTheme() {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
         collectionView.backgroundColor = Current.themeManager.color(for: .viewBackground)

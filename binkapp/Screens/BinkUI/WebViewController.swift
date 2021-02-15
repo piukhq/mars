@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController {
+class WebViewController: BinkViewController {
     private let url: URL?
     private var webView: WKWebView!
     private var activityIndicator: UIActivityIndicatorView!
@@ -42,8 +42,8 @@ class WebViewController: UIViewController {
         setActivityIndicator()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         navigationController?.setToolbarHidden(true, animated: false)
     }
     
@@ -54,6 +54,11 @@ class WebViewController: UIViewController {
         var currentEdgeInsets = webView.scrollView.contentInset
         currentEdgeInsets.bottom = navigationController?.toolbar.frame.size.height ?? 0
         webView.scrollView.contentInset = currentEdgeInsets
+    }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        navigationController?.toolbar.tintColor = Current.themeManager.color(for: .text)
     }
     
     private func setWebView() {

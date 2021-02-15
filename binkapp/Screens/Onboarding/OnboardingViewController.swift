@@ -114,7 +114,6 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         startTimer()
-        view.backgroundColor = .white
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -168,12 +167,13 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             buttonsView.insertAdditionalViews([signInWithAppleButton])
             NSLayoutConstraint.activate([
                 signInWithAppleButton.heightAnchor.constraint(equalToConstant: 55),
-                signInWithAppleButton.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage)
+                signInWithAppleButton.widthAnchor.constraint(equalTo: buttonsView.widthAnchor, multiplier: LayoutHelper.PillButton.widthPercentage),
+                buttonsView.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor)
             ])
             signInWithAppleButton.addTarget(self, action: #selector(handleAppleIdRequest), for: .touchUpInside)
         } else if let buttonsView = footerButtonsView {
             NSLayoutConstraint.activate([
-                buttonsView.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor, constant: 25)
+                buttonsView.topAnchor.constraint(greaterThanOrEqualTo: pageControl.bottomAnchor)
             ])
         }
 
@@ -221,7 +221,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
     func showError(_ isCancelled: Bool) {
         let message = isCancelled ? viewModel.facebookLoginCancelledText : viewModel.facebookLoginErrorText
         
-        let alert = UIAlertController(title: viewModel.facebookLoginErrorTitle, message: message, preferredStyle: .alert)
+        let alert = BinkAlertController(title: viewModel.facebookLoginErrorTitle, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: viewModel.facebookLoginOK, style: .default))
         present(alert, animated: true)
     }

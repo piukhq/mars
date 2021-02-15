@@ -74,10 +74,10 @@ enum Styling {
             case .light:
                 return .binkDynamicGrayLight
             case .dark:
-                return .binkBlueDividerColor
+                return .binkBlueDivider
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkBlueDividerColor
+                    return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkBlueDivider
                 }
             }
         }
@@ -87,10 +87,10 @@ enum Styling {
             case .light:
                 return .black
             case .dark:
-                return .binkBlueTextColor
+                return .binkBlueText
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? .black : .binkBlueTextColor
+                    return traitcollection.userInterfaceStyle == .light ? .black : .binkBlueText
                 }
             }
         }
@@ -100,10 +100,10 @@ enum Styling {
             case .light:
                 return UIColor.white.withAlphaComponent(0.6)
             case .dark:
-                return UIColor.binkBlueViewBackground.withAlphaComponent(0.6)
+                return UIColor.binkBlueBarBackground.withAlphaComponent(0.7)
             case .system:
                 return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                    return traitcollection.userInterfaceStyle == .light ? UIColor.white.withAlphaComponent(0.6) : UIColor.binkBlueViewBackground.withAlphaComponent(0.6)
+                    return traitcollection.userInterfaceStyle == .light ? UIColor.white.withAlphaComponent(0.6) : UIColor.binkBlueBarBackground.withAlphaComponent(0.7)
                 }
             }
         }

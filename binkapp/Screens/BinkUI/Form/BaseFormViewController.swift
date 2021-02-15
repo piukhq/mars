@@ -31,7 +31,7 @@ class BaseFormViewController: BinkViewController, Form {
         collectionView.dataSource = dataSource
         collectionView.isScrollEnabled = false
         collectionView.delegate = self
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.register(FormCollectionViewCell.self)
         return collectionView
     }()
@@ -39,7 +39,7 @@ class BaseFormViewController: BinkViewController, Form {
     lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel, collectionView], adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -107,6 +107,12 @@ class BaseFormViewController: BinkViewController, Form {
         configureCheckboxes()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
     }
     
     private func configureLayout() {

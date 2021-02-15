@@ -70,6 +70,7 @@ class PLLScreenViewController: BinkViewController {
         tableView.rowHeight = 100.0
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
         return tableView
     }()
     
@@ -99,6 +100,7 @@ class PLLScreenViewController: BinkViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
         return tableView
     }()
 
@@ -143,8 +145,6 @@ class PLLScreenViewController: BinkViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .white
         
         configureBrandHeader()
         configureUI()
@@ -159,6 +159,15 @@ class PLLScreenViewController: BinkViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .pll)
+    }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        primaryMessageLabel.textColor = Current.themeManager.color(for: .text)
+        secondaryMessageLabel.textColor = Current.themeManager.color(for: .text)
+        activePaymentCardsTableView.reloadData()
+        pendingPaymentCardsTableView.reloadData()
     }
     
     private func configureLayout() {
@@ -271,14 +280,16 @@ private extension PLLScreenViewController {
         
         primaryMessageLabel.text = viewModel.primaryMessageText
         primaryMessageLabel.isHidden = titleLabel.isHidden
-        
+
         secondaryMessageLabel.text = viewModel.secondaryMessageText
         secondaryMessageLabel.isHidden = viewModel.shouldShowActivePaymentCards || viewModel.shouldShowPendingPaymentCards
         
         activePaymentCardsTableView.isHidden = !viewModel.shouldShowActivePaymentCards
         
         pendingCardsTitleLabel.text = "pll_screen_pending_cards_title".localized
+        pendingCardsTitleLabel.textColor = Current.themeManager.color(for: .text)
         pendingCardsDetailLabel.text = "pll_screen_pending_cards_detail".localized
+        pendingCardsDetailLabel.textColor = Current.themeManager.color(for: .text)
         pendingCardsTitleLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
         pendingCardsDetailLabel.isHidden = !viewModel.shouldShowPendingPaymentCards
         pendingPaymentCardsTableView.isHidden = !viewModel.shouldShowPendingPaymentCards

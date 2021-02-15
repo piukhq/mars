@@ -40,7 +40,7 @@ class TransactionsViewController: BinkViewController, InAppReviewable {
     lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: [titleLabel, descriptionLabel], adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         stackView.margin = UIEdgeInsets(top: 0, left: Constants.horizontalInset, bottom: 0, right: Constants.horizontalInset)
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -69,6 +69,12 @@ class TransactionsViewController: BinkViewController, InAppReviewable {
         super.viewDidDisappear(animated)
 
         requestInAppReviewIfNecessary()
+    }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
     }
     
     private func configureUI() {

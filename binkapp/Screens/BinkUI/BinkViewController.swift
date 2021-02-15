@@ -49,6 +49,10 @@ class BinkViewController: UIViewController {
         }
     }
 
+    deinit {
+        Current.themeManager.removeObserver(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDynamicActionIfNecessary()
@@ -133,6 +137,3 @@ extension String {
         return String(unicode)
     }
 }
-
-
-

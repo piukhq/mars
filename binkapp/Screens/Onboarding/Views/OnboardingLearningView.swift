@@ -65,7 +65,9 @@ class OnboardingLearningView: CustomView {
     func configure(forType type: OnboardingLearningType) {
         learningImageView.image = UIImage(named: type.learningImageName)
         headerTextLabel.text = type.headerText
+        headerTextLabel.textColor = Current.themeManager.color(for: .text)
         bodyTextLabel.text = type.bodyText
+        bodyTextLabel.textColor = Current.themeManager.color(for: .text)
         imageTopPaddingConstraint.constant = type.topPadding
     }
 }

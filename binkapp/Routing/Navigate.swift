@@ -77,9 +77,9 @@ struct TabBarNavigationRequest: BaseNavigationRequest {
 }
 
 struct AlertNavigationRequest: BaseNavigationRequest {
-    let alertController: UIAlertController
+    let alertController: BinkAlertController
     let completion: EmptyCompletionBlock?
-    init(alertController: UIAlertController, completion: EmptyCompletionBlock? = nil) {
+    init(alertController: BinkAlertController, completion: EmptyCompletionBlock? = nil) {
         self.alertController = alertController
         self.completion = completion
     }

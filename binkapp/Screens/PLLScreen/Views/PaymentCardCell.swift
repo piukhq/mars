@@ -24,19 +24,12 @@ class PaymentCardCell: UITableViewCell {
     func configureUI(paymentCard: CD_PaymentCard, cardIndex: Int, delegate: PaymentCardCellDelegate, journey: PllScreenJourney, showAsLinked: Bool) {
         self.delegate = delegate
         self.cardIndex = cardIndex
-
-        switch PaymentCardType.type(from: paymentCard.card?.firstSix) {
-        case .visa:
-            paymentCardImageView.image = UIImage(named: "visalogoContainer")
-        case .amex:
-            paymentCardImageView.image = UIImage(named: "americanexpresslogoContainer")
-        case .mastercard:
-            paymentCardImageView.image = UIImage(named: "mastercardlogoContainer")
-        default:
-            break
-        }
+        
+        paymentCardImageView.setImage(forPaymentCardFirstSix: paymentCard.card?.firstSix ?? "")
         titleLabel.text = paymentCard.card?.nameOnCard
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         subtitleLabel.text = String(format: "pll_screen_card_ending".localized, paymentCard.card?.lastFour ?? "")
+        subtitleLabel.textColor = Current.themeManager.color(for: .text)
         switchButton.isOn = journey == .newCard ? true : showAsLinked
         
         selectionStyle = .none

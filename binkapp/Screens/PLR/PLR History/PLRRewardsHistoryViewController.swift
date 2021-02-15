@@ -53,7 +53,6 @@ class PLRRewardsHistoryViewController: BinkViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
 
         title = viewModel.navigationTitle
 
@@ -88,6 +87,12 @@ class PLRRewardsHistoryViewController: BinkViewController {
                 }
             }
         }
+    }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        subtitleLabel.textColor = Current.themeManager.color(for: .text)
     }
 
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {

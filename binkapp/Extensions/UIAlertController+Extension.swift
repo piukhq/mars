@@ -10,16 +10,16 @@ import UIKit
 
 extension UIAlertController {
     static func presentFeatureNotImplementedAlert(on vc: UIViewController) {
-        let alert = UIAlertController(title: "Feature not implemented", message: nil, preferredStyle: .alert)
+        let alert = BinkAlertController(title: "Feature not implemented", message: nil, preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(alertAction)
         vc.present(alert, animated: true, completion: nil)
     }
     
-    static func cardScannerEnterManuallyAlertController(enterManuallyAction: @escaping () -> Void) -> UIAlertController? {
+    static func cardScannerEnterManuallyAlertController(enterManuallyAction: @escaping () -> Void) -> BinkAlertController? {
         guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return nil }
         
-        let alert = UIAlertController(title: "camera_denied_title".localized, message: "camera_denied_body".localized, preferredStyle: .alert)
+        let alert = BinkAlertController(title: "camera_denied_title".localized, message: "camera_denied_body".localized, preferredStyle: .alert)
         let allowAction = UIAlertAction(title: "camera_denied_allow_access".localized, style: .default, handler: { _ in
             UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
         })

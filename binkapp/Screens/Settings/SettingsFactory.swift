@@ -42,7 +42,7 @@ struct SettingsFactory {
                 type: .theme,
                 subtitle: nil,
                 action: .customAction(action: {
-                    let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                    let ac = BinkAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                     let systemAction = UIAlertAction(title: "settings_theme_system_title".localized, style: .default, handler: { _ in
                         Current.themeManager.setTheme(Theme(type: .system))
                     })

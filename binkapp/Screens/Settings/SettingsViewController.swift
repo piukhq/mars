@@ -45,6 +45,9 @@ class SettingsViewController: BinkViewController {
 
     private let zendeskTickets = ZendeskTickets()
     private weak var delegate: SettingsViewControllerDelegate?
+
+    /// Zendesk view controllers malform our navigation bar. This flag tells our view controller to reconfigure for the current theme next time it comes into view.
+    private var navigationBarRequiresThemeUpdate = false
     
     // MARK: - View Lifecycle
     
@@ -63,6 +66,16 @@ class SettingsViewController: BinkViewController {
         
         configureLayout()
         title = viewModel.title
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(true, animated: true)
+
+        if let nav = navigationController as? PortraitNavigationController, navigationBarRequiresThemeUpdate {
+            nav.configureForCurrentTheme()
+            navigationBarRequiresThemeUpdate = false
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -155,6 +168,7 @@ extension SettingsViewController: UITableViewDelegate {
             case let .customAction(action):
                 action()
             case let .launchSupport(service):
+                navigationBarRequiresThemeUpdate = true
                 switch service {
                 case .faq:
                     let helpCenterConfig = HelpCenterUiConfiguration()
@@ -199,7 +213,7 @@ extension SettingsViewController: UITableViewDelegate {
                     presentWebView(url: Constants.termsAndConditionsUrl)
                 }
             case .logout:
-                let alert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+                let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
                 alert.addAction(
                     UIAlertAction(title: "Log out", style: .default, handler: { _ in
                         NotificationCenter.default.post(name: .shouldLogout, object: nil)

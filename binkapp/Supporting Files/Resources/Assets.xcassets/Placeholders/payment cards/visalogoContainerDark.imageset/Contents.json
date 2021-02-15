@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "forward.png",
+      "filename" : "visalogoContainerDark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "forward@2x.png",
+      "filename" : "visalogoContainerDark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "forward@3x.png",
+      "filename" : "visalogoContainerDark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,8 +19,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }

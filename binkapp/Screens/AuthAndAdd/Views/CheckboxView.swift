@@ -33,6 +33,7 @@ class CheckboxView: CustomView {
     private(set) var title: NSMutableAttributedString? {
         didSet {
             textView.attributedText = title
+            textView.textColor = Current.themeManager.color(for: .text)
         }
     }
     
@@ -81,6 +82,7 @@ class CheckboxView: CustomView {
         let attributedString = title
         attributedString.addAttribute(.link, value: safeUrl, range: NSRange(location: title.length - columnName.count, length: columnName.count))
         textView.attributedText = attributedString
+        textView.textColor = Current.themeManager.color(for: .text)
     }
     
     override func configureUI() {
