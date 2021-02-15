@@ -203,8 +203,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         if let voucherCells = plrVoucherCells as? [PLRBaseCollectionViewCell], let vouchers = viewModel.vouchers {
             for index in 0..<voucherCells.count {
                 let cellViewModel = PLRCellViewModel(voucher: vouchers[index])
-                voucherCells[index].configureWithViewModel(cellViewModel) {
-                    self.viewModel.toVoucherDetailScreen(voucher: vouchers[index])
+                voucherCells[index].configureWithViewModel(cellViewModel) { [weak self] in
+                    self?.viewModel.toVoucherDetailScreen(voucher: vouchers[index])
                 }
             }
         }
