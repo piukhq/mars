@@ -58,26 +58,26 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")
         merchantGridCollectionView.dataSource = self
         merchantGridCollectionView.delegate = self
-        merchantGridCollectionView.clipsToBounds = false
+        merchantGridCollectionView.clipsToBounds = true
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         width.constant = bounds.size.width
         height.constant = 225
-        
         return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: targetSize.height))
     }
 }
 
 extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        walletPrompt?.numberOfRows ?? 0
+        walletPrompt?.membershipPlans?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: MerchantHeroCell = collectionView.dequeue(indexPath: indexPath)
-        cell.backgroundColor = .black15
-        cell.configure()
+        guard let plans = walletPrompt?.membershipPlans else { return cell }
+        
+        cell.configure(with: plans[indexPath.row])
         return cell
     }
     
@@ -93,11 +93,11 @@ class MerchantHeroCell: UICollectionViewCell {
         return "MerchantHeroCell"
     }
     
-    func configure() {
-//        let imageView = UIImageView(image: UIImage(named: "bink-logo"))
-//        imageView.bounds = self.bounds
-//        imageView.contentMode = .scaleAspectFit
-//
-//        addSubview(imageView)
+    func configure(with membershipPlan: CD_MembershipPlan) {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
+        imageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
+        imageView.contentMode = .scaleAspectFill
+
+        addSubview(imageView)
     }
 }

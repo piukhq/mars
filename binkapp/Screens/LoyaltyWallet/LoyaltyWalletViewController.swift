@@ -16,7 +16,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func configureCollectionView() {
         super.configureCollectionView()
-//        collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true) // DELETE
+        collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
         collectionView.register(OnboardingCardCollectionViewCell.self, asNib: true)
     }
     

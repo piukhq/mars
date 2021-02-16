@@ -16,6 +16,7 @@ final class ImageService {
     enum PathType {
         case membershipPlanIcon(plan: CD_MembershipPlan)
         case membershipPlanHero(plan: CD_MembershipPlan)
+        case membershipPlanAlternativeHero(plan: CD_MembershipPlan)
         case membershipPlanTier(card: CD_MembershipCard)
         case membershipPlanOfferTile(url: String)
     }
@@ -54,6 +55,8 @@ final class ImageService {
             image = plan.image(ofType: .icon)
         case .membershipPlanHero(let plan):
             image = plan.image(ofType: .hero)
+        case .membershipPlanAlternativeHero(let plan):
+            image = plan.image(ofType: .alternativeHero)
         case .membershipPlanTier(let card):
             /// If we have a tier image, return that, otherwise return hero
             image = card.image(ofType: .tier) ?? card.membershipPlan?.image(ofType: .hero)
