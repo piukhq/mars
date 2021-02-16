@@ -47,8 +47,8 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     private var walletPrompt: WalletPrompt?
     
     func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {
+        cornerRadius = 20
         setupShadow()
-
         headerLabel.text = walletPrompt.title
         headerLabel.textColor = .white
         descriptionLabel.text = walletPrompt.body

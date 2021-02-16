@@ -227,9 +227,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             if indexPath.row < viewModel.cardCount {
                 return LayoutHelper.WalletDimensions.cardSize
             } else {
-                guard let prompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
+                guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
 
-                return CGSize(width: LayoutHelper.WalletDimensions.walletPromptSize.width, height: LayoutHelper.WalletDimensions.walletPromptSize.height + (LayoutHelper.WalletDimensions.walletPromptLinkHeight * prompt.numberOfRows))
+                return CGSize(width: LayoutHelper.WalletDimensions.walletPromptSize.width, height: LayoutHelper.WalletDimensions.walletPromptHeaderHeight + (LayoutHelper.WalletDimensions.walletPromptLinkCellHeight * walletPrompt.numberOfRows))
             }
         }
 
