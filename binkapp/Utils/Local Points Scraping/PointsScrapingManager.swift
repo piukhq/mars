@@ -222,7 +222,7 @@ class PointsScrapingManager {
         return agentEnabled(agent)
     }
     
-    private func agent(forPlanId planId: Int) -> WebScrapable? {
+    func agent(forPlanId planId: Int) -> WebScrapable? {
         return agents.first(where: { $0.membershipPlanId == planId })
     }
 

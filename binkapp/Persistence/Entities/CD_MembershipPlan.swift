@@ -48,16 +48,21 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
         }
     }
 
-    var isPointsScrapable: Bool {
-        let planId = Int(id)
-        return Current.pointsScrapingManager.planIdIsWebScrapable(planId)
-    }
-
     enum DynamicContentColumn: String {
         case voucherStampsExpiredDetail = "Voucher_Expired_Detail"
         case voucherStampsRedeemedDetail = "Voucher_Redeemed_Detail"
         case voucherStampsInProgressDetail = "Voucher_Inprogress_Detail"
         case voucherStampsIssuedDetail = "Voucher_Issued_Detail"
         case voucherStampsCancelledDetail = "Voucher_Cancelled_Detail"
+    }
+}
+
+// MARK: - Local Points Collection
+
+extension CD_MembershipPlan {
+    /// The auth fields returned by remote config in order to locally scrape points balances without needing to interact with the Bink API
+    var lpcAuthFields: [AuthoriseFieldModel]? {
+        guard let planId = Int(id), let agent = Current.pointsScrapingManager.agent(forPlanId: planId) else { return nil }
+        return Current.remoteConfig.objectForConfigKey(.localPointsCollectionAuthFields(agent), forObjectType: [AuthoriseFieldModel].self)
     }
 }
