@@ -48,6 +48,11 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
         }
     }
 
+    var isPointsScrapable: Bool {
+        let planId = Int(id)
+        return Current.pointsScrapingManager.planIdIsWebScrapable(planId)
+    }
+
     enum DynamicContentColumn: String {
         case voucherStampsExpiredDetail = "Voucher_Expired_Detail"
         case voucherStampsRedeemedDetail = "Voucher_Redeemed_Detail"
