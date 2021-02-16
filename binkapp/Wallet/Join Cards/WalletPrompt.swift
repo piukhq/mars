@@ -11,7 +11,7 @@ import CardScan
 
 enum WalletPromptType {
     case addPaymentCards
-    case link
+    case link(plans: [CD_MembershipPlan])
 
     var title: String {
         switch self {
@@ -49,25 +49,23 @@ enum WalletPromptType {
         return userDefaultsDismiss
     }
 
-//    var membershipPlans: [CD_MembershipPlan]? {
-//        switch self {
-//        case .loyaltyJoin(let plan):
-//            return plan
-//        case .link:
-//
-//        case .addPaymentCards:
-//            return nil
-//        }
-//    }
-//
-//    var numberOfRows: CGFloat {
-//        switch self {
-//        case .link:
-//            <#code#>
-//        default:
-//            return 0
-//        }
-//    }
+    var membershipPlans: [CD_MembershipPlan]? {
+        switch self {
+        case .link(let plans):
+            return plans
+        case .addPaymentCards:
+            return nil
+        }
+    }
+
+    var numberOfRows: Int {
+        switch self {
+        case .link(let plans):
+            return plans.count > 2 ? 2 : 1
+        default:
+            return 0
+        }
+    }
 
     var iconImageName: String? {
         switch self {
@@ -108,14 +106,12 @@ class WalletPrompt: WalletPromptProtocol {
         return type.userDefaultsDismissKey
     }
 
-//    var membershipPlans: CD_MembershipPlan? {
-//        return type.membershipPlan
-//    }
+    var membershipPlans: [CD_MembershipPlan]? {
+        return type.membershipPlans
+    }
     
-    var plans = 5
-    
-    var numberOfRows: CGFloat {
-        return plans > 2 ? 2 : 1
+    var numberOfRows: Int {
+        return type.numberOfRows
     }
 
     var iconImageName: String? {

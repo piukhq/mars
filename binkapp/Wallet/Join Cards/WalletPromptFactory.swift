@@ -25,22 +25,27 @@ enum WalletPromptFactory {
         // <<<<<<<<<<<<<<<<<<<<<<<
 
         if walletType == .loyalty {
-//            guard let plans = Current.wallet.membershipPlans else {
-//                return walletPrompts
-//            }
-//
-//            // join cards
-//            let sortedPlans = plans.sorted(by: { (firstPlan, secondPlan) -> Bool in
-//                firstPlan.account?.companyName ?? "" < secondPlan.account?.companyName ?? ""
-//            })
+            guard let plans = Current.wallet.membershipPlans else {
+                return walletPrompts
+            }
+
+            // TODO: Check if there are any PLL or PLR cards, if none, return linkwallet prompt
+
+            let linkPlans = plans.filter({ $0.featureSet?.planCardType == .link })
+
+            let sortedPlans = linkPlans.sorted(by: {(firstPlan, secondPlan) -> Bool in
+                firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
+            })
+    
+            walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
+            
 //            sortedPlans.filter({ $0.featureSet?.planCardType == .link }).forEach { plan in
 //                if shouldShowJoinCard(forMembershipPlan: plan) {
-//                    walletPrompts.append(WalletPrompt(type: .loyaltyJoin(membershipPlan: plan)))
+//                    walletPrompts.append(WalletPrompt(type: .link(plans: <#T##[CD_MembershipPlan]#>)))
 //                }
 //            }
             
-            // Check if there are any PLL or PLR cards, if none, return linkwallet prompt
-            walletPrompts.append(WalletPrompt(type: .link))
+//            walletPrompts.append(WalletPrompt(type: .link))
             
             
             // Check for see and store cards and return one of those types if none
