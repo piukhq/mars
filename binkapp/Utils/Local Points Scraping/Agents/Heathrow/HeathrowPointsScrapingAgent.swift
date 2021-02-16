@@ -26,14 +26,6 @@ struct HeathrowScrapingAgent: WebScrapable {
         }
     }
 
-    var usernameFieldTitle: String {
-        return "Email Address / Card Number"
-    }
-
-    var passwordFieldTitle: String {
-        return "Password"
-    }
-
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }

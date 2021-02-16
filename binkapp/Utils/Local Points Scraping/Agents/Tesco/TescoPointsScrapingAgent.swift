@@ -25,14 +25,6 @@ struct TescoScrapingAgent: WebScrapable {
             return 203
         }
     }
-    
-    var usernameFieldTitle: String {
-        return "Email"
-    }
-    
-    var passwordFieldTitle: String {
-        return "Password"
-    }
 
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
