@@ -132,6 +132,7 @@ class FormField {
         case register
         case planDocument
         case userPreference
+        case lpcAuth
     }
     
     let title: String

@@ -339,7 +339,7 @@ extension FormDataSource {
                             shouldChange: shouldChangeBlock,
                             fieldExited: fieldExitedBlock,
                             pickerSelected: pickerUpdatedBlock,
-                            columnKind: .auth,
+                            columnKind: .lpcAuth,
                             forcedValue: prefilledValues?.first(where: { $0.commonName?.rawValue == field.commonName })?.value,
                             fieldCommonName: FieldCommonName(rawValue: fieldCommonName)
                         )
