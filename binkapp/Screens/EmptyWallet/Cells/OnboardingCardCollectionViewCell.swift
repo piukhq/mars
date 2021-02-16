@@ -49,6 +49,8 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         descriptionLabel.text = walletPrompt.body
         descriptionLabel.textColor = .white
         
+        headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
+        
         gradientLayer.frame = headerView.bounds
         gradientLayer.colors = [UIColor.blueAccent.cgColor, UIColor.binkPurple.cgColor]
         gradientLayer.locations = [0.0, 1.0]
@@ -67,6 +69,14 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         height.constant = 225
         return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: targetSize.height))
     }
+    
+    @objc private func toBrowseBrands() {
+        let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
+        let navigatioRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigatioRequest)
+    }
+    
+    
 }
 
 extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
