@@ -22,6 +22,7 @@ var recaptchaAnchorInvalidQuery = "re-captcha[class*=-invalid]"
 var recaptchaAnchorValidQuery = "re-captcha[class*=-valid]"
 var recaptchaAnchorContainerQuery = "re-captcha div"
 var recaptchaChallengeQuery = ""
+var recaptchaMessage = "You must resolve the CAPTCHA challenge to see your updated <MERCHANT_NAME> balance in Bink.\n\n"
 
 
 performLogin()
@@ -110,7 +111,15 @@ function performLogin() {
         container.style.position = 'relative'
         container.style.zIndex = '1000'
         
+        var message = document.createElement('h2')
+        message.innerText = recaptchaMessage
+        message.style.position = 'relative'
+        message.style.zIndex = '1000'
+
         rInvalid.appendChild(node)
+        rInvalid.insertBefore(message, container)
+
+        f.scrollIntoView()
 
         return {
             "success": false,
