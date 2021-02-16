@@ -62,7 +62,7 @@ open class CD_MembershipPlan: _CD_MembershipPlan {
 extension CD_MembershipPlan {
     /// The auth fields returned by remote config in order to locally scrape points balances without needing to interact with the Bink API
     var lpcAuthFields: [AuthoriseFieldModel]? {
-        guard let planId = Int(id), let agent = Current.pointsScrapingManager.agent(forPlanId: planId) else { return nil }
+        guard let planId = Int(id), Current.pointsScrapingManager.planIdIsWebScrapable(planId), let agent = Current.pointsScrapingManager.agent(forPlanId: planId) else { return nil }
         return Current.remoteConfig.objectForConfigKey(.localPointsCollectionAuthFields(agent), forObjectType: [AuthoriseFieldModel].self)
     }
 }
