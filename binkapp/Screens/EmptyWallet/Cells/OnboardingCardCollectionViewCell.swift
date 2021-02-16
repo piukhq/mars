@@ -9,17 +9,6 @@
 import UIKit
 
 class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
-//    enum Constants {
-//        static let stampViewWidth: CGFloat = 57
-////        static let interimSpacing: CGFloat = 34
-//    }
-    
-//    private lazy var layout: UICollectionViewFlowLayout = {
-//        let flowLayout = UICollectionViewFlowLayout()
-//        flowLayout.estimatedItemSize = CGSize(width: 1, height: 1) // To invoke automatic self sizing
-//        return flowLayout
-//    }()
-    
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -97,7 +86,8 @@ class MerchantHeroCell: UICollectionViewCell {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
         imageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
         imageView.contentMode = .scaleAspectFill
-
+        imageView.clipsToBounds = true
+        
         addSubview(imageView)
     }
 }
