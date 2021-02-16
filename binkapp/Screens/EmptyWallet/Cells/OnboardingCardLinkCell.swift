@@ -11,47 +11,47 @@ import Foundation
 class OnboardingCardLinkCell: OnboardingCardCollectionViewCell {
     
     
-    func configureWithOnboardingCard(_ onboardingCard: OnboardingCard) {
-        setupShadow()
-        
-        headerLabel.text = onboardingCard.title
-        headerLabel.textColor = Current.themeManager.color(for: .text)
-        descriptionLabel.text = onboardingCard.description
-        descriptionLabel.textColor = Current.themeManager.color(for: .text)
-    }
+//    func configureWithOnboardingCard(_ onboardingCard: WalletPrompt) {
+//        setupShadow()
+//
+//        headerLabel.text = onboardingCard.title
+//        headerLabel.textColor = Current.themeManager.color(for: .text)
+//        descriptionLabel.text = onboardingCard.body
+//        descriptionLabel.textColor = Current.themeManager.color(for: .text)
+//    }
 }
 
 
-enum OnboardingCardType {
-    case link
-    
-    var title: String {
-        switch self {
-        case .link:
-            return "onboarding_title_link".localized
-        }
-    }
-    
-    var desciption: String {
-        switch self {
-        case .link:
-            return "onboarding_description_link".localized
-        }
-    }
-}
-
-class OnboardingCard {
-    let type: OnboardingCardType
-    
-    required init(type: OnboardingCardType) {
-        self.type = type
-    }
-    
-    var title: String {
-        return type.title
-    }
-    
-    var description: String {
-        return type.desciption
-    }
-}
+//enum OnboardingCardType {
+//    case link
+//    
+//    var title: String {
+//        switch self {
+//        case .link:
+//            return "onboarding_title_link".localized
+//        }
+//    }
+//    
+//    var desciption: String {
+//        switch self {
+//        case .link:
+//            return "onboarding_description_link".localized
+//        }
+//    }
+//}
+//
+//class OnboardingCard {
+//    let type: OnboardingCardType
+//    
+//    required init(type: OnboardingCardType) {
+//        self.type = type
+//    }
+//    
+//    var title: String {
+//        return type.title
+//    }
+//    
+//    var description: String {
+//        return type.desciption
+//    }
+//}

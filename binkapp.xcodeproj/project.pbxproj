@@ -280,7 +280,7 @@
 		CE07917A25ADB4A4009FE8BA /* LoyaltyWalletAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07917925ADB4A3009FE8BA /* LoyaltyWalletAnimator.swift */; };
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
-		CE27A0DB25DA990E00C58412 /* OnboardingCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCollectionViewCell.xib */; };
+		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
 		CE27A0EC25DAA7E500C58412 /* OnboardingCardLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0EB25DAA7E500C58412 /* OnboardingCardLinkCell.swift */; };
 		CE341ED7252DC01A00577153 /* WhoWeAreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE341ED6252DC01A00577153 /* WhoWeAreViewController.swift */; };
 		CE341F0C252DED1400577153 /* BinkPersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE341F0A252DED1400577153 /* BinkPersonTableViewCell.swift */; };
@@ -821,7 +821,7 @@
 		CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLRRewardDetailViewModelTests.swift; sourceTree = "<group>"; };
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
-		CE27A0D925DA990E00C58412 /* OnboardingCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCollectionViewCell.xib; sourceTree = "<group>"; };
+		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE27A0EB25DAA7E500C58412 /* OnboardingCardLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardLinkCell.swift; sourceTree = "<group>"; };
 		CE341ED6252DC01A00577153 /* WhoWeAreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreViewController.swift; sourceTree = "<group>"; };
 		CE341F0A252DED1400577153 /* BinkPersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkPersonTableViewCell.swift; sourceTree = "<group>"; };
@@ -2158,7 +2158,7 @@
 				EF586FDF23578735000917B6 /* WalletPromptCollectionViewCell.swift */,
 				EF335C81234F565B00D49223 /* WalletPromptCollectionViewCell.xib */,
 				CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */,
-				CE27A0D925DA990E00C58412 /* OnboardingCollectionViewCell.xib */,
+				CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */,
 				CE27A0EB25DAA7E500C58412 /* OnboardingCardLinkCell.swift */,
 			);
 			path = Cells;
@@ -2912,7 +2912,7 @@
 				3CD3493422F99E1D000C1F4D /* NunitoSans-ExtraLight.ttf in Resources */,
 				5ECE047622CE579B001BA964 /* Assets.xcassets in Resources */,
 				3CD3493622F99E1D000C1F4D /* NunitoSans-BlackItalic.ttf in Resources */,
-				CE27A0DB25DA990E00C58412 /* OnboardingCollectionViewCell.xib in Resources */,
+				CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */,
 				EFF59F1A234B73C900CF3992 /* CardDetailInfoTableViewCell.xib in Resources */,
 				EF5229BA2423FC96004AC972 /* prodPublicKey.der in Resources */,
 				EF6921732469A8A90049875B /* DebugSecondaryPlanColorViewController.xib in Resources */,

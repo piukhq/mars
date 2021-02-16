@@ -17,6 +17,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
     private let repository = LoyaltyWalletRepository()
 
     var walletPrompts: [WalletPrompt]? {
+        print("wallet prompts called")
         return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
     }
     
@@ -40,10 +41,10 @@ class LoyaltyWalletViewModel: WalletViewModel {
     
     func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
         switch walletPrompt.type {
-        case .loyaltyJoin(let membershipPlan):
-            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
+//        case .loyaltyJoin(let membershipPlan):
+//            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+//            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+//            Current.navigate.to(navigationRequest)
         case .addPaymentCards:
             guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
             PermissionsUtility.launchPaymentScanner(viewController) {
@@ -54,6 +55,8 @@ class LoyaltyWalletViewModel: WalletViewModel {
                 let navigationRequest = ModalNavigationRequest(viewController: addPaymentCardViewController)
                 Current.navigate.to(navigationRequest)
             }
+        case .link:
+            print("Cell tapped")
         }
     }
     

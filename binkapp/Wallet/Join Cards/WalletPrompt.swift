@@ -10,24 +10,24 @@ import Foundation
 import CardScan
 
 enum WalletPromptType {
-    case loyaltyJoin(membershipPlan: CD_MembershipPlan)
     case addPaymentCards
+    case link
 
     var title: String {
         switch self {
-        case .loyaltyJoin(let plan):
-            return plan.account?.planName ?? ""
         case .addPaymentCards:
             return "Add your payment cards"
+        case .link:
+            return "wallet_prompt_link_title".localized
         }
     }
 
     var body: String {
         switch self {
-        case .loyaltyJoin:
-            return "wallet_prompt_loyalty".localized
         case .addPaymentCards:
             return "wallet_prompt_payment".localized
+        case .link:
+            return "wallet_prompt_link_body".localized
         }
     }
 
@@ -40,23 +40,34 @@ enum WalletPromptType {
         }
         
         switch self {
-        case .loyaltyJoin(let plan):
-            userDefaultsDismiss += "join_card_\(plan.account?.planName ?? "")_was_dismissed"
         case .addPaymentCards:
             userDefaultsDismiss += "add_payment_card_prompt_was_dismissed"
+        default:
+            break
         }
         
         return userDefaultsDismiss
     }
 
-    var membershipPlan: CD_MembershipPlan? {
-        switch self {
-        case .loyaltyJoin(let plan):
-            return plan
-        case .addPaymentCards:
-            return nil
-        }
-    }
+//    var membershipPlans: [CD_MembershipPlan]? {
+//        switch self {
+//        case .loyaltyJoin(let plan):
+//            return plan
+//        case .link:
+//
+//        case .addPaymentCards:
+//            return nil
+//        }
+//    }
+//
+//    var numberOfRows: CGFloat {
+//        switch self {
+//        case .link:
+//            <#code#>
+//        default:
+//            return 0
+//        }
+//    }
 
     var iconImageName: String? {
         switch self {
@@ -72,7 +83,7 @@ protocol WalletPromptProtocol {
     var title: String { get }
     var body: String { get }
     var userDefaultsDismissKey: String { get }
-    var membershipPlan: CD_MembershipPlan? { get }
+//    var membershipPlan: CD_MembershipPlan? { get }
     var iconImageName: String? { get }
     static func userDefaultsDismissKey(forType type: WalletPromptType) -> String
     init(type: WalletPromptType)
@@ -97,8 +108,14 @@ class WalletPrompt: WalletPromptProtocol {
         return type.userDefaultsDismissKey
     }
 
-    var membershipPlan: CD_MembershipPlan? {
-        return type.membershipPlan
+//    var membershipPlans: CD_MembershipPlan? {
+//        return type.membershipPlan
+//    }
+    
+    var plans = 5
+    
+    var numberOfRows: CGFloat {
+        return plans > 2 ? 2 : 1
     }
 
     var iconImageName: String? {

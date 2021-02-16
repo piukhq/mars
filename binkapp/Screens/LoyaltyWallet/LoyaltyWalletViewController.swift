@@ -16,7 +16,8 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     
     override func configureCollectionView() {
         super.configureCollectionView()
-        collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
+//        collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true) // DELETE
+        collectionView.register(OnboardingCardCollectionViewCell.self, asNib: true)
     }
     
     override func viewDidLoad() {
@@ -54,15 +55,25 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             
             return cell
         } else {
-            // join card
-            let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            // Wallet prompts
+            let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else {
                 return cell
             }
-            cell.configureWithWalletPrompt(walletPrompt)
+            
+            if walletPrompt.type == .link {
+//                let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+                cell.configureWithWalletPrompt(walletPrompt)
+                return cell
+            }
+
             return cell
         }
     }
+    
+//    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        <#code#>
+//    }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         super.collectionView(collectionView, didSelectItemAt: indexPath)

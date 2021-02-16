@@ -27,7 +27,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = LayoutHelper.WalletDimensions.cardLineSpacing
-        layout.estimatedItemSize = LayoutHelper.WalletDimensions.cardSize
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         return layout
     }()
 
@@ -166,10 +166,10 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         collectionView.register(WalletPromptCollectionViewCell.self, asNib: true)
         view.addSubview(collectionView)
         collectionView.addSubview(refreshControl)
-
+        
         collectionView.dataSource = self
         collectionView.delegate = self
-
+        
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -227,7 +227,9 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             if indexPath.row < viewModel.cardCount {
                 return LayoutHelper.WalletDimensions.cardSize
             } else {
-                return LayoutHelper.WalletDimensions.walletPromptSize
+                guard let prompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
+
+                return CGSize(width: LayoutHelper.WalletDimensions.walletPromptSize.width, height: LayoutHelper.WalletDimensions.walletPromptSize.height + (LayoutHelper.WalletDimensions.walletPromptLinkHeight * prompt.numberOfRows))
             }
         }
 
