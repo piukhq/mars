@@ -26,6 +26,12 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         return height
     }()
     
+    private lazy var gradientLayer: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        headerView.layer.insertSublayer(gradient, at: 0)
+        return gradient
+    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         translatesAutoresizingMaskIntoConstraints = false
@@ -42,6 +48,12 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         headerLabel.textColor = .white
         descriptionLabel.text = walletPrompt.body
         descriptionLabel.textColor = .white
+        
+        gradientLayer.frame = headerView.bounds
+        gradientLayer.colors = [UIColor.blueAccent.cgColor, UIColor.binkPurple.cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.startPoint = CGPoint(x: 0.7, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
         
         self.walletPrompt = walletPrompt
         merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")
