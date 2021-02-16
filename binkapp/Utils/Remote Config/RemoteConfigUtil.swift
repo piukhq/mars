@@ -13,6 +13,7 @@ class RemoteConfigUtil {
     enum RemoteConfigKey {
         case localPointsCollectionMasterEnabled
         case localPointsCollectionAgentEnabled(WebScrapable)
+        case localPointsCollectionAuthFields(WebScrapable)
         case inAppReviewEnabled
         case dynamicActions
         
@@ -24,6 +25,8 @@ class RemoteConfigUtil {
                 return "LPC_master_enabled\(isDebug ? "_debug" : "")"
             case .localPointsCollectionAgentEnabled(let agent):
                 return "LPC_\(agent.merchant)_enabled\(isDebug ? "_debug" : "")"
+            case .localPointsCollectionAuthFields(let agent):
+                return "LPC_\(agent.merchant)_auth_fields\(isDebug ? "_debug" : "")"
             case .inAppReviewEnabled:
                 return "in_app_review_enabled"
             case .dynamicActions:
