@@ -26,6 +26,10 @@ struct HeathrowScrapingAgent: WebScrapable {
         }
     }
 
+    var usernameField: FieldCommonName {
+        return .username
+    }
+
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }

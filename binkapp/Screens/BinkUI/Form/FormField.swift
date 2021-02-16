@@ -10,7 +10,7 @@ import UIKit
 
 enum FieldCommonName: String {
     case email
-    case userName = "user_name"
+    case username
     case password
     case placeOfBirth = "place_of_birth"
     case postcode
