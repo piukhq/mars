@@ -99,7 +99,7 @@ print(payload)
 headers = {'content-type': 'application/json'}
 r = requests.post(webhook, data=payload, headers=headers)
 if r:
-    print(r.raw)
+    print('Success - Teams notification sent. SAST Process Complete.')
 else:
-    print('An error has occurred.')
+    print('Error - Could not send Teams notification. An error has occurred.')
     exit(1)
