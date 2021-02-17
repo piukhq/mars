@@ -21,8 +21,7 @@ enum WebScrapableMerchant: String {
 protocol WebScrapable {
     var merchant: WebScrapableMerchant { get }
     var membershipPlanId: Int { get }
-    var usernameFieldTitle: String { get }
-    var passwordFieldTitle: String { get }
+    var usernameField: FieldCommonName { get }
     var loyaltySchemeBalanceCurrency: String? { get }
     var loyaltySchemeBalanceSuffix: String? { get }
     var loyaltySchemeBalancePrefix: String? { get }
@@ -33,6 +32,11 @@ protocol WebScrapable {
 }
 
 extension WebScrapable {
+    /// Some future merchants may use .username - override if that is the case.
+    var usernameField: FieldCommonName {
+        return .email
+    }
+
     var loyaltySchemeBalanceCurrency: String? {
         return nil
     }

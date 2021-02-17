@@ -26,14 +26,6 @@ struct SuperdrugScrapingAgent: WebScrapable {
         }
     }
 
-    var usernameFieldTitle: String {
-        return "Email Address"
-    }
-
-    var passwordFieldTitle: String {
-        return "Password"
-    }
-
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }
