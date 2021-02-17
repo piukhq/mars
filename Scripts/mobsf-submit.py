@@ -57,7 +57,7 @@ if r:
         print('Report Saved')
         f.write(r.content)
         webhook = os.environ.get('MOBILE_TEAMS_WEBHOOK') 
-        url = os.environ.get('BITRISE_BUILD_URL') + '?tab=artifacts'
+        url = os.environ.get('BITRISE_BUILD_URL') + '#?tab=artifacts'
 
         payload = """ {
             "@type": "MessageCard",
