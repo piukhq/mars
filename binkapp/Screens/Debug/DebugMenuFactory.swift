@@ -104,7 +104,7 @@ class DebugMenuFactory {
     
     private func makeAllowCustomBundleClientOnLoginRow() -> DebugMenuRow {
         let shouldAllowCustomBundleClientOnLogin = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
-        return DebugMenuRow(title: "Allow Custom Bundle and Client on Login/Register", subtitle: shouldAllowCustomBundleClientOnLogin ? "Yes" : "No", action: { [weak self] in
+        return DebugMenuRow(title: "Allow Custom Bundle and Client on Login", subtitle: shouldAllowCustomBundleClientOnLogin ? "Yes" : "No", action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .customBundleClientLogin)
         }, cellType: .titleSubtitle)
