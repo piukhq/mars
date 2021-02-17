@@ -225,10 +225,13 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let cell = collectionView.cellForItem(at: indexPath) else {
             if indexPath.row < viewModel.cardCount {
+                /// Wallet cards
                 return LayoutHelper.WalletDimensions.cardSize
             } else {
+                /// talk about what we're doing and why
                 guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
 
+                /// Pass into layout helper and return size
                 return CGSize(width: LayoutHelper.WalletDimensions.walletPromptSize.width, height: LayoutHelper.WalletDimensions.walletPromptHeaderHeight + (LayoutHelper.WalletDimensions.walletPromptLinkCellHeight * CGFloat(walletPrompt.numberOfRows)))
             }
         }

@@ -17,7 +17,6 @@ class LoyaltyWalletViewModel: WalletViewModel {
     private let repository = LoyaltyWalletRepository()
 
     var walletPrompts: [WalletPrompt]? {
-        print("wallet prompts called")
         return WalletPromptFactory.makeWalletPrompts(forWallet: .loyalty)
     }
     

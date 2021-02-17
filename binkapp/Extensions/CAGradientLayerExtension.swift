@@ -24,4 +24,14 @@ extension CAGradientLayer {
 
         return gradientLayer
     }
+    
+    static func makeGradient(for view: UIView, firstColor: UIColor, secondColor: UIColor) {
+        let gradientLayer = CAGradientLayer()
+        view.layer.insertSublayer(gradientLayer, at: 0)
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [secondColor.cgColor, firstColor.cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.startPoint = CGPoint(x: 0.7, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+    }
 }
