@@ -18,38 +18,26 @@ enum WalletPromptFactory {
     static func makeWalletPrompts(forWallet walletType: WalletType) -> [WalletPrompt] {
         var walletPrompts: [WalletPrompt] = []
 
-        // TODO: Reinstate this: >>>>>>>>>>>>>
-//        guard Current.wallet.shouldDisplayWalletPrompts == true else {
-//            return walletPrompts
-//        }
-        // <<<<<<<<<<<<<<<<<<<<<<<
+        guard Current.wallet.shouldDisplayWalletPrompts == true else {
+            return walletPrompts
+        }
 
         if walletType == .loyalty {
-            guard let plans = Current.wallet.membershipPlans else {
+            guard let plans = Current.wallet.membershipPlans,
+                  let membershipCards = Current.wallet.membershipCards,
+                  !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) else {
                 return walletPrompts
             }
-
-            // TODO: Check if there are any PLL or PLR cards, if none, return linkwallet prompt
-
-            let linkPlans = plans.filter({ $0.featureSet?.planCardType == .link })
-
-            let sortedPlans = linkPlans.sorted(by: {(firstPlan, secondPlan) -> Bool in
+            
+            /// Get PLL plans and sort by ID
+            let pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
+            let sortedPlans = pllPlans.sorted(by: {(firstPlan, secondPlan) -> Bool in
                 firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
             })
     
             walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
-            
-//            sortedPlans.filter({ $0.featureSet?.planCardType == .link }).forEach { plan in
-//                if shouldShowJoinCard(forMembershipPlan: plan) {
-//                    walletPrompts.append(WalletPrompt(type: .link(plans: <#T##[CD_MembershipPlan]#>)))
-//                }
-//            }
-            
-//            walletPrompts.append(WalletPrompt(type: .link))
-            
-            
+
             // Check for see and store cards and return one of those types if none
-            
         }
 
         // add payment cards prompt
@@ -59,22 +47,6 @@ enum WalletPromptFactory {
 
         return walletPrompts
     }
-
-//    static private func shouldShowJoinCard(forMembershipPlan plan: CD_MembershipPlan) -> Bool {
-//        guard let membershipCards = Current.wallet.membershipCards else {
-//            return false
-//        }
-//
-//        var planExistsInWallet = false
-//        membershipCards.forEach {
-//            if plan == $0.membershipPlan {
-//                planExistsInWallet = true
-//            }
-//        }
-//
-//        let hasBeenDismissed = Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .loyaltyJoin(membershipPlan: plan)))
-//        return !hasBeenDismissed && !planExistsInWallet
-//    }
 
     static private func shouldShowAddPaymentCard() -> Bool {
         // We pass nil as the scan delegate as the receiver doesn't care about the delegate in order to return the key
