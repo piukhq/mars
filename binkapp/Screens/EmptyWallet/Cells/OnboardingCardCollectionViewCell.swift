@@ -75,8 +75,6 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         let navigatioRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigatioRequest)
     }
-    
-    
 }
 
 extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -90,6 +88,14 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
         
         cell.configure(with: plans[indexPath.row])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let plans = walletPrompt?.membershipPlans else { return }
+        let membershipPlan = plans[indexPath.row]
+        let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
