@@ -10,7 +10,7 @@ import UIKit
 
 class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var merchantGridCollectionView: UICollectionView!
     
@@ -38,10 +38,18 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {
         cornerRadius = 20
         setupShadow()
-        headerLabel.text = walletPrompt.title
-        headerLabel.textColor = .white
+        titleLabel.text = walletPrompt.title
+        titleLabel.textColor = .white
         descriptionLabel.text = walletPrompt.body
         descriptionLabel.textColor = .white
+        
+        switch UIDevice.current.width {
+        case (.iPhone6Size), (.iPhone5Size), (.iPhone4Size):
+            titleLabel.font = UIFont.walletPromptTitleSmall
+            descriptionLabel.font = UIFont.walletPromptBodySmall
+        default:
+            break
+        }
         
         headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
         

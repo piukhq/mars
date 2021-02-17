@@ -14,8 +14,8 @@ class OnboardingCardLinkCell: OnboardingCardCollectionViewCell {
 //    func configureWithOnboardingCard(_ onboardingCard: WalletPrompt) {
 //        setupShadow()
 //
-//        headerLabel.text = onboardingCard.title
-//        headerLabel.textColor = Current.themeManager.color(for: .text)
+//        titleLabel.text = onboardingCard.title
+//        titleLabel.textColor = Current.themeManager.color(for: .text)
 //        descriptionLabel.text = onboardingCard.body
 //        descriptionLabel.textColor = Current.themeManager.color(for: .text)
 //    }

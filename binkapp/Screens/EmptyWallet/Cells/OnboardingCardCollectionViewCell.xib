@@ -95,9 +95,9 @@
             <connections>
                 <outlet property="containerView" destination="fAV-MY-2kV" id="Zmk-qg-bjh"/>
                 <outlet property="descriptionLabel" destination="H8f-7h-p36" id="MCL-vj-1Xm"/>
-                <outlet property="headerLabel" destination="7Zu-4G-N4Z" id="GbK-P5-ExO"/>
                 <outlet property="headerView" destination="hgI-TK-6Jo" id="gi2-mD-iHl"/>
                 <outlet property="merchantGridCollectionView" destination="8e3-TN-Tw1" id="nv3-eb-zhc"/>
+                <outlet property="titleLabel" destination="7Zu-4G-N4Z" id="GbK-P5-ExO"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="152.34375"/>
         </collectionViewCell>

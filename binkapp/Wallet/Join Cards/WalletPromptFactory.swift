@@ -37,10 +37,10 @@ enum WalletPromptFactory {
     
             walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
 
-            // Check for see and store cards and return one of those types if none
+            // TODO: Check for see and store cards and return one of those types if none
         }
 
-        // add payment cards prompt
+        /// Add payment cards prompt to payment wallet only
         if walletType == .payment && shouldShowAddPaymentCard() {
             walletPrompts.append(WalletPrompt(type: .addPaymentCards))
         }
