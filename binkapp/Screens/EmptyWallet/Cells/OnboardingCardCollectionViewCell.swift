@@ -55,22 +55,14 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         
         self.walletPrompt = walletPrompt
         merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")
-//        merchantGridCollectionView.invalidateIntrinsicContentSize()
-//        merchantGridCollectionView.collectionViewLayout.invalidateLayout()
         merchantGridCollectionView.translatesAutoresizingMaskIntoConstraints = false
         merchantGridCollectionView.dataSource = self
         merchantGridCollectionView.delegate = self
         merchantGridCollectionView.clipsToBounds = true
-        
-//        merchantGridCollectionView.collectionViewLayout.invalidateLayout()
-//        merchantGridCollectionView.invalidateIntrinsicContentSize()
-//        merchantGridCollectionView.layoutIfNeeded()
-//        merchantGridCollectionView.reloadData()
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         width.constant = bounds.size.width
-//        height.constant = 225
         return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: targetSize.height))
     }
     
@@ -83,23 +75,38 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
 
 extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        walletPrompt?.membershipPlans?.count ?? 0
+        var plansCount = walletPrompt?.membershipPlans?.count ?? 0
+        if !(plansCount % 2 == 0) {
+            plansCount += 1
+        }
+
+        return plansCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: MerchantHeroCell = collectionView.dequeue(indexPath: indexPath)
         guard let plans = walletPrompt?.membershipPlans else { return cell }
-        
-        cell.configure(with: plans[indexPath.row])
+
+        if (indexPath.row + 1) > plans.count {
+            cell.configureWithPlaceholder(frame: collectionView.frame, walletPrompt: walletPrompt)
+        } else {
+            cell.configure(with: plans[indexPath.row])
+        }
+                
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let plans = walletPrompt?.membershipPlans else { return }
-        let membershipPlan = plans[indexPath.row]
-        let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
+
+        if (indexPath.row + 1) > plans.count {
+            toBrowseBrands()
+        } else {
+            let membershipPlan = plans[indexPath.row]
+            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+            let navigationRequest = ModalNavigationRequest(viewController: viewController)
+            Current.navigate.to(navigationRequest)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -120,5 +127,17 @@ class MerchantHeroCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         
         addSubview(imageView)
+    }
+    
+    func configureWithPlaceholder(frame: CGRect, walletPrompt: WalletPrompt?) {
+        backgroundColor = UIColor(hexString: "102F82").darker(by: 5.0)
+        
+        let size = LayoutHelper.WalletDimensions.sizeForWalletPromptCell(viewFrame: frame, walletPrompt: walletPrompt)
+        let label = UILabel(frame: CGRect(origin: .zero, size: size))
+        label.text = "wallet_prompt_more_coming_soon".localized
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = UIFont.statusLabel
+        addSubview(label)
     }
 }

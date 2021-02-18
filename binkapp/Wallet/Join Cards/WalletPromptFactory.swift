@@ -23,24 +23,26 @@ enum WalletPromptFactory {
         }
 
         if walletType == .loyalty {
-            guard let plans = Current.wallet.membershipPlans,
-                  let membershipCards = Current.wallet.membershipCards,
-                  !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) else {
+            guard let plans = Current.wallet.membershipPlans, let membershipCards = Current.wallet.membershipCards, !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) else {
                 return walletPrompts
             }
             
             /// Get PLL plans and sort by ID
             let pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
-            let sortedPlans = pllPlans.sorted(by: {(firstPlan, secondPlan) -> Bool in
+            var sortedPlans = pllPlans.sorted(by: {(firstPlan, secondPlan) -> Bool in
                 firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
             })
+            
+            let desriedNumberOfPlans = 3
+            let numberOfPlansToRemove = sortedPlans.count - desriedNumberOfPlans
+            sortedPlans.removeLast(numberOfPlansToRemove)
     
             walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
 
             // TODO: Check for see and store cards and return one of those types if none
         }
 
-        /// Add payment cards prompt to payment wallet only
+        /// Add payment card prompt to payment wallet only
         if walletType == .payment && shouldShowAddPaymentCard() {
             walletPrompts.append(WalletPrompt(type: .addPaymentCards))
         }
