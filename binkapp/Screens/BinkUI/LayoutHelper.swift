@@ -39,7 +39,7 @@ extension LayoutHelper {
             }
         }
         
-        static func walletPromptLinkCellHeight(viewWidth: CGFloat) -> CGFloat {
+        private static func walletPromptLinkCellHeight(viewWidth: CGFloat) -> CGFloat {
             return (viewWidth / 2) * 0.596491228
         }
         
@@ -58,7 +58,12 @@ extension LayoutHelper {
             }
             
             let width = (viewFrame.width / CGFloat(numberOfCellsPerRow))
-            let height = (viewFrame.width / 2) * 0.596491228
+            var height = width
+            
+            if case .link = walletPrompt?.type {
+                height = width * 0.596491228
+            }
+            
             return CGSize(width: width, height: height)
         }
     }
