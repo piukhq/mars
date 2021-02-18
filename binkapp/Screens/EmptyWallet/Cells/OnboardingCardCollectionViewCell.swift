@@ -20,11 +20,11 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         return width
     }()
     
-    private lazy var height: NSLayoutConstraint = {
-        let height = contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 225)
-        height.isActive = true
-        return height
-    }()
+//    private lazy var height: NSLayoutConstraint = {
+//        let height = contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 225)
+//        height.isActive = true
+//        return height
+//    }()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -57,14 +57,22 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         
         self.walletPrompt = walletPrompt
         merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")
+//        merchantGridCollectionView.invalidateIntrinsicContentSize()
+//        merchantGridCollectionView.collectionViewLayout.invalidateLayout()
+        merchantGridCollectionView.translatesAutoresizingMaskIntoConstraints = false
         merchantGridCollectionView.dataSource = self
         merchantGridCollectionView.delegate = self
         merchantGridCollectionView.clipsToBounds = true
+        
+//        merchantGridCollectionView.collectionViewLayout.invalidateLayout()
+//        merchantGridCollectionView.invalidateIntrinsicContentSize()
+//        merchantGridCollectionView.layoutIfNeeded()
+//        merchantGridCollectionView.reloadData()
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         width.constant = bounds.size.width
-        height.constant = 225
+//        height.constant = 225
         return contentView.systemLayoutSizeFitting(CGSize(width: targetSize.width, height: targetSize.height))
     }
     
@@ -97,8 +105,9 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // TODO: Refactor to wallet dimensions method
         let width = collectionView.frame.width / 2
-        return CGSize(width: width, height: 102)
+        return CGSize(width: width, height: LayoutHelper.WalletDimensions.walletPromptLinkCellHeight(viewWidth: collectionView.frame.width))
     }
 }
 

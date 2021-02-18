@@ -62,7 +62,6 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             }
             
             if case .link = walletPrompt.type {
-//                let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
                 cell.configureWithWalletPrompt(walletPrompt)
                 return cell
             }
@@ -71,9 +70,19 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         }
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        <#code#>
-//    }
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let cell = collectionView.cellForItem(at: indexPath) else {
+            if indexPath.row < viewModel.cardCount {
+                /// Wallet cards
+                return LayoutHelper.WalletDimensions.cardSize
+            } else {
+                /// Pass wallet prompt to layout helper to calculate size of prompt card based on the amount of merchant cells its collection view will contain
+                guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
+                return LayoutHelper.WalletDimensions.sizeForWalletPrompt(viewFrame: collectionView.frame, walletPrompt: walletPrompt)
+            }
+        }
+        return cell.frame.size
+    }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         super.collectionView(collectionView, didSelectItemAt: indexPath)

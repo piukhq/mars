@@ -44,6 +44,10 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
             return cell
         }
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return LayoutHelper.WalletDimensions.cardSize
+    }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         super.collectionView(collectionView, didSelectItemAt: indexPath)
