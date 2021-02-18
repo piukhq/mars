@@ -48,5 +48,18 @@ extension LayoutHelper {
             
             return CGSize(width: cardWidth, height: cardHeight)
         }
+        
+        static func sizeForWalletPromptCell(viewFrame: CGRect, walletPrompt: WalletPrompt?) -> CGSize {
+            let plansCount = walletPrompt?.membershipPlans?.count ?? 0
+            var numberOfCellsPerRow = plansCount > 5 ? 6 : 5
+            
+            if case .link = walletPrompt?.type {
+                numberOfCellsPerRow = 2
+            }
+            
+            let width = (viewFrame.width / CGFloat(numberOfCellsPerRow))
+            let height = (viewFrame.width / 2) * 0.596491228
+            return CGSize(width: width, height: height)
+        }
     }
 }

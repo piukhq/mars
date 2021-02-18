@@ -21,7 +21,6 @@ protocol WalletViewModel {
     func refreshLocalWallet()
     func toCardDetail(for card: T)
     func toSettings(rowsWithActionRequired: [SettingsRow.RowType]?, delegate: SettingsViewControllerDelegate?)
-    func didSelectWalletPrompt(_ walletPrompt: WalletPrompt)
     func showDeleteConfirmationAlert(card: T, onCancel: @escaping () -> Void)
 }
 

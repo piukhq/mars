@@ -85,7 +85,14 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        super.collectionView(collectionView, didSelectItemAt: indexPath)
+        if indexPath.row < viewModel.cardCount {
+            guard let card = viewModel.cards?[indexPath.row] else {
+                return
+            }
+            shouldUseTransition = true
+            viewModel.toCardDetail(for: card)
+        }
+        
         selectedIndexPath = indexPath
         resetAllSwipeStates()
     }

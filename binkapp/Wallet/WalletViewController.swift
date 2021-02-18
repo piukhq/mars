@@ -231,19 +231,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row < viewModel.cardCount {
-            guard let card = viewModel.cards?[indexPath.row] else {
-                return
-            }
-            shouldUseTransition = true
-            viewModel.toCardDetail(for: card)
-        } else {
-            guard let joinCard = viewModel.promptCard(forIndexPath: indexPath) else {
-                return
-            }
-            shouldUseTransition = false
-            viewModel.didSelectWalletPrompt(joinCard)
-        }
+        fatalError("Subclasses should override this method.")
     }
 
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {

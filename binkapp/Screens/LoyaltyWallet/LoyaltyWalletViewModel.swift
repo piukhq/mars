@@ -38,27 +38,6 @@ class LoyaltyWalletViewModel: WalletViewModel {
         Current.navigate.to(navigationRequest)
     }
     
-    func didSelectWalletPrompt(_ walletPrompt: WalletPrompt) {
-        switch walletPrompt.type {
-//        case .loyaltyJoin(let membershipPlan):
-//            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
-//            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-//            Current.navigate.to(navigationRequest)
-        case .addPaymentCards:
-            guard let viewController = ViewControllerFactory.makePaymentCardScannerViewController(strings: Current.paymentCardScannerStrings, delegate: Current.navigate.paymentCardScannerDelegate) else { return }
-            PermissionsUtility.launchPaymentScanner(viewController) {
-                let navigationRequest = ModalNavigationRequest(viewController: viewController)
-                Current.navigate.to(navigationRequest)
-            } enterManuallyAction: {
-                let addPaymentCardViewController = ViewControllerFactory.makeAddPaymentCardViewController(journey: .wallet)
-                let navigationRequest = ModalNavigationRequest(viewController: addPaymentCardViewController)
-                Current.navigate.to(navigationRequest)
-            }
-        case .link:
-            print("Cell tapped")
-        }
-    }
-    
     func showDeleteConfirmationAlert(card: CD_MembershipCard, onCancel: @escaping () -> Void) {
         let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
             guard let self = self else { return }

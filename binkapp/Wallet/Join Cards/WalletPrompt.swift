@@ -12,6 +12,8 @@ import CardScan
 enum WalletPromptType {
     case addPaymentCards
     case link(plans: [CD_MembershipPlan])
+    case see(plans: [CD_MembershipPlan])
+    case store(plans: [CD_MembershipPlan])
 
     var title: String {
         switch self {
@@ -19,6 +21,10 @@ enum WalletPromptType {
             return "Add your payment cards"
         case .link:
             return "wallet_prompt_link_title".localized
+        case .see:
+            return ""
+        case .store:
+            return ""
         }
     }
 
@@ -28,6 +34,10 @@ enum WalletPromptType {
             return "wallet_prompt_payment".localized
         case .link:
             return "wallet_prompt_link_body".localized
+        case .see:
+            return ""
+        case .store:
+            return ""
         }
     }
 
@@ -55,6 +65,10 @@ enum WalletPromptType {
             return plans
         case .addPaymentCards:
             return nil
+        case .see(plans: let plans):
+            return plans
+        case .store(plans: let plans):
+            return plans
         }
     }
 

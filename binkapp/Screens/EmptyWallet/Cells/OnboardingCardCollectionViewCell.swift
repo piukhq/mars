@@ -31,8 +31,6 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         translatesAutoresizingMaskIntoConstraints = false
     }
     
-//    private var itemsPerRow: CGFloat = 2
-    
     private var walletPrompt: WalletPrompt?
     
     func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {
@@ -105,9 +103,7 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // TODO: Refactor to wallet dimensions method
-        let width = collectionView.frame.width / 2
-        return CGSize(width: width, height: LayoutHelper.WalletDimensions.walletPromptLinkCellHeight(viewWidth: collectionView.frame.width))
+        return LayoutHelper.WalletDimensions.sizeForWalletPromptCell(viewFrame: collectionView.frame, walletPrompt: walletPrompt)
     }
 }
 
