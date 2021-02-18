@@ -76,10 +76,20 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
 extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var plansCount = walletPrompt?.membershipPlans?.count ?? 0
-        if !(plansCount % 2 == 0) {
-            plansCount += 1
+        
+        switch walletPrompt?.type {
+        case .link:
+            if !(plansCount % 2 == 0) {
+                plansCount += 1
+            }
+        case .see, .store:
+            if plansCount > 6 {
+                plansCount += 1
+            }
+        default:
+            return 0
         }
-
+        
         return plansCount
     }
     
