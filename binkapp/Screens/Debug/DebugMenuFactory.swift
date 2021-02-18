@@ -20,7 +20,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -88,6 +88,10 @@ class DebugMenuFactory {
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .inAppReviewRules)
         }, cellType: .titleSubtitle)
+    }
+    
+    private func makePLLPromptCounterRow() -> DebugMenuRow {
+        return DebugMenuRow(title: "PLL Prompt cell count", subtitle: nil, action: nil, cellType: .picker)
     }
     
     func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {

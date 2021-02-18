@@ -33,10 +33,13 @@ enum WalletPromptFactory {
                 firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
             })
             
-            let desriedNumberOfPlans = 3
-            let numberOfPlansToRemove = sortedPlans.count - desriedNumberOfPlans
-            sortedPlans.removeLast(numberOfPlansToRemove)
-    
+            /// Remove after testing is complete >>>>>>>>>>>>>>
+            if let numberOfCells = Current.numberOfPromptCells {
+                let numberOfPlansToRemove = sortedPlans.count - numberOfCells
+                sortedPlans.removeLast(numberOfPlansToRemove)
+            }
+            /// <<<<<<<<<<<<<<<<<<<
+            
             walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
 
             // TODO: Check for see and store cards and return one of those types if none

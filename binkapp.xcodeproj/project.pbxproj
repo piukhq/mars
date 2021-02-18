@@ -282,6 +282,8 @@
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
 		CE27A0EC25DAA7E500C58412 /* OnboardingCardLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0EB25DAA7E500C58412 /* OnboardingCardLinkCell.swift */; };
+		CE2C7A7825DEC635007624FE /* DebugMenuSegmentedTestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C7A7625DEC635007624FE /* DebugMenuSegmentedTestTableViewCell.swift */; };
+		CE2C7A7925DEC635007624FE /* DebugMenuSegmentedTestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C7A7725DEC635007624FE /* DebugMenuSegmentedTestTableViewCell.xib */; };
 		CE341ED7252DC01A00577153 /* WhoWeAreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE341ED6252DC01A00577153 /* WhoWeAreViewController.swift */; };
 		CE341F0C252DED1400577153 /* BinkPersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE341F0A252DED1400577153 /* BinkPersonTableViewCell.swift */; };
 		CE341F0D252DED1400577153 /* BinkPersonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE341F0B252DED1400577153 /* BinkPersonTableViewCell.xib */; };
@@ -823,6 +825,8 @@
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
 		CE27A0EB25DAA7E500C58412 /* OnboardingCardLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardLinkCell.swift; sourceTree = "<group>"; };
+		CE2C7A7625DEC635007624FE /* DebugMenuSegmentedTestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuSegmentedTestTableViewCell.swift; sourceTree = "<group>"; };
+		CE2C7A7725DEC635007624FE /* DebugMenuSegmentedTestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugMenuSegmentedTestTableViewCell.xib; sourceTree = "<group>"; };
 		CE341ED6252DC01A00577153 /* WhoWeAreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoWeAreViewController.swift; sourceTree = "<group>"; };
 		CE341F0A252DED1400577153 /* BinkPersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkPersonTableViewCell.swift; sourceTree = "<group>"; };
 		CE341F0B252DED1400577153 /* BinkPersonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BinkPersonTableViewCell.xib; sourceTree = "<group>"; };
@@ -2198,6 +2202,8 @@
 				3C5C9E1223FD32FF004ABDC0 /* DebugMenuSegmentedTableViewCell.xib */,
 				EF6921742469A9290049875B /* DebugSecondaryPlanColorCell.swift */,
 				EF6921752469A9290049875B /* DebugSecondaryPlanColorCell.xib */,
+				CE2C7A7625DEC635007624FE /* DebugMenuSegmentedTestTableViewCell.swift */,
+				CE2C7A7725DEC635007624FE /* DebugMenuSegmentedTestTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2866,6 +2872,7 @@
 				70907E2F25C883C3007629BB /* LocalPointsCollection_Points_Superdrug.js in Resources */,
 				3C25BE0023019BC100E931EE /* BrandTableViewCell.xib in Resources */,
 				70907E3E25C883E2007629BB /* LocalPointsCollection_Points_Waterstones.js in Resources */,
+				CE2C7A7925DEC635007624FE /* DebugMenuSegmentedTestTableViewCell.xib in Resources */,
 				B71D51F92343692000BB3406 /* OfferTileView.xib in Resources */,
 				EFF59F16234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib in Resources */,
 				3CD3493A22F99E1D000C1F4D /* NunitoSans-Italic.ttf in Resources */,
@@ -3334,6 +3341,7 @@
 				B7E2EC0822E5ED6600BB201A /* String+Encrypting.swift in Sources */,
 				EF8F0481238D582300BD708B /* _CD_PlanDocument.swift in Sources */,
 				EF2E8811233385A400F678F3 /* World.swift in Sources */,
+				CE2C7A7825DEC635007624FE /* DebugMenuSegmentedTestTableViewCell.swift in Sources */,
 				EF94AF0D23D9F04700AAA039 /* DictionaryExtension.swift in Sources */,
 				EF3BC90F234770E000FE52ED /* WalletViewModel.swift in Sources */,
 				70F7EC2B25CAF97A005DE935 /* WebScrapingViewController.swift in Sources */,

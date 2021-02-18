@@ -28,6 +28,7 @@ struct DebugMenuRow {
     enum CellType {
         case titleSubtitle
         case segmentedControl
+        case picker
     }
 
     typealias DebugRowAction = () -> Void
