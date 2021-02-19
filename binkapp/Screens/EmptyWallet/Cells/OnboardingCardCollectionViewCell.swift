@@ -137,6 +137,15 @@ class MerchantHeroCell: UICollectionViewCell {
     
     func configure(with membershipPlan: CD_MembershipPlan) {
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
+        
+        if let hexStringColor = membershipPlan.card?.colour {
+            backgroundColor = UIColor(hexString: hexStringColor)
+            layoutIfNeeded()
+            let placeholderName = membershipPlan.account?.planNameCard ?? membershipPlan.account?.planName ?? ""
+            let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: self.frame.size)
+            backgroundColor = UIColor(patternImage: placeholder)
+        }
+        
         imageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
