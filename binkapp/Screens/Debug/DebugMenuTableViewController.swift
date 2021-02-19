@@ -30,7 +30,7 @@ class DebugMenuTableViewController: UITableViewController {
         
         tableView.register(DebugMenuTableViewCell.self, asNib: true)
         tableView.register(DebugMenuSegmentedTableViewCell.self, asNib: true)
-        tableView.register(DebugMenuSegmentedTestTableViewCell.self, asNib: true)
+        tableView.register(DebugMenuPickerTableViewCell.self, asNib: true) /// Remove after testing <<<<<<<<<<<<<<<<,
     }
 
     // MARK: - Table view data source
@@ -55,16 +55,14 @@ class DebugMenuTableViewController: UITableViewController {
         
         /// Remove after testing >>>>>>>>>>>>>>>
         if viewModel.sections.first?.rows[indexPath.row].cellType == DebugMenuRow.CellType.picker {
-            let cell: DebugMenuSegmentedTestTableViewCell = tableView.dequeue(indexPath: indexPath)
-            cell.type = .link
-//            if indexPath.row == 10 {
-//                cell = DebugMenuSegmentedTestTableViewCell(type: .link)
-//            } else if indexPath.row == 11 {
-//
-//            } else {
-//
-//            }
-            
+            let cell: DebugMenuPickerTableViewCell = tableView.dequeue(indexPath: indexPath)
+            if indexPath.row == 10 {
+                cell.type = .link
+            } else if indexPath.row == 11 {
+                cell.type = .see
+            } else {
+                cell.type = .store
+            }
             return cell
         }
         /// <<<<<<<<<<<<<<<<<<

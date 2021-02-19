@@ -20,12 +20,6 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         return width
     }()
     
-//    private lazy var height: NSLayoutConstraint = {
-//        let height = contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 225)
-//        height.isActive = true
-//        return height
-//    }()
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         translatesAutoresizingMaskIntoConstraints = false
@@ -59,6 +53,8 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         merchantGridCollectionView.dataSource = self
         merchantGridCollectionView.delegate = self
         merchantGridCollectionView.clipsToBounds = true
+        
+        merchantGridCollectionView.reloadData() /// Delete after testing <<<<<<<<<<<<<<<
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
@@ -126,16 +122,22 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
 
 
 class MerchantHeroCell: UICollectionViewCell {
+    var imageView = UIImageView()
+    
     override var reuseIdentifier: String? {
         return "MerchantHeroCell"
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
+    
     func configure(with membershipPlan: CD_MembershipPlan) {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
         imageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        
         addSubview(imageView)
     }
     

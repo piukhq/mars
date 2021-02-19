@@ -28,7 +28,7 @@ struct DebugMenuRow {
     enum CellType {
         case titleSubtitle
         case segmentedControl
-        case picker
+        case picker /// Remove after testing <<<<<<
     }
 
     typealias DebugRowAction = () -> Void
