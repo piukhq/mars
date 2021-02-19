@@ -34,7 +34,7 @@ enum WalletPromptFactory {
                     firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
                 })
                 
-                sortedPlans = addOrRemovePlans(totalNumberOfPlans: Current.numberOfStorePromptCells, sortedPlans: &sortedPlans) /// <<<<<<<<<<<<<<<<<<< Remove after testing
+                sortedPlans = addOrRemovePlans(totalNumberOfPlans: Current.numberOfLinkPromptCells, sortedPlans: &sortedPlans) /// <<<<<<<<<<<<<<<<<<< Remove after testing
                 walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
             }
         }
