@@ -25,7 +25,8 @@ class DebugMenuViewModelTests: XCTestCase {
     func test_rowCount_isCorrect_forToolsSection() {
         let factory = DebugMenuFactory()
         let sut = DebugMenuViewModel(debugMenuFactory: factory)
-        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 0), 10)
+//        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 0), 10)
+        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 0), 13) /// Revert back after testing <<<<<<<<<<<<<<<<<<<<
     }
 
     func test_titleText_forToolsSection_isCorrect() {

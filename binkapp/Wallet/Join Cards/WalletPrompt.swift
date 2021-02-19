@@ -95,7 +95,7 @@ protocol WalletPromptProtocol {
     var title: String { get }
     var body: String { get }
     var userDefaultsDismissKey: String { get }
-//    var membershipPlan: CD_MembershipPlan? { get }
+    var membershipPlans: [CD_MembershipPlan]? { get }
     var iconImageName: String? { get }
     static func userDefaultsDismissKey(forType type: WalletPromptType) -> String
     init(type: WalletPromptType)

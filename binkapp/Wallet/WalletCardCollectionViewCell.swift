@@ -10,10 +10,8 @@ import UIKit
 
 class WalletCardCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView!
-    
-    var cornerRadius: CGFloat = 8
 
-    func setupShadow() {
+    func setupShadow(cornerRadius: CGFloat = 8) {
         containerView.layer.cornerRadius = cornerRadius
         containerView.layer.masksToBounds = true
         contentView.layer.cornerRadius = cornerRadius

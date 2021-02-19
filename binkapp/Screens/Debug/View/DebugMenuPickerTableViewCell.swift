@@ -25,17 +25,6 @@ class DebugMenuPickerTableViewCell: UITableViewCell, UIPickerViewDataSource, UIP
         
         picker.dataSource = self
         picker.delegate = self
-        
-        switch type {
-        case .link:
-            titleLabel.text = "PLL prompt count"
-        case .see:
-            titleLabel.text = "See prompt count"
-        case .store:
-            titleLabel.text = "Store prompt count"
-        default:
-            print("NOTHING")
-        }
     }
     
 
