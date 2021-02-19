@@ -75,7 +75,17 @@ class DebugMenuPickerTableViewCell: UITableViewCell, UIPickerViewDataSource, UIP
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        Current.numberOfPromptCells = row + 1
+        switch type {
+        case .link:
+            Current.numberOfLinkPromptCells = row + 1
+        case .see:
+            Current.numberOfSeePromptCells = row + 1
+        case .store:
+            Current.numberOfStorePromptCells = row + 1
+        default:
+            break
+        }
+        
         Current.navigate.close(animated: true) {
             Current.wallet.refreshLocal()
         }

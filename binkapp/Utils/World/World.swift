@@ -36,7 +36,10 @@ class World {
         return bundleIdentifier == prodBundleIdentifier
     }
     
-    var numberOfPromptCells: Int? /// Remove after testing is complete <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,
+    var numberOfLinkPromptCells: Int? /// Remove after testing is complete <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    var numberOfSeePromptCells: Int? /// Remove after testing is complete <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    var numberOfStorePromptCells: Int? /// Remove after testing is complete <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 }
 
 protocol BinkUserDefaults {

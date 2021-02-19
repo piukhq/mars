@@ -14,7 +14,7 @@ enum WalletPromptFactory {
         case loyalty
         case payment
     }
-
+    
     static func makeWalletPrompts(forWallet walletType: WalletType) -> [WalletPrompt] {
         var walletPrompts: [WalletPrompt] = []
 
@@ -23,33 +23,20 @@ enum WalletPromptFactory {
         }
 
         if walletType == .loyalty {
-            guard let plans = Current.wallet.membershipPlans, let membershipCards = Current.wallet.membershipCards, !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) else {
+            guard let plans = Current.wallet.membershipPlans, let membershipCards = Current.wallet.membershipCards else {
                 return walletPrompts
             }
             
-            /// Get PLL plans and sort by ID
-            let pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
-            var sortedPlans = pllPlans.sorted(by: {(firstPlan, secondPlan) -> Bool in
-                firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
-            })
-            
-            /// Remove after testing is complete >>>>>>>>>>>>>>
-            if let numberOfCells = Current.numberOfPromptCells {
-                let numberOfPlansToRemove = sortedPlans.count - numberOfCells
+            if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) {
+                /// Get PLL plans and sort by ID
+                let pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
+                var sortedPlans = pllPlans.sorted(by: {(firstPlan, secondPlan) -> Bool in
+                    firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
+                })
                 
-                if numberOfPlansToRemove < 0 {
-                    // If negative, add that many plans onto sorted plans
-                    let plansToAppend = plans.prefix(abs(numberOfPlansToRemove))
-                    sortedPlans.append(contentsOf: plansToAppend)
-                } else {
-                    sortedPlans.removeLast(numberOfPlansToRemove)
-                }
+                sortedPlans = addOrRemovePlans(totalNumberOfPlans: Current.numberOfStorePromptCells, sortedPlans: &sortedPlans) /// <<<<<<<<<<<<<<<<<<< Remove after testing
+                walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
             }
-            /// <<<<<<<<<<<<<<<<<<<
-            
-            walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
-
-            // TODO: Check for see and store cards and return one of those types if none
         }
 
         /// Add payment card prompt to payment wallet only
@@ -64,4 +51,22 @@ enum WalletPromptFactory {
         // We pass nil as the scan delegate as the receiver doesn't care about the delegate in order to return the key
         return !Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards)) && !Current.wallet.hasPaymentCards
     }
+    
+    /// Remove after testing is complete >>>>>>>>>>>>>>
+    fileprivate static func addOrRemovePlans(totalNumberOfPlans: Int?, sortedPlans: inout [CD_MembershipPlan]) -> [CD_MembershipPlan] {
+        guard let plans = Current.wallet.membershipPlans else { return [] }
+        
+        if let totalNumberOfPlans = totalNumberOfPlans {
+            let numberToAddOrRemove = sortedPlans.count - totalNumberOfPlans
+            
+            if numberToAddOrRemove < 0 {
+                // If negative, add that many plans onto sorted plans
+                let plansToAppend = plans.prefix(abs(numberToAddOrRemove))
+                sortedPlans.append(contentsOf: plansToAppend)
+            } else {
+                sortedPlans.removeLast(numberToAddOrRemove)
+            }
+        }
+        return sortedPlans
+    } /// <<<<<<<<<<<<<<<<<<<
 }
