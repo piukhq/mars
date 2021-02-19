@@ -36,9 +36,10 @@ class World {
         return bundleIdentifier == prodBundleIdentifier
     }
     
-    var numberOfLinkPromptCells: Int? /// Remove after testing is complete <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    var numberOfSeePromptCells: Int? /// Remove after testing is complete <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    var numberOfStorePromptCells: Int? /// Remove after testing is complete <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    // Wallet Prompt debug testing
+    var numberOfLinkPromptCells: Int?
+    var numberOfSeePromptCells: Int?
+    var numberOfStorePromptCells: Int?
 
 }
 

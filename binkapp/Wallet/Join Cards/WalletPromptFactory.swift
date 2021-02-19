@@ -34,7 +34,7 @@ enum WalletPromptFactory {
                     firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
                 })
                 
-                sortedPlans = addOrRemovePlans(totalNumberOfPlans: Current.numberOfLinkPromptCells, sortedPlans: &sortedPlans) /// <<<<<<<<<<<<<<<<<<< Remove after testing
+                sortedPlans = addOrRemovePlans(totalNumberOfPlans: Current.numberOfLinkPromptCells, sortedPlans: &sortedPlans) ///  For debug testing
                 walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
             }
         }
@@ -52,7 +52,6 @@ enum WalletPromptFactory {
         return !Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards)) && !Current.wallet.hasPaymentCards
     }
     
-    /// Remove after testing is complete >>>>>>>>>>>>>>
     fileprivate static func addOrRemovePlans(totalNumberOfPlans: Int?, sortedPlans: inout [CD_MembershipPlan]) -> [CD_MembershipPlan] {
         guard let plans = Current.wallet.membershipPlans else { return [] }
         
@@ -68,5 +67,5 @@ enum WalletPromptFactory {
             }
         }
         return sortedPlans
-    } /// <<<<<<<<<<<<<<<<<<<
+    }
 }

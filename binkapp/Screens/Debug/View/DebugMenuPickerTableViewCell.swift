@@ -8,55 +8,39 @@
 
 import UIKit
 
-enum PromptType {
-    case link
-    case see
-    case store
-}
-
 class DebugMenuPickerTableViewCell: UITableViewCell, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var picker: UIPickerView!
     
-    var type: PromptType?
+    var debugRow: DebugMenuRow?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         picker.dataSource = self
         picker.delegate = self
     }
     
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        switch type {
-        case .link:
-            titleLabel.text = "PLL prompt count"
-        case .see:
-            titleLabel.text = "See prompt count"
-        case .store:
-            titleLabel.text = "Store prompt count"
+    func configure(debugRow: DebugMenuRow) {
+        self.debugRow = debugRow
+        
+        switch debugRow.cellType {
+        case .picker(.link):
+            titleLabel.text = "PLL wallet prompt count"
+        case .picker(.see):
+            titleLabel.text = "See wallet prompt count"
+        case .picker(.store):
+            titleLabel.text = "Store wallet prompt count"
         default:
             break
         }
+    }
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        switch type {
-        case .link:
-            return 5
-        case .see:
-            return 60
-        case .store:
-            return 60
-        default:
-            return 10
-        }
+        return 60
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -64,12 +48,12 @@ class DebugMenuPickerTableViewCell: UITableViewCell, UIPickerViewDataSource, UIP
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        switch type {
-        case .link:
+        switch debugRow?.cellType {
+        case .picker(.link):
             Current.numberOfLinkPromptCells = row + 1
-        case .see:
+        case .picker(.see):
             Current.numberOfSeePromptCells = row + 1
-        case .store:
+        case .picker(.store):
             Current.numberOfStorePromptCells = row + 1
         default:
             break

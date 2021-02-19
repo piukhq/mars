@@ -31,7 +31,7 @@ class DebugMenuTableViewController: UITableViewController {
 
         tableView.register(DebugMenuTableViewCell.self, asNib: true)
         tableView.register(DebugMenuSegmentedTableViewCell.self, asNib: true)
-        tableView.register(DebugMenuPickerTableViewCell.self, asNib: true) /// Remove after testing <<<<<<<<<<<<<<<<,
+        tableView.register(DebugMenuPickerTableViewCell.self, asNib: true)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -54,38 +54,32 @@ class DebugMenuTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if viewModel.sections.first?.rows[indexPath.row].cellType == DebugMenuRow.CellType.segmentedControl {
+        let row = viewModel.row(atIndexPath: indexPath)
+        
+        switch viewModel.sections.first?.rows[indexPath.row].cellType {
+        case .segmentedControl:
             let cell: DebugMenuSegmentedTableViewCell = tableView.dequeue(indexPath: indexPath)
             return cell
-        }
-        
-        /// Remove after testing >>>>>>>>>>>>>>>
-        if viewModel.sections.first?.rows[indexPath.row].cellType == DebugMenuRow.CellType.picker {
+        case .picker:
             let cell: DebugMenuPickerTableViewCell = tableView.dequeue(indexPath: indexPath)
-            if indexPath.row == 10 {
-                cell.type = .link
-            } else if indexPath.row == 11 {
-                cell.type = .see
-            } else {
-                cell.type = .store
-            }
+            cell.configure(debugRow: row)
             return cell
+        default:
+            break
         }
-        /// <<<<<<<<<<<<<<<<<<
         
         let cell: DebugMenuTableViewCell = tableView.dequeue(indexPath: indexPath)
-        
-        let row = viewModel.row(atIndexPath: indexPath)
         cell.configure(withDebugRow: row)
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if viewModel.sections.first?.rows[indexPath.row].cellType == DebugMenuRow.CellType.picker {
-            return 100 } else { /// <<<<<<<<<<<<<<<<<<< Remove after testing
-                return viewModel.cellHeight
-            }
+        if case .picker = viewModel.sections.first?.rows[indexPath.row].cellType {
+            return 80
+        } else {
+            return viewModel.cellHeight
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
