@@ -36,18 +36,9 @@ class PaymentCardDetailLoyaltyCardStatusCell: PaymentCardDetailTableViewCell {
         detailLabel.text = String(format: "pll_screen_card_ending".localized, paymentCard.card?.lastFour ?? "")
         statusLabel.text = paymentCard.paymentCardStatus.rawValue
         statusLabel.textColor = .amberPending
-        
-        var paymentCardProviderImageName: String
-        switch PaymentCardType.type(from: paymentCard.card?.firstSix) {
-        case .visa:
-            paymentCardProviderImageName = "visalogoContainer"
-        case .amex:
-            paymentCardProviderImageName = "americanexpresslogoContainer"
-        case .mastercard:
-            paymentCardProviderImageName = "mastercardlogoContainer"
-        default: return
-        }
-        iconImageView.image = UIImage(named: paymentCardProviderImageName)
+        headerLabel.textColor = Current.themeManager.color(for: .text)
+        detailLabel.textColor = Current.themeManager.color(for: .text)
+        iconImageView.setImage(forPaymentCardFirstSix: paymentCard.card?.firstSix ?? "")
     }
 
     private func textColor(forStatus status: CD_MembershipCardStatus?) -> UIColor {

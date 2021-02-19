@@ -123,7 +123,7 @@ class DebugMenuFactory {
             NotificationCenter.default.post(name: .shouldLogout, object: nil)
         }))
         alert.addAction(UIAlertAction(title: "Custom", style: .destructive, handler: { _ in
-            let customAlert = UIAlertController(title: "Base URL", message: "Please insert a valid URL, removing https:// or http://", preferredStyle: .alert)
+            let customAlert = BinkAlertController(title: "Base URL", message: "Please insert a valid URL, removing https:// or http://", preferredStyle: .alert)
             customAlert.addTextField { textField in
                 textField.placeholder = "api.dev.gb.com"
             }

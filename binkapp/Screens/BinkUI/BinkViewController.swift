@@ -49,6 +49,10 @@ class BinkViewController: UIViewController {
         }
     }
 
+    deinit {
+        Current.themeManager.removeObserver(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDynamicActionIfNecessary()
@@ -58,7 +62,7 @@ class BinkViewController: UIViewController {
 
     func setScreenName(trackedScreen: TrackedScreen) {
         screenName = trackedScreen.rawValue
-        Analytics.setScreenName(screenName, screenClass: nil)
+        Analytics.logEvent(AnalyticsEventScreenView, parameters: [AnalyticsParameterScreenName: screenName ?? ""])
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -133,6 +137,3 @@ extension String {
         return String(unicode)
     }
 }
-
-
-

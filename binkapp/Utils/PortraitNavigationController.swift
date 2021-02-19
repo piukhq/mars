@@ -47,6 +47,10 @@ class PortraitNavigationController: UINavigationController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    deinit {
+        Current.themeManager.removeObserver(self)
+    }
     
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return .portrait
@@ -114,6 +118,7 @@ class PortraitNavigationController: UINavigationController {
     @objc func configureForCurrentTheme() {
         navigationBar.standardAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
         navigationBar.scrollEdgeAppearance = Current.themeManager.navBarAppearance(for: traitCollection)
+        toolbar.standardAppearance = Current.themeManager.toolbarAppearance(for: traitCollection)
         
         // If top view controller is LCD and navBar is not visible, don't change tint colour
         if let loyaltyCardDetailsViewController = viewControllers.last as? LoyaltyCardFullDetailsViewController {

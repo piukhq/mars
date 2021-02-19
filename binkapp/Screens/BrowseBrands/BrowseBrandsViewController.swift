@@ -82,7 +82,7 @@ class BrowseBrandsViewController: BinkViewController {
         configureCollectionView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,6 +108,7 @@ class BrowseBrandsViewController: BinkViewController {
         super.viewDidLayoutSubviews()
         didLayoutSubviews = true
     }
+    
     override func configureForCurrentTheme() {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
         collectionView.backgroundColor = Current.themeManager.color(for: .viewBackground)
@@ -175,7 +176,7 @@ class BrowseBrandsViewController: BinkViewController {
         }
     }
     
-    @objc private func keyboardWillHide(notification: NSNotification) {
+    @objc private func keyboardDidHide(notification: NSNotification) {
         if filtersVisible {
             tableView.contentInset = UIEdgeInsets(top: filterViewHeight, left: 0, bottom: 0, right: 0)
         } else {

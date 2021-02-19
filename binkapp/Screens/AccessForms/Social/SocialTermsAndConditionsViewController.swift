@@ -163,7 +163,7 @@ class SocialTermsAndConditionsViewController: BaseFormViewController, UserServic
             message = "social_tandcs_facebook_error".localized
         }
         
-        let alert = UIAlertController(title: "error_title".localized, message: message, preferredStyle: .alert)
+        let alert = BinkAlertController(title: "error_title".localized, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         present(alert, animated: true)
     }

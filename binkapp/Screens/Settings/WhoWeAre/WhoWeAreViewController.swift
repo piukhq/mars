@@ -19,7 +19,7 @@ class WhoWeAreViewController: BinkViewController {
     private lazy var stackScrollView: StackScrollView = {
         let stackView = StackScrollView(axis: .vertical, arrangedSubviews: nil, adjustForKeyboard: true)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.margin = LayoutHelper.WhoWeAre.stackScrollMargin
@@ -38,11 +38,12 @@ class WhoWeAreViewController: BinkViewController {
     }()
     
     private lazy var textStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionText])
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel])
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fill
         stackView.alignment = .leading
+        stackView.backgroundColor = .clear
         return stackView
     }()
     
@@ -55,7 +56,7 @@ class WhoWeAreViewController: BinkViewController {
         return label
     }()
     
-    private lazy var descriptionText: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -67,7 +68,7 @@ class WhoWeAreViewController: BinkViewController {
     
     private lazy var binkPeopleTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
-        tableView.separatorColor = .lightGray
+        tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(BinkPersonTableViewCell.self, asNib: true)
         tableView.delegate = self
@@ -97,6 +98,14 @@ class WhoWeAreViewController: BinkViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+    }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
+        binkPeopleTableView.separatorColor = Current.themeManager.color(for: .divider)
+        binkPeopleTableView.reloadData()
     }
 }
 

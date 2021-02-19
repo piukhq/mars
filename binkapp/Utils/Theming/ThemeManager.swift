@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CardScan
 
 class ThemeManager {
     enum ScreenElement {
@@ -78,6 +79,15 @@ class ThemeManager {
         return appearance
     }
     
+    func toolbarAppearance(for traitCollection: UITraitCollection) -> UIToolbarAppearance {
+        let appearance = UIToolbarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.shadowImage = UIImage()
+        appearance.backgroundColor = Styling.Colors.bar
+        appearance.backgroundEffect = Styling.barBlur(for: traitCollection)
+        return appearance
+    }
+    
     func statusBarStyle(for traitCollection: UITraitCollection) -> UIStatusBarStyle {
         return Styling.statusBarStyle(for: traitCollection)
     }
@@ -88,5 +98,31 @@ class ThemeManager {
 
     func addObserver(_ observer: Any, handler: Selector) {
         NotificationCenter.default.addObserver(observer, selector: handler, name: .themeManagerDidSetTheme, object: nil)
+    }
+
+    func removeObserver(_ observer: Any) {
+        NotificationCenter.default.removeObserver(self, name: .themeManagerDidSetTheme, object: nil)
+    }
+}
+
+extension ThemeManager: ThemeDelegate {
+    var scannerBackgroundColor: UIColor {
+        return color(for: .bar)
+    }
+
+    var scannerTextColor: UIColor {
+        return color(for: .text)
+    }
+
+    var widgetBackgroundColor: UIColor {
+        return color(for: .viewBackground).withAlphaComponent(0.5)
+    }
+
+    var widgetTextColor: UIColor {
+        return color(for: .text)
+    }
+
+    var closeButtonColor: UIColor {
+        return color(for: .text)
     }
 }

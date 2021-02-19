@@ -92,9 +92,9 @@ class FormCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = UIFont.textFieldExplainer
-        label.textColor = .red
         label.text = "form_field_validation_error".localized
         label.isHidden = true
+        label.textColor = .binkDynamicRed
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.heightAnchor.constraint(equalToConstant: Constants.validationLabelHeight).isActive = true
         return label
@@ -117,7 +117,6 @@ class FormCollectionViewCell: UICollectionViewCell {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
         separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
-        separator.backgroundColor = .grey10
         contentView.addSubview(separator)
         return separator
     }()
@@ -141,10 +140,15 @@ class FormCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureLayout()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        Current.themeManager.removeObserver(self)
     }
     
     // MARK: - Layout
@@ -166,13 +170,22 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Public Methods
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureForCurrentTheme()
+    }
+
+    @objc private func configureForCurrentTheme() {
+        validationLabel.textColor = .binkDynamicRed
+    }
     
     func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
         let isEnabled = !field.isReadOnly
         
+        tintColor = Current.themeManager.color(for: .text)
         titleLabel.text = field.title
-        titleLabel.textColor = isEnabled ? .black : .disabledTextGrey
-        textField.textColor = isEnabled ? .black : .disabledTextGrey
+        titleLabel.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
+        textField.textColor = isEnabled ? Current.themeManager.color(for: .text) : .binkDynamicGray
         textField.text = field.forcedValue
         textField.placeholder = field.placeholder
         textField.isSecureTextEntry = field.fieldType.isSecureTextEntry
@@ -183,6 +196,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         formField = field
         configureTextFieldRightView(shouldDisplay: formField?.value == nil)
         validationLabel.isHidden = textField.text?.isEmpty == true ? true : field.isValid()
+        separator.backgroundColor = Current.themeManager.color(for: .divider)
         
         if case let .expiry(months, years) = field.fieldType {
             textField.inputView = FormMultipleChoiceInput(with: [months, years], delegate: self)

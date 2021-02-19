@@ -42,7 +42,7 @@ extension PermissionsUtility {
     }
 
     private static func launchScanner(viewController: UIViewController, grantedAction: @escaping EmptyCompletionBlock, enterManuallyAction: EmptyCompletionBlock? = nil) {
-        let enterManuallyAlert = UIAlertController.cardScannerEnterManuallyAlertController {
+        let enterManuallyAlert = BinkAlertController.cardScannerEnterManuallyAlertController {
             enterManuallyAction?()
         }
 

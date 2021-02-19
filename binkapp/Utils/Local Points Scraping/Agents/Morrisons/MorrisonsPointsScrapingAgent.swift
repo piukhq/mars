@@ -26,14 +26,6 @@ struct MorrisonsScrapingAgent: WebScrapable {
         }
     }
     
-    var usernameFieldTitle: String {
-        return "Email address"
-    }
-    
-    var passwordFieldTitle: String {
-        return "Password"
-    }
-    
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }

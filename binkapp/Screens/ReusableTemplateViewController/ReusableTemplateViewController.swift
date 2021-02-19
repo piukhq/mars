@@ -41,6 +41,11 @@ class ReusableTemplateViewController: BinkViewController {
         textView.setContentOffset(.zero, animated: false)
     }
     
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        textView.textColor = Current.themeManager.color(for: .text)
+    }
+    
     private func configureUI() {
         textView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 140, right: 0)
         textView.attributedText = viewModel.text
