@@ -33,9 +33,9 @@ extension LayoutHelper {
         static var walletPromptHeaderHeight: CGFloat {
             switch UIDevice.current.width {
             case (.iPhone6Size), (.iPhone5Size), (.iPhone4Size):
-                return 123
+                return 113
             default:
-                return 138
+                return 134
             }
         }
         

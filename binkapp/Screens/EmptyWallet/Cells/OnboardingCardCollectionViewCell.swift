@@ -13,6 +13,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var merchantGridCollectionView: UICollectionView!
+    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
     
     private lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
@@ -39,6 +40,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         case (.iPhone6Size), (.iPhone5Size), (.iPhone4Size):
             titleLabel.font = UIFont.walletPromptTitleSmall
             descriptionLabel.font = UIFont.walletPromptBodySmall
+            titleLabelTopConstraint.constant = 15
         default:
             break
         }
@@ -54,7 +56,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         merchantGridCollectionView.delegate = self
         merchantGridCollectionView.clipsToBounds = true
         
-        merchantGridCollectionView.reloadData() /// Delete after testing <<<<<<<<<<<<<<<
+        merchantGridCollectionView.reloadData()
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {

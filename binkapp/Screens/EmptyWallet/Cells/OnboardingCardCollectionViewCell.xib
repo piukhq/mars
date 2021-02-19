@@ -30,17 +30,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="400" height="327"/>
                         <subviews>
                             <view contentMode="scaleToFill" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="hgI-TK-6Jo" userLabel="Header View">
-                                <rect key="frame" x="0.0" y="0.0" width="400" height="138"/>
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="134"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1" text="Header" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7Zu-4G-N4Z">
-                                        <rect key="frame" x="25" y="25" width="350" height="27.5"/>
+                                        <rect key="frame" x="25" y="21" width="350" height="27.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="NunitoSans-Bold" family="Nunito Sans" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1" text="Add these loyalty cards and link them to your payment cards to collect rewards automatically when you pay." textAlignment="natural" lineBreakMode="clip" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H8f-7h-p36">
-                                        <rect key="frame" x="25" y="57.5" width="350" height="65.5"/>
+                                        <rect key="frame" x="25" y="53.5" width="350" height="65.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="NunitoSans-Regular" family="Nunito Sans" pointSize="16"/>
                                         <nil key="textColor"/>
@@ -52,14 +52,14 @@
                                     <constraint firstItem="H8f-7h-p36" firstAttribute="leading" secondItem="hgI-TK-6Jo" secondAttribute="leading" constant="25" id="6OR-lM-SDr"/>
                                     <constraint firstAttribute="trailing" secondItem="H8f-7h-p36" secondAttribute="trailing" constant="25" id="7O1-lY-g0Z"/>
                                     <constraint firstAttribute="trailing" secondItem="7Zu-4G-N4Z" secondAttribute="trailing" constant="25" id="9nR-MW-xLE"/>
-                                    <constraint firstItem="7Zu-4G-N4Z" firstAttribute="top" secondItem="hgI-TK-6Jo" secondAttribute="top" constant="25" id="NRh-2B-FIs"/>
+                                    <constraint firstItem="7Zu-4G-N4Z" firstAttribute="top" secondItem="hgI-TK-6Jo" secondAttribute="top" constant="21" id="NRh-2B-FIs"/>
                                     <constraint firstItem="H8f-7h-p36" firstAttribute="top" secondItem="7Zu-4G-N4Z" secondAttribute="bottom" constant="5" id="lpD-x3-XHL"/>
                                     <constraint firstItem="7Zu-4G-N4Z" firstAttribute="leading" secondItem="hgI-TK-6Jo" secondAttribute="leading" constant="25" id="u2W-vl-znO"/>
                                     <constraint firstAttribute="bottom" secondItem="H8f-7h-p36" secondAttribute="bottom" constant="15" id="z0B-ss-pxt"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="247" scrollEnabled="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8e3-TN-Tw1">
-                                <rect key="frame" x="0.0" y="138" width="400" height="189"/>
+                                <rect key="frame" x="0.0" y="134" width="400" height="193"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="b4r-1S-i7u">
                                     <size key="itemSize" width="128" height="102"/>
@@ -96,6 +96,7 @@
                 <outlet property="headerView" destination="hgI-TK-6Jo" id="gi2-mD-iHl"/>
                 <outlet property="merchantGridCollectionView" destination="8e3-TN-Tw1" id="nv3-eb-zhc"/>
                 <outlet property="titleLabel" destination="7Zu-4G-N4Z" id="GbK-P5-ExO"/>
+                <outlet property="titleLabelTopConstraint" destination="NRh-2B-FIs" id="Hfa-RT-sQ3"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="152.34375"/>
         </collectionViewCell>
