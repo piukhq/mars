@@ -36,7 +36,14 @@ enum WalletPromptFactory {
             /// Remove after testing is complete >>>>>>>>>>>>>>
             if let numberOfCells = Current.numberOfPromptCells {
                 let numberOfPlansToRemove = sortedPlans.count - numberOfCells
-                sortedPlans.removeLast(numberOfPlansToRemove)
+                
+                if numberOfPlansToRemove < 0 {
+                    // If negative, add that many plans onto sorted plans
+                    let plansToAppend = plans.prefix(abs(numberOfPlansToRemove))
+                    sortedPlans.append(contentsOf: plansToAppend)
+                } else {
+                    sortedPlans.removeLast(numberOfPlansToRemove)
+                }
             }
             /// <<<<<<<<<<<<<<<<<<<
             

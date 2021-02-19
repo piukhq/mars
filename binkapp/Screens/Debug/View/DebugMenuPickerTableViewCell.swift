@@ -60,11 +60,11 @@ class DebugMenuPickerTableViewCell: UITableViewCell, UIPickerViewDataSource, UIP
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch type {
         case .link:
-            return 4
+            return 5
         case .see:
-            return 10
+            return 60
         case .store:
-            return 10
+            return 60
         default:
             return 10
         }
@@ -79,9 +79,5 @@ class DebugMenuPickerTableViewCell: UITableViewCell, UIPickerViewDataSource, UIP
         Current.navigate.close(animated: true) {
             Current.wallet.refreshLocal()
         }
-        
-//        Current.navigate.back(toRoot: true, animated: true) {
-//            Current.wallet.refreshLocal()
-//        }
     }
 }
