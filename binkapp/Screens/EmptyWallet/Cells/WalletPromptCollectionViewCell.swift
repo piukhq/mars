@@ -38,9 +38,6 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
 
         if let iconName = walletPrompt.iconImageName {
             brandIconImageView.image = UIImage(named: iconName)
-        } else {
-            guard let membershipPlan = walletPrompt.membershipPlan else { return }
-            brandIconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
         }
 
         containerView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
