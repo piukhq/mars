@@ -233,6 +233,8 @@
 
 "settings_section_debug_title" = "Debug";
 "settings_section_debug_subtitle" = "Only accessible on debug builds";
+"settings_section_beta_title" = "Beta";
+"settings_row_featureflags_title" = "Feature flags";
 
 // MARK: - Support mail
 
