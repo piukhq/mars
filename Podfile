@@ -25,12 +25,6 @@ pod 'SwiftLint', '~> 0.42.0'
 plugin 'cocoapods-keys', {
   :project => "binkapp",
   :keys => [
-    "baseUrlKey",
-    "organisationIdKey",
-    "propertyIdKey",
-    "bundleIdKey",
-    "secretKey",
-    "stagingSecretKey",
     "spreedlyEnvironmentKey",
     "devPaymentCardHashingSecret1",
     "stagingPaymentCardHashingSecret1",
