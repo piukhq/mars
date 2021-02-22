@@ -28,7 +28,7 @@ struct DebugMenuRow {
     enum CellType {
         case titleSubtitle
         case segmentedControl
-        case picker(PromptType)
+        case picker(PromptType?)
     }
 
     enum PromptType {

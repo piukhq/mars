@@ -14,14 +14,10 @@ class DebugMenuPickerTableViewCell: UITableViewCell, UIPickerViewDataSource, UIP
     
     var debugRow: DebugMenuRow?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        picker.dataSource = self
-        picker.delegate = self
-    }
-    
     func configure(debugRow: DebugMenuRow) {
         self.debugRow = debugRow
+        picker.dataSource = self
+        picker.delegate = self
         
         switch debugRow.cellType {
         case .picker(.link):
@@ -59,8 +55,6 @@ class DebugMenuPickerTableViewCell: UITableViewCell, UIPickerViewDataSource, UIP
             break
         }
         
-        Current.navigate.close(animated: true) {
-            Current.wallet.refreshLocal()
-        }
+        Current.wallet.refreshLocal()
     }
 }
