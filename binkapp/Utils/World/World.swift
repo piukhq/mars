@@ -35,12 +35,6 @@ class World {
         
         return bundleIdentifier == prodBundleIdentifier
     }
-    
-    // Wallet Prompt debug testing
-    var numberOfLinkPromptCells: Int?
-    var numberOfSeePromptCells: Int?
-    var numberOfStorePromptCells: Int?
-
 }
 
 protocol BinkUserDefaults {

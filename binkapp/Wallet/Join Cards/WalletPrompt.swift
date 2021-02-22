@@ -21,9 +21,7 @@ enum WalletPromptType {
             return "Add your payment cards"
         case .link:
             return "wallet_prompt_link_title".localized
-        case .see:
-            return ""
-        case .store:
+        default :
             return ""
         }
     }
@@ -34,9 +32,7 @@ enum WalletPromptType {
             return "wallet_prompt_payment".localized
         case .link:
             return "wallet_prompt_link_body".localized
-        case .see:
-            return ""
-        case .store:
+        default:
             return ""
         }
     }

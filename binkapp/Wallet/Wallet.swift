@@ -30,6 +30,11 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
         Current.userDefaults.set(true, forDefaultsKey: .hasLaunchedWallet)
         return shouldDisplay
     }
+    
+    // Wallet Prompt debug testing
+    var numberOfLinkPromptCellsForDebug: Int?
+    var numberOfSeePromptCellsForDebug: Int?
+    var numberOfStorePromptCellsForDebug: Int?
 
     // MARK: - Public
 
