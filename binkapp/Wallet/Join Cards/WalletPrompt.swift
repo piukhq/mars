@@ -22,9 +22,9 @@ enum WalletPromptType {
         case .link:
             return "wallet_prompt_link_title".localized
         case .see:
-            return ""
+            return "wallet_prompt_see_title".localized
         case .store:
-            return ""
+            return "wallet_prompt_store_title".localized
         }
     }
 
@@ -35,9 +35,9 @@ enum WalletPromptType {
         case .link:
             return "wallet_prompt_link_body".localized
         case .see:
-            return ""
+            return "wallet_prompt_see_body".localized
         case .store:
-            return ""
+            return "wallet_prompt_store_body".localized
         }
     }
 
@@ -61,14 +61,10 @@ enum WalletPromptType {
 
     var membershipPlans: [CD_MembershipPlan]? {
         switch self {
-        case .link(let plans):
+        case .link(let plans), .see(let plans), .store(let plans):
             return plans
         case .addPaymentCards:
             return nil
-        case .see(plans: let plans):
-            return plans
-        case .store(plans: let plans):
-            return plans
         }
     }
 
@@ -76,6 +72,8 @@ enum WalletPromptType {
         switch self {
         case .link(let plans):
             return plans.count > 2 ? 2 : 1
+        case .see(let plans), .store(let plans):
+            return plans.count > 6 ? 2 : 1
         default:
             return 0
         }
