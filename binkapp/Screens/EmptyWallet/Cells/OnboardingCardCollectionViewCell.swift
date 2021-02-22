@@ -46,7 +46,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         
         headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
         
-        CAGradientLayer.makeGradient(for: headerView, firstColor: .binkPurple, secondColor: .blueAccent)
+        CAGradientLayer.makeGradient(for: headerView, firstColor: .binkPurple, secondColor: .blueAccent, startPoint: CGPoint(x: 0.7, y: 0.0))
         
         self.walletPrompt = walletPrompt
         merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")

@@ -24,15 +24,14 @@ extension LayoutHelper {
     enum WalletDimensions {
         static let cardHorizontalPadding: CGFloat = 25.0
         private static let cardWidth: CGFloat = UIScreen.main.bounds.width - (WalletDimensions.cardHorizontalPadding * 2)
+        private static let linkCellAspectRatio: CGFloat = 34 / 57
         static let cardSize = CGSize(width: WalletDimensions.cardWidth, height: 120.0)
         static let cardLineSpacing: CGFloat = 12.0
         static let cardCornerRadius: CGFloat = 8.0
         static let contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
-        
-        static let walletPromptSize = CGSize(width: WalletDimensions.cardWidth, height: 123)
         static var walletPromptHeaderHeight: CGFloat {
             switch UIDevice.current.width {
-            case (.iPhone6Size), (.iPhone5Size), (.iPhone4Size):
+            case .iPhone6Size, .iPhone5Size, .iPhone4Size:
                 return 113
             default:
                 return 134
@@ -40,11 +39,11 @@ extension LayoutHelper {
         }
         
         private static func walletPromptLinkCellHeight(viewWidth: CGFloat) -> CGFloat {
-            return (viewWidth / 2) * 0.596491228
+            return (viewWidth / 2) * linkCellAspectRatio
         }
         
-        static func sizeForWalletPrompt(viewFrame: CGRect, walletPrompt: WalletPrompt) -> CGSize {
-            let cardHeight = walletPromptHeaderHeight + (walletPromptLinkCellHeight(viewWidth: cardWidth) * CGFloat(walletPrompt.numberOfRows))
+        static func sizeForWalletPrompt(viewFrame: CGRect, numberOfRows: CGFloat) -> CGSize {
+            let cardHeight = walletPromptHeaderHeight + (walletPromptLinkCellHeight(viewWidth: cardWidth) * numberOfRows)
             
             return CGSize(width: cardWidth, height: cardHeight)
         }
@@ -61,7 +60,7 @@ extension LayoutHelper {
             var height = width
             
             if case .link = walletPrompt?.type {
-                height = width * 0.596491228
+                height = width * linkCellAspectRatio
             }
             
             return CGSize(width: width, height: height)
