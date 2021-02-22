@@ -60,5 +60,5 @@ final class FeatureTogglingManager {
 }
 
 class FeatureFlagsViewModel {
-    private let features = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
+    let features = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
 }

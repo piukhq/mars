@@ -29,12 +29,13 @@ class FeatureFlagsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return viewModel.features?.count ?? 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: FeatureFlagsTableViewCell = tableView.dequeue(indexPath: indexPath)
-
+        let feature = viewModel.features?[indexPath.row]
+        cell.configure(feature)
         return cell
     }
 }

@@ -13,9 +13,15 @@ class FeatureFlagsTableViewCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var toggleSwitch: BinkSwitch!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    private var feature: Feature?
+    
+    func configure(_ feature: Feature?) {
+        self.feature = feature
+        titleLabel.text = feature?.title
+        titleLabel.textColor = Current.themeManager.color(for: .text)
+        descriptionLabel.text = feature?.description
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
+        descriptionLabel.isHidden = feature?.description == nil ? true : false
     }
     
     @IBAction func didToggle(_ sender: Any) {
