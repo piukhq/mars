@@ -166,7 +166,12 @@ struct SettingsFactory {
         ])
         
         sections.append(debugSection)
-        sections.append(betaSection)
+        
+        /// Only show beta section if user ID is contained in beta list group in remote config
+        if FeatureTogglingManager().shouldShowInSettings {
+            sections.append(betaSection)
+        }
+        
         #endif
         
         return sections

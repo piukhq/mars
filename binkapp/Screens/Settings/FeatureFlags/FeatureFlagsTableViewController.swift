@@ -9,6 +9,17 @@
 import UIKit
 
 class FeatureFlagsTableViewController: UITableViewController {
+    private let viewModel: FeatureFlagsViewModel
+    
+    init(viewModel: FeatureFlagsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,7 +29,7 @@ class FeatureFlagsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
