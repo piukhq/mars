@@ -173,7 +173,7 @@ extension SettingsViewController: UITableViewDelegate {
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 case is FeatureFlagsTableViewController.Type:
-                    let viewController = FeatureFlagsTableViewController()
+                    let viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel())
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 default:

@@ -47,7 +47,7 @@ final class FeatureTogglingManager {
     }
 
     private func userIsEligible() -> Bool {
-        return false
+        return true
     }
 
     func isFeatureEnabled(_ feature: Feature) -> Bool {

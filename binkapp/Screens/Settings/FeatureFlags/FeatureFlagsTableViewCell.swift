@@ -27,5 +27,4 @@ class FeatureFlagsTableViewCell: UITableViewCell {
     @IBAction func didToggle(_ sender: Any) {
         toggleSwitch.isGradientVisible = toggleSwitch.isOn
     }
-    
 }
