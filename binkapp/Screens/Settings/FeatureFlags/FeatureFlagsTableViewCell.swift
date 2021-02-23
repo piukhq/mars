@@ -16,15 +16,18 @@ class FeatureFlagsTableViewCell: UITableViewCell {
     private var feature: Feature?
     
     func configure(_ feature: Feature?) {
+        guard let feature = feature else { return }
         self.feature = feature
-        titleLabel.text = feature?.title
+        titleLabel.text = feature.title
         titleLabel.textColor = Current.themeManager.color(for: .text)
-        descriptionLabel.text = feature?.description
+        descriptionLabel.text = feature.description
         descriptionLabel.textColor = .binkDynamicGray3
-        descriptionLabel.isHidden = feature?.description == nil ? true : false
+        descriptionLabel.isHidden = feature.description == nil ? true : false
+        toggleSwitch.isOn = feature.isEnabled
     }
     
     @IBAction func didToggle(_ sender: Any) {
         toggleSwitch.isGradientVisible = toggleSwitch.isOn
+        feature?.toggle(isOn: toggleSwitch.isOn)
     }
 }

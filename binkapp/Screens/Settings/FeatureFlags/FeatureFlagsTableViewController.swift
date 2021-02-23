@@ -8,6 +8,14 @@
 
 import UIKit
 
+class FeatureFlagsViewModel {
+    let features = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
+    
+    var cellHeight: CGFloat {
+        return 60
+    }
+}
+
 class FeatureFlagsTableViewController: UITableViewController {
     private let viewModel: FeatureFlagsViewModel
     
@@ -41,5 +49,9 @@ class FeatureFlagsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return viewModel.cellHeight
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
 }

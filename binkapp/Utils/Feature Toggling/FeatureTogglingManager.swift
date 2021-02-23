@@ -22,25 +22,60 @@ struct Feature: Codable {
     }
 
     var isEnabled: Bool {
-        // Is there a user defaults value set? If so, return it
-        // Otherwise, return the value from remote config
+        // Is there a user defaults value set? If so, return it, Otherwise, return the value from remote config
+
+        let userDefaultsFlags = Current.userDefaults.value(forDefaultsKey: .featureFlags) as? [[String: Any]]
+        
+        for feature in userDefaultsFlags ?? [] {
+            if feature["slug"] as? String == slug {
+                return feature["enabled"] as? Bool ?? false
+            }
+        }
         return isEnabledOnRemoteConfig ?? false
     }
 
-    func toggle() {
-        // Get the user default value
-        // Store a toggled representation of the user default value
+    func toggle(isOn: Bool) {
+        guard var userDefaultsFlags = Current.userDefaults.value(forDefaultsKey: .featureFlags) as? [[String: Any]] else {
+            // If there are no flags in user defaults, store this one
+            let featureDict = toDictionary(enabled: isOn)
+            Current.userDefaults.set([featureDict], forDefaultsKey: .featureFlags)
+            return
+        }
+
+        // If there are UD flags, Loop through flags and see if it contains current feature
+        for feature in userDefaultsFlags {
+            let userDefaultsSlug = feature["slug"] as? String
+            
+            if userDefaultsSlug == slug {
+                // Feature is already in user defaults - change enabled value and save back in UD
+                for feat in userDefaultsFlags.indices {
+                    userDefaultsFlags[feat]["enabled"] = isOn
+                }
+                
+                Current.userDefaults.set(userDefaultsFlags, forDefaultsKey: .featureFlags)
+                return
+            } else {
+                // There are UD flags but not this one, append it
+                let featureDict = self.toDictionary(enabled: isOn)
+                userDefaultsFlags.append(featureDict)
+                Current.userDefaults.set(userDefaultsFlags, forDefaultsKey: .featureFlags)
+            }
+        }
+        
         // If there is no user default value, get the remote config value
         // Store a toggled representation of the remote config value
+    }
+    
+    func toDictionary(enabled: Bool) -> [String: Any] {
+        return [
+            "slug": slug ?? "" as String,
+            "enabled": enabled
+        ]
     }
 }
 
 final class FeatureTogglingManager {
     // Has the user toggled the feature?
-
-    // Is the user enrolled in feature toggling?
-
-    // Show feature toggling in settings if necessary
 
     var shouldShowInSettings: Bool {
         return userIsEligible()
@@ -56,17 +91,9 @@ final class FeatureTogglingManager {
         return feature.isEnabled
     }
 
-    func toggle(_ feature: Feature) {
-        feature.toggle()
-    }
-}
-
-class FeatureFlagsViewModel {
-    let features = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
-    
-    var cellHeight: CGFloat {
-        return 60
-    }
+//    func toggle(_ feature: Feature) {
+//        feature.toggle()
+//    }
 }
 
 struct BetaUser: Codable {
