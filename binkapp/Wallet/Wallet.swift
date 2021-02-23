@@ -32,9 +32,9 @@ class Wallet: CoreDataRepositoryProtocol, WalletServiceProtocol {
     }
     
     // Wallet Prompt debug testing
-    var numberOfLinkPromptCellsForDebug: Int?
-    var numberOfSeePromptCellsForDebug: Int?
-    var numberOfStorePromptCellsForDebug: Int?
+    var linkPromptDebugCellCount: Int?
+    var seePromptDebugCellCount: Int?
+    var storePromptDebugCellCount: Int?
 
     // MARK: - Public
 

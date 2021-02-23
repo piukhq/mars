@@ -46,11 +46,11 @@ class DebugMenuPickerTableViewCell: UITableViewCell, UIPickerViewDataSource, UIP
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch debugRow?.cellType {
         case .picker(.link):
-            Current.wallet.numberOfLinkPromptCellsForDebug = row + 1
+            Current.wallet.linkPromptDebugCellCount = row + 1
         case .picker(.see):
-            Current.wallet.numberOfSeePromptCellsForDebug = row + 1
+            Current.wallet.seePromptDebugCellCount = row + 1
         case .picker(.store):
-            Current.wallet.numberOfStorePromptCellsForDebug = row + 1
+            Current.wallet.storePromptDebugCellCount = row + 1
         default:
             break
         }
