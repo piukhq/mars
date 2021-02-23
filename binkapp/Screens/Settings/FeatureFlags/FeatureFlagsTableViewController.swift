@@ -22,7 +22,7 @@ class FeatureFlagsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        title = "Feature Flags"
         tableView.register(FeatureFlagsTableViewCell.self, asNib: true)
     }
 
@@ -40,6 +40,6 @@ class FeatureFlagsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return viewModel.cellHeight
     }
 }

@@ -20,7 +20,7 @@ class FeatureFlagsTableViewCell: UITableViewCell {
         titleLabel.text = feature?.title
         titleLabel.textColor = Current.themeManager.color(for: .text)
         descriptionLabel.text = feature?.description
-        descriptionLabel.textColor = Current.themeManager.color(for: .text)
+        descriptionLabel.textColor = .binkDynamicGray3
         descriptionLabel.isHidden = feature?.description == nil ? true : false
     }
     

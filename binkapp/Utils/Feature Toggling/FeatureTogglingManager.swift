@@ -6,7 +6,7 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct Feature: Codable {
     let slug: String?
@@ -47,7 +47,9 @@ final class FeatureTogglingManager {
     }
 
     private func userIsEligible() -> Bool {
-        return true
+        let UID = Current.userManager.currentUserId ?? ""
+        let betaUsers = Current.remoteConfig.objectForConfigKey(.betaUsers, forObjectType: [BetaUser].self)
+        return betaUsers?.contains(where: { $0.uid == UID }) ?? false
     }
 
     func isFeatureEnabled(_ feature: Feature) -> Bool {
@@ -61,4 +63,12 @@ final class FeatureTogglingManager {
 
 class FeatureFlagsViewModel {
     let features = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
+    
+    var cellHeight: CGFloat {
+        return 60
+    }
+}
+
+struct BetaUser: Codable {
+    let uid: String
 }
