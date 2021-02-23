@@ -9,7 +9,7 @@
 import UIKit
 
 class FeatureFlagsViewModel {
-    let features = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
+    let features = FeatureTogglingManager().features
     
     var cellHeight: CGFloat {
         return 60

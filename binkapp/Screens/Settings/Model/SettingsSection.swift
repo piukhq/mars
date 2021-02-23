@@ -10,7 +10,7 @@ import UIKit
 
 struct SettingsSection {
     let title: String
-    let rows: [SettingsRow]
+    var rows: [SettingsRow]
 }
 
 struct SettingsRow {

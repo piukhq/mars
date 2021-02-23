@@ -68,7 +68,7 @@ struct Feature: Codable {
 }
 
 final class FeatureTogglingManager {
-    // Has the user toggled the feature?
+    let features = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
 
     var shouldShowInSettings: Bool {
         return userIsEligible()
@@ -80,8 +80,9 @@ final class FeatureTogglingManager {
         return betaUsers?.contains(where: { $0.uid == UID }) ?? false
     }
 
-    func isFeatureEnabled(_ feature: Feature) -> Bool {
-        return feature.isEnabled
+    func isFeatureEnabled(_ featureType: FeatureType) -> Bool {
+        let feature = features?.first(where: { $0.slug == featureType.rawValue })
+        return feature?.isEnabled ?? false
     }
 
 //    func toggle(_ feature: Feature) {
@@ -91,4 +92,8 @@ final class FeatureTogglingManager {
 
 struct BetaUser: Codable {
     let uid: String
+}
+
+enum FeatureType: String {
+    case DarkMode = "dark_mode"
 }
