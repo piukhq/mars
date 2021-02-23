@@ -41,7 +41,7 @@ struct Feature: Codable {
             return
         }
 
-        // If there are UD flags, Loop through flags and see if it contains current feature
+        // UD flags exist: check if they contain current feature, if yes, update 'enabled' value
         for feature in userDefaultsFlags.indices {
             if userDefaultsFlags[feature]["slug"] as? String == slug {
                 userDefaultsFlags[feature]["enabled"] = isOn
@@ -50,7 +50,7 @@ struct Feature: Codable {
             }
         }
         
-        // There are UD flags but not this one, append it
+        // UD flags exist, but not this one, append it
         let featureDict = self.toDictionary(enabled: isOn)
         userDefaultsFlags.append(featureDict)
         Current.userDefaults.set(userDefaultsFlags, forDefaultsKey: .featureFlags)
