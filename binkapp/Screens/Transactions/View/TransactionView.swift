@@ -16,7 +16,9 @@ class TransactionView: CustomView {
     
     override func configureUI() {
         valueLabel.font = .subtitle
+        valueLabel.textColor = Current.themeManager.color(for: .text)
         descriptionLabel.font = .bodyTextSmall
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
     }
     
     func configure(with transaction: CD_MembershipTransaction) {

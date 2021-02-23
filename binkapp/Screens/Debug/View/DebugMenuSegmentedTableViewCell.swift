@@ -32,6 +32,8 @@ class DebugMenuSegmentedTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        backgroundColor = .clear
+
         segmentedControl.setTitle("API v1.2", forSegmentAt: 0)
         segmentedControl.setTitle("API v1.3", forSegmentAt: 1)
         

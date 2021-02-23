@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,6 +15,7 @@
                 <outlet property="barcodeLabel" destination="rDB-WQ-Xw9" id="Dnr-LY-WbC"/>
                 <outlet property="barcodeNumberLabel" destination="xaV-ek-2XU" id="APx-Iu-QXX"/>
                 <outlet property="descriptionLabel" destination="aBF-M2-M8O" id="DD7-BP-Wgg"/>
+                <outlet property="imageContainerView" destination="F3Z-f4-lSw" id="8wg-uP-SgL"/>
                 <outlet property="numberLabel" destination="pql-nN-4DC" id="y00-tr-R3u"/>
                 <outlet property="stackView" destination="bEh-RB-7fs" id="7k5-zz-gsj"/>
                 <outlet property="titleLabel" destination="uM9-25-u1E" id="oJJ-fa-Sjl"/>
@@ -26,14 +27,33 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bEh-RB-7fs">
-                    <rect key="frame" x="20" y="64.000000000000028" width="374" height="497.66666666666674"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pfc-LG-qkr">
+                    <rect key="frame" x="0.0" y="64" width="414" height="246"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bink-logo" translatesAutoresizingMaskIntoConstraints="NO" id="W07-ft-Vcs">
-                            <rect key="frame" x="0.0" y="0.0" width="374" height="246"/>
-                        </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F3Z-f4-lSw">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="246"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bink-logo" translatesAutoresizingMaskIntoConstraints="NO" id="W07-ft-Vcs">
+                                    <rect key="frame" x="20" y="0.0" width="374" height="246"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="W07-ft-Vcs" secondAttribute="bottom" id="GNu-Np-j3L"/>
+                                <constraint firstAttribute="trailing" secondItem="W07-ft-Vcs" secondAttribute="trailing" constant="20" id="WDh-CY-ehf"/>
+                                <constraint firstItem="W07-ft-Vcs" firstAttribute="leading" secondItem="F3Z-f4-lSw" secondAttribute="leading" constant="20" id="lhg-jb-Bf1"/>
+                                <constraint firstItem="W07-ft-Vcs" firstAttribute="top" secondItem="F3Z-f4-lSw" secondAttribute="top" id="sLk-xb-7MD"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bEh-RB-7fs">
+                    <rect key="frame" x="20" y="330" width="374" height="251.66666666666663"/>
+                    <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTg-VR-lQ4">
-                            <rect key="frame" x="0.0" y="246" width="374" height="150"/>
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="150" id="iud-m9-V4O"/>
                             </constraints>
@@ -42,31 +62,31 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rDB-WQ-Xw9">
-                            <rect key="frame" x="0.0" y="396" width="374" height="20.333333333333314"/>
+                            <rect key="frame" x="0.0" y="150" width="374" height="20.333333333333343"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xaV-ek-2XU" customClass="BinkCopyableLabel" customModule="binkapp" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="416.33333333333331" width="374" height="20.333333333333314"/>
+                            <rect key="frame" x="0.0" y="170.33333333333331" width="374" height="20.333333333333343"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uM9-25-u1E">
-                            <rect key="frame" x="0.0" y="436.66666666666669" width="374" height="20.333333333333314"/>
+                            <rect key="frame" x="0.0" y="190.66666666666663" width="374" height="20.333333333333343"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pql-nN-4DC" customClass="BinkCopyableLabel" customModule="binkapp" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="457" width="374" height="20.333333333333314"/>
+                            <rect key="frame" x="0.0" y="211" width="374" height="20.333333333333343"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBF-M2-M8O">
-                            <rect key="frame" x="0.0" y="477.33333333333337" width="374" height="20.333333333333314"/>
+                            <rect key="frame" x="0.0" y="231.33333333333337" width="374" height="20.333333333333343"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -77,9 +97,12 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="pfc-LG-qkr" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="JCW-ik-eFi"/>
+                <constraint firstItem="bEh-RB-7fs" firstAttribute="top" secondItem="pfc-LG-qkr" secondAttribute="bottom" constant="20" id="Np6-Eh-hPg"/>
+                <constraint firstItem="pfc-LG-qkr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="U0b-Di-CRf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bEh-RB-7fs" secondAttribute="trailing" constant="20" id="avU-jl-I22"/>
-                <constraint firstItem="bEh-RB-7fs" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="cRN-lY-Nu0"/>
                 <constraint firstItem="bEh-RB-7fs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="o82-S8-FM1"/>
+                <constraint firstAttribute="trailing" secondItem="pfc-LG-qkr" secondAttribute="trailing" id="uBe-UU-e65"/>
             </constraints>
             <point key="canvasLocation" x="53.600000000000001" y="48.125937031484263"/>
         </view>

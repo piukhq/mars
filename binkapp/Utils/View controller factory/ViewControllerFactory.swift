@@ -27,6 +27,7 @@ enum ViewControllerFactory {
     
     static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, allowSkip: Bool = true, delegate: ScanDelegate?) -> ScanViewController? {
         guard let viewController = ScanViewController.createViewController(withDelegate: delegate) else { return nil }
+        viewController.themeDelegate = Current.themeManager
         viewController.allowSkip = allowSkip
         viewController.cornerColor = .white
         viewController.torchButtonImage = UIImage(named: "payment_scanner_torch")
@@ -150,9 +151,9 @@ enum ViewControllerFactory {
     
     // MARK: - Wallets
     
-    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?) -> SettingsViewController {
+    static func makeSettingsViewController(rowsWithActionRequired: [SettingsRow.RowType]?, delegate: SettingsViewControllerDelegate?) -> SettingsViewController {
         let viewModel = SettingsViewModel(rowsWithActionRequired: rowsWithActionRequired)
-        return SettingsViewController(viewModel: viewModel)
+        return SettingsViewController(viewModel: viewModel, delegate: delegate)
     }
 
     // MARK: - Onboarding
@@ -189,8 +190,8 @@ enum ViewControllerFactory {
         return ReusableTemplateViewController(viewModel: viewModel)
     }
     
-    static func makeDeleteConfirmationAlertController(message: String, deleteAction: @escaping EmptyCompletionBlock, onCancel: EmptyCompletionBlock? = nil) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+    static func makeDeleteConfirmationAlertController(message: String, deleteAction: @escaping EmptyCompletionBlock, onCancel: EmptyCompletionBlock? = nil) -> BinkAlertController {
+        let alert = BinkAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "no".localized, style: .cancel, handler: { _ in
             onCancel?()
         }))
@@ -200,8 +201,8 @@ enum ViewControllerFactory {
         return alert
     }
     
-    static func makeNoConnectivityAlertController(completion: EmptyCompletionBlock? = nil) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
+    static func makeNoConnectivityAlertController(completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
+        let alert = BinkAlertController(title: nil, message: "no_internet_connection_message".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
             if let completion = completion {
                 completion()
@@ -210,8 +211,8 @@ enum ViewControllerFactory {
         return alert
     }
     
-    static func makeOkAlertViewController(title: String?, message: String?, completion: EmptyCompletionBlock? = nil) -> UIAlertController {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    static func makeOkAlertViewController(title: String?, message: String?, completion: EmptyCompletionBlock? = nil) -> BinkAlertController {
+        let alert = BinkAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .cancel, handler: { _ in
             completion?()
         }))

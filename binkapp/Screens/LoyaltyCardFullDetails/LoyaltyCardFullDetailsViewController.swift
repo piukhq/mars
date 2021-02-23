@@ -203,8 +203,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         if let voucherCells = plrVoucherCells as? [PLRBaseCollectionViewCell], let vouchers = viewModel.vouchers {
             for index in 0..<voucherCells.count {
                 let cellViewModel = PLRCellViewModel(voucher: vouchers[index])
-                voucherCells[index].configureWithViewModel(cellViewModel) {
-                    self.viewModel.toVoucherDetailScreen(voucher: vouchers[index])
+                voucherCells[index].configureWithViewModel(cellViewModel) { [weak self] in
+                    self?.viewModel.toVoucherDetailScreen(voucher: vouchers[index])
                 }
             }
         }
@@ -329,8 +329,8 @@ private extension LoyaltyCardFullDetailsViewController {
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
         let cell = PLRBaseCollectionViewCell.nibForCellType(cellType)
         let cellViewModel = PLRCellViewModel(voucher: voucher)
-        cell.configureWithViewModel(cellViewModel) {
-            self.viewModel.toVoucherDetailScreen(voucher: voucher)
+        cell.configureWithViewModel(cellViewModel) { [weak self] in
+            self?.viewModel.toVoucherDetailScreen(voucher: voucher)
         }
         stackScrollView.add(arrangedSubview: cell)
         cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true

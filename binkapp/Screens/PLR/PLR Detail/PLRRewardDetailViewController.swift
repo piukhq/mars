@@ -95,11 +95,19 @@ class PLRRewardDetailViewController: BinkViewController {
         setupUI()
         navigationController?.navigationBar.tintColor = Current.themeManager.color(for: .text)
     }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        headerLabel.textColor = Current.themeManager.color(for: .text)
+        subtextLabel.textColor = Current.themeManager.color(for: .text)
+        issuedDateLabel.textColor = Current.themeManager.color(for: .text)
+        redeemedDateLabel.textColor = Current.themeManager.color(for: .text)
+        expiryDateLabel.textColor = Current.themeManager.color(for: .text)
+    }
 }
 
 private extension PLRRewardDetailViewController {
     func setupUI() {
-        view.backgroundColor = .white
         title = viewModel.title
 
         switch (viewModel.voucherState, viewModel.voucherEarnType) {

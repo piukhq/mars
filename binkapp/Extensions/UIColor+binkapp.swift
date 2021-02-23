@@ -137,8 +137,10 @@ extension UIColor {
     // MARK: Bink Blue
     static let binkBlueViewBackground = UIColor(hexString: "111127")
     static let binkBlueCardBackground = UIColor(hexString: "1A1A38")
-    static let binkBlueDividerColor = UIColor(hexString: "767676")
-    static let binkBlueTextColor = UIColor(hexString: "FFFFFF")
+    static let binkBlueDivider = UIColor(hexString: "767676")
+    static let binkBlueText = UIColor(hexString: "FFFFFF")
+    static let binkBlueBarBackground = UIColor(hexString: "0E0E2A")
+    static let binkBlueTableCellSelection = binkBlueViewBackground.darker(by: 3) ?? .binkBlueDivider
     
     // MARK: Bink custom dynamic colours
     static let binkDynamicGrayLight = UIColor(hexString: "d1d1d6")
@@ -148,12 +150,12 @@ extension UIColor {
         switch Current.themeManager.currentTheme.type {
         case .system:
             return UIColor { (traitcollection: UITraitCollection) -> UIColor in
-                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkBlueDividerColor
+                return traitcollection.userInterfaceStyle == .light ? .binkDynamicGrayLight : .binkBlueDivider
             }
         case .light:
             return binkDynamicGrayLight
         case .dark:
-            return binkBlueDividerColor
+            return binkBlueDivider
         }
     }
     
@@ -180,6 +182,17 @@ extension UIColor {
             return .darkGray
         case .dark:
             return .binkDynamicGrayLight
+        }
+    }
+
+    static var binkDynamicRed: UIColor {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            return .systemRed
+        case .light:
+            return UIColor(hexString: "ff3b30")
+        case .dark:
+            return UIColor(hexString: "ff453a")
         }
     }
 }
