@@ -22,8 +22,7 @@ struct Feature: Codable {
     }
 
     var isEnabled: Bool {
-        // Is there a user defaults value set? If so, return it, Otherwise, return the value from remote config
-
+        // Is there a user defaults value set? If so, return it, otherwise, return the value from remote config
         let userDefaultsFlags = Current.userDefaults.value(forDefaultsKey: .featureFlags) as? [[String: Any]]
         
         for feature in userDefaultsFlags ?? [] {
@@ -43,30 +42,24 @@ struct Feature: Codable {
         }
 
         // If there are UD flags, Loop through flags and see if it contains current feature
-        for feature in userDefaultsFlags {
-            let userDefaultsSlug = feature["slug"] as? String
-            
-            if userDefaultsSlug == slug {
-                // Feature is already in user defaults - change enabled value and save back in UD
-                for feat in userDefaultsFlags.indices {
-                    userDefaultsFlags[feat]["enabled"] = isOn
-                }
-                
+        for feature in userDefaultsFlags.indices {
+            if userDefaultsFlags[feature]["slug"] as? String == slug {
+                userDefaultsFlags[feature]["enabled"] = isOn
                 Current.userDefaults.set(userDefaultsFlags, forDefaultsKey: .featureFlags)
                 return
-            } else {
-                // There are UD flags but not this one, append it
-                let featureDict = self.toDictionary(enabled: isOn)
-                userDefaultsFlags.append(featureDict)
-                Current.userDefaults.set(userDefaultsFlags, forDefaultsKey: .featureFlags)
             }
         }
+        
+        // There are UD flags but not this one, append it
+        let featureDict = self.toDictionary(enabled: isOn)
+        userDefaultsFlags.append(featureDict)
+        Current.userDefaults.set(userDefaultsFlags, forDefaultsKey: .featureFlags)
         
         // If there is no user default value, get the remote config value
         // Store a toggled representation of the remote config value
     }
     
-    func toDictionary(enabled: Bool) -> [String: Any] {
+    private func toDictionary(enabled: Bool) -> [String: Any] {
         return [
             "slug": slug ?? "" as String,
             "enabled": enabled
