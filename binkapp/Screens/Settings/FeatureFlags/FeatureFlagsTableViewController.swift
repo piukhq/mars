@@ -11,16 +11,31 @@ import UIKit
 class FeatureFlagsViewModel {
     let features = FeatureTogglingManager().features
     
+    var title: String {
+        return "Feature Flags"
+    }
+    
     var cellHeight: CGFloat {
         return 60
     }
 }
 
+protocol FeatureFlagsViewControllerDelegate: AnyObject {
+    func featureFlagsViewControllerDidDismiss(_ featureFlagsViewController: FeatureFlagsTableViewController)
+}
+
 class FeatureFlagsTableViewController: UITableViewController {
+    // MARK: - Properties
+
     private let viewModel: FeatureFlagsViewModel
+    private weak var delegate: FeatureFlagsViewControllerDelegate?
     
-    init(viewModel: FeatureFlagsViewModel) {
+    
+    // MARK: - View Lifecycle
+
+    init(viewModel: FeatureFlagsViewModel, delegate: FeatureFlagsViewControllerDelegate?) {
         self.viewModel = viewModel
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -30,8 +45,20 @@ class FeatureFlagsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Feature Flags"
+        title = viewModel.title
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        
         tableView.register(FeatureFlagsTableViewCell.self, asNib: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        delegate?.featureFlagsViewControllerDidDismiss(self)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -43,7 +70,7 @@ class FeatureFlagsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: FeatureFlagsTableViewCell = tableView.dequeue(indexPath: indexPath)
         let feature = viewModel.features?[indexPath.row]
-        cell.configure(feature)
+        cell.configure(feature, delegate: self)
         return cell
     }
     
@@ -53,5 +80,16 @@ class FeatureFlagsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
+    }
+}
+
+extension FeatureFlagsTableViewController: FeatureFlagCellDelegate {
+    func featureWasToggled(_ feature: Feature?) {
+        switch feature?.type {
+        case .DarkMode:
+            tableView.reloadData()
+        default:
+            break
+        }
     }
 }

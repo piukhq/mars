@@ -199,7 +199,7 @@ extension SettingsViewController: UITableViewDelegate {
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 case is FeatureFlagsTableViewController.Type:
-                    let viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel())
+                    let viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel(), delegate: self)
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 default:
@@ -228,5 +228,11 @@ extension SettingsViewController: UITableViewDelegate {
                 Current.navigate.to(navigationRequest)
             }
         }
+    }
+}
+
+extension SettingsViewController: FeatureFlagsViewControllerDelegate {
+    func featureFlagsViewControllerDidDismiss(_ featureFlagsViewController: FeatureFlagsTableViewController) {
+        tableView.reloadData()
     }
 }
