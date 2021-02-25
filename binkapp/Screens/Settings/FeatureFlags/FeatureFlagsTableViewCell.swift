@@ -35,7 +35,7 @@ class FeatureFlagsTableViewCell: UITableViewCell {
     
     @IBAction func didToggle(_ sender: Any) {
         toggleSwitch.isGradientVisible = toggleSwitch.isOn
-        FeatureTogglingManager().toggle(feature, enabled: toggleSwitch.isOn)
+        Current.featureManager.toggle(feature, enabled: toggleSwitch.isOn)
         delegate?.featureWasToggled(feature)
     }
 }

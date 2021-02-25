@@ -21,7 +21,9 @@ class World {
     lazy var pointsScrapingManager = PointsScrapingManager()
     lazy var remoteConfig = RemoteConfigUtil()
     lazy var paymentCardScannerStrings = PaymentCardScannerStrings()
+    lazy var featureManager = FeatureTogglingManager()
     lazy var themeManager = ThemeManager()
+
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
     var inAppReviewableJourney: Any? // We cast this to the correct type using generics when we need to
     

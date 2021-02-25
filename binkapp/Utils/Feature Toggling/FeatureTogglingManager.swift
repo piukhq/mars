@@ -9,7 +9,7 @@
 import UIKit
 
 enum FeatureType: String, Codable {
-    case DarkMode
+    case darkmode
     case seanmode
     case nickmode
 }
@@ -26,7 +26,7 @@ struct Feature: Codable {
         case type
         case title
         case description
-        case isEnabledOnRemoteConfig = "isEnabled"
+        case isEnabledOnRemoteConfig = "enabled"
     }
 
     var isEnabled: Bool {
@@ -41,7 +41,7 @@ struct Feature: Codable {
         return isEnabledOnRemoteConfig ?? false
     }
 
-    func toggle(_ enabled: Bool) {
+    func storeToUserDefaults(_ enabled: Bool) {
         guard var userDefaultsFlags = Current.userDefaults.value(forDefaultsKey: .featureFlags) as? [[String: Any]] else {
             // If there are no flags in user defaults, store this one
             let featureDict = toDictionary(enabled: enabled)
@@ -62,9 +62,6 @@ struct Feature: Codable {
         let featureDict = self.toDictionary(enabled: enabled)
         userDefaultsFlags.append(featureDict)
         Current.userDefaults.set(userDefaultsFlags, forDefaultsKey: .featureFlags)
-        
-        // If there is no user default value, get the remote config value
-        // Store a toggled representation of the remote config value
     }
     
     private func toDictionary(enabled: Bool) -> [String: Any] {
@@ -76,13 +73,18 @@ struct Feature: Codable {
 }
 
 final class FeatureTogglingManager {
-    let features = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
+    var features: [Feature]? = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
 
     var shouldShowInSettings: Bool {
-        return userIsEligible()
+        return userIsBetaUser()
+    }
+    
+    func getFeaturesFromRemoteConfig() {
+        features = Current.remoteConfig.objectForConfigKey(.betaFeatures, forObjectType: [Feature].self)
+        setupFeatures()
     }
 
-    private func userIsEligible() -> Bool {
+    private func userIsBetaUser() -> Bool {
         let UID = Current.userManager.currentUserId ?? ""
         let betaUsers = Current.remoteConfig.objectForConfigKey(.betaUsers, forObjectType: [BetaUser].self)
         return betaUsers?.contains(where: { $0.uid == UID }) ?? false
@@ -93,19 +95,34 @@ final class FeatureTogglingManager {
         return feature?.isEnabled ?? false
     }
 
-    func toggle(_ feature: Feature?, enabled: Bool) {
+    
+    func toggle(_ feature: Feature?, enabled: Bool, shouldStore: Bool = true) {
         switch feature?.type {
-        case .DarkMode:
+        case .darkmode:
             Current.themeManager.setTheme(Theme(type: enabled ? .system : .light))
-        case .seanmode:
-            print("SEAAAAAAAANNNNNNNNNN")
-        case .nickmode:
-            print("NIIIIIIIICKKKKKKKKKK")
         default:
             break
         }
         
-        feature?.toggle(enabled)
+        // If beta user has toggled, store value in user defaults
+        if shouldStore {
+            feature?.storeToUserDefaults(enabled)
+        }
+    }
+    
+    func setupFeature(_ feature: Feature?, enabled: Bool) {
+        switch feature?.type {
+        case .darkmode:
+            Current.themeManager.applyPreferredTheme()
+        default:
+            break
+        }
+    }
+    
+    func setupFeatures() {
+        features?.forEach {
+            setupFeature($0, enabled: $0.isEnabled)
+        }
     }
 }
 

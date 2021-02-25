@@ -9,7 +9,7 @@
 import UIKit
 
 class FeatureFlagsViewModel {
-    let features = FeatureTogglingManager().features
+    let features = Current.featureManager.features
     
     var title: String {
         return "Feature Flags"
@@ -86,7 +86,7 @@ class FeatureFlagsTableViewController: UITableViewController {
 extension FeatureFlagsTableViewController: FeatureFlagCellDelegate {
     func featureWasToggled(_ feature: Feature?) {
         switch feature?.type {
-        case .DarkMode:
+        case .darkmode:
             tableView.reloadData()
         default:
             break

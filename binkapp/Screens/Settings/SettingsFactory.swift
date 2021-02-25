@@ -76,7 +76,7 @@ struct SettingsFactory {
         
         var appearanceSection = SettingsSection(title: "settings_section_appearance_title".localized, rows: [])
         
-        if FeatureTogglingManager().isFeatureEnabled(.DarkMode) {
+        if Current.featureManager.isFeatureEnabled(.darkmode) {
             appearanceSection.rows.append(themeSettingsRow)
         }
         
@@ -174,7 +174,7 @@ struct SettingsFactory {
         sections.append(debugSection)
         
         /// Only show beta section if user ID is contained in beta list group in remote config
-        if FeatureTogglingManager().shouldShowInSettings {
+        if Current.featureManager.shouldShowInSettings {
             sections.append(betaSection)
         }
         

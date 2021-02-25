@@ -60,11 +60,18 @@ class RemoteConfigUtil {
         fetch()
     }
     
+    private func handleRemoteConfigFetch() {
+        Current.featureManager.getFeaturesFromRemoteConfig()
+    }
+    
     func fetch(completion: (() -> Void)? = nil) {
         remoteConfig.fetch { [weak self] (status, _) in
             guard let self = self else { return }
             if status == .success {
                 self.remoteConfig.activate { (_, _) in
+                    DispatchQueue.main.async {
+                        self.handleRemoteConfigFetch()
+                    }
                     completion?()
                 }
             } else {
