@@ -297,6 +297,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     func transitionToFailed(membershipCard: CD_MembershipCard) {
+        removeCredentials(forMembershipCardId: membershipCard.id)
         Current.userDefaults.set(nil, forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id))
         
         fetchMembershipCard(forId: membershipCard.id) { membershipCard in
