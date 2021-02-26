@@ -76,7 +76,7 @@ struct SettingsFactory {
         
         var appearanceSection = SettingsSection(title: "settings_section_appearance_title".localized, rows: [])
         
-        if Current.featureManager.isFeatureEnabled(.darkmode) {
+        if Current.featureManager.isFeatureEnabled(.themes) {
             appearanceSection.rows.append(themeSettingsRow)
         }
         

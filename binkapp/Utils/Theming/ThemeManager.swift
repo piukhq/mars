@@ -29,7 +29,7 @@ class ThemeManager {
 
     var currentTheme: Theme {
         didSet {
-            if Current.featureManager.isFeatureEnabled(.darkmode) {
+            if Current.featureManager.isFeatureEnabled(.themes) {
                 Current.userDefaults.set(currentTheme.type.rawValue, forDefaultsKey: .theme)
             }
             NotificationCenter.default.post(name: .themeManagerDidSetTheme, object: nil)
@@ -37,7 +37,7 @@ class ThemeManager {
     }
     
     func applyPreferredTheme() {
-        if Current.featureManager.isFeatureEnabled(.darkmode) {
+        if Current.featureManager.isFeatureEnabled(.themes) {
             if let preferredThemeType = Theme.ThemeType.fromUserDefaults() {
                 self.currentTheme = Theme(type: preferredThemeType)
             } else {

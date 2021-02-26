@@ -24,7 +24,7 @@ protocol FeatureFlagsViewControllerDelegate: AnyObject {
     func featureFlagsViewControllerDidDismiss(_ featureFlagsViewController: FeatureFlagsTableViewController)
 }
 
-class FeatureFlagsTableViewController: UITableViewController {
+class FeatureFlagsTableViewController: BinkTableViewController {
     // MARK: - Properties
 
     private let viewModel: FeatureFlagsViewModel
@@ -46,8 +46,6 @@ class FeatureFlagsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = viewModel.title
-        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
-        
         tableView.register(FeatureFlagsTableViewCell.self, asNib: true)
     }
     
@@ -56,7 +54,8 @@ class FeatureFlagsTableViewController: UITableViewController {
         delegate?.featureFlagsViewControllerDidDismiss(self)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
         tableView.reloadData()
     }
@@ -86,7 +85,7 @@ class FeatureFlagsTableViewController: UITableViewController {
 extension FeatureFlagsTableViewController: FeatureFlagCellDelegate {
     func featureWasToggled(_ feature: Feature?) {
         switch feature?.type {
-        case .darkmode:
+        case .themes:
             tableView.reloadData()
         default:
             break

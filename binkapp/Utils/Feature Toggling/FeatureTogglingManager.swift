@@ -9,9 +9,13 @@
 import UIKit
 
 enum FeatureType: String, Codable {
-    case darkmode
+    case themes
     case seanmode
     case nickmode
+}
+
+struct BetaUser: Codable {
+    let uid: String
 }
 
 struct Feature: Codable {
@@ -96,36 +100,25 @@ final class FeatureTogglingManager {
     }
 
     
-    func toggle(_ feature: Feature?, enabled: Bool, shouldStore: Bool = true) {
+    func toggle(_ feature: Feature?, enabled: Bool) {
         switch feature?.type {
-        case .darkmode:
+        case .themes:
             Current.themeManager.setTheme(Theme(type: enabled ? .system : .light))
         default:
             break
         }
         
-        // If beta user has toggled, store value in user defaults
-        if shouldStore {
-            feature?.storeToUserDefaults(enabled)
-        }
-    }
-    
-    func setupFeature(_ feature: Feature?, enabled: Bool) {
-        switch feature?.type {
-        case .darkmode:
-            Current.themeManager.applyPreferredTheme()
-        default:
-            break
-        }
+        feature?.storeToUserDefaults(enabled)
     }
     
     func setupFeatures() {
-        features?.forEach {
-            setupFeature($0, enabled: $0.isEnabled)
+        features?.forEach { feature in
+            switch feature.type {
+            case .themes:
+                Current.themeManager.applyPreferredTheme()
+            default:
+                break
+            }
         }
     }
-}
-
-struct BetaUser: Codable {
-    let uid: String
 }
