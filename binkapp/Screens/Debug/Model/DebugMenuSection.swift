@@ -28,8 +28,15 @@ struct DebugMenuRow {
     enum CellType {
         case titleSubtitle
         case segmentedControl
+        case picker(PromptType?)
     }
 
+    enum PromptType {
+        case link
+        case see
+        case store
+    }
+    
     typealias DebugRowAction = () -> Void
     
     let title: String
