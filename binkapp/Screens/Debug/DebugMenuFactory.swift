@@ -20,7 +20,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow(), makeSeePromptCounterRow(), makeStorePromptCounterRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -90,8 +90,20 @@ class DebugMenuFactory {
         }, cellType: .titleSubtitle)
     }
     
-    func makeEnvironmentAlertController(navigationController: UINavigationController) -> BinkAlertController {
-        let alert = BinkAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    private func makePLLPromptCounterRow() -> DebugMenuRow {
+        return DebugMenuRow(cellType: .picker(.link))
+    }
+    
+    private func makeSeePromptCounterRow() -> DebugMenuRow {
+        return DebugMenuRow(cellType: .picker(.see))
+    }
+    
+    private func makeStorePromptCounterRow() -> DebugMenuRow {
+        return DebugMenuRow(cellType: .picker(.store))
+    }
+    
+    func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
             APIConstants.changeEnvironment(environment: .dev)
             NotificationCenter.default.post(name: .shouldLogout, object: nil)

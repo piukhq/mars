@@ -27,7 +27,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = LayoutHelper.WalletDimensions.cardLineSpacing
-        layout.estimatedItemSize = LayoutHelper.WalletDimensions.cardSize
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         return layout
     }()
 
@@ -166,10 +166,10 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         collectionView.register(WalletPromptCollectionViewCell.self, asNib: true)
         view.addSubview(collectionView)
         collectionView.addSubview(refreshControl)
-
+        
         collectionView.dataSource = self
         collectionView.delegate = self
-
+        
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -223,15 +223,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let cell = collectionView.cellForItem(at: indexPath) else {
-            if indexPath.row < viewModel.cardCount {
-                return LayoutHelper.WalletDimensions.cardSize
-            } else {
-                return LayoutHelper.WalletDimensions.walletPromptSize
-            }
-        }
-
-        return cell.frame.size
+        fatalError("Subclasses should override this method")
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -239,19 +231,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row < viewModel.cardCount {
-            guard let card = viewModel.cards?[indexPath.row] else {
-                return
-            }
-            shouldUseTransition = true
-            viewModel.toCardDetail(for: card)
-        } else {
-            guard let joinCard = viewModel.promptCard(forIndexPath: indexPath) else {
-                return
-            }
-            shouldUseTransition = false
-            viewModel.didSelectWalletPrompt(joinCard)
-        }
+        fatalError("Subclasses should override this method.")
     }
 
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {

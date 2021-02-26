@@ -17,6 +17,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     override func configureCollectionView() {
         super.configureCollectionView()
         collectionView.register(WalletLoyaltyCardCollectionViewCell.self, asNib: true)
+        collectionView.register(OnboardingCardCollectionViewCell.self, asNib: true)
     }
     
     override func viewDidLoad() {
@@ -54,18 +55,44 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             
             return cell
         } else {
-            // join card
-            let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
+            // Wallet prompts
+            let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
             guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else {
                 return cell
             }
-            cell.configureWithWalletPrompt(walletPrompt)
+            
+            if case .link = walletPrompt.type {
+                cell.configureWithWalletPrompt(walletPrompt)
+                return cell
+            }
+
             return cell
         }
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let cell = collectionView.cellForItem(at: indexPath) else {
+            if indexPath.row < viewModel.cardCount {
+                /// Wallet cards
+                return LayoutHelper.WalletDimensions.cardSize
+            } else {
+                /// Pass wallet prompt to layout helper to calculate size of prompt card based on the amount of merchant cells its collection view will contain
+                guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
+                return LayoutHelper.WalletDimensions.sizeForWalletPrompt(viewFrame: collectionView.frame, numberOfRows: walletPrompt.numberOfRows)
+            }
+        }
+        return cell.frame.size
+    }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        super.collectionView(collectionView, didSelectItemAt: indexPath)
+        if indexPath.row < viewModel.cardCount {
+            guard let card = viewModel.cards?[indexPath.row] else {
+                return
+            }
+            shouldUseTransition = true
+            viewModel.toCardDetail(for: card)
+        }
+        
         selectedIndexPath = indexPath
         resetAllSwipeStates()
     }
@@ -144,6 +171,8 @@ extension LoyaltyWalletViewController: WalletLoyaltyCardCollectionViewCellDelega
 
 extension LoyaltyWalletViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        navigationController.interactivePopGestureRecognizer?.delegate = nil
+
         // Check whether we have tapped a cell or added a new card
         guard shouldUseTransition else { return nil }
         if let _ = fromVC as? LoyaltyWalletViewController {
