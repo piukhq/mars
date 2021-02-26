@@ -44,12 +44,17 @@ class BinkButtonsView: UIStackView {
         self.buttons = buttons
         super.init(frame: .zero)
         configure()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        Current.themeManager.removeObserver(self)
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         backgroundMaskedView.layer.mask = gradientMaskLayer
@@ -71,6 +76,10 @@ class BinkButtonsView: UIStackView {
             $0.attachButton(to: self)
         }
         addArrangedSubview(bottomSpacerView)
+    }
+    
+    @objc func configureForCurrentTheme() {
+        backgroundMaskedView.backgroundColor = Current.themeManager.color(for: .viewBackground)
     }
 
     func attach(to view: UIView) {

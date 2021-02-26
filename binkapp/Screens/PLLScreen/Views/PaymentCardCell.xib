@@ -33,9 +33,10 @@
                             <constraint firstAttribute="height" constant="64" id="DnK-Zd-ZqT"/>
                         </constraints>
                     </imageView>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Ich-up-VlQ" customClass="BinkSwitch" customModule="binkapp" customModuleProvider="target">
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ich-up-VlQ" customClass="BinkSwitch" customModule="binkapp" customModuleProvider="target">
                         <rect key="frame" x="342" y="34.5" width="50" height="31"/>
                         <color key="onTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="thumbTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <connections>
                             <action selector="switchDidChangeValue:" destination="P7l-xW-Dxt" eventType="valueChanged" id="DO4-eC-Jni"/>
                         </connections>
