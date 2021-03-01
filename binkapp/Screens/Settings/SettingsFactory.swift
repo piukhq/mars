@@ -164,15 +164,17 @@ struct SettingsFactory {
             )
         ])
         
+        sections.append(debugSection)
+        
+        // MARK: - Beta
+        
         let betaSection = SettingsSection(title: "settings_section_beta_title".localized, rows: [
             SettingsRow(
                 type: .featureFlags,
                 action: .pushToViewController(viewController: FeatureFlagsTableViewController.self),
                 actionRequired: rowsWithActionRequired?.contains(.featureFlags) ?? false)
         ])
-        
-        sections.append(debugSection)
-        
+                
         /// Only show beta section if user ID is contained in beta list group in remote config
         if Current.featureManager.shouldShowInSettings {
             sections.append(betaSection)

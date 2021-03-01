@@ -13,15 +13,14 @@ protocol FeatureFlagCellDelegate: AnyObject {
 }
 
 class FeatureFlagsTableViewCell: UITableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var toggleSwitch: BinkSwitch!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var toggleSwitch: BinkSwitch!
     
     private var feature: Feature?
     private weak var delegate: FeatureFlagCellDelegate?
     
-    func configure(_ feature: Feature?, delegate: FeatureFlagCellDelegate) {
-        guard let feature = feature else { return }
+    func configure(_ feature: Feature, delegate: FeatureFlagCellDelegate) {
         self.feature = feature
         self.delegate = delegate
         
@@ -31,9 +30,11 @@ class FeatureFlagsTableViewCell: UITableViewCell {
         descriptionLabel.textColor = .binkDynamicGray3
         descriptionLabel.isHidden = feature.description == nil ? true : false
         toggleSwitch.isOn = feature.isEnabled
+        selectionStyle = .none
     }
     
     @IBAction func didToggle(_ sender: Any) {
+        guard let feature = feature else { return }
         toggleSwitch.isGradientVisible = toggleSwitch.isOn
         Current.featureManager.toggle(feature, enabled: toggleSwitch.isOn)
         delegate?.featureWasToggled(feature)

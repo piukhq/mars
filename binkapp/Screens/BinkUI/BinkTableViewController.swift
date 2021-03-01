@@ -9,7 +9,6 @@
 import UIKit
 
 class BinkTableViewController: UITableViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureForCurrentTheme()
@@ -22,6 +21,7 @@ class BinkTableViewController: UITableViewController {
     
     @objc func configureForCurrentTheme() {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        tableView.reloadData()
         switch Current.themeManager.currentTheme.type {
         case .light:
             view.window?.overrideUserInterfaceStyle = .light

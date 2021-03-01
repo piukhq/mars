@@ -53,12 +53,6 @@ class FeatureFlagsTableViewController: BinkTableViewController {
         super.viewWillDisappear(animated)
         delegate?.featureFlagsViewControllerDidDismiss(self)
     }
-    
-    override func configureForCurrentTheme() {
-        super.configureForCurrentTheme()
-        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
-        tableView.reloadData()
-    }
 
     // MARK: - Table view data source
 
@@ -68,17 +62,14 @@ class FeatureFlagsTableViewController: BinkTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: FeatureFlagsTableViewCell = tableView.dequeue(indexPath: indexPath)
-        let feature = viewModel.features?[indexPath.row]
-        cell.configure(feature, delegate: self)
+        if let feature = viewModel.features?[indexPath.row] {
+            cell.configure(feature, delegate: self)
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return viewModel.cellHeight
-    }
-    
-    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
     }
 }
 
@@ -86,7 +77,7 @@ extension FeatureFlagsTableViewController: FeatureFlagCellDelegate {
     func featureWasToggled(_ feature: Feature?) {
         switch feature?.type {
         case .themes:
-            tableView.reloadData()
+            configureForCurrentTheme()
         default:
             break
         }
