@@ -102,8 +102,8 @@ class DebugMenuFactory {
         return DebugMenuRow(cellType: .picker(.store))
     }
     
-    func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    func makeEnvironmentAlertController(navigationController: UINavigationController) -> BinkAlertController {
+        let alert = BinkAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
             APIConstants.changeEnvironment(environment: .dev)
             NotificationCenter.default.post(name: .shouldLogout, object: nil)
