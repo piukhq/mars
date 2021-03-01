@@ -104,7 +104,7 @@ class RegisterViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     private func showError() {
-        let alert = UIAlertController(title: "error_title".localized, message: "register_failed".localized, preferredStyle: .alert)
+        let alert = BinkAlertController(title: "error_title".localized, message: "register_failed".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         present(alert, animated: true)
     }

@@ -49,14 +49,40 @@ class BinkViewController: UIViewController {
         }
     }
 
+    deinit {
+        Current.themeManager.removeObserver(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDynamicActionIfNecessary()
+        configureForCurrentTheme()
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
     }
 
     func setScreenName(trackedScreen: TrackedScreen) {
         screenName = trackedScreen.rawValue
-        Analytics.setScreenName(screenName, screenClass: nil)
+        Analytics.logEvent(AnalyticsEventScreenView, parameters: [AnalyticsParameterScreenName: screenName ?? ""])
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        Current.themeManager.statusBarStyle(for: traitCollection)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureForCurrentTheme()
+    }
+
+    @objc func configureForCurrentTheme() {
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            view.window?.overrideUserInterfaceStyle = .light
+        case .dark:
+            view.window?.overrideUserInterfaceStyle = .dark
+        case .system:
+            view.window?.overrideUserInterfaceStyle = .unspecified
+        }
     }
 }
 

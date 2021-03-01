@@ -9,6 +9,11 @@
 import UIKit
 
 class NestedTableView: UITableView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        separatorColor = Current.themeManager.color(for: .divider)
+    }
+    
     override var contentSize: CGSize {
         didSet {
             invalidateIntrinsicContentSize()

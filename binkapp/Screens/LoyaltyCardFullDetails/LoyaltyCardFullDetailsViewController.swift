@@ -59,7 +59,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private lazy var showBarcodeButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .bodyTextLarge
-        button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(showBarcodeButtonPressed), for: .touchUpInside)
         return button
     }()
@@ -67,7 +66,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private lazy var modulesStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [pointsModule, linkModule])
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.axis = .horizontal
@@ -86,7 +85,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     private lazy var offerTilesStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         stackView.distribution = .fillEqually
         stackView.alignment = .fill
         stackView.axis = .vertical
@@ -96,14 +95,13 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     
     lazy var separator: UIView = {
         let separator = UIView()
-        separator.backgroundColor = .lightGray
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
     
     lazy var informationTableView: NestedTableView = {
         let tableView = NestedTableView(frame: .zero, style: .plain)
-        tableView.separatorColor = .lightGray
+        tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -113,7 +111,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }()
     
     let viewModel: LoyaltyCardFullDetailsViewModel
-    private var navigationBarShouldBeVisible = false
+    var navigationBarShouldBeVisible = false
     private var previousOffset = 0.0
     private var topConstraint: NSLayoutConstraint?
     private lazy var contentAnimationSpacerHeightConstraint: NSLayoutConstraint = {
@@ -123,6 +121,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     }()
     private var didLayoutSubviews = false
     private var statusBarStyle: UIStatusBarStyle = .darkContent
+
+    private let titleView: DetailNavigationTitleView = .fromNib()
 
     init(viewModel: LoyaltyCardFullDetailsViewModel) {
         self.viewModel = viewModel
@@ -135,7 +135,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         configureUI()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePointsScrapingUpdate), name: .webScrapingUtilityDidComplete, object: nil)
     }
@@ -161,7 +160,7 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        setNavigationBarAppearanceLight(false)
+        navigationController?.setNavigationBarVisibility(true, animated: true)
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -170,7 +169,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         if PllLoyaltyInAppReviewableJourney.isInProgress {
             requestInAppReview()
         }
-        navigationController?.setNavigationBarVisibility(true, animated: true)
     }
 
     override func viewDidLayoutSubviews() {
@@ -183,6 +181,33 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         statusBarStyle
+    }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        navigationController?.setNavigationBarVisibility(navigationBarShouldBeVisible, animated: true)
+        showBarcodeButton.setTitleColor(Current.themeManager.color(for: .text), for: .normal)
+        separator.backgroundColor = Current.themeManager.color(for: .divider)
+        informationTableView.separatorColor = Current.themeManager.color(for: .divider)
+        informationTableView.reloadData()
+        titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
+        
+        guard let plan = viewModel.membershipCard.membershipPlan else { return }
+        if viewModel.isMembershipCardAuthorised {
+            brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
+        } else {
+            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
+        }
+
+        let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
+        if let voucherCells = plrVoucherCells as? [PLRBaseCollectionViewCell], let vouchers = viewModel.vouchers {
+            for index in 0..<voucherCells.count {
+                let cellViewModel = PLRCellViewModel(voucher: vouchers[index])
+                voucherCells[index].configureWithViewModel(cellViewModel) { [weak self] in
+                    self?.viewModel.toVoucherDetailScreen(voucher: vouchers[index])
+                }
+            }
+        }
     }
 }
 
@@ -304,8 +329,8 @@ private extension LoyaltyCardFullDetailsViewController {
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
         let cell = PLRBaseCollectionViewCell.nibForCellType(cellType)
         let cellViewModel = PLRCellViewModel(voucher: voucher)
-        cell.configureWithViewModel(cellViewModel) {
-            self.viewModel.toVoucherDetailScreen(voucher: voucher)
+        cell.configureWithViewModel(cellViewModel) { [weak self] in
+            self?.viewModel.toVoucherDetailScreen(voucher: voucher)
         }
         stackScrollView.add(arrangedSubview: cell)
         cell.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor, constant: -(LayoutHelper.LoyaltyCardDetail.contentPadding * 2)).isActive = true
@@ -347,10 +372,11 @@ private extension LoyaltyCardFullDetailsViewController {
 
     
     private func setNavigationBarAppearanceLight(_ lightAppearance: Bool) {
-        if lightAppearance && viewModel.secondaryColourIsDark && !navigationBarShouldBeVisible {
+        switch (lightAppearance, viewModel.secondaryColourIsDark, navigationBarShouldBeVisible, traitCollection.userInterfaceStyle, Current.themeManager.currentTheme.type) {
+        case (true, true, false, _, _), (true, _, _, .dark, .dark), (true, _, _, .dark, .system), (_, _, _, _, .dark):
             navigationController?.navigationBar.tintColor = .white
             statusBarStyle = .lightContent
-        } else {
+        default:
             navigationController?.navigationBar.tintColor = .black
             statusBarStyle = .darkContent
         }
@@ -408,7 +434,6 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard didLayoutSubviews else { return }
 
-        let titleView: DetailNavigationTitleView = .fromNib()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
 
         let navBarHeight = navigationController?.navigationBar.frame.height ?? 0
@@ -420,12 +445,24 @@ extension LoyaltyCardFullDetailsViewController: UIScrollViewDelegate {
             navigationController?.setNavigationBarVisibility(true)
             navigationBarShouldBeVisible = true
             navigationItem.titleView = titleView
-            setNavigationBarAppearanceLight(false)
+
+            switch (traitCollection.userInterfaceStyle, Current.themeManager.currentTheme.type) {
+            case (.dark, .dark), (.dark, .system), (_, .dark):
+                setNavigationBarAppearanceLight(true)
+            default:
+                setNavigationBarAppearanceLight(false)
+            }
         } else if secondaryColorViewHeight > topBarHeight {
             navigationController?.setNavigationBarVisibility(false)
             navigationBarShouldBeVisible = false
             navigationItem.titleView = nil
-            setNavigationBarAppearanceLight(true)
+            
+            // When navBar is hidden and in dark mode and secondary background colour is light, set navBar appearance to dark
+            if traitCollection.userInterfaceStyle == .dark && !viewModel.secondaryColourIsDark {
+                setNavigationBarAppearanceLight(false)
+            } else {
+                setNavigationBarAppearanceLight(true)
+            }
         }
     }
 }

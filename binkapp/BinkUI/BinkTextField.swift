@@ -20,9 +20,21 @@ class BinkTextField: UITextField {
         borderStyle = .none
         layer.cornerRadius = bounds.height / 2
         layer.borderWidth = 1.0
-        layer.borderColor = UIColor.white.cgColor
+        layer.borderColor = Current.themeManager.color(for: .walletCardBackground).cgColor
         layer.masksToBounds = false
-        layer.backgroundColor = UIColor.white.cgColor
+        layer.backgroundColor = Current.themeManager.color(for: .walletCardBackground).cgColor
         layer.applyDefaultBinkShadow()
+        
+        textColor = Current.themeManager.color(for: .text)
+        tintColor = Current.themeManager.color(for: .text)
+        
+        switch Current.themeManager.currentTheme.type {
+        case .light:
+            overrideUserInterfaceStyle = .light
+        case .dark:
+            overrideUserInterfaceStyle = .dark
+        case .system:
+            overrideUserInterfaceStyle = .unspecified
+        }
     }
 }

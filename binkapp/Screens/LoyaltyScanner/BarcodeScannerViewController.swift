@@ -52,7 +52,7 @@ class BarcodeScannerViewController: BinkViewController {
     private var canPresentScanError = true
 
     private lazy var blurredView: UIVisualEffectView = {
-        return UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
+        return UIVisualEffectView(effect: UIBlurEffect(style: .regular))
     }()
 
     private lazy var guideImageView: UIImageView = {
@@ -66,6 +66,7 @@ class BarcodeScannerViewController: BinkViewController {
         label.text = "loyalty_scanner_explainer_text".localized
         label.font = .bodyTextLarge
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
         return label
     }()
 
@@ -98,15 +99,12 @@ class BarcodeScannerViewController: BinkViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-
         view.addSubview(previewView)
 
         // BLUR AND MASK
         blurredView.frame = view.frame
         let maskLayer = CAShapeLayer()
         maskLayer.frame = view.frame
-        maskLayer.fillColor = UIColor.black.cgColor
         // Setup rect of interest
         let inset = Constants.rectOfInterestInset
         let width = view.frame.size.width - (inset * 2)
@@ -158,6 +156,14 @@ class BarcodeScannerViewController: BinkViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopScanning()
+    }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        blurredView.backgroundColor = Current.themeManager.color(for: .bar)
+        explainerLabel.textColor = Current.themeManager.color(for: .text)
+        cancelButton.tintColor = Current.themeManager.color(for: .text)
+        widgetView.configure()
     }
 
     private func startScanning() {
@@ -302,7 +308,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                             self.canPresentScanError = false
                             DispatchQueue.main.async {
                                 HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
-                                let alert = UIAlertController(title: "Error", message: "The card you scanned was not correct, please scan your \(planFromForm.account?.companyName ?? "") card", preferredStyle: .alert)
+                                let alert = BinkAlertController(title: "Error", message: "The card you scanned was not correct, please scan your \(planFromForm.account?.companyName ?? "") card", preferredStyle: .alert)
                                 let action = UIAlertAction(title: "OK", style: .cancel) { _ in
                                     DispatchQueue.main.asyncAfter(deadline: .now() + Constants.scanErrorThreshold, execute: {
                                         self.canPresentScanError = true

@@ -10,15 +10,15 @@ import UIKit
 
 class FilterBrandsCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var filterTitleLable: UILabel!
+    @IBOutlet private weak var filterTitleLabel: UILabel!
     @IBOutlet private weak var customSeparatorView: UIView!
     
     var cellWasTapped: Bool = false {
         didSet {
             if cellWasTapped {
-                imageView.image = UIImage(imageLiteralResourceName: "inactive_check")
+                imageView.tintColor = .binkDynamicGray2
             } else {
-                imageView.image = UIImage(imageLiteralResourceName: "active_check")
+                imageView.tintColor = .blueAccent
             }
         }
     }
@@ -28,9 +28,18 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        customSeparatorView.isHidden = false
+    }
+    
     func configureCell(with name: String) {
-        filterTitleLable.text = name
+        backgroundColor = .clear
+        customSeparatorView.backgroundColor = Current.themeManager.color(for: .divider)
+        filterTitleLabel.text = name
+        filterTitleLabel.textColor = Current.themeManager.color(for: .text)
         filterTitle = name
+        imageView.image = UIImage(imageLiteralResourceName: "active_check")
     }
     
     func hideSeparator() {

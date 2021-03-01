@@ -42,6 +42,9 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
             guard let membershipPlan = walletPrompt.membershipPlan else { return }
             brandIconImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
         }
+
+        containerView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        detailLabel.textColor = Current.themeManager.color(for: .text)
     }
 
     @IBAction private func dismissButtonWasPressed() {

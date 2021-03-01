@@ -14,6 +14,7 @@ class BrandTableViewCell: UITableViewCell {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var separatorView: UIView!
     @IBOutlet private weak var existingBrandIcon: UIImageView!
+    @IBOutlet private weak var disclosureIndicatorImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,17 +28,25 @@ class BrandTableViewCell: UITableViewCell {
     }
     
     func configure(plan: CD_MembershipPlan, brandName: String, brandExists: Bool) {
+        logoImageView.backgroundColor = .clear
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
-
+        backgroundColor = Current.themeManager.color(for: .viewBackground)
+        
+        disclosureIndicatorImageView.tintColor = Current.themeManager.color(for: .text)
+        separatorView.backgroundColor = Current.themeManager.color(for: .divider)
+        
         brandLabel.font = UIFont.subtitle
         brandLabel.text = brandName
+        brandLabel.textColor = Current.themeManager.color(for: .text)
 
         let isPLL = plan.featureSet?.planCardType == .link
         descriptionLabel.isHidden = !isPLL
         descriptionLabel.font = UIFont.bodyTextSmall
         descriptionLabel.text = "can_be_linked_description".localized
-        
+        descriptionLabel.textColor = Current.themeManager.color(for: .text)
+
         existingBrandIcon.isHidden = !brandExists
+        existingBrandIcon.tintColor = Current.themeManager.color(for: .text)
     }
     
     func hideSeparatorView() {

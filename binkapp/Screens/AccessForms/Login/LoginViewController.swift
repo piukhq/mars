@@ -112,7 +112,7 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
     }
     
     private func showError() {
-        let alert = UIAlertController(title: "error_title".localized, message: "login_error".localized, preferredStyle: .alert)
+        let alert = BinkAlertController(title: "error_title".localized, message: "login_error".localized, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ok".localized, style: .default))
         present(alert, animated: true)
     }

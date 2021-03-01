@@ -11,6 +11,11 @@ import MessageUI
 import ZendeskCoreSDK
 import SupportSDK
 
+
+protocol SettingsViewControllerDelegate: AnyObject {
+    func settingsViewControllerDidDismiss(_ settingsViewController: SettingsViewController)
+}
+
 class SettingsViewController: BinkViewController {
     // MARK: - Helpers
     
@@ -32,18 +37,23 @@ class SettingsViewController: BinkViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = Constants.rowHeight
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         view.addSubview(tableView)
         return tableView
     }()
 
     private let zendeskTickets = ZendeskTickets()
+    private weak var delegate: SettingsViewControllerDelegate?
+
+    /// Zendesk view controllers malform our navigation bar. This flag tells our view controller to reconfigure for the current theme next time it comes into view.
+    private var navigationBarRequiresThemeUpdate = false
     
     // MARK: - View Lifecycle
     
-    init(viewModel: SettingsViewModel) {
+    init(viewModel: SettingsViewModel, delegate: SettingsViewControllerDelegate?) {
         self.viewModel = viewModel
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,9 +68,30 @@ class SettingsViewController: BinkViewController {
         title = viewModel.title
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(true, animated: true)
+
+        if let nav = navigationController as? PortraitNavigationController, navigationBarRequiresThemeUpdate {
+            nav.configureForCurrentTheme()
+            navigationBarRequiresThemeUpdate = false
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .settings)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        delegate?.settingsViewControllerDidDismiss(self)
+    }
+
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        tableView.reloadData()
+        tableView.indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
     }
     
     private func configureLayout() {
@@ -137,6 +168,7 @@ extension SettingsViewController: UITableViewDelegate {
             case let .customAction(action):
                 action()
             case let .launchSupport(service):
+                navigationBarRequiresThemeUpdate = true
                 switch service {
                 case .faq:
                     let helpCenterConfig = HelpCenterUiConfiguration()
@@ -152,7 +184,7 @@ extension SettingsViewController: UITableViewDelegate {
             case let .pushToViewController(viewController: viewControllerType):
                 switch viewControllerType {
                 case is SettingsViewController.Type:
-                    let vc = SettingsViewController(viewModel: viewModel)
+                    let vc = SettingsViewController(viewModel: viewModel, delegate: nil)
                     present(vc, animated: true)
                 case is DebugMenuTableViewController.Type:
                     let viewController = ViewControllerFactory.makeDebugViewController()
@@ -181,7 +213,7 @@ extension SettingsViewController: UITableViewDelegate {
                     presentWebView(url: Constants.termsAndConditionsUrl)
                 }
             case .logout:
-                let alert = UIAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
+                let alert = BinkAlertController(title: "Log out", message: "Are you sure you want to log out?", preferredStyle: .alert)
                 alert.addAction(
                     UIAlertAction(title: "Log out", style: .default, handler: { _ in
                         NotificationCenter.default.post(name: .shouldLogout, object: nil)

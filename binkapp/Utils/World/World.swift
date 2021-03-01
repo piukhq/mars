@@ -21,6 +21,7 @@ class World {
     lazy var pointsScrapingManager = PointsScrapingManager()
     lazy var remoteConfig = RemoteConfigUtil()
     lazy var paymentCardScannerStrings = PaymentCardScannerStrings()
+    lazy var themeManager = ThemeManager()
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
     var inAppReviewableJourney: Any? // We cast this to the correct type using generics when we need to
     
@@ -66,6 +67,8 @@ extension UserDefaults: BinkUserDefaults {
         case appLaunches
         case hasPreviouslyLaunchedApp
         case localWalletOrder(userId: String, walletType: Wallet.WalletType)
+        case theme
+        case hasSupportUpdates
         
         var keyValue: String {
             switch self {
@@ -97,6 +100,10 @@ extension UserDefaults: BinkUserDefaults {
                 return "hasPreviouslyLaunchedApp"
             case .localWalletOrder(let userId, let walletType):
                 return "localWalletOrders_user_\(userId)_\(walletType.rawValue)"
+            case .theme:
+                return "theme"
+            case .hasSupportUpdates:
+                return "hasSupportUpdates"
             }
         }
     }

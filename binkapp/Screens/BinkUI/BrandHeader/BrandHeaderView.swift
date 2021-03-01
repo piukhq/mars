@@ -23,6 +23,8 @@ class BrandHeaderView: CustomView {
     
     func configure(plan: CD_MembershipPlan?, delegate: LoyaltyButtonDelegate) {
         self.delegate = delegate
+        logoImageView.backgroundColor = .clear
+        view.backgroundColor = .clear
         guard let membershipPlan = plan else { return }
         
         logoImageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))

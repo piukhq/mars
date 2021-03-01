@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -43,6 +43,7 @@
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cu4-Iv-pDu" customClass="BinkTextField" customModule="binkapp" customModuleProvider="target">
                                     <rect key="frame" x="25" y="25" width="364" height="40"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="ZrJ-EU-TCa"/>
                                     </constraints>
@@ -50,7 +51,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="Cu4-Iv-pDu" secondAttribute="trailing" constant="25" id="2hJ-Xr-baD"/>
                                 <constraint firstItem="Cu4-Iv-pDu" firstAttribute="leading" secondItem="V71-or-ZOr" secondAttribute="leading" constant="25" id="Q1y-Xy-ebF"/>
@@ -59,9 +60,11 @@
                             </constraints>
                         </view>
                     </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="ccM-nf-ZMN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4tc-3l-0Zu"/>
                 <constraint firstItem="wZU-1d-SYO" firstAttribute="top" secondItem="ccM-nf-ZMN" secondAttribute="bottom" id="5OQ-j5-hGu"/>
@@ -75,7 +78,6 @@
                 <constraint firstAttribute="bottom" secondItem="1MC-ks-eDc" secondAttribute="bottom" id="tGh-dY-p2u"/>
                 <constraint firstItem="1MC-ks-eDc" firstAttribute="top" secondItem="ccM-nf-ZMN" secondAttribute="bottom" id="yMw-w8-qE3"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="153.34821428571428"/>
         </view>
     </objects>

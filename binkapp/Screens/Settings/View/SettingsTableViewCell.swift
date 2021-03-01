@@ -43,7 +43,6 @@ class SettingsTableViewCell: UITableViewCell {
     private lazy var separator: UIView = {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.backgroundColor = UIColor(hexString: "e5e5e5")
         contentView.addSubview(separator)
         return separator
     }()
@@ -110,6 +109,7 @@ class SettingsTableViewCell: UITableViewCell {
     }
     
     func setup(with rowData: SettingsRow, showSeparator: Bool) {
+        backgroundColor = .clear
         subtitleLabel.text = rowData.title
     
         if let body = rowData.subtitle {
@@ -121,6 +121,12 @@ class SettingsTableViewCell: UITableViewCell {
         
         separator.isHidden = !showSeparator
         actionRequiredIndicator.isHidden = !rowData.actionRequired
+
+        separator.backgroundColor = Current.themeManager.color(for: .divider)
+        bodyLabel.textColor = Current.themeManager.color(for: .text)
+        subtitleLabel.textColor = Current.themeManager.color(for: .text)
+        chevron.tintColor = Current.themeManager.color(for: .text)
+        selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
     
     

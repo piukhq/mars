@@ -12,13 +12,21 @@ class PaymentCardDetailAddLoyaltyCardCell: PaymentCardDetailTableViewCell {
     @IBOutlet private weak var addCardButton: BinkMiniGradientButton!
 
     private var viewModel: PaymentCardDetailAddLoyaltyCardCellViewModel!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setSeparatorDefaultWidth()
+    }
 
     func configureWithViewModel(_ viewModel: PaymentCardDetailAddLoyaltyCardCellViewModel) {
         self.viewModel = viewModel
         headerLabel.text = viewModel.headerText
+        headerLabel.textColor = Current.themeManager.color(for: .text)
         detailLabel.text = viewModel.detailText
-        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: viewModel.membershipPlan))
+        detailLabel.textColor = Current.themeManager.color(for: .text)
         addCardButton.configure(title: "pcd_add_card_button_title".localized, hasShadow: false)
+        iconImageView.setImage(forPathType: .membershipPlanIcon(plan: viewModel.membershipPlan))
+        selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
 
     @IBAction private func handleAddCardButtonPress() {

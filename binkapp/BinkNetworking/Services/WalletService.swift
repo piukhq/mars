@@ -175,12 +175,13 @@ extension WalletServiceProtocol {
     
     func getSpreedlyToken(withRequest model: SpreedlyRequest, completion: @escaping ServiceCompletionResultHandler<SpreedlyResponse, WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .spreedly, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(request, body: model, expecting: SpreedlyResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(request, body: model, expecting: SpreedlyResponse.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
                 completion(.success(response))
             case .failure:
-                completion(.failure(.failedToGetPaymentCards))
+                SentryService.triggerException(.tokenisationServiceRejectedRequest(rawResponse))
+                completion(.failure(.failedToGetSpreedlyToken))
             }
         }
     }
@@ -193,6 +194,7 @@ extension WalletServiceProtocol {
             case .success(let response):
                 completion(.success(response), rawResponse)
             case .failure:
+                SentryService.triggerException(.apiRejectedRequest(rawResponse))
                 completion(.failure(.failedToAddMembershipCard), rawResponse)
             }
         }

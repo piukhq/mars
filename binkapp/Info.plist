@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>62</string>
+	<string>64</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -102,7 +102,5 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
 </dict>
 </plist>

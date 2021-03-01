@@ -24,6 +24,7 @@ class BinkGradientButton: BinkPillButton {
     override var isEnabled: Bool {
         didSet {
             gradientLayer.opacity = isEnabled ? 1.0 : 0.5
+            setTitleColor(isEnabled ? .white : UIColor.white.withAlphaComponent(0.5), for: .normal)
         }
     }
 
@@ -43,7 +44,7 @@ class BinkGradientButton: BinkPillButton {
     
     private func setWhiteLayer() {
         whiteLayer.frame = bounds
-        whiteLayer.backgroundColor = UIColor.white.cgColor
+        whiteLayer.backgroundColor = Current.themeManager.color(for: .viewBackground).cgColor
         whiteLayer.cornerRadius = self.frame.size.height / 2
         whiteLayer.cornerCurve = .continuous
     }

@@ -126,6 +126,8 @@ open class StackScrollView: UIScrollView {
                 minimumContentWidthGuidingConstraint
             ])
         }
+        
+        indicatorStyle = Current.themeManager.scrollViewIndicatorStyle(for: traitCollection)
     }
     
     required public init?(coder aDecoder: NSCoder) {

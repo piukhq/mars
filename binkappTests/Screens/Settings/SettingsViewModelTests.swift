@@ -28,6 +28,10 @@ class SettingsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 0), 2)
     }
     
+//    func test_rowsCount_returnsCorrectCountForAppearanceSection() {
+//        XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 2), 3)
+//    }
+
     func test_rowsCount_returnsCorrectCountForSupportSection() {
         XCTAssertEqual(sut.rowsCount(forSectionAtIndex: 1), 3)
     }
@@ -49,6 +53,10 @@ class SettingsViewModelTests: XCTestCase {
     func test_titleForSection_returnsCorrectTitleForAccountSection() {
         XCTAssertEqual(sut.titleForSection(atIndex: 0), "settings_section_account_title".localized)
     }
+    
+//    func test_titleForSection_returnsCorrectTitleForAppearanceSection() {
+//        XCTAssertEqual(sut.titleForSection(atIndex: 1), "settings_section_appearance_title".localized)
+//    }
     
     func test_titleForSection_returnsCorrectTitleForSupportSection() {
         XCTAssertEqual(sut.titleForSection(atIndex: 1), "settings_section_support_title".localized)
@@ -78,6 +86,11 @@ class SettingsViewModelTests: XCTestCase {
         let logOut = getSettingsRow(forRow: 1, section: 0)
         XCTAssertEqual(logOut?.title, "Log out")
     }
+    
+//    func test_row_returnsCorrectRowForAppearanceRow() {
+//        let logOut = getSettingsRow(forRow: 0, section: 1)
+//        XCTAssertEqual(logOut?.title, "Theme")
+//    }
     
     func test_row_returnsCorrectRowForFAQRow() {
         let faqs = getSettingsRow(forRow: 0, section: 1)

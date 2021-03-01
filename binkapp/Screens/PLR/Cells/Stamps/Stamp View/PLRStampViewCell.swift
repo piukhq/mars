@@ -24,7 +24,7 @@ class PLRStampViewCell: UICollectionViewCell {
         layer.cornerRadius = Constants.outerViewCornerRadius
 
         let innerView = UIView()
-        innerView.backgroundColor = .white
+        innerView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         innerView.translatesAutoresizingMaskIntoConstraints = false
         innerView.layer.cornerRadius = Constants.innerViewCornerRadius
         addSubview(innerView)
@@ -49,7 +49,7 @@ class PLRStampViewCell: UICollectionViewCell {
                 return .blueInactive
             }
         } else {
-            return .black15
+            return .binkDynamicGray
         }
     }
 }

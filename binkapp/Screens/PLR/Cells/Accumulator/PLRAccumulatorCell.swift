@@ -25,7 +25,7 @@ class PLRAccumulatorCell: PLRBaseCollectionViewCell {
     private func setupUI() {
         innerProgressBar.layer.cornerRadius = LayoutHelper.PLRCollectionViewCell.Accumulator.progressBarCornerRadius
         outerProgressBar.layer.cornerRadius = LayoutHelper.PLRCollectionViewCell.Accumulator.progressBarCornerRadius
-        outerProgressBar.backgroundColor = .init(red: 0, green: 0, blue: 0, alpha: 0.15)
+        outerProgressBar.backgroundColor = .binkDynamicGray
     }
 
     private func progressBarColor(forState state: VoucherState?) -> UIColor {

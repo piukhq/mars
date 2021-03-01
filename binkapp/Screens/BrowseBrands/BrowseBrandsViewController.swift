@@ -33,7 +33,7 @@ class BrowseBrandsViewController: BinkViewController {
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.alwaysBounceVertical = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
@@ -54,6 +54,7 @@ class BrowseBrandsViewController: BinkViewController {
     
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
+    private var didLayoutSubviews = false
     
     init(viewModel: BrowseBrandsViewModel) {
         self.viewModel = viewModel
@@ -101,6 +102,25 @@ class BrowseBrandsViewController: BinkViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .browseBrands)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        didLayoutSubviews = true
+    }
+    
+    override func configureForCurrentTheme() {
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        collectionView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        topStackView.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        noMatchesLabel.textColor = Current.themeManager.color(for: .text)
+        searchTextField.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
+        
+        if didLayoutSubviews {
+            collectionView.reloadData()
+            tableView.reloadData()
+        }
     }
     
     private func configureCollectionView() {
@@ -198,7 +218,7 @@ class BrowseBrandsViewController: BinkViewController {
             self.noMatchesLabelTopConstraint.constant = self.filterViewHeight
         }
         filtersButton?.isEnabled = false
-        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.linkTextButtonNormal], for: .disabled)
+        filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .disabled)
         let frame = self.collectionView.frame
         UIView.animate(withDuration: 0.3, animations: {
             self.collectionView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: self.view.frame.width - (Constants.marginPadding * 2), height: self.filterViewHeight)
@@ -210,7 +230,7 @@ class BrowseBrandsViewController: BinkViewController {
         }) { [weak self] _ in
             self?.tableView.contentInset.top = self?.filterViewHeight ?? 0.0
             self?.filtersButton?.isEnabled = true
-            self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.black, .font: UIFont.linkTextButtonNormal], for: .normal)
+            self?.filtersButton?.setTitleTextAttributes([.foregroundColor: UIColor.blueAccent, .font: UIFont.linkTextButtonNormal], for: .normal)
         }
     }
     
@@ -259,6 +279,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: Constants.tableViewHeaderHeight))
         titleLabel.font = UIFont.headline
         titleLabel.text = viewModel.getSectionTitleText(section: section)
+        titleLabel.textColor = Current.themeManager.color(for: .text)
         view.addSubview(titleLabel)
         return view
     }

@@ -27,9 +27,15 @@ class DebugMenuTableViewController: UITableViewController {
         super.viewDidLoad()
         
         title = viewModel.title
-        
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+
         tableView.register(DebugMenuTableViewCell.self, asNib: true)
         tableView.register(DebugMenuSegmentedTableViewCell.self, asNib: true)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source

@@ -25,7 +25,7 @@ class OfferTileView: CustomView {
     }
 
     private func configure() {
-        guard let imageUrl = offerTileImage.url else { return }
+        guard let imageUrl = offerTileImage.imageUrl else { return }
         containerView.layer.cornerRadius = 8
         containerView.clipsToBounds = true
         offerImageView.setImage(forPathType: .membershipPlanOfferTile(url: imageUrl))

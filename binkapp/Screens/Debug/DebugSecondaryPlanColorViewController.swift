@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DebugSecondaryPlanColorViewController: UIViewController {
+class DebugSecondaryPlanColorViewController: BinkViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
@@ -16,6 +16,11 @@ class DebugSecondaryPlanColorViewController: UIViewController {
         collectionView.register(DebugSecondaryPlanColorCell.self, asNib: true)
         collectionView.delegate = self
         collectionView.dataSource = self
+    }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
     }
 }
 
