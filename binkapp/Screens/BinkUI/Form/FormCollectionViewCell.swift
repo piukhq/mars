@@ -104,7 +104,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, textFieldStack, separator, validationLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         stackView.alignment = .fill
         stackView.spacing = Constants.stackViewSpacing
         stackView.setCustomSpacing(Constants.postTextFieldSpacing, after: textFieldStack)
