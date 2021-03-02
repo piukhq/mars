@@ -93,6 +93,7 @@ class PLRRewardsHistoryViewController: BinkViewController {
         super.configureForCurrentTheme()
         titleLabel.textColor = Current.themeManager.color(for: .text)
         subtitleLabel.textColor = Current.themeManager.color(for: .text)
+        navigationController?.navigationBar.tintColor = Current.themeManager.color(for: .text)
     }
 
     private func setupCellForType<T: PLRBaseCollectionViewCell>(_ cellType: T.Type, voucher: CD_Voucher) {
