@@ -27,4 +27,11 @@ struct LoginRegisterRequest: Codable {
         self.clientID = APIConstants.clientID
         self.bundleID = APIConstants.bundleID
     }
+    
+    init(email: String?, password: String?, clientID: String, bundleID: String) {
+        self.email = email
+        self.password = password
+        self.clientID = clientID
+        self.bundleID = bundleID
+    }
 }

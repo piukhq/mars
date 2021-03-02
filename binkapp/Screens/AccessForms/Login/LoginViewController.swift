@@ -63,11 +63,24 @@ class LoginViewController: BaseFormViewController, UserServiceProtocol {
         continueButton.toggleLoading(isLoading: true)
         
         let fields = dataSource.currentFieldValues()
-
-        let loginRequest = LoginRegisterRequest(
-            email: fields["email"],
-            password: fields["password"]
-        )
+        
+        let loginRequest: LoginRegisterRequest
+        
+        let customBundleClientEnabled = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
+        
+        if !Current.isReleaseTypeBuild && customBundleClientEnabled {
+            loginRequest = LoginRegisterRequest(
+                email: fields["email"],
+                password: fields["password"],
+                clientID: fields["client id"] ?? "",
+                bundleID: fields["bundle id"] ?? ""
+            )
+        } else {
+            loginRequest = LoginRegisterRequest(
+                email: fields["email"],
+                password: fields["password"]
+            )
+        }
 
         login(request: loginRequest) { [weak self] result in
             switch result {

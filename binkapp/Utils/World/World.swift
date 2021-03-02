@@ -65,6 +65,7 @@ extension UserDefaults: BinkUserDefaults {
         case inAppReviewLastRequestedDate
         case inAppReviewRequestedMinorVersions
         case applyInAppReviewRules
+        case allowCustomBundleClientOnLogin
         case membershipCardMostRecentTransaction(membershipCardId: String)
         case appLaunches
         case hasPreviouslyLaunchedApp
@@ -95,6 +96,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "inAppReviewRequestedMinorVersions"
             case .applyInAppReviewRules:
                 return "applyInAppReviewRules"
+            case .allowCustomBundleClientOnLogin:
+                return "allowCustomBundleClientOnLogin"
             case .membershipCardMostRecentTransaction(let cardId):
                 return "membership_card_most_recent_transaction_\(cardId)"
             case .appLaunches:
