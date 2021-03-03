@@ -28,43 +28,51 @@ enum BinkLog {
     
     // Info - Not persisted
     
-//    static func info(_ message: String, value: String) {
-//        logger.info("\(message) \(value, privacy: .public)")
-//    }
-//
-//    static func infoPrivate(_ message: String, value: String) {
-//        logger.info("\(message) \(value, privacy: .private)")
-//    }
-//
-//    static func infoPrivateHash(_ message: String, value: String) {
-//        logger.info("\(message) \(value, privacy: .private(mask: .hash))")
-//    }
-//
-//
-//    // Log - Persisted
-//
-//    static func log(_ message: String, value: String) {
-//        logger.log("\(message) \(value, privacy: .public)")
-//    }
-//
-//    static func logPrivate(_ message: String, value: String) {
-//        logger.log("\(message) \(value, privacy: .private)")
-//    }
-//
-//    static func logPrivateHash(_ message: String, value: String) {
-//        logger.log("\(message) \(value, privacy: .private(mask: .hash))")
-//    }
-//
-//
-//    // Error - Persisted
-//
-//    static func error(_ message: String, value: String) {
-//        logger.error("\(message, privacy: .public) \(value, privacy: .public)")
-//    }
+    static func info(_ message: String, value: String?, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.info("\(message) \(value ?? "", privacy: .public)")
+    }
+
+    static func infoPrivate(_ message: String, value: String, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.info("\(message) \(value, privacy: .private)")
+    }
+
+    static func infoPrivateHash(_ message: String, value: String, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.info("\(message) \(value, privacy: .private(mask: .hash))")
+    }
+
+
+    // Log - Persisted: For troubleshooting
+
+    static func log(_ message: String, value: String?, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.log("\(message) \(value ?? "", privacy: .public)")
+    }
+
+    static func logPrivate(_ message: String, value: String, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.log("\(message) \(value, privacy: .private)")
+    }
+
+    static func logPrivateHash(_ message: String, value: String, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.log("\(message) \(value, privacy: .private(mask: .hash))")
+    }
+
+
+    // Error - Persisted
+
+    static func error(_ message: String, value: String?, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.error("\(message, privacy: .public) \(value ?? "", privacy: .public)")
+    }
     
-//    static func errorPrivate(_ message: String, value: String) {
-//        logger.error("\(message) \(value, privacy: .private)")
-//    }
+    static func errorPrivate(_ message: String, value: String, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.error("\(message, privacy: .public) \(value, privacy: .private)")
+    }
 }
 
 enum AddPaymentCardJourney {
@@ -147,16 +155,16 @@ class AddPaymentCardViewModel {
         let num = 999
         
         if #available(iOS 14.0, *) {
-//            BinkLog.info("Payment card added \(num)", value: String(num))
-//            BinkLog.infoPrivate("Payment card added", value: String(num))
-//            BinkLog.infoPrivateHash("Payment card added", value: String(num))
-//            BinkLog.error("OH NO", value: "It all went wrong")
-//            BinkLog.errorPrivate("Bugger", value: "SHIT has got fucked")
-//            BinkLog.log("Payment card added", value: String(num))
-//            BinkLog.logPrivate("Payment card added", value: String(num))
-//            BinkLog.logPrivateHash("Payment card added", value: String(num))
-            BinkLog.debug("Debugging yo", value: String(num), category: .addPaymentCardViewModel)
-            BinkLog.debug("Optional debugg yo", value: nil, category: .addPaymentCardViewModel)
+//            BinkLog.debug("Debugging yo", value: String(num), category: .addPaymentCardViewModel)
+//            BinkLog.debug("Optional debugg yo", value: nil, category: .addPaymentCardViewModel)
+//            BinkLog.info("Payment card added", value: String(num), category: .addPaymentCardViewModel)
+//            BinkLog.infoPrivate("Payment card added", value: String(num), category: .addPaymentCardViewModel)
+//            BinkLog.infoPrivateHash("Payment card added", value: String(num), category: .addPaymentCardViewModel)
+            BinkLog.error("OH NO", value: (String(num)), category: .addPaymentCardViewModel)
+            BinkLog.errorPrivate("Bugger", value: (String(num)), category: .addPaymentCardViewModel)
+//            BinkLog.log("Payment card added", value: String(num), category: .addPaymentCardViewModel)
+//            BinkLog.logPrivate("Payment card added", value: String(num), category: .addPaymentCardViewModel)
+//            BinkLog.logPrivateHash("Payment card added", value: String(num), category: .addPaymentCardViewModel)
         }
         
 //        let uuid = "09390839083938"
@@ -179,6 +187,7 @@ class AddPaymentCardViewModel {
             
             if #available(iOS 14.0, *) {
 //                BinkLog.info("Payment card added", interpol: paymentCard.id, privacy: .private(mask: .hash))
+                
             }
             
             switch self.journey {
