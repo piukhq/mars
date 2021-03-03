@@ -8,6 +8,28 @@
 
 import CardScan
 import UIKit
+import os
+
+@available(iOS 14.0, *)
+enum BinkLog {
+    private static let logger = Logger(subsystem: "com.bink.wallet", category: "AddPaymentCardViewModel")
+
+    static func info(_ message: String, value: String) {
+        logger.info("\(message) \(value, privacy: .public)")
+    }
+    
+    static func infoPrivate(_ message: String, value: String) {
+        logger.info("\(message) \(value, privacy: .private)")
+    }
+    
+    static func infoPrivateHash(_ message: String, value: String) {
+        logger.info("\(message) \(value, privacy: .private(mask: .hash))")
+    }
+    
+    static func error(_ message: String, value: String) {
+        logger.error("\(message) \(value, privacy: .public)")
+    }
+}
 
 enum AddPaymentCardJourney {
     case wallet
@@ -79,12 +101,33 @@ class AddPaymentCardViewModel {
     }
     
     func toPrivacyAndSecurity() {
-        let title: String = "security_and_privacy_title".localized
-        let description: String = "security_and_privacy_description".localized
-        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
-        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigationRequest)
+//        let title: String = "security_and_privacy_title".localized
+//        let description: String = "security_and_privacy_description".localized
+//        let configuration = ReusableModalConfiguration(title: title, text: ReusableModalConfiguration.makeAttributedString(title: title, description: description))
+//        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
+//        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+//        Current.navigate.to(navigationRequest)
+        
+//        self.logger.info("Payment card added \("999999999999999", privacy: .private(mask: .hash))")
+
+        let num = 999
+        
+        if #available(iOS 14.0, *) {
+            BinkLog.info("Payment card added", value: String(num))
+            BinkLog.infoPrivate("Payment card added", value: String(num))
+            BinkLog.infoPrivateHash("Payment card added", value: String(num))
+
+        }
+        
+//        let uuid = "09390839083938"
+        
+//        if #available(iOS 14.0, *) {
+//            let logger = Logger(subsystem: "com.bink.wallet", category: "AddPaymentCardViewModel")
+//            logger.info("Payment card added \(uuid, privacy: .public)")
+//            logger.info("Feed downloaded. Contents UUID is \(uuid, privacy: .private(mask: .hash))")
+//            logger.log("SEAN \(uuid)")
+//            logger.error("ERRRRROR: \(uuid, privacy: .private(mask: .hash))")
+//        }
     }
 
     func addPaymentCard(onError: @escaping () -> Void) {
@@ -92,6 +135,10 @@ class AddPaymentCardViewModel {
             guard let self = self else { return }
             guard let paymentCard = paymentCard else { return }
             Current.wallet.refreshLocal()
+            
+            if #available(iOS 14.0, *) {
+//                BinkLog.info("Payment card added", interpol: paymentCard.id, privacy: .private(mask: .hash))
+            }
             
             switch self.journey {
             case .wallet:
@@ -104,8 +151,9 @@ class AddPaymentCardViewModel {
             case .pll:
                 Current.navigate.close()
             }
-        }) { _ in
+        }) { [self] error in
             onError()
+//            logger.error("Error adding payment card: \(error?.message ?? "", privacy: .public)")
             self.displayError()
         }
     }
