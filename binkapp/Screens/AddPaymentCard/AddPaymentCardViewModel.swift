@@ -18,60 +18,64 @@ enum BinkLog {
         case addPaymentCardViewModel
     }
     
-    // Debug - Not persisted
-    
-    static func debug(_ message: String, value: String?, category: Category) {
-        let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.debug("\(message, privacy: .public) \(value ?? "", privacy: .public)")
+    enum Event: String {
+        case paymentCardAdded = "Payment card added"
     }
     
+    // Debug - Not persisted: Not shown in exported logs
     
-    // Info - Not persisted
-    
-    static func info(_ message: String, value: String?, category: Category) {
+    static func debug(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.info("\(message) \(value ?? "", privacy: .public)")
-    }
-
-    static func infoPrivate(_ message: String, value: String, category: Category) {
-        let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.info("\(message) \(value, privacy: .private)")
-    }
-
-    static func infoPrivateHash(_ message: String, value: String, category: Category) {
-        let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.info("\(message) \(value, privacy: .private(mask: .hash))")
-    }
-
-
-    // Log - Persisted: For troubleshooting
-
-    static func log(_ message: String, value: String?, category: Category) {
-        let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.log("\(message) \(value ?? "", privacy: .public)")
-    }
-
-    static func logPrivate(_ message: String, value: String, category: Category) {
-        let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.log("\(message) \(value, privacy: .private)")
-    }
-
-    static func logPrivateHash(_ message: String, value: String, category: Category) {
-        let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.log("\(message) \(value, privacy: .private(mask: .hash))")
-    }
-
-
-    // Error - Persisted
-
-    static func error(_ message: String, value: String?, category: Category) {
-        let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.error("\(message, privacy: .public) \(value ?? "", privacy: .public)")
+        logger.debug("\(event.rawValue, privacy: .public) \(value ?? "", privacy: .public)")
     }
     
-    static func errorPrivate(_ message: String, value: String, category: Category) {
+    
+    // Info - Only recent logs persisted, written to disk
+    
+    static func info(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.error("\(message, privacy: .public) \(value, privacy: .private)")
+        logger.info("\(event.rawValue) \(value ?? "", privacy: .public)")
+    }
+
+    static func infoPrivate(_ event: Event, value: String, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.info("\(event.rawValue) \(value, privacy: .private)")
+    }
+
+    static func infoPrivateHash(_ event: Event, value: String, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.info("\(event.rawValue) \(value, privacy: .private(mask: .hash))")
+    }
+
+
+    // Log - For troubleshooting, written to memory and disk
+
+    static func log(_ event: Event, value: String?, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.log("\(event.rawValue, privacy: .public) \(value ?? "", privacy: .public)")
+    }
+
+    static func logPrivate(_ event: Event, value: String, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.log("\(event.rawValue) \(value, privacy: .private)")
+    }
+
+    static func logPrivateHash(_ event: Event, value: String, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.log("\(event.rawValue) \(value, privacy: .private(mask: .hash))")
+    }
+
+
+    // Error - Persisted to memory and disk
+
+    static func error(_ event: Event, value: String?, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.error("\(event.rawValue, privacy: .public) \(value ?? "", privacy: .public)")
+    }
+    
+    static func errorPrivate(_ event: Event, value: String, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.error("\(event.rawValue, privacy: .public) \(value, privacy: .private)")
     }
 }
 
@@ -152,19 +156,19 @@ class AddPaymentCardViewModel {
 //        let navigationRequest = ModalNavigationRequest(viewController: viewController)
 //        Current.navigate.to(navigationRequest)
 
-        let num = 999
+        let num = 5555555545499873
         
         if #available(iOS 14.0, *) {
-//            BinkLog.debug("Debugging yo", value: String(num), category: .addPaymentCardViewModel)
-//            BinkLog.debug("Optional debugg yo", value: nil, category: .addPaymentCardViewModel)
-//            BinkLog.info("Payment card added", value: String(num), category: .addPaymentCardViewModel)
-//            BinkLog.infoPrivate("Payment card added", value: String(num), category: .addPaymentCardViewModel)
-//            BinkLog.infoPrivateHash("Payment card added", value: String(num), category: .addPaymentCardViewModel)
-            BinkLog.error("OH NO", value: (String(num)), category: .addPaymentCardViewModel)
-            BinkLog.errorPrivate("Bugger", value: (String(num)), category: .addPaymentCardViewModel)
-//            BinkLog.log("Payment card added", value: String(num), category: .addPaymentCardViewModel)
-//            BinkLog.logPrivate("Payment card added", value: String(num), category: .addPaymentCardViewModel)
-//            BinkLog.logPrivateHash("Payment card added", value: String(num), category: .addPaymentCardViewModel)
+            BinkLog.debug(.paymentCardAdded, value: String(num), category: .addPaymentCardViewModel)
+            BinkLog.debug(.paymentCardAdded, value: nil, category: .addPaymentCardViewModel)
+            BinkLog.info(.paymentCardAdded, value: String(num), category: .addPaymentCardViewModel)
+            BinkLog.infoPrivate(.paymentCardAdded, value: String(num), category: .addPaymentCardViewModel)
+            BinkLog.infoPrivateHash(.paymentCardAdded, value: String(num), category: .addPaymentCardViewModel)
+            BinkLog.error(.paymentCardAdded, value: (String(num)), category: .addPaymentCardViewModel)
+            BinkLog.errorPrivate(.paymentCardAdded, value: (String(num)), category: .addPaymentCardViewModel)
+            BinkLog.log(.paymentCardAdded, value: String(num), category: .addPaymentCardViewModel)
+            BinkLog.logPrivate(.paymentCardAdded, value: String(num), category: .addPaymentCardViewModel)
+            BinkLog.logPrivateHash(.paymentCardAdded, value: String(num), category: .addPaymentCardViewModel)
         }
         
 //        let uuid = "09390839083938"
@@ -186,8 +190,7 @@ class AddPaymentCardViewModel {
             Current.wallet.refreshLocal()
             
             if #available(iOS 14.0, *) {
-//                BinkLog.info("Payment card added", interpol: paymentCard.id, privacy: .private(mask: .hash))
-                
+                BinkLog.infoPrivateHash(.paymentCardAdded, value: paymentCard.id, category: .addPaymentCardViewModel)
             }
             
             switch self.journey {
