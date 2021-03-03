@@ -12,23 +12,59 @@ import os
 
 @available(iOS 14.0, *)
 enum BinkLog {
-    private static let logger = Logger(subsystem: "com.bink.wallet", category: "AddPaymentCardViewModel")
+    private static let subsystem = Bundle.main.bundleIdentifier ?? ""
 
-    static func info(_ message: String, value: String) {
-        logger.info("\(message) \(value, privacy: .public)")
+    enum Category: String {
+        case addPaymentCardViewModel
     }
     
-    static func infoPrivate(_ message: String, value: String) {
-        logger.info("\(message) \(value, privacy: .private)")
+    // Debug - Not persisted
+    
+    static func debug(_ message: String, value: String?, category: Category) {
+        let logger = Logger(subsystem: subsystem, category: category.rawValue)
+        logger.debug("\(message, privacy: .public) \(value ?? "", privacy: .public)")
     }
     
-    static func infoPrivateHash(_ message: String, value: String) {
-        logger.info("\(message) \(value, privacy: .private(mask: .hash))")
-    }
     
-    static func error(_ message: String, value: String) {
-        logger.error("\(message) \(value, privacy: .public)")
-    }
+    // Info - Not persisted
+    
+//    static func info(_ message: String, value: String) {
+//        logger.info("\(message) \(value, privacy: .public)")
+//    }
+//
+//    static func infoPrivate(_ message: String, value: String) {
+//        logger.info("\(message) \(value, privacy: .private)")
+//    }
+//
+//    static func infoPrivateHash(_ message: String, value: String) {
+//        logger.info("\(message) \(value, privacy: .private(mask: .hash))")
+//    }
+//
+//
+//    // Log - Persisted
+//
+//    static func log(_ message: String, value: String) {
+//        logger.log("\(message) \(value, privacy: .public)")
+//    }
+//
+//    static func logPrivate(_ message: String, value: String) {
+//        logger.log("\(message) \(value, privacy: .private)")
+//    }
+//
+//    static func logPrivateHash(_ message: String, value: String) {
+//        logger.log("\(message) \(value, privacy: .private(mask: .hash))")
+//    }
+//
+//
+//    // Error - Persisted
+//
+//    static func error(_ message: String, value: String) {
+//        logger.error("\(message, privacy: .public) \(value, privacy: .public)")
+//    }
+    
+//    static func errorPrivate(_ message: String, value: String) {
+//        logger.error("\(message) \(value, privacy: .private)")
+//    }
 }
 
 enum AddPaymentCardJourney {
@@ -107,26 +143,31 @@ class AddPaymentCardViewModel {
 //        let viewController = ViewControllerFactory.makeSecurityAndPrivacyViewController(configuration: configuration)
 //        let navigationRequest = ModalNavigationRequest(viewController: viewController)
 //        Current.navigate.to(navigationRequest)
-        
-//        self.logger.info("Payment card added \("999999999999999", privacy: .private(mask: .hash))")
 
         let num = 999
         
         if #available(iOS 14.0, *) {
-            BinkLog.info("Payment card added", value: String(num))
-            BinkLog.infoPrivate("Payment card added", value: String(num))
-            BinkLog.infoPrivateHash("Payment card added", value: String(num))
-
+//            BinkLog.info("Payment card added \(num)", value: String(num))
+//            BinkLog.infoPrivate("Payment card added", value: String(num))
+//            BinkLog.infoPrivateHash("Payment card added", value: String(num))
+//            BinkLog.error("OH NO", value: "It all went wrong")
+//            BinkLog.errorPrivate("Bugger", value: "SHIT has got fucked")
+//            BinkLog.log("Payment card added", value: String(num))
+//            BinkLog.logPrivate("Payment card added", value: String(num))
+//            BinkLog.logPrivateHash("Payment card added", value: String(num))
+            BinkLog.debug("Debugging yo", value: String(num), category: .addPaymentCardViewModel)
+            BinkLog.debug("Optional debugg yo", value: nil, category: .addPaymentCardViewModel)
         }
         
 //        let uuid = "09390839083938"
-        
+//
 //        if #available(iOS 14.0, *) {
 //            let logger = Logger(subsystem: "com.bink.wallet", category: "AddPaymentCardViewModel")
 //            logger.info("Payment card added \(uuid, privacy: .public)")
 //            logger.info("Feed downloaded. Contents UUID is \(uuid, privacy: .private(mask: .hash))")
 //            logger.log("SEAN \(uuid)")
 //            logger.error("ERRRRROR: \(uuid, privacy: .private(mask: .hash))")
+//            logger.error("Bello this is an error: \(uuid, privacy: .public)")
 //        }
     }
 
