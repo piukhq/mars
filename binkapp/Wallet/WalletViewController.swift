@@ -240,13 +240,13 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
 
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return false }
-        return !cell.isKind(of: WalletPromptCollectionViewCell.self)
+        return !cell.isKind(of: WalletPromptCollectionViewCell.self) && !cell.isKind(of: OnboardingCardCollectionViewCell.self)
     }
 
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath, toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath {
         guard let cell = collectionView.cellForItem(at: proposedIndexPath) else { return proposedIndexPath }
 
-        if cell.isKind(of: WalletPromptCollectionViewCell.self) {
+        if cell.isKind(of: WalletPromptCollectionViewCell.self) || cell.isKind(of: OnboardingCardCollectionViewCell.self) {
             return originalIndexPath
         }
 
