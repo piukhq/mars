@@ -16,15 +16,18 @@ enum BinkLogger {
     enum Category: String {
         case addPaymentCardViewModel
         case paymentWalletRepository
+        case paymentWalletViewModel
     }
     
     enum Event: String {
         case paymentCardAdded = "Payment card added"
+        case paymentCardDeleted = "Payment card deleted"
         case spreedlyTokenResponseSuccess = "Spreedly token success"
     }
     
     enum Error: String {
         case addPaymentCardFailure = "Add payment card failure"
+        case deletePaymentCardFailure = "Delete payment card failure"
         case spreedlyTokenResponseFailure = "Spreedly response failure"
     }
     

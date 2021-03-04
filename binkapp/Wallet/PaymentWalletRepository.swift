@@ -18,6 +18,10 @@ class PaymentWalletRepository: WalletServiceProtocol {
         deletePaymentCard(paymentCard) { (success, _, responseData) in
             guard success else {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard, responseData: responseData))
+                if #available(iOS 14.0, *) {
+                    BinkLogger.errorPrivate(.deletePaymentCardFailure, value: paymentCard.id, category: .paymentWalletRepository)
+                    BinkLogger.error(.deletePaymentCardFailure, value: responseData?.urlResponse?.statusCode.description, category: .paymentWalletRepository)
+                }
                 return
             }
             BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseSuccess(card: trackableCard))
