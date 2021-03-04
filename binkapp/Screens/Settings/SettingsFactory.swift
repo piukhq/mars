@@ -166,6 +166,8 @@ struct SettingsFactory {
         
         sections.append(debugSection)
         
+        #endif
+        
         // MARK: - Beta
         
         let betaSection = SettingsSection(title: "settings_section_beta_title".localized, rows: [
@@ -179,8 +181,6 @@ struct SettingsFactory {
         if Current.featureManager.shouldShowInSettings {
             sections.append(betaSection)
         }
-        
-        #endif
         
         return sections
     }
