@@ -73,8 +73,15 @@ class PaymentWalletRepository: WalletServiceProtocol {
         getSpreedlyToken(withRequest: spreedlyRequest) { result in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    let paymentMethod = response.transaction?.paymentMethod
+                    BinkLogger.infoPrivateHash(.spreedlyTokenResponseSuccess, value: paymentMethod?.lastFour, category: .paymentWalletRepository)
+                }
                 onSuccess(response)
             case .failure(let error):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.spreedlyTokenResponseFailure, value: error.localizedDescription, category: .paymentWalletRepository)
+                }
                 onError(error)
             }
         }
@@ -118,6 +125,9 @@ class PaymentWalletRepository: WalletServiceProtocol {
                 }
             case .failure(let error):
                 BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseFail(request: paymentCard, responseData: responseData))
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.addPaymentCardFailure, value: responseData?.urlResponse?.statusCode.description, category: .paymentWalletRepository)
+                }
                 onError(error)
             }
         }
