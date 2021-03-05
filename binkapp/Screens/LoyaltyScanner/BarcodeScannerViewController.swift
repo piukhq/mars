@@ -233,7 +233,9 @@ class BarcodeScannerViewController: BinkViewController {
             try device.lockForConfiguration()
         } catch let error {
             // TODO: Handle error
-            print(error.localizedDescription)
+            if #available(iOS 14.0, *) {
+                BinkLogger.error(.lockDeviceForAVCaptureConfig, value: error.localizedDescription, category: .barcodeScannerViewController)
+            }
         }
 
         if device.isFocusModeSupported(.continuousAutoFocus) {

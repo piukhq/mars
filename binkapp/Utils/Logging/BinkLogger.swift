@@ -27,6 +27,8 @@ enum BinkLogger {
         case loyaltyWalletRepository
         case pllScreenRepository
         case database
+        case barcodeScannerViewController
+        case onboardingViewController
     }
     
     enum Event: String {
@@ -51,6 +53,8 @@ enum BinkLogger {
         case pllLoyaltyCardLinkingFailure = "PLL loyalty card linking failure"
         case pllLoyaltyCardUnlinkingFailure = "PLL loyalty card unlinking failure"
         case coreDataObjectMappingFailure = "Could not map object"
+        case lockDeviceForAVCaptureConfig = "Could not aquire device lock for AV capture configuration"
+        case appleSignIn = "Apple sign in auth failure"
     }
     
     // Debug - Not persisted: Not shown in exported logs

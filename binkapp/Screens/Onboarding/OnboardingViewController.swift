@@ -302,11 +302,13 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
         guard let authCodeData = appleIDCredential.authorizationCode else { return }
         let authCodeString = String(decoding: authCodeData, as: UTF8.self)
-        signInWithApple(authCode: authCodeString)
+        signInWithApple(authCode: authCodeString + "sean")
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("")
+        if #available(iOS 14.0, *) {
+            BinkLogger.error(.appleSignIn, value: error.localizedDescription, category: .onboardingViewController)
+        }
     }
     
     // TODO: // Move to user service in future ticket. All login type requests should reuse the same code where possible

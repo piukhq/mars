@@ -171,7 +171,7 @@ extension WalletLoyaltyCardCollectionViewCell {
         case .barcode:
             processGradient(.barcodeSwipeGradientLeft, .barcodeSwipeGradientRight)
         case .unset:
-            print()
+            break
         }
     }
     
