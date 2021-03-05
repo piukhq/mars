@@ -128,11 +128,18 @@ extension WalletServiceProtocol {
     
     func patchGhostCard(withRequestModel model: MembershipCardPostModel, existingMembershipCard: CD_MembershipCard, completion: @escaping ServiceCompletionResultHandler<MembershipCardModel, WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .membershipCard(cardId: existingMembershipCard.id), method: .patch, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(request, body: model, expecting: MembershipCardModel.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(request, body: model, expecting: MembershipCardModel.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.ghostCardAdded, value: existingMembershipCard.id, category: .walletService)
+                }
                 completion(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    let logData = rawResponse?.urlResponse?.statusCode.description
+                    BinkLogger.error(.addGhostCardFailure, value: logData, category: .walletService)
+                }
                 completion(.failure(.failedToAddGhostCard))
             }
         }
