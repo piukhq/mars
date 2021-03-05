@@ -60,7 +60,9 @@ public class Database {
             
             DispatchQueue.main.async {
                 // Needs to be dispatched to main otherwise we get cross thread errors
-                print("Database initialised at: \(storePath)")
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(.databaseInitialised, value: storePath.absoluteString, category: .database)
+                }
             }
         }
         
@@ -211,7 +213,9 @@ public extension CoreDataMappable {
         }
 
         guard let mappableObject = object else {
-            print("Could not map object: \(String(describing: self))")
+            if #available(iOS 14.0, *) {
+                BinkLogger.error(.coreDataObjectMappingFailure, value: String(describing: self), category: .database)
+            }
             fatalError("This is an impossible state, bail")
         }
 

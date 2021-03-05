@@ -26,6 +26,7 @@ enum BinkLogger {
         case loyaltyCardFullDetailsRepository
         case loyaltyWalletRepository
         case pllScreenRepository
+        case database
     }
     
     enum Event: String {
@@ -37,6 +38,7 @@ enum BinkLogger {
         case loyaltyCardDeleted = "Loyalty card deleted"
         case pllLoyaltyCardLinked = "PLL loyalty card linked"
         case pllLoyaltyCardUnlinked = "PLL loyalty card unlinked"
+        case databaseInitialised = "Database initialised at"
     }
     
     enum Error: String {
@@ -48,6 +50,7 @@ enum BinkLogger {
         case deleteLoyaltyCardFailure = "Delete loyalty card failure"
         case pllLoyaltyCardLinkingFailure = "PLL loyalty card linking failure"
         case pllLoyaltyCardUnlinkingFailure = "PLL loyalty card unlinking failure"
+        case coreDataObjectMappingFailure = "Could not map object"
     }
     
     // Debug - Not persisted: Not shown in exported logs
