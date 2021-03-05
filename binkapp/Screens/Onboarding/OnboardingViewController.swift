@@ -302,7 +302,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
         guard let authCodeData = appleIDCredential.authorizationCode else { return }
         let authCodeString = String(decoding: authCodeData, as: UTF8.self)
-        signInWithApple(authCode: authCodeString + "sean")
+        signInWithApple(authCode: authCodeString)
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {

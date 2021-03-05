@@ -29,6 +29,9 @@ enum BinkLogger {
         case database
         case barcodeScannerViewController
         case onboardingViewController
+        case preferencesViewModel
+        case settingsViewController
+        case secureUtility
     }
     
     enum Event: String {
@@ -55,6 +58,9 @@ enum BinkLogger {
         case coreDataObjectMappingFailure = "Could not map object"
         case lockDeviceForAVCaptureConfig = "Could not aquire device lock for AV capture configuration"
         case appleSignIn = "Apple sign in auth failure"
+        case updatePreferences = "Preferences update failure"
+        case unsupportedViewController = "Unsupported view controller for presentation"
+        case stringEncryption = "Sensitive field string encryption failure"
     }
     
     // Debug - Not persisted: Not shown in exported logs
