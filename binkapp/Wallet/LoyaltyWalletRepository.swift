@@ -20,8 +20,7 @@ struct LoyaltyWalletRepository: WalletServiceProtocol {
             guard success else {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseFail(card: trackableCard, responseData: responseData))
                 if #available(iOS 14.0, *) {
-                    BinkLogger.errorPrivate(.deleteLoyaltyCardFailure, value: membershipCard.id, category: .loyaltyWalletRepository)
-                    BinkLogger.error(.deleteLoyaltyCardFailure, value: responseData?.urlResponse?.statusCode.description, category: .loyaltyWalletRepository)
+                    BinkLogger.errorPrivate(.deleteLoyaltyCardFailure, value: "\(responseData?.urlResponse?.statusCode.description ?? "") - \(membershipCard.id ?? "")", category: .loyaltyWalletRepository)
                 }
                 return
             }
