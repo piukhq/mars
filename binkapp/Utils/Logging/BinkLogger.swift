@@ -33,6 +33,7 @@ enum BinkLogger {
         case settingsViewController
         case secureUtility
         case userManager
+        case userServiceProtocol
     }
     
     enum Event: String {
@@ -50,6 +51,7 @@ enum BinkLogger {
         case getPaymentCards = "Got payment cards"
         case getPaymentCard = "Got payment card"
         case getMembershipCards = "Got membership cards"
+        case getUserProfile = "Got user profile"
     }
     
     enum Error: String {
@@ -74,6 +76,7 @@ enum BinkLogger {
         case getPaymentCards = "Problem getting payment cards"
         case getPaymentCard = "Problem getting payment card"
         case getMembershipCards = "Problem getting membership cards"
+        case getUserProfile = "Failed to get user profile"
     }
     
     // Debug - Not persisted: Not shown in exported logs
