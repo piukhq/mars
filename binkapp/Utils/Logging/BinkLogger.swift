@@ -32,6 +32,7 @@ enum BinkLogger {
         case preferencesViewModel
         case settingsViewController
         case secureUtility
+        case userManager
     }
     
     enum Event: String {
@@ -40,10 +41,14 @@ enum BinkLogger {
         case spreedlyTokenResponseSuccess = "Spreedly token success"
         case loyaltyCardAdded = "Loyalty card added"
         case ghostCardAdded = "Ghost card added"
+        case ghostCardUpdated = "Ghost card updated"
         case loyaltyCardDeleted = "Loyalty card deleted"
         case pllLoyaltyCardLinked = "PLL loyalty card linked"
         case pllLoyaltyCardUnlinked = "PLL loyalty card unlinked"
         case databaseInitialised = "Database initialised at"
+        case getMembershipPlans = "Got membership plans"
+        case getPaymentCards = "Got payment cards"
+        case getMembershipCards = "Got membership cards"
     }
     
     enum Error: String {
@@ -52,6 +57,7 @@ enum BinkLogger {
         case spreedlyTokenResponseFailure = "Spreedly response failure"
         case addLoyaltyCardFailure = "Add loyalty card failure"
         case addGhostCardFailure = "Add ghost card failure"
+        case updateGhostCardFailure = "Update ghost card failure"
         case deleteLoyaltyCardFailure = "Delete loyalty card failure"
         case pllLoyaltyCardLinkingFailure = "PLL loyalty card linking failure"
         case pllLoyaltyCardUnlinkingFailure = "PLL loyalty card unlinking failure"
@@ -61,6 +67,11 @@ enum BinkLogger {
         case updatePreferences = "Preferences update failure"
         case unsupportedViewController = "Unsupported view controller for presentation"
         case stringEncryption = "Sensitive field string encryption failure"
+        case getKeychainValueFromKey = "Problem getting keychain value from key"
+        case setNewUser = "Problem setting new user"
+        case getMembershipPlans = "Problem getting membership plans"
+        case getPaymentCards = "Problem getting payment cards"
+        case getMembershipCards = "Problem getting membership cards"
     }
     
     // Debug - Not persisted: Not shown in exported logs

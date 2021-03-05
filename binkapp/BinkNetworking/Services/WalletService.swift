@@ -68,11 +68,17 @@ protocol WalletServiceProtocol {}
 extension WalletServiceProtocol {
     func getMembershipPlans(isUserDriven: Bool, completion: @escaping ServiceCompletionResultHandler<[MembershipPlanModel], WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .membershipPlans, method: .get, headers: nil, isUserDriven: isUserDriven)
-        Current.apiClient.performRequest(request, expecting: [MembershipPlanModel].self) { (result, _) in
+        Current.apiClient.performRequest(request, expecting: [MembershipPlanModel].self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(.getMembershipPlans, value: "\(response.count) plans aquired", category: .walletService)
+                }
                 completion(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.getMembershipPlans, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                }
                 completion(.failure(.failedToGetMembershipPlans))
             }
         }
@@ -80,11 +86,17 @@ extension WalletServiceProtocol {
 
     func getMembershipCards(isUserDriven: Bool, completion: @escaping ServiceCompletionResultHandler<[MembershipCardModel], WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .membershipCards, method: .get, headers: nil, isUserDriven: isUserDriven)
-        Current.apiClient.performRequest(request, expecting: [MembershipCardModel].self) { (result, _) in
+        Current.apiClient.performRequest(request, expecting: [MembershipCardModel].self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(.getMembershipCards, value: "\(response.count) cards aquired", category: .walletService)
+                }
                 completion(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.getMembershipCards, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                }
                 completion(.failure(.failedToGetMembershipCards))
             }
         }
@@ -116,11 +128,17 @@ extension WalletServiceProtocol {
     
     func addGhostCard(withRequestModel model: MembershipCardPostModel, completion: @escaping ServiceCompletionResultHandler<MembershipCardModel, WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .membershipCards, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(request, body: model, expecting: MembershipCardModel.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(request, body: model, expecting: MembershipCardModel.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.ghostCardAdded, value: model.uuid, category: .walletService)
+                }
                 completion(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.addGhostCardFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                }
                 completion(.failure(.failedToAddGhostCard))
             }
         }
@@ -132,13 +150,12 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(.ghostCardAdded, value: existingMembershipCard.id, category: .walletService)
+                    BinkLogger.infoPrivateHash(.ghostCardUpdated, value: existingMembershipCard.id, category: .walletService)
                 }
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    let logData = rawResponse?.urlResponse?.statusCode.description
-                    BinkLogger.error(.addGhostCardFailure, value: logData, category: .walletService)
+                    BinkLogger.error(.updateGhostCardFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
                 }
                 completion(.failure(.failedToAddGhostCard))
             }
@@ -158,11 +175,17 @@ extension WalletServiceProtocol {
 
     func getPaymentCards(isUserDriven: Bool, completion: @escaping ServiceCompletionResultHandler<[PaymentCardModel], WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .paymentCards, method: .get, headers: nil, isUserDriven: isUserDriven)
-        Current.apiClient.performRequest(request, expecting: [PaymentCardModel].self) { (result, _) in
+        Current.apiClient.performRequest(request, expecting: [PaymentCardModel].self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(.getPaymentCards, value: "\(response.count) cards aquired", category: .walletService)
+                }
                 completion(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.getPaymentCards, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                }
                 completion(.failure(.failedToGetPaymentCards))
             }
         }

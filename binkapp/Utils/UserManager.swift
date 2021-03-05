@@ -69,8 +69,10 @@ class UserManager {
         
         do {
             try token = keychain.getString(key)
-        } catch let error {
-            print(error)
+        } catch {
+            if #available(iOS 14.0, *) {
+                BinkLogger.error(.getKeychainValueFromKey, value: error.localizedDescription, category: .userManager)
+            }
         }
         
         return token
@@ -82,8 +84,10 @@ class UserManager {
             if let loginRegisterResponse = response as? LoginRegisterResponse {
                 try setEmail(with: loginRegisterResponse)
             }
-        } catch let error {
-            print(error)
+        } catch {
+            if #available(iOS 14.0, *) {
+                BinkLogger.error(.setNewUser, value: error.localizedDescription, category: .userManager)
+            }
         }
     }
     
