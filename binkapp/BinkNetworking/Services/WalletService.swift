@@ -225,6 +225,10 @@ extension WalletServiceProtocol {
             case .success(let response):
                 completion(.success(response))
             case .failure(let networkError):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.errorPrivate(shouldLink ? .pllLoyaltyCardLinkingFailure : .pllLoyaltyCardUnlinkingFailure, value: "- \(response?.urlResponse?.statusCode ?? 0) - \(membershipCard.id ?? "")", category: .walletService)
+                }
+                
                 if case .userFacingError = networkError {
                     completion(.failure(.userFacingNetworkingError(networkError)))
                 } else {

@@ -64,6 +64,9 @@ private extension PLLScreenRepository {
             switch result {
             case .success(let response):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: response))
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.pllLoyaltyCardLinked, value: membershipCard.id, category: .pllScreenRepository)
+                }
                 completion(response.id, nil)
             case .failure(let walletError):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: nil))
@@ -77,6 +80,9 @@ private extension PLLScreenRepository {
             switch result {
             case .success:
                 BinkAnalytics.track(PLLAnalyticsEvent.pllDelete(loyaltyCard: membershipCard, paymentCard: paymentCard))
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.pllLoyaltyCardUnlinked, value: membershipCard.id, category: .pllScreenRepository)
+                }
                 Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in
                     if let membershipCardToRemove = context.fetchWithApiID(CD_MembershipCard.self, id: membershipCard.id) {
                         safePaymentCard?.removeLinkedMembershipCardsObject(membershipCardToRemove)

@@ -24,6 +24,7 @@ enum BinkLogger {
         case loyaltyCardFullDetailsViewModel
         case loyaltyCardFullDetailsRepository
         case loyaltyWalletRepository
+        case pllScreenRepository
     }
     
     enum Event: String {
@@ -33,6 +34,8 @@ enum BinkLogger {
         case loyaltyCardAdded = "Loyalty card added"
         case ghostCardAdded = "Ghost card added"
         case loyaltyCardDeleted = "Loyalty card deleted"
+        case pllLoyaltyCardLinked = "PLL loyalty card linked"
+        case pllLoyaltyCardUnlinked = "PLL loyalty card unlinked"
     }
     
     enum Error: String {
@@ -42,7 +45,8 @@ enum BinkLogger {
         case addLoyaltyCardFailure = "Add loyalty card failure"
         case addGhostCardFailure = "Add ghost card failure"
         case deleteLoyaltyCardFailure = "Delete loyalty card failure"
-
+        case pllLoyaltyCardLinkingFailure = "PLL loyalty card linking failure"
+        case pllLoyaltyCardUnlinkingFailure = "PLL loyalty card unlinking failure"
     }
     
     // Debug - Not persisted: Not shown in exported logs
