@@ -20,6 +20,10 @@ enum BinkLogger {
         case paymentCardDetailViewModel
         case addAuthRepository
         case walletService
+        case loyaltyWalletViewModel
+        case loyaltyCardFullDetailsViewModel
+        case loyaltyCardFullDetailsRepository
+        case loyaltyWalletRepository
     }
     
     enum Event: String {
@@ -28,6 +32,7 @@ enum BinkLogger {
         case spreedlyTokenResponseSuccess = "Spreedly token success"
         case loyaltyCardAdded = "Loyalty card added"
         case ghostCardAdded = "Ghost card added"
+        case loyaltyCardDeleted = "Loyalty card deleted"
     }
     
     enum Error: String {
@@ -36,6 +41,8 @@ enum BinkLogger {
         case spreedlyTokenResponseFailure = "Spreedly response failure"
         case addLoyaltyCardFailure = "Add loyalty card failure"
         case addGhostCardFailure = "Add ghost card failure"
+        case deleteLoyaltyCardFailure = "Delete loyalty card failure"
+
     }
     
     // Debug - Not persisted: Not shown in exported logs
