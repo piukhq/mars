@@ -193,11 +193,17 @@ extension WalletServiceProtocol {
 
     func getPaymentCard(withId id: String, completion: @escaping ServiceCompletionResultHandler<PaymentCardModel, WalletServiceError>) {
         let request = BinkNetworkRequest(endpoint: .paymentCard(cardId: id), method: .get, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, _) in
+        Current.apiClient.performRequest(request, expecting: PaymentCardModel.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(.getPaymentCard, value: "\(response.id)", category: .walletService)
+                }
                 completion(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.getPaymentCard, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                }
                 completion(.failure(.failedToGetPaymentCards))
             }
         }

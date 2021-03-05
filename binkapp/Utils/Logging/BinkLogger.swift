@@ -48,6 +48,7 @@ enum BinkLogger {
         case databaseInitialised = "Database initialised at"
         case getMembershipPlans = "Got membership plans"
         case getPaymentCards = "Got payment cards"
+        case getPaymentCard = "Got payment card"
         case getMembershipCards = "Got membership cards"
     }
     
@@ -71,6 +72,7 @@ enum BinkLogger {
         case setNewUser = "Problem setting new user"
         case getMembershipPlans = "Problem getting membership plans"
         case getPaymentCards = "Problem getting payment cards"
+        case getPaymentCard = "Problem getting payment card"
         case getMembershipCards = "Problem getting membership cards"
     }
     
