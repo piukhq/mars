@@ -15,6 +15,7 @@ enum BinkLogger {
 
     enum Category: String {
         case addPaymentCardViewModel
+        case addPaymentCardViewController
         case paymentWalletRepository
         case paymentWalletViewModel
         case paymentCardDetailViewModel
@@ -26,6 +27,7 @@ enum BinkLogger {
         case loyaltyCardFullDetailsRepository
         case loyaltyWalletRepository
         case pllScreenRepository
+        case pllScreenViewController
         case database
         case barcodeScannerViewController
         case onboardingViewController
@@ -38,6 +40,7 @@ enum BinkLogger {
         case remoteConfigUtil
         case inAppReviewable
         case pointsScrapingManager
+        case mainTabBarViewController
     }
     
     enum Event: String {
@@ -72,6 +75,8 @@ enum BinkLogger {
         case fetchedRemoteConfig = "Fetched remote config data"
         case requestedInAppReview = "Requested in-app review"
         case pointsScrapingSuccess = "Points scraping success"
+        case barcodeScanned = "Barcode scanned"
+        case paymentCardScanned = "Payment card scanned"
     }
     
     enum Error: String {
@@ -109,13 +114,14 @@ enum BinkLogger {
         case renewTokenFailure = "Failed to renew token"
         case remoteConfigFetchFailure = "Failed to get remote config data"
         case pointsScrapingFailure = "Failed points scraping"
+        case barcodeScanningFailure = "Incorrect barcode scanned"
     }
     
     // Debug - Not persisted: Not shown in exported logs
     
     static func debug(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.debug("\(event.rawValue, privacy: .public)\(value == nil ? "" : ":") \(value ?? "", privacy: .public)")
+        logger.debug("\(event.rawValue, privacy: .public)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .public)")
     }
     
     
@@ -123,17 +129,17 @@ enum BinkLogger {
     
     static func info(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.info("\(event.rawValue)\(value == nil ? "" : ":") \(value ?? "", privacy: .public)")
+        logger.info("\(event.rawValue)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .public)")
     }
 
     static func infoPrivate(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.info("\(event.rawValue)\(value == nil ? "" : ":") \(value ?? "", privacy: .private)")
+        logger.info("\(event.rawValue)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .private)")
     }
 
     static func infoPrivateHash(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.info("\(event.rawValue)\(value == nil ? "" : ":") \(value ?? "", privacy: .private(mask: .hash))")
+        logger.info("\(event.rawValue)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .private(mask: .hash))")
     }
 
 
@@ -141,7 +147,7 @@ enum BinkLogger {
 
     static func log(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.log("\(event.rawValue, privacy: .public)\(value == nil ? "" : ":") \(value ?? "", privacy: .public)")
+        logger.log("\(event.rawValue, privacy: .public)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .public)")
     }
 
     static func logPrivate(_ event: Event, value: String, category: Category) {
@@ -159,7 +165,7 @@ enum BinkLogger {
 
     static func error(_ message: Error, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.error("\(message.rawValue, privacy: .public)\(value == nil ? "" : ":") \(value ?? "", privacy: .public)")
+        logger.error("\(message.rawValue, privacy: .public)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .public)")
     }
     
     static func errorPrivate(_ message: Error, value: String, category: Category) {

@@ -363,6 +363,9 @@ extension PLLScreenViewController: ScanDelegate {
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        if #available(iOS 14.0, *) {
+            BinkLogger.infoPrivateHash(.paymentCardScanned, value: creditCard.number, category: .pllScreenViewController)
+        }
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = creditCard.expiryMonthInteger()
         let year = creditCard.expiryYearInteger()

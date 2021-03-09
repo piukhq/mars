@@ -302,6 +302,10 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                     return
                 }
                 
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.barcodeScanned, value: "ID: \(plan.id ?? "") - \(stringValue)", category: .barcodeScannerViewController)
+                }
+                
                 // We recognised the plan, but is this the plan we injected if any?
                 if let planFromForm = self.viewModel.plan {
                     // We injected a plan from a form
@@ -309,6 +313,9 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                         if self.canPresentScanError {
                             self.canPresentScanError = false
                             DispatchQueue.main.async {
+                                if #available(iOS 14.0, *) {
+                                    BinkLogger.error(.barcodeScanningFailure, value: planFromForm.account?.companyName, category: .barcodeScannerViewController)
+                                }
                                 HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
                                 let alert = BinkAlertController(title: "Error", message: "The card you scanned was not correct, please scan your \(planFromForm.account?.companyName ?? "") card", preferredStyle: .alert)
                                 let action = UIAlertAction(title: "OK", style: .cancel) { _ in
