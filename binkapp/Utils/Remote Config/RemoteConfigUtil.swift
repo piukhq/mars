@@ -65,16 +65,22 @@ class RemoteConfigUtil {
     }
     
     func fetch(completion: (() -> Void)? = nil) {
-        remoteConfig.fetch { [weak self] (status, _) in
+        remoteConfig.fetch { [weak self] (status, error) in
             guard let self = self else { return }
             if status == .success {
                 self.remoteConfig.activate { (_, _) in
                     DispatchQueue.main.async {
                         self.handleRemoteConfigFetch()
                     }
+                    if #available(iOS 14.0, *) {
+                        BinkLogger.info(.fetchedRemoteConfig, value: nil, category: .remoteConfigUtil)
+                    }
                     completion?()
                 }
             } else {
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.remoteConfigFetchFailure, value: error?.localizedDescription, category: .remoteConfigUtil)
+                }
                 completion?()
             }
         }
