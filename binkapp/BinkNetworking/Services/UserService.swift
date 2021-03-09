@@ -105,11 +105,17 @@ extension UserServiceProtocol {
     
     func logout(completion: ServiceCompletionResultHandler<LogoutResponse, UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .logout, method: .post, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequest(request, expecting: LogoutResponse.self) { (result, _) in
+        Current.apiClient.performRequest(request, expecting: LogoutResponse.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(.logout, value: nil, category: .userServiceProtocol)
+                }
                 completion?(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.userLogoutFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                }
                 completion?(.failure(.failedToLogout))
             }
         }
@@ -117,10 +123,16 @@ extension UserServiceProtocol {
     
     func submitForgotPasswordRequest(forEmailAddress email: String, completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .forgotPassword, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithNoResponse(request, body: ["email": email]) { (success, _, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: ["email": email]) { (success, _, rawResponse) in
             guard success else {
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.forgotPasswordRequestFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                }
                 completion?(false, .failedToSubmitForgotPasswordRequest)
                 return
+            }
+            if #available(iOS 14.0, *) {
+                BinkLogger.infoPrivateHash(.submittedForgotPasswordRequest, value: email, category: .userServiceProtocol)
             }
             completion?(true, nil)
         }
@@ -128,11 +140,17 @@ extension UserServiceProtocol {
     
     func registerUser(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .register, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.registeredUser, value: response.uid, category: .userServiceProtocol)
+                }
                 completion?(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.userRegistrationFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                }
                 completion?(.failure(.failedToRegisterUser))
             }
         }
@@ -140,11 +158,17 @@ extension UserServiceProtocol {
     
     func login(request: LoginRegisterRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .login, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.userLoggedIn, value: response.uid, category: .userServiceProtocol)
+                }
                 completion?(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.userLoginFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                }
                 completion?(.failure(.failedToLogin))
             }
         }

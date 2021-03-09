@@ -53,6 +53,10 @@ enum BinkLogger {
         case getMembershipCards = "Got membership cards"
         case getUserProfile = "Got user profile"
         case updatedUserProfile = "Updated user profile"
+        case logout = "User logged out successfully"
+        case submittedForgotPasswordRequest = "Submitted forgot password request"
+        case registeredUser = "Registered new user"
+        case userLoggedIn = "User logged in"
     }
     
     enum Error: String {
@@ -79,13 +83,17 @@ enum BinkLogger {
         case getMembershipCards = "Problem getting membership cards"
         case getUserProfile = "Failed to get user profile"
         case updateUserProfileFailure = "Failed to update user profile"
+        case userLogoutFailure = "Failed to log user out"
+        case forgotPasswordRequestFailure = "Forgot password request submission failure"
+        case userRegistrationFailure = "Failed to register user"
+        case userLoginFailure = "Failed to login"
     }
     
     // Debug - Not persisted: Not shown in exported logs
     
     static func debug(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.debug("\(event.rawValue, privacy: .public): \(value ?? "", privacy: .public)")
+        logger.debug("\(event.rawValue, privacy: .public)\(value == nil ? "" : ":") \(value ?? "", privacy: .public)")
     }
     
     
@@ -93,17 +101,17 @@ enum BinkLogger {
     
     static func info(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.info("\(event.rawValue): \(value ?? "", privacy: .public)")
+        logger.info("\(event.rawValue)\(value == nil ? "" : ":") \(value ?? "", privacy: .public)")
     }
 
     static func infoPrivate(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.info("\(event.rawValue): \(value ?? "", privacy: .private)")
+        logger.info("\(event.rawValue)\(value == nil ? "" : ":") \(value ?? "", privacy: .private)")
     }
 
     static func infoPrivateHash(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.info("\(event.rawValue): \(value ?? "", privacy: .private(mask: .hash))")
+        logger.info("\(event.rawValue)\(value == nil ? "" : ":") \(value ?? "", privacy: .private(mask: .hash))")
     }
 
 
@@ -111,12 +119,12 @@ enum BinkLogger {
 
     static func log(_ event: Event, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.log("\(event.rawValue, privacy: .public): \(value ?? "", privacy: .public)")
+        logger.log("\(event.rawValue, privacy: .public)\(value == nil ? "" : ":") \(value ?? "", privacy: .public)")
     }
 
     static func logPrivate(_ event: Event, value: String, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.log("\(event.rawValue): \(value, privacy: .private)")
+        logger.log("\(event.rawValue) \(value, privacy: .private)")
     }
 
     static func logPrivateHash(_ event: Event, value: String, category: Category) {
@@ -129,7 +137,7 @@ enum BinkLogger {
 
     static func error(_ message: Error, value: String?, category: Category) {
         let logger = Logger(subsystem: subsystem, category: category.rawValue)
-        logger.error("\(message.rawValue, privacy: .public): \(value ?? "", privacy: .public)")
+        logger.error("\(message.rawValue, privacy: .public)\(value == nil ? "" : ":") \(value ?? "", privacy: .public)")
     }
     
     static func errorPrivate(_ message: Error, value: String, category: Category) {
