@@ -22,6 +22,11 @@ extension InAppReviewable {
         guard canRequestReview else { return }
         SKStoreReviewController.requestReview()
         if let event = InAppReviewAnalyticsEvent.eventForInProgressJourney {
+            if #available(iOS 14.0, *) {
+                let data = event.data as? [String: String]
+                let trigger = data?["review_trigger"]
+                BinkLogger.info(.requestedInAppReview, value: trigger, category: .inAppReviewable)
+            }
             BinkAnalytics.track(event)
         }
         setUpdatedRequestTime()

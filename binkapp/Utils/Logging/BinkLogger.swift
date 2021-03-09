@@ -36,6 +36,7 @@ enum BinkLogger {
         case userServiceProtocol
         case appDelegate
         case remoteConfigUtil
+        case inAppReviewable
     }
     
     enum Event: String {
@@ -68,6 +69,7 @@ enum BinkLogger {
         case appEnteredForeground = "App entered foreground"
         case appEnteredBackground = "App entered background"
         case fetchedRemoteConfig = "Fetched remote config data"
+        case requestedInAppReview = "Requested in-app review"
     }
     
     enum Error: String {
