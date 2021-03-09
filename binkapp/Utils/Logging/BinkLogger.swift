@@ -37,6 +37,7 @@ enum BinkLogger {
         case appDelegate
         case remoteConfigUtil
         case inAppReviewable
+        case pointsScrapingManager
     }
     
     enum Event: String {
@@ -70,6 +71,7 @@ enum BinkLogger {
         case appEnteredBackground = "App entered background"
         case fetchedRemoteConfig = "Fetched remote config data"
         case requestedInAppReview = "Requested in-app review"
+        case pointsScrapingSuccess = "Points scraping success"
     }
     
     enum Error: String {
@@ -106,6 +108,7 @@ enum BinkLogger {
         case setPreferencesFailure = "Failed to set preferences"
         case renewTokenFailure = "Failed to renew token"
         case remoteConfigFetchFailure = "Failed to get remote config data"
+        case pointsScrapingFailure = "Failed points scraping"
     }
     
     // Debug - Not persisted: Not shown in exported logs

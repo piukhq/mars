@@ -328,6 +328,9 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
+        if #available(iOS 14.0, *) {
+            BinkLogger.infoPrivateHash(.pointsScrapingSuccess, value: card.id, category: .pointsScrapingManager)
+        }
         transitionToAuthorized(pointsValue: value, membershipCard: card, agent: agent)
     }
     
@@ -337,6 +340,9 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: card, error: error))
         default:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: card, error: error))
+        }
+        if #available(iOS 14.0, *) {
+            BinkLogger.error(.pointsScrapingFailure, value: error.message, category: .pointsScrapingManager)
         }
         transitionToFailed(membershipCard: card)
     }
