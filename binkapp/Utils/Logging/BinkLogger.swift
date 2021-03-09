@@ -52,6 +52,7 @@ enum BinkLogger {
         case getPaymentCard = "Got payment card"
         case getMembershipCards = "Got membership cards"
         case getUserProfile = "Got user profile"
+        case updatedUserProfile = "Updated user profile"
     }
     
     enum Error: String {
@@ -77,6 +78,7 @@ enum BinkLogger {
         case getPaymentCard = "Problem getting payment card"
         case getMembershipCards = "Problem getting membership cards"
         case getUserProfile = "Failed to get user profile"
+        case updateUserProfileFailure = "Failed to update user profile"
     }
     
     // Debug - Not persisted: Not shown in exported logs

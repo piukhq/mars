@@ -87,11 +87,17 @@ extension UserServiceProtocol {
     
     func updateUserProfile(request: UserProfileUpdateRequest, completion: ServiceCompletionResultHandler<UserProfileResponse, UserServiceError>? = nil) {
         let networkRequest = BinkNetworkRequest(endpoint: .me, method: .put, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithBody(networkRequest, body: request, expecting: UserProfileResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networkRequest, body: request, expecting: UserProfileResponse.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.updatedUserProfile, value: response.uid, category: .userServiceProtocol)
+                }
                 completion?(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.updateUserProfileFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                }
                 completion?(.failure(.failedToUpdateUserProfile))
             }
         }
