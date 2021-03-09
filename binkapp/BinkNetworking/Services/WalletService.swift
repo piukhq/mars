@@ -72,12 +72,12 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(.getMembershipPlans, value: "\(response.count) plans aquired", category: .walletService)
+                    BinkLogger.info(.gotMembershipPlans, value: "\(response.count) plans aquired", category: .walletService)
                 }
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.getMembershipPlans, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                    BinkLogger.error(.gotMembershipPlans, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
                 }
                 completion(.failure(.failedToGetMembershipPlans))
             }
@@ -90,12 +90,12 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(.getMembershipCards, value: "\(response.count) cards aquired", category: .walletService)
+                    BinkLogger.info(.gotMembershipCards, value: "\(response.count) cards aquired", category: .walletService)
                 }
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.getMembershipCards, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                    BinkLogger.error(.gotMembershipCards, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
                 }
                 completion(.failure(.failedToGetMembershipCards))
             }
@@ -179,12 +179,12 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(.getPaymentCards, value: "\(response.count) cards aquired", category: .walletService)
+                    BinkLogger.info(.gotPaymentCards, value: "\(response.count) cards aquired", category: .walletService)
                 }
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.getPaymentCards, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                    BinkLogger.error(.gotPaymentCards, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
                 }
                 completion(.failure(.failedToGetPaymentCards))
             }
@@ -197,12 +197,12 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(.getPaymentCard, value: "\(response.id)", category: .walletService)
+                    BinkLogger.info(.gotPaymentCard, value: "\(response.id)", category: .walletService)
                 }
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.getPaymentCard, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                    BinkLogger.error(.gotPaymentCard, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
                 }
                 completion(.failure(.failedToGetPaymentCards))
             }

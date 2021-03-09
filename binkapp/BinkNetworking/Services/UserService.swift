@@ -73,12 +73,12 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(.getUserProfile, value: response.uid, category: .userServiceProtocol)
+                    BinkLogger.infoPrivateHash(.gotUserProfile, value: response.uid, category: .userServiceProtocol)
                 }
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.getUserProfile, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(.gotUserProfile, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
                 }
                 completion?(.failure(.failedToGetUserProfile))
             }
