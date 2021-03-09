@@ -176,11 +176,17 @@ extension UserServiceProtocol {
     
     func authWithFacebook(request: FacebookRequest, completion: ServiceCompletionResultHandler<LoginRegisterResponse, UserServiceError>? = nil) {
         let networtRequest = BinkNetworkRequest(endpoint: .facebook, method: .post, headers: nil, isUserDriven: true)
-        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, _) in
+        Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.authFacebookUser, value: response.uid, category: .userServiceProtocol)
+                }
                 completion?(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.facebookAuthFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                }
                 completion?(.failure(.failedToAuthWithFacebook))
             }
         }
@@ -191,6 +197,9 @@ extension UserServiceProtocol {
         Current.apiClient.performRequestWithBody(networtRequest, body: request, expecting: LoginRegisterResponse.self) { (result, _) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.signedInWithApple, value: response.uid, category: .userServiceProtocol)
+                }
                 completion?(.success(response))
             case .failure:
                 completion?(.failure(.failedToAuthWithApple))
@@ -200,10 +209,16 @@ extension UserServiceProtocol {
     
     func createService(params: [String: Any], completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .service, method: .post, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _, rawResponse) in
             guard success else {
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.createServiceFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                }
                 completion?(false, .failedToCreateService)
                 return
+            }
+            if #available(iOS 14.0, *) {
+                BinkLogger.info(.createdService, value: nil, category: .userServiceProtocol)
             }
             completion?(true, nil)
         }
@@ -211,11 +226,17 @@ extension UserServiceProtocol {
     
     func getPreferences(completion: ServiceCompletionResultHandler<[PreferencesModel], UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .preferences, method: .get, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequest(request, expecting: [PreferencesModel].self) { (result, _) in
+        Current.apiClient.performRequest(request, expecting: [PreferencesModel].self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.info(.gotPreferences, value: nil, category: .userServiceProtocol)
+                }
                 completion?(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.getPreferencesFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                }
                 completion?(.failure(.failedToGetPreferences))
             }
         }
@@ -223,10 +244,16 @@ extension UserServiceProtocol {
     
     func setPreferences(params: [String: String], completion: ServiceCompletionSuccessHandler<UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .preferences, method: .put, headers: nil, isUserDriven: false)
-        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _, _) in
+        Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _, rawResponse) in
             guard success else {
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.setPreferencesFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                }
                 completion?(false, .failedToSetPreferences)
                 return
+            }
+            if #available(iOS 14.0, *) {
+                BinkLogger.info(.setPreferences, value: nil, category: .userServiceProtocol)
             }
             completion?(true, nil)
         }
@@ -234,11 +261,17 @@ extension UserServiceProtocol {
     
     func renewToken(_ currentToken: String, completion: ServiceCompletionResultHandler<RenewTokenResponse, UserServiceError>? = nil) {
         let request = BinkNetworkRequest(endpoint: .renew, method: .post, headers: [.authorization(currentToken), .defaultContentType, .acceptWithAPIVersion()], isUserDriven: false)
-        Current.apiClient.performRequest(request, expecting: RenewTokenResponse.self) { (result, _) in
+        Current.apiClient.performRequest(request, expecting: RenewTokenResponse.self) { (result, rawResponse) in
             switch result {
             case .success(let response):
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(.renewedToken, value: response.apiKey, category: .userServiceProtocol)
+                }
                 completion?(.success(response))
             case .failure:
+                if #available(iOS 14.0, *) {
+                    BinkLogger.error(.renewTokenFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                }
                 completion?(.failure(.failedToRenewToken))
             }
         }

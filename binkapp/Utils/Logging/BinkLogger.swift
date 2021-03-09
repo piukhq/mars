@@ -57,6 +57,13 @@ enum BinkLogger {
         case submittedForgotPasswordRequest = "Submitted forgot password request"
         case registeredUser = "Registered new user"
         case userLoggedIn = "User logged in"
+        case authFacebookUser = "Authorised user with Facebook"
+        case signedInWithApple = "Signed in with Apple"
+        case createdService = "Created service"
+        case gotPreferences = "Got preferences"
+        case setPreferences = "Set preferences success"
+        case renewedToken = "Renewed token"
+
     }
     
     enum Error: String {
@@ -87,6 +94,11 @@ enum BinkLogger {
         case forgotPasswordRequestFailure = "Forgot password request submission failure"
         case userRegistrationFailure = "Failed to register user"
         case userLoginFailure = "Failed to login"
+        case facebookAuthFailure = "Failed to authorise user with Facebook"
+        case createServiceFailure = "Failed to create service"
+        case getPreferencesFailure = "Failed to get preferences"
+        case setPreferencesFailure = "Failed to set preferences"
+        case renewTokenFailure = "Failed to renew token"
     }
     
     // Debug - Not persisted: Not shown in exported logs
