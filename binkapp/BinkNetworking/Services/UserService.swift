@@ -73,12 +73,12 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(.gotUserProfile, value: response.uid, category: .userServiceProtocol)
+                    BinkLogger.infoPrivateHash(.fetchedUserProfile, value: response.uid, category: .userServiceProtocol)
                 }
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.gotUserProfile, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(.fetchUserProfile, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
                 }
                 completion?(.failure(.failedToGetUserProfile))
             }
@@ -230,12 +230,12 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(.gotPreferences, value: nil, category: .userServiceProtocol)
+                    BinkLogger.info(.fetchedPreferences, value: nil, category: .userServiceProtocol)
                 }
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.getPreferencesFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(.fetchPreferencesFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
                 }
                 completion?(.failure(.failedToGetPreferences))
             }
