@@ -7,3 +7,105 @@
 //
 
 import Foundation
+
+enum BinkLoggerCategory: String {
+    case paymentCards
+    case loyaltyCards
+    case app
+    case user
+    case wallet
+}
+
+protocol BinkLoggerEvent {
+    var category: BinkLoggerCategory { get }
+    var message: String { get }
+}
+
+enum PaymentCardLoggerEvent: String, BinkLoggerEvent {
+    case paymentCardAdded = "Payment card added"
+    case paymentCardDeleted = "Payment card deleted"
+    case fetchedPaymentCards = "Fetched payment cards"
+    case fetchedPaymentCard = "Fetched payment card"
+    case spreedlyTokenResponseSuccess = "Spreedly token success"
+    case pllLoyaltyCardLinked = "PLL loyalty card linked"
+    case pllLoyaltyCardUnlinked = "PLL loyalty card unlinked"
+    
+    var category: BinkLoggerCategory {
+        return .paymentCards
+    }
+    
+    var message: String {
+        return rawValue
+    }
+}
+
+enum LoyaltyCardLoggerEvent: String, BinkLoggerEvent {
+    case loyaltyCardAdded = "Loyalty card added"
+    case loyaltyCardDeleted = "Loyalty card deleted"
+
+
+    var category: BinkLoggerCategory {
+        return .loyaltyCards
+    }
+    
+    var message: String {
+        return rawValue
+    }
+}
+
+enum WalletLoggerEvent: String, BinkLoggerEvent {
+    case ghostCardAdded = "Ghost card added"
+    case ghostCardUpdated = "Ghost card updated"
+    case pointsScrapingSuccess = "Points scraping success"
+    case fetchedMembershipPlans = "Fetched membership plans"
+
+    var category: BinkLoggerCategory {
+        return .wallet
+    }
+    
+    var message: String {
+        return rawValue
+    }
+}
+
+enum AppLoggerEvent: String, BinkLoggerEvent {
+    case databaseInitialised = "Database initialised at"
+    case appEnteredForeground = "App entered foreground"
+    case appEnteredBackground = "App entered background"
+    case fetchedRemoteConfig = "Fetched remote config data"
+    case requestedInAppReview = "Requested in-app review"
+    case barcodeScanned = "Barcode scanned"
+    case paymentCardScanned = "Payment card scanned"
+
+    var category: BinkLoggerCategory {
+        return .app
+    }
+    
+    var message: String {
+        return rawValue
+    }
+}
+
+enum UserLoggerEvent: String, BinkLoggerEvent {
+    case fetchedMembershipCards = "Fetched membership cards"
+    case fetchedUserProfile = "Fetched user profile"
+    case updatedUserProfile = "Updated user profile"
+    case logout = "User logged out successfully"
+    case submittedForgotPasswordRequest = "Submitted forgot password request"
+    case registeredUser = "Registered new user"
+    case userLoggedIn = "User logged in"
+    case authFacebookUser = "Authorised user with Facebook"
+    case signedInWithApple = "Signed in with Apple"
+    case createdService = "Created service"
+    case fetchedPreferences = "Fetched preferences"
+    case setPreferences = "Set preferences success"
+    case renewedToken = "Renewed token"
+
+    var category: BinkLoggerCategory {
+        return .user
+    }
+    
+    var message: String {
+        return rawValue
+    }
+}
