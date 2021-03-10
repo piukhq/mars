@@ -300,6 +300,7 @@
 		CE539DAE25E80C1100BDA5EF /* BinkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */; };
 		CE539DBF25E943DD00BDA5EF /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DBE25E943DD00BDA5EF /* Feature.swift */; };
 		CE539DFD25F0EBAB00BDA5EF /* BinkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */; };
+		CE54AF5D25F938720061838C /* BinkLoggerEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
 		CEA9057E25C81994000F69E1 /* BinkAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9057D25C81994000F69E1 /* BinkAlertController.swift */; };
 		CEA905BE25C986E6000F69E1 /* CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BC25C986E6000F69E1 /* CD_BaseImage.swift */; };
@@ -854,6 +855,7 @@
 		CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTableViewController.swift; sourceTree = "<group>"; };
 		CE539DBE25E943DD00BDA5EF /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLogger.swift; sourceTree = "<group>"; };
+		CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkLoggerEvents.swift; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
 		CEA9057D25C81994000F69E1 /* BinkAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkAlertController.swift; sourceTree = "<group>"; };
 		CEA905B825C9859A000F69E1 /* binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel"; sourceTree = "<group>"; };
@@ -2158,6 +2160,7 @@
 			isa = PBXGroup;
 			children = (
 				CE539DFC25F0EBAB00BDA5EF /* BinkLogger.swift */,
+				CE54AF5C25F938720061838C /* BinkLoggerEvents.swift */,
 			);
 			path = Logging;
 			sourceTree = "<group>";
@@ -3273,6 +3276,7 @@
 				BDB01872232D9E7900BFFA18 /* FormCollectionViewCell.swift in Sources */,
 				EFA5F7132379A7C70027AB80 /* CD_MembershipCardImage.swift in Sources */,
 				EF51CCD7243B56150035BF02 /* LoyaltyScannerWidgetView.swift in Sources */,
+				CE54AF5D25F938720061838C /* BinkLoggerEvents.swift in Sources */,
 				3CF029EF22F45ACE009A0E61 /* AddingOptionView.swift in Sources */,
 				B7D577B823180EB600C6B145 /* LoyaltyCardFullDetailsRepository.swift in Sources */,
 				EF8BF1EF233CBCE300D2E5F3 /* CAGradientLayerExtension.swift in Sources */,

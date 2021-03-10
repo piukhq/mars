@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         if #available(iOS 14.0, *) {
-            BinkLogger.info(.appEnteredForeground, value: nil, category: .appDelegate)
+            BinkLogger.info(AppLoggerEvent.appEnteredForeground)
         }
         Current.wallet.refreshMembershipPlansIfNecessary()
         InAppReviewUtility.recordAppLaunch()
@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         if #available(iOS 14.0, *) {
-            BinkLogger.info(.appEnteredBackground, value: nil, category: .appDelegate)
+            BinkLogger.info(AppLoggerEvent.appEnteredBackground)
         }
         Current.wallet.handleAppDidEnterBackground()
     }

@@ -73,7 +73,7 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(.fetchedUserProfile, value: response.uid, category: .userServiceProtocol)
+                    BinkLogger.infoPrivateHash(UserLoggerEvent.fetchedUserProfile, value: response.uid)
                 }
                 completion?(.success(response))
             case .failure:
@@ -91,7 +91,7 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(.updatedUserProfile, value: response.uid, category: .userServiceProtocol)
+                    BinkLogger.infoPrivateHash(UserLoggerEvent.updatedUserProfile, value: response.uid)
                 }
                 completion?(.success(response))
             case .failure:
@@ -109,7 +109,7 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(.logout, value: nil, category: .userServiceProtocol)
+                    BinkLogger.info(UserLoggerEvent.logout)
                 }
                 completion?(.success(response))
             case .failure:
@@ -132,7 +132,7 @@ extension UserServiceProtocol {
                 return
             }
             if #available(iOS 14.0, *) {
-                BinkLogger.infoPrivateHash(.submittedForgotPasswordRequest, value: email, category: .userServiceProtocol)
+                BinkLogger.infoPrivateHash(UserLoggerEvent.submittedForgotPasswordRequest, value: email)
             }
             completion?(true, nil)
         }
@@ -144,7 +144,7 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(.registeredUser, value: response.uid, category: .userServiceProtocol)
+                    BinkLogger.infoPrivateHash(UserLoggerEvent.registeredUser, value: response.uid)
                 }
                 completion?(.success(response))
             case .failure:
@@ -162,7 +162,7 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(.userLoggedIn, value: response.uid, category: .userServiceProtocol)
+                    BinkLogger.infoPrivateHash(UserLoggerEvent.userLoggedIn, value: response.uid)
                 }
                 completion?(.success(response))
             case .failure:
@@ -180,7 +180,7 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(.authFacebookUser, value: response.uid, category: .userServiceProtocol)
+                    BinkLogger.infoPrivateHash(UserLoggerEvent.authFacebookUser, value: response.uid)
                 }
                 completion?(.success(response))
             case .failure:
@@ -198,7 +198,7 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(.signedInWithApple, value: response.uid, category: .userServiceProtocol)
+                    BinkLogger.infoPrivateHash(UserLoggerEvent.signedInWithApple, value: response.uid)
                 }
                 completion?(.success(response))
             case .failure:
@@ -218,7 +218,7 @@ extension UserServiceProtocol {
                 return
             }
             if #available(iOS 14.0, *) {
-                BinkLogger.info(.createdService, value: nil, category: .userServiceProtocol)
+                BinkLogger.info(UserLoggerEvent.createdService)
             }
             completion?(true, nil)
         }
@@ -230,7 +230,7 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(.fetchedPreferences, value: nil, category: .userServiceProtocol)
+                    BinkLogger.info(UserLoggerEvent.fetchedPreferences)
                 }
                 completion?(.success(response))
             case .failure:
@@ -253,7 +253,7 @@ extension UserServiceProtocol {
                 return
             }
             if #available(iOS 14.0, *) {
-                BinkLogger.info(.setPreferences, value: nil, category: .userServiceProtocol)
+                BinkLogger.info(UserLoggerEvent.setPreferences)
             }
             completion?(true, nil)
         }
@@ -265,7 +265,7 @@ extension UserServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(.renewedToken, value: response.apiKey, category: .userServiceProtocol)
+                    BinkLogger.infoPrivateHash(UserLoggerEvent.renewedToken, value: response.apiKey)
                 }
                 completion?(.success(response))
             case .failure:

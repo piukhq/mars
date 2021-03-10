@@ -94,7 +94,7 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
         if #available(iOS 14.0, *) {
-            BinkLogger.infoPrivateHash(.paymentCardScanned, value: creditCard.number, category: .addPaymentCardViewController)
+            BinkLogger.infoPrivateHash(AppLoggerEvent.paymentCardScanned, value: creditCard.number)
         }
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = creditCard.expiryMonthInteger()
