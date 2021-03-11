@@ -67,7 +67,7 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
             case .success(let response):
                 BinkAnalytics.track(PLLAnalyticsEvent.pllPatch(loyaltyCard: membershipCard, paymentCard: paymentCard, response: response))
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(PaymentCardLoggerEvent.pllLoyaltyCardLinked, value: membershipCard.id)
+                    BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.pllLoyaltyCardLinked, value: membershipCard.id)
                 }
                 Current.database.performBackgroundTask { backgroundContext in
                     let newObject = response.mapToCoreData(backgroundContext, .update, overrideID: nil)
@@ -99,7 +99,7 @@ class PaymentCardDetailRepository: WalletServiceProtocol {
             case .success:
                 BinkAnalytics.track(PLLAnalyticsEvent.pllDelete(loyaltyCard: membershipCard, paymentCard: paymentCard))
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(PaymentCardLoggerEvent.pllLoyaltyCardUnlinked, value: membershipCard.id)
+                    BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.pllLoyaltyCardUnlinked, value: membershipCard.id)
                 }
                 
                 Current.database.performBackgroundTask(with: paymentCard) { (context, safePaymentCard) in

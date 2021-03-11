@@ -23,7 +23,7 @@ enum BinkLogger {
     
     // Info - Only recent logs persisted, written to disk
     
-    static func info<E: BinkLoggerProtocol>(_ event: E, value: String? = nil, file: NSString? = #file) {
+    static func info<E: BinkLoggerProtocol>(event: E, value: String? = nil, file: NSString? = #file) {
         let logger = Logger(subsystem: subsystem, category: "\(event.category.rawValue) - \(file?.lastPathComponent ?? "")")
         logger.info("\(event.message)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .public)")
     }
@@ -33,7 +33,7 @@ enum BinkLogger {
         logger.info("\(event.message)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .private)")
     }
 
-    static func infoPrivateHash<E: BinkLoggerProtocol>(_ event: E, value: String? = nil, file: NSString? = #file) {
+    static func infoPrivateHash<E: BinkLoggerProtocol>(event: E, value: String? = nil, file: NSString? = #file) {
         let logger = Logger(subsystem: subsystem, category: "\(event.category.rawValue) - \(file?.lastPathComponent ?? "")")
         logger.info("\(event.message)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .private(mask: .hash))")
     }
@@ -64,8 +64,8 @@ enum BinkLogger {
         logger.error("\(error.message, privacy: .public)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .public)")
     }
     
-    static func errorPrivate<E: BinkLoggerProtocol>(_ error: E, value: String, file: NSString? = #file) {
+    static func errorPrivate<E: BinkLoggerProtocol>(_ error: E, value: String? = nil, file: NSString? = #file) {
         let logger = Logger(subsystem: subsystem, category: "\(error.category.rawValue) - \(file?.lastPathComponent ?? "")")
-        logger.error("\(error.message, privacy: .public): \(value, privacy: .private)")
+        logger.error("\(error.message, privacy: .public)\(value == nil ? "" : ":", privacy: .public) \(value ?? "", privacy: .private)")
     }
 }

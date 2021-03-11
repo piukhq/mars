@@ -50,7 +50,7 @@ class LoyaltyWalletViewModel: WalletViewModel {
             }
             self.repository.delete(card) {
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: card.id)
+                    BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: card.id)
                 }
                 Current.wallet.refreshLocal()
             }

@@ -79,7 +79,7 @@ class PaymentWalletRepository: WalletServiceProtocol {
             case .success(let response):
                 if #available(iOS 14.0, *) {
                     let paymentMethod = response.transaction?.paymentMethod
-                    BinkLogger.infoPrivateHash(PaymentCardLoggerEvent.spreedlyTokenResponseSuccess, value: paymentMethod?.lastFour)
+                    BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.spreedlyTokenResponseSuccess, value: paymentMethod?.lastFour)
                 }
                 onSuccess(response)
             case .failure(let error):

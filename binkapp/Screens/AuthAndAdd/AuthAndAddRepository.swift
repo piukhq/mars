@@ -25,7 +25,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
                     
                     if #available(iOS 14.0, *) {
                         let logData = formPurpose.planDocumentDisplayMatching.rawValue + " - " + newObject.id
-                        BinkLogger.infoPrivateHash(LoyaltyCardLoggerEvent.loyaltyCardAdded, value: logData)
+                        BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardAdded, value: logData)
                     }
                     
                     if Current.pointsScrapingManager.planIdIsWebScrapable(request.membershipPlan) {

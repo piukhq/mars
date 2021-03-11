@@ -94,7 +94,7 @@ class AddPaymentCardViewModel {
             Current.wallet.refreshLocal()
             
             if #available(iOS 14.0, *) {
-                BinkLogger.infoPrivateHash(PaymentCardLoggerEvent.paymentCardAdded, value: paymentCard.id)
+                BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.paymentCardAdded, value: paymentCard.id)
             }
             
             switch self.journey {

@@ -73,7 +73,7 @@ class RemoteConfigUtil {
                         self.handleRemoteConfigFetch()
                     }
                     if #available(iOS 14.0, *) {
-                        BinkLogger.info(AppLoggerEvent.fetchedRemoteConfig)
+                        BinkLogger.info(event: AppLoggerEvent.fetchedRemoteConfig)
                     }
                     completion?()
                 }

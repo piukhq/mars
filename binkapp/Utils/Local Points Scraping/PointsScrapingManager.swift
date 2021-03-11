@@ -329,7 +329,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
         if #available(iOS 14.0, *) {
-            BinkLogger.infoPrivateHash(WalletLoggerEvent.pointsScrapingSuccess, value: card.id)
+            BinkLogger.infoPrivateHash(event: WalletLoggerEvent.pointsScrapingSuccess, value: card.id)
         }
         transitionToAuthorized(pointsValue: value, membershipCard: card, agent: agent)
     }

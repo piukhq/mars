@@ -303,7 +303,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                 }
                 
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(stringValue)")
+                    BinkLogger.infoPrivateHash(event: AppLoggerEvent.barcodeScanned, value: "ID: \(plan.id ?? "") - \(stringValue)")
                 }
                 
                 // We recognised the plan, but is this the plan we injected if any?

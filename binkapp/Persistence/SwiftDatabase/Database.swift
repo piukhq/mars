@@ -61,7 +61,7 @@ public class Database {
             DispatchQueue.main.async {
                 // Needs to be dispatched to main otherwise we get cross thread errors
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(AppLoggerEvent.databaseInitialised, value: storePath.absoluteString)
+                    BinkLogger.info(event: AppLoggerEvent.databaseInitialised, value: storePath.absoluteString)
                 }
             }
         }

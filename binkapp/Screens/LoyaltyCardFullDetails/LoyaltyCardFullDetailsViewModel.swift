@@ -250,7 +250,7 @@ extension LoyaltyCardFullDetailsViewModel {
             }
             self.repository.delete(self.membershipCard) {
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: self.membershipCard.id)
+                    BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: self.membershipCard.id)
                 }
                 Current.wallet.refreshLocal()
                 Current.navigate.back()

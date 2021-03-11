@@ -72,7 +72,7 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(WalletLoggerEvent.fetchedMembershipPlans, value: "\(response.count) plans aquired")
+                    BinkLogger.info(event: WalletLoggerEvent.fetchedMembershipPlans, value: "\(response.count) plans aquired")
                 }
                 completion(.success(response))
             case .failure:
@@ -90,7 +90,7 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(LoyaltyCardLoggerEvent.fetchedMembershipCards, value: "\(response.count) cards aquired")
+                    BinkLogger.info(event: LoyaltyCardLoggerEvent.fetchedMembershipCards, value: "\(response.count) cards aquired")
                 }
                 completion(.success(response))
             case .failure:
@@ -132,7 +132,7 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(WalletLoggerEvent.ghostCardAdded, value: model.uuid)
+                    BinkLogger.infoPrivateHash(event: WalletLoggerEvent.ghostCardAdded, value: model.uuid)
                 }
                 completion(.success(response))
             case .failure:
@@ -150,7 +150,7 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.infoPrivateHash(WalletLoggerEvent.ghostCardUpdated, value: existingMembershipCard.id)
+                    BinkLogger.infoPrivateHash(event: WalletLoggerEvent.ghostCardUpdated, value: existingMembershipCard.id)
                 }
                 completion(.success(response))
             case .failure:
@@ -179,7 +179,7 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(PaymentCardLoggerEvent.fetchedPaymentCards, value: "\(response.count) cards aquired")
+                    BinkLogger.info(event: PaymentCardLoggerEvent.fetchedPaymentCards, value: "\(response.count) cards aquired")
                 }
                 completion(.success(response))
             case .failure:
@@ -197,7 +197,7 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(PaymentCardLoggerEvent.fetchedPaymentCard, value: "\(response.id)")
+                    BinkLogger.info(event: PaymentCardLoggerEvent.fetchedPaymentCard, value: "\(response.id)")
                 }
                 completion(.success(response))
             case .failure:
