@@ -23,7 +23,7 @@ function performLogin() {
 
     var f = document.querySelectorAll(formQuery)
 
-    if (!f) {
+    if (!f || f.length == 0) {
         return {
             "success": false,
             "error_message": "Failed to identify form."
@@ -42,7 +42,7 @@ function performLogin() {
 
     var u = document.querySelectorAll(usernameInputQuery)
 
-    if (!u) {
+    if (!u || u.length == 0) {
         return {
             "success": false,
             "error_message": "Failed to identify email/username input field."
@@ -55,7 +55,7 @@ function performLogin() {
 
     var p = document.querySelectorAll(passwordInputQuery)
 
-    if (!p) {
+    if (!p || p.length == 0) {
         return {
             "success": false,
             "error_message": "Failed to identify password input field."
@@ -82,7 +82,7 @@ function performLogin() {
 
     var b = document.querySelectorAll(submitButtonQuery)
 
-    if (!b) {
+    if (!b || b.length == 0) {
         return {
             "success": false,
             "error_message": "Failed to identify submit button."
