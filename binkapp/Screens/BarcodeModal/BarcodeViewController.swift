@@ -50,7 +50,9 @@ class BarcodeViewController: BinkViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         previousBrightness = UIScreen.main.brightness
-        if viewModel.isBarcodeAvailable { UIScreen.main.brightness = 1.0 }
+        if viewModel.isBarcodeAvailable {
+            UIScreen.main.brightness = 1.0
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
