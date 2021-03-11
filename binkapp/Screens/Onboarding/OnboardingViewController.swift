@@ -307,7 +307,7 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         if #available(iOS 14.0, *) {
-            BinkLogger.error(.appleSignIn, value: error.localizedDescription, category: .onboardingViewController)
+            BinkLogger.error(UserLoggerError.appleSignIn, value: error.localizedDescription)
         }
     }
     

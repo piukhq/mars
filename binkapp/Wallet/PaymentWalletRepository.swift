@@ -19,8 +19,8 @@ class PaymentWalletRepository: WalletServiceProtocol {
             guard success else {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.deletePaymentCardResponseFail(card: trackableCard, responseData: responseData))
                 if #available(iOS 14.0, *) {
-                    BinkLogger.errorPrivate(.deletePaymentCardFailure, value: paymentCard.id, category: .paymentWalletRepository)
-                    BinkLogger.error(.deletePaymentCardFailure, value: responseData?.urlResponse?.statusCode.description, category: .paymentWalletRepository)
+                    BinkLogger.errorPrivate(PaymentCardLoggerError.deletePaymentCardFailure, value: paymentCard.id)
+                    BinkLogger.error(PaymentCardLoggerError.deletePaymentCardFailure, value: responseData?.urlResponse?.statusCode.description)
                 }
                 return
             }
@@ -84,7 +84,7 @@ class PaymentWalletRepository: WalletServiceProtocol {
                 onSuccess(response)
             case .failure(let error):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.spreedlyTokenResponseFailure, value: error.localizedDescription, category: .paymentWalletRepository)
+                    BinkLogger.error(PaymentCardLoggerError.spreedlyTokenResponseFailure, value: error.localizedDescription)
                 }
                 onError(error)
             }
@@ -130,7 +130,7 @@ class PaymentWalletRepository: WalletServiceProtocol {
             case .failure(let error):
                 BinkAnalytics.track(CardAccountAnalyticsEvent.addPaymentCardResponseFail(request: paymentCard, responseData: responseData))
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.addPaymentCardFailure, value: responseData?.urlResponse?.statusCode.description, category: .paymentWalletRepository)
+                    BinkLogger.error(PaymentCardLoggerError.addPaymentCardFailure, value: responseData?.urlResponse?.statusCode.description)
                 }
                 onError(error)
             }

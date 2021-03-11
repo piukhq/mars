@@ -71,7 +71,7 @@ class UserManager {
             try token = keychain.getString(key)
         } catch {
             if #available(iOS 14.0, *) {
-                BinkLogger.error(.retrieveKeychainValueFromKey, value: error.localizedDescription, category: .userManager)
+                BinkLogger.error(AppLoggerError.retrieveKeychainValueFromKey, value: error.localizedDescription)
             }
         }
         
@@ -86,7 +86,7 @@ class UserManager {
             }
         } catch {
             if #available(iOS 14.0, *) {
-                BinkLogger.error(.setNewUser, value: error.localizedDescription, category: .userManager)
+                BinkLogger.error(UserLoggerError.setNewUser, value: error.localizedDescription)
             }
         }
     }

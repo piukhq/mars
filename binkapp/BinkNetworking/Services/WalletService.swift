@@ -77,7 +77,7 @@ extension WalletServiceProtocol {
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.fetchMembershipPlans, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                    BinkLogger.error(WalletLoggerError.fetchMembershipPlans, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion(.failure(.failedToGetMembershipPlans))
             }
@@ -90,12 +90,12 @@ extension WalletServiceProtocol {
             switch result {
             case .success(let response):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.info(UserLoggerEvent.fetchedMembershipCards, value: "\(response.count) cards aquired")
+                    BinkLogger.info(LoyaltyCardLoggerEvent.fetchedMembershipCards, value: "\(response.count) cards aquired")
                 }
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.fetchMembershipCards, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                    BinkLogger.error(LoyaltyCardLoggerError.fetchMembershipCards, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion(.failure(.failedToGetMembershipCards))
             }
@@ -137,7 +137,7 @@ extension WalletServiceProtocol {
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.addGhostCardFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                    BinkLogger.error(WalletLoggerError.addGhostCardFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion(.failure(.failedToAddGhostCard))
             }
@@ -155,7 +155,7 @@ extension WalletServiceProtocol {
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.updateGhostCardFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                    BinkLogger.error(WalletLoggerError.updateGhostCardFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion(.failure(.failedToAddGhostCard))
             }
@@ -184,7 +184,7 @@ extension WalletServiceProtocol {
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.fetchPaymentCards, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                    BinkLogger.error(PaymentCardLoggerError.fetchPaymentCards, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion(.failure(.failedToGetPaymentCards))
             }
@@ -202,7 +202,7 @@ extension WalletServiceProtocol {
                 completion(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.fetchPaymentCard, value: rawResponse?.urlResponse?.statusCode.description, category: .walletService)
+                    BinkLogger.error(PaymentCardLoggerError.fetchPaymentCard, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion(.failure(.failedToGetPaymentCards))
             }
@@ -255,7 +255,7 @@ extension WalletServiceProtocol {
                 completion(.success(response))
             case .failure(let networkError):
                 if #available(iOS 14.0, *) {
-                    BinkLogger.errorPrivate(shouldLink ? .pllLoyaltyCardLinkingFailure : .pllLoyaltyCardUnlinkingFailure, value: "\(response?.urlResponse?.statusCode ?? 0) - \(membershipCard.id ?? "")", category: .walletService)
+                    BinkLogger.errorPrivate(shouldLink ? PaymentCardLoggerError.pllLoyaltyCardLinkingFailure : .pllLoyaltyCardUnlinkingFailure, value: "\(response?.urlResponse?.statusCode ?? 0) - \(membershipCard.id ?? "")")
                 }
                 
                 if case .userFacingError = networkError {

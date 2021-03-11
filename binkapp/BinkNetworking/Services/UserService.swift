@@ -78,7 +78,7 @@ extension UserServiceProtocol {
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.fetchUserProfile, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.fetchUserProfile, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToGetUserProfile))
             }
@@ -96,7 +96,7 @@ extension UserServiceProtocol {
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.updateUserProfileFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.updateUserProfileFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToUpdateUserProfile))
             }
@@ -114,7 +114,7 @@ extension UserServiceProtocol {
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.userLogoutFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.userLogoutFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToLogout))
             }
@@ -126,7 +126,7 @@ extension UserServiceProtocol {
         Current.apiClient.performRequestWithNoResponse(request, body: ["email": email]) { (success, _, rawResponse) in
             guard success else {
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.forgotPasswordRequestFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.forgotPasswordRequestFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(false, .failedToSubmitForgotPasswordRequest)
                 return
@@ -149,7 +149,7 @@ extension UserServiceProtocol {
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.userRegistrationFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.userRegistrationFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToRegisterUser))
             }
@@ -167,7 +167,7 @@ extension UserServiceProtocol {
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.userLoginFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.userLoginFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToLogin))
             }
@@ -185,7 +185,7 @@ extension UserServiceProtocol {
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.facebookAuthFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.facebookAuthFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToAuthWithFacebook))
             }
@@ -212,7 +212,7 @@ extension UserServiceProtocol {
         Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _, rawResponse) in
             guard success else {
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.createServiceFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.createServiceFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(false, .failedToCreateService)
                 return
@@ -235,7 +235,7 @@ extension UserServiceProtocol {
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.fetchPreferencesFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.fetchPreferencesFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToGetPreferences))
             }
@@ -247,7 +247,7 @@ extension UserServiceProtocol {
         Current.apiClient.performRequestWithNoResponse(request, body: params) { (success, _, rawResponse) in
             guard success else {
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.setPreferencesFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.setPreferencesFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(false, .failedToSetPreferences)
                 return
@@ -270,7 +270,7 @@ extension UserServiceProtocol {
                 completion?(.success(response))
             case .failure:
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.renewTokenFailure, value: rawResponse?.urlResponse?.statusCode.description, category: .userServiceProtocol)
+                    BinkLogger.error(UserLoggerError.renewTokenFailure, value: rawResponse?.urlResponse?.statusCode.description)
                 }
                 completion?(.failure(.failedToRenewToken))
             }

@@ -41,7 +41,7 @@ class PreferencesViewModel {
             onSuccess()
         }) { error in
             if #available(iOS 14.0, *) {
-                BinkLogger.error(.updatePreferences, value: error.localizedDescription, category: .preferencesViewModel)
+                BinkLogger.error(UserLoggerError.updatePreferences, value: error.localizedDescription)
             }
             onError(error)
         }

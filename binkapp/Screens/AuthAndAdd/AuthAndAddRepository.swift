@@ -57,7 +57,7 @@ class AuthAndAddRepository: WalletServiceProtocol {
             case .failure(let error):
                 BinkAnalytics.track(CardAccountAnalyticsEvent.addLoyaltyCardResponseFail(request: request, formPurpose: formPurpose, responseData: responseData))
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.addLoyaltyCardFailure, value: responseData?.urlResponse?.statusCode.description, category: .addAuthRepository)
+                    BinkLogger.error(LoyaltyCardLoggerError.addLoyaltyCardFailure, value: responseData?.urlResponse?.statusCode.description)
                 }
                 onError(error)
             }

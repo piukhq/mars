@@ -20,7 +20,7 @@ class LoyaltyCardFullDetailsRepository: WalletServiceProtocol {
             guard success else {
                 BinkAnalytics.track(CardAccountAnalyticsEvent.deleteLoyaltyCardResponseFail(card: trackableCard, responseData: responseData))
                 if #available(iOS 14.0, *) {
-                    BinkLogger.errorPrivate(.deleteLoyaltyCardFailure, value: "\(membershipCard.id ?? "") - \(responseData?.urlResponse?.statusCode.description ?? "")", category: .loyaltyCardFullDetailsRepository)
+                    BinkLogger.errorPrivate(LoyaltyCardLoggerError.deleteLoyaltyCardFailure, value: "\(membershipCard.id ?? "") - \(responseData?.urlResponse?.statusCode.description ?? "")")
                 }
                 return
             }

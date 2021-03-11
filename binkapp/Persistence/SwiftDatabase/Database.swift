@@ -214,7 +214,7 @@ public extension CoreDataMappable {
 
         guard let mappableObject = object else {
             if #available(iOS 14.0, *) {
-                BinkLogger.error(.coreDataObjectMappingFailure, value: String(describing: self), category: .database)
+                BinkLogger.error(AppLoggerError.coreDataObjectMappingFailure, value: String(describing: self))
             }
             fatalError("This is an impossible state, bail")
         }

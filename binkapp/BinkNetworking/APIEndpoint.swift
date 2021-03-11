@@ -139,7 +139,7 @@ enum APIEndpoint: Equatable {
         case .paymentCards:
             return "/ubiquity/payment_cards"
         case .paymentCard(let cardId):
-            return "/ubiquity/payment_ca/\(cardId)"
+            return "/ubiquity/payment_card/\(cardId)"
         case .linkMembershipCardToPaymentCard(let membershipCardId, let paymentCardId):
             return "/ubiquity/membership_card/\(membershipCardId)/payment_card/\(paymentCardId)"
         case .spreedly:

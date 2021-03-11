@@ -9,19 +9,19 @@
 import Foundation
 
 enum BinkLoggerCategory: String {
-    case paymentCards
-    case loyaltyCards
-    case app
-    case user
-    case wallet
+    case paymentCards = "Payment Cards"
+    case loyaltyCards = "Loyalty Cards"
+    case app = "App"
+    case user = "User"
+    case wallet = "Wallet"
 }
 
-protocol BinkLoggerEvent {
+protocol BinkLoggerProtocol {
     var category: BinkLoggerCategory { get }
     var message: String { get }
 }
 
-enum PaymentCardLoggerEvent: String, BinkLoggerEvent {
+enum PaymentCardLoggerEvent: String, BinkLoggerProtocol {
     case paymentCardAdded = "Payment card added"
     case paymentCardDeleted = "Payment card deleted"
     case fetchedPaymentCards = "Fetched payment cards"
@@ -39,10 +39,10 @@ enum PaymentCardLoggerEvent: String, BinkLoggerEvent {
     }
 }
 
-enum LoyaltyCardLoggerEvent: String, BinkLoggerEvent {
+enum LoyaltyCardLoggerEvent: String, BinkLoggerProtocol {
     case loyaltyCardAdded = "Loyalty card added"
     case loyaltyCardDeleted = "Loyalty card deleted"
-
+    case fetchedMembershipCards = "Fetched membership cards"
 
     var category: BinkLoggerCategory {
         return .loyaltyCards
@@ -53,7 +53,7 @@ enum LoyaltyCardLoggerEvent: String, BinkLoggerEvent {
     }
 }
 
-enum WalletLoggerEvent: String, BinkLoggerEvent {
+enum WalletLoggerEvent: String, BinkLoggerProtocol {
     case ghostCardAdded = "Ghost card added"
     case ghostCardUpdated = "Ghost card updated"
     case pointsScrapingSuccess = "Points scraping success"
@@ -68,7 +68,7 @@ enum WalletLoggerEvent: String, BinkLoggerEvent {
     }
 }
 
-enum AppLoggerEvent: String, BinkLoggerEvent {
+enum AppLoggerEvent: String, BinkLoggerProtocol {
     case databaseInitialised = "Database initialised at"
     case appEnteredForeground = "App entered foreground"
     case appEnteredBackground = "App entered background"
@@ -86,8 +86,7 @@ enum AppLoggerEvent: String, BinkLoggerEvent {
     }
 }
 
-enum UserLoggerEvent: String, BinkLoggerEvent {
-    case fetchedMembershipCards = "Fetched membership cards"
+enum UserLoggerEvent: String, BinkLoggerProtocol {
     case fetchedUserProfile = "Fetched user profile"
     case updatedUserProfile = "Updated user profile"
     case logout = "User logged out successfully"

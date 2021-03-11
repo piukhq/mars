@@ -234,7 +234,7 @@ class BarcodeScannerViewController: BinkViewController {
         } catch let error {
             // TODO: Handle error
             if #available(iOS 14.0, *) {
-                BinkLogger.error(.lockDeviceForAVCaptureConfig, value: error.localizedDescription, category: .barcodeScannerViewController)
+                BinkLogger.error(AppLoggerError.lockDeviceForAVCaptureConfig, value: error.localizedDescription)
             }
         }
 
@@ -314,7 +314,7 @@ extension BarcodeScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                             self.canPresentScanError = false
                             DispatchQueue.main.async {
                                 if #available(iOS 14.0, *) {
-                                    BinkLogger.error(.barcodeScanningFailure, value: planFromForm.account?.companyName, category: .barcodeScannerViewController)
+                                    BinkLogger.error(AppLoggerError.barcodeScanningFailure, value: planFromForm.account?.companyName)
                                 }
                                 HapticFeedbackUtil.giveFeedback(forType: .notification(type: .error))
                                 let alert = BinkAlertController(title: "Error", message: "The card you scanned was not correct, please scan your \(planFromForm.account?.companyName ?? "") card", preferredStyle: .alert)

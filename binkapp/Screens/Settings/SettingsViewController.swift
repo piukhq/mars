@@ -204,7 +204,7 @@ extension SettingsViewController: UITableViewDelegate {
                     Current.navigate.to(navigationRequest)
                 default:
                     if #available(iOS 14.0, *) {
-                        BinkLogger.error(.unsupportedViewController, category: .settingsViewController)
+                        BinkLogger.error(AppLoggerError.unsupportedViewController)
                     }
                 }
             case .pushToReusable(let screen):

@@ -79,7 +79,7 @@ class RemoteConfigUtil {
                 }
             } else {
                 if #available(iOS 14.0, *) {
-                    BinkLogger.error(.remoteConfigFetchFailure, value: error?.localizedDescription, category: .remoteConfigUtil)
+                    BinkLogger.error(AppLoggerError.remoteConfigFetchFailure, value: error?.localizedDescription)
                 }
                 completion?()
             }

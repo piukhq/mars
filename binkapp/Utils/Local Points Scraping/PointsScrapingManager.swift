@@ -342,7 +342,7 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: card, error: error))
         }
         if #available(iOS 14.0, *) {
-            BinkLogger.error(.pointsScrapingFailure, value: error.message, category: .pointsScrapingManager)
+            BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
         transitionToFailed(membershipCard: card)
     }
