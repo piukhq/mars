@@ -191,7 +191,7 @@ private extension PaymentCardDetailViewController {
         
         stackScrollView.customPadding(viewModel.paymentCardStatus == .pending ? 20 : 0, after: cardAddedLabel)
         stackScrollView.customPadding(viewModel.paymentCardStatus != .active ? 20 : 0, after: addedCardsDescriptionLabel)
-        stackScrollView.customPadding(viewModel.shouldShowAddedLoyaltyCardTableView && viewModel.shouldShowOtherCardsTableView ? LayoutHelper.PaymentCardDetail.headerViewsPadding : 0, after: addedCardsTableView)
+        stackScrollView.customPadding(viewModel.shouldShowAddedLoyaltyCardTableView ? LayoutHelper.PaymentCardDetail.headerViewsPadding : 0, after: addedCardsTableView)
 
         stackScrollView.delegate = self
         
