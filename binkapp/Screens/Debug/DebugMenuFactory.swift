@@ -20,7 +20,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeAllowCustomBundleClientOnLoginRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow(), makeSeePromptCounterRow(), makeStorePromptCounterRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeAllowCustomBundleClientOnLoginRow(), makeSecondaryColorRow(), makeLPCDebugModeRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow(), makeSeePromptCounterRow(), makeStorePromptCounterRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -52,11 +52,11 @@ class DebugMenuFactory {
         }, cellType: .titleSubtitle)
     }
     
-    private func makeLPCWebViewRow() -> DebugMenuRow {
-        let shouldShow = Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView)
-        return DebugMenuRow(title: "LPC debug web view", subtitle: shouldShow ? "On" : "Off", action: { [weak self] in
+    private func makeLPCDebugModeRow() -> DebugMenuRow {
+        let debugModeEnabled = Current.pointsScrapingManager.isDebugMode
+        return DebugMenuRow(title: "LPC debug mode", subtitle: debugModeEnabled ? "Enabled" : "Disabled", action: { [weak self] in
             guard let self = self else { return }
-            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcWebView)
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcDebugMode)
         }, cellType: .titleSubtitle)
     }
     

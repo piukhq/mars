@@ -93,9 +93,8 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
         case .secondaryColor:
             let viewController = DebugSecondaryPlanColorViewController()
             navigationController?.pushViewController(viewController, animated: true)
-        case .lpcWebView:
-            let shouldShow = Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView)
-            Current.userDefaults.set(!shouldShow, forDefaultsKey: .lpcDebugWebView)
+        case .lpcDebugMode:
+            Current.pointsScrapingManager.isDebugMode.toggle()
             tableView.reloadData()
         case .lpcCookies:
             let shouldUseCookies = Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies)

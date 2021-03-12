@@ -36,7 +36,7 @@ class WebScrapingUtility: NSObject {
     private var isReloadingWebView = false
 
     private var isInDebugMode: Bool {
-        return Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView)
+        return Current.pointsScrapingManager.isDebugMode
     }
 
     private var isPresentingWebView: Bool {

@@ -232,7 +232,9 @@ private extension APIClient {
             }
 
             #if DEBUG
-            ResponseCodeVisualiser.show(statusCode)
+            if Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser) {
+                DebugInfoAlertView.show(String(statusCode), type: successStatusRange.contains(statusCode) ? .success : .failure)
+            }
             #endif
 
             guard let data = response.data else {
@@ -304,7 +306,9 @@ private extension APIClient {
         }
         
         #if DEBUG
-        ResponseCodeVisualiser.show(statusCode)
+        if Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser) {
+            DebugInfoAlertView.show(String(statusCode), type: successStatusRange.contains(statusCode) ? .success : .failure)
+        }
         #endif
 
         if statusCode == unauthorizedStatus && endpoint.shouldRespondToUnauthorizedStatus {
