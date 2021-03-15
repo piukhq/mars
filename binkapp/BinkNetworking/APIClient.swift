@@ -233,7 +233,7 @@ private extension APIClient {
 
             #if DEBUG
             if Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser) {
-                DebugInfoAlertView.show(String(statusCode), type: successStatusRange.contains(statusCode) ? .success : .failure)
+                DebugInfoAlertView.show("HTTP status code \(statusCode)", type: successStatusRange.contains(statusCode) ? .success : .failure)
             }
             #endif
 
@@ -307,7 +307,7 @@ private extension APIClient {
         
         #if DEBUG
         if Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser) {
-            DebugInfoAlertView.show(String(statusCode), type: successStatusRange.contains(statusCode) ? .success : .failure)
+            DebugInfoAlertView.show("HTTP status code \(statusCode)", type: successStatusRange.contains(statusCode) ? .success : .failure)
         }
         #endif
 

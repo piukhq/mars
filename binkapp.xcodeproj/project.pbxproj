@@ -297,7 +297,7 @@
 		CE3878BE2563ED9A006BAC11 /* BarcodeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878BD2563ED9A006BAC11 /* BarcodeViewControllerTests.swift */; };
 		CE3878CF25643C1F006BAC11 /* WalletPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */; };
 		CE3A54DE253E0F27007989FE /* ZendeskTickets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */; };
-		CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */; };
+		CE3A5518253EE89A007989FE /* DebugInfoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3A5517253EE89A007989FE /* DebugInfoAlertView.swift */; };
 		CE4A624925714EAE003271F6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = CE4A624825714EAE003271F6 /* Sentry */; };
 		CE539DAE25E80C1100BDA5EF /* BinkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */; };
 		CE539DBF25E943DD00BDA5EF /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE539DBE25E943DD00BDA5EF /* Feature.swift */; };
@@ -854,7 +854,7 @@
 		CE3878CE25643C1F006BAC11 /* WalletPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPromptTests.swift; sourceTree = "<group>"; };
 		CE387AA02565749D006BAC11 /* BrandHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandHeaderViewTests.swift; sourceTree = "<group>"; };
 		CE3A54DD253E0F27007989FE /* ZendeskTickets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskTickets.swift; sourceTree = "<group>"; };
-		CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCodeVisualiser.swift; sourceTree = "<group>"; };
+		CE3A5517253EE89A007989FE /* DebugInfoAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInfoAlertView.swift; sourceTree = "<group>"; };
 		CE4A628025715519003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4A6285257155AE003271F6 /* Keys.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Keys.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE539DAD25E80C1100BDA5EF /* BinkTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkTableViewController.swift; sourceTree = "<group>"; };
@@ -1178,7 +1178,7 @@
 				EF59A12724473589001B60B8 /* APIClient.swift */,
 				EF59A1292447406B001B60B8 /* APIEndpoint.swift */,
 				EF59A12E24474572001B60B8 /* NetworkingError.swift */,
-				CE3A5517253EE89A007989FE /* ResponseCodeVisualiser.swift */,
+				CE3A5517253EE89A007989FE /* DebugInfoAlertView.swift */,
 				CEACE7202543309E004DD27E /* BinkHTTPHeaders.swift */,
 			);
 			path = BinkNetworking;
@@ -3400,7 +3400,7 @@
 				EF39C1DF231E9F2900A0BBC0 /* UITableViewExtension.swift in Sources */,
 				CEC402E02551B66400553C75 /* PaymentCardScannerStrings.swift in Sources */,
 				EF6921762469A9290049875B /* DebugSecondaryPlanColorCell.swift in Sources */,
-				CE3A5518253EE89A007989FE /* ResponseCodeVisualiser.swift in Sources */,
+				CE3A5518253EE89A007989FE /* DebugInfoAlertView.swift in Sources */,
 				3C794D8F23018DBA000A31FD /* BrowseBrandsViewModel.swift in Sources */,
 				EFD602EC243B9454003AC746 /* Animations.swift in Sources */,
 				BDB01869232D949A00BFFA18 /* AddPaymentCardViewController.swift in Sources */,

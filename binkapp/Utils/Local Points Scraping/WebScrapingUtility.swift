@@ -150,6 +150,10 @@ class WebScrapingUtility: NSObject {
                     self.detectElementTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.detectRecaptchaSuccess), userInfo: nil, repeats: true)
                     return
                 }
+                
+                if Current.pointsScrapingManager.isDebugMode {
+                    DebugInfoAlertView.show("\(self.agent.merchant.rawValue.capitalized) LPC - Logged in", type: .success)
+                }
             case .failure:
                 self.finish(withError: .failedToExecuteLoginScript)
             }
@@ -261,10 +265,16 @@ class WebScrapingUtility: NSObject {
         closeWebView(force: true)
 
         if let value = value {
+            if Current.pointsScrapingManager.isDebugMode {
+                DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Retreived points balance", type: .success)
+            }
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, forMembershipCard: membershipCard, withAgent: agent)
         }
 
         if let error = error {
+            if Current.pointsScrapingManager.isDebugMode {
+                DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - \(error.localizedDescription)", type: .failure)
+            }
             SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: isBalanceRefresh))
             delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: membershipCard, withAgent: agent)
         }

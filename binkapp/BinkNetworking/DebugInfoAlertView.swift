@@ -17,20 +17,23 @@ class DebugInfoAlertView: UIView {
     }
     
     private let message: String
-    private let type: AlertType
+    private var type: AlertType
     private var timer: Timer?
     
     private lazy var textLabel: UILabel = {
-        let label = UILabel(frame: self.bounds)
+        let label = UILabel(frame: CGRect(x: self.bounds.origin.x + 10, y: self.bounds.origin.y, width: self.bounds.width - 20, height: self.bounds.height))
         label.textAlignment = .center
         label.textColor = .white
+        label.font = .alertText
+        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     init(message: String, type: AlertType, window: UIWindow) {
         self.message = message
         self.type = type
-        super.init(frame: CGRect(x: (window.bounds.width / 2) - 25, y: -50, width: 50, height: 30))
+        super.init(frame: CGRect(x: 25, y: 0, width: window.bounds.width - 50, height: 50))
         configure()
     }
     
@@ -41,6 +44,7 @@ class DebugInfoAlertView: UIView {
     static func show(_ message: String, type: DebugInfoAlertView.AlertType) {
         if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
             if let statusCodeView = window.subviews.first(where: { $0.isKind(of: DebugInfoAlertView.self) }) as? DebugInfoAlertView {
+                statusCodeView.type = type
                 statusCodeView.update(message: message)
             } else {
                 let view = DebugInfoAlertView(message: message, type: type, window: window)
@@ -73,18 +77,18 @@ class DebugInfoAlertView: UIView {
         timer?.invalidate()
         UIView.transition(with: textLabel, duration: 0.25, options: .transitionCrossDissolve, animations: {
             self.textLabel.text = message
+            
+            switch self.type {
+            case .success:
+                self.backgroundColor = .systemGreen
+            case .warning:
+                self.backgroundColor = .amberPending
+            case .failure:
+                self.backgroundColor = .systemRed
+            default:
+                self.backgroundColor = .grey10
+            }
         })
-        
-        switch type {
-        case .success:
-            backgroundColor = .systemGreen
-        case .warning:
-            backgroundColor = .amberPending
-        case .failure:
-            backgroundColor = .systemRed
-        default:
-            backgroundColor = .grey10
-        }
         
         timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
             self.hide()
@@ -93,7 +97,7 @@ class DebugInfoAlertView: UIView {
     
     private func configure() {
         addSubview(textLabel)
-        layer.cornerRadius = 15
+        layer.cornerRadius = 8
         layer.cornerCurve = .continuous
     }
 }
