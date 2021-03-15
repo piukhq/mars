@@ -49,30 +49,30 @@ class BrowseBrandsViewModel {
     }
     
     func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan {
-        if indexPath.section == 0 {
-            return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans()[indexPath.row] : getPllMembershipPlans()[indexPath.row]
+        switch indexPath.section {
+        case 0:
+            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row]  : getSeeMembershipPlans()[indexPath.row] ) : getPllMembershipPlans()[indexPath.row]
+        case 1:
+            return getPllMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row]  : (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row] : getSeeMembershipPlans()[indexPath.row])
+        case 2:
+            return getStoreMembershipPlans()[indexPath.row]
+        default:
+            break
         }
-        return getNonPllMembershipPlans()[indexPath.row]
+        return getStoreMembershipPlans()[indexPath.row]
     }
     
     func getSectionTitleText(section: Int) -> String {
         switch section {
         case 0:
-            return getPllMembershipPlans().isEmpty ? "all_title".localized : "pll_title".localized
+            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? "STORE"  : "SEE") : "pll_title".localized
         case 1:
-            return "SEE"
+            return getPllMembershipPlans().isEmpty ? "STORE" : (getSeeMembershipPlans().isEmpty ? "STORE" : "SEE")
         case 2:
             return "STORE"
         default:
             return ""
         }
-        
-//        if section == 0 {
-//            if !getPllMembershipPlans().isEmpty {
-//                return "pll_title".localized
-//            }
-//        }
-//        return "all_title".localized
     }
     
     func getMembershipPlans() -> [CD_MembershipPlan] {
@@ -97,6 +97,8 @@ class BrowseBrandsViewModel {
         return false
     }
     
+    // TODO: - Delete
+    
     func getPllMembershipPlans() -> [CD_MembershipPlan] {
         let plans = getMembershipPlans().filter { $0.featureSet?.planCardType == .link }
         return plans.sorted {
@@ -107,20 +109,21 @@ class BrowseBrandsViewModel {
         }
     }
     
-//    func getNonPllMembershipPlans() -> [CD_MembershipPlan] {
-//        let plans = getMembershipPlans().filter { $0.featureSet?.planCardType != .link }
-//        return plans.sorted {
-//            guard let first = $0.account?.companyName?.lowercased() else { return false }
-//            guard let second = $1.account?.companyName?.lowercased() else { return true }
-//            return first < second
-//        }
-//    }
+    func getNonPllMembershipPlans() -> [CD_MembershipPlan] {
+        let plans = getMembershipPlans().filter { $0.featureSet?.planCardType != .link }
+        return plans.sorted {
+            guard let first = $0.account?.companyName?.lowercased() else { return false }
+            guard let second = $1.account?.companyName?.lowercased() else { return true }
+            return first < second
+        }
+    }
     
     func getSeeMembershipPlans() -> [CD_MembershipPlan] {
         let agentsEnabledForLPS = Current.pointsScrapingManager.agents.filter { Current.pointsScrapingManager.agentEnabled($0) }
         let seePlans = getMembershipPlans().filter { $0.featureSet?.planCardType == .view }
         var plansEnabledForScraping: [CD_MembershipPlan] = []
 
+        // TODO: - Refactor
         seePlans.forEach { plan in
             if agentsEnabledForLPS.contains(where: { $0.membershipPlanId == Int(plan.id) }) {
                 plansEnabledForScraping.append(plan)
@@ -131,13 +134,13 @@ class BrowseBrandsViewModel {
     
     func getStoreMembershipPlans() -> [CD_MembershipPlan] {
         let pllAndSeePlans = getSeeMembershipPlans() + getPllMembershipPlans()
-        let storePlans: [CD_MembershipPlan] = getMembershipPlans().filter( { !pllAndSeePlans.contains($0)})
+        let storePlans: [CD_MembershipPlan] = getMembershipPlans().filter { !pllAndSeePlans.contains($0) }
         return storePlans
     }
     
     func numberOfSections() -> Int {
         var sections = 0
-        [getPllMembershipPlans(), getSeeMembershipPlans(), getNonPllMembershipPlans()].forEach {
+        [getPllMembershipPlans(), getSeeMembershipPlans(), getStoreMembershipPlans()].forEach {
             if !$0.isEmpty {
                 sections += 1
             }
@@ -151,7 +154,7 @@ class BrowseBrandsViewModel {
         case 0:
             return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans().count : getSeeMembershipPlans().count) : getPllMembershipPlans().count
         case 1:
-            return getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans().count : getSeeMembershipPlans().count
+            return getPllMembershipPlans().isEmpty ? getStoreMembershipPlans().count : (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans().count : getSeeMembershipPlans().count)
         case 2:
             return getStoreMembershipPlans().count
         default:
