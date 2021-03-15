@@ -56,12 +56,23 @@ class BrowseBrandsViewModel {
     }
     
     func getSectionTitleText(section: Int) -> String {
-        if section == 0 {
-            if !getPllMembershipPlans().isEmpty {
-                return "pll_title".localized
-            }
+        switch section {
+        case 0:
+            return getPllMembershipPlans().isEmpty ? "all_title".localized : "pll_title".localized
+        case 1:
+            return "SEE"
+        case 2:
+            return "STORE"
+        default:
+            return ""
         }
-        return "all_title".localized
+        
+//        if section == 0 {
+//            if !getPllMembershipPlans().isEmpty {
+//                return "pll_title".localized
+//            }
+//        }
+//        return "all_title".localized
     }
     
     func getMembershipPlans() -> [CD_MembershipPlan] {
@@ -96,19 +107,37 @@ class BrowseBrandsViewModel {
         }
     }
     
-    func getNonPllMembershipPlans() -> [CD_MembershipPlan] {
-        let plans = getMembershipPlans().filter { $0.featureSet?.planCardType != .link }
-        return plans.sorted {
-            guard let first = $0.account?.companyName?.lowercased() else { return false }
-            guard let second = $1.account?.companyName?.lowercased() else { return true }
-            
-            return first < second
+//    func getNonPllMembershipPlans() -> [CD_MembershipPlan] {
+//        let plans = getMembershipPlans().filter { $0.featureSet?.planCardType != .link }
+//        return plans.sorted {
+//            guard let first = $0.account?.companyName?.lowercased() else { return false }
+//            guard let second = $1.account?.companyName?.lowercased() else { return true }
+//            return first < second
+//        }
+//    }
+    
+    func getSeeMembershipPlans() -> [CD_MembershipPlan] {
+        let agentsEnabledForLPS = Current.pointsScrapingManager.agents.filter { Current.pointsScrapingManager.agentEnabled($0) }
+        let seePlans = getMembershipPlans().filter { $0.featureSet?.planCardType == .view }
+        var plansEnabledForScraping: [CD_MembershipPlan] = []
+
+        seePlans.forEach { plan in
+            if agentsEnabledForLPS.contains(where: { $0.membershipPlanId == Int(plan.id) }) {
+                plansEnabledForScraping.append(plan)
+            }
         }
+        return plansEnabledForScraping
+    }
+    
+    func getStoreMembershipPlans() -> [CD_MembershipPlan] {
+        let pllAndSeePlans = getSeeMembershipPlans() + getPllMembershipPlans()
+        let storePlans: [CD_MembershipPlan] = getMembershipPlans().filter( { !pllAndSeePlans.contains($0)})
+        return storePlans
     }
     
     func numberOfSections() -> Int {
         var sections = 0
-        [getPllMembershipPlans(), getNonPllMembershipPlans()].forEach {
+        [getPllMembershipPlans(), getSeeMembershipPlans(), getNonPllMembershipPlans()].forEach {
             if !$0.isEmpty {
                 sections += 1
             }
@@ -120,9 +149,11 @@ class BrowseBrandsViewModel {
     func getNumberOfRowsFor(section: Int) -> Int {
         switch section {
         case 0:
-            return getPllMembershipPlans().isEmpty ? getNonPllMembershipPlans().count : getPllMembershipPlans().count
+            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans().count : getSeeMembershipPlans().count) : getPllMembershipPlans().count
         case 1:
-            return getNonPllMembershipPlans().count
+            return getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans().count : getSeeMembershipPlans().count
+        case 2:
+            return getStoreMembershipPlans().count
         default:
             return 0
         }
