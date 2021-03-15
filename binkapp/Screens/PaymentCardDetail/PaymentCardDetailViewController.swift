@@ -292,7 +292,9 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
                 let isLinked = viewModel.membershipCardIsLinked(membershipCard)
                 let cellViewModel = PaymentCardDetailLinkLoyaltyCardCellViewModel(membershipCard: membershipCard, isLinked: isLinked)
 
-                cell.configureWithViewModel(cellViewModel, delegate: self)
+                if tableView.indexPathsForVisibleRows?.contains(indexPath) ?? false {
+                    cell.configureWithViewModel(cellViewModel, delegate: self)
+                }
 
                 if tableView.cellAtIndexPathIsLastInSection(indexPath) {
                     cell.setSeparatorFullWidth()
@@ -303,7 +305,9 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
                 let cell: PaymentCardDetailLoyaltyCardStatusCell = tableView.dequeue(indexPath: indexPath)
                 let cellViewModel = PaymentCardDetailLoyaltyCardStatusCellViewModel(membershipCard: membershipCard)
 
-                cell.configureWithViewModel(cellViewModel)
+                if tableView.indexPathsForVisibleRows?.contains(indexPath) ?? false {
+                    cell.configureWithViewModel(cellViewModel)
+                }
 
                 if tableView.cellAtIndexPathIsLastInSection(indexPath) {
                     cell.setSeparatorFullWidth()
@@ -320,7 +324,9 @@ extension PaymentCardDetailViewController: UITableViewDataSource, UITableViewDel
 
             let cellViewModel = PaymentCardDetailAddLoyaltyCardCellViewModel(membershipPlan: plan)
 
-            cell.configureWithViewModel(cellViewModel)
+            if tableView.indexPathsForVisibleRows?.contains(indexPath) ?? false {
+                cell.configureWithViewModel(cellViewModel)
+            }
 
             if tableView.cellAtIndexPathIsLastInSection(indexPath) {
                 cell.setSeparatorFullWidth()
