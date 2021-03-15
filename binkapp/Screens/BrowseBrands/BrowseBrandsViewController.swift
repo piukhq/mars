@@ -259,17 +259,17 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
             switch indexPath.section {
             case 0:
                 cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
-                if indexPath.row == viewModel.getPllMembershipPlans().count - 1 {
+                if indexPath.row == (viewModel.getPllMembershipPlans().isEmpty ? (viewModel.getSeeMembershipPlans().isEmpty ? viewModel.getStoreMembershipPlans().count - 1 : viewModel.getSeeMembershipPlans().count - 1) : viewModel.getPllMembershipPlans().count - 1) {
                     cell.hideSeparatorView()
                 }
             case 1:
                 cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
-                if indexPath.row == viewModel.getNonPllMembershipPlans().count - 1 {
+                if indexPath.row == (viewModel.getPllMembershipPlans().isEmpty ? viewModel.getStoreMembershipPlans().count - 1 : (viewModel.getSeeMembershipPlans().isEmpty ? viewModel.getStoreMembershipPlans().count - 1 : viewModel.getSeeMembershipPlans().count - 1)) {
                     cell.hideSeparatorView()
                 }
             case 2:
                 cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
-                if indexPath.row == viewModel.getNonPllMembershipPlans().count - 1 {
+                if indexPath.row == viewModel.getStoreMembershipPlans().count - 1 {
                     cell.hideSeparatorView()
                 }
             default:
