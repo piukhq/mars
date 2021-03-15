@@ -159,6 +159,8 @@
 		709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */; };
 		70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */; };
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
+		70AA970825E51E1E00D10EC0 /* LocalPointsCollection_Login_Boots.js in Resources */ = {isa = PBXBuildFile; fileRef = 70AA970725E51E1E00D10EC0 /* LocalPointsCollection_Login_Boots.js */; };
+		70AA970D25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js in Resources */ = {isa = PBXBuildFile; fileRef = 70AA970C25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js */; };
 		70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B316E624E6AF2800D86DE5 /* Navigate.swift */; };
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
@@ -708,6 +710,8 @@
 		7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigUtil.swift; sourceTree = "<group>"; };
 		70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsScrapingManager.swift; sourceTree = "<group>"; };
 		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
+		70AA970725E51E1E00D10EC0 /* LocalPointsCollection_Login_Boots.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Boots.js; sourceTree = "<group>"; };
+		70AA970C25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Points_Boots.js; sourceTree = "<group>"; };
 		70B316E624E6AF2800D86DE5 /* Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigate.swift; sourceTree = "<group>"; };
 		70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
@@ -1683,6 +1687,8 @@
 			isa = PBXGroup;
 			children = (
 				70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */,
+				70AA970725E51E1E00D10EC0 /* LocalPointsCollection_Login_Boots.js */,
+				70AA970C25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js */,
 			);
 			path = Boots;
 			sourceTree = "<group>";
@@ -2937,9 +2943,11 @@
 				3C71683524069F370058701E /* bink.der in Resources */,
 				3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */,
 				EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */,
+				70AA970825E51E1E00D10EC0 /* LocalPointsCollection_Login_Boots.js in Resources */,
 				DBE54852240D514B00EDEE90 /* FilterBrandsCollectionViewCell.xib in Resources */,
 				EF99B025240E74860046D41E /* devPublicKey.der in Resources */,
 				3CF029F322F45AEC009A0E61 /* AddingOptionsViewController.xib in Resources */,
+				70AA970D25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js in Resources */,
 				3CD3493322F99E1D000C1F4D /* NunitoSans-BoldItalic.ttf in Resources */,
 				3C9CCD2F231695AE00FAF589 /* CheckboxView.xib in Resources */,
 				CE2CFE9125E3D48E00B1CB93 /* FeatureFlagsTableViewCell.xib in Resources */,
