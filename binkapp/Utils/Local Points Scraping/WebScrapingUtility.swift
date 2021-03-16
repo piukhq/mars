@@ -70,30 +70,8 @@ class WebScrapingUtility: NSObject {
         }
         
         let request = URLRequest(url: url)
-        
-        guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else {
-            self.webView.navigationDelegate = self
-            self.webView.load(request)
-            return
-        }
-        
-        if let cookiesDictionary = Current.userDefaults.value(forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id)) as? [String: Any] {
-            var cookiesSet: Int = 0
-            for (_, cookieProperties) in cookiesDictionary {
-                if let properties = cookieProperties as? [HTTPCookiePropertyKey: Any], let cookie = HTTPCookie(properties: properties) {
-                    webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie) {
-                        cookiesSet += 1
-                        if cookiesSet == cookiesDictionary.count {
-                            self.webView.navigationDelegate = self
-                            self.webView.load(request)
-                        }
-                    }
-                }
-            }
-        } else {
-            self.webView.navigationDelegate = self
-            self.webView.load(request)
-        }
+        webView.navigationDelegate = self
+        webView.load(request)
 
         resetIdlingTimer()
     }
@@ -202,14 +180,6 @@ class WebScrapingUtility: NSObject {
                 guard let points = response.pointsValue else {
                     self.finish(withError: .failedToCastReturnValue)
                     return
-                }
-                self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
-                    guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else { return }
-                    var cookiesDictionary: [String: Any] = [:]
-                    for cookie in cookies {
-                        cookiesDictionary[cookie.name] = cookie.properties
-                    }
-                    Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
                 }
                 completion(.success(points))
             case .failure:

@@ -96,10 +96,6 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
         case .lpcDebugMode:
             Current.pointsScrapingManager.isDebugMode.toggle()
             tableView.reloadData()
-        case .lpcCookies:
-            let shouldUseCookies = Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies)
-            Current.userDefaults.set(!shouldUseCookies, forDefaultsKey: .lpcUseCookies)
-            tableView.reloadData()
         case .responseCodeVisualiser:
             let shouldShow = Current.userDefaults.bool(forDefaultsKey: .responseCodeVisualiser)
             Current.userDefaults.set(!shouldShow, forDefaultsKey: .responseCodeVisualiser)

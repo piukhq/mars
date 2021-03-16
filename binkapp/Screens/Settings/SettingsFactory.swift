@@ -18,6 +18,21 @@ struct SettingsFactory {
     func sectionData() -> [SettingsSection] {
         var sections: [SettingsSection] = []
         
+        // MARK: - Debug
+        
+        #if DEBUG
+        let debugSection = SettingsSection(title: "settings_section_debug_title".localized, rows: [
+            SettingsRow(
+                type: .debug,
+                subtitle: "settings_section_debug_subtitle".localized,
+                action: .pushToViewController(viewController: DebugMenuTableViewController.self),
+                actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
+            )
+        ])
+        
+        sections.append(debugSection)
+        #endif
+        
         // MARK: - Account
         
         let accountSection = SettingsSection(title: "settings_section_account_title".localized, rows: [
@@ -152,20 +167,6 @@ struct SettingsFactory {
         
         sections.append(legalSection)
         
-        // MARK: - Debug
-        
-        #if DEBUG
-        let debugSection = SettingsSection(title: "settings_section_debug_title".localized, rows: [
-            SettingsRow(
-                type: .debug,
-                subtitle: "settings_section_debug_subtitle".localized,
-                action: .pushToViewController(viewController: DebugMenuTableViewController.self),
-                actionRequired: rowsWithActionRequired?.contains(.debug) ?? false
-            )
-        ])
-        
-        sections.append(debugSection)
-        
         // MARK: - Beta
         
         let betaSection = SettingsSection(title: "settings_section_beta_title".localized, rows: [
@@ -179,8 +180,6 @@ struct SettingsFactory {
         if Current.featureManager.shouldShowInSettings {
             sections.append(betaSection)
         }
-        
-        #endif
         
         return sections
     }

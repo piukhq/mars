@@ -20,18 +20,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeAllowCustomBundleClientOnLoginRow(), makeSecondaryColorRow(), makeLPCDebugModeRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow(), makeSeePromptCounterRow(), makeStorePromptCounterRow()])
-    }
-    
-    private func makeVersionNumberRow() -> DebugMenuRow {
-        let versionNumber = Bundle.shortVersionNumber ?? ""
-        let buildNumber = Bundle.bundleVersion ?? ""
-        return DebugMenuRow(title: "Current version", subtitle: String(format: "support_mail_app_version".localized, versionNumber, buildNumber), action: nil, cellType: .titleSubtitle)
-    }
-
-    private func makeEmailAddressRow() -> DebugMenuRow {
-        let currentEmailAddress = Current.userManager.currentEmailAddress
-        return DebugMenuRow(title: "Current email address", subtitle: currentEmailAddress, action: nil, cellType: .titleSubtitle)
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeEndpointRow(), makeAllowCustomBundleClientOnLoginRow(), makeSecondaryColorRow(), makeLPCDebugModeRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow(), makeSeePromptCounterRow(), makeStorePromptCounterRow()])
     }
     
     private func makeEndpointRow() -> DebugMenuRow {
@@ -57,14 +46,6 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "LPC debug mode", subtitle: debugModeEnabled ? "Enabled" : "Disabled", action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcDebugMode)
-        }, cellType: .titleSubtitle)
-    }
-    
-    private func makeLPCUseCookiesRow() -> DebugMenuRow {
-        let shouldUseCookies = Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies)
-        return DebugMenuRow(title: "LPC use cookies", subtitle: shouldUseCookies ? "Yes" : "No", action: { [weak self] in
-            guard let self = self else { return }
-            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .lpcCookies)
         }, cellType: .titleSubtitle)
     }
     
