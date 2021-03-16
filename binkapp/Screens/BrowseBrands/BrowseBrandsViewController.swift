@@ -8,7 +8,6 @@
 import UIKit
 
 fileprivate enum Constants {
-    static let tableViewHeaderHeight: CGFloat = 47.0
     static let searchIconLeftPadding = 12
     static let searchIconTopPadding = 13
     static let searchIconSideSize = 14
@@ -68,7 +67,8 @@ class BrowseBrandsViewController: BinkViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
+        tableView.register(BrandTableViewCell.self, asNib: true)
+        tableView.register(HeaderTableViewCell.self, asNib: true)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.contentInset = Constants.contentInset
@@ -280,21 +280,13 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView()
-        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: Constants.tableViewHeaderHeight))
-        titleLabel.font = UIFont.headline
-        titleLabel.text = viewModel.getSectionTitleText(section: section)
-        titleLabel.textColor = Current.themeManager.color(for: .text)
-        view.addSubview(titleLabel)
-        return view
+        guard let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as? HeaderTableViewCell else { return nil }
+        headerCell.configure(section: section, viewModel: viewModel)
+        return headerCell
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.backgroundColor = .clear
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return Constants.tableViewHeaderHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

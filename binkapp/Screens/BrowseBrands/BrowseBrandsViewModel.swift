@@ -65,11 +65,24 @@ class BrowseBrandsViewModel {
     func getSectionTitleText(section: Int) -> String {
         switch section {
         case 0:
-            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? "STORE"  : "SEE") : "pll_title".localized
+            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? "store_title".localized  : "see_title".localized) : "pll_title".localized
         case 1:
-            return getPllMembershipPlans().isEmpty ? "STORE" : (getSeeMembershipPlans().isEmpty ? "STORE" : "SEE")
+            return getPllMembershipPlans().isEmpty ? "store_title".localized : (getSeeMembershipPlans().isEmpty ? "store_title".localized : "see_title".localized)
         case 2:
-            return "STORE"
+            return "store_title".localized
+        default:
+            return ""
+        }
+    }
+    
+    func getSectionDescriptionText(section: Int) -> String {
+        switch section {
+        case 0:
+            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? "store_description".localized  : "see_description".localized) : "pll_description".localized
+        case 1:
+            return getPllMembershipPlans().isEmpty ? "store_description".localized : (getSeeMembershipPlans().isEmpty ? "store_description".localized : "see_description".localized)
+        case 2:
+            return "store_description".localized
         default:
             return ""
         }
