@@ -241,6 +241,10 @@ class PointsScrapingManager {
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
         return webScrapingUtility?.isCurrentlyScraping(forMembershipCard: card) == true
     }
+    
+    func debug() {
+        webScrapingUtility?.debug()
+    }
 }
 
 // MARK: - Core Data interaction

@@ -363,6 +363,10 @@ extension WebScrapingUtility: WKNavigationDelegate {
             }
         }
     }
+    
+    func debug() {
+        presentWebView()
+    }
 }
 
 extension WebScrapingUtility: WebScrapingViewControllerDelegate {

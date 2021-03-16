@@ -14,6 +14,7 @@ struct WebScrapingResponse: Codable {
     var errorMessage: String?
     var userActionRequired: Bool?
     var elementDetected: Bool?
+    var cookies: String?
 
     var pointsValue: Int? {
         guard let string = pointsString else { return nil }
@@ -26,5 +27,6 @@ struct WebScrapingResponse: Codable {
         case errorMessage = "error_message"
         case userActionRequired = "user_action_required"
         case elementDetected = "element_detected"
+        case cookies
     }
 }

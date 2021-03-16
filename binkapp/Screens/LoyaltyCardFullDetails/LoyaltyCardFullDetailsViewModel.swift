@@ -106,6 +106,11 @@ class LoyaltyCardFullDetailsViewModel {
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         case .pending:
+            if let planId = membershipCard.membershipPlan?.id, Current.pointsScrapingManager.planIdIsWebScrapable(Int(planId)) {
+                Current.pointsScrapingManager.debug()
+                return
+            }
+            
             let title = "generic_pending_module_title".localized
             let description = "generic_pending_module_description".localized
             let attributedString = ReusableModalConfiguration.makeAttributedString(title: title, description: description)
