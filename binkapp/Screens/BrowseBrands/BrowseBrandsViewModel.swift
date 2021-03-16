@@ -95,22 +95,6 @@ class BrowseBrandsViewModel {
             return filteredPlans
         }
     }
-    
-    // TODO: - Delete
-
-//    func hasMembershipPlans() -> Bool {
-//        if !getPllMembershipPlans().isEmpty && !getNonPllMembershipPlans().isEmpty {
-//            return true
-//        }
-//        return false
-//    }
-//
-//    func hasPlansForOneSection() -> Bool {
-//        if (getPllMembershipPlans().isEmpty && !getNonPllMembershipPlans().isEmpty) || (!getPllMembershipPlans().isEmpty && getNonPllMembershipPlans().isEmpty) {
-//            return true
-//        }
-//        return false
-//    }
         
     func getPllMembershipPlans() -> [CD_MembershipPlan] {
         let plans = getMembershipPlans().filter { $0.featureSet?.planCardType == .link }
@@ -122,27 +106,13 @@ class BrowseBrandsViewModel {
         }
     }
     
-//    func getNonPllMembershipPlans() -> [CD_MembershipPlan] {
-//        let plans = getMembershipPlans().filter { $0.featureSet?.planCardType != .link }
-//        return plans.sorted {
-//            guard let first = $0.account?.companyName?.lowercased() else { return false }
-//            guard let second = $1.account?.companyName?.lowercased() else { return true }
-//            return first < second
-//        }
-//    }
-    
     func getSeeMembershipPlans() -> [CD_MembershipPlan] {
         let agentsEnabledForLPS = Current.pointsScrapingManager.agents.filter { Current.pointsScrapingManager.agentEnabled($0) }
         let seePlans = getMembershipPlans().filter { $0.featureSet?.planCardType == .view }
-        var plansEnabledForScraping: [CD_MembershipPlan] = []
 
-        // TODO: - Refactor
-        seePlans.forEach { plan in
-            if agentsEnabledForLPS.contains(where: { $0.membershipPlanId == Int(plan.id) }) {
-                plansEnabledForScraping.append(plan)
-            }
-        }
-        return plansEnabledForScraping
+        return seePlans.filter({ plan -> Bool in
+            return agentsEnabledForLPS.contains(where: { Int(plan.id) == $0.membershipPlanId })
+        })
     }
     
     func getStoreMembershipPlans() -> [CD_MembershipPlan] {
