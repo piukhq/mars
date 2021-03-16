@@ -18,16 +18,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ejR-3O-P51">
-                        <rect key="frame" x="0.0" y="10" width="404" height="170"/>
+                        <rect key="frame" x="25" y="10" width="354" height="170"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doD-8N-fHO" userLabel="Header Label">
-                                <rect key="frame" x="0.0" y="0.0" width="404" height="20.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="354" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gv6-Ec-Zat" userLabel="Description Label">
-                                <rect key="frame" x="0.0" y="28.5" width="404" height="141.5"/>
+                                <rect key="frame" x="0.0" y="28.5" width="354" height="141.5"/>
                                 <string key="text">Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -38,9 +38,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="ejR-3O-P51" secondAttribute="bottom" constant="20" id="Odi-4C-gSa"/>
-                    <constraint firstItem="ejR-3O-P51" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Qh5-sM-VL4"/>
+                    <constraint firstItem="ejR-3O-P51" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="Qh5-sM-VL4"/>
                     <constraint firstItem="ejR-3O-P51" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="nmg-HO-dgb"/>
-                    <constraint firstAttribute="trailing" secondItem="ejR-3O-P51" secondAttribute="trailing" id="xrB-9b-Db6"/>
+                    <constraint firstAttribute="trailing" secondItem="ejR-3O-P51" secondAttribute="trailing" constant="25" id="xrB-9b-Db6"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

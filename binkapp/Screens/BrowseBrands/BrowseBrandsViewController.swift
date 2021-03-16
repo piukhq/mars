@@ -260,21 +260,25 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
             case 0:
                 cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
                 if indexPath.row == (viewModel.getPllMembershipPlans().isEmpty ? (viewModel.getSeeMembershipPlans().isEmpty ? viewModel.getStoreMembershipPlans().count - 1 : viewModel.getSeeMembershipPlans().count - 1) : viewModel.getPllMembershipPlans().count - 1) {
-                    cell.hideSeparatorView()
+//                    cell.hideSeparatorView()
                 }
             case 1:
                 cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
                 if indexPath.row == (viewModel.getPllMembershipPlans().isEmpty ? viewModel.getStoreMembershipPlans().count - 1 : (viewModel.getSeeMembershipPlans().isEmpty ? viewModel.getStoreMembershipPlans().count - 1 : viewModel.getSeeMembershipPlans().count - 1)) {
-                    cell.hideSeparatorView()
+//                    cell.hideSeparatorView()
                 }
             case 2:
                 cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
                 if indexPath.row == viewModel.getStoreMembershipPlans().count - 1 {
-                    cell.hideSeparatorView()
+//                    cell.hideSeparatorView()
                 }
             default:
                 break
             }
+        }
+        
+        if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+            cell.hideSeparatorView()
         }
         return cell
     }
@@ -284,7 +288,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
         headerCell.configure(section: section, viewModel: viewModel)
         return headerCell
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.backgroundColor = .clear
     }
@@ -292,6 +296,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
         viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

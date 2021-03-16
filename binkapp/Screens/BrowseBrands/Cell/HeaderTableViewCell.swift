@@ -19,5 +19,6 @@ class HeaderTableViewCell: UITableViewCell {
         descriptionLabel.text = viewModel.getSectionDescriptionText(section: section)
         descriptionLabel.font = .bodyTextLarge
         descriptionLabel.textColor = Current.themeManager.color(for: .text)
+        selectedBackgroundView = binkTableViewCellSelectedBackgroundView()
     }
 }
