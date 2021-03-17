@@ -233,6 +233,8 @@
 
 "settings_section_debug_title" = "Debug";
 "settings_section_debug_subtitle" = "Only accessible on debug builds";
+"settings_section_beta_title" = "Beta";
+"settings_row_featureflags_title" = "Feature flags";
 
 // MARK: - Support mail
 
@@ -378,7 +380,9 @@
 "cards_already_linked_message_prefix" = "One of these payment cards are";
 
 // MARK: - Wallet prompts
-"wallet_prompt_loyalty" = "Link this card to your payment cards to automatically collect rewards.";
+"wallet_prompt_link_title" = "Link to your payment cards.";
+"wallet_prompt_link_body" = "Add these loyalty cards and link them to your payment cards to collect rewards automatically when you pay.";
+"wallet_prompt_more_coming_soon" = "More coming soon!";
 "wallet_prompt_payment" = "Collect rewards automatically for select loyalty cards by linking them to your payment cards.";
 
 // MARK: - Camera access

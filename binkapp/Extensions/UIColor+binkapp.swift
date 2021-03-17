@@ -171,6 +171,19 @@ extension UIColor {
             return .binkDynamicGrayDark
         }
     }
+    
+    static var binkDynamicGray3: UIColor {
+        switch Current.themeManager.currentTheme.type {
+        case .system:
+            return UIColor { (traitcollection: UITraitCollection) -> UIColor in
+                return traitcollection.userInterfaceStyle == .light ? .darkGray : .binkDynamicGrayLight
+            }
+        case .light:
+            return .darkGray
+        case .dark:
+            return .binkDynamicGrayLight
+        }
+    }
 
     static var binkDynamicRed: UIColor {
         switch Current.themeManager.currentTheme.type {

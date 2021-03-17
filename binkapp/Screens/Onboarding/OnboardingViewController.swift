@@ -129,6 +129,13 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             configureUI()
         }
     }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        onboardingView1.configure(forType: .pll)
+        onboardingView2.configure(forType: .wallet)
+        onboardingView3.configure(forType: .barcodeOrCollect)
+    }
 
     private func setLayout() {
         let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.learningContainerHeight)

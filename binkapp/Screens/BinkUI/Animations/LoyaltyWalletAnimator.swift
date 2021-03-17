@@ -27,8 +27,6 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             return
         }
         
-        lcdViewController.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
         let collectionViewCellFrame = loyaltyWalletViewController.collectionView.layoutAttributesForItem(at: selectedIndexPath)?.frame
         let cellFrame = loyaltyWalletViewController.collectionView.convert(collectionViewCellFrame ?? CGRect.zero, to: loyaltyWalletViewController.collectionView.superview)
         let navBarHeight = lcdViewController.navigationController?.navigationBar.frame.height ?? 0

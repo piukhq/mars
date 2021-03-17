@@ -13,8 +13,11 @@ class RemoteConfigUtil {
     enum RemoteConfigKey {
         case localPointsCollectionMasterEnabled
         case localPointsCollectionAgentEnabled(WebScrapable)
+        case localPointsCollectionAuthFields(WebScrapable)
         case inAppReviewEnabled
         case dynamicActions
+        case betaFeatures
+        case betaUsers
         
         var formattedKey: String {
             let isDebug = !APIConstants.isProduction
@@ -24,10 +27,16 @@ class RemoteConfigUtil {
                 return "LPC_master_enabled\(isDebug ? "_debug" : "")"
             case .localPointsCollectionAgentEnabled(let agent):
                 return "LPC_\(agent.merchant)_enabled\(isDebug ? "_debug" : "")"
+            case .localPointsCollectionAuthFields(let agent):
+                return "LPC_\(agent.merchant)_auth_fields\(isDebug ? "_debug" : "")"
             case .inAppReviewEnabled:
                 return "in_app_review_enabled"
             case .dynamicActions:
                 return "dynamic_actions"
+            case .betaFeatures:
+                return "beta_features"
+            case .betaUsers:
+                return "beta_users"
             }
         }
     }
@@ -51,11 +60,18 @@ class RemoteConfigUtil {
         fetch()
     }
     
+    private func handleRemoteConfigFetch() {
+        Current.featureManager.getFeaturesFromRemoteConfig()
+    }
+    
     func fetch(completion: (() -> Void)? = nil) {
         remoteConfig.fetch { [weak self] (status, _) in
             guard let self = self else { return }
             if status == .success {
                 self.remoteConfig.activate { (_, _) in
+                    DispatchQueue.main.async {
+                        self.handleRemoteConfigFetch()
+                    }
                     completion?()
                 }
             } else {

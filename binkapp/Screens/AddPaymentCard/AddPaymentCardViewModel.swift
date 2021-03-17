@@ -74,7 +74,7 @@ class AddPaymentCardViewModel {
         
         let configurationModel = ReusableModalConfiguration(title: "terms_and_conditions_title".localized, text: attributedText, primaryButtonTitle: "i_accept".localized, primaryButtonAction: acceptAction, secondaryButtonTitle: "i_decline".localized, secondaryButtonAction: declineAction)
         let viewController = ViewControllerFactory.makePaymentTermsAndConditionsViewController(configurationModel: configurationModel)
-        let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: false)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController, dragToDismiss: false, hideCloseButton: true)
         Current.navigate.to(navigationRequest)
     }
     

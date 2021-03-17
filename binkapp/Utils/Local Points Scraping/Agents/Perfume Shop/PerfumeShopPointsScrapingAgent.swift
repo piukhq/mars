@@ -25,15 +25,7 @@ struct PerfumeShopScrapingAgent: WebScrapable {
             return 78
         }
     }
-
-    var usernameFieldTitle: String {
-        return "email"
-    }
-
-    var passwordFieldTitle: String {
-        return "password"
-    }
-
+    
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }
