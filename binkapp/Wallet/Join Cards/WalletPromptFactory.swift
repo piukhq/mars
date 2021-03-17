@@ -27,6 +27,7 @@ enum WalletPromptFactory {
                 return walletPrompts
             }
             
+            // PLL
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) {
                 /// Get PLL plans and sort by ID
                 let pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
@@ -36,6 +37,23 @@ enum WalletPromptFactory {
                 
                 sortedPlans = addOrRemovePlans(totalNumberOfPlans: Current.numberOfLinkPromptCells, sortedPlans: &sortedPlans) ///  For debug testing
                 walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
+            }
+            
+            // See
+            if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .view }) {
+                let plansEnabledOnRemoteConfig = Current.pointsScrapingManager.agents.filter { Current.pointsScrapingManager.agentEnabled($0) }
+                let seePlans = plans.filter { $0.featureSet?.planCardType == .view }
+                let liveSeePlans = seePlans.filter { plan -> Bool in
+                    return plansEnabledOnRemoteConfig.contains(where: { $0.membershipPlanId == Int(plan.id) })
+                }
+                
+                walletPrompts.append(WalletPrompt(type: .see(plans: liveSeePlans)))
+            }
+            
+            
+            // Store
+            if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .store }) {
+
             }
         }
 
