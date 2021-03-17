@@ -11,7 +11,7 @@ import UIKit
 import ZendeskCoreSDK
 import SupportSDK
 
-class DebugMenuTableViewController: UITableViewController {
+class DebugMenuTableViewController: BinkTableViewController {
     private let viewModel: DebugMenuViewModel
     
     init(viewModel: DebugMenuViewModel) {
@@ -27,13 +27,12 @@ class DebugMenuTableViewController: UITableViewController {
         super.viewDidLoad()
         
         title = viewModel.title
-        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
-
         tableView.register(DebugMenuTableViewCell.self, asNib: true)
         tableView.register(DebugMenuSegmentedTableViewCell.self, asNib: true)
+        tableView.register(DebugMenuPickerTableViewCell.self, asNib: true)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override func configureForCurrentTheme() {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
         tableView.reloadData()
     }
@@ -53,21 +52,28 @@ class DebugMenuTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if viewModel.sections.first?.rows[indexPath.row].cellType == DebugMenuRow.CellType.segmentedControl {
+        let row = viewModel.row(atIndexPath: indexPath)
+        
+        switch viewModel.sections.first?.rows[indexPath.row].cellType {
+        case .segmentedControl:
             let cell: DebugMenuSegmentedTableViewCell = tableView.dequeue(indexPath: indexPath)
             return cell
+        case .picker:
+            let cell: DebugMenuPickerTableViewCell = tableView.dequeue(indexPath: indexPath)
+            cell.configure(debugRow: row)
+            return cell
+        default:
+            break
         }
         
         let cell: DebugMenuTableViewCell = tableView.dequeue(indexPath: indexPath)
-        
-        let row = viewModel.row(atIndexPath: indexPath)
         cell.configure(withDebugRow: row)
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return viewModel.cellHeight
+        return viewModel.cellHeight(atIndex: indexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -102,6 +108,10 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
         case .inAppReviewRules:
             let shouldApply = Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules)
             Current.userDefaults.set(!shouldApply, forDefaultsKey: .applyInAppReviewRules)
+            tableView.reloadData()
+        case .customBundleClientLogin:
+            let customRules = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
+            Current.userDefaults.set(!customRules, forDefaultsKey: .allowCustomBundleClientOnLogin)
             tableView.reloadData()
         default:
             return

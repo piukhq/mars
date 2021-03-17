@@ -96,4 +96,12 @@ extension UIFont {
     class var navBar: UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()
     }
+    
+    class var walletPromptTitleSmall: UIFont {
+        return UIFont(name: "NunitoSans-Bold", size: 16.0) ?? UIFont()
+    }
+    
+    class var walletPromptBodySmall: UIFont {
+        return UIFont(name: "NunitoSans-Regular", size: 14.0) ?? UIFont()
+    }
 }

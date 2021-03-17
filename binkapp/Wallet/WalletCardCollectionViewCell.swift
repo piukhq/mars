@@ -11,10 +11,10 @@ import UIKit
 class WalletCardCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView!
 
-    func setupShadow() {
-        containerView.layer.cornerRadius = 8
+    func setupShadow(cornerRadius: CGFloat = 8) {
+        containerView.layer.cornerRadius = cornerRadius
         containerView.layer.masksToBounds = true
-        contentView.layer.cornerRadius = 8
+        contentView.layer.cornerRadius = cornerRadius
         contentView.clipsToBounds = true
         clipsToBounds = false
         layer.applyDefaultBinkShadow()

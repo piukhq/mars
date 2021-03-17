@@ -21,7 +21,9 @@ class World {
     lazy var pointsScrapingManager = PointsScrapingManager()
     lazy var remoteConfig = RemoteConfigUtil()
     lazy var paymentCardScannerStrings = PaymentCardScannerStrings()
+    lazy var featureManager = FeatureTogglingManager()
     lazy var themeManager = ThemeManager()
+
     var onboardingTrackingId: String? // Stored to provide a consistent id from start to finish of onboarding, reset upon a new journey
     var inAppReviewableJourney: Any? // We cast this to the correct type using generics when we need to
     
@@ -63,12 +65,14 @@ extension UserDefaults: BinkUserDefaults {
         case inAppReviewLastRequestedDate
         case inAppReviewRequestedMinorVersions
         case applyInAppReviewRules
+        case allowCustomBundleClientOnLogin
         case membershipCardMostRecentTransaction(membershipCardId: String)
         case appLaunches
         case hasPreviouslyLaunchedApp
         case localWalletOrder(userId: String, walletType: Wallet.WalletType)
         case theme
         case hasSupportUpdates
+        case featureFlags
         
         var keyValue: String {
             switch self {
@@ -92,6 +96,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "inAppReviewRequestedMinorVersions"
             case .applyInAppReviewRules:
                 return "applyInAppReviewRules"
+            case .allowCustomBundleClientOnLogin:
+                return "allowCustomBundleClientOnLogin"
             case .membershipCardMostRecentTransaction(let cardId):
                 return "membership_card_most_recent_transaction_\(cardId)"
             case .appLaunches:
@@ -104,6 +110,8 @@ extension UserDefaults: BinkUserDefaults {
                 return "theme"
             case .hasSupportUpdates:
                 return "hasSupportUpdates"
+            case .featureFlags:
+                return "featureFlags"
             }
         }
     }

@@ -20,7 +20,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeAllowCustomBundleClientOnLoginRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow(), makeSeePromptCounterRow(), makeStorePromptCounterRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -87,6 +87,26 @@ class DebugMenuFactory {
         return DebugMenuRow(title: "Apply in-app review rules", subtitle: shouldApplyRules ? "Yes" : "No", action: { [weak self] in
             guard let self = self else { return }
             self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .inAppReviewRules)
+        }, cellType: .titleSubtitle)
+    }
+    
+    private func makePLLPromptCounterRow() -> DebugMenuRow {
+        return DebugMenuRow(cellType: .picker(.link))
+    }
+    
+    private func makeSeePromptCounterRow() -> DebugMenuRow {
+        return DebugMenuRow(cellType: .picker(.see))
+    }
+    
+    private func makeStorePromptCounterRow() -> DebugMenuRow {
+        return DebugMenuRow(cellType: .picker(.store))
+    }
+    
+    private func makeAllowCustomBundleClientOnLoginRow() -> DebugMenuRow {
+        let shouldAllowCustomBundleClientOnLogin = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
+        return DebugMenuRow(title: "Allow Custom Bundle and Client on Login", subtitle: shouldAllowCustomBundleClientOnLogin ? "Yes" : "No", action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .customBundleClientLogin)
         }, cellType: .titleSubtitle)
     }
     

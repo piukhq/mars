@@ -26,14 +26,6 @@ struct BootsScrapingAgent: WebScrapable {
         }
     }
     
-    var usernameFieldTitle: String {
-        return "Email"
-    }
-    
-    var passwordFieldTitle: String {
-        return "Password"
-    }
-    
     var loyaltySchemeBalanceSuffix: String? {
         return "points"
     }

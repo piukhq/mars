@@ -11,7 +11,7 @@ import UIKit
 typealias BinkButtonAction = () -> Void
 
 class BinkButton {
-    enum ButtonType {
+    enum ButtonType: Equatable {
         case pill(BinkPillButton.PillButtonType)
         case gradient
         case plain
@@ -33,6 +33,18 @@ class BinkButton {
         self.title = title
         self.enabled = enabled
         self.action = action
+        
+        Current.themeManager.addObserver(self, handler: #selector(configureForCurrentTheme))
+    }
+    
+    deinit {
+        Current.themeManager.removeObserver(self)
+    }
+    
+    @objc func configureForCurrentTheme() {
+        if type == .plain {
+            button.setTitleColor(Current.themeManager.color(for: .text), for: .normal)
+        }
     }
 
     func toggleLoading(isLoading: Bool) {

@@ -75,9 +75,9 @@ class PointsScrapingManager {
     func makeCredentials(fromFormFields fields: [FormField], membershipPlanId: String) -> WebScrapingCredentials? {
         guard let planId = Int(membershipPlanId) else { return nil }
         guard let agent = agent(forPlanId: planId) else { return nil }
-        let authFields = fields.filter { $0.columnKind == .auth }
-        let usernameField = authFields.first(where: { $0.title == agent.usernameFieldTitle })
-        let passwordField = authFields.first(where: { $0.title == agent.passwordFieldTitle })
+        let authFields = fields.filter { $0.columnKind == .lpcAuth }
+        let usernameField = authFields.first(where: { $0.fieldCommonName == agent.usernameField })
+        let passwordField = authFields.first(where: { $0.fieldCommonName == .password })
         
         guard let usernameValue = usernameField?.value else { return nil }
         guard let passwordValue = passwordField?.value else { return nil }
@@ -222,7 +222,7 @@ class PointsScrapingManager {
         return agentEnabled(agent)
     }
     
-    private func agent(forPlanId planId: Int) -> WebScrapable? {
+    func agent(forPlanId planId: Int) -> WebScrapable? {
         return agents.first(where: { $0.membershipPlanId == planId })
     }
 

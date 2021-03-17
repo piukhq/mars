@@ -19,11 +19,8 @@ class ThemeManager {
     }
 
     init() {
-        if let preferredThemeType = Theme.ThemeType.fromUserDefaults() {
-            self.currentTheme = Theme(type: preferredThemeType)
-        } else {
-            self.currentTheme = Theme(type: .system)
-        }
+        currentTheme = Theme(type: .light) /// Need to initialise currentTheme property before accessing self
+        applyPreferredTheme()
     }
 
     init(theme: Theme.ThemeType) {
@@ -32,8 +29,22 @@ class ThemeManager {
 
     var currentTheme: Theme {
         didSet {
-            Current.userDefaults.set(currentTheme.type.rawValue, forDefaultsKey: .theme)
+            if Current.featureManager.isFeatureEnabled(.themes) {
+                Current.userDefaults.set(currentTheme.type.rawValue, forDefaultsKey: .theme)
+            }
             NotificationCenter.default.post(name: .themeManagerDidSetTheme, object: nil)
+        }
+    }
+    
+    func applyPreferredTheme() {
+        if Current.featureManager.isFeatureEnabled(.themes) {
+            if let preferredThemeType = Theme.ThemeType.fromUserDefaults() {
+                self.currentTheme = Theme(type: preferredThemeType)
+            } else {
+                self.currentTheme = Theme(type: .system)
+            }
+        } else {
+            self.currentTheme = Theme(type: .light)
         }
     }
 
