@@ -5,7 +5,7 @@
 //  Copyright © 2019 Bink. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol BrowseBrandsViewModelDelegate: class {
     func browseBrandsViewModel(_ viewModel: BrowseBrandsViewModel, didUpdateFilteredData filteredData: [CD_MembershipPlan])
@@ -75,17 +75,27 @@ class BrowseBrandsViewModel {
         }
     }
     
-    func getSectionDescriptionText(section: Int) -> String {
+    func getSectionDescriptionText(section: Int) -> NSMutableAttributedString? {
+        var descriptionText: String
         switch section {
         case 0:
-            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? "store_description".localized  : "see_description".localized) : "pll_description".localized
+            descriptionText = getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? "store_description".localized : "see_description".localized) : "pll_description".localized
         case 1:
-            return getPllMembershipPlans().isEmpty ? "store_description".localized : (getSeeMembershipPlans().isEmpty ? "store_description".localized : "see_description".localized)
+            descriptionText = getPllMembershipPlans().isEmpty ? "store_description".localized : (getSeeMembershipPlans().isEmpty ? "store_description".localized : "see_description".localized)
         case 2:
-            return "store_description".localized
+            descriptionText = "store_description".localized
         default:
-            return ""
+            return nil
         }
+        
+        let attributedText = NSMutableAttributedString(string: descriptionText, attributes: [.font: UIFont.bodyTextLarge])
+        
+        if section == 0 && !getPllMembershipPlans().isEmpty {
+            let automaticallyRange = NSString(string: attributedText.string).range(of: "pll_description_highlight_automatically".localized)
+            attributedText.addAttributes([.font: UIFont.bodyTextBold], range: automaticallyRange)
+        }
+        
+        return attributedText
     }
     
     func getMembershipPlans() -> [CD_MembershipPlan] {
