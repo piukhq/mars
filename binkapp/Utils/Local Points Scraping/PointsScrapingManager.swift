@@ -142,7 +142,6 @@ class PointsScrapingManager {
     
     func disableLocalPointsScraping(forMembershipCardId cardId: String) {
         removeCredentials(forMembershipCardId: cardId)
-        Current.userDefaults.set(nil, forDefaultsKey: .webScrapingCookies(membershipCardId: cardId))
     }
     
     private func canEnableLocalPointsScrapingForCard(withRequest request: MembershipCardPostModel) -> Bool {
@@ -304,7 +303,6 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     
     func transitionToFailed(membershipCard: CD_MembershipCard) {
         removeCredentials(forMembershipCardId: membershipCard.id)
-        Current.userDefaults.set(nil, forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id))
         
         fetchMembershipCard(forId: membershipCard.id) { membershipCard in
             guard let membershipCard = membershipCard else {

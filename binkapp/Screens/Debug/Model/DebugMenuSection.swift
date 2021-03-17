@@ -20,7 +20,6 @@ struct DebugMenuRow {
         case endpoint
         case secondaryColor
         case lpcDebugMode
-        case lpcCookies
         case responseCodeVisualiser
         case inAppReviewRules
         case customBundleClientLogin
