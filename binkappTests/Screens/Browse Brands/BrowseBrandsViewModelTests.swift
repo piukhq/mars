@@ -19,7 +19,8 @@ class BrowseBrandsViewModelTests: XCTestCase, CoreDataTestable {
     override class func setUp() {
         let membershipPlanModels: [MembershipPlanModel] = [
             MembershipPlanModel(apiId: 0, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "FirstCard", category: "household", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil),
-            MembershipPlanModel(apiId: 1, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .store, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "SecondCard", category: "food", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
+            MembershipPlanModel(apiId: 230, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .view, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "SecondCard", category: "travel", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil),
+            MembershipPlanModel(apiId: 2, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .store, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "ThirdCard", category: "food", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
         ]
 
         baseMembershipPlanResponse = membershipPlanModels
@@ -62,78 +63,63 @@ class BrowseBrandsViewModelTests: XCTestCase, CoreDataTestable {
 //    }
 
     func test_getMembershipPlan_section_0() {
-        var indexPath = IndexPath(row: 0, section: 0)
+        let indexPath = IndexPath(row: 0, section: 0)
         XCTAssertEqual(Self.sut.getMembershipPlan(for: indexPath), Self.membershipPlans.first)
-        indexPath = IndexPath(row: 0, section: 1)
+    }
+    
+    func test_getMembershipPlan_section_1() {
+        let indexPath = IndexPath(row: 0, section: 1)
         XCTAssertEqual(Self.sut.getMembershipPlan(for: indexPath), Self.membershipPlans[1])
+    }
+    
+    func test_getMembershipPlan_section_2() {
+        let indexPath = IndexPath(row: 0, section: 2)
+        XCTAssertEqual(Self.sut.getMembershipPlan(for: indexPath), Self.membershipPlans[2])
     }
 
     func test_getSectionTitleText() {
-        XCTAssertEqual(Self.sut.getSectionTitleText(section: 0), "Payment Linked Loyalty")
-        XCTAssertEqual(Self.sut.getSectionTitleText(section: 1), "All")
+        XCTAssertEqual(Self.sut.getSectionTitleText(section: 0), "Link to your Payments Cards")
+        XCTAssertEqual(Self.sut.getSectionTitleText(section: 1), "See your balance")
+        XCTAssertEqual(Self.sut.getSectionTitleText(section: 2), "Store your barcode")
     }
 
-    func test_hasMembershipPlans_true() {
-        let membershipPlanModels: [MembershipPlanModel] = [
-            MembershipPlanModel(apiId: 0, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "FirstCard", category: "household", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil),
-            MembershipPlanModel(apiId: 1, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .store, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "SecondCard", category: "food", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
-        ]
-
-        mapPlansToManagedObjects(membershipPlanModels)
-        XCTAssertTrue(Self.sut.hasMembershipPlans())
+    func test_getSectionDescriptionText() {
+        XCTAssertEqual(Self.sut.getSectionDescriptionText(section: 0)?.string, "pll_description".localized)
+        XCTAssertEqual(Self.sut.getSectionDescriptionText(section: 1)?.string, "see_description".localized)
+        XCTAssertEqual(Self.sut.getSectionDescriptionText(section: 2)?.string, "store_description".localized )
     }
-
-    func test_hasMembershipPlans_false() {
-        let membershipPlanModels: [MembershipPlanModel] = [
-            MembershipPlanModel(apiId: 0, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: nil, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "FirstCard", category: "household", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil),
-            MembershipPlanModel(apiId: 1, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: nil, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "SecondCard", category: "food", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
-        ]
-        
-        mapPlansToManagedObjects(membershipPlanModels)
-        XCTAssertFalse(Self.sut.hasMembershipPlans())
-    }
-
-    func test_hasPlansForOneSection_true() {
-        let membershipPlanModels: [MembershipPlanModel] = [
-            MembershipPlanModel(apiId: 0, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "FirstCard", category: "household", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil),
-            MembershipPlanModel(apiId: 1, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "SecondCard", category: "food", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
-        ]
-        
-        mapPlansToManagedObjects(membershipPlanModels)
-        XCTAssertTrue(Self.sut.hasPlansForOneSection())
-    }
-
-    func test_hasPlansForOneSection_false() {
-        let membershipPlanModels: [MembershipPlanModel] = [
-            MembershipPlanModel(apiId: 0, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "FirstCard", category: "household", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil),
-            MembershipPlanModel(apiId: 1, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: nil, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "SecondCard", category: "food", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
-        ]
-        
-        mapPlansToManagedObjects(membershipPlanModels)
-        XCTAssertFalse(Self.sut.hasPlansForOneSection())
+    
+    func test_getMembershipPlans() {
+        XCTAssertEqual(Self.sut.getMembershipPlans().count, 3)
     }
 
     func test_getPllMembershipPlans() {
         XCTAssertEqual(Self.sut.getPllMembershipPlans().count, 1)
     }
 
-    func test_getNonPllMembershipPlans() {
-        XCTAssertEqual(Self.sut.getNonPllMembershipPlans().count, 1)
+    func test_getSeeMembershipPlans() {
+        XCTAssertEqual(Self.sut.getSeeMembershipPlans().count, 1)
+    }
+    
+    func test_getStoreMembershipPlans() {
+        XCTAssertEqual(Self.sut.getStoreMembershipPlans().count, 1)
     }
 
     func test_numberOfSections() {
-        let membershipPlanModels: [MembershipPlanModel] = [
-            MembershipPlanModel(apiId: 0, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .link, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "FirstCard", category: "household", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil),
-            MembershipPlanModel(apiId: 1, status: nil, featureSet: FeatureSetModel(apiId: nil, authorisationRequired: nil, transactionsAvailable: nil, digitalOnly: nil, hasPoints: nil, cardType: .store, linkingSupport: nil, hasVouchers: nil), images: nil, account: MembershipPlanAccountModel(apiId: nil, planName: nil, planNameCard: nil, planURL: nil, companyName: "SecondCard", category: "food", planSummary: nil, planDescription: nil, barcodeRedeemInstructions: nil, planRegisterInfo: nil, companyURL: nil, enrolIncentive: nil, forgottenPasswordUrl: nil, tiers: nil, planDocuments: nil, addFields: nil, authoriseFields: nil, registrationFields: nil, enrolFields: nil), balances: nil, dynamicContent: nil, hasVouchers: nil, card: nil)
-        ]
-
-        mapPlansToManagedObjects(membershipPlanModels)
-        XCTAssertEqual(Self.sut.numberOfSections(), 2)
+        XCTAssertEqual(Self.sut.numberOfSections(), 3)
     }
 
     func test_searchText() {
         Self.sut.searchText = "First"
         Self.sut.selectedFilters = ["household"]
+        XCTAssertEqual(Self.sut.filteredPlans.count, 1)
+        
+        Self.sut.searchText = "Second"
+        Self.sut.selectedFilters = ["travel"]
+        XCTAssertEqual(Self.sut.filteredPlans.count, 1)
+        
+        Self.sut.searchText = "Third"
+        Self.sut.selectedFilters = ["food"]
         XCTAssertEqual(Self.sut.filteredPlans.count, 1)
     }
 
@@ -143,5 +129,9 @@ class BrowseBrandsViewModelTests: XCTestCase, CoreDataTestable {
 
     func test_getNumberOfRowsForSection_1() {
         XCTAssertEqual(Self.sut.getNumberOfRowsFor(section: 1), 1)
+    }
+    
+    func test_getNumberOfRowsForSection_2() {
+        XCTAssertEqual(Self.sut.getNumberOfRowsFor(section: 2), 1)
     }
 }

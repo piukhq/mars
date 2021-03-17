@@ -53,7 +53,7 @@ class BrowseBrandsViewModel {
         case 0:
             return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row]  : getSeeMembershipPlans()[indexPath.row] ) : getPllMembershipPlans()[indexPath.row]
         case 1:
-            return getPllMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row]  : (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row] : getSeeMembershipPlans()[indexPath.row])
+            return getPllMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row] : (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row] : getSeeMembershipPlans()[indexPath.row])
         case 2:
             return getStoreMembershipPlans()[indexPath.row]
         default:
