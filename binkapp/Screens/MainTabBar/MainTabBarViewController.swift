@@ -38,8 +38,6 @@ class MainTabBarViewController: UITabBarController {
         super.viewDidLoad()
 
         Current.wallet.launch()
-        
-        self.title = "" // TODO: Why? Remove.
         populateTabBar()
 
         configureForCurrentTheme()
@@ -63,8 +61,8 @@ class MainTabBarViewController: UITabBarController {
 
 extension MainTabBarViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if viewController is AddingOptionsTabBarViewController {
-            viewModel.toAddingOptionsScreen()
+        if viewController is BrowseBrandsViewController {
+            viewModel.toBrowseBrandsScreen()
             return false
         }
         
