@@ -48,7 +48,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
             descriptionLabel.textColor = .black
             
             let layout = UICollectionViewFlowLayout()
-            layout.sectionInset = UIEdgeInsets(top: 0, left: LayoutHelper.WalletDimensions.cardHorizontalPadding, bottom: LayoutHelper.WalletDimensions.cardHorizontalPadding, right: LayoutHelper.WalletDimensions.cardHorizontalPadding)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: LayoutHelper.WalletDimensions.cardHorizontalInset, bottom: LayoutHelper.WalletDimensions.cardHorizontalPadding, right: LayoutHelper.WalletDimensions.cardHorizontalInset)
             layout.minimumLineSpacing = LayoutHelper.WalletDimensions.cellInterimSpacing
             layout.minimumInteritemSpacing = LayoutHelper.WalletDimensions.cellInterimSpacing
             self.merchantGridCollectionView?.collectionViewLayout = layout
@@ -58,7 +58,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")
         merchantGridCollectionView.translatesAutoresizingMaskIntoConstraints = false
         merchantGridCollectionView.dataSource = self
-        merchantGridCollectionView.delegate = self        
+        merchantGridCollectionView.delegate = self
         merchantGridCollectionView.reloadData()
     }
     

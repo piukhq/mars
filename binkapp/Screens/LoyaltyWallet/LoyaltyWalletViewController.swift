@@ -79,7 +79,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
             } else {
                 /// Pass wallet prompt to layout helper to calculate size of prompt card based on the amount of merchant cells its collection view will contain
                 guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return .zero }
-                return LayoutHelper.WalletDimensions.sizeForWalletPrompt(viewFrame: collectionView.frame, numberOfRows: walletPrompt.numberOfRows)
+                return LayoutHelper.WalletDimensions.sizeForWalletPrompt(viewFrame: collectionView.frame, walletPrompt: walletPrompt)
             }
         }
         return cell.frame.size

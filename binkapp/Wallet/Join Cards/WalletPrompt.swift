@@ -73,7 +73,7 @@ enum WalletPromptType {
         case .link(let plans):
             return plans.count > 2 ? 2 : 1
         case .see(let plans), .store(let plans):
-            return plans.count > 6 ? 2 : 1
+            return plans.count > 5 ? 2 : 1
         default:
             return 0
         }

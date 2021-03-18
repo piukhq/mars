@@ -41,13 +41,12 @@ class MerchantHeroCell: UICollectionViewCell {
         }
         
         imageView.contentMode = .scaleAspectFill
-//        imageView.clipsToBounds = true
         addSubview(imageView)
-        
-        let width = frame.width * UIScreen.main.scale
-        let height = frame.height * UIScreen.main.scale
-        print(width / UIScreen.main.scale)
-        print(height / UIScreen.main.scale)
+//
+//        let width = frame.width * UIScreen.main.scale
+//        let height = frame.height * UIScreen.main.scale
+//        print(width / UIScreen.main.scale)
+//        print(height / UIScreen.main.scale)
     }
     
     func configureWithPlaceholder(frame: CGRect, walletPrompt: WalletPrompt?) {

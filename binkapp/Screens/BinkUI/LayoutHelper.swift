@@ -23,6 +23,7 @@ extension LayoutHelper {
 
     enum WalletDimensions {
         static let cardHorizontalPadding: CGFloat = 25.0
+        static let cardHorizontalInset: CGFloat = 25.0
         private static let cardWidth: CGFloat = UIScreen.main.bounds.width - (WalletDimensions.cardHorizontalPadding * 2)
         private static let linkCellAspectRatio: CGFloat = 34 / 57
         static let cardSize = CGSize(width: WalletDimensions.cardWidth, height: 120.0)
@@ -44,8 +45,27 @@ extension LayoutHelper {
             return (viewWidth / 2) * linkCellAspectRatio
         }
         
-        static func sizeForWalletPrompt(viewFrame: CGRect, numberOfRows: CGFloat) -> CGSize {
-            let cardHeight = walletPromptHeaderHeight + (walletPromptLinkCellHeight(viewWidth: cardWidth) * numberOfRows)
+        static func sizeForWalletPrompt(viewFrame: CGRect, walletPrompt: WalletPrompt) -> CGSize {
+            var cardHeight: CGFloat = 0
+            
+            switch walletPrompt.type {
+            case .link:
+                cardHeight = walletPromptHeaderHeight + (walletPromptLinkCellHeight(viewWidth: cardWidth) * walletPrompt.numberOfRows)
+            case .see, .store:
+                var numberOfItemsPerRow = 5
+                switch UIDevice.current.width {
+                case .iPhone6Size, .iPhone5Size, .iPhone4Size:
+                    numberOfItemsPerRow = 4
+                default:
+                    break
+                }
+                let totalSpacing: CGFloat = (cardHorizontalInset * 2) + (cellInterimSpacing * CGFloat((numberOfItemsPerRow - 1)))
+                let cellHeight = ((viewFrame.width - totalSpacing) / CGFloat(numberOfItemsPerRow))
+
+                cardHeight = walletPromptHeaderHeight + (cellHeight * walletPrompt.numberOfRows) + cellInterimSpacing + 5
+            default:
+                break
+            }
             
             return CGSize(width: cardWidth, height: cardHeight)
         }
@@ -60,7 +80,7 @@ extension LayoutHelper {
                 break
             }
             
-            var totalSpacing: CGFloat = (cardHorizontalPadding * 2) + (cellInterimSpacing * CGFloat((numberOfItemsPerRow - 1)))
+            var totalSpacing: CGFloat = (cardHorizontalInset * 2) + (cellInterimSpacing * CGFloat((numberOfItemsPerRow - 1)))
 
             if case .link = walletPrompt?.type {
                 numberOfItemsPerRow = 2

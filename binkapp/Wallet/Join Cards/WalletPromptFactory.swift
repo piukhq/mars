@@ -47,9 +47,13 @@ enum WalletPromptFactory {
                 let plansEnabledOnRemoteConfig = Current.pointsScrapingManager.agents.filter { Current.pointsScrapingManager.agentEnabled($0) }
                 if !plansEnabledOnRemoteConfig.isEmpty {
                     let seePlans = plans.filter { $0.featureSet?.planCardType == .view }
-                    let liveSeePlans = seePlans.filter { plan -> Bool in
+                    var liveSeePlans = seePlans.filter { plan -> Bool in
                         return plansEnabledOnRemoteConfig.contains(where: { $0.membershipPlanId == Int(plan.id) })
                     }
+                    
+                    #if DEBUG
+                    liveSeePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.seePromptDebugCellCount, sortedPlans: &liveSeePlans)
+                    #endif
                     
                     walletPrompts.append(WalletPrompt(type: .see(plans: liveSeePlans)))
                 }
@@ -58,7 +62,6 @@ enum WalletPromptFactory {
             
             // Store
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .store }) {
-
             }
         }
 
