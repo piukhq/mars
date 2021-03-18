@@ -28,8 +28,12 @@ struct DebugMenuViewModel {
         return sections.count
     }
     
-    var cellHeight: CGFloat {
-        return 60
+    func cellHeight(atIndex index: Int) -> CGFloat {
+        if case .picker = sections.first?.rows[index].cellType {
+            return 80
+        } else {
+            return 60
+        }
     }
     
     func rowsCount(forSectionAtIndex index: Int) -> Int {

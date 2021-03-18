@@ -22,13 +22,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     }()
     
     private var walletPrompt: WalletPrompt?
-//    let spacing: CGFloat = 25.0
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-        
     func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {
         setupShadow(cornerRadius: 20)
         titleLabel.text = walletPrompt.title
@@ -36,8 +30,8 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         
         switch UIDevice.current.width {
         case .iPhone6Size, .iPhone5Size, .iPhone4Size:
-            titleLabel.font = UIFont.walletPromptTitleSmall
-            descriptionLabel.font = UIFont.walletPromptBodySmall
+            titleLabel.font = .walletPromptTitleSmall
+            descriptionLabel.font = .walletPromptBodySmall
             titleLabelTopConstraint.constant = 15
         default:
             break
@@ -46,7 +40,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
         
         if case .link = walletPrompt.type {
-            CAGradientLayer.makeGradient(for: headerView, firstColor: .binkPurple, secondColor: .blueAccent)
+            CAGradientLayer.makeGradient(for: headerView, firstColor: .binkPurple, secondColor: .blueAccent, startPoint: CGPoint(x: 0.7, y: 0.0))
             titleLabel.textColor = .white
             descriptionLabel.textColor = .white
         } else {
@@ -64,9 +58,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")
         merchantGridCollectionView.translatesAutoresizingMaskIntoConstraints = false
         merchantGridCollectionView.dataSource = self
-        merchantGridCollectionView.delegate = self
-        merchantGridCollectionView.clipsToBounds = true
-        
+        merchantGridCollectionView.delegate = self        
         merchantGridCollectionView.reloadData()
     }
     
@@ -133,61 +125,5 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return LayoutHelper.WalletDimensions.sizeForWalletPromptCell(viewFrame: collectionView.frame, walletPrompt: walletPrompt)
-    }
-}
-
-
-class MerchantHeroCell: UICollectionViewCell {
-    var imageView = UIImageView()
-    
-    override var reuseIdentifier: String? {
-        return "MerchantHeroCell"
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        imageView.image = nil
-    }
-    
-    func configure(with membershipPlan: CD_MembershipPlan, walletPrompt: WalletPrompt?) {
-        backgroundColor = .lightGray
-        
-//        if let hexStringColor = membershipPlan.card?.colour {
-//            backgroundColor = UIColor(hexString: hexStringColor)
-//            layoutIfNeeded()
-//            let placeholderName = membershipPlan.account?.planNameCard ?? membershipPlan.account?.planName ?? ""
-//            let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: self.frame.size)
-//            backgroundColor = UIColor(patternImage: placeholder)
-//        }
-        
-        if case .link = walletPrompt?.type {
-            imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
-            imageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
-        } else {
-            imageView = UIImageView(frame: CGRect(x: 5, y: 5, width: frame.width - 10, height: frame.height - 10))
-            imageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
-            layer.cornerRadius = 10
-        }
-        
-        imageView.contentMode = .scaleAspectFill
-//        imageView.clipsToBounds = true
-        addSubview(imageView)
-        
-        let width = frame.width * UIScreen.main.scale
-        let height = frame.height * UIScreen.main.scale
-        print(width / UIScreen.main.scale)
-        print(height / UIScreen.main.scale)
-    }
-    
-    func configureWithPlaceholder(frame: CGRect, walletPrompt: WalletPrompt?) {
-        backgroundColor = UIColor(hexString: "102F82").darker(by: 5.0)
-        
-        let size = LayoutHelper.WalletDimensions.sizeForWalletPromptCell(viewFrame: frame, walletPrompt: walletPrompt)
-        let label = UILabel(frame: CGRect(origin: .zero, size: size))
-        label.text = "wallet_prompt_more_coming_soon".localized
-        label.textAlignment = .center
-        label.textColor = .white
-        label.font = UIFont.statusLabel
-        addSubview(label)
     }
 }

@@ -68,7 +68,7 @@ enum WalletPromptType {
         }
     }
 
-    var numberOfRows: Int {
+    var numberOfRows: CGFloat {
         switch self {
         case .link(let plans):
             return plans.count > 2 ? 2 : 1
@@ -122,7 +122,7 @@ class WalletPrompt: WalletPromptProtocol {
         return type.membershipPlans
     }
     
-    var numberOfRows: Int {
+    var numberOfRows: CGFloat {
         return type.numberOfRows
     }
 

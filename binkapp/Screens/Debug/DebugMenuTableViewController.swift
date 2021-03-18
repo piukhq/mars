@@ -75,11 +75,7 @@ class DebugMenuTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if case .picker = viewModel.sections.first?.rows[indexPath.row].cellType {
-            return 80
-        } else {
-            return viewModel.cellHeight
-        }
+        return viewModel.cellHeight(atIndex: indexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

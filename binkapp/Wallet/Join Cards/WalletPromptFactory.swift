@@ -35,7 +35,10 @@ enum WalletPromptFactory {
                     firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
                 })
                 
-                sortedPlans = addOrRemovePlans(totalNumberOfPlans: Current.numberOfLinkPromptCells, sortedPlans: &sortedPlans) ///  For debug testing
+                #if DEBUG
+                sortedPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &sortedPlans)
+                #endif
+                
                 walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
             }
             
@@ -71,15 +74,18 @@ enum WalletPromptFactory {
         // We pass nil as the scan delegate as the receiver doesn't care about the delegate in order to return the key
         return !Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards)) && !Current.wallet.hasPaymentCards
     }
-    
-    fileprivate static func addOrRemovePlans(totalNumberOfPlans: Int?, sortedPlans: inout [CD_MembershipPlan]) -> [CD_MembershipPlan] {
+}
+
+// Debugging methods
+extension WalletPromptFactory {
+    static private func adjustDebugCellCount(totalNumberOfPlans: Int?, sortedPlans: inout [CD_MembershipPlan]) -> [CD_MembershipPlan] {
         guard let plans = Current.wallet.membershipPlans else { return [] }
         
         if let totalNumberOfPlans = totalNumberOfPlans {
             let numberToAddOrRemove = sortedPlans.count - totalNumberOfPlans
             
             if numberToAddOrRemove < 0 {
-                // If negative, add that many plans onto sorted plans
+                /// If negative, add that many plans onto sorted plans
                 let plansToAppend = plans.prefix(abs(numberToAddOrRemove))
                 sortedPlans.append(contentsOf: plansToAppend)
             } else {
