@@ -61,10 +61,11 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
                 return cell
             }
             
-            if case .link = walletPrompt.type {
-                cell.configureWithWalletPrompt(walletPrompt)
-                return cell
-            }
+//            if case .link = walletPrompt.type {
+//                cell.configureWithWalletPrompt(walletPrompt)
+//                return cell
+//            }
+            cell.configureWithWalletPrompt(walletPrompt)
 
             return cell
         }
