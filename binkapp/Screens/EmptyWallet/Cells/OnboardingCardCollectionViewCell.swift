@@ -115,6 +115,13 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
         if (indexPath.row + 1) > plans.count {
             toBrowseBrands()
         } else {
+            // TODO: - Scroll to see or store section
+            
+            if plans.count > 10 && indexPath.row == (10 - 1) {
+                toBrowseBrands()
+                return
+            }
+            
             let membershipPlan = plans[indexPath.row]
             let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
