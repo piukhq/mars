@@ -31,7 +31,7 @@ enum LCDPlaceholderGenerator {
         return img
     }
     
-    static func generate(with colorHexString: String, planName: String, destSize: CGSize) -> UIImage {
+    static func generate(with colorHexString: String, planName: String, destSize: CGSize, font: UIFont = .subtitle) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: destSize)
         let img = renderer.image { ctx in
             ctx.cgContext.setFillColor(UIColor(hexString: colorHexString).cgColor)
@@ -41,7 +41,7 @@ enum LCDPlaceholderGenerator {
             let xStart = padding
             let yStart = padding
             
-            let attributes = [NSAttributedString.Key.font: UIFont.subtitle, NSAttributedString.Key.foregroundColor: UIColor.white ]
+            let attributes = [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor: UIColor.white ]
             let planNameAttributed = NSAttributedString(string: planName, attributes: attributes)
                         
             planNameAttributed.draw(at: CGPoint(x: xStart, y: yStart))

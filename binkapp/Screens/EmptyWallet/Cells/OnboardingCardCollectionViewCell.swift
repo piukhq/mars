@@ -85,11 +85,10 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
                 plansCount += 1
             }
         case .see, .store:
-            // Check device, if small then change from 6 to 5?
-            break
-//            if plansCount > 6 {
-//                plansCount += 1
-//            }
+            // Check device, if small then change from 10 to 8?
+            if plansCount > 10 {
+                plansCount = 10
+            }
         default:
             return 0
         }
@@ -104,7 +103,7 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
         if (indexPath.row + 1) > plans.count {
             cell.configureWithPlaceholder(frame: collectionView.frame, walletPrompt: walletPrompt)
         } else {
-            cell.configure(with: plans[indexPath.row], walletPrompt: walletPrompt)
+            cell.configure(with: plans[indexPath.row], walletPrompt: walletPrompt, showMoreCell: plans.count > 10 && indexPath.row == (10 - 1) ? true : false)
         }
                 
         return cell
