@@ -24,7 +24,8 @@ class MerchantHeroCell: UICollectionViewCell {
         label.removeFromSuperview()
     }
     
-    func configure(with membershipPlan: CD_MembershipPlan, walletPrompt: WalletPrompt?, showMoreCell: Bool) {
+    func configure(with membershipPlan: CD_MembershipPlan?, walletPrompt: WalletPrompt?, showMorePlansCell: Bool) {
+        guard let membershipPlan = membershipPlan else { return }
         let hexStringColor = membershipPlan.card?.colour ?? ""
             backgroundColor = UIColor(hexString: hexStringColor)
             layoutIfNeeded()
@@ -39,7 +40,7 @@ class MerchantHeroCell: UICollectionViewCell {
             layer.cornerRadius = 10
             imageView = UIImageView(frame: CGRect(x: 5, y: 5, width: frame.width - 10, height: frame.height - 10))
             
-            if showMoreCell {
+            if showMorePlansCell {
                 backgroundColor = .binkDynamicGray2
                 imageView.image = UIImage(systemName: "ellipsis")
                 imageView.contentMode = .scaleAspectFit

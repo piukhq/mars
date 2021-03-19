@@ -60,7 +60,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
             CAGradientLayer.makeGradient(for: headerView, firstColor: .binkPurple, secondColor: .blueAccent, startPoint: CGPoint(x: 0.7, y: 0.0))
             titleLabel.textColor = .white
             descriptionLabel.textColor = .white
-            
+
             let layout = UICollectionViewFlowLayout()
             layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             layout.minimumLineSpacing = 0
@@ -141,7 +141,7 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
         if (indexPath.row + 1) > plans.count {
             cell.configureWithPlaceholder(frame: collectionView.frame, walletPrompt: walletPrompt)
         } else {
-            cell.configure(with: plans[indexPath.row], walletPrompt: walletPrompt, showMoreCell: plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) ? true : false)
+            cell.configure(with: plans[safe: indexPath.row], walletPrompt: walletPrompt, showMorePlansCell: plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) ? true : false)
         }
                 
         return cell
