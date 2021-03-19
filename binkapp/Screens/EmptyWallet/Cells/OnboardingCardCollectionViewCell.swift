@@ -22,6 +22,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     }()
     
     private var walletPrompt: WalletPrompt?
+    private var maxPlansToDisplay = 8
     
     func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {
         setupShadow(cornerRadius: 20)
@@ -55,6 +56,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         }
         
         self.walletPrompt = walletPrompt
+        maxPlansToDisplay = walletPrompt.maxNumberOfPlansToDisplay
         merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")
         merchantGridCollectionView.translatesAutoresizingMaskIntoConstraints = false
         merchantGridCollectionView.dataSource = self
@@ -85,9 +87,8 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
                 plansCount += 1
             }
         case .see, .store:
-            // Check device, if small then change from 10 to 8?
-            if plansCount > 10 {
-                plansCount = 10
+            if plansCount > maxPlansToDisplay {
+                plansCount = maxPlansToDisplay
             }
         default:
             return 0
@@ -103,7 +104,7 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
         if (indexPath.row + 1) > plans.count {
             cell.configureWithPlaceholder(frame: collectionView.frame, walletPrompt: walletPrompt)
         } else {
-            cell.configure(with: plans[indexPath.row], walletPrompt: walletPrompt, showMoreCell: plans.count > 10 && indexPath.row == (10 - 1) ? true : false)
+            cell.configure(with: plans[indexPath.row], walletPrompt: walletPrompt, showMoreCell: plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) ? true : false)
         }
                 
         return cell
@@ -117,7 +118,7 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
         } else {
             // TODO: - Scroll to see or store section
             
-            if plans.count > 10 && indexPath.row == (10 - 1) {
+            if plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) {
                 toBrowseBrands()
                 return
             }

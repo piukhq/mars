@@ -73,7 +73,23 @@ enum WalletPromptType {
         case .link(let plans):
             return plans.count > 2 ? 2 : 1
         case .see(let plans), .store(let plans):
-            return plans.count > 5 ? 2 : 1
+            return plans.count > maxNumberOfPlansToDisplay / 2 ? 2 : 1
+        default:
+            return 0
+        }
+    }
+    
+    var maxNumberOfPlansToDisplay: Int {
+        switch self {
+        case .link:
+            return 4
+        case .see, .store:
+            switch UIDevice.current.width {
+            case .iPhone6Size, .iPhone5Size, .iPhone4Size:
+                return 8
+            default:
+                return 10
+            }
         default:
             return 0
         }
@@ -128,6 +144,10 @@ class WalletPrompt: WalletPromptProtocol {
 
     var iconImageName: String? {
         return type.iconImageName
+    }
+    
+    var maxNumberOfPlansToDisplay: Int {
+        return type.maxNumberOfPlansToDisplay
     }
 
     static func userDefaultsDismissKey(forType type: WalletPromptType) -> String {
