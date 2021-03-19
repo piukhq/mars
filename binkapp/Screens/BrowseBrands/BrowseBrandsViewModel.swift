@@ -48,18 +48,18 @@ class BrowseBrandsViewModel {
         }
     }
     
-    func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan {
+    func getMembershipPlan(for indexPath: IndexPath) -> CD_MembershipPlan? {
         switch indexPath.section {
         case 0:
-            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row]  : getSeeMembershipPlans()[indexPath.row] ) : getPllMembershipPlans()[indexPath.row]
+            return getPllMembershipPlans().isEmpty ? (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[safe: indexPath.row]  : getSeeMembershipPlans()[safe: indexPath.row] ) : getPllMembershipPlans()[safe: indexPath.row]
         case 1:
-            return getPllMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row] : (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[indexPath.row] : getSeeMembershipPlans()[indexPath.row])
+            return getPllMembershipPlans().isEmpty ? getStoreMembershipPlans()[safe: indexPath.row] : (getSeeMembershipPlans().isEmpty ? getStoreMembershipPlans()[safe: indexPath.row] : getSeeMembershipPlans()[safe: indexPath.row])
         case 2:
-            return getStoreMembershipPlans()[indexPath.row]
+            return getStoreMembershipPlans()[safe: indexPath.row]
         default:
             break
         }
-        return getStoreMembershipPlans()[indexPath.row]
+        return getStoreMembershipPlans()[safe: indexPath.row]
     }
     
     func getSectionTitleText(section: Int) -> String {

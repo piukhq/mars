@@ -253,7 +253,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: BrandTableViewCell = tableView.dequeue(indexPath: indexPath)
         
-        let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
+        guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return cell }
         
         if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
             cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
@@ -276,7 +276,7 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
+        guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return }
         viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
         tableView.deselectRow(at: indexPath, animated: true)
     }
