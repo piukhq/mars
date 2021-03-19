@@ -129,6 +129,13 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
             configureUI()
         }
     }
+    
+    override func configureForCurrentTheme() {
+        super.configureForCurrentTheme()
+        onboardingView1.configure(forType: .pll)
+        onboardingView2.configure(forType: .wallet)
+        onboardingView3.configure(forType: .barcodeOrCollect)
+    }
 
     private func setLayout() {
         let learningContainerHeightConstraint = learningContainer.heightAnchor.constraint(equalToConstant: LayoutHelper.Onboarding.learningContainerHeight)
@@ -299,7 +306,9 @@ extension OnboardingViewController: ASAuthorizationControllerDelegate, ASAuthori
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("")
+        if #available(iOS 14.0, *) {
+            BinkLogger.error(UserLoggerError.appleSignIn, value: error.localizedDescription)
+        }
     }
     
     // TODO: // Move to user service in future ticket. All login type requests should reuse the same code where possible

@@ -70,8 +70,6 @@ extension LoginTextFieldView: UITextFieldDelegate {
         if isValid && fieldType != nil {
             guard let fType = fieldType else { return }
             delegate?.loginTextFieldView(self, didCompleteWithColumn: title, value: textField.text ?? "", fieldType: fType)
-        } else {
-            print("IT IS NOT VALID")
         }
     }
     

@@ -20,7 +20,7 @@ class DebugMenuFactory {
     }
     
     private func makeToolsSection() -> DebugMenuSection {
-        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow(), makeSeePromptCounterRow(), makeStorePromptCounterRow()])
+        return DebugMenuSection(title: "debug_menu_tools_section_title".localized, rows: [makeVersionNumberRow(), makeEndpointRow(), makeEmailAddressRow(), makeApiVersionRow(), makeAllowCustomBundleClientOnLoginRow(), makeSecondaryColorRow(), makeLPCWebViewRow(), makeLPCUseCookiesRow(), makeForceCrashRow(), makeResponseCodeVisualiserRow(), makeInAppReviewRow(), makePLLPromptCounterRow(), makeSeePromptCounterRow(), makeStorePromptCounterRow()])
     }
     
     private func makeVersionNumberRow() -> DebugMenuRow {
@@ -102,8 +102,16 @@ class DebugMenuFactory {
         return DebugMenuRow(cellType: .picker(.store))
     }
     
-    func makeEnvironmentAlertController(navigationController: UINavigationController) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    private func makeAllowCustomBundleClientOnLoginRow() -> DebugMenuRow {
+        let shouldAllowCustomBundleClientOnLogin = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
+        return DebugMenuRow(title: "Allow Custom Bundle and Client on Login", subtitle: shouldAllowCustomBundleClientOnLogin ? "Yes" : "No", action: { [weak self] in
+            guard let self = self else { return }
+            self.delegate?.debugMenuFactory(self, shouldPerformActionForType: .customBundleClientLogin)
+        }, cellType: .titleSubtitle)
+    }
+    
+    func makeEnvironmentAlertController(navigationController: UINavigationController) -> BinkAlertController {
+        let alert = BinkAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Dev", style: .default, handler: { _ in
             APIConstants.changeEnvironment(environment: .dev)
             NotificationCenter.default.post(name: .shouldLogout, object: nil)

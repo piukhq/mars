@@ -297,6 +297,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     func transitionToFailed(membershipCard: CD_MembershipCard) {
+        removeCredentials(forMembershipCardId: membershipCard.id)
         Current.userDefaults.set(nil, forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id))
         
         fetchMembershipCard(forId: membershipCard.id) { membershipCard in
@@ -328,6 +329,9 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
+        if #available(iOS 14.0, *) {
+            BinkLogger.infoPrivateHash(event: WalletLoggerEvent.pointsScrapingSuccess, value: card.id)
+        }
         transitionToAuthorized(pointsValue: value, membershipCard: card, agent: agent)
     }
     
@@ -337,6 +341,9 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: card, error: error))
         default:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: card, error: error))
+        }
+        if #available(iOS 14.0, *) {
+            BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
         transitionToFailed(membershipCard: card)
     }

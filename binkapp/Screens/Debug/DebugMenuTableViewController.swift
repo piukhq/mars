@@ -11,7 +11,7 @@ import UIKit
 import ZendeskCoreSDK
 import SupportSDK
 
-class DebugMenuTableViewController: UITableViewController {
+class DebugMenuTableViewController: BinkTableViewController {
     private let viewModel: DebugMenuViewModel
     
     init(viewModel: DebugMenuViewModel) {
@@ -27,14 +27,12 @@ class DebugMenuTableViewController: UITableViewController {
         super.viewDidLoad()
         
         title = viewModel.title
-        view.backgroundColor = Current.themeManager.color(for: .viewBackground)
-
         tableView.register(DebugMenuTableViewCell.self, asNib: true)
         tableView.register(DebugMenuSegmentedTableViewCell.self, asNib: true)
         tableView.register(DebugMenuPickerTableViewCell.self, asNib: true)
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override func configureForCurrentTheme() {
         view.backgroundColor = Current.themeManager.color(for: .viewBackground)
         tableView.reloadData()
     }
@@ -110,6 +108,10 @@ extension DebugMenuTableViewController: DebugMenuFactoryDelegate {
         case .inAppReviewRules:
             let shouldApply = Current.userDefaults.bool(forDefaultsKey: .applyInAppReviewRules)
             Current.userDefaults.set(!shouldApply, forDefaultsKey: .applyInAppReviewRules)
+            tableView.reloadData()
+        case .customBundleClientLogin:
+            let customRules = Current.userDefaults.bool(forDefaultsKey: .allowCustomBundleClientOnLogin)
+            Current.userDefaults.set(!customRules, forDefaultsKey: .allowCustomBundleClientOnLogin)
             tableView.reloadData()
         default:
             return

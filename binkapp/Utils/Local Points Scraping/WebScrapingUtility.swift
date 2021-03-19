@@ -60,8 +60,8 @@ class WebScrapingUtility: NSObject {
     
     func start() throws {
         /// If we are refreshing the balance, we should try to access the scrapable url straight away, otherwise we know we'll need to login
-        let urlString = isBalanceRefresh ? agent.scrapableUrlString : agent.loginUrlString
-        guard let url = URL(string: urlString) else {
+//        let urlString = isBalanceRefresh ? agent.scrapableUrlString : agent.loginUrlString
+        guard let url = URL(string: agent.loginUrlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         

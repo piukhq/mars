@@ -10,7 +10,7 @@ import UIKit
 
 struct SettingsSection {
     let title: String
-    let rows: [SettingsRow]
+    var rows: [SettingsRow]
 }
 
 struct SettingsRow {
@@ -29,6 +29,7 @@ struct SettingsRow {
         case debug = "settings_section_debug_title"
         case whoWeAre = "settings_who_we_are_title"
         case theme = "settings_row_theme_title"
+        case featureFlags = "settings_row_featureflags_title"
     }
     
     enum RowAction {

@@ -198,8 +198,14 @@ extension SettingsViewController: UITableViewDelegate {
                     let viewController = WhoWeAreViewController()
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
+                case is FeatureFlagsTableViewController.Type:
+                    let viewController = FeatureFlagsTableViewController(viewModel: FeatureFlagsViewModel(), delegate: self)
+                    let navigationRequest = PushNavigationRequest(viewController: viewController)
+                    Current.navigate.to(navigationRequest)
                 default:
-                    print("Unsupported VC for presentation")
+                    if #available(iOS 14.0, *) {
+                        BinkLogger.error(AppLoggerError.unsupportedViewController)
+                    }
                 }
             case .pushToReusable(let screen):
                 switch screen {
@@ -224,5 +230,11 @@ extension SettingsViewController: UITableViewDelegate {
                 Current.navigate.to(navigationRequest)
             }
         }
+    }
+}
+
+extension SettingsViewController: FeatureFlagsViewControllerDelegate {
+    func featureFlagsViewControllerDidDismiss(_ featureFlagsViewController: FeatureFlagsTableViewController) {
+        tableView.reloadData()
     }
 }
