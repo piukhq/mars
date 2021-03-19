@@ -380,3 +380,10 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
         switchTableWithNoMatchesLabel()
     }
 }
+
+extension BrowseBrandsViewController: OnboardingCardDelegate {
+    func scrollToSection(_ section: PlanCardType?) {
+        guard let section = section?.rawValue, section < viewModel.numberOfSections() else { return }
+        tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: true)
+    }
+}

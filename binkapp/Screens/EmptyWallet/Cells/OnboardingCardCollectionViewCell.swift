@@ -8,12 +8,22 @@
 
 import UIKit
 
+enum PlanCardType: Int {
+    case link
+    case see
+    case store
+}
+
+protocol OnboardingCardDelegate: AnyObject {
+    func scrollToSection(_ section: PlanCardType?)
+}
+
 class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var merchantGridCollectionView: UICollectionView!
-    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var headerView: UIView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var merchantGridCollectionView: UICollectionView!
+    @IBOutlet private weak var titleLabelTopConstraint: NSLayoutConstraint!
     
     private lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
@@ -23,6 +33,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     
     private var walletPrompt: WalletPrompt?
     private var maxPlansToDisplay = 8
+    private weak var delegate: OnboardingCardDelegate?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -82,8 +93,22 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     }
     
     @objc private func toBrowseBrands() {
+        switch walletPrompt?.type {
+        case .see:
+            navigateToBrowseBrands(section: .see)
+        case .store:
+            navigateToBrowseBrands(section: .store)
+        default:
+            navigateToBrowseBrands()
+        }
+    }
+    
+    private func navigateToBrowseBrands(section: PlanCardType? = .link) {
         let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
-        let navigatioRequest = ModalNavigationRequest(viewController: viewController)
+        delegate = viewController
+        let navigatioRequest = ModalNavigationRequest(viewController: viewController) {
+            self.delegate?.scrollToSection(section)
+        }
         Current.navigate.to(navigatioRequest)
     }
 }
@@ -126,15 +151,15 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
         guard let plans = walletPrompt?.membershipPlans else { return }
 
         if (indexPath.row + 1) > plans.count {
-            toBrowseBrands()
+            navigateToBrowseBrands()
         } else {
-            // TODO: - Scroll to see or store section
-            
+            /// More plans cell
             if plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) {
                 toBrowseBrands()
                 return
             }
             
+            /// All other cells
             let membershipPlan = plans[indexPath.row]
             let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
