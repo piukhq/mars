@@ -10,6 +10,7 @@ import UIKit
 
 class MerchantHeroCell: UICollectionViewCell {
     var imageView = UIImageView()
+    var label = UILabel()
     
     override var reuseIdentifier: String? {
         return "MerchantHeroCell"
@@ -19,6 +20,8 @@ class MerchantHeroCell: UICollectionViewCell {
         super.prepareForReuse()
         imageView.image = nil
         backgroundColor = .clear
+        layer.cornerRadius = 0
+        label.removeFromSuperview()
     }
     
     func configure(with membershipPlan: CD_MembershipPlan, walletPrompt: WalletPrompt?, showMoreCell: Bool) {
@@ -49,18 +52,13 @@ class MerchantHeroCell: UICollectionViewCell {
         }
         
         addSubview(imageView)
-//
-//        let width = frame.width * UIScreen.main.scale
-//        let height = frame.height * UIScreen.main.scale
-//        print(width / UIScreen.main.scale)
-//        print(height / UIScreen.main.scale)
     }
     
     func configureWithPlaceholder(frame: CGRect, walletPrompt: WalletPrompt?) {
         backgroundColor = UIColor(hexString: "102F82").darker(by: 5.0)
         
         let size = LayoutHelper.WalletDimensions.sizeForWalletPromptCell(viewFrame: frame, walletPrompt: walletPrompt)
-        let label = UILabel(frame: CGRect(origin: .zero, size: size))
+        label = UILabel(frame: CGRect(origin: .zero, size: size))
         label.text = "wallet_prompt_more_coming_soon".localized
         label.textAlignment = .center
         label.textColor = .white
