@@ -23,23 +23,21 @@ enum WalletPromptFactory {
         }
 
         if walletType == .loyalty {
-            guard let plans = Current.wallet.membershipPlans, let membershipCards = Current.wallet.membershipCards else {
+            guard var plans = Current.wallet.membershipPlans, let membershipCards = Current.wallet.membershipCards else {
                 return walletPrompts
             }
+
+            plans = plans.sorted(by: { $0.account?.id.localizedStandardCompare($1.account?.id ?? "") == .orderedDescending })
             
             // PLL
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) {
-                /// Get PLL plans and sort by ID
-                let pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
-                var sortedPlans = pllPlans.sorted(by: {(firstPlan, secondPlan) -> Bool in
-                    firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
-                })
+                var pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
                 
                 #if DEBUG
-                sortedPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &sortedPlans)
+                pllPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &pllPlans)
                 #endif
                 
-                walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
+                walletPrompts.append(WalletPrompt(type: .link(plans: pllPlans)))
             }
             
             // See
