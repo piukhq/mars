@@ -62,6 +62,13 @@ enum WalletPromptFactory {
             
             // Store
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .store }) {
+                var storePlans = plans.filter { $0.featureSet?.planCardType == .store }
+                
+                #if DEBUG
+                storePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.storePromptDebugCellCount, sortedPlans: &storePlans)
+                #endif
+                
+                walletPrompts.append(WalletPrompt(type: .store(plans: storePlans)))
             }
         }
 

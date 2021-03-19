@@ -24,6 +24,11 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     private var walletPrompt: WalletPrompt?
     private var maxPlansToDisplay = 8
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        CAGradientLayer.removeGradientLayer(for: headerView)
+    }
+    
     func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {
         setupShadow(cornerRadius: 20)
         titleLabel.text = walletPrompt.title
@@ -44,6 +49,12 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
             CAGradientLayer.makeGradient(for: headerView, firstColor: .binkPurple, secondColor: .blueAccent, startPoint: CGPoint(x: 0.7, y: 0.0))
             titleLabel.textColor = .white
             descriptionLabel.textColor = .white
+            
+            let layout = UICollectionViewFlowLayout()
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            layout.minimumLineSpacing = 0
+            layout.minimumInteritemSpacing = 0
+            merchantGridCollectionView?.collectionViewLayout = layout
         } else {
             contentView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
             titleLabel.textColor = Current.themeManager.color(for: .text)
@@ -53,7 +64,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
             layout.sectionInset = UIEdgeInsets(top: 0, left: LayoutHelper.WalletDimensions.cardHorizontalInset, bottom: LayoutHelper.WalletDimensions.cardHorizontalPadding, right: LayoutHelper.WalletDimensions.cardHorizontalInset)
             layout.minimumLineSpacing = LayoutHelper.WalletDimensions.cellInterimSpacing
             layout.minimumInteritemSpacing = LayoutHelper.WalletDimensions.cellInterimSpacing
-            self.merchantGridCollectionView?.collectionViewLayout = layout
+            merchantGridCollectionView?.collectionViewLayout = layout
         }
         
         self.walletPrompt = walletPrompt

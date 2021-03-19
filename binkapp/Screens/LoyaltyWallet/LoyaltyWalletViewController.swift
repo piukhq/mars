@@ -57,16 +57,9 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
         } else {
             // Wallet prompts
             let cell: OnboardingCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else {
-                return cell
-            }
-            
-//            if case .link = walletPrompt.type {
-//                cell.configureWithWalletPrompt(walletPrompt)
-//                return cell
-//            }
+            guard let walletPrompt = viewModel.promptCard(forIndexPath: indexPath) else { return cell }
             cell.configureWithWalletPrompt(walletPrompt)
-
+            
             return cell
         }
     }
