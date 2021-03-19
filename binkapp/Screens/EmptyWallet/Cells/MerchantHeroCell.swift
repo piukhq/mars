@@ -37,14 +37,14 @@ class MerchantHeroCell: UICollectionViewCell {
             imageView = UIImageView(frame: CGRect(x: 5, y: 5, width: frame.width - 10, height: frame.height - 10))
             
             if showMoreCell {
-                backgroundColor = .disabledTextGrey
+                backgroundColor = .binkDynamicGray2
                 imageView.image = UIImage(systemName: "ellipsis")
                 imageView.contentMode = .scaleAspectFit
                 imageView.tintColor = .white
             } else {
                 imageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
                 imageView.contentMode = .scaleAspectFill
-                backgroundColor = .binkDynamicGrayDark // Remove
+                backgroundColor = .binkDynamicGray // Remove
             }
         }
         

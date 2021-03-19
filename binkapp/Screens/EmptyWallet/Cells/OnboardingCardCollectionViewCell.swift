@@ -45,8 +45,9 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
             titleLabel.textColor = .white
             descriptionLabel.textColor = .white
         } else {
-            titleLabel.textColor = .black
-            descriptionLabel.textColor = .black
+            contentView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+            titleLabel.textColor = Current.themeManager.color(for: .text)
+            descriptionLabel.textColor = Current.themeManager.color(for: .text)
             
             let layout = UICollectionViewFlowLayout()
             layout.sectionInset = UIEdgeInsets(top: 0, left: LayoutHelper.WalletDimensions.cardHorizontalInset, bottom: LayoutHelper.WalletDimensions.cardHorizontalPadding, right: LayoutHelper.WalletDimensions.cardHorizontalInset)
