@@ -80,13 +80,13 @@ class BrowseBrandsViewModelTests: XCTestCase, CoreDataTestable {
 //    }
 
     func test_getSectionTitleText() {
-        XCTAssertEqual(Self.sut.getSectionTitleText(section: 0), "Link to your Payments Cards")
+        XCTAssertEqual(Self.sut.getSectionTitleText(section: 0), "Link to your Payment Cards")
 //        XCTAssertEqual(Self.sut.getSectionTitleText(section: 1), "See your balance")
 //        XCTAssertEqual(Self.sut.getSectionTitleText(section: 2), "Store your barcode")
     }
 
     func test_getSectionDescriptionText() {
-        XCTAssertEqual(Self.sut.getSectionDescriptionText(section: 0)?.string, "pll_description".localized)
+        XCTAssertEqual(Self.sut.getSectionDescriptionText(section: 0)?.string, "Add these loyalty cards and link them to your payment cards to collect rewards automatically when you pay.")
 //        XCTAssertEqual(Self.sut.getSectionDescriptionText(section: 1)?.string, "see_description".localized)
 //        XCTAssertEqual(Self.sut.getSectionDescriptionText(section: 2)?.string, "store_description".localized )
     }
