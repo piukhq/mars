@@ -20,6 +20,14 @@ extension UIDevice {
     var iPhoneX: Bool { UIScreen.main.nativeBounds.height == 2436 }
     var iPhone: Bool { UIDevice.current.userInterfaceIdiom == .phone }
     var iPad: Bool { UIDevice().userInterfaceIdiom == .pad }
+    var iPhoneSE: Bool {
+        switch width {
+        case .iPhone6Size, .iPhone5Size:
+            return true
+        default:
+            return false
+        }
+    }
     
     enum ScreenSize: String {
         case iPhone4Size = "iPhone 4 or iPhone 4S"

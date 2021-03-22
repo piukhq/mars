@@ -79,17 +79,23 @@ enum WalletPromptType {
         }
     }
     
+    var numberOfItemsPerRow: CGFloat {
+        switch self {
+        case .link:
+            return 2
+        case .see, .store:
+            return UIDevice.current.iPhoneSE ? 4 : 5
+        default:
+            return 0
+        }
+    }
+    
     var maxNumberOfPlansToDisplay: Int {
         switch self {
         case .link:
             return 4
         case .see, .store:
-            switch UIDevice.current.width {
-            case .iPhone6Size, .iPhone5Size, .iPhone4Size:
-                return 8
-            default:
-                return 10
-            }
+            return UIDevice.current.iPhoneSE ? 8 : 10
         default:
             return 0
         }
@@ -140,6 +146,10 @@ class WalletPrompt: WalletPromptProtocol {
     
     var numberOfRows: CGFloat {
         return type.numberOfRows
+    }
+    
+    var numberOfItemsPerRow: CGFloat {
+        return type.numberOfItemsPerRow
     }
 
     var iconImageName: String? {

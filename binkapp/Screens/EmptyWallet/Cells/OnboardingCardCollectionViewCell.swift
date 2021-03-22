@@ -45,13 +45,10 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         titleLabel.text = walletPrompt.title
         descriptionLabel.text = walletPrompt.body
         
-        switch UIDevice.current.width {
-        case .iPhone6Size, .iPhone5Size, .iPhone4Size:
+        if UIDevice.current.iPhoneSE {
             titleLabel.font = .walletPromptTitleSmall
             descriptionLabel.font = .walletPromptBodySmall
             titleLabelTopConstraint.constant = 15
-        default:
-            break
         }
         
         headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
@@ -113,6 +110,8 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     }
 }
 
+// MARK: - Merchant Grid Collection View
+
 extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var plansCount = walletPrompt?.membershipPlans?.count ?? 0
@@ -120,8 +119,7 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
         switch walletPrompt?.type {
         case .link:
             if !(plansCount % 2 == 0) {
-                /// Add extra item for coming soon cell
-                plansCount += 1
+                plansCount += 1 /// Add extra item for coming soon cell
             }
         case .see, .store:
             if plansCount > maxPlansToDisplay {

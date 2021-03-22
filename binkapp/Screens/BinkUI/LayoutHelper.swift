@@ -31,21 +31,14 @@ extension LayoutHelper {
         static let cardCornerRadius: CGFloat = 8.0
         static let contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         static let cellInterimSpacing: CGFloat = 15.0
-        static var walletPromptLinkHeaderHeight: CGFloat {
-            switch UIDevice.current.width {
-            case .iPhone6Size, .iPhone5Size, .iPhone4Size:
-                return 113
+        private static func headerHeight(for walletPrompt: WalletPrompt) -> CGFloat {
+            switch walletPrompt.type {
+            case .link, .store:
+                return UIDevice.current.iPhoneSE ? 114.5 : 134
+            case .see:
+                return UIDevice.current.iPhoneSE ? 95.5 : 134
             default:
-                return 134
-            }
-        }
-        
-        static var walletPromptSeeHeaderHeight: CGFloat {
-            switch UIDevice.current.width {
-            case .iPhone6Size, .iPhone5Size, .iPhone4Size:
-                return 95.5
-            default:
-                return 134
+                return 0
             }
         }
         
@@ -58,27 +51,14 @@ extension LayoutHelper {
             
             switch walletPrompt.type {
             case .link:
-                cardHeight = walletPromptLinkHeaderHeight + (walletPromptLinkCellHeight(viewWidth: cardWidth) * walletPrompt.numberOfRows)
+                cardHeight = headerHeight(for: walletPrompt) + (walletPromptLinkCellHeight(viewWidth: cardWidth) * walletPrompt.numberOfRows)
             case .see, .store:
-                var numberOfItemsPerRow = 5
-                var padding: CGFloat = 0
-                
-                switch UIDevice.current.width {
-                case .iPhone6Size, .iPhone5Size, .iPhone4Size:
-                    numberOfItemsPerRow = 4
-                default:
-                    padding = walletPrompt.numberOfRows == 2 ? 5 : 0
-                }
+                let numberOfItemsPerRow = UIDevice.current.iPhoneSE ? 4 : 5
+                let padding: CGFloat = !UIDevice.current.iPhoneSE && walletPrompt.numberOfRows == 2 ? 5 : 0 /// Fixes clipping when 10 or more cells are visible
                 
                 let totalSpacing: CGFloat = (cardHorizontalInset * 2) + (cellInterimSpacing * CGFloat((numberOfItemsPerRow - 1)))
                 let cellHeight = ((viewFrame.width - totalSpacing) / CGFloat(numberOfItemsPerRow))
-                
-                var headerHeight = walletPromptSeeHeaderHeight
-                if case .store = walletPrompt.type {
-                    headerHeight = walletPromptLinkHeaderHeight
-                }
-                
-                cardHeight = headerHeight + (cellHeight * walletPrompt.numberOfRows) + cellInterimSpacing + padding
+                cardHeight = headerHeight(for: walletPrompt) + (cellHeight * walletPrompt.numberOfRows) + cellInterimSpacing + padding
             default:
                 break
             }
@@ -87,26 +67,18 @@ extension LayoutHelper {
         }
         
         static func sizeForWalletPromptCell(viewFrame: CGRect, walletPrompt: WalletPrompt?) -> CGSize {
-            var numberOfItemsPerRow = 5
-            switch UIDevice.current.width {
-            case .iPhone6Size, .iPhone5Size, .iPhone4Size:
-                numberOfItemsPerRow = 4
-            default:
-                break
-            }
+            guard let walletPrompt = walletPrompt else { return .zero }
+            var width: CGFloat
+            var height: CGFloat
             
-            var totalSpacing: CGFloat = (cardHorizontalInset * 2) + (cellInterimSpacing * CGFloat((numberOfItemsPerRow - 1)))
-
-            if case .link = walletPrompt?.type {
-                numberOfItemsPerRow = 2
-                totalSpacing = 0
-            }
-            
-            let width = ((viewFrame.width - totalSpacing) / CGFloat(numberOfItemsPerRow))
-            var height = width
-            
-            if case .link = walletPrompt?.type {
+            switch walletPrompt.type {
+            case .link:
+                width = viewFrame.width / CGFloat(walletPrompt.numberOfItemsPerRow)
                 height = width * linkCellAspectRatio
+            default:
+                let totalSpacing: CGFloat = (cardHorizontalInset * 2) + (cellInterimSpacing * CGFloat((walletPrompt.numberOfItemsPerRow - 1)))
+                width = (viewFrame.width - totalSpacing) / CGFloat(walletPrompt.numberOfItemsPerRow)
+                height = width
             }
             
             return CGSize(width: width, height: height)
