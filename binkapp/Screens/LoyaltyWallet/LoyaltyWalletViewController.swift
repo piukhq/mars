@@ -45,11 +45,7 @@ class LoyaltyWalletViewController: WalletViewController<LoyaltyWalletViewModel> 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row < viewModel.cardCount {
             let cell: WalletLoyaltyCardCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            
-            guard let membershipCard = viewModel.cards?[indexPath.row] else {
-                return cell
-            }
-            
+            guard let membershipCard = viewModel.cards?[indexPath.row] else { return cell }
             let cellViewModel = WalletLoyaltyCardCellViewModel(membershipCard: membershipCard)
             cell.configureUIWithViewModel(viewModel: cellViewModel, delegate: self)
             

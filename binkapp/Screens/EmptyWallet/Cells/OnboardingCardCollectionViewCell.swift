@@ -160,10 +160,11 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
             }
             
             /// All other cells
-            let membershipPlan = plans[indexPath.row]
-            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
+            if let membershipPlan = plans[safe: indexPath.row] {
+                let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
         }
     }
     

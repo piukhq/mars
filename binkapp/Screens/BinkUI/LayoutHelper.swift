@@ -40,7 +40,7 @@ extension LayoutHelper {
             }
         }
         
-        static var walletPromptSeeStoreHeaderHeight: CGFloat {
+        static var walletPromptSeeHeaderHeight: CGFloat {
             switch UIDevice.current.width {
             case .iPhone6Size, .iPhone5Size, .iPhone4Size:
                 return 95.5
@@ -72,7 +72,13 @@ extension LayoutHelper {
                 
                 let totalSpacing: CGFloat = (cardHorizontalInset * 2) + (cellInterimSpacing * CGFloat((numberOfItemsPerRow - 1)))
                 let cellHeight = ((viewFrame.width - totalSpacing) / CGFloat(numberOfItemsPerRow))
-                cardHeight = walletPromptSeeStoreHeaderHeight + (cellHeight * walletPrompt.numberOfRows) + cellInterimSpacing + padding
+                
+                var headerHeight = walletPromptSeeHeaderHeight
+                if case .store = walletPrompt.type {
+                    headerHeight = walletPromptLinkHeaderHeight
+                }
+                
+                cardHeight = headerHeight + (cellHeight * walletPrompt.numberOfRows) + cellInterimSpacing + padding
             default:
                 break
             }
