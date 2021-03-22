@@ -24,13 +24,21 @@ extension LayoutHelper {
     enum WalletDimensions {
         static let cardHorizontalPadding: CGFloat = 25.0
         static let cardHorizontalInset: CGFloat = 25.0
-        private static let cardWidth: CGFloat = UIScreen.main.bounds.width - (WalletDimensions.cardHorizontalPadding * 2)
-        private static let linkCellAspectRatio: CGFloat = 34 / 57
         static let cardSize = CGSize(width: WalletDimensions.cardWidth, height: 120.0)
         static let cardLineSpacing: CGFloat = 12.0
         static let cardCornerRadius: CGFloat = 8.0
         static let contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         static let cellInterimSpacing: CGFloat = 15.0
+        private static let cardWidth: CGFloat = UIScreen.main.bounds.width - (WalletDimensions.cardHorizontalPadding * 2)
+        private static let linkCellAspectRatio: CGFloat = 34 / 57
+        private static var walletPromptLinkCellHeight: CGFloat {
+            (cardWidth / 2) * linkCellAspectRatio
+        }
+        private static func walletPromptSeeStoreCellHeight(_ itemsPerRow: CGFloat) -> CGFloat {
+            let totalSpacing = (cardHorizontalInset * 2) + (cellInterimSpacing * (itemsPerRow - 1))
+            return (cardWidth - totalSpacing) / itemsPerRow
+        }
+        
         private static func headerHeight(for walletPrompt: WalletPrompt) -> CGFloat {
             switch walletPrompt.type {
             case .link, .store:
@@ -42,24 +50,13 @@ extension LayoutHelper {
             }
         }
         
-        private static func walletPromptLinkCellHeight(viewWidth: CGFloat) -> CGFloat {
-            return (viewWidth / 2) * linkCellAspectRatio
-        }
-        
-        
         static func sizeForWalletPrompt(walletPrompt: WalletPrompt) -> CGSize {
-            var cardHeight: CGFloat = 0
-            
+            var cardHeight = headerHeight(for: walletPrompt)
             switch walletPrompt.type {
             case .link:
-                cardHeight = headerHeight(for: walletPrompt) + (walletPromptLinkCellHeight(viewWidth: cardWidth) * walletPrompt.numberOfRows)
+                cardHeight += walletPromptLinkCellHeight * walletPrompt.numberOfRows
             case .see, .store:
-                let totalSpacing: CGFloat = (cardHorizontalInset * 2) + (cellInterimSpacing * CGFloat((walletPrompt.numberOfItemsPerRow - 1)))
-                let cellHeight = (cardWidth - totalSpacing) / CGFloat(walletPrompt.numberOfItemsPerRow)
-                cardHeight = headerHeight(for: walletPrompt) + (cellHeight * walletPrompt.numberOfRows) + cardHorizontalInset
-                if walletPrompt.numberOfRows == 2 {
-                    cardHeight += cellInterimSpacing
-                }
+                cardHeight += (walletPromptSeeStoreCellHeight(walletPrompt.numberOfItemsPerRow) * walletPrompt.numberOfRows) + cardHorizontalInset + (cellInterimSpacing * (walletPrompt.numberOfRows - 1))
             default:
                 break
             }
@@ -68,20 +65,13 @@ extension LayoutHelper {
         }
         
         static func sizeForWalletPromptCell(walletPrompt: WalletPrompt) -> CGSize {
-            var width: CGFloat
-            var height: CGFloat
-            
             switch walletPrompt.type {
             case .link:
-                width = cardWidth / CGFloat(walletPrompt.numberOfItemsPerRow)
-                height = width * linkCellAspectRatio
+                return CGSize(width: cardWidth / walletPrompt.numberOfItemsPerRow, height: walletPromptLinkCellHeight)
             default:
-                let totalSpacing: CGFloat = (cardHorizontalInset * 2) + (cellInterimSpacing * CGFloat((walletPrompt.numberOfItemsPerRow - 1)))
-                width = (cardWidth - totalSpacing) / CGFloat(walletPrompt.numberOfItemsPerRow)
-                height = width
+                let height = walletPromptSeeStoreCellHeight(walletPrompt.numberOfItemsPerRow)
+                return CGSize(width: height, height: height)
             }
-            
-            return CGSize(width: width, height: height)
         }
     }
 }
