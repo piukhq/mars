@@ -9,8 +9,8 @@
 import UIKit
 
 class MerchantHeroCell: UICollectionViewCell {
-    var imageView = UIImageView()
-    var label = UILabel()
+    private var imageView = UIImageView()
+    private var label = UILabel()
     
     override var reuseIdentifier: String? {
         return "MerchantHeroCell"
@@ -24,13 +24,13 @@ class MerchantHeroCell: UICollectionViewCell {
         label.removeFromSuperview()
     }
     
-    func configure(with membershipPlan: CD_MembershipPlan?, walletPrompt: WalletPrompt?, showMorePlansCell: Bool) {
+    func configure(with membershipPlan: CD_MembershipPlan?, walletPrompt: WalletPrompt, showMorePlansCell: Bool) {
         guard let membershipPlan = membershipPlan else { return }
         let hexStringColor = membershipPlan.card?.colour ?? ""
             backgroundColor = UIColor(hexString: hexStringColor)
             layoutIfNeeded()
         
-        if case .link = walletPrompt?.type {
+        if case .link = walletPrompt.type {
             let placeholderName = membershipPlan.account?.planName ?? membershipPlan.account?.planNameCard ?? ""
             let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: self.frame.size, font: .textFieldLabel)
             backgroundColor = UIColor(patternImage: placeholder)
@@ -55,10 +55,10 @@ class MerchantHeroCell: UICollectionViewCell {
         addSubview(imageView)
     }
     
-    func configureWithPlaceholder(frame: CGRect, walletPrompt: WalletPrompt?) {
+    func configureWithPlaceholder(walletPrompt: WalletPrompt) {
         backgroundColor = UIColor(hexString: "102F82").darker(by: 5.0)
         
-        let size = LayoutHelper.WalletDimensions.sizeForWalletPromptCell(viewFrame: frame, walletPrompt: walletPrompt)
+        let size = LayoutHelper.WalletDimensions.sizeForWalletPromptCell(walletPrompt: walletPrompt)
         label = UILabel(frame: CGRect(origin: .zero, size: size))
         label.text = "wallet_prompt_more_coming_soon".localized
         label.textAlignment = .center

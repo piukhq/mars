@@ -134,10 +134,10 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: MerchantHeroCell = collectionView.dequeue(indexPath: indexPath)
-        guard let plans = walletPrompt?.membershipPlans else { return cell }
+        guard let plans = walletPrompt?.membershipPlans, let walletPrompt = walletPrompt else { return cell }
 
         if (indexPath.row + 1) > plans.count {
-            cell.configureWithPlaceholder(frame: collectionView.frame, walletPrompt: walletPrompt)
+            cell.configureWithPlaceholder(walletPrompt: walletPrompt)
         } else {
             cell.configure(with: plans[safe: indexPath.row], walletPrompt: walletPrompt, showMorePlansCell: plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) ? true : false)
         }
@@ -167,6 +167,7 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return LayoutHelper.WalletDimensions.sizeForWalletPromptCell(viewFrame: collectionView.frame, walletPrompt: walletPrompt)
+        guard let walletPrompt = walletPrompt else { return .zero }
+        return LayoutHelper.WalletDimensions.sizeForWalletPromptCell(walletPrompt: walletPrompt)
     }
 }
