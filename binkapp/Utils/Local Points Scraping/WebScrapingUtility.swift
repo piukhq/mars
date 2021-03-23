@@ -17,6 +17,7 @@ struct WebScrapingCredentials {
 protocol WebScrapingUtilityDelegate: AnyObject {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityAgentError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
 }
 
 class WebScrapingUtility: NSObject {
@@ -151,7 +152,7 @@ class WebScrapingUtility: NSObject {
                     return
                 }
             case .failure:
-                self.finish(withError: .failedToExecuteLoginScript)
+                self.finish(withAgentError: .failedToExecuteLoginScript)
             }
         }
     }
@@ -168,7 +169,7 @@ class WebScrapingUtility: NSObject {
                     self.closeWebView()
 
                     guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: self.membershipCard.id) else {
-                        self.finish(withError: .failedToExecuteLoginScript)
+                        self.finish(withAgentError: .failedToExecuteLoginScript)
                         return
                     }
                     self.login(credentials: credentials)
@@ -196,7 +197,7 @@ class WebScrapingUtility: NSObject {
                 }
 
                 guard let points = response.pointsValue else {
-                    self.finish(withError: .failedToCastReturnValue)
+                    self.finish(withAgentError: .failedToCastReturnValue)
                     return
                 }
                 self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
@@ -209,12 +210,12 @@ class WebScrapingUtility: NSObject {
                 }
                 completion(.success(points))
             case .failure:
-                self.finish(withError: .failedToExecuteScrapingScript)
+                self.finish(withAgentError: .failedToExecuteScrapingScript)
             }
         }
     }
 
-    private func detectElement(queryString: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
+    private func detectElement(queryString: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityAgentError>) -> Void) {
         guard let script = script(scriptName: "LocalPointsCollection_DetectElement") else {
             return
         }
@@ -229,7 +230,7 @@ class WebScrapingUtility: NSObject {
         return try? String(contentsOf: file)
     }
 
-    private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
+    private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityAgentError>) -> Void) {
         if isRunningScript { return }
         isRunningScript = true
         webView.evaluateJavaScript(script) { [weak self] (response, error) in
@@ -254,7 +255,7 @@ class WebScrapingUtility: NSObject {
         }
     }
 
-    private func finish(withValue value: Int? = nil, withError error: WebScrapingUtilityError? = nil) {
+    private func finish(withValue value: Int? = nil, withError error: WebScrapingUtilityError? = nil, withAgentError agentError: WebScrapingUtilityAgentError? = nil) {
         idleTimer?.invalidate()
         detectElementTimer?.invalidate()
 
@@ -267,6 +268,11 @@ class WebScrapingUtility: NSObject {
         if let error = error {
             SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: isBalanceRefresh))
             delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: membershipCard, withAgent: agent)
+        }
+        
+        if let agentError = agentError {
+            SentryService.triggerException(.localPointsCollectionScrapingAgentFailed(agentError, agent.merchant, balanceRefresh: isBalanceRefresh))
+            delegate?.webScrapingUtility(self, didCompleteWithError: agentError, forMembershipCard: membershipCard, withAgent: agent)
         }
     }
     

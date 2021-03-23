@@ -362,6 +362,7 @@ enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
     case localPointsCollectionSuccess(membershipCard: CD_MembershipCard)
     case localPointsCollectionStatus(membershipCard: CD_MembershipCard)
     case localPointsCollectionInternalFailure(membershipCard: CD_MembershipCard, error: WebScrapingUtilityError)
+    case localPointsCollectionInternalAgentFailure(membershipCard: CD_MembershipCard, error: WebScrapingUtilityAgentError)
     case localPointsCollectionCredentialFailure(membershipCard: CD_MembershipCard, error: WebScrapingUtilityError)
     
     var name: String {
@@ -372,6 +373,8 @@ enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
             return "local_points_collection_status"
         case .localPointsCollectionInternalFailure:
             return "local_points_collection_internal_failure"
+        case .localPointsCollectionInternalAgentFailure:
+            return "local_points_collection_internal_agent_failure"
         case .localPointsCollectionCredentialFailure:
             return "local_points_collection_credential_failure"
         }
@@ -396,6 +399,12 @@ enum LocalPointsCollectionEvent: BinkAnalyticsEvent {
                 "client_account_id": uuid
             ]
         case .localPointsCollectionInternalFailure(let membershipCard, let error):
+            guard let uuid = membershipCard.uuid else { return nil }
+            return [
+                "client_account_id": uuid,
+                "error_string": error.message
+            ]
+        case .localPointsCollectionInternalAgentFailure(let membershipCard, let error):
             guard let uuid = membershipCard.uuid else { return nil }
             return [
                 "client_account_id": uuid,

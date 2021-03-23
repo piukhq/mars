@@ -16,14 +16,9 @@ enum WebScrapingUtilityError: BinkError {
     case agentProvidedInvalidLoginScript
     case agentProvidedInvalidScrapeScript
     case invalidDetectTextScript
-    case failedToExecuteLoginScript
-    case failedToExecuteScrapingScript
-    case failedToExecuteDetectTextScript
-    case failedToCastReturnValue
     case loginFailed(errorMessage: String?)
     case userDismissedWebView
     case unhandledIdling
-    case javascriptError
     case pointsScrapingFailed(errorMessage: String?)
 
     var domain: BinkErrorDomain {
@@ -42,12 +37,6 @@ enum WebScrapingUtilityError: BinkError {
             return "Agent provided invalid login script"
         case .agentProvidedInvalidScrapeScript:
             return "Agent provided invalid scrape script"
-        case .failedToExecuteLoginScript:
-            return "Failed to execute login script"
-        case .failedToExecuteScrapingScript:
-            return "Failed to execute scraping script"
-        case .failedToCastReturnValue:
-            return "Failed to cast return value"
         case .loginFailed(let errorMessage):
             if let error = errorMessage {
                 return "Login failed - \(error)"
@@ -57,19 +46,43 @@ enum WebScrapingUtilityError: BinkError {
             return "Detect text script file not found"
         case .invalidDetectTextScript:
             return "Invalid detect text script"
-        case .failedToExecuteDetectTextScript:
-            return "Failed to execute detect text script"
+
         case .userDismissedWebView:
             return "User dismissed webview"
         case .unhandledIdling:
             return "Unhandled idling"
-        case .javascriptError:
-            return "Javascript error"
         case .pointsScrapingFailed(let errorMessage):
             if let error = errorMessage {
                 return "Points scraping failed - \(error)"
             }
             return "Points scraping failed"
+        }
+    }
+}
+
+enum WebScrapingUtilityAgentError: BinkError {
+    case javascriptError
+    case failedToExecuteDetectTextScript
+    case failedToCastReturnValue
+    case failedToExecuteScrapingScript
+    case failedToExecuteLoginScript
+
+    var domain: BinkErrorDomain {
+        return .webScrapingUtility
+    }
+    
+    var message: String {
+        switch self {
+        case .javascriptError:
+            return "Javascript error"
+        case .failedToExecuteDetectTextScript:
+            return "Failed to execute detect text script"
+        case .failedToCastReturnValue:
+            return "Failed to cast return value"
+        case .failedToExecuteScrapingScript:
+            return "Failed to execute scraping script"
+        case .failedToExecuteLoginScript:
+            return "Failed to execute login script"
         }
     }
 }

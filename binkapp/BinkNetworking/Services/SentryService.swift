@@ -94,6 +94,7 @@ enum SentryException {
     case tokenisationServiceRejectedRequest(NetworkResponseData?)
     case apiRejectedRequest(NetworkResponseData?)
     case localPointsCollectionFailed(WebScrapingUtilityError, WebScrapableMerchant, balanceRefresh: Bool)
+    case localPointsCollectionScrapingAgentFailed(WebScrapingUtilityAgentError, WebScrapableMerchant, balanceRefresh: Bool)
 
     var formattedError: NSError {
         return NSError(domain: domain.rawValue, code: errorCode, userInfo: userInfo)
@@ -113,6 +114,8 @@ enum SentryException {
             return 3002
         case .localPointsCollectionFailed:
             return 4001
+        case .localPointsCollectionScrapingAgentFailed:
+            return 4002
         }
     }
 
@@ -120,7 +123,7 @@ enum SentryException {
         switch self {
         case .invalidPayload, .tokenisationServiceRejectedRequest, .apiRejectedRequest:
             return .payment
-        case .localPointsCollectionFailed:
+        case .localPointsCollectionFailed, .localPointsCollectionScrapingAgentFailed:
             return .lpc
         }
     }
@@ -141,6 +144,12 @@ enum SentryException {
                 "merchant": merchant.rawValue,
                 "balance_refresh": isBalanceRefresh
             ]
+        case .localPointsCollectionScrapingAgentFailed(let error, let merchant, balanceRefresh: let isBalanceRefresh):
+            return [
+                "error_message": error.localizedDescription,
+                "merchant": merchant.rawValue,
+                "balance_refresh": isBalanceRefresh
+            ]
         }
     }
 
@@ -152,7 +161,7 @@ enum SentryException {
             return "Tokenisation service rejected request"
         case .apiRejectedRequest:
             return "Bink API rejected request"
-        case .localPointsCollectionFailed:
+        case .localPointsCollectionFailed, .localPointsCollectionScrapingAgentFailed:
             return "Local points collection failed"
         }
     }
