@@ -38,18 +38,22 @@ class MerchantHeroCell: UICollectionViewCell {
             imageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
         } else {
             layer.cornerRadius = 10
-            imageView = UIImageView(frame: CGRect(x: 5, y: 5, width: frame.width - 10, height: frame.height - 10))
             
             if showMorePlansCell {
+                imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: frame.width - 20, height: frame.height - 20))
                 backgroundColor = .binkDynamicGray2
                 imageView.image = UIImage(systemName: "ellipsis")
                 imageView.contentMode = .scaleAspectFit
                 imageView.tintColor = .white
             } else {
+                imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
                 backgroundColor = .clear
                 imageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
                 imageView.contentMode = .scaleAspectFill
             }
+            
+            imageView.layer.cornerRadius = 10
+            imageView.clipsToBounds = true
         }
         
         addSubview(imageView)
