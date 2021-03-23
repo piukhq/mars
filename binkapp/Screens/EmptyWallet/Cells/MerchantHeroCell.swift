@@ -55,7 +55,7 @@ class MerchantHeroCell: UICollectionViewCell {
             imageView.layer.cornerRadius = 10
             imageView.clipsToBounds = true
         }
-        
+
         addSubview(imageView)
     }
     
