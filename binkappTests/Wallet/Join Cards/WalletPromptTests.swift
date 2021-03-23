@@ -30,7 +30,7 @@ class WalletPromptTests: XCTestCase, CoreDataTestable {
     
     func test_titleString_isCorrect() {
         XCTAssertEqual(Self.addPaymentCardsWalletPrompt.title, "Add your payment cards")
-        XCTAssertEqual(Self.pllWalletPrompt.title, "Link to your payment cards.")
+        XCTAssertEqual(Self.pllWalletPrompt.title, "Link to your payment cards")
     }
     
     func test_bodyString_isCorrect() {
