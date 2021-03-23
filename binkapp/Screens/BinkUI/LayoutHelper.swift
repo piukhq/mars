@@ -44,7 +44,14 @@ extension LayoutHelper {
             case .link, .store:
                 return UIDevice.current.iPhoneSE ? 114.5 : 134
             case .see:
-                return UIDevice.current.iPhoneSE ? 95.5 : 134
+                switch UIDevice.current.width {
+                case .iPhone12Size:
+                    return 134
+                case .iPhone6Size, .iPhone5Size:
+                    return 95.5
+                default:
+                    return 112
+                }
             default:
                 return 0
             }

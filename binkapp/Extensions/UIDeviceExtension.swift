@@ -38,6 +38,7 @@ extension UIDevice {
         case iPhone11Size = "iPhone XR or iPhone 11"
         case iPhoneMaxSize = "iPhone XS Max or iPhone Pro Max"
         case iPhone11ProSize = "iPhone 11 Pro"
+        case iPhone12Size = "iPhone 12"
         case unknown
     }
     
@@ -70,6 +71,8 @@ extension UIDevice {
             return .iPhone6Size
         case 414:
             return .iPhonePlusSize
+        case 390:
+            return .iPhone12Size
         default:
             return .unknown
         }
