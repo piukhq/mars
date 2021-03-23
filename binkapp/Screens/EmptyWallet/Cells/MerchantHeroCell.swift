@@ -46,9 +46,9 @@ class MerchantHeroCell: UICollectionViewCell {
                 imageView.contentMode = .scaleAspectFit
                 imageView.tintColor = .white
             } else {
+                backgroundColor = .clear
                 imageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
                 imageView.contentMode = .scaleAspectFill
-                backgroundColor = .binkDynamicGray // Remove
             }
         }
         
