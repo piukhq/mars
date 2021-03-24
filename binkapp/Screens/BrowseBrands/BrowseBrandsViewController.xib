@@ -24,8 +24,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="1MC-ks-eDc">
-                    <rect key="frame" x="25" y="134" width="364" height="762"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="1MC-ks-eDc">
+                    <rect key="frame" x="0.0" y="134" width="414" height="762"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="sectionIndexBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
@@ -69,9 +69,9 @@
                 <constraint firstItem="ccM-nf-ZMN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4tc-3l-0Zu"/>
                 <constraint firstItem="wZU-1d-SYO" firstAttribute="top" secondItem="ccM-nf-ZMN" secondAttribute="bottom" id="5OQ-j5-hGu"/>
                 <constraint firstItem="wZU-1d-SYO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Csj-ZI-w8E"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1MC-ks-eDc" secondAttribute="trailing" constant="25" id="RTb-MF-O5L"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1MC-ks-eDc" secondAttribute="trailing" id="RTb-MF-O5L"/>
                 <constraint firstItem="ccM-nf-ZMN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="bCz-hm-3d3"/>
-                <constraint firstItem="1MC-ks-eDc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="hId-fZ-Z73"/>
+                <constraint firstItem="1MC-ks-eDc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="hId-fZ-Z73"/>
                 <constraint firstItem="wZU-1d-SYO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="lSJ-Fs-5vv"/>
                 <constraint firstItem="ccM-nf-ZMN" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="lmh-JR-au4"/>
                 <constraint firstItem="1MC-ks-eDc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="obq-Vm-0Lw"/>

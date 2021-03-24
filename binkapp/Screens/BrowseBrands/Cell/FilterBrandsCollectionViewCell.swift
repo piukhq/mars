@@ -13,7 +13,7 @@ class FilterBrandsCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var filterTitleLabel: UILabel!
     @IBOutlet private weak var customSeparatorView: UIView!
     
-    var cellWasTapped: Bool = false {
+    var cellWasTapped = false {
         didSet {
             if cellWasTapped {
                 imageView.tintColor = .binkDynamicGray2
