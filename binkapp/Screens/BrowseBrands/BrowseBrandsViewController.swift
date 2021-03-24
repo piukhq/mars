@@ -54,6 +54,7 @@ class BrowseBrandsViewController: BinkViewController {
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
+    private var rowHeight: CGFloat?
     
     init(viewModel: BrowseBrandsViewModel) {
         self.viewModel = viewModel
@@ -367,7 +368,15 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
 
 extension BrowseBrandsViewController: OnboardingCardDelegate {
     func scrollToSection(_ section: PlanCardType?) {
-        guard let section = section?.rawValue, section < viewModel.numberOfSections() else { return }
-        tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: true)
+        guard let section = section?.rawValue, section != 0 else { return }
+        let numberOfRowsInSection = viewModel.getNumberOfRowsFor(section: section - 1) - 1
+        tableView.scrollToRow(at: IndexPath(row: numberOfRowsInSection, section: section - 1), at: .top, animated: true)
+        rowHeight = tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.frame.height
+    }
+
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        guard rowHeight != nil, let rowHeight = rowHeight else { return }
+        tableView.setContentOffset( CGPoint(x: 0, y: tableView.contentOffset.y + rowHeight), animated: false)
+        self.rowHeight = nil
     }
 }
