@@ -61,7 +61,9 @@ class WebScrapingUtility: NSObject {
         self.agent = agent
         self.membershipCard = membershipCard
         
-        guard let url = URL(string: agent.scrapableUrlString) else {
+        let urlString = isBalanceRefresh ? agent.scrapableUrlString : agent.loginUrlString
+        
+        guard let url = URL(string: urlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
@@ -79,6 +81,7 @@ class WebScrapingUtility: NSObject {
     private func stop() {
         agent = nil
         membershipCard = nil
+        hasAttemptedLogin = false
         idleTimer?.invalidate()
         detectElementTimer?.invalidate()
         closeWebView(force: true)
@@ -318,14 +321,16 @@ extension WebScrapingUtility: WKNavigationDelegate {
         guard !isRedirecting else { return }
 
         if shouldScrape {
-            getScrapedValue { [weak self] result in
-                guard let self = self else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.getScrapedValue { [weak self] result in
+                    guard let self = self else { return }
 
-                switch result {
-                case .failure(let error):
-                    self.finish(withError: error)
-                case .success(let pointsValue):
-                    self.finish(withValue: pointsValue)
+                    switch result {
+                    case .failure(let error):
+                        self.finish(withError: error)
+                    case .success(let pointsValue):
+                        self.finish(withValue: pointsValue)
+                    }
                 }
             }
         } else {
@@ -337,7 +342,9 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: id)
                 if shouldAttemptLogin {
                     hasAttemptedLogin = true
-                    login(credentials: credentials)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.login(credentials: credentials)
+                    }
                 } else {
                     // We should only fall into here if we know we are at the login url, but we've already attempted a login
                     self.finish(withError: .loginFailed(errorMessage: nil))

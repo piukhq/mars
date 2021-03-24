@@ -314,6 +314,13 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
                     fatalError("We should never get here. Core data didn't return us an object, why not?")
                 }
                 
+                // Remove balance objects
+                if let balances = membershipCard.formattedBalances {
+                    for balance in balances {
+                        membershipCard.removeBalancesObject(balance)
+                    }
+                }
+                
                 // Set card status to failed
                 let status = MembershipCardStatusModel(apiId: nil, state: .failed, reasonCodes: [.pointsScrapingLoginFailed])
                 let cdStatus = status.mapToCoreData(backgroundContext, .update, overrideID: MembershipCardStatusModel.overrideId(forParentId: membershipCard.id))
