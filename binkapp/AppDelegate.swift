@@ -55,6 +55,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         // Initialise Zendesk
         ZendeskService.start()
         
+        // Start points scraping manager
+        Current.pointsScrapingManager.start()
+        
         // Get latest user profile data
         if Current.userManager.hasCurrentUser {
             getUserProfile { result in

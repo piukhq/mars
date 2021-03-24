@@ -52,8 +52,9 @@ class PointsScrapingManager {
     private let keychain = Keychain(service: APIConstants.bundleID)
 
     private var webScrapingUtility: WebScrapingUtility?
+    
     var isRunning: Bool {
-        return webScrapingUtility != nil
+        return webScrapingUtility?.isRunning ?? false
     }
     
     private var isMasterEnabled: Bool {
@@ -71,6 +72,10 @@ class PointsScrapingManager {
         PerfumeShopScrapingAgent(),
         WaterstonesScrapingAgent()
     ]
+    
+    func start() {
+        webScrapingUtility = WebScrapingUtility(delegate: self)
+    }
     
     // MARK: - Credentials handling
     
@@ -131,10 +136,9 @@ class PointsScrapingManager {
             throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
         }
 
-        webScrapingUtility = WebScrapingUtility(agent: agent, membershipCard: membershipCard, delegate: self)
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
-            try webScrapingUtility?.start()
+            try webScrapingUtility?.start(agent: agent, membershipCard: membershipCard)
         } catch {
             self.transitionToFailed(membershipCard: membershipCard)
         }
@@ -188,10 +192,8 @@ class PointsScrapingManager {
         guard agentEnabled(agent) else { return }
         
         DispatchQueue.main.async {
-            self.webScrapingUtility = WebScrapingUtility(agent: agent, membershipCard: membershipCard, delegate: self)
-            
             do {
-                try self.webScrapingUtility?.start()
+                try self.webScrapingUtility?.start(agent: agent, membershipCard: membershipCard)
             } catch {
                 self.transitionToFailed(membershipCard: membershipCard)
             }
@@ -232,7 +234,6 @@ class PointsScrapingManager {
     }
     
     private func pointsScrapingDidComplete() {
-        webScrapingUtility = nil
         NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
         refreshNextBalanceIfNecessary()
     }

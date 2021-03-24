@@ -20,9 +20,11 @@ protocol WebScrapingUtilityDelegate: AnyObject {
 }
 
 class WebScrapingUtility: NSObject {
+    var isRunning = false
+    
     private let webView: WKWebView
-    private let agent: WebScrapable
-    private let membershipCard: CD_MembershipCard
+    private var agent: WebScrapable?
+    private var membershipCard: CD_MembershipCard?
 
     private weak var delegate: WebScrapingUtilityDelegate?
 
@@ -31,7 +33,6 @@ class WebScrapingUtility: NSObject {
     private let idleThreshold: TimeInterval = 60
 
     private var hasAttemptedLogin = false
-    private var isRunningScript = false
     private var isPerformingUserAction = false
     private var isReloadingWebView = false
 
@@ -46,22 +47,21 @@ class WebScrapingUtility: NSObject {
     }
 
     private var isBalanceRefresh: Bool {
-        guard let balances = membershipCard.formattedBalances, !balances.isEmpty else { return false }
+        guard let balances = membershipCard?.formattedBalances, !balances.isEmpty else { return false }
         return true
     }
     
-    init(agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
+    init(delegate: WebScrapingUtilityDelegate?) {
         webView = WKWebView(frame: .zero)
-        self.agent = agent
-        self.membershipCard = membershipCard
         self.delegate = delegate
         super.init()
     }
     
-    func start() throws {
-        /// If we are refreshing the balance, we should try to access the scrapable url straight away, otherwise we know we'll need to login
-//        let urlString = isBalanceRefresh ? agent.scrapableUrlString : agent.loginUrlString
-        guard let url = URL(string: agent.loginUrlString) else {
+    func start(agent: WebScrapable, membershipCard: CD_MembershipCard) throws {
+        self.agent = agent
+        self.membershipCard = membershipCard
+        
+        guard let url = URL(string: agent.scrapableUrlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
@@ -74,6 +74,14 @@ class WebScrapingUtility: NSObject {
         webView.load(request)
 
         resetIdlingTimer()
+    }
+    
+    private func stop() {
+        agent = nil
+        membershipCard = nil
+        idleTimer?.invalidate()
+        detectElementTimer?.invalidate()
+        closeWebView(force: true)
     }
 
     private func resetIdlingTimer() {
@@ -103,7 +111,7 @@ class WebScrapingUtility: NSObject {
     }
 
     private func login(credentials: WebScrapingCredentials) {
-        guard let script = script(scriptName: agent.loginScriptFileName) else {
+        guard let agent = agent, let script = script(scriptName: agent.loginScriptFileName) else {
             self.finish(withError: .loginScriptFileNotFound)
             return
         }
@@ -130,7 +138,7 @@ class WebScrapingUtility: NSObject {
                 }
                 
                 if Current.pointsScrapingManager.isDebugMode {
-                    DebugInfoAlertView.show("\(self.agent.merchant.rawValue.capitalized) LPC - Logged in", type: .success)
+                    DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Logged in", type: .success)
                 }
             case .failure:
                 self.finish(withError: .failedToExecuteLoginScript)
@@ -139,6 +147,8 @@ class WebScrapingUtility: NSObject {
     }
 
     @objc private func detectRecaptchaSuccess() {
+        guard let card = membershipCard else { return }
+        
         detectElement(queryString: "re-captcha[class*=-valid]") { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -149,7 +159,7 @@ class WebScrapingUtility: NSObject {
                     self.isPerformingUserAction = false
                     self.closeWebView()
 
-                    guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: self.membershipCard.id) else {
+                    guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: card.id) else {
                         self.finish(withError: .failedToExecuteLoginScript)
                         return
                     }
@@ -162,7 +172,7 @@ class WebScrapingUtility: NSObject {
     }
 
     private func getScrapedValue(completion: @escaping (Result<Int, WebScrapingUtilityError>) -> Void) {
-        guard let script = script(scriptName: agent.pointsScrapingScriptFileName) else {
+        guard let agent = agent, let script = script(scriptName: agent.pointsScrapingScriptFileName) else {
             completion(.failure(.scapingScriptFileNotFound))
             return
         }
@@ -204,10 +214,10 @@ class WebScrapingUtility: NSObject {
     }
 
     private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
-        if isRunningScript { return }
-        isRunningScript = true
+        if isRunning { return }
+        isRunning = true
         webView.evaluateJavaScript(script) { [weak self] (response, error) in
-            self?.isRunningScript = false
+            self?.isRunning = false
             guard error == nil else {
                 completion(.failure(.javascriptError))
                 return
@@ -229,10 +239,12 @@ class WebScrapingUtility: NSObject {
     }
 
     private func finish(withValue value: Int? = nil, withError error: WebScrapingUtilityError? = nil) {
-        idleTimer?.invalidate()
-        detectElementTimer?.invalidate()
-
-        closeWebView(force: true)
+        defer {
+            stop()
+        }
+        
+        guard let agent = agent else { return }
+        guard let membershipCard = membershipCard else { return }
 
         if let value = value {
             if Current.pointsScrapingManager.isDebugMode {
@@ -263,10 +275,12 @@ class WebScrapingUtility: NSObject {
     }
     
     private var isLikelyAtLoginScreen: Bool {
-        return webView.url?.absoluteString.starts(with: agent.loginUrlString) == true
+        guard let urlString = agent?.loginUrlString else { return false }
+        return webView.url?.absoluteString.starts(with: urlString) == true
     }
     
     private var isLikelyAtScrapableScreen: Bool {
+        guard let agent = agent else { return false }
         guard agent.loginUrlString != agent.scrapableUrlString else {
             // This agent has the same url for login and scraping
             // If we have attempted login, we may be able to scrape here
@@ -276,7 +290,7 @@ class WebScrapingUtility: NSObject {
     }
 
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
-        return membershipCard.id == card.id
+        return membershipCard?.id == card.id
     }
 }
 
@@ -316,7 +330,11 @@ extension WebScrapingUtility: WKNavigationDelegate {
             }
         } else {
             do {
-                let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCard.id)
+                guard let id = membershipCard?.id else {
+                    self.finish(withError: .loginFailed(errorMessage: nil))
+                    return
+                }
+                let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: id)
                 if shouldAttemptLogin {
                     hasAttemptedLogin = true
                     login(credentials: credentials)
