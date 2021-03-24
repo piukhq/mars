@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   binkapp
 
@@ -80,7 +80,14 @@
 
 "auth_screen_description" = "Please enter your %@ credentials below to add this card to your wallet";
 
-"pll_title" = "Payment Linked Loyalty";
+"pll_title" = "Link to your Payment Cards";
+"see_title" = "See your balance";
+"store_title" = "Store your barcode";
+"pll_description" = "Add these loyalty cards and link them to your payment cards to collect rewards automatically when you pay.";
+"pll_description_highlight_automatically" = "automatically";
+"see_description" = "Add these loyalty cards to see your points and rewards in real time in the Bink app.";
+"store_description" = "Add these loyalty cards to store your barcode in Bink and always have it on your phone. No more plastic!";
+
 "popular_title" = "Popular";
 "all_title" = "All";
 
