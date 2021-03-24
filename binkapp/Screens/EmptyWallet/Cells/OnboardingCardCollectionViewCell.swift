@@ -148,13 +148,18 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let plans = walletPrompt?.membershipPlans else { return }
 
-        if (indexPath.row + 1) > plans.count {
-            navigateToBrowseBrands()
-        } else {
-            /// More plans cell
-            if plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) {
-                toBrowseBrands()
-                return
+            /// See & Store more plans cell
+            switch walletPrompt?.type {
+            case .see, .store:
+                if plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) {
+                    toBrowseBrands()
+                    return
+                }
+            default:
+                if (indexPath.row + 1) > plans.count {
+                    navigateToBrowseBrands()
+                    return
+                }
             }
             
             /// All other cells
@@ -163,7 +168,6 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
                 let navigationRequest = ModalNavigationRequest(viewController: viewController)
                 Current.navigate.to(navigationRequest)
             }
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
