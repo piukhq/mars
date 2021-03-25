@@ -28,8 +28,6 @@ class MerchantHeroCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
-        backgroundColor = .clear
-        layer.cornerRadius = 0
         label.removeFromSuperview()
     }
     
@@ -42,13 +40,11 @@ class MerchantHeroCell: UICollectionViewCell {
         
         if case .link = walletPrompt.type {
             let placeholderName = membershipPlan.account?.planName ?? membershipPlan.account?.planNameCard ?? ""
-            let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: self.frame.size, font: .textFieldLabel)
+            let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: frame.size, font: .textFieldLabel)
             backgroundColor = UIColor(patternImage: placeholder)
             imageView.layer.cornerRadius = 0
             imageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
         } else {
-            layer.cornerRadius = 10
-            
             if showMorePlansCell {
                 imageView.frame = CGRect(x: 10, y: 10, width: frame.width - 20, height: frame.height - 20)
                 backgroundColor = .binkDynamicGray2
@@ -56,12 +52,15 @@ class MerchantHeroCell: UICollectionViewCell {
                 imageView.contentMode = .scaleAspectFit
                 imageView.tintColor = .white
             } else {
-                backgroundColor = .clear
                 imageView.setImage(forPathType: .membershipPlanIcon(plan: membershipPlan))
+                backgroundColor = .clear
                 imageView.contentMode = .scaleAspectFill
             }
             
+            layer.cornerRadius = 10
+            layer.cornerCurve = .continuous
             imageView.layer.cornerRadius = 10
+            imageView.layer.cornerCurve = .continuous
             imageView.clipsToBounds = true
         }
         
@@ -70,6 +69,7 @@ class MerchantHeroCell: UICollectionViewCell {
     
     func configureWithPlaceholder(walletPrompt: WalletPrompt) {
         backgroundColor = UIColor(hexString: "102F82").darker(by: 5.0)
+        layer.cornerRadius = 0
         let size = LayoutHelper.WalletDimensions.sizeForWalletPromptCell(walletPrompt: walletPrompt)
         label.frame = CGRect(origin: .zero, size: size)
         addSubview(label)
