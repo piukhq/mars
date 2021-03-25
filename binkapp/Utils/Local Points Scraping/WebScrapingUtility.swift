@@ -59,9 +59,7 @@ class WebScrapingUtility: NSObject {
     }
     
     func start() throws {
-        /// If we are refreshing the balance, we should try to access the scrapable url straight away, otherwise we know we'll need to login
-        let urlString = isBalanceRefresh ? agent.scrapableUrlString : agent.loginUrlString
-        guard let url = URL(string: urlString) else {
+        guard let url = URL(string: agent.loginUrlString) else {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
@@ -124,13 +122,18 @@ class WebScrapingUtility: NSObject {
         }
     }
 
-    private func login(credentials: WebScrapingCredentials) {
+    private func login() {
         guard let script = script(scriptName: agent.loginScriptFileName) else {
             self.finish(withError: .loginScriptFileNotFound)
             return
         }
+        
+        guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCard.id) else {
+            self.finish(withError: .loginFailed(errorMessage: "Could not build credentials"))
+            return
+        }
+        
         let formattedScript = String(format: script, credentials.username, credentials.password)
-
         runScript(formattedScript) { [weak self] result in
             guard let self = self else { return }
 
@@ -138,50 +141,73 @@ class WebScrapingUtility: NSObject {
             case .success(let response):
                 // Successfully executed login script, but didn't necessarily succeed
                 // We may have encountered an error, or recaptcha
+                
+                // Did we return an error?
                 if let error = response.errorMessage {
                     self.finish(withError: .loginFailed(errorMessage: error))
                     return
                 }
+                
+                // No error returned
+                // We should start detecting on screen elements for some idea of what to do next
+                self.detectElementTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.detect), userInfo: nil, repeats: true)
 
-                if response.userActionRequired == true {
-                    self.idleTimer?.invalidate()
-                    self.isPerformingUserAction = true
-                    self.presentWebView()
-                    self.detectElementTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.detectRecaptchaSuccess), userInfo: nil, repeats: true)
-                    return
-                }
+//                if response.action == .recaptcha {
+//                    self.idleTimer?.invalidate()
+//                    self.isPerformingUserAction = true
+//                    self.presentWebView()
+//                    self.detectElementTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.detectRecaptchaSuccess), userInfo: nil, repeats: true)
+//                    return
+//                }
             case .failure:
                 self.finish(withError: .failedToExecuteLoginScript)
             }
         }
     }
-
-    @objc private func detectRecaptchaSuccess() {
-        detectElement(queryString: "re-captcha[class*=-valid]") { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let response):
-                if response.elementDetected == true {
-                    self.resetIdlingTimer()
-                    self.detectElementTimer?.invalidate()
-                    self.isPerformingUserAction = false
-                    self.closeWebView()
-
-                    guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: self.membershipCard.id) else {
-                        self.finish(withError: .failedToExecuteLoginScript)
-                        return
-                    }
-                    self.login(credentials: credentials)
-                }
-            case .failure:
-                self.finish(withError: .loginFailed(errorMessage: "Failed to detect recaptcha element."))
-            }
-        }
+    
+    @objc private func detect() {
+//        guard let detectScript = script(scriptName: "LocalPointsCollection_Detect_Template") else { return }
+//        runScript(detectScript) { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let response):
+//                if response.elementDetected == true, let action = response.action {
+//                    self.detectElementTimer?.invalidate()
+//                    switch action {
+//                    case .recaptcha:
+//                        print("Display recaptcha and start detecting success")
+//                    case .retry:
+//                        self.finish(withError: .genericFailure(errorMessage: response.errorMessage))
+//                    default: return
+//                    }
+//                }
+//            case .failure(let error):
+//                self.finish(withError: error)
+//            }
+//        }
     }
 
-    private func getScrapedValue(completion: @escaping (Result<Int, WebScrapingUtilityError>) -> Void) {
+    @objc private func detectRecaptchaSuccess() {
+//        detectElement(queryString: "re-captcha[class*=-valid]") { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let response):
+//                if response.elementDetected == true {
+//                    self.resetIdlingTimer()
+//                    self.detectElementTimer?.invalidate()
+//                    self.isPerformingUserAction = false
+//                    self.closeWebView()
+//                    self.login()
+//                }
+//            case .failure:
+//                self.finish(withError: .loginFailed(errorMessage: "Failed to detect recaptcha element."))
+//            }
+//        }
+    }
+
+    private func getScrapedValue() {
         guard let script = script(scriptName: agent.pointsScrapingScriptFileName) else {
-            completion(.failure(.scapingScriptFileNotFound))
+            self.finish(withError: .scapingScriptFileNotFound)
             return
         }
 
@@ -207,7 +233,7 @@ class WebScrapingUtility: NSObject {
                     }
                     Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
                 }
-                completion(.success(points))
+                self.finish(withValue: points)
             case .failure:
                 self.finish(withError: .failedToExecuteScrapingScript)
             }
@@ -265,34 +291,9 @@ class WebScrapingUtility: NSObject {
         }
 
         if let error = error {
-            SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: isBalanceRefresh))
+//            SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: isBalanceRefresh))
             delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: membershipCard, withAgent: agent)
         }
-    }
-    
-    private var shouldScrape: Bool {
-        return isLikelyAtScrapableScreen
-    }
-    
-    private var shouldAttemptLogin: Bool {
-        return isLikelyAtLoginScreen && !hasAttemptedLogin
-    }
-    
-    private var isRedirecting: Bool {
-        return !isLikelyAtLoginScreen && !isLikelyAtScrapableScreen
-    }
-    
-    private var isLikelyAtLoginScreen: Bool {
-        return webView.url?.absoluteString.starts(with: agent.loginUrlString) == true
-    }
-    
-    private var isLikelyAtScrapableScreen: Bool {
-        guard agent.loginUrlString != agent.scrapableUrlString else {
-            // This agent has the same url for login and scraping
-            // If we have attempted login, we may be able to scrape here
-            return hasAttemptedLogin
-        }
-        return webView.url?.absoluteString.starts(with: agent.scrapableUrlString) == true
     }
 
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
@@ -302,16 +303,16 @@ class WebScrapingUtility: NSObject {
 
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        handleWebViewNavigation()
-
         // We know that if we entered this delegate method via a forced reload, we've now completed that
         isReloadingWebView = false
+        
+        handleWebViewNavigation()
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
         decisionHandler(.allow, preferences)
 
-        if webView.url?.absoluteString.contains("#") == true, !isReloadingWebView, shouldScrape {
+        if webView.url?.absoluteString.contains("#") == true, !isReloadingWebView {
             isReloadingWebView = true
             webView.reload()
         }
@@ -319,39 +320,59 @@ extension WebScrapingUtility: WKNavigationDelegate {
 
     private func handleWebViewNavigation() {
         resetIdlingTimer()
-
-        // We only care about the webview navigation to our agent's login url or scrapable url
-        guard !isRedirecting else { return }
-
-        if shouldScrape {
-            getScrapedValue { [weak self] result in
+        
+        if let navigateScript = script(scriptName: "LocalPointsCollection_Navigate_Template") {
+            runScript(navigateScript) { [weak self] result in
                 guard let self = self else { return }
-
                 switch result {
+                case .success(let response):
+                    if let error = response.errorMessage {
+                        self.finish(withError: .pointsScrapingFailed(errorMessage: error))
+                        return
+                    }
+
+                    if let points = response.pointsValue {
+                        self.finish(withValue: points)
+                        return
+                    }
                 case .failure(let error):
                     self.finish(withError: error)
-                case .success(let pointsValue):
-                    self.finish(withValue: pointsValue)
-                }
-            }
-        } else {
-            do {
-                let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCard.id)
-                if shouldAttemptLogin {
-                    hasAttemptedLogin = true
-                    login(credentials: credentials)
-                } else {
-                    // We should only fall into here if we know we are at the login url, but we've already attempted a login
-                    self.finish(withError: .loginFailed(errorMessage: nil))
-                }
-            } catch {
-                if let webScrapingError = error as? WebScrapingUtilityError {
-                    self.finish(withError: webScrapingError)
-                } else {
-                    self.finish(withError: .loginFailed(errorMessage: nil))
                 }
             }
         }
+
+        // We only care about the webview navigation to our agent's login url or scrapable url
+//        guard !isRedirecting else { return }
+//
+//        if shouldScrape {
+//            getScrapedValue { [weak self] result in
+//                guard let self = self else { return }
+//
+//                switch result {
+//                case .failure(let error):
+//                    self.finish(withError: error)
+//                case .success(let pointsValue):
+//                    self.finish(withValue: pointsValue)
+//                }
+//            }
+//        } else {
+//            do {
+//                let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCard.id)
+//                if shouldAttemptLogin {
+//                    hasAttemptedLogin = true
+//                    login(credentials: credentials)
+//                } else {
+//                    // We should only fall into here if we know we are at the login url, but we've already attempted a login
+//                    self.finish(withError: .loginFailed(errorMessage: nil))
+//                }
+//            } catch {
+//                if let webScrapingError = error as? WebScrapingUtilityError {
+//                    self.finish(withError: webScrapingError)
+//                } else {
+//                    self.finish(withError: .loginFailed(errorMessage: nil))
+//                }
+//            }
+//        }
     }
 }
 

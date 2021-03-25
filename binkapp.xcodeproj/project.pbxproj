@@ -157,6 +157,8 @@
 		70907E3E25C883E2007629BB /* LocalPointsCollection_Points_Waterstones.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E3D25C883E1007629BB /* LocalPointsCollection_Points_Waterstones.js */; };
 		70907E4F25C95EDA007629BB /* LocalPointsCollection_Login_Morrisons.js in Resources */ = {isa = PBXBuildFile; fileRef = 70907E4E25C95EDA007629BB /* LocalPointsCollection_Login_Morrisons.js */; };
 		709748A024D32A52008D0E29 /* RemoteConfigUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */; };
+		7098E6BA25EFC41300A086C3 /* LocalPointsCollection_Navigate_Template.js in Resources */ = {isa = PBXBuildFile; fileRef = 7098E6B925EFC41300A086C3 /* LocalPointsCollection_Navigate_Template.js */; };
+		7098E6BF25EFE81600A086C3 /* LocalPointsCollection_Detect_Template.js in Resources */ = {isa = PBXBuildFile; fileRef = 7098E6BE25EFE81600A086C3 /* LocalPointsCollection_Detect_Template.js */; };
 		70A4EE7524BC651700FA33B1 /* PointsScrapingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */; };
 		70A4EE7824BDBA5900FA33B1 /* PermissionsUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */; };
 		70B316E724E6AF2800D86DE5 /* Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B316E624E6AF2800D86DE5 /* Navigate.swift */; };
@@ -703,6 +705,8 @@
 		70907E4E25C95EDA007629BB /* LocalPointsCollection_Login_Morrisons.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Login_Morrisons.js; sourceTree = "<group>"; };
 		7097489D24D088FE008D0E29 /* ExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionHandler.h; sourceTree = "<group>"; };
 		7097489F24D32A52008D0E29 /* RemoteConfigUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigUtil.swift; sourceTree = "<group>"; };
+		7098E6B925EFC41300A086C3 /* LocalPointsCollection_Navigate_Template.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Template.js; sourceTree = "<group>"; };
+		7098E6BE25EFE81600A086C3 /* LocalPointsCollection_Detect_Template.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Detect_Template.js; sourceTree = "<group>"; };
 		70A4EE7424BC651700FA33B1 /* PointsScrapingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointsScrapingManager.swift; sourceTree = "<group>"; };
 		70A4EE7724BDBA5900FA33B1 /* PermissionsUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsUtility.swift; sourceTree = "<group>"; };
 		70B316E624E6AF2800D86DE5 /* Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigate.swift; sourceTree = "<group>"; };
@@ -1845,6 +1849,8 @@
 		70F7EC1F25CAF905005DE935 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				7098E6BE25EFE81600A086C3 /* LocalPointsCollection_Detect_Template.js */,
+				7098E6B925EFC41300A086C3 /* LocalPointsCollection_Navigate_Template.js */,
 				70907E1B25C87DA3007629BB /* LocalPointsCollection_Login_Template.js */,
 				70907E3325C883D3007629BB /* LocalPointsCollection_Points_Template.js */,
 				700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */,
@@ -2963,6 +2969,7 @@
 				CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */,
 				EFF59F1A234B73C900CF3992 /* CardDetailInfoTableViewCell.xib in Resources */,
 				EF5229BA2423FC96004AC972 /* prodPublicKey.der in Resources */,
+				7098E6BA25EFC41300A086C3 /* LocalPointsCollection_Navigate_Template.js in Resources */,
 				EF6921732469A8A90049875B /* DebugSecondaryPlanColorViewController.xib in Resources */,
 				EFD602E8243B8627003AC746 /* LoyaltyScannerWidgetView.xib in Resources */,
 				3CD3493222F99E1D000C1F4D /* NunitoSans-LightItalic.ttf in Resources */,
@@ -2975,6 +2982,7 @@
 				B713662F232A63BA008A0ED7 /* BinkModuleView.xib in Resources */,
 				70907E1725C87CB6007629BB /* LocalPointsCollection_Login_Waterstones.js in Resources */,
 				3CD3493522F99E1D000C1F4D /* NunitoSans-Light.ttf in Resources */,
+				7098E6BF25EFE81600A086C3 /* LocalPointsCollection_Detect_Template.js in Resources */,
 				EF2E881F233A354500F678F3 /* PaymentCardCollectionViewCell.xib in Resources */,
 				5ECE047122CE5798001BA964 /* Main.storyboard in Resources */,
 				B766599A2320F68D00B327BE /* HyperlinkAlertController.xib in Resources */,
