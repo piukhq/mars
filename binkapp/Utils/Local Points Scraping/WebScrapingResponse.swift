@@ -10,6 +10,7 @@ import Foundation
 
 struct WebScrapingResponse: Codable {
     var pointsString: String?
+    var didAttemptLogin: Bool?
     var errorMessage: String?
 
     var pointsValue: Int? {
@@ -19,6 +20,7 @@ struct WebScrapingResponse: Codable {
 
     enum CodingKeys: String, CodingKey {
         case pointsString = "points"
+        case didAttemptLogin = "did_attempt_login"
         case errorMessage = "error_message"
     }
 }

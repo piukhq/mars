@@ -69,6 +69,10 @@ function handleNavigation() {
             }
         }
         b.click()
+
+        return {
+            "did_attempt_login": true
+        }
     }
 
     // If we cannot identify a login form, points value, recaptcha or incorrect credentials

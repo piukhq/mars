@@ -330,6 +330,10 @@ extension WebScrapingUtility: WKNavigationDelegate {
                         self.finish(withError: .pointsScrapingFailed(errorMessage: error))
                         return
                     }
+                    
+                    if response.didAttemptLogin == true {
+                        print("")
+                    }
 
                     if let points = response.pointsValue {
                         self.finish(withValue: points)
