@@ -45,7 +45,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         titleLabel.text = walletPrompt.title
         descriptionLabel.text = walletPrompt.body
         
-        if UIDevice.current.iPhoneSE {
+        if UIDevice.current.isSmallSize {
             titleLabel.font = .walletPromptTitleSmall
             descriptionLabel.font = .walletPromptBodySmall
             titleLabelTopConstraint.constant = 15

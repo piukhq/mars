@@ -42,12 +42,12 @@ extension LayoutHelper {
         private static func headerHeight(for walletPrompt: WalletPrompt) -> CGFloat {
             switch walletPrompt.type {
             case .link, .store:
-                return UIDevice.current.iPhoneSE ? 114.5 : 134
+                return UIDevice.current.isSmallSize ? 114.5 : 134
             case .see:
                 switch UIDevice.current.width {
                 case .iPhone12Size:
                     return 134
-                case .iPhoneSESize, .iPhone5Size:
+                case .iPhone12MiniSize, .iPhoneSESize, .iPhone5Size:
                     return 95.5
                 default:
                     return 112

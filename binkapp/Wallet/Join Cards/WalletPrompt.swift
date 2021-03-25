@@ -84,7 +84,7 @@ enum WalletPromptType {
         case .link:
             return 2
         case .see, .store:
-            return UIDevice.current.iPhoneSE ? 4 : 5
+            return UIDevice.current.isSmallSize ? 4 : 5
         default:
             return 0
         }
@@ -95,7 +95,7 @@ enum WalletPromptType {
         case .link:
             return 4
         case .see, .store:
-            return UIDevice.current.iPhoneSE ? 8 : 10
+            return UIDevice.current.isSmallSize ? 8 : 10
         default:
             return 0
         }
