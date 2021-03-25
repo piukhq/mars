@@ -84,7 +84,6 @@ class WebScrapingUtility: NSObject {
         hasAttemptedLogin = false
         idleTimer?.invalidate()
         detectElementTimer?.invalidate()
-        closeWebView(force: true)
     }
 
     private func resetIdlingTimer() {
@@ -321,7 +320,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
         guard !isRedirecting else { return }
 
         if shouldScrape {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                 self.getScrapedValue { [weak self] result in
                     guard let self = self else { return }
 
@@ -342,7 +341,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                 let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: id)
                 if shouldAttemptLogin {
                     hasAttemptedLogin = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                         self.login(credentials: credentials)
                     }
                 } else {

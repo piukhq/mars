@@ -31,7 +31,7 @@ struct WaterstonesScrapingAgent: WebScrapable {
     }
 
     var loginUrlString: String {
-        return "https://www.waterstones.com/plus/signin"
+        return "https://www.waterstones.com/signin?ov=1&continue=/account/waterstonescard"
     }
 
     var scrapableUrlString: String {

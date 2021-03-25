@@ -35,6 +35,6 @@ struct BootsScrapingAgent: WebScrapable {
     }
     
     var scrapableUrlString: String {
-        return "https://www.boots.com/AjaxLogonForm"
+        return "https://www.boots.com/AjaxLogonForm?myAcctMain=1"
     }
 }
