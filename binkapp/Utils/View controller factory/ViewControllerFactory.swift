@@ -21,8 +21,8 @@ enum ViewControllerFactory {
         return BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
     }
     
-    static func makeBrowseBrandsViewController() -> BrowseBrandsViewController {
-        return BrowseBrandsViewController(viewModel: BrowseBrandsViewModel())
+    static func makeBrowseBrandsViewController(section: Int? = nil) -> BrowseBrandsViewController {
+        return BrowseBrandsViewController(viewModel: BrowseBrandsViewModel(), section: section)
     }
     
     static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, allowSkip: Bool = true, delegate: ScanDelegate?) -> ScanViewController? {

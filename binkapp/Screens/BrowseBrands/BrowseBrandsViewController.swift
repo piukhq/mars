@@ -54,11 +54,12 @@ class BrowseBrandsViewController: BinkViewController {
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
-    private var rowHeight: CGFloat?
+    private var sectionToScrollTo: Int?
     
-    init(viewModel: BrowseBrandsViewModel) {
+    init(viewModel: BrowseBrandsViewModel, section: Int?) {
         self.viewModel = viewModel
         self.selectedFilters = viewModel.filters
+        self.sectionToScrollTo = section
         super.init(nibName: "BrowseBrandsViewController", bundle: Bundle(for: BrowseBrandsViewController.self))
     }
     
@@ -103,6 +104,7 @@ class BrowseBrandsViewController: BinkViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .browseBrands)
+        scrollToSection()
     }
     
     override func viewDidLayoutSubviews() {
@@ -240,6 +242,14 @@ class BrowseBrandsViewController: BinkViewController {
         noMatchesLabelTopConstraint.constant = filtersVisible ? filterViewHeight : 0.0
         noMatchesLabel.isHidden = !viewModel.shouldShowNoResultsLabel
     }
+    
+    private func scrollToSection() {
+        guard let section = sectionToScrollTo, section != 0 else { return }
+        let headerRect = tableView.rectForHeader(inSection: section)
+        let sectionOneHeaderHeight = section == 2 ? tableView.rectForHeader(inSection: 1).height : 0.0
+        tableView.setContentOffset(CGPoint(x: 0, y: headerRect.minY + sectionOneHeaderHeight), animated: true)
+        sectionToScrollTo = nil
+    }
 }
 
 extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -363,20 +373,5 @@ extension BrowseBrandsViewController: UICollectionViewDelegate, UICollectionView
         }
         viewModel.selectedFilters = selectedFilters
         switchTableWithNoMatchesLabel()
-    }
-}
-
-extension BrowseBrandsViewController: OnboardingCardDelegate {
-    func scrollToSection(_ section: PlanCardType?) {
-        guard let section = section?.rawValue, section != 0 else { return }
-        let numberOfRowsInSection = viewModel.getNumberOfRowsFor(section: section - 1) - 1
-        tableView.scrollToRow(at: IndexPath(row: numberOfRowsInSection, section: section - 1), at: .top, animated: true)
-        rowHeight = tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.frame.height
-    }
-
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        guard rowHeight != nil, let rowHeight = rowHeight else { return }
-        tableView.setContentOffset( CGPoint(x: 0, y: tableView.contentOffset.y + rowHeight), animated: false)
-        self.rowHeight = nil
     }
 }

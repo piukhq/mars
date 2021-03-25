@@ -14,10 +14,6 @@ enum PlanCardType: Int {
     case store
 }
 
-protocol OnboardingCardDelegate: AnyObject {
-    func scrollToSection(_ section: PlanCardType?)
-}
-
 class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -33,7 +29,6 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     
     private var walletPrompt: WalletPrompt?
     private var maxPlansToDisplay = 8
-    private weak var delegate: OnboardingCardDelegate?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -101,12 +96,9 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     }
     
     private func navigateToBrowseBrands(section: PlanCardType? = .link) {
-        let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
-        delegate = viewController
-        let navigatioRequest = ModalNavigationRequest(viewController: viewController) {
-            self.delegate?.scrollToSection(section)
-        }
-        Current.navigate.to(navigatioRequest)
+        let viewController = ViewControllerFactory.makeBrowseBrandsViewController(section: section?.rawValue)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }
 
