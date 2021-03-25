@@ -47,7 +47,7 @@ extension LayoutHelper {
                 switch UIDevice.current.width {
                 case .iPhone12Size:
                     return 134
-                case .iPhone6Size, .iPhone5Size:
+                case .iPhoneSESize, .iPhone5Size:
                     return 95.5
                 default:
                     return 112

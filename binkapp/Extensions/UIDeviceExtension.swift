@@ -22,7 +22,7 @@ extension UIDevice {
     var iPad: Bool { UIDevice().userInterfaceIdiom == .pad }
     var iPhoneSE: Bool {
         switch width {
-        case .iPhone6Size, .iPhone5Size:
+        case .iPhoneSESize, .iPhone5Size:
             return true
         default:
             return false
@@ -31,8 +31,8 @@ extension UIDevice {
     
     enum ScreenSize: String {
         case iPhone4Size = "iPhone 4 or iPhone 4S"
-        case iPhone5Size = "iPhone 5, iPhone 5s, iPhone 5c or iPhone SE"
-        case iPhone6Size = "iPhone 6, iPhone 6S, iPhone 7 or iPhone 8"
+        case iPhone5Size = "iPhone 5, iPhone 5s, iPhone 5c"
+        case iPhoneSESize = "iPhone 6, iPhone 6S, iPhone 7, iPhone 8 or iPhone SE"
         case iPhonePlusSize = "iPhone 6 Plus, iPhone 6S Plus, iPhone 7 Plus or iPhone 8 Plus"
         case iPhoneXSize = "iPhone X or iPhone XS"
         case iPhone11Size = "iPhone XR or iPhone 11"
@@ -47,7 +47,7 @@ extension UIDevice {
         case 1136:
             return .iPhone5Size
         case 1334:
-            return .iPhone6Size
+            return .iPhoneSESize
         case 1792:
             return .iPhone11Size
         case 1920, 2208:
@@ -68,7 +68,7 @@ extension UIDevice {
         case 320:
             return .iPhone5Size
         case 375:
-            return .iPhone6Size
+            return .iPhoneSESize
         case 414:
             return .iPhonePlusSize
         case 390:
