@@ -63,7 +63,9 @@ extension LayoutHelper {
             case .link:
                 cardHeight += walletPromptLinkCellHeight * walletPrompt.numberOfRows
             case .see, .store:
-                cardHeight += (walletPromptSeeStoreCellHeight(walletPrompt.numberOfItemsPerRow) * walletPrompt.numberOfRows) + cardHorizontalInset + (cellInterimSpacing * (walletPrompt.numberOfRows - 1))
+                let merchantGridTotalCellsHeight = walletPromptSeeStoreCellHeight(walletPrompt.numberOfItemsPerRow) * walletPrompt.numberOfRows
+                let merchantGridSpacing = cellInterimSpacing * (walletPrompt.numberOfRows - 1)
+                cardHeight += merchantGridTotalCellsHeight + merchantGridSpacing + cardHorizontalInset
             default:
                 break
             }
