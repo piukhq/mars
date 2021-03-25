@@ -244,7 +244,12 @@ class BrowseBrandsViewController: BinkViewController {
     }
     
     private func scrollToSection() {
-        guard let section = sectionToScrollTo, section != 0 else { return }
+        guard var section = sectionToScrollTo, section != 0, viewModel.numberOfSections() != 1 else { return }
+
+        if viewModel.getPllMembershipPlans().isEmpty || viewModel.getSeeMembershipPlans().isEmpty {
+            section -= 1
+        }
+        
         let headerRect = tableView.rectForHeader(inSection: section)
         let sectionOneHeaderHeight = section == 2 ? tableView.rectForHeader(inSection: 1).height : 0.0
         tableView.setContentOffset(CGPoint(x: 0, y: headerRect.minY + sectionOneHeaderHeight), animated: true)
