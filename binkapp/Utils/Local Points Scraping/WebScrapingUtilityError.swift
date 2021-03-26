@@ -25,6 +25,7 @@ enum WebScrapingUtilityError: BinkError {
     case unhandledIdling
     case javascriptError
     case pointsScrapingFailed(errorMessage: String?)
+    case genericFailure(errorMessage: String?)
 
     var domain: BinkErrorDomain {
         return .webScrapingUtility
@@ -70,6 +71,11 @@ enum WebScrapingUtilityError: BinkError {
                 return "Points scraping failed - \(error)"
             }
             return "Points scraping failed"
+        case .genericFailure(let errorMessage):
+            if let error = errorMessage {
+                return "Generic failure - \(error)"
+            }
+            return "Generic failed"
         }
     }
 }
