@@ -178,7 +178,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     @objc private func configureForCurrentTheme() {
         validationLabel.textColor = .binkDynamicRed
     }
-    
+
     func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
         let isEnabled = !field.isReadOnly
         
