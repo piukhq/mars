@@ -244,10 +244,16 @@ class BrowseBrandsViewController: BinkViewController {
     }
     
     private func scrollToSection() {
-        guard let section = sectionToScrollTo else { return }
+        guard var section = sectionToScrollTo, viewModel.numberOfSections() != 1 else { return }
+
+        if viewModel.getPllMembershipPlans().isEmpty || viewModel.getSeeMembershipPlans().isEmpty {
+            /// If there are no pll or see membership plans, section adjusted by -1 so that the correct section is scrolled to
+            section -= 1
+        }
         
         let indexPath = IndexPath(row: NSNotFound, section: section)
         tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        sectionToScrollTo = nil
     }
 }
 

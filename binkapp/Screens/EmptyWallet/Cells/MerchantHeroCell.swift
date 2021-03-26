@@ -40,6 +40,7 @@ class MerchantHeroCell: UICollectionViewCell {
             let placeholderName = membershipPlan.account?.planName ?? membershipPlan.account?.planNameCard ?? ""
             let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: frame.size, font: .textFieldLabel)
             backgroundColor = UIColor(patternImage: placeholder)
+            layer.cornerRadius = 0
             imageView.layer.cornerRadius = 0
             imageView.setImage(forPathType: .membershipPlanAlternativeHero(plan: membershipPlan))
         } else {

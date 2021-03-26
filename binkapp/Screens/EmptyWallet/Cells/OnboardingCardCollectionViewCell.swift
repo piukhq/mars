@@ -89,8 +89,8 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         }
     }
     
-    private func navigateToBrowseBrands(section: CD_FeatureSet.PlanCardType = .link) {
-        let viewController = ViewControllerFactory.makeBrowseBrandsViewController(section: section.walletPromptSectionIndex)
+    private func navigateToBrowseBrands(section: CD_FeatureSet.PlanCardType? = nil) {
+        let viewController = ViewControllerFactory.makeBrowseBrandsViewController(section: section?.walletPromptSectionIndex)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
