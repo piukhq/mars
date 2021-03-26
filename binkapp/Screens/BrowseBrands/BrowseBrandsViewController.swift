@@ -247,6 +247,7 @@ class BrowseBrandsViewController: BinkViewController {
         guard var section = sectionToScrollTo, section != 0, viewModel.numberOfSections() != 1 else { return }
 
         if viewModel.getPllMembershipPlans().isEmpty || viewModel.getSeeMembershipPlans().isEmpty {
+            /// If there are no pll or see membership plans, section adjusted by -1 so that the correct section is scrolled to
             section -= 1
         }
         

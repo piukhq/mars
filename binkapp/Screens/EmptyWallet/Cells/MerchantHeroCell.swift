@@ -9,9 +9,7 @@
 import UIKit
 
 class MerchantHeroCell: UICollectionViewCell {
-    private lazy var imageView: UIImageView = {
-        return UIImageView()
-    }()
+    private var imageView = UIImageView()
     private lazy var label: UILabel = {
         let label = UILabel()
         label.text = "wallet_prompt_more_coming_soon".localized

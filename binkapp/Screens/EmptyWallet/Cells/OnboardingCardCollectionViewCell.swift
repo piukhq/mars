@@ -8,12 +8,6 @@
 
 import UIKit
 
-enum PlanCardType: Int {
-    case link
-    case see
-    case store
-}
-
 class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -87,7 +81,7 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     @objc private func toBrowseBrands() {
         switch walletPrompt?.type {
         case .see:
-            navigateToBrowseBrands(section: .see)
+            navigateToBrowseBrands(section: .view)
         case .store:
             navigateToBrowseBrands(section: .store)
         default:
@@ -95,8 +89,8 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         }
     }
     
-    private func navigateToBrowseBrands(section: PlanCardType? = .link) {
-        let viewController = ViewControllerFactory.makeBrowseBrandsViewController(section: section?.rawValue)
+    private func navigateToBrowseBrands(section: CD_FeatureSet.PlanCardType = .link) {
+        let viewController = ViewControllerFactory.makeBrowseBrandsViewController(section: section.walletPromptSectionIndex)
         let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
