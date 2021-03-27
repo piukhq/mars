@@ -25,10 +25,11 @@ protocol WebScrapable {
     var loyaltySchemeBalanceCurrency: String? { get }
     var loyaltySchemeBalanceSuffix: String? { get }
     var loyaltySchemeBalancePrefix: String? { get }
-    var loginUrlString: String { get }
+//    var loginUrlString: String { get }
     var scrapableUrlString: String { get }
-    var loginScriptFileName: String { get }
-    var pointsScrapingScriptFileName: String { get }
+//    var loginScriptFileName: String { get }
+//    var pointsScrapingScriptFileName: String { get }
+    var navigateScriptFileName: String { get }
 }
 
 extension WebScrapable {
@@ -49,11 +50,15 @@ extension WebScrapable {
         return nil
     }
 
-    var loginScriptFileName: String {
-        return "LocalPointsCollection_Login_\(merchant.rawValue.capitalized)"
-    }
-
-    var pointsScrapingScriptFileName: String {
-        return "LocalPointsCollection_Points_\(merchant.rawValue.capitalized)"
+//    var loginScriptFileName: String {
+//        return "LocalPointsCollection_Login_\(merchant.rawValue.capitalized)"
+//    }
+//
+//    var pointsScrapingScriptFileName: String {
+//        return "LocalPointsCollection_Points_\(merchant.rawValue.capitalized)"
+//    }
+    
+    var navigateScriptFileName: String {
+        return "LocalPointsCollection_Navigate_\(merchant.rawValue.capitalized)"
     }
 }

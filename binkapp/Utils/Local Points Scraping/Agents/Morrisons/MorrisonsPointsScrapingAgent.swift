@@ -30,9 +30,9 @@ struct MorrisonsScrapingAgent: WebScrapable {
         return "points"
     }
     
-    var loginUrlString: String {
-        return "https://my.morrisons.com/more/#/login"
-    }
+//    var loginUrlString: String {
+//        return "https://my.morrisons.com/more/#/login"
+//    }
     
     var scrapableUrlString: String {
         return "https://my.morrisons.com/more/#/mypoints"

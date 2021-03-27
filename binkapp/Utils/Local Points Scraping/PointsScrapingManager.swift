@@ -349,7 +349,7 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
         switch error {
-        case .loginFailed:
+        case .incorrectCredentials:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: card, error: error))
         default:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: card, error: error))

@@ -1,12 +1,12 @@
 var username = "%@"
 var password = "%@"
 
-var formQuery = "form#sign-in-form"
+var formQuery = "form#loginForm"
 var usernameInputQuery = "form#login-form input[type=email]"
 var passwordInputQuery = "form#login-form input[type=password]"
 var submitButtonQuery = "form#login-form button[type=submit]"
 
-var pointsValueQuery = ".pointvalue"
+var pointsValueQuery = ".plus-balance-row strong"
 
 var incorrectCredentialsQuery = "p.ui-component__notice__error-text"
 
@@ -18,8 +18,10 @@ function handleNavigation() {
     var pts = document.querySelector(pointsValueQuery)
 
     if (pts) {
+        var num = p.innerHTML.match(/\d+/);
         return {
-            "points": pts.innerHTML
+            "success": true,
+            "points": num[0]
         }
     }
 

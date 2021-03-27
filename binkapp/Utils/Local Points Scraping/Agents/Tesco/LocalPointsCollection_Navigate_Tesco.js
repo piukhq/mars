@@ -30,7 +30,6 @@ function handleNavigation() {
     var error = document.querySelector(incorrectCredentialsQuery)
     if (error) {
         return {
-            "did_attempt_login": true,
             "error_message": "Login failed. Incorrect credentials identified: " + error.innerHTML
         }
     }

@@ -193,15 +193,13 @@ class WebScrapingUtility: NSObject {
         activeWebview.evaluateJavaScript(script) { [weak self] (response, error) in
             self?.isRunning = false
             
-            
-            // TODO: Use 3 different errors here
             guard error == nil else {
                 completion(.failure(.javascriptError))
                 return
             }
             
             guard let response = response else {
-                completion(.failure(.javascriptError))
+                completion(.failure(.noJavascriptResponse))
                 return
             }
 
@@ -210,7 +208,7 @@ class WebScrapingUtility: NSObject {
                 let scrapingResponse = try JSONDecoder().decode(WebScrapingResponse.self, from: data)
                 completion(.success(scrapingResponse))
             } catch {
-                completion(.failure(.javascriptError))
+                completion(.failure(.failedToDecodeJavascripResponse))
             }
         }
     }
@@ -262,45 +260,49 @@ extension WebScrapingUtility: WKNavigationDelegate {
 
     private func handleWebViewNavigation() {
         resetIdlingTimer()
+        guard let agent = agent else { return }
+        guard let script = script(scriptName: agent.navigateScriptFileName) else {
+            finish(withError: .scriptFileNotFound)
+            return
+        }
+        guard let card = membershipCard, let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: card.id) else {
+            return
+        }
         
-        if let navigateScript = script(scriptName: "LocalPointsCollection_Navigate_Template") {
-            
-            guard let card = membershipCard, let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: card.id) else {
-                return
-            }
-            
-            let formattedScript = String(format: navigateScript, credentials.username, credentials.password)
-            runScript(formattedScript) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let response):
-                    if let error = response.errorMessage {
-                        self.finish(withError: .pointsScrapingFailed(errorMessage: error))
-                        return
+        let formattedScript = String(format: script, credentials.username, credentials.password)
+        runScript(formattedScript) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                if let error = response.errorMessage {
+                    if response.didAttemptLogin == true {
+                        self.finish(withError: .incorrectCredentials(errorMessage: error))
+                    } else {
+                        self.finish(withError: .genericFailure(errorMessage: error))
+                    }
+                }
+                
+                if response.didAttemptLogin == true {
+                    if let card = self.membershipCard, self.activeWebview == self.priorityWebview {
+                        /// At this point, we know we've attempted a login so there was no valid session
+                        /// As we are using the priority web view, we know the membership card is the only one of it's plan type
+                        /// We can safely assume the membership card can be move to the priority list and have it's session reused
+                        if let priorityCard = PriorityScrapableCard(membershipCard: card) {
+                            self.priorityScrapableCards.append(priorityCard)
+                        }
                     }
                     
-                    if response.didAttemptLogin == true {
-                        if let card = self.membershipCard, self.activeWebview == self.priorityWebview {
-                            /// At this point, we know we've attempted a login so there was no valid session
-                            /// As we are using the priority web view, we know the membership card is the only one of it's plan type
-                            /// We can safely assume the membership card can be move to the priority list and have it's session reused
-                            if let priorityCard = PriorityScrapableCard(membershipCard: card) {
-                                self.priorityScrapableCards.append(priorityCard)
-                            }
-                        }
-                        
-                        if Current.pointsScrapingManager.isDebugMode, let agent = self.agent {
-                            DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Attempted to log in", type: .success)
-                        }
+                    if Current.pointsScrapingManager.isDebugMode, let agent = self.agent {
+                        DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Attempted to log in", type: .success)
                     }
-
-                    if let points = response.pointsValue {
-                        self.finish(withValue: points)
-                        return
-                    }
-                case .failure(let error):
-                    self.finish(withError: error)
                 }
+
+                if let points = response.pointsValue {
+                    self.finish(withValue: points)
+                    return
+                }
+            case .failure(let error):
+                self.finish(withError: error)
             }
         }
     }

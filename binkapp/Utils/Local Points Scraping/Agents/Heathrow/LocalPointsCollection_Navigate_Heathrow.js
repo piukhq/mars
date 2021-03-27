@@ -1,12 +1,12 @@
 var username = "%@"
 var password = "%@"
 
-var formQuery = "form#sign-in-form"
-var usernameInputQuery = "form#login-form input[type=email]"
+var formQuery = "form#login-form"
+var usernameInputQuery = "form#login-form input#username"
 var passwordInputQuery = "form#login-form input[type=password]"
 var submitButtonQuery = "form#login-form button[type=submit]"
 
-var pointsValueQuery = ".pointvalue"
+var pointsValueQuery = ".total-points"
 
 var incorrectCredentialsQuery = "p.ui-component__notice__error-text"
 
@@ -30,7 +30,6 @@ function handleNavigation() {
     var error = document.querySelector(incorrectCredentialsQuery)
     if (error) {
         return {
-            "did_attempt_login": true,
             "error_message": "Login failed. Incorrect credentials identified: " + error.innerHTML
         }
     }

@@ -166,6 +166,9 @@
 		70B61D52251251EC006A98C8 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B61D51251251EC006A98C8 /* ViewControllerFactory.swift */; };
 		70BD4BD224B77500006E4E3D /* TescoPointsScrapingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */; };
 		70C3931D25D6E47F0065FDDE /* FeatureTogglingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C3931C25D6E47F0065FDDE /* FeatureTogglingManager.swift */; };
+		70C530D9260F45A5007E2147 /* LocalPointsCollection_Navigate_Tesco.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530D8260F45A5007E2147 /* LocalPointsCollection_Navigate_Tesco.js */; };
+		70C530DE260F4824007E2147 /* LocalPointsCollection_Navigate_Heathrow.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530DD260F4824007E2147 /* LocalPointsCollection_Navigate_Heathrow.js */; };
+		70C530E3260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530E2260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js */; };
 		70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */; };
 		70CE8967258A807E00078ADA /* BinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CE8966258A807E00078ADA /* BinkButton.swift */; };
 		70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6863D257152F300403448 /* DynamicActionsTests.swift */; };
@@ -719,6 +722,9 @@
 		70BC233F24BE0C07004F28E0 /* binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 14-07-20 - Remove payment card to membership image relationship.xcdatamodel"; sourceTree = "<group>"; };
 		70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TescoPointsScrapingAgent.swift; sourceTree = "<group>"; };
 		70C3931C25D6E47F0065FDDE /* FeatureTogglingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTogglingManager.swift; sourceTree = "<group>"; };
+		70C530D8260F45A5007E2147 /* LocalPointsCollection_Navigate_Tesco.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Tesco.js; sourceTree = "<group>"; };
+		70C530DD260F4824007E2147 /* LocalPointsCollection_Navigate_Heathrow.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Heathrow.js; sourceTree = "<group>"; };
+		70C530E2260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Waterstones.js; sourceTree = "<group>"; };
 		70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionModel.swift; sourceTree = "<group>"; };
 		70CE8966258A807E00078ADA /* BinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButton.swift; sourceTree = "<group>"; };
 		70D6863D257152F300403448 /* DynamicActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsTests.swift; sourceTree = "<group>"; };
@@ -1678,6 +1684,7 @@
 		70661B85250792B6006DB009 /* Tesco */ = {
 			isa = PBXGroup;
 			children = (
+				70C530D8260F45A5007E2147 /* LocalPointsCollection_Navigate_Tesco.js */,
 				70907E0725C8683C007629BB /* LocalPointsCollection_Login_Tesco.js */,
 				70907E3825C883D9007629BB /* LocalPointsCollection_Points_Tesco.js */,
 				70BD4BD124B77500006E4E3D /* TescoPointsScrapingAgent.swift */,
@@ -1824,6 +1831,7 @@
 		70E8DFDB2563E2F20027A244 /* Heathrow */ = {
 			isa = PBXGroup;
 			children = (
+				70C530DD260F4824007E2147 /* LocalPointsCollection_Navigate_Heathrow.js */,
 				70E8DFDC2563E3050027A244 /* HeathrowPointsScrapingAgent.swift */,
 				70907E0C25C878AE007629BB /* LocalPointsCollection_Login_Heathrow.js */,
 				70907E2925C883B7007629BB /* LocalPointsCollection_Points_Heathrow.js */,
@@ -1842,6 +1850,7 @@
 		70E8E126256419FD0027A244 /* Waterstones */ = {
 			isa = PBXGroup;
 			children = (
+				70C530E2260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js */,
 				70907E1625C87CB6007629BB /* LocalPointsCollection_Login_Waterstones.js */,
 				70907E3D25C883E1007629BB /* LocalPointsCollection_Points_Waterstones.js */,
 				70E8E12725641A350027A244 /* WaterstonesPointsScrapingAgent.swift */,
@@ -2943,6 +2952,7 @@
 				EFF59F16234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib in Resources */,
 				3CD3493A22F99E1D000C1F4D /* NunitoSans-Italic.ttf in Resources */,
 				BD01E123231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib in Resources */,
+				70C530DE260F4824007E2147 /* LocalPointsCollection_Navigate_Heathrow.js in Resources */,
 				3C71683524069F370058701E /* bink.der in Resources */,
 				3CCC46C522FC652C008476E3 /* BarcodeViewController.xib in Resources */,
 				EF4B46672346489C009A3651 /* PaymentCardDetailViewController.xib in Resources */,
@@ -2966,6 +2976,7 @@
 				3C794D8D23018C25000A31FD /* BrowseBrandsViewController.xib in Resources */,
 				EF5229B82423FC4E004AC972 /* stagingPublicKey.der in Resources */,
 				B7FE19BB234391B000F2D6A0 /* PaymentCardCell.xib in Resources */,
+				70C530E3260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js in Resources */,
 				70F7EC1B25CAC657005DE935 /* LocalPointsCollection_Points_Morrisons.js in Resources */,
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
@@ -3012,6 +3023,7 @@
 				70E3984F256FE7BA009AD8CB /* DynamicActionViewController.xib in Resources */,
 				EF485568231D679E00FC9E5F /* DebugMenuTableViewCell.xib in Resources */,
 				EFA81016240405070000D21D /* JailbrokenViewController.xib in Resources */,
+				70C530D9260F45A5007E2147 /* LocalPointsCollection_Navigate_Tesco.js in Resources */,
 				EFA5F75F2379BD3A0027AB80 /* PLRAccumulatorActiveCell.xib in Resources */,
 				70907E1C25C87DA3007629BB /* LocalPointsCollection_Login_Template.js in Resources */,
 				706D203E24D96D35004BCCF3 /* GoogleService-Info-BETA.plist in Resources */,
