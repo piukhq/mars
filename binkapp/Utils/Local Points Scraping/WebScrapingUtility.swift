@@ -14,6 +14,17 @@ struct WebScrapingCredentials {
     let password: String
 }
 
+struct PriorityScrapableCard {
+    let cardId: String
+    let planId: String
+    
+    init?(membershipCard: CD_MembershipCard) {
+        self.cardId = membershipCard.id
+        guard let planId = membershipCard.membershipPlan?.id else { return nil }
+        self.planId = planId
+    }
+}
+
 protocol WebScrapingUtilityDelegate: AnyObject {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
@@ -22,8 +33,10 @@ protocol WebScrapingUtilityDelegate: AnyObject {
 class WebScrapingUtility: NSObject {
     var isRunning = false
     
-    private let primaryWebview: WKWebView
+    private let priorityWebview: WKWebView
     private var activeWebview: WKWebView!
+    private var priorityScrapableCards: [PriorityScrapableCard] = []
+    
     private var agent: WebScrapable?
     private var membershipCard: CD_MembershipCard?
 
@@ -53,7 +66,7 @@ class WebScrapingUtility: NSObject {
     }
     
     init(delegate: WebScrapingUtilityDelegate?) {
-        primaryWebview = WKWebView(frame: .zero)
+        priorityWebview = WKWebView(frame: .zero)
         self.delegate = delegate
         super.init()
     }
@@ -80,37 +93,25 @@ class WebScrapingUtility: NSObject {
         resetIdlingTimer()
     }
     
-    private func appropriateWebview() -> WKWebView {
-        // TODO: The first card for each plan added should always use the primary webview for best user experience. If we add another one, it should use a new temporary webview, but if the first one refreshes it's balance, it should use the primary webview
+    /// A function to determine if the membership card we are about to scrape can use our priority webview or not.
+    /// The priority webview can support one membership card per membership plan.
+    /// If we are already supporting a membership card of the same membership plan, we use an ephermeral webview that will only live as long as scraping is taking place.
+    /// Only the priority web view can handle sessions and cookies in a user-friendly way.
+    /// - Returns: The webview in which to perform points scraping
+    private func appropriateWebview() -> WKWebView? {
+        guard let card = membershipCard, let plan = card.membershipPlan else { return nil }
         
-        // Is this card the only card of it's type in the wallet?
+        let priorityCardIds = priorityScrapableCards.map { $0.cardId }
+        let priorityPlanIds = priorityScrapableCards.map { $0.planId }
         
-        // Should we maintain an array of primary scraping cards, and everything else uses a temporary webview?
+        if priorityCardIds.contains(card.id) {
+            return priorityWebview
+        }
         
-        // First card of each type added to the array
-        
-        
-        
-        
-        
-        
-        
-        
-        let scrapedMembershipCards = Current.wallet.membershipCards?.filter {
-            if let planIdString = $0.membershipPlan?.id, let planId = Int(planIdString) {
-                 return Current.pointsScrapingManager.planIdIsWebScrapable(planId)
-            }
-            return false
-        }.compactMap { $0 }
-        
-        guard let cards = scrapedMembershipCards else { return primaryWebview }
-        
-        let scrapedPlans = cards.map { $0.membershipPlan }.compactMap { $0 }
-        
-        if let plan = membershipCard?.membershipPlan, scrapedPlans.contains(plan) {
+        if priorityPlanIds.contains(plan.id) {
             return WKWebView(frame: .zero)
         } else {
-            return primaryWebview
+            return priorityWebview
         }
     }
     
@@ -120,6 +121,10 @@ class WebScrapingUtility: NSObject {
         hasAttemptedLogin = false
         idleTimer?.invalidate()
         detectElementTimer?.invalidate()
+        
+        if activeWebview != priorityWebview {
+            activeWebview = nil
+        }
     }
 
     private func resetIdlingTimer() {
@@ -184,8 +189,12 @@ class WebScrapingUtility: NSObject {
     private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
         if isRunning { return }
         isRunning = true
+        
         activeWebview.evaluateJavaScript(script) { [weak self] (response, error) in
             self?.isRunning = false
+            
+            
+            // TODO: Use 3 different errors here
             guard error == nil else {
                 completion(.failure(.javascriptError))
                 return
@@ -255,8 +264,12 @@ extension WebScrapingUtility: WKNavigationDelegate {
         resetIdlingTimer()
         
         if let navigateScript = script(scriptName: "LocalPointsCollection_Navigate_Template") {
-            // TODO: Inject credentials
-            let formattedScript = String(format: navigateScript, "", "")
+            
+            guard let card = membershipCard, let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: card.id) else {
+                return
+            }
+            
+            let formattedScript = String(format: navigateScript, credentials.username, credentials.password)
             runScript(formattedScript) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
@@ -266,8 +279,19 @@ extension WebScrapingUtility: WKNavigationDelegate {
                         return
                     }
                     
-                    if response.didAttemptLogin == true, Current.pointsScrapingManager.isDebugMode, let agent = self.agent {
-                        DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Attempted to log in", type: .success)
+                    if response.didAttemptLogin == true {
+                        if let card = self.membershipCard, self.activeWebview == self.priorityWebview {
+                            /// At this point, we know we've attempted a login so there was no valid session
+                            /// As we are using the priority web view, we know the membership card is the only one of it's plan type
+                            /// We can safely assume the membership card can be move to the priority list and have it's session reused
+                            if let priorityCard = PriorityScrapableCard(membershipCard: card) {
+                                self.priorityScrapableCards.append(priorityCard)
+                            }
+                        }
+                        
+                        if Current.pointsScrapingManager.isDebugMode, let agent = self.agent {
+                            DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Attempted to log in", type: .success)
+                        }
                     }
 
                     if let points = response.pointsValue {
