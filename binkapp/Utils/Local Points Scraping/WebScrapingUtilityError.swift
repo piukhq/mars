@@ -28,7 +28,29 @@ enum WebScrapingUtilityError: BinkError {
     }
 
     var message: String {
-        // TODO: Add messages here
-        return ""
+        switch self {
+        case .agentProvidedInvalidUrl:
+            return "Agent provided invalid URL"
+        case .scriptFileNotFound:
+            return "Script file not found"
+        case .failedToExecuteScript:
+            return "Failed to execute script"
+        case .failedToCastReturnValue:
+            return "Failed to cast return value"
+        case .userDismissedWebView:
+            return "User dismissed web view for user action"
+        case .unhandledIdling:
+            return "Unhandled idling"
+        case .javascriptError:
+            return "Javascript error"
+        case .noJavascriptResponse:
+            return "No javascript response"
+        case .failedToDecodeJavascripResponse:
+            return "Failed to decode javascript response"
+        case .incorrectCredentials(let errorMessage):
+            return "Login failed - incorrect credentials. Error message: \(errorMessage ?? "")"
+        case .genericFailure(let errorMessage):
+            return "Local points collection uncategorized failure. Error message: \(errorMessage ?? "")"
+        }
     }
 }
