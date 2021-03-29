@@ -18,7 +18,7 @@ function handleNavigation() {
     var pts = document.querySelector(pointsValueQuery)
 
     if (pts) {
-        var num = p.innerHTML.match(/\d+/);
+        var num = pts.innerHTML.match(/\d+/);
         return {
             "success": true,
             "points": num[0]

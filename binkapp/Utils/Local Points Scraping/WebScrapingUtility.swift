@@ -34,7 +34,7 @@ class WebScrapingUtility: NSObject {
     var isRunning = false
     
     private let priorityWebview: WKWebView
-    private var activeWebview: WKWebView!
+    private var activeWebview: WKWebView?
     private var priorityScrapableCards: [PriorityScrapableCard] = []
     
     private var agent: WebScrapable?
@@ -55,6 +55,7 @@ class WebScrapingUtility: NSObject {
     }
 
     private var isPresentingWebView: Bool {
+        guard let activeWebview = activeWebview else { return false }
         guard let navigationViewController = UIViewController.topMostViewController() as? UINavigationController else { return false }
         guard let topViewController = navigationViewController.viewControllers.first else { return false }
         return topViewController.view.subviews.contains(activeWebview)
@@ -87,8 +88,8 @@ class WebScrapingUtility: NSObject {
         
         activeWebview = appropriateWebview()
         
-        activeWebview.navigationDelegate = self
-        activeWebview.load(request)
+        activeWebview?.navigationDelegate = self
+        activeWebview?.load(request)
 
         resetIdlingTimer()
     }
@@ -190,7 +191,7 @@ class WebScrapingUtility: NSObject {
         if isRunning { return }
         isRunning = true
         
-        activeWebview.evaluateJavaScript(script) { [weak self] (response, error) in
+        activeWebview?.evaluateJavaScript(script) { [weak self] (response, error) in
             self?.isRunning = false
             
             guard error == nil else {

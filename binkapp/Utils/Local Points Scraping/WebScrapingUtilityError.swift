@@ -8,6 +8,8 @@
 
 import Foundation
 
+// TODO: Separate client vs JS errors in sentry
+
 enum WebScrapingUtilityError: BinkError {
     case agentProvidedInvalidUrl
     case scriptFileNotFound
@@ -26,6 +28,7 @@ enum WebScrapingUtilityError: BinkError {
     }
 
     var message: String {
+        // TODO: Add messages here
         return ""
     }
 }
