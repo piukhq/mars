@@ -170,6 +170,7 @@
 		70C530DE260F4824007E2147 /* LocalPointsCollection_Navigate_Heathrow.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530DD260F4824007E2147 /* LocalPointsCollection_Navigate_Heathrow.js */; };
 		70C530E3260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530E2260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js */; };
 		70C530EB26121358007E2147 /* LocalPointsCollection_Navigate_Superdrug.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530EA26121358007E2147 /* LocalPointsCollection_Navigate_Superdrug.js */; };
+		70C530F026121E9E007E2147 /* LocalPointsCollection_Navigate_Boots.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530EF26121E9E007E2147 /* LocalPointsCollection_Navigate_Boots.js */; };
 		70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */; };
 		70CE8967258A807E00078ADA /* BinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CE8966258A807E00078ADA /* BinkButton.swift */; };
 		70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6863D257152F300403448 /* DynamicActionsTests.swift */; };
@@ -727,6 +728,7 @@
 		70C530DD260F4824007E2147 /* LocalPointsCollection_Navigate_Heathrow.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Heathrow.js; sourceTree = "<group>"; };
 		70C530E2260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Waterstones.js; sourceTree = "<group>"; };
 		70C530EA26121358007E2147 /* LocalPointsCollection_Navigate_Superdrug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Superdrug.js; sourceTree = "<group>"; };
+		70C530EF26121E9E007E2147 /* LocalPointsCollection_Navigate_Boots.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Boots.js; sourceTree = "<group>"; };
 		70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionModel.swift; sourceTree = "<group>"; };
 		70CE8966258A807E00078ADA /* BinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButton.swift; sourceTree = "<group>"; };
 		70D6863D257152F300403448 /* DynamicActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsTests.swift; sourceTree = "<group>"; };
@@ -1697,6 +1699,7 @@
 		70661B86250792C0006DB009 /* Boots */ = {
 			isa = PBXGroup;
 			children = (
+				70C530EF26121E9E007E2147 /* LocalPointsCollection_Navigate_Boots.js */,
 				70661B87250792DB006DB009 /* BootsPointsScrapingAgent.swift */,
 				70AA970725E51E1E00D10EC0 /* LocalPointsCollection_Login_Boots.js */,
 				70AA970C25E51F5400D10EC0 /* LocalPointsCollection_Points_Boots.js */,
@@ -2985,6 +2988,7 @@
 				5ECE047922CE579B001BA964 /* LaunchScreen.storyboard in Resources */,
 				3CD3494022F99E1D000C1F4D /* NunitoSans-ExtraLightItalic.ttf in Resources */,
 				3C2394FF22F45CC0004D1874 /* AddingOptionView.xib in Resources */,
+				70C530F026121E9E007E2147 /* LocalPointsCollection_Navigate_Boots.js in Resources */,
 				3C9B1A2323854B9D0078A1EC /* PreferencesViewController.xib in Resources */,
 				3CD3493822F99E1D000C1F4D /* NunitoSans-Regular.ttf in Resources */,
 				3C360721230FF03B00AC76A3 /* BrandHeaderView.xib in Resources */,
