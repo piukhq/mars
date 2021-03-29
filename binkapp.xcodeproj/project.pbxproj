@@ -171,6 +171,7 @@
 		70C530E3260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530E2260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js */; };
 		70C530EB26121358007E2147 /* LocalPointsCollection_Navigate_Superdrug.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530EA26121358007E2147 /* LocalPointsCollection_Navigate_Superdrug.js */; };
 		70C530F026121E9E007E2147 /* LocalPointsCollection_Navigate_Boots.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530EF26121E9E007E2147 /* LocalPointsCollection_Navigate_Boots.js */; };
+		70C530F526122646007E2147 /* LocalPointsCollection_Navigate_Morrisons.js in Resources */ = {isa = PBXBuildFile; fileRef = 70C530F426122646007E2147 /* LocalPointsCollection_Navigate_Morrisons.js */; };
 		70CA2F05256E79D1008E0A81 /* DynamicActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */; };
 		70CE8967258A807E00078ADA /* BinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CE8966258A807E00078ADA /* BinkButton.swift */; };
 		70D6863E257152F300403448 /* DynamicActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D6863D257152F300403448 /* DynamicActionsTests.swift */; };
@@ -729,6 +730,7 @@
 		70C530E2260F4D6F007E2147 /* LocalPointsCollection_Navigate_Waterstones.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Waterstones.js; sourceTree = "<group>"; };
 		70C530EA26121358007E2147 /* LocalPointsCollection_Navigate_Superdrug.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Superdrug.js; sourceTree = "<group>"; };
 		70C530EF26121E9E007E2147 /* LocalPointsCollection_Navigate_Boots.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Boots.js; sourceTree = "<group>"; };
+		70C530F426122646007E2147 /* LocalPointsCollection_Navigate_Morrisons.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LocalPointsCollection_Navigate_Morrisons.js; sourceTree = "<group>"; };
 		70CA2F04256E79D1008E0A81 /* DynamicActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionModel.swift; sourceTree = "<group>"; };
 		70CE8966258A807E00078ADA /* BinkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkButton.swift; sourceTree = "<group>"; };
 		70D6863D257152F300403448 /* DynamicActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicActionsTests.swift; sourceTree = "<group>"; };
@@ -1710,6 +1712,7 @@
 		70661B8D250A56DB006DB009 /* Morrisons */ = {
 			isa = PBXGroup;
 			children = (
+				70C530F426122646007E2147 /* LocalPointsCollection_Navigate_Morrisons.js */,
 				70F7EC1A25CAC656005DE935 /* LocalPointsCollection_Points_Morrisons.js */,
 				70907E4E25C95EDA007629BB /* LocalPointsCollection_Login_Morrisons.js */,
 				70661B92250A572C006DB009 /* MorrisonsPointsScrapingAgent.swift */,
@@ -2957,6 +2960,7 @@
 				CE2C7A7925DEC635007624FE /* DebugMenuPickerTableViewCell.xib in Resources */,
 				B71D51F92343692000BB3406 /* OfferTileView.xib in Resources */,
 				EFF59F16234B71B400CF3992 /* PaymentCardDetailLinkLoyaltyCardCell.xib in Resources */,
+				70C530F526122646007E2147 /* LocalPointsCollection_Navigate_Morrisons.js in Resources */,
 				3CD3493A22F99E1D000C1F4D /* NunitoSans-Italic.ttf in Resources */,
 				BD01E123231FA38900D52713 /* WalletLoyaltyCardCollectionViewCell.xib in Resources */,
 				70C530DE260F4824007E2147 /* LocalPointsCollection_Navigate_Heathrow.js in Resources */,

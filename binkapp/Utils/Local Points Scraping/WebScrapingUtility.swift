@@ -43,14 +43,13 @@ class WebScrapingUtility: NSObject {
     private weak var delegate: WebScrapingUtilityDelegate?
 
     private var idleTimer: Timer?
-    private var detectElementTimer: Timer?
-    private let idleThreshold: TimeInterval = 30
-    private let idleRetryLimit = 1
+    private let idleThreshold: TimeInterval = 20
+    private let idleRetryLimit = 2
     private var idleRetryCount = 0
+    
+    private var userActionTimer: Timer?
 
-    private var hasAttemptedLogin = false
     private var isPerformingUserAction = false
-    private var isReloadingWebView = false
 
     private var isInDebugMode: Bool {
         return Current.pointsScrapingManager.isDebugMode
@@ -121,10 +120,9 @@ class WebScrapingUtility: NSObject {
     private func stop() {
         agent = nil
         membershipCard = nil
-        hasAttemptedLogin = false
         idleTimer?.invalidate()
         idleRetryCount = 0
-        detectElementTimer?.invalidate()
+        userActionTimer?.invalidate()
         
         if activeWebview != priorityWebview {
             activeWebview = nil
@@ -140,6 +138,7 @@ class WebScrapingUtility: NSObject {
             // But first, let's retry if we haven't already
             
             if self.idleRetryCount < self.idleRetryLimit {
+                self.idleRetryCount += 1
                 self.handleWebViewNavigation()
                 return
             }
@@ -147,6 +146,22 @@ class WebScrapingUtility: NSObject {
             timer.invalidate()
             self.finish(withError: .unhandledIdling)
         })
+    }
+    
+    private func beginUserAction() {
+        isPerformingUserAction = true
+        presentWebView()
+        userActionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
+            guard let self = self else { return }
+            self.handleWebViewNavigation(stateConfigurator: .userActionRequired)
+        })
+    }
+    
+    private func endUserAction() {
+        isPerformingUserAction = false
+        userActionTimer?.invalidate()
+        closeWebView()
+        handleWebViewNavigation(stateConfigurator: .userActionComplete)
     }
 
     private func presentWebView() {
@@ -164,31 +179,6 @@ class WebScrapingUtility: NSObject {
         if isPresentingWebView {
             Current.navigate.close()
         }
-    }
-
-    @objc private func detectRecaptchaSuccess() {
-//        guard let card = membershipCard else { return }
-//
-//        detectElement(queryString: "re-captcha[class*=-valid]") { [weak self] result in
-//            guard let self = self else { return }
-//            switch result {
-//            case .success(let response):
-//                if response.elementDetected == true {
-//                    self.resetIdlingTimer()
-//                    self.detectElementTimer?.invalidate()
-//                    self.isPerformingUserAction = false
-//                    self.closeWebView()
-//
-//                    guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: card.id) else {
-//                        self.finish(withError: .failedToExecuteLoginScript)
-//                        return
-//                    }
-//                    self.login(credentials: credentials)
-//                }
-//            case .failure:
-//                self.finish(withError: .loginFailed(errorMessage: "Failed to detect recaptcha element."))
-//            }
-//        }
     }
 
     private func script(scriptName: String) -> String? {
@@ -256,21 +246,15 @@ class WebScrapingUtility: NSObject {
 
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        // We know that if we entered this delegate method via a forced reload, we've now completed that
-        isReloadingWebView = false
         handleWebViewNavigation()
     }
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
-        decisionHandler(.allow, preferences)
-
-        if webView.url?.absoluteString.contains("#") == true, !isReloadingWebView {
-            isReloadingWebView = true
-            webView.reload()
-        }
+    enum WebScrapingStateConfigurator: String {
+        case userActionRequired
+        case userActionComplete
     }
 
-    private func handleWebViewNavigation() {
+    private func handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator? = nil) {
         resetIdlingTimer()
         guard let agent = agent else { return }
         guard let script = script(scriptName: agent.navigateScriptFileName) else {
@@ -281,7 +265,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
             return
         }
         
-        let formattedScript = String(format: script, credentials.username, credentials.password)
+        let formattedScript = String(format: script, credentials.username, credentials.password, stateConfigurator?.rawValue ?? "")
         runScript(formattedScript) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -294,6 +278,22 @@ extension WebScrapingUtility: WKNavigationDelegate {
                     }
                     return
                 }
+                
+                
+                // User action
+                
+                if response.userActionComplete == true {
+                    self.endUserAction()
+                    return
+                }
+                
+                if response.userActionRequired == true {
+                    self.beginUserAction()
+                    return
+                }
+                
+                
+                // Login attempt
                 
                 if response.didAttemptLogin == true {
                     if let card = self.membershipCard, self.activeWebview == self.priorityWebview {
@@ -309,6 +309,9 @@ extension WebScrapingUtility: WKNavigationDelegate {
                         DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Attempted to log in", type: .success)
                     }
                 }
+                
+                
+                // Points retrieval
 
                 if let points = response.pointsValue {
                     self.finish(withValue: points)

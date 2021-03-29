@@ -12,6 +12,8 @@ struct WebScrapingResponse: Codable {
     var pointsString: String?
     var didAttemptLogin: Bool?
     var errorMessage: String?
+    var userActionRequired: Bool?
+    var userActionComplete: Bool?
 
     var pointsValue: Int? {
         guard let string = pointsString else { return nil }
@@ -22,5 +24,7 @@ struct WebScrapingResponse: Codable {
         case pointsString = "points"
         case didAttemptLogin = "did_attempt_login"
         case errorMessage = "error_message"
+        case userActionRequired = "user_action_required"
+        case userActionComplete = "user_action_complete"
     }
 }
