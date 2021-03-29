@@ -31,13 +31,16 @@ extension UIDevice {
     
     enum ScreenSize: String {
         case iPhone4Size = "iPhone 4 or iPhone 4S"
-        case iPhone5Size = "iPhone 5, iPhone 5s, iPhone 5c or iPhone SE"
-        case iPhone6Size = "iPhone 6, iPhone 6S, iPhone 7 or iPhone 8"
+        case iPhone5Size = "iPhone 5, iPhone 5s, iPhone 5c"
+        case iPhoneSESize = "iPhone 6, iPhone 6S, iPhone 7, iPhone 8 or iPhone SE"
         case iPhonePlusSize = "iPhone 6 Plus, iPhone 6S Plus, iPhone 7 Plus or iPhone 8 Plus"
         case iPhoneXSize = "iPhone X or iPhone XS"
         case iPhone11Size = "iPhone XR or iPhone 11"
-        case iPhoneMaxSize = "iPhone XS Max or iPhone Pro Max"
+        case iPhone11ProMaxSize = "iPhone XS Max or iPhone 11 Pro Max"
         case iPhone11ProSize = "iPhone 11 Pro"
+        case iPhone12MiniSize = "iPhone 12 Mini"
+        case iPhone12Size = "iPhone 12 or iPhone 12 Pro"
+        case iPhone12ProMaxSize = "iPhone 12 Pro Max"
         case unknown
     }
     
@@ -46,17 +49,21 @@ extension UIDevice {
         case 1136:
             return .iPhone5Size
         case 1334:
-            return .iPhone6Size
+            return .iPhoneSESize
         case 1792:
             return .iPhone11Size
         case 1920, 2208:
             return .iPhonePlusSize
+        case 2340:
+            return .iPhone12MiniSize
         case 2426:
             return .iPhone11ProSize
         case 2436:
             return .iPhoneXSize
         case 2688:
-            return .iPhoneMaxSize
+            return .iPhone11ProMaxSize
+        case 2778:
+            return .iPhone12ProMaxSize
         default:
             return .unknown
         }
@@ -66,10 +73,14 @@ extension UIDevice {
         switch UIScreen.main.bounds.width {
         case 320:
             return .iPhone5Size
+        case 360:
+            return .iPhone12MiniSize
         case 375:
-            return .iPhone6Size
+            return .iPhoneSESize
         case 414:
             return .iPhonePlusSize
+        case 390:
+            return .iPhone12Size
         default:
             return .unknown
         }
