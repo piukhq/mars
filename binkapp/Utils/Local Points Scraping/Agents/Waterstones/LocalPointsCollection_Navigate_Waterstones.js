@@ -8,7 +8,7 @@ var submitButtonQuery = "form#login-form button[type=submit]"
 
 var pointsValueQuery = ".plus-balance-row strong"
 
-var incorrectCredentialsQuery = "p.ui-component__notice__error-text"
+var incorrectCredentialsQuery = ".login-container p[class=error]"
 
 handleNavigation()
 
