@@ -43,11 +43,6 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
         containerView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         detailLabel.textColor = Current.themeManager.color(for: .text)
     }
-
-    @IBAction private func dismissButtonWasPressed() {
-        Current.userDefaults.set(true, forKey: walletPrompt.userDefaultsDismissKey)
-        Current.wallet.refreshLocal()
-    }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         width.constant = bounds.size.width

@@ -38,10 +38,6 @@ class WalletPromptTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.pllWalletPrompt.body, "Add these loyalty cards and link them to your payment cards to collect rewards automatically when you pay.")
     }
     
-    func test_userDefaultsDismissKeyString_isCorrect() {
-        XCTAssertEqual(Self.addPaymentCardsWalletPrompt.userDefaultsDismissKey, userDefaultsDismissKey(forType: .addPaymentCards))
-    }
-    
     func test_membershipPlans_areCorrect() {
         XCTAssertEqual(Self.pllWalletPrompt.membershipPlans, Self.membershipPlans)
         XCTAssertNil(Self.addPaymentCardsWalletPrompt.membershipPlans)
@@ -50,10 +46,6 @@ class WalletPromptTests: XCTestCase, CoreDataTestable {
     func test_iconImageNameString_isCorrect() {
         XCTAssertEqual(Self.addPaymentCardsWalletPrompt.iconImageName, "payment")
         XCTAssertNil(Self.pllWalletPrompt.iconImageName)
-    }
-    
-    func test_userDefaultsDismissKeyFuncString_isCorrect() {
-        XCTAssertEqual(WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards), userDefaultsDismissKey(forType: .addPaymentCards))
     }
     
     func test_numberOfRows_isCorrect() {
