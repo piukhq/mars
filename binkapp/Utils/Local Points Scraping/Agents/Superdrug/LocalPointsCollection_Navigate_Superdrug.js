@@ -1,14 +1,14 @@
 var username = "%@"
 var password = "%@"
 
-var formQuery = "form#login-form"
-var usernameInputQuery = "form#login-form input#username"
+var formQuery = "form#loginForm"
+var usernameInputQuery = "form#login-form input[name=j_username]"
 var passwordInputQuery = "form#login-form input[type=password]"
 var submitButtonQuery = "form#login-form button[type=submit]"
 
-var pointsValueQuery = ".total-points"
+var pointsValueQuery = ".sd-panel p:last-of-type b"
 
-var incorrectCredentialsQuery = "div[class*=validation-error-message] p"
+var incorrectCredentialsQuery = "div[class*=\"information_message negative\""
 
 handleNavigation()
 
@@ -30,7 +30,7 @@ function handleNavigation() {
     if (error) {
         return {
             "did_attempt_login": true,
-            "error_message": "Login failed. Incorrect credentials identified: " + error.innerHTML
+            "error_message": "Login failed. Incorrect credentials identified: " + error.innerText
         }
     }
 
