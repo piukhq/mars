@@ -44,7 +44,9 @@ class WebScrapingUtility: NSObject {
 
     private var idleTimer: Timer?
     private var detectElementTimer: Timer?
-    private let idleThreshold: TimeInterval = 60
+    private let idleThreshold: TimeInterval = 30
+    private let idleRetryLimit = 1
+    private var idleRetryCount = 0
 
     private var hasAttemptedLogin = false
     private var isPerformingUserAction = false
@@ -121,6 +123,7 @@ class WebScrapingUtility: NSObject {
         membershipCard = nil
         hasAttemptedLogin = false
         idleTimer?.invalidate()
+        idleRetryCount = 0
         detectElementTimer?.invalidate()
         
         if activeWebview != priorityWebview {
@@ -130,9 +133,17 @@ class WebScrapingUtility: NSObject {
 
     private func resetIdlingTimer() {
         idleTimer?.invalidate()
-        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
+        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { [weak self] timer in
+            guard let self = self else { return }
             // The webview has sat idle for a period of time without performing any navigation.
             // If we don't force to failed, the card will remain in an unusable pending state.
+            // But first, let's retry if we haven't already
+            
+            if self.idleRetryCount < self.idleRetryLimit {
+                self.handleWebViewNavigation()
+                return
+            }
+            
             timer.invalidate()
             self.finish(withError: .unhandledIdling)
         })
@@ -281,6 +292,7 @@ extension WebScrapingUtility: WKNavigationDelegate {
                     } else {
                         self.finish(withError: .genericFailure(errorMessage: error))
                     }
+                    return
                 }
                 
                 if response.didAttemptLogin == true {

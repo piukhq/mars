@@ -8,7 +8,7 @@ var submitButtonQuery = "form#login-form button[type=submit]"
 
 var pointsValueQuery = ".total-points"
 
-var incorrectCredentialsQuery = "p.ui-component__notice__error-text"
+var incorrectCredentialsQuery = "div[class*=validation-error-message] p"
 
 handleNavigation()
 
@@ -16,8 +16,7 @@ function handleNavigation() {
     // If we can identify the points value, scrape
 
     var pts = document.querySelector(pointsValueQuery)
-
-    if (pts) {
+    if (pts && pts.innerHTML !== "") {
         return {
             "points": pts.innerHTML
         }
@@ -30,6 +29,7 @@ function handleNavigation() {
     var error = document.querySelector(incorrectCredentialsQuery)
     if (error) {
         return {
+            "did_attempt_login": true,
             "error_message": "Login failed. Incorrect credentials identified: " + error.innerHTML
         }
     }
@@ -60,7 +60,7 @@ function handleNavigation() {
         }
         p.value = password
 
-        var b = Array.from(document.querySelectorAll('form#login-form button')).filter(el => el.type === "submit")[0]
+        var b = document.querySelector(submitButtonQuery)
         if (!b) {
             return {
                 "error_message": "Login failed. Submit button could not be identified."

@@ -61,7 +61,7 @@ function handleNavigation() {
         }
         p.value = password
 
-        var b = Array.from(document.querySelectorAll('form#login-form button')).filter(el => el.type === "submit")[0]
+        var b = document.querySelector(submitButtonQuery)
         if (!b) {
             return {
                 "error_message": "Login failed. Submit button could not be identified."
