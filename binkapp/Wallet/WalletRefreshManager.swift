@@ -11,7 +11,7 @@ import Foundation
 class WalletRefreshManager {
     private static let oneHour: TimeInterval = 3600
     private static let twoMinutes: TimeInterval = 120
-    private static let twoHours: TimeInterval = 10
+    private static let twoHours: TimeInterval = 7200
 
     private var accountsRefreshTimer: Timer!
     private var plansRefreshTimer: Timer!
@@ -65,7 +65,7 @@ extension WalletRefreshManager {
         if let balanceLastUpdatedTimeStamp = card.formattedBalances?.first?.updatedAt?.doubleValue {
             let balanceLastUpdatedDate = Date(timeIntervalSince1970: balanceLastUpdatedTimeStamp)
             let elapsed = Int(Date().timeIntervalSince(balanceLastUpdatedDate))
-            return elapsed >= Int(WalletRefreshManager.twoHours)
+            return elapsed >= Int(Current.pointsScrapingManager.isDebugMode ? 60 : WalletRefreshManager.twoHours)
         }
         return false
     }

@@ -123,6 +123,7 @@ class WebScrapingUtility: NSObject {
         idleTimer?.invalidate()
         idleRetryCount = 0
         userActionTimer?.invalidate()
+        isPerformingUserAction = false
         
         if activeWebview != priorityWebview {
             activeWebview = nil
