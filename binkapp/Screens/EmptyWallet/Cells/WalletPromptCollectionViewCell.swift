@@ -35,6 +35,11 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
         detailLabel.text = walletPrompt.body
         titleLabel.sizeToFit()
         detailLabel.sizeToFit()
+        
+        if UIDevice.current.isSmallSize {
+            titleLabel.font = .walletPromptTitleSmall
+            detailLabel.font = .walletPromptBodySmall
+        }
 
         if let iconName = walletPrompt.iconImageName {
             brandIconImageView.image = UIImage(named: iconName)
