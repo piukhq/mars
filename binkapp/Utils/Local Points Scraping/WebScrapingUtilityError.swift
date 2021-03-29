@@ -8,7 +8,11 @@
 
 import Foundation
 
-// TODO: Separate client vs JS errors in sentry
+enum WebScrapingUtilityErrorLevel {
+    case client
+    case site
+    case user
+}
 
 enum WebScrapingUtilityError: BinkError {
     case agentProvidedInvalidUrl
@@ -51,6 +55,17 @@ enum WebScrapingUtilityError: BinkError {
             return "Login failed - incorrect credentials. Error message: \(errorMessage ?? "")"
         case .genericFailure(let errorMessage):
             return "Local points collection uncategorized failure. Error message: \(errorMessage ?? "")"
+        }
+    }
+    
+    var level: WebScrapingUtilityErrorLevel {
+        switch self {
+        case .agentProvidedInvalidUrl, .scriptFileNotFound, .failedToExecuteScript, .javascriptError, .failedToDecodeJavascripResponse:
+            return .client
+        case .failedToCastReturnValue, .genericFailure, .unhandledIdling, .noJavascriptResponse:
+            return .site
+        case .userDismissedWebView, .incorrectCredentials:
+            return .user
         }
     }
 }
