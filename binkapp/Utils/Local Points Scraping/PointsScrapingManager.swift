@@ -200,7 +200,7 @@ class PointsScrapingManager {
         }
     }
     
-    private func agentEnabled(_ agent: WebScrapable) -> Bool {
+    func agentEnabled(_ agent: WebScrapable) -> Bool {
         return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionAgentEnabled(agent))
     }
     

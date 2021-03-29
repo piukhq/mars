@@ -37,7 +37,7 @@ enum WalletPromptFactory {
                 #if DEBUG
                 sortedPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &sortedPlans)
                 #endif
-                
+            
                 walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
             }
         }
