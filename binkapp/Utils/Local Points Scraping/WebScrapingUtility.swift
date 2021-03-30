@@ -81,10 +81,6 @@ class WebScrapingUtility: NSObject {
             throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
-        if isInDebugMode {
-            presentWebView()
-        }
-        
         let request = URLRequest(url: url)
         
         activeWebview = appropriateWebview()
