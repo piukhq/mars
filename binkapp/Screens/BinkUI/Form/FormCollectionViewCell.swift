@@ -148,7 +148,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
 
     deinit {
-        Current.themeManager.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Layout
