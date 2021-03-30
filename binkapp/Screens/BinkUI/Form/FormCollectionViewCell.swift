@@ -96,7 +96,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         label.isHidden = true
         label.textColor = .binkDynamicRed
         label.setContentCompressionResistancePriority(.required, for: .vertical)
-        label.heightAnchor.constraint(equalToConstant: Constants.validationLabelHeight).isActive = true
+        label.widthAnchor.constraint(equalToConstant: preferredWidth).isActive = true
         return label
     }()
     
@@ -155,9 +155,9 @@ class FormCollectionViewCell: UICollectionViewCell {
     
     private func configureLayout() {
         let topConstraint = fieldStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17.0)
-        topConstraint.priority = .almostRequired
+        topConstraint.priority = .required
         let bottomConstraint = contentView.bottomAnchor.constraint(equalTo: fieldStack.bottomAnchor)
-        bottomConstraint.priority = .almostRequired
+        bottomConstraint.priority = .required
         
         NSLayoutConstraint.activate([
             fieldStack.leftAnchor.constraint(equalTo: contentView.leftAnchor),
