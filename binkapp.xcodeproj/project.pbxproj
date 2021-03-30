@@ -347,7 +347,6 @@
 		EF48556E231D6E4000FC9E5F /* DebugMenuFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48556D231D6E4000FC9E5F /* DebugMenuFactory.swift */; };
 		EF485572231D728A00FC9E5F /* DebugMenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485571231D728A00FC9E5F /* DebugMenuSection.swift */; };
 		EF485574231D72A700FC9E5F /* DebugMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */; };
-		EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */; };
 		EF4B465E2343B5FF009A3651 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465D2343B5FF009A3651 /* RectangleView.swift */; };
 		EF4B46602343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */; };
 		EF4B46622344A73D009A3651 /* HapticFeedbackUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */; };
@@ -911,7 +910,6 @@
 		EF48556D231D6E4000FC9E5F /* DebugMenuFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuFactory.swift; sourceTree = "<group>"; };
 		EF485571231D728A00FC9E5F /* DebugMenuSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuSection.swift; sourceTree = "<group>"; };
 		EF485573231D72A700FC9E5F /* DebugMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModel.swift; sourceTree = "<group>"; };
-		EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuViewModelTests.swift; sourceTree = "<group>"; };
 		EF4B465D2343B5FF009A3651 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
 		EF4B465F2343BB32009A3651 /* WalletLoyaltyCardCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletLoyaltyCardCellViewModel.swift; sourceTree = "<group>"; };
 		EF4B46612344A73D009A3651 /* HapticFeedbackUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackUtil.swift; sourceTree = "<group>"; };
@@ -2286,17 +2284,8 @@
 				CE3878492562EEB3006BAC11 /* Barcode */,
 				3CDDEFFB243C75490009BD0B /* Settings */,
 				3CEE1699244054DE00933859 /* Browse Brands */,
-				EF485579231E5A4000FC9E5F /* Debug Menu */,
 			);
 			path = Screens;
-			sourceTree = "<group>";
-		};
-		EF485579231E5A4000FC9E5F /* Debug Menu */ = {
-			isa = PBXGroup;
-			children = (
-				EF48557A231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift */,
-			);
-			path = "Debug Menu";
 			sourceTree = "<group>";
 		};
 		EF4B466323464873009A3651 /* PaymentCardDetail */ = {
@@ -3596,7 +3585,6 @@
 				CEF389EB255D72E90063C718 /* DateExtensionTests.swift in Sources */,
 				EF7F6E6123E4288C00352DCF /* StorageUtilityTests.swift in Sources */,
 				5ECE048422CE579B001BA964 /* binkappTests.swift in Sources */,
-				EF48557B231E5A4F00FC9E5F /* DebugMenuViewModelTests.swift in Sources */,
 				3CEE169B2440550D00933859 /* BrowseBrandsViewModelTests.swift in Sources */,
 				3CFD913022F1BA8200F25AF1 /* (null) in Sources */,
 				EF758E1523225F95000D26A9 /* TestDatabase.xcdatamodeld in Sources */,
