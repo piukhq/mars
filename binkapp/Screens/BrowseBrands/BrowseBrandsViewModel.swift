@@ -125,9 +125,13 @@ class BrowseBrandsViewModel {
         })
     }
     
+    func getComingSoonBrands() -> [CD_MembershipPlan] {
+        return getMembershipPlans().filter { $0.featureSet?.planCardType == .comingSoon }
+    }
+    
     func getStoreMembershipPlans() -> [CD_MembershipPlan] {
-        let pllAndSeePlans = getSeeMembershipPlans() + getPllMembershipPlans()
-        let storePlans = getMembershipPlans().filter { !pllAndSeePlans.contains($0) }
+        let pllSeeandComingSoonPlans = getSeeMembershipPlans() + getPllMembershipPlans() + getComingSoonBrands()
+        let storePlans = getMembershipPlans().filter { !pllSeeandComingSoonPlans.contains($0) }
         return storePlans
     }
     

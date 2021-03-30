@@ -8,6 +8,7 @@ open class CD_FeatureSet: _CD_FeatureSet {
         case store
         case view
         case link
+        case comingSoon
     }
     
     var planCardType: PlanCardType? {

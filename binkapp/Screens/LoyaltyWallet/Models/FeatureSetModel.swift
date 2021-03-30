@@ -13,6 +13,7 @@ struct FeatureSetModel: Codable {
         case store
         case view
         case link
+        case comingSoon
     }
 
     let apiId: Int?
