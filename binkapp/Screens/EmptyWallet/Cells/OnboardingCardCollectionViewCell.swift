@@ -40,6 +40,14 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
             titleLabelTopConstraint.constant = 15
         }
         
+        self.walletPrompt = walletPrompt
+        maxPlansToDisplay = walletPrompt.maxNumberOfPlansToDisplay
+        merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")
+        merchantGridCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        merchantGridCollectionView.dataSource = self
+        merchantGridCollectionView.delegate = self
+        merchantGridCollectionView.reloadData()
+        
         headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
         
         if case .link = walletPrompt.type {
@@ -63,14 +71,6 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
             layout.minimumInteritemSpacing = LayoutHelper.WalletDimensions.cellInterimSpacing
             merchantGridCollectionView?.collectionViewLayout = layout
         }
-        
-        self.walletPrompt = walletPrompt
-        maxPlansToDisplay = walletPrompt.maxNumberOfPlansToDisplay
-        merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")
-        merchantGridCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        merchantGridCollectionView.dataSource = self
-        merchantGridCollectionView.delegate = self
-        merchantGridCollectionView.reloadData()
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
