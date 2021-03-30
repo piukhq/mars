@@ -14,7 +14,7 @@ var recaptchaMessage = "You must resolve the CAPTCHA challenge to see your updat
 
 var pointsValueQuery = ".quantity"
 
-var incorrectCredentialsQuery = "div[class*=validation-error-message] p"
+var incorrectCredentialsQuery = ".text-danger"
 
 handleNavigation()
 
