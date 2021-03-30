@@ -27,7 +27,7 @@ function handleNavigation() {
     // Recaptcha, incorrect credentials message
 
     var error = document.querySelector(incorrectCredentialsQuery)
-    if (error) {
+    if (error && error.innerHTML !== "") {
         return {
             "did_attempt_login": true,
             "error_message": "Login failed. Incorrect credentials identified: " + error.innerHTML
