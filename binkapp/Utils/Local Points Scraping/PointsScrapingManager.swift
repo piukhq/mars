@@ -347,4 +347,13 @@ extension PointsScrapingManager: WebScrapingUtilityDelegate {
         }
         transitionToFailed(membershipCard: card)
     }
+    
+    func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityAgentError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
+        BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalAgentFailure(membershipCard: card, error: error))
+
+        if #available(iOS 14.0, *) {
+            BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
+        }
+        transitionToFailed(membershipCard: card)
+    }
 }
