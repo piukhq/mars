@@ -21,8 +21,10 @@ enum WalletPromptType {
             return "Add your payment cards"
         case .link:
             return "wallet_prompt_link_title".localized
-        default :
-            return ""
+        case .see:
+            return "wallet_prompt_see_title".localized
+        case .store:
+            return "wallet_prompt_store_title".localized
         }
     }
 
@@ -32,21 +34,19 @@ enum WalletPromptType {
             return "wallet_prompt_payment".localized
         case .link:
             return "wallet_prompt_link_body".localized
-        default:
-            return ""
+        case .see:
+            return "wallet_prompt_see_body".localized
+        case .store:
+            return "wallet_prompt_store_body".localized
         }
     }
 
     var membershipPlans: [CD_MembershipPlan]? {
         switch self {
-        case .link(let plans):
+        case .link(let plans), .see(let plans), .store(let plans):
             return plans
         case .addPaymentCards:
             return nil
-        case .see(plans: let plans):
-            return plans
-        case .store(plans: let plans):
-            return plans
         }
     }
 
@@ -54,6 +54,30 @@ enum WalletPromptType {
         switch self {
         case .link(let plans):
             return plans.count > 2 ? 2 : 1
+        case .see(let plans), .store(let plans):
+            return plans.count > maxNumberOfPlansToDisplay / 2 ? 2 : 1
+        default:
+            return 0
+        }
+    }
+    
+    var numberOfItemsPerRow: CGFloat {
+        switch self {
+        case .link:
+            return 2
+        case .see, .store:
+            return UIDevice.current.isSmallSize ? 4 : 5
+        default:
+            return 0
+        }
+    }
+    
+    var maxNumberOfPlansToDisplay: Int {
+        switch self {
+        case .link:
+            return 4
+        case .see, .store:
+            return UIDevice.current.isSmallSize ? 8 : 10
         default:
             return 0
         }
@@ -99,8 +123,16 @@ class WalletPrompt: WalletPromptProtocol {
     var numberOfRows: CGFloat {
         return type.numberOfRows
     }
+    
+    var numberOfItemsPerRow: CGFloat {
+        return type.numberOfItemsPerRow
+    }
 
     var iconImageName: String? {
         return type.iconImageName
+    }
+    
+    var maxNumberOfPlansToDisplay: Int {
+        return type.maxNumberOfPlansToDisplay
     }
 }

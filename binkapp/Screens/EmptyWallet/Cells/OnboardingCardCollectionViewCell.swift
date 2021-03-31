@@ -9,11 +9,11 @@
 import UIKit
 
 class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var merchantGridCollectionView: UICollectionView!
-    @IBOutlet weak var titleLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var headerView: UIView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var merchantGridCollectionView: UICollectionView!
+    @IBOutlet private weak var titleLabelTopConstraint: NSLayoutConstraint!
     
     private lazy var width: NSLayoutConstraint = {
         let width = contentView.widthAnchor.constraint(equalToConstant: bounds.size.width)
@@ -22,13 +22,17 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     }()
     
     private var walletPrompt: WalletPrompt?
+    private var maxPlansToDisplay = 8
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        CAGradientLayer.removeGradientLayer(for: headerView)
+    }
     
     func configureWithWalletPrompt(_ walletPrompt: WalletPrompt) {
         setupShadow(cornerRadius: 20)
         titleLabel.text = walletPrompt.title
-        titleLabel.textColor = .white
         descriptionLabel.text = walletPrompt.body
-        descriptionLabel.textColor = .white
         
         if UIDevice.current.isSmallSize {
             titleLabel.font = .walletPromptTitleSmall
@@ -36,16 +40,37 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
             titleLabelTopConstraint.constant = 15
         }
         
-        headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
-        
-        CAGradientLayer.makeGradient(for: headerView, firstColor: .binkPurple, secondColor: .blueAccent, startPoint: CGPoint(x: 0.7, y: 0.0))
-        
         self.walletPrompt = walletPrompt
+        maxPlansToDisplay = walletPrompt.maxNumberOfPlansToDisplay
         merchantGridCollectionView.register(MerchantHeroCell.self, forCellWithReuseIdentifier: "MerchantHeroCell")
         merchantGridCollectionView.translatesAutoresizingMaskIntoConstraints = false
         merchantGridCollectionView.dataSource = self
-        merchantGridCollectionView.delegate = self        
+        merchantGridCollectionView.delegate = self
         merchantGridCollectionView.reloadData()
+        
+        headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
+        
+        if case .link = walletPrompt.type {
+            CAGradientLayer.makeGradient(for: headerView, firstColor: .binkPurple, secondColor: .blueAccent, startPoint: CGPoint(x: 0.7, y: 0.0))
+            titleLabel.textColor = .white
+            descriptionLabel.textColor = .white
+
+            let layout = UICollectionViewFlowLayout()
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            layout.minimumLineSpacing = 0
+            layout.minimumInteritemSpacing = 0
+            merchantGridCollectionView?.collectionViewLayout = layout
+        } else {
+            contentView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+            titleLabel.textColor = Current.themeManager.color(for: .text)
+            descriptionLabel.textColor = Current.themeManager.color(for: .text)
+            
+            let layout = UICollectionViewFlowLayout()
+            layout.sectionInset = UIEdgeInsets(top: 0, left: LayoutHelper.WalletDimensions.cardHorizontalInset, bottom: LayoutHelper.WalletDimensions.cardHorizontalPadding, right: LayoutHelper.WalletDimensions.cardHorizontalInset)
+            layout.minimumLineSpacing = LayoutHelper.WalletDimensions.cellInterimSpacing
+            layout.minimumInteritemSpacing = LayoutHelper.WalletDimensions.cellInterimSpacing
+            merchantGridCollectionView?.collectionViewLayout = layout
+        }
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
@@ -54,11 +79,24 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
     }
     
     @objc private func toBrowseBrands() {
-        let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
-        let navigatioRequest = ModalNavigationRequest(viewController: viewController)
-        Current.navigate.to(navigatioRequest)
+        switch walletPrompt?.type {
+        case .see:
+            navigateToBrowseBrands(section: .view)
+        case .store:
+            navigateToBrowseBrands(section: .store)
+        default:
+            navigateToBrowseBrands()
+        }
+    }
+    
+    private func navigateToBrowseBrands(section: CD_FeatureSet.PlanCardType? = nil) {
+        let viewController = ViewControllerFactory.makeBrowseBrandsViewController(section: section?.walletPromptSectionIndex)
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
+        Current.navigate.to(navigationRequest)
     }
 }
+
+// MARK: - Merchant Grid Collection View
 
 extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -67,11 +105,11 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
         switch walletPrompt?.type {
         case .link:
             if !(plansCount % 2 == 0) {
-                plansCount += 1
+                plansCount += 1 /// Add extra item for coming soon cell
             }
         case .see, .store:
-            if plansCount > 6 {
-                plansCount += 1
+            if plansCount > maxPlansToDisplay {
+                plansCount = maxPlansToDisplay
             }
         default:
             return 0
@@ -82,12 +120,13 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: MerchantHeroCell = collectionView.dequeue(indexPath: indexPath)
-        guard let plans = walletPrompt?.membershipPlans else { return cell }
+        guard let plans = walletPrompt?.membershipPlans, let walletPrompt = walletPrompt else { return cell }
 
         if (indexPath.row + 1) > plans.count {
-            cell.configureWithPlaceholder(frame: collectionView.frame, walletPrompt: walletPrompt)
+            cell.configureWithPlaceholder(walletPrompt: walletPrompt)
         } else {
-            cell.configure(with: plans[indexPath.row])
+            let shouldShowMorePlansCell = plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) ? true : false
+            cell.configure(with: plans[safe: indexPath.row], walletPrompt: walletPrompt, showMorePlansCell: shouldShowMorePlansCell)
         }
                 
         return cell
@@ -96,17 +135,30 @@ extension OnboardingCardCollectionViewCell: UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let plans = walletPrompt?.membershipPlans else { return }
 
-        if (indexPath.row + 1) > plans.count {
-            toBrowseBrands()
-        } else {
-            let membershipPlan = plans[indexPath.row]
-            let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
-            let navigationRequest = ModalNavigationRequest(viewController: viewController)
-            Current.navigate.to(navigationRequest)
-        }
+            /// See & Store more plans cell
+            switch walletPrompt?.type {
+            case .see, .store:
+                if plans.count > maxPlansToDisplay && indexPath.row == (maxPlansToDisplay - 1) {
+                    toBrowseBrands()
+                    return
+                }
+            default:
+                if (indexPath.row + 1) > plans.count {
+                    navigateToBrowseBrands()
+                    return
+                }
+            }
+            
+            /// All other cells
+            if let membershipPlan = plans[safe: indexPath.row] {
+                let viewController = ViewControllerFactory.makeAddOrJoinViewController(membershipPlan: membershipPlan)
+                let navigationRequest = ModalNavigationRequest(viewController: viewController)
+                Current.navigate.to(navigationRequest)
+            }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return LayoutHelper.WalletDimensions.sizeForWalletPromptCell(viewFrame: collectionView.frame, walletPrompt: walletPrompt)
+        guard let walletPrompt = walletPrompt else { return .zero }
+        return LayoutHelper.WalletDimensions.sizeForWalletPromptCell(walletPrompt: walletPrompt)
     }
 }

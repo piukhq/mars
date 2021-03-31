@@ -30,7 +30,7 @@ class MainTabBarViewModel {
         loyaltyWalletNavigationController.tabBarItem = getTabBarLoyaltyButton()
         
         // BROWSE BRANDS
-        let browseBrandsViewController = BrowseBrandsViewController(viewModel: BrowseBrandsViewModel())
+        let browseBrandsViewController = ViewControllerFactory.makeBrowseBrandsViewController()
         browseBrandsViewController.tabBarItem = getTabBarAddButton()
         
         // PAYMENT WALLET
