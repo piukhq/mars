@@ -65,7 +65,7 @@ extension WalletRefreshManager {
         if let balanceLastUpdatedTimeStamp = card.formattedBalances?.first?.updatedAt?.doubleValue {
             let balanceLastUpdatedDate = Date(timeIntervalSince1970: balanceLastUpdatedTimeStamp)
             let elapsed = Int(Date().timeIntervalSince(balanceLastUpdatedDate))
-            return elapsed >= Int(WalletRefreshManager.twoHours)
+            return elapsed >= Int(Current.pointsScrapingManager.isDebugMode ? 60 : WalletRefreshManager.twoHours)
         }
         return false
     }

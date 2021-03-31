@@ -19,8 +19,7 @@ struct DebugMenuRow {
         case email
         case endpoint
         case secondaryColor
-        case lpcWebView
-        case lpcCookies
+        case lpcDebugMode
         case responseCodeVisualiser
         case inAppReviewRules
         case customBundleClientLogin

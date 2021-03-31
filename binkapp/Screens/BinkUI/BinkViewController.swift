@@ -50,7 +50,7 @@ class BinkViewController: UIViewController {
     }
 
     deinit {
-        Current.themeManager.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewDidLoad() {

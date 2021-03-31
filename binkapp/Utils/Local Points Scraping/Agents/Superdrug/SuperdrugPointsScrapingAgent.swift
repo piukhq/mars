@@ -30,9 +30,9 @@ struct SuperdrugScrapingAgent: WebScrapable {
         return "points"
     }
 
-    var loginUrlString: String {
-        return "https://www.superdrug.com/login"
-    }
+//    var loginUrlString: String {
+//        return "https://www.superdrug.com/login"
+//    }
 
     var scrapableUrlString: String {
         return "https://www.superdrug.com/login"
