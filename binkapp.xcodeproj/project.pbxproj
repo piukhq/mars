@@ -284,7 +284,6 @@
 		CE085D5F255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085D5E255EA1A2003966ED /* PLRRewardDetailViewModelTests.swift */; };
 		CE27A0DA25DA990E00C58412 /* OnboardingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */; };
 		CE27A0DB25DA990E00C58412 /* OnboardingCardCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */; };
-		CE27A0EC25DAA7E500C58412 /* OnboardingCardLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A0EB25DAA7E500C58412 /* OnboardingCardLinkCell.swift */; };
 		CE2C7A7825DEC635007624FE /* DebugMenuPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2C7A7625DEC635007624FE /* DebugMenuPickerTableViewCell.swift */; };
 		CE2C7A7925DEC635007624FE /* DebugMenuPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2C7A7725DEC635007624FE /* DebugMenuPickerTableViewCell.xib */; };
 		CE2CFE5E25E3C5CB00B1CB93 /* MerchantHeroCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2CFE5D25E3C5CB00B1CB93 /* MerchantHeroCell.swift */; };
@@ -841,7 +840,6 @@
 		CE0AE2DD2542DB81000CDB86 /* binkapp - 23-10-20 - Card secondary colour.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 23-10-20 - Card secondary colour.xcdatamodel"; sourceTree = "<group>"; };
 		CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCardCollectionViewCell.xib; sourceTree = "<group>"; };
-		CE27A0EB25DAA7E500C58412 /* OnboardingCardLinkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCardLinkCell.swift; sourceTree = "<group>"; };
 		CE2C7A7625DEC635007624FE /* DebugMenuPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuPickerTableViewCell.swift; sourceTree = "<group>"; };
 		CE2C7A7725DEC635007624FE /* DebugMenuPickerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugMenuPickerTableViewCell.xib; sourceTree = "<group>"; };
 		CE2CFE5D25E3C5CB00B1CB93 /* MerchantHeroCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantHeroCell.swift; sourceTree = "<group>"; };
@@ -2213,7 +2211,6 @@
 				EF335C81234F565B00D49223 /* WalletPromptCollectionViewCell.xib */,
 				CE27A0D825DA990E00C58412 /* OnboardingCardCollectionViewCell.swift */,
 				CE27A0D925DA990E00C58412 /* OnboardingCardCollectionViewCell.xib */,
-				CE27A0EB25DAA7E500C58412 /* OnboardingCardLinkCell.swift */,
 				CE2CFE5D25E3C5CB00B1CB93 /* MerchantHeroCell.swift */,
 			);
 			path = Cells;
@@ -3304,7 +3301,6 @@
 				BD458B42236CA3910029A538 /* LogoutResponse.swift in Sources */,
 				3CE24B2B2304014600B258C8 /* AddOrJoinViewController.swift in Sources */,
 				CEF837E925DA7AB10066C77E /* FeatureFlagsTableViewController.swift in Sources */,
-				CE27A0EC25DAA7E500C58412 /* OnboardingCardLinkCell.swift in Sources */,
 				3C453CB72338E84F00287B56 /* PaymentWalletViewModel.swift in Sources */,
 				EF4B46662346489C009A3651 /* PaymentCardDetailViewController.swift in Sources */,
 				EF59A1312448B769001B60B8 /* APIErrorResponses.swift in Sources */,

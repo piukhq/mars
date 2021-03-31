@@ -54,10 +54,12 @@ class BrowseBrandsViewController: BinkViewController {
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
+    private var sectionToScrollTo: Int?
     
-    init(viewModel: BrowseBrandsViewModel) {
+    init(viewModel: BrowseBrandsViewModel, section: Int?) {
         self.viewModel = viewModel
         self.selectedFilters = viewModel.filters
+        self.sectionToScrollTo = section
         super.init(nibName: "BrowseBrandsViewController", bundle: Bundle(for: BrowseBrandsViewController.self))
     }
     
@@ -102,6 +104,7 @@ class BrowseBrandsViewController: BinkViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .browseBrands)
+        scrollToSection()
     }
     
     override func viewDidLayoutSubviews() {
@@ -238,6 +241,19 @@ class BrowseBrandsViewController: BinkViewController {
         tableView.isHidden = viewModel.shouldShowNoResultsLabel
         noMatchesLabelTopConstraint.constant = filtersVisible ? filterViewHeight : 0.0
         noMatchesLabel.isHidden = !viewModel.shouldShowNoResultsLabel
+    }
+    
+    private func scrollToSection() {
+        guard var section = sectionToScrollTo, viewModel.numberOfSections() != 1 else { return }
+
+        if viewModel.getPllMembershipPlans().isEmpty || viewModel.getSeeMembershipPlans().isEmpty {
+            /// If there are no pll or see membership plans, section adjusted by -1 so that the correct section is scrolled to
+            section -= 1
+        }
+        
+        let indexPath = IndexPath(row: NSNotFound, section: section)
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        sectionToScrollTo = nil
     }
 }
 

@@ -28,10 +28,20 @@ extension CAGradientLayer {
     static func makeGradient(for view: UIView, firstColor: UIColor, secondColor: UIColor, startPoint: CGPoint = CGPoint(x: 1.0, y: 0.0), endPoint: CGPoint = CGPoint(x: 0.0, y: 0.0)) {
         let gradientLayer = CAGradientLayer()
         view.layer.insertSublayer(gradientLayer, at: 0)
-        gradientLayer.frame = view.bounds
         gradientLayer.colors = [secondColor.cgColor, firstColor.cgColor]
         gradientLayer.locations = [0.0, 1.0]
         gradientLayer.startPoint = startPoint
         gradientLayer.endPoint = endPoint
+        gradientLayer.layoutIfNeeded()
+        gradientLayer.frame = view.frame
+    }
+    
+    static func removeGradientLayer(for view: UIView) {
+        guard let sublayers = view.layer.sublayers else { return }
+        for sublayer in sublayers {
+            if sublayer.isKind(of: CAGradientLayer.self) {
+                sublayer.removeFromSuperlayer()
+            }
+        }
     }
 }
