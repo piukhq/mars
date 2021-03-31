@@ -31,7 +31,7 @@ class MainTabBarViewController: UITabBarController {
     }
 
     deinit {
-        Current.themeManager.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {

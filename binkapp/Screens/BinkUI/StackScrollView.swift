@@ -134,6 +134,10 @@ open class StackScrollView: UIScrollView {
         fatalError("This view controller has no related XIB or Storyboard")
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - View Lifecycle
     
     override open func layoutIfNeeded() {
