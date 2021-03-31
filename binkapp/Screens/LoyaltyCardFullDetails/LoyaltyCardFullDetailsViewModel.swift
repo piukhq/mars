@@ -244,7 +244,7 @@ extension LoyaltyCardFullDetailsViewModel {
         informationRows[indexPath.row].action()
     }
     
-    func showDeleteConfirmationAlert() {
+    func showDeleteConfirmationAlert(completion: @escaping (Bool) -> Void) {
         let alert = ViewControllerFactory.makeDeleteConfirmationAlertController(message: "delete_card_confirmation".localized, deleteAction: { [weak self] in
             guard let self = self else { return }
             guard Current.apiClient.networkIsReachable else {
@@ -257,6 +257,8 @@ extension LoyaltyCardFullDetailsViewModel {
                 if #available(iOS 14.0, *) {
                     BinkLogger.infoPrivateHash(event: LoyaltyCardLoggerEvent.loyaltyCardDeleted, value: self.membershipCard.id)
                 }
+                /// We need to tell the view controller that the card has been deleted, so we can unsubscribe from notifications before we refresh the wallet, so avoid crashing before LCD has called deinit.
+                completion(true)
                 Current.wallet.refreshLocal()
                 Current.navigate.back()
             }

@@ -411,7 +411,12 @@ extension LoyaltyCardFullDetailsViewController: CardDetailInformationRowFactoryD
         case .securityAndPrivacy:
             viewModel.toSecurityAndPrivacyScreen()
         case .deleteMembershipCard:
-            viewModel.showDeleteConfirmationAlert()
+            viewModel.showDeleteConfirmationAlert { [weak self] didDelete in
+                guard let self = self else { return }
+                if didDelete {
+                    NotificationCenter.default.removeObserver(self)
+                }
+            }
         case .rewardsHistory:
             viewModel.toRewardsHistoryScreen()
         default:
