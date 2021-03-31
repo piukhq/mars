@@ -37,24 +37,6 @@ enum WalletPromptType {
         }
     }
 
-    var userDefaultsDismissKey: String {
-        var userDefaultsDismiss = ""
-        
-        // Let these be on a per user basis
-        if let email = Current.userManager.currentEmailAddress {
-            userDefaultsDismiss += "\(email)_"
-        }
-        
-        switch self {
-        case .addPaymentCards:
-            userDefaultsDismiss += "add_payment_card_prompt_was_dismissed"
-        default:
-            break
-        }
-        
-        return userDefaultsDismiss
-    }
-
     var membershipPlans: [CD_MembershipPlan]? {
         switch self {
         case .link(let plans):
@@ -90,10 +72,8 @@ enum WalletPromptType {
 protocol WalletPromptProtocol {
     var title: String { get }
     var body: String { get }
-    var userDefaultsDismissKey: String { get }
     var membershipPlans: [CD_MembershipPlan]? { get }
     var iconImageName: String? { get }
-    static func userDefaultsDismissKey(forType type: WalletPromptType) -> String
     init(type: WalletPromptType)
 }
 
@@ -112,10 +92,6 @@ class WalletPrompt: WalletPromptProtocol {
         return type.body
     }
 
-    var userDefaultsDismissKey: String {
-        return type.userDefaultsDismissKey
-    }
-
     var membershipPlans: [CD_MembershipPlan]? {
         return type.membershipPlans
     }
@@ -126,9 +102,5 @@ class WalletPrompt: WalletPromptProtocol {
 
     var iconImageName: String? {
         return type.iconImageName
-    }
-
-    static func userDefaultsDismissKey(forType type: WalletPromptType) -> String {
-        return type.userDefaultsDismissKey
     }
 }

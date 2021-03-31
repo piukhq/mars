@@ -30,13 +30,10 @@ class OnboardingCardCollectionViewCell: WalletCardCollectionViewCell {
         descriptionLabel.text = walletPrompt.body
         descriptionLabel.textColor = .white
         
-        switch UIDevice.current.width {
-        case .iPhone6Size, .iPhone5Size, .iPhone4Size:
+        if UIDevice.current.isSmallSize {
             titleLabel.font = .walletPromptTitleSmall
             descriptionLabel.font = .walletPromptBodySmall
             titleLabelTopConstraint.constant = 15
-        default:
-            break
         }
         
         headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toBrowseBrands)))
