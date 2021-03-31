@@ -46,10 +46,6 @@ class WalletPromptTests: XCTestCase, CoreDataTestable {
         XCTAssertEqual(Self.storeWalletPrompt.body, "Add these loyalty cards to store their barcodes so you'll always have them on your phone when you need them.")
     }
     
-    func test_userDefaultsDismissKeyString_isCorrect() {
-        XCTAssertEqual(Self.addPaymentCardsWalletPrompt.userDefaultsDismissKey, userDefaultsDismissKey(forType: .addPaymentCards))
-    }
-    
     func test_membershipPlans_areCorrect() {
         XCTAssertEqual(Self.pllWalletPrompt.membershipPlans, Self.membershipPlans)
         XCTAssertEqual(Self.seeWalletPrompt.membershipPlans, Self.membershipPlans)
@@ -62,10 +58,6 @@ class WalletPromptTests: XCTestCase, CoreDataTestable {
         XCTAssertNil(Self.pllWalletPrompt.iconImageName)
         XCTAssertNil(Self.seeWalletPrompt.iconImageName)
         XCTAssertNil(Self.storeWalletPrompt.iconImageName)
-    }
-    
-    func test_userDefaultsDismissKeyFuncString_isCorrect() {
-        XCTAssertEqual(WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards), userDefaultsDismissKey(forType: .addPaymentCards))
     }
     
     func test_numberOfRows_isCorrect() {

@@ -71,16 +71,11 @@ enum WalletPromptFactory {
         }
 
         /// Add payment card prompt to payment wallet only
-        if walletType == .payment && shouldShowAddPaymentCard() {
+        if walletType == .payment {
             walletPrompts.append(WalletPrompt(type: .addPaymentCards))
         }
 
         return walletPrompts
-    }
-
-    static private func shouldShowAddPaymentCard() -> Bool {
-        // We pass nil as the scan delegate as the receiver doesn't care about the delegate in order to return the key
-        return !Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards)) && !Current.wallet.hasPaymentCards
     }
 }
 
