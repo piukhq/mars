@@ -42,7 +42,7 @@ class BrowseBrandsViewModel {
         Current.database.performTask { context in
             let plans = context.fetchAll(CD_MembershipPlan.self)
             self.membershipPlans = plans.sorted(by: { (firstPlan, secondPlan) -> Bool in
-                (firstPlan.account?.companyName ?? "") < (secondPlan.account?.companyName ?? "")
+                (firstPlan.account?.companyName?.lowercased() ?? "") < (secondPlan.account?.companyName?.lowercased() ?? "")
             })
             self.selectedFilters = self.mapFilters(fromPlans: self.membershipPlans)
         }
@@ -107,12 +107,7 @@ class BrowseBrandsViewModel {
     }
         
     func getPllMembershipPlans() -> [CD_MembershipPlan] {
-        let plans = getMembershipPlans().filter { $0.featureSet?.planCardType == .link }
-        return plans.sorted {
-            guard let first = $0.account?.companyName?.lowercased() else { return false }
-            guard let second = $1.account?.companyName?.lowercased() else { return true }
-            return first < second
-        }
+        return getMembershipPlans().filter { $0.featureSet?.planCardType == .link }
     }
     
     func getSeeMembershipPlans() -> [CD_MembershipPlan] {
