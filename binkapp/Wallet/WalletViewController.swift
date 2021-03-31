@@ -118,7 +118,7 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
         switch UIDevice.current.width {
         case .iPhone5Size:
             rightInset = 9
-        case .iPhone6Size:
+        case .iPhoneSESize:
             rightInset = 9
         case .iPhonePlusSize:
             rightInset = 6

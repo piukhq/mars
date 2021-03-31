@@ -25,9 +25,9 @@ class PaymentWalletViewController: WalletViewController<PaymentWalletViewModel> 
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row < viewModel.walletPromptsCount {
+        if indexPath.row == viewModel.cardCount {
             let cell: WalletPromptCollectionViewCell = collectionView.dequeue(indexPath: indexPath)
-            guard let walletPrompt = viewModel.walletPrompts?[indexPath.row] else {
+            guard let walletPrompt = viewModel.walletPrompts?.first else {
                 return cell
             }
             cell.configureWithWalletPrompt(walletPrompt)

@@ -31,7 +31,7 @@ extension LayoutHelper {
         static let contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         static var walletPromptHeaderHeight: CGFloat {
             switch UIDevice.current.width {
-            case .iPhone6Size, .iPhone5Size, .iPhone4Size:
+            case .iPhoneSESize, .iPhone5Size, .iPhone4Size:
                 return 113
             default:
                 return 134
