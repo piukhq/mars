@@ -83,15 +83,18 @@ class WalletViewController<T: WalletViewModel>: BinkViewController, UICollection
             self.refreshControl.endRefreshing()
         }
         
+        configureLoadingIndicator()
+        checkForZendeskUpdates()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         Current.wallet.reloadWalletsIfNecessary { willPerformRefresh in
             if willPerformRefresh, InAppReviewUtility.canRequestReviewBasedOnUsage {
                 TimeAndUsageBasedInAppReviewableJourney().begin()
                 requestInAppReview()
             }
         }
-        configureLoadingIndicator()
-        
-        checkForZendeskUpdates()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
