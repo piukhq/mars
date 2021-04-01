@@ -320,28 +320,34 @@ enum PLLAnalyticsEvent: BinkAnalyticsEvent {
         case .pllPatch(let loyaltyCard, let paymentCard, let response):
             guard let paymentId = paymentCard.id else { return nil }
             guard let loyaltyId = loyaltyCard.id else { return nil }
+            guard let planIdString = loyaltyCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
             return [
                 "payment_id": paymentId,
                 "loyalty_id": loyaltyId,
                 "link_id": "\(loyaltyId)/\(paymentId)",
-                "state": pllState(response: response, loyaltyCard: loyaltyCard).rawValue
+                "state": pllState(response: response, loyaltyCard: loyaltyCard).rawValue,
+                "loyalty_plan": planId
             ]
         case .pllDelete(let loyaltyCard, let paymentCard):
             guard let paymentId = paymentCard.id else { return nil }
             guard let loyaltyId = loyaltyCard.id else { return nil }
+            guard let planIdString = loyaltyCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
             return [
                 "payment_id": paymentId,
                 "loyalty_id": loyaltyId,
-                "link_id": "\(loyaltyId)/\(paymentId)"
+                "link_id": "\(loyaltyId)/\(paymentId)",
+                "loyalty_plan": planId
             ]
             
         case .pllActive(let loyaltyCard, paymentCard: let paymentCard):
             guard let paymentId = paymentCard.id else { return nil }
             guard let loyaltyId = loyaltyCard.id else { return nil }
+            guard let planIdString = loyaltyCard.membershipPlan?.id, let planId = Int(planIdString) else { return nil }
             return [
                 "payment_id": paymentId,
                 "loyalty_id": loyaltyId,
-                "link_id": "\(loyaltyId)/\(paymentId)"
+                "link_id": "\(loyaltyId)/\(paymentId)",
+                "loyalty_plan": planId
             ]
         }
     }
