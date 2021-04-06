@@ -4,10 +4,11 @@ import Foundation
 open class CD_FeatureSet: _CD_FeatureSet {
     // Custom logic goes here.
     
-    enum PlanCardType: Int {
+    enum PlanCardType: Int, Codable {
         case store
         case view
         case link
+        case comingSoon
         
         var walletPromptSectionIndex: Int? {
             let order: [PlanCardType] = [.link, .view, .store]
