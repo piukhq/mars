@@ -53,10 +53,6 @@ class PointsScrapingManager {
 
     private var webScrapingUtility: WebScrapingUtility?
     
-    var isRunning: Bool {
-        return webScrapingUtility?.isRunning ?? false
-    }
-    
     private var isMasterEnabled: Bool {
         return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionMasterEnabled)
     }
