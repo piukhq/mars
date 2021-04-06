@@ -9,40 +9,43 @@
 import XCTest
 
 class binkappUITests: XCTestCase {
+    private var app = XCUIApplication()
+    
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         UIView.setAnimationsEnabled(false)
-    }
-    
-    func test_loginScreenOnAppLaunch_exists() {
-        let app = XCUIApplication()
+        
         app.launchArguments = ["enable-testing"]
         app.launch()
+    }
+    
+    func test0RG411HD_loginScreenOnAppLaunch_exists() {
         let buttonsQuery = app.buttons
         XCTAssertTrue(buttonsQuery.staticTexts["Log in with email"].waitForExistence(timeout: 20), "Login button does not exist")
     }
     
-    func test_loginWithEmailAndPassword() {
-        let app = XCUIApplication()
-        app.launchArguments = ["enable-testing"]
-        app.launch()
+    func test1_loginWithEmailAndPassword() {
+        app.buttons["Log in with email"].tap()
         
-        let buttonsQuery = app.buttons
-        let loginWithEmailButton = buttonsQuery.staticTexts["Log in with email"]
-        loginWithEmailButton.tap()
-        
-        let emailTextfield = app.textFields.element(boundBy: 0)
+        let emailTextfield = app.textFields["Enter email address"]
         emailTextfield.tap()
         emailTextfield.typeText("binklogin@binktest.com")
         app.buttons["next"].tap()
-        
+
         app.typeText("Binklogin123")
         app.buttons["done"].tap()
         app.buttons["Continue"].tap()
         
         let paymentTabBarButton = app.buttons["Payment"]
-
         XCTAssertTrue(paymentTabBarButton.waitForExistence(timeout: 30))
     }
+    
+//    func test_addIcelandCard_isSuccessful() {
+//        let app = UIApplication()
+//        app.launchArguments = ["enable-testing"]
+//        app.launch()
+//        
+//        
+//    }
 }
