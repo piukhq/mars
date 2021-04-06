@@ -10,7 +10,7 @@ import UIKit
 
 class BinkAlertController: UIAlertController {
     deinit {
-        Current.themeManager.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {

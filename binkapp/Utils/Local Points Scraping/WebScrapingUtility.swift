@@ -14,104 +14,164 @@ struct WebScrapingCredentials {
     let password: String
 }
 
+struct PriorityScrapableCard {
+    let cardId: String
+    let planId: String
+    
+    init?(membershipCard: CD_MembershipCard) {
+        self.cardId = membershipCard.id
+        guard let planId = membershipCard.membershipPlan?.id else { return nil }
+        self.planId = planId
+    }
+}
+
 protocol WebScrapingUtilityDelegate: AnyObject {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable)
 }
 
 class WebScrapingUtility: NSObject {
-    private let webView: WKWebView
-    private let agent: WebScrapable
-    private let membershipCard: CD_MembershipCard
+    var isExecutingScript = false
+    private var isRunning: Bool {
+        return membershipCard != nil || agent != nil
+    }
+    
+    private let priorityWebview: WKWebView
+    private var activeWebview: WKWebView?
+    private var priorityScrapableCards: [PriorityScrapableCard] = []
+    
+    private var agent: WebScrapable?
+    private var membershipCard: CD_MembershipCard?
 
     private weak var delegate: WebScrapingUtilityDelegate?
 
     private var idleTimer: Timer?
-    private var detectElementTimer: Timer?
-    private let idleThreshold: TimeInterval = 60
+    private let idleThreshold: TimeInterval = 20
+    private let idleRetryLimit = 2
+    private var idleRetryCount = 0
+    
+    private var userActionTimer: Timer?
 
-    private var hasAttemptedLogin = false
-    private var isRunningScript = false
     private var isPerformingUserAction = false
-    private var isReloadingWebView = false
 
     private var isInDebugMode: Bool {
-        return Current.userDefaults.bool(forDefaultsKey: .lpcDebugWebView)
+        return Current.pointsScrapingManager.isDebugMode
     }
 
     private var isPresentingWebView: Bool {
+        guard let activeWebview = activeWebview else { return false }
         guard let navigationViewController = UIViewController.topMostViewController() as? UINavigationController else { return false }
         guard let topViewController = navigationViewController.viewControllers.first else { return false }
-        return topViewController.view.subviews.contains(webView)
+        return topViewController.view.subviews.contains(activeWebview)
     }
 
     private var isBalanceRefresh: Bool {
-        guard let balances = membershipCard.formattedBalances, !balances.isEmpty else { return false }
+        guard let balances = membershipCard?.formattedBalances, !balances.isEmpty else { return false }
         return true
     }
     
-    init(agent: WebScrapable, membershipCard: CD_MembershipCard, delegate: WebScrapingUtilityDelegate?) {
-        webView = WKWebView(frame: .zero)
-        self.agent = agent
-        self.membershipCard = membershipCard
+    init(delegate: WebScrapingUtilityDelegate?) {
+        priorityWebview = WKWebView(frame: .zero)
         self.delegate = delegate
         super.init()
     }
     
-    func start() throws {
-        /// If we are refreshing the balance, we should try to access the scrapable url straight away, otherwise we know we'll need to login
-//        let urlString = isBalanceRefresh ? agent.scrapableUrlString : agent.loginUrlString
-        guard let url = URL(string: agent.loginUrlString) else {
-            throw WebScrapingUtilityError.agentProvidedInvalidUrl
-        }
+    func start(agent: WebScrapable, membershipCard: CD_MembershipCard) throws {
+        /// If we have a membership card or agent, then we are currently in the process of scraping and should not be interrupted
+        guard !isRunning else { return }
         
-        if isInDebugMode {
-            presentWebView()
+        self.agent = agent
+        self.membershipCard = membershipCard
+        
+        guard let url = URL(string: agent.scrapableUrlString) else {
+            throw WebScrapingUtilityError.agentProvidedInvalidUrl
         }
         
         let request = URLRequest(url: url)
         
-        guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else {
-            self.webView.navigationDelegate = self
-            self.webView.load(request)
-            return
-        }
+        activeWebview = appropriateWebview()
         
-        if let cookiesDictionary = Current.userDefaults.value(forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id)) as? [String: Any] {
-            var cookiesSet: Int = 0
-            for (_, cookieProperties) in cookiesDictionary {
-                if let properties = cookieProperties as? [HTTPCookiePropertyKey: Any], let cookie = HTTPCookie(properties: properties) {
-                    webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie) {
-                        cookiesSet += 1
-                        if cookiesSet == cookiesDictionary.count {
-                            self.webView.navigationDelegate = self
-                            self.webView.load(request)
-                        }
-                    }
-                }
-            }
-        } else {
-            self.webView.navigationDelegate = self
-            self.webView.load(request)
-        }
+        activeWebview?.navigationDelegate = self
+        activeWebview?.load(request)
 
         resetIdlingTimer()
+    }
+    
+    /// A function to determine if the membership card we are about to scrape can use our priority webview or not.
+    /// The priority webview can support one membership card per membership plan.
+    /// If we are already supporting a membership card of the same membership plan, we use an ephermeral webview that will only live as long as scraping is taking place.
+    /// Only the priority web view can handle sessions and cookies in a user-friendly way.
+    /// - Returns: The webview in which to perform points scraping
+    private func appropriateWebview() -> WKWebView? {
+        guard let card = membershipCard, let plan = card.membershipPlan else { return nil }
+        
+        let priorityCardIds = priorityScrapableCards.map { $0.cardId }
+        let priorityPlanIds = priorityScrapableCards.map { $0.planId }
+        
+        if priorityCardIds.contains(card.id) {
+            return priorityWebview
+        }
+        
+        if priorityPlanIds.contains(plan.id) {
+            return WKWebView(frame: .zero)
+        } else {
+            return priorityWebview
+        }
+    }
+    
+    private func stop() {
+        agent = nil
+        membershipCard = nil
+        idleTimer?.invalidate()
+        idleRetryCount = 0
+        userActionTimer?.invalidate()
+        isPerformingUserAction = false
+        
+        if activeWebview != priorityWebview {
+            activeWebview = nil
+        }
     }
 
     private func resetIdlingTimer() {
         idleTimer?.invalidate()
-        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { timer in
+        idleTimer = Timer.scheduledTimer(withTimeInterval: idleThreshold, repeats: false, block: { [weak self] timer in
+            guard let self = self else { return }
             // The webview has sat idle for a period of time without performing any navigation.
             // If we don't force to failed, the card will remain in an unusable pending state.
+            // But first, let's retry if we haven't already
+            
+            if self.idleRetryCount < self.idleRetryLimit {
+                self.idleRetryCount += 1
+                self.handleWebViewNavigation()
+                return
+            }
+            
             timer.invalidate()
             self.finish(withError: .unhandledIdling)
         })
     }
+    
+    private func beginUserAction() {
+        isPerformingUserAction = true
+        presentWebView()
+        userActionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
+            guard let self = self else { return }
+            self.handleWebViewNavigation(stateConfigurator: .userActionRequired)
+        })
+    }
+    
+    private func endUserAction() {
+        isPerformingUserAction = false
+        userActionTimer?.invalidate()
+        closeWebView()
+        handleWebViewNavigation(stateConfigurator: .userActionComplete)
+    }
 
     private func presentWebView() {
         guard !isPresentingWebView else { return }
+        guard let activeWebview = activeWebview else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            let viewController = WebScrapingViewController(webView: self.webView, delegate: self)
+            let viewController = WebScrapingViewController(webView: activeWebview, delegate: self)
             let navigationRequest = ModalNavigationRequest(viewController: viewController)
             Current.navigate.to(navigationRequest)
         }
@@ -124,104 +184,6 @@ class WebScrapingUtility: NSObject {
         }
     }
 
-    private func login(credentials: WebScrapingCredentials) {
-        guard let script = script(scriptName: agent.loginScriptFileName) else {
-            self.finish(withError: .loginScriptFileNotFound)
-            return
-        }
-        let formattedScript = String(format: script, credentials.username, credentials.password)
-
-        runScript(formattedScript) { [weak self] result in
-            guard let self = self else { return }
-
-            switch result {
-            case .success(let response):
-                // Successfully executed login script, but didn't necessarily succeed
-                // We may have encountered an error, or recaptcha
-                if let error = response.errorMessage {
-                    self.finish(withError: .loginFailed(errorMessage: error))
-                    return
-                }
-
-                if response.userActionRequired == true {
-                    self.idleTimer?.invalidate()
-                    self.isPerformingUserAction = true
-                    self.presentWebView()
-                    self.detectElementTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.detectRecaptchaSuccess), userInfo: nil, repeats: true)
-                    return
-                }
-            case .failure:
-                self.finish(withError: .failedToExecuteLoginScript)
-            }
-        }
-    }
-
-    @objc private func detectRecaptchaSuccess() {
-        detectElement(queryString: "re-captcha[class*=-valid]") { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let response):
-                if response.elementDetected == true {
-                    self.resetIdlingTimer()
-                    self.detectElementTimer?.invalidate()
-                    self.isPerformingUserAction = false
-                    self.closeWebView()
-
-                    guard let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: self.membershipCard.id) else {
-                        self.finish(withError: .failedToExecuteLoginScript)
-                        return
-                    }
-                    self.login(credentials: credentials)
-                }
-            case .failure:
-                self.finish(withError: .loginFailed(errorMessage: "Failed to detect recaptcha element."))
-            }
-        }
-    }
-
-    private func getScrapedValue(completion: @escaping (Result<Int, WebScrapingUtilityError>) -> Void) {
-        guard let script = script(scriptName: agent.pointsScrapingScriptFileName) else {
-            completion(.failure(.scapingScriptFileNotFound))
-            return
-        }
-
-        runScript(script) { [weak self] result in
-            guard let self = self else { return }
-
-            switch result {
-            case .success(let response):
-                if let error = response.errorMessage {
-                    self.finish(withError: .pointsScrapingFailed(errorMessage: error))
-                    return
-                }
-
-                guard let points = response.pointsValue else {
-                    self.finish(withError: .failedToCastReturnValue)
-                    return
-                }
-                self.webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
-                    guard Current.userDefaults.bool(forDefaultsKey: .lpcUseCookies) else { return }
-                    var cookiesDictionary: [String: Any] = [:]
-                    for cookie in cookies {
-                        cookiesDictionary[cookie.name] = cookie.properties
-                    }
-                    Current.userDefaults.set(cookiesDictionary, forDefaultsKey: .webScrapingCookies(membershipCardId: self.membershipCard.id))
-                }
-                completion(.success(points))
-            case .failure:
-                self.finish(withError: .failedToExecuteScrapingScript)
-            }
-        }
-    }
-
-    private func detectElement(queryString: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
-        guard let script = script(scriptName: "LocalPointsCollection_DetectElement") else {
-            return
-        }
-        let formattedScript = String(format: script, queryString)
-        runScript(formattedScript, completion: completion)
-    }
-
     private func script(scriptName: String) -> String? {
         guard let file = Bundle.main.url(forResource: scriptName, withExtension: "js") else {
             return nil
@@ -230,17 +192,19 @@ class WebScrapingUtility: NSObject {
     }
 
     private func runScript(_ script: String, completion: @escaping (Result<WebScrapingResponse, WebScrapingUtilityError>) -> Void) {
-        if isRunningScript { return }
-        isRunningScript = true
-        webView.evaluateJavaScript(script) { [weak self] (response, error) in
-            self?.isRunningScript = false
+        if isExecutingScript { return }
+        isExecutingScript = true
+        
+        activeWebview?.evaluateJavaScript(script) { [weak self] (response, error) in
+            self?.isExecutingScript = false
+            
             guard error == nil else {
                 completion(.failure(.javascriptError))
                 return
             }
             
             guard let response = response else {
-                completion(.failure(.javascriptError))
+                completion(.failure(.noJavascriptResponse))
                 return
             }
 
@@ -249,109 +213,123 @@ class WebScrapingUtility: NSObject {
                 let scrapingResponse = try JSONDecoder().decode(WebScrapingResponse.self, from: data)
                 completion(.success(scrapingResponse))
             } catch {
-                completion(.failure(.javascriptError))
+                completion(.failure(.failedToDecodeJavascripResponse))
             }
         }
     }
 
     private func finish(withValue value: Int? = nil, withError error: WebScrapingUtilityError? = nil) {
-        idleTimer?.invalidate()
-        detectElementTimer?.invalidate()
-
-        closeWebView(force: true)
+        defer {
+            stop()
+        }
+        
+        guard let agent = agent else { return }
+        guard let membershipCard = membershipCard else { return }
 
         if let value = value {
+            if Current.pointsScrapingManager.isDebugMode {
+                DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Retreived points balance", type: .success)
+            }
             delegate?.webScrapingUtility(self, didCompleteWithValue: value, forMembershipCard: membershipCard, withAgent: agent)
         }
 
         if let error = error {
+            if Current.pointsScrapingManager.isDebugMode {
+                DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - \(error.localizedDescription)", type: .failure)
+            }
             SentryService.triggerException(.localPointsCollectionFailed(error, agent.merchant, balanceRefresh: isBalanceRefresh))
             delegate?.webScrapingUtility(self, didCompleteWithError: error, forMembershipCard: membershipCard, withAgent: agent)
+            
+            priorityScrapableCards.removeAll(where: { $0.cardId == membershipCard.id })
         }
-    }
-    
-    private var shouldScrape: Bool {
-        return isLikelyAtScrapableScreen
-    }
-    
-    private var shouldAttemptLogin: Bool {
-        return isLikelyAtLoginScreen && !hasAttemptedLogin
-    }
-    
-    private var isRedirecting: Bool {
-        return !isLikelyAtLoginScreen && !isLikelyAtScrapableScreen
-    }
-    
-    private var isLikelyAtLoginScreen: Bool {
-        return webView.url?.absoluteString.starts(with: agent.loginUrlString) == true
-    }
-    
-    private var isLikelyAtScrapableScreen: Bool {
-        guard agent.loginUrlString != agent.scrapableUrlString else {
-            // This agent has the same url for login and scraping
-            // If we have attempted login, we may be able to scrape here
-            return hasAttemptedLogin
-        }
-        return webView.url?.absoluteString.starts(with: agent.scrapableUrlString) == true
     }
 
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
-        return membershipCard.id == card.id
+        return membershipCard?.id == card.id
     }
 }
 
 extension WebScrapingUtility: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         handleWebViewNavigation()
-
-        // We know that if we entered this delegate method via a forced reload, we've now completed that
-        isReloadingWebView = false
     }
     
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
-        decisionHandler(.allow, preferences)
-
-        if webView.url?.absoluteString.contains("#") == true, !isReloadingWebView, shouldScrape {
-            isReloadingWebView = true
-            webView.reload()
-        }
+    enum WebScrapingStateConfigurator: String {
+        case userActionRequired
+        case userActionComplete
     }
 
-    private func handleWebViewNavigation() {
+    private func handleWebViewNavigation(stateConfigurator: WebScrapingStateConfigurator? = nil) {
         resetIdlingTimer()
-
-        // We only care about the webview navigation to our agent's login url or scrapable url
-        guard !isRedirecting else { return }
-
-        if shouldScrape {
-            getScrapedValue { [weak self] result in
-                guard let self = self else { return }
-
-                switch result {
-                case .failure(let error):
-                    self.finish(withError: error)
-                case .success(let pointsValue):
-                    self.finish(withValue: pointsValue)
+        guard let agent = agent else { return }
+        guard let script = script(scriptName: agent.navigateScriptFileName) else {
+            finish(withError: .scriptFileNotFound)
+            return
+        }
+        guard let card = membershipCard, let credentials = try? Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: card.id) else {
+            return
+        }
+        
+        let formattedScript = String(format: script, credentials.username, credentials.password, stateConfigurator?.rawValue ?? "")
+        runScript(formattedScript) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                if let error = response.errorMessage {
+                    if response.didAttemptLogin == true {
+                        self.finish(withError: .incorrectCredentials(errorMessage: error))
+                    } else {
+                        self.finish(withError: .genericFailure(errorMessage: error))
+                    }
+                    return
                 }
-            }
-        } else {
-            do {
-                let credentials = try Current.pointsScrapingManager.retrieveCredentials(forMembershipCardId: membershipCard.id)
-                if shouldAttemptLogin {
-                    hasAttemptedLogin = true
-                    login(credentials: credentials)
-                } else {
-                    // We should only fall into here if we know we are at the login url, but we've already attempted a login
-                    self.finish(withError: .loginFailed(errorMessage: nil))
+                
+                
+                // User action
+                
+                if response.userActionComplete == true {
+                    self.endUserAction()
+                    return
                 }
-            } catch {
-                if let webScrapingError = error as? WebScrapingUtilityError {
-                    self.finish(withError: webScrapingError)
-                } else {
-                    self.finish(withError: .loginFailed(errorMessage: nil))
+                
+                if response.userActionRequired == true {
+                    self.beginUserAction()
+                    return
                 }
+                
+                
+                // Login attempt
+                
+                if response.didAttemptLogin == true {
+                    if let card = self.membershipCard, self.activeWebview == self.priorityWebview {
+                        /// At this point, we know we've attempted a login so there was no valid session
+                        /// As we are using the priority web view, we know the membership card is the only one of it's plan type
+                        /// We can safely assume the membership card can be move to the priority list and have it's session reused
+                        if let priorityCard = PriorityScrapableCard(membershipCard: card) {
+                            self.priorityScrapableCards.append(priorityCard)
+                        }
+                    }
+                    
+                    if Current.pointsScrapingManager.isDebugMode, let agent = self.agent {
+                        DebugInfoAlertView.show("\(agent.merchant.rawValue.capitalized) LPC - Attempted to log in", type: .success)
+                    }
+                }
+                
+                
+                // Points retrieval
+
+                if let points = response.pointsValue {
+                    self.finish(withValue: points)
+                    return
+                }
+            case .failure(let error):
+                self.finish(withError: error)
             }
         }
+    }
+    
+    func debug() {
+        presentWebView()
     }
 }
 

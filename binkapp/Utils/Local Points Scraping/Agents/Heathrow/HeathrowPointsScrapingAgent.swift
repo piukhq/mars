@@ -34,11 +34,11 @@ struct HeathrowScrapingAgent: WebScrapable {
         return "points"
     }
 
-    var loginUrlString: String {
-        return "https://www.heathrow.com/heathrow-rewards/login"
-    }
+//    var loginUrlString: String {
+//        return "https://www.heathrow.com/heathrow-rewards/login"
+//    }
 
     var scrapableUrlString: String {
-        return "https://www.heathrow.com/rewards/home?login=Login%20Succcessful"
+        return "https://www.heathrow.com/rewards/home"
     }
 }

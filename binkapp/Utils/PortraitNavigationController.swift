@@ -49,7 +49,7 @@ class PortraitNavigationController: UINavigationController {
     }
 
     deinit {
-        Current.themeManager.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {

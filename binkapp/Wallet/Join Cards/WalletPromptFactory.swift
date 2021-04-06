@@ -23,36 +23,59 @@ enum WalletPromptFactory {
         }
 
         if walletType == .loyalty {
-            guard let plans = Current.wallet.membershipPlans, let membershipCards = Current.wallet.membershipCards else {
+            guard var plans = Current.wallet.membershipPlans, let membershipCards = Current.wallet.membershipCards else {
                 return walletPrompts
             }
+
+            plans = plans.sorted(by: { $0.account?.id.localizedStandardCompare($1.account?.id ?? "") == .orderedDescending })
             
+            // PLL
             if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .link }) {
-                /// Get PLL plans and sort by ID
-                let pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
-                var sortedPlans = pllPlans.sorted(by: {(firstPlan, secondPlan) -> Bool in
-                    firstPlan.account?.id ?? "" > secondPlan.account?.id ?? ""
-                })
+                var pllPlans = plans.filter({ $0.featureSet?.planCardType == .link })
                 
                 #if DEBUG
-                sortedPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &sortedPlans)
+                pllPlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.linkPromptDebugCellCount, sortedPlans: &pllPlans)
                 #endif
+                
+                walletPrompts.append(WalletPrompt(type: .link(plans: pllPlans)))
+            }
             
-                walletPrompts.append(WalletPrompt(type: .link(plans: sortedPlans)))
+            // See
+            if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .view }) {
+                let plansEnabledOnRemoteConfig = Current.pointsScrapingManager.agents.filter { Current.pointsScrapingManager.planIdIsWebScrapable($0.membershipPlanId) }
+                if !plansEnabledOnRemoteConfig.isEmpty {
+                    let seePlans = plans.filter { $0.featureSet?.planCardType == .view }
+                    var liveSeePlans = seePlans.filter { plan -> Bool in
+                        return plansEnabledOnRemoteConfig.contains(where: { $0.membershipPlanId == Int(plan.id) })
+                    }
+                    
+                    #if DEBUG
+                    liveSeePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.seePromptDebugCellCount, sortedPlans: &liveSeePlans)
+                    #endif
+                    
+                    walletPrompts.append(WalletPrompt(type: .see(plans: liveSeePlans)))
+                }
+            }
+            
+            
+            // Store
+            if !membershipCards.contains(where: { $0.membershipPlan?.featureSet?.planCardType == .store }) {
+                var storePlans = plans.filter { $0.featureSet?.planCardType == .store }
+                
+                #if DEBUG
+                storePlans = adjustDebugCellCount(totalNumberOfPlans: Current.wallet.storePromptDebugCellCount, sortedPlans: &storePlans)
+                #endif
+                
+                walletPrompts.append(WalletPrompt(type: .store(plans: storePlans)))
             }
         }
 
         /// Add payment card prompt to payment wallet only
-        if walletType == .payment && shouldShowAddPaymentCard() {
+        if walletType == .payment {
             walletPrompts.append(WalletPrompt(type: .addPaymentCards))
         }
 
         return walletPrompts
-    }
-
-    static private func shouldShowAddPaymentCard() -> Bool {
-        // We pass nil as the scan delegate as the receiver doesn't care about the delegate in order to return the key
-        return !Current.userDefaults.bool(forKey: WalletPrompt.userDefaultsDismissKey(forType: .addPaymentCards)) && !Current.wallet.hasPaymentCards
     }
 }
 
