@@ -20,7 +20,7 @@ class binkappUITests: XCTestCase {
         app.launch()
     }
     
-    func test0RG411HD_loginScreenOnAppLaunch_exists() {
+    func test0_loginScreenOnAppLaunch_exists() {
         let buttonsQuery = app.buttons
         XCTAssertTrue(buttonsQuery.staticTexts["Log in with email"].waitForExistence(timeout: 20), "Login button does not exist")
     }
