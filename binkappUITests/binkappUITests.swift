@@ -78,4 +78,18 @@ class binkappUITests: XCTestCase {
 //        app.alerts.scrollViews.otherElements.buttons["Yes"].tap()
         
     }
+    
+    func test_addStoreCard_isSuccessful() {
+        app.buttons["Browse brands"].tap()
+        app.tables.staticTexts["B&Q"].tap()
+        app.buttons["Add my card"].tap()
+        let cardNumberTextfield = app.textFields.element
+        cardNumberTextfield.tap()
+        cardNumberTextfield.typeText("6356661234567891")
+
+        app.toolbars["Toolbar"].buttons["Done"].tap()
+        app.buttons["Add card"].tap()
+
+        XCTAssertTrue(app.staticTexts["Tap card to show barcode"].waitForExistence(timeout: 60))
+    }
 }
