@@ -117,7 +117,7 @@
 		3CF029F622F45B53009A0E61 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF029F522F45B53009A0E61 /* CustomView.swift */; };
 		3CF054CE22FD7DC80069E98A /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF054CD22FD7DC80069E98A /* UIView+Extension.swift */; };
 		3CFD913022F1BA8200F25AF1 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		3CFD913122F1BB7D00F25AF1 /* binkappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048E22CE579B001BA964 /* binkappUITests.swift */; };
+		3CFD913122F1BB7D00F25AF1 /* AutomatedTesting_0_login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE048E22CE579B001BA964 /* AutomatedTesting_0_login.swift */; };
 		3CFDB225230C382400E75A14 /* BinkGradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFDB224230C382400E75A14 /* BinkGradientButton.swift */; };
 		3CFDB227230C38A700E75A14 /* BinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFDB226230C38A700E75A14 /* BinkTextField.swift */; };
 		5ECE046C22CE5798001BA964 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE046B22CE5798001BA964 /* AppDelegate.swift */; };
@@ -306,6 +306,7 @@
 		CE73F9AD2600B64E00D53BCF /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */; };
 		CE73F9AE2600B64E00D53BCF /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */; };
 		CE92FC942536F1B600C3AF92 /* BinkCopyableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */; };
+		CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */; };
 		CEA9057E25C81994000F69E1 /* BinkAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9057D25C81994000F69E1 /* BinkAlertController.swift */; };
 		CEA905BE25C986E6000F69E1 /* CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BC25C986E6000F69E1 /* CD_BaseImage.swift */; };
 		CEA905BF25C986E6000F69E1 /* _CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BD25C986E6000F69E1 /* _CD_BaseImage.swift */; };
@@ -668,7 +669,7 @@
 		5ECE048322CE579B001BA964 /* binkappTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = binkappTests.swift; sourceTree = "<group>"; };
 		5ECE048522CE579B001BA964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5ECE048A22CE579B001BA964 /* binkappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = binkappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5ECE048E22CE579B001BA964 /* binkappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = binkappUITests.swift; sourceTree = "<group>"; };
+		5ECE048E22CE579B001BA964 /* AutomatedTesting_0_login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_0_login.swift; sourceTree = "<group>"; };
 		5ECE049022CE579B001BA964 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67B8D6E0B8AB406C5DE33137 /* Pods-binkapp.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkapp.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkapp/Pods-binkapp.app store (internal).xcconfig"; sourceTree = "<group>"; };
 		6D524C6191655F19A0B9384F /* Pods-binkappUITests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappUITests.app store.xcconfig"; path = "Target Support Files/Pods-binkappUITests/Pods-binkappUITests.app store.xcconfig"; sourceTree = "<group>"; };
@@ -864,6 +865,7 @@
 		CE73F9AB2600B64E00D53BCF /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		CE73F9AC2600B64E00D53BCF /* HeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderTableViewCell.xib; sourceTree = "<group>"; };
 		CE92FC932536F1B600C3AF92 /* BinkCopyableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkCopyableLabel.swift; sourceTree = "<group>"; };
+		CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomatedTesting_1_LoyaltyCards.swift; sourceTree = "<group>"; };
 		CEA9057D25C81994000F69E1 /* BinkAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkAlertController.swift; sourceTree = "<group>"; };
 		CEA905B825C9859A000F69E1 /* binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel"; sourceTree = "<group>"; };
 		CEA905BC25C986E6000F69E1 /* CD_BaseImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_BaseImage.swift; sourceTree = "<group>"; };
@@ -1583,8 +1585,9 @@
 		5ECE048D22CE579B001BA964 /* binkappUITests */ = {
 			isa = PBXGroup;
 			children = (
-				5ECE048E22CE579B001BA964 /* binkappUITests.swift */,
 				5ECE049022CE579B001BA964 /* Info.plist */,
+				5ECE048E22CE579B001BA964 /* AutomatedTesting_0_login.swift */,
+				CE990E12261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift */,
 			);
 			path = binkappUITests;
 			sourceTree = "<group>";
@@ -3601,7 +3604,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CFD913122F1BB7D00F25AF1 /* binkappUITests.swift in Sources */,
+				CE990E13261DB1F90080FEB6 /* AutomatedTesting_1_LoyaltyCards.swift in Sources */,
+				3CFD913122F1BB7D00F25AF1 /* AutomatedTesting_0_login.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

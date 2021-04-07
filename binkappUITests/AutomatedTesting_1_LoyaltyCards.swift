@@ -1,14 +1,14 @@
 //
-//  binkappUITests.swift
+//  LoyaltyCardsAutomatedTesting.swift
 //  binkappUITests
 //
-//  Created by Sean Williams on 27/11/2020.
-//  Copyright © 2020 Bink. All rights reserved.
+//  Created by Sean Williams on 07/04/2021.
+//  Copyright © 2021 Bink. All rights reserved.
 //
 
 import XCTest
 
-class binkappUITests: XCTestCase {
+class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     private var app = XCUIApplication()
     
     override func setUp() {
@@ -20,27 +20,7 @@ class binkappUITests: XCTestCase {
         app.launch()
     }
     
-    func test0_loginScreenOnAppLaunch_exists() {
-        let buttonsQuery = app.buttons
-        XCTAssertTrue(buttonsQuery.staticTexts["Log in with email"].waitForExistence(timeout: 20), "Login button does not exist")
-    }
-    
-    func test1_loginWithEmailAndPassword() {
-        app.buttons["Log in with email"].tap()
-        
-        let emailTextfield = app.textFields["Enter email address"]
-        emailTextfield.tap()
-        emailTextfield.typeText("binklogin@binktest.com")
-        app.buttons["next"].tap()
-        app.typeText("Binklogin123")
-        app.buttons["done"].tap()
-        app.buttons["Continue"].tap()
-        
-        let paymentTabBarButton = app.buttons["Payment"]
-        XCTAssertTrue(paymentTabBarButton.waitForExistence(timeout: 30))
-    }
-    
-    func test_addIcelandCard_isSuccessful() {
+    func test_0_addIcelandCard_isSuccessful() {
         app.buttons["Browse brands"].tap()
         app.tables.staticTexts["Iceland"].tap()
         app.buttons["Add my card"].tap()
@@ -79,7 +59,7 @@ class binkappUITests: XCTestCase {
         
     }
     
-    func test_addStoreCard_isSuccessful() {
+    func test_1_addBAndQCard_isSuccessful() {
         app.buttons["Browse brands"].tap()
         app.tables.staticTexts["B&Q"].tap()
         app.buttons["Add my card"].tap()
@@ -92,4 +72,19 @@ class binkappUITests: XCTestCase {
 
         XCTAssertTrue(app.staticTexts["Tap card to show barcode"].waitForExistence(timeout: 60))
     }
+    
+    func test_2_viewIcelandBarcode_isSuccessful() {
+        app.staticTexts["Iceland"].tap()
+        app.staticTexts["Tap card to show barcode"].tap()
+        let imageView = app.images["Barcode imageview"]
+        XCTAssertTrue(imageView.waitForExistence(timeout: 10))
+    }
+    
+    func test_3_viewBAndQBarcode_isSuccessful() {
+        app.staticTexts["B&Q"].tap()
+        app.staticTexts["Tap card to show barcode"].tap()
+        let imageView = app.images["Barcode imageview"]
+        XCTAssertTrue(imageView.waitForExistence(timeout: 10))
+    }
+
 }
