@@ -114,7 +114,7 @@ struct ValidatedNetworkRequest {
 }
 
 extension APIClient {
-    func performRequest<ResponseType: Codable>(_ request: BinkNetworkRequest, expecting responseType: ResponseType.Type, completion: APIClientCompletionHandler<ResponseType>?) {
+    func performRequest<ResponseType: Decodable>(_ request: BinkNetworkRequest, expecting responseType: ResponseType.Type, completion: APIClientCompletionHandler<ResponseType>?) {
         validateRequest(request) { [weak self] (validatedRequest, error) in
             if let error = error {
                 completion?(.failure(error), nil)
@@ -130,7 +130,7 @@ extension APIClient {
         }
     }
 
-    func performRequestWithBody<ResponseType: Codable, P: Encodable>(_ request: BinkNetworkRequest, body: P?, expecting responseType: ResponseType.Type, completion: APIClientCompletionHandler<ResponseType>?) {
+    func performRequestWithBody<ResponseType: Decodable, P: Encodable>(_ request: BinkNetworkRequest, body: P?, expecting responseType: ResponseType.Type, completion: APIClientCompletionHandler<ResponseType>?) {
         validateRequest(request) { (validatedRequest, error) in
             if let error = error {
                 completion?(.failure(error), nil)
@@ -208,7 +208,7 @@ extension APIClient {
 // MARK: - Response handling
 
 private extension APIClient {
-    func handleResponse<ResponseType: Codable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
+    func handleResponse<ResponseType: Decodable>(_ response: AFDataResponse<Any>, endpoint: APIEndpoint, expecting responseType: ResponseType.Type, isUserDriven: Bool, completion: APIClientCompletionHandler<ResponseType>?) {
         var networkResponseData = NetworkResponseData(urlResponse: response.response, errorMessage: nil)
         
         if case let .failure(error) = response.result, error.isServerTrustEvaluationError, isUserDriven {
