@@ -21,6 +21,7 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     }
     
     func test_0_addIcelandCard_isSuccessful() {
+        sleep(10)
         app.buttons["Browse brands"].tap()
         app.tables.staticTexts["Iceland"].tap()
         app.buttons["Add my card"].tap()
@@ -38,28 +39,23 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
 
         let backButton = app.navigationBars["binkapp.LoyaltyCardFullDetailsView"].buttons["Back"]
         backButton.tap()
+        
         sleep(60)
 
         // Pull to refresh
-        let firstCell = app.staticTexts["Iceland"]
-        let start = firstCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-        let finish = firstCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
+        let icelandCell = app.staticTexts["Iceland"]
+        let start = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
+        let finish = icelandCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
         start.press(forDuration: 0, thenDragTo: finish)
         
         sleep(15)
+        
         app.staticTexts["Iceland"].tap()
-
-        XCTAssertTrue(app.staticTexts["£1 "].waitForExistence(timeout: 120))
-        
-        
-//        app.navigationBars["binkapp.TransactionsView"].children(matching: .button).element.tap()
-//        scrollViewsQuery.otherElements.containing(.button, identifier:"Tap card to show barcode").children(matching: .other).element(boundBy: 1).children(matching: .other).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element/*@START_MENU_TOKEN@*/.swipeRight()/*[[".swipeUp()",".swipeRight()"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-//        elementsQuery.tables/*@START_MENU_TOKEN@*/.staticTexts["Delete Card"]/*[[".cells.staticTexts[\"Delete Card\"]",".staticTexts[\"Delete Card\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-//        app.alerts.scrollViews.otherElements.buttons["Yes"].tap()
-        
+        XCTAssertTrue(app.staticTexts["£1 "].waitForExistence(timeout: 30))
     }
     
     func test_1_addBAndQCard_isSuccessful() {
+        sleep(10)
         app.buttons["Browse brands"].tap()
         app.tables.staticTexts["B&Q"].tap()
         app.buttons["Add my card"].tap()
@@ -70,7 +66,7 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         app.toolbars["Toolbar"].buttons["Done"].tap()
         app.buttons["Add card"].tap()
 
-        XCTAssertTrue(app.staticTexts["Tap card to show barcode"].waitForExistence(timeout: 60))
+        XCTAssertTrue(app.staticTexts["Tap card to show barcode"].waitForExistence(timeout: 30))
     }
     
     func test_2_viewIcelandBarcode_isSuccessful() {
@@ -86,5 +82,29 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         let imageView = app.images["Barcode imageview"]
         XCTAssertTrue(imageView.waitForExistence(timeout: 10))
     }
+    
+    func test_4_cardsAreVisibleAfterPullToRefresh_isTrue() {
+        let bAndQCell = app.staticTexts["B&Q"]
+        let start = bAndQCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
+        let finish = bAndQCell.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 50))
+        start.press(forDuration: 0, thenDragTo: finish)
+        
+        sleep(10)
+        
+        XCTAssertTrue(app.staticTexts["B&Q"].exists)
+        XCTAssertTrue(app.staticTexts["Iceland"].exists)
+    }
+    
+    func test_5_deleteLoyaltyCards_isSuccessful() {
+        app.staticTexts["B&Q"].tap()
+        app.staticTexts["Remove this card from Bink"].tap()
+        app.buttons["Yes"].tap()
 
+        app.staticTexts["Iceland"].tap()
+        app.staticTexts["Remove this card from Bink"].tap()
+        app.buttons["Yes"].tap()
+        
+        XCTAssertFalse(app.staticTexts["B&Q"].exists)
+        XCTAssertFalse(app.staticTexts["Iceland"].exists)
+    }
 }
