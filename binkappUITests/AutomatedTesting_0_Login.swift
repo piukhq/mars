@@ -1,5 +1,5 @@
 //
-//  binkappUITests.swift
+//  AutomatedTesting_0_Login.swift
 //  binkappUITests
 //
 //  Created by Sean Williams on 27/11/2020.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class AutomatedTesting_0_login: XCTestCase {
+class AutomatedTesting_0_Login: XCTestCase {
     private var app = XCUIApplication()
     
     override func setUp() {

@@ -1,5 +1,5 @@
 //
-//  LoyaltyCardsAutomatedTesting.swift
+//  AutomatedTesting_1_LoyaltyCards.swift
 //  binkappUITests
 //
 //  Created by Sean Williams on 07/04/2021.
@@ -99,6 +99,8 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         app.staticTexts["B&Q"].tap()
         app.staticTexts["Remove this card from Bink"].tap()
         app.buttons["Yes"].tap()
+        
+        sleep(10)
 
         app.staticTexts["Iceland"].tap()
         app.staticTexts["Remove this card from Bink"].tap()
