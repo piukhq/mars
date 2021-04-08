@@ -35,6 +35,11 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
         detailLabel.text = walletPrompt.body
         titleLabel.sizeToFit()
         detailLabel.sizeToFit()
+        
+        if UIDevice.current.isSmallSize {
+            titleLabel.font = .walletPromptTitleSmall
+            detailLabel.font = .walletPromptBodySmall
+        }
 
         if let iconName = walletPrompt.iconImageName {
             brandIconImageView.image = UIImage(named: iconName)
@@ -42,11 +47,6 @@ class WalletPromptCollectionViewCell: WalletCardCollectionViewCell {
 
         containerView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         detailLabel.textColor = Current.themeManager.color(for: .text)
-    }
-
-    @IBAction private func dismissButtonWasPressed() {
-        Current.userDefaults.set(true, forKey: walletPrompt.userDefaultsDismissKey)
-        Current.wallet.refreshLocal()
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {

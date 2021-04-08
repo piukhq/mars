@@ -56,11 +56,8 @@ protocol BinkUserDefaults {
 extension UserDefaults: BinkUserDefaults {
     enum Keys {
         case hasLaunchedWallet
-        case userEmail
         case debugBaseURL
         case webScrapingCookies(membershipCardId: String)
-        case lpcDebugWebView
-        case lpcUseCookies
         case responseCodeVisualiser
         case inAppReviewLastRequestedDate
         case inAppReviewRequestedMinorVersions
@@ -78,16 +75,10 @@ extension UserDefaults: BinkUserDefaults {
             switch self {
             case .hasLaunchedWallet:
                 return "hasLaunchedWallet"
-            case .userEmail:
-                return "userEmail"
             case .debugBaseURL:
                 return "debugBaseURL"
             case .webScrapingCookies(let membershipCardId):
                 return "webScrapingCookies_cardId_\(membershipCardId)"
-            case .lpcDebugWebView:
-                return "lpcDebugWebView"
-            case .lpcUseCookies:
-                return "lpcUseCookies"
             case .responseCodeVisualiser:
                 return "responseCodeVisualiser"
             case .inAppReviewLastRequestedDate:

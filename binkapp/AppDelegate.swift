@@ -55,6 +55,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
         // Initialise Zendesk
         ZendeskService.start()
         
+        // Start points scraping manager
+        Current.pointsScrapingManager.start()
+        
         // Get latest user profile data
         if Current.userManager.hasCurrentUser {
             getUserProfile { result in
@@ -81,11 +84,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UserServiceProtocol {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        if #available(iOS 14.0, *) {
+            BinkLogger.info(event: AppLoggerEvent.appEnteredForeground)
+        }
         Current.wallet.refreshMembershipPlansIfNecessary()
         InAppReviewUtility.recordAppLaunch()
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
+        if #available(iOS 14.0, *) {
+            BinkLogger.info(event: AppLoggerEvent.appEnteredBackground)
+        }
         Current.wallet.handleAppDidEnterBackground()
     }
 

@@ -9,11 +9,11 @@
 import Foundation
 
 struct WebScrapingResponse: Codable {
-    var success: Bool?
     var pointsString: String?
+    var didAttemptLogin: Bool?
     var errorMessage: String?
     var userActionRequired: Bool?
-    var elementDetected: Bool?
+    var userActionComplete: Bool?
 
     var pointsValue: Int? {
         guard let string = pointsString else { return nil }
@@ -21,10 +21,10 @@ struct WebScrapingResponse: Codable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case success
         case pointsString = "points"
+        case didAttemptLogin = "did_attempt_login"
         case errorMessage = "error_message"
         case userActionRequired = "user_action_required"
-        case elementDetected = "element_detected"
+        case userActionComplete = "user_action_complete"
     }
 }

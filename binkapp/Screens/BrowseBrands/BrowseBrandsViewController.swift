@@ -8,7 +8,6 @@
 import UIKit
 
 fileprivate enum Constants {
-    static let tableViewHeaderHeight: CGFloat = 47.0
     static let searchIconLeftPadding = 12
     static let searchIconTopPadding = 13
     static let searchIconSideSize = 14
@@ -55,10 +54,12 @@ class BrowseBrandsViewController: BinkViewController {
     let viewModel: BrowseBrandsViewModel
     private var selectedFilters: [String]
     private var didLayoutSubviews = false
+    private var sectionToScrollTo: Int?
     
-    init(viewModel: BrowseBrandsViewModel) {
+    init(viewModel: BrowseBrandsViewModel, section: Int?) {
         self.viewModel = viewModel
         self.selectedFilters = viewModel.filters
+        self.sectionToScrollTo = section
         super.init(nibName: "BrowseBrandsViewController", bundle: Bundle(for: BrowseBrandsViewController.self))
     }
     
@@ -68,7 +69,8 @@ class BrowseBrandsViewController: BinkViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: "BrandTableViewCell", bundle: Bundle(for: BrandTableViewCell.self)), forCellReuseIdentifier: "BrandTableViewCell")
+        tableView.register(BrandTableViewCell.self, asNib: true)
+        tableView.register(HeaderTableViewCell.self, asNib: true)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.contentInset = Constants.contentInset
@@ -102,6 +104,7 @@ class BrowseBrandsViewController: BinkViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setScreenName(trackedScreen: .browseBrands)
+        scrollToSection()
     }
     
     override func viewDidLayoutSubviews() {
@@ -239,6 +242,19 @@ class BrowseBrandsViewController: BinkViewController {
         noMatchesLabelTopConstraint.constant = filtersVisible ? filterViewHeight : 0.0
         noMatchesLabel.isHidden = !viewModel.shouldShowNoResultsLabel
     }
+    
+    private func scrollToSection() {
+        guard var section = sectionToScrollTo, viewModel.numberOfSections() != 1 else { return }
+
+        if viewModel.getPllMembershipPlans().isEmpty || viewModel.getSeeMembershipPlans().isEmpty {
+            /// If there are no pll or see membership plans, section adjusted by -1 so that the correct section is scrolled to
+            section -= 1
+        }
+        
+        let indexPath = IndexPath(row: NSNotFound, section: section)
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        sectionToScrollTo = nil
+    }
 }
 
 extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -253,48 +269,32 @@ extension BrowseBrandsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: BrandTableViewCell = tableView.dequeue(indexPath: indexPath)
         
-        let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
+        guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return cell }
         
         if let brandName = membershipPlan.account?.companyName, let brandExists = viewModel.existingCardsPlanIDs?.contains(membershipPlan.id) {
-            switch indexPath.section {
-            case 0:
-                cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
-                if indexPath.row == viewModel.getPllMembershipPlans().count - 1 {
-                    cell.hideSeparatorView()
-                }
-            case 1:
-                cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
-                if indexPath.row == viewModel.getNonPllMembershipPlans().count - 1 {
-                    cell.hideSeparatorView()
-                }
-            default:
-                break
-            }
+            cell.configure(plan: membershipPlan, brandName: brandName, brandExists: brandExists)
+        }
+        
+        if tableView.cellAtIndexPathIsLastInSection(indexPath) {
+            cell.hideSeparatorView()
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView()
-        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: Constants.tableViewHeaderHeight))
-        titleLabel.font = UIFont.headline
-        titleLabel.text = viewModel.getSectionTitleText(section: section)
-        titleLabel.textColor = Current.themeManager.color(for: .text)
-        view.addSubview(titleLabel)
-        return view
+        guard let headerCell = tableView.dequeueReusableCell(withIdentifier: "HeaderTableViewCell") as? HeaderTableViewCell else { return nil }
+        headerCell.configure(section: section, viewModel: viewModel)
+        return headerCell
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.backgroundColor = .clear
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return Constants.tableViewHeaderHeight
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let membershipPlan = viewModel.getMembershipPlan(for: indexPath)
+        guard let membershipPlan = viewModel.getMembershipPlan(for: indexPath) else { return }
         viewModel.toAddOrJoinScreen(membershipPlan: membershipPlan)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

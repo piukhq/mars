@@ -203,7 +203,9 @@ extension SettingsViewController: UITableViewDelegate {
                     let navigationRequest = PushNavigationRequest(viewController: viewController)
                     Current.navigate.to(navigationRequest)
                 default:
-                    print("Unsupported VC for presentation")
+                    if #available(iOS 14.0, *) {
+                        BinkLogger.error(AppLoggerError.unsupportedViewController)
+                    }
                 }
             case .pushToReusable(let screen):
                 switch screen {

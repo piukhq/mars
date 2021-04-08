@@ -96,7 +96,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         label.isHidden = true
         label.textColor = .binkDynamicRed
         label.setContentCompressionResistancePriority(.required, for: .vertical)
-        label.heightAnchor.constraint(equalToConstant: Constants.validationLabelHeight).isActive = true
+        label.widthAnchor.constraint(equalToConstant: preferredWidth).isActive = true
         return label
     }()
     
@@ -104,7 +104,7 @@ class FormCollectionViewCell: UICollectionViewCell {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, textFieldStack, separator, validationLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         stackView.alignment = .fill
         stackView.spacing = Constants.stackViewSpacing
         stackView.setCustomSpacing(Constants.postTextFieldSpacing, after: textFieldStack)
@@ -148,16 +148,16 @@ class FormCollectionViewCell: UICollectionViewCell {
     }
 
     deinit {
-        Current.themeManager.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Layout
     
     private func configureLayout() {
         let topConstraint = fieldStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 17.0)
-        topConstraint.priority = .almostRequired
+        topConstraint.priority = .required
         let bottomConstraint = contentView.bottomAnchor.constraint(equalTo: fieldStack.bottomAnchor)
-        bottomConstraint.priority = .almostRequired
+        bottomConstraint.priority = .required
         
         NSLayoutConstraint.activate([
             fieldStack.leftAnchor.constraint(equalTo: contentView.leftAnchor),
@@ -178,7 +178,7 @@ class FormCollectionViewCell: UICollectionViewCell {
     @objc private func configureForCurrentTheme() {
         validationLabel.textColor = .binkDynamicRed
     }
-    
+
     func configure(with field: FormField, delegate: FormCollectionViewCellDelegate?) {
         let isEnabled = !field.isReadOnly
         

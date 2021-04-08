@@ -110,10 +110,6 @@ class ThemeManager {
     func addObserver(_ observer: Any, handler: Selector) {
         NotificationCenter.default.addObserver(observer, selector: handler, name: .themeManagerDidSetTheme, object: nil)
     }
-
-    func removeObserver(_ observer: Any) {
-        NotificationCenter.default.removeObserver(self, name: .themeManagerDidSetTheme, object: nil)
-    }
 }
 
 extension ThemeManager: ThemeDelegate {

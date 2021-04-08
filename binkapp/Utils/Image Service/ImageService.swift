@@ -148,7 +148,7 @@ extension UIImageView {
         case .amex:
             paymentCardProviderImageName = "americanexpresslogoContainer"
         case .mastercard:
-            paymentCardProviderImageName = "mastercardlogoContainer\(isDarkMode ? "Dark" : "")"
+            paymentCardProviderImageName = "mastercardlogoContainer"
         default: return
         }
         
