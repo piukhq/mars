@@ -23,7 +23,9 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     func test_0_addIcelandCard_isSuccessful() {
         sleep(10)
         app.buttons["Browse brands"].tap()
+        sleep(10)
         app.tables.staticTexts["Iceland"].tap()
+        sleep(10)
         app.buttons["Add my card"].tap()
         let cardNumberTextfield = app.textFields["You'll usually find this on the front of your loyalty card."]
         cardNumberTextfield.tap()
@@ -57,7 +59,9 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
     func test_1_addBAndQCard_isSuccessful() {
         sleep(10)
         app.buttons["Browse brands"].tap()
+        sleep(10)
         app.tables.staticTexts["B&Q"].tap()
+        sleep(10)
         app.buttons["Add my card"].tap()
         let cardNumberTextfield = app.textFields.element
         cardNumberTextfield.tap()
@@ -106,7 +110,7 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         app.staticTexts["Remove this card from Bink"].tap()
         app.buttons["Yes"].tap()
         
-        XCTAssertFalse(app.staticTexts["B&Q"].exists)
-        XCTAssertFalse(app.staticTexts["Iceland"].exists)
+        XCTAssertFalse(app.staticTexts["B&Q"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["Iceland"].waitForExistence(timeout: 10))
     }
 }
