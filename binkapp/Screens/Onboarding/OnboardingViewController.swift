@@ -86,6 +86,7 @@ class OnboardingViewController: BinkViewController, UIScrollViewDelegate {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.delegate = self
         scrollView.isPagingEnabled = true
+        scrollView.accessibilityIdentifier = "Learning scrollview"
         return scrollView
     }()
 
