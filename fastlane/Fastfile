@@ -88,14 +88,20 @@ platform :ios do
       in_house: false
     )
 
+    run_tests(
+      workspace: "binkapp.xcworkspace",
+      device: "iPhone 12",
+      scheme: "binkapp tests"
+    )
+
     build_app(
-      workspace: "binkapp.xcworkspace", 
+      workspace: "binkapp.xcworkspace",
       scheme: "binkapp app store"
     )
 
     upload_to_testflight(
-      distribute_external: true, 
-      groups: "Mobile Squad", 
+      distribute_external: true,
+      groups: "Mobile Squad",
       changelog: "No tests notes"
     )
 

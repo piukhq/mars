@@ -1,5 +1,5 @@
 //
-//  binkappUITests.swift
+//  AutomatedTesting_0_Login.swift
 //  binkappUITests
 //
 //  Created by Sean Williams on 27/11/2020.
@@ -8,41 +8,38 @@
 
 import XCTest
 
-class binkappUITests: XCTestCase {
+class AutomatedTesting_0_Login: XCTestCase {
+    private var app = XCUIApplication()
+    
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         UIView.setAnimationsEnabled(false)
-    }
-    
-    func test_loginScreenOnAppLaunch_exists() {
-        let app = XCUIApplication()
+        
         app.launchArguments = ["enable-testing"]
         app.launch()
+    }
+    
+    func test0_loginScreenOnAppLaunch_exists() {
         let buttonsQuery = app.buttons
         XCTAssertTrue(buttonsQuery.staticTexts["Log in with email"].waitForExistence(timeout: 20), "Login button does not exist")
     }
     
-    func test_loginWithEmailAndPassword() {
-        let app = XCUIApplication()
-        app.launchArguments = ["enable-testing"]
-        app.launch()
+    func test2_loginWithEmailAndPassword() {
+        app.scrollViews["Learning scrollview"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
+        app.tables.staticTexts["Environment Base URL"].tap()
+        app.sheets.scrollViews.otherElements.buttons["Dev"].tap()
+        app.buttons["Log in with email"].tap()
         
-        let buttonsQuery = app.buttons
-        let loginWithEmailButton = buttonsQuery.staticTexts["Log in with email"]
-        loginWithEmailButton.tap()
-        
-        let emailTextfield = app.textFields.element(boundBy: 0)
+        let emailTextfield = app.textFields["Enter email address"]
         emailTextfield.tap()
         emailTextfield.typeText("binklogin@binktest.com")
         app.buttons["next"].tap()
-        
         app.typeText("Binklogin123")
         app.buttons["done"].tap()
         app.buttons["Continue"].tap()
         
         let paymentTabBarButton = app.buttons["Payment"]
-
         XCTAssertTrue(paymentTabBarButton.waitForExistence(timeout: 30))
     }
 }
