@@ -66,6 +66,6 @@ class LoyaltyPlanView: CustomView {
     
     override func configureUI() {
         titleLabel.font = UIFont.headline
-        descriptionLabel.font = UIFont.bodyTextLarge
+        descriptionLabel.font = UIFont.addOrJoinBodyText
     }
 }
