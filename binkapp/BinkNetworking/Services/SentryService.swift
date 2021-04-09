@@ -77,6 +77,10 @@ enum SentryException {
             switch self {
             case .payment:
                 return "add_payment_card"
+            case .loyalty:
+                return "add_loyalty_card"
+            case .lpc:
+                return "local_points_collection"
             default:
                 return ""
             }
@@ -111,8 +115,15 @@ enum SentryException {
             return 3001
         case .apiRejectedRequest:
             return 3002
-        case .localPointsCollectionFailed:
-            return 4001
+        case .localPointsCollectionFailed(let error, _, _):
+            switch error.level {
+            case .client:
+                return 4001
+            case .site:
+                return 4002
+            case .user:
+                return 4003
+            }
         }
     }
 

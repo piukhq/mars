@@ -104,4 +104,8 @@ extension UIFont {
     class var walletPromptBodySmall: UIFont {
         return UIFont(name: "NunitoSans-Regular", size: 14.0) ?? UIFont()
     }
+    
+    class var bodyTextBold: UIFont {
+        return UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()
+    }
 }

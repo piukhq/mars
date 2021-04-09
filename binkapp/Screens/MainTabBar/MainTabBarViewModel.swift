@@ -29,9 +29,9 @@ class MainTabBarViewModel {
         let loyaltyWalletNavigationController = PortraitNavigationController(rootViewController: loyaltyWalletViewController)
         loyaltyWalletNavigationController.tabBarItem = getTabBarLoyaltyButton()
         
-        // ADD OPTIONS
-        let addOptionsViewController = AddingOptionsTabBarViewController()
-        addOptionsViewController.tabBarItem = getTabBarAddButton()
+        // BROWSE BRANDS
+        let browseBrandsViewController = ViewControllerFactory.makeBrowseBrandsViewController()
+        browseBrandsViewController.tabBarItem = getTabBarAddButton()
         
         // PAYMENT WALLET
         let paymentWalletViewModel = PaymentWalletViewModel()
@@ -39,7 +39,7 @@ class MainTabBarViewModel {
         let paymentWalletNavigationController = PortraitNavigationController(rootViewController: paymentWalletViewController)
         paymentWalletNavigationController.tabBarItem = getTabBarPaymentButton()
         
-        viewControllers = [loyaltyWalletNavigationController, addOptionsViewController, paymentWalletNavigationController]
+        viewControllers = [loyaltyWalletNavigationController, browseBrandsViewController, paymentWalletNavigationController]
     }
     
     private func getTabBarLoyaltyButton() -> UITabBarItem {
@@ -64,9 +64,9 @@ class MainTabBarViewModel {
         return item
     }
     
-    func toAddingOptionsScreen() {
-        let viewController = ViewControllerFactory.makeAddingOptionsViewController()
-        let navigationRequest = ModalNavigationRequest(viewController: viewController, fullScreen: true, embedInNavigationController: false, transition: .crossDissolve)
+    func toBrowseBrandsScreen() {
+        let viewController = ViewControllerFactory.makeBrowseBrandsViewController()
+        let navigationRequest = ModalNavigationRequest(viewController: viewController)
         Current.navigate.to(navigationRequest)
     }
 }

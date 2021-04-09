@@ -93,6 +93,10 @@ class AddPaymentCardViewModel {
             guard let paymentCard = paymentCard else { return }
             Current.wallet.refreshLocal()
             
+            if #available(iOS 14.0, *) {
+                BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.paymentCardAdded, value: paymentCard.id)
+            }
+            
             switch self.journey {
             case .wallet:
                 let pcdViewController = ViewControllerFactory.makePaymentCardDetailViewController(paymentCard: paymentCard)
