@@ -194,9 +194,19 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         
         guard let plan = viewModel.membershipCard.membershipPlan else { return }
         if viewModel.isMembershipCardAuthorised {
-            brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
+            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
+                // if not pll and we have a barcode - configure with barcode view
+            } else {
+                // if not pll and we don't have a barcode OR if brand is PLL - set image
+                brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
+            }
         } else {
-            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
+            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
+                // if not pll and we have a barcode - configure with barcode view
+            } else {
+                // if not pll and we don't have a barcode OR if brand is PLL - set image
+                brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
+            }
         }
 
         let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
@@ -252,8 +262,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: brandHeaderBarcodeButtonPadding)
         
         if viewModel.membershipCard.card?.barcode != nil || viewModel.membershipCard.card?.membershipId != nil {
-            let showBarcode = viewModel.membershipCard.card?.barcode != nil
-            let buttonTitle = showBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
+            let buttonTitle = viewModel.hasBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
             showBarcodeButton.setTitle(buttonTitle, for: .normal)
             stackScrollView.add(arrangedSubview: showBarcodeButton)
             let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))

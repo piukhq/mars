@@ -70,6 +70,10 @@ class LoyaltyCardFullDetailsViewModel {
     var secondaryColourIsDark: Bool {
         return !(secondaryColor?.isLight() ?? false)
     }
+    
+    var hasBarcode: Bool {
+        return membershipCard.card?.barcode != nil
+    }
         
     // MARK: - Public methods
     
