@@ -108,4 +108,16 @@ extension UIFont {
     class var bodyTextBold: UIFont {
         return UIFont(name: "NunitoSans-ExtraBold", size: 18.0) ?? UIFont()
     }
+    
+    class var addOrJoinBodyText: UIFont {
+        var fontSize: CGFloat
+        if UIDevice.current.height == .iPhonePlusSize || UIDevice.current.height == .iPhone11ProSize {
+            fontSize = 16.0
+        } else if UIDevice.current.isSmallSize {
+            fontSize = 14.0
+        } else {
+            fontSize = 18.0
+        }
+        return UIFont(name: "NunitoSans-Light", size: fontSize) ?? UIFont()
+    }
 }
