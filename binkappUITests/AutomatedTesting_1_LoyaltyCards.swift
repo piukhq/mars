@@ -27,7 +27,7 @@ class AutomatedTesting_1_LoyaltyCards: XCTestCase {
         app.tables.staticTexts["Iceland"].tap()
         sleep(10)
         app.buttons["Add my card"].tap()
-        let cardNumberTextfield = app.textFields["You'll usually find this on the front of your loyalty card."]
+        let cardNumberTextfield = app.textFields["19 digit card number"]
         cardNumberTextfield.tap()
         cardNumberTextfield.typeText("6332040000200000002")
         app.buttons["next"].tap()
