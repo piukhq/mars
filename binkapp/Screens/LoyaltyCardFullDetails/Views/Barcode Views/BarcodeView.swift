@@ -10,6 +10,10 @@ import UIKit
 
 class BarcodeView: UIView {
 
-
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var barcodeImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var cardNumberLabel: UILabel!
+    
 
 }

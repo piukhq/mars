@@ -65,6 +65,12 @@
                 <constraint firstItem="d38-Qh-CDY" firstAttribute="centerY" secondItem="XYh-fe-QI3" secondAttribute="centerY" id="uJn-vh-8uJ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="barcodeImageView" destination="sk0-HZ-CRk" id="D9i-TD-b0z"/>
+                <outlet property="cardNumberLabel" destination="QNX-eJ-QSX" id="diw-OY-515"/>
+                <outlet property="iconImageView" destination="d38-Qh-CDY" id="sgZ-Km-EKg"/>
+                <outlet property="titleLabel" destination="mHY-lv-yLX" id="NYK-VX-RXu"/>
+            </connections>
             <point key="canvasLocation" x="-386.23188405797106" y="181.80803571428569"/>
         </view>
     </objects>

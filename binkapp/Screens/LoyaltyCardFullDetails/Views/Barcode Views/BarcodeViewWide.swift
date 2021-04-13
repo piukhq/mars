@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BarcodeViewWide: UIView {
+class BarcodeViewWide: BarcodeView {
 
     /*
     // Only override draw() if you perform custom drawing.
