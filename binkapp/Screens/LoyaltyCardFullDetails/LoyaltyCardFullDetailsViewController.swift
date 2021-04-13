@@ -33,13 +33,20 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return stackView
     }()
     
-    lazy var brandHeader: UIImageView = {
+    lazy var brandHeader: UIView = {
+        let headerView = UIView()
+        headerView.isUserInteractionEnabled = true
+        headerView.clipsToBounds = true
+        headerView.layer.cornerRadius = Constants.cornerRadius
+        headerView.layer.applyDefaultBinkShadow()
+        headerView.addSubview(brandHeaderImageView)
+        return headerView
+    }()
+    
+    lazy var brandHeaderImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.isUserInteractionEnabled = true
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = Constants.cornerRadius
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.applyDefaultBinkShadow()
         return imageView
     }()
     
@@ -192,22 +199,25 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         informationTableView.reloadData()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
         
-        guard let plan = viewModel.membershipCard.membershipPlan else { return }
-        if viewModel.isMembershipCardAuthorised {
-            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
-                // if not pll and we have a barcode - configure with barcode view
-            } else {
-                // if not pll and we don't have a barcode OR if brand is PLL - set image
-                brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
-            }
-        } else {
-            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
-                // if not pll and we have a barcode - configure with barcode view
-            } else {
-                // if not pll and we don't have a barcode OR if brand is PLL - set image
-                brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
-            }
-        }
+//        guard let plan = viewModel.membershipCard.membershipPlan else { return }
+//        if viewModel.isMembershipCardAuthorised {
+//            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
+//                // if not pll and we have a barcode - configure with barcode view
+//
+//            } else {
+//                // if not pll and we don't have a barcode OR if brand is PLL - set image
+//                brandHeader.addSubview(brandHeaderImageView)
+//                brandHeaderImageView.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
+//            }
+//        } else {
+//            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
+//                // if not pll and we have a barcode - configure with barcode view
+//            } else {
+//                // if not pll and we don't have a barcode OR if brand is PLL - set image
+//                brandHeader.addSubview(brandHeaderImageView)
+//                brandHeaderImageView.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
+//            }
+//        }
 
         let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
         if let voucherCells = plrVoucherCells as? [PLRBaseCollectionViewCell], let vouchers = viewModel.vouchers {
@@ -326,12 +336,24 @@ private extension LoyaltyCardFullDetailsViewController {
             let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeader.frame.size)
             brandHeader.backgroundColor = UIColor(patternImage: placeholder)
         }
-        if viewModel.isMembershipCardAuthorised {
-            brandHeader.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
-        } else {
-            brandHeader.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
-        }
         
+        if viewModel.isMembershipCardAuthorised {
+            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
+                // if not pll and we have a barcode - configure with barcode view
+                
+            } else {
+                // if not pll and we don't have a barcode OR if brand is PLL - set image
+                brandHeaderImageView.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
+            }
+        } else {
+            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
+                // if not pll and we have a barcode - configure with barcode view
+            } else {
+                // if not pll and we don't have a barcode OR if brand is PLL - set image
+                brandHeaderImageView.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
+            }
+        }
+
         configureSecondaryColorViewLayout()
     }
     
@@ -362,7 +384,9 @@ private extension LoyaltyCardFullDetailsViewController {
             modulesStackView.rightAnchor.constraint(equalTo: stackScrollView.rightAnchor, constant: -LayoutHelper.LoyaltyCardDetail.contentPadding),
             separator.heightAnchor.constraint(equalToConstant: CGFloat.onePointScaled()),
             separator.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
-            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor)
+            informationTableView.widthAnchor.constraint(equalTo: stackScrollView.widthAnchor),
+            brandHeaderImageView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor),
+            brandHeaderImageView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor)
         ])
     }
     

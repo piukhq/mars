@@ -56,7 +56,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeader.frame.size)
             brandHeader.backgroundColor = UIColor(patternImage: placeholder)
         }
-        brandHeader.image = lcdViewController.brandHeader.image
+        brandHeader.image = lcdViewController.brandHeaderImageView.image
         
         /// Secondary Card
         let secondaryCard = UIView()
