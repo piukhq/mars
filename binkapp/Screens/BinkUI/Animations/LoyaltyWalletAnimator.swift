@@ -41,22 +41,55 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         primaryCard.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
         primaryCard.alpha = 0
         
-        /// Brand Header
+        let barcodeView = UIView()
         let brandHeader = UIImageView()
-        brandHeader.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
-        brandHeader.clipsToBounds = true
-        brandHeader.contentMode = .scaleAspectFill
         let brandHeaderRect = CGRect(x: LayoutHelper.LoyaltyCardDetail.contentPadding, y: topBarHeight + LayoutHelper.PaymentCardDetail.stackScrollViewContentInsets.top, width: lcdViewController.brandHeader.frame.width, height: lcdViewController.brandHeader.frame.height)
-        brandHeader.frame = brandHeaderRect
-        brandHeader.alpha = 0
-        if let hexStringColor = membershipCard.card?.colour {
-            brandHeader.backgroundColor = UIColor(hexString: hexStringColor)
-            brandHeader.layoutIfNeeded()
-            let placeholderName = membershipPlan.account?.planNameCard ?? membershipPlan.account?.planName ?? ""
-            let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeader.frame.size)
-            brandHeader.backgroundColor = UIColor(patternImage: placeholder)
+
+        if lcdViewController.viewModel.shouldShowBarcode {
+            /// Barcode View
+            barcodeView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
+            barcodeView.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
+            barcodeView.frame = brandHeaderRect
+            barcodeView.alpha = 0
+            
+            let barcodeTypeIntValue = lcdViewController.viewModel.membershipCard.card?.barcodeType?.intValue ?? 0
+            let barcodeType = BarcodeType(rawValue: barcodeTypeIntValue) ?? .code128
+
+            switch barcodeType {
+            case .aztec, .qr:
+                let barcodeViewCompact: BarcodeViewCompact = .fromNib()
+                barcodeViewCompact.configure(membershipCard: lcdViewController.viewModel.membershipCard)
+                barcodeView.addSubview(barcodeViewCompact)
+                barcodeViewCompact.heightAnchor.constraint(equalTo: barcodeView.heightAnchor).isActive = true
+                barcodeViewCompact.widthAnchor.constraint(equalTo: barcodeView.widthAnchor).isActive = true
+                barcodeViewCompact.translatesAutoresizingMaskIntoConstraints = false
+                barcodeViewCompact.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
+            default:
+                let barcodeViewWide: BarcodeViewWide = .fromNib()
+                barcodeViewWide.configure(membershipCard: lcdViewController.viewModel.membershipCard)
+                barcodeView.addSubview(barcodeViewWide)
+                barcodeViewWide.heightAnchor.constraint(equalTo: barcodeView.heightAnchor).isActive = true
+                barcodeViewWide.widthAnchor.constraint(equalTo: barcodeView.widthAnchor).isActive = true
+                barcodeViewWide.translatesAutoresizingMaskIntoConstraints = false
+                barcodeViewWide.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
+            }
+        } else {
+            /// Brand Header
+            brandHeader.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
+            brandHeader.clipsToBounds = true
+            brandHeader.contentMode = .scaleAspectFill
+            brandHeader.frame = brandHeaderRect
+            brandHeader.alpha = 0
+            
+            if let hexStringColor = membershipCard.card?.colour {
+                brandHeader.backgroundColor = UIColor(hexString: hexStringColor)
+                brandHeader.layoutIfNeeded()
+                let placeholderName = membershipPlan.account?.planNameCard ?? membershipPlan.account?.planName ?? ""
+                let placeholder = LCDPlaceholderGenerator.generate(with: hexStringColor, planName: placeholderName, destSize: brandHeader.frame.size)
+                brandHeader.backgroundColor = UIColor(patternImage: placeholder)
+            }
+            brandHeader.image = lcdViewController.brandHeaderImageView.image
         }
-        brandHeader.image = lcdViewController.brandHeaderImageView.image
         
         /// Secondary Card
         let secondaryCard = UIView()
@@ -70,7 +103,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(lcdViewController.view)
         containerView.addSubview(loyaltyWalletViewController.view)
         containerView.addSubview(secondaryCard)
-        containerView.addSubview(brandHeader)
+        containerView.addSubview(lcdViewController.viewModel.shouldShowBarcode ? barcodeView : brandHeader)
         containerView.addSubview(primaryCard)
         
         /// Animations
@@ -96,6 +129,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             secondaryCard.frame = CGRect(x: -25, y: 0 - 5, width: lcdViewController.view.frame.width + 50, height: secondaryCardHeight)
             loyaltyWalletViewController.view.alpha = 0
             brandHeader.alpha = 1
+            barcodeView.alpha = 1
             lcdViewController.brandHeader.alpha = 1
         } completion: { _ in
             loyaltyWalletViewController.view.alpha = 1
@@ -103,6 +137,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             primaryCard.removeFromSuperview()
             secondaryCard.removeFromSuperview()
             brandHeader.removeFromSuperview()
+            barcodeView.removeFromSuperview()
             transitionContext.completeTransition(true)
         }
     }

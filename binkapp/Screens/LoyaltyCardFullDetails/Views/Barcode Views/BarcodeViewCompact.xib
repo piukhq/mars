@@ -19,7 +19,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="b4f-tC-okO" customClass="BarcodeViewWide" customModule="binkapp" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="b4f-tC-okO" customClass="BarcodeViewCompact" customModule="binkapp" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="346" height="182"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>

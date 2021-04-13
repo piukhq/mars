@@ -312,6 +312,7 @@
 		CEA16ED62624B0EE00D449E1 /* BarcodeViewWide.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */; };
 		CEA16EE02625879B00D449E1 /* BarcodeViewCompact.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */; };
 		CEA16EF526258C8E00D449E1 /* BarcodeViewWide.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA16EF426258C8E00D449E1 /* BarcodeViewWide.xib */; };
+		CEA16EFD2625B0F100D449E1 /* BarcodeViewCompact.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA16EFC2625B0F100D449E1 /* BarcodeViewCompact.swift */; };
 		CEA9057E25C81994000F69E1 /* BinkAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9057D25C81994000F69E1 /* BinkAlertController.swift */; };
 		CEA905BE25C986E6000F69E1 /* CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BC25C986E6000F69E1 /* CD_BaseImage.swift */; };
 		CEA905BF25C986E6000F69E1 /* _CD_BaseImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA905BD25C986E6000F69E1 /* _CD_BaseImage.swift */; };
@@ -876,6 +877,7 @@
 		CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewWide.swift; sourceTree = "<group>"; };
 		CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewCompact.xib; sourceTree = "<group>"; };
 		CEA16EF426258C8E00D449E1 /* BarcodeViewWide.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BarcodeViewWide.xib; sourceTree = "<group>"; };
+		CEA16EFC2625B0F100D449E1 /* BarcodeViewCompact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeViewCompact.swift; sourceTree = "<group>"; };
 		CEA9057D25C81994000F69E1 /* BinkAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinkAlertController.swift; sourceTree = "<group>"; };
 		CEA905B825C9859A000F69E1 /* binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "binkapp - 2-2-21 - Membership card image dark mode url .xcdatamodel"; sourceTree = "<group>"; };
 		CEA905BC25C986E6000F69E1 /* CD_BaseImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_BaseImage.swift; sourceTree = "<group>"; };
@@ -2190,6 +2192,7 @@
 				CEA16ED52624B0EE00D449E1 /* BarcodeViewWide.swift */,
 				CEA16EF426258C8E00D449E1 /* BarcodeViewWide.xib */,
 				CEA16EDF2625879B00D449E1 /* BarcodeViewCompact.xib */,
+				CEA16EFC2625B0F100D449E1 /* BarcodeViewCompact.swift */,
 			);
 			path = "Barcode Views";
 			sourceTree = "<group>";
@@ -3301,6 +3304,7 @@
 				70E39806256E8F4F009AD8CB /* BinkViewController.swift in Sources */,
 				EF4C4781246017C80056CE17 /* ZendeskService.swift in Sources */,
 				EF8BF1F9234147E000D2E5F3 /* LinkedCardResponse.swift in Sources */,
+				CEA16EFD2625B0F100D449E1 /* BarcodeViewCompact.swift in Sources */,
 				B7136629232690F7008A0ED7 /* PLLScreenViewModel.swift in Sources */,
 				DB088545234FD8A30041A67A /* PLLScreenRepository.swift in Sources */,
 				BD553CCF2332615900DA7D2A /* PaymentCardCreateRequest.swift in Sources */,

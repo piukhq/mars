@@ -338,7 +338,7 @@ private extension LoyaltyCardFullDetailsViewController {
         }
         
         if viewModel.isMembershipCardAuthorised {
-            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
+            if viewModel.shouldShowBarcode {
                 // if not pll and we have a barcode - configure with barcode view
                 
             } else {
@@ -346,8 +346,27 @@ private extension LoyaltyCardFullDetailsViewController {
                 brandHeaderImageView.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
             }
         } else {
-            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
+            if viewModel.shouldShowBarcode {
                 // if not pll and we have a barcode - configure with barcode view
+                let barcodeTypeIntValue = viewModel.membershipCard.card?.barcodeType?.intValue ?? 0
+                let barcodeType = BarcodeType(rawValue: barcodeTypeIntValue) ?? .code128
+                
+                switch barcodeType {
+                case .aztec, .qr:
+                    let barcodeViewCompact: BarcodeViewCompact = .fromNib()
+                    barcodeViewCompact.configure(membershipCard: viewModel.membershipCard)
+                    brandHeader.addSubview(barcodeViewCompact)
+                    barcodeViewCompact.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
+                    barcodeViewCompact.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
+                    barcodeViewCompact.translatesAutoresizingMaskIntoConstraints = false
+                default:
+                    let barcodeViewWide: BarcodeViewWide = .fromNib()
+                    barcodeViewWide.configure(membershipCard: viewModel.membershipCard)
+                    brandHeader.addSubview(barcodeViewWide)
+                    barcodeViewWide.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
+                    barcodeViewWide.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
+                    barcodeViewWide.translatesAutoresizingMaskIntoConstraints = false
+                }
             } else {
                 // if not pll and we don't have a barcode OR if brand is PLL - set image
                 brandHeaderImageView.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
