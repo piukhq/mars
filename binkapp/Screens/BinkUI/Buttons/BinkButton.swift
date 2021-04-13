@@ -38,7 +38,7 @@ class BinkButton {
     }
     
     deinit {
-        Current.themeManager.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     @objc func configureForCurrentTheme() {

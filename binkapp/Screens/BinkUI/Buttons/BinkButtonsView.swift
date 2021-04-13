@@ -52,7 +52,7 @@ class BinkButtonsView: UIStackView {
     }
 
     deinit {
-        Current.themeManager.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func layoutSubviews() {

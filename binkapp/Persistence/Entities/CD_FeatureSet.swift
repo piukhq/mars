@@ -2,12 +2,17 @@ import Foundation
 
 @objc(CD_FeatureSet)
 open class CD_FeatureSet: _CD_FeatureSet {
-	// Custom logic goes here.
+    // Custom logic goes here.
     
     enum PlanCardType: Int {
         case store
         case view
         case link
+        
+        var walletPromptSectionIndex: Int? {
+            let order: [PlanCardType] = [.link, .view, .store]
+            return order.firstIndex(of: self)
+        }
     }
     
     var planCardType: PlanCardType? {

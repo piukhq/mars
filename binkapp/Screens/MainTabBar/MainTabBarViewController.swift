@@ -31,15 +31,13 @@ class MainTabBarViewController: UITabBarController {
     }
 
     deinit {
-        Current.themeManager.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         Current.wallet.launch()
-        
-        self.title = "" // TODO: Why? Remove.
         populateTabBar()
 
         configureForCurrentTheme()
@@ -63,8 +61,8 @@ class MainTabBarViewController: UITabBarController {
 
 extension MainTabBarViewController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if viewController is AddingOptionsTabBarViewController {
-            viewModel.toAddingOptionsScreen()
+        if viewController is BrowseBrandsViewController {
+            viewModel.toBrowseBrandsScreen()
             return false
         }
         
@@ -93,6 +91,9 @@ extension MainTabBarViewController: BarcodeScannerViewControllerDelegate, ScanDe
     }
     
     func userDidScanCard(_ scanViewController: ScanViewController, creditCard: CreditCard) {
+        if #available(iOS 14.0, *) {
+            BinkLogger.infoPrivateHash(event: AppLoggerEvent.paymentCardScanned, value: creditCard.number)
+        }
         BinkAnalytics.track(GenericAnalyticsEvent.paymentScan(success: true))
         let month = creditCard.expiryMonthInteger()
         let year = creditCard.expiryYearInteger()

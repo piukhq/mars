@@ -9,16 +9,6 @@
 import UIKit
 
 class OnboardingViewModel {
-    private let fallbackUserEmail = "Bink20iteration1@testbink.com"
-
-    private var userEmail: String {
-        guard let userEmail = Current.userDefaults.string(forDefaultsKey: .userEmail) else {
-            Current.userDefaults.set(fallbackUserEmail, forDefaultsKey: .userEmail)
-            return fallbackUserEmail
-        }
-        return userEmail
-    }
-
     var signUpWithEmailButtonText: String {
         return "signup_with_email_button".localized
     }

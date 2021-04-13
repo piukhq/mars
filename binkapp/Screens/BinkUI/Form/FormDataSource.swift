@@ -555,7 +555,7 @@ extension FormDataSource {
             let offersRange = baseMarketing.range(of: "preferences_prompt_highlight_offers".localized)
             let updatesRange = baseMarketing.range(of: "preferences_prompt_highlight_updates".localized)
             
-            let attributes: [NSAttributedString.Key: Any]  = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "NunitoSans-ExtraBold", size: 14.0) ?? UIFont()]
             
             attributedMarketing.addAttributes(attributes, range: rewardsRange)
             attributedMarketing.addAttributes(attributes, range: offersRange)

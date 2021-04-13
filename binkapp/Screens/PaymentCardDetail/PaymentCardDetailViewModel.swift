@@ -275,6 +275,9 @@ class PaymentCardDetailViewModel {
                 return
             }
             self.repository.delete(self.paymentCard) {
+                if #available(iOS 14.0, *) {
+                    BinkLogger.infoPrivateHash(event: PaymentCardLoggerEvent.paymentCardDeleted, value: self.paymentCard.id)
+                }
                 Current.wallet.refreshLocal()
                 Current.navigate.back()
             }

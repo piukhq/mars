@@ -10,19 +10,15 @@ import UIKit
 import CardScan
 
 enum ViewControllerFactory {
-    // MARK: - Adding Options
-    
-    static func makeAddingOptionsViewController() -> AddingOptionsViewController {
-        return AddingOptionsViewController(viewModel: AddingOptionsViewModel())
-    }
+    // MARK: - Adding Cards
     
     static func makeLoyaltyScannerViewController(forPlan plan: CD_MembershipPlan? = nil, delegate: BarcodeScannerViewControllerDelegate?) -> BarcodeScannerViewController {
         let viewModel = BarcodeScannerViewModel(plan: plan)
         return BarcodeScannerViewController(viewModel: viewModel, delegate: delegate)
     }
     
-    static func makeBrowseBrandsViewController() -> BrowseBrandsViewController {
-        return BrowseBrandsViewController(viewModel: BrowseBrandsViewModel())
+    static func makeBrowseBrandsViewController(section: Int? = nil) -> BrowseBrandsViewController {
+        return BrowseBrandsViewController(viewModel: BrowseBrandsViewModel(), section: section)
     }
     
     static func makePaymentCardScannerViewController(strings: ScanStringsDataSource, allowSkip: Bool = true, delegate: ScanDelegate?) -> ScanViewController? {

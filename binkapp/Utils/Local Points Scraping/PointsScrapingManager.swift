@@ -52,13 +52,16 @@ class PointsScrapingManager {
     private let keychain = Keychain(service: APIConstants.bundleID)
 
     private var webScrapingUtility: WebScrapingUtility?
+    
     var isRunning: Bool {
-        return webScrapingUtility != nil
+        return webScrapingUtility?.isRunning ?? false
     }
     
     private var isMasterEnabled: Bool {
         return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionMasterEnabled)
     }
+    
+    var isDebugMode = false
     
     let agents: [WebScrapable] = [
         TescoScrapingAgent(),
@@ -69,6 +72,10 @@ class PointsScrapingManager {
         PerfumeShopScrapingAgent(),
         WaterstonesScrapingAgent()
     ]
+    
+    func start() {
+        webScrapingUtility = WebScrapingUtility(delegate: self)
+    }
     
     // MARK: - Credentials handling
     
@@ -129,10 +136,9 @@ class PointsScrapingManager {
             throw PointsScrapingManagerError.failedToGetAgentForMembershipPlan
         }
 
-        webScrapingUtility = WebScrapingUtility(agent: agent, membershipCard: membershipCard, delegate: self)
         do {
             try storeCredentials(credentials, forMembershipCardId: membershipCard.id)
-            try webScrapingUtility?.start()
+            try webScrapingUtility?.start(agent: agent, membershipCard: membershipCard)
         } catch {
             self.transitionToFailed(membershipCard: membershipCard)
         }
@@ -140,7 +146,6 @@ class PointsScrapingManager {
     
     func disableLocalPointsScraping(forMembershipCardId cardId: String) {
         removeCredentials(forMembershipCardId: cardId)
-        Current.userDefaults.set(nil, forDefaultsKey: .webScrapingCookies(membershipCardId: cardId))
     }
     
     private func canEnableLocalPointsScrapingForCard(withRequest request: MembershipCardPostModel) -> Bool {
@@ -187,17 +192,15 @@ class PointsScrapingManager {
         guard agentEnabled(agent) else { return }
         
         DispatchQueue.main.async {
-            self.webScrapingUtility = WebScrapingUtility(agent: agent, membershipCard: membershipCard, delegate: self)
-            
             do {
-                try self.webScrapingUtility?.start()
+                try self.webScrapingUtility?.start(agent: agent, membershipCard: membershipCard)
             } catch {
                 self.transitionToFailed(membershipCard: membershipCard)
             }
         }
     }
     
-    private func agentEnabled(_ agent: WebScrapable) -> Bool {
+    func agentEnabled(_ agent: WebScrapable) -> Bool {
         return Current.remoteConfig.boolValueForConfigKey(.localPointsCollectionAgentEnabled(agent))
     }
     
@@ -231,13 +234,16 @@ class PointsScrapingManager {
     }
     
     private func pointsScrapingDidComplete() {
-        webScrapingUtility = nil
         NotificationCenter.default.post(name: .webScrapingUtilityDidComplete, object: nil)
         refreshNextBalanceIfNecessary()
     }
 
     func isCurrentlyScraping(forMembershipCard card: CD_MembershipCard) -> Bool {
         return webScrapingUtility?.isCurrentlyScraping(forMembershipCard: card) == true
+    }
+    
+    func debug() {
+        webScrapingUtility?.debug()
     }
 }
 
@@ -297,7 +303,7 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
     }
     
     func transitionToFailed(membershipCard: CD_MembershipCard) {
-        Current.userDefaults.set(nil, forDefaultsKey: .webScrapingCookies(membershipCardId: membershipCard.id))
+        removeCredentials(forMembershipCardId: membershipCard.id)
         
         fetchMembershipCard(forId: membershipCard.id) { membershipCard in
             guard let membershipCard = membershipCard else {
@@ -306,6 +312,13 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
             Current.database.performBackgroundTask(with: membershipCard) { (backgroundContext, safeObject) in
                 guard let membershipCard = safeObject else {
                     fatalError("We should never get here. Core data didn't return us an object, why not?")
+                }
+                
+                // Remove balance objects
+                if let balances = membershipCard.formattedBalances {
+                    for balance in balances {
+                        membershipCard.removeBalancesObject(balance)
+                    }
                 }
                 
                 // Set card status to failed
@@ -328,15 +341,21 @@ extension PointsScrapingManager: CoreDataRepositoryProtocol {
 
 extension PointsScrapingManager: WebScrapingUtilityDelegate {
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithValue value: Int, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
+        if #available(iOS 14.0, *) {
+            BinkLogger.infoPrivateHash(event: WalletLoggerEvent.pointsScrapingSuccess, value: card.id)
+        }
         transitionToAuthorized(pointsValue: value, membershipCard: card, agent: agent)
     }
     
     func webScrapingUtility(_ utility: WebScrapingUtility, didCompleteWithError error: WebScrapingUtilityError, forMembershipCard card: CD_MembershipCard, withAgent agent: WebScrapable) {
         switch error {
-        case .loginFailed:
+        case .incorrectCredentials:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionCredentialFailure(membershipCard: card, error: error))
         default:
             BinkAnalytics.track(LocalPointsCollectionEvent.localPointsCollectionInternalFailure(membershipCard: card, error: error))
+        }
+        if #available(iOS 14.0, *) {
+            BinkLogger.error(WalletLoggerError.pointsScrapingFailure, value: error.message)
         }
         transitionToFailed(membershipCard: card)
     }

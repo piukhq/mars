@@ -30,9 +30,9 @@ struct TescoScrapingAgent: WebScrapable {
         return "points"
     }
     
-    var loginUrlString: String {
-        return "https://secure.tesco.com/account/en-GB/login?from=https://secure.tesco.com/Clubcard/MyAccount/home/Home"
-    }
+//    var loginUrlString: String {
+//        return "https://secure.tesco.com/account/en-GB/login?from=https://secure.tesco.com/Clubcard/MyAccount/home/Home"
+//    }
 
     var scrapableUrlString: String {
         return "https://secure.tesco.com/Clubcard/MyAccount/home/Home"
