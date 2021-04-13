@@ -74,6 +74,10 @@ class LoyaltyCardFullDetailsViewModel {
     var hasBarcode: Bool {
         return membershipCard.card?.barcode != nil
     }
+    
+    var shouldShowBarcode: Bool {
+        return !(membershipCard.membershipPlan?.featureSet?.planCardType == .link) && hasBarcode
+    }
         
     // MARK: - Public methods
     
