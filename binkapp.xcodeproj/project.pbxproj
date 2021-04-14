@@ -194,6 +194,11 @@
 		70F7EC2625CAF950005DE935 /* WebScrapingUtilityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2525CAF950005DE935 /* WebScrapingUtilityError.swift */; };
 		70F7EC2B25CAF97A005DE935 /* WebScrapingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */; };
 		70F7EC3025CAF9A2005DE935 /* WebScrapingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */; };
+		70F7F71C26271B1F00821018 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F7F71B26271B1F00821018 /* WidgetKit.framework */; };
+		70F7F71E26271B1F00821018 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F7F71D26271B1F00821018 /* SwiftUI.framework */; };
+		70F7F72126271B1F00821018 /* PLR_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F7F72026271B1F00821018 /* PLR_Widget.swift */; };
+		70F7F72326271B2600821018 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70F7F72226271B2600821018 /* Assets.xcassets */; };
+		70F7F72726271B2600821018 /* PLR WidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 70F7F71A26271B1F00821018 /* PLR WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9686E5CB25D1427D00CE87B1 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 9686E5CA25D1427D00CE87B1 /* FacebookLogin */; };
 		9686E5CD25D1427D00CE87B1 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9686E5CC25D1427D00CE87B1 /* FacebookCore */; };
 		96F22E002507C5AC0009951B /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 96F22DFF2507C5AC0009951B /* Sentry */; };
@@ -534,9 +539,27 @@
 			remoteGlobalIDString = 5ECE046722CE5798001BA964;
 			remoteInfo = binkapp;
 		};
+		70F7F72526271B2600821018 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ECE046022CE5797001BA964 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 70F7F71926271B1F00821018;
+			remoteInfo = "PLR WidgetExtension";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		70F7F72826271B2600821018 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				70F7F72726271B2600821018 /* PLR WidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BDA4EE9A2320508500A99CB1 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -748,6 +771,12 @@
 		70F7EC2525CAF950005DE935 /* WebScrapingUtilityError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingUtilityError.swift; sourceTree = "<group>"; };
 		70F7EC2A25CAF97A005DE935 /* WebScrapingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingViewController.swift; sourceTree = "<group>"; };
 		70F7EC2F25CAF9A2005DE935 /* WebScrapingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebScrapingResponse.swift; sourceTree = "<group>"; };
+		70F7F71A26271B1F00821018 /* PLR WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "PLR WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		70F7F71B26271B1F00821018 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		70F7F71D26271B1F00821018 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		70F7F72026271B1F00821018 /* PLR_Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLR_Widget.swift; sourceTree = "<group>"; };
+		70F7F72226271B2600821018 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		70F7F72426271B2600821018 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		782FD7EAEC7253B4F80C33EF /* Pods-binkappTests.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.beta.xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.beta.xcconfig"; sourceTree = "<group>"; };
 		96F22E012508B6060009951B /* SentryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryService.swift; sourceTree = "<group>"; };
 		9AF638C55EA3C2FE09150516 /* Pods-binkappTests.app store (internal).xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-binkappTests.app store (internal).xcconfig"; path = "Target Support Files/Pods-binkappTests/Pods-binkappTests.app store (internal).xcconfig"; sourceTree = "<group>"; };
@@ -1115,6 +1144,15 @@
 			files = (
 				CE4A624925714EAE003271F6 /* Sentry in Frameworks */,
 				CB92D023BF75D98DF0B2550E /* Pods_binkappUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70F7F71726271B1F00821018 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70F7F71E26271B1F00821018 /* SwiftUI.framework in Frameworks */,
+				70F7F71C26271B1F00821018 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1495,6 +1533,8 @@
 				4BF7651BEBD7E19F9F7391DE /* Pods_binkapp.framework */,
 				352CBEDF33DDEB7B603C909B /* Pods_binkappTests.framework */,
 				0578BBF342AD2E4F349D1822 /* Pods_binkappUITests.framework */,
+				70F7F71B26271B1F00821018 /* WidgetKit.framework */,
+				70F7F71D26271B1F00821018 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1531,6 +1571,7 @@
 				5ECE048222CE579B001BA964 /* binkappTests */,
 				5ECE048D22CE579B001BA964 /* binkappUITests */,
 				BD3CB94223285716005C37AE /* Configuration */,
+				70F7F71F26271B1F00821018 /* PLR Widget */,
 				492DA371EDF911EDB1A625BF /* Frameworks */,
 				55D2E5494D854AAC5EFAFFC7 /* Pods */,
 				B766599D2321461D00B327BE /* Recovered References */,
@@ -1543,6 +1584,7 @@
 				5ECE046822CE5798001BA964 /* Bink α.app */,
 				5ECE047F22CE579B001BA964 /* binkappTests.xctest */,
 				5ECE048A22CE579B001BA964 /* binkappUITests.xctest */,
+				70F7F71A26271B1F00821018 /* PLR WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1862,6 +1904,16 @@
 				700900D625C1DB7500548F50 /* LocalPointsCollection_DetectElement.js */,
 			);
 			path = Scripts;
+			sourceTree = "<group>";
+		};
+		70F7F71F26271B1F00821018 /* PLR Widget */ = {
+			isa = PBXGroup;
+			children = (
+				70F7F72026271B1F00821018 /* PLR_Widget.swift */,
+				70F7F72226271B2600821018 /* Assets.xcassets */,
+				70F7F72426271B2600821018 /* Info.plist */,
+			);
+			path = "PLR Widget";
 			sourceTree = "<group>";
 		};
 		AF06D86448D661A8F4142F87 /* Persistence */ = {
@@ -2803,10 +2855,12 @@
 				BDA4EE9B2320ED4D00A99CB1 /* ShellScript */,
 				70FFDD07253F1A58004EF1F1 /* Swift Lint */,
 				E9C9355DDE6B8A796F5CDFF8 /* [CP] Embed Pods Frameworks */,
+				70F7F72826271B2600821018 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				70F7F72626271B2600821018 /* PBXTargetDependency */,
 			);
 			name = binkapp;
 			packageProductDependencies = (
@@ -2861,13 +2915,30 @@
 			productReference = 5ECE048A22CE579B001BA964 /* binkappUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		70F7F71926271B1F00821018 /* PLR WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70F7F72D26271B2600821018 /* Build configuration list for PBXNativeTarget "PLR WidgetExtension" */;
+			buildPhases = (
+				70F7F71626271B1F00821018 /* Sources */,
+				70F7F71726271B1F00821018 /* Frameworks */,
+				70F7F71826271B1F00821018 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PLR WidgetExtension";
+			productName = "PLR WidgetExtension";
+			productReference = 70F7F71A26271B1F00821018 /* PLR WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		5ECE046022CE5797001BA964 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Bink;
 				TargetAttributes = {
@@ -2882,6 +2953,9 @@
 					5ECE048922CE579B001BA964 = {
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = 5ECE046722CE5798001BA964;
+					};
+					70F7F71926271B1F00821018 = {
+						CreatedOnToolsVersion = 12.4;
 					};
 					EF45F71D2322570F00DA6A29 = {
 						CreatedOnToolsVersion = 10.3;
@@ -2909,6 +2983,7 @@
 				5ECE047E22CE579B001BA964 /* binkappTests */,
 				5ECE048922CE579B001BA964 /* binkappUITests */,
 				EF45F71D2322570F00DA6A29 /* mogenerator */,
+				70F7F71926271B1F00821018 /* PLR WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -3025,6 +3100,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70F7F71826271B1F00821018 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70F7F72326271B2600821018 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3621,6 +3704,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		70F7F71626271B1F00821018 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70F7F72126271B1F00821018 /* PLR_Widget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -3633,6 +3724,11 @@
 			isa = PBXTargetDependency;
 			target = 5ECE046722CE5798001BA964 /* binkapp */;
 			targetProxy = 5ECE048B22CE579B001BA964 /* PBXContainerItemProxy */;
+		};
+		70F7F72626271B2600821018 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 70F7F71926271B1F00821018 /* PLR WidgetExtension */;
+			targetProxy = 70F7F72526271B2600821018 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3789,6 +3885,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E708C17C8E9A69A07732E058 /* Pods-binkapp.alpha.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Alpha";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
@@ -3823,6 +3920,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2211289D0FB0F1A14BC9E957 /* Pods-binkapp.beta.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
@@ -4029,6 +4127,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48E817B386298CDCB07B08F6 /* Pods-binkapp.app store.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
@@ -4176,6 +4275,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 67B8D6E0B8AB406C5DE33137 /* Pods-binkapp.app store (internal).xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "binkapp/Bink α.entitlements";
@@ -4257,6 +4357,301 @@
 			};
 			name = "App Store (Internal)";
 		};
+		70F7F72926271B2600821018 /* Alpha */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "PLR Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bink.wallet.alpha.PLR-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Alpha;
+		};
+		70F7F72A26271B2600821018 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "PLR Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bink.wallet.alpha.PLR-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
+		};
+		70F7F72B26271B2600821018 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "PLR Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bink.wallet.alpha.PLR-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
+		70F7F72C26271B2600821018 /* App Store (Internal) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "PLR Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bink.wallet.alpha.PLR-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store (Internal)";
+		};
 		EF45F71E2322570F00DA6A29 /* Alpha */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4332,6 +4727,17 @@
 				5ECE049B22CE579B001BA964 /* Beta */,
 				5EFB27E92306A81D0046A2BF /* App Store */,
 				5EFB27F12306A8F90046A2BF /* App Store (Internal) */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "App Store";
+		};
+		70F7F72D26271B2600821018 /* Build configuration list for PBXNativeTarget "PLR WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70F7F72926271B2600821018 /* Alpha */,
+				70F7F72A26271B2600821018 /* Beta */,
+				70F7F72B26271B2600821018 /* App Store */,
+				70F7F72C26271B2600821018 /* App Store (Internal) */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "App Store";
