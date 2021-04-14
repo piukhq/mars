@@ -255,8 +255,7 @@ private extension LoyaltyCardFullDetailsViewController {
         stackScrollView.add(arrangedSubview: brandHeaderBarcodeButtonPadding)
         
         if viewModel.membershipCard.card?.barcode != nil || viewModel.membershipCard.card?.membershipId != nil {
-            let buttonTitle = viewModel.hasBarcode ? "details_header_show_barcode".localized : "details_header_show_card_number".localized
-            showBarcodeButton.setTitle(buttonTitle, for: .normal)
+            showBarcodeButton.setTitle(viewModel.barcodeButtonTitle, for: .normal)
             stackScrollView.add(arrangedSubview: showBarcodeButton)
             let gestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(showBarcodeButtonPressed))
             brandHeader.addGestureRecognizer(gestureRecogniser)
@@ -304,7 +303,6 @@ private extension LoyaltyCardFullDetailsViewController {
         }
         
         stackScrollView.add(arrangedSubview: separator)
-        
         stackScrollView.add(arrangedSubview: informationTableView)
         
         configureLayout()
@@ -336,11 +334,8 @@ private extension LoyaltyCardFullDetailsViewController {
         }
     }
     
-    private func configureBarcodeViewForBrandHeader() {
-        let barcodeTypeIntValue = viewModel.membershipCard.card?.barcodeType?.intValue ?? 0
-        let barcodeType = BarcodeType(rawValue: barcodeTypeIntValue) ?? .code128
-        
-        switch barcodeType {
+    private func configureBarcodeViewForBrandHeader() {        
+        switch viewModel.barcodeViewModel.barcodeType {
         case .aztec, .qr:
             let barcodeView: BarcodeViewCompact = .fromNib()
             barcodeView.translatesAutoresizingMaskIntoConstraints = false

@@ -66,7 +66,7 @@ class BarcodeViewModel {
     }
     
     var isBarcodeAvailable: Bool {
-        return ((membershipCard.card?.barcode) != nil)
+        return membershipCard.card?.barcode != nil
     }
     
     var isCardNumberAvailable: Bool {
