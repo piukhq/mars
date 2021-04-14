@@ -57,7 +57,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             switch barcodeType {
             case .aztec, .qr:
                 let barcodeViewCompact: BarcodeViewCompact = .fromNib()
-                barcodeViewCompact.configure(membershipCard: lcdViewController.viewModel.membershipCard)
+                barcodeViewCompact.configure(viewModel: lcdViewController.viewModel)
                 barcodeView.addSubview(barcodeViewCompact)
                 barcodeViewCompact.heightAnchor.constraint(equalTo: barcodeView.heightAnchor).isActive = true
                 barcodeViewCompact.widthAnchor.constraint(equalTo: barcodeView.widthAnchor).isActive = true
@@ -65,7 +65,7 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 barcodeViewCompact.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
             default:
                 let barcodeViewWide: BarcodeViewWide = .fromNib()
-                barcodeViewWide.configure(membershipCard: lcdViewController.viewModel.membershipCard)
+                barcodeViewWide.configure(viewModel: lcdViewController.viewModel)
                 barcodeView.addSubview(barcodeViewWide)
                 barcodeViewWide.heightAnchor.constraint(equalTo: barcodeView.heightAnchor).isActive = true
                 barcodeViewWide.widthAnchor.constraint(equalTo: barcodeView.widthAnchor).isActive = true

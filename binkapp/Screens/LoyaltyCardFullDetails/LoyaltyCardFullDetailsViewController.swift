@@ -343,14 +343,14 @@ private extension LoyaltyCardFullDetailsViewController {
             barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
             barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
             
-            barcodeView.configure(membershipCard: viewModel.membershipCard)
+            barcodeView.configure(viewModel: viewModel)
         default:
             let barcodeView: BarcodeViewWide = .fromNib()
             barcodeView.translatesAutoresizingMaskIntoConstraints = false
             brandHeader.addSubview(barcodeView)
             barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
             barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
-            barcodeView.configure(membershipCard: viewModel.membershipCard)
+            barcodeView.configure(viewModel: viewModel)
         }
     }
     

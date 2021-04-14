@@ -6,18 +6,15 @@
 //  Copyright © 2021 Bink. All rights reserved.
 //
 
-import UIKit
-
 class BarcodeViewWide: BarcodeView {
-    func configure(membershipCard: CD_MembershipCard) {
-        let viewModel = BarcodeViewModel(membershipCard: membershipCard)
-        cardNumberLabel.text = viewModel.cardNumber
+    func configure(viewModel: LoyaltyCardFullDetailsViewModel) {
+        cardNumberLabel.text = viewModel.barcodeViewModel.cardNumber
         
-        if let plan = membershipCard.membershipPlan {
+        if let plan = viewModel.membershipCard.membershipPlan {
             iconImageView.setImage(forPathType: .membershipPlanIcon(plan: plan))
         }
         
-        if let barcodeImage = viewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
+        if let barcodeImage = viewModel.barcodeViewModel.barcodeImage(withSize: barcodeImageView.frame.size) {
             barcodeImageView.image = barcodeImage
         }
     }
