@@ -50,6 +50,24 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return imageView
     }()
     
+    lazy var barcodeViewCompact: BarcodeViewCompact = {
+        let barcodeView: BarcodeViewCompact = .fromNib()
+        barcodeView.translatesAutoresizingMaskIntoConstraints = false
+        brandHeader.addSubview(barcodeView)
+        barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
+        barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
+        return barcodeView
+    }()
+    
+    lazy var barcodeViewWide: BarcodeViewWide = {
+        let barcodeView: BarcodeViewWide = .fromNib()
+        barcodeView.translatesAutoresizingMaskIntoConstraints = false
+        brandHeader.addSubview(barcodeView)
+        barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
+        barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
+        return barcodeView
+    }()
+    
     lazy var secondaryColorView: UIView = {
         let secondaryColorView = UIView()
         secondaryColorView.translatesAutoresizingMaskIntoConstraints = false
@@ -354,27 +372,15 @@ private extension LoyaltyCardFullDetailsViewController {
         configureSecondaryColorViewLayout()
     }
     
-    
-    
     private func configureBarcodeViewForBrandHeader() {
         let barcodeTypeIntValue = viewModel.membershipCard.card?.barcodeType?.intValue ?? 0
         let barcodeType = BarcodeType(rawValue: barcodeTypeIntValue) ?? .code128
         
         switch barcodeType {
         case .aztec, .qr:
-            let barcodeViewCompact: BarcodeViewCompact = .fromNib()
             barcodeViewCompact.configure(membershipCard: viewModel.membershipCard)
-            brandHeader.addSubview(barcodeViewCompact)
-            barcodeViewCompact.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
-            barcodeViewCompact.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
-            barcodeViewCompact.translatesAutoresizingMaskIntoConstraints = false
         default:
-            let barcodeViewWide: BarcodeViewWide = .fromNib()
             barcodeViewWide.configure(membershipCard: viewModel.membershipCard)
-            brandHeader.addSubview(barcodeViewWide)
-            barcodeViewWide.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
-            barcodeViewWide.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
-            barcodeViewWide.translatesAutoresizingMaskIntoConstraints = false
         }
     }
     
