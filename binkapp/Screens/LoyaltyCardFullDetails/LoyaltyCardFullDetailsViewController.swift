@@ -338,7 +338,7 @@ private extension LoyaltyCardFullDetailsViewController {
         }
     }
     
-    private func configureBarcodeViewForBrandHeader() {        
+    private func configureBarcodeViewForBrandHeader() {
         switch viewModel.barcodeViewModel.barcodeType {
         case .aztec, .qr:
             let barcodeView: BarcodeViewCompact = .fromNib()
@@ -346,7 +346,6 @@ private extension LoyaltyCardFullDetailsViewController {
             brandHeader.addSubview(barcodeView)
             barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
             barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
-            
             barcodeView.configure(viewModel: viewModel)
         default:
             let barcodeView: BarcodeViewWide = .fromNib()

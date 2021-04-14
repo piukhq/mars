@@ -22,7 +22,7 @@ class LoyaltyCardFullDetailsViewModel {
         return membershipCard.status?.status == .authorised
     }
     
-    var barcodeViewModel : BarcodeViewModel {
+    var barcodeViewModel: BarcodeViewModel {
         return BarcodeViewModel(membershipCard: membershipCard)
     }
     
@@ -75,12 +75,8 @@ class LoyaltyCardFullDetailsViewModel {
         return !(secondaryColor?.isLight() ?? false)
     }
     
-//    var hasBarcode: Bool {
-//        return membershipCard.card?.barcode != nil
-//    }
-    
     var shouldShowBarcode: Bool {
-        return !(membershipCard.membershipPlan?.featureSet?.planCardType == .link) && barcodeViewModel.isBarcodeAvailable
+        return !(membershipCard.membershipPlan?.featureSet?.planCardType == .link) && barcodeViewModel.isBarcodeAvailable && barcodeViewModel.barcodeImage(withSize: .zero) != nil
     }
     
     var barcodeButtonTitle: String {
@@ -95,7 +91,6 @@ class LoyaltyCardFullDetailsViewModel {
             }
         }
 
-//        let buttonTitle = barcodeViewModel.isBarcodeAvailable ? "details_header_show_barcode".localized :
         return buttonTitle
     }
         
