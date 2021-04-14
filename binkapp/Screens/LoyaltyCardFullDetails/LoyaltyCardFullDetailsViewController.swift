@@ -36,9 +36,11 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
     lazy var brandHeader: UIView = {
         let headerView = UIView()
         headerView.isUserInteractionEnabled = true
-        headerView.clipsToBounds = true
         headerView.layer.cornerRadius = Constants.cornerRadius
+        headerView.clipsToBounds = false
         headerView.layer.applyDefaultBinkShadow()
+        headerView.layer.shouldRasterize = true
+        headerView.layer.rasterizationScale = UIScreen.main.scale
         headerView.addSubview(brandHeaderImageView)
         return headerView
     }()
@@ -47,6 +49,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = Constants.cornerRadius
+        imageView.clipsToBounds = true
         return imageView
     }()
     

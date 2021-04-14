@@ -16,6 +16,8 @@ class BarcodeView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        layer.cornerRadius = 12
+        clipsToBounds = true
         backgroundColor = Current.themeManager.color(for: .walletCardBackground)
         titleLabel.textColor = Current.themeManager.color(for: .text)
         cardNumberLabel.textColor = Current.themeManager.color(for: .text)
