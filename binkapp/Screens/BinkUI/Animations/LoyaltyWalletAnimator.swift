@@ -47,7 +47,6 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         if lcdViewController.viewModel.shouldShowBarcode {
             /// Barcode View
-            barcodeView.backgroundColor = Current.themeManager.color(for: .walletCardBackground)
             barcodeView.layer.cornerRadius = LayoutHelper.RectangleView.cornerRadius
             barcodeView.frame = brandHeaderRect
             barcodeView.alpha = 0

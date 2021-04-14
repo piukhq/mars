@@ -50,24 +50,6 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         return imageView
     }()
     
-    lazy var barcodeViewCompact: BarcodeViewCompact = {
-        let barcodeView: BarcodeViewCompact = .fromNib()
-        barcodeView.translatesAutoresizingMaskIntoConstraints = false
-        brandHeader.addSubview(barcodeView)
-        barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
-        barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
-        return barcodeView
-    }()
-    
-    lazy var barcodeViewWide: BarcodeViewWide = {
-        let barcodeView: BarcodeViewWide = .fromNib()
-        barcodeView.translatesAutoresizingMaskIntoConstraints = false
-        brandHeader.addSubview(barcodeView)
-        barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
-        barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
-        return barcodeView
-    }()
-    
     lazy var secondaryColorView: UIView = {
         let secondaryColorView = UIView()
         secondaryColorView.translatesAutoresizingMaskIntoConstraints = false
@@ -217,25 +199,8 @@ class LoyaltyCardFullDetailsViewController: BinkViewController, InAppReviewable 
         informationTableView.reloadData()
         titleView.configureWithTitle(viewModel.brandName, detail: viewModel.pointsValueText)
         
-//        guard let plan = viewModel.membershipCard.membershipPlan else { return }
-//        if viewModel.isMembershipCardAuthorised {
-//            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
-//                // if not pll and we have a barcode - configure with barcode view
-//
-//            } else {
-//                // if not pll and we don't have a barcode OR if brand is PLL - set image
-//                brandHeader.addSubview(brandHeaderImageView)
-//                brandHeaderImageView.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
-//            }
-//        } else {
-//            if !(viewModel.membershipCard.membershipPlan?.featureSet?.planCardType == .link) && viewModel.hasBarcode {
-//                // if not pll and we have a barcode - configure with barcode view
-//            } else {
-//                // if not pll and we don't have a barcode OR if brand is PLL - set image
-//                brandHeader.addSubview(brandHeaderImageView)
-//                brandHeaderImageView.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
-//            }
-//        }
+        guard let plan = viewModel.membershipCard.membershipPlan else { return }
+        configureBrandHeader(with: plan)
 
         let plrVoucherCells = stackScrollView.arrangedSubviews.filter { $0.isKind(of: PLRBaseCollectionViewCell.self) }
         if let voucherCells = plrVoucherCells as? [PLRBaseCollectionViewCell], let vouchers = viewModel.vouchers {
@@ -355,21 +320,20 @@ private extension LoyaltyCardFullDetailsViewController {
             brandHeader.backgroundColor = UIColor(patternImage: placeholder)
         }
         
-        if viewModel.isMembershipCardAuthorised {
-            if viewModel.shouldShowBarcode {
-                configureBarcodeViewForBrandHeader()
-            } else {
-                brandHeaderImageView.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
-            }
-        } else {
-            if viewModel.shouldShowBarcode {
-                configureBarcodeViewForBrandHeader()
-            } else {
-                brandHeaderImageView.setImage(forPathType: .membershipPlanHero(plan: plan), animated: true)
-            }
-        }
-
+        configureBrandHeader(with: plan)
+        
         configureSecondaryColorViewLayout()
+    }
+    
+    private func configureBrandHeader(with membershipPlan: CD_MembershipPlan) {
+        switch (viewModel.isMembershipCardAuthorised, viewModel.shouldShowBarcode) {
+        case (true, true), (false, true):
+            configureBarcodeViewForBrandHeader()
+        case (true, false):
+            brandHeaderImageView.setImage(forPathType: .membershipPlanTier(card: viewModel.membershipCard), animated: true)
+        case (false, false):
+            brandHeaderImageView.setImage(forPathType: .membershipPlanHero(plan: membershipPlan), animated: true)
+        }
     }
     
     private func configureBarcodeViewForBrandHeader() {
@@ -378,9 +342,20 @@ private extension LoyaltyCardFullDetailsViewController {
         
         switch barcodeType {
         case .aztec, .qr:
-            barcodeViewCompact.configure(membershipCard: viewModel.membershipCard)
+            let barcodeView: BarcodeViewCompact = .fromNib()
+            barcodeView.translatesAutoresizingMaskIntoConstraints = false
+            brandHeader.addSubview(barcodeView)
+            barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
+            barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
+            
+            barcodeView.configure(membershipCard: viewModel.membershipCard)
         default:
-            barcodeViewWide.configure(membershipCard: viewModel.membershipCard)
+            let barcodeView: BarcodeViewWide = .fromNib()
+            barcodeView.translatesAutoresizingMaskIntoConstraints = false
+            brandHeader.addSubview(barcodeView)
+            barcodeView.heightAnchor.constraint(equalTo: brandHeader.heightAnchor).isActive = true
+            barcodeView.widthAnchor.constraint(equalTo: brandHeader.widthAnchor).isActive = true
+            barcodeView.configure(membershipCard: viewModel.membershipCard)
         }
     }
     
