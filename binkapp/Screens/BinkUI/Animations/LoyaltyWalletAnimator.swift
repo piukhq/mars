@@ -51,11 +51,8 @@ class LoyaltyWalletAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             barcodeView.frame = brandHeaderRect
             barcodeView.alpha = 0
             
-            let barcodeTypeIntValue = lcdViewController.viewModel.membershipCard.card?.barcodeType?.intValue ?? 0
-            let barcodeType = BarcodeType(rawValue: barcodeTypeIntValue) ?? .code128
-
-            switch barcodeType {
-            case .aztec, .qr:
+            switch (lcdViewController.viewModel.barcodeViewModel.barcodeType, lcdViewController.viewModel.barcodeViewModel.barcodeIsMoreSquareThanRectangle) {
+            case (.aztec, _), (.qr, _), (_, true):
                 let barcodeViewCompact: BarcodeViewCompact = .fromNib()
                 barcodeViewCompact.configure(viewModel: lcdViewController.viewModel)
                 barcodeView.addSubview(barcodeViewCompact)
